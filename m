@@ -2,275 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF4871FC0A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 23:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93CDA1FC0D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 23:17:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726630AbgFPVFG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 17:05:06 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24483 "EHLO m43-7.mailgun.net"
+        id S1726044AbgFPVRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 17:17:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56276 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726804AbgFPVFF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 17:05:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592341503; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=IMNNo1BqQ1o0gHuNsl/LI5YBXnEGtDooQJTtyr/egAU=;
- b=LRhOqzs+hf7mIx2TKYkMazvdBnjKrW8sXK0hpvFuomO8sI6tn0ZZXL/vWToabGrCxaAWqooE
- XcxpccOPJVoyfvqboZyyFINgJo2udn54Z1i9WG6pmU7HSgc1RyokMlehkKWWASHGq8JIRoO2
- ndG05gq3Ygn7pUWfWs3C1+0B3Pw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5ee933fd117610c7ff2678e5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 21:05:01
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 77EDEC43395; Tue, 16 Jun 2020 21:05:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1725967AbgFPVRO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Jun 2020 17:17:14 -0400
+Received: from localhost (mobile-166-170-222-206.mycingular.net [166.170.222.206])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3197CC433C9;
-        Tue, 16 Jun 2020 21:05:00 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4BE502085B;
+        Tue, 16 Jun 2020 21:17:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592342233;
+        bh=djiXrU2UPs1VBTk8L8oL0srNfH1ZR8zahiqBoVs5Upc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=a+tDMaEm6a4kfqMC1/7x10y7SE1HmbTW08nc4ko60pujKNkpY630kwdrIJAv7+JEu
+         bgl+ed9bLJ4cS7+QiHCabve3wfLL/SzcGetnrF4VniXIUSDUirCRPrLfuHWbogfZLm
+         QAxqzGcW6hprLyp4+g0rBOsntCFdQVJ73ckv50RI=
+Date:   Tue, 16 Jun 2020 16:17:11 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     svarbanov@mm-sol.com, bjorn.andersson@linaro.org, vkoul@kernel.org,
+        sanm@codeaurora.org, mgautam@codeaurora.org, agross@kernel.org,
+        bhelgaas@google.com, robh@kernel.org, lorenzo.pieralisi@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Disable power management for uPD720201 USB3
+ controller
+Message-ID: <20200616211711.GA1981914@bjorn-Precision-5520>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 17 Jun 2020 02:35:00 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
-        bjorn.andersson@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v6 4/5] cpufreq: qcom: Update the bandwidth levels on
- frequency change
-In-Reply-To: <20200615172553.GU4525@google.com>
-References: <20200605213332.609-1-sibis@codeaurora.org>
- <20200605213332.609-5-sibis@codeaurora.org>
- <20200615172553.GU4525@google.com>
-Message-ID: <e21f85d64d72ec637c10dae93e8323bb@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200615182413.15649-1-georgi.djakov@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Matthias,
-Thanks for taking time to review
-the series.
+[+cc Rafael, linux-pm]
 
-On 2020-06-15 22:55, Matthias Kaehlcke wrote:
-> Hi Sibi,
+On Mon, Jun 15, 2020 at 09:24:13PM +0300, Georgi Djakov wrote:
+> The uPD720201 USB3 host controller (connected to PCIe) on the Dragonboard
+> 845c is often failing during suspend and resume. The following messages
+> are seen over the console:
 > 
-> On Sat, Jun 06, 2020 at 03:03:31AM +0530, Sibi Sankar wrote:
->> Add support to parse optional OPP table attached to the cpu node when
->> the OPP bandwidth values are populated. This allows for scaling of
->> DDR/L3 bandwidth levels with frequency change.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->> 
->> v6:
->>  * Add global flag to distinguish between voltage update and opp add.
->>    Use the same flag before trying to scale ddr/l3 bw [Viresh]
->>  * Use dev_pm_opp_find_freq_ceil to grab all opps [Viresh]
->>  * Move dev_pm_opp_of_find_icc_paths into probe [Viresh]
->> 
->> v5:
->>  * Use dev_pm_opp_adjust_voltage instead [Viresh]
->>  * Misc cleanup
->> 
->> v4:
->>  * Split fast switch disable into another patch [Lukasz]
->> 
->>  drivers/cpufreq/qcom-cpufreq-hw.c | 82 
->> ++++++++++++++++++++++++++++++-
->>  1 file changed, 80 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c 
->> b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index fc92a8842e252..8fa6ab6e0e4b6 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -6,6 +6,7 @@
->>  #include <linux/bitfield.h>
->>  #include <linux/cpufreq.h>
->>  #include <linux/init.h>
->> +#include <linux/interconnect.h>
->>  #include <linux/kernel.h>
->>  #include <linux/module.h>
->>  #include <linux/of_address.h>
->> @@ -30,6 +31,48 @@
->> 
->>  static unsigned long cpu_hw_rate, xo_rate;
->>  static struct platform_device *global_pdev;
->> +static bool icc_scaling_enabled;
+>   PM: suspend entry (s2idle)
+>   Filesystems sync: 0.000 seconds
+>   Freezing user space processes ... (elapsed 0.001 seconds) done.
+>   OOM killer disabled.
+>   Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+>   printk: Suspending console(s) (use no_console_suspend to debug)
+>   dwc3-qcom a8f8800.usb: HS-PHY not in L2
+>   dwc3-qcom a6f8800.usb: HS-PHY not in L2
+>   xhci_hcd 0000:01:00.0: can't change power state from D3hot to D0 (config
+>   space inaccessible)
+>   xhci_hcd 0000:01:00.0: can't change power state from D3hot to D0 (config
+>   space inaccessible)
+>   xhci_hcd 0000:01:00.0: Controller not ready at resume -19
+>   xhci_hcd 0000:01:00.0: PCI post-resume error -19!
+>   xhci_hcd 0000:01:00.0: HC died; cleaning up
 > 
-> It seem you rely on 'icc_scaling_enabled' to be initialized to 'false'.
-> This works during the first initialization, but not if the 'device' is
-> unbound/rebound. In theory things shouldn't be different in a succesive
+> Then the USB devices are not functional anymore. Let's disable the PM of
+> the controller for now, as this will at least keep USB devices working
+> even after suspend and resume.
 
-yes it shouldn't but sure I'll set
-it to false along the way.
+This seems like we're just covering up a deeper problem here.  I think
+it would be better to fix the underlying problem.
 
-> initialization, however for robustness the variable should be 
-> explicitly
-> set to 'false' somewhere in the code path (_probe(), _read_lut(), ...).
+The quirk you're adding is specific to the Renesas 0x0014 device.  Is
+there some reason to think the problem is specific to that device, or
+might other devices have the same problem?
 
+Maybe we're missing something in pcie-qcom.c?  Is there any
+suspend/resume support required in that driver?  It doesn't look like
+it has anything except that it calls pm_runtime_enable().
+
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
->> +static int qcom_cpufreq_set_bw(struct cpufreq_policy *policy,
->> +			       unsigned long freq_khz)
->> +{
->> +	unsigned long freq_hz = freq_khz * 1000;
->> +	struct dev_pm_opp *opp;
->> +	struct device *dev;
->> +	int ret;
->> +
->> +	dev = get_cpu_device(policy->cpu);
->> +	if (!dev)
->> +		return -ENODEV;
->> +
->> +	opp = dev_pm_opp_find_freq_exact(dev, freq_hz, true);
->> +	if (IS_ERR(opp))
->> +		return PTR_ERR(opp);
->> +
->> +	ret = dev_pm_opp_set_bw(dev, opp);
->> +	dev_pm_opp_put(opp);
->> +	return ret;
->> +}
->> +
->> +static int qcom_cpufreq_update_opp(struct device *cpu_dev,
->> +				   unsigned long freq_khz,
->> +				   unsigned long volt)
->> +{
->> +	unsigned long freq_hz = freq_khz * 1000;
->> +	int ret;
->> +
->> +	/* Skip voltage update if the opp table is not available */
->> +	if (!icc_scaling_enabled)
->> +		return dev_pm_opp_add(cpu_dev, freq_hz, volt);
->> +
->> +	ret = dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt);
->> +	if (ret) {
->> +		dev_err(cpu_dev, "Voltage update failed freq=%ld\n", freq_khz);
->> +		return ret;
->> +	}
->> +
->> +	return dev_pm_opp_enable(cpu_dev, freq_hz);
->> +}
->> 
->>  static int qcom_cpufreq_hw_target_index(struct cpufreq_policy 
->> *policy,
->>  					unsigned int index)
->> @@ -39,6 +82,9 @@ static int qcom_cpufreq_hw_target_index(struct 
->> cpufreq_policy *policy,
->> 
->>  	writel_relaxed(index, perf_state_reg);
->> 
->> +	if (icc_scaling_enabled)
->> +		qcom_cpufreq_set_bw(policy, freq);
->> +
->>  	arch_set_freq_scale(policy->related_cpus, freq,
->>  			    policy->cpuinfo.max_freq);
->>  	return 0;
->> @@ -89,11 +135,31 @@ static int qcom_cpufreq_hw_read_lut(struct device 
->> *cpu_dev,
->>  	u32 data, src, lval, i, core_count, prev_freq = 0, freq;
->>  	u32 volt;
->>  	struct cpufreq_frequency_table	*table;
->> +	struct dev_pm_opp *opp;
->> +	unsigned long rate;
->> +	int ret;
->> 
->>  	table = kcalloc(LUT_MAX_ENTRIES + 1, sizeof(*table), GFP_KERNEL);
->>  	if (!table)
->>  		return -ENOMEM;
->> 
->> +	ret = dev_pm_opp_of_add_table(cpu_dev);
->> +	if (!ret) {
->> +		/* Disable all opps and cross-validate against LUT */
-> 
-> nit: IIUC the cross-validation doesn't happen in this branch, so the
-> comment is a bit misleading. Maybe change it to "Disable all opps to
-> cross-validate against the LUT {below,later}".
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 138e1a2d21cc..c1f502682a19 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1439,6 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
+>  {
+>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
+>  }
+> +
+> +static void qcom_fixup_nopm(struct pci_dev *dev)
+> +{
+> +	dev->pm_cap = 0;
+> +	dev_info(&dev->dev, "Disabling PCI power management\n");
+> +}
+> +
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
+> @@ -1446,6 +1453,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
+>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_RENESAS, 0x0014, qcom_fixup_nopm);
 
-sure will re-word it.
+The convention is that DECLARE_PCI_FIXUP_*() comes immediately after
+the quirk function itself, so the whole patch would be a single diff
+hunk.  See drivers/pci/quirks.c for many examples.
 
-> 
->> +		icc_scaling_enabled = true;
->> +		for (rate = 0; ; rate++) {
->> +			opp = dev_pm_opp_find_freq_ceil(cpu_dev, &rate);
->> +			if (IS_ERR(opp))
->> +				break;
->> +
->> +			dev_pm_opp_put(opp);
->> +			dev_pm_opp_disable(cpu_dev, rate);
->> +		}
->> +	} else if (ret != -ENODEV) {
->> +		dev_err(cpu_dev, "Invalid opp table in device tree\n");
->> +		return ret;
->> +	}
->> +
->>  	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
->>  		data = readl_relaxed(base + REG_FREQ_LUT +
->>  				      i * LUT_ROW_SIZE);
->> @@ -112,7 +178,7 @@ static int qcom_cpufreq_hw_read_lut(struct device 
->> *cpu_dev,
->> 
->>  		if (freq != prev_freq && core_count != LUT_TURBO_IND) {
->>  			table[i].frequency = freq;
->> -			dev_pm_opp_add(cpu_dev, freq * 1000, volt);
->> +			qcom_cpufreq_update_opp(cpu_dev, freq, volt);
-> 
-> This is the cross-validation mentioned above, right? Shouldn't it 
-> include
-> a check of the return value?
-
-Yes, this is the cross-validation step,
-we adjust the voltage if opp-tables are
-present/added successfully and enable
-them, else we would just do a add opp.
-We don't want to exit early on a single
-opp failure. We will error out a bit
-later if the opp-count ends up to be
-zero.
-
-> 
->>  			dev_dbg(cpu_dev, "index=%d freq=%d, core_count %d\n", i,
->>  				freq, core_count);
->>  		} else if (core_count == LUT_TURBO_IND) {
->> @@ -133,7 +199,8 @@ static int qcom_cpufreq_hw_read_lut(struct device 
->> *cpu_dev,
->>  			if (prev->frequency == CPUFREQ_ENTRY_INVALID) {
->>  				prev->frequency = prev_freq;
->>  				prev->flags = CPUFREQ_BOOST_FREQ;
->> -				dev_pm_opp_add(cpu_dev,	prev_freq * 1000, volt);
->> +				qcom_cpufreq_update_opp(cpu_dev, prev_freq,
->> +							volt);
-> 
-> ditto
-> 
-> nit: with the updated max line length it isn't necessary anymore to 
-> break
-> this into multiple lines
-> (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/scripts/checkpatch.pl?h=v5.8-rc1#n54),
-> though the coding style still has the old limit.
-
-yeah I'll expand it.
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+>  static struct platform_driver qcom_pcie_driver = {
+>  	.probe = qcom_pcie_probe,
