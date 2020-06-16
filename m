@@ -2,104 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AF001FBCC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 19:24:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AC8B1FBE4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2020 20:42:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727962AbgFPRYY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 13:24:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33340 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726573AbgFPRYY (ORCPT
+        id S1729578AbgFPSlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Jun 2020 14:41:42 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:36961 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727819AbgFPSlm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 13:24:24 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44094C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 10:24:24 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id f18so19966548qkh.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 10:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wLz7l5oBTTWRrPJZo/ObezKhptZZKpKERaSHZ1hXdEw=;
-        b=oyEHBZBt8MKmPuGWBNEF4brHRUaiRePPVL0QfAls08WgpIjuFIYa6kB864rT/Vbf25
-         48gUSVw6ATmzjhX/wyCSwzwHozlA+TPfnPj3bX8nuKKD84+OKWm4OT3vkyVwwBCfT9yD
-         vFBrcemSctjrRxOQi1neixJQ+KgBmUa8HopxjjLxRYCMxK1ESVcFwS1yvIHfDWQPsIig
-         GQpwfaY4ccw8T202rJcnVgi244sbCojoHfqbouXxl2peytOjyoaR2dVMbOtZHkNDSNAB
-         QrXlr8NXaPf7w0CNnMASPVEyAIEZBbQGmFzXqpdg8HadXxQuBWloIvDAi6HPapw/bGcy
-         w5iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wLz7l5oBTTWRrPJZo/ObezKhptZZKpKERaSHZ1hXdEw=;
-        b=cvyrN/xAwSqSF1I38JOvYtRiaR1Ymfh9rJYnSv4bGcHw9TYs0T504SX/tIgHPbGGJa
-         pHIkIkwQo+3ZQwunZBIIY1I7b2Wl0aPdmT7snw5eKv1kx+adAJP8ftLSvA+r8Ey330Jb
-         4FHlEuZbxkh6a1qflOxbhosuHe0CHvBgWGrEPATfdEsn9Kn6y90TaiYhTEOMrF3DpZ4o
-         Xf5+uoI0FODfr9jHP0eVsYksXN1eWKG0/y36KcbC7sCvb8dZU8fYouLfFcF4hehR6ZMj
-         NX7Pg1NaKQdmhe33UzEOT7+X8gyY2pgEnfeqLpKiDprc9kHBptH+HaFW1fLsvnv7NoLk
-         tGlA==
-X-Gm-Message-State: AOAM530TSqj2waAFUeWYwo9pLzKvgxtdyK4BKqfXKLHLnXoyZuY+hbx+
-        ZQWJU64dIi6Abba4bA4OBJh0vw==
-X-Google-Smtp-Source: ABdhPJwoXL0o8krQI9ycOghoOHGeNjAjXqPQZniw43Gw2Bb7ZaVEABjgZ/Mvt3KgOHJnO522R60wWg==
-X-Received: by 2002:a37:9586:: with SMTP id x128mr21268593qkd.312.1592328263452;
-        Tue, 16 Jun 2020 10:24:23 -0700 (PDT)
-Received: from [192.168.1.92] (pool-71-255-246-27.washdc.fios.verizon.net. [71.255.246.27])
-        by smtp.gmail.com with ESMTPSA id n25sm14066118qkk.76.2020.06.16.10.24.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2020 10:24:23 -0700 (PDT)
-Subject: Re: [PATCH v6 0/6] Introduce Power domain based warming device driver
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     rui.zhang@intel.com, ulf.hansson@linaro.org,
-        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, robh@kernel.org, amit.kucheria@verdurent.com,
-        mark.rutland@arm.com, rjw@rjwysocki.net, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200604015317.31389-1-thara.gopinath@linaro.org>
- <20200616105325.GH1718@bug>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <0eb2e140-9c9c-4777-9916-d81eddc793ca@linaro.org>
-Date:   Tue, 16 Jun 2020 13:24:16 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        Tue, 16 Jun 2020 14:41:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592332900; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=4IXZYzpvzDFKvTNY4cMQoOFAUngf4iLPe0XTms7I9B8=;
+ b=uT6hcV+GwTx7hrbhY81y1r5lwxTv2ZkJG+IyTDzumDykki3N0wNmvh8X50ns0YkyWNtiSb2k
+ 7U+XrwBIXxSuCBDAPHaoM2ti75II6cdIyGUgRdC361LMcxdUMOwvQRm/EHfxtz30HU8TG2Vg
+ rRDKZdaiJqnlnKCn0XCaIbziNOo=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5ee9125ba6e154319fb82bb6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Jun 2020 18:41:31
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EF01DC43395; Tue, 16 Jun 2020 18:41:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B2460C433C9;
+        Tue, 16 Jun 2020 18:41:28 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200616105325.GH1718@bug>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Wed, 17 Jun 2020 00:11:28 +0530
+From:   dikshita@codeaurora.org
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     Nicolas Dufresne <nicolas@ndufresne.ca>, mchehab@kernel.org,
+        ezequiel@collabora.com, boris.brezillon@collabora.com,
+        ribalda@kernel.org, paul.kocialkowski@bootlin.com,
+        posciak@chromium.org, linux-media@vger.kernel.org,
+        stanimir.varbanov@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org,
+        majja@codeaurora.org, linux-media-owner@vger.kernel.org
+Subject: Re: [RFC PATCH 0/1] Add LTR controls
+In-Reply-To: <1a9904b6-60a5-0faa-8a5e-c9dc00802184@xs4all.nl>
+References: <1591871121-25420-1-git-send-email-dikshita@codeaurora.org>
+ <f07c4aab69d2b333c0e36c50c526c0a85322e708.camel@ndufresne.ca>
+ <1a9904b6-60a5-0faa-8a5e-c9dc00802184@xs4all.nl>
+Message-ID: <40040141fc3027c3eb1fdebc1a0e8ade@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Hans, Nicolas,
 
+Thanks for your comments.
 
-On 6/16/20 6:53 AM, Pavel Machek wrote:
-> Hi!
+On 2020-06-12 14:41, Hans Verkuil wrote:
+> Hi Dikshita, Nicolas,
 > 
->> Certain resources modeled as a generic power domain in linux kernel can be
->> used to warm up the SoC (mx power domain on sdm845) if the temperature
->> falls below certain threshold. These power domains can be considered as
->> thermal warming devices.  (opposite of thermal cooling devices).
+> On 11/06/2020 16:22, Nicolas Dufresne wrote:
+>> Le jeudi 11 juin 2020 à 15:55 +0530, Dikshita Agarwal a écrit :
+>>> LTR (Long Term Reference) frames are the frames that are encoded 
+>>> sometime in the past
+>>> and stored in the DPB buffer list to be used as reference to encode 
+>>> future frames.
+>>> One usage of LTR encoding is to reduce error propagation for video 
+>>> transmission
+>>> in packet lossy networks.  For example, encoder may want to specify 
+>>> some key frames as
+>>> LTR pictures and use them as reference frames for encoding. With 
+>>> extra protection
+>>> selectively on these LTR frames or synchronization with the receiver 
+>>> of reception of
+>>> the LTR frames during transmission, decoder can receive reference 
+>>> frames more reliably
+>>> than other non-reference frames. As a result, transmission error can 
+>>> be effectively
+>>> restricted within certain frames rather than propagated to future 
+>>> frames.
+>>> 
+>>> We are introducing below V4l2 Controls for this feature
+>>> 1. V4L2_CID_MPEG_VIDEO_LTRCOUNT
+>>>     a. This is used to query or configure the number of LTR frames.
+>>>        This is a static control and is controlled by the client.
+>>>     b. The LTR index varies from 0 to the max LTR-1.
+>>>     c. If LTR Count is more than max supported LTR count (max LTR) by 
+>>> driver, it will be rejected.
+>>>     d. Auto Marking : If LTR count is non zero,
+>>>         1) first LTR count frames would be mark as LTR automatically 
+>>> after
+>>>       	   every IDR frame (inclusive).
+>>>         2) For multilayer encoding: first LTR count base layer 
+>>> reference frames starting after
+>>>            every IDR frame (inclusive) in encoding order would be 
+>>> marked as LTR frames by the encoder.
+>>>         3) Auto marking of LTR due to IDR should consider following 
+>>> conditions:
+>>>             1. The frame is not already set to be marked as LTR.
+>>>             2. The frame is part of the base layer in the 
+>>> hierarchical layer case.
+>>>             3. The number of frames currently marked as LTR is less 
+>>> than the maximum LTR frame index plus 1.
+>>>     e. Encoder needs to handle explicit Mark/Use command when encoder 
+>>> is still doing "auto" marking
 > 
-> Would you explain when this is needed?
+> I don't follow this, quite possibly due to lack of experience with 
+> encoders.
 > 
-> I'd normally expect "too low" temperature to be a problem during power-on, but at
-> that time Linux is not running so it can not provide the heating...
-Hi Pavel,
+> I kind of would expect to see two modes: either automatic where 
+> encoders can
+> mark up to LTR_COUNT frames as long term reference, and userspace just 
+> sets
+> LTR_COUNT and doesn't have to do anything else.
+> 
+> Or it is manual mode where userspace explicitly marks long term 
+> reference
+> frames.
+> 
+> From the proposal above it looks like you can mix auto and manual 
+> modes.
+> 
+> BTW, how do you 'unmark' long term reference frames?
+> 
+> This feature is for stateful encoders, right?
+> 
+>> 
+>> Perhaps we are missing a LONG_TERM_REFERENCE_MODE ? I bet some encoder
+>> can select by themself long term references and even some encoders may
+>> not let the user decide.
+>> 
+>> (not huge han of LTR acronyme, but that could be fine too, assuming 
+>> you
+>> add more _).
+>> 
 
-This is more in the scenario if the system in on and temperature is 
-dipping (I have been told in colder climates). Idea is to turn on 
-resources so as to prevent further dipping of temperature if possible.
+Userspace sets LTR count which signifies the number of LTR frames 
+encoder needs to generate or keep.
+The encoder has to build-up its internal buffer reference list (aka DBP 
+list or recon buffer list).
+In order to achieve that encoder will fill It's LTR (long term 
+references) list and STR (short term references) list
+by auto marking n frames as LTR frames(n is equal to LTR count) based on 
+auto-marking dictated by the encoder spec.
+The client then can replace those automatically marked frames with new 
+frames using V4L2_CID_MPEG_VIDEO_MARKLTRFRAME and can ask
+encoder to refer the newly marked frame for encoding the next frame 
+using V4L2_CID_MPEG_VIDEO_USELTRFRAME.
 
+>>> 
+>>> 2. V4L2_CID_MPEG_VIDEO_MARKLTRFRAME :
+>>>     a. This signals to mark the current frame as LTR frame. It is a 
+>>> dynamic control and also provide the LTR index to be used.
+>>>     b. the LTR index provided by this control should never exceed the 
+>>> max LTR-1. Else it will be rejected.
+>> 
+>> The "current" frame seems a bit loose. Perhaps you wanted to use 
+>> buffer
+>> flags ? A bit like what we have to signal TOP/BOTTOM fields in
+>> alternate interlacing.
 > 
-> Best regards,
-> 
-> 									Pavel
+> I was thinking the same thing. Using a control for this doesn't seem 
+> right.
 > 
 
--- 
-Warm Regards
-Thara
+the client sets this to replace automatically marked frames by the 
+encoder with a particular frame.
+this provides an index that ranges from 0 to LTR count-1 and then the 
+particular frame will be marked with that index.
+this can be achieved through request by associating this control with a 
+specific buffer to make it synchronized.
+
+>> 
+>>> 
+>>> 3. V4L2_CID_MPEG_VIDEO_USELTRFRAME :
+>>>     a. This specifies the LTR frame(s) to be used for encoding the 
+>>> current frame. This is a dynamic control.
+>>>     b. LTR Use Bitmap : this consists of bits [0, 15]. A total of N 
+>>> LSB bits of this field are valid,
+>>>        where N is the maximum number of LTRs supported. All the other 
+>>> bits are invalid and should be rejected.
+>>>        The LSB corresponds to the LTR index 0. Bit N-1 from the LSB 
+>>> corresponds to the LTR index max LTR-1.
+> 
+> How would userspace know this? Esp. with auto marking since userspace 
+> would have
+> to predict how auto marking works (if I understand this correctly).
+> 
+
+Client sets LTR count which tells about the number of LTR frames 
+automatically marked by the encoder.
+so client can use LTR index (0 to LTR count -1) to ask encoder to refer 
+any particular
+frame (marked automatically by driver or marked by client with 
+V4L2_CID_MPEG_VIDEO_MARKLTRFRAME) as a reference to encode the next 
+frame.
+
+> For which HW encoder is this meant?
+> 
+This is primarily meant for H264 and HEVC.
+
+Thanks,
+Dikshita
+
+>> 
+>> Note, I haven't captured very well the userspace control flow, perhaps
+>> this could be enhanced through writing some documentation.
+>> 
+>> As per all other generic encoder controls, we need to make sure it 
+>> will
+>> be usable and flexible enough for multiple HW blocks, as it can be
+>> tedious to extend later otherwise. It is important that along with 
+>> this
+>> RFC you provide some comparisons with with other HW / SW APIs in order
+>> to help justify the design decisions. I also think there should be
+>> link made V4L2_CID_MPEG_VIDEO_GOP_* , number of B-Frames etc.
+> 
+> I agree with Nicolas.
+> 
+> Regards,
+> 
+> 	Hans
+> 
+>> 
+>> regards,
+>> Nicolas
+>> 
+>>> 
+>>> Dikshita Agarwal (1):
+>>>   media: v4l2-ctrls:  add control for ltr
+>>> 
+>>>  drivers/media/v4l2-core/v4l2-ctrls.c | 6 ++++++
+>>>  include/uapi/linux/v4l2-controls.h   | 4 ++++
+>>>  2 files changed, 10 insertions(+)
+>>> 
+>> 
