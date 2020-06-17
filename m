@@ -2,179 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 824C31FD666
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:53:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2814E1FD66E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:53:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726966AbgFQUxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 16:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34028 "EHLO
+        id S1726763AbgFQUxZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 16:53:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726840AbgFQUxK (ORCPT
+        with ESMTP id S1726761AbgFQUxZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:53:10 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 889DEC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:53:10 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id b16so1702773pfi.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:53:10 -0700 (PDT)
+        Wed, 17 Jun 2020 16:53:25 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39577C0613ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:53:25 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id x207so1730150pfc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=QnReyXxnOu9ZZjgV+0fELmFBwkF8t9sS5NXbAXaUWrU=;
-        b=gjcf4NZZMPS/xxo/MEuRK7uaEen6br1tQkcKD5yijmxio5vLdECcP+aSbIWeRjCx/b
-         NlAV2NUWyZ94TjFrq0dy46OI8j5tp/dLwbwKETZPL8g7FBo9F/9PObvOAjkPYbfLOAR3
-         9OcA/XGNM7veXfhq9dPzOxnL3VYn1fTd56S6I=
+        d=anholt-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q2vFanbkC3uvjUoe1v3YzWZWXnFy1tDZVnwieI4nd9Y=;
+        b=U1vB3FFXCBnFJurQB75heRhAW7lMV3f4bkk1rZ/IrcNCPafx08mjlJhLOcBRbKMvh6
+         UW+tkU7o/v3J9aEa+zA6BqkttVnr42asCTQMjKL4vQ/LmR4xM+dGsZI+vhseLnhBoKha
+         qQ55Vc6TJJE1qTzsoTkNFpgmFrBQHrY11gowCx7PmbM0rBZBfwrj3hQ5/F9IqZcvwdh+
+         t2yXOcOiqIgY5Bc0qxtlfoLNBGI4y0MC1a86lltnPbJ34qY1OP8TMcMlUD2VI1ndg2RA
+         AQCtYvKCqXTtckfzYIQpyl803MP+SrpWF/SjyUXqpDbVn6aBd1z0vCXxLslDMhEvBEtH
+         CSdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=QnReyXxnOu9ZZjgV+0fELmFBwkF8t9sS5NXbAXaUWrU=;
-        b=nsI2eFJKc0dxoF/E9h1ZTgd6wxmCcjYOJcYJwWVAjT3a27ayKjYVhAO+Phn7m0KzxS
-         DZDVERgo4Uy4jdlnChKH3QxvV1BTbGuEFyPspOkKxPYcqJmY+e4X/+4BdtHrQI0ViE2x
-         W90gNZ3gkBGS12SMIxrq8wR8y7/ASIOQPjTZkTTYUrUyWvBmuhYf6WkQHBbaZNrGu6t7
-         9ZJ9n9JWwDRCDxPago8E5GgCaolHiZmDKBuBwosn9JNt7Kq8s2J/XrR/V6ji9cy4roOX
-         0MpyTg+KPvHnAT45QKtD4gIgJ3fUc88IW0V+CwWKPZp++nNVefxniOo0tQlcJ3AJsADn
-         PTyw==
-X-Gm-Message-State: AOAM532QdwEU28G+7ZUG/cgovfCrv2nnezpgJGOPjpM+mdds8ZYxiumu
-        Sn2TL0zwdKMA6pB2BmEs5jhSJg==
-X-Google-Smtp-Source: ABdhPJw75FLzMY2EKLhIE4fbWx+vsu2fEfVEDYxgCAyGOn+B2hfOzc2yzg04DadvCVQtW9r1VEj5FA==
-X-Received: by 2002:a63:1a11:: with SMTP id a17mr552466pga.227.1592427189951;
-        Wed, 17 Jun 2020 13:53:09 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id k101sm406682pjb.26.2020.06.17.13.53.09
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q2vFanbkC3uvjUoe1v3YzWZWXnFy1tDZVnwieI4nd9Y=;
+        b=rqL02XUZfpTCFTgHuY2JiK5lIMuS2xFYEdkmNJ8xw9pQ6TUY72Ycn/7cvTPZvpO44+
+         9G4HymylL+IquuK0WkLVGmmjMQ1LhRn+kY/uvsG9d/llneVSd3ZIcNpiMbGaf1n7Q5ML
+         qkQRJF5i9ksN0CCCfpZgfe6JLdRsf/KeNbCDy8ZvpAtF2lK++3PM9dHGJuGPgF3Op0r2
+         aUClpSS4jOKhoxj+37s21PnWACYGtwIfncGUeTmf1LIWWh6KVJssoEGuk+W/smYMz7EG
+         GyzV0rMphuJrPY8VSQPxPTfnzsoMF1txVTsWiHzj72zstvc+5ezbqpx9JN26g1HbCy5/
+         O46A==
+X-Gm-Message-State: AOAM531xtD1Z0KQhea7Z8PTzq++3fLCGTgVE+WeMdhJ8ldYIEP46NkUo
+        9LVgAFLyxR208HojxbkA8mebOw==
+X-Google-Smtp-Source: ABdhPJztQrP4O1BHPZxdSGgbABHzOJqmU7cZUuKr3wGa1+knYDpG0udKd8LAT9RleSRBWs6SNIbsmQ==
+X-Received: by 2002:a63:a06b:: with SMTP id u43mr572047pgn.294.1592427204507;
+        Wed, 17 Jun 2020 13:53:24 -0700 (PDT)
+Received: from miranda.anholt.net (c-73-11-63-120.hsd1.or.comcast.net. [73.11.63.120])
+        by smtp.gmail.com with ESMTPSA id ca6sm392454pjb.46.2020.06.17.13.53.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 13:53:09 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 17 Jun 2020 13:53:23 -0700 (PDT)
+From:   Eric Anholt <eric@anholt.net>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     linux-kernel@vger.kernel.org, Eric Anholt <eric@anholt.net>
+Subject: [PATCH 1/2] drm/msm: Fix address space size after refactor.
+Date:   Wed, 17 Jun 2020 13:53:09 -0700
+Message-Id: <20200617205310.2183722-1-eric@anholt.net>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200616034044.v3.2.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid>
-References: <20200616104050.84764-1-dianders@chromium.org> <20200616034044.v3.2.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid>
-Subject: Re: [PATCH v3 2/5] spi: spi-geni-qcom: Mo' betta locking
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <dkota@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>
-Date:   Wed, 17 Jun 2020 13:53:08 -0700
-Message-ID: <159242718864.62212.18160698526818943096@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-06-16 03:40:47)
-> If you added a bit of a delay (like a trace_printk) into the ISR for
-> the spi-geni-qcom driver, you would suddenly start seeing some errors
-> spit out.  The problem was that, though the ISR itself held a lock,
-> other parts of the driver didn't always grab the lock.
->=20
-> One example race was this:
-> a) Driver queues off a command to set a Chip Select (CS).
-> b) ISR fires indicating the CS is done.
-> c) Done bit is set, so we complete().
-> d) Second CPU gallops off and starts a transfer.
-> e) Second CPU starts messing with hardware / software state (not under
->    spinlock).
-> f) ISR now does things like set "mas->cur_mcmd" to CMD_NONE, prints
->    errors if "tx_rem_bytes" / "rx_rem_bytes" have been set, and also
->    Acks all interrupts it handled.
+Previously the address space went from 16M to ~0u, but with the
+refactor one of the 'f's was dropped, limiting us to 256MB.
+Additionally, the new interface takes a start and size, not start and
+end, so we can't just copy and paste.
 
-Can we get a CPU0/CPU1 diagram here? At point e) I got sort of lost. And
-maybe it's not even a dual CPU problem? i.e. it can happen on one CPU?
+Fixes regressions in dEQP-VK.memory.allocation.random.*
 
-    CPU0
-    ----
- a) spi_geni_set_cs()
-     mas->cur_mcmd =3D CMD_CS
-     wait_for_completion_timeout(&xfer_done)
- b)  <INTERRUPT>
-     geni_spi_isr()
- c)   complete(&xfer_done);
-     <END INTERRUPT>
-     pm_runtime_put(mas->dev);
- d) galloping?
+Fixes: ccac7ce373c1 ("drm/msm: Refactor address space initialization")
+Signed-off-by: Eric Anholt <eric@anholt.net>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I got lost... Sorry!
-   =20
->=20
-> Let's fix this.  Before we start messing with hardware, we'll grab the
-> lock to make sure that the IRQ handler from some previous command has
-> really finished.  We don't need to hold the lock unless we're in a
-> state where more interrupts can come in, but we at least need to make
-> sure the previous IRQ is done.  This lock is used exclusively to
-> prevent the IRQ handler and non-IRQ from stomping on each other.  The
-> SPI core handles all other mutual exclusion.
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 89673c7ed473..5db06b590943 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -194,7 +194,7 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+ 	struct msm_gem_address_space *aspace;
+ 
+ 	aspace = msm_gem_address_space_create(mmu, "gpu", SZ_16M,
+-		0xfffffff);
++		0xffffffff - SZ_16M);
+ 
+ 	if (IS_ERR(aspace) && !IS_ERR(mmu))
+ 		mmu->funcs->destroy(mmu);
+-- 
+2.26.2
 
-Ok maybe the problem is the completion at c) never happens until the
-wait_for_completion_timeout() times out?
-
->=20
-> As part of this, we change the way that the IRQ handler detects
-> spurious interrupts.  Previously we checked for our state variable
-> being set to IRQ_NONE, but that was done outside the spinlock.  We
-> could move it into the spinlock, but instead let's just change it to
-> look for the lack of any IRQ status bits being set.  This can be done
-> outside the lock--the hardware certainly isn't grabbing or looking at
-> the spinlock when it updates its status register.
->=20
-> It's possible that this will fix real (but very rare) errors seen in
-> the field that look like:
->   irq ...: nobody cared (try booting with the "irqpoll" option)
->=20
-> NOTE: an alternate strategy considered here was to always make the
-> complete() / spi_finalize_current_transfer() the very last thing in
-> our IRQ handler.  With such a change you could consider that we could
-> be "lockless".  In that case, though, we'd have to be very careful w/
-> memory barriers so we made sure we didn't have any bugs with weakly
-> ordered memory.  Using spinlocks makes the driver much easier to
-> understand.
->=20
-> Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI=
- based QUP")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->=20
-> Changes in v3:
-> - Split out some lock cleanup to previous patch.
-> - Don't need to read IRQ status register inside spinlock.
-> - Don't check for state CMD_NONE; later patch is removing state var.
-> - Don't hold the lock for all of setup_fifo_xfer().
-> - Comment about why it's safe to Ack interrupts at the end.
-> - Subject/desc changed since race is definitely there.
->=20
-> Changes in v2:
-> - Detect true spurious interrupt.
-> - Still return IRQ_NONE for state machine mismatch, but print warn.
->=20
->  drivers/spi/spi-geni-qcom.c | 45 ++++++++++++++++++++++++++++++++++---
->  1 file changed, 42 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index c7d2c7e45b3f..e0f0e5c241f3 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -367,6 +384,12 @@ static void setup_fifo_xfer(struct spi_transfer *xfe=
-r,
->         }
->         writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
->         mas->cur_mcmd =3D CMD_XFER;
-> +
-> +       /*
-> +        * Lock around right before we start the transfer since our
-> +        * interrupt controller could come in at any time now.
-
-drop 'controller'?
-
-> +        */
-> +       spin_lock_irq(&mas->lock);
->         geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
-> =20
->         /*
