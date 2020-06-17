@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3D6C1FCD88
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 14:39:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ABAF1FCD96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 14:40:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbgFQMim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 08:38:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48206 "EHLO mail.kernel.org"
+        id S1726510AbgFQMke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 08:40:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50068 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725901AbgFQMil (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 08:38:41 -0400
+        id S1725964AbgFQMke (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 08:40:34 -0400
 Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 54ACC2098B;
-        Wed, 17 Jun 2020 12:38:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 703C620DD4;
+        Wed, 17 Jun 2020 12:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592397520;
-        bh=HOdAF9PkDDZt0fIlDrdVPJRCgbbRxePx4HnejZ5IJi0=;
+        s=default; t=1592397633;
+        bh=L++2pqqcClpU9mPgWdwwA260YxhqLgIQOBMLvdueqUU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RSc8e+bo3qH0FA9g7o9sD5Y+XAj6jNCBNoyADskGoUaP0m4GuT9xKHmtbYQRG2yy8
-         Vryrx9Y+EAeO7q4Gyh9xM/eZHTPdGrXzd/Si1l3Ca1l3sZ0kxzYW/1UhdrWInLq+Gb
-         GBb8f0vcg4kwS3ogwe19Kddqvtv1ipFnx/H/lp/Q=
-Date:   Wed, 17 Jun 2020 13:38:38 +0100
+        b=wrdJkg1VSnmORU6g1UOqTFJAgbYx94MFEgjLYhzxh30EcpiMJB/0y95yHC8Rcm3uS
+         2mFdY38oT/rlih3MoIYqV2wsITqH3KOYSUhhvY1sUm/67FghxZAl/qrVEqvCAg3AON
+         XQmLu4xQT1zqs4FQNpVz+p8G4LXhvhZqs7XUnBQY=
+Date:   Wed, 17 Jun 2020 13:40:31 +0100
 From:   Mark Brown <broonie@kernel.org>
 To:     Sumit Semwal <sumit.semwal@linaro.org>
 Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -32,17 +32,23 @@ Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org, kgunda@codeaurora.org,
         Rajendra Nayak <rnayak@codeaurora.org>
-Subject: Re: [PATCH v4 5/5] regulator: qcom: labibb: Add SC interrupt handling
-Message-ID: <20200617123838.GF4613@sirena.org.uk>
+Subject: Re: [PATCH v4 4/5] regulator: qcom: Add labibb driver
+Message-ID: <20200617124031.GG4613@sirena.org.uk>
 References: <20200602100924.26256-1-sumit.semwal@linaro.org>
- <20200602100924.26256-6-sumit.semwal@linaro.org>
- <20200602122205.GF5684@sirena.org.uk>
- <CAO_48GGY2TRVPXFVCvo9fEoknw65sz9BrL-mp+SZ=_EAo88t-A@mail.gmail.com>
+ <20200602100924.26256-5-sumit.semwal@linaro.org>
+ <20200602113241.GE5684@sirena.org.uk>
+ <CAO_48GGgNUGosN2PiL=U5JkR3Bh5wNK3N4xYYML1UwmdfDPRww@mail.gmail.com>
+ <20200602122554.GG5684@sirena.org.uk>
+ <CAO_48GFwEHBGmz0QvN+pXFSyHC9+7=0aoJLHF4uupGSx2TcSvA@mail.gmail.com>
+ <20200617114721.GD4613@sirena.org.uk>
+ <CAO_48GF9pKZCCof170TvB0ubOkecDzcGhtUUuY_Td78L1J338A@mail.gmail.com>
+ <20200617120601.GE4613@sirena.org.uk>
+ <CAO_48GGhX-AxjvvvPKRMc+LQ_Uws1s_b4Q+aHokVv2RxcpObQw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GLp9dJVi+aaipsRk"
+        protocol="application/pgp-signature"; boundary="GUPx2O/K0ibUojHx"
 Content-Disposition: inline
-In-Reply-To: <CAO_48GGY2TRVPXFVCvo9fEoknw65sz9BrL-mp+SZ=_EAo88t-A@mail.gmail.com>
+In-Reply-To: <CAO_48GGhX-AxjvvvPKRMc+LQ_Uws1s_b4Q+aHokVv2RxcpObQw@mail.gmail.com>
 X-Cookie: This fortune is false.
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -51,90 +57,37 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---GLp9dJVi+aaipsRk
+--GUPx2O/K0ibUojHx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Jun 17, 2020 at 05:36:43PM +0530, Sumit Semwal wrote:
-> On Tue, 2 Jun 2020 at 17:52, Mark Brown <broonie@kernel.org> wrote:
-> > On Tue, Jun 02, 2020 at 03:39:24PM +0530, Sumit Semwal wrote:
+On Wed, Jun 17, 2020 at 05:39:26PM +0530, Sumit Semwal wrote:
+> On Wed, 17 Jun 2020 at 17:36, Mark Brown <broonie@kernel.org> wrote:
 
-> > > +
-> > > +     ret = regulator_enable_regmap(rdev);
-> > > +     if (ret >= 0)
-> > > +             reg->enabled = true;
+> > That seems...  interesting.  Are you sure the regulator has fully ramped
+> > when STATUS1 starts flagging?
 
-> > Can we not read the register we just wrote to here?
+> On a consumer device, I am not sure I have any way of checking that,
+> but if there's some way you'd like me to validate it, I'll be happy
+> to.
 
-> As I mentioned in the other patch, it seems there is a (noticeable)
-> delay in getting the value to reflect in this register for IBB.
+Without any way of validating what's going on or information on the
+hardware I'd be inclined to go with whatever reports more slowly for
+safety.
 
-This sounds like it may not actually have finished enabling fully?
-
-> Also, from the notes from the downstream driver (also copied below),
-> it seems like during short circuit there is another protection system
-> that can cause the registers to be cleared, hence the need to track
-> the current state in software.
-
-If the regulator has been disabled underneath us in a way that means it
-won't come back the driver should be reflecting that in the status it
-reports.
-
-> > > +      * Check if the regulator is enabled in the driver but
-> > > +      * disabled in hardware, this means a SC fault had happened
-> > > +      * and SCP handling is completed by PBS.
-> > > +      */
-> > > +     if (!in_sc_err) {
-> > > +
-> > > +             reg = labibb_reg->base + REG_LABIBB_ENABLE_CTL;
-> > > +
-> > > +             ret = regmap_read_poll_timeout(labibb_reg->regmap,
-> > > +                                     reg, val,
-> > > +                                     !(val & LABIBB_CONTROL_ENABLE),
-> > > +                                     POLLING_SCP_DONE_INTERVAL_US,
-> > > +                                     POLLING_SCP_TIMEOUT);
-
-> > Why do we need a timeout here?
-
-> IMHO, This seems to be the time required by the PBS to actually
-> disable the regulator? If the PBS is not able to disable the
-> regulator, then it points to a more serious problem?
-> I'm sorry, that's just my understanding based on the downstream driver
-> :/ - not much input is available from the QC teams about it.
-
-So it might generate an interrupt but then take a long time to take the
-actions associated with the interrupt that allow us to tell what the
-interrupt was about?  That doesn't seem great.  Do you know if this code
-has ever been exercised, the error handling code appears unusually
-involved here?  Normally errors don't routinely occur in production.
-
-> > > +                                             NULL);
-> > > +             regulator_unlock(labibb_reg->rdev);
-> > > +     }
-> > > +     return IRQ_HANDLED;
-
-> > This returns IRQ_HANDLED even if we didn't detect an interrupt source...
-> > Especially given the need to check to see if the regulator was turned
-> > off by the hardware it seems like there must be some false positives.
-
-> Right - I'm not sure what else can I do here.
-
-Only return IRQ_HANDLED if we actually managed to figure out an error to
-report?
-
---GLp9dJVi+aaipsRk
+--GUPx2O/K0ibUojHx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7qDs0ACgkQJNaLcl1U
-h9A4bwf/Rmar2mhyhznLpWbPuV2Pq9HgCst5AvtDPMP6QIQXwfhGid/yKU93ZZ3u
-3+YYBNbWMl5Jww0o3wtzdZrYGaWMlwIf52RGqvJln4EMW+IKgLl1bzbLLP9Zqe63
-t+/9kFse1b9ofK6jxxRLrVD4d+qe0lHmt+vmxx6+2hox+RE+SjztCjIbuHyNiC/g
-65wVS2b/o6/N7x4Ff2eADLqAQlVXwqnAkXZpr+arZtPW5MCxQSVG3hovDL7jkBdf
-xfPa+20W2cejsiV1s97+X974NVlqWrSDrz0gsi9obUEM4lda2kg+A3I2kfLed1k2
-0EG1aUj/yF6bGGoeat+g4hwcXJ0VRQ==
-=7Jub
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7qDz4ACgkQJNaLcl1U
+h9BUTQf+KRqV/mXMamOWLACdLW5gZH6Y09B9TTc3Tz2fPQsNFYJnIhlDLeu8fT1+
+9B1QCd6Uu+8YxtlaD9d013/bapXRVVrx+6Lge3xyghKGc4UYljifwI5aSnP/+KbK
+WdtJ803eBe1inc0yg03o5OzrwKtd3Q48bIaOJuApqz6Jww5o7bZ4lglbMfv56f0n
+HsD1z0i0zX83BewbLqxTWWxv8u4DrrS1+o3EqzzK2dgUwKFmCR/ZJ8RHZeVS20vJ
+WGHc8n8fV5EjIuUHlqJ5lOl/+C07FCI1UrLSYA+16MiAmPbmaWlEXzKl0/m3yj8k
+/FZh8gFCDt0cewJTYyDX/huTVOwNdA==
+=AigS
 -----END PGP SIGNATURE-----
 
---GLp9dJVi+aaipsRk--
+--GUPx2O/K0ibUojHx--
