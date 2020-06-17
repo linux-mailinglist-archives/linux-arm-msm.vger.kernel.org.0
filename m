@@ -2,99 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 269E51FD126
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 17:38:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B00E1FD216
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 18:29:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbgFQPie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 11:38:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35516 "EHLO mail.kernel.org"
+        id S1727088AbgFQQ1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 12:27:17 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42841 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726597AbgFQPid (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 11:38:33 -0400
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        id S1727836AbgFQQ1P (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 12:27:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592411234; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3kphDNNgXxmWAV6mi4fI4VHOf8JSRgD1IIPPeGHUYd0=; b=MAxocyfj6KCgsdqk8Ah81Mx1Xh3B9N3WlmdD9M+jEiARGwDCZnoKZow+92Gw2M504F8vysW8
+ 4q3cWIqYUU4O0EeHVUd/laRD/xQOj5alqNyaittLuTcEe2KBmoWBPvleGPawMVSuZbLx3Rjg
+ QGshnmuQ1D6DWTlUUnRyEBfgMv0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-east-1.postgun.com with SMTP id
+ 5eea4448c4bb4f886d9c2701 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Jun 2020 16:26:48
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0A68CC4339C; Wed, 17 Jun 2020 16:26:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.50.9.163] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E8E0921527;
-        Wed, 17 Jun 2020 15:38:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592408313;
-        bh=Mmp7l8nOqzeof+dCZUf8iwFZM9Tbqs2liNaByHyvJTY=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=USXaaW6m3HgNXWONtUd4GS+12X3vlrQ2BIvKWKCz+S7WUOSD+FgPuGUBLy+80HhnC
-         QQZlhSL97CRpS8wMlCVCmBYzPVGQeqxfK0ZOSHdVCQ5redR969T0BmYdNxZNYaehvO
-         5UNFUMqKg9dyyc8FECvUdiSMwisPSJDXrY4Ec1CU=
-Received: by mail-ot1-f45.google.com with SMTP id e5so1944121ote.11;
-        Wed, 17 Jun 2020 08:38:32 -0700 (PDT)
-X-Gm-Message-State: AOAM533megbuNEP/iL4ZKX++IfcJPJWYdF0TAPYmzaMbRoP0cuQ2/z2R
-        bRIrGOhPIm0/N88h4Mn6U2iZhFVNJXWo50Vj3g==
-X-Google-Smtp-Source: ABdhPJx+PoYXKyeUx8MAjbYQ1LRx9EEpUKsbhPm2Dbg1Vw8A/V17ptpVa4zGODoB4OocpKHaH/C7MvTr0HCPXdlZSBA=
-X-Received: by 2002:a05:6830:3104:: with SMTP id b4mr7446929ots.192.1592408312183;
- Wed, 17 Jun 2020 08:38:32 -0700 (PDT)
+        (Authenticated sender: rbokka)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 315E0C433AD;
+        Wed, 17 Jun 2020 16:26:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 315E0C433AD
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rbokka@codeaurora.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: nvmem: qfprom: Convert to yaml
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     dhavalp@codeaurora.org, mturney@codeaurora.org,
+        rnayak@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        saiprakash.ranjan@codeaurora.org, sparate@codeaurora.org,
+        mkurumel@codeaurora.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200617145116.247432-1-dianders@chromium.org>
+ <20200617074930.v3.1.Iea2704ec2cb40c00eca47781c310a6330ac5dd41@changeid>
+ <ed6d22a1-0d38-9874-d5cc-efe39f360baa@linaro.org>
+From:   "Ravi Kumar Bokka (Temp)" <rbokka@codeaurora.org>
+Message-ID: <0181cfe3-6627-e599-8f2f-1f433d9e0596@codeaurora.org>
+Date:   Wed, 17 Jun 2020 21:56:38 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <20200612015030.16072-1-tanmay@codeaurora.org> <20200612015030.16072-2-tanmay@codeaurora.org>
- <159230611219.62212.8262135380349283774@swboyd.mtv.corp.google.com>
-In-Reply-To: <159230611219.62212.8262135380349283774@swboyd.mtv.corp.google.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 17 Jun 2020 09:38:20 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLsp6gR_=nA36usk67n7+EJOoxt-87R5zc1_DXpap5cag@mail.gmail.com>
-Message-ID: <CAL_JsqLsp6gR_=nA36usk67n7+EJOoxt-87R5zc1_DXpap5cag@mail.gmail.com>
-Subject: Re: [PATCH v6 1/5] dt-bindings: msm/dp: add bindings of DP/DP-PLL
- driver for Snapdragon
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Tanmay Shah <tanmay@codeaurora.org>,
-        Sam Ravnborg <sam@ravnborg.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, aravindh@codeaurora.org,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ed6d22a1-0d38-9874-d5cc-efe39f360baa@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 16, 2020 at 5:15 AM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Tanmay Shah (2020-06-11 18:50:26)
-> > diff --git a/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
-> > new file mode 100644
-> > index 000000000000..5fdb9153df00
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/display/msm/dp-sc7180.yaml
-> > @@ -0,0 +1,142 @@
-> > +        data-lanes = <0 1>;
-> > +
-> > +        ports {
-> > +            #address-cells = <1>;
-> > +            #size-cells = <0>;
-> > +
-> > +            port@0 {
-> > +                reg = <0>;
-> > +                dp_in: endpoint {
-> > +                    remote-endpoint = <&dpu_intf0_out>;
-> > +                };
-> > +            };
-> > +
-> > +            port@1 {
-> > +                reg = <1>;
-> > +                dp_out: endpoint {
->
-> Just curious what is eventually connected here? This is possibly a
-> question for Rob Herring, but I can't figure out how we're supposed to
-> connect this to the USB type-c connector that is receiving the DP
-> signal. Does the type-c connector binding support connecting to this end
-> of the graph? Or should this connect to the DP phy and then the phy
-> connects to the USB type-c connector node? Right now it is empty which
-> seems wrong.
 
-It should connect to the Type-C connector perhaps thru some sort of
-switching/muxing node, but that's not really flushed out though. See
-'dt-bindings: chrome: Add cros-ec-typec mux props' discussion with
-your CrOS colleagues.
 
-Rob
+On 6/17/2020 8:48 PM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 17/06/2020 15:51, Douglas Anderson wrote:
+>> From: Ravi Kumar Bokka <rbokka@codeaurora.org>
+>>
+>> This switches the bindings over from txt to yaml.
+>>
+>> Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
+>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>> ---
+>>
+>> Changes in v3:
+>> - Split conversion to yaml into separate patch new in v3.
+>> - Use 'const' for compatible instead of a 1-entry enum.
+>> - Changed filename to match compatible string.
+>> - Add #address-cells and #size-cells to list of properties.
+>> - Fixed up example.
+>>
+>>   .../bindings/nvmem/qcom,qfprom.yaml           | 45 +++++++++++++++++++
+>>   .../devicetree/bindings/nvmem/qfprom.txt      | 35 ---------------
+>>   2 files changed, 45 insertions(+), 35 deletions(-)
+>>   create mode 100644 
+>> Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>   delete mode 100644 Documentation/devicetree/bindings/nvmem/qfprom.txt
+>>
+>> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml 
+>> b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>> new file mode 100644
+>> index 000000000000..5efa5e7c4d81
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>> @@ -0,0 +1,45 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies Inc, QFPROM Efuse bindings
+>> +
+>> +maintainers:
+>> +  - Ravi Kumar Bokka <rbokka@codeaurora.org>
+>> +
+> 
+> Am not sure this was intentional, but the old maintainer name is totally 
+> lost in this patch!
+> 
+> Please fix this!
+> 
+
+Hi Srinivas,
+The existed qfprom dt-bindings in .txt format.
+I will make it as it is to merge whole content in .yaml format once 
+confirm all the parameters with this new driver changes.
+
+> 
+> 
+>> +allOf:
+>> +  - $ref: "nvmem.yaml#"
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,qfprom
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: The corrected region.
+>> +
+>> +  # Needed if any child nodes are present.
+>> +  "#address-cells":
+>> +    const: 1
+>> +  "#size-cells":
+>> +    const: 1
+>> +
+>> +required:
+>> +   - compatible
+>> +   - reg
+>> +
+>> +examples:
+>> +  - |
+>> +    efuse@784000 {
+>> +      compatible = "qcom,qfprom";
+>> +      reg = <0 0x00784000 0 0x8ff>;
+>> +      #address-cells = <1>;
+>> +      #size-cells = <1>;
+>> +
+>> +      hstx-trim-primary@1eb {
+>> +        reg = <0x1eb 0x1>;
+>> +        bits = <1 4>;
+>> +      };
+>> +    };
+>> diff --git a/Documentation/devicetree/bindings/nvmem/qfprom.txt 
+>> b/Documentation/devicetree/bindings/nvmem/qfprom.txt
+>> deleted file mode 100644
+>> index 26fe878d5c86..000000000000
+>> --- a/Documentation/devicetree/bindings/nvmem/qfprom.txt
+>> +++ /dev/null
+>> @@ -1,35 +0,0 @@
+>> -= Qualcomm QFPROM device tree bindings =
+>> -
+>> -This binding is intended to represent QFPROM which is found in most 
+>> QCOM SOCs.
+>> -
+>> -Required properties:
+>> -- compatible: should be "qcom,qfprom"
+>> -- reg: Should contain registers location and length
+>> -
+>> -= Data cells =
+>> -Are child nodes of qfprom, bindings of which as described in
+>> -bindings/nvmem/nvmem.txt
+>> -
+>> -Example:
+>> -
+>> -    qfprom: qfprom@700000 {
+>> -        compatible     = "qcom,qfprom";
+>> -        reg        = <0x00700000 0x8000>;
+>> -        ...
+>> -        /* Data cells */
+>> -        tsens_calibration: calib@404 {
+>> -            reg = <0x4404 0x10>;
+>> -        };
+>> -    };
+>> -
+>> -
+>> -= Data consumers =
+>> -Are device nodes which consume nvmem data cells.
+>> -
+>> -For example:
+>> -
+>> -    tsens {
+>> -        ...
+>> -        nvmem-cells = <&tsens_calibration>;
+>> -        nvmem-cell-names = "calibration";
+>> -    };
+>>
+
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of the Code Aurora Forum, hosted by the Linux Foundation.
