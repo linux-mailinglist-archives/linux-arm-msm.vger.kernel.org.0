@@ -2,275 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B7AC1FCF49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 16:16:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D15261FCFF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 16:51:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727049AbgFQOQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 10:16:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57080 "EHLO
+        id S1726835AbgFQOvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 10:51:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727047AbgFQOQi (ORCPT
+        with ESMTP id S1725894AbgFQOvv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 10:16:38 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E43C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 07:16:37 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id c1so1445615vsc.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 07:16:37 -0700 (PDT)
+        Wed, 17 Jun 2020 10:51:51 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F51AC06174E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 07:51:51 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id u128so1375964pgu.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 07:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gSW8BPLoltx1w5hCbo9mZt1Y0aly6PeCbW4FnOcx58o=;
-        b=puyh6IIB9om+v34S6yPC5lV02PiuqvGWHI3pSFUkPQpUCe8Phx1XKP3aXPtyxAhmZD
-         bxgQBCYv936XR5J8jgI0ilTX9BSW0sl7yZHQQ0AWFYV8Uf7QrN3TEZzQj4PKd0x4yiru
-         ExmAVLgPbgDMHk14tMuz226+dGwcVxVfXgrZywCplVewC+xbahBxzlBWXNUOwT33t9a/
-         P+BTFl7MjpGE/1vU2b+QalrVnNe2dqvEAOyBxNTj3CdupxQMtYtgnWXGJ3yp5KVy/nUp
-         F7rR6aJ4XAXz1F4OQE4jVaph7ELqsAWlVSOn/W/BcgUao37f14paqOwOZaIxnestPX2J
-         /xMw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=66urSHPu2efS+32Pqzoys5Raxw2fRk+bGC6RlneeuRo=;
+        b=h97C+k8ylseDAfHw4T4eqkY9Jza6VQnKM4iJxgFLCrg7jw2QLqDoh1WLySycMWJkDq
+         JJjOVXRuBfdHtar8huMK1CiRfo4YVONH/6jpkUzHBJgkYd+HQSYaoLYwk4s7QL+xLy2u
+         evYpk3fE9aQm7AEu0Gm38X9jQSW5Ohilo/dAM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gSW8BPLoltx1w5hCbo9mZt1Y0aly6PeCbW4FnOcx58o=;
-        b=GizV4iL2fZbm39dSbbogaAovWq4uPTq/Dpil0VpFtEtuwtjGQLcebexdG8Yi7T9IUE
-         Ykwb6VFyhkDaDimyW0q3TOkySAxJhBGYzPImI6/5FiC6fPKAPvpOSy0lRvMKDEg+rNHe
-         DyNp+yYYzI6wJel5QGpuMwTrYvrDlrwtTkDT+cRvigUle0CAyvatdFGv34ovT6Y/hepP
-         RdJPGhFJqme/d/PN9+1HdjvI1Po9eJrVz737rd1OOoujXf7541i9EmPR1cKlXIrgyltK
-         Hob7MIEWomsWFQhpAABitqlL2RSb3/zOrdygdr0OAgiZ+NzsSwLCFsE25dZ2s70zU7i7
-         oG5g==
-X-Gm-Message-State: AOAM532PxfBnGDD3vGN+AQWS9n+Pibo27CjnU6A7CeSLV0efnxnFS5M/
-        oaXXg+aCXLvuNo5jS8HLCoDLJWByFrho3G/FK2iq8w==
-X-Google-Smtp-Source: ABdhPJzmC8gc3+JMfV9wCocw1ivFjymC2aPSQ/lfOhTELQ8oMXdIviDwMW4WplrnBCcbqAC/slVDAmnXL6IsmyqJ4Wo=
-X-Received: by 2002:a05:6102:18e:: with SMTP id r14mr6059812vsq.200.1592403397046;
- Wed, 17 Jun 2020 07:16:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <1589541535-8523-1-git-send-email-vbadigan@codeaurora.org>
- <1592321779-28556-1-git-send-email-vbadigan@codeaurora.org>
- <1592321779-28556-3-git-send-email-vbadigan@codeaurora.org>
- <CAPDyKFrvvhQPio3FRQmoBgMm1Euvsma_dgGzxA=R8rm0aQgDMQ@mail.gmail.com> <40b03630-cdbc-50ee-e483-8ff919f76fb5@codeaurora.org>
-In-Reply-To: <40b03630-cdbc-50ee-e483-8ff919f76fb5@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 17 Jun 2020 16:16:00 +0200
-Message-ID: <CAPDyKFrf3rxA-_0wB=bNby2dVSxTwZHSTXeNO5OayQ57Eqiphg@mail.gmail.com>
-Subject: Re: [PATCH V4 2/2] mmc: sdhci-msm: Use internal voltage control
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=66urSHPu2efS+32Pqzoys5Raxw2fRk+bGC6RlneeuRo=;
+        b=E0Gs0gi6OgTWedQtwvzhC1EFgFiByfLET2MiXx9uUvIgmJa9ul+1X7iReZ3iyDlKL3
+         LBpFFvrm16W/xJ6k47MFDDI/eUBtNyYjG3we4hoMKuT0/Dc99rrivrvUDEL5uLlZzdiT
+         /teK5N2glwRPHOZ3YDCgUmvyvLdtjcool/huihjelXQUrQBRYs+oiGohbOlhJWhfv/nH
+         t3ZBBi2el/O2JAhJnoczyFprzWSwsOSsUDUeV6sC+C3oaZlvV3m4JxGfW8k0Xa8PAptj
+         1AyMLZZKQ2P8kGWkEBC51J/KKDeHJg9jGSxL39WKA8FQrkdKJ+OGppo5fM4gXNxWWlpF
+         +uCg==
+X-Gm-Message-State: AOAM532FIQhUd+OPQisHZgssxj4TPamMgulIADSjz4RI790tYGF2JP66
+        R1fI7s6jZOS9a4ft1jVQ1bviJQ==
+X-Google-Smtp-Source: ABdhPJyKlaYdlG28apy/dV4lrjPIdZ9x/wH0LnJd7AhxvioZHBIrcl/BvGYMi2kMv19lahz9TgaNKQ==
+X-Received: by 2002:a63:3e09:: with SMTP id l9mr6931881pga.235.1592405510849;
+        Wed, 17 Jun 2020 07:51:50 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
+        by smtp.gmail.com with ESMTPSA id k18sm147040pfp.208.2020.06.17.07.51.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jun 2020 07:51:50 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Vijay Viswanath <vviswana@codeaurora.org>,
         Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     dhavalp@codeaurora.org, mturney@codeaurora.org,
+        rnayak@codeaurora.org, Ravi Kumar Bokka <rbokka@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, saiprakash.ranjan@codeaurora.org,
+        sparate@codeaurora.org, mkurumel@codeaurora.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/4] nvmem: qfprom: Patches for fuse blowing on Qualcomm SoCs
+Date:   Wed, 17 Jun 2020 07:51:12 -0700
+Message-Id: <20200617145116.247432-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.27.0.290.gba653c62da-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 17 Jun 2020 at 14:46, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
-> Thanks for comments Uffe.
->
-> On 6/17/2020 3:04 PM, Ulf Hansson wrote:
-> > On Tue, 16 Jun 2020 at 17:38, Veerabhadrarao Badiganti
-> > <vbadigan@codeaurora.org> wrote:
-> >> On qcom SD host controllers voltage switching be done after the HW
-> >> is ready for it. The HW informs its readiness through power irq.
-> >> The voltage switching should happen only then.
-> >>
-> >> Use the internal voltage switching and then control the voltage
-> >> switching using power irq.
-> >>
-> >> IO-bus supply of eMMC would be kept always-on. So set the load
-> >> for this supply to configure it in LPM when eMMC is suspend state
-> >>   and in HPM when eMMC is active.
-> >>
-> >> Co-developed-by: Asutosh Das <asutoshd@codeaurora.org>
-> >> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> >> Co-developed-by: Vijay Viswanath <vviswana@codeaurora.org>
-> >> Signed-off-by: Vijay Viswanath <vviswana@codeaurora.org>
-> >> Co-developed-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> >> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> >> ---
-> >>   drivers/mmc/host/sdhci-msm.c | 208 +++++++++++++++++++++++++++++++++++++++++--
-> >>   1 file changed, 199 insertions(+), 9 deletions(-)
-> >>
-> >> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> >> index 15c42b059240..8297b2142748 100644
-> >> --- a/drivers/mmc/host/sdhci-msm.c
-> >> +++ b/drivers/mmc/host/sdhci-msm.c
-> >> @@ -37,7 +37,9 @@
-> >>   #define CORE_PWRCTL_IO_LOW     BIT(2)
-> >>   #define CORE_PWRCTL_IO_HIGH    BIT(3)
-> >>   #define CORE_PWRCTL_BUS_SUCCESS BIT(0)
-> >> +#define CORE_PWRCTL_BUS_FAIL    BIT(1)
-> >>   #define CORE_PWRCTL_IO_SUCCESS BIT(2)
-> >> +#define CORE_PWRCTL_IO_FAIL     BIT(3)
-> >>   #define REQ_BUS_OFF            BIT(0)
-> >>   #define REQ_BUS_ON             BIT(1)
-> >>   #define REQ_IO_LOW             BIT(2)
-> >> @@ -127,6 +129,9 @@
-> >>   /* Timeout value to avoid infinite waiting for pwr_irq */
-> >>   #define MSM_PWR_IRQ_TIMEOUT_MS 5000
-> >>
-> >> +/* Max load for eMMC Vdd-io supply */
-> >> +#define MMC_VQMMC_MAX_LOAD_UA  325000
-> >> +
-> >>   #define msm_host_readl(msm_host, host, offset) \
-> >>          msm_host->var_ops->msm_readl_relaxed(host, offset)
-> >>
-> >> @@ -278,6 +283,7 @@ struct sdhci_msm_host {
-> >>          bool uses_tassadar_dll;
-> >>          u32 dll_config;
-> >>          u32 ddr_config;
-> >> +       bool vqmmc_enabled;
-> >>   };
-> >>
-> >>   static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
-> >> @@ -1346,6 +1352,88 @@ static void sdhci_msm_set_uhs_signaling(struct sdhci_host *host,
-> >>                  sdhci_msm_hs400(host, &mmc->ios);
-> >>   }
-> >>
-> >> +static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
-> >> +{
-> >> +       if (IS_ERR(mmc->supply.vmmc))
-> >> +               return 0;
-> >> +
-> >> +       return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
-> >> +}
-> >> +
-> >> +static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
-> >> +                             struct mmc_host *mmc, bool level)
-> >> +{
-> >> +       int ret;
-> >> +       struct mmc_ios ios;
-> >> +
-> >> +       if (msm_host->vqmmc_enabled == level)
-> >> +               return 0;
-> >> +
-> >> +       if (level) {
-> >> +               /* Set the IO voltage regulator to default voltage level */
-> >> +               if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
-> >> +                       ios.signal_voltage = MMC_SIGNAL_VOLTAGE_330;
-> >> +               else if (msm_host->caps_0 & CORE_1_8V_SUPPORT)
-> >> +                       ios.signal_voltage = MMC_SIGNAL_VOLTAGE_180;
-> >> +
-> >> +               if (msm_host->caps_0 & CORE_VOLT_SUPPORT) {
-> >> +                       ret = mmc_regulator_set_vqmmc(mmc, &ios);
-> >> +                       if (ret < 0) {
-> >> +                               dev_err(mmc_dev(mmc), "%s: vqmmc set volgate failed: %d\n",
-> >> +                                       mmc_hostname(mmc), ret);
-> >> +                               goto out;
-> >> +                       }
-> >> +               }
-> >> +               ret = regulator_enable(mmc->supply.vqmmc);
-> >> +       } else {
-> >> +               ret = regulator_disable(mmc->supply.vqmmc);
-> >> +       }
-> >> +
-> >> +       if (ret)
-> >> +               dev_err(mmc_dev(mmc), "%s: vqmm %sable failed: %d\n",
-> >> +                       mmc_hostname(mmc), level ? "en":"dis", ret);
-> >> +       else
-> >> +               msm_host->vqmmc_enabled = level;
-> >> +out:
-> >> +       return ret;
-> >> +}
-> >> +
-> >> +static int msm_config_vqmmc_mode(struct sdhci_msm_host *msm_host,
-> >> +                             struct mmc_host *mmc, bool hpm)
-> >> +{
-> >> +       int load, ret;
-> >> +
-> >> +       load = hpm ? MMC_VQMMC_MAX_LOAD_UA : 0;
-> >> +       ret = regulator_set_load(mmc->supply.vqmmc, load);
-> >> +       if (ret)
-> >> +               dev_err(mmc_dev(mmc), "%s: vqmmc set load failed: %d\n",
-> >> +                       mmc_hostname(mmc), ret);
-> >> +       return ret;
-> >> +}
-> >> +
-> >> +static int sdhci_msm_set_vqmmc(struct sdhci_msm_host *msm_host,
-> >> +                             struct mmc_host *mmc, bool level)
-> >> +{
-> >> +       int ret;
-> >> +       bool always_on;
-> >> +
-> >> +       if (IS_ERR(mmc->supply.vqmmc)           ||
-> > White space.
-> >
-> >> +           (mmc->ios.power_mode == MMC_POWER_UNDEFINED))
-> >> +               return 0;
-> >> +       /*
-> >> +        * For eMMC don't turn off Vqmmc, Instead just configure it in LPM
-> >> +        * and HPM modes by setting the right amonut of load.
-> > /s/right amonut of load/corresponding load
-> >
-> >> +        */
-> >> +       always_on = mmc->card && mmc_card_mmc(mmc->card);
-> >> +
-> >> +       if (always_on)
-> >> +               ret = msm_config_vqmmc_mode(msm_host, mmc, level);
-> >> +       else
-> >> +               ret = msm_toggle_vqmmc(msm_host, mmc, level);
-> > I am worried that this isn't really doing what you think it does.
-> > always_on may not always be set for an eMMC.
-> >
-> > This is because the mmc->card doesn't get assigned until the
-> > initialization of the eMMC has been completed. In other words, way
-> > after VCC and VCCQ have been turned on and changed voltage levels.
-> For the very first time, i have to enable the vqmmc.
-> And second time on-wards I have to set load instead of turning vqmmc off
-> / on.
->
-> This condition helps me in doing exactly the same.
->
-> This gets invoked first time when  mmc_power_up() is called.
-> Yes, by that time card won't be initialized. So this check fails and
-> allows to turn on the regulator instead of setting load.
->
-> After that, this gets invoked only next time mmc_power_up/off() is called
-> which is during mmc_suspend/resume.
 
-I see.
+This series enables blowing of fuses on Qualcomm SoCs by extending the
+existing qfprom driver with write support.
 
-That assumes the initialization always works at the first attempt, so
-no re-try or power cycle gets done in some error/reset path.
+A few notes:
+- Though I don't have any firsthand knowledge of it, it's my
+  understanding that these changes could be used on any Qualcomm SoC.
+  However, it's likely not very useful on most boards because the
+  bootloader protects against this.  Thus the write support here is
+  likely only useful with a cooperating bootloader.
+- Blowing fuses is truly a one-way process.  If you mess around with
+  this and do something wrong you could irreparably brick your chip.
+  You have been warned.
 
->
-> By this time card is initialized, it allows to set load.
+Versions 1 and 2 of this series were posted by Ravi Kumar Bokka.  I am
+posting version 3 containing my changes / fixups with his consent.  I
+have left authorship as Ravi but added my own Signed-off-by.
 
-Okay, I get it. Thanks for clarifying.
+Changes in v3:
+- Split conversion to yaml into separate patch new in v3.
+- Use 'const' for compatible instead of a 1-entry enum.
+- Changed filename to match compatible string.
+- Add #address-cells and #size-cells to list of properties.
+- Fixed up example.
+- Add an extra reg range (at 0x6000 offset for SoCs checked)
+- Define two options for reg: 1 item or 4 items.
+- No reg-names.
+- Add "clocks" and "clock-names" to list of properties.
+- Clock is now "sec", not "secclk".
+- Add "vcc-supply" to list of properties.
+- Fixed up example.
+- Don't provide "reset" value for things; just save/restore.
+- Use the major/minor version read from 0x6000.
+- Reading should still read "corrected", not "raw".
+- Added a sysfs knob to allow you to read "raw" instead of "corrected"
+- Simplified the SoC data structure.
+- No need for quite so many levels of abstraction for clocks/regulator.
+- Don't set regulator voltage.  Rely on device tree to make sure it's right.
+- Properly undo things in the case of failure.
+- Don't just keep enabling the regulator over and over again.
+- Enable / disable the clock each time
+- Polling every 100 us but timing out in 10 us didn't make sense; swap.
+- No reason for 100 us to be SoC specific.
+- No need for reg-names.
+- We shouldn't be creating two separate nvmem devices.
+- Name is now 'efuse' to match what schema checker wants.
+- Reorganized ranges to match driver/bindings changes.
+- Added 4th range as per driver/binding changes.
+- No more reg-names as per driver/binding changes.
+- Clock name is now just "sec" as per driver/binding changes.
 
-Perhaps you can add a small comment about this in the code, so we
-don't forget the reasons why the code looks like this.
+Ravi Kumar Bokka (4):
+  dt-bindings: nvmem: qfprom: Convert to yaml
+  dt-bindings: nvmem: Add properties needed for blowing fuses
+  nvmem: qfprom: Add fuse blowing support
+  arm64: dts: qcom: sc7180: Add properties to qfprom for fuse blowing
 
->
->
-> > Moreover, mmc_card_mmc() is also about legacy MMC cards, not solely for eMMCs.
->
-> Okay. But on qcom platform, we have support for only eMMC/SD/SDIO.
-> So this mmc_card_mmc() meets my requirements!!! Allows only eMMC not SD
-> & SDIO.
+ .../bindings/nvmem/qcom,qfprom.yaml           |  86 +++++
+ .../devicetree/bindings/nvmem/qfprom.txt      |  35 --
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |   4 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  10 +-
+ drivers/nvmem/qfprom.c                        | 314 +++++++++++++++++-
+ 5 files changed, 401 insertions(+), 48 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+ delete mode 100644 Documentation/devicetree/bindings/nvmem/qfprom.txt
 
-Well, eMMC is fairly similar to MMC, from a basic functionality point
-of view. So, I am quite sure you can get it to work with your
-controller, even if it's not officially supported.
+-- 
+2.27.0.290.gba653c62da-goog
 
->
-> > If you want special treatment of an eMMC, I think it's better to use
-> > the DT bindings Documentation/devicetree/bindings/mmc/mmc-card.txt. If
-> > you have such a subnode, that indicates that there is an eMMC card
-> > attached.
-
-That said, if you don't like the pure DT based solution, as I
-suggested above - at least extend mmc_card_mmc() with checking the
-MMC_CAP_NONREMOVABLE flag.
-
-[...]
-
-Kind regards
-Uffe
