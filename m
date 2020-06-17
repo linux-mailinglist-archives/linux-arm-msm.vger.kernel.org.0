@@ -2,137 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B342D1FD5DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:16:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B0D51FD5F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:24:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbgFQUQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 16:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56596 "EHLO
+        id S1726833AbgFQUYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 16:24:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726761AbgFQUQU (ORCPT
+        with ESMTP id S1726496AbgFQUYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:16:20 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ABAEC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:16:19 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id 9so4480803ljc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:16:19 -0700 (PDT)
+        Wed, 17 Jun 2020 16:24:51 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9B5C06174E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:24:51 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id n9so1472939plk.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=anholt-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=llMR4XP929ZlX0ktOlskzBn+oIEoOfRqB8eqQjrjFOM=;
-        b=RcjQboxpASiHG7fxPLYiYz5Qsa067b/Y7vl562EyU/eKD/7YLcsaUuCfIdUTFBIHmw
-         wHu1OwrDlNQHnWt4Ew9oNmuKIrDMqXCfolYHnFGrjkmeyGXdLquSjo3gFjVUR1nfQq/i
-         ZK6t1/zTyaUNnP5hURPNXEeotoLQhdR6NJOnbSNL2A0LapL/0QmmidRZK86i5GdxS0L9
-         jP1ZHgwGyeRQrZuUnxjyUCHcPXBBM3N5+LS4Ao9rF9K25pqmqaMxUzIWODCR9fG0TcDO
-         bi+9IEPa45OkrbM3kjub8tE3MWQeGbESE0rN8pj6AZO0BV4H+yNG5Einj+yC97ghVEgl
-         z+nw==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=Oi8WdEL0xHPWSjEuRn/3DpBy4qY4ecDATBbe5otJXBE=;
+        b=J5MKLGjXGUT07r4aFv5ozaZuu3kZvZznC8PH0oHKeVzwG4W7Sa5yT0nuHpVqc/yDGr
+         EpYlaHHELjEmVUclc9MW/pBhcdy5ZfMfADf6QXsfUlXnphGBrNvgWoHmfSM/D7wydIJD
+         DxHhTS3nbziS/wq5ocHsECn/Sk9PC9wTRmhqE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=llMR4XP929ZlX0ktOlskzBn+oIEoOfRqB8eqQjrjFOM=;
-        b=Hjklwn/iwSQWkZroEqa7fuqWhuu12FzI9h3laH09TjztLzrmKVxSuglxzr7fZnGmhN
-         v8wwPHrpx1HjAYKid3Y6HLYGz6NvuopNi8Xg4Z0vqTW1fQxFnb2qnArYJzSHA1P4sBSI
-         a8qz+QikjhszZrQb0nkTpR/C6F9mUFIRE9guazO820tPb2vq1VBSAknZEmwMAYQoqPZa
-         s28kXRQ6SvWXgg7Smovbb3Owbyv3lWqXI+si5wfVmkNJbVddg44MxtSzyCj/uvgjqH3r
-         YKUn2Jhp6LDQdiSfy7uoVY5yzSOV6d48WcGx0KoxQCwK1fg/AjExbWjPDeYDi+jOVRVc
-         d5lQ==
-X-Gm-Message-State: AOAM531Yw5AJbCenOH8KxO2EZhduz/NQRfl3aWUHpS4/52P/mALn6Hgb
-        s5UYYv7Wj2d5ErEerwNUaMHyimiZTW8Av2iJ8XspUw==
-X-Google-Smtp-Source: ABdhPJwSuKXzvk5zn5fk4tSXh655bmsbFyqQJkONPwl29Qe0rVGDqzm/i/OqfAbWrrePE2TK2xM+/wTuvOvXd6Q6bW8=
-X-Received: by 2002:a2e:9147:: with SMTP id q7mr513712ljg.430.1592424977772;
- Wed, 17 Jun 2020 13:16:17 -0700 (PDT)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=Oi8WdEL0xHPWSjEuRn/3DpBy4qY4ecDATBbe5otJXBE=;
+        b=qASvZhijyx0e1+cbk4ONzv+bfdj/B0apoAQDYCJrYKLnl+1Cz5OI9FjthBAMX7g/K8
+         pIPcg68JTalsjgr1cRwEvIYmoim9m+ZF9O0TPAFykUk6D0YRQmQBl2oZ+idjGhI87fqK
+         kgbxNBUZiV5kJQ61eyFCZOcgjg0zQNblUPLSwGUVCQT6s2Zt47k4EyxNKg30jpeE0L7d
+         n1inmuH7p7tt0xgHmeVFiJ4/E/joyS3usKWHEmYAVNQomm6taYT2NAQzGSCoIAZmvV5X
+         +b1SnjbJ2yBdSamdK9GpCACMhmAkKg49ahfh9m8dJoLgFljHRiZpEItpTINYcqtb3/if
+         Nfeg==
+X-Gm-Message-State: AOAM531p5XS8G8av4srNW6jdz07t7qjbBrRB3f4z2MtZM4MtXauh17B8
+        v3+EOozfztnykQXx6cus5NdMKA==
+X-Google-Smtp-Source: ABdhPJyZmGniT2GeQsnfQbcp1rjOQ22uxwwhX/RB7fTaW7sfeOWTkRvWtF86/hVCPycnzfrvFiY5Uw==
+X-Received: by 2002:a17:90a:fa8f:: with SMTP id cu15mr811773pjb.9.1592425490882;
+        Wed, 17 Jun 2020 13:24:50 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id b24sm637675pfo.112.2020.06.17.13.24.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jun 2020 13:24:50 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20200409233350.6343-1-jcrouse@codeaurora.org> <20200409233350.6343-5-jcrouse@codeaurora.org>
-In-Reply-To: <20200409233350.6343-5-jcrouse@codeaurora.org>
-From:   Eric Anholt <eric@anholt.net>
-Date:   Wed, 17 Jun 2020 13:16:06 -0700
-Message-ID: <CADaigPWJDEwPZyUyEO9H3=+zzdEX=h+gSa-w1ppNpM9ryY0LZA@mail.gmail.com>
-Subject: Re: [PATCH v6 4/5] drm/msm: Refactor address space initialization
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     iommu@lists.linux-foundation.org, Sam Ravnborg <sam@ravnborg.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        DRI Development <dri-devel@lists.freedesktop.org>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200616034044.v3.1.Ic50cccdf27d42420a63485082f8b5bf86ed1a2b6@changeid>
+References: <20200616104050.84764-1-dianders@chromium.org> <20200616034044.v3.1.Ic50cccdf27d42420a63485082f8b5bf86ed1a2b6@changeid>
+Subject: Re: [PATCH v3 1/5] spi: spi-geni-qcom: No need for irqsave variant of spinlock calls
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Wen Yang <wen.yang99@zte.com.cn>, will@kernel.org,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Brian Masney <masneyb@onstation.org>,
-        freedreno@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Alexios Zavras <alexios.zavras@intel.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Allison Randal <allison@lohutok.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        zhengbin <zhengbin13@huawei.com>,
-        tongtiangen <tongtiangen@huawei.com>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+To:     Douglas Anderson <dianders@chromium.org>,
+        Mark Brown <broonie@kernel.org>
+Date:   Wed, 17 Jun 2020 13:24:49 -0700
+Message-ID: <159242548959.62212.17168767504846192201@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 9, 2020 at 4:34 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> Refactor how address space initialization works. Instead of having the
-> address space function create the MMU object (and thus require separate but
-> equal functions for gpummu and iommu) use a single function and pass the
-> MMU struct in. Make the generic code cleaner by using target specific
-> functions to create the address space so a2xx can do its own thing in its
-> own space.  For all the other targets use a generic helper to initialize
-> IOMMU but leave the door open for newer targets to use customization
-> if they need it.
+Quoting Douglas Anderson (2020-06-16 03:40:46)
+> The driver locks its locks in two places.
+>=20
+> In the first usage of the lock the function doing the locking already
+> has a sleeping call and thus we know we can't be called from interrupt
+> context.  That means we can use the "spin_lock_irq" variant of the
+> function.
+>=20
+> In the second usage of the lock the function is the interrupt handler
+> and we know interrupt handlers are called with interrupts disabled.
+> That means we can use the "spin_lock" variant of the function.
+>=20
+> This patch is expected to be a no-op and is just a cleanup / slight
+> optimization.
+>=20
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-I'm seeing regressions in dEQP-VK.memory.allocation.random.* on cheza
-after this commit.   The symptom is that large allocations fail with
--ENOSPC from MSM_GEM_INFO(IOVA).
-
-Possibly relevant change from having stuffed some debug info in:
-
-before:
-[    3.791436] [drm:msm_gem_address_space_create] *ERROR* msmgem
-address space create: 0x1000000 + 0xfeffffff
-[    3.801672] platform 506a000.gmu: Adding to iommu group 6
-[    3.807359] [drm:msm_gem_address_space_create] *ERROR* msmgem
-address space create: 0x0 + 0x7fffffff
-[    3.817140] msm ae00000.mdss: bound 5000000.gpu (ops a3xx_ops)
-[    3.823212] msm_dpu ae01000.mdp: [drm:msm_ioremap] *ERROR* failed
-to get memory resource: vbif_nrt
-[    3.832429] msm_dpu ae01000.mdp: [drm:msm_ioremap] *ERROR* failed
-to get memory resource: regdma
-[    3.841478] [drm:dpu_kms_hw_init:878] dpu hardware revision:0x40000000
-[    3.848193] [drm:msm_gem_address_space_create] *ERROR* msmgem
-address space create: 0x1000 + 0xffffefff
-
-after:
-
-[    3.798707] [drm:msm_gem_address_space_create] *ERROR* msmgem
-address space create: 0x1000000 + 0xfffffff
-[    3.808731] platform 506a000.gmu: Adding to iommu group 6
-[    3.814440] [drm:msm_gem_address_space_create] *ERROR* msmgem
-address space create: 0x0 + 0x7fffffff
-[    3.820494] hub 2-1:1.0: USB hub found
-[    3.824108] msm ae00000.mdss: bound 5000000.gpu (ops a3xx_ops)
-[    3.828554] hub 2-1:1.0: 4 ports detected
-[    3.833756] msm_dpu ae01000.mdp: [drm:msm_ioremap] *ERROR* failed
-to get memory resource: vbif_nrt
-[    3.847038] msm_dpu ae01000.mdp: [drm:msm_ioremap] *ERROR* failed
-to get memory resource: regdma
-[    3.856095] [drm:dpu_kms_hw_init:878] dpu hardware revision:0x40000000
-[    3.862840] [drm:msm_gem_address_space_create] *ERROR* msmgem
-address space create: 0x1000 + 0xfffffff
-
-256MB for GMU address space?
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
