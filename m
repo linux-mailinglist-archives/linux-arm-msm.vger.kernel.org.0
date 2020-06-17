@@ -2,143 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30EC81FC25B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 01:36:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E14A1FC56A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 06:53:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726463AbgFPXgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Jun 2020 19:36:12 -0400
-Received: from ns.mm-sol.com ([37.157.136.199]:40981 "EHLO extserv.mm-sol.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726271AbgFPXgM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Jun 2020 19:36:12 -0400
-Received: from [192.168.1.3] (212-5-158-38.ip.btc-net.bg [212.5.158.38])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 1F3F2CFFF;
-        Wed, 17 Jun 2020 02:36:08 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1592350568; bh=aLjBBuVOgl1FEIUDX+t32lCMDeKTv5OVH1NddWDHMpE=;
-        h=Subject:To:Cc:From:Date:From;
-        b=EfroWTqqlD6NHw6xyFCW6GE8yNG9v4tk9irwG84sR4pF6hq/+ltwGqL5xdpb0edjn
-         r5UQ/kKqRFK+U5OXH/gAW4439jtDbk+lvbvmmfw/emfwsyxyJ0vYjnxnQejw9mXyME
-         5VayAl3PcplbJxDYIst2n5x1bGwouyPJSLMWQm4azu5MolegAppuBLr1eN+BZfhu33
-         jmjyzV10E7U3EumlPt1c78s/+hKpUQjGqGZdTTGrfZDVjgecQgv627neoN8vWI+awy
-         4QZ8/0uQj+wehx2TajEMLiZnF9CDqPvWUHpE7VoXioOvs7j4xrbtMRjbxdVxQWg5vv
-         FGk9WG7SqdTfw==
-Subject: Re: [PATCH] PCI: qcom: Disable power management for uPD720201 USB3
- controller
-To:     Bjorn Helgaas <helgaas@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     bjorn.andersson@linaro.org, vkoul@kernel.org, sanm@codeaurora.org,
-        mgautam@codeaurora.org, agross@kernel.org, bhelgaas@google.com,
-        robh@kernel.org, lorenzo.pieralisi@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org
-References: <20200616211711.GA1981914@bjorn-Precision-5520>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <47b52403-360e-08b6-ad0d-0f4a2272a5f7@mm-sol.com>
-Date:   Wed, 17 Jun 2020 02:36:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1726811AbgFQEwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 00:52:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54748 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726795AbgFQEwv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 00:52:51 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE69C06174E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 21:52:50 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id i12so419758pju.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 21:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=h0vhA/U1QaPFJFPPSjv2ooCi1yzJ6bifslhy6/ILfNA=;
+        b=qqIvT076Ge1qMBfJZRudD6kJOw7/2aACm4VFEGmTFxFn+fCQL61SzYuS80vLfgU0EO
+         1arc/y+G8q/3e4CymS8UeG6vnphqJUxbkEX9ScUZ9sskxZa5SyNwTR6p51GO3N4XLJ8Y
+         CpOdAaHvmQgc3foOQzxQDusX6yi6ARQogN6GxF6/ZZvu2dTxQNvTkoxtZPcEI45AjFku
+         znd+4BS7UNWJ3KPwSGmrwyp0c39/7x5UkacWCK/fcA+yUIUQJYTWbWxX2mDZtkHRPzH6
+         CiHPsaN+s9EVhHoAeYUMPxQqhZHqk8ptbYyNQqHdCH0TfckHERqD1a75k2FQOhfuhHgs
+         MLJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=h0vhA/U1QaPFJFPPSjv2ooCi1yzJ6bifslhy6/ILfNA=;
+        b=UqQ/TBaSAngyIqknZ/xxdN1J1WakWBorQp5+vWJ9ku2N+IAdsCmJ5TwixT9S8cXrTh
+         8rPBK5MgbwqR+yUkStwWGpx1TM2T3Llflb0j3cLkUkIN4ZhNU8VwWywflDBO6lDNJ0fq
+         xqBJg9J769FiLLxg5UC4umOG9p8fuTB+8edCCHA3dR4GYN2wpxsUr7vcTywvpPwENhVQ
+         LEE5PeIxGGhnYSJS3OY3WmNWiBsHpMYRXBISRUf0wtMrTagUt/uKsRJDGYtAFTqi8wze
+         t+s+WFjiLN/reKTlBH6m3m39gE/e5kAL4+nNEscMPX/61w/qzzDZLVOVQ6ckv9wWwFjE
+         dWCg==
+X-Gm-Message-State: AOAM5301CPZ3bLOQfwa1iaxalmbk8pxP5AFrtNvbsEHQS0Tib60D2jJq
+        7rHlXYu3O+6DeuGzudjj5WP/3g==
+X-Google-Smtp-Source: ABdhPJzUPNYD737LZ9mvXjpLQCfZmh5Gx+UdS29xXQW9wm49nYfnbVwYV0zTgJAUSgpio21zZQQuuQ==
+X-Received: by 2002:a17:90a:930c:: with SMTP id p12mr6662433pjo.2.1592369570118;
+        Tue, 16 Jun 2020 21:52:50 -0700 (PDT)
+Received: from localhost ([122.172.119.132])
+        by smtp.gmail.com with ESMTPSA id h17sm18753333pfo.168.2020.06.16.21.52.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jun 2020 21:52:49 -0700 (PDT)
+Date:   Wed, 17 Jun 2020 10:22:47 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, nm@ti.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
+        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v6 4/5] cpufreq: qcom: Update the bandwidth levels on
+ frequency change
+Message-ID: <20200617045247.zet624tyloxzj5fx@vireshk-i7>
+References: <20200605213332.609-1-sibis@codeaurora.org>
+ <20200605213332.609-5-sibis@codeaurora.org>
+ <20200615172553.GU4525@google.com>
+ <e21f85d64d72ec637c10dae93e8323bb@codeaurora.org>
+ <20200616221157.GA4525@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20200616211711.GA1981914@bjorn-Precision-5520>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200616221157.GA4525@google.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/17/20 12:17 AM, Bjorn Helgaas wrote:
-> [+cc Rafael, linux-pm]
+On 16-06-20, 15:11, Matthias Kaehlcke wrote:
+> Hi Sibi,
 > 
-> On Mon, Jun 15, 2020 at 09:24:13PM +0300, Georgi Djakov wrote:
->> The uPD720201 USB3 host controller (connected to PCIe) on the Dragonboard
->> 845c is often failing during suspend and resume. The following messages
->> are seen over the console:
->>
->>   PM: suspend entry (s2idle)
->>   Filesystems sync: 0.000 seconds
->>   Freezing user space processes ... (elapsed 0.001 seconds) done.
->>   OOM killer disabled.
->>   Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
->>   printk: Suspending console(s) (use no_console_suspend to debug)
->>   dwc3-qcom a8f8800.usb: HS-PHY not in L2
->>   dwc3-qcom a6f8800.usb: HS-PHY not in L2
->>   xhci_hcd 0000:01:00.0: can't change power state from D3hot to D0 (config
->>   space inaccessible)
->>   xhci_hcd 0000:01:00.0: can't change power state from D3hot to D0 (config
->>   space inaccessible)
->>   xhci_hcd 0000:01:00.0: Controller not ready at resume -19
->>   xhci_hcd 0000:01:00.0: PCI post-resume error -19!
->>   xhci_hcd 0000:01:00.0: HC died; cleaning up
->>
->> Then the USB devices are not functional anymore. Let's disable the PM of
->> the controller for now, as this will at least keep USB devices working
->> even after suspend and resume.
-> 
-> This seems like we're just covering up a deeper problem here.  I think
-> it would be better to fix the underlying problem.
-> 
-> The quirk you're adding is specific to the Renesas 0x0014 device.  Is
-> there some reason to think the problem is specific to that device, or
-> might other devices have the same problem?
+> after doing the review I noticed that Viresh replied on the cover letter
+> that he picked the series up for v5.9, so I'm not sure if it makes sense
+> to send a v7.
 
-I also think that the USB controller might have some issue with .resume.
-It is obvious that qcom-pcie RC doesn't implement suspend/resume which
-means that its clocks are not disabled at the moment when USB is resuming.
-
-Georgi, can you try to bypass suspend/resume in the USB driver itself?
-
-> 
-> Maybe we're missing something in pcie-qcom.c?  Is there any
-> suspend/resume support required in that driver?  It doesn't look like
-> it has anything except that it calls pm_runtime_enable().
-
-Yes, definitely we did not implemented suspend/resume callbacks, but
-that means that the RC should be functional while the system is in suspend.
-
-> 
->> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
->> ---
->>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index 138e1a2d21cc..c1f502682a19 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -1439,6 +1439,13 @@ static void qcom_fixup_class(struct pci_dev *dev)
->>  {
->>  	dev->class = PCI_CLASS_BRIDGE_PCI << 8;
->>  }
->> +
->> +static void qcom_fixup_nopm(struct pci_dev *dev)
->> +{
->> +	dev->pm_cap = 0;
->> +	dev_info(&dev->dev, "Disabling PCI power management\n");
->> +}
->> +
->>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0101, qcom_fixup_class);
->>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0104, qcom_fixup_class);
->>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0106, qcom_fixup_class);
->> @@ -1446,6 +1453,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0107, qcom_fixup_class);
->>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302, qcom_fixup_class);
->>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000, qcom_fixup_class);
->>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
->> +DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_RENESAS, 0x0014, qcom_fixup_nopm);
-> 
-> The convention is that DECLARE_PCI_FIXUP_*() comes immediately after
-> the quirk function itself, so the whole patch would be a single diff
-> hunk.  See drivers/pci/quirks.c for many examples.
-> 
->>  static struct platform_driver qcom_pcie_driver = {
->>  	.probe = qcom_pcie_probe,
+Its okay, you can send a new version and I will apply that instead.
 
 -- 
-regards,
-Stan
+viresh
