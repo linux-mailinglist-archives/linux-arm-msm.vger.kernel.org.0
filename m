@@ -2,105 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 415C01FD67E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CEDA1FD698
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 23:03:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbgFQU4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 16:56:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34496 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726835AbgFQU4I (ORCPT
+        id S1726853AbgFQVCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 17:02:52 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:44359 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgFQVCv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:56:08 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76C9C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:56:08 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id e18so1866602pgn.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:56:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=lyZJziQzzP4b5ndqsln6PR/ze9CmlmKyWOv9+1Wwqxo=;
-        b=UUkaBxwarvyUz8chpn1JF7SSiQn2UkaFFz3E5R0kokx7j8jEjbpsNYyQEKfgU+o4qe
-         T2Sdp6mI30KCKdG7RLaMcxh5hNb34xsGeGwyohEVcASG3zIdBRq5vDRII50e2HiJyExK
-         5oPKmJ0I9qKyRgs6bheAZjo0IrNXJIoGrPyOA=
+        Wed, 17 Jun 2020 17:02:51 -0400
+Received: by mail-io1-f66.google.com with SMTP id i4so1550059iov.11;
+        Wed, 17 Jun 2020 14:02:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=lyZJziQzzP4b5ndqsln6PR/ze9CmlmKyWOv9+1Wwqxo=;
-        b=kEOVwNOgh2bk8501qPYf4zFGyEjiG5Q2vx35o2pRWYcy1nHP7SB7EcCaYAViylzGUx
-         4mJGd3tR6rVrCfgXjebXEgTxSE9bm1X4/tllYgeSHBH+0UzVM+PAny/FbkzS2/uysCAJ
-         SECupeerBVLPyOhc/+vvu4Ujbtdo3IBxDB+RX/2Kgu2ptkaRzVBLxsQ2iVCDL8/KS5tN
-         9laH9+SEOznXpOSRUZL55+WzPON9pP0x6Ijfb5txMHqp1fcADjpAaygFl5bwRQrdj+MZ
-         P+Brt8L5mCCH9oZSjmxXRFtVBL7vy+W/8RixJ4c+dbfGYCXP1RLvY8IqskKIeaI+Tbfr
-         3Ngw==
-X-Gm-Message-State: AOAM533IIonGSYP/3N7PyOl5hUINQUcbYjBgQ/upqrWID5OUH4G28BTt
-        li8H9aY/AgWAxFkU6mvWn3tuQQ==
-X-Google-Smtp-Source: ABdhPJzjaJdHqvLdNxXLND/5deAqoi1Q7B9L9AQScf8t11WtgyZgn1pllJ/maHehWSndAABRUnU0VA==
-X-Received: by 2002:aa7:8651:: with SMTP id a17mr581745pfo.144.1592427368101;
-        Wed, 17 Jun 2020 13:56:08 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id j13sm680259pfe.48.2020.06.17.13.56.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xFFFGVbhSch5Pt2svn8MimZRF1LlF10vkrqi5t3dW9I=;
+        b=sQdyR7yg6FjwlEvFgoJUeHxE4yCreObyk4DB8tdEQZ8kJMm8lMOSqwmWtvzCCCc4tX
+         OBM8PyeHLCgCQPFupTCiN5+9uikcM8CiTlfAcOi54zFNHzM028w7K4NTspv8naLWIfxD
+         0zIOaE9/9LMO8AymXJ9JdXIqX43hBYnCtx25CfZOIAx+lahwlAT51lXVDMMOCITWjLjY
+         Rn6Wdb41NGZP+TgCWoEBTtgFLry5LI8hHB+k9mPfQ2y4bokX7BQABkZw+qo0MiQHSc44
+         mUftUJdb42wONV8JeDondOluvGCNbyaDhOiTDHud8BFLeGJh7PgiZDnyVS9HZyY5jQOL
+         WAjw==
+X-Gm-Message-State: AOAM5319ZfGjgha8FIt0dNCDbzOUcRiUpbWrfZJtc8lod9gT97WhoxzL
+        QDvsJZtg/r5P1HOxI967Dw==
+X-Google-Smtp-Source: ABdhPJyXhGFVD9efkJSsHu1gz54q5MCenhejfFdnSe9K2byNsnC5c7h0Xj90NBIYtbqHKRUf3MoPIg==
+X-Received: by 2002:a6b:9054:: with SMTP id s81mr1423659iod.122.1592427770922;
+        Wed, 17 Jun 2020 14:02:50 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id f11sm398301ilf.53.2020.06.17.14.02.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 13:56:07 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200616034044.v3.4.I988281f7c6ee0ed00325559bfce7539f403da69e@changeid>
-References: <20200616104050.84764-1-dianders@chromium.org> <20200616034044.v3.4.I988281f7c6ee0ed00325559bfce7539f403da69e@changeid>
-Subject: Re: [PATCH v3 4/5] spi: spi-geni-qcom: Actually use our FIFO
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
+        Wed, 17 Jun 2020 14:02:50 -0700 (PDT)
+Received: (nullmailer pid 2809826 invoked by uid 1000);
+        Wed, 17 Jun 2020 21:02:47 -0000
+Date:   Wed, 17 Jun 2020 15:02:47 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>
+Cc:     mirq-linux@rere.qmqm.pl, Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        bcm-kernel-feedback-list@broadcom.com,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>
-Date:   Wed, 17 Jun 2020 13:56:06 -0700
-Message-ID: <159242736681.62212.65181596887239100@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>,
+        kernel-team@android.com, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        devicetree@vger.kernel.org, wsd_upstream@mediatek.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v6 4/4] dt-bindings: mmc: mediatek: Add document for
+ mt6779
+Message-ID: <20200617210247.GA2800817@bogus>
+References: <1591665502-6573-1-git-send-email-chun-hung.wu@mediatek.com>
+ <1591665502-6573-5-git-send-email-chun-hung.wu@mediatek.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1591665502-6573-5-git-send-email-chun-hung.wu@mediatek.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-06-16 03:40:49)
-> The geni hardware has a FIFO that can hold up to 64 bytes (it has 16
-> entries that can hold 4 bytes each), at least on the two SoCs I tested
-> (sdm845 and sc7180).  We configured our RX Watermark to 0, which
-> basically meant we got an interrupt as soon as the first 4 bytes
-> showed up in the FIFO.  Tracing the IRQ handler showed that we often
-> only read 4 or 8 bytes per IRQ handler.
->=20
-> I tried setting the RX Watermark to "fifo size - 2" but that just got
-> me a bunch of overrun errors reported.  Setting it to "fifo size - 3"
-> seemed to work great, though.  This made me worried that we'd start
-> getting overruns if we had long interrupt latency, but that doesn't
-> appear to be the case and delays inserted in the IRQ handler while
-> using "fifo size - 3" didn't cause any errors.  Presumably there is
-> some interaction with the poorly-documented RFR (ready for receive)
-> level means that "fifo size - 3" is the max.  We are the SPI master,
-> so it makes sense that there would be no problems with overruns, the
-> master should just stop clocking.
->=20
-> Despite "fifo size - 3" working, I chose "fifo size / 2" (8 entries =3D
-> 32 bytes) which gives us a little extra time to get to the interrupt
-> handler and should reduce dead time on the SPI wires.  With this
-> setting, I often saw the IRQ handler handle 40 bytes but sometimes up
-> to 56 if we had bad interrupt latency.
->=20
-> Testing by running "flashrom -p ec -r" on a Chromebook saw interrupts
-> from the SPI driver cut roughly in half.  Time was roughly the same.
->=20
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+On Tue, Jun 09, 2020 at 09:18:22AM +0800, Chun-Hung Wu wrote:
+> Add compatible node for mt6779 mmc and HW cmdq selection
+> node "mediatek,cqhci".
+> 
+> Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
 > ---
+>  Documentation/devicetree/bindings/mmc/mtk-sd.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/mtk-sd.txt b/Documentation/devicetree/bindings/mmc/mtk-sd.txt
+> index 8a532f4..d4d20b9 100644
+> --- a/Documentation/devicetree/bindings/mmc/mtk-sd.txt
+> +++ b/Documentation/devicetree/bindings/mmc/mtk-sd.txt
+> @@ -12,6 +12,7 @@ Required properties:
+>  	"mediatek,mt8173-mmc": for mmc host ip compatible with mt8173
+>  	"mediatek,mt8183-mmc": for mmc host ip compatible with mt8183
+>  	"mediatek,mt8516-mmc": for mmc host ip compatible with mt8516
+> +	"mediatek,mt6779-mmc": for mmc host ip compatible with mt6779
+>  	"mediatek,mt2701-mmc": for mmc host ip compatible with mt2701
+>  	"mediatek,mt2712-mmc": for mmc host ip compatible with mt2712
+>  	"mediatek,mt7622-mmc": for MT7622 SoC
+> @@ -49,6 +50,9 @@ Optional properties:
+>  		     error caused by stop clock(fifo full)
+>  		     Valid range = [0:0x7]. if not present, default value is 0.
+>  		     applied to compatible "mediatek,mt2701-mmc".
+> +- mediatek,cqhci: HW cmdq selection
+> +		  If present, hw command queue is enabled.
+> +		  If not present, hw command queue is disabled.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+'supports-cqe' does the same thing.
 
-Nice improvement. Maybe it can still have a Fixes tag because it's a
-performance problem?
+>  
+>  Examples:
+>  mmc0: mmc@11230000 {
+> -- 
+> 1.9.1
