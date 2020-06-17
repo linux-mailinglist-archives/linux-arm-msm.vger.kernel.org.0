@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F5D41FD336
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 19:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ADE21FD35A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 19:23:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbgFQROK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 13:14:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56684 "EHLO
+        id S1726815AbgFQRXN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 13:23:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbgFQROJ (ORCPT
+        with ESMTP id S1726763AbgFQRXM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 13:14:09 -0400
-Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2579C06174E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:14:07 -0700 (PDT)
-Received: by mail-vk1-xa43.google.com with SMTP id n22so751012vkm.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:14:07 -0700 (PDT)
+        Wed, 17 Jun 2020 13:23:12 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96D4FC061755
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:23:12 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id b10so1040149uaf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JOY1l8xgfbg/yocZCf5EyJ50x3P+Us55PL0tdjs++n0=;
-        b=Gtxn+CfkAztV5LlGzlR68soPB+aRgFZF/cnYvVs2szVoBHaWPBRtFXbmz6+GvH2Ld2
-         5f8+WT8zbMutCEKd02SGi34c05t5ex4cNi2yDXV3i3SQ1XuS4Soh4IQ7pIa4OEJDiG4u
-         bG2qi+/HLzUaE2Haot+oLolqO/z/YGCYaDR0s=
+        bh=OnWnquHlT/ltYTFNOPUHSh/iGSUA1c4DqQQurVsebw8=;
+        b=Xh1zc5cvq0KeGeKe9/EMOtxNnm0G2z0Rf2LfQ7DfSbytlWYqX6TDlwuE81rzzG74qY
+         RbK/RQqrrCu8cQP/sDw3TD37jNJpQRTkRMSPvp7VMoEAnyyE/AQQx7GqQmatJJn3bPup
+         Es06CH2SxxxZMpdKRMBPxDYp7T/H/08kX2iMU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JOY1l8xgfbg/yocZCf5EyJ50x3P+Us55PL0tdjs++n0=;
-        b=nGdrQ5hAn/t//7glvgUB06mYL4AOd/xyq0Kugja3F+LixUQJE6LkBbdf2u2TvqBByT
-         GIPEhTLfoNBG2PCeA/Zif1ZNGT84+Vkx8yliojeyNBBD7QrckRq/ZFdh0eJB36dSNjm1
-         x2mmwpJKpPXq31YV9CxS6hYzHy7vPpsh6Ude6uI4UbNlXV2GnXGIbETgmv3YsRvGHCSv
-         Ss/fpAEokqn70ZHXgAiojxsfnxnTyqPNil539RI6oCN1jz+OPui950hopPCreWIrGiyS
-         6AVLRhcTsY2uzvU7U6+Wee2aidxE/zwsBCGErcMy+bLdNsOIT7DEyeD9jYqspzEijFrA
-         AV7Q==
-X-Gm-Message-State: AOAM532CXVow96rIA5fR8J08ABFHd26k/2xXRILC8g0ugwRSTOa/DNSH
-        bPv0JcF0SAFB1YAWn7jJxN+yba9PFnw=
-X-Google-Smtp-Source: ABdhPJwiG9zwJeZg7MfiII4WvRgcIRR34nzg8PwJlaLf/AvIZqfKPahWBjtjqEReAZyJmng9qJ2nyQ==
-X-Received: by 2002:ac5:ccf0:: with SMTP id k16mr343480vkn.95.1592414046249;
-        Wed, 17 Jun 2020 10:14:06 -0700 (PDT)
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
-        by smtp.gmail.com with ESMTPSA id i2sm35514vkp.22.2020.06.17.10.14.05
+        bh=OnWnquHlT/ltYTFNOPUHSh/iGSUA1c4DqQQurVsebw8=;
+        b=D/v2Hxj5oKzE3gexUw1Cp9UBieiBNpYVRQBds6AMYbkS3h7QxnVDO1iFJEzWwfIrqp
+         F2I3jdOj5nF+xTteajCpjIfXGjNXuOqv/vUQx65cbSze7e98ke70O01XaGvOXqfJxK6C
+         XfV9ZdjJ7cD21dwEvnc5hElM4pePKKlquNPx3Ky1Gq5gS91nBSsHf4vUZbexr6jR0p83
+         MPLQuJ50VHDtBFu4OuZtLo1mwd9DuEGFgrY0Y6GW7TdenPMkj3FI2kLZ3j6gXzGboEqi
+         7+4UkgkPbxKBX48ipOOTf9ODq1jhryUcteFoj6APFlA75oG3GW/hHbvG5I24tfSznCw+
+         VRWw==
+X-Gm-Message-State: AOAM531TzeTpXuY9HeAY7C3jDJWFMTqmfCliLinNdgDxlY9A6k7IMJF/
+        fcY7Aa7Aahex+6GluypIquqhP3PwWs0=
+X-Google-Smtp-Source: ABdhPJyjS3fXo3nNtC5K2HmfYMKM33rQ+gpUrk6hbXjYZDy2fZ3vkHPiH6g7PtxZGQEkI6Ed4aEzzw==
+X-Received: by 2002:ab0:30d1:: with SMTP id c17mr9377uam.142.1592414590948;
+        Wed, 17 Jun 2020 10:23:10 -0700 (PDT)
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com. [209.85.217.52])
+        by smtp.gmail.com with ESMTPSA id t76sm36075vkt.56.2020.06.17.10.23.09
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2020 10:14:05 -0700 (PDT)
-Received: by mail-vs1-f45.google.com with SMTP id o2so1851890vsr.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:14:05 -0700 (PDT)
-X-Received: by 2002:a67:1703:: with SMTP id 3mr128094vsx.169.1592414044517;
- Wed, 17 Jun 2020 10:14:04 -0700 (PDT)
+        Wed, 17 Jun 2020 10:23:10 -0700 (PDT)
+Received: by mail-vs1-f52.google.com with SMTP id r11so1850388vsj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:23:09 -0700 (PDT)
+X-Received: by 2002:a05:6102:20c8:: with SMTP id i8mr205487vsr.106.1592414588681;
+ Wed, 17 Jun 2020 10:23:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200617145116.247432-1-dianders@chromium.org>
- <20200617074930.v3.3.I68222d0b5966f652f29dd3a73ab33551a6e3b7e0@changeid> <ca00ca5c-eb8b-5662-d73a-e222735347eb@linaro.org>
-In-Reply-To: <ca00ca5c-eb8b-5662-d73a-e222735347eb@linaro.org>
+ <20200617074930.v3.2.I3b5c3bfaf5fb2d28d63f1b5ee92980900e3f8251@changeid> <254998b9-c45e-bd6b-bc9a-b5934c0fea8e@linaro.org>
+In-Reply-To: <254998b9-c45e-bd6b-bc9a-b5934c0fea8e@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 17 Jun 2020 10:13:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X9xZH9Sj6hE-T=hz64XeaEVOHjP40cj-koXpE5KCHDSQ@mail.gmail.com>
-Message-ID: <CAD=FV=X9xZH9Sj6hE-T=hz64XeaEVOHjP40cj-koXpE5KCHDSQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] nvmem: qfprom: Add fuse blowing support
+Date:   Wed, 17 Jun 2020 10:22:57 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vec5FVrDVkmUQTfa6bP+1d3yOtj_FsgVAFdHLLbZ8VDA@mail.gmail.com>
+Message-ID: <CAD=FV=Vec5FVrDVkmUQTfa6bP+1d3yOtj_FsgVAFdHLLbZ8VDA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] dt-bindings: nvmem: Add properties needed for
+ blowing fuses
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -68,7 +69,8 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         sparate@codeaurora.org, mkurumel@codeaurora.org,
-        LKML <linux-kernel@vger.kernel.org>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -77,193 +79,85 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Wed, Jun 17, 2020 at 8:18 AM Srinivas Kandagatla
+On Wed, Jun 17, 2020 at 8:19 AM Srinivas Kandagatla
 <srinivas.kandagatla@linaro.org> wrote:
 >
-> Thanks Doug,
-> Overall the patch is looking good, I have few minor comments below!
+>
 >
 > On 17/06/2020 15:51, Douglas Anderson wrote:
 > > From: Ravi Kumar Bokka <rbokka@codeaurora.org>
 > >
-> > This patch adds support for blowing fuses to the qfprom driver if the
-> > required properties are defined in the device tree.
+> > On some systems it's possible to actually blow the fuses in the qfprom
+> > from the kernel.  Add properties to support that.
+> >
+> > NOTE: Whether this is possible depends on the BIOS settings and
+> > whether the kernel has permissions here, so not all boards will be
+> > able to blow fuses in the kernel.
 > >
 > > Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
 > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > > ---
-> > Please double-check that I got the major/minor version logic right
-> > here.  I don't have documentation for this, but Srinivas mentioned
-> > that it was at address 0x6000 and I happened to find an "8" and a "7"
-> > on sc7180 so I assumed that was the major and minor version.
 > >
 > > Changes in v3:
-> > - Don't provide "reset" value for things; just save/restore.
-> > - Use the major/minor version read from 0x6000.
-> > - Reading should still read "corrected", not "raw".
-> > - Added a sysfs knob to allow you to read "raw" instead of "corrected"
-> > - Simplified the SoC data structure.
-> > - No need for quite so many levels of abstraction for clocks/regulator.
-> > - Don't set regulator voltage.  Rely on device tree to make sure it's right.
-> > - Properly undo things in the case of failure.
-> > - Don't just keep enabling the regulator over and over again.
-> > - Enable / disable the clock each time
-> > - Polling every 100 us but timing out in 10 us didn't make sense; swap.
-> > - No reason for 100 us to be SoC specific.
-> > - No need for reg-names.
-> > - We shouldn't be creating two separate nvmem devices.
+> > - Add an extra reg range (at 0x6000 offset for SoCs checked)
+> > - Define two options for reg: 1 item or 4 items.
+> > - No reg-names.
+> > - Add "clocks" and "clock-names" to list of properties.
+> > - Clock is now "sec", not "secclk".
+> > - Add "vcc-supply" to list of properties.
+> > - Fixed up example.
 > >
-> >   drivers/nvmem/qfprom.c | 314 +++++++++++++++++++++++++++++++++++++++--
-> >   1 file changed, 303 insertions(+), 11 deletions(-)
+> >   .../bindings/nvmem/qcom,qfprom.yaml           | 45 ++++++++++++++++++-
+> >   1 file changed, 43 insertions(+), 2 deletions(-)
 > >
-> > diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> > index 8a91717600be..486202860f84 100644
-> > --- a/drivers/nvmem/qfprom.c
-> > +++ b/drivers/nvmem/qfprom.c
-> > @@ -3,57 +3,349 @@
-> >    * Copyright (C) 2015 Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >    */
+> > diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> > index 5efa5e7c4d81..b195212c6193 100644
+> > --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> > +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> > @@ -17,8 +17,27 @@ properties:
+> >       const: qcom,qfprom
 > >
-> > +#include <linux/clk.h>
-> >   #include <linux/device.h>
-> > +#include <linux/io.h>
-> > +#include <linux/iopoll.h>
-> > +#include <linux/kernel.h>
-> >   #include <linux/module.h>
-> >   #include <linux/mod_devicetable.h>
-> > -#include <linux/io.h>
-> >   #include <linux/nvmem-provider.h>
-> >   #include <linux/platform_device.h>
-> > +#include <linux/regulator/consumer.h>
+> >     reg:
+> > -    items:
+> > -      - description: The corrected region.
+> > +    # If the QFPROM is read-only OS image then only the corrected region
+> > +    # needs to be provided.  If the QFPROM is writable then all 4 regions
+> > +    # must be provided.
+> > +    oneOf:
+> > +      - items:
+> > +          - description: The corrected region.
+> > +      - items:
+> > +          - description: The corrected region.
+> > +          - description: The raw region.
+> > +          - description: The config region.
+> > +          - description: The security control region.
 > > +
-> > +/* Blow timer clock frequency in Mhz */
-> > +#define QFPROM_BLOW_TIMER_OFFSET 0x03c
-> > +
-> > +/* Amount of time required to hold charge to blow fuse in micro-seconds */
-> > +#define QFPROM_FUSE_BLOW_POLL_US     10
-> > +#define QFPROM_FUSE_BLOW_TIMEOUT_US  100
-> > +
-> > +#define QFPROM_BLOW_STATUS_OFFSET    0x048
-> > +#define QFPROM_BLOW_STATUS_BUSY              0x1
-> > +#define QFPROM_BLOW_STATUS_READY     0x0
-> > +
-> > +#define QFPROM_ACCEL_OFFSET          0x044
-> > +
-> > +#define QFPROM_VERSION_OFFSET                0x0
-> > +#define QFPROM_MAJOR_VERSION_SHIFT   28
-> > +#define QFPROM_MAJOR_VERSION_MASK    0xf
-> > +#define QFPROM_MINOR_VERSION_SHIFT   16
-> > +#define QFPROM_MINOR_VERSION_MASK    0xf
+> > +  # Clock must be provided if QFPROM is writable from the OS image.
+> > +  clocks:
+> > +    maxItems: 1
 >
-> Using GENMASK here makes it much readable!
 >
-> ...
+> > +  clock-names:
+> > +    const: sec
 >
-> >
-> >   static int qfprom_probe(struct platform_device *pdev)
-> >   {
-> > +     struct nvmem_config econfig = {
-> > +             .name = "qfprom",
-> > +             .stride = 1,
-> > +             .word_size = 1,
-> > +             .reg_read = qfprom_reg_read,
-> > +     };
-> >       struct device *dev = &pdev->dev;
-> >       struct resource *res;
-> >       struct nvmem_device *nvmem;
-> >       struct qfprom_priv *priv;
-> > +     int ret;
-> >
-> >       priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> >       if (!priv)
-> >               return -ENOMEM;
-> >
-> > +     /* The corrected section is always provided */
-> >       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > -     priv->base = devm_ioremap_resource(dev, res);
-> > -     if (IS_ERR(priv->base))
-> > -             return PTR_ERR(priv->base);
-> > +     priv->qfpcorrected = devm_ioremap_resource(dev, res);
-> > +     if (IS_ERR(priv->qfpcorrected))
-> > +             return PTR_ERR(priv->qfpcorrected);
-> >
-> >       econfig.size = resource_size(res);
-> >       econfig.dev = dev;
-> >       econfig.priv = priv;
-> >
-> > +     priv->dev = dev;
-> > +
-> > +     /*
-> > +      * If more than one region is provided then the OS has the ability
-> > +      * to write.
-> > +      */
-> > +     res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-> > +     if (res) {
-> > +             u32 version;
-> > +             int major_version, minor_version;
-> > +
-> > +             priv->qfpraw = devm_ioremap_resource(dev, res);
-> > +             if (IS_ERR(priv->qfpraw))
-> > +                     return PTR_ERR(priv->qfpraw);
-> > +             res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-> > +             priv->qfpconf = devm_ioremap_resource(dev, res);
-> > +             if (IS_ERR(priv->qfpconf))
-> > +                     return PTR_ERR(priv->qfpconf);
-> > +             res = platform_get_resource(pdev, IORESOURCE_MEM, 3);
-> > +             priv->qfpsecurity = devm_ioremap_resource(dev, res);
-> > +             if (IS_ERR(priv->qfpsecurity))
-> > +                     return PTR_ERR(priv->qfpsecurity);
-> > +
-> > +             version = readl(priv->qfpsecurity + QFPROM_VERSION_OFFSET);
-> > +             major_version = (version >> QFPROM_MAJOR_VERSION_SHIFT) &
-> > +                             QFPROM_MAJOR_VERSION_MASK;
-> > +             minor_version = (version >> QFPROM_MINOR_VERSION_SHIFT) &
-> > +                             QFPROM_MINOR_VERSION_MASK;
-> > +
-> > +             if (major_version == 7 && minor_version == 8)
-> > +                     priv->soc_data = &qfprom_7_8_data;
-> > +
-> > +             /* Only enable writing if we have SoC data. */
-> > +             if (priv->soc_data)
-> > +                     econfig.reg_write = qfprom_reg_write;
-> > +     }
-> > +
->
-> <----------snip
-> > +     priv->vcc = devm_regulator_get(&pdev->dev, "vcc");
-> > +     if (IS_ERR(priv->vcc))
-> > +             return PTR_ERR(priv->vcc);
-> > +
-> > +     priv->secclk = devm_clk_get_optional(dev, "sec");
-> > +     if (IS_ERR(priv->secclk)) {
-> > +             ret = PTR_ERR(priv->secclk);
-> > +             if (ret != -EPROBE_DEFER)
-> > +                     dev_err(dev, "sec error getting : %d\n", ret);
-> > +             return ret;
-> > +     }
-> > +
-> ----------->
-> should you move both clk and regulator into the previous if (res) {}
-> block? As I don't see them marked as optional for write cases.
+> Do we need clock-names for just one clock here?
 
-Sure, I'll move them on the next version.  I will note that the
-current version actually works fine but I guess since there currently
-isn't actually a user of the clock/regulator in the non-write case
-then we don't need to make the calls...  Why does it work fine the way
-it is too?
+I think technically you can get by without, but convention is that
+clock-names are always provided for clocks.  It's talked about in the
+same link I sent that talked about reg-names:
 
-* regulator_get() will automatically create a "dummy" regulator if one
-isn't specified in the device tree, so there's no harm in the call.
-If you actually need to know if a regulator is there you need to call
-regulator_get_optional()
+https://lore.kernel.org/r/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
 
-* clk_get_optional() will return NULL if a clock isn't specified in
-the device tree and clock framework is fine with you passing NULL for
-enable/disable/prepare/unprepare.  If you actually need to know if a
-clock is there you need to call clk_get().
+Specifically, Rob said:
 
-Amazing but true that the "optional" variants of the regulator and
-clock code are effectively opposites of each other.  :-P
+> That probably is because the clock binding has had clock-names from
+> the start (it may have been the first one). That was probably partly
+> due to the clock API also was mainly by name already if we want to
+> admit Linux influence on bindings
 
+Basically the standard way for getting clocks in Linux is
+clk_get(name).  With just one clock you can call clk_get(NULL) and I
+believe that works, but when you add the 2nd clock then you have to
+switch APIs to one of the less-commonly-used variants.
 
 -Doug
