@@ -2,76 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60BE71FD90F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 00:40:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58A421FD923
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 00:45:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727037AbgFQWka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 18:40:30 -0400
-Received: from mail-il1-f193.google.com ([209.85.166.193]:41263 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726864AbgFQWk2 (ORCPT
+        id S1726761AbgFQWpz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 18:45:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51450 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726758AbgFQWpy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 18:40:28 -0400
-Received: by mail-il1-f193.google.com with SMTP id c75so3926377ila.8;
-        Wed, 17 Jun 2020 15:40:27 -0700 (PDT)
+        Wed, 17 Jun 2020 18:45:54 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A418C06174E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 15:45:54 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id n24so4866299lji.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 15:45:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yawPnxDk49botwMdb+iaW6FZN+F8UQyFiiskYiOSfeQ=;
+        b=XDyZS+++Zkn6BIBUSi9kkFoJ/8TqtbS8h/v3gA9xSe3Ij7PK8at9hy2SlW/d1Jfo6o
+         7eNj2kG5JhYecfrqlAgHCWpgrSHi8DGUbTKdHWVoVf7ojfbVlbjRIAT7t4jjxX49kfTo
+         BkeSsnuxB03xXOKCVfjEVFSMvjQrIdu1Q1qV0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Zfs6fQ9dNu1WR3lr294IASeX3pxyyPciqezJugqbLdg=;
-        b=G0ltQ4jE9bsx7HoaSL+9uqiI/M6feDClifO1DbwqodFsP4zcHESho+38F4RrtIaaaV
-         yU0pDEPrS9aGF8uJwOmV1gPCsOfkTyO5BStywEfwQVFEg+WhvkKDCcm11c7Xiilzg50V
-         gNcQeJm+sxPi40QHlrZ4/mj0zFZfB7kyJUfd4BPkjce793MQkdYKEAZZayKSaSADKzkS
-         gGI2KSCk6zhTC+zWv0QugNd89LMvHYm52NuFYxuMoSpLmSRlqup/sqREzaSPbpmVUVxt
-         Dr/SYEs9oHunV8kUNqJc5umPm8FY2onZ0YnH5YCsT3BMwQy7Z+8BbKoRr77jRBYKQMEB
-         Rpxw==
-X-Gm-Message-State: AOAM5339dqAUPQ12LSkQvcX5IrSOvdm6LNhw0vU40ixBybnhlDQNAWx3
-        f6BrHo/l/qlHU09hLcN23Q==
-X-Google-Smtp-Source: ABdhPJzRwz/0uaYi76fA5Zd1pUASZHPvWS/+PxMD1pnVAfG3nH0ehNSUR64R0ytuzMsQ9XxUG4dQDg==
-X-Received: by 2002:a05:6e02:ef2:: with SMTP id j18mr1221721ilk.69.1592433627244;
-        Wed, 17 Jun 2020 15:40:27 -0700 (PDT)
-Received: from xps15 ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id c85sm537559ilg.41.2020.06.17.15.40.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 15:40:26 -0700 (PDT)
-Received: (nullmailer pid 2970050 invoked by uid 1000);
-        Wed, 17 Jun 2020 22:40:25 -0000
-Date:   Wed, 17 Jun 2020 16:40:25 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, Will Deacon <will@kernel.org>
-Subject: Re: [PATCH v8 3/7] dt-bindings: arm-smmu: Add compatible string for
- Adreno GPU SMMU
-Message-ID: <20200617224025.GA2969998@bogus>
-References: <20200611222128.28826-1-jcrouse@codeaurora.org>
- <20200611222128.28826-4-jcrouse@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yawPnxDk49botwMdb+iaW6FZN+F8UQyFiiskYiOSfeQ=;
+        b=ispgI3dYmmSeYPb+JBeqAnK7V0gbVyghQ5w2rK5Q2VgUBJ7ooIkXmso00YwL8XYDiy
+         LzLPcVBlYgNPWXErCmYQBDCRTjjPLkz8z9pspsJ9bvTcLmA83HTtRwsWxT8oiYJDNQv5
+         OFMO0MAq2Fa61AyEptfYuC57eMiibKpf/SZEm3JxuQJPuZLdsxGMCWnPv82hZq982AAr
+         jV5AhAMVs67cxctVZyjB3i2TYZpp/J4pqNY6vim+MCvy3W+99VwSed8EEbnzBX3iyeIW
+         cWnUCKbypWHTR1YD49OF2GhRnQw8rHFEXKxcQOvRiGXH9h42/AqNRRRdqRwl43wLQC/t
+         GK8w==
+X-Gm-Message-State: AOAM530j7krx444QsTQlRbeCyyZIrL79rVmcIt8sKiuG706zVL5nRJ1S
+        QkKsfKjOJkrWG57UNcpw+cKwjBi2ogQ=
+X-Google-Smtp-Source: ABdhPJynTii2tls9Oa2sfJDK2e7mY8cCzZ57hRoFcATlYdyyA5SdiSOtGvVw/WaoFYdT8/9ZBxUirQ==
+X-Received: by 2002:a05:651c:1213:: with SMTP id i19mr701390lja.116.1592433952131;
+        Wed, 17 Jun 2020 15:45:52 -0700 (PDT)
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com. [209.85.208.179])
+        by smtp.gmail.com with ESMTPSA id q14sm254598lfn.75.2020.06.17.15.45.51
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jun 2020 15:45:51 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id i27so4847278ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 15:45:51 -0700 (PDT)
+X-Received: by 2002:a05:651c:1181:: with SMTP id w1mr707524ljo.432.1592433950682;
+ Wed, 17 Jun 2020 15:45:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200611222128.28826-4-jcrouse@codeaurora.org>
+References: <1589946996-31264-1-git-send-email-pillair@codeaurora.org> <CAE=gft5pcHwK8yjObNSSH=U_B6Pz++bDaeUxZhPyJfG2E7LRAg@mail.gmail.com>
+In-Reply-To: <CAE=gft5pcHwK8yjObNSSH=U_B6Pz++bDaeUxZhPyJfG2E7LRAg@mail.gmail.com>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Wed, 17 Jun 2020 15:45:14 -0700
+X-Gmail-Original-Message-ID: <CAE=gft5So9Uk2UqRWs2zFO_iD+6ofMy97bKP4HpgM1Wu6Duxvw@mail.gmail.com>
+Message-ID: <CAE=gft5So9Uk2UqRWs2zFO_iD+6ofMy97bKP4HpgM1Wu6Duxvw@mail.gmail.com>
+Subject: Re: [PATCH v11] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+To:     Rakesh Pillai <pillair@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 11 Jun 2020 16:21:24 -0600, Jordan Crouse wrote:
-> Every Qcom Adreno GPU has an embedded SMMU for its own use. These
-> devices depend on unique features such as split pagetables,
-> different stall/halt requirements and other settings. Identify them
-> with a compatible string so that they can be identified in the
-> arm-smmu implementation specific code.
-> 
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> ---
-> 
->  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+On Thu, May 21, 2020 at 9:19 AM Evan Green <evgreen@chromium.org> wrote:
+>
+> On Tue, May 19, 2020 at 8:57 PM Rakesh Pillai <pillair@codeaurora.org> wrote:
+> >
+> > Add device node for the ath10k SNOC platform driver probe
+> > and add resources required for WCN3990 on sc7180 soc.
+> >
+> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+>
+> Reviewed-by: Evan Green <evgreen@chromium.org>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Looks like this never landed anywhere. Is it blocked on something?
+-Evan
