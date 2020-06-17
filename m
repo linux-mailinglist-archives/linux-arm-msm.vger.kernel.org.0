@@ -2,124 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 171E71FCEC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 15:45:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 865D21FCED1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 15:49:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbgFQNpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 09:45:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52194 "EHLO
+        id S1726491AbgFQNtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 09:49:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726329AbgFQNpQ (ORCPT
+        with ESMTP id S1726329AbgFQNtV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 09:45:16 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20202C06174E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 06:45:16 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id l11so2435014wru.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 06:45:16 -0700 (PDT)
+        Wed, 17 Jun 2020 09:49:21 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C762C0613ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 06:49:20 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id i27so2899637ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 06:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jZcfSh9+wW5N+Dlp3gMek+FnLdHyfPdEraPwakLbSEY=;
-        b=LYAkHByCGO57OGvCsKakDa/onsj0NNBFKEEvJ1Z7yYhTezhe8ecYidS+fkrK9VFrBz
-         SygBH0qJBjfg3qU3HPXeyU8qALRaERnoia1cSFiOruEduuKOrx8vuRg1Kl1WksZQCLMK
-         x/5nLL7+T2k0SU7zHsW7tdWl4RiwXAqkqs2Fy546cOoMY647WD5v1IQqNKWaqoQQDTo4
-         Fu93NL6f5TPFC+i9cCNmWKSL2uQnJg0vC4e+UvZuzF13cCeVrCAApkOOBlsVWXiytWqG
-         c5GFLY/NNOSig71fvwBpu2UfSn9tOl2xE27q9XngYXC+pEjbm45Ppje22FIen6vyjkGr
-         lRzA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vC2m/NVOsMePL7cd05WEIx6qonlbpRgoDsdMvHqyOPM=;
+        b=WTmaZqP6UdEgLvq/OSB7yIjYV9nBX4EXBL9g7HIak/60g/87RpOi2miJaHBNwUgwkc
+         H+5ch+9xdNeq6Eykr1eRu0BWx/1ulGmSUqh1/BbrvYCcsDa1ZPbxrIxaLJdo7j0PSAEf
+         Q2vRfD29srze/fsC6mP9pcuSJLoSP+bUbVZD52WfQ5XBgdZNhxM5IfB+FQETiu071r9D
+         yqqdzmF224Y7++hl3mLT2AyQLSS2lj5jC+ljT3Y3pSQI4y4JZRU4mgyjc8noBbCTOb5V
+         mz+mmSeD5JGuL7JWtzL+dgLfJZ9QhZzrNtdSSQEV7PA5YZxk4W69Vw2Kfu3+YDF/LdKt
+         GTCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jZcfSh9+wW5N+Dlp3gMek+FnLdHyfPdEraPwakLbSEY=;
-        b=ebXyXeyxzR4VlieNC91hT78BzjXxy5UAe4JMK8TGHXVE/Y9GUwgHMJqGbb7Y5/YsKr
-         K1M2bwRab3XDTovzA+K2ZOekPoVfM8+bh6IYVgHIizTqKZkXLkVVW95GWZNXdiibQSSN
-         QNZz4DnBzt6FlWQHDQKbuTej0M9iMUgY2ZE7HjAQCCg6dDXBPe8AqgZ3BIoU7xOxhYH9
-         aljJXzTdEOZwvhy8J8ZTuzeLi6z40flSrgMHo7q6nAX8UY6H0EOIY3LfFD/laW1ZEWTE
-         /I8bTV7nqNXuNBIuyr/Rfd/811QX07nQawnMPqvsEik2QtRoB87fC2OWC3ckj/E56DWx
-         FWIA==
-X-Gm-Message-State: AOAM532IDfcN7FPnLO0C0G3pB6m1RCqEbJn45FHXFJ/BYuJ75yt/Mvji
-        l0HmYlNR9eAXid/lPOBieEHS5nI3vjKLpg==
-X-Google-Smtp-Source: ABdhPJyjEYHOKxsSHo9Q9bM5sAOlNls27BPQ1cWgfi72kiXg1pUC1BOlnpNjFiDtsyLCGFq+QVwFTA==
-X-Received: by 2002:adf:9c12:: with SMTP id f18mr9306013wrc.105.1592401514854;
-        Wed, 17 Jun 2020 06:45:14 -0700 (PDT)
-Received: from localhost.localdomain ([87.120.218.65])
-        by smtp.googlemail.com with ESMTPSA id j14sm1251165wrs.75.2020.06.17.06.45.13
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Jun 2020 06:45:14 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        georgi.djakov@linaro.org
-Subject: [PATCH] arm64: dts: msm8916: Add interconnect provider DT nodes
-Date:   Wed, 17 Jun 2020 16:45:15 +0300
-Message-Id: <20200617134515.25229-1-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.26.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vC2m/NVOsMePL7cd05WEIx6qonlbpRgoDsdMvHqyOPM=;
+        b=D1nwxBoMG+9d2Re3+S8OoBF8nz736zqIW2wn1qp+ToN4dbyZYxVtXBgXKOrYrQIiNX
+         +aq9ArZP/8ZQUTmnJK0GmxgZ2yt2423wo6OFT8rFBP4EhKrdp1WXIlyJK7oUfF3pYiXq
+         ho5FZ+grrKBjJIFR/zLkWMgUvrTGPdby2WPVfVxS0hEdf5aUrJo7pJ25KuoLnbF9oe98
+         TIwVvXPZATotlbXL8Wk3hbbQxGRR/tkKCxWymgtWbp1ImpyGFoeheGIa/bQikRiE5L9j
+         L9205erwQMmoRplPTN/aCZ4sSrz3VQu589/YpCVIu0X+7pLQtvDB9W6EOrlf9oerzuYQ
+         AJuQ==
+X-Gm-Message-State: AOAM530i0Jqmofw5msuKwzyEi7JWZDiVYXQ8cI252Nv4wSB2Np3ISdDI
+        Aj9OKQEaPaSvvHlQAVPORWSmoKWNzq/MsRqdLUEbgS+fiNq3ug==
+X-Google-Smtp-Source: ABdhPJyvm7mXDGUIA1HB62LGReElqV+BhcGKmVz/LfVuEfkWC4MV5x1jr6gooo2ixzzp+Ijd7hPb38OMLUJtFoXFTqs=
+X-Received: by 2002:a2e:974e:: with SMTP id f14mr3960178ljj.102.1592401756905;
+ Wed, 17 Jun 2020 06:49:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200617065658.27567-1-naresh.kamboju@linaro.org>
+In-Reply-To: <20200617065658.27567-1-naresh.kamboju@linaro.org>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Wed, 17 Jun 2020 19:19:04 +0530
+Message-ID: <CA+G9fYuEojvbmvLPZ7JzY9bNh4f030sYGZOWQU1Rf=6rFUPuUw@mail.gmail.com>
+Subject: Re: [PATCH] remoteproc: qcom: q6v5-mss: Fix kfree build error
+To:     linux-arm-msm@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
+        Vinod Koul <vinod.koul@linaro.org>, agross@kernel.org,
+        Ohad Ben Cohen <ohad@wizery.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the network-on-chip interconnect buses present on
-MSM8916-based platforms.
++ linux-remoteproc@vger.kernel.org
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 28 +++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 32bd140ac9fd..6c57896d9836 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -4,6 +4,7 @@
-  */
- 
- #include <dt-bindings/arm/coresight-cti-dt.h>
-+#include <dt-bindings/interconnect/qcom,msm8916.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-msm8916.h>
- #include <dt-bindings/reset/qcom,gcc-msm8916.h>
-@@ -406,11 +407,38 @@ soc: soc {
- 		ranges = <0 0 0 0xffffffff>;
- 		compatible = "simple-bus";
- 
-+		bimc: interconnect@400000 {
-+			compatible = "qcom,msm8916-bimc";
-+			reg = <0x00400000 0x62000>;
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-+				 <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+		};
-+
- 		restart@4ab000 {
- 			compatible = "qcom,pshold";
- 			reg = <0x4ab000 0x4>;
- 		};
- 
-+		pcnoc: interconnect@500000 {
-+			compatible = "qcom,msm8916-pcnoc";
-+			reg = <0x00500000 0x11000>;
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_PCNOC_CLK>,
-+				 <&rpmcc RPM_SMD_PCNOC_A_CLK>;
-+		};
-+
-+		snoc: interconnect@580000 {
-+			compatible = "qcom,msm8916-snoc";
-+			reg = <0x00580000 0x14000>;
-+			#interconnect-cells = <1>;
-+			clock-names = "bus", "bus_a";
-+			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-+				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+		};
-+
- 		msmgpio: pinctrl@1000000 {
- 			compatible = "qcom,msm8916-pinctrl";
- 			reg = <0x1000000 0x300000>;
+On Wed, 17 Jun 2020 at 12:27, Naresh Kamboju <naresh.kamboju@linaro.org> wr=
+ote:
+>
+> This patch adds linux/slab.h to fix build error in qcom_q6v5_mss.c
+>
+> Build error:
+>  ../drivers/remoteproc/qcom_q6v5_mss.c:
+>   In function =E2=80=98q6v5_mpss_init_image=E2=80=99:
+>  ../drivers/remoteproc/qcom_q6v5_mss.c:772:3:
+>   error: implicit declaration of function =E2=80=98kfree=E2=80=99;
+>   did you mean =E2=80=98vfree=E2=80=99? [-Werror=3Dimplicit-function-decl=
+aration]
+>    772 |   kfree(metadata);
+>        |   ^~~~~
+>        |   vfree
+>
+> Signed-off-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> ---
+>  drivers/remoteproc/qcom_q6v5_mss.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom=
+_q6v5_mss.c
+> index feb70283b6a2..903b2bb97e12 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -26,6 +26,7 @@
+>  #include <linux/reset.h>
+>  #include <linux/soc/qcom/mdt_loader.h>
+>  #include <linux/iopoll.h>
+> +#include <linux/slab.h>
+>
+>  #include "remoteproc_internal.h"
+>  #include "qcom_common.h"
+> --
+> 2.17.1
+>
