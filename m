@@ -2,131 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA5441FC5B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 07:36:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19FFC1FC656
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 08:48:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726816AbgFQFf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 01:35:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32996 "EHLO
+        id S1726326AbgFQGsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 02:48:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725929AbgFQFf2 (ORCPT
+        with ESMTP id S1725536AbgFQGsX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 01:35:28 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5941C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 22:35:28 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id k15so659194otp.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 22:35:28 -0700 (PDT)
+        Wed, 17 Jun 2020 02:48:23 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E97C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 23:48:23 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id n70so778844ota.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2020 23:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=fHG/w1e8yLTHpzr4hwGwsEUCs6bE9NYtF8uNRp5AdUU=;
-        b=nwPD8fK4PQg4o/1yR3F4U2FVp6SkohvK02Jo12KlG+lE4CvKKo3uzuUsUCaAuOWM+i
-         BweN6R9rl/Oj0UT+wqVgkPLpVzXF0IFCS/HlQBzPpnYtebAOxK/D6EW8wOKGF8ISakGO
-         Pvfciz4gpGntdifhUsMsh2wF7K/rQ2FXSQbdXIp33MuphrUuj2cmJhrPl2pDV1Ze8nX8
-         AViBLqFenVRVbqQu496+XkSpl9cEnBlhOR1DgK2Qi0IHXqItacw7cYFZFcDGoy39ecrm
-         4HTGDZT/vtkQJ0PUBvXO+8SgoWoEsvECFm5y+bj3z7JQA1sJXAfWcUFA23sUN0ut34wK
-         DmKw==
+        bh=eUDSD6z6rPH0CReES0Wf0V4zppIWRjMIWkdDaKPcoe4=;
+        b=oBAB7SlLC6G9XCadbh6agjeaubv5miRZ4A7qOr7fJzW+IGL0agM1hSLaEXMm0fwq+P
+         czHMu4iQNOIGOKb5Ng34Xn6o+qYHhGTs40WKCBORE+6bWQL5Mr9JT1CyFpt3fDj2wC/H
+         OM2U84GCRsQZz99YUyFO5O7Hy1Q2BGYfjW0/xZBqHxQ94rQKGILDgKaMhjUSgrUrNhFP
+         ClqY505KCO5/fOQwvPzQKyyWhWWjGFhp/nflqlU93p2GlZ96+vfhUy1+A5aLjAvB252t
+         +pX54qga2hHsGUc3HycYEej26ZjKS6w6Y8snR7f0llU4/ReY7VajuuIrfN37gffCx8lh
+         bWzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=fHG/w1e8yLTHpzr4hwGwsEUCs6bE9NYtF8uNRp5AdUU=;
-        b=X+cjQgLcffALS6dYDkXyAvKwo2cLYviOVc3c1gEIasEkE9Q4t6NEH/hQerwSjKLvCl
-         4gQHajNJuzlUAk+Nu6i+hcNy6nOCxIpNsmAWrXX/yaeA7/g0DqPn+fKpUXCuTUgBJ7HW
-         Zr2Lp+sU4XGfSwUpE2j+a55bk3wuQLD+xKTgs8NdDRpUxnFjwhtuX/7pe/2ia6O4eAoc
-         pOFbaIYbfh0iqOPfKtJgNT9gLqD8TtcjCkziWEBoRfduu1+0KI6mYFcSogXcoCBc/hWK
-         CZvgtky4jZFd8TaWM+1P7L0rwrxB5F0LAuDtkp7tWueDjdYMMusf5eaiij909d1fHD5p
-         VV0A==
-X-Gm-Message-State: AOAM530OdiQRmM7eaNATK1uh1pJxaoYNc+c/cyfJB4n3tZNDQX27PATa
-        RareussULMegeSbUbuebxx7xcw==
-X-Google-Smtp-Source: ABdhPJwg1mt33T11n882LJlXCOpmqr4Mfv8iLvxPSI8/+BHZ4PTHoIG3vNbEKlfuxtahElyRBc88sw==
-X-Received: by 2002:a9d:6949:: with SMTP id p9mr5645333oto.7.1592372128046;
-        Tue, 16 Jun 2020 22:35:28 -0700 (PDT)
+        bh=eUDSD6z6rPH0CReES0Wf0V4zppIWRjMIWkdDaKPcoe4=;
+        b=CJ6aKhxOvR/zoIbbnoSI7l/HT5vJhh31CGd352FwSqvUTKZNmj45H5IBYv7clxDzDv
+         q79UEK9vjcRPclJvfzB1wn0XNpBU8fLqXU21NwwqrnBwWM6xsjhoMSKKItlXQmfd6NMn
+         furA1ES5LTdbB7m4LfiXkzasrhFHVhd0fex7pXZUtNg0wCkkTR43WqSPrQwLtT0ApUgw
+         TnfRU+XgYTb5ZUJCHUrw8h6I3hRnQMQrzYfN830ajV8mlUZkxO8IQvGlJ3jhlbL30dqR
+         2HdzmJ7iyPE5LpFYKPh1rai9O/gAd0D0GCXdeVT46kRbBPz0FfKbHE/HU0/yMsbbhDXB
+         lw5Q==
+X-Gm-Message-State: AOAM531yx/1MqavzfTfeCvC1To3aadIJYk0i4Yukn0ZuAtdG5bGOpiOK
+        y3bmG3qPR+j1dOyaIIt29K6ugg==
+X-Google-Smtp-Source: ABdhPJzhXNxnWAfZ5ITiZG0bsUWWR1kLvJdkRGUYGyKerqr8WAdOj3reUJLA8mUAtlbam1MOx/CdpA==
+X-Received: by 2002:a05:6830:1e61:: with SMTP id m1mr5299019otr.42.1592376502256;
+        Tue, 16 Jun 2020 23:48:22 -0700 (PDT)
 Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 53sm4582582otv.22.2020.06.16.22.35.26
+        by smtp.gmail.com with ESMTPSA id g2sm4722635otq.9.2020.06.16.23.48.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2020 22:35:27 -0700 (PDT)
-Date:   Tue, 16 Jun 2020 22:35:24 -0700
+        Tue, 16 Jun 2020 23:48:21 -0700 (PDT)
+Date:   Tue, 16 Jun 2020 23:48:19 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH] usb: dwc3: qcom: Make sure core device is fully
- initialized before it is used
-Message-ID: <20200617053524.GD11847@yoga>
-References: <20200616133734.1.I1902d0d48e4f3d4c5b5f1a2008108a4cd3c5ddb5@changeid>
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>
+Subject: Re: [RFC PATCH v4 1/4] firmware: qcom_scm: Add support for
+ programming inline crypto keys
+Message-ID: <20200617064819.GF11847@yoga>
+References: <20200501045111.665881-1-ebiggers@kernel.org>
+ <20200501045111.665881-2-ebiggers@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200616133734.1.I1902d0d48e4f3d4c5b5f1a2008108a4cd3c5ddb5@changeid>
+In-Reply-To: <20200501045111.665881-2-ebiggers@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 16 Jun 13:37 PDT 2020, Matthias Kaehlcke wrote:
+On Thu 30 Apr 21:51 PDT 2020, Eric Biggers wrote:
 
-> dwc3_qcom_of_register_core() uses of_platform_populate() to add
-> the dwc3 core device. The driver core will try to probe the device,
-> however this might fail (e.g. due to deferred probing) and
-> of_platform_populate() would still return 0 if the device was
-> successully added to the platform bus. Verify that the core device
-> is actually bound to its driver before using it, defer probing of the
-> dwc3_qcom device if the core device isn't ready (yet).
+> From: Eric Biggers <ebiggers@google.com>
 > 
-> Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver").
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> Add support for the Inline Crypto Engine (ICE) key programming interface
+> that's needed for the ufs-qcom driver to use inline encryption on
+> Snapdragon SoCs.  This interface consists of two SCM calls: one to
+> program a key into a keyslot, and one to invalidate a keyslot.
+> 
+> Although the UFS specification defines a standard way to do this, on
+> these SoCs the Linux kernel isn't permitted to access the needed crypto
+> configuration registers directly; these SCM calls must be used instead.
+> 
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
 
-I wish there was a better way than to unregistering the dwc3 device when
-this happens. E.g. if dwc3 fails for some other reason we still would
-keep probe deferring the qcom part and each time attempt to reprobe dwc3.
-
-But with the way the device model is used here I don't have any better
-suggestions, and until a better solution appears this does improve the
-situation...
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
 > ---
-> depends on:
->   https://lore.kernel.org/patchwork/patch/1251661/ ("driver core:Export
->     the symbol device_is_bound")
+>  drivers/firmware/qcom_scm.c | 101 ++++++++++++++++++++++++++++++++++++
+>  drivers/firmware/qcom_scm.h |   4 ++
+>  include/linux/qcom_scm.h    |  19 +++++++
+>  3 files changed, 124 insertions(+)
 > 
->  drivers/usb/dwc3/dwc3-qcom.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 1dfd024cd06b..5a9036b050c6 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -537,6 +537,16 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->  		return -ENODEV;
->  	}
->  
-> +	/*
-> +	 * A successful return from of_platform_populate() only guarantees that
-> +	 * the core device was added to the platform bus, however it might not
-> +	 * be bound to its driver (e.g. due to deferred probing). This driver
-> +	 * requires the core device to be fully initialized, so defer probing
-> +	 * if it isn't ready (yet).
-> +	 */
-> +	if (!device_is_bound(&qcom->dwc3->dev))
-> +		return -EPROBE_DEFER;
-> +
->  	return 0;
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 059bb0fbae9e5b..646f9613393612 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -926,6 +926,107 @@ int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_client id, u32 offset, u32 size)
 >  }
+>  EXPORT_SYMBOL(qcom_scm_ocmem_unlock);
 >  
+> +/**
+> + * qcom_scm_ice_available() - Is the ICE key programming interface available?
+> + *
+> + * Return: true iff the SCM calls wrapped by qcom_scm_ice_invalidate_key() and
+> + *	   qcom_scm_ice_set_key() are available.
+> + */
+> +bool qcom_scm_ice_available(void)
+> +{
+> +	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_ES,
+> +					    QCOM_SCM_ES_INVALIDATE_ICE_KEY) &&
+> +		__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_ES,
+> +					     QCOM_SCM_ES_CONFIG_SET_ICE_KEY);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_ice_available);
+> +
+> +/**
+> + * qcom_scm_ice_invalidate_key() - Invalidate an inline encryption key
+> + * @index: the keyslot to invalidate
+> + *
+> + * The UFSHCI standard defines a standard way to do this, but it doesn't work on
+> + * these SoCs; only this SCM call does.
+> + *
+> + * Return: 0 on success; -errno on failure.
+> + */
+> +int qcom_scm_ice_invalidate_key(u32 index)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_ES,
+> +		.cmd = QCOM_SCM_ES_INVALIDATE_ICE_KEY,
+> +		.arginfo = QCOM_SCM_ARGS(1),
+> +		.args[0] = index,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	return qcom_scm_call(__scm->dev, &desc, NULL);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_ice_invalidate_key);
+> +
+> +/**
+> + * qcom_scm_ice_set_key() - Set an inline encryption key
+> + * @index: the keyslot into which to set the key
+> + * @key: the key to program
+> + * @key_size: the size of the key in bytes
+> + * @cipher: the encryption algorithm the key is for
+> + * @data_unit_size: the encryption data unit size, i.e. the size of each
+> + *		    individual plaintext and ciphertext.  Given in 512-byte
+> + *		    units, e.g. 1 = 512 bytes, 8 = 4096 bytes, etc.
+> + *
+> + * Program a key into a keyslot of Qualcomm ICE (Inline Crypto Engine), where it
+> + * can then be used to encrypt/decrypt UFS I/O requests inline.
+> + *
+> + * The UFSHCI standard defines a standard way to do this, but it doesn't work on
+> + * these SoCs; only this SCM call does.
+> + *
+> + * Return: 0 on success; -errno on failure.
+> + */
+> +int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+> +			 enum qcom_scm_ice_cipher cipher, u32 data_unit_size)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_ES,
+> +		.cmd = QCOM_SCM_ES_CONFIG_SET_ICE_KEY,
+> +		.arginfo = QCOM_SCM_ARGS(5, QCOM_SCM_VAL, QCOM_SCM_RW,
+> +					 QCOM_SCM_VAL, QCOM_SCM_VAL,
+> +					 QCOM_SCM_VAL),
+> +		.args[0] = index,
+> +		.args[2] = key_size,
+> +		.args[3] = cipher,
+> +		.args[4] = data_unit_size,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +	void *keybuf;
+> +	dma_addr_t key_phys;
+> +	int ret;
+> +
+> +	/*
+> +	 * 'key' may point to vmalloc()'ed memory, but we need to pass a
+> +	 * physical address that's been properly flushed.  The sanctioned way to
+> +	 * do this is by using the DMA API.  But as is best practice for crypto
+> +	 * keys, we also must wipe the key after use.  This makes kmemdup() +
+> +	 * dma_map_single() not clearly correct, since the DMA API can use
+> +	 * bounce buffers.  Instead, just use dma_alloc_coherent().  Programming
+> +	 * keys is normally rare and thus not performance-critical.
+> +	 */
+> +
+> +	keybuf = dma_alloc_coherent(__scm->dev, key_size, &key_phys,
+> +				    GFP_KERNEL);
+> +	if (!keybuf)
+> +		return -ENOMEM;
+> +	memcpy(keybuf, key, key_size);
+> +	desc.args[1] = key_phys;
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+> +
+> +	memzero_explicit(keybuf, key_size);
+> +
+> +	dma_free_coherent(__scm->dev, key_size, keybuf, key_phys);
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(qcom_scm_ice_set_key);
+> +
+>  /**
+>   * qcom_scm_hdcp_available() - Check if secure environment supports HDCP.
+>   *
+> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> index d9ed670da222c8..38ea614d29fea2 100644
+> --- a/drivers/firmware/qcom_scm.h
+> +++ b/drivers/firmware/qcom_scm.h
+> @@ -103,6 +103,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>  #define QCOM_SCM_OCMEM_LOCK_CMD		0x01
+>  #define QCOM_SCM_OCMEM_UNLOCK_CMD	0x02
+>  
+> +#define QCOM_SCM_SVC_ES			0x10	/* Enterprise Security */
+> +#define QCOM_SCM_ES_INVALIDATE_ICE_KEY	0x03
+> +#define QCOM_SCM_ES_CONFIG_SET_ICE_KEY	0x04
+> +
+>  #define QCOM_SCM_SVC_HDCP		0x11
+>  #define QCOM_SCM_HDCP_INVOKE		0x01
+>  
+> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+> index 3d6a2469776153..2e1193a3fb5f06 100644
+> --- a/include/linux/qcom_scm.h
+> +++ b/include/linux/qcom_scm.h
+> @@ -44,6 +44,13 @@ enum qcom_scm_sec_dev_id {
+>  	QCOM_SCM_ICE_DEV_ID     = 20,
+>  };
+>  
+> +enum qcom_scm_ice_cipher {
+> +	QCOM_SCM_ICE_CIPHER_AES_128_XTS = 0,
+> +	QCOM_SCM_ICE_CIPHER_AES_128_CBC = 1,
+> +	QCOM_SCM_ICE_CIPHER_AES_256_XTS = 3,
+> +	QCOM_SCM_ICE_CIPHER_AES_256_CBC = 4,
+> +};
+> +
+>  #define QCOM_SCM_VMID_HLOS       0x3
+>  #define QCOM_SCM_VMID_MSS_MSA    0xF
+>  #define QCOM_SCM_VMID_WLAN       0x18
+> @@ -88,6 +95,12 @@ extern int qcom_scm_ocmem_lock(enum qcom_scm_ocmem_client id, u32 offset,
+>  extern int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_client id, u32 offset,
+>  				 u32 size);
+>  
+> +extern bool qcom_scm_ice_available(void);
+> +extern int qcom_scm_ice_invalidate_key(u32 index);
+> +extern int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+> +				enum qcom_scm_ice_cipher cipher,
+> +				u32 data_unit_size);
+> +
+>  extern bool qcom_scm_hdcp_available(void);
+>  extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+>  			     u32 *resp);
+> @@ -138,6 +151,12 @@ static inline int qcom_scm_ocmem_lock(enum qcom_scm_ocmem_client id, u32 offset,
+>  static inline int qcom_scm_ocmem_unlock(enum qcom_scm_ocmem_client id,
+>  		u32 offset, u32 size) { return -ENODEV; }
+>  
+> +static inline bool qcom_scm_ice_available(void) { return false; }
+> +static inline int qcom_scm_ice_invalidate_key(u32 index) { return -ENODEV; }
+> +static inline int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+> +				       enum qcom_scm_ice_cipher cipher,
+> +				       u32 data_unit_size) { return -ENODEV; }
+> +
+>  static inline bool qcom_scm_hdcp_available(void) { return false; }
+>  static inline int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+>  		u32 *resp) { return -ENODEV; }
 > -- 
-> 2.27.0.290.gba653c62da-goog
+> 2.26.2
 > 
