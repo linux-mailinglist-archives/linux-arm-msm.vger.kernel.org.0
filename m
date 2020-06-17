@@ -2,51 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B668B1FD003
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 16:52:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA32F1FD03D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 17:03:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726868AbgFQOwF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 10:52:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34436 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726890AbgFQOv4 (ORCPT
+        id S1726328AbgFQPDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 11:03:32 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:48598 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726491AbgFQPDb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 10:51:56 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 288DAC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 07:51:56 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id i12so1113129pju.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 07:51:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oHDXTrxrPr/ji5r+gzel+9fUGlLw6TAHPNwGJ7xfdkA=;
-        b=VvUC35sOnZr1p54G45m3VOKy8uZ8e5bmbhcZN9jZnFVgnTDiwJJjn9q1w9joR+fq6+
-         LvIBHOBoTFfEjjTgB2XyZgDwbQMwmAF2q/yvQvrXOVOTPcqSP5y46rr1TpxGi0W40RPU
-         9jf31u38Q01rzuP+kO6uGvxmaReLYGtsWSpAE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oHDXTrxrPr/ji5r+gzel+9fUGlLw6TAHPNwGJ7xfdkA=;
-        b=e7BJpcb83ZfmCQfiPQ77RQrbvOZ/V9YqF6Lud1Wp8sV8lRjLECDGr/8lTea+dwwr6w
-         i77R1pLLq/gm/mEQXt/zsfeRbgnGzq59ZFrILVqN8C26dp0FRc5AJvDaV1S+6jQWvXRN
-         bUa8+qqD5XqBO3JhJG1GgsDeLUXAIDzciALXuflv7v/s1enlaCd75l+TKNbLkxJ/lik4
-         /4bp4t+oU5QbBUTBArESaDIPqsPzcTTJr7Pt7kDOHrWiUylkFdq3ts2aLn0V4/a3j0zR
-         6ZIXXO/ccfP3r7BCAivvC8Ax/N3c+B/rK4TGYVrbdNrwGQCM+ERqN7i/Q9nMPhLxkLIE
-         58kA==
-X-Gm-Message-State: AOAM532ylTzstaYW5Fq1qhPpq3LG5GxBO9eBjjJ3vmj38o/nBMMyt4nt
-        jWYhZxDj4RPahQesm+HS3HArbQ==
-X-Google-Smtp-Source: ABdhPJyABziZjJ2pLl5VgSZD68qgYBT6lnAEYD6+D8xTs6fWFVqzHs1ul+Kl1aQoJPBpUFqDygFnzg==
-X-Received: by 2002:a17:90b:4911:: with SMTP id kr17mr8174779pjb.40.1592405515652;
-        Wed, 17 Jun 2020 07:51:55 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id k18sm147040pfp.208.2020.06.17.07.51.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 07:51:55 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Wed, 17 Jun 2020 11:03:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592406210; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3AFzlHE002JKH4sqLw68GR2u+wU+FRloVI3U+58b50c=; b=RqTm7m7hyM8Vj041BFokABTLrM5HScTorcUxXXwvPdNlPhGhVartfhcXwrOkOAoboA418FdX
+ JcjwHvip2EQHNhEYonoufoubD6FkidCKdRLKzvN0gcP3MvALlEVLRR2RG4fgJyJdtjhTOlF9
+ /4nDkNU0hNlVjohKLBGghCzo7j4=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5eea30b8c76a4e7a2a2081a2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Jun 2020 15:03:20
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CFE7FC433CA; Wed, 17 Jun 2020 15:03:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.226.58.28] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E629BC433C9;
+        Wed, 17 Jun 2020 15:03:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E629BC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v3 3/4] nvmem: qfprom: Add fuse blowing support
+To:     Douglas Anderson <dianders@chromium.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>
@@ -54,77 +52,100 @@ Cc:     dhavalp@codeaurora.org, mturney@codeaurora.org,
         rnayak@codeaurora.org, Ravi Kumar Bokka <rbokka@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, saiprakash.ranjan@codeaurora.org,
         sparate@codeaurora.org, mkurumel@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 4/4] arm64: dts: qcom: sc7180: Add properties to qfprom for fuse blowing
-Date:   Wed, 17 Jun 2020 07:51:16 -0700
-Message-Id: <20200617074930.v3.4.I70c17309f8b433e900656d7c53a2e6b61888bb68@changeid>
-X-Mailer: git-send-email 2.27.0.290.gba653c62da-goog
-In-Reply-To: <20200617145116.247432-1-dianders@chromium.org>
+        linux-kernel@vger.kernel.org
 References: <20200617145116.247432-1-dianders@chromium.org>
+ <20200617074930.v3.3.I68222d0b5966f652f29dd3a73ab33551a6e3b7e0@changeid>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <559d8a23-ec50-30ab-3ff6-ce524d1b6be8@codeaurora.org>
+Date:   Wed, 17 Jun 2020 09:03:16 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200617074930.v3.3.I68222d0b5966f652f29dd3a73ab33551a6e3b7e0@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ravi Kumar Bokka <rbokka@codeaurora.org>
+On 6/17/2020 8:51 AM, Douglas Anderson wrote:
+> From: Ravi Kumar Bokka <rbokka@codeaurora.org>
+> 
+> This patch adds support for blowing fuses to the qfprom driver if the
+> required properties are defined in the device tree.
+> 
+> Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> Please double-check that I got the major/minor version logic right
+> here.  I don't have documentation for this, but Srinivas mentioned
+> that it was at address 0x6000 and I happened to find an "8" and a "7"
+> on sc7180 so I assumed that was the major and minor version.
+> 
+> Changes in v3:
+> - Don't provide "reset" value for things; just save/restore.
+> - Use the major/minor version read from 0x6000.
+> - Reading should still read "corrected", not "raw".
+> - Added a sysfs knob to allow you to read "raw" instead of "corrected"
+> - Simplified the SoC data structure.
+> - No need for quite so many levels of abstraction for clocks/regulator.
+> - Don't set regulator voltage.  Rely on device tree to make sure it's right.
+> - Properly undo things in the case of failure.
+> - Don't just keep enabling the regulator over and over again.
+> - Enable / disable the clock each time
+> - Polling every 100 us but timing out in 10 us didn't make sense; swap.
+> - No reason for 100 us to be SoC specific.
+> - No need for reg-names.
+> - We shouldn't be creating two separate nvmem devices.
+> 
+>   drivers/nvmem/qfprom.c | 314 +++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 303 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
+> index 8a91717600be..486202860f84 100644
+> --- a/drivers/nvmem/qfprom.c
+> +++ b/drivers/nvmem/qfprom.c
+> @@ -3,57 +3,349 @@
+>    * Copyright (C) 2015 Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>    */
+>   
+> +#include <linux/clk.h>
+>   #include <linux/device.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/kernel.h>
+>   #include <linux/module.h>
+>   #include <linux/mod_devicetable.h>
+> -#include <linux/io.h>
+>   #include <linux/nvmem-provider.h>
+>   #include <linux/platform_device.h>
+> +#include <linux/regulator/consumer.h>
+> +
+> +/* Blow timer clock frequency in Mhz */
+> +#define QFPROM_BLOW_TIMER_OFFSET 0x03c
+> +
+> +/* Amount of time required to hold charge to blow fuse in micro-seconds */
+> +#define QFPROM_FUSE_BLOW_POLL_US	10
+> +#define QFPROM_FUSE_BLOW_TIMEOUT_US	100
+> +
+> +#define QFPROM_BLOW_STATUS_OFFSET	0x048
+> +#define QFPROM_BLOW_STATUS_BUSY		0x1
+> +#define QFPROM_BLOW_STATUS_READY	0x0
+> +
+> +#define QFPROM_ACCEL_OFFSET		0x044
+> +
+> +#define QFPROM_VERSION_OFFSET		0x0
+> +#define QFPROM_MAJOR_VERSION_SHIFT	28
+> +#define QFPROM_MAJOR_VERSION_MASK	0xf
+> +#define QFPROM_MINOR_VERSION_SHIFT	16
+> +#define QFPROM_MINOR_VERSION_MASK	0xf
 
-This patch adds properties to the qfprom node to enable fuse blowing.
+Minor looks wrong.  Documentation says bits 27:16 are the minor version, 
+and bits 15:0 are step.  I think your minor mask needs to be 0xfff.
 
-Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
-Changes in v3:
-- Name is now 'efuse' to match what schema checker wants.
-- Reorganized ranges to match driver/bindings changes.
-- Added 4th range as per driver/binding changes.
-- No more reg-names as per driver/binding changes.
-- Clock name is now just "sec" as per driver/binding changes.
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts |  4 ++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 10 ++++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 4e9149d82d09..2a9224e2083f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -287,6 +287,10 @@ vreg_bob: bob {
- 	};
- };
- 
-+&qfprom {
-+	vcc-supply = <&vreg_l11a_1p8>;
-+};
-+
- &qspi {
- 	status = "okay";
- 	pinctrl-names = "default";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 31b9217bb5bf..d7f5e3d64b17 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -498,9 +498,15 @@ gcc: clock-controller@100000 {
- 			#power-domain-cells = <1>;
- 		};
- 
--		qfprom@784000 {
-+		qfprom: efuse@784000 {
- 			compatible = "qcom,qfprom";
--			reg = <0 0x00784000 0 0x8ff>;
-+			reg = <0 0x00784000 0 0x8ff>,
-+			      <0 0x00780000 0 0x7a0>,
-+			      <0 0x00782000 0 0x100>,
-+			      <0 0x00786000 0 0x1fff>;
-+
-+			clocks = <&gcc GCC_SEC_CTRL_CLK_SRC>;
-+			clock-names = "sec";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 
 -- 
-2.27.0.290.gba653c62da-goog
-
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
