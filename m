@@ -2,94 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 944DB1FD66F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:53:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 880B11FD677
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 22:54:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727003AbgFQUx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 16:53:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34078 "EHLO
+        id S1727035AbgFQUyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 16:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726761AbgFQUx0 (ORCPT
+        with ESMTP id S1726761AbgFQUyP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:53:26 -0400
+        Wed, 17 Jun 2020 16:54:15 -0400
 Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC4BC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:53:26 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id ne5so1538933pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:53:26 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F680C06174E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:54:14 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id i4so1652691pjd.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 13:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=anholt-net.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Rkwd2ka8Z7iO2pJxHXIRpwXonoZgh2tKHVmhTEheWDo=;
-        b=ankX+yV3pTmnsA/EifSsAOqJzVbig1w1EwLxdujI9nqFQz069s7Fk775dKVyb77dZz
-         lsPW2YGgbcyA3+CjH4idHRgLZ94mALQ2IjTUKoioyiNO8+//px24k4CRWfcNgZThRtrV
-         SrVLqkHIkdcIAG+Ajf9KeNtMOuZC+3HGLZ/nRTDRer73f/76QobJZP52SyTCPDWBrtOP
-         M7nvex6ZuDmGWg8hUvoB+co44d9rgwp6dVbl3WtsAK5Oz/bvPtC+dxGri4nOmSMHWZVV
-         ciZ+p0m+yFcsotHidWlmJg1FcX0M3/PgJG2tzDLv0qYXaNrqFbr4RREJ9ZjJPMJlaxmO
-         QEoA==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=OA+uiTlyL85CZVRoQNcoC7+qlZN6RmKLWW5aiSiJuSc=;
+        b=NH/VqbBGwSaY1nzrHm1kEj9rcr4pDtofLKRzAdXGVa0FWB8cs7zmHv2MrzuTEOxuoR
+         jqnS8y3QB2ZPfKLqOdPtU2EyEZqqlWe2H16s3046nhZoRfQ+NmZ24dyydktP0azd4CH9
+         vpvjer/AXROo2NgkyG2Yv5o67ILRWOfh6VDE0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Rkwd2ka8Z7iO2pJxHXIRpwXonoZgh2tKHVmhTEheWDo=;
-        b=SDT+lSIdhrOiIR2F3Yepev/j5+oHSdT3IMWVWEFi3SBnX/ZFvfJTluyU5gwyIZEsLV
-         11Pb06pY9DpzTODPYQEWkp5U2+E4cXAjfOW+3vxW8rdkgKJQLFyf1nm+TewRqmntBmg9
-         bgxXFUS+CZlOpfQ9MklpHUMms2QhJAHoapSbkXQU988HpG18UDGYzvcg0Mil5gfhLLdU
-         4g832XyZ4tDVxHJFw+M3xZRcYjyuARQULIurVHqq7KYF3cL5a8A1qw/qJNXA9PRPdSmO
-         rOfjo2T0EWQOjwxRfUx/d3LEnL7QAGBW7UeVvB0y5fU9LzYtZLmXv4ydWukNGvLayAIt
-         JXAw==
-X-Gm-Message-State: AOAM5309qbIvo89PGWQFlSGh7seq4tTYBXhQiRLSnOywyEhMiI3v2Ycb
-        6phSPRI2ckk72uTJ+pXi/CtdjQ==
-X-Google-Smtp-Source: ABdhPJwJ2UTlCE2dQ2laBUA/pxpoSp23Y3LfsK2W24qN8hJszwXs3PuSNGnOaofSqf1abQraw6x8yg==
-X-Received: by 2002:a17:90a:2683:: with SMTP id m3mr859532pje.196.1592427206091;
-        Wed, 17 Jun 2020 13:53:26 -0700 (PDT)
-Received: from miranda.anholt.net (c-73-11-63-120.hsd1.or.comcast.net. [73.11.63.120])
-        by smtp.gmail.com with ESMTPSA id ca6sm392454pjb.46.2020.06.17.13.53.24
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=OA+uiTlyL85CZVRoQNcoC7+qlZN6RmKLWW5aiSiJuSc=;
+        b=BHcgbIrElDvwPzl+fFrovxbf9Dwurzn/4oVj+MZ9N9b8Jh8ydgPG8X2Hp3l/I0PK9A
+         vkRayQiYo8ZYE6Wdbhs+01ZZUcy8T+n9Q21AMhmDxzDuXDZQKmrzdTvNw95u2aQUSlWZ
+         ABZ6xrWBqTeG/2kGoejQCBEItmzMaenzHB9W1Ve5Syn7HRcjIs+Ph/WNptwFZOqZcMfO
+         nctpWbGfZfigBgqsJcjGa74bxGYZnqMo469nRBfKRwqWuaXJqjSf/QrXlKU7ifrw1GDg
+         7Ugnrw5XZPG3xOwpPbpo0FcLHLuboKWA+5NIRzOnt5MEbvwZpXpopu4hUJisVR13PfRU
+         DNPQ==
+X-Gm-Message-State: AOAM530ta32ZWfOY2WY3TgdDfpDDtx2/ipRHh7f+3IXeghH0V5pxtKEc
+        PW7/FglIrplDZMNTDA2daBTrrQ==
+X-Google-Smtp-Source: ABdhPJwQzv0SQLHzKZqNG5RUwMkhrA80IwPwJOJQUpxUYPiq4LFyAiKMcUt6VkqSVC+bEy+YrFSmmw==
+X-Received: by 2002:a17:90a:f414:: with SMTP id ch20mr796741pjb.97.1592427254228;
+        Wed, 17 Jun 2020 13:54:14 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id j6sm673200pfi.183.2020.06.17.13.54.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 13:53:25 -0700 (PDT)
-From:   Eric Anholt <eric@anholt.net>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, Eric Anholt <eric@anholt.net>
-Subject: [PATCH 2/2] drm/msm: Fix setup of a6xx create_address_space.
-Date:   Wed, 17 Jun 2020 13:53:10 -0700
-Message-Id: <20200617205310.2183722-2-eric@anholt.net>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200617205310.2183722-1-eric@anholt.net>
-References: <20200617205310.2183722-1-eric@anholt.net>
+        Wed, 17 Jun 2020 13:54:13 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200616034044.v3.3.Id8bebdbdb4d2ed9468634343a7e6207d6cffff8a@changeid>
+References: <20200616104050.84764-1-dianders@chromium.org> <20200616034044.v3.3.Id8bebdbdb4d2ed9468634343a7e6207d6cffff8a@changeid>
+Subject: Re: [PATCH v3 3/5] spi: spi-geni-qcom: Check for error IRQs
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+To:     Douglas Anderson <dianders@chromium.org>,
+        Mark Brown <broonie@kernel.org>
+Date:   Wed, 17 Jun 2020 13:54:13 -0700
+Message-ID: <159242725302.62212.16716926914794028093@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We don't want it under CONFIG_DRM_MSM_GPU_STATE, we need it all the
-time (like the other GPUs do).
+Quoting Douglas Anderson (2020-06-16 03:40:48)
+> From reading the #defines it seems like we should shout if we ever see
+> one of these error bits.  Let's do so.  This doesn't do anything
+> functional except print a yell in the log if the error bits are seen.
+>=20
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Fixes: ccac7ce373c1 ("drm/msm: Refactor address space initialization")
-Signed-off-by: Eric Anholt <eric@anholt.net>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index a1589e040c57..7768557cdfb2 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -893,8 +893,8 @@ static const struct adreno_gpu_funcs funcs = {
- #if defined(CONFIG_DRM_MSM_GPU_STATE)
- 		.gpu_state_get = a6xx_gpu_state_get,
- 		.gpu_state_put = a6xx_gpu_state_put,
--		.create_address_space = adreno_iommu_create_address_space,
- #endif
-+		.create_address_space = adreno_iommu_create_address_space,
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
- };
--- 
-2.26.2
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
