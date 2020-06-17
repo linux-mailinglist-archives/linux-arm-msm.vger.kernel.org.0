@@ -2,149 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BF651FD37D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 19:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA6A61FD404
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2020 20:04:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727019AbgFQR2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 13:28:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726840AbgFQR2k (ORCPT
+        id S1726960AbgFQSDA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 14:03:00 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:33524 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727093AbgFQSC4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 13:28:40 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 934F8C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:28:40 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id 190so1852687vsr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UWll59MdN+ez6rWdnCElUjlRL1alI73PEwi04U04HAI=;
-        b=CvnTOWt81baGdhjQChJpjeoBAJiA931fOK8jDOKIWzJx1WjRaeTmgcPKQ4GL8/VAnF
-         CBPWQHyMTNs23BL/btIg4GSiZYTRy7ApJShGSsKJQ3Jmk61PA1L5zC6owRPNNDAkzFiU
-         R7uHZ9DL3iZnfWBtoC9Mb9tZYMgBB1+aIBo7A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UWll59MdN+ez6rWdnCElUjlRL1alI73PEwi04U04HAI=;
-        b=a56aB8phMIGPEDkKolgWvbp8YDd5dWZpq2+6wnf/Hb898XmR1jwTWX3K8L1XEzEjQ8
-         K1DSIjB0xxpL7NeIBLDCuxW16ww8rXK2hETYcIpij+u7P4wmzlYLSTzQq+VFHs+qGwQo
-         WFxW9FcQouUkhV+cq6NjvpTTrZQtkb4VLgZdrTXqHdX8V0s3Op/G2f3+pzfX26JB6/6Z
-         y6Tx1jWPzXkQLU77aJ+UDgqzgFQfrUUXyOYrK7dEQEY4se1s1iaMxiIQNnfnxlkOXk5c
-         CyW3MQC8T4mcVTy8MEpflCem1eV98e3sPYPuWZC2kAJugVyfoDs895xg0KVXN/hRkaa8
-         nw6w==
-X-Gm-Message-State: AOAM530qZsnjomBnDNWFgXRIG7XeH6gk68y9kUHUjE9O3pTynlOhvhh+
-        NuJWD09+G2aVi2B8AkmirVa+QvNVoCM=
-X-Google-Smtp-Source: ABdhPJyegZ21adTJ34ah2y4Zshw764l2RHFekKUipj4KU/1RcGfvysb16E6CeejDNpCH2IKWp2d+Cg==
-X-Received: by 2002:a67:8881:: with SMTP id k123mr205037vsd.198.1592414919313;
-        Wed, 17 Jun 2020 10:28:39 -0700 (PDT)
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
-        by smtp.gmail.com with ESMTPSA id z77sm50504vsz.31.2020.06.17.10.28.37
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2020 10:28:38 -0700 (PDT)
-Received: by mail-ua1-f49.google.com with SMTP id v6so1029531uam.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2020 10:28:37 -0700 (PDT)
-X-Received: by 2002:a9f:3b1c:: with SMTP id i28mr55758uah.22.1592414917295;
- Wed, 17 Jun 2020 10:28:37 -0700 (PDT)
+        Wed, 17 Jun 2020 14:02:56 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592416976; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=1Fo/mHRPbXq8Dw+ER0BmnTiWHZSuhNsLLPn0GOFAKxU=; b=RaMMaMdfJhr6vOPsUcySoBRyH2wapJDfozyr4r52/1vc9J5PsA8/zDr2YrtYLIKttA1vOba7
+ KgSgWApRzKJXIMoQoVNNWbWmTha1PrVlaQThmtIPsk6C/n25mdELoU93oQPUzRq6b7bh8GvI
+ aBonmtplnl9Dg+KVFyhXz8OgOY0=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-east-1.postgun.com with SMTP id
+ 5eea5aad8fe116ddd9f6a756 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 17 Jun 2020 18:02:21
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7A507C433C9; Wed, 17 Jun 2020 18:02:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 07352C433CA;
+        Wed, 17 Jun 2020 18:02:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 07352C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     heikki.krogerus@linux.intel.com, mark.rutland@arm.com,
+        broonie@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, lgirdwood@gmail.com, agross@kernel.org,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jackp@codeaurora.org, rdunlap@infradead.org,
+        bryan.odonoghue@linaro.org, lijun.kernel@gmail.com,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v3 0/6] Introduce PMIC based USB type C detection
+Date:   Wed, 17 Jun 2020 11:02:03 -0700
+Message-Id: <20200617180209.5636-1-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <20200617145116.247432-1-dianders@chromium.org>
- <20200617074930.v3.1.Iea2704ec2cb40c00eca47781c310a6330ac5dd41@changeid>
- <ed6d22a1-0d38-9874-d5cc-efe39f360baa@linaro.org> <0181cfe3-6627-e599-8f2f-1f433d9e0596@codeaurora.org>
-In-Reply-To: <0181cfe3-6627-e599-8f2f-1f433d9e0596@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 17 Jun 2020 10:28:26 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WJeWudDDp79pZepX3o7yXUqEojy9_VM6ER4z-u=LK9eA@mail.gmail.com>
-Message-ID: <CAD=FV=WJeWudDDp79pZepX3o7yXUqEojy9_VM6ER4z-u=LK9eA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] dt-bindings: nvmem: qfprom: Convert to yaml
-To:     "Ravi Kumar Bokka (Temp)" <rbokka@codeaurora.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, dhavalp@codeaurora.org,
-        mturney@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        sparate@codeaurora.org, mkurumel@codeaurora.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Changes in v3:
+ - Fix driver reference to match driver name in Kconfig for
+   qcom_usb_vbus-regulator.c
+ - Utilize regulator bitmap helpers for enable, disable and is enabled calls in
+   qcom_usb_vbus-regulator.c
+ - Use of_get_regulator_init_data() to initialize regulator init data, and to
+   set constraints in qcom_usb_vbus-regulator.c
+ - Remove the need for a local device structure in the vbus regulator driver
+ 
+Changes in v2:
+ - Use devm_kzalloc() in qcom_pmic_typec_probe()
+ - Add checks to make sure return value of typec_find_port_power_role() is
+   valid
+ - Added a VBUS output regulator driver, which will be used by the PMIC USB
+   type c driver to enable/disable the source
+ - Added logic to control vbus source from the PMIC type c driver when
+   UFP/DFP is detected
+ - Added dt-binding for this new regulator driver
+ - Fixed Kconfig typec notation to match others
+ - Leave type C block disabled until enabled by a platform DTS
 
-On Wed, Jun 17, 2020 at 9:26 AM Ravi Kumar Bokka (Temp)
-<rbokka@codeaurora.org> wrote:
->
->
->
-> On 6/17/2020 8:48 PM, Srinivas Kandagatla wrote:
-> >
-> >
-> > On 17/06/2020 15:51, Douglas Anderson wrote:
-> >> From: Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >>
-> >> This switches the bindings over from txt to yaml.
-> >>
-> >> Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >> ---
-> >>
-> >> Changes in v3:
-> >> - Split conversion to yaml into separate patch new in v3.
-> >> - Use 'const' for compatible instead of a 1-entry enum.
-> >> - Changed filename to match compatible string.
-> >> - Add #address-cells and #size-cells to list of properties.
-> >> - Fixed up example.
-> >>
-> >>   .../bindings/nvmem/qcom,qfprom.yaml           | 45 +++++++++++++++++++
-> >>   .../devicetree/bindings/nvmem/qfprom.txt      | 35 ---------------
-> >>   2 files changed, 45 insertions(+), 35 deletions(-)
-> >>   create mode 100644
-> >> Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>   delete mode 100644 Documentation/devicetree/bindings/nvmem/qfprom.txt
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >> b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >> new file mode 100644
-> >> index 000000000000..5efa5e7c4d81
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >> @@ -0,0 +1,45 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Qualcomm Technologies Inc, QFPROM Efuse bindings
-> >> +
-> >> +maintainers:
-> >> +  - Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >> +
-> >
-> > Am not sure this was intentional, but the old maintainer name is totally
-> > lost in this patch!
-> >
-> > Please fix this!
-> >
->
-> Hi Srinivas,
-> The existed qfprom dt-bindings in .txt format.
-> I will make it as it is to merge whole content in .yaml format once
-> confirm all the parameters with this new driver changes.
+Add the required drivers for implementing type C orientation and role
+detection using the Qualcomm PMIC.  Currently, PMICs such as the PM8150B
+have an integrated type C block, which can be utilized for this.  This
+series adds the dt-binding, PMIC type C driver, and DTS nodes.
 
-Ah, right.  It makes more sense to set you as the maintainer since you
-were listed as the maintainer for the Linux driver and also the author
-of the old bindings.  I'll change it to you then.
+The PMIC type C driver will register itself as a type C port w/ a
+registered type C switch for orientation, and will fetch a USB role switch
+handle for the role notifications.  It will also have the ability to enable
+the VBUS output to any connected devices based on if the device is behaving
+as a UFP or DFP.
 
-Unless I hear otherwise, I'll plan to send out a v4 tomorrow with
-feedback I've gotten today.
+Wesley Cheng (6):
+  usb: typec: Add QCOM PMIC typec detection driver
+  dt-bindings: usb: Add Qualcomm PMIC type C controller dt-binding
+  arm64: boot: dts: qcom: pm8150b: Add node for USB type C block
+  regulator: Add support for QCOM PMIC VBUS booster
+  dt-bindings: regulator: Add dt-binding for QCOM PMIC VBUS output
+    regulator
+  arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
 
--Doug
+ .../regulator/qcom,usb-vbus-regulator.yaml    |  41 +++
+ .../bindings/usb/qcom,pmic-typec.yaml         | 117 ++++++++
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |  14 +
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts       |   7 +
+ drivers/regulator/Kconfig                     |  10 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/qcom_usb_vbus-regulator.c   | 100 +++++++
+ drivers/usb/typec/Kconfig                     |  12 +
+ drivers/usb/typec/Makefile                    |   1 +
+ drivers/usb/typec/qcom-pmic-typec.c           | 275 ++++++++++++++++++
+ 10 files changed, 578 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ create mode 100644 drivers/regulator/qcom_usb_vbus-regulator.c
+ create mode 100644 drivers/usb/typec/qcom-pmic-typec.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
