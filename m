@@ -2,40 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B56AC1FE90A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:53:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A51B1FE8E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:52:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728648AbgFRCws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 22:52:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33914 "EHLO mail.kernel.org"
+        id S1729032AbgFRCvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 22:51:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34966 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727112AbgFRBIV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:08:21 -0400
+        id S1727019AbgFRBI5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:08:57 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7F16021974;
-        Thu, 18 Jun 2020 01:08:19 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 59CCF2193E;
+        Thu, 18 Jun 2020 01:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592442500;
-        bh=7nE8C1YbYrTwvD5y/SKbRWoc0Mb/3j5lKq5bUoSzKQc=;
+        s=default; t=1592442536;
+        bh=+vEkPhmzh426RGcTQdJbbQ/XsrAnTOgO/RTwQ9TiMLc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TnqdQ+ulZu53UiHj+PNH05dh7gx7LQBwrwtVhgMSqbjWA19CxDgCABpWPyvcfp6dh
-         mrEOAsGyYaMuHx5m0GGxKdlR2m2Ct36qyUa4JOUVrzg1DP0bUwzvHH8F3pDGYDEamH
-         CzUBeWJTFc4ox8lsvbNKzX0xYXxPzpVAkacc/a2g=
+        b=XB5VoAs5UDwYPA025H4ZEJmUKVi6o6hno/8pTsZsFauLC8L9yzgVyOkV/eAOXS0Pr
+         LBRmqFctnQ1ri5t4ASMhy9iLtytKwiEhF+4sX/YJwttgjpHKB1QyGO4W2vHALftICo
+         IdyMW9Hru6g8WXfJ9eZNoGv1VJiFyS0zjseJWphU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 011/388] clk: qcom: msm8916: Fix the address location of pll->config_reg
-Date:   Wed, 17 Jun 2020 21:01:48 -0400
-Message-Id: <20200618010805.600873-11-sashal@kernel.org>
+        linux-remoteproc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 038/388] remoteproc: qcom_q6v5_mss: map/unmap mpss segments before/after use
+Date:   Wed, 17 Jun 2020 21:02:15 -0400
+Message-Id: <20200618010805.600873-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200618010805.600873-1-sashal@kernel.org>
 References: <20200618010805.600873-1-sashal@kernel.org>
@@ -48,92 +45,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Sibi Sankar <sibis@codeaurora.org>
 
-[ Upstream commit f47ab3c2f5338828a67e89d5f688d2cef9605245 ]
+[ Upstream commit be050a3429f46ecf13eb2b80f299479f8bb823fb ]
 
-During the process of debugging a processor derived from the msm8916 which
-we found the new processor was not starting one of its PLLs.
+The application processor accessing the mpss region when the Q6 modem is
+running will lead to an XPU violation. Fix this by un-mapping the mpss
+segments post copy during mpss authentication and coredumps.
 
-After tracing the addresses and writes that downstream was doing and
-comparing to upstream it became obvious that we were writing to a different
-register location than downstream when trying to configure the PLL.
-
-This error is also present in upstream msm8916.
-
-As an example clk-pll.c::clk_pll_recalc_rate wants to write to
-pll->config_reg updating the bit-field POST_DIV_RATIO. That bit-field is
-defined in PLL_USER_CTL not in PLL_CONFIG_CTL. Taking the BIMC PLL as an
-example
-
-lm80-p0436-13_c_qc_snapdragon_410_processor_hrd.pdf
-
-0x01823010 GCC_BIMC_PLL_USER_CTL
-0x01823014 GCC_BIMC_PLL_CONFIG_CTL
-
-This pattern is repeated for gpll0, gpll1, gpll2 and bimc_pll.
-
-This error is likely not apparent since the bootloader will already have
-initialized these PLLs.
-
-This patch corrects the location of config_reg from PLL_CONFIG_CTL to
-PLL_USER_CTL for all relevant PLLs on msm8916.
-
-Fixes commit 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
-
-Cc: Georgi Djakov <georgi.djakov@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lkml.kernel.org/r/20200329124116.4185447-1-bryan.odonoghue@linaro.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Tested-by: Evan Green <evgreen@chromium.org>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Link: https://lore.kernel.org/r/20200415071619.6052-1-sibis@codeaurora.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-msm8916.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/remoteproc/qcom_q6v5_mss.c | 31 +++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-msm8916.c b/drivers/clk/qcom/gcc-msm8916.c
-index 4e329a7baf2b..17e4a5a2a9fd 100644
---- a/drivers/clk/qcom/gcc-msm8916.c
-+++ b/drivers/clk/qcom/gcc-msm8916.c
-@@ -260,7 +260,7 @@ static struct clk_pll gpll0 = {
- 	.l_reg = 0x21004,
- 	.m_reg = 0x21008,
- 	.n_reg = 0x2100c,
--	.config_reg = 0x21014,
-+	.config_reg = 0x21010,
- 	.mode_reg = 0x21000,
- 	.status_reg = 0x2101c,
- 	.status_bit = 17,
-@@ -287,7 +287,7 @@ static struct clk_pll gpll1 = {
- 	.l_reg = 0x20004,
- 	.m_reg = 0x20008,
- 	.n_reg = 0x2000c,
--	.config_reg = 0x20014,
-+	.config_reg = 0x20010,
- 	.mode_reg = 0x20000,
- 	.status_reg = 0x2001c,
- 	.status_bit = 17,
-@@ -314,7 +314,7 @@ static struct clk_pll gpll2 = {
- 	.l_reg = 0x4a004,
- 	.m_reg = 0x4a008,
- 	.n_reg = 0x4a00c,
--	.config_reg = 0x4a014,
-+	.config_reg = 0x4a010,
- 	.mode_reg = 0x4a000,
- 	.status_reg = 0x4a01c,
- 	.status_bit = 17,
-@@ -341,7 +341,7 @@ static struct clk_pll bimc_pll = {
- 	.l_reg = 0x23004,
- 	.m_reg = 0x23008,
- 	.n_reg = 0x2300c,
--	.config_reg = 0x23014,
-+	.config_reg = 0x23010,
- 	.mode_reg = 0x23000,
- 	.status_reg = 0x2301c,
- 	.status_bit = 17,
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 5475d4f808a8..22416e86a174 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -1156,7 +1156,13 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			goto release_firmware;
+ 		}
+ 
+-		ptr = qproc->mpss_region + offset;
++		ptr = ioremap_wc(qproc->mpss_phys + offset, phdr->p_memsz);
++		if (!ptr) {
++			dev_err(qproc->dev,
++				"unable to map memory region: %pa+%zx-%x\n",
++				&qproc->mpss_phys, offset, phdr->p_memsz);
++			goto release_firmware;
++		}
+ 
+ 		if (phdr->p_filesz && phdr->p_offset < fw->size) {
+ 			/* Firmware is large enough to be non-split */
+@@ -1165,6 +1171,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 					"failed to load segment %d from truncated file %s\n",
+ 					i, fw_name);
+ 				ret = -EINVAL;
++				iounmap(ptr);
+ 				goto release_firmware;
+ 			}
+ 
+@@ -1175,6 +1182,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			ret = request_firmware(&seg_fw, fw_name, qproc->dev);
+ 			if (ret) {
+ 				dev_err(qproc->dev, "failed to load %s\n", fw_name);
++				iounmap(ptr);
+ 				goto release_firmware;
+ 			}
+ 
+@@ -1187,6 +1195,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			memset(ptr + phdr->p_filesz, 0,
+ 			       phdr->p_memsz - phdr->p_filesz);
+ 		}
++		iounmap(ptr);
+ 		size += phdr->p_memsz;
+ 
+ 		code_length = readl(qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
+@@ -1236,7 +1245,8 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+ 	int ret = 0;
+ 	struct q6v5 *qproc = rproc->priv;
+ 	unsigned long mask = BIT((unsigned long)segment->priv);
+-	void *ptr = rproc_da_to_va(rproc, segment->da, segment->size);
++	int offset = segment->da - qproc->mpss_reloc;
++	void *ptr = NULL;
+ 
+ 	/* Unlock mba before copying segments */
+ 	if (!qproc->dump_mba_loaded) {
+@@ -1250,10 +1260,15 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+ 		}
+ 	}
+ 
+-	if (!ptr || ret)
+-		memset(dest, 0xff, segment->size);
+-	else
++	if (!ret)
++		ptr = ioremap_wc(qproc->mpss_phys + offset, segment->size);
++
++	if (ptr) {
+ 		memcpy(dest, ptr, segment->size);
++		iounmap(ptr);
++	} else {
++		memset(dest, 0xff, segment->size);
++	}
+ 
+ 	qproc->dump_segment_mask |= mask;
+ 
+@@ -1595,12 +1610,6 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 
+ 	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+ 	qproc->mpss_size = resource_size(&r);
+-	qproc->mpss_region = devm_ioremap_wc(qproc->dev, qproc->mpss_phys, qproc->mpss_size);
+-	if (!qproc->mpss_region) {
+-		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, qproc->mpss_size);
+-		return -EBUSY;
+-	}
+ 
+ 	return 0;
+ }
 -- 
 2.25.1
 
