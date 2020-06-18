@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A337C1FF63B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 127961FF63E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:11:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731325AbgFRPKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 11:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33340 "EHLO
+        id S1731386AbgFRPKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 11:10:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731001AbgFRPKr (ORCPT
+        with ESMTP id S1731380AbgFRPKt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 11:10:47 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16990C06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:10:47 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id jz3so2682419pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:10:47 -0700 (PDT)
+        Thu, 18 Jun 2020 11:10:49 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE4AFC0613EF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:10:48 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id x207so2924564pfc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a8mQLD0t+cboPjyUGv/rlRj+Qss5ICQz5LRvfNgouBU=;
-        b=ZwfcIPvrNKDx+t692D9K1GQFNEsGQSVfZhEYZVBs7Jl7zFNclXAbZlo4B+E9sEGNkR
-         yJD2nhFyKLIesbLDMKCPLNlcnvRLAHoTWKiIkCiADOsroG/2cO6NSnax5G8CAuQ6irue
-         2ilzPIcya+GwU1mM2ChbbsDjwvTnSsZ1W5qX4=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=t+eo8u2tvjQcobTsfwzlNHUA5Mu/KPf2pgVwBrin5d8=;
+        b=HC73/dQnkC9Dn5aSVy4RnCYBA5ijhBmCJTKj2PsOBV/VghxkBBjfVyTFAGfWwIbAps
+         0iYX0Bw2m+c18/djLCXhIcY6yGIFs5wJ3D/NZ9LshATV8SBeATCxim6b4ZeCdAJD/bpd
+         s+HD0VcUYngCx818XJNFW6jugOMX4hlLdHHgw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a8mQLD0t+cboPjyUGv/rlRj+Qss5ICQz5LRvfNgouBU=;
-        b=DFfVUPK6h5b2xbzhAhOoK00S+8Ms5xfcfwuLL7UhdNOO5lG/37EHsUcxU+U0V9mbe+
-         1cFOW29JmTOuxyeBoTa6o12Qx8z9w+bD9KPeCNosU0rwbHvx/PITTaZ20IotXNERtcJx
-         hla+aysk0t8HpiwO+nPoigGbBFxnQITx5QiKya0nkn/t8QBSmV0TokB4NLqY5QqeCyoP
-         Egaeu4DauIhIY1Z8zXiGrdy+icruIuDxk4H5Wl75dnpouw769i8kpaw/OcTcByLvpNys
-         Kv5A8vzwjvHdkWBS1KJvQkPROLnadmpfcL5T64Ckce9RV0srQgaKL+oi3ArYvGTSXvta
-         7hBg==
-X-Gm-Message-State: AOAM533finORmPhVQ8d26C5s2CCmhDyg6GLkn0VxtxFeVd/bGe787is7
-        Umx0qXQhtVQP6ErEO0cWuT+HOzMHh+Q=
-X-Google-Smtp-Source: ABdhPJwBCiEAsnjvXI94MJ1y3WUY67xCpOx5K26a+YK+FChk55yVpiuoiRfBjWpfMLd0e7JdctVK1g==
-X-Received: by 2002:a17:902:8d97:: with SMTP id v23mr4120640plo.3.1592493046531;
-        Thu, 18 Jun 2020 08:10:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=t+eo8u2tvjQcobTsfwzlNHUA5Mu/KPf2pgVwBrin5d8=;
+        b=Vf//UkT1ZspBaps2iiAd2bmJ0tcMglNtr2WHXtwCf1dPb5PJaPwfTW0QLM5qdXxHOL
+         Vb1y59Fx6H6tgZ4160Jb3a5OdmG8i/RzdMD0p907V/MuhBB9aKJqzzpi228ec4ieJJGC
+         k7agZj8gP4RZfdMVVX0tu6t5InWm90k8bIxqnlNYQuasiRAb2yQStPPojF0bF2NxERqg
+         /q6QHk+T3SJIQmDVvSig/Wy2UBPOBK1lciCOMi7/LKU7kmRbRHJTz6hPbUWgcxImecyz
+         70wawk2IaoTOqxzOc7tJzt6Mei0t5I2D0BeKYFtO7SULt+NdZFNVemTwSRpZIylnHFgV
+         wmzA==
+X-Gm-Message-State: AOAM532hJc0nkP9huyr30McfZm2+j7m+r57izFJ2APDT2SdBZdni0Lgt
+        fOdkSixYA8KRbRY8BbVVbBtOeQ==
+X-Google-Smtp-Source: ABdhPJwH4R+xbXw4ZAQeCHxEFnPqtmhSc85aG0KbO3UK44AAzlOvfA5p3syDpRaqGxQ1lUZzcDfIyg==
+X-Received: by 2002:a63:5d54:: with SMTP id o20mr3517250pgm.253.1592493047938;
+        Thu, 18 Jun 2020 08:10:47 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id b14sm3171510pft.23.2020.06.18.08.10.45
+        by smtp.gmail.com with ESMTPSA id b14sm3171510pft.23.2020.06.18.08.10.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2020 08:10:45 -0700 (PDT)
+        Thu, 18 Jun 2020 08:10:47 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Mark Brown <broonie@kernel.org>
 Cc:     swboyd@chromium.org, Alok Chauhan <alokc@codeaurora.org>,
         skakit@codeaurora.org, Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <dkota@codeaurora.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-spi@vger.kernel.org
-Subject: [PATCH v4 0/5] spi: spi-geni-qcom: Fixes / perf improvements
-Date:   Thu, 18 Jun 2020 08:06:21 -0700
-Message-Id: <20200618150626.237027-1-dianders@chromium.org>
+Subject: [PATCH v4 1/5] spi: spi-geni-qcom: No need for irqsave variant of spinlock calls
+Date:   Thu, 18 Jun 2020 08:06:22 -0700
+Message-Id: <20200618080459.v4.1.Ic50cccdf27d42420a63485082f8b5bf86ed1a2b6@changeid>
 X-Mailer: git-send-email 2.27.0.290.gba653c62da-goog
+In-Reply-To: <20200618150626.237027-1-dianders@chromium.org>
+References: <20200618150626.237027-1-dianders@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,52 +66,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch series is a new version of the previous patch posted:
-  [PATCH v2] spi: spi-geni-qcom: Speculative fix of "nobody cared" about interrupt
-  https://lore.kernel.org/r/20200317133653.v2.1.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid
+The driver locks its locks in two places.
 
-At this point I've done enough tracing to know that there was a real
-race in the old code (not just weakly ordered memory problems) and
-that should be fixed with the locking patches.
+In the first usage of the lock the function doing the locking already
+has a sleeping call and thus we know we can't be called from interrupt
+context.  That means we can use the "spin_lock_irq" variant of the
+function.
 
-While looking at this driver, I also noticed we weren't properly
-noting error interrupts and also weren't actually using our FIFO
-effectively, so I fixed those.
+In the second usage of the lock the function is the interrupt handler
+and we know interrupt handlers are called with interrupts disabled.
+That means we can use the "spin_lock" variant of the function.
 
-The last patch in the series addresses review feedback about dislike
-for the "cur_mcmd" state variable.  It also could possibly make
-"abort" work ever-so-slightly more reliably.
+This patch is expected to be a no-op and is just a cleanup / slight
+optimization.
 
-Changes in v4:
-- Drop 'controller' in comment.
-- Use Stephen's diagram to explain the race better.
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+---
 
+Changes in v4: None
 Changes in v3:
 - ("spi: spi-geni-qcom: No need for irqsave variant...") new for v3
-- Split out some lock cleanup to previous patch.
-- Don't need to read IRQ status register inside spinlock.
-- Don't check for state CMD_NONE; later patch is removing state var.
-- Don't hold the lock for all of setup_fifo_xfer().
-- Comment about why it's safe to Ack interrupts at the end.
-- Subject/desc changed since race is definitely there.
-- ("spi: spi-geni-qcom: Check for error IRQs") new in v3.
-- ("spi: spi-geni-qcom: Actually use our FIFO") new in v3.
-- ("spi: spi-geni-qcom: Don't keep a local state variable") new in v3.
 
-Changes in v2:
-- Detect true spurious interrupt.
-- Still return IRQ_NONE for state machine mismatch, but print warn.
+Changes in v2: None
 
-Douglas Anderson (5):
-  spi: spi-geni-qcom: No need for irqsave variant of spinlock calls
-  spi: spi-geni-qcom: Mo' betta locking
-  spi: spi-geni-qcom: Check for error IRQs
-  spi: spi-geni-qcom: Actually use our FIFO
-  spi: spi-geni-qcom: Don't keep a local state variable
+ drivers/spi/spi-geni-qcom.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
- drivers/spi/spi-geni-qcom.c | 120 ++++++++++++++++++++++++------------
- 1 file changed, 81 insertions(+), 39 deletions(-)
-
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index c3972424af71..c7d2c7e45b3f 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -122,23 +122,23 @@ static void handle_fifo_timeout(struct spi_master *spi,
+ 				struct spi_message *msg)
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+-	unsigned long time_left, flags;
++	unsigned long time_left;
+ 	struct geni_se *se = &mas->se;
+ 
+-	spin_lock_irqsave(&mas->lock, flags);
++	spin_lock_irq(&mas->lock);
+ 	reinit_completion(&mas->xfer_done);
+ 	mas->cur_mcmd = CMD_CANCEL;
+ 	geni_se_cancel_m_cmd(se);
+ 	writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+-	spin_unlock_irqrestore(&mas->lock, flags);
++	spin_unlock_irq(&mas->lock);
+ 	time_left = wait_for_completion_timeout(&mas->xfer_done, HZ);
+ 	if (time_left)
+ 		return;
+ 
+-	spin_lock_irqsave(&mas->lock, flags);
++	spin_lock_irq(&mas->lock);
+ 	reinit_completion(&mas->xfer_done);
+ 	geni_se_abort_m_cmd(se);
+-	spin_unlock_irqrestore(&mas->lock, flags);
++	spin_unlock_irq(&mas->lock);
+ 	time_left = wait_for_completion_timeout(&mas->xfer_done, HZ);
+ 	if (!time_left)
+ 		dev_err(mas->dev, "Failed to cancel/abort m_cmd\n");
+@@ -477,12 +477,11 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+ 	struct geni_se *se = &mas->se;
+ 	u32 m_irq;
+-	unsigned long flags;
+ 
+ 	if (mas->cur_mcmd == CMD_NONE)
+ 		return IRQ_NONE;
+ 
+-	spin_lock_irqsave(&mas->lock, flags);
++	spin_lock(&mas->lock);
+ 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
+ 
+ 	if ((m_irq & M_RX_FIFO_WATERMARK_EN) || (m_irq & M_RX_FIFO_LAST_EN))
+@@ -524,7 +523,7 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 	}
+ 
+ 	writel(m_irq, se->base + SE_GENI_M_IRQ_CLEAR);
+-	spin_unlock_irqrestore(&mas->lock, flags);
++	spin_unlock(&mas->lock);
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.27.0.290.gba653c62da-goog
 
