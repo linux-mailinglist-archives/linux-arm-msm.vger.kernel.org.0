@@ -2,227 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F1981FF3A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 15:48:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C05F71FF431
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 16:08:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729010AbgFRNsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 09:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48752 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728000AbgFRNsY (ORCPT
+        id S1730250AbgFROIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 10:08:02 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:28282 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730360AbgFROIB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 09:48:24 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB2DC06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 06:48:23 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id w20so2009526uaa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 06:48:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CpHy4ZRqt4vTzluMmipLOM1I/DLh0EwjsdNnc3s1SIg=;
-        b=eC+MKw65pcbP1d26NYOHLWaBWSwkLLCE9cI07VO97OTuchUg0GA+7RDfpJ5Xaq3CMQ
-         gsyETWKCUKyjJj07ULiDGDCHYss4q+UDbrxJuOjt7NdthhPuciIGS1XpXNa3sBD8+9Ap
-         WBCYcgAGtLBnyFlpYvkGY2eL7YuB2VsdAu0tc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CpHy4ZRqt4vTzluMmipLOM1I/DLh0EwjsdNnc3s1SIg=;
-        b=S4ZeMV+1py6dBvGPj43jEX6F0C8VXiX4vszj3daBCTiZ1K1E+cZEAc8AE2vs6DkyAT
-         ixbLUTYLP8jV9jRTE3TaLhjgG5s5WLoD9S5C4rMjp85Cwe20M08rOuwmMP3NraYI9i8j
-         9pWRBcfO+YQiNDaS/oYSLuJd5a878FpMf0EJUkQn5IL2Z+tD2c3P0OYyKujLTqPZdtua
-         kyOLV8gJZkg7wuJ1jO3rB0N8nON9yhN4rsmLFjkfP00JZZl4JcrULvhAnRSY1rs1P98a
-         OUPowPsbaEO1eTNaLGDiqHzFCfbTEgnMeQWqOFoRt0M16tJ6P9ZN39R/Kw4LH+yCV/2V
-         FhTQ==
-X-Gm-Message-State: AOAM530S6antmjC5RqKiyZuKSeOe2vO2Xds501VFhxgKvX303Da0w64q
-        z/GIv1ZAahUo0uZMzGZK3unY9i69l7U=
-X-Google-Smtp-Source: ABdhPJwuL/v+T5+ZrfHoTTgmL580RMIBAzCINbAaQRS1DpRTMiw+N6zl1APJndSTKLIHs8EA78KfWA==
-X-Received: by 2002:ab0:b13:: with SMTP id b19mr2787722uak.55.1592488101905;
-        Thu, 18 Jun 2020 06:48:21 -0700 (PDT)
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com. [209.85.221.179])
-        by smtp.gmail.com with ESMTPSA id b5sm358667vsm.7.2020.06.18.06.48.20
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 06:48:20 -0700 (PDT)
-Received: by mail-vk1-f179.google.com with SMTP id t23so1441046vkt.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 06:48:20 -0700 (PDT)
-X-Received: by 2002:a1f:ee81:: with SMTP id m123mr3227978vkh.51.1592488099550;
- Thu, 18 Jun 2020 06:48:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200617145116.247432-1-dianders@chromium.org>
- <20200617074930.v3.2.I3b5c3bfaf5fb2d28d63f1b5ee92980900e3f8251@changeid>
- <254998b9-c45e-bd6b-bc9a-b5934c0fea8e@linaro.org> <CAD=FV=Vec5FVrDVkmUQTfa6bP+1d3yOtj_FsgVAFdHLLbZ8VDA@mail.gmail.com>
- <db6cc914-0520-5286-f852-473fc63bd6c7@linaro.org>
-In-Reply-To: <db6cc914-0520-5286-f852-473fc63bd6c7@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Jun 2020 06:48:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UZAtJY42jwSZy+Z+O3AdZqDxnjY1zzOswqQRDY91uPpA@mail.gmail.com>
-Message-ID: <CAD=FV=UZAtJY42jwSZy+Z+O3AdZqDxnjY1zzOswqQRDY91uPpA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] dt-bindings: nvmem: Add properties needed for
- blowing fuses
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, dhavalp@codeaurora.org,
-        mturney@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Ravi Kumar Bokka <rbokka@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        sparate@codeaurora.org, mkurumel@codeaurora.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 18 Jun 2020 10:08:01 -0400
+X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jun 2020 10:07:58 EDT
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 18 Jun 2020 07:01:54 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 Jun 2020 07:01:52 -0700
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 18 Jun 2020 19:31:28 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 5292D4A0A; Thu, 18 Jun 2020 19:31:27 +0530 (IST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        travitej@codeaurora.org, nganji@codeaurora.org
+Subject: [v8] drm/msm/dpu: ensure device suspend happens during PM sleep
+Date:   Thu, 18 Jun 2020 19:31:24 +0530
+Message-Id: <1592488884-21890-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+"The PM core always increments the runtime usage counter
+before calling the ->suspend() callback and decrements it
+after calling the ->resume() callback"
 
-On Thu, Jun 18, 2020 at 3:10 AM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
-> +Adding SBoyd.
->
-> On 17/06/2020 18:22, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Wed, Jun 17, 2020 at 8:19 AM Srinivas Kandagatla
-> > <srinivas.kandagatla@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 17/06/2020 15:51, Douglas Anderson wrote:
-> >>> From: Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >>>
-> >>> On some systems it's possible to actually blow the fuses in the qfprom
-> >>> from the kernel.  Add properties to support that.
-> >>>
-> >>> NOTE: Whether this is possible depends on the BIOS settings and
-> >>> whether the kernel has permissions here, so not all boards will be
-> >>> able to blow fuses in the kernel.
-> >>>
-> >>> Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >>> ---
-> >>>
-> >>> Changes in v3:
-> >>> - Add an extra reg range (at 0x6000 offset for SoCs checked)
-> >>> - Define two options for reg: 1 item or 4 items.
-> >>> - No reg-names.
-> >>> - Add "clocks" and "clock-names" to list of properties.
-> >>> - Clock is now "sec", not "secclk".
-> >>> - Add "vcc-supply" to list of properties.
-> >>> - Fixed up example.
-> >>>
-> >>>    .../bindings/nvmem/qcom,qfprom.yaml           | 45 ++++++++++++++++++-
-> >>>    1 file changed, 43 insertions(+), 2 deletions(-)
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>> index 5efa5e7c4d81..b195212c6193 100644
-> >>> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>> @@ -17,8 +17,27 @@ properties:
-> >>>        const: qcom,qfprom
-> >>>
-> >>>      reg:
-> >>> -    items:
-> >>> -      - description: The corrected region.
-> >>> +    # If the QFPROM is read-only OS image then only the corrected region
-> >>> +    # needs to be provided.  If the QFPROM is writable then all 4 regions
-> >>> +    # must be provided.
-> >>> +    oneOf:
-> >>> +      - items:
-> >>> +          - description: The corrected region.
-> >>> +      - items:
-> >>> +          - description: The corrected region.
-> >>> +          - description: The raw region.
-> >>> +          - description: The config region.
-> >>> +          - description: The security control region.
-> >>> +
-> >>> +  # Clock must be provided if QFPROM is writable from the OS image.
-> >>> +  clocks:
-> >>> +    maxItems: 1
-> >>
-> >>
-> >>> +  clock-names:
-> >>> +    const: sec
-> >>
-> >> Do we need clock-names for just one clock here?
-> >
-> > I think technically you can get by without, but convention is that
-> > clock-names are always provided for clocks.  It's talked about in the
-> > same link I sent that talked about reg-names:
-> >
-> > https://lore.kernel.org/r/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
-> >
->
-> TBH, This is total confusion!!!
->
-> when to use "*-names" Device tree bindings is totally depended on Linux
-> Subsystem interfaces!
->
-> And what is the starting point to draw this line?
+DPU and DSI are managed as runtime devices. When
+suspend is triggered, PM core adds a refcount on all the
+devices and calls device suspend, since usage count is
+already incremented, runtime suspend was not getting called
+and it kept the clocks on which resulted in target not
+entering into XO shutdown.
 
-Definitely confusing and mostly because the dts stuff grew organically
-for a while there.  It does feel like Rob is pretty clear on the
-current state of things and the policy in the link I provided, though.
+Add changes to force suspend on runtime devices during pm sleep.
 
+Changes in v1:
+ - Remove unnecessary checks in the function
+    _dpu_kms_disable_dpu (Rob Clark).
 
-> > Specifically, Rob said:
-> >
-> >> That probably is because the clock binding has had clock-names from
-> >> the start (it may have been the first one). That was probably partly
-> >> due to the clock API also was mainly by name already if we want to
-> >> admit Linux influence on bindings
-> >
-> > Basically the standard way for getting clocks in Linux is
-> > clk_get(name).  With just one clock you can call clk_get(NULL) and I
-> > believe that works, but when you add the 2nd clock then you have to
-> > switch APIs to one of the less-commonly-used variants.
->
-> In previous NON-DT life clk_get api name argument comes from the clk
-> names that clk provider registered the clocks with.
->
-> If I remember this correctly, the name that is refereed here for
-> clk_get() is old clkdev api based on clk_lookups and is not the same as
-> clk-names that we have in Device tree. Atleast in this case!
->
-> clk-names has two objectives in DT:
-> 1> To find the index of the clock in the clocks DT property.
->
-> 2> If actual clk name is specified then if "1" fails then name could
-> potentially fallback to use old clkdev based clk_lookups.
->
-> In this specific case we have "sec" as clock-names which is totally used
-> for indexing into clocks property and it can not be used for (2) as
-> there is no clk named "sec" registered by any of the clk providers.
->
-> So this does not justify the reasoning why "clock-names" should be used
-> while "reg-names" should not be used!. Both of them are going to be
-> finally used for indexing into there respective properties.
+Changes in v2:
+ - Avoid using suspend_late to reset the usagecount
+   as suspend_late might not be called during suspend
+   call failures (Doug).
 
-Right, you just have to accept the fact that logic doesn't come into
-play here.  For clocks, always use "clk-names" but also always use a
-consistent order (which is now more enforced by the schema checker).
-For "reg" almost never use "reg-names".
+Changes in v3:
+ - Use force suspend instead of managing device usage_count
+   via runtime put and get API's to trigger callbacks (Doug).
 
+Changes in v4:
+ - Check the return values of pm_runtime_force_suspend and
+   pm_runtime_force_resume API's and pass appropriately (Doug).
 
-> This also brings in greater confusion for both existing and while adding
-> bindings with "*-names" for new interfaces.
->
-> Rob, can you please provide some clarity and direction on when to
-> use/not-use *-names properties!
+Changes in v5:
+ - With v4 patch, test cycle has uncovered issues in device resume.
 
-If I had to guess Rob will say that we shouldn't add more places where
-the convention is to have "-names".
+   On bubs: cmd tx failures were seen as SW is sending panel off
+   commands when the dsi resources are turned off.
 
+   Upon suspend, DRM driver will issue a NULL composition to the
+   dpu, followed by turning off all the HW blocks.
 
-I will put posting v4 of this patch on pause until this is resolved to
-avoid fragmenting the discussion.
+   v5 changes will serialize the NULL commit and resource unwinding
+   by handling them under PM prepare and PM complete phases there by
+   ensuring that clks are on when panel off commands are being
+   processed.
 
+Changes in v6:
+- Use drm_mode_config_helper_suspend/resume() instead of legacy API
+  drm_atomic_helper_suspend/resume() (Doug).
 
--Doug
+  Trigger runtime callbacks from the suspend/resume call to turn
+  off the resources.
+
+Changes in v7:
+- Add "__maybe_unused" to the functions to avoid compilation
+  failures. Cleanup unnecessary configs (Doug).
+
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  2 +
+ drivers/gpu/drm/msm/dsi/dsi.c           |  2 +
+ drivers/gpu/drm/msm/msm_drv.c           | 67 +++++++++++++++------------------
+ 3 files changed, 35 insertions(+), 36 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index a5da7aa..dcf5b9a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1150,6 +1150,8 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+ 
+ static const struct dev_pm_ops dpu_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(dpu_runtime_suspend, dpu_runtime_resume, NULL)
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ };
+ 
+ static const struct of_device_id dpu_dt_match[] = {
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+index 55ea4bc2..62704885 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -161,6 +161,8 @@ static int dsi_dev_remove(struct platform_device *pdev)
+ 
+ static const struct dev_pm_ops dsi_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(msm_dsi_runtime_suspend, msm_dsi_runtime_resume, NULL)
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ };
+ 
+ static struct platform_driver dsi_driver = {
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index f6ce40b..6d294c8 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1039,75 +1039,70 @@ static int msm_ioctl_submitqueue_close(struct drm_device *dev, void *data,
+ 	.patchlevel         = MSM_VERSION_PATCHLEVEL,
+ };
+ 
+-#ifdef CONFIG_PM_SLEEP
+-static int msm_pm_suspend(struct device *dev)
++static int __maybe_unused msm_runtime_suspend(struct device *dev)
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct msm_drm_private *priv = ddev->dev_private;
++	struct msm_mdss *mdss = priv->mdss;
+ 
+-	if (WARN_ON(priv->pm_state))
+-		drm_atomic_state_put(priv->pm_state);
++	DBG("");
+ 
+-	priv->pm_state = drm_atomic_helper_suspend(ddev);
+-	if (IS_ERR(priv->pm_state)) {
+-		int ret = PTR_ERR(priv->pm_state);
+-		DRM_ERROR("Failed to suspend dpu, %d\n", ret);
+-		return ret;
+-	}
++	if (mdss && mdss->funcs)
++		return mdss->funcs->disable(mdss);
+ 
+ 	return 0;
+ }
+ 
+-static int msm_pm_resume(struct device *dev)
++static int __maybe_unused msm_runtime_resume(struct device *dev)
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct msm_drm_private *priv = ddev->dev_private;
+-	int ret;
++	struct msm_mdss *mdss = priv->mdss;
+ 
+-	if (WARN_ON(!priv->pm_state))
+-		return -ENOENT;
++	DBG("");
+ 
+-	ret = drm_atomic_helper_resume(ddev, priv->pm_state);
+-	if (!ret)
+-		priv->pm_state = NULL;
++	if (mdss && mdss->funcs)
++		return mdss->funcs->enable(mdss);
+ 
+-	return ret;
++	return 0;
+ }
+-#endif
+ 
+-#ifdef CONFIG_PM
+-static int msm_runtime_suspend(struct device *dev)
++static int __maybe_unused msm_pm_suspend(struct device *dev)
+ {
+-	struct drm_device *ddev = dev_get_drvdata(dev);
+-	struct msm_drm_private *priv = ddev->dev_private;
+-	struct msm_mdss *mdss = priv->mdss;
+ 
+-	DBG("");
++	if (pm_runtime_suspended(dev))
++		return 0;
+ 
+-	if (mdss && mdss->funcs)
+-		return mdss->funcs->disable(mdss);
++	return msm_runtime_suspend(dev);
++}
+ 
+-	return 0;
++static int __maybe_unused msm_pm_resume(struct device *dev)
++{
++	if (pm_runtime_suspended(dev))
++		return 0;
++
++	return msm_runtime_resume(dev);
+ }
+ 
+-static int msm_runtime_resume(struct device *dev)
++static int __maybe_unused msm_pm_prepare(struct device *dev)
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+-	struct msm_drm_private *priv = ddev->dev_private;
+-	struct msm_mdss *mdss = priv->mdss;
+ 
+-	DBG("");
++	return drm_mode_config_helper_suspend(ddev);
++}
+ 
+-	if (mdss && mdss->funcs)
+-		return mdss->funcs->enable(mdss);
++static void __maybe_unused msm_pm_complete(struct device *dev)
++{
++	struct drm_device *ddev = dev_get_drvdata(dev);
+ 
+-	return 0;
++	drm_mode_config_helper_resume(ddev);
+ }
+-#endif
+ 
+ static const struct dev_pm_ops msm_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(msm_pm_suspend, msm_pm_resume)
+ 	SET_RUNTIME_PM_OPS(msm_runtime_suspend, msm_runtime_resume, NULL)
++	.prepare = msm_pm_prepare,
++	.complete = msm_pm_complete,
+ };
+ 
+ /*
+-- 
+1.9.1
+
