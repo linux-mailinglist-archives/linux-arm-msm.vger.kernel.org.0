@@ -2,73 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0D181FFDA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 00:00:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EF871FFDBB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 00:09:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731524AbgFRWA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 18:00:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40104 "EHLO
+        id S1731678AbgFRWJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 18:09:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726573AbgFRWA0 (ORCPT
+        with ESMTP id S1728321AbgFRWJb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 18:00:26 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE02C06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:00:24 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id r5so1914134vso.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:00:24 -0700 (PDT)
+        Thu, 18 Jun 2020 18:09:31 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3137CC06174E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:09:28 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id e1so1832599vkd.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JJH2EhuV/l7lkkyLG+fPn9FLJNHdoBEceDl0Qlyep9Q=;
-        b=BuEgVqa7JJLH/NwKBu8Sw33xZRs5BjNpsUCbu53oaMGOfj8rIToOq03sVNfeMQ0eSN
-         XHqwE1QZaeylpeCgx8Azm6R9RJttc3GRF91SUFrc3gUIOTrNV+mYLkzqzbKNBpdFkvyw
-         eUrvad2APf3CIoCUdT6o0wTqhaxATvNBU0yoE=
+        bh=rIJ2X6dOzoq0wY6kg8iKEYYmkTTN8+C1IDuvViUAAlw=;
+        b=lVrFJvl5mDjocLA105kchQDYwRR/Mq9nlcXy/owwADieAZYgAuGsjK3xpftm0NXclu
+         BDh1QPoJU1TPpXMWq0DmrgoRSIGzBPlrIy8he0In3LWP8m83XqE+r0HZadf/sXAFVj2e
+         IayO8IVxHmcZK2mLywOzCBqLmikiRhPA0Z8ME=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JJH2EhuV/l7lkkyLG+fPn9FLJNHdoBEceDl0Qlyep9Q=;
-        b=ULtWtegWZisR7bDGLo1B02AwQh3bfBFK+iN93o3pGMhliGORLXSJK5alK07JTQDsjS
-         10y4KSYLBaynzQbw9K30+WlahHixLhDmGesIHvHvQadAIMe1wwUC3ILAFaJhUbzeqYT4
-         LqrShhGYnLd1cgtAyAdVJumj3yT7/BA1fcDkHDnh0v1Kj+YSfU8h/5dY7n6cSKNAmkK6
-         reaWlveNHaZCdQw9Cj9KzKZEtOVc41cnGxZHguRacpZQztO4Uvx904jfhZp6jirO5CNd
-         7W3NMyBhoHkcp0epvtK2l1daLuAZFoxtDlI+TbkO3dKyix4jJ8RTOWT1FVfPS5uxcbod
-         kuDQ==
-X-Gm-Message-State: AOAM531V6/WQFBQ6gke8ss37jm2RFU6YtFddTsPFDDEZ8Yfz59yqtDA8
-        rQugpVug0dLFu++h6Kb3y67p2g8V6Vk=
-X-Google-Smtp-Source: ABdhPJzPBwrqijTEsbNNsBdlJs5MM1HJEKog0Y4aiRWhKkLlgGo07Ap35oz6Bio0PvFDE4jeR7R0gQ==
-X-Received: by 2002:a05:6102:15b:: with SMTP id a27mr5458180vsr.141.1592517623338;
-        Thu, 18 Jun 2020 15:00:23 -0700 (PDT)
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
-        by smtp.gmail.com with ESMTPSA id g5sm489917vsp.26.2020.06.18.15.00.22
+        bh=rIJ2X6dOzoq0wY6kg8iKEYYmkTTN8+C1IDuvViUAAlw=;
+        b=saHeORgKinbFuefQroQb0gVgVzuPMXmp1HjvtMp5LA5vDSmqHo6bp0JK8Wwc5MFEKF
+         7y/rrJz0t7/Gs31VgVq/W7lRey0/oDhA56So6M0+Klxoo/sGdoraNOog4iU+fXsAOtTV
+         gblawH1n+qvy/vvkaBW9mOYlcfL+BqegTUqps2jtQhQklGuOYcrKugKrylMfDgMa/ic9
+         i6AA9/uKhxe3QzP+L+AYaEa9j1fQGMtQW/4ouCzK7LKEPJgAK79k6Cv/ZEuMdvT4urwb
+         TenZLygK0czdOZEsBWDcP8qcpVrHtYCoLOX+XeSzS0YIShVGiKEyq6zKLhvRAc1imM2w
+         a2Vg==
+X-Gm-Message-State: AOAM530eOC2cunVuANvaSbG1yClYkdTzI1CiFEF0lXBSCbIu3nGcVa60
+        GW2QGn9alLAufV+iO1E2z13r1zUt2mQ=
+X-Google-Smtp-Source: ABdhPJz2oHCnUx5k8SXk4YLGYttDpsvdnMN/Q32aOgPeoQFkdxyvTs3bAZ9YnpgzolphLC70+Di1tw==
+X-Received: by 2002:a1f:9444:: with SMTP id w65mr5357466vkd.50.1592518166950;
+        Thu, 18 Jun 2020 15:09:26 -0700 (PDT)
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
+        by smtp.gmail.com with ESMTPSA id g5sm492975vsp.26.2020.06.18.15.09.25
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 15:00:22 -0700 (PDT)
-Received: by mail-vs1-f49.google.com with SMTP id t132so4474265vst.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:00:22 -0700 (PDT)
-X-Received: by 2002:a67:62c4:: with SMTP id w187mr3093005vsb.109.1592517622000;
- Thu, 18 Jun 2020 15:00:22 -0700 (PDT)
+        Thu, 18 Jun 2020 15:09:25 -0700 (PDT)
+Received: by mail-ua1-f49.google.com with SMTP id t26so2519305ual.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:09:25 -0700 (PDT)
+X-Received: by 2002:a9f:3b1c:: with SMTP id i28mr501831uah.22.1592518164952;
+ Thu, 18 Jun 2020 15:09:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200618150626.237027-1-dianders@chromium.org>
- <20200618080459.v4.5.Ib1e6855405fc9c99916ab7c7dee84d73a8bf3d68@changeid>
- <159250352382.62212.8085892973272354046@swboyd.mtv.corp.google.com>
- <CAD=FV=Xh3+cROZC8dCn99MLkngsyBcxq+Gv1CERayZXExwdygA@mail.gmail.com> <159251712230.62212.10744179843753723398@swboyd.mtv.corp.google.com>
-In-Reply-To: <159251712230.62212.10744179843753723398@swboyd.mtv.corp.google.com>
+References: <20200609120455.20458-1-harigovi@codeaurora.org>
+In-Reply-To: <20200609120455.20458-1-harigovi@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Jun 2020 15:00:10 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W1y4Z4T13i410zkb27mUxqn+rQE889=ckEEBhbPuci2w@mail.gmail.com>
-Message-ID: <CAD=FV=W1y4Z4T13i410zkb27mUxqn+rQE889=ckEEBhbPuci2w@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] spi: spi-geni-qcom: Don't keep a local state variable
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Date:   Thu, 18 Jun 2020 15:09:13 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XHHAAWNkJGMJESf4C=hcbaswFamGVeyMJ9eRd6dWAy8Q@mail.gmail.com>
+Message-ID: <CAD=FV=XHHAAWNkJGMJESf4C=hcbaswFamGVeyMJ9eRd6dWAy8Q@mail.gmail.com>
+Subject: Re: [v3] drm/bridge: ti-sn65dsi86: ensure bridge suspend happens
+ during PM sleep
+To:     Harigovindan P <harigovi@codeaurora.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Andrzej Hajda <a.hajda@samsung.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>, nganji@codeaurora.org,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -77,85 +83,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Thu, Jun 18, 2020 at 2:52 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Tue, Jun 9, 2020 at 5:05 AM Harigovindan P <harigovi@codeaurora.org> wrote:
 >
-> Quoting Doug Anderson (2020-06-18 13:09:47)
-> > On Thu, Jun 18, 2020 at 11:05 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Douglas Anderson (2020-06-18 08:06:26)
-> > > > @@ -126,20 +120,23 @@ static void handle_fifo_timeout(struct spi_master *spi,
-> > > >         struct geni_se *se = &mas->se;
-> > > >
-> > > >         spin_lock_irq(&mas->lock);
-> > > > -       reinit_completion(&mas->xfer_done);
-> > > > -       mas->cur_mcmd = CMD_CANCEL;
-> > > > -       geni_se_cancel_m_cmd(se);
-> > > > +       reinit_completion(&mas->cancel_done);
-> > > >         writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> > > > +       mas->cur_xfer = NULL;
-> > >
-> > > BTW, is this necessary? It's subtlely placed here without a comment why.
-> >
-> > I believe so.  Now that we don't have the "cur_mcmd" we rely on
-> > cur_xfer being NULL to tell the difference between a "done" for chip
-> > select vs. a "done" for transfer.
-> >
-> > * When we start a transfer we set "cur_xfer" to a non-NULL pointer.
-> > When the transfer finishes we set it to NULL again.
-> >
-> > * When we start a chip select transfer we _don't_ explicitly set it to
-> > NULL because it should already be NULL.
-> >
-> > * When we are aborting a transfer we need to NULL so we can handle the
-> > chip select that will come next.
-> >
-> > I suppose it's possible that we could get by without without NULLing
-> > it because I believe when the "abort" IRQ finally fires then it will
-> > include a "DONE" and that would presumably NULL it out.  ...but I
-> > guess if both the cancel and abort timed out and no IRQ ever fired
-> > then nothing would have NULLed it and the next chip select would be
-> > confused.
+> ti-sn65dsi86 bridge is enumerated as a runtime device. When
+> suspend is triggered, PM core adds a refcount on all the
+> devices and calls device suspend, since usage count is
+> already incremented, runtime suspend will not be called
+> and it kept the bridge regulators and gpios ON which resulted
+> in platform not entering into XO shutdown.
 >
-> I was going to say that we should set it NULL when starting CS but that
-> is not as important as clearing it out when a cancel/abort is processing
-> so that a stale transfer isn't kept around.
+> Add changes to force suspend on the runtime device during pm sleep.
 >
-> >
-> > Prior to getting rid of "cur_mcmd" this all wasn't needed because
-> > "cur_xfer" was only ever looked at if "cur_mcmd" was set to
-> > "CMD_XFER".
-> >
-> >
-> > One part of my change that is technically not related to the removal
-> > of "cur_mcmd" is the part where I do "mas->tx_rem_bytes =
-> > mas->rx_rem_bytes = 0;".  I can split that as a separate change if you
-> > want but it seemed fine to just clean up this extra bit of state here.
-> >
+> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+> ---
 >
-> How about a comment like this?
+> Changes in v2:
+>         - Include bridge name in the commit message and
+>         remove dependent patchwork link from the commit
+>         text as bridge is independent of OEM(Stephen Boyd)
 >
-> -----8<----
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index d8f03ffb8594..670f83793aa4 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -121,6 +121,10 @@ static void handle_fifo_timeout(struct spi_master *spi,
->         spin_lock_irq(&mas->lock);
->         reinit_completion(&mas->cancel_done);
->         writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> +       /*
-> +        * Make sure we don't finalize a spi transfer that timed out but
-> +        * came in while cancelling.
-> +        */
->         mas->cur_xfer = NULL;
->         mas->tx_rem_bytes = mas->rx_rem_bytes = 0;
->         geni_se_cancel_m_cmd(se);
+> Changes in v3:
+>         - Updating changelog to explain the need for patch
+>
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Sure.  It gets the point across, though
-spi_finalize_current_transfer() is actually pretty harmless if you
-call it while cancelling.  It just calls a completion.  I'd rather say
-something like "If we're here because the SPI controller was calling
-handle_err() then the transfer is done and we shouldn't hold onto it
-anymore".
+I think this patch is good to go now (has both Stephen's and my
+reviews).  I noticed that Neil landed my other patches to this driver
+recently (thanks!) and wondered why he didn't land this one.  Then, I
+realized that you didn't send it to him or the other bridge
+maintainer.  :(  Have you tried running get_maintainer?
+
+$ ./scripts/get_maintainer.pl -f drivers/gpu/drm/bridge/ti-sn65dsi86.c
+Andrzej Hajda <a.hajda@samsung.com> (maintainer:DRM DRIVERS FOR BRIDGE CHIPS)
+Neil Armstrong <narmstrong@baylibre.com> (maintainer:DRM DRIVERS FOR
+BRIDGE CHIPS)
+Laurent Pinchart <Laurent.pinchart@ideasonboard.com> (reviewer:DRM
+DRIVERS FOR BRIDGE CHIPS)
+Jonas Karlman <jonas@kwiboo.se> (reviewer:DRM DRIVERS FOR BRIDGE CHIPS)
+Jernej Skrabec <jernej.skrabec@siol.net> (reviewer:DRM DRIVERS FOR BRIDGE CHIPS)
+David Airlie <airlied@linux.ie> (maintainer:DRM DRIVERS)
+Daniel Vetter <daniel@ffwll.ch> (maintainer:DRM DRIVERS)
+dri-devel@lists.freedesktop.org (open list:DRM DRIVERS)
+linux-kernel@vger.kernel.org (open list)
+
+In any case, unless someone has extra feedback on this patch I think
+it's ready to land.
+
+Neil: If you're willing to land this patch too, can you let
+Harigovindan know if it needs to be re-sent with you in the "To:" list
+or if you can find it on the dri-devel list?
+
+Thanks!
 
 -Doug
