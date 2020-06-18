@@ -2,35 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A6D1FDAF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 03:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 104451FDB39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 03:11:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728186AbgFRBJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 21:09:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35802 "EHLO mail.kernel.org"
+        id S1728594AbgFRBKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 21:10:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38298 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728170AbgFRBJ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:09:27 -0400
+        id S1728609AbgFRBKs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:10:48 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 31D5321BE5;
-        Thu, 18 Jun 2020 01:09:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1CC9B214DB;
+        Thu, 18 Jun 2020 01:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592442567;
-        bh=BCck0kQnMhAfG7wmIdj+cka0AdBZOnZe4nLqeQw3x8M=;
+        s=default; t=1592442647;
+        bh=OeDBeLcNk9Jymm8syCr+lEMv51GWrupM4856RcZCB9s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YfFhefDlkiYbAMIMTLE2SROWppImYqa0AevDdoZFlJZvnVfh/GqBoMmLG4mmLtdJm
-         nEVRjA+NTJ/MW8V5YaCwv0JDWS18ATdIxpa8/dI856W5KqYQuswG54DlxXNtLOAKHm
-         VzXU/NqNygKWNVoZqKEXQu5B8iReZTzRB6ZB8Rk0=
+        b=aaOyxYij5SBkvwxxO48xe1hEWbTIRzWGXh19QZHw3DHJFwbfdinfyrikGgLfj7RjU
+         1cohyafayB7LkdmOUysJjbasSSgOU2r1guwt0fVEF6vlvMrlkLh9wD16tHt0j85sgZ
+         sKw0OZNu6LRTeIPDV/l4ov0SXvgNi/E/cCmd2wGQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Maulik Shah <mkshah@codeaurora.org>, devicetree@vger.kernel.org,
+Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 061/388] arm64: dts: qcom: sc7180: Correct the pdc interrupt ranges
-Date:   Wed, 17 Jun 2020 21:02:38 -0400
-Message-Id: <20200618010805.600873-61-sashal@kernel.org>
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 121/388] arm64: dts: qcom: msm8916: remove unit name for thermal trip points
+Date:   Wed, 17 Jun 2020 21:03:38 -0400
+Message-Id: <20200618010805.600873-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200618010805.600873-1-sashal@kernel.org>
 References: <20200618010805.600873-1-sashal@kernel.org>
@@ -43,37 +44,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Maulik Shah <mkshah@codeaurora.org>
+From: Amit Kucheria <amit.kucheria@linaro.org>
 
-[ Upstream commit 7d2f29e49477aa51339e719cf73f0945c39c8a9e ]
+[ Upstream commit fe2aff0c574d206f34f1864d5a0b093694c27142 ]
 
-Few PDC interrupts do not map to respective parent GIC interrupt.
-Fix this by correcting the pdc interrupt map.
+The thermal trip points have unit name but no reg property, so we can
+remove them. It also fixes the following warnings from 'make dtbs_check'
+after adding the thermal yaml bindings.
 
-Fixes: 22f185ee81d2 ("arm64: dts: qcom: sc7180: Add pdc interrupt controller")
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Link: https://lore.kernel.org/r/1589804402-27130-1-git-send-email-mkshah@codeaurora.org
+arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml: thermal-zones:
+gpu-thermal:trips: 'trip-point@0' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml: thermal-zones:
+camera-thermal:trips: 'trip-point@0' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml: thermal-zones:
+modem-thermal:trips: 'trip-point@0' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+
+arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml: thermal-zones:
+gpu-thermal:trips: 'trip-point@0' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml: thermal-zones:
+camera-thermal:trips: 'trip-point@0' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml: thermal-zones:
+modem-thermal:trips: 'trip-point@0' does not match any of the regexes:
+'^[a-zA-Z][a-zA-Z0-9\\-_]{0,63}$', 'pinctrl-[0-9]+'
+
+Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+Link: https://lore.kernel.org/r/2d3d045c18a2fb85b28cf304aa11ae6e6538d75e.1585562459.git.amit.kucheria@linaro.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 998f101ad623..eea92b314fc6 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1657,8 +1657,7 @@ dispcc: clock-controller@af00000 {
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sc7180-pdc", "qcom,pdc";
- 			reg = <0 0x0b220000 0 0x30000>;
--			qcom,pdc-ranges = <0 480 15>, <17 497 98>,
--					  <119 634 4>, <124 639 1>;
-+			qcom,pdc-ranges = <0 480 94>, <94 609 31>, <125 63 1>;
- 			#interrupt-cells = <2>;
- 			interrupt-parent = <&intc>;
- 			interrupt-controller;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index a88a15f2352b..5548d7b5096c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -261,7 +261,7 @@ cpu2_3-thermal {
+ 			thermal-sensors = <&tsens 4>;
+ 
+ 			trips {
+-				cpu2_3_alert0: trip-point@0 {
++				cpu2_3_alert0: trip-point0 {
+ 					temperature = <75000>;
+ 					hysteresis = <2000>;
+ 					type = "passive";
+@@ -291,7 +291,7 @@ gpu-thermal {
+ 			thermal-sensors = <&tsens 2>;
+ 
+ 			trips {
+-				gpu_alert0: trip-point@0 {
++				gpu_alert0: trip-point0 {
+ 					temperature = <75000>;
+ 					hysteresis = <2000>;
+ 					type = "passive";
+@@ -311,7 +311,7 @@ camera-thermal {
+ 			thermal-sensors = <&tsens 1>;
+ 
+ 			trips {
+-				cam_alert0: trip-point@0 {
++				cam_alert0: trip-point0 {
+ 					temperature = <75000>;
+ 					hysteresis = <2000>;
+ 					type = "hot";
+@@ -326,7 +326,7 @@ modem-thermal {
+ 			thermal-sensors = <&tsens 0>;
+ 
+ 			trips {
+-				modem_alert0: trip-point@0 {
++				modem_alert0: trip-point0 {
+ 					temperature = <85000>;
+ 					hysteresis = <2000>;
+ 					type = "hot";
 -- 
 2.25.1
 
