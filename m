@@ -2,145 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 112491FF449
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 16:10:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D47D51FF5D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 16:55:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730652AbgFROKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 10:10:40 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:42563 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730622AbgFROKk (ORCPT
+        id S1731165AbgFROyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 10:54:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59094 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730971AbgFROyy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 10:10:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592489439; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=jjmPl8ffifdefNdsGpjiapdQuNH9tn0Yaao34JTd4R8=; b=ViF0ONqo2J9EWL+dbR6evAVa6/wBHH3vsm9EUyQEQgW2gvU2/pX8b7ZeIBbBBV03C4DXTNWb
- 27rtO5yj/S65+kW5tGIkywL4bIJz4WWm/nMDslvXTFyMsAvERxSemrYuVvdqj2VRlmTkg6I6
- zV4tbamKBQER2yonED9UPlgEF9E=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
- 5eeb75d0567385e8e7ff6a56 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Jun 2020 14:10:24
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0BAEAC43391; Thu, 18 Jun 2020 14:10:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0EF7EC433C8;
-        Thu, 18 Jun 2020 14:10:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0EF7EC433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Thu, 18 Jun 2020 08:10:21 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        georgi.djakov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        dianders@chromium.org, swboyd@chromium.org, rnayak@codeaurora.org,
-        lsrao@codeaurora.org
-Subject: Re: [PATCH] soc: qcom: rpmh: Update rpmh_invalidate function to
- return void
-Message-ID: <20200618141021.GG12942@codeaurora.org>
-References: <1592485553-29163-1-git-send-email-mkshah@codeaurora.org>
+        Thu, 18 Jun 2020 10:54:54 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4CBC06174E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 07:54:54 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id l12so6722115ejn.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 07:54:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HZYiZmWf6ruq72Uesy0UkTynhdCMb7aPfkJ7IXCFCdM=;
+        b=Jf26HU5wpOUJ2LgyCiL8Kvo/hfcGs1oXL7yWO/GV9O2ZMv2+coQ9M7P099MydNUx+5
+         WCah9K/X1uK/ZpZ3dO8vhfA2XT2pnRBOyOFB8aE9IrTyd1R2vpUevLTlnffrTDOsCAep
+         fKAtEDsPu3ery2VkgkpdwK5Aj5uWdShz9dcGlGtiBI05uQiiRzumcdgOy0xFOLGlUKwG
+         qm/oyPbIQBNw2Gif0utsnHoNoFDYZGa258tsCklpvUw7a8lDqPZKN/n6/QfIa2U6JEpm
+         G6PAbDTZN/4jy4OQiwlqVrskkqz31lw1GkCucJZA+aauWc7DoOqKBFuL4nVbtvsRWs3u
+         0Nww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HZYiZmWf6ruq72Uesy0UkTynhdCMb7aPfkJ7IXCFCdM=;
+        b=mbsOYYyfKZNrGLWC1mlP9+qRWzTtzlEcvdgqASBb2VTp++QuBzyurRqk396sovTOYc
+         dLKfpwAfO8wJH0GLPbfHPjqF1HXEllOU5Q2GuT5vlkOY08S6fYFuJF1QmMTsceS+5Zdc
+         CAeukrQmQqfiFvoHOldolDRIzgCaFRMsMHvDJFfC/ARQ/g1gNqHcHfS+985cUOF+4GWq
+         LjUaZFYM5dv0z4Up2unIfWMTMl+gWGgquYpJ4l3r9SOGqxnBDbBSxzDye+p0NSN1X2BC
+         zT8FP83rW1Iq0e5ivYMpGCjsIHB2HgmNEAfDlflIWAkxF+KJNUWzDaatIvkygdtAkyif
+         ahHQ==
+X-Gm-Message-State: AOAM533zfDJXAEj2/hVyHWI7g9d209Exp0BJiAu1HsKyemhwo4KLJXQt
+        8sy7ueo9bdzg0ebRVclM6P3JmKoXXpmCUg==
+X-Google-Smtp-Source: ABdhPJy/EIb3YZlC6znqs6Wl7xziMLGfTrsNGqzk6lXGsHU4ulDHFzp1AeBFvSlKwH3Rh5VWBxb6hw==
+X-Received: by 2002:a17:906:f291:: with SMTP id gu17mr4394554ejb.411.1592492092970;
+        Thu, 18 Jun 2020 07:54:52 -0700 (PDT)
+Received: from [192.168.1.3] (212-5-158-140.ip.btc-net.bg. [212.5.158.140])
+        by smtp.googlemail.com with ESMTPSA id b26sm2452595eju.6.2020.06.18.07.54.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jun 2020 07:54:52 -0700 (PDT)
+Subject: Re: [PATCH v6 5/6] media: venus: core: Add support for opp
+ tables/perf voting
+To:     Rajendra Nayak <rnayak@codeaurora.org>, bjorn.andersson@linaro.org,
+        agross@kernel.org, robdclark@gmail.com, robdclark@chromium.org,
+        stanimir.varbanov@linaro.org
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
+ <1592222564-13556-6-git-send-email-rnayak@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <e0f856ec-e391-9b1d-baa3-7dda20cb853a@linaro.org>
+Date:   Thu, 18 Jun 2020 17:54:49 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <1592485553-29163-1-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1592222564-13556-6-git-send-email-rnayak@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 18 2020 at 07:06 -0600, Maulik Shah wrote:
->Currently rpmh_invalidate() always returns success. Update its
->return type to void.
->
->Suggested-by: Stephen Boyd <swboyd@chromium.org>
->Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Lina Iyer <ilina@codeaurora.org>
+Hi Rajendra,
 
->---
-> drivers/interconnect/qcom/bcm-voter.c | 6 +-----
-> drivers/soc/qcom/rpmh.c               | 4 +---
-> include/soc/qcom/rpmh.h               | 7 ++++---
-> 3 files changed, 6 insertions(+), 11 deletions(-)
->
->diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
->index 2a11a63..a3d2ef1 100644
->--- a/drivers/interconnect/qcom/bcm-voter.c
->+++ b/drivers/interconnect/qcom/bcm-voter.c
->@@ -266,11 +266,7 @@ int qcom_icc_bcm_voter_commit(struct bcm_voter *voter)
-> 	if (!commit_idx[0])
-> 		goto out;
->
->-	ret = rpmh_invalidate(voter->dev);
->-	if (ret) {
->-		pr_err("Error invalidating RPMH client (%d)\n", ret);
->-		goto out;
->-	}
->+	rpmh_invalidate(voter->dev);
->
-> 	ret = rpmh_write_batch(voter->dev, RPMH_ACTIVE_ONLY_STATE,
-> 			       cmds, commit_idx);
->diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
->index f2b5b46c..b61e183 100644
->--- a/drivers/soc/qcom/rpmh.c
->+++ b/drivers/soc/qcom/rpmh.c
->@@ -497,7 +497,7 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
->  *
->  * Invalidate the sleep and wake values in batch_cache.
->  */
->-int rpmh_invalidate(const struct device *dev)
->+void rpmh_invalidate(const struct device *dev)
-> {
-> 	struct rpmh_ctrlr *ctrlr = get_rpmh_ctrlr(dev);
-> 	struct batch_cache_req *req, *tmp;
->@@ -509,7 +509,5 @@ int rpmh_invalidate(const struct device *dev)
-> 	INIT_LIST_HEAD(&ctrlr->batch_cache);
-> 	ctrlr->dirty = true;
-> 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
->-
->-	return 0;
-> }
-> EXPORT_SYMBOL(rpmh_invalidate);
->diff --git a/include/soc/qcom/rpmh.h b/include/soc/qcom/rpmh.h
->index f9ec353..bdbee1a 100644
->--- a/include/soc/qcom/rpmh.h
->+++ b/include/soc/qcom/rpmh.h
->@@ -20,7 +20,7 @@ int rpmh_write_async(const struct device *dev, enum rpmh_state state,
-> int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
-> 		     const struct tcs_cmd *cmd, u32 *n);
->
->-int rpmh_invalidate(const struct device *dev);
->+void rpmh_invalidate(const struct device *dev);
->
-> #else
->
->@@ -38,8 +38,9 @@ static inline int rpmh_write_batch(const struct device *dev,
-> 				   const struct tcs_cmd *cmd, u32 *n)
-> { return -ENODEV; }
->
->-static inline int rpmh_invalidate(const struct device *dev)
->-{ return -ENODEV; }
->+static inline void rpmh_invalidate(const struct device *dev)
->+{
->+}
->
-> #endif /* CONFIG_QCOM_RPMH */
->
->-- 
->QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->of Code Aurora Forum, hosted by The Linux Foundation
->
+On 6/15/20 3:02 PM, Rajendra Nayak wrote:
+> Add support to add OPP tables and perf voting on the OPP powerdomain.
+> This is needed so venus votes on the corresponding performance state
+> for the OPP powerdomain along with setting the core clock rate.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> Cc: linux-media@vger.kernel.org
+> ---
+> No functional change in v6, rebased over 5.8-rc1
+> Bindings update to add optional PD https://lore.kernel.org/patchwork/patch/1241077/
+> 
+>  drivers/media/platform/qcom/venus/core.c       | 43 +++++++++++++++++---
+>  drivers/media/platform/qcom/venus/core.h       |  5 +++
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++++--
+>  3 files changed, 92 insertions(+), 10 deletions(-)
+> 
+
+<cut>
+
+>  
+> @@ -740,13 +740,16 @@ static int venc_power_v4(struct device *dev, int on)
+>  
+>  static int vcodec_domains_get(struct device *dev)
+>  {
+> +	int ret;
+> +	struct opp_table *opp_table;
+> +	struct device **opp_virt_dev;
+>  	struct venus_core *core = dev_get_drvdata(dev);
+>  	const struct venus_resources *res = core->res;
+>  	struct device *pd;
+>  	unsigned int i;
+>  
+>  	if (!res->vcodec_pmdomains_num)
+> -		return -ENODEV;
+> +		goto skip_pmdomains;
+>  
+>  	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
+>  		pd = dev_pm_domain_attach_by_name(dev,
+> @@ -763,7 +766,41 @@ static int vcodec_domains_get(struct device *dev)
+>  	if (!core->pd_dl_venus)
+>  		return -ENODEV;
+>  
+> +skip_pmdomains:
+> +	if (!core->has_opp_table)
+> +		return 0;
+> +
+> +	/* Attach the power domain for setting performance state */
+> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
+> +	if (IS_ERR(opp_table)) {
+> +		ret = PTR_ERR(opp_table);
+> +		goto opp_attach_err;
+> +	}
+> +
+> +	core->opp_pmdomain = *opp_virt_dev;
+> +	core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
+> +					     DL_FLAG_RPM_ACTIVE |
+> +					     DL_FLAG_PM_RUNTIME |
+> +					     DL_FLAG_STATELESS);
+> +	if (!core->opp_dl_venus) {
+> +		ret = -ENODEV;
+> +		goto opp_dl_add_err;
+> +	}
+> +
+>  	return 0;
+> +
+> +opp_dl_add_err:
+> +	dev_pm_domain_detach(core->opp_pmdomain, true);
+> +opp_attach_err:
+> +	if (core->pd_dl_venus) {
+> +		device_link_del(core->pd_dl_venus);
+> +		for (i = 0; i < res->vcodec_pmdomains_num; i++) {
+> +			if (IS_ERR_OR_NULL(core->pmdomains[i]))
+> +				continue;
+> +			dev_pm_domain_detach(core->pmdomains[i], true);
+> +		}
+> +	}
+> +	return ret;
+>  }
+>  
+>  static void vcodec_domains_put(struct device *dev)
+> @@ -773,7 +810,7 @@ static void vcodec_domains_put(struct device *dev)
+>  	unsigned int i;
+>  
+>  	if (!res->vcodec_pmdomains_num)
+> -		return;
+> +		goto skip_pmdomains;
+>  
+>  	if (core->pd_dl_venus)
+>  		device_link_del(core->pd_dl_venus);
+> @@ -783,6 +820,15 @@ static void vcodec_domains_put(struct device *dev)
+>  			continue;
+>  		dev_pm_domain_detach(core->pmdomains[i], true);
+>  	}
+> +
+> +skip_pmdomains:
+> +	if (!res->opp_pmdomain)
+> +		return;
+> +
+> +	if (core->opp_dl_venus)
+> +		device_link_del(core->opp_dl_venus);
+> +
+> +	dev_pm_domain_detach(core->opp_pmdomain, true);
+
+Without corresponding changes in venus DT node we call pm_domain_detach
+with core->opp_pmdomain = NULL which triggers NULL pointer dereference.
+
+I guess you should check:
+
+	if (core->has_opp_table)
+		dev_pm_domain_detach(core->opp_pmdomain, true);
+
+or
+
+	if (core->opp_pmdomain)
+		dev_pm_domain_detach(core->opp_pmdomain, true);
+
+
+... not sure which one is more appropriate or both are.
+
+
+-- 
+regards,
+Stan
