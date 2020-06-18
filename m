@@ -2,80 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78B381FF9AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 18:49:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D2951FF9BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 18:52:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731965AbgFRQsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 12:48:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57080 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728523AbgFRQsy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 12:48:54 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1709D208C7;
-        Thu, 18 Jun 2020 16:48:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592498934;
-        bh=JjYy4elxxB+2wBR7hAUU2Tjb0skJmcm3jUXYNY6Jq38=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=FNKtWEyWKqxztlMMa/0EFi/o/yLTGyx7C/kLP+hw6kYFEh+cL+puFC/uZLMr/IV8H
-         CC/T8I0fKH9brkUZq9gyAvaxTk8XUJ3IowINRZNe8lH2mQKIRVw44AFu/+Z6FYkxjf
-         zQQaa6RxMAEAZGQ0ND+6+hKdYO4n4M+NN7gUiczA=
-Date:   Thu, 18 Jun 2020 17:48:52 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        Dilip Kota <dkota@codeaurora.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org
-In-Reply-To: <20200616104050.84764-1-dianders@chromium.org>
-References: <20200616104050.84764-1-dianders@chromium.org>
-Subject: Re: [PATCH v3 0/5] spi: spi-geni-qcom: Fixes / perf improvements
-Message-Id: <159249892720.8894.5843182459934461610.b4-ty@kernel.org>
+        id S1732022AbgFRQvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 12:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728703AbgFRQvy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jun 2020 12:51:54 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC0FC0613EE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 09:51:54 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 64so3025826pfv.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 09:51:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ysQewDSw9pjMrTYmtr4DIZRhQJEHELerRdzz4gWr0zI=;
+        b=Isl79jUuGROnOJxWpzGM1yzagFHHGRUUAOks6EttsjO63UiTCwl1X+56UA8ZYoWyy5
+         5UgmnnO23gbW/Z/39XIaXrdFzWifiW6dMdwwTlzrYEM5DSXiQzLfx6AoM4oCwb2p6a17
+         rlyGtTTzPmr4wAwf3s/p2fkaKVmMC9vKpvVig=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ysQewDSw9pjMrTYmtr4DIZRhQJEHELerRdzz4gWr0zI=;
+        b=RPtS7gLejOcv0OQEUHvzPKb17JtIOLEaVAxJwqDnE4rbKfauj8rwjC7x5dE6IAHZ6R
+         MIjIoonkvFvgTXM4u3nfQpTrE5KPPSUPSodE5InE55PMEuW5hz8FaVrsUDh17clIpNv3
+         //n8wRxBoUyZZSlxm5G1AdYjbCUJNXNZF5rhFs7YcMLZsiSGbNGj0F8zvlZRg0eXs5B8
+         Y7HFJPL1VLLQ9zj1dJdkDaQgjlDYHTuG5EqiChmBndKTw8KZadEGMvW+1C7Zj//4o3tS
+         MjLNHIyTcMQKjsVRn2TPdd+seCi0cd7Jmgcm9AzLN0T7UBm/P8i13Ea1ZXZggG5mnXL7
+         vqxw==
+X-Gm-Message-State: AOAM532jQ/oD7yr8Z8LbxhMQ//D8jjSlz/pQooRLETq3NEFnELCPGW7H
+        6Gjh2Ez/V8tCbqstASQ67QyGxw==
+X-Google-Smtp-Source: ABdhPJzL9RB7aKjHDGDCcpAUdTwKeWdNUobj7fic0ZPFWMk6a2ICKZMgXeYMIfXfiYPbzW3PfMxaAA==
+X-Received: by 2002:a63:7453:: with SMTP id e19mr4059548pgn.450.1592499113560;
+        Thu, 18 Jun 2020 09:51:53 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id y7sm3090742pjm.54.2020.06.18.09.51.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jun 2020 09:51:52 -0700 (PDT)
+Date:   Thu, 18 Jun 2020 09:51:51 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH] driver core:Export the symbol device_is_bound
+Message-ID: <20200618165151.GE4525@google.com>
+References: <1591123192-565-1-git-send-email-sanm@codeaurora.org>
+ <20200618081443.GA1043700@kroah.com>
+ <20200618154555.GD4525@google.com>
+ <20200618155820.GA3076467@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200618155820.GA3076467@kroah.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 16 Jun 2020 03:40:45 -0700, Douglas Anderson wrote:
-> This patch series is a new version of the previous patch posted:
->   [PATCH v2] spi: spi-geni-qcom: Speculative fix of "nobody cared" about interrupt
->   https://lore.kernel.org/r/20200317133653.v2.1.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid
+On Thu, Jun 18, 2020 at 05:58:20PM +0200, Greg Kroah-Hartman wrote:
+> On Thu, Jun 18, 2020 at 08:45:55AM -0700, Matthias Kaehlcke wrote:
+> > Hi Greg,
+> > 
+> > On Thu, Jun 18, 2020 at 10:14:43AM +0200, Greg Kroah-Hartman wrote:
+> > > On Wed, Jun 03, 2020 at 12:09:52AM +0530, Sandeep Maheswaram wrote:
+> > > > Export the symbol device_is_bound so that it can be used by the modules.
+> > > 
+> > > What modules need this?
+> > 
+> > drivers/usb/dwc3/dwc3-qcom.c (and probably other dwc3 'wrappers').
 > 
-> At this point I've done enough tracing to know that there was a real
-> race in the old code (not just weakly ordered memory problems) and
-> that should be fixed with the locking patches.
+> Why wasn't that said here?  No context is not good :(
+
+Agreed, this patch should probably have been part of a series to establish
+the context.
+
+> > Short summary: QCOM dwc3 support is split in two drivers, the core dwc3
+> > driver and the QCOM specific parts. dwc3-qcom is probed first (through
+> > a DT entry or ACPI), dwc3_qcom_probe() then calls of_platform_populate()
+> > to probe the core part. After a successful return from _populate() the
+> > driver assumes that the core device is fully initialized. However the
+> > latter is not correct, the driver core doesn't propagate errors from
+> > probe() to platform_populate(). The dwc3-qcom driver would use
+> > device_is_bound() to make sure the core device was probed successfully.
 > 
-> [...]
+> why does the dwc3-qcom driver care?
 
-Applied to
+Currently the dwc3-qcom driver uses the core device to determine if the
+controller is used in peripheral mode and it runtime resumes the XHCI
+device when it sees a wakeup interrupt.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+The WIP patch to add interconnect support relies on the core driver
+to determine the max speed of the controller.
 
-Thanks!
+> And why is the driver split in a way that requires such "broken"
+> structures?  Why can't that be fixed instead?
 
-[1/1] spi: spi-geni-qcom: No need for irqsave variant of spinlock calls
-      commit: 539afdf969d6ad7ded543d9abf14596aec411fe9
+It seems determining the mode could be easily changed by getting it through
+the pdev, as in st_dwc3_probe(). Not sure about the other two parts,
+determining the maximum speed can involve evaluating hardware registers,
+which currently are 'owned' by the core driver.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Manu or Sandeep who know the hardware and the driver better than me might
+have ideas on how to improve things.
