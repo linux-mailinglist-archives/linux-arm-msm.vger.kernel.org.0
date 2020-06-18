@@ -2,142 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1F971FFD91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 23:52:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 296571FFD93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 23:52:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729158AbgFRVwF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 17:52:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38822 "EHLO
+        id S1730832AbgFRVwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 17:52:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728504AbgFRVwE (ORCPT
+        with ESMTP id S1728484AbgFRVwq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 17:52:04 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C387DC0613EE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 14:52:04 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id s10so3564202pgm.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 14:52:04 -0700 (PDT)
+        Thu, 18 Jun 2020 17:52:46 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91940C06174E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 14:52:46 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id j13so4463324vsn.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 14:52:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=htMPMcs32J6Mn8F4SKlfPg2WVumh2QnKtqfjwVVA/yY=;
-        b=Hj2o2YVWPdtfsH2wb6VoOBekKUoiFrGd1yY6m8NmfE2/NmN+wsPKw+6XWLLdNIznui
-         jE/kQOovXbAa/AHnD2YO0Y4ucvGrRQ3rYHJKgAs6tCqZmLSJQXMI6N3b9EqcCqCs8jpv
-         v680OYeWSzhRO9BlqDtPgpKxU6daT6OLkO/Jg=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ew2PN/4JsZ1wOw/upw7XfR2Cn0MqAYGwSv+ArwTNfmg=;
+        b=GtNFZSwLjEFMtYwi0oRZBt+nZLXjddEbJRtWA3O3P8yrVdh+hvhXAdHuvsPbpWO8ii
+         fsmwrUcikBj2TG5ojkCPeDiL3xc/s/V4bO+dGxXHxeRVhRsVyZQYCRDJxzgKi/eUdOZp
+         RqD7kWnJQgaLxxyMkLKR8Yju/2pQXlPg+7ivc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=htMPMcs32J6Mn8F4SKlfPg2WVumh2QnKtqfjwVVA/yY=;
-        b=GdcuFSv0YVOuESG/HLukHQ4S8pEyQgtEHcw3eU7nmdDyef7eL2PjIYNr8V184CE8JF
-         XW6JCZyWJyukIDZhMNhFJMzn4jDjckQnrfNj3HX+AQ6ziv5q5sLMiT4XSK3erUMEssyH
-         g9lQcJ+jPKDKj0XSwcagrUMXF+XbEY/wLLmI4I2JG5FR9WfMpsO7EfcZMfskvhBrWS2Z
-         74YrqgXg2UgB/VqtjefrpVkUCbPy6/EYielJL4+bYn9xAQDR3RnJ5Oj7OPGPCaXPJFKI
-         O3WmJc0hAtiwD7R1yMwbmGuyfXq6DhhWH/YWKrRKmnvyXni7JjDnWFebPVr8w1q/vLVO
-         Wf/w==
-X-Gm-Message-State: AOAM531w6MlLZjsJ+cGIZmV4GQrLsCfjG1VrODt+ypEvRZhV1sbHIig8
-        TzLFMsQ6fRvIIKwykVR5cigQHg==
-X-Google-Smtp-Source: ABdhPJz4ExoNuYi889lTqPTdupQ5+Uvgur4SUMgfRQnXy/W0tzn9UNT4NgtnDTXBH/XJOcVyLIErpA==
-X-Received: by 2002:a62:1d8e:: with SMTP id d136mr5271301pfd.323.1592517123988;
-        Thu, 18 Jun 2020 14:52:03 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id m7sm3335220pgg.69.2020.06.18.14.52.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2020 14:52:03 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ew2PN/4JsZ1wOw/upw7XfR2Cn0MqAYGwSv+ArwTNfmg=;
+        b=Y4cM1NJc1QFfnr2LnDvGAOY8v1A9wNAUYkuk2MfwAhHU+JzdUPi9dypX9eEGg9u5T8
+         RXccUsnnW/qujTtyO4tCEAzRGabRaIeaG3FzgrskeGN+WabWtllPqGDMBOjDaKVNiiVk
+         zuYZsXivOZEyXii7aHK79jjFBiQBlWspCtxyjby727Wqo/jLAoEE+80PZKgacx4pR6bF
+         CzF5mkJYSP/pW6hXyIzzLnImnH9heUe8yr7iYU/KlEDT9K5NcWp2sjN4oSFBQ+9rENWE
+         pvIbbqE+xiM86xflqRIjtr41CwfCwvxvxNXzVWUC+AmoaKJUdwtg2CAsxHbS5Qz6Um5D
+         jJjg==
+X-Gm-Message-State: AOAM530U3p+DTha9FsNJl0bVQcaFtoVa1COyCeHgqa3Qceg/6dzBzfk2
+        LSXDMHGtBQZmz33WuzfXbOao6FL8rzc=
+X-Google-Smtp-Source: ABdhPJz7dXs1R5rTaKMidRq7uQpPJrdws34rmz4jViQbiU64hwuFjLQbMN0LaqqrU3+1MbfrfyQsww==
+X-Received: by 2002:a67:3291:: with SMTP id y139mr5582733vsy.37.1592517165552;
+        Thu, 18 Jun 2020 14:52:45 -0700 (PDT)
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com. [209.85.222.46])
+        by smtp.gmail.com with ESMTPSA id f19sm487494vka.3.2020.06.18.14.52.44
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jun 2020 14:52:44 -0700 (PDT)
+Received: by mail-ua1-f46.google.com with SMTP id v25so2522046uau.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 14:52:44 -0700 (PDT)
+X-Received: by 2002:ab0:29c1:: with SMTP id i1mr451761uaq.120.1592517164088;
+ Thu, 18 Jun 2020 14:52:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=Xh3+cROZC8dCn99MLkngsyBcxq+Gv1CERayZXExwdygA@mail.gmail.com>
-References: <20200618150626.237027-1-dianders@chromium.org> <20200618080459.v4.5.Ib1e6855405fc9c99916ab7c7dee84d73a8bf3d68@changeid> <159250352382.62212.8085892973272354046@swboyd.mtv.corp.google.com> <CAD=FV=Xh3+cROZC8dCn99MLkngsyBcxq+Gv1CERayZXExwdygA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] spi: spi-geni-qcom: Don't keep a local state variable
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
+In-Reply-To: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 18 Jun 2020 14:52:32 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=W9=cWZpW10ecG9_DmpWCEVhJ9C_AzbP4fTqdPQFZPhZw@mail.gmail.com>
+Message-ID: <CAD=FV=W9=cWZpW10ecG9_DmpWCEVhJ9C_AzbP4fTqdPQFZPhZw@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Don't use ktime for timeout in write_tcs_reg_sync()
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Jun 2020 14:52:02 -0700
-Message-ID: <159251712230.62212.10744179843753723398@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-06-18 13:09:47)
-> On Thu, Jun 18, 2020 at 11:05 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Douglas Anderson (2020-06-18 08:06:26)
-> > > @@ -126,20 +120,23 @@ static void handle_fifo_timeout(struct spi_mast=
-er *spi,
-> > >         struct geni_se *se =3D &mas->se;
-> > >
-> > >         spin_lock_irq(&mas->lock);
-> > > -       reinit_completion(&mas->xfer_done);
-> > > -       mas->cur_mcmd =3D CMD_CANCEL;
-> > > -       geni_se_cancel_m_cmd(se);
-> > > +       reinit_completion(&mas->cancel_done);
-> > >         writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> > > +       mas->cur_xfer =3D NULL;
-> >
-> > BTW, is this necessary? It's subtlely placed here without a comment why.
->=20
-> I believe so.  Now that we don't have the "cur_mcmd" we rely on
-> cur_xfer being NULL to tell the difference between a "done" for chip
-> select vs. a "done" for transfer.
->=20
-> * When we start a transfer we set "cur_xfer" to a non-NULL pointer.
-> When the transfer finishes we set it to NULL again.
->=20
-> * When we start a chip select transfer we _don't_ explicitly set it to
-> NULL because it should already be NULL.
->=20
-> * When we are aborting a transfer we need to NULL so we can handle the
-> chip select that will come next.
->=20
-> I suppose it's possible that we could get by without without NULLing
-> it because I believe when the "abort" IRQ finally fires then it will
-> include a "DONE" and that would presumably NULL it out.  ...but I
-> guess if both the cancel and abort timed out and no IRQ ever fired
-> then nothing would have NULLed it and the next chip select would be
-> confused.
+Bjorn and Andy,
 
-I was going to say that we should set it NULL when starting CS but that
-is not as important as clearing it out when a cancel/abort is processing
-so that a stale transfer isn't kept around.
+On Thu, May 28, 2020 at 7:48 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> The write_tcs_reg_sync() may be called after timekeeping is suspended
+> so it's not OK to use ktime.  The readl_poll_timeout_atomic() macro
+> implicitly uses ktime.  This was causing a warning at suspend time.
+>
+> Change to just loop 1000000 times with a delay of 1 us between loops.
+> This may give a timeout of more than 1 second but never less and is
+> safe even if timekeeping is suspended.
+>
+> NOTE: I don't have any actual evidence that we need to loop here.
+> It's possibly that all we really need to do is just read the value
+> back to ensure that the pipes are cleaned and the looping/comparing is
+> totally not needed.  I never saw the loop being needed in my tests.
+> However, the loop shouldn't hurt.
+>
+> Fixes: 91160150aba0 ("soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()")
+> Reported-by: Maulik Shah <mkshah@codeaurora.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  drivers/soc/qcom/rpmh-rsc.c | 18 +++++++++++++-----
+>  1 file changed, 13 insertions(+), 5 deletions(-)
 
->=20
-> Prior to getting rid of "cur_mcmd" this all wasn't needed because
-> "cur_xfer" was only ever looked at if "cur_mcmd" was set to
-> "CMD_XFER".
->=20
->=20
-> One part of my change that is technically not related to the removal
-> of "cur_mcmd" is the part where I do "mas->tx_rem_bytes =3D
-> mas->rx_rem_bytes =3D 0;".  I can split that as a separate change if you
-> want but it seemed fine to just clean up this extra bit of state here.
->=20
+Is it a good time to land this change now that -rc1 has come out?
+It'd be nice to get this resolved.
 
-How about a comment like this?
+Thanks!
 
------8<----
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index d8f03ffb8594..670f83793aa4 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -121,6 +121,10 @@ static void handle_fifo_timeout(struct spi_master *spi,
- 	spin_lock_irq(&mas->lock);
- 	reinit_completion(&mas->cancel_done);
- 	writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-+	/*
-+	 * Make sure we don't finalize a spi transfer that timed out but
-+	 * came in while cancelling.
-+	 */
- 	mas->cur_xfer =3D NULL;
- 	mas->tx_rem_bytes =3D mas->rx_rem_bytes =3D 0;
- 	geni_se_cancel_m_cmd(se);
+-Doug
