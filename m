@@ -2,133 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0A321FF18D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 14:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B9151FF299
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 15:06:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726928AbgFRMZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 08:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbgFRMZP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 08:25:15 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83259C06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 05:25:14 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id t21so4658383edr.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 05:25:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UJIK3eOWDyPeiIHQU/0dVlnLexDXba9OTxbGB4A2gl0=;
-        b=TClc42ft33RKTYHUlkBWRBKsios0AGMU7D9gpjxS2oUwxMcT80bd7DgivTYXhb690C
-         XiHzmQA4YzrPiQxrocVdRCO07C3p62JJ/o92jBfwRDpddxb9LjPgbm6kQ6AD6/vYxvT+
-         dOYeAVVW4x4ZiiGOWY/tjcNfQeoUSSYKL/EokpoSZjJrkOeEvIteZ7jY0IIWayaALA/8
-         +TY1cesiZNA9fFeghI5qxn2sBzNglIr7koVGWACUlK6eDy9KZbD4uE7fn2IXjaJ43R4V
-         GYPUXzhtarWhOmZV5l/V7JuMJ0x1YewjoA1k68HsPeyVoPlWRfJJK8YkAIDuiSCmvBmc
-         HxRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=UJIK3eOWDyPeiIHQU/0dVlnLexDXba9OTxbGB4A2gl0=;
-        b=COTrmakzs5u2zyQBVJTwdJrAEXYipTHO4/e1Xozc7SJCj7MBToXGprxzgMkJIzqf4k
-         lQwhjDT9xm4u6zZuEe7wkBoLAhg9qexjKFjzMeHviCc+ZqZf0VbaBX4816aUAY4oK3+c
-         WvWVjh+MLtzgeL4X8g0g8HVIaQiZforJRh4BHY7fOUBif2qN18P2/aS2lqY4mfgCTQff
-         qsWKqOr23+ebRZjY8CediWpW8CXXGBBvlwQ5VdT/H+OGZYfD8A9LeNfz71VEEGb4nZ8N
-         faDkWQO9HfWB5mtotGNvi6h4B6GYmFmpgnqdGJwVzXB9PQk8Rj9VsCzUKrUYNgzF82rV
-         5RKA==
-X-Gm-Message-State: AOAM533IBZ6VIjlvHUqvIpyK+Ww0XATv6UOwaSUyDTBLIglKmE9VDByi
-        qU79JHQa1tsn/klX6YlfV1cEaw==
-X-Google-Smtp-Source: ABdhPJwqR4gqZ3OqNJw1hJs4k/8ksjobysLkcxPc2MEE1KzpZBuqHII90p7CC0TTvHLdEXaJaY+GyQ==
-X-Received: by 2002:aa7:c15a:: with SMTP id r26mr3649380edp.21.1592483113177;
-        Thu, 18 Jun 2020 05:25:13 -0700 (PDT)
-Received: from [192.168.1.3] (212-5-158-140.ip.btc-net.bg. [212.5.158.140])
-        by smtp.googlemail.com with ESMTPSA id s17sm2157278eju.80.2020.06.18.05.25.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 05:25:12 -0700 (PDT)
-Subject: Re: [PATCH v6 0/6] DVFS for IO devices on sdm845 and sc7180
-To:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org, robdclark@gmail.com,
-        robdclark@chromium.org, viresh.kumar@linaro.org, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <20200617221546.GC4525@google.com>
- <4f3d4c91-2a01-8ef5-1ad0-73ed354f930a@codeaurora.org>
- <9bb7fbb6-6309-3f30-dd4f-2ee3d187c074@linaro.org>
- <3ec9bc56-3e31-64fe-320a-2dc153a81f98@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <d715708b-db7a-efb7-5861-aa5bb8dfcd86@linaro.org>
-Date:   Thu, 18 Jun 2020 15:25:10 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <3ec9bc56-3e31-64fe-320a-2dc153a81f98@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S1729648AbgFRNGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 09:06:21 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:35956 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727853AbgFRNGT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jun 2020 09:06:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592485578; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=hMRM2QVP/ewY7wLU63zjCcKd42Mc9s6EEHHa9yVORQk=; b=ehgUICvZnaxVPWU+wSwnX55EQAIeNHR46j31kbdSyorwYhW/ysyjDC71L+9jLdoq+XlaVMEy
+ zJERmaQ3oIAXSPordWAHKaP85z+IgVclHUb6V4YBN7mPNLk/OLQdClV3mPqLRjdRjFiC+B40
+ wsFdXr1ZRQcpNp6vqG/poxQBG9M=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
+ 5eeb66c8ad153efa3425df8c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Jun 2020 13:06:16
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CC7B2C43391; Thu, 18 Jun 2020 13:06:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D58D8C433C8;
+        Thu, 18 Jun 2020 13:06:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D58D8C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        georgi.djakov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        swboyd@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH] soc: qcom: rpmh: Update rpmh_invalidate function to return void
+Date:   Thu, 18 Jun 2020 18:35:53 +0530
+Message-Id: <1592485553-29163-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently rpmh_invalidate() always returns success. Update its
+return type to void.
 
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+---
+ drivers/interconnect/qcom/bcm-voter.c | 6 +-----
+ drivers/soc/qcom/rpmh.c               | 4 +---
+ include/soc/qcom/rpmh.h               | 7 ++++---
+ 3 files changed, 6 insertions(+), 11 deletions(-)
 
-On 6/18/20 3:11 PM, Rajendra Nayak wrote:
-> 
-> Hey Stan,
->  
->> On 6/18/20 7:47 AM, Rajendra Nayak wrote:
->>> Hey Matthias, thanks for summarizing this.
->>>
->>> On 6/18/2020 3:45 AM, Matthias Kaehlcke wrote:
->>>> What is the plan for landing these, it seems not all must/should
->>>> go through the QCOM tree.
->>>>
->>>> My guesses:
->>>>
->>>> tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state
->>>> spi: spi-geni-qcom: Use OPP API to set clk/perf state
->>>>     QCOM tree due to shared dependency on change in
->>>> include/linux/qcom-geni-se.h
->>>
->>> That's correct, Bjorn/Andy, can these be pulled in now for 5.9?
->>> They have acks from Greg for serial and Mark for the spi patch.
->>>  
->>>> drm/msm/dpu: Use OPP API to set clk/perf state
->>>> drm/msm: dsi: Use OPP API to set clk/perf state
->>>>     drm/msm tree
->>>
->>> Correct, the dsi patch is still not reviewed by Rob, so once that's
->>> done,
->>> I am guessing Rob would pull both of these.
->>>
->>>>
->>>> media: venus: core: Add support for opp tables/perf voting
->>>>     venus tree
->>>
->>> correct, this is pending review/ack from Stan.
->>
->> I tested the changes in the driver, and they looks fine. But when
->> applied the corresponding change in the DT node I see this message when
->> the streaming is stopping:
->>
->> qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x30000
->>
->> I tested on v5.7 (linaro-integration). Should I be worried ?
-> 
-> Is this seen on sdm845 or sc7180, or both?
-
-Seen on sdm845, I don't have sc7180 to test.
-
-I can try it on 5.8-rc1 integration-linux-qcomlt if you think there
-might be a fix in rpmh.
-
-
+diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+index 2a11a63..a3d2ef1 100644
+--- a/drivers/interconnect/qcom/bcm-voter.c
++++ b/drivers/interconnect/qcom/bcm-voter.c
+@@ -266,11 +266,7 @@ int qcom_icc_bcm_voter_commit(struct bcm_voter *voter)
+ 	if (!commit_idx[0])
+ 		goto out;
+ 
+-	ret = rpmh_invalidate(voter->dev);
+-	if (ret) {
+-		pr_err("Error invalidating RPMH client (%d)\n", ret);
+-		goto out;
+-	}
++	rpmh_invalidate(voter->dev);
+ 
+ 	ret = rpmh_write_batch(voter->dev, RPMH_ACTIVE_ONLY_STATE,
+ 			       cmds, commit_idx);
+diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+index f2b5b46c..b61e183 100644
+--- a/drivers/soc/qcom/rpmh.c
++++ b/drivers/soc/qcom/rpmh.c
+@@ -497,7 +497,7 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
+  *
+  * Invalidate the sleep and wake values in batch_cache.
+  */
+-int rpmh_invalidate(const struct device *dev)
++void rpmh_invalidate(const struct device *dev)
+ {
+ 	struct rpmh_ctrlr *ctrlr = get_rpmh_ctrlr(dev);
+ 	struct batch_cache_req *req, *tmp;
+@@ -509,7 +509,5 @@ int rpmh_invalidate(const struct device *dev)
+ 	INIT_LIST_HEAD(&ctrlr->batch_cache);
+ 	ctrlr->dirty = true;
+ 	spin_unlock_irqrestore(&ctrlr->cache_lock, flags);
+-
+-	return 0;
+ }
+ EXPORT_SYMBOL(rpmh_invalidate);
+diff --git a/include/soc/qcom/rpmh.h b/include/soc/qcom/rpmh.h
+index f9ec353..bdbee1a 100644
+--- a/include/soc/qcom/rpmh.h
++++ b/include/soc/qcom/rpmh.h
+@@ -20,7 +20,7 @@ int rpmh_write_async(const struct device *dev, enum rpmh_state state,
+ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
+ 		     const struct tcs_cmd *cmd, u32 *n);
+ 
+-int rpmh_invalidate(const struct device *dev);
++void rpmh_invalidate(const struct device *dev);
+ 
+ #else
+ 
+@@ -38,8 +38,9 @@ static inline int rpmh_write_batch(const struct device *dev,
+ 				   const struct tcs_cmd *cmd, u32 *n)
+ { return -ENODEV; }
+ 
+-static inline int rpmh_invalidate(const struct device *dev)
+-{ return -ENODEV; }
++static inline void rpmh_invalidate(const struct device *dev)
++{
++}
+ 
+ #endif /* CONFIG_QCOM_RPMH */
+ 
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
