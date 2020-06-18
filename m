@@ -2,35 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5C491FE4C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:21:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D6011FE4BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:20:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729654AbgFRBSr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 21:18:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50292 "EHLO mail.kernel.org"
+        id S1730047AbgFRCUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 22:20:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50396 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730007AbgFRBSp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:18:45 -0400
+        id S1728431AbgFRBSz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:18:55 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DC145206F1;
-        Thu, 18 Jun 2020 01:18:43 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DD19421D7E;
+        Thu, 18 Jun 2020 01:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443124;
-        bh=NyDDe6IQv3TijH7jTfeyPHKXA8AYHM53FDI8iSDwKmU=;
+        s=default; t=1592443134;
+        bh=10sXDbedggxckhqYcZsB+MHV9CqU9ANcMhYsBRC6/bc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QYtRgH8lQv2ACJsQYdDxn523O5XzaeWGDyiVtKF+YqVmVo7BhTdXfcrzAs+aLZro9
-         s6d2ca5x1oi/l9H4RZPChesvZLbPhCgAj5GEtGGf8yhbUDsH6LTE2A1Iget1iB1rmR
-         rBf7lMYSg5trcIQizsbQiUuxuGfzPF1jbLL7q0KU=
+        b=Io7Ab+5pCsdrMKf4vxDrJYYreuijBsPjSc17TLhfPItIFK+QbHx/YmR8HFZcmTJba
+         qmn8TluUVlkCPSvDeS0WszUooPE4EEND7FkPQELsm5pHDGbkU3PizayevLodCXVmMB
+         1or6i32HHl/acI94hjHMQ5KHA7V5n73oRUb313Bg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Christoph Hellwig <hch@lst.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 098/266] firmware: qcom_scm: fix bogous abuse of dma-direct internals
-Date:   Wed, 17 Jun 2020 21:13:43 -0400
-Message-Id: <20200618011631.604574-98-sashal@kernel.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org
+Subject: [PATCH AUTOSEL 5.4 106/266] slimbus: ngd: get drvdata from correct device
+Date:   Wed, 17 Jun 2020 21:13:51 -0400
+Message-Id: <20200618011631.604574-106-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200618011631.604574-1-sashal@kernel.org>
 References: <20200618011631.604574-1-sashal@kernel.org>
@@ -43,70 +44,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Christoph Hellwig <hch@lst.de>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 459b1f86f1cba7de813fbc335df476c111feec22 ]
+[ Upstream commit b58c663059b484f7ff547d076a34cf6d7a302e56 ]
 
-As far as the device is concerned the dma address is the physical
-address.  There is no need to convert it to a physical address,
-especially not using dma-direct internals that are not available
-to drivers and which will interact badly with IOMMUs.  Last but not
-least the commit introducing it claimed to just fix a type issue,
-but actually changed behavior.
+Get drvdata directly from parent instead of ngd dev, as ngd
+dev can probe defer and previously set drvdata will become null.
 
-Fixes: 6e37ccf78a532 ("firmware: qcom_scm: Use proper types for dma mappings")
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20200414123136.441454-1-hch@lst.de
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20200417093618.7929-1-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom_scm.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/slimbus/qcom-ngd-ctrl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 4802ab170fe5..b9fdc20b4eb9 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -9,7 +9,6 @@
- #include <linux/init.h>
- #include <linux/cpumask.h>
- #include <linux/export.h>
--#include <linux/dma-direct.h>
- #include <linux/dma-mapping.h>
- #include <linux/module.h>
- #include <linux/types.h>
-@@ -441,8 +440,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	struct qcom_scm_mem_map_info *mem_to_map;
- 	phys_addr_t mem_to_map_phys;
- 	phys_addr_t dest_phys;
--	phys_addr_t ptr_phys;
--	dma_addr_t ptr_dma;
-+	dma_addr_t ptr_phys;
- 	size_t mem_to_map_sz;
- 	size_t dest_sz;
- 	size_t src_sz;
-@@ -459,10 +457,9 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
- 			ALIGN(dest_sz, SZ_64);
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 29fbab55c3b3..01a17d84b606 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1354,7 +1354,6 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+ 		ngd->pdev->driver_override = QCOM_SLIM_NGD_DRV_NAME;
+ 		ngd->pdev->dev.of_node = node;
+ 		ctrl->ngd = ngd;
+-		platform_set_drvdata(ngd->pdev, ctrl);
  
--	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_dma, GFP_KERNEL);
-+	ptr = dma_alloc_coherent(__scm->dev, ptr_sz, &ptr_phys, GFP_KERNEL);
- 	if (!ptr)
- 		return -ENOMEM;
--	ptr_phys = dma_to_phys(__scm->dev, ptr_dma);
+ 		platform_device_add(ngd->pdev);
+ 		ngd->base = ctrl->base + ngd->id * data->offset +
+@@ -1369,12 +1368,13 @@ static int of_qcom_slim_ngd_register(struct device *parent,
  
- 	/* Fill source vmid detail */
- 	src = ptr;
-@@ -490,7 +487,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ {
+-	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
++	struct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev->parent);
+ 	int ret;
  
- 	ret = __qcom_scm_assign_mem(__scm->dev, mem_to_map_phys, mem_to_map_sz,
- 				    ptr_phys, src_sz, dest_phys, dest_sz);
--	dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_dma);
-+	dma_free_coherent(__scm->dev, ptr_sz, ptr, ptr_phys);
- 	if (ret) {
- 		dev_err(__scm->dev,
- 			"Assign memory protection call failed %d\n", ret);
+ 	ctrl->ctrl.dev = dev;
+ 
++	platform_set_drvdata(pdev, ctrl);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_set_autosuspend_delay(dev, QCOM_SLIM_NGD_AUTOSUSPEND);
+ 	pm_runtime_set_suspended(dev);
 -- 
 2.25.1
 
