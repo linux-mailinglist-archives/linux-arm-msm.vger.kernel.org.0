@@ -2,250 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6193E1FF6F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:33:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3617A1FF72F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:40:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728225AbgFRPcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 11:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36818 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728113AbgFRPcm (ORCPT
+        id S1731672AbgFRPkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 11:40:33 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:38501 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731626AbgFRPk2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 11:32:42 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 583FDC06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:32:42 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id r5so1211714vso.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:32:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9oZMKeC4utgl0CIoXcDw/AVYW+JLy1inJu/qLK1E0rs=;
-        b=d/s0QMsjBiHwZlUjTpvheqikuQN0gf96atNeo2FcX6n8t5wgQJT5vqUidxqWydjds+
-         wkLtTkz9/J83+L+KflKRQzGRezRXQ2ia0Cv5dglMC8elv6LQs/A1svNdxwDEz4Gcm59H
-         gbvjQU+d19X2IVDeGYliNv3X+nsf5IGlghYn4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9oZMKeC4utgl0CIoXcDw/AVYW+JLy1inJu/qLK1E0rs=;
-        b=X2wTi4UehTT8K2xyICVJ8eJRzsts3XuoLkCeeQGWSnVmhMWAu9FGTuS0gi0bgQ+gRL
-         bRDnaVBCmzAEZws5E9P0/GucgezeOqaTi3qFhBWkv/0v/JxgwWxNHFryG5Oob8djscQJ
-         RCL0zrrMeJBXBZULvsf8X676UNrxp2QJQst44NSmhRN4OHZNNa8+V+8tQJxllmTwRtEN
-         R/9Sl3P+qRZ6xZAK4dnaU03zAHXE/NBpUs5lFLxmTsS7YDn/rmxZWSiVrhRtt3LwCawQ
-         IBWHGuNm1pSGjRqgUZZzoce3FTJAIpOEZIzEL8j3qIWk0BZwnpeyFtxWgZJPO3u8Tpoa
-         mE9Q==
-X-Gm-Message-State: AOAM533UF3tKmPEHHj46g8IZFJLSohxHkJYzq0ivaOb7ahAt+pUpyPjb
-        0oUSrIAu6Zs1dRYf1kkXkcEXiRoYfKo=
-X-Google-Smtp-Source: ABdhPJwYI0zY27eVyP/aPMWv1dckBMpUA460x5vyJhGc56LPWZhgo54Y96AKQT7SIUrtNvjompQUQA==
-X-Received: by 2002:a67:dc89:: with SMTP id g9mr3777342vsk.206.1592494361199;
-        Thu, 18 Jun 2020 08:32:41 -0700 (PDT)
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
-        by smtp.gmail.com with ESMTPSA id k48sm302947uae.11.2020.06.18.08.32.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 08:32:33 -0700 (PDT)
-Received: by mail-vs1-f47.google.com with SMTP id k13so3745735vsm.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:32:33 -0700 (PDT)
-X-Received: by 2002:a67:8881:: with SMTP id k123mr3844642vsd.198.1592494352448;
- Thu, 18 Jun 2020 08:32:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200617145116.247432-1-dianders@chromium.org>
- <20200617074930.v3.2.I3b5c3bfaf5fb2d28d63f1b5ee92980900e3f8251@changeid>
- <254998b9-c45e-bd6b-bc9a-b5934c0fea8e@linaro.org> <CAD=FV=Vec5FVrDVkmUQTfa6bP+1d3yOtj_FsgVAFdHLLbZ8VDA@mail.gmail.com>
- <db6cc914-0520-5286-f852-473fc63bd6c7@linaro.org> <CAD=FV=UZAtJY42jwSZy+Z+O3AdZqDxnjY1zzOswqQRDY91uPpA@mail.gmail.com>
- <0b0b52db-da8c-e958-d72e-797e319bbe9c@linaro.org>
-In-Reply-To: <0b0b52db-da8c-e958-d72e-797e319bbe9c@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Jun 2020 08:32:20 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UShR-a8kEvpNEx5gGkUr=DhX-=kzcBQ1SegQTQMoCyKw@mail.gmail.com>
-Message-ID: <CAD=FV=UShR-a8kEvpNEx5gGkUr=DhX-=kzcBQ1SegQTQMoCyKw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] dt-bindings: nvmem: Add properties needed for
- blowing fuses
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, dhavalp@codeaurora.org,
-        mturney@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Ravi Kumar Bokka <rbokka@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        sparate@codeaurora.org, mkurumel@codeaurora.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 18 Jun 2020 11:40:28 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200618154024euoutp022daef69e64ec76a5a1ea535ef6259158~ZrZrqbfLd1470214702euoutp02C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:40:24 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200618154024euoutp022daef69e64ec76a5a1ea535ef6259158~ZrZrqbfLd1470214702euoutp02C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1592494824;
+        bh=ePXLHe/mfRhAa1xR5V0eqYUoM9rqbQC5MkvAEkUq1G0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ATZDW8CYehNxGSzbUJe/C9zxb730GeyAY8blPLMTAkUQw8+mjXebd+89tBpnPB9b3
+         n2sps0AktumKgyQTmF29QcGU5ZGQxEyMcMt9cLAE7Bx/gSGYhBjBtGHxExc97Q6fBC
+         dlhukTmGBFmFLgXSKgngsqhRb5gLzX94JR/NhpXo=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200618154023eucas1p2c76353986edc8fa47f500f6958cd6ff9~ZrZrXy-wd0500605006eucas1p2v;
+        Thu, 18 Jun 2020 15:40:23 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id E0.DE.60679.7EA8BEE5; Thu, 18
+        Jun 2020 16:40:23 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200618154023eucas1p1613c9cd68f360fdcdaed7adf9d5abf93~ZrZqsjD1q1755717557eucas1p1I;
+        Thu, 18 Jun 2020 15:40:23 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200618154023eusmtrp2a3565a5ca2c08fe56a160f1ec7cc0fee~ZrZqr24EP0399203992eusmtrp2Z;
+        Thu, 18 Jun 2020 15:40:23 +0000 (GMT)
+X-AuditID: cbfec7f4-0e5ff7000001ed07-32-5eeb8ae78786
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 7A.EE.08375.6EA8BEE5; Thu, 18
+        Jun 2020 16:40:22 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200618154022eusmtip17c625ab9615396284a89154a2f9a6468~ZrZp7-JR90742307423eusmtip1R;
+        Thu, 18 Jun 2020 15:40:22 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linaro-mm-sig@lists.linaro.org, linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v6 13/36] drm: msm: fix common struct sg_table related
+ issues
+Date:   Thu, 18 Jun 2020 17:39:34 +0200
+Message-Id: <20200618153956.29558-14-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200618153956.29558-1-m.szyprowski@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA0WSe1BMYRjG59uz59JOy2kz+SRldjCTW8KMQzIYl2PG0Bj/YMSho2J3NedU
+        2qYhJWNWpcsIqyFEd7E1XValVrU12aSarEshmspOMhXSmrKnE/77vc/zvO873zsfgSieoe5E
+        qCac5TSMSonJpGWNv16s6NfZAleN/VxOJbU2S6jH14tRaqosFaE6vw9jVGa/BVB5BQ0SKuup
+        HzXW+VFCGT51oVTqUwtOdRgzMaqovhun+u+MI1Tdt88o1Z1eDzbPpgtvFQK6+keWlK7Ud+N0
+        +Y8PKP3+sllCl2Sfo99OfkLodGsOoJ+8jsVos/ENTieX5gN61OAZ4HxQtjGIVYVGspzPpqOy
+        kMyXJWiYXhmVYmmQxAKLhw4QBCTXwpvNWh1wIhRkLoC9hT4ijwGYXXdWB2QOHgWwsX0cCIaQ
+        bx20S0QjB8C+6nu4WDg6HuisqJDCSF+oG9JhAs8hEwBsSnIWQgipR+CAyT5tuJJ7YW99yvRY
+        KbkYXit4Ps1ychO8MGyTiuu8YMGjWkRgJ4feYk5AhUGQ7MFhQkPNTGgbvDBVhYjsCr+YS3GR
+        PeBU5W2J2BAP4MfWIlwsEgHsiLs+8yI/+K51AhOugZDesNjoI8pbYF9OGyYeaRa0DrkIMuLA
+        tLJriCjL4aWLCjG9BOrND/+trWtrn4nQsDLRSzxQKoC2K10gBXjp/+/KAiAfzGUjeHUwy6/W
+        sGdW8oyaj9AErzx+Wm0Ajq/VMmkeqwDG38dMgCSA0lk+sN8WqECZSF6rNgFIIMo58q2WlkCF
+        PIjRRrPc6SNchIrlTWA+IVXOla+5O3hYQQYz4ewplg1jub+uhHByjwUxV5tenVNrksNr8u1J
+        0btUGa4B8w5NSBdweRs3VPy+cQDZ6V5Qxa3IfuiivWl9Fddw8s7FhfF7yjHSvq7Hc2DRSA5y
+        X8/4p60fBbFRU18zKFOMoWJ3L4ufCPbOtaXvcJN2l2p9oruIwYzztXxccY/b9pGQSa99lf54
+        2qPkpGWhSikfwvguRTie+QOgax04VgMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGIsWRmVeSWpSXmKPExsVy+t/xu7rPul7HGbzstrboPXeSyWLjjPWs
+        Fv+3TWS2uPL1PZvFnOdnGS1Wrj7KZLFgv7XFlysPmSw2Pb7GajFx/1l2i8u75rBZrD1yl93i
+        +cIfzBYHPzxhtbg7+QijA7/HmnlrGD32flvA4rFz1l12j+3fHrB63O8+zuSxeUm9x+1/j5k9
+        Jt9Yzuix+2YDm8fxXbfYPfq2rGL0+LxJLoAnSs+mKL+0JFUhI7+4xFYp2tDCSM/Q0kLPyMRS
+        z9DYPNbKyFRJ384mJTUnsyy1SN8uQS9jzsXNrAWzlComnD3K1MB4VqaLkZNDQsBE4tzL30wg
+        tpDAUkaJNdPDIeIyEienNbBC2MISf651sXUxcgHVfGKUmDXtMQtIgk3AUKLrLURCRKCTUWJa
+        90d2EIdZYAmzRN/US0AZDg5hAV+JV/1sIA0sAqoS01efYQSxeQXsJFrev2aB2CAvsXrDAWYQ
+        mxMofvp4KyvERbYSzz+0sU1g5FvAyLCKUSS1tDg3PbfYUK84Mbe4NC9dLzk/dxMjMI62Hfu5
+        eQfjpY3BhxgFOBiVeHhfhLyOE2JNLCuuzD3EKMHBrCTC63T2dJwQb0piZVVqUX58UWlOavEh
+        RlOgoyYyS4km5wNjPK8k3tDU0NzC0tDc2NzYzEJJnLdD4GCMkEB6YklqdmpqQWoRTB8TB6dU
+        A2Pzbd6pahNm3yq6ylW46XDBYUWPz3WREvfdjzBObXPwSlPq7nZ4xzJZ65Gv/6K2VVqz5knG
+        LE+8Pv0k7+81jKX/WHgt/yzzvqD5aH7LhLLdLWdS5Lnbn8efaa1jDvv8+ELxet7I6QdimFc3
+        ng+t3BCRe8Bg/5vt867m7RfmMJ/yuHrPPpk7+3YpsRRnJBpqMRcVJwIA7lJ9zrkCAAA=
+X-CMS-MailID: 20200618154023eucas1p1613c9cd68f360fdcdaed7adf9d5abf93
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200618154023eucas1p1613c9cd68f360fdcdaed7adf9d5abf93
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200618154023eucas1p1613c9cd68f360fdcdaed7adf9d5abf93
+References: <20200618153956.29558-1-m.szyprowski@samsung.com>
+        <CGME20200618154023eucas1p1613c9cd68f360fdcdaed7adf9d5abf93@eucas1p1.samsung.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The Documentation/DMA-API-HOWTO.txt states that the dma_map_sg() function
+returns the number of the created entries in the DMA address space.
+However the subsequent calls to the dma_sync_sg_for_{device,cpu}() and
+dma_unmap_sg must be called with the original number of the entries
+passed to the dma_map_sg().
 
-On Thu, Jun 18, 2020 at 7:01 AM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
->
->
-> On 18/06/2020 14:48, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Thu, Jun 18, 2020 at 3:10 AM Srinivas Kandagatla
-> > <srinivas.kandagatla@linaro.org> wrote:
-> >>
-> >> +Adding SBoyd.
-> >>
-> >> On 17/06/2020 18:22, Doug Anderson wrote:
-> >>> Hi,
-> >>>
-> >>> On Wed, Jun 17, 2020 at 8:19 AM Srinivas Kandagatla
-> >>> <srinivas.kandagatla@linaro.org> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> On 17/06/2020 15:51, Douglas Anderson wrote:
-> >>>>> From: Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >>>>>
-> >>>>> On some systems it's possible to actually blow the fuses in the qfprom
-> >>>>> from the kernel.  Add properties to support that.
-> >>>>>
-> >>>>> NOTE: Whether this is possible depends on the BIOS settings and
-> >>>>> whether the kernel has permissions here, so not all boards will be
-> >>>>> able to blow fuses in the kernel.
-> >>>>>
-> >>>>> Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
-> >>>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >>>>> ---
-> >>>>>
-> >>>>> Changes in v3:
-> >>>>> - Add an extra reg range (at 0x6000 offset for SoCs checked)
-> >>>>> - Define two options for reg: 1 item or 4 items.
-> >>>>> - No reg-names.
-> >>>>> - Add "clocks" and "clock-names" to list of properties.
-> >>>>> - Clock is now "sec", not "secclk".
-> >>>>> - Add "vcc-supply" to list of properties.
-> >>>>> - Fixed up example.
-> >>>>>
-> >>>>>     .../bindings/nvmem/qcom,qfprom.yaml           | 45 ++++++++++++++++++-
-> >>>>>     1 file changed, 43 insertions(+), 2 deletions(-)
-> >>>>>
-> >>>>> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>>>> index 5efa5e7c4d81..b195212c6193 100644
-> >>>>> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>>>> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-> >>>>> @@ -17,8 +17,27 @@ properties:
-> >>>>>         const: qcom,qfprom
-> >>>>>
-> >>>>>       reg:
-> >>>>> -    items:
-> >>>>> -      - description: The corrected region.
-> >>>>> +    # If the QFPROM is read-only OS image then only the corrected region
-> >>>>> +    # needs to be provided.  If the QFPROM is writable then all 4 regions
-> >>>>> +    # must be provided.
-> >>>>> +    oneOf:
-> >>>>> +      - items:
-> >>>>> +          - description: The corrected region.
-> >>>>> +      - items:
-> >>>>> +          - description: The corrected region.
-> >>>>> +          - description: The raw region.
-> >>>>> +          - description: The config region.
-> >>>>> +          - description: The security control region.
-> >>>>> +
-> >>>>> +  # Clock must be provided if QFPROM is writable from the OS image.
-> >>>>> +  clocks:
-> >>>>> +    maxItems: 1
-> >>>>
-> >>>>
-> >>>>> +  clock-names:
-> >>>>> +    const: sec
-> >>>>
-> >>>> Do we need clock-names for just one clock here?
-> >>>
-> >>> I think technically you can get by without, but convention is that
-> >>> clock-names are always provided for clocks.  It's talked about in the
-> >>> same link I sent that talked about reg-names:
-> >>>
-> >>> https://lore.kernel.org/r/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
-> >>>
-> >>
-> >> TBH, This is total confusion!!!
-> >>
-> >> when to use "*-names" Device tree bindings is totally depended on Linux
-> >> Subsystem interfaces!
-> >>
-> >> And what is the starting point to draw this line?
-> >
-> > Definitely confusing and mostly because the dts stuff grew organically
-> > for a while there.  It does feel like Rob is pretty clear on the
-> > current state of things and the policy in the link I provided, though.
-> >
-> >
-> >>> Specifically, Rob said:
-> >>>
-> >>>> That probably is because the clock binding has had clock-names from
-> >>>> the start (it may have been the first one). That was probably partly
-> >>>> due to the clock API also was mainly by name already if we want to
-> >>>> admit Linux influence on bindings
-> >>>
-> >>> Basically the standard way for getting clocks in Linux is
-> >>> clk_get(name).  With just one clock you can call clk_get(NULL) and I
-> >>> believe that works, but when you add the 2nd clock then you have to
-> >>> switch APIs to one of the less-commonly-used variants.
-> >>
-> >> In previous NON-DT life clk_get api name argument comes from the clk
-> >> names that clk provider registered the clocks with.
-> >>
-> >> If I remember this correctly, the name that is refereed here for
-> >> clk_get() is old clkdev api based on clk_lookups and is not the same as
-> >> clk-names that we have in Device tree. Atleast in this case!
-> >>
-> >> clk-names has two objectives in DT:
-> >> 1> To find the index of the clock in the clocks DT property.
-> >>
-> >> 2> If actual clk name is specified then if "1" fails then name could
-> >> potentially fallback to use old clkdev based clk_lookups.
-> >>
-> >> In this specific case we have "sec" as clock-names which is totally used
-> >> for indexing into clocks property and it can not be used for (2) as
-> >> there is no clk named "sec" registered by any of the clk providers.
-> >>
-> >> So this does not justify the reasoning why "clock-names" should be used
-> >> while "reg-names" should not be used!. Both of them are going to be
-> >> finally used for indexing into there respective properties.
-> >
-> > Right, you just have to accept the fact that logic doesn't come into
-> > play here.  For clocks, always use "clk-names" but also always use a
-> > consistent order (which is now more enforced by the schema checker).
-> > For "reg" almost never use "reg-names".
-> >
->
-> On the other note:
->
-> clock-names are not mandatory according to
-> Documentation/devicetree/bindings/clock/clock-bindings.txt
->
-> For this particular case where clock-names = "sec" is totally used for
-> indexing and nothing else!
+struct sg_table is a common structure used for describing a non-contiguous
+memory buffer, used commonly in the DRM and graphics subsystems. It
+consists of a scatterlist with memory pages and DMA addresses (sgl entry),
+as well as the number of scatterlist entries: CPU pages (orig_nents entry)
+and DMA mapped pages (nents entry).
 
-So I guess in the one-clock case it's more optional and if you feel
-strongly I'll get rid of clk-names here.  ...but if we ever need
-another clock we probably will want to add it back and (I could be
-corrected) I believe it's convention to specify clk-names even with
-one clock.
+It turned out that it was a common mistake to misuse nents and orig_nents
+entries, calling DMA-mapping functions with a wrong number of entries or
+ignoring the number of mapped entries returned by the dma_map_sg()
+function.
 
-I won't say it's impossible to get by without clock-names when you
-have more than one clock, but (almost) nobody does it.  It's hard to
-quickly come up with a good way to search for this, but skimming
-through:
+To avoid such issues, lets use a common dma-mapping wrappers operating
+directly on the struct sg_table objects and use scatterlist page
+iterators where possible. This, almost always, hides references to the
+nents and orig_nents entries, making the code robust, easier to follow
+and copy/paste safe.
 
-git grep -C5 'clocks.*,' -- arch/arm64/boot/dts
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+---
+ drivers/gpu/drm/msm/msm_gem.c    | 13 +++++--------
+ drivers/gpu/drm/msm/msm_gpummu.c | 14 ++++++--------
+ drivers/gpu/drm/msm/msm_iommu.c  |  2 +-
+ 3 files changed, 12 insertions(+), 17 deletions(-)
 
-...you don't find too many examples of no clock-names and you find
-_lots_ of examples where clock-names are specified.  One example that
-_does_ have multiple clocks and doesn't specify clock-names is
-"simple-framebuffer".  Looking at the Linux driver you can see they
-have to use the special "of_clk_get()" variant to handle it.
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 38b0c0e1f83e..e0d5fd36ea8f 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -53,11 +53,10 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
+ 	struct device *dev = msm_obj->base.dev->dev;
+ 
+ 	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
+-		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_sync_sgtable_for_device(dev, msm_obj->sgt,
++					    DMA_BIDIRECTIONAL);
+ 	} else {
+-		dma_map_sg(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_map_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
+ 	}
+ }
+ 
+@@ -66,11 +65,9 @@ static void sync_for_cpu(struct msm_gem_object *msm_obj)
+ 	struct device *dev = msm_obj->base.dev->dev;
+ 
+ 	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
+-		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_sync_sgtable_for_cpu(dev, msm_obj->sgt, DMA_BIDIRECTIONAL);
+ 	} else {
+-		dma_unmap_sg(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_unmap_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
+ 	}
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
+index 310a31b05faa..319f06c28235 100644
+--- a/drivers/gpu/drm/msm/msm_gpummu.c
++++ b/drivers/gpu/drm/msm/msm_gpummu.c
+@@ -30,21 +30,19 @@ static int msm_gpummu_map(struct msm_mmu *mmu, uint64_t iova,
+ {
+ 	struct msm_gpummu *gpummu = to_msm_gpummu(mmu);
+ 	unsigned idx = (iova - GPUMMU_VA_START) / GPUMMU_PAGE_SIZE;
+-	struct scatterlist *sg;
++	struct sg_dma_page_iter dma_iter;
+ 	unsigned prot_bits = 0;
+-	unsigned i, j;
+ 
+ 	if (prot & IOMMU_WRITE)
+ 		prot_bits |= 1;
+ 	if (prot & IOMMU_READ)
+ 		prot_bits |= 2;
+ 
+-	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
+-		dma_addr_t addr = sg->dma_address;
+-		for (j = 0; j < sg->length / GPUMMU_PAGE_SIZE; j++, idx++) {
+-			gpummu->table[idx] = addr | prot_bits;
+-			addr += GPUMMU_PAGE_SIZE;
+-		}
++	for_each_sgtable_dma_page(sgt, &dma_iter, 0) {
++		dma_addr_t addr = sg_page_iter_dma_address(&dma_iter);
++
++		BUILD_BUG_ON(GPUMMU_PAGE_SIZE != PAGE_SIZE);
++		gpummu->table[idx++] = addr | prot_bits;
+ 	}
+ 
+ 	/* we can improve by deferring flush for multiple map() */
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index 3a381a9674c9..6c31e65834c6 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -36,7 +36,7 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+ 	struct msm_iommu *iommu = to_msm_iommu(mmu);
+ 	size_t ret;
+ 
+-	ret = iommu_map_sg(iommu->domain, iova, sgt->sgl, sgt->nents, prot);
++	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
+ 	WARN_ON(!ret);
+ 
+ 	return (ret == len) ? 0 : -EINVAL;
+-- 
+2.17.1
 
-
--Doug
