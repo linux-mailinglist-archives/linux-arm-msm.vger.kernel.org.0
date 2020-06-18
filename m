@@ -2,35 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F75F1FE7D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:44:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEA361FE791
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:42:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728712AbgFRBLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 21:11:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38830 "EHLO mail.kernel.org"
+        id S1730733AbgFRCmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 22:42:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40602 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728709AbgFRBLF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:11:05 -0400
+        id S1728861AbgFRBMJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:12:09 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7B88021D7E;
-        Thu, 18 Jun 2020 01:11:04 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3495D20EDD;
+        Thu, 18 Jun 2020 01:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592442665;
-        bh=nXySQYyZR7XIC8RhMQ6BDal9RFYXQkjxarwlV7ejjg4=;
+        s=default; t=1592442729;
+        bh=NznlWfKmX/UWHufbw5kvuUbn4Bkrlk5WDFiJ3oJ4Oiw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oksSqBSdFUTFZz76Fsp50PfymeOiMY2wCJZwx2v9zo35ieaYH06yuo9Rr76QsKmL6
-         cQLKQlMMllPbiDHtxW6KACXZExLJx4LOaz/b1ZAIAI16MWrl34np9uQLmTaIFrveCl
-         uo30EKvIei+psEhg3Egn6c750jIBfYhT16KkOL8c=
+        b=GhFk5Dw0u3OhnRJAuo5JKURn61Kt0+tpOt2QLMPMBbWiG3RRl5st+Kdh7HFLw+/YP
+         BdrCVxuSfYsoWZz4kGel5cB4+Gi+JxIZs/9P+ZuX/MUFxwdm1V12mgdcQvUc0OuvxD
+         dD2f1eWzi8k7hg7TvbAkSG2+x3AyYtIQCEF4lBVg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 135/388] arm64: dts: qcom: sm8250: Fix PDC compatible and reg
-Date:   Wed, 17 Jun 2020 21:03:52 -0400
-Message-Id: <20200618010805.600873-135-sashal@kernel.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 185/388] arm64: dts: msm8996: Fix CSI IRQ types
+Date:   Wed, 17 Jun 2020 21:04:42 -0400
+Message-Id: <20200618010805.600873-185-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200618010805.600873-1-sashal@kernel.org>
 References: <20200618010805.600873-1-sashal@kernel.org>
@@ -43,38 +44,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Loic Poulain <loic.poulain@linaro.org>
 
-[ Upstream commit 240031967ac4c63713c6e0c3249d734e23c913aa ]
+[ Upstream commit 4a4a26317ec8aba575f6b85789a42639937bc1a4 ]
 
-The pdc node suffers from both too narrow compatible and insufficient
-cells in the reg, fix these.
+Each IRQ_TYPE_NONE interrupt causes a warning at boot.
+Fix that by defining an appropriate type.
 
-Fixes: 60378f1a171e ("arm64: dts: qcom: sm8250: Add sm8250 dts file")
-Tested-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20200415054703.739507-1-bjorn.andersson@linaro.org
+Fixes: e0531312e78f ("arm64: dts: qcom: msm8996: Add CAMSS support")
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Link: https://lore.kernel.org/r/1587470425-13726-1-git-send-email-loic.poulain@linaro.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 891d83b2afea..2a7eaefd221d 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -314,8 +314,8 @@ intc: interrupt-controller@17a00000 {
- 		};
- 
- 		pdc: interrupt-controller@b220000 {
--			compatible = "qcom,sm8250-pdc";
--			reg = <0x0b220000 0x30000>, <0x17c000f0 0x60>;
-+			compatible = "qcom,sm8250-pdc", "qcom,pdc";
-+			reg = <0 0x0b220000 0 0x30000>, <0 0x17c000f0 0 0x60>;
- 			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
- 					  <125 63 1>, <126 716 12>;
- 			#interrupt-cells = <2>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 98634d5c4440..d22c364b520a 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -989,16 +989,16 @@ camss: camss@a00000 {
+ 				"csi_clk_mux",
+ 				"vfe0",
+ 				"vfe1";
+-			interrupts = <GIC_SPI 78 0>,
+-				<GIC_SPI 79 0>,
+-				<GIC_SPI 80 0>,
+-				<GIC_SPI 296 0>,
+-				<GIC_SPI 297 0>,
+-				<GIC_SPI 298 0>,
+-				<GIC_SPI 299 0>,
+-				<GIC_SPI 309 0>,
+-				<GIC_SPI 314 0>,
+-				<GIC_SPI 315 0>;
++			interrupts = <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 80 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 296 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 297 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 298 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 299 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 309 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 314 IRQ_TYPE_EDGE_RISING>,
++				<GIC_SPI 315 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "csiphy0",
+ 				"csiphy1",
+ 				"csiphy2",
 -- 
 2.25.1
 
