@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 438381FE6CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:38:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E3511FE6B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729179AbgFRBNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 21:13:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42938 "EHLO mail.kernel.org"
+        id S1728997AbgFRCfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 22:35:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43802 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728014AbgFRBNj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:13:39 -0400
+        id S1727914AbgFRBON (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:14:13 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 08E3421924;
-        Thu, 18 Jun 2020 01:13:37 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 95E3721974;
+        Thu, 18 Jun 2020 01:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592442819;
-        bh=++TE833j+DXLC/txZxLB2LxUhnJsxmm4FsnYJoi9dB0=;
+        s=default; t=1592442852;
+        bh=nkZF8hnJwomHUsLmId6zjEEiKZoa/7yMkeMVYrIPgKk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=C6pUeXGKa7SvAt8zdK9LNe/ol6sjtyqgKQ5X5hQ8E0JuvdZ4q3K2M7+n3BqaIy/CA
-         DvPbgWIZi/rtvsJ7n6o5upj2TuTJMY94nZscG/xjjg8Bzr7iJLf9wIvfkDwU2rjNVX
-         VkVo74y7fqEIceYjQnFI7vTeqfwwXZHUeJ1wcFtg=
+        b=moa3x/zzukwMvNfGe0DtBBb0XY4M5xuDO6P2saqUQsSzhxgJOXfGN18SkQAqSNYaK
+         dSIw6T8IOG3WAnOZSBZRSMjxf7/OiNdztLbKByeTNb2Ff61ufy6oxn3LDnBcEhR3qJ
+         shy3hqHAgOLgnHBgng3FdNJRD5hsTeMHVq2hOJxY=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 256/388] bus: mhi: core: Read transfer length from an event properly
-Date:   Wed, 17 Jun 2020 21:05:53 -0400
-Message-Id: <20200618010805.600873-256-sashal@kernel.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.7 283/388] scsi: ufs-qcom: Fix scheduling while atomic issue
+Date:   Wed, 17 Jun 2020 21:06:20 -0400
+Message-Id: <20200618010805.600873-283-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200618010805.600873-1-sashal@kernel.org>
 References: <20200618010805.600873-1-sashal@kernel.org>
@@ -46,57 +46,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Hemant Kumar <hemantk@codeaurora.org>
+From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-[ Upstream commit ee75cedf82d832561af8ba8380aeffd00a9eea77 ]
+[ Upstream commit 3be60b564de49875e47974c37fabced893cd0931 ]
 
-When MHI Driver receives an EOT event, it reads xfer_len from the
-event in the last TRE. The value is under control of the MHI device
-and never validated by Host MHI driver. The value should never be
-larger than the real size of the buffer but a malicious device can
-set the value 0xFFFF as maximum. This causes driver to memory
-overflow (both read or write). Fix this issue by reading minimum of
-transfer length from event and the buffer length provided.
+ufs_qcom_dump_dbg_regs() uses usleep_range, a sleeping function, but can be
+called from atomic context in the following flow:
 
-Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20200521170249.21795-5-manivannan.sadhasivam@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ufshcd_intr -> ufshcd_sl_intr -> ufshcd_check_errors ->
+ufshcd_print_host_regs -> ufshcd_vops_dbg_register_dump ->
+ufs_qcom_dump_dbg_regs
+
+This causes a boot crash on the Lenovo Miix 630 when the interrupt is
+handled on the idle thread.
+
+Fix the issue by switching to udelay().
+
+Link: https://lore.kernel.org/r/20200525204125.46171-1-jeffrey.l.hugo@gmail.com
+Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus registers")
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/core/main.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/ufs/ufs-qcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 97e06cc586e4..8be3d0fb0614 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -513,7 +513,10 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 				mhi_cntrl->unmap_single(mhi_cntrl, buf_info);
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 19aa5c44e0da..f938867301a0 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1658,11 +1658,11 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
  
- 			result.buf_addr = buf_info->cb_buf;
--			result.bytes_xferd = xfer_len;
-+
-+			/* truncate to buf len if xfer_len is larger */
-+			result.bytes_xferd =
-+				min_t(u16, xfer_len, buf_info->len);
- 			mhi_del_ring_element(mhi_cntrl, buf_ring);
- 			mhi_del_ring_element(mhi_cntrl, tre_ring);
- 			local_rp = tre_ring->rp;
-@@ -597,7 +600,9 @@ static int parse_rsc_event(struct mhi_controller *mhi_cntrl,
+ 	/* sleep a bit intermittently as we are dumping too much data */
+ 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ 	ufs_qcom_testbus_read(hba);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ 	ufs_qcom_print_unipro_testbus(hba);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ }
  
- 	result.transaction_status = (ev_code == MHI_EV_CC_OVERFLOW) ?
- 		-EOVERFLOW : 0;
--	result.bytes_xferd = xfer_len;
-+
-+	/* truncate to buf len if xfer_len is larger */
-+	result.bytes_xferd = min_t(u16, xfer_len, buf_info->len);
- 	result.buf_addr = buf_info->cb_buf;
- 	result.dir = mhi_chan->dir;
- 
+ /**
 -- 
 2.25.1
 
