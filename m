@@ -2,37 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AC791FE23C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA7371FE1F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 03:58:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731189AbgFRBY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 21:24:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58920 "EHLO mail.kernel.org"
+        id S1731322AbgFRBY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 21:24:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59766 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731181AbgFRBYZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:24:25 -0400
+        id S1731316AbgFRBY5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:24:57 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C87AD20776;
-        Thu, 18 Jun 2020 01:24:23 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 07A3621D80;
+        Thu, 18 Jun 2020 01:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443464;
-        bh=CCU6RsdEuc7ATExJHevX6rxXxURwrNZzuNfZq/Ayhhs=;
+        s=default; t=1592443497;
+        bh=w1lTZXh9IdDYDLqWT6YpftBSWKQnfqyHQ9w33e4WjlE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Qx5+qQbAi4m7O8YuGChuUl7PJv56Jpnae5lrbMTaBpIoYq6nGtWGxmvH+LsueEqtn
-         G8lGIvGJ8PfU/itsPqFipYPbC8f/Ryu10H71fRBrX7DG7ltQaoyjYlbv9HCa94tg8e
-         OZ9FkDfFXJqVcGQ/frTg8i5p5GK0fe02MgJnW9nw=
+        b=zQLrPnSBf+Xnf257jBvWnAXNHb1ZtUqsH79ru6QEjSFMRirng1kk/++G5i9dAcMl4
+         o7pJSN2BAlG7WLD+fhTov0/NQiFtUsNwhtjSZt+63paYMCN+T0zfdWaFUIWDKvgm1M
+         u+kOKlHMeaf516WbeYcKHRcsEPCBvdxajLwxDe4w=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Roy Spliet <nouveau@spliet.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 097/172] drm/msm/mdp5: Fix mdp5_init error path for failed mdp5_kms allocation
-Date:   Wed, 17 Jun 2020 21:21:03 -0400
-Message-Id: <20200618012218.607130-97-sashal@kernel.org>
+        linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 123/172] scsi: ufs-qcom: Fix scheduling while atomic issue
+Date:   Wed, 17 Jun 2020 21:21:29 -0400
+Message-Id: <20200618012218.607130-123-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200618012218.607130-1-sashal@kernel.org>
 References: <20200618012218.607130-1-sashal@kernel.org>
@@ -45,35 +46,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Roy Spliet <nouveau@spliet.org>
+From: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 
-[ Upstream commit e4337877c5d578722c0716f131fb774522013cf5 ]
+[ Upstream commit 3be60b564de49875e47974c37fabced893cd0931 ]
 
-When allocation for mdp5_kms fails, calling mdp5_destroy() leads to undefined
-behaviour, likely a nullptr exception or use-after-free troubles.
+ufs_qcom_dump_dbg_regs() uses usleep_range, a sleeping function, but can be
+called from atomic context in the following flow:
 
-Signed-off-by: Roy Spliet <nouveau@spliet.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+ufshcd_intr -> ufshcd_sl_intr -> ufshcd_check_errors ->
+ufshcd_print_host_regs -> ufshcd_vops_dbg_register_dump ->
+ufs_qcom_dump_dbg_regs
+
+This causes a boot crash on the Lenovo Miix 630 when the interrupt is
+handled on the idle thread.
+
+Fix the issue by switching to udelay().
+
+Link: https://lore.kernel.org/r/20200525204125.46171-1-jeffrey.l.hugo@gmail.com
+Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus registers")
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Signed-off-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/ufs/ufs-qcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index bddd625ab91b..25691b7cece1 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -1021,7 +1021,8 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 75ee5906b966..21e3ff590ec9 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1635,11 +1635,11 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
  
- 	return 0;
- fail:
--	mdp5_destroy(pdev);
-+	if (mdp5_kms)
-+		mdp5_destroy(pdev);
- 	return ret;
+ 	/* sleep a bit intermittently as we are dumping too much data */
+ 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ 	ufs_qcom_testbus_read(hba);
+-	usleep_range(1000, 1100);
++	udelay(1000);
+ 	ufs_qcom_print_unipro_testbus(hba);
+-	usleep_range(1000, 1100);
++	udelay(1000);
  }
  
+ /**
 -- 
 2.25.1
 
