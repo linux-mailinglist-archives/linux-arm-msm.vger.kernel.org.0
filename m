@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E81CE1FDF30
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 03:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 574251FE5A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 04:27:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732484AbgFRBaR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Jun 2020 21:30:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40078 "EHLO mail.kernel.org"
+        id S1730448AbgFRC1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Jun 2020 22:27:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47578 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732474AbgFRBaL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Jun 2020 21:30:11 -0400
+        id S1728523AbgFRBQo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Jun 2020 21:16:44 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B0E7E22251;
-        Thu, 18 Jun 2020 01:30:09 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C411D21D80;
+        Thu, 18 Jun 2020 01:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592443810;
-        bh=BNNH8wXOLzEpdqTfYme0mxdsQXeu5vh/B7BXxU0daxA=;
+        s=default; t=1592443003;
+        bh=7nE8C1YbYrTwvD5y/SKbRWoc0Mb/3j5lKq5bUoSzKQc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=V8P5VEUZczWEN4tKUrVm99RMBZGwzr2qQSCIcHZICz0FztF0y8RoN4AcI24HPBakN
-         HuIJPHFML6r3zJCzmLHr51WwleJxNVwG8PsXzzgWNc45IBcNr+0YJTvH3avELqOvqC
-         DKtpUPZX6pB3ijjG+wPf9ATIBegCQZoAn5leO+yA=
+        b=1E3nw04DA/peSAtoBDANNYNvgu7BUX51mp3zuumnX0XbH43A+PChiUVDA4EWXiMZP
+         IZTPNIDL6b6FlRauoQo6RcA1rGoV45ikrx/xFDQsw91PhMCgnH+G3dEF+ulQfy73jR
+         LZqMdfGPqbnX3yBpZwIOUuCaJVlBI20HiM3h3AcQ=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
@@ -33,12 +33,12 @@ Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 04/60] clk: qcom: msm8916: Fix the address location of pll->config_reg
-Date:   Wed, 17 Jun 2020 21:29:08 -0400
-Message-Id: <20200618013004.610532-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 009/266] clk: qcom: msm8916: Fix the address location of pll->config_reg
+Date:   Wed, 17 Jun 2020 21:12:14 -0400
+Message-Id: <20200618011631.604574-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200618013004.610532-1-sashal@kernel.org>
-References: <20200618013004.610532-1-sashal@kernel.org>
+In-Reply-To: <20200618011631.604574-1-sashal@kernel.org>
+References: <20200618011631.604574-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -95,10 +95,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/clk/qcom/gcc-msm8916.c b/drivers/clk/qcom/gcc-msm8916.c
-index 95a4dd290f35..d7dd0417ef5e 100644
+index 4e329a7baf2b..17e4a5a2a9fd 100644
 --- a/drivers/clk/qcom/gcc-msm8916.c
 +++ b/drivers/clk/qcom/gcc-msm8916.c
-@@ -270,7 +270,7 @@ static struct clk_pll gpll0 = {
+@@ -260,7 +260,7 @@ static struct clk_pll gpll0 = {
  	.l_reg = 0x21004,
  	.m_reg = 0x21008,
  	.n_reg = 0x2100c,
@@ -107,7 +107,7 @@ index 95a4dd290f35..d7dd0417ef5e 100644
  	.mode_reg = 0x21000,
  	.status_reg = 0x2101c,
  	.status_bit = 17,
-@@ -297,7 +297,7 @@ static struct clk_pll gpll1 = {
+@@ -287,7 +287,7 @@ static struct clk_pll gpll1 = {
  	.l_reg = 0x20004,
  	.m_reg = 0x20008,
  	.n_reg = 0x2000c,
@@ -116,7 +116,7 @@ index 95a4dd290f35..d7dd0417ef5e 100644
  	.mode_reg = 0x20000,
  	.status_reg = 0x2001c,
  	.status_bit = 17,
-@@ -324,7 +324,7 @@ static struct clk_pll gpll2 = {
+@@ -314,7 +314,7 @@ static struct clk_pll gpll2 = {
  	.l_reg = 0x4a004,
  	.m_reg = 0x4a008,
  	.n_reg = 0x4a00c,
@@ -125,7 +125,7 @@ index 95a4dd290f35..d7dd0417ef5e 100644
  	.mode_reg = 0x4a000,
  	.status_reg = 0x4a01c,
  	.status_bit = 17,
-@@ -351,7 +351,7 @@ static struct clk_pll bimc_pll = {
+@@ -341,7 +341,7 @@ static struct clk_pll bimc_pll = {
  	.l_reg = 0x23004,
  	.m_reg = 0x23008,
  	.n_reg = 0x2300c,
