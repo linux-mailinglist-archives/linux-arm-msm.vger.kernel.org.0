@@ -2,52 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7442D1FF7D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:46:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 391ED1FF856
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728072AbgFRPqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 11:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38894 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728027AbgFRPqA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 11:46:00 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031B9C0613EE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:45:59 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id 64so2946150pfv.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qupWaprfLr4lzKnkhWjV2SAcxhuEsrjPa2GnObdvpSE=;
-        b=aKSPCnP9b2NTkaOyGcrTbKo3rY2wFLGG91oRV96liS8c16qb5KhllynE9aiwFxLNMW
-         xDBaz8Ryfw1RDZye6DBc58F8ytYCk2Sg7eh6GlRn97eex80uA5NZMTRkYMVmmgpvLFou
-         D1BDLZjc049E9Dtme4t2DDzjRLaqLsIN+PdA0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qupWaprfLr4lzKnkhWjV2SAcxhuEsrjPa2GnObdvpSE=;
-        b=aSyCYxeZT3mb4YthMACQguQyZw62hLQTNUXnGaxDc+fUwIKvpbzH9vHf/z0QWa4cAV
-         o8hTy4099I2ugy2NifwPpGfwKB1xpTz4UW7ZNqB6/KMWg9g+cqWJcohSJGSJNTJ0jtfl
-         sfhnTOCZTSrMv33sFzsdCLM52MQK88CyikZzq2+QIJh7hv60bbd9hvhqQarUQPrsxlLY
-         OH9tAYuD77zSKBQ8pVKn3CbAcTphIcNKpune8ZyHZ7MUzuryLZvoyJJGnYbtgGApv40z
-         iy+Dc240+56df/GdWxf5TSCDA+SVNlYfx8kf0+a3SeYtnN8xmVo8L64Iait5+eZU2WJA
-         Jv+g==
-X-Gm-Message-State: AOAM5317PXOCZybB9R6VQ5tZeZx/5+P3jFR//Vb2752pcXoidcuDX+D8
-        lrrhxRbDWhhBadjC6pToLwOt2g==
-X-Google-Smtp-Source: ABdhPJxnLLK0++ErXNmptr1FXVpVla5sak2tHgdgxR6PEcwdMlSdbcd9ahWQAclwOSlzARoOrSmIjg==
-X-Received: by 2002:a63:5f8c:: with SMTP id t134mr1373770pgb.99.1592495159393;
-        Thu, 18 Jun 2020 08:45:59 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id i7sm2947669pgr.86.2020.06.18.08.45.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 08:45:58 -0700 (PDT)
-Date:   Thu, 18 Jun 2020 08:45:55 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        id S1729227AbgFRP6c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 11:58:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59054 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729225AbgFRP6b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jun 2020 11:58:31 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CF90F20732;
+        Thu, 18 Jun 2020 15:58:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592495911;
+        bh=+KZmL52GIm7EihsT05Q49pyQj6KTBxyDgCq04pwK7Sc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=slS5eq2eelDBTkTN+YE2koLjJkA1T4jOn/J3pc6Nhbp+B+9CaSiptkj9cRfkRkQ0X
+         NdxAnrzSCZEjX3M7q5js+8XrRroVek9+HThygE7TBaIK7VwpoTjpNJlP3hlQeV/GT5
+         GfWM9YsGTi4yBkUvXX3YY7zuWnboCdl/2RtzPwkk=
+Date:   Thu, 18 Jun 2020 17:58:20 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,73 +37,46 @@ Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-kernel@vger.kernel.org, Manu Gautam <mgautam@codeaurora.org>
 Subject: Re: [PATCH] driver core:Export the symbol device_is_bound
-Message-ID: <20200618154555.GD4525@google.com>
+Message-ID: <20200618155820.GA3076467@kroah.com>
 References: <1591123192-565-1-git-send-email-sanm@codeaurora.org>
  <20200618081443.GA1043700@kroah.com>
+ <20200618154555.GD4525@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200618081443.GA1043700@kroah.com>
+In-Reply-To: <20200618154555.GD4525@google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
-
-On Thu, Jun 18, 2020 at 10:14:43AM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Jun 03, 2020 at 12:09:52AM +0530, Sandeep Maheswaram wrote:
-> > Export the symbol device_is_bound so that it can be used by the modules.
+On Thu, Jun 18, 2020 at 08:45:55AM -0700, Matthias Kaehlcke wrote:
+> Hi Greg,
 > 
-> What modules need this?
-
-drivers/usb/dwc3/dwc3-qcom.c (and probably other dwc3 'wrappers').
-
-Short summary: QCOM dwc3 support is split in two drivers, the core dwc3
-driver and the QCOM specific parts. dwc3-qcom is probed first (through
-a DT entry or ACPI), dwc3_qcom_probe() then calls of_platform_populate()
-to probe the core part. After a successful return from _populate() the
-driver assumes that the core device is fully initialized. However the
-latter is not correct, the driver core doesn't propagate errors from
-probe() to platform_populate(). The dwc3-qcom driver would use
-device_is_bound() to make sure the core device was probed successfully.
-
-Related patches:
-
-"usb: dwc3: qcom: Make sure core device is fully initialized before it is used"
-https://lore.kernel.org/patchwork/patch/1257279/
-
-"usb: dwc3: qcom: Add interconnect support in dwc3 driver"
-https://patchwork.kernel.org/patch/11468647/
-
-> > This change was suggested to solve the allmodconfig build error on adding
-> > the patch https://lore.kernel.org/patchwork/patch/1218628/
+> On Thu, Jun 18, 2020 at 10:14:43AM +0200, Greg Kroah-Hartman wrote:
+> > On Wed, Jun 03, 2020 at 12:09:52AM +0530, Sandeep Maheswaram wrote:
+> > > Export the symbol device_is_bound so that it can be used by the modules.
 > > 
-> > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> > ---
-> >  drivers/base/dd.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-> > index 9a1d940..65d16ce 100644
-> > --- a/drivers/base/dd.c
-> > +++ b/drivers/base/dd.c
-> > @@ -337,6 +337,7 @@ bool device_is_bound(struct device *dev)
-> >  {
-> >  	return dev->p && klist_node_attached(&dev->p->knode_driver);
-> >  }
-> > +EXPORT_SYMBOL_GPL(device_is_bound);
+> > What modules need this?
 > 
-> If a driver needs to use this, something is really wrong with it.  What
-> happens right after this, the state could have changed?
-> 
-> So, no, sorry, this is not a good idea.
+> drivers/usb/dwc3/dwc3-qcom.c (and probably other dwc3 'wrappers').
 
-Agreed that what some dwc3 'wrapper' drivers do is brittle, and that using
-device_is_bound() is only a bandaid, that doesn't address the entire issue.
+Why wasn't that said here?  No context is not good :(
 
-Do you have any suggestions on how this could be properly addressed?
+> Short summary: QCOM dwc3 support is split in two drivers, the core dwc3
+> driver and the QCOM specific parts. dwc3-qcom is probed first (through
+> a DT entry or ACPI), dwc3_qcom_probe() then calls of_platform_populate()
+> to probe the core part. After a successful return from _populate() the
+> driver assumes that the core device is fully initialized. However the
+> latter is not correct, the driver core doesn't propagate errors from
+> probe() to platform_populate(). The dwc3-qcom driver would use
+> device_is_bound() to make sure the core device was probed successfully.
 
-Thanks
+why does the dwc3-qcom driver care?
 
-Matthias
+And why is the driver split in a way that requires such "broken"
+structures?  Why can't that be fixed instead?
+
+thanks,
+
+greg k-h
