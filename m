@@ -2,188 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75B151FEF2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 12:03:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A60631FEF68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 12:10:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728365AbgFRKDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 06:03:36 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:53840 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728356AbgFRKDd (ORCPT
+        id S1729051AbgFRKKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 06:10:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43370 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728938AbgFRKKY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 06:03:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592474612; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=CwMAQGp5QqqMs436TWKlp4Y2VmDjG4KEwhlH53uGM7c=; b=ncOQfRfEgebpa/uXWGlJydMaV6i4ZRaF0+jUKU+GUWm2tVKkwrnJjmvRWi3emIqgs19R95qY
- NBg7eeVipPileIQBVFYIPa+BiZO5Kaf+C1x36T0sghENj07T3N0VpqXLM+Ml6/paxyNw9TAT
- Kj26FwJ+sxUHI4zjpLRsxsSsMzs=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5eeb3be1fe1db4db89a09658 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Jun 2020 10:03:13
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9254C433C8; Thu, 18 Jun 2020 10:03:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.129] (unknown [106.222.1.75])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4D519C433C9;
-        Thu, 18 Jun 2020 10:03:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4D519C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2 4/4] irqchip: qcom-pdc: Introduce irq_set_wake call
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org>
- <1590253873-11556-5-git-send-email-mkshah@codeaurora.org>
- <159057454795.88029.5963412495484312088@swboyd.mtv.corp.google.com>
- <e565f798-e62b-7b03-6cd5-6daf9b516262@codeaurora.org>
- <159086679215.69627.4444511187342075544@swboyd.mtv.corp.google.com>
- <c93695d4-a03e-7f62-747a-90d892c48694@codeaurora.org>
- <159230866475.62212.10807813558467898966@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <4e318931-cff0-0d8b-d0a0-9d139533c551@codeaurora.org>
-Date:   Thu, 18 Jun 2020 15:33:03 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Thu, 18 Jun 2020 06:10:24 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25919C06174E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 03:10:24 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id t194so5021642wmt.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 03:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OwJsflTboOZP6LbxLiR2D3X1/RtjhErKQOO0ZRCejlo=;
+        b=xFwo+1KO0qIziXEjKjKhDmQG5DAT7HTL3vfq9JYjUk7rnRXpQj8eiQadVojy5j/xR7
+         HSXQcwXFdcyV4jtE2nvrXgHpaJeCX9H7VIN32wE2ftr7UKz0N3NLuqxBuQUVRxBz8hTO
+         zsHKCSkRgIVEzHVcAf3QBNmvfh/pCff1zuCXfiorC/V12+E0zAdJWyoZpDMwb8NRR3e2
+         rVI+lf/SrA7/FjEU6+NX4/TBwm8b+xUNdwp88MeoNJsRln0n9kEiW3Z/iGGZejhoD+/c
+         2bQeOcBW85u59Xcvoj9sk4xGmv3DdbHfGDnoDh4EpQBcSNj5Qaz8eeO4TfABflhPnfHs
+         fqPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OwJsflTboOZP6LbxLiR2D3X1/RtjhErKQOO0ZRCejlo=;
+        b=kcnYuZfQ1iWPhls6/YQm2EvmyJdFpkj2B83MOb9YxV654mc6Hfl7XMTlzqzRJdzTgk
+         PaNZvZZdNMM7cX0vOglBwewpsbXjHbHG9cwuq6SY65Qr1+Q83qbeg3cQokSkM3IbwVci
+         5WHDHkiZTBv7ER+335THJ0PEeshBzBscoJ+2+bARYQ9k5BKgSmVs/uDg8NOuW1Xnpe3S
+         P9yqqGSrzm941e/twN9OqbNOYk+bVwfncAZn0r0xf4UY7Lhv8IWiF3bpKhxUmtZpaKKx
+         T7TfCeUWgjco5d6ub4hWyXgTVbzUjZCfIZCbcIBPmQHumJ/4d+3sQKdJSSd/tbTGHLBt
+         eMaQ==
+X-Gm-Message-State: AOAM5305n9tz7hvbJRit/UT9KXO/dOHHMBtvQa6/yVrOYmlnEOT2Zo6k
+        KCvTerY5hKJo4+3fmfMRvkRMNg==
+X-Google-Smtp-Source: ABdhPJwTDt4perkWCiEvn8HgFTKm3VTLE8DTiPNTY6XLRlvvmmlvQKQkRZGYVY9PPZIPgOd27rCXwA==
+X-Received: by 2002:a1c:b656:: with SMTP id g83mr3345799wmf.151.1592475022767;
+        Thu, 18 Jun 2020 03:10:22 -0700 (PDT)
+Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
+        by smtp.googlemail.com with ESMTPSA id u130sm3121602wmg.32.2020.06.18.03.10.19
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jun 2020 03:10:22 -0700 (PDT)
+Subject: Re: [PATCH v3 2/4] dt-bindings: nvmem: Add properties needed for
+ blowing fuses
+To:     Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, dhavalp@codeaurora.org,
+        mturney@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        Ravi Kumar Bokka <rbokka@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        sparate@codeaurora.org, mkurumel@codeaurora.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        swboyd@chromium.org
+References: <20200617145116.247432-1-dianders@chromium.org>
+ <20200617074930.v3.2.I3b5c3bfaf5fb2d28d63f1b5ee92980900e3f8251@changeid>
+ <254998b9-c45e-bd6b-bc9a-b5934c0fea8e@linaro.org>
+ <CAD=FV=Vec5FVrDVkmUQTfa6bP+1d3yOtj_FsgVAFdHLLbZ8VDA@mail.gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <db6cc914-0520-5286-f852-473fc63bd6c7@linaro.org>
+Date:   Thu, 18 Jun 2020 11:10:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <159230866475.62212.10807813558467898966@swboyd.mtv.corp.google.com>
+In-Reply-To: <CAD=FV=Vec5FVrDVkmUQTfa6bP+1d3yOtj_FsgVAFdHLLbZ8VDA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
++Adding SBoyd.
 
-On 6/16/2020 5:27 PM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-06-01 04:38:25)
->> On 5/31/2020 12:56 AM, Stephen Boyd wrote:
->>> Quoting Maulik Shah (2020-05-29 02:20:32)
->>>> On 5/27/2020 3:45 PM, Stephen Boyd wrote:
->>>>> Quoting Maulik Shah (2020-05-23 10:11:13)
->>>>>> @@ -118,6 +120,7 @@ static void qcom_pdc_gic_unmask(struct irq_data *d)
->>>>>>            if (d->hwirq == GPIO_NO_WAKE_IRQ)
->>>>>>                    return;
->>>>>>     
->>>>>> +       pdc_enable_intr(d, true);
->>>>>>            irq_chip_unmask_parent(d);
->>>>>>     }
->>>>>>     
->>>>> I find these two hunks deeply confusing. I'm not sure what the
->>>>> maintainers think though. I hope it would be simpler to always enable
->>>>> the hwirqs in the pdc when an irq is requested and only disable it in
->>>>> the pdc when the system goes to suspend and the pdc pin isn't for an irq
->>>>> that's marked for wakeup. Does that break somehow?
->>>> PDC monitors interrupts during CPUidle as well, in cases where deepest
->>>> low power mode happened from cpuidle where GIC is not active.
->>>> If we keep PDC IRQ always enabled/unmasked during idle and then
->>>> disable/mask when entering to suspend, it will break cpuidle.
->>> How does it break cpuidle? The irqs that would be enabled/unmasked in
->>> pdc would only be the irqs that the kernel has setup irq handlers for
->>> (from request_irq() and friends).  We want those irqs to keep working
->>> during cpuidle and wake the CPU from the deepest idle states.
->>>> I hope it would be simpler to always enable
->>>> the hwirqs in the pdc when an irq is requested and only disable it in
->>>> the pdc when the system goes to suspend and the pdc pin isn't for an irq
->>>> that's marked for wakeup
->>>> How does it break cpuidle?
->> Consider a scenario..
->> 1. All PDC irqs enabled/unmasked in HW when request_irq() happened/alloc happens
->> 2. Client driver disable's irq. (lazy disable is there, so in HW its still unmasked) but disabled in SW.
->> 3. Device enters deep CPUidle low power modes where only PDC monitors IRQ.
->> 4. This IRQ can still wakeup from CPUidle since it was monitored by PDC.
->> 5. From handler, it comes to know that IRQ is disabled in SW, so it really invokes irq_mask callback now to disable in HW.
->> 6. This mask callback doesn't operate on PDC (since in PDC, IRQs gets masked only during suspend, all other times its enabled)
->> 7. step 3 to 6 repeats, if this IRQ keeps on coming and waking up from deep cpuidle states.
-> Ok so in summary, irq is left unmasked in pdc during deep cpu idle and
-> it keeps waking up the CPU because it isn't masked at the PDC after the
-> first time it interrupts? Is this a power problem?
-yes it can be a power problem.
->   Because from a
-> correctness standpoint we don't really care. It woke up the CPU because
-> it happened, and the GIC can decide to ignore it or not by masking it at
-> the GIC. I thought that the PDC wouldn't wake up the CPU if we masked
-> the irq at the GIC level. Is that not true?
-
-once PDC detects IRQ, it directly doesn't wake up CPU. it replays IRQ to 
-GIC.
-
-since at GIC its masked, GIC doesn't forward to cpu to immediatly wake 
-it up.
-
-however after PDC detecting IRQ, it exits low power mode and 
-watchdog/timer can wakeup upon expiry.
-
-
->
->>>>> My understanding of the hardware is that the GPIO controller has lines
->>>>> directly connected to various SPI lines on the GIC and PDC has a way to
->>>>> monitor those direct connections and wakeup the CPUs when they trigger
->>>>> the detection logic in the PDC. The enable/disable bit in PDC gates that
->>>>> logic for each wire between the GPIO controller and the GIC.
->>>>>
->>>>> So isn't it simpler to leave the PDC monitoring pins that we care about
->>>>> all the time and only stop monitoring when we enter and leave suspend?
->>>> it can affect idle path as explained above.
->>>>
->>>>> And shouldn't the driver set something sane in qcom_pdc_init() to
->>>>> disable all the pdc pins so that we don't rely on boot state to
->>>>> configure pins for wakeup?
->>>> We don't rely on boot state, by default all interrupt will be disabled.
->>> Does 'default' mean the hardware register reset state?
->> correct.
->>> I'm worried that
->>> we will kexec and then various pdc pins will be enabled because the
->>> previous kernel had them enabled but then the new kernel doesn't care
->>> about those pins and we'll never be able to suspend or go idle. I don't
->>> know what happens in the GIC case but I think gic_dist_config() and
->>> things set a sane state at kernel boot.
->> Right however when switching kernel, i suppose client drivers will do a
->> free_irq(), then this will
+On 17/06/2020 18:22, Doug Anderson wrote:
+> Hi,
+> 
+> On Wed, Jun 17, 2020 at 8:19 AM Srinivas Kandagatla
+> <srinivas.kandagatla@linaro.org> wrote:
 >>
->> clear the PDC interrupt in HW by invoking mask_irq() from within free_irq().
-> We can't rely on drivers to do that.
->
->>>> This is same to GIC driver having GICD_ISENABLER register, where all
->>>> bits (one bit per interrupt) set to 0 (masked irqs) during boot up.
->>>>
->>>> Similarly PDC also have all bits set to 0 in PDC's IRQ_ENABLE_BANK.
->>>>
->>> What code sets the IRQ_ENABLE_BANK to all zero when this driver probes?
->> Enable bank will be zero as part of HW reset status when booting up
->> first time.
 >>
-> It's not a concern about the hardware reset state of these registers at
-> boot. I'm worried that the bootloaders or previous OS will configure pdc
-> pins to wake us up. It's better to just force it to something sane, i.e.
-> everything disabled in the PDC, at driver probe time so that nothing can
-> be wrong.
+>>
+>> On 17/06/2020 15:51, Douglas Anderson wrote:
+>>> From: Ravi Kumar Bokka <rbokka@codeaurora.org>
+>>>
+>>> On some systems it's possible to actually blow the fuses in the qfprom
+>>> from the kernel.  Add properties to support that.
+>>>
+>>> NOTE: Whether this is possible depends on the BIOS settings and
+>>> whether the kernel has permissions here, so not all boards will be
+>>> able to blow fuses in the kernel.
+>>>
+>>> Signed-off-by: Ravi Kumar Bokka <rbokka@codeaurora.org>
+>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>> ---
+>>>
+>>> Changes in v3:
+>>> - Add an extra reg range (at 0x6000 offset for SoCs checked)
+>>> - Define two options for reg: 1 item or 4 items.
+>>> - No reg-names.
+>>> - Add "clocks" and "clock-names" to list of properties.
+>>> - Clock is now "sec", not "secclk".
+>>> - Add "vcc-supply" to list of properties.
+>>> - Fixed up example.
+>>>
+>>>    .../bindings/nvmem/qcom,qfprom.yaml           | 45 ++++++++++++++++++-
+>>>    1 file changed, 43 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>> index 5efa5e7c4d81..b195212c6193 100644
+>>> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>> @@ -17,8 +17,27 @@ properties:
+>>>        const: qcom,qfprom
+>>>
+>>>      reg:
+>>> -    items:
+>>> -      - description: The corrected region.
+>>> +    # If the QFPROM is read-only OS image then only the corrected region
+>>> +    # needs to be provided.  If the QFPROM is writable then all 4 regions
+>>> +    # must be provided.
+>>> +    oneOf:
+>>> +      - items:
+>>> +          - description: The corrected region.
+>>> +      - items:
+>>> +          - description: The corrected region.
+>>> +          - description: The raw region.
+>>> +          - description: The config region.
+>>> +          - description: The security control region.
+>>> +
+>>> +  # Clock must be provided if QFPROM is writable from the OS image.
+>>> +  clocks:
+>>> +    maxItems: 1
+>>
+>>
+>>> +  clock-names:
+>>> +    const: sec
+>>
+>> Do we need clock-names for just one clock here?
+> 
+> I think technically you can get by without, but convention is that
+> clock-names are always provided for clocks.  It's talked about in the
+> same link I sent that talked about reg-names:
+> 
+> https://lore.kernel.org/r/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
+> 
 
-okay, i will include a patch to disable all IRQs in PDC hw during init 
-time in next revision.
+TBH, This is total confusion!!!
+
+when to use "*-names" Device tree bindings is totally depended on Linux 
+Subsystem interfaces!
+
+And what is the starting point to draw this line?
+
+
+> Specifically, Rob said:
+> 
+>> That probably is because the clock binding has had clock-names from
+>> the start (it may have been the first one). That was probably partly
+>> due to the clock API also was mainly by name already if we want to
+>> admit Linux influence on bindings
+> 
+> Basically the standard way for getting clocks in Linux is
+> clk_get(name).  With just one clock you can call clk_get(NULL) and I
+> believe that works, but when you add the 2nd clock then you have to
+> switch APIs to one of the less-commonly-used variants.
+
+In previous NON-DT life clk_get api name argument comes from the clk 
+names that clk provider registered the clocks with.
+
+If I remember this correctly, the name that is refereed here for 
+clk_get() is old clkdev api based on clk_lookups and is not the same as 
+clk-names that we have in Device tree. Atleast in this case!
+
+clk-names has two objectives in DT:
+1> To find the index of the clock in the clocks DT property.
+
+2> If actual clk name is specified then if "1" fails then name could 
+potentially fallback to use old clkdev based clk_lookups.
+
+In this specific case we have "sec" as clock-names which is totally used 
+for indexing into clocks property and it can not be used for (2) as 
+there is no clk named "sec" registered by any of the clk providers.
+
+So this does not justify the reasoning why "clock-names" should be used 
+while "reg-names" should not be used!. Both of them are going to be 
+finally used for indexing into there respective properties.
+
+This also brings in greater confusion for both existing and while adding 
+bindings with "*-names" for new interfaces.
+
+Rob, can you please provide some clarity and direction on when to 
+use/not-use *-names properties!
+
 
 Thanks,
-Maulik
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+srini
+> 
+> -Doug
+> 
