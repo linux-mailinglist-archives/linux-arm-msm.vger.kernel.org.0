@@ -2,105 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87FC01FFEB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 01:37:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DEE41FFEC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 01:40:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726478AbgFRXh5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 19:37:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55074 "EHLO
+        id S1727926AbgFRXkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 19:40:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbgFRXh5 (ORCPT
+        with ESMTP id S1726892AbgFRXkB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 19:37:57 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42C80C0613EF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 16:37:57 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id h95so3476771pje.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 16:37:57 -0700 (PDT)
+        Thu, 18 Jun 2020 19:40:01 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BFC5C0613EE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 16:40:01 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id d8so3146671plo.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 16:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=WVpMi69RhX6AlKIc/TV+JAVrcTVQ8jcepQSU/Lx1Ia8=;
-        b=ZrdFXYvrd7w7AxZmBqDQ7XDvlgXtG7LCUhK/NlZgc+S8B4hTRH4lWnej597gWOw3Ch
-         2gQYIFD1JsrSpG4a3Pqw3ZzMvNsSYzDdxBOC+KVFzfSQZ4fdKV4qYEVrGiQGbYyEKnbw
-         r/cTQ/KI/nnu5A9DYBGElCFs5ENXAkHO/qfOg=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=rcHTOjx1Q346P9ZsaYW4owKJanYsDyPidI2shLjtOJ0=;
+        b=dY+RVgnMbwlyOGl4P//IOxVJvx4Qsckqq5/7RKUlK3B0HNqReZ1iIEAYd/Gdz4XzoZ
+         JUOMUSv3Yr6q9tPxAX+XhmV2u8vtcVcwEflJYgP+lEujrAkAgl82N8OhC6huceMDZDQq
+         ytrLGOoiUvTIDJ8xyGuEVcRJxs7f0s/eDwhw8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=WVpMi69RhX6AlKIc/TV+JAVrcTVQ8jcepQSU/Lx1Ia8=;
-        b=p0HdcrNoFOvZOcG0AQTQz1aMT0NZ9to9f+Ql0JoFk2MtoGajc/IgfsgE/LKvjaDtZm
-         lKz0dzpzJrf5WylNNlh4O8hPfc5ipEglP4emzbcCBBgRglpzPK8tIMaPNj2QO7XW2A7L
-         ZgFiIpJjZDvtaXU9LwnaWnP+urHdDNlnT1yxYDC/AwURZdYiOB7Sdmd+tRnr00HRILUD
-         7AkSaVk7mpodXD7b9rJ4ldMuKOPv983YHfFezpi5nCj6P7BBK191nln09kvloXyGTfJd
-         +TMAcrLXs6u3Xb6bVqyHZSkTe67S5SQYwCzHkmZvFUe5pZKpQpcYr/EmI5iCrKXSmjdy
-         32NA==
-X-Gm-Message-State: AOAM5314RKYPkOTOq6lt/7FCLzkIobC0u7cykbjiO9vq667bomHuPTsM
-        GBMLGy0/tIvAtV+kftLp0/pkvA==
-X-Google-Smtp-Source: ABdhPJxlzELG49LGZDZUYQPHCXKPiBbx6hWYaTzn3v+DaL2ie6JbODXE9Z16wsDVzwst62vFk6lIeQ==
-X-Received: by 2002:a17:90a:2843:: with SMTP id p3mr675332pjf.187.1592523476571;
-        Thu, 18 Jun 2020 16:37:56 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id m15sm3403754pgv.45.2020.06.18.16.37.55
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rcHTOjx1Q346P9ZsaYW4owKJanYsDyPidI2shLjtOJ0=;
+        b=q//1XX3MnBsgHq38g1giHfKQSzdY93+dtI3PbriR3CZeYDaNk6gRgBWYbZrpl13RVl
+         9FLZJYXOMR53JXnXZPhycWJF6HPtH6Pi9LJwqrIvJ5dQw6caYtEaanxHA4LNp8CXDGJb
+         NezRWDExTqBdtuv6b2MbFxhXuzLkZe9rIoFhWGi5wd5gtoMCBQW8W6RycT24vkhZ1JPl
+         sZRt7B5KBriqc/iMrmBdCqWnOycVyUdfy0NYyVlzOaye1v3uiJg0GPr6sNro42avIXUR
+         657V08wGtjdhDV+4FjkZkBC+0BDNMXXeBHRvSL8XuoSajA8Yb0GE2Gkca4ccdSgOB8v9
+         2mSw==
+X-Gm-Message-State: AOAM531r+WmX3S6gTJKxHR1LvwPOKt0/CxaZ+srHalWhIrbIaqwjwx9A
+        cEcEytqi9VkZSs/EH0iC/+Xn5A==
+X-Google-Smtp-Source: ABdhPJyi4TrKrINHRr4ksSg7boVpVbJGS2fQzBBNhqgUlekddu3vS2EjX4ceIVFsaPIJfbmrwC/oOQ==
+X-Received: by 2002:a17:90a:930f:: with SMTP id p15mr765529pjo.85.1592523600729;
+        Thu, 18 Jun 2020 16:40:00 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id r202sm3876993pfr.185.2020.06.18.16.39.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2020 16:37:55 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=W1y4Z4T13i410zkb27mUxqn+rQE889=ckEEBhbPuci2w@mail.gmail.com>
-References: <20200618150626.237027-1-dianders@chromium.org> <20200618080459.v4.5.Ib1e6855405fc9c99916ab7c7dee84d73a8bf3d68@changeid> <159250352382.62212.8085892973272354046@swboyd.mtv.corp.google.com> <CAD=FV=Xh3+cROZC8dCn99MLkngsyBcxq+Gv1CERayZXExwdygA@mail.gmail.com> <159251712230.62212.10744179843753723398@swboyd.mtv.corp.google.com> <CAD=FV=W1y4Z4T13i410zkb27mUxqn+rQE889=ckEEBhbPuci2w@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] spi: spi-geni-qcom: Don't keep a local state variable
+        Thu, 18 Jun 2020 16:40:00 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Jun 2020 16:37:55 -0700
-Message-ID: <159252347502.62212.15886549130634139267@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, Alok Chauhan <alokc@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6/5] spi: spi-geni-qcom: Simplify setup_fifo_xfer()
+Date:   Thu, 18 Jun 2020 16:39:58 -0700
+Message-Id: <20200618233959.160032-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.27.0.111.gc72c7da667-goog
+In-Reply-To: <20200618150626.237027-1-dianders@chromium.org>
+References: <20200618150626.237027-1-dianders@chromium.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-06-18 15:00:10)
-> On Thu, Jun 18, 2020 at 2:52 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > -----8<----
-> > diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> > index d8f03ffb8594..670f83793aa4 100644
-> > --- a/drivers/spi/spi-geni-qcom.c
-> > +++ b/drivers/spi/spi-geni-qcom.c
-> > @@ -121,6 +121,10 @@ static void handle_fifo_timeout(struct spi_master =
-*spi,
-> >         spin_lock_irq(&mas->lock);
-> >         reinit_completion(&mas->cancel_done);
-> >         writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> > +       /*
-> > +        * Make sure we don't finalize a spi transfer that timed out but
-> > +        * came in while cancelling.
-> > +        */
-> >         mas->cur_xfer =3D NULL;
-> >         mas->tx_rem_bytes =3D mas->rx_rem_bytes =3D 0;
-> >         geni_se_cancel_m_cmd(se);
->=20
-> Sure.  It gets the point across, though
-> spi_finalize_current_transfer() is actually pretty harmless if you
-> call it while cancelling.  It just calls a completion.  I'd rather say
-> something like "If we're here because the SPI controller was calling
-> handle_err() then the transfer is done and we shouldn't hold onto it
-> anymore".
->=20
+The definition of SPI_FULL_DUPLEX (3) is really SPI_TX_ONLY (1) ORed
+with SPI_RX_ONLY (2). Let's drop the define and simplify the code here a
+bit by collapsing the setting of 'm_cmd' into conditions that are the
+same.
 
-Agreed it's mostly harmless. I thought the concern was that 'cur_xfer'
-may reference a freed piece of memory so it's best to remove ownership
-of the pointer from here so that the irq handler doesn't try to finalize
-a transfer that may no longer exist. "Shouldn't hold onto it anymore"
-doesn't tell us why it shouldn't be held onto, leaving it to the reader
-to figure out why, which isn't good.
+This is a non-functional change, just cleanup to consolidate code.
+
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/spi/spi-geni-qcom.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 636c3da15db0..670f83793aa4 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -51,7 +51,6 @@
+ /* M_CMD OP codes for SPI */
+ #define SPI_TX_ONLY		1
+ #define SPI_RX_ONLY		2
+-#define SPI_FULL_DUPLEX		3
+ #define SPI_TX_RX		7
+ #define SPI_CS_ASSERT		8
+ #define SPI_CS_DEASSERT		9
+@@ -357,12 +356,6 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 
+ 	mas->tx_rem_bytes = 0;
+ 	mas->rx_rem_bytes = 0;
+-	if (xfer->tx_buf && xfer->rx_buf)
+-		m_cmd = SPI_FULL_DUPLEX;
+-	else if (xfer->tx_buf)
+-		m_cmd = SPI_TX_ONLY;
+-	else if (xfer->rx_buf)
+-		m_cmd = SPI_RX_ONLY;
+ 
+ 	spi_tx_cfg &= ~CS_TOGGLE;
+ 
+@@ -373,12 +366,14 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	len &= TRANS_LEN_MSK;
+ 
+ 	mas->cur_xfer = xfer;
+-	if (m_cmd & SPI_TX_ONLY) {
++	if (xfer->tx_buf) {
++		m_cmd |= SPI_TX_ONLY;
+ 		mas->tx_rem_bytes = xfer->len;
+ 		writel(len, se->base + SE_SPI_TX_TRANS_LEN);
+ 	}
+ 
+-	if (m_cmd & SPI_RX_ONLY) {
++	if (xfer->rx_buf) {
++		m_cmd |= SPI_RX_ONLY;
+ 		writel(len, se->base + SE_SPI_RX_TRANS_LEN);
+ 		mas->rx_rem_bytes = xfer->len;
+ 	}
+-- 
+Sent by a computer, using git, on the internet
+
