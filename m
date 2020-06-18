@@ -2,138 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EF871FFDBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 00:09:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BABD81FFDED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 00:24:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731678AbgFRWJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 18:09:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41504 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728321AbgFRWJb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 18:09:31 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3137CC06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:09:28 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id e1so1832599vkd.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:09:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rIJ2X6dOzoq0wY6kg8iKEYYmkTTN8+C1IDuvViUAAlw=;
-        b=lVrFJvl5mDjocLA105kchQDYwRR/Mq9nlcXy/owwADieAZYgAuGsjK3xpftm0NXclu
-         BDh1QPoJU1TPpXMWq0DmrgoRSIGzBPlrIy8he0In3LWP8m83XqE+r0HZadf/sXAFVj2e
-         IayO8IVxHmcZK2mLywOzCBqLmikiRhPA0Z8ME=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rIJ2X6dOzoq0wY6kg8iKEYYmkTTN8+C1IDuvViUAAlw=;
-        b=saHeORgKinbFuefQroQb0gVgVzuPMXmp1HjvtMp5LA5vDSmqHo6bp0JK8Wwc5MFEKF
-         7y/rrJz0t7/Gs31VgVq/W7lRey0/oDhA56So6M0+Klxoo/sGdoraNOog4iU+fXsAOtTV
-         gblawH1n+qvy/vvkaBW9mOYlcfL+BqegTUqps2jtQhQklGuOYcrKugKrylMfDgMa/ic9
-         i6AA9/uKhxe3QzP+L+AYaEa9j1fQGMtQW/4ouCzK7LKEPJgAK79k6Cv/ZEuMdvT4urwb
-         TenZLygK0czdOZEsBWDcP8qcpVrHtYCoLOX+XeSzS0YIShVGiKEyq6zKLhvRAc1imM2w
-         a2Vg==
-X-Gm-Message-State: AOAM530eOC2cunVuANvaSbG1yClYkdTzI1CiFEF0lXBSCbIu3nGcVa60
-        GW2QGn9alLAufV+iO1E2z13r1zUt2mQ=
-X-Google-Smtp-Source: ABdhPJz2oHCnUx5k8SXk4YLGYttDpsvdnMN/Q32aOgPeoQFkdxyvTs3bAZ9YnpgzolphLC70+Di1tw==
-X-Received: by 2002:a1f:9444:: with SMTP id w65mr5357466vkd.50.1592518166950;
-        Thu, 18 Jun 2020 15:09:26 -0700 (PDT)
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
-        by smtp.gmail.com with ESMTPSA id g5sm492975vsp.26.2020.06.18.15.09.25
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 15:09:25 -0700 (PDT)
-Received: by mail-ua1-f49.google.com with SMTP id t26so2519305ual.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 15:09:25 -0700 (PDT)
-X-Received: by 2002:a9f:3b1c:: with SMTP id i28mr501831uah.22.1592518164952;
- Thu, 18 Jun 2020 15:09:24 -0700 (PDT)
+        id S1732059AbgFRWYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 18:24:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52648 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725829AbgFRWX7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jun 2020 18:23:59 -0400
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 02A9E20732;
+        Thu, 18 Jun 2020 22:23:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592519039;
+        bh=suc9pm53OLkf5+tDTVTkktvXVOKJj7lJ6p6vf0fAzPU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=YoqsdiIMkAkW5I7KL3asxk7dZW8YFot/9qO7uTYjFzZYlNMbb11jjIgzofi+vfWSN
+         QCx0PuMoe8ViFXtMUz04+1oUI/FDzn8h+pd4DmLqh3inuLt+lAscX5c2Uzz64ieJPr
+         iELIJNlCKYeczmr4JEPtg6Hoq04HkahOuC/b010Q=
+Received: by mail-oi1-f181.google.com with SMTP id 25so6580396oiy.13;
+        Thu, 18 Jun 2020 15:23:58 -0700 (PDT)
+X-Gm-Message-State: AOAM531skErlZ5b0asHZpQCIcxg4oztRK8kWvoMIkcLu2Px+DrS7OeZD
+        236rAXW37F9Q09CGsM4gTTc6+GjLszNJ5E0RTA==
+X-Google-Smtp-Source: ABdhPJw1K2OvzxLmNVbzVFc6bTX+uL3GtdpnvRebeJA5Th13K0T4h+C+0pOQ+rfRUWnRUcvWCYUGc3DRbledxdgoUFs=
+X-Received: by 2002:aca:d454:: with SMTP id l81mr939987oig.152.1592519038311;
+ Thu, 18 Jun 2020 15:23:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200609120455.20458-1-harigovi@codeaurora.org>
-In-Reply-To: <20200609120455.20458-1-harigovi@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Jun 2020 15:09:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XHHAAWNkJGMJESf4C=hcbaswFamGVeyMJ9eRd6dWAy8Q@mail.gmail.com>
-Message-ID: <CAD=FV=XHHAAWNkJGMJESf4C=hcbaswFamGVeyMJ9eRd6dWAy8Q@mail.gmail.com>
-Subject: Re: [v3] drm/bridge: ti-sn65dsi86: ensure bridge suspend happens
- during PM sleep
-To:     Harigovindan P <harigovi@codeaurora.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Andrzej Hajda <a.hajda@samsung.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+References: <20200617180209.5636-1-wcheng@codeaurora.org> <20200617180209.5636-3-wcheng@codeaurora.org>
+ <CAL_Jsq+fhXWGJvYxUDygd6hKs3dc8GKxKCz_Q+_C1AjK0J0N+w@mail.gmail.com> <fb448691-2bda-ada6-799f-ee389e647710@codeaurora.org>
+In-Reply-To: <fb448691-2bda-ada6-799f-ee389e647710@codeaurora.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 18 Jun 2020 16:23:42 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLGWY_bBUzr6r0czxH32vvDnsR6=MzS=zH4tJ-5PEobZw@mail.gmail.com>
+Message-ID: <CAL_JsqLGWY_bBUzr6r0czxH32vvDnsR6=MzS=zH4tJ-5PEobZw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] dt-bindings: usb: Add Qualcomm PMIC type C
+ controller dt-binding
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>, nganji@codeaurora.org,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>
+        devicetree@vger.kernel.org,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Jun Li <lijun.kernel@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Jun 9, 2020 at 5:05 AM Harigovindan P <harigovi@codeaurora.org> wrote:
+On Thu, Jun 18, 2020 at 2:09 PM Wesley Cheng <wcheng@codeaurora.org> wrote:
 >
-> ti-sn65dsi86 bridge is enumerated as a runtime device. When
-> suspend is triggered, PM core adds a refcount on all the
-> devices and calls device suspend, since usage count is
-> already incremented, runtime suspend will not be called
-> and it kept the bridge regulators and gpios ON which resulted
-> in platform not entering into XO shutdown.
 >
-> Add changes to force suspend on the runtime device during pm sleep.
+> On 6/18/2020 11:33 AM, Rob Herring wrote:
+> > On Wed, Jun 17, 2020 at 12:02 PM Wesley Cheng <wcheng@codeaurora.org> wrote:
+> >
+> > You are duplicating everything in usb-connector.yaml. You should have
+> > a $ref to it.
+> >
 >
-> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
-> ---
+> Hi Rob,
 >
-> Changes in v2:
->         - Include bridge name in the commit message and
->         remove dependent patchwork link from the commit
->         text as bridge is independent of OEM(Stephen Boyd)
+> Sure, I will add a reference to that doc.
 >
-> Changes in v3:
->         - Updating changelog to explain the need for patch
+> >
+> > This is wrong. The connector binding says port 0 is the connection the
+> > USB HS controller.
+> >
+> > What's a type C mux node? Is there a binding for that? There's an
+> > ongoing discussion with the CrOS folks on how to describe Alt mode
+> > mux/switches.
 >
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
->  1 file changed, 2 insertions(+)
+> I reviewed the connector binding previously, and couldn't seem to come
+> up with a model which fit a design where the type C controller (ie the
+> entity which does the CC orientation and role detection) does not have
+> the SS lane mux included.  The SS lane mux is the HW which handles the
+> selection of the SS lanes to utilize based on cable orientation.
 
-I think this patch is good to go now (has both Stephen's and my
-reviews).  I noticed that Neil landed my other patches to this driver
-recently (thanks!) and wondered why he didn't land this one.  Then, I
-realized that you didn't send it to him or the other bridge
-maintainer.  :(  Have you tried running get_maintainer?
+The intent was the controller would be the parent node of the connector.
 
-$ ./scripts/get_maintainer.pl -f drivers/gpu/drm/bridge/ti-sn65dsi86.c
-Andrzej Hajda <a.hajda@samsung.com> (maintainer:DRM DRIVERS FOR BRIDGE CHIPS)
-Neil Armstrong <narmstrong@baylibre.com> (maintainer:DRM DRIVERS FOR
-BRIDGE CHIPS)
-Laurent Pinchart <Laurent.pinchart@ideasonboard.com> (reviewer:DRM
-DRIVERS FOR BRIDGE CHIPS)
-Jonas Karlman <jonas@kwiboo.se> (reviewer:DRM DRIVERS FOR BRIDGE CHIPS)
-Jernej Skrabec <jernej.skrabec@siol.net> (reviewer:DRM DRIVERS FOR BRIDGE CHIPS)
-David Airlie <airlied@linux.ie> (maintainer:DRM DRIVERS)
-Daniel Vetter <daniel@ffwll.ch> (maintainer:DRM DRIVERS)
-dri-devel@lists.freedesktop.org (open list:DRM DRIVERS)
-linux-kernel@vger.kernel.org (open list)
+How the SS lane mux is represented is what needs to be figured out. I
+don't know what that looks like, but it needs to be something that
+works for multiple designs. Ideally, that's an extension of the
+existing 'usb-c-connector' binding, but if there's good reasons to
+redesign it that can happen.
 
-In any case, unless someone has extra feedback on this patch I think
-it's ready to land.
-
-Neil: If you're willing to land this patch too, can you let
-Harigovindan know if it needs to be re-sent with you in the "To:" list
-or if you can find it on the dri-devel list?
-
-Thanks!
-
--Doug
+Rob
