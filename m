@@ -2,89 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB91F1FFABE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 20:05:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3020C1FFB1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 20:33:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729538AbgFRSF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 14:05:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60370 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729506AbgFRSF0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 14:05:26 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D431C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 11:05:26 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id p3so557252pgh.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 11:05:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=U/NBx5iNuxPhAKHb+kUULsBBMbGGlzASGtNIcw4W5uE=;
-        b=Z72UdmlicDyKDeBJTvQpVBA3ht1UUD1b0OD1QjLw/ez1ugGh5UQKAMSLjzs45zbd8W
-         Z943RjYBpyrshoTRMDtmv8OsXhbIPDWquxtsT+ddOZhy4NjS2dFIMzzquu2HAa9WCfRR
-         Q8Opd/GT3dGPW++wFXkafku/r93AieqnWAq7k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=U/NBx5iNuxPhAKHb+kUULsBBMbGGlzASGtNIcw4W5uE=;
-        b=Il7XeINgKWDPVl4qnws54XjrwcCLFZO08pO3DHjRwrR3UNXzSKan1P7Ew97g41s/QG
-         XXdbnIVErYGLJvB5MnbY7Ghex6YN49kvWrGXagQyPoPNRe/FZpqUxC2NYeR+pop0bAFs
-         uWmomTqzKd26u087W2ZySRxSero8HZN2aDUd6wFvbcR3CefE/hD/AJwi9/QEcmKTqELE
-         llcIDLpqk4SbHdo6NQuB/SSUNy8EUeENf6qTnwqlcBm+2IIc5qouPqjDVPEx1byt/Apk
-         zX3pPCHeW3TjK0R3c5ncDR061BMvN5/+k2tB3Iw8J7nxBYvBZHpdTHQkotoeDhlmByQQ
-         TNuA==
-X-Gm-Message-State: AOAM530hQ0stZwm0Zb2FugbdlfKUveTHYxQvQabyVG11F4EU82FEbOi0
-        5UiCwmIHmZZO+n6w/AL3z9bmQw==
-X-Google-Smtp-Source: ABdhPJx3p0Z9jr1KsFl6XpysHkvnoVCnziYUSjlxCRl5yETq1eNcKTLonfueBPsrFSZtLmcL6Q7P0g==
-X-Received: by 2002:a63:5a58:: with SMTP id k24mr3964247pgm.1.1592503525574;
-        Thu, 18 Jun 2020 11:05:25 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id d6sm3133807pjh.5.2020.06.18.11.05.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2020 11:05:24 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1729926AbgFRSdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 14:33:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47010 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729862AbgFRSdU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Jun 2020 14:33:20 -0400
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CBC1F20DD4;
+        Thu, 18 Jun 2020 18:33:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592505199;
+        bh=Wa43T7w4Pf81pk4qHW8JXP2v08fY04xx7ru8epXTzJg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ecX5Ld1C7sjO0SKydvTx6QgyY74RFFqkiWnwMkxD4jX71EmRFAZbRf1SerGyIli3R
+         RZl95VzhTjcClNC29YOwPoiGgk7m7vhs8a1gruUkjU0bfitz0O1/8qARf5cXGIDbju
+         zjjHj9YihPIoZu0HkGVQjpeneXBfdHEM4Q05d4L8=
+Received: by mail-ot1-f44.google.com with SMTP id v13so5345603otp.4;
+        Thu, 18 Jun 2020 11:33:19 -0700 (PDT)
+X-Gm-Message-State: AOAM532oj0Lz6d7z6RBJL/UzqyzCpdjBDjNcid6/gwdCeNKAPD6q5QkG
+        QIjrSJprmw2HlEW2TPUUP32f/F4UWI1LwwnhrA==
+X-Google-Smtp-Source: ABdhPJx+Rb+JwD1PIWMOTJ6UqjOwSRAy1TpYrAkSXPkBhtxEkdRG5n3IX0zx8pWKa9xRNHPUxS5L8u5iKcFIdAX3nNk=
+X-Received: by 2002:a05:6830:3104:: with SMTP id b4mr68860ots.192.1592505199060;
+ Thu, 18 Jun 2020 11:33:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200618080459.v4.5.Ib1e6855405fc9c99916ab7c7dee84d73a8bf3d68@changeid>
-References: <20200618150626.237027-1-dianders@chromium.org> <20200618080459.v4.5.Ib1e6855405fc9c99916ab7c7dee84d73a8bf3d68@changeid>
-Subject: Re: [PATCH v4 5/5] spi: spi-geni-qcom: Don't keep a local state variable
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20200617180209.5636-1-wcheng@codeaurora.org> <20200617180209.5636-3-wcheng@codeaurora.org>
+In-Reply-To: <20200617180209.5636-3-wcheng@codeaurora.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 18 Jun 2020 12:33:07 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+fhXWGJvYxUDygd6hKs3dc8GKxKCz_Q+_C1AjK0J0N+w@mail.gmail.com>
+Message-ID: <CAL_Jsq+fhXWGJvYxUDygd6hKs3dc8GKxKCz_Q+_C1AjK0J0N+w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] dt-bindings: usb: Add Qualcomm PMIC type C
+ controller dt-binding
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Mark Brown <broonie@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>
-Date:   Thu, 18 Jun 2020 11:05:23 -0700
-Message-ID: <159250352382.62212.8085892973272354046@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Jun Li <lijun.kernel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-06-18 08:06:26)
-> @@ -126,20 +120,23 @@ static void handle_fifo_timeout(struct spi_master *=
-spi,
->         struct geni_se *se =3D &mas->se;
-> =20
->         spin_lock_irq(&mas->lock);
-> -       reinit_completion(&mas->xfer_done);
-> -       mas->cur_mcmd =3D CMD_CANCEL;
-> -       geni_se_cancel_m_cmd(se);
-> +       reinit_completion(&mas->cancel_done);
->         writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-> +       mas->cur_xfer =3D NULL;
+On Wed, Jun 17, 2020 at 12:02 PM Wesley Cheng <wcheng@codeaurora.org> wrote:
+>
+> Introduce the dt-binding for enabling USB type C orientation and role
+> detection using the PM8150B.  The driver will be responsible for receiving
+> the interrupt at a state change on the CC lines, reading the orientation/role,
+> and communicating this information to the remote clients, which can include
+> a role switch node and a type C switch.
+>
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> ---
+>  .../bindings/usb/qcom,pmic-typec.yaml         | 117 ++++++++++++++++++
+>  1 file changed, 117 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> new file mode 100644
+> index 000000000000..085b4547d75a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> @@ -0,0 +1,117 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/usb/qcom,pmic-typec.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm PMIC based USB type C Detection Driver
+> +
+> +maintainers:
+> +  - Wesley Cheng <wcheng@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm PMIC Type C Detect
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8150b-usb-typec
+> +
+> +  reg:
+> +    maxItems: 1
+> +    description: Type C base address
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +    description: CC change interrupt from PMIC
+> +
+> +  connector:
+> +    description: Connector type for remote endpoints
+> +    type: object
 
-BTW, is this necessary? It's subtlely placed here without a comment why.
+You are duplicating everything in usb-connector.yaml. You should have
+a $ref to it.
 
-> +       mas->tx_rem_bytes =3D mas->rx_rem_bytes =3D 0;
-> +       geni_se_cancel_m_cmd(se);
->         spin_unlock_irq(&mas->lock);
-> -       time_left =3D wait_for_completion_timeout(&mas->xfer_done, HZ);
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - usb-c-connector
+> +
+> +      power-role:
+> +       enum:
+> +         - dual
+> +         - source
+> +         - sink
+> +
+> +      data-role:
+> +        enum:
+> +          - dual
+> +          - host
+> +          - device
+> +
+> +      port:
+> +        description: Remote endpoint connections
+> +        type: object
+> +
+> +        properties:
+> +          endpoint@0:
+> +            description: Connection to USB type C mux node
+
+This is wrong. The connector binding says port 0 is the connection the
+USB HS controller.
+
+What's a type C mux node? Is there a binding for that? There's an
+ongoing discussion with the CrOS folks on how to describe Alt mode
+mux/switches.
+
+> +            type: object
+> +
+> +            properties:
+> +              remote-endpoint:
+> +                maxItems: 1
+> +                description: Node reference to the type C mux
+> +
+> +          endpoint@1:
+> +            description: Connection to role switch node
+
+Again, what's this?
+
+> +            type: object
+> +
+> +            properties:
+> +              remote-endpoint:
+> +                maxItems: 1
+> +                description: Node reference to the role switch node
+> +
+> +    required:
+> +      - compatible
+> +
+> +required:
+> +  - compatible
+> +  - interrupts
+> +  - connector
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    pm8150b {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +        qcom,typec@1500 {
+> +            compatible = "qcom,pm8150b-usb-typec";
+> +            reg = <0x1500>;
+> +            interrupts =
+> +                <0x2 0x15 0x5 IRQ_TYPE_EDGE_RISING>;
+> +
+> +            connector {
+> +                compatible = "usb-c-connector";
+> +                power-role = "dual";
+> +                data-role = "dual";
+> +                port {
+> +                    #address-cells = <1>;
+> +                    #size-cells = <0>;
+> +                    usb3_data_ss: endpoint@0 {
+> +                        reg = <0>;
+> +                        remote-endpoint =
+> +                                <&qmp_ss_mux>;
+> +                    };
+> +
+> +                    usb3_role: endpoint@1 {
+> +
+> +                        reg = <1>;
+> +                        remote-endpoint =
+> +                                <&dwc3_drd_switch>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
