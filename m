@@ -2,202 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D47D51FF5D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 16:55:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CB7E1FF62A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2020 17:06:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731165AbgFROyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Jun 2020 10:54:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59094 "EHLO
+        id S1726193AbgFRPGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Jun 2020 11:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730971AbgFROyy (ORCPT
+        with ESMTP id S1730950AbgFRPGI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Jun 2020 10:54:54 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4CBC06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 07:54:54 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id l12so6722115ejn.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 07:54:54 -0700 (PDT)
+        Thu, 18 Jun 2020 11:06:08 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D84C0613EE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:06:08 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id t23so1509239vkt.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HZYiZmWf6ruq72Uesy0UkTynhdCMb7aPfkJ7IXCFCdM=;
-        b=Jf26HU5wpOUJ2LgyCiL8Kvo/hfcGs1oXL7yWO/GV9O2ZMv2+coQ9M7P099MydNUx+5
-         WCah9K/X1uK/ZpZ3dO8vhfA2XT2pnRBOyOFB8aE9IrTyd1R2vpUevLTlnffrTDOsCAep
-         fKAtEDsPu3ery2VkgkpdwK5Aj5uWdShz9dcGlGtiBI05uQiiRzumcdgOy0xFOLGlUKwG
-         qm/oyPbIQBNw2Gif0utsnHoNoFDYZGa258tsCklpvUw7a8lDqPZKN/n6/QfIa2U6JEpm
-         G6PAbDTZN/4jy4OQiwlqVrskkqz31lw1GkCucJZA+aauWc7DoOqKBFuL4nVbtvsRWs3u
-         0Nww==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Uhyo0sKph8oAx2mIyvhHF5US4adK0E3GfKdnIj29E9Y=;
+        b=aB8ub7BN1xbigSK9olQdwudzkwJ1S2Yyrfdib2JJjs9mSUrmcIBMO2frrAcBiZHX7l
+         4L9kXEoi3EWaFw233GFFuBhCKCauoatr3Dh0Zel+L6LuxU0GkTw8Fz5FrXpPncLbU1ap
+         Wjgam1IaQoIbFXWShumV1iaHOZseVhcJ8qLaQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=HZYiZmWf6ruq72Uesy0UkTynhdCMb7aPfkJ7IXCFCdM=;
-        b=mbsOYYyfKZNrGLWC1mlP9+qRWzTtzlEcvdgqASBb2VTp++QuBzyurRqk396sovTOYc
-         dLKfpwAfO8wJH0GLPbfHPjqF1HXEllOU5Q2GuT5vlkOY08S6fYFuJF1QmMTsceS+5Zdc
-         CAeukrQmQqfiFvoHOldolDRIzgCaFRMsMHvDJFfC/ARQ/g1gNqHcHfS+985cUOF+4GWq
-         LjUaZFYM5dv0z4Up2unIfWMTMl+gWGgquYpJ4l3r9SOGqxnBDbBSxzDye+p0NSN1X2BC
-         zT8FP83rW1Iq0e5ivYMpGCjsIHB2HgmNEAfDlflIWAkxF+KJNUWzDaatIvkygdtAkyif
-         ahHQ==
-X-Gm-Message-State: AOAM533zfDJXAEj2/hVyHWI7g9d209Exp0BJiAu1HsKyemhwo4KLJXQt
-        8sy7ueo9bdzg0ebRVclM6P3JmKoXXpmCUg==
-X-Google-Smtp-Source: ABdhPJy/EIb3YZlC6znqs6Wl7xziMLGfTrsNGqzk6lXGsHU4ulDHFzp1AeBFvSlKwH3Rh5VWBxb6hw==
-X-Received: by 2002:a17:906:f291:: with SMTP id gu17mr4394554ejb.411.1592492092970;
-        Thu, 18 Jun 2020 07:54:52 -0700 (PDT)
-Received: from [192.168.1.3] (212-5-158-140.ip.btc-net.bg. [212.5.158.140])
-        by smtp.googlemail.com with ESMTPSA id b26sm2452595eju.6.2020.06.18.07.54.50
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Uhyo0sKph8oAx2mIyvhHF5US4adK0E3GfKdnIj29E9Y=;
+        b=C3jK2KIbbFpVJxNB0kII/ewv+YuUol0by212P6v7Rk2EFUuW+WksgdEj3kaDZeMYiy
+         w2hI2ROJOLKYKYvoVyXwF6iDKOauk+jlB8uL5nCa4fx7WNlEv/Y/mg7QqoLLv74n8q1c
+         sFX1h9PEhkBR3w56mZE90Y5VwwNY+7ws2Lv3r9K2MQqV724jJiNsXFpx+W4Sn7D5zKea
+         jYlZptGHwZnALprNdmi2YW8KP9fYUmLH09mELVet3KgRao+23qdfve7B1CJ+YdMLv5p2
+         L5NeMTuBM3ZQs3/kqKN0H81wm+a8lUYGZsgsvKhzaWzoI1tDWL7xZiODoKqmAjQRBM3z
+         kiRA==
+X-Gm-Message-State: AOAM531dcnc/EADqrtM1iJ6MAu55ehof3zogI6jE9ysdPZMt1YyS2rCx
+        kD7cYftRWeFwbBwGe2XTitqdQptk+xE=
+X-Google-Smtp-Source: ABdhPJyocS/vEjwNlImQ4lzANhppSgRCfIfVwT+eAE0Z9UVsfOBf0I82hqS6AOEP5WHNealyurS5bw==
+X-Received: by 2002:a1f:d444:: with SMTP id l65mr3687663vkg.27.1592492767203;
+        Thu, 18 Jun 2020 08:06:07 -0700 (PDT)
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com. [209.85.221.176])
+        by smtp.gmail.com with ESMTPSA id m11sm364401vko.34.2020.06.18.08.06.05
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jun 2020 07:54:52 -0700 (PDT)
-Subject: Re: [PATCH v6 5/6] media: venus: core: Add support for opp
- tables/perf voting
-To:     Rajendra Nayak <rnayak@codeaurora.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org, robdclark@gmail.com, robdclark@chromium.org,
-        stanimir.varbanov@linaro.org
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <1592222564-13556-6-git-send-email-rnayak@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <e0f856ec-e391-9b1d-baa3-7dda20cb853a@linaro.org>
-Date:   Thu, 18 Jun 2020 17:54:49 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Thu, 18 Jun 2020 08:06:06 -0700 (PDT)
+Received: by mail-vk1-f176.google.com with SMTP id s6so1506764vkb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2020 08:06:05 -0700 (PDT)
+X-Received: by 2002:ac5:ce86:: with SMTP id 6mr3726475vke.75.1592492765249;
+ Thu, 18 Jun 2020 08:06:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1592222564-13556-6-git-send-email-rnayak@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200616104050.84764-1-dianders@chromium.org> <20200616034044.v3.5.Ib1e6855405fc9c99916ab7c7dee84d73a8bf3d68@changeid>
+ <159242860191.62212.18088243128415903480@swboyd.mtv.corp.google.com>
+In-Reply-To: <159242860191.62212.18088243128415903480@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 18 Jun 2020 08:05:52 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XfYnkw2EFFHZNMRffmO3XJE9Qm8YtMzjK8OWLgL39XKQ@mail.gmail.com>
+Message-ID: <CAD=FV=XfYnkw2EFFHZNMRffmO3XJE9Qm8YtMzjK8OWLgL39XKQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] spi: spi-geni-qcom: Don't keep a local state variable
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Alok Chauhan <alokc@codeaurora.org>, skakit@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rajendra,
+Hi,
 
-On 6/15/20 3:02 PM, Rajendra Nayak wrote:
-> Add support to add OPP tables and perf voting on the OPP powerdomain.
-> This is needed so venus votes on the corresponding performance state
-> for the OPP powerdomain along with setting the core clock rate.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> Cc: linux-media@vger.kernel.org
-> ---
-> No functional change in v6, rebased over 5.8-rc1
-> Bindings update to add optional PD https://lore.kernel.org/patchwork/patch/1241077/
-> 
->  drivers/media/platform/qcom/venus/core.c       | 43 +++++++++++++++++---
->  drivers/media/platform/qcom/venus/core.h       |  5 +++
->  drivers/media/platform/qcom/venus/pm_helpers.c | 54 ++++++++++++++++++++++++--
->  3 files changed, 92 insertions(+), 10 deletions(-)
-> 
+On Wed, Jun 17, 2020 at 2:16 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2020-06-16 03:40:50)
+> > diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> > index 63a62548b078..6feea88d63ac 100644
+> > --- a/drivers/spi/spi-geni-qcom.c
+> > +++ b/drivers/spi/spi-geni-qcom.c
+> > @@ -63,13 +63,6 @@
+> >  #define TIMESTAMP_AFTER                BIT(3)
+> >  #define POST_CMD_DELAY         BIT(4)
+> >
+> > -enum spi_m_cmd_opcode {
+> > -       CMD_NONE,
+> > -       CMD_XFER,
+> > -       CMD_CS,
+> > -       CMD_CANCEL,
+> > -};
+> > -
+> >  struct spi_geni_master {
+> >         struct geni_se se;
+> >         struct device *dev;
+> > @@ -81,10 +74,11 @@ struct spi_geni_master {
+> >         unsigned int tx_rem_bytes;
+> >         unsigned int rx_rem_bytes;
+> >         const struct spi_transfer *cur_xfer;
+> > -       struct completion xfer_done;
+> > +       struct completion cs_done;
+> > +       struct completion cancel_done;
+> > +       struct completion abort_done;
+>
+> I wonder if it would be better to use the wait_bit() APIs. That would
+> let us have one word for various bits like CS_DONE, CANCEL_DONE,
+> ABORT_DONE and then wake up the waiters when the particular bit happens
+> to come in through the isr. It is probably over-engineering though
+> because it saves a handful of bytes while increasing complexity.
+>
+> Otherwise I like this patch.
 
-<cut>
+I'm going to leave it as-is for v4.  We can always make it a future
+improvement if we want.
 
->  
-> @@ -740,13 +740,16 @@ static int venc_power_v4(struct device *dev, int on)
->  
->  static int vcodec_domains_get(struct device *dev)
->  {
-> +	int ret;
-> +	struct opp_table *opp_table;
-> +	struct device **opp_virt_dev;
->  	struct venus_core *core = dev_get_drvdata(dev);
->  	const struct venus_resources *res = core->res;
->  	struct device *pd;
->  	unsigned int i;
->  
->  	if (!res->vcodec_pmdomains_num)
-> -		return -ENODEV;
-> +		goto skip_pmdomains;
->  
->  	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
->  		pd = dev_pm_domain_attach_by_name(dev,
-> @@ -763,7 +766,41 @@ static int vcodec_domains_get(struct device *dev)
->  	if (!core->pd_dl_venus)
->  		return -ENODEV;
->  
-> +skip_pmdomains:
-> +	if (!core->has_opp_table)
-> +		return 0;
-> +
-> +	/* Attach the power domain for setting performance state */
-> +	opp_table = dev_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
-> +	if (IS_ERR(opp_table)) {
-> +		ret = PTR_ERR(opp_table);
-> +		goto opp_attach_err;
-> +	}
-> +
-> +	core->opp_pmdomain = *opp_virt_dev;
-> +	core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
-> +					     DL_FLAG_RPM_ACTIVE |
-> +					     DL_FLAG_PM_RUNTIME |
-> +					     DL_FLAG_STATELESS);
-> +	if (!core->opp_dl_venus) {
-> +		ret = -ENODEV;
-> +		goto opp_dl_add_err;
-> +	}
-> +
->  	return 0;
-> +
-> +opp_dl_add_err:
-> +	dev_pm_domain_detach(core->opp_pmdomain, true);
-> +opp_attach_err:
-> +	if (core->pd_dl_venus) {
-> +		device_link_del(core->pd_dl_venus);
-> +		for (i = 0; i < res->vcodec_pmdomains_num; i++) {
-> +			if (IS_ERR_OR_NULL(core->pmdomains[i]))
-> +				continue;
-> +			dev_pm_domain_detach(core->pmdomains[i], true);
-> +		}
-> +	}
-> +	return ret;
->  }
->  
->  static void vcodec_domains_put(struct device *dev)
-> @@ -773,7 +810,7 @@ static void vcodec_domains_put(struct device *dev)
->  	unsigned int i;
->  
->  	if (!res->vcodec_pmdomains_num)
-> -		return;
-> +		goto skip_pmdomains;
->  
->  	if (core->pd_dl_venus)
->  		device_link_del(core->pd_dl_venus);
-> @@ -783,6 +820,15 @@ static void vcodec_domains_put(struct device *dev)
->  			continue;
->  		dev_pm_domain_detach(core->pmdomains[i], true);
->  	}
-> +
-> +skip_pmdomains:
-> +	if (!res->opp_pmdomain)
-> +		return;
-> +
-> +	if (core->opp_dl_venus)
-> +		device_link_del(core->opp_dl_venus);
-> +
-> +	dev_pm_domain_detach(core->opp_pmdomain, true);
-
-Without corresponding changes in venus DT node we call pm_domain_detach
-with core->opp_pmdomain = NULL which triggers NULL pointer dereference.
-
-I guess you should check:
-
-	if (core->has_opp_table)
-		dev_pm_domain_detach(core->opp_pmdomain, true);
-
-or
-
-	if (core->opp_pmdomain)
-		dev_pm_domain_detach(core->opp_pmdomain, true);
-
-
-... not sure which one is more appropriate or both are.
-
-
--- 
-regards,
-Stan
+-Doug
