@@ -2,174 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9186A2004FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 11:26:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CB002005CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 11:54:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729195AbgFSJ0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jun 2020 05:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725290AbgFSJ0K (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jun 2020 05:26:10 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99B6C06174E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jun 2020 02:26:09 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id s88so4054412pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jun 2020 02:26:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=Vf4ohuWrMr6Ie8GDWlHSJlKxCEowfJaXNdmYfwVJvPc=;
-        b=jOZbgyplTYdCwtTeEcFO8ao/1IeWpEdkro9XqPz5EJ39CEsiECBlBL5OofeK8Lwhdj
-         2gLiKCqlqC1tnJxGddrWrfF/XWxxnqyLOhx1yoUm0s9ovbZjUeJP9p0tkXVS9ucNU5vH
-         FHcRbu9FGV/GhFMDTiPxiYqtpNNHr7NaOOqM4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=Vf4ohuWrMr6Ie8GDWlHSJlKxCEowfJaXNdmYfwVJvPc=;
-        b=LtoJ8+kyBa9BX40ePUomv7UFqOeyR3NUfwpeVwKnfVuCzOMyz+FZNStH3VDj7QCLFc
-         BZeOIi/Keyb/A2VMKF33xqg3iIJi83sOt2QI4eWh65BpE8DOTYwgJlTfJQpPkO27NbbL
-         QgRQeIyvqpf/tn0Lhahz5460t59doARd/qgXjJmHIyqsBgzpY52b8JTh2XM+IjAUwlI9
-         ecg3LJmU4ya7hBUgN5uipSOJV1bp4CgXtuqWmR9tqT35IJuC5sFZT0JWmQp6HAizKW+Q
-         +TATpmivNdJ8CcGkXL3Z0mkA+ZhO2u4L/B/CgA03xKjYbdXsshT5ig6Zy8LJmwflBqth
-         /rrQ==
-X-Gm-Message-State: AOAM532edeyEXTzdayhlMycufTXMypXC37eDhbh86P5MxyRLh8Hum2mb
-        vfgH0/sRjkxQo8ycq1ZDh8b//pDlom4=
-X-Google-Smtp-Source: ABdhPJxjHsNZeQt5FvCcMCd8wr+B8WtJxmN74WGei/ANeOiFzi/Yi8987MSgZQkKyyETYu7yUepo5g==
-X-Received: by 2002:a17:902:b58f:: with SMTP id a15mr7621006pls.106.1592558769148;
-        Fri, 19 Jun 2020 02:26:09 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id y136sm5440917pfg.55.2020.06.19.02.26.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2020 02:26:08 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1731195AbgFSJyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jun 2020 05:54:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45576 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731048AbgFSJyS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jun 2020 05:54:18 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 76E6120776;
+        Fri, 19 Jun 2020 09:54:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592560458;
+        bh=b2se84h3l52DyW04Q6ULrra7Nh1wmtClcpg6wu/oHFo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QEsjuS4HYPXHzz8/m/2jC5cXNsBwfCYCKxumbFdkqH6xVxlDMveQvusjboG2Dj7o/
+         gs6LnYG3n3PmejAkcAV0ip6pnkylUbqSAIUIAPQ47ZdOaIg4t4KRJUlo4O0Tk9K7uE
+         HaqDsY7TvkPrFf0LDf65MeWbZhY+/+QPh+ajee8Y=
+Date:   Fri, 19 Jun 2020 10:54:15 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, Alok Chauhan <alokc@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
+Subject: Re: [PATCH 6/5] spi: spi-geni-qcom: Simplify setup_fifo_xfer()
+Message-ID: <20200619095415.GA5396@sirena.org.uk>
+References: <20200618150626.237027-1-dianders@chromium.org>
+ <20200618233959.160032-1-swboyd@chromium.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <4e318931-cff0-0d8b-d0a0-9d139533c551@codeaurora.org>
-References: <1590253873-11556-1-git-send-email-mkshah@codeaurora.org> <1590253873-11556-5-git-send-email-mkshah@codeaurora.org> <159057454795.88029.5963412495484312088@swboyd.mtv.corp.google.com> <e565f798-e62b-7b03-6cd5-6daf9b516262@codeaurora.org> <159086679215.69627.4444511187342075544@swboyd.mtv.corp.google.com> <c93695d4-a03e-7f62-747a-90d892c48694@codeaurora.org> <159230866475.62212.10807813558467898966@swboyd.mtv.corp.google.com> <4e318931-cff0-0d8b-d0a0-9d139533c551@codeaurora.org>
-Subject: Re: [PATCH v2 4/4] irqchip: qcom-pdc: Introduce irq_set_wake call
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Date:   Fri, 19 Jun 2020 02:26:07 -0700
-Message-ID: <159255876756.62212.4221488367063412094@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PNTmBPCT7hxwcZjr"
+Content-Disposition: inline
+In-Reply-To: <20200618233959.160032-1-swboyd@chromium.org>
+X-Cookie: Robot, n.:
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-06-18 03:03:03)
-> On 6/16/2020 5:27 PM, Stephen Boyd wrote:
-> > Quoting Maulik Shah (2020-06-01 04:38:25)
-> >> On 5/31/2020 12:56 AM, Stephen Boyd wrote:
-> >>> Quoting Maulik Shah (2020-05-29 02:20:32)
-> >>>> On 5/27/2020 3:45 PM, Stephen Boyd wrote:
-> >>>>> Quoting Maulik Shah (2020-05-23 10:11:13)
-> >>>>>> @@ -118,6 +120,7 @@ static void qcom_pdc_gic_unmask(struct irq_dat=
-a *d)
-> >>>>>>            if (d->hwirq =3D=3D GPIO_NO_WAKE_IRQ)
-> >>>>>>                    return;
-> >>>>>>    =20
-> >>>>>> +       pdc_enable_intr(d, true);
-> >>>>>>            irq_chip_unmask_parent(d);
-> >>>>>>     }
-> >>>>>>    =20
-> >>>>> I find these two hunks deeply confusing. I'm not sure what the
-> >>>>> maintainers think though. I hope it would be simpler to always enab=
-le
-> >>>>> the hwirqs in the pdc when an irq is requested and only disable it =
-in
-> >>>>> the pdc when the system goes to suspend and the pdc pin isn't for a=
-n irq
-> >>>>> that's marked for wakeup. Does that break somehow?
-> >>>> PDC monitors interrupts during CPUidle as well, in cases where deepe=
-st
-> >>>> low power mode happened from cpuidle where GIC is not active.
-> >>>> If we keep PDC IRQ always enabled/unmasked during idle and then
-> >>>> disable/mask when entering to suspend, it will break cpuidle.
-> >>> How does it break cpuidle? The irqs that would be enabled/unmasked in
-> >>> pdc would only be the irqs that the kernel has setup irq handlers for
-> >>> (from request_irq() and friends).  We want those irqs to keep working
-> >>> during cpuidle and wake the CPU from the deepest idle states.
-> >>>> I hope it would be simpler to always enable
-> >>>> the hwirqs in the pdc when an irq is requested and only disable it in
-> >>>> the pdc when the system goes to suspend and the pdc pin isn't for an=
- irq
-> >>>> that's marked for wakeup
-> >>>> How does it break cpuidle?
-> >> Consider a scenario..
-> >> 1. All PDC irqs enabled/unmasked in HW when request_irq() happened/all=
-oc happens
-> >> 2. Client driver disable's irq. (lazy disable is there, so in HW its s=
-till unmasked) but disabled in SW.
-> >> 3. Device enters deep CPUidle low power modes where only PDC monitors =
-IRQ.
-> >> 4. This IRQ can still wakeup from CPUidle since it was monitored by PD=
-C.
-> >> 5. From handler, it comes to know that IRQ is disabled in SW, so it re=
-ally invokes irq_mask callback now to disable in HW.
-> >> 6. This mask callback doesn't operate on PDC (since in PDC, IRQs gets =
-masked only during suspend, all other times its enabled)
-> >> 7. step 3 to 6 repeats, if this IRQ keeps on coming and waking up from=
- deep cpuidle states.
-> > Ok so in summary, irq is left unmasked in pdc during deep cpu idle and
-> > it keeps waking up the CPU because it isn't masked at the PDC after the
-> > first time it interrupts? Is this a power problem?
-> yes it can be a power problem.
-> >   Because from a
-> > correctness standpoint we don't really care. It woke up the CPU because
-> > it happened, and the GIC can decide to ignore it or not by masking it at
-> > the GIC. I thought that the PDC wouldn't wake up the CPU if we masked
-> > the irq at the GIC level. Is that not true?
->=20
-> once PDC detects IRQ, it directly doesn't wake up CPU. it replays IRQ to =
 
-> GIC.
->=20
-> since at GIC its masked, GIC doesn't forward to cpu to immediatly wake=20
-> it up.
->=20
-> however after PDC detecting IRQ, it exits low power mode and=20
-> watchdog/timer can wakeup upon expiry.
+--PNTmBPCT7hxwcZjr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Ok. So the only problem is some screaming irq that really wants to be
-handled but the driver that requested it has disabled it at runtime. The
-IRQ keeps kicking the CPUs out of deep idle and then eventually the
-timer tick happens and we've run the CPUs in a shallower idle state for
-this time? Presumably we'd like to have these irqs be lazily masked at
-the PDC so that they can become pending when they first arrive but not
-block deep idle states if they're interrupting often while being
-handled.
+On Thu, Jun 18, 2020 at 04:39:58PM -0700, Stephen Boyd wrote:
+> The definition of SPI_FULL_DUPLEX (3) is really SPI_TX_ONLY (1) ORed
+> with SPI_RX_ONLY (2). Let's drop the define and simplify the code here a
+> bit by collapsing the setting of 'm_cmd' into conditions that are the
+> same.
 
-On the other hand, we want irq wake state to be the only factor in irqs
-being unmasked at the PDC on the entry to suspend. Purely
-masking/unmasking at the PDC when the irq is masked in software doesn't
-work because suspend/resume will break for disabled but wake enabled
-irqs. But doing that makes idle work easily because we can assume during
-idle that leaving it unmasked until it fires and then masking it in the
-PDC until it is handled gives us good deep idle states in the face of
-screaming irqs.
+Please don't add extra patches after someone else's series like this, it
+makes things harder to follow and really confuses tooling which tries to
+parse serieses off the list.  Just send a separate series.
 
-What are the actual requirements? Here is my attempt to boil this
-discussion down into a few bullet points:
+--PNTmBPCT7hxwcZjr
+Content-Type: application/pgp-signature; name="signature.asc"
 
- 1. During system suspend, wake enabled irqs should be enabled in PDC
- and all other irqs should be disabled in PDC.
+-----BEGIN PGP SIGNATURE-----
 
- 2. During idle, enabled irqs must be enabled in PDC, unless they're
- pending in which case they should be masked in the PDC so as to not
- wake up the CPU from deep idle states
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7si0YACgkQJNaLcl1U
+h9DGNgf/dEFbdjb6kLp+Q0o2czzyuD3ZIRvlSfE/PF6C8M6Zk2av7RL+CC+X24ve
+pVOAFd8BKA4qVKaYKQMzXI+YvyH3nj9UnYAkaYhp+4e0seLzFqqibuT3oC0Zsvcu
+43/leUWUjRG1IwqAO34o6khhPYGZq86xm8vZVHZdzlag8Z+xsi2fSOG9FX90zloy
+hH+FfH/vR1otM7fsOFRcg6fKZsz/KrRtkdskQQiJcLXCHgrqsuQvrBEPUvpVR0PR
+qDDU3uqVb8TuhHeAlf5VYfjb4SjzpOFsXyhh5fukLEjtbiNcCvvJeWGM0uNuw4XM
+cRR/1HsNX7N3YmX60sd3h/SQcPJfaA==
+=NiTl
+-----END PGP SIGNATURE-----
 
- 3. During non-idle, non-suspend, enabled irqs must be enabled in PDC.
-
-Or is #3 actually false and PDC has no bearing on this?
+--PNTmBPCT7hxwcZjr--
