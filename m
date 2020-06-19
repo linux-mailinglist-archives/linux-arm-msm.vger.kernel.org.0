@@ -2,87 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32405200A12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 15:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A668B201232
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 17:52:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732726AbgFSN20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jun 2020 09:28:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46346 "EHLO mail.kernel.org"
+        id S2392740AbgFSPt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jun 2020 11:49:56 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56680 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732737AbgFSN2L (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jun 2020 09:28:11 -0400
+        id S2393352AbgFSPY4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jun 2020 11:24:56 -0400
 Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C552921582;
-        Fri, 19 Jun 2020 13:28:10 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 71F8921548;
+        Fri, 19 Jun 2020 15:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592573291;
-        bh=woHoEU4qR1vtVDk6B4g7zX0biyS6r/lidqoPWMRgCmo=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=oWAUvvSiXpJTenQdhbrdO2GPm2gCTdYtqIZ+XfDE4nNQILPYHkEWQkHefSeZX5ej7
-         Q6ChI282ZFvsbrJk0hfvmXKhRFSnFuiVtPgIwkBv5hOFshKzeBjH3eoz9KV910p+m1
-         bcP8m0pxd0npcncMY85QRiKi5+PLtaWpE1V7VcYQ=
-Date:   Fri, 19 Jun 2020 14:28:09 +0100
+        s=default; t=1592580296;
+        bh=6pPLNDKrv87+k5VZCfUwfgvITyVDXp59nu5bggC7DSo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=O0LXG7tjc3yMZvuWQC1p1ELsD27zR8uIFDp4g/nc0CmHbJIVDA7/ZqbtQ81NsMOiy
+         khHUDLUAFgqnABslRmG9tOL5GZNWXeiz1PayM28TYYaro2T5asGiYUmSvoNNGRFpSC
+         HpHSx7C2x0V2ki9zUkruCChYxiQ1l4eUP+VutIpI=
+Date:   Fri, 19 Jun 2020 16:24:53 +0100
 From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     skakit@codeaurora.org, linux-spi@vger.kernel.org,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        linux-kernel@vger.kernel.org, Dilip Kota <dkota@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alok Chauhan <alokc@codeaurora.org>
-In-Reply-To: <20200618150626.237027-1-dianders@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, Alok Chauhan <alokc@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
+Subject: Re: [PATCH 7/5] spi: spi-geni-qcom: Don't set {tx,rx}_rem_bytes
+ unnecessarily
+Message-ID: <20200619152453.GA14534@sirena.org.uk>
 References: <20200618150626.237027-1-dianders@chromium.org>
-Subject: Re: [PATCH v4 0/5] spi: spi-geni-qcom: Fixes / perf improvements
-Message-Id: <159257327821.5984.3382372060351730090.b4-ty@kernel.org>
+ <20200618233959.160032-2-swboyd@chromium.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="T4sUOijqQbZv57TR"
+Content-Disposition: inline
+In-Reply-To: <20200618233959.160032-2-swboyd@chromium.org>
+X-Cookie: Haste makes waste.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Jun 2020 08:06:21 -0700, Douglas Anderson wrote:
-> This patch series is a new version of the previous patch posted:
->   [PATCH v2] spi: spi-geni-qcom: Speculative fix of "nobody cared" about interrupt
->   https://lore.kernel.org/r/20200317133653.v2.1.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid
-> 
-> At this point I've done enough tracing to know that there was a real
-> race in the old code (not just weakly ordered memory problems) and
-> that should be fixed with the locking patches.
-> 
-> [...]
 
-Applied to
+--T4sUOijqQbZv57TR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+On Thu, Jun 18, 2020 at 04:39:59PM -0700, Stephen Boyd wrote:
+> We only need to test for these counters being non-zero when we see the
+> end of a transfer. If we're doing a CS change then they will already be
+> zero.  This implies that we don't need to set these to 0 if we're
 
-Thanks!
+This doesn't apply against current code, please check and resend.
 
-[1/4] spi: spi-geni-qcom: Mo' betta locking
-      commit: 2ee471a1e28ec79fbfcdc8900ed0ed74132b0efe
-[2/4] spi: spi-geni-qcom: Check for error IRQs
-      commit: e191a082d764e80a36c198da61fbf2851ebf425a
-[3/4] spi: spi-geni-qcom: Actually use our FIFO
-      commit: 902481a78ee4173926dc59f060526dee21aeb7a8
-[4/4] spi: spi-geni-qcom: Don't keep a local state variable
-      commit: 7ba9bdcb91f694b0eaf486a825afd9c2d99532b7
+--T4sUOijqQbZv57TR
+Content-Type: application/pgp-signature; name="signature.asc"
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+-----BEGIN PGP SIGNATURE-----
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7s2MUACgkQJNaLcl1U
+h9COLwf/UgIzQy5TqFeLGYEW3Dxe5xoNJ2xLB4Aqxg24VEFRSXijOkY6yl3pbGuM
+6vN+VuJzSHBXfR9d+fVvd4khHUCqUnk/O0+FDLhIdiTrIGVEA9AdNo+Uu+0CIEmg
+EG19GZ/YRTyl1XeFjSkuUCIgJJZGXQu+K7MeKOTh0PK3Q2qg4HW3/vWUke/NL/Nh
+RDgeUu1Vdk/xHnsijd9uFwF5XsZKOIuSr1cuRpcDU8Jju/L9Hrx7tw7XeLg+Cs6v
+rPj8mQXY/n7OOnHefMyF8DeD17tjSc5kHKcsTWUxOWz++QWSg1r8HlJfml+BRQnz
+VXP96l1zd8xqQuOPiyUu484kzwz4fw==
+=2CLH
+-----END PGP SIGNATURE-----
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+--T4sUOijqQbZv57TR--
