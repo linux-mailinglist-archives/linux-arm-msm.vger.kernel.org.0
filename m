@@ -2,469 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB870201D47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 23:47:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9110B201D5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 23:55:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728091AbgFSVrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jun 2020 17:47:37 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:15718 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728040AbgFSVrg (ORCPT
+        id S1728218AbgFSVzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jun 2020 17:55:14 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:41725 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728220AbgFSVzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jun 2020 17:47:36 -0400
-X-Greylist: delayed 357 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Jun 2020 17:47:32 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1592603251;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=rHK0cXpZw8Y668uCrG8vhx3naoSmZjRUO3mOxBZPeJs=;
-        b=Y77EF0bQIJhzslsxbqgcA9YwsiWqQkekk0cLh3BWVlVy2/CLPnQdBbqTjRBhKZWbSs
-        Xme0bxZ5B+QhlzlZX9jJzgu/k2MKkrz3zMgwjvNePAfexHzCIxbe7xykqHdXrAP3Wcz8
-        P+xf9jyTGf19uSL6EJjbR/E2Yaag6qJRxLU7bEwEoLiNi8qJOZkDXsw1e6uF5ORAVxqo
-        lfBURa71tlSDUEzKZopZzVkPVSLHjN1N7BGSiPKcp8wrZElqYGeE1EdTGgff08lly2ZQ
-        WB0rSFoW9YvmSuNTf2IFqez2TkR6zpUdPbKwBVF7S3xisQFENp2MhpgOaJlnquzNOEgy
-        8pZg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IczFaoo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.4 DYNA|AUTH)
-        with ESMTPSA id 6005e9w5JLfUr2y
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Fri, 19 Jun 2020 23:41:30 +0200 (CEST)
-Date:   Fri, 19 Jun 2020 23:41:26 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Pantelis Antoniou <pantelis.antoniou@linaro.org>
-Cc:     alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Matt Porter <mporter@konsulko.com>,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: sound: Device tree bindings for the
- apq8039 sound complex
-Message-ID: <20200619214126.GA1251@gerhold.net>
-References: <20200619193831.12528-1-pantelis.antoniou@linaro.org>
- <20200619193831.12528-2-pantelis.antoniou@linaro.org>
+        Fri, 19 Jun 2020 17:55:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592603712; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=wam1wyE1W3Of+tegUUPP3NeNpIntvTygPj4lrZBjm+o=;
+ b=HKrxqujayXTasK0Gpko+KQypCMbiHIG1lS0PF5fwJvY0jz454GMKKajKkYUiLK4+fwuRJj+6
+ Qdu0uz6YBUWud498/E+j/L0hbwsqgYBJHz+UnV61+7karV7+84W5ZeY/bJhxvDFg8W1OxvN9
+ uWjfKowxDI+HBbTMsQe8mWbxYvI=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5eed343d6bebe35deb2df770 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Jun 2020 21:55:09
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5208EC43387; Fri, 19 Jun 2020 21:55:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tanmay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7C819C433CA;
+        Fri, 19 Jun 2020 21:55:08 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200619193831.12528-2-pantelis.antoniou@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 19 Jun 2020 14:55:08 -0700
+From:   tanmay@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        seanpaul@chromium.org, robdclark@gmail.com, dianders@chromium.org,
+        aravindh@codeaurora.org, abhinavk@codeaurora.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Add Display Port dt node
+In-Reply-To: <159252916745.62212.16228625951632835694@swboyd.mtv.corp.google.com>
+References: <20200618232113.22687-1-tanmay@codeaurora.org>
+ <159252916745.62212.16228625951632835694@swboyd.mtv.corp.google.com>
+Message-ID: <c110cd89a3144a20b21ec392f50eee68@codeaurora.org>
+X-Sender: tanmay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pantelis,
+Thanks Stephen for reviews.
+I will post new change addressing your all comments.
 
-On Fri, Jun 19, 2020 at 10:38:30PM +0300, Pantelis Antoniou wrote:
-> Add a yaml device binding for the QCOM apq8039 sound complex driver.
+On 2020-06-18 18:12, Stephen Boyd wrote:
+> Quoting Tanmay Shah (2020-06-18 16:21:13)
+>> Enable DP driver for sc7180.
 > 
-
-Nice to see some activity to get sound working on another SoC!
-Thanks for documenting all these properties.
-
-> Signed-off-by: Pantelis Antoniou <pantelis.antoniou@linaro.org>
-> ---
->  .../bindings/sound/qcom,apq8039.yaml          | 370 ++++++++++++++++++
->  1 file changed, 370 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,apq8039.yaml
+> Add DP device node on sc7180? This isn't a driver.
 > 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8039.yaml b/Documentation/devicetree/bindings/sound/qcom,apq8039.yaml
-> new file mode 100644
-> index 000000000000..f1c4fb99ccbb
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,apq8039.yaml
-> @@ -0,0 +1,370 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,apq8039.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies APQ8039 ASoC sound card
-> +
-> +maintainers:
-> +  - Pantelis Antoniou <pantelis.antoniou@linaro.org>
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,apq8039-sndcard
-> +
-> +  pinctrl-0:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description: |
-> +      Should specify pin control groups used for this controller matching
-> +      the first entry in pinctrl-names.
-> +
-> +  pinctrl-1:
-> +    description: |
-> +      Should specify pin control groups used for this controller matching
-> +      the second entry in pinctrl-names.
-> +
-> +  pinctrl-names:
-> +    minItems: 1
-> +    items:
-> +      - const: default
-> +      - const: sleep
-> +    description:
-> +      Names for the pin configuration(s); may be "default" or "sleep",
-> +      where the "sleep" configuration may describe the state
-> +      the pins should be in during system suspend.
-> +
-> +  reg:
-> +    description: Must contain an address for each entry in "reg-names".
-> +    minItems: 2
-> +    maxItems: 2
-> +
-> +  reg-names:
-> +    items:
-> +      - const: mic-iomux
-> +      - const: spkr-iomux
-> +
-> +  qcom,model:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: The user-visible name of the sound complex.
-> +
-> +  qcom,audio-routing:
-> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +    description: |
-> +      List of the connections between audio components;  each entry is a
-> +      pair of strings, the first being the connection's sink, the second
-> +      being the connection's source; valid names could be power supplies
-> +      and MicBias of msm8916-analoc-wcd codec.
-> +
-> +  function-definition:
-> +    type: object
-> +    description: |
-> +      Functional configuration for the sound complex via a
-> +      simple control. allows fixed and dynamically constructed
-> +      function selection.
-> +
-> +    properties:
-> +      mixer-control:
-> +        $ref: /schemas/types.yaml#/definitions/string
-> +        description: |
-> +          Name of the exported alsa mix control.
-> +
-> +      function-list:
-> +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        description: |
-> +          phandle(s) of the functions which the sound complex
-> +          exposes via the control.
-> +
-> +      system-list:
-> +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        description: |
-> +          phandle(s) of the default, init and shutdown functions
-> +          Must be one of the declared ones in the function property.
-> +          The default function is the one selected by default on
-> +          startup (after the init function's sequence is executed).
-> +          On shutdown the shutdown function sequence will be executed.
-> +          Typically init and shutdown are the same and it's purpose
-> +          is to initialize the sound complex mixer controls to the
-> +          all off state, and be ready for a regular function selection.
-> +
-> +    patternProperties:
-> +      "^[A-Za-z_][A-Aa-z0-9_]*$":
-> +        type: object
-> +        description:
-> +          Function description subnodes. The name of the function
-> +          is simply the name of the subnode, so restrictions apply
-> +          to the valid node names.
-> +
-> +          The function definition of each subnode is either a cooked
-> +          function (i.e. which is not dependent on state inputs), or
-> +          a function that is selecting a cooked function based on the
-> +          state inputs and the generated state vector.
-> +
-> +        oneOf:
-> +          # non-cooked function
-> +          - properties:
-> +              enable:
-> +                $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +                description: |
-> +                  Sequence of alsa mixer controls to apply when this state is to
-> +                  be enabled.
-> +
-> +              disable:
-> +                $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +                description: |
-> +                  Sequence of alsa mixer controls to apply when this state is to
-> +                  be disabled.
-> +
-> +            required:
-> +              - enable
-> +
-> +          # cooked function
-> +          - properties:
-> +              state-inputs:
-> +                description: |
-> +                  A list of state inputs to be used in constructing a state
-> +                  vector.
-> +                type: array
-> +                uniqueItems: true
-> +                minItems: 1
-> +                items:
-> +                  anyOf:
-> +                    - const: JACK_HEADPHONE
-> +                    - const: JACK_MICROPHONE
-> +
-> +              state-input-bits:
-> +                $ref: /schemas/types.yaml#/definitions/uint32-array
-> +                description: |
-> +                  Number of bits to use for each state-input in the
-> +                  state vector creation. For now only the value 1 is
-> +                  supported for JACK_HEADPHONE and JACK_MICROPHONE.
-> +
-> +              state-input-defaults:
-> +                $ref: /schemas/types.yaml#/definitions/uint32-array
-> +                description: |
-> +                  The default value to use as a state input at startup.
-> +
-> +              state-map:
-> +                $ref: /schemas/types.yaml#/definitions/phandle-array
-> +                description: |
-> +                  The mapping of this function to a cooked function. The
-> +                  format used is a sequence of phandle to a state, the mask
-> +                  to apply to the state vector, and the equality value.
-> +
-> +                  Take the example's configuration
-> +
-> +                    state-inputs         = "JACK_HEADPHONE", "JACK_MICROPHONE";
-> +                    state-input-bits     = <1>, <1>;
-> +                    state-input-defaults = <0>, <0>;
-> +
-> +                    state-map = <&speaker    0x1 0x0>,
-> +                                <&headphones 0x3 0x1>,
-> +                                <&headset    0x3 0x3>;
-> +
-> +                  is decoded as follows.
-> +
-> +                  There are 3 possible cooked functions to be selected.
-> +                  speaker, headphone and headset. The state-inputs are
-> +                  the JACK_HEADPHONE and JACK_MICROPHONE, which are single
-> +                  bit values, being placed at bit 0 and bit 1 of the
-> +                  constructed vector.
-> +
-> +                  The 4 possible state vectors are:
-> +                    MICROPHONE=0, HEADPHONE=0, 0
-> +                    MICROPHONE=0, HEADPHONE=1, 1
-> +                    MICROPHONE=1, HEADPHONE=0, 2
-> +                    MICROPHONE=1, HEADPHONE=1, 3
-> +
-> +                  The speaker function is selected when HEADPHONE=0 because
-> +                  both (0 & 1) == (2 & 1) == 0.
-> +
-> +                  The headphones function is selected when HEADPHONE=1 and
-> +                  MICROPHONE=0 because (1 & 3) == 1.
-> +
-> +                  The headset function is selected when both HEADPHONE=1 and
-> +                  MICROPHONE=1 because (3 & 3) == 3.
-> +
-> +            required:
-> +              - state-inputs
-> +              - state-input-bits
-> +              - state-input-defaults
-> +              - state-map
-> +
-> +patternProperties:
-> +  "^.*dai-link-[0-9]+$":
-> +    type: object
-> +    description: |-
-> +      cpu and codec child nodes:
-> +        Container for cpu and codec dai sub-nodes.
-> +        One cpu and one codec sub-node must exist.
-> +
-> +    properties:
-> +      link-name:
-> +        description: The link name
-> +
-> +      cpu:
-> +        type: object
-> +        properties:
-> +
-> +          sound-dai:
-> +            $ref: /schemas/types.yaml#/definitions/phandle-array
-> +            description: phandle(s) of the CPU DAI(s)
-> +
-> +        required:
-> +          - sound-dai
-> +
-> +      codec:
-> +        type: object
-> +        properties:
-> +
-> +          sound-dai:
-> +            $ref: /schemas/types.yaml#/definitions/phandle-array
-> +            description: phandle(s) of the codec DAI(s)
-> +
-> +        required:
-> +          - sound-dai
-> +
-> +    required:
-> +      - link-name
-> +      - cpu
-> +      - codec
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - qcom,model
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/sound/apq8016-lpass.h>
-> +
-> +    sound: sound@7702000  {
-> +        compatible = "qcom,apq8039-sndcard";
-> +        reg = <0x07702000 0x4>, <0x07702004 0x4>;
-> +        reg-names = "mic-iomux", "spkr-iomux";
-> +
-> +        status = "okay";
-> +        pinctrl-0 = <&cdc_pdm_lines_act>;
-> +        pinctrl-1 = <&cdc_pdm_lines_sus>;
-> +        pinctrl-names = "default", "sleep";
-> +        qcom,model = "APQ8039";
-> +        qcom,audio-routing = "AMIC2", "MIC BIAS Internal2";
-> +
-> +        internal-codec-playback-dai-link-0 {
-> +            link-name = "WCD";
-> +            cpu {
-> +                sound-dai = <&lpass MI2S_PRIMARY>;
-> +            };
-> +            codec {
-> +                sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
-> +            };
-> +        };
-> +
-> +        internal-codec-capture-dai-link-0 {
-> +            link-name = "WCD-Capture";
-> +            cpu {
-> +                sound-dai = <&lpass MI2S_TERTIARY>;
-> +            };
-> +            codec {
-> +                sound-dai = <&lpass_codec 1>, <&wcd_codec 1>;
-> +            };
-> +        };
-> +
-> +        function-definition {
-> +
-> +            mixer-control = "Jack Function";
-> +            function-list = <&auto &headphones &headset &speaker &off>;
-> +            system-list = <&auto &off &off>;  // default, init, shutdown
-> +
-> +            auto: Automatic {
-> +                // Headphone presence bit 0 (1) - H
-> +                // Microphone presence bit 1 (2) - M
-> +                state-inputs         = "JACK_HEADPHONE", "JACK_MICROPHONE";
-> +                state-input-bits     = <1>, <1>;
-> +                state-input-defaults = <0>, <0>;
-> +
-> +                // HM & MASK
-> +                state-map =
-> +                    <&speaker    0x1 0x0>,  // no headphone -> speaker
-> +                    <&headphones 0x3 0x1>,  // headphone but no mic -> headphones
-> +                    <&headset    0x3 0x3>;  // headphone & mic -> headset
-> +            };
-> +            headphones: Headphones {
-> +                enable =
-> +                    "RX1 MIX1 INP1", "RX1",
-> +                    "RX2 MIX1 INP1", "RX2",
-> +                    "RDAC2 MUX", "RX2",
-> +                    "RX1 Digital Volume", "128",
-> +                    "RX2 Digital Volume", "128",
-> +                    "HPHL", "Switch",
-> +                    "HPHR", "Switch";
-> +
-> +                disable =
-> +                    "RX1 Digital Volume", "0",
-> +                    "RX2 Digital Volume", "0",
-> +                    "HPHL", "ZERO",
-> +                    "HPHR", "ZERO",
-> +                    "RDAC2 MUX", "RX1",
-> +                    "RX1 MIX1 INP1", "ZERO",
-> +                    "RX2 MIX1 INP1", "ZERO";
-> +            };
-> +            headset: Headset {
-> +                enable =
-> +                    "RX1 MIX1 INP1", "RX1",
-> +                    "RX2 MIX1 INP1", "RX2",
-> +                    "RDAC2 MUX", "RX2",
-> +                    "RX1 Digital Volume", "128",
-> +                    "RX2 Digital Volume", "128",
-> +                    "DEC1 MUX", "ADC2",
-> +                    "CIC1 MUX", "AMIC",
-> +                    "ADC2 Volume", "8",
-> +                    "ADC2 MUX", "INP2",
-> +                    "HPHL", "Switch",
-> +                    "HPHR", "Switch";
-> +
-> +                disable =
-> +                    "RX1 Digital Volume", "0",
-> +                    "RX2 Digital Volume", "0",
-> +                    "HPHL", "ZERO",
-> +                    "HPHR", "ZERO",
-> +                    "RDAC2 MUX", "RX1",
-> +                    "RX1 MIX1 INP1", "ZERO",
-> +                    "RX2 MIX1 INP1", "ZERO",
-> +                    "ADC2 MUX", "ZERO",
-> +                    "ADC2 Volume", "0",
-> +                    "DEC1 MUX", "ZERO";
-> +            };
-> +            speaker: Speaker {
-> +                enable =
-> +                    "SPK DAC Switch", "1",
-> +                    "RX3 MIX1 INP1", "RX1",
-> +                    "RX3 MIX1 INP2", "RX2",
-> +                    "RX3 Digital Volume", "128";
-> +
-> +                disable =
-> +                    "SPK DAC Switch", "0",
-> +                    "RX3 MIX1 INP1", "ZERO",
-> +                    "RX3 MIX1 INP2", "ZERO";
-> +            };
-> +            off: Off {
-> +                enable =
-> +                    "RX1 Digital Volume", "0",
-> +                    "RX2 Digital Volume", "0",
-> +                    "HPHL", "ZERO",
-> +                    "HPHR", "ZERO",
-> +                    "RDAC2 MUX", "RX1",
-> +                    "RX1 MIX1 INP1", "ZERO",
-> +                    "RX2 MIX1 INP1", "ZERO",
-> +                    "ADC2 MUX", "ZERO",
-> +                    "ADC2 Volume", "0",
-> +                    "DEC1 MUX", "ZERO",
-> +                    "SPK DAC Switch", "0",
-> +                    "RX3 MIX1 INP1", "ZERO",
-> +                    "RX3 MIX1 INP2", "ZERO";
-> +            };
-> +        };
+Done.
+>> 
+>> This change depends-on following series:
+>> https://patchwork.freedesktop.org/series/78583/
+>> and https://patchwork.freedesktop.org/patch/351990/
+>> 
+>> Changes in v2:
+>> 
+>> - Add assigned-clocks and assigned-clock-parents
+>> - Remove cell-index and pixel_rcg
+>> - Change compatible to qcom,sc7180-dp
+>> 
+>> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 57 
+>> ++++++++++++++++++++++++++--
+>>  1 file changed, 53 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> index 916401f7e87c..26fe623e3b0f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> @@ -2216,10 +2216,19 @@ ports {
+>>                                         #address-cells = <1>;
+>>                                         #size-cells = <0>;
+>> 
+>> +                                       port@1 {
+>> +                                               reg = <1>;
+>> +                                               dpu_intf1_out: 
+>> endpoint {
+>> +                                                       
+>> remote-endpoint =
+>> +                                                                
+>> <&dsi0_in>;
+>> +                                               };
+>> +                                       };
+>> +
+>>                                         port@0 {
+>>                                                 reg = <0>;
+>> -                                               dpu_intf1_out: 
+>> endpoint {
+>> -                                                       
+>> remote-endpoint = <&dsi0_in>;
+>> +                                               dpu_intf0_out: 
+>> endpoint {
+>> +                                                       
+>> remote-endpoint =
+>> +                                                                
+>> <&dp_in>;
+>>                                                 };
+>>                                         };
+>>                                 };
+> 
+> I thought this wasn't supposed to change? At least according to the
+> binding it shouldn't be needed.
+> 
+Thanks. Yes it should be port@2 as per new dpu-sc7180.yaml bindings in 
+below patch.
+https://patchwork.freedesktop.org/patch/371087/?series=78583&rev=1
 
-This looks much like a replacement for ALSA UCM and userspace audio jack
-detection coded into the device tree.
+>> @@ -2293,6 +2302,46 @@ dsi_phy: dsi-phy@ae94400 {
+>>                         };
+>>                 };
+>> 
+>> +               msm_dp: displayport-controller@ae90000{
+>> +                       status = "ok";
+> 
+> Please use status = "disabled";
+> 
+Ok got it. Board's DT will enable it.
 
-While I personally think this is an interesting idea
-(We have the device tree to describe the hardware, why can we not also
- describe necessary audio routing to enable a particular output?)
-this is also not really specific to the APQ8039 hardware, is it?
-
-In fact, without all the code to handle the mixer enable/disable
-sequences the machine driver looks almost identical to the existing
-apq8016-sbc.
-
-If you want to discuss ways to integrate mixer enable/disable sequences
-into the device tree, I suggest that you post your ideas separately as
-[RFC] with a more generic subject. That will make it more easy for
-everyone interested to share their thoughts.
-
-Right now it's quite hidden in a patch set where the subjects suggest
-that it's just a simple machine driver to glue some codecs together.
-
-Thanks,
-Stephan
+>> +                       compatible = "qcom,sc7180-dp";
+>> +
+>> +                       reg = <0 0xae90000 0 0x1400>;
+>> +                       reg-names = "dp_controller";
+>> +
+>> +                       interrupt-parent = <&mdss>;
+> 
+> Any reason why this isn't under the mdss node like the other display
+> device nodes?
+> 
+Done. Moved msm_dp node under mdss.
+>> +                       interrupts = <12 0>;
+>> +
+>> +                       clocks = <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+>> +                                <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+>> +                                <&dispcc 
+>> DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+>> +                                <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+>> +                       clock-names = "core_aux", "ctrl_link",
+>> +                                     "ctrl_link_iface", 
+>> "stream_pixel";
+>> +                       #clock-cells = <1>;
+>> +                       assigned-clocks = <&dispcc 
+>> DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+>> +                       assigned-clock-parents = <&msm_dp 1>;
+>> +
+>> +                       data-lanes = <0 1>;
+> 
+> This can and should be left to the board files. At the SoC level my
+> understanding is that there are four lanes possible, so no need to
+> artificially limit it here.
+> 
+Removed from here. Driver changes I will be posting accordingly.
+>> +
+>> +                       ports {
+>> +                               #address-cells = <1>;
+>> +                               #size-cells = <0>;
+>> +                               port@0 {
+>> +                                       reg = <0>;
+>> +                                       dp_in: endpoint {
+>> +                                               remote-endpoint =
+>> +                                                        
+>> <&dpu_intf0_out>;
+> 
+> I'd prefer these were on one line, regardless of the 80 character line
+> limit/suggestion.
+> 
+ok done.
+>> +                                       };
+>> +                               };
+>> +
+>> +                               port@1 {
+>> +                                       reg = <1>;
+>> +                                       dp_out: endpoint { };
+>> +                               };
+>> +                       };
+>> +               };
+>> +
+>>                 dispcc: clock-controller@af00000 {
+>>                         compatible = "qcom,sc7180-dispcc";
+>>                         reg = <0 0x0af00000 0 0x200000>;
