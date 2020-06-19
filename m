@@ -2,137 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D116820027B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 09:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AB7A2002E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2020 09:44:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727916AbgFSHGK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Jun 2020 03:06:10 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:27596 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730254AbgFSHFr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Jun 2020 03:05:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592550347; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=3IGSqQn8wPmBUvFPUqXdomMb9/avgVjdyjhP5K9XSGg=; b=HkfcmExMVTbbsVO9eiqXYKPL3OvrJCs+21zGUmk5YJmZYFINwLWjgGCBD41Qv4NdUP5vqpu2
- WcJsW+aREaE9lEg9LwOW9MDIge2FmEcRtYHjV3M0rU5gM/1+ev9XXy0jSYV+gdAfCuFOLCFu
- rKw7qNJkAXx6ZNfVwqnQxNC+eOA=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n14.prod.us-west-2.postgun.com with SMTP id
- 5eec63ca6bebe35deb5418b4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Jun 2020 07:05:46
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AF227C433A0; Fri, 19 Jun 2020 07:05:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1731014AbgFSHoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Jun 2020 03:44:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59968 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730955AbgFSHoA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Jun 2020 03:44:00 -0400
+Received: from localhost.localdomain (unknown [171.61.66.58])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C7154C43395;
-        Fri, 19 Jun 2020 07:05:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C7154C43395
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, kathirav@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     sivaprak@codeaurora.org
-Subject: [PATCH 6/6] regulator: qcom_smd: Add MP5496 regulators
-Date:   Fri, 19 Jun 2020 12:35:07 +0530
-Message-Id: <1592550307-11040-7-git-send-email-kathirav@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1592550307-11040-1-git-send-email-kathirav@codeaurora.org>
-References: <1592550307-11040-1-git-send-email-kathirav@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id F16F32073E;
+        Fri, 19 Jun 2020 07:43:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592552640;
+        bh=G9lBmeDxHh2VeTZymUbF1CdX0re/3uaKH5q60zlt4gY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Jr0YrytKVOh9yPMdnZtTHUIndZk8WAzweXTFVG3Ktp/df/K6Mvu0eRFsBQt9uI4oO
+         966xh614vJSnAP5XdHlHE+Gw+NUQeyGhDVgvXxDbjAZvTjsquBkZoFsHI+TqfRl8IK
+         OzEjg9UwNEJmULmxV0z4XYHCNbzPOLV8YrWGRVQo=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mani@kernel.org
+Subject: [PATCH] spi: spidev: fix missing octal defines
+Date:   Fri, 19 Jun 2020 13:13:45 +0530
+Message-Id: <20200619074345.4041673-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ6018 SoC uses the PMIC MP5496. SMPA2 and LDOA2 regulator controls the
-APSS and SDCC voltage scaling respectively. Add support for the same.
+Commit 896fa735084e ("spi: spidev_test: Add support for Octal mode data
+transfers") adds support for octal mode but failed to update userspace
+header with octal defines causing build error for the spidev tool
 
-Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+spidev_test.c: In function ‘transfer’:
+spidev_test.c:131:13: error: ‘SPI_TX_OCTAL’ undeclared (first use in this function); did you mean ‘SPI_TX_DUAL’?
+  if (mode & SPI_TX_OCTAL)
+...
+
+Update the header with octal values.
+
+Fixes: 896fa735084e ("spi: spidev_test: Add support for Octal mode data transfers")
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/regulator/qcom_smd-regulator.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ include/uapi/linux/spi/spidev.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index 53a64d8..e6d137a 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -198,6 +198,15 @@ static const struct regulator_ops rpm_bob_ops = {
- 	.set_voltage = rpm_reg_set_voltage,
- };
+diff --git a/include/uapi/linux/spi/spidev.h b/include/uapi/linux/spi/spidev.h
+index ee0f2460bff6..f0c95f5cc719 100644
+--- a/include/uapi/linux/spi/spidev.h
++++ b/include/uapi/linux/spi/spidev.h
+@@ -48,6 +48,8 @@
+ #define SPI_TX_QUAD		0x200
+ #define SPI_RX_DUAL		0x400
+ #define SPI_RX_QUAD		0x800
++#define SPI_TX_OCTAL		0x2000
++#define SPI_RX_OCTAL		0x4000
  
-+static const struct regulator_ops rpm_mp5496_ops = {
-+	.enable = rpm_reg_enable,
-+	.disable = rpm_reg_disable,
-+	.is_enabled = rpm_reg_is_enabled,
-+	.list_voltage = regulator_list_voltage_linear_range,
-+
-+	.set_voltage = rpm_reg_set_voltage,
-+};
-+
- static const struct regulator_desc pma8084_hfsmps = {
- 	.linear_ranges = (struct linear_range[]) {
- 		REGULATOR_LINEAR_RANGE(375000,  0,  95, 12500),
-@@ -595,6 +604,24 @@ static const struct regulator_desc pms405_pldo600 = {
- 	.ops = &rpm_smps_ldo_ops,
- };
+ /*---------------------------------------------------------------------------*/
  
-+static const struct regulator_desc mp5496_smpa2 = {
-+	.linear_ranges = (struct linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(725000, 0, 27, 12500),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 28,
-+	.ops = &rpm_mp5496_ops,
-+};
-+
-+static const struct regulator_desc mp5496_ldoa2 = {
-+	.linear_ranges = (struct linear_range[]) {
-+		REGULATOR_LINEAR_RANGE(1800000, 0, 60, 25000),
-+	},
-+	.n_linear_ranges = 1,
-+	.n_voltages = 61,
-+	.ops = &rpm_mp5496_ops,
-+};
-+
- struct rpm_regulator_data {
- 	const char *name;
- 	u32 type;
-@@ -603,6 +630,12 @@ struct rpm_regulator_data {
- 	const char *supply;
- };
- 
-+static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
-+	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smpa2, "s2" },
-+	{ "l2", QCOM_SMD_RPM_LDOA, 2, &mp5496_ldoa2, "l2" },
-+	{}
-+};
-+
- static const struct rpm_regulator_data rpm_pm8841_regulators[] = {
- 	{ "s1", QCOM_SMD_RPM_SMPB, 1, &pm8x41_hfsmps, "vdd_s1" },
- 	{ "s2", QCOM_SMD_RPM_SMPB, 2, &pm8841_ftsmps, "vdd_s2" },
-@@ -901,6 +934,7 @@ static const struct rpm_regulator_data rpm_pms405_regulators[] = {
- };
- 
- static const struct of_device_id rpm_of_match[] = {
-+	{ .compatible = "qcom,rpm-mp5496-regulators", .data = &rpm_mp5496_regulators },
- 	{ .compatible = "qcom,rpm-pm8841-regulators", .data = &rpm_pm8841_regulators },
- 	{ .compatible = "qcom,rpm-pm8916-regulators", .data = &rpm_pm8916_regulators },
- 	{ .compatible = "qcom,rpm-pm8941-regulators", .data = &rpm_pm8941_regulators },
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.26.2
 
