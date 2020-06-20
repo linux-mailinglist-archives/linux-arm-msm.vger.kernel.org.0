@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD1AD202481
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 16:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38843202484
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 16:51:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728517AbgFTOtC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Jun 2020 10:49:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48682 "EHLO
+        id S1728529AbgFTOtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Jun 2020 10:49:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728514AbgFTOtA (ORCPT
+        with ESMTP id S1728527AbgFTOtF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Jun 2020 10:49:00 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DC9C0613EE;
-        Sat, 20 Jun 2020 07:49:00 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id o11so4645371wrv.9;
-        Sat, 20 Jun 2020 07:49:00 -0700 (PDT)
+        Sat, 20 Jun 2020 10:49:05 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 567BEC06174E;
+        Sat, 20 Jun 2020 07:49:04 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a6so10394610wrm.4;
+        Sat, 20 Jun 2020 07:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MeYEH2NT9Ksi+ZUmEtGsNon+EIn/ZBuaDVI8zEZeGNg=;
-        b=YIVQuHWgM49qYpXdPQNympBBYQbbFBGZkjEsqcqyETwRj9kf9t0RjWOhgajtTRudJY
-         3fE7rcSE9EkylJbhu8jq1c/HIuxBME215cESDRerNFMLO8pZoDrSOPOrO19P8haQ7wZY
-         gwlTLuXXa356Ul6P833I6C+GCZTibNTrgxrPlQWFj1JWc5ivinYpyAskhI0ji81rDSDt
-         6vgHp4Q6OOehHBdEPB95GqCuuQUkjJE+3FCaBOTESO+A2iYbGrFJ0EZHwa/UXy5UIG5N
-         SR9IBqIg3rXL2V/IN9IfTd0iTn19YJPyulo0Ry9HUuX5S+LgkcUP6EzWeo6/F5yrEuc8
-         LH8A==
+        bh=CmNC2Bn3o5ZHDXHiQCU50tdsYyPVrsvYkHpZV/07Wbc=;
+        b=EeO10bvWF4DWwXsKNumh1NVGPR+ieOFU345TmMkTlan178HKMPpVNOhyZTRX9e2GZy
+         ZqCOBi9upR3nwo8zltO9o62iLrOi6EaA/zVcbPHiS6TgotzMbmzYUzCtcDt2mE9Md1w2
+         iv1Pb6iZhCJArbZzmW2Mk+QGLcfPTiIhBsjOIYrbHLlIAYqCOqgzFUt1pxFt6f7gHcPC
+         aIvpVjtblvcdXACQU7yHqIr5AMiDBRRWKFC4QLyeocgfkWXufNewhpNyZw/Yv2RKpDrR
+         cqGe6X4QYmBeE2XfL13NadxXMt936rrIlbFCY+PYOxXyfVugpAzDPgAYZyC/+JcYa3Tl
+         DGPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MeYEH2NT9Ksi+ZUmEtGsNon+EIn/ZBuaDVI8zEZeGNg=;
-        b=o0PwuT6nCh8xo/S9ZIdu1yQA/EYhFOP1oL9a3d7Sn3HtNH8eLVYzGYfN3k8YVmJxtS
-         kluii6OeWHlxWrFmZR/AUGrxT9PDUypQKRcaGmss3SKnUfX3r1xLQ39vgpGPzeVhnFeP
-         5zIYa711Xjxou7IFY8Ji0SSEjNAa0gktxZ0Uhn8YSycaPbXyG4721Ip1eQ+AdZ+83HDE
-         BBX1hieNpIXRa7aulZAxlmvbgsVR4Y2iB6vK4E4jA3LP4p7FKzNPuaiG92rareFiP+rj
-         sHbdxURVmzIrhh1oFGC4qytJ0v6os5r6/l1417F+0eTAk6LiLmQxhkTrPzzbVNrIJTfg
-         1XzQ==
-X-Gm-Message-State: AOAM530G0BCsDmBZizl2I6d8Mpy7rYyETpOaILlGwu1QSLknANdBSYVo
-        usqYiihbrI8bUckmPU5NWdI=
-X-Google-Smtp-Source: ABdhPJxyZZKyky8VpeKa0oZKBtCvFQtDQKh0NHz7gHoYnCoXTmRSjraU8MLDG5kVZX4AVNoj2HbGMQ==
-X-Received: by 2002:a05:6000:108c:: with SMTP id y12mr9206195wrw.88.1592664539229;
-        Sat, 20 Jun 2020 07:48:59 -0700 (PDT)
+        bh=CmNC2Bn3o5ZHDXHiQCU50tdsYyPVrsvYkHpZV/07Wbc=;
+        b=WMTKT+S3Vbu7ihqgUDWzD4LdkJvzA7O3AVJoIkW0J8DyhuO7TUTeRYV15Qnh5fAQrE
+         m5IKWgY5VwZhjZEoNEOTuDlec+fJqwbeK8ftVOyTuFD047c2RlnDUEUyuL/32I1Y4vBr
+         faEAyovGam2dVDTB6Pd275hBKqtYy1saHpR/65QC84bdwuDv/zLOXhtKt06FCn5bJx/J
+         dVPVDpaS3m06LeT1YAj+qW3srK60fa+yj623gjLT4XLdxMoE54l66mY9JQ6eC9pdhCK2
+         yjSzGOkpaoO2pXf4GEPbdUjdpZYAl5rvGjM3M5Q98wjlXKHs0fVkqQKzzZ/IuPXGZPR4
+         C+Aw==
+X-Gm-Message-State: AOAM532Kh657O9MurGKRxawDxVbD0g9RlOA4K+LauqfkIsASs6rSzEhz
+        bR8HbDymZ/a8Dmx9BF4/dlw=
+X-Google-Smtp-Source: ABdhPJxR2Lbrigrq+LKG7o7imoOlgy6vDMmUHbf3biel4jVv39a5gW7ZPNBKsATu3FsbvLzOmpkWNg==
+X-Received: by 2002:adf:f984:: with SMTP id f4mr7590983wrr.221.1592664542957;
+        Sat, 20 Jun 2020 07:49:02 -0700 (PDT)
 Received: from localhost.localdomain (abae138.neoplus.adsl.tpnet.pl. [83.6.168.138])
-        by smtp.googlemail.com with ESMTPSA id 63sm11928379wra.86.2020.06.20.07.48.57
+        by smtp.googlemail.com with ESMTPSA id 63sm11928379wra.86.2020.06.20.07.49.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2020 07:48:58 -0700 (PDT)
+        Sat, 20 Jun 2020 07:49:02 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
@@ -64,9 +64,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 20/21] arm64: dts: qcom: Add support for Sony Xperia Z5 (SoMC Sumire-RoW)
-Date:   Sat, 20 Jun 2020 16:46:36 +0200
-Message-Id: <20200620144639.335093-21-konradybcio@gmail.com>
+Subject: [PATCH 21/21] arm64: dts: qcom: Move msm8994-smd-rpm contents to lg-bullhead.
+Date:   Sat, 20 Jun 2020 16:46:37 +0200
+Message-Id: <20200620144639.335093-22-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200620144639.335093-1-konradybcio@gmail.com>
 References: <20200620144639.335093-1-konradybcio@gmail.com>
@@ -77,236 +77,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree support for the Sony Xperia Z5 smartphone.
-The kitakami part in DT name comes from Sony platform naming
-and is there to indicate that as more Sony devices using msm8994
-are added to the kernel, they will share a lot of common code.
-
-The board currently supports
-* Serial
-* SDHCI
-* I2C
-* Regulator configuration
-* pstore log dump
-* GPIO keys
+This was the only device using that dtsi, so no point
+keeping it separate AND with a confusing name (bullhead
+is based on msm8992 and the file contains regulator
+values for that specific board).
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../msm8994-sony-xperia-kitakami-sumire.dts   | 410 ++++++++++++++++++
- 2 files changed, 411 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dts
+ .../dts/qcom/msm8992-bullhead-rev-101.dts     | 264 ++++++++++++++++-
+ arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi | 268 ------------------
+ 2 files changed, 263 insertions(+), 269 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0f2c33d611df..01ca9ac9f905 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -10,6 +10,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-sony-xperia-kitakami-sumire.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dts b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dts
-new file mode 100644
-index 000000000000..3b0a880416c4
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dts
-@@ -0,0 +1,410 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2020, Konrad Dybcio
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8994.dtsi"
-+#include "pm8994.dtsi"
-+#include "pmi8994.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+
-+/ {
-+	model = "SoMC Sumire-ROW";
-+	compatible = "somc,sumire-row", "qcom,msm8994";
-+	/* required for bootloader to select correct board */
-+	qcom,msm-id = <0xcf 0x20001>;
-+	qcom,pmic-id = <0x10009 0x1000a 0x00 0x00>;
-+	qcom,board-id = <8 0>;
-+
-+	/* Xperia Z5's firmware doesn't support PSCI */
-+	/delete-node/ psci;
-+
-+	soc {
-+		serial@f991e000 {
-+			status = "okay";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&blsp1_uart2_default>;
-+			pinctrl-1 = <&blsp1_uart2_sleep>;
-+		};
-+
-+		serial@f995e000 {
-+			status = "okay";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&blsp2_uart2_default>;
-+			pinctrl-1 = <&blsp2_uart2_sleep>;
-+		};
-+
-+		/* I2C1 is disabled on this board */
-+
-+		i2c@f9924000 {
-+			status = "okay";
-+
-+			/* NXP NFC */
-+		};
-+
-+		i2c@f9926000 {
-+			status = "okay";
-+
-+			/* Empty but active */
-+		};
-+
-+		i2c@f9967000 {
-+			status = "okay";
-+
-+			/* SMB1357 charger and sii8620 HDMI/MHL bridge */
-+		};
-+
-+		i2c@f9928000 {
-+			status = "okay";
-+
-+			/* Synaptics touchscreen */
-+		};
-+
-+		sdhci@f9824900 {
-+			status = "okay";
-+
-+			/* Downstream pushes 2.95V to the sdhci device,
-+			but upstream driver REALLY wants to make vmmc 1.8v
-+			cause of the hs400-1_8v mode. MMC works fine without
-+			that regulator, so let's not use it for now.
-+			vqmmc is also disabled cause driver stll complains.
-+
-+			vmmc-supply = <&pm8994_l20>;
-+			vqmmc-supply = <&pm8994_s4>;
-+			*/
-+		};
-+
-+		spi@f9923000 {
-+			status = "okay";
-+
-+			/* FPC fingerprint reader */
-+		};
-+	};
-+
-+	gpio_keys {
-+		compatible = "gpio-keys";
-+		input-name = "gpio-keys";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		autorepeat;
-+
-+		button@0 {
-+			label = "Volume Down";
-+			gpios = <&pm8994_gpios 2 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+		button@1 {
-+			label = "Volume Up";
-+			gpios = <&pm8994_gpios 3 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+		button@2 {
-+			label = "Camera Snapshot";
-+			gpios = <&pm8994_gpios 4 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_CAMERA>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+		button@3 {
-+			label = "Camera Focus";
-+			gpios = <&pm8994_gpios 5 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		/* This is for getting crash logs using Android downstream kernels */
-+		ramoops@1fe00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0x1fe00000 0x0 0x200000>;
-+			console-size = <0x100000>;
-+			record-size = <0x10000>;
-+			ftrace-size = <0x10000>;
-+			pmsg-size = <0x80000>;
-+		};
-+
-+		continuous_splash: framebuffer@3401000{
-+			reg = <0x0 0x3401000 0x0 0x2200000>;
-+			no-map;
-+		};
-+
-+		dfps_data_mem: dfps_data_mem@3400000 {
-+			reg = <0x0 0x3400000 0x0 0x1000>;
-+			no-map;
-+		};
-+
-+		peripheral_region: peripheral_region@7400000 {
-+			reg = <0x0 0x7400000 0x0 0x1c00000>;
-+			no-map;
-+		};
-+
-+		modem_region: modem_region@9000000 {
-+			reg = <0x0 0x9000000 0x0 0x5a00000>;
-+			no-map;
-+		};
-+
-+		tzapp: modem_region@ea00000 {
-+			reg = <0x0 0xea00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		fb_region: fb_region@40000000 {
-+			reg = <0x00 0x40000000 0x00 0x1000000>;
-+			no-map;
-+		};
-+	};
-+};
-+
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
+index 32670d5afdd6..893fc5b8fc34 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
+@@ -47,4 +47,266 @@ ramoops@1ff00000 {
+ 	};
+ };
+ 
+-#include "msm8994-smd-rpm.dtsi"
 +&smd_rpm {
 +	rpm {
 +		rpm_requests {
 +			pm8994-regulators {
++
++				vdd_l1-supply = <&pm8994_s1>;
++				vdd_l2_26_28-supply = <&pm8994_s3>;
++				vdd_l3_11-supply = <&pm8994_s3>;
++				vdd_l4_27_31-supply = <&pm8994_s3>;
++				vdd_l5_7-supply = <&pm8994_s3>;
++				vdd_l6_12_32-supply = <&pm8994_s5>;
++				vdd_l8_16_30-supply = <&vreg_vph_pwr>;
++				vdd_l9_10_18_22-supply = <&vreg_vph_pwr>;
++				vdd_l13_19_23_24-supply = <&vreg_vph_pwr>;
++				vdd_l14_15-supply = <&pm8994_s5>;
++				vdd_l17_29-supply = <&vreg_vph_pwr>;
++				vdd_l20_21-supply = <&vreg_vph_pwr>;
++				vdd_l25-supply = <&pm8994_s5>;
++				vdd_lvs1_2 = <&pm8994_s4>;
++
 +				s1 {
-+					/* Unused */
-+					status = "disabled";
++					regulator-min-microvolt = <800000>;
++					regulator-max-microvolt = <800000>;
 +				};
 +
 +				s2 {
-+					/* Unused */
-+					status = "disabled";
++					/* TODO */
 +				};
 +
 +				s3 {
@@ -317,6 +135,8 @@ index 000000000000..3b0a880416c4
 +				s4 {
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <1800000>;
++					regulator-allow-set-load;
++					regulator-system-load = <325000>;
 +				};
 +
 +				s5 {
@@ -340,8 +160,8 @@ index 000000000000..3b0a880416c4
 +				};
 +
 +				l3 {
-+					regulator-min-microvolt = <1100000>;
-+					regulator-max-microvolt = <1100000>;
++					regulator-min-microvolt = <1200000>;
++					regulator-max-microvolt = <1200000>;
 +				};
 +
 +				l4 {
@@ -350,8 +170,7 @@ index 000000000000..3b0a880416c4
 +				};
 +
 +				l5 {
-+					/* Unused */
-+					status = "disabled";
++					/* TODO */
 +				};
 +
 +				l6 {
@@ -360,8 +179,7 @@ index 000000000000..3b0a880416c4
 +				};
 +
 +				l7 {
-+					/* Unused */
-+					status = "disabled";
++					/* TODO */
 +				};
 +
 +				l8 {
@@ -377,52 +195,76 @@ index 000000000000..3b0a880416c4
 +				l10 {
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <1800000>;
++					qcom,init-voltage = <1800000>;
 +				};
 +
 +				l11 {
 +					regulator-min-microvolt = <1200000>;
 +					regulator-max-microvolt = <1200000>;
++					qcom,init-voltage = <1200000>;
 +				};
 +
 +				l12 {
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <1800000>;
++					qcom,init-voltage = <1800000>;
++					proxy-supply = <&pm8994_l12>;
++					qcom,proxy-consumer-enable;
++					qcom,proxy-consumer-current = <10000>;
++					status = "okay";
 +				};
 +
 +				l13 {
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <2950000>;
++					qcom,init-voltage = <2950000>;
++					status = "okay";
 +				};
 +
 +				l14 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
++					regulator-min-microvolt = <1200000>;
++					regulator-max-microvolt = <1200000>;
++					qcom,init-voltage = <1200000>;
++					proxy-supply = <&pm8994_l14>;
++					qcom,proxy-consumer-enable;
++					qcom,proxy-consumer-current = <10000>;
++					status = "okay";
 +				};
 +
 +				l15 {
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <1800000>;
++					qcom,init-voltage = <1800000>;
++					status = "okay";
 +				};
 +
 +				l16 {
 +					regulator-min-microvolt = <2700000>;
 +					regulator-max-microvolt = <2700000>;
++					qcom,init-voltage = <2700000>;
++					status = "okay";
 +				};
 +
 +				l17 {
-+					regulator-min-microvolt = <2200000>;
-+					regulator-max-microvolt = <2200000>;
++					regulator-min-microvolt = <2700000>;
++					regulator-max-microvolt = <2700000>;
++					qcom,init-voltage = <2700000>;
++					status = "okay";
 +				};
 +
 +				l18 {
-+					regulator-min-microvolt = <2850000>;
-+					regulator-max-microvolt = <2850000>;
++					regulator-min-microvolt = <3000000>;
++					regulator-max-microvolt = <3000000>;
 +					regulator-always-on;
++					qcom,init-voltage = <3000000>;
++					qcom,init-ldo-mode = <1>;
 +				};
 +
 +				l19 {
-+					regulator-min-microvolt = <2850000>;
-+					regulator-max-microvolt = <2850000>;
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
++					qcom,init-voltage = <1800000>;
++					status = "okay";
 +				};
 +
 +				l20 {
@@ -430,102 +272,369 @@ index 000000000000..3b0a880416c4
 +					regulator-max-microvolt = <2950000>;
 +					regulator-always-on;
 +					regulator-boot-on;
++					regulator-allow-set-load;
++					regulator-system-load = <570000>;
 +				};
 +
 +				l21 {
-+					regulator-min-microvolt = <2950000>;
-+					regulator-max-microvolt = <2950000>;
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
 +					regulator-always-on;
++					qcom,init-voltage = <1800000>;
 +				};
 +
 +				l22 {
-+					regulator-min-microvolt = <3000000>;
-+					regulator-max-microvolt = <3000000>;
++					regulator-min-microvolt = <3100000>;
++					regulator-max-microvolt = <3100000>;
++					qcom,init-voltage = <3100000>;
 +				};
 +
 +				l23 {
 +					regulator-min-microvolt = <2800000>;
 +					regulator-max-microvolt = <2800000>;
++					qcom,init-voltage = <2800000>;
 +				};
 +
 +				l24 {
 +					regulator-min-microvolt = <3075000>;
 +					regulator-max-microvolt = <3150000>;
++					qcom,init-voltage = <3075000>;
 +				};
 +
 +				l25 {
-+					regulator-min-microvolt = <1000000>;
-+					regulator-max-microvolt = <1000000>;
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
++					qcom,init-voltage = <1800000>;
 +				};
 +
 +				l26 {
++					/* TODO: value from downstream
 +					regulator-min-microvolt = <987500>;
-+					regulator-max-microvolt = <987500>;
++					fails to apply */
 +				};
 +
 +				l27 {
-+					regulator-min-microvolt = <1200000>;
-+					regulator-max-microvolt = <1200000>;
++					regulator-min-microvolt = <1050000>;
++					regulator-max-microvolt = <1050000>;
++					qcom,init-voltage = <1050000>;
 +				};
 +
 +				l28 {
 +					regulator-min-microvolt = <1000000>;
 +					regulator-max-microvolt = <1000000>;
++					qcom,init-voltage = <1000000>;
++					proxy-supply = <&pm8994_l28>;
++					qcom,proxy-consumer-enable;
++					qcom,proxy-consumer-current = <10000>;
 +				};
 +
 +				l29 {
-+					regulator-min-microvolt = <2700000>;
-+					regulator-max-microvolt = <2700000>;
++					/* TODO: Unsupported voltage range.
++					regulator-min-microvolt = <2800000>;
++					regulator-max-microvolt = <2800000>;
++					qcom,init-voltage = <2800000>;
++					*/
 +				};
 +
 +				l30 {
++					/* TODO: get this verified
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <1800000>;
++					qcom,init-voltage = <1800000>;
++					*/
 +				};
 +
 +				l31 {
-+					regulator-min-microvolt = <1200000>;
-+					regulator-max-microvolt = <1200000>;
-+					regulator-boot-on;
++					regulator-min-microvolt = <1262500>;
++					regulator-max-microvolt = <1262500>;
++					qcom,init-voltage = <1262500>;
 +				};
 +
 +				l32 {
++					/* TODO: get this verified
 +					regulator-min-microvolt = <1800000>;
 +					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				lvs1 {
-+					/* Downstream sets it to enabled but
-+					doesn't specify a voltage range */
-+					status = "okay";
-+				};
-+
-+				lvs2 {
-+					/* Downstream sets it to enabled but
-+					doesn't specify a voltage range */
-+					status = "okay";
-+				};
-+			};
-+			pmi8994-regulators {
-+				s1 {
-+					regulator-min-microvolt = <1025000>;
-+					regulator-max-microvolt = <1025000>;
-+				};
-+
-+				s2 {
-+					/* Unused */
-+					status = "disabled";
-+				};
-+
-+				boost-bypass {
-+					regulator-min-microvolt = <3150000>;
-+					regulator-max-microvolt = <3600000>;
++					qcom,init-voltage = <1800000>;
++					*/
 +				};
 +			};
 +		};
 +	};
 +};
-\ No newline at end of file
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi b/arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi
+deleted file mode 100644
+index 31e3eb6ab515..000000000000
+--- a/arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi
++++ /dev/null
+@@ -1,268 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/* Copyright (c) 2015, LGE Inc. All rights reserved.
+- * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+- */
+-
+-&smd_rpm {
+-	rpm {
+-		rpm_requests {
+-			pm8994-regulators {
+-
+-				vdd_l1-supply = <&pm8994_s1>;
+-				vdd_l2_26_28-supply = <&pm8994_s3>;
+-				vdd_l3_11-supply = <&pm8994_s3>;
+-				vdd_l4_27_31-supply = <&pm8994_s3>;
+-				vdd_l5_7-supply = <&pm8994_s3>;
+-				vdd_l6_12_32-supply = <&pm8994_s5>;
+-				vdd_l8_16_30-supply = <&vreg_vph_pwr>;
+-				vdd_l9_10_18_22-supply = <&vreg_vph_pwr>;
+-				vdd_l13_19_23_24-supply = <&vreg_vph_pwr>;
+-				vdd_l14_15-supply = <&pm8994_s5>;
+-				vdd_l17_29-supply = <&vreg_vph_pwr>;
+-				vdd_l20_21-supply = <&vreg_vph_pwr>;
+-				vdd_l25-supply = <&pm8994_s5>;
+-				vdd_lvs1_2 = <&pm8994_s4>;
+-
+-				s1 {
+-					regulator-min-microvolt = <800000>;
+-					regulator-max-microvolt = <800000>;
+-				};
+-
+-				s2 {
+-					/* TODO */
+-				};
+-
+-				s3 {
+-					regulator-min-microvolt = <1300000>;
+-					regulator-max-microvolt = <1300000>;
+-				};
+-
+-				s4 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					regulator-allow-set-load;
+-					regulator-system-load = <325000>;
+-				};
+-
+-				s5 {
+-					regulator-min-microvolt = <2150000>;
+-					regulator-max-microvolt = <2150000>;
+-				};
+-
+-				s7 {
+-					regulator-min-microvolt = <1000000>;
+-					regulator-max-microvolt = <1000000>;
+-				};
+-
+-				l1 {
+-					regulator-min-microvolt = <1000000>;
+-					regulator-max-microvolt = <1000000>;
+-				};
+-
+-				l2 {
+-					regulator-min-microvolt = <1250000>;
+-					regulator-max-microvolt = <1250000>;
+-				};
+-
+-				l3 {
+-					regulator-min-microvolt = <1200000>;
+-					regulator-max-microvolt = <1200000>;
+-				};
+-
+-				l4 {
+-					regulator-min-microvolt = <1225000>;
+-					regulator-max-microvolt = <1225000>;
+-				};
+-
+-				l5 {
+-					/* TODO */
+-				};
+-
+-				l6 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-				};
+-
+-				l7 {
+-					/* TODO */
+-				};
+-
+-				l8 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-				};
+-
+-				l9 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-				};
+-
+-				l10 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-				};
+-
+-				l11 {
+-					regulator-min-microvolt = <1200000>;
+-					regulator-max-microvolt = <1200000>;
+-					qcom,init-voltage = <1200000>;
+-				};
+-
+-				l12 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-					proxy-supply = <&pm8994_l12>;
+-					qcom,proxy-consumer-enable;
+-					qcom,proxy-consumer-current = <10000>;
+-					status = "okay";
+-				};
+-
+-				l13 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <2950000>;
+-					qcom,init-voltage = <2950000>;
+-					status = "okay";
+-				};
+-
+-				l14 {
+-					regulator-min-microvolt = <1200000>;
+-					regulator-max-microvolt = <1200000>;
+-					qcom,init-voltage = <1200000>;
+-					proxy-supply = <&pm8994_l14>;
+-					qcom,proxy-consumer-enable;
+-					qcom,proxy-consumer-current = <10000>;
+-					status = "okay";
+-				};
+-
+-				l15 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-					status = "okay";
+-				};
+-
+-				l16 {
+-					regulator-min-microvolt = <2700000>;
+-					regulator-max-microvolt = <2700000>;
+-					qcom,init-voltage = <2700000>;
+-					status = "okay";
+-				};
+-
+-				l17 {
+-					regulator-min-microvolt = <2700000>;
+-					regulator-max-microvolt = <2700000>;
+-					qcom,init-voltage = <2700000>;
+-					status = "okay";
+-				};
+-
+-				l18 {
+-					regulator-min-microvolt = <3000000>;
+-					regulator-max-microvolt = <3000000>;
+-					regulator-always-on;
+-					qcom,init-voltage = <3000000>;
+-					qcom,init-ldo-mode = <1>;
+-				};
+-
+-				l19 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-					status = "okay";
+-				};
+-
+-				l20 {
+-					regulator-min-microvolt = <2950000>;
+-					regulator-max-microvolt = <2950000>;
+-					regulator-always-on;
+-					regulator-boot-on;
+-					regulator-allow-set-load;
+-					regulator-system-load = <570000>;
+-				};
+-
+-				l21 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					regulator-always-on;
+-					qcom,init-voltage = <1800000>;
+-				};
+-
+-				l22 {
+-					regulator-min-microvolt = <3100000>;
+-					regulator-max-microvolt = <3100000>;
+-					qcom,init-voltage = <3100000>;
+-				};
+-
+-				l23 {
+-					regulator-min-microvolt = <2800000>;
+-					regulator-max-microvolt = <2800000>;
+-					qcom,init-voltage = <2800000>;
+-				};
+-
+-				l24 {
+-					regulator-min-microvolt = <3075000>;
+-					regulator-max-microvolt = <3150000>;
+-					qcom,init-voltage = <3075000>;
+-				};
+-
+-				l25 {
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-				};
+-
+-				l26 {
+-					/* TODO: value from downstream
+-					regulator-min-microvolt = <987500>;
+-					fails to apply */
+-				};
+-
+-				l27 {
+-					regulator-min-microvolt = <1050000>;
+-					regulator-max-microvolt = <1050000>;
+-					qcom,init-voltage = <1050000>;
+-				};
+-
+-				l28 {
+-					regulator-min-microvolt = <1000000>;
+-					regulator-max-microvolt = <1000000>;
+-					qcom,init-voltage = <1000000>;
+-					proxy-supply = <&pm8994_l28>;
+-					qcom,proxy-consumer-enable;
+-					qcom,proxy-consumer-current = <10000>;
+-				};
+-
+-				l29 {
+-					/* TODO: Unsupported voltage range.
+-					regulator-min-microvolt = <2800000>;
+-					regulator-max-microvolt = <2800000>;
+-					qcom,init-voltage = <2800000>;
+-					*/
+-				};
+-
+-				l30 {
+-					/* TODO: get this verified
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-					*/
+-				};
+-
+-				l31 {
+-					regulator-min-microvolt = <1262500>;
+-					regulator-max-microvolt = <1262500>;
+-					qcom,init-voltage = <1262500>;
+-				};
+-
+-				l32 {
+-					/* TODO: get this verified
+-					regulator-min-microvolt = <1800000>;
+-					regulator-max-microvolt = <1800000>;
+-					qcom,init-voltage = <1800000>;
+-					*/
+-				};
+-			};
+-		};
+-	};
+-};
 -- 
 2.27.0
 
