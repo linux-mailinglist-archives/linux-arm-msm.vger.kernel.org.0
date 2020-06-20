@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB11C202468
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 16:50:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73F87202465
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 16:50:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728377AbgFTOs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1728382AbgFTOs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 20 Jun 2020 10:48:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48554 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728336AbgFTOsU (ORCPT
+        with ESMTP id S1728348AbgFTOsZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Jun 2020 10:48:20 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DB92C06174E;
-        Sat, 20 Jun 2020 07:48:19 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id f185so11596445wmf.3;
-        Sat, 20 Jun 2020 07:48:19 -0700 (PDT)
+        Sat, 20 Jun 2020 10:48:25 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACD7C0613EE;
+        Sat, 20 Jun 2020 07:48:25 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id l11so12380599wru.0;
+        Sat, 20 Jun 2020 07:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PSLEOK9fPCw4hWzP+JVNPy4yvTUndH25kPo0XCKTFOs=;
-        b=L2MDQZW+LoBYVV+Jw08MZmX0aVHmdOCK6+wvfPeW+mfKVs1Fa4J59aLNI8nl4x9ZeU
-         RDd+6J40MwgbvaaD3Op/Yb1VnTTHt814DHZbB4u07+KR+Co7S6f9ivm6cisy5qK+W/c3
-         OTuOZGfRB5qSfSRHk4gjvCWPDhlN7mBeYUc/kwYKXF3JmabOfAXnRr1R5i7Ji+dzlz4Q
-         PT8U5LRDclMrpOjqoIsRndHk+RaC+2MAxA2NH9TDAL5bk+tgaNej5H4DKlk0wz/WbQfK
-         j6F+/fzpcLGik2U7z53r8qbFbqm1Wyqo2I5hXPjJja4/x5wGGjNacBLF5Fjb5nbYnC9O
-         TKZA==
+        bh=p7Zl7lqrThNKdsqg3QbPFVZu6d1ST335CM8NkSqvRSU=;
+        b=LIeBcIrJ3ecmKXNYIeszQaZlRVNNTxuJ418s85/jubTj/u6h9YLE2j2TddBJ4/ZYTj
+         GaajqqoyzoJex+Tk+BAIrai+LxbgmjrZa4T+1PnJQTF1E6011BOqUnWhA/SzBXTz7kn7
+         +3RdTGEwZb4P2qCYbCbnKLrtcQvIltU+U6eulxE2H4IA91v3lWjQaps0dJfpVAuYFK1E
+         KkzOlY6PraOAmYlZqSkiZtWQ4SOZ1N2apP0Gd92d8h4+ukVMDpTyJqTegSGkhu91jl0x
+         I1qIHx8FgvizAxg46XsilMnEbEeQYkuP+YLp+7n9z5ro4KRAakKM8UPpKuSAfFIg65Wl
+         5ghQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PSLEOK9fPCw4hWzP+JVNPy4yvTUndH25kPo0XCKTFOs=;
-        b=Tlt8w3pEchmKGt6D5zA9y1yGt241NEBy+gJ8eTOn9TlD5SJKXlLp5eIPlFA9ZTYnNP
-         1QARpCkc72JaxhuI9hUin3MzGtL6o9bNcoN3WBaxR+iL0pHH32ZE7caFmgFwMd3HEGlf
-         lP93rGjGBMxFY95groRYubf00/YgRa+68W8CStrD8XYmhlboq2VYP0J5cgRePTqOnwMY
-         BOxfP1+TKS3UEcm4GA20N6rgKgUb4HfvjP1NSfUvsOPxhMbrTPizEcba+AjhK7VeWkeQ
-         LrpXsCrbSQRq47eMEOYBo17BGUvAjGSaWSzABMFnK7CoXqarwtDM7OiRKgoaZhkhPzRu
-         abcA==
-X-Gm-Message-State: AOAM530ENBi5J/aL0c69Q4DFfaveBYcYJ5r3l7lhRHJZE5FOfNoIIVY3
-        PwVtGH9pJ0sWQvp8l1s7eWY=
-X-Google-Smtp-Source: ABdhPJw0cCQKipE56GoSUjaEegp9czLgVsWprul1TCDgo9Xlzobxs+x+JKzDuSfVTnjh8Fuqno/MQQ==
-X-Received: by 2002:a05:600c:210:: with SMTP id 16mr9626715wmi.185.1592664498431;
-        Sat, 20 Jun 2020 07:48:18 -0700 (PDT)
+        bh=p7Zl7lqrThNKdsqg3QbPFVZu6d1ST335CM8NkSqvRSU=;
+        b=hQB8udHy1RR5cxK0u47j/08mLO26X4spqDR5lb6e8DGQMh9nF01uMMtq/ypxMKSD/h
+         cq6ewcvjqcB+s9kJXC8RwIrLr0cjwpe9lWi4sphtOTf+/K3vjczPXq5dh11pnk+sArNo
+         rYeWGcO+ngoxMaX9PLmZgVywdbC9SWBK8BSGnoWpQWoM6lAFefcMskE0ANeNZKgeappE
+         9P9PUZFk8KAxQvLkFuT2sxiMwO/0rRdYPU+gzEWHSV6KytytW5iQl1CKpVWArpoYCGDk
+         Os0K5DfXKmia71LlJHE1QlOtqv81SqHOAEujXmZWoMHtkrU/K1bTPCP7wmykZuzSUoR4
+         Ir/Q==
+X-Gm-Message-State: AOAM533UjsK+8d2fWv/AnFiy4T2HT83eWMbLKXCn4C4AKZfMW3BkoEM9
+        3N/v1uakqvwGDS9dzbaPpKY=
+X-Google-Smtp-Source: ABdhPJw1WAcTW3meA7eqByw3FB5W2Ahyf/5p/55ugLQgziZCG2Q2KAKToi6OI5m21LQPLucdThBjnQ==
+X-Received: by 2002:adf:e4cc:: with SMTP id v12mr9114825wrm.183.1592664501803;
+        Sat, 20 Jun 2020 07:48:21 -0700 (PDT)
 Received: from localhost.localdomain (abae138.neoplus.adsl.tpnet.pl. [83.6.168.138])
-        by smtp.googlemail.com with ESMTPSA id 63sm11928379wra.86.2020.06.20.07.48.16
+        by smtp.googlemail.com with ESMTPSA id 63sm11928379wra.86.2020.06.20.07.48.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2020 07:48:18 -0700 (PDT)
+        Sat, 20 Jun 2020 07:48:21 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
@@ -64,9 +64,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 08/21] arm64: dts: qcom: msm8994: Add pmu node
-Date:   Sat, 20 Jun 2020 16:46:24 +0200
-Message-Id: <20200620144639.335093-9-konradybcio@gmail.com>
+Subject: [PATCH 09/21] arm64: dts: qcom: msm8994: Add PSCI node
+Date:   Sat, 20 Jun 2020 16:46:25 +0200
+Message-Id: <20200620144639.335093-10-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200620144639.335093-1-konradybcio@gmail.com>
 References: <20200620144639.335093-1-konradybcio@gmail.com>
@@ -77,7 +77,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the CPU PMU to get perf support for hardware events.
+Add PSCI node to enable multi-processor startup.
+
+Note that not every 8994 device firmware supports PSCI,
+and even if, then it can only start the cores and not
+shut them down.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
@@ -85,16 +89,16 @@ Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
  1 file changed, 5 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 8853559f755d..adb1ebd15667 100644
+index adb1ebd15667..076da1fc52a1 100644
 --- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -282,6 +282,11 @@ memory {
- 		reg = <0 0 0 0>;
+@@ -287,6 +287,11 @@ pmu {
+ 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4)| IRQ_TYPE_LEVEL_HIGH)>;
  	};
  
-+	pmu {
-+		compatible = "arm,cortex-a53-pmu";
-+		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4)| IRQ_TYPE_LEVEL_HIGH)>;
++	psci {
++		compatible = "arm,psci-0.2";
++		method = "hvc";
 +	};
 +
  	clocks {
