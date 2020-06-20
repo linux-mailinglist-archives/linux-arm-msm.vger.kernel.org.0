@@ -2,72 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97BAF20232D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 12:26:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66F6B20243D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 16:45:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727944AbgFTK0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Jun 2020 06:26:46 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191]:6296 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727861AbgFTK0o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Jun 2020 06:26:44 -0400
-Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id 9CEED5468307C131E412;
-        Sat, 20 Jun 2020 18:26:41 +0800 (CST)
-Received: from [10.173.222.27] (10.173.222.27) by
- DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
- 14.3.487.0; Sat, 20 Jun 2020 18:26:31 +0800
-Subject: Re: [PATCH] drm/msm/dpu: Fix usage of ERR_PTR()
-To:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-CC:     <robdclark@gmail.com>, <sean@poorly.run>, <airlied@linux.ie>,
-        <daniel@ffwll.ch>, <jsanka@codeaurora.org>,
-        <wanghaibin.wang@huawei.com>
-References: <20200528130816.1670-1-yuzenghui@huawei.com>
-From:   Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <f1357380-9e98-4c1e-c1bf-a0a95bb5910d@huawei.com>
-Date:   Sat, 20 Jun 2020 18:26:30 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1728249AbgFTOoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Jun 2020 10:44:54 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:58385 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728210AbgFTOov (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 20 Jun 2020 10:44:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592664290; h=Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
+ To: From: Sender; bh=Z5Q7QuSRV0AlAio71S0FB6kALc6xp3I4DkvvHs47BtU=; b=rmwX1xLIe3ECo4b5bvCfbl6Qju6jzcoVBIBGNwBheWyGfPtzzK/2YNqSFuOUce0QtH6m6hIu
+ vX/YOLW21XRfN8rfKD56y+CeTAYNaJql6k40BqRo82fRL38pB3SL3CCJ0cPhGtNHguC/Pe2L
+ NrFc+QrDsfYgPy0dna4iZI7DxWE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
+ 5eee20e1356bcc26ab67d05b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 20 Jun 2020 14:44:49
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D697DC43387; Sat, 20 Jun 2020 14:44:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from Pillair (unknown [183.83.71.149])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3E189C433C9;
+        Sat, 20 Jun 2020 14:44:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3E189C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
+From:   "Rakesh Pillai" <pillair@codeaurora.org>
+To:     "'Evan Green'" <evgreen@chromium.org>,
+        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
+Cc:     "'open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS'" 
+        <devicetree@vger.kernel.org>,
+        "'linux-arm Mailing List'" <linux-arm-kernel@lists.infradead.org>,
+        "'LKML'" <linux-kernel@vger.kernel.org>,
+        "'linux-arm-msm'" <linux-arm-msm@vger.kernel.org>
+References: <1589946996-31264-1-git-send-email-pillair@codeaurora.org> <CAE=gft5pcHwK8yjObNSSH=U_B6Pz++bDaeUxZhPyJfG2E7LRAg@mail.gmail.com> <CAE=gft5So9Uk2UqRWs2zFO_iD+6ofMy97bKP4HpgM1Wu6Duxvw@mail.gmail.com>
+In-Reply-To: <CAE=gft5So9Uk2UqRWs2zFO_iD+6ofMy97bKP4HpgM1Wu6Duxvw@mail.gmail.com>
+Subject: RE: [PATCH v11] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
+Date:   Sat, 20 Jun 2020 20:14:43 +0530
+Message-ID: <000101d64711$587929c0$096b7d40$@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200528130816.1670-1-yuzenghui@huawei.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.173.222.27]
-X-CFilter-Loop: Reflected
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQG/PI1FMT9lT4wFnqoECWl87ZLpcgLOq7cUAp/L6tWo5DW1wA==
+Content-Language: en-us
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ping for this obvious fix...
+Hi Evan,
+All the dependent patches are already merged.
 
-On 2020/5/28 21:08, Zenghui Yu wrote:
-> ERR_PTR() is used in the kernel to encode an usual *negative* errno code
-> into a pointer.  Passing a positive value (ENOMEM) to it will break the
-> following IS_ERR() check.
+Thanks,
+Rakesh Pillai.
+
+> -----Original Message-----
+> From: Evan Green <evgreen@chromium.org>
+> Sent: Thursday, June 18, 2020 4:15 AM
+> To: Rakesh Pillai <pillair@codeaurora.org>; Bjorn Andersson
+> <bjorn.andersson@linaro.org>
+> Cc: open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
+> <devicetree@vger.kernel.org>; linux-arm Mailing List <linux-arm-
+> kernel@lists.infradead.org>; LKML <linux-kernel@vger.kernel.org>; linux-
+> arm-msm <linux-arm-msm@vger.kernel.org>
+> Subject: Re: [PATCH v11] arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> module device node
 > 
-> Though memory allocation is unlikely to fail, it's still worth fixing.
-> And grepping shows that this is the only misuse of ERR_PTR() in kernel.
+> On Thu, May 21, 2020 at 9:19 AM Evan Green <evgreen@chromium.org>
+> wrote:
+> >
+> > On Tue, May 19, 2020 at 8:57 PM Rakesh Pillai <pillair@codeaurora.org>
+> wrote:
+> > >
+> > > Add device node for the ath10k SNOC platform driver probe
+> > > and add resources required for WCN3990 on sc7180 soc.
+> > >
+> > > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> >
+> > Reviewed-by: Evan Green <evgreen@chromium.org>
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index a1b79ee2bd9d..a2f6b688a976 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -2173,7 +2173,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
->   
->   	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
->   	if (!dpu_enc)
-> -		return ERR_PTR(ENOMEM);
-> +		return ERR_PTR(-ENOMEM);
->   
->   	rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
->   			drm_enc_mode, NULL);
-> 
+> Looks like this never landed anywhere. Is it blocked on something?
+> -Evan
+
