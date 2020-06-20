@@ -2,126 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 375582024F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 17:57:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ABFD20253C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2020 18:27:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727798AbgFTP50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Jun 2020 11:57:26 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:64287 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726139AbgFTP5Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Jun 2020 11:57:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592668643; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=BBBfKMGR+gMiO9YhDRvlSioav0U5MzKSOOLtx2cvzQY=; b=m7BTTvjs6NO7Slpc0erHCTcZlbjRV8uuYpCg6s0e6EHqvygs7uLAcuXLD/0oeyIP3XYD5PSS
- 2uYPJzMU78ku39k0vvJOWRbztBlurByzsF7djZSE9NaBQivTrXyV6yeUa0bcnUmKT7iZ2IhY
- IuJRWD4S6gBenEqV+aBj2SshwFY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5eee31e286de6ccd448be34b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 20 Jun 2020 15:57:22
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 17EA0C433CA; Sat, 20 Jun 2020 15:57:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pillair-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2C032C433C8;
-        Sat, 20 Jun 2020 15:57:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2C032C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     devicetree@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        dianders@chromium.org, evgreen@chromium.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v12] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node
-Date:   Sat, 20 Jun 2020 21:27:15 +0530
-Message-Id: <1592668635-10894-1-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1727871AbgFTQ13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Jun 2020 12:27:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35502 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726976AbgFTQ13 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 20 Jun 2020 12:27:29 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A731C06174E;
+        Sat, 20 Jun 2020 09:27:29 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id m21so10150700eds.13;
+        Sat, 20 Jun 2020 09:27:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/BMMpD7qtU5pkOn7Z4pc22pm3d3A2SjW9M7WNCHeAiY=;
+        b=QVIIupKxa71Or8M1ClPfavFaWT0DeX7jreTr2LyxDbUbYAeTT4y0fkSdjacNshjutr
+         BeMoZok/aRl/E36YP4z8utRYnCpQeJ5Aosyto1cXGGEwZB9Gra6J+qWzl386BId7q3Kb
+         8zIuaryYutyw+jQVByn0gym1OPyOV3sBKxcJyokF47KHEjiSyBh68bw3mluJMNUxiviE
+         l2IIgYY1n6WTEeHI9b0DBJl/ZMaQPepwgGW+9b4jLj3L9tvm3gZwBORH5uWTbppWk5Vy
+         fg8a4rck24+F1awR4f3zwPG04llDWfBqgeOfpU4yIasIHqci9y8XaLPxj/eXRtObYhOw
+         GO5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/BMMpD7qtU5pkOn7Z4pc22pm3d3A2SjW9M7WNCHeAiY=;
+        b=byhBf2i3HQB11iFD1Ehd64JruTwni738Y8id1NWsU6SfoumLnQFZdOhoe3Ovs8vrCA
+         saHfJrXHFR/rIuDHfsbqvPVEnuva4v0HJ97lysKfACPHSus7IvlfoWNcIAmX3+5xH53/
+         nVp9jsLakGdQfgjBnm4gkf6P/G5nIP8nk9TWGVW9KFjr979bITpKw57jQKBHbFKybGTQ
+         LQfpQII14Wkj4/hDH/m3NbSQJXm8oGdUSo29WY1WCfISf8eHJIr65PiRwp9gbNMB6EbL
+         dBeBEaxdCDy4ji4y+eu9YItw1lUcYNqQ7Y4qehAKYJnpsYP6PgPoyzdwzW3l2lZbvACc
+         29IA==
+X-Gm-Message-State: AOAM530hgI0tXsUSXQSX8aHvz3ZX4ILf72kpjHz5WM6vrGKGbuoI2zvp
+        espR7NuaNKo1Hux8kLYc6VYGGvOxkKtL0CZKD6U=
+X-Google-Smtp-Source: ABdhPJypOsgdt+fPQZQTGg7oTELjjmivaxGQ2UlMWlYWToihFkcE5WrbmvWFN/dybafH1Uk8WYjOZIkXCWzA5J5yOUI=
+X-Received: by 2002:aa7:d952:: with SMTP id l18mr8585130eds.151.1592670447699;
+ Sat, 20 Jun 2020 09:27:27 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200528130816.1670-1-yuzenghui@huawei.com> <f1357380-9e98-4c1e-c1bf-a0a95bb5910d@huawei.com>
+In-Reply-To: <f1357380-9e98-4c1e-c1bf-a0a95bb5910d@huawei.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 20 Jun 2020 09:27:56 -0700
+Message-ID: <CAF6AEGun5DgsTzLRswxt2NRG9P+HVake0hQUKPR6czcNvc5LxQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: Fix usage of ERR_PTR()
+To:     Zenghui Yu <yuzenghui@huawei.com>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        wanghaibin.wang@huawei.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for the ath10k SNOC platform driver probe
-and add resources required for WCN3990 on sc7180 soc.
+On Sat, Jun 20, 2020 at 3:26 AM Zenghui Yu <yuzenghui@huawei.com> wrote:
+>
+> ping for this obvious fix...
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
----
-Changes from v11:
-- Add the optional regulator votes which are needed in case of SSR.
----
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 11 +++++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi    | 22 ++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+Hi, thanks, but there is already a similar fix in msm-next:
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 4e9149d..39dbfc8 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -389,6 +389,17 @@
- 	};
- };
- 
-+&wifi {
-+	status = "okay";
-+	vdd-0.8-cx-mx = <&vreg_l9a_0p6>;
-+	vdd-1.8-xo = <&vreg_l1c_1p8>;
-+	vdd-1.3-rfa = <&vreg_l2c_1p3>;
-+	vdd-3.3-ch0 = <&vreg_l10c_3p3>;
-+	wifi-firmware {
-+		iommus = <&apps_smmu 0xc2 0x1>;
-+	};
-+};
-+
- /* PINCTRL - additions to nodes defined in sc7180.dtsi */
- 
- &qspi_clk {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 31b9217..cd6d3b5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2814,6 +2814,28 @@
- 
- 			#freq-domain-cells = <1>;
- 		};
-+
-+		wifi: wifi@18800000 {
-+			compatible = "qcom,wcn3990-wifi";
-+			reg = <0 0x18800000 0 0x800000>;
-+			reg-names = "membase";
-+			iommus = <&apps_smmu 0xc0 0x1>;
-+			interrupts =
-+				<GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH /* CE0 */ >,
-+				<GIC_SPI 415 IRQ_TYPE_LEVEL_HIGH /* CE1 */ >,
-+				<GIC_SPI 416 IRQ_TYPE_LEVEL_HIGH /* CE2 */ >,
-+				<GIC_SPI 417 IRQ_TYPE_LEVEL_HIGH /* CE3 */ >,
-+				<GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH /* CE4 */ >,
-+				<GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH /* CE5 */ >,
-+				<GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH /* CE6 */ >,
-+				<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH /* CE7 */ >,
-+				<GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH /* CE8 */ >,
-+				<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH /* CE9 */ >,
-+				<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
-+				<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
-+			memory-region = <&wlan_mem>;
-+			status = "disabled";
-+		};
- 	};
- 
- 	thermal-zones {
--- 
-2.7.4
+commit aa472721c8dbe1713cf510f56ffbc56ae9e14247
+Refs: v5.7-rc5-33-gaa472721c8db
+Author:     Chen Tao <chentao107@huawei.com>
+AuthorDate: Mon Jun 8 09:48:59 2020 +0800
+Commit:     Rob Clark <robdclark@chromium.org>
+CommitDate: Thu Jun 11 20:07:21 2020 -0700
 
+    drm/msm/dpu: fix error return code in dpu_encoder_init
+
+    Fix to return negative error code -ENOMEM with the use of
+    ERR_PTR from dpu_encoder_init.
+
+    Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+    Signed-off-by: Chen Tao <chentao107@huawei.com>
+    Signed-off-by: Rob Clark <robdclark@chromium.org>
+
+
+BR,
+-R
+
+>
+> On 2020/5/28 21:08, Zenghui Yu wrote:
+> > ERR_PTR() is used in the kernel to encode an usual *negative* errno code
+> > into a pointer.  Passing a positive value (ENOMEM) to it will break the
+> > following IS_ERR() check.
+> >
+> > Though memory allocation is unlikely to fail, it's still worth fixing.
+> > And grepping shows that this is the only misuse of ERR_PTR() in kernel.
+> >
+> > Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> > Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > index a1b79ee2bd9d..a2f6b688a976 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -2173,7 +2173,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+> >
+> >       dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
+> >       if (!dpu_enc)
+> > -             return ERR_PTR(ENOMEM);
+> > +             return ERR_PTR(-ENOMEM);
+> >
+> >       rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
+> >                       drm_enc_mode, NULL);
+> >
