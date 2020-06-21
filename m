@@ -2,154 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26E96202B9F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 18:50:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59475202BCC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 19:41:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730421AbgFUQuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Jun 2020 12:50:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730411AbgFUQuR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Jun 2020 12:50:17 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F420C061794;
-        Sun, 21 Jun 2020 09:50:17 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id n24so15499036ejd.0;
-        Sun, 21 Jun 2020 09:50:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8/oeYmT0gf/BQf5rhsOaYvoPP5ayrLP9PM0KP+IAgfg=;
-        b=WC/NqBMGWLqBQRZbzUo1d4ajwpofeyOODarATg8fVi1KkjU+anC7Pom0DeZCqPelxu
-         XrRcKDvuIBUgVs3cUzYJOC83XgFBC6pKZU8C34sw0ONUdCf4N/dnOWPj+oqhEuznsnKV
-         oZFMQCqtevhZdAGtoZVIBpcM1s77qdqWW5yxbGI7Bes0hQCUV5mUlIDKESpVEJ2u7QLF
-         mGeRJYH1uJNJIq0/VOje77BpxGIZU+rTJ40DdB6jFYppD/f4VRxhIceQHkGwFB83P/OI
-         TA2jMQDCisNagqz/E/xuwDfOlPtEHywOhE2n7JGq8Ttq2YqVjmiCafXBQEP609cC6L1q
-         espA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8/oeYmT0gf/BQf5rhsOaYvoPP5ayrLP9PM0KP+IAgfg=;
-        b=rlRnCOnFHfe8d1RJ/A5Fxw+3pxmpjT4lBwe+eQMnRzvOGAd8sla/cDTl/6aX3ZdQp0
-         FPT/PGKb72ax6GnNrkN9dmHIST/YqeonJzbmECFi1z9Yx+YjdDepMo8FZCd+g3m6A6ID
-         ocNQ6jXzGyu5ys+jPPWakoUqVnuShSnjKk78rHhKW8h664MDWhYzd6mLp/HCBkF0ebPf
-         dgHIEWHFbdaOX44i0dBLkJm6Z0g/sI8CFSZ0K9XY1paBU6FjIBFVlFiY8Sh6n3hcBQB+
-         d+vKZe6CN16yHphVegNsncv1UQKbWgvrP3i0knaKShvMeSYB9TxeAvEg9k7XQb2Otncs
-         nV4g==
-X-Gm-Message-State: AOAM532NuKj75uB0zJ2PpD7eQZxLzUlRCYw+dq7rFp4v7UVmK1ACGhv7
-        dM81Tb6KuMxhsYGvLtI9ic2oI40lFD6vkQDEJiw=
-X-Google-Smtp-Source: ABdhPJxSdA2O9bfRHd4FEkpgAkg0zBjCVSJMWG2BUWgw83KJC+QN/PKfGTm3H9P6BtV5cQTTx+7xynA2gzaW3NiUvAM=
-X-Received: by 2002:a17:906:856:: with SMTP id f22mr3072421ejd.245.1592758215478;
- Sun, 21 Jun 2020 09:50:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1586374414.git.asutoshd@codeaurora.org> <3c186284280c37c76cf77bf482dde725359b8a8a.1586382357.git.asutoshd@codeaurora.org>
- <CAF6AEGvgmfYoybv4XMVVH85fGMr-eDfpzxdzkFWCx-2N5PEw2w@mail.gmail.com>
- <SN6PR04MB46402FD7981F9FCA2111AB37FC960@SN6PR04MB4640.namprd04.prod.outlook.com>
- <20200621075539.GK128451@builder.lan>
-In-Reply-To: <20200621075539.GK128451@builder.lan>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 21 Jun 2020 09:50:43 -0700
-Message-ID: <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] scsi: ufs: add write booster feature support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Avri Altman <Avri.Altman@wdc.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        "cang@codeaurora.org" <cang@codeaurora.org>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
+        id S1730484AbgFURk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jun 2020 13:40:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52434 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730471AbgFURk7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 21 Jun 2020 13:40:59 -0400
+Received: from sol.hsd1.ca.comcast.net (c-107-3-166-239.hsd1.ca.comcast.net [107.3.166.239])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F1E01221F7;
+        Sun, 21 Jun 2020 17:40:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592761258;
+        bh=2WuP/skh00do2CBELmgP2BjUhfAXpwflm1XOnaq3gAc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ubwGYsHIoVgXlaRyoXcBBBLDHoHhq+XMSw6IxSxBbVfdgjC6ylw1+ID9Kw+JLG57F
+         5TRg/HoZebRmd7n5WGtAcoV/oHPJmCLoW8HIEzVHVtraklWcV6Pd5n0NddcClJHPPq
+         JBY8KSOHN2nuQr46R9jKMYxSftcL3BzB1fp12HYU=
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-fscrypt@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Subject: [PATCH v5 0/5] Inline crypto support on DragonBoard 845c
+Date:   Sun, 21 Jun 2020 10:37:08 -0700
+Message-Id: <20200621173713.132879-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 21, 2020 at 12:58 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Sun 21 Jun 00:40 PDT 2020, Avri Altman wrote:
->
-> >
-> > >
-> > > On Wed, Apr 8, 2020 at 3:00 PM Asutosh Das <asutoshd@codeaurora.org>
-> > > wrote:
-> > > >
-> > > > The write performance of TLC NAND is considerably
-> > > > lower than SLC NAND. Using SLC NAND as a WriteBooster
-> > > > Buffer enables the write request to be processed with
-> > > > lower latency and improves the overall write performance.
-> > > >
-> > > > Adds support for shared-buffer mode WriteBooster.
-> > > >
-> > > > WriteBooster enable: SW enables it when clocks are
-> > > > scaled up, thus it's enabled only in high load conditions.
-> > > >
-> > > > WriteBooster disable: SW will disable the feature,
-> > > > when clocks are scaled down. Thus writes would go as normal
-> > > > writes.
-> > >
-> > > btw, in v5.8-rc1 (plus handful of remaining patches for lenovo c630
-> > > laptop (sdm850)), I'm seeing a lot of:
-> > >
-> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_query_flag: Sending flag query for
-> > > idn 14 failed, err = 253
-> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_query_flag: Sending flag query for
-> > > idn 14 failed, err = 253
-> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_query_flag_retry: query attribute,
-> > > opcode 6, idn 14, failed with error 253 after 3 retires
-> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_wb_ctrl write booster enable failed 253
-> > >
-> > > and at least subjectively, compiling mesa seems slower, which seems
-> > > like it might be related?
-> > This looks like a device issue to be taken with the flash vendor:
->
-> There's no way for a end-user to file a bug report with the flash vendor
-> on a device bought from an OEM and even if they would accept the bug
-> report they wouldn't re-provision the flash in an shipped device.
->
-> So you will have to work around this in the driver.
+Hello,
 
-oh, ugg.. well I think these msgs from dmesg identify the part if we
-end up needing to use a denylist:
+This patchset implements UFS inline encryption support on the
+DragonBoard 845c, using the Qualcomm Inline Crypto Engine (ICE)
+that's present on the Snapdragon 845 SoC.
 
-scsi 0:0:0:49488: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-scsi 0:0:0:49476: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-scsi 0:0:0:49456: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-scsi 0:0:0:0: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-scsi 0:0:0:1: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-sd 0:0:0:0: [sda] 29765632 4096-byte logical blocks: (122 GB/114 GiB)
-sd 0:0:0:0: [sda] Write Protect is off
-sd 0:0:0:0: [sda] Mode Sense: 00 32 00 10
-sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports
-DPO and FUA
-sd 0:0:0:0: [sda] Optimal transfer size 786432 bytes
-scsi 0:0:0:2: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-scsi 0:0:0:3: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
+This is based on top of the patchset
+"[PATCH v2 0/3] Inline Encryption support for UFS" by Satya Tangirala.
+Link: https://lkml.kernel.org/r/20200618024736.97207-1-satyat@google.com
 
+Most of the logic needed to use ICE is already handled by the blk-crypto
+framework (introduced in v5.8-rc1) and by ufshcd-crypto
+(the above patchset).  This new patchset just adds the vendor-specific
+parts.  I also only implemented support for version 3 of the ICE
+hardware, which seems to be easier to use than older versions.
 
-(otoh I guess the driver could just notice that writeboost keeps
-failing and stop trying to use it)
+Due to these factors and others, I was able to greatly simplify the
+driver from the vendor's original.  It works fine in testing with
+fscrypt and with a blk-crypto self-test I'm also working on.
 
-BR,
--R
+This driver also works on several other Snapdragon SoCs.
+See the commit messages for details.
 
+This patchset is also available in git at:
+    Repo: https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+    Tag: db845c-crypto-v5
 
-> Regards,
-> Bjorn
->
-> > The device reports that it supports wd, but returns inalid idn for flag 0xe...
-> >
-> > Thanks,
-> > Avri
+Changed v4 => v5:
+    - Rebased onto v5.8-rc1 + the latest ufshcd-crypto patchset.
+    - Refer to the ICE registers by name rather than by index.
+    - Added Tested-by and Acked-by tags.
+
+Changed v3 => v4:
+    - Rebased onto the v12 inline encryption patchset.
+    - A couple small cleanups.
+
+Changed v2 => v3:
+    - Rebased onto the v8 inline encryption patchset.  Now the driver
+      has to opt into inline crypto support rather than opting out.
+    - Switched qcom_scm_ice_set_key() to use dma_alloc_coherent()
+      so that we can reliably zeroing the key without assuming that
+      bounce buffers aren't used.  Also added a comment.
+    - Made the key_size and data_unit_size arguments to
+      qcom_scm_ice_set_key() be 'u32' instead of 'int'.
+
+Changed v1 => v2:
+    - Rebased onto the v7 inline encryption patchset.
+    - Account for all the recent qcom_scm changes.
+    - Don't ignore errors from ->program_key().
+    - Don't dereference NULL hba->vops.
+    - Dropped the patch that added UFSHCD_QUIRK_BROKEN_CRYPTO, as this
+      flag is now included in the main inline encryption patchset.
+    - Many other cleanups.
+
+Eric Biggers (5):
+  firmware: qcom_scm: Add support for programming inline crypto keys
+  scsi: ufs-qcom: name the dev_ref_clk_ctrl registers
+  arm64: dts: sdm845: add Inline Crypto Engine registers and clock
+  scsi: ufs: add program_key() variant op
+  scsi: ufs-qcom: add Inline Crypto Engine support
+
+ MAINTAINERS                          |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |  13 +-
+ drivers/firmware/qcom_scm.c          | 101 +++++++++++
+ drivers/firmware/qcom_scm.h          |   4 +
+ drivers/scsi/ufs/Kconfig             |   1 +
+ drivers/scsi/ufs/Makefile            |   4 +-
+ drivers/scsi/ufs/ufs-qcom-ice.c      | 245 +++++++++++++++++++++++++++
+ drivers/scsi/ufs/ufs-qcom.c          |  15 +-
+ drivers/scsi/ufs/ufs-qcom.h          |  27 +++
+ drivers/scsi/ufs/ufshcd-crypto.c     |  27 +--
+ drivers/scsi/ufs/ufshcd.h            |   3 +
+ include/linux/qcom_scm.h             |  19 +++
+ 12 files changed, 443 insertions(+), 18 deletions(-)
+ create mode 100644 drivers/scsi/ufs/ufs-qcom-ice.c
+
+-- 
+2.27.0
+
