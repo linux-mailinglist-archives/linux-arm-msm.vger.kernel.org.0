@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1106A202C13
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 20:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D44E6202C18
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 21:06:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730287AbgFUS4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Jun 2020 14:56:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45708 "EHLO
+        id S1729783AbgFUTGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jun 2020 15:06:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729783AbgFUS4Q (ORCPT
+        with ESMTP id S1728649AbgFUTGE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Jun 2020 14:56:16 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDA3C061795
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 11:56:16 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id x202so13666754oix.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 11:56:16 -0700 (PDT)
+        Sun, 21 Jun 2020 15:06:04 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4540AC061794
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 12:06:04 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id x202so13681569oix.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 12:06:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2r26ZQAdN4GoklsV0xP0YFMPJK7NXM2OoxqIwBxLXXY=;
-        b=gcJLlUlDkgfAiQ/+U9NJZYMVurjS7cq2M6Xvu50NY4nRFAfTXaZH69BBNPaFdW9pC6
-         YTFCjDkHCGdPe7aBgsdXwfxDLlv/kX2WjBwkMWnaXxxK4tbwAsa7wozF/j14dhtIxnVA
-         sJmS/JhJcnf9p1c+6uESIm9VNVdmlXlMTWUR86Fc4mAJkpXyn1+8HEVRUDIhVoLB0hfH
-         8CJ1z8eXMrakjBAZqoaLFuD/A0nl8sOVpILVyFMO/1j5Y9VikIZyuywcT/OxmGgY6LFW
-         Wx9c+Sh/A73cGUMMUGSTIFY4+Y6s8cEKQ8Cl9DjfVNp/3Qb5z+mvhinmNLyaJKknR5vW
-         IpkQ==
+        bh=o53PdA9uPCJnfRH0bPZtJEfl2g77G3rHoAKUfp/7kUo=;
+        b=Uv29zYAVX0tqPL1HplFFe7dbL1EPjMyH4TJF2szni+U9GYruN0WuhWks/JS+IaTOH+
+         CX+scc33/HczNRmVNRG8B9PISC+uFAmv6rivLOFuC7xQTtUUW5+IqrduxfQfTdDSUFOt
+         r1+DA9dE6yIDNaBieTpNekHldFWe2JansxxSJPdROdjFbXTIjIWy001OEyZncJrWfu+w
+         miwX4BzeePlx8QJfSbSakQnr3D3N1BPzSM/zQ1rckuVi+LEz8Sxbn4oC8MDopTlk0Dth
+         9d5E3qusi3Zj8KoxRug/my8K35mpTuMrrbgQGb5z9i8+XhpthdE2k9EUGa3A5TE4nzZz
+         5hSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2r26ZQAdN4GoklsV0xP0YFMPJK7NXM2OoxqIwBxLXXY=;
-        b=rLKtoP5H7B7TKS4vLrz3O4zeOFUYTvV9wR/b03GkG6dxYo7MSK6BUhdpeuFIDLnpa3
-         lBdHvjAJ8+/MCNJ3GGdSLUUP9Ticj381JJasJNSlUfjAfZS2mybImB5yhe1l+XvTyok7
-         NsT4RZuZL6f558VRnF9qx15Sk8Ima8GFX4GXE0F+dlbCbdlcH/OhgTWbYgRJI/XUeuBq
-         obGGdayICGfX6HtJkzbe7mKhVCYTYFYHg3O7oBB+0Oirs8UlfWsOtLJwlZc9C+aIgKzC
-         4lRzXeLNaS/IO0cwxoRezNfGsQrGV1624hftti9EVolYW8OWso7cYCyigmykYHoJGU7B
-         ArYg==
-X-Gm-Message-State: AOAM532q7Qc5f1YKz4a/imsaFdPgkMCRJQ+Z809nD5kSffwWyZlGNcjS
-        gwbx+eAdFZCNEs873aC2HhcbRGzmdU5GqZyHKQrdZg==
-X-Google-Smtp-Source: ABdhPJyyjnHIxIz912lNk3b1yarc1xc9PkqtEyaXn3fCVH8+hjOgMIgybWwGJuyKC3uNZhkgm5f3A3RrFB6xEuoHrxQ=
-X-Received: by 2002:a54:4399:: with SMTP id u25mr10581982oiv.177.1592765775327;
- Sun, 21 Jun 2020 11:56:15 -0700 (PDT)
+        bh=o53PdA9uPCJnfRH0bPZtJEfl2g77G3rHoAKUfp/7kUo=;
+        b=leV4JQnRFcalnJFCXy+uxpHcqKJ5v1XU8tB6oZei2Svz0z178e5P2+c+ebV8inCKob
+         xr9qumWJjPXmm0lttm+8ktV0L2pJDSX8dPcpEmd6GA1Ro7+idW14Q2c++1I3E8rBstod
+         3NiW1Kwuj5tWi2jrZBGGgLq4XC0xwGhM5pIKVLkrOBptY+euD5hShrCxegyHQxHD77/w
+         7nv9cLDzrxRtq+C59Lu1IA98ZhfpbXye8go+dlIN50hyqYGh3pJx6Ao/nlPRItKqGJU9
+         KU36qYdVjLWOxxMbgHRoUym8193UnFLrYT8+aZdqxMfyDtMFdYDJlo6hp9D2d+DbHGHJ
+         IHAQ==
+X-Gm-Message-State: AOAM531HXojsQuonwtmjoLSoJkbRdbhd1hDYvdziJe05rAPaCenLmTJY
+        rMxWJ96kPNldEG1kxaiFitxYyF/TcmmaB0ApuLdW6Q==
+X-Google-Smtp-Source: ABdhPJygSlEpGfYIODM6AAcGtxNLcZ1X5a2YfsVSiuNr/u6qm+cdiZexK56Wk++E/vmwlJm975sl0rcKDkXuh6ny4Vg=
+X-Received: by 2002:aca:f40e:: with SMTP id s14mr2385939oih.92.1592766363735;
+ Sun, 21 Jun 2020 12:06:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200604004331.669936-1-dmitry.baryshkov@linaro.org> <20200621064214.GA128451@builder.lan>
-In-Reply-To: <20200621064214.GA128451@builder.lan>
+References: <20200606131300.3874987-1-dmitry.baryshkov@linaro.org> <20200621072655.GH128451@builder.lan>
+In-Reply-To: <20200621072655.GH128451@builder.lan>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 21 Jun 2020 21:56:04 +0300
-Message-ID: <CAA8EJprbWntcJ_9sKy3veNeEds8nR4cC6sbEcXbhtrsf5Q9O1w@mail.gmail.com>
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: pm8009: Add base dts file
+Date:   Sun, 21 Jun 2020 22:05:52 +0300
+Message-ID: <CAA8EJprHke0=OhpP2WwPtJ-ttzOvx63j5BjHhZL0N1JO6uJZEQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: add I2C and SPI nodes
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
@@ -63,61 +63,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 21 Jun 2020 at 09:45, Bjorn Andersson
+Hello,
+
+On Sun, 21 Jun 2020 at 10:29, Bjorn Andersson
 <bjorn.andersson@linaro.org> wrote:
 >
-> On Wed 03 Jun 17:43 PDT 2020, Dmitry Baryshkov wrote:
+> On Sat 06 Jun 06:13 PDT 2020, Dmitry Baryshkov wrote:
 >
-> > Add base DTS file for pm8009 along with GPIOs and power-on nodes.
+> > Much like SDM845 each serial engine has 4 pins attached. Add all
+> > possible I2C and SPI nodes for all 20 serial engines.
 > >
 > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/pm8009.dtsi | 40 ++++++++++++++++++++++++++++
-> >  1 file changed, 40 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/pm8009.dtsi
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/pm8009.dtsi b/arch/arm64/boot/dts/qcom/pm8009.dtsi
-> > new file mode 100644
-> > index 000000000000..9f3e19b5bd00
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/pm8009.dtsi
-> > @@ -0,0 +1,40 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2019, Linaro Limited
-> > + */
-> > +
-> > +#include <dt-bindings/input/input.h>
-> > +#include <dt-bindings/interrupt-controller/irq.h>
-> > +#include <dt-bindings/spmi/spmi.h>
-> > +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> > +
-> > +&spmi_bus {
-> > +     pmic@a {
-> > +             compatible = "qcom,pm8009", "qcom,spmi-pmic";
-> > +             reg = <0xa SPMI_USID>;
-> > +             #address-cells = <1>;
-> > +             #size-cells = <0>;
-> > +
-> > +             power-on@800 {
 >
-> Please name this "pon", just for consistency.
->
-> > +                     compatible = "qcom,pm8916-pon";
->
-> Can you confirm that pm8009 is subtype 1, and hence the reboot reason
-> going into RB_SPARE should be shifted 2 steps, rather than 1 as in the
-> newer PMICs?
+> This looks good, can you please give me a r-b or a-b on the patch adding
+> the TLMM node so that I can merge the two.
 
-For pm8009 the subtype reads as 0x07, while according to msm-4.19 gen2
-handling is only enabled for subtypes 0x04 and 0x05.
-
-> Would be nice if we had a generic compatible that read the subtype,
-> rather than having to add new compatibles for each pmic (or use the old
-> ones)...
-
-Will do it in a separate patch.
+I don't have it in my mbox, sorry. But anyway for TLMM patch:
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
