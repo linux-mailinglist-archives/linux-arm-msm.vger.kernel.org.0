@@ -2,144 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9B5E202950
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 09:21:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08291202952
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 09:25:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729343AbgFUHVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Jun 2020 03:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
+        id S1729413AbgFUHZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jun 2020 03:25:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729395AbgFUHVa (ORCPT
+        with ESMTP id S1729388AbgFUHZB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Jun 2020 03:21:30 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A124BC061797
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 00:21:30 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id a45so5647556pje.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 00:21:30 -0700 (PDT)
+        Sun, 21 Jun 2020 03:25:01 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87482C061794
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 00:25:01 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id s14so2002111plq.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 00:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zhhnd4ooynuYp+DByQntd+/eACdv1P9A50jueK+9Jz0=;
-        b=yt7zuV6i6+kuAthGmj/DlOb4D50uMszJWqg3anEKpSeMOmcg+ci2KBcvYWRChL2n1I
-         uY58D9qvZmXynLUO2XjAdZje5PKshv7DEzG4kEW0GLW661dQ/3NiLnzkDD+cD5i+Lyu7
-         Nepf5U5yH94YPZCd3al6F+60jUOMoMR0luaFoAF9IAiG8jJ/EwdIlsYdqFZFMQeFQNK2
-         58oVfyVV+WSkes/l+iAKwUZf19DhK6tYuQcWWNDEcC2FVHHLqtNMSdfUOl0Vx9DBBZU4
-         y16F1XtYEi340XdbzH1u42PWqLRbB9BzKJXBXxlNWs0xo+rt9ot93mU3mJ7hwhhKZPLm
-         TOag==
+        bh=t8DfxJQgsCB49aGfdQiob3v0fXxUaFZwxnv8u/wZF/o=;
+        b=KQR3QdwrumXa62xgL+DVytV1CTh7/7+K7UWVQw+wq4Xw96YtBusVtgLr48eeF+tFuQ
+         OWXhrt9WOLh/OpeX3oe+7UsSWerjF+K9IxLgXwKKaZrOzJgdGAFnLsQFMiK8WlEx1KQe
+         s97MKMkCDslPjdT0c49KVqoqxEil1HM4YYHXpmLJi9ADTuQDOG4jegROfNiaV87XxtQM
+         LXbnWYQcdRCxFrLUWBY9bmfM3z+TfISg3PO5PpPFu1GVcj00PREZ1ei4fTs4YHYz/4Y4
+         XwRz//QTB6GGC/+iIeYPT9UWYS8gAntsDzOP9hVKpIN8gNjBvU73eBGiIG904dnJCnCc
+         Sugw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zhhnd4ooynuYp+DByQntd+/eACdv1P9A50jueK+9Jz0=;
-        b=OlGuOZHTZQ0FXZTg8XGSuclkJillev+rjqWJiyRdoSx/XsW25td0PErUYSwAWtIxUt
-         cKBWZu3wNeKEK8xLRbbMjRwY6WGomxWE3R9K1W95F4sD7Vd6VVCBdtIKW/FZo+EaH5kN
-         T5WeylD1bNtp2Y5Djy0i+addOXBKvnketw06JLQSy1HUnBOYD7SA2kasn28Euy8Be6c9
-         cFQMU4OgpKQN7YiUOArBdKAh/lhbQg1kzb/0qhvWQaGlu4pW7UVoTJ19rk7KQ/KTxc5O
-         Fx/DwVyOVG9ReHRZ4D3Nes7qAfvqK70crjIOVrfBtaLL/Lwh0lZByF8+qP/8EDw/vKlU
-         ZmAg==
-X-Gm-Message-State: AOAM5331ikd2nITZO5j5t1CpGVeR9MYqZfBZrPliuOfzmGoCvDxecQb3
-        ey8AlS6Vkch3iIUDgouYaxI0ng==
-X-Google-Smtp-Source: ABdhPJwlGPhiIqDqP8vcOExyveA/1VsmWOgswjkutg/xCC/ADeseuuGLBVqwQm3jgUsHhE1UtCJcng==
-X-Received: by 2002:a17:90a:eac8:: with SMTP id ev8mr11655642pjb.80.1592724089756;
-        Sun, 21 Jun 2020 00:21:29 -0700 (PDT)
+        bh=t8DfxJQgsCB49aGfdQiob3v0fXxUaFZwxnv8u/wZF/o=;
+        b=DnfxP9fLs/QoedkWhfAKsWAxEKvw9gf6pdvd6fEMpV4MhwlcSofY77vi5TFYIK3O2v
+         zAh6gs11uk7k3fXSdeTQtgcqZtL4tvvOTRUOY/7la5QcpYXEQi9k1ssYUG2pRtbXwsMF
+         JLNN+3y6SUMERKSzBY+EaNbeo3cXURPoBYPB6dth6iUe3eg9s+/MSioIUhrU1YsGUm5r
+         t6BEokdytAd5y/H1LWwYymZWlPuuYZIqz/rgkSgfS6uFsC3BWleFpoZ/QzFUf3QytYes
+         XUvsJsqEBZfsZ7hTV+OnxG+AnQeh1Z/wRK/X5L8lA5zg3kjVTDPGBGnHUjAFjegjv0C7
+         wwkw==
+X-Gm-Message-State: AOAM53073LG/niURTDA/4+O/tMuG3FZzJsaVFtNX+rCVvEHGoClCGOTy
+        ZM6ooz4SDCdlNZ1yhhuBOaJAOg==
+X-Google-Smtp-Source: ABdhPJzdfufl/2D2MnrN1ggslh+BlG+1XHrUvCJ0m6IM55MOOhIMmKkvsm/pMCewTxbEWp4a5dJCgw==
+X-Received: by 2002:a17:90b:3793:: with SMTP id mz19mr11685376pjb.12.1592724300915;
+        Sun, 21 Jun 2020 00:25:00 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e124sm10106487pfh.140.2020.06.21.00.21.28
+        by smtp.gmail.com with ESMTPSA id c194sm10037877pfc.212.2020.06.21.00.24.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Jun 2020 00:21:28 -0700 (PDT)
-Date:   Sun, 21 Jun 2020 00:18:41 -0700
+        Sun, 21 Jun 2020 00:25:00 -0700 (PDT)
+Date:   Sun, 21 Jun 2020 00:22:13 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sibis@codeaurora.org, manivannan.sadhasivam@linaro.org,
-        dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8250: Add thermal zones and
- throttling support
-Message-ID: <20200621071841.GF128451@builder.lan>
-References: <cover.1591684754.git.amit.kucheria@linaro.org>
- <bf5ca7777fbb6f5e2d374a9a72d1e17d485bd8ea.1591684754.git.amit.kucheria@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        mike.leach@linaro.org, Jonathan Marek <jonathan@marek.ca>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7180: Add iommus property to ETR
+Message-ID: <20200621072213.GG128451@builder.lan>
+References: <cover.1591708204.git.saiprakash.ranjan@codeaurora.org>
+ <2312c9a10e7251d69e31e4f51c0f1d70e6f2f2f5.1591708204.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bf5ca7777fbb6f5e2d374a9a72d1e17d485bd8ea.1591684754.git.amit.kucheria@linaro.org>
+In-Reply-To: <2312c9a10e7251d69e31e4f51c0f1d70e6f2f2f5.1591708204.git.saiprakash.ranjan@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 08 Jun 23:44 PDT 2020, Amit Kucheria wrote:
+On Tue 09 Jun 06:30 PDT 2020, Sai Prakash Ranjan wrote:
 
-> sm8250 has 24 thermal sensors split across two tsens controllers. Add
-> the thermal zones to expose them and wireup the cpus to throttle on
-> crossing passive temperature thresholds.
+> Define iommus property for Coresight ETR component in
+> SC7180 SoC with the SID and mask to enable SMMU
+> translation for this master.
 > 
-> Update the comment in the drivers to list the SoCs it supports.
-> 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 766 +++++++++++++++++++++++++++
->  drivers/thermal/qcom/tsens-v2.c      |   2 +-
->  2 files changed, 767 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index deaa8415c7b72..5cd18cd8a675b 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -8,6 +8,7 @@
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/thermal/thermal.h>
->  
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -86,6 +87,7 @@ CPU0: cpu@0 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
->  			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			#cooling-cells = <2>;
 
-This doesn't apply to linux-next.
+We don't have &apps_smmu in linux-next, as we've yet to figure out how
+to disable the boot splash or support the stream mapping handover.
 
-The problem seems to be that, as pointed out when I submitted that
-patch, the previously anonymous "cpufreq hardware" is now replaced by
-the "EPSS" hardware block.
-
-So we need a new driver (or update the existing one) to support this new
-hardware block.
-
-Presumably though, without this there's not much cooling anyways - which
-is sad, as your patch looks good.
-
->  			L2_0: l2-cache {
->  			      compatible = "cache";
->  			      next-level-cache = <&L3_0>;
-[..]
-> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-> index b293ed32174b5..58cac8f2a358c 100644
-> --- a/drivers/thermal/qcom/tsens-v2.c
-> +++ b/drivers/thermal/qcom/tsens-v2.c
-> @@ -26,7 +26,7 @@
->  #define TM_TRDY_OFF			0x00e4
->  #define TM_WDOG_LOG_OFF		0x013c
->  
-> -/* v2.x: 8996, 8998, sdm845 */
-> +/* v2.x: 8996, 8998, sc7180, sdm845, sm8150, sm8250 */
-
-Even though it's trivial, can you please send this through the tsens
-tree instead, so we don't end up having unnecessary merge conflicts.
+So I'm not able to apply this.
 
 Regards,
 Bjorn
 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index f684a0b87848..9b38867740ca 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1711,6 +1711,7 @@
+>  		etr@6048000 {
+>  			compatible = "arm,coresight-tmc", "arm,primecell";
+>  			reg = <0 0x06048000 0 0x1000>;
+> +			iommus = <&apps_smmu 0x04a0 0x20>;
 >  
->  static struct tsens_features tsens_v2_feat = {
->  	.ver_major	= VER_2_X,
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
 > -- 
-> 2.25.1
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
 > 
