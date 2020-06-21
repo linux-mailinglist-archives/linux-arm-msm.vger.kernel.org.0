@@ -2,86 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D44E6202C18
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 21:06:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95C37202C1D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 21:08:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729783AbgFUTGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Jun 2020 15:06:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47254 "EHLO
+        id S1728751AbgFUTIw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jun 2020 15:08:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728649AbgFUTGE (ORCPT
+        with ESMTP id S1728649AbgFUTIv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Jun 2020 15:06:04 -0400
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4540AC061794
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 12:06:04 -0700 (PDT)
-Received: by mail-oi1-x243.google.com with SMTP id x202so13681569oix.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 12:06:04 -0700 (PDT)
+        Sun, 21 Jun 2020 15:08:51 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736DAC061796
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 12:08:50 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id s10so7126268pgm.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 12:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=o53PdA9uPCJnfRH0bPZtJEfl2g77G3rHoAKUfp/7kUo=;
-        b=Uv29zYAVX0tqPL1HplFFe7dbL1EPjMyH4TJF2szni+U9GYruN0WuhWks/JS+IaTOH+
-         CX+scc33/HczNRmVNRG8B9PISC+uFAmv6rivLOFuC7xQTtUUW5+IqrduxfQfTdDSUFOt
-         r1+DA9dE6yIDNaBieTpNekHldFWe2JansxxSJPdROdjFbXTIjIWy001OEyZncJrWfu+w
-         miwX4BzeePlx8QJfSbSakQnr3D3N1BPzSM/zQ1rckuVi+LEz8Sxbn4oC8MDopTlk0Dth
-         9d5E3qusi3Zj8KoxRug/my8K35mpTuMrrbgQGb5z9i8+XhpthdE2k9EUGa3A5TE4nzZz
-         5hSQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=S0b0ZtKOWPlzNq/G1azVX71YKnUMD0IovOZ8THJOPgs=;
+        b=BVEtf+kYxEMuzMYYlyLRd35P70u1PZTRSwalr+MQXyoqvR9/rvVfvv6IdyKTD/j1mf
+         1Su7XRdm3RVJ0bhNE1OjjK3GaK/HYsCcRZ3EhnlA0UoiMU9P1KzkGL1zufuuGs1fWE3E
+         KWmD6iRGPL24DU+/PreGQVabmYTKF0lZGeebfqkie81ouu8sLtUMkCFARHvIWIbcUamd
+         rS9ijGbYwHbz3MWfEdduy0EbgVTVwf64S90cFT9whaTbkrSie7+tTcmITGe7UAwI58SH
+         /MZkCgEWfFZQ/mrNQsDzFoZV9bdGPVTZ3Kd4shxclb043u8sGCelVWgHE3RKiF3+GGKd
+         MY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=o53PdA9uPCJnfRH0bPZtJEfl2g77G3rHoAKUfp/7kUo=;
-        b=leV4JQnRFcalnJFCXy+uxpHcqKJ5v1XU8tB6oZei2Svz0z178e5P2+c+ebV8inCKob
-         xr9qumWJjPXmm0lttm+8ktV0L2pJDSX8dPcpEmd6GA1Ro7+idW14Q2c++1I3E8rBstod
-         3NiW1Kwuj5tWi2jrZBGGgLq4XC0xwGhM5pIKVLkrOBptY+euD5hShrCxegyHQxHD77/w
-         7nv9cLDzrxRtq+C59Lu1IA98ZhfpbXye8go+dlIN50hyqYGh3pJx6Ao/nlPRItKqGJU9
-         KU36qYdVjLWOxxMbgHRoUym8193UnFLrYT8+aZdqxMfyDtMFdYDJlo6hp9D2d+DbHGHJ
-         IHAQ==
-X-Gm-Message-State: AOAM531HXojsQuonwtmjoLSoJkbRdbhd1hDYvdziJe05rAPaCenLmTJY
-        rMxWJ96kPNldEG1kxaiFitxYyF/TcmmaB0ApuLdW6Q==
-X-Google-Smtp-Source: ABdhPJygSlEpGfYIODM6AAcGtxNLcZ1X5a2YfsVSiuNr/u6qm+cdiZexK56Wk++E/vmwlJm975sl0rcKDkXuh6ny4Vg=
-X-Received: by 2002:aca:f40e:: with SMTP id s14mr2385939oih.92.1592766363735;
- Sun, 21 Jun 2020 12:06:03 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=S0b0ZtKOWPlzNq/G1azVX71YKnUMD0IovOZ8THJOPgs=;
+        b=lyf+IFcH3agPnOKBMgwufqqG549crZ6jxh2D/L7Ph1S/Hc9JHFjOmPj/q49z4Un80X
+         gGLVngUxOs0nJ7arxaZuUFAjklvuTyFn94x5qzbv3R36ONm9RCim9WRg15tWjFxj5k42
+         PDtP16OSpbM2n7k0WCC+uo9BNp+bOjT4Lzxi2Hpa5y4Ivm1w4hqYBODY6xQx5Cy8SI+9
+         OgMWC0b0dpNJU6O0YSWPTOkG63OlRFBysjoxdhfg3iO5SZKsJPaPuDrHq1GIRFwSgImr
+         IXjOKRtcicdkd6SbCQbgb8i13ta6LzvfpVHvGCA3DzPQd4HYVZY3nj8C6kGXG1M/Bp9z
+         gDQw==
+X-Gm-Message-State: AOAM530aOv/cS5nrhnnYy0+C+U0bX7hDcIn4ZkuuayKhhueazCQ/YRII
+        KEDj0zHx3OVUEriGa1dST1Qudw==
+X-Google-Smtp-Source: ABdhPJwowz3Qkey2wW0m5o/l81oVTa6RgAoYgrbWPkcWn2ieNzkJ+5o+CSU2K6ceSvlf4yNDwbu16g==
+X-Received: by 2002:a63:1624:: with SMTP id w36mr10261738pgl.144.1592766529724;
+        Sun, 21 Jun 2020 12:08:49 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id fa13sm10989997pjb.39.2020.06.21.12.08.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Jun 2020 12:08:48 -0700 (PDT)
+Date:   Sun, 21 Jun 2020 12:06:02 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Rakesh Pillai <pillair@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v11] arm64: dts: qcom: sc7180: Add WCN3990 WLAN module
+ device node
+Message-ID: <20200621190602.GL128451@builder.lan>
+References: <1589946996-31264-1-git-send-email-pillair@codeaurora.org>
+ <CAE=gft5pcHwK8yjObNSSH=U_B6Pz++bDaeUxZhPyJfG2E7LRAg@mail.gmail.com>
+ <CAE=gft5So9Uk2UqRWs2zFO_iD+6ofMy97bKP4HpgM1Wu6Duxvw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20200606131300.3874987-1-dmitry.baryshkov@linaro.org> <20200621072655.GH128451@builder.lan>
-In-Reply-To: <20200621072655.GH128451@builder.lan>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 21 Jun 2020 22:05:52 +0300
-Message-ID: <CAA8EJprHke0=OhpP2WwPtJ-ttzOvx63j5BjHhZL0N1JO6uJZEQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: add I2C and SPI nodes
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, devicetree@vger.kernel.org,
-        Patch Tracking <patches@linaro.org>,
-        linaro-kernel@lists.linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE=gft5So9Uk2UqRWs2zFO_iD+6ofMy97bKP4HpgM1Wu6Duxvw@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+On Wed 17 Jun 15:45 PDT 2020, Evan Green wrote:
 
-On Sun, 21 Jun 2020 at 10:29, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Sat 06 Jun 06:13 PDT 2020, Dmitry Baryshkov wrote:
->
-> > Much like SDM845 each serial engine has 4 pins attached. Add all
-> > possible I2C and SPI nodes for all 20 serial engines.
+> On Thu, May 21, 2020 at 9:19 AM Evan Green <evgreen@chromium.org> wrote:
 > >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> This looks good, can you please give me a r-b or a-b on the patch adding
-> the TLMM node so that I can merge the two.
+> > On Tue, May 19, 2020 at 8:57 PM Rakesh Pillai <pillair@codeaurora.org> wrote:
+> > >
+> > > Add device node for the ath10k SNOC platform driver probe
+> > > and add resources required for WCN3990 on sc7180 soc.
+> > >
+> > > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> >
+> > Reviewed-by: Evan Green <evgreen@chromium.org>
+> 
+> Looks like this never landed anywhere. Is it blocked on something?
 
-I don't have it in my mbox, sorry. But anyway for TLMM patch:
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I remember waiting for some reviews, but I see those are in place. Then
+as I was applying this I saw that a v12 had shown up, with regulators.
 
--- 
-With best wishes
-Dmitry
+So, I applied v12.
+
+Thanks,
+Bjorn
