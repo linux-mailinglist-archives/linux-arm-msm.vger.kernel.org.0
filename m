@@ -2,128 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7405202BE6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 19:50:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1106A202C13
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2020 20:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730493AbgFURua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Jun 2020 13:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35604 "EHLO
+        id S1730287AbgFUS4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Jun 2020 14:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730474AbgFURu3 (ORCPT
+        with ESMTP id S1729783AbgFUS4Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Jun 2020 13:50:29 -0400
-Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C502DC061794
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 10:50:29 -0700 (PDT)
-Received: by mail-oo1-xc44.google.com with SMTP id e8so2898453ooi.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 10:50:29 -0700 (PDT)
+        Sun, 21 Jun 2020 14:56:16 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDA3C061795
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 11:56:16 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id x202so13666754oix.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 11:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Z6fzJhAJ321ixT62OQUqlN+rS3fNSQjyBcE/UbACpjY=;
-        b=DuV+Hv67MaBq/Ob9oSfvtuHDVbHw+hTc1Rh2pjsk3L2pz2XMiMqoE3QJEm3HSaw1r9
-         c1YeAShi164lcWNcHfksX1W4SQxanHh7P+HY+cg9U1tkSOyxtZxuSpql8vQVmXMMeqkp
-         GGr6GihsauMjg+brMyPGAwjLpg6i+n5JEBe3aP8NTrRh7jYAMldFWzELXU+jw+X2pbID
-         /cE7vM75UQ/jkR9QOC2PFwCnWYY4LXfgxq4J5sCHpZ+EA6mokiRQLPUQulEVukoGZs1+
-         naCfyaX3MB20rZ5dXp+tJ8NcqIuCvwxEaHqb+7pZtZRwUirJcEi61G7Ca3TeHPPLRiio
-         3zAg==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2r26ZQAdN4GoklsV0xP0YFMPJK7NXM2OoxqIwBxLXXY=;
+        b=gcJLlUlDkgfAiQ/+U9NJZYMVurjS7cq2M6Xvu50NY4nRFAfTXaZH69BBNPaFdW9pC6
+         YTFCjDkHCGdPe7aBgsdXwfxDLlv/kX2WjBwkMWnaXxxK4tbwAsa7wozF/j14dhtIxnVA
+         sJmS/JhJcnf9p1c+6uESIm9VNVdmlXlMTWUR86Fc4mAJkpXyn1+8HEVRUDIhVoLB0hfH
+         8CJ1z8eXMrakjBAZqoaLFuD/A0nl8sOVpILVyFMO/1j5Y9VikIZyuywcT/OxmGgY6LFW
+         Wx9c+Sh/A73cGUMMUGSTIFY4+Y6s8cEKQ8Cl9DjfVNp/3Qb5z+mvhinmNLyaJKknR5vW
+         IpkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Z6fzJhAJ321ixT62OQUqlN+rS3fNSQjyBcE/UbACpjY=;
-        b=UpdnOqMJh8jGo3lYsX/v7+DcdV69vbdaTtRKmeh4+5Bnph+guCBFhRNo5TMSjNJHV5
-         +yBVEbHATQ5D8+WFj3co4WAhY30s8rXhY9g0+42wntrtWRdygmHOlWcwKjiC1bStaHJC
-         zfOezEwgqVfiB0Bp3ESwTqpmrsuGdCy7orpXGfs2eg6UvvOfnjnqw6rlVSUvTbt4KY0v
-         Jg/KwWGjeZCPhtKAPRwvR6SGt8/4kFzqox1nPGUVJO59KaZprkjkykvW/Z/kTrgFMErL
-         0tac+w+t2L/OChocukmATnTarXmAoHI2iRYqSadRjPgsnHaQvENx2PLKnIHbhXSF1o7U
-         5N/g==
-X-Gm-Message-State: AOAM533cTcMPDwpz7J8/uQgk0H3wvpzHEH6ibr+T1jRJ5duHEQX+AnVh
-        se6zdhLNEBEssWQtsYXsTEH70A==
-X-Google-Smtp-Source: ABdhPJxCbibHRQuCBo8z043+guNjnBrsjVmhvo/gNbpQNm3dzjFOs/kMOstmC4c83XVlt+0qkUZo8A==
-X-Received: by 2002:a4a:ca8b:: with SMTP id x11mr11267088ooq.83.1592761828953;
-        Sun, 21 Jun 2020 10:50:28 -0700 (PDT)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id a9sm2733424otr.15.2020.06.21.10.50.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Jun 2020 10:50:28 -0700 (PDT)
-Subject: Re: [PATCH v1 1/3] scsi: ufs: add write booster feature support
-To:     Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Avri Altman <Avri.Altman@wdc.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        "cang@codeaurora.org" <cang@codeaurora.org>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1586374414.git.asutoshd@codeaurora.org>
- <3c186284280c37c76cf77bf482dde725359b8a8a.1586382357.git.asutoshd@codeaurora.org>
- <CAF6AEGvgmfYoybv4XMVVH85fGMr-eDfpzxdzkFWCx-2N5PEw2w@mail.gmail.com>
- <SN6PR04MB46402FD7981F9FCA2111AB37FC960@SN6PR04MB4640.namprd04.prod.outlook.com>
- <20200621075539.GK128451@builder.lan>
- <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <ba3873e3-75e0-a55f-6a93-d7d8df4da0e9@kali.org>
-Date:   Sun, 21 Jun 2020 12:50:27 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.9.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2r26ZQAdN4GoklsV0xP0YFMPJK7NXM2OoxqIwBxLXXY=;
+        b=rLKtoP5H7B7TKS4vLrz3O4zeOFUYTvV9wR/b03GkG6dxYo7MSK6BUhdpeuFIDLnpa3
+         lBdHvjAJ8+/MCNJ3GGdSLUUP9Ticj381JJasJNSlUfjAfZS2mybImB5yhe1l+XvTyok7
+         NsT4RZuZL6f558VRnF9qx15Sk8Ima8GFX4GXE0F+dlbCbdlcH/OhgTWbYgRJI/XUeuBq
+         obGGdayICGfX6HtJkzbe7mKhVCYTYFYHg3O7oBB+0Oirs8UlfWsOtLJwlZc9C+aIgKzC
+         4lRzXeLNaS/IO0cwxoRezNfGsQrGV1624hftti9EVolYW8OWso7cYCyigmykYHoJGU7B
+         ArYg==
+X-Gm-Message-State: AOAM532q7Qc5f1YKz4a/imsaFdPgkMCRJQ+Z809nD5kSffwWyZlGNcjS
+        gwbx+eAdFZCNEs873aC2HhcbRGzmdU5GqZyHKQrdZg==
+X-Google-Smtp-Source: ABdhPJyyjnHIxIz912lNk3b1yarc1xc9PkqtEyaXn3fCVH8+hjOgMIgybWwGJuyKC3uNZhkgm5f3A3RrFB6xEuoHrxQ=
+X-Received: by 2002:a54:4399:: with SMTP id u25mr10581982oiv.177.1592765775327;
+ Sun, 21 Jun 2020 11:56:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20200604004331.669936-1-dmitry.baryshkov@linaro.org> <20200621064214.GA128451@builder.lan>
+In-Reply-To: <20200621064214.GA128451@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 21 Jun 2020 21:56:04 +0300
+Message-ID: <CAA8EJprbWntcJ_9sKy3veNeEds8nR4cC6sbEcXbhtrsf5Q9O1w@mail.gmail.com>
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: pm8009: Add base dts file
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, devicetree@vger.kernel.org,
+        Patch Tracking <patches@linaro.org>,
+        linaro-kernel@lists.linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 6/21/20 11:50 AM, Rob Clark wrote:
-> This looks like a device issue to be taken with the flash vendor:
->> There's no way for a end-user to file a bug report with the flash vendor
->> on a device bought from an OEM and even if they would accept the bug
->> report they wouldn't re-provision the flash in an shipped device.
->>
->> So you will have to work around this in the driver.
-> oh, ugg.. well I think these msgs from dmesg identify the part if we
-> end up needing to use a denylist:
+On Sun, 21 Jun 2020 at 09:45, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> scsi 0:0:0:49488: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-> scsi 0:0:0:49476: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-> scsi 0:0:0:49456: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-> scsi 0:0:0:0: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-> scsi 0:0:0:1: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-> sd 0:0:0:0: [sda] 29765632 4096-byte logical blocks: (122 GB/114 GiB)
-> sd 0:0:0:0: [sda] Write Protect is off
-> sd 0:0:0:0: [sda] Mode Sense: 00 32 00 10
-> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports
-> DPO and FUA
-> sd 0:0:0:0: [sda] Optimal transfer size 786432 bytes
-> scsi 0:0:0:2: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
-> scsi 0:0:0:3: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI: 6
+> On Wed 03 Jun 17:43 PDT 2020, Dmitry Baryshkov wrote:
 >
+> > Add base DTS file for pm8009 along with GPIOs and power-on nodes.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/pm8009.dtsi | 40 ++++++++++++++++++++++++++++
+> >  1 file changed, 40 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/pm8009.dtsi
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/pm8009.dtsi b/arch/arm64/boot/dts/qcom/pm8009.dtsi
+> > new file mode 100644
+> > index 000000000000..9f3e19b5bd00
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/pm8009.dtsi
+> > @@ -0,0 +1,40 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2019, Linaro Limited
+> > + */
+> > +
+> > +#include <dt-bindings/input/input.h>
+> > +#include <dt-bindings/interrupt-controller/irq.h>
+> > +#include <dt-bindings/spmi/spmi.h>
+> > +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> > +
+> > +&spmi_bus {
+> > +     pmic@a {
+> > +             compatible = "qcom,pm8009", "qcom,spmi-pmic";
+> > +             reg = <0xa SPMI_USID>;
+> > +             #address-cells = <1>;
+> > +             #size-cells = <0>;
+> > +
+> > +             power-on@800 {
 >
-> (otoh I guess the driver could just notice that writeboost keeps
-> failing and stop trying to use it)
+> Please name this "pon", just for consistency.
 >
-> BR,
-> -R
+> > +                     compatible = "qcom,pm8916-pon";
+>
+> Can you confirm that pm8009 is subtype 1, and hence the reboot reason
+> going into RB_SPARE should be shifted 2 steps, rather than 1 as in the
+> newer PMICs?
 
+For pm8009 the subtype reads as 0x07, while according to msm-4.19 gen2
+handling is only enabled for subtypes 0x04 and 0x05.
 
-FWIW, I see this on my c630 as well, but my LUN shows up as
+> Would be nice if we had a generic compatible that read the subtype,
+> rather than having to add new compatibles for each pmic (or use the old
+> ones)...
 
+Will do it in a separate patch.
 
-scsi 0:0:0:49488: Well-known LUN    SAMSUNG  KLUDG4U1EA-B0C1   0500 PQ:
-0 ANSI: 6
-
+-- 
+With best wishes
+Dmitry
