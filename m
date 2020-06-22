@@ -2,125 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4DB6203C83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 18:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 354BA203CCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 18:43:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729709AbgFVQ0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 12:26:17 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:60930 "EHLO m43-7.mailgun.net"
+        id S1729852AbgFVQnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 12:43:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53574 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729407AbgFVQ0Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 12:26:16 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592843176; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=B8MkbA73HBcHUgVuuaeIgAVxKFah+m4d+ECDIS3Ed+0=; b=pt4XPdlv+8RX5pDkJiyBlbVfKEG8phsYLMbvh8BN7OTuNdTN5U9cScVmSAEOtJ9hHsX8WtPg
- B75B+edzlwF7M3bAQaTbZK/UT4LsAoxqnjAz9aPWvdZ3fhqK+fGv9xqzjXSylLudfy42eehs
- W73YNwaMA862BLuaa7jeDLLUTKY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5ef0db98bfb34e631c46a28c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Jun 2020 16:26:00
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AB0C6C433C8; Mon, 22 Jun 2020 16:25:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729458AbgFVQnW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 12:43:22 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57767C433C6;
-        Mon, 22 Jun 2020 16:25:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 57767C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 22 Jun 2020 10:25:54 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Eric Anholt <eric@anholt.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] drm/msm: Fix address space size after refactor.
-Message-ID: <20200622162554.GA9114@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Eric Anholt <eric@anholt.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20200617205310.2183722-1-eric@anholt.net>
- <CAF6AEGu1jV+SWg8apDdq5QghGUvr1wKV38R8XwTL97VXfVUmdQ@mail.gmail.com>
+        by mail.kernel.org (Postfix) with ESMTPSA id 0920B2073E;
+        Mon, 22 Jun 2020 16:43:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592844201;
+        bh=fHdUYMN1CthGXBqW5gf/eyqTc6WkYbVr0aR/luIj1iU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FtULZXDtg7M5nsENpvPqhbRvPL6xdrpt7Wt71cZ4txBP4svF8ppG5hckyjtGdPXvN
+         gN6g8D4p7Iw/NSpfFhVKIikjGC4nLuFMAzncSTkrKbXaZwF+cLWoCllQev5sTDgG1R
+         xRg94lJFACbaXJIBEzuCCkoM0hFZKSV+wgvQS3e4=
+Date:   Mon, 22 Jun 2020 17:43:18 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Pantelis Antoniou <pantelis.antoniou@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>, alsa-devel@alsa-project.org,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthew Porter <mporter@konsulko.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: sound: Device tree bindings for the
+ apq8039 sound complex
+Message-ID: <20200622164318.GL4560@sirena.org.uk>
+References: <20200619193831.12528-1-pantelis.antoniou@linaro.org>
+ <20200619193831.12528-2-pantelis.antoniou@linaro.org>
+ <20200619214126.GA1251@gerhold.net>
+ <2070B433-83E0-4ACE-A470-36401934FC5A@linaro.org>
+ <20200622120409.GD4560@sirena.org.uk>
+ <519B5FAC-4DB8-4968-B9D4-96E376D74F1E@linaro.org>
+ <20200622134145.GJ4560@sirena.org.uk>
+ <8C9C4D5E-D92B-426D-A597-C784D1611967@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pFej7zHSL6C5fFIz"
 Content-Disposition: inline
-In-Reply-To: <CAF6AEGu1jV+SWg8apDdq5QghGUvr1wKV38R8XwTL97VXfVUmdQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <8C9C4D5E-D92B-426D-A597-C784D1611967@linaro.org>
+X-Cookie: laser, n.:
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 17, 2020 at 07:39:08PM -0700, Rob Clark wrote:
-> On Wed, Jun 17, 2020 at 1:53 PM Eric Anholt <eric@anholt.net> wrote:
-> >
-> > Previously the address space went from 16M to ~0u, but with the
-> > refactor one of the 'f's was dropped, limiting us to 256MB.
-> > Additionally, the new interface takes a start and size, not start and
-> > end, so we can't just copy and paste.
-> >
-> > Fixes regressions in dEQP-VK.memory.allocation.random.*
-> >
-> > Fixes: ccac7ce373c1 ("drm/msm: Refactor address space initialization")
-> > Signed-off-by: Eric Anholt <eric@anholt.net>
-> 
-> 
-> rebased on https://patchwork.freedesktop.org/series/78281/ (which
-> fixed half of the problem) and pushed this and 2/2 to msm-next so it
-> should show up in linux-next shortly..
-> 
-> planning to wait a short time more to see if we find any other issues
-> and then send a -fixes PR
 
-I'll fix up the rest of the flubbed addresses sizes.
+--pFej7zHSL6C5fFIz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Jordan
+On Mon, Jun 22, 2020 at 05:04:16PM +0300, Pantelis Antoniou wrote:
 
-> BR,
-> -R
-> 
-> 
-> > ---
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index 89673c7ed473..5db06b590943 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -194,7 +194,7 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
-> >         struct msm_gem_address_space *aspace;
-> >
-> >         aspace = msm_gem_address_space_create(mmu, "gpu", SZ_16M,
-> > -               0xfffffff);
-> > +               0xffffffff - SZ_16M);
-> >
-> >         if (IS_ERR(aspace) && !IS_ERR(mmu))
-> >                 mmu->funcs->destroy(mmu);
-> > --
-> > 2.26.2
-> >
+> The problem is that for sound card that is composed of a number of compon=
+ent
+> like this one a pretty non trivial setting of controls must be done.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> Tt is not atypical for a card like this the set of control being a dozen
+> or so, with some requiring even more.
+
+> Someone has to do them, be it the kernel or userspace.
+
+This is super standard stuff, it's why UCM (and the Android equivalent)
+exist.  There is nothing here that's remarkable or new here, *please*
+look at existing solutions before proposing new stuff and (as Stephan
+suggested) please don't try to sneak major changes in how things work
+into otherwise routine patches.
+
+> Instead of having userspace do it, bundle everything in DT so that everyt=
+hing
+> can be set in one go, and without having the user-space engineer read the
+> a few 10-100 pages of reference manuals.
+
+Very often in embedded systems the people doing the tuning include
+hardware and acoustic engineers for whom dealing with the flexibility of
+the device is not an issue but having to reflash and reboot the system
+to test out changes is a substantial inconvenience.  I've seen how happy
+they can be with userspace configuration options allowing them to speed
+up their workflows.  For end users it doesn't really make a huge
+difference if the configuration is delivered as part of the firmware or
+as part of userspace.
+
+> This is arguably a hardware setting (eg. the set of configuration paramet=
+ers
+> that enables routing sound to speaker).
+
+In all but the simplest systems there are several, frequently many,
+options available for even seemingly simple tasks like routing audio to
+the speaker.  Deciding between these is something that's well within the
+bounds of userspace configurability, it's not like there's only one way
+to do things and there may be tradeoffs to be made or combinations of
+things to be considered (eg, will we have to mix additional streams in
+or route the audio to additional outputs later?).  Transitions between
+use cases are also very much part of this, they can often be worked out
+automatically but not always.
+
+> Now this is not going to perfect for all cases; some cases are very compl=
+icated
+> and indeed user-space has to be engaged and perform the configuration.
+> This mechanism does not preclude it.
+
+Having multiple uncoordinated mechanisms for doing the same thing in the
+same system makes the system more complicated. =20
+
+--pFej7zHSL6C5fFIz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7w36YACgkQJNaLcl1U
+h9ALXAf+ITFI2DOoH2qE4+RFkrE6iNsf5CAeoJwCOIa0ZzBWTZINaqr8sHF8Ak7Q
+n5iU+vu4EZRAxkRZMzzc8zPsZC7tey4F4yNshc+n1t41HtmA1OOG7Yie3Nt1iCUF
+Vpj7TtWHLsAmCewClfYJ48qp2ZinR+RBGlJ3qqW4MaoZbcQEW3AGv7yswXtPZuxE
+AGNvlac3wLT4dF15Ol46dIRRpcBZfs2CgP/+afQ5ZQoVFPCnucA3ljSRyM48DcqB
+fM8o5v5HmUtC/FgHsMHvA46UZcyoaZzDwMGK/SpyqLOt1beqw8BbL3B8dP7EMIOY
+rvDT0R1JIokB+JAoseBcmEQtxbvXXg==
+=Am6L
+-----END PGP SIGNATURE-----
+
+--pFej7zHSL6C5fFIz--
