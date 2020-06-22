@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 432C1203E7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 19:55:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D6F1203E8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 19:57:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729860AbgFVRzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 13:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60914 "EHLO
+        id S1730194AbgFVR5Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 13:57:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729992AbgFVRzh (ORCPT
+        with ESMTP id S1730097AbgFVR5P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 13:55:37 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0837AC061573
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:55:37 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id 64so2860866oti.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:55:37 -0700 (PDT)
+        Mon, 22 Jun 2020 13:57:15 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD232C061796
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:57:14 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id p82so5675047oif.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:57:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=yL/GGFgKvPpT/ESkDllNmDDqKcU651dh4sx64jW309s=;
-        b=AT4AvU9sAT5ioVcP/Ma82mag06FRZC53FNcWA1/DQgm2s3sS33VltL9VIEI3UqR0M5
-         TNTcrDi7uP7DdLozHKbKufOXZKfzrTJpjDIVIcd3As/rfGfC4xxeW2Fu65Yr0k22eOEi
-         qX9SP3JdyPQMPfz5IvW1Aef66AMQtm5vGBr+K+tWNkBWMLB4zsAi1h+uRlBAQ/7tlORO
-         tkP+zf5ZaWa98u/3LgqRZiDpD8ublLJ9e2OB8sb0Kah9I5R793MuvtMFLtNKlJan3iKh
-         VYRwouZuzG9f+nUHLefWF6ZF6Ydga4Ge/rPCe6pxSPMh99UBaVKUMbauepZ0T61t9Nyu
-         JoDg==
+        bh=M3GEVdXIf0tk+DXRvjn8ivHe3tRnJ1flWGbCBgMSqFc=;
+        b=fKYxb8a5H/16u9zlWS8iJSngzhsQi8W1gBgVdQKgopZCmgNRKW4ShQtq754r/X5ZHq
+         fy6m5ZY5hX4E0YahT9PIK9K0hD3j10Uy59Ms3GAKtrVZaffV73Avh9kzG2xPwcQpE2jN
+         8f9MCiTyTnGs+lgdJ4+REJgssZ4aoLmVB39814XTPl2qPHqWj/gzwk+XimPFIVVEHUvp
+         JzsFN060SsfLCwR1b2ZTOFv/2dloiWXa9fBsxadwXtQFyVQEwAdDKS6LxeGJ6e36GFJZ
+         nvfChvHXG4x7H6NJ79akzQS3olwqvZy18fNlsxK0nyMeuPuAZK5+wYZs67khpZMIQQqQ
+         mHaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=yL/GGFgKvPpT/ESkDllNmDDqKcU651dh4sx64jW309s=;
-        b=h6xWpA1yBvSpl0jYPWmYS7r4ef4mPi9I0Bo2LnZn4aCUvFnExltjq4knX5fi0zcEgJ
-         CnaFrOEJ3xaIGM4DNO7eWfb1nzL9y55TUAu2rpsS7wWATs6mdt9Ympkm2Hyk/BCAExkA
-         VxyjW71hryYnQKb2CF46IhLOuCJKtBBEMuKG+rKnD+Hgy+QVQ4qJ53cCwck3zjSo2Fpy
-         iRIwXFdw/a7MUEm6t/9Qd5xTfy9oMqRadQqvTVMkjR17XbxAcQgbFKJeRkBkBnmCT616
-         f8/e13ctidQUgZYDNIVovdXZSM+R9FubM+uv9Kj8ozOjUkMvZTUhx/oIOWNAr3+ipsjr
-         X4JQ==
-X-Gm-Message-State: AOAM530z/M8To1fKlNh5PS/v2CAW0rz3ZHd+8+i3EMjVqtKAVKfCD7Rg
-        5cOCiakjtC6eMvHjwk49AxrmFw==
-X-Google-Smtp-Source: ABdhPJxdPSEtlZTw4FnQA7BtS442zJ/JmTFbMHgsow0c1g5UJUAeaTEOfHwjrLB7P+2NEyn5SJtbgg==
-X-Received: by 2002:a4a:e2c1:: with SMTP id l1mr15507498oot.12.1592848536280;
-        Mon, 22 Jun 2020 10:55:36 -0700 (PDT)
+        bh=M3GEVdXIf0tk+DXRvjn8ivHe3tRnJ1flWGbCBgMSqFc=;
+        b=nAeM9rw5ui61DdI0xU3nQ+ktqhfoJ6ibqNl0aqlFxSHfb3QAHZ0HEff6HiTNAa5SFJ
+         1N7SQYWQH0XExfZuCyH0mIHnf1Ynz8EY/McuQ2TUL/dI603iZKkasCfkxPJaE91aKtup
+         7ahgRBMHO8T9MuofTnMh/8wp7ES4qnobtW01ET4fKJcxSNqEr9pR+0Dm83tK21UuI+B8
+         s9MySgBl6GQ7QkG91GmZiGtlxmJf3KVAwCU1BQDRG9UdhtzMS6sBJLKdwMBqkRdrwm8w
+         4YS8Jyd+KOmDfacMPR/SdmfCrCocdbYz6XZIpuJajboM8wIOhIMviMZCoqStVJTMCkFQ
+         Oepw==
+X-Gm-Message-State: AOAM5338OpMu1P6fO01LoXWR89uSbsxabFZ1kHM1jdANBtjwcx65FHle
+        5HouROHsVciGVzxvp/OH+MfeQQ==
+X-Google-Smtp-Source: ABdhPJxkLE5HD8rZWtgYIPepWBzqCb0jDBaJuqVva8yCjfKKXg5Nh77NsC5ouVeAKrFlZLLucadR5A==
+X-Received: by 2002:aca:7213:: with SMTP id p19mr13643738oic.58.1592848634118;
+        Mon, 22 Jun 2020 10:57:14 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id k15sm3552652oom.22.2020.06.22.10.55.34
+        by smtp.gmail.com with ESMTPSA id k7sm3510087oon.29.2020.06.22.10.57.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 10:55:35 -0700 (PDT)
-Date:   Mon, 22 Jun 2020 10:52:50 -0700
+        Mon, 22 Jun 2020 10:57:13 -0700 (PDT)
+Date:   Mon, 22 Jun 2020 10:54:28 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Konrad Dybcio <konradybcio@gmail.com>
 Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
@@ -62,16 +62,16 @@ Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        ??ukasz Patron <priv.luk@gmail.com>
-Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: Add support for Sony Xperia
- XA2/Plus/Ultra (Nile platform)
-Message-ID: <20200622175250.GT128451@builder.lan>
+        Martin Botka <martin.botka1@gmail.com>
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: Add support for Sony Xperia
+ 10/10 Plus (Ganges platform)
+Message-ID: <20200622175428.GU128451@builder.lan>
 References: <20200622075749.21925-1-konradybcio@gmail.com>
- <20200622075749.21925-8-konradybcio@gmail.com>
+ <20200622075749.21925-9-konradybcio@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200622075749.21925-8-konradybcio@gmail.com>
+In-Reply-To: <20200622075749.21925-9-konradybcio@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -79,15 +79,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 22 Jun 00:57 PDT 2020, Konrad Dybcio wrote:
 
-> Add device tree support for the Sony Xperia XA2, XA2 Plus and
-> XA2 Ultra smartphones. They are all based on the Sony Nile
-> platform (sdm630) and share a lot of common code. The
-> differences are really minor, so a Nile-common DTSI
+> From: Martin Botka <martin.botka1@gmail.com>
+> 
+> Add device tree support for the Sony Xperia 10 and 10
+> Plus smartphones. They are all based on the Sony Ganges
+> platform (sdm630/636) and share a lot of common code.
+> The differences are really minor, so a Ganges-common DTSI
 > has been created to reduce clutter.
 > 
-> XA2 - Pioneer
-> XA2 Plus - Voyager
-> XA2 Ultra - Discovery
+> 10 - Kirin
+> 10 Plus - Mermaid
+> 
+> This platform is based on SoMC Nile, but there are some
+> major differences when it comes to pin configuration and
+> panel setup (among others).
 > 
 > The boards currently support:
 > * Screen console
@@ -97,259 +102,134 @@ On Mon 22 Jun 00:57 PDT 2020, Konrad Dybcio wrote:
 > * GPIO keys
 > * PSCI idle states
 > 
+> Signed-off-by: Martin Botka <martin.botka1@gmail.com>
 > Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> Tested-by: ??ukasz Patron <priv.luk@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   3 +
->  .../sdm630-sony-xperia-nile-discovery.dts     |  13 ++
->  .../qcom/sdm630-sony-xperia-nile-pioneer.dts  |  13 ++
->  .../qcom/sdm630-sony-xperia-nile-voyager.dts  |  20 +++
->  .../dts/qcom/sdm630-sony-xperia-nile.dtsi     | 135 ++++++++++++++++++
->  5 files changed, 184 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 0f2c33d611df..1cad7cb07574 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -16,6 +16,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
-> new file mode 100644
-> index 000000000000..1312eebe76a1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
-> @@ -0,0 +1,13 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, Konrad Dybcio
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sdm630-sony-xperia-nile.dtsi"
-> +
-> +/ {
-> +	model = "SoMC Discovery-RoW";
+> Tested-by: Martin Botka <martin.botka1@gmail.com>
 
-Given that this is already stated by the compatible, would it be
-reasonable to make this use the marketing name instead?
+Same comments as on patch 7 regarding the model, but apart from that
+this looks good.
 
-(I.e. "Sony Mobile Xperia XA2 Ultra")
-
-> +	compatible = "sony,discovery-row", "qcom,sdm630", "qcom,sdm630-mtp";
-
-Does the -mtp one have any significance? Otherwise I would like you to
-drop this - given that this isn't going to be compatible with the actual
-MTP hardware.
-
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
-> new file mode 100644
-> index 000000000000..76f20ad5273f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
-> @@ -0,0 +1,13 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, Konrad Dybcio
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sdm630-sony-xperia-nile.dtsi"
-> +
-> +/ {
-> +	model = "SoMC Pioneer-RoW";
-> +	compatible = "sony,pioneer-row", "qcom,sdm630", "qcom,sdm630-mtp";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
-> new file mode 100644
-> index 000000000000..82e54a73d172
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
-> @@ -0,0 +1,20 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, Konrad Dybcio
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sdm630-sony-xperia-nile.dtsi"
-> +
-> +/ {
-> +	model = "SoMC Voyager-RoW";
-> +	compatible = "sony,voyager-row", "qcom,sdm630", "qcom,sdm630-mtp";
-> +
-> +	chosen {
-> +		framebuffer@9d400000 {
-> +			reg = <0 0x9d400000 0 (2160 * 1080 * 4)>;
-> +			height = <2160>;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> new file mode 100644
-> index 000000000000..af75ab211b5f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> @@ -0,0 +1,135 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, Konrad Dybcio
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sdm630.dtsi"
-> +#include "pm660.dtsi"
-> +#include "pm660l.dtsi"
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/input/gpio-keys.h>
-> +
-> +/ {
-> +	/* required for bootloader to select correct board */
-> +	qcom,msm-id = <318 0>;
-> +	qcom,board-id = <8 1>;
-> +	qcom,pmic-id = <0x1001b 0x101011a 0x00 0x00 0x1001b 0x201011a 0x00 0x00>;
-> +
-> +	/* This part enables graphical output via bootloader-enabled display */
-> +	chosen {
-> +		bootargs = "earlycon=tty0 console=tty0";
-> +
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		stdout-path = "framebuffer0";
-> +
-> +		framebuffer0: framebuffer@9d400000 {
-> +		compatible = "simple-framebuffer";
-
-Please check the indentation here.
-
-> +		reg = <0 0x9d400000 0 (1920 * 1080 * 4)>;
-> +		width = <1080>;
-> +		height = <1920>;
-> +		stride = <(1080 * 4)>;
-> +		format = "a8r8g8b8";
-> +		status= "okay";
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		ramoops@ffc00000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0xffc00000 0x0 0x100000>;
-> +			record-size = <0x10000>;
-> +			console-size = <0x60000>;
-> +			ftrace-size = <0x10000>;
-> +			pmsg-size = <0x20000>;
-> +			ecc-size = <16>;
-> +			status = "okay";
-> +		};
-> +
-> +		debug_region@ffb00000 {
-> +			reg = <0x00 0xffb00000 0x00 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		removed_region@85800000 {
-> +			reg = <0x00 0x85800000 0x00 0x3700000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	soc {
-> +		gpio_keys {
-
-/soc is for mmio devices, as such gpio_keys should be moved outside
-"soc".
+Happy to see these patches on the list, keep up the good work!
 
 Regards,
 Bjorn
 
-> +			status = "okay";
-> +			compatible = "gpio-keys";
-> +			input-name = "gpio-keys";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			autorepeat;
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |  2 +
+>  .../qcom/sdm630-sony-xperia-ganges-kirin.dts  | 13 ++++++
+>  .../dts/qcom/sdm630-sony-xperia-ganges.dtsi   | 40 +++++++++++++++++++
+>  .../sdm636-sony-xperia-ganges-mermaid.dts     | 20 ++++++++++
+>  4 files changed, 75 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 1cad7cb07574..c98bafe03a96 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -16,9 +16,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dts
+> new file mode 100644
+> index 000000000000..246710a01046
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dts
+> @@ -0,0 +1,13 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Martin Botka
+> + */
 > +
-> +			camera_focus {
-> +				label = "Camera Focus";
-> +				gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-> +				linux,input-type = <1>;
-> +				linux,code = <KEY_CAMERA_FOCUS>;
-> +				debounce-interval = <15>;
-> +			};
+> +/dts-v1/;
 > +
-> +			camera_snapshot {
-> +				label = "Camera Snapshot";
-> +				gpios = <&tlmm 113 GPIO_ACTIVE_LOW>;
-> +				linux,input-type = <1>;
-> +				linux,code = <KEY_CAMERA>;
-> +				debounce-interval = <15>;
-> +			};
+> +#include "sdm630-sony-xperia-ganges.dtsi"
 > +
-> +			vol_down {
-> +				label = "Volume Down";
-> +				gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
-> +				linux,input-type = <1>;
-> +				linux,code = <KEY_VOLUMEDOWN>;
-> +				gpio-key,wakeup;
-> +				debounce-interval = <15>;
-> +			};
+> +/ {
+> +	model = "SoMC Kirin-RoW";
+> +	compatible = "sony,kirin-row", "qcom,sdm630", "qcom,sdm630-mtp";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges.dtsi
+> new file mode 100644
+> index 000000000000..ea051b3d14b8
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges.dtsi
+> @@ -0,0 +1,40 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Martin Botka
+> + */
+> +
+> +/dts-v1/;
+> +
+> +/* Ganges is very similar to Nile, but
+> + * there are some differences that will need
+> + * to be addresed when more peripherals are
+> + * enabled upstream. Hence the separate DTSI.
+> + */
+> +#include "sdm630-sony-xperia-nile.dtsi"
+> +
+> +/ {
+> +	chosen {
+> +		framebuffer@9d400000 {
+> +			reg = <0 0x9d400000 0 (2520 * 1080 * 4)>;
+> +			height = <2520>;
 > +		};
+> +	};
 > +
-> +		sdhci@c0c4000 {
-> +			status = "okay";
-> +
-> +			/* SoMC Nile platform's eMMC doesn't support HS200 mode */
-> +			/delete-property/ mmc-hs200-1_8v;
-> +		};
+> +	soc {
 > +
 > +		i2c@c175000 {
 > +			status = "okay";
 > +
-> +			/* Synaptics touchscreen */
+> +			/* Novatek touchscreen */
 > +		};
 > +
-> +		i2c@c176000 {
-> +			status = "okay";
-> +
-> +			/* SMB1351 charger */
-> +		};
-> +
-> +		/* I2C3, 4, 5, 7 and 8 are disabled on this board. */
-> +
-> +		i2c@c1b6000 {
-> +			status = "okay";
-> +
-> +			/* NXP NFC */
-> +		};
-> +
-> +		serial@c1af000 {
-> +			status = "okay";
-> +		};
+> +		/* Yes, this is intentional.
+> +		 * Ganges devices only use gpio-keys for
+> +		 * Volume Down, but currently there's an
+> +		 * issue with it that has to be resolved.
+> +		 * Until then, let's not make the kernel panic
+> +		 */
+> +		/delete-node/ gpio-keys;
 > +	};
+> +
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dts b/arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dts
+> new file mode 100644
+> index 000000000000..96b7782d58de
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dts
+> @@ -0,0 +1,20 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Martin Botka
+> + */
+> +
+> +/dts-v1/;
+> +
+> +/* Mermaid uses sdm636, but it's different ever so slightly
+> + * that we can ignore it for the time being. Sony also commonizes
+> + * the Ganges platform as a whole in downstream kernels.
+> + */
+> +#include "sdm630-sony-xperia-ganges.dtsi"
+> +
+> +/ {
+> +	model = "SoMC Mermaid-RoW";
+> +	compatible = "sony,mermaid-row", "qcom,sdm636", "qcom,sdm636-mtp";
+> +
+> +	qcom,msm-id = <345 0>;
+> +	qcom,pmic-id = <0x1001b 0x101011a 0x00 0x00 0x1001b 0x201011a 0x00 0x00 0x1001b 0x102001a 0x00 0x00>;
 > +};
 > -- 
 > 2.27.0
