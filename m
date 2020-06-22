@@ -2,82 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20BCA203A25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 16:59:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C349203A6E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 17:14:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729304AbgFVO7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 10:59:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51422 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728431AbgFVO7u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 10:59:50 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 94D8120708;
-        Mon, 22 Jun 2020 14:59:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592837990;
-        bh=Rx2z5NK4KKWGugSx/gn2fQ0uqFJxseGFeORbKEalUZo=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=TJu5TXG41tQCWC7LsG9K03BGGRlZnAOiUz/UGAsvM81TRTQjg9Kl63hvGSB/laIvR
-         O6CCqAku+1RJ5kOzAZ6+hSdp5NMiEY23Z6hbX2nTHfgMh1awDc2a65OlRZXZtNWgdo
-         1cw6XA2eqZu3ElebDbYR7ADimZGC9/rpdWQ3o50w=
-Date:   Mon, 22 Jun 2020 15:59:47 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     swboyd@chromium.org, Girish Mahadevan <girishm@codeaurora.org>,
-        linux-kernel@vger.kernel.org, skakit@codeaurora.org,
-        linux-spi@vger.kernel.org, Dilip Kota <dkota@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-In-Reply-To: <20200618150626.237027-1-dianders@chromium.org>
-References: <20200618150626.237027-1-dianders@chromium.org>
-Subject: Re: [PATCH v4 0/5] spi: spi-geni-qcom: Fixes / perf improvements
-Message-Id: <159283798284.27744.9640256219140180318.b4-ty@kernel.org>
+        id S1729049AbgFVPOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 11:14:21 -0400
+Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]:59306 "EHLO
+        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728951AbgFVPOV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 11:14:21 -0400
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+        by mx0a-001ae601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 05MF80B4019238;
+        Mon, 22 Jun 2020 10:13:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=date : from : to : cc
+ : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=PODMain02222019;
+ bh=YA68rp2GcBNVbHKDQJaNZbD5aBuB8Gj1QhN4VwD4g18=;
+ b=pXnn7VoViKb8ETOJPdlZm51DIPoT5w5oQZwY4HWFHDXP282cCpDAZglLe8A0cPjKou9E
+ IuOYXhQUQh/MumzOWrCXkKprNWkKy9PQ3WuXb72IGD3/W+URRmbls64fGds2IRi8dSs8
+ 1hTkTSp6+pbJHSXkKLge8W5G7tYoNZfkcAfERdeWSqSgsjX3p2yxWMonJzhZykY4P/Zj
+ uf0QO2U4Pt00lJO9wN2uUXYLE52ebMiRL9+Bw6MNVjBwlMueJNsgJ8t1Frw/2aQ193yF
+ rIPKyfW0n0Ep3Q0KgmMVBWfTA3xsOkX+Oi3SZm51RlmMc3s7psODNBa8gx9+Hbq4tuiQ WQ== 
+Authentication-Results: ppops.net;
+        spf=fail smtp.mailfrom=ckeepax@opensource.cirrus.com
+Received: from ediex01.ad.cirrus.com ([87.246.76.36])
+        by mx0a-001ae601.pphosted.com with ESMTP id 31sfv1tftd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+        Mon, 22 Jun 2020 10:13:36 -0500
+Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1913.5; Mon, 22 Jun
+ 2020 16:13:34 +0100
+Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
+ (198.61.84.80) with Microsoft SMTP Server id 15.1.1913.5 via Frontend
+ Transport; Mon, 22 Jun 2020 16:13:34 +0100
+Received: from ediswmail.ad.cirrus.com (ediswmail.ad.cirrus.com [198.61.86.93])
+        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id 4884C2C5;
+        Mon, 22 Jun 2020 15:13:34 +0000 (UTC)
+Date:   Mon, 22 Jun 2020 15:13:34 +0000
+From:   Charles Keepax <ckeepax@opensource.cirrus.com>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+CC:     Vinod Koul <vkoul@kernel.org>, Takashi Iwai <tiwai@suse.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] ALSA: compress: document the compress audio state
+ machine
+Message-ID: <20200622151334.GW71940@ediswmail.ad.cirrus.com>
+References: <20200622065811.221485-1-vkoul@kernel.org>
+ <20200622065811.221485-2-vkoul@kernel.org>
+ <800a2632-b263-500f-707e-c1ce94ce92d4@linux.intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <800a2632-b263-500f-707e-c1ce94ce92d4@linux.intel.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Proofpoint-SPF-Result: fail
+X-Proofpoint-SPF-Record: v=spf1 include:spf-001ae601.pphosted.com include:spf.protection.outlook.com
+ ip4:5.172.152.52 -all
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 adultscore=0 clxscore=1011
+ malwarescore=0 cotscore=-2147483648 spamscore=0 priorityscore=1501
+ suspectscore=2 phishscore=0 mlxlogscore=871 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2006220114
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Jun 2020 08:06:21 -0700, Douglas Anderson wrote:
-> This patch series is a new version of the previous patch posted:
->   [PATCH v2] spi: spi-geni-qcom: Speculative fix of "nobody cared" about interrupt
->   https://lore.kernel.org/r/20200317133653.v2.1.I752ebdcfd5e8bf0de06d66e767b8974932b3620e@changeid
+On Mon, Jun 22, 2020 at 08:28:48AM -0500, Pierre-Louis Bossart wrote:
+> On 6/22/20 1:58 AM, Vinod Koul wrote:
+> >+                                        +----------+
+> >+                                        |          |
+> >+                                        |   OPEN   |
+> >+                                        |          |
+> >+                                        +----------+
+> >+                                             |
+> >+                                             |
+> >+                                             | compr_set_params()
+> >+                                             |
+> >+                                             v
+> >+         compr_free()                   +----------+
+> >+  +-------------------------------------|          |
+> >+  |                                     |   SETUP  |
+> >+  |           +------------------------>|          |<---------------------------------+
+> >+  |           | compr_drain_notify()    +----------+                                  |
+> >+  |           |                              |                                        |
+> >+  |           |                              |                                        |
+> >+  |           |                              | compr_write()                          |
+> >+  |           |                              |                                        |
+> >+  |           |                              v                                        |
+> >+  |           |                         +----------+                                  |
+> >+  |           |                         |          |                                  |
+> >+  |           |                         |  PREPARE |                                  |
+> >+  |           |                         |          |                                  |
+> >+  |           |                         +----------+                                  |
+> >+  |           |                              |                                        |
+> >+  |           |                              |                                        |
+> >+  |           |                              | compr_start()                          |
+> >+  |           |                              |                                        |
+> >+  |           |                              v                                        |
+> >+  |     +----------+                    +----------+  compr_pause()  +----------+     |
+> >+  |     |          |    compr_drain()   |          |---------------->|          |     |
+> >+  |     |  DRAIN   |<-------------------|  RUNNING |                 |  PAUSE   |     |
+> >+  |     |          |                    |          |<----------------|          |     |
+> >+  |     +----------+                    +----------+  compr_resume() +----------+     |
+> >+  |           |                           |      |                                    |
+> >+  |           |                           |      |                                    |
+> >+  |           |                           |      |                                    |
+> >+  |           |                           |      |          compr_stop()              |
+> >+  |           |                           |      +------------------------------------+
+> >+  |           |       +----------+        |
+> >+  |           |       |          |        |
+> >+  +-----------+------>|          |<-------+
+> >+     compr_free()     |   FREE   |  compr_free()
+> >+                      |          |
+> >+                      +----------+
+> a) can you clarify if we can go from running to free directly? is
+> this really a legit transition? There's already the option of doing
+> a stop and a a drain.
 > 
-> At this point I've done enough tracing to know that there was a real
-> race in the old code (not just weakly ordered memory problems) and
-> that should be fixed with the locking patches.
-> 
-> [...]
 
-Applied to
+This is allowed in the current code, the kernel sends the stop
+internally in this case, so it kinda does go through the setup
+state just not from the users view point. I am not sure I have a
+good handle on if that makes sense or not.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+> c) no way to stop a paused stream?
 
-Thanks!
-
-[1/2] spi: spi-geni-qcom: Simplify setup_fifo_xfer()
-      commit: 0d574c6b59c6ac0ae5b581a2ffb813d446a50a3d
-[2/2] spi: spi-geni-qcom: Don't set {tx,rx}_rem_bytes unnecessarily
-      (no commit info)
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+Currently the code does allow this and it certainly makes sense
+so should probably be added.
 
 Thanks,
-Mark
+Charles
