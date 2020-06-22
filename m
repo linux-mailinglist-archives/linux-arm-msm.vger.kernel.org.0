@@ -2,104 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9884E2035E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 13:39:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D347220362E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 13:51:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbgFVLjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 07:39:42 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:40434 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727060AbgFVLjl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 07:39:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592825980; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=kQrKbNDc/6IkvX8zRZYkxck2Qap2jlhaPCjcowWErCM=; b=i4Xx0xJzTGSJIXHSfE/GMgV9dTERqixLlWH4Elr2Y+cZRsxuB9312w0HSPlueBt1iQ2F1qX0
- YR3pPgLHHXI2KEbcTEfGgrmAIji76YvfCsS7Elq1A/Tu9okB4AvWaJFZQ1fBuqzn3MRd4DPG
- TPjUZjb8p+ajvZQOSAH5WYfAiNU=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-west-2.postgun.com with SMTP id
- 5ef09873117610c7ffc171c9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Jun 2020 11:39:31
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E665C43395; Mon, 22 Jun 2020 11:39:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.71.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1727906AbgFVLvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 07:51:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54302 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727864AbgFVLvc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 07:51:32 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BFEE6C433C8;
-        Mon, 22 Jun 2020 11:39:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BFEE6C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Set suppress_bind_attrs flag
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, rnayak@codeaurora.org, ilina@codeaurora.org,
-        lsrao@codeaurora.org, john.stultz@linaro.org
-References: <1592808805-2437-1-git-send-email-mkshah@codeaurora.org>
- <159281658960.62212.15968925558324290917@swboyd.mtv.corp.google.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <a429dfbb-4125-6019-c102-d5b2f4d7379f@codeaurora.org>
-Date:   Mon, 22 Jun 2020 17:09:24 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 2D93B206EB;
+        Mon, 22 Jun 2020 11:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592826691;
+        bh=6kI4L4zPUlkblUHtlE0vjkJQynOdD+oESUx6nEDdgtA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k5bbji9DbfRj4tdakCUFG9c0m2fv4xOMhtcICMHdf7aexe0EUGfar7nMd2ujoLGWj
+         Zm9fi6pWgwb3HpZxKrRYxjVAtm+/vsWZjURMA/jMuJ7C+ouAEWJT6VL3hBBqWebpCx
+         xiZ5uBYb12DAW6k45vIv8bs9j8QJ0quxF2AHCaEQ=
+Date:   Mon, 22 Jun 2020 12:51:29 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Pantelis Antoniou <pantelis.antoniou@linaro.org>,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matt Porter <mporter@konsulko.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: sound: Device tree bindings for the
+ apq8039 sound complex
+Message-ID: <20200622115129.GC4560@sirena.org.uk>
+References: <20200619193831.12528-1-pantelis.antoniou@linaro.org>
+ <20200619193831.12528-2-pantelis.antoniou@linaro.org>
+ <20200619214126.GA1251@gerhold.net>
 MIME-Version: 1.0
-In-Reply-To: <159281658960.62212.15968925558324290917@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0vzXIDBeUiKkjNJl"
+Content-Disposition: inline
+In-Reply-To: <20200619214126.GA1251@gerhold.net>
+X-Cookie: laser, n.:
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-Thanks for the review Stephen.
+--0vzXIDBeUiKkjNJl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 6/22/2020 2:33 PM, Stephen Boyd wrote:
-> Quoting Maulik Shah (2020-06-21 23:53:25)
->> rpmh-rsc driver is fairly core to system and should not be removable
->> once its probed. However it allows to unbind driver from sysfs using
->> below command which results into a crash on sc7180.
-> What is the crash? The world falls apart because rpmh APIs start
-> referencing pointers that point to freed memory?
-Yes.
->
->> echo 18200000.rsc > /sys/bus/platform/drivers/rpmh/unbind
->>
->> Lets prevent unbind at runtime by setting suppress_bind_attrs flag.
-> Ok. But when the Android module brigade comes knocking they'll have to
-> revert this change and solve this problem too. Have fun!
+On Fri, Jun 19, 2020 at 11:41:26PM +0200, Stephan Gerhold wrote:
+> Hi Pantelis,
+>=20
+> On Fri, Jun 19, 2020 at 10:38:30PM +0300, Pantelis Antoniou wrote:
+> > Add a yaml device binding for the QCOM apq8039 sound complex driver.
+> >=20
+>=20
+> Nice to see some activity to get sound working on another SoC!
+> Thanks for documenting all these properties.
 
-No should not need to revert this change.
+Please delete unneeded context from mails when replying.  Doing this
+makes it much easier to find your reply in the message, helping ensure
+it won't be missed by people scrolling through the irrelevant quoted
+material.
 
-Even if rpmh-rsc is planned to be loadable module for android, Once 
-loaded it should be disallowed to be removed.
+> > +  function-definition:
+> > +    type: object
+> > +    description: |
+> > +      Functional configuration for the sound complex via a
+> > +      simple control. allows fixed and dynamically constructed
+> > +      function selection.
+> > +
+> > +    properties:
+> > +      mixer-control:
+> > +        $ref: /schemas/types.yaml#/definitions/string
+> > +        description: |
+> > +          Name of the exported alsa mix control.
 
-same is the case for PDC irqchip as well. these drivers are core to the 
-system and shouldn't be allowed to rmmod/unbind.
+This does *not* look like something that should be in a DT binding, it
+is quite clearly OS specific.
 
-Thanks,
-Maulik
+> > +      system-list:
+> > +        $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +        description: |
+> > +          phandle(s) of the default, init and shutdown functions
+> > +          Must be one of the declared ones in the function property.
+> > +          The default function is the one selected by default on
+> > +          startup (after the init function's sequence is executed).
+> > +          On shutdown the shutdown function sequence will be executed.
+> > +          Typically init and shutdown are the same and it's purpose
+> > +          is to initialize the sound complex mixer controls to the
+> > +          all off state, and be ready for a regular function selection.
 
->
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> ---
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> This looks much like a replacement for ALSA UCM and userspace audio jack
+> detection coded into the device tree.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+Very much so.  This is use case configuration and completely
+inappropriate for DT.  DT should describe the hardware, the way the OS
+intends to use the hardware is up to the OS.
 
+> If you want to discuss ways to integrate mixer enable/disable sequences
+> into the device tree, I suggest that you post your ideas separately as
+> [RFC] with a more generic subject. That will make it more easy for
+> everyone interested to share their thoughts.
+
+> Right now it's quite hidden in a patch set where the subjects suggest
+> that it's just a simple machine driver to glue some codecs together.
+
+Indeed, I agree entirely.
+
+--0vzXIDBeUiKkjNJl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7wm0AACgkQJNaLcl1U
+h9CUhgf/RIFd53orwiMac+A1ik82HDNf5kX/wfvcuhQB6aFkTGuyMHXXcAC/8JJp
+XgvvAcZqZpVpGZd+l9FoSp3Ye2iAPJfA4zfM7pQ5MLHoZNjnQG8n5gE04w6JhCZq
+fWi4khSCyOej+9u3Wef+37mCCLIT8g1mB34QialxOU/JsFyZEzULz/9q0reposju
+yxbv899e+GoUrRdYwhYafXcbsvy2t8UfERlBdoaGb5WDOXpYXJeTbirDhnYCKWtb
+ze3jg9a1/OAtqkPjolDJHxHY8AC4WJSYwVyPGjHMPKnf5nhuLa/CKB7J6UMyyEXN
+SEQyffj47T49rSpjtvS9FdMTg7nwXw==
+=4kwO
+-----END PGP SIGNATURE-----
+
+--0vzXIDBeUiKkjNJl--
