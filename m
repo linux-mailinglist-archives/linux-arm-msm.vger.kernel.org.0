@@ -2,122 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6423F203005
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 08:58:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82CA6203055
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 09:09:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731314AbgFVG6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 02:58:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43854 "EHLO mail.kernel.org"
+        id S1731334AbgFVHJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 03:09:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48702 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725933AbgFVG6i (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 02:58:38 -0400
-Received: from localhost.localdomain (unknown [171.61.66.58])
+        id S1726850AbgFVHJj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 03:09:39 -0400
+Received: from localhost (unknown [171.61.66.58])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0BABF2543D;
-        Mon, 22 Jun 2020 06:58:35 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6A54F25440;
+        Mon, 22 Jun 2020 07:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592809117;
-        bh=UQA6roE5vMe7DuXL5wfFwW1a+4Izllpm3Vh8e3+Lxlo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ni4vPRF6mN1e4+i/fWwpy7wzPUbjCqt8oPVW4xbAYGGsyJHD4FJ/vZkSe7KEfu5Xw
-         vIMol42e5KZdCikaSEgD6d/63cEeR9l9r+LmGBTuazzM9Dq2vXOepYmXGLIE2EoQig
-         wRTL5dFg13uRUVddL+0nyqDrOzGTadRXEZCoyT+Y=
+        s=default; t=1592809778;
+        bh=oQfZYFEK5TzA58baDfjiFR4quEk2JmrbUpxr4Y4OY1k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=obWIgoG2HbCErNH6CrWpyWHVaLgzv5zgbpsfOH3hgbjA+565FWwDlEoYCjC9nSFA9
+         pbGbOncwMUBZZMefktQmKx5Ne9W1PweltyIuiadv9bE2zKOzi+3D3VhjL9B52+b0v6
+         aUQk7bKDsaHi0h+KGL7BJiwxi7c14Zd7LpaLOdE0=
+Date:   Mon, 22 Jun 2020 12:39:34 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>, devicetree@vger.kernel.org,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, Jonas Karlman <jonas@kwiboo.se>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v2 3/3] ALSA: compress: fix partial_drain completion state
-Date:   Mon, 22 Jun 2020 12:28:11 +0530
-Message-Id: <20200622065811.221485-4-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200622065811.221485-1-vkoul@kernel.org>
-References: <20200622065811.221485-1-vkoul@kernel.org>
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Subject: Re: [PATCH v3 3/3] drm/bridge: Introduce LT9611 DSI to HDMI bridge
+Message-ID: <20200622070934.GG2324254@vkoul-mobl>
+References: <20200617105950.3165360-1-vkoul@kernel.org>
+ <20200617105950.3165360-4-vkoul@kernel.org>
+ <20200620180516.GA27870@ravnborg.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200620180516.GA27870@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On partial_drain completion we should be in SNDRV_PCM_STATE_RUNNING
-state, so set that for partially draining streams in
-snd_compr_drain_notify() and use a flag for partially draining streams
+Hello Sam,
 
-While at it, add locks for stream state change in
-snd_compr_drain_notify() as well.
+On 20-06-20, 20:05, Sam Ravnborg wrote:
+> Hi Vinod.
+> 
+> Looks good but some some of small nits.
 
-Fixes: f44f2a5417b2 ("ALSA: compress: fix drain calls blocking other compress functions (v6)")
-Reported-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- include/sound/compress_driver.h | 12 +++++++++++-
- sound/core/compress_offload.c   |  4 ++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+Great :)
 
-diff --git a/include/sound/compress_driver.h b/include/sound/compress_driver.h
-index 3df8d8c90191..93a5897201ea 100644
---- a/include/sound/compress_driver.h
-+++ b/include/sound/compress_driver.h
-@@ -66,6 +66,7 @@ struct snd_compr_runtime {
-  * @direction: stream direction, playback/recording
-  * @metadata_set: metadata set flag, true when set
-  * @next_track: has userspace signal next track transition, true when set
-+ * @partial_drain: undergoing partial_drain for stream, true when set
-  * @private_data: pointer to DSP private data
-  * @dma_buffer: allocated buffer if any
-  */
-@@ -78,6 +79,7 @@ struct snd_compr_stream {
- 	enum snd_compr_direction direction;
- 	bool metadata_set;
- 	bool next_track;
-+	bool partial_drain;
- 	void *private_data;
- 	struct snd_dma_buffer dma_buffer;
- };
-@@ -187,7 +189,15 @@ static inline void snd_compr_drain_notify(struct snd_compr_stream *stream)
- 	if (snd_BUG_ON(!stream))
- 		return;
- 
--	stream->runtime->state = SNDRV_PCM_STATE_SETUP;
-+	mutex_lock(&stream->device->lock);
-+	/* for partial_drain case we are back to running state on success */
-+	if (stream->partial_drain) {
-+		stream->runtime->state = SNDRV_PCM_STATE_RUNNING;
-+		stream->partial_drain = false; /* clear this flag as well */
-+	} else {
-+		stream->runtime->state = SNDRV_PCM_STATE_SETUP;
-+	}
-+	mutex_unlock(&stream->device->lock);
- 
- 	wake_up(&stream->runtime->sleep);
- }
-diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index e618580feac4..1c4b2cf450a0 100644
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -803,6 +803,9 @@ static int snd_compr_stop(struct snd_compr_stream *stream)
- 
- 	retval = stream->ops->trigger(stream, SNDRV_PCM_TRIGGER_STOP);
- 	if (!retval) {
-+		/* clear flags and stop any drain wait */
-+		stream->partial_drain = false;
-+		stream->metadata_set = false;
- 		snd_compr_drain_notify(stream);
- 		stream->runtime->total_bytes_available = 0;
- 		stream->runtime->total_bytes_transferred = 0;
-@@ -960,6 +963,7 @@ static int snd_compr_partial_drain(struct snd_compr_stream *stream)
- 	if (stream->next_track == false)
- 		return -EPERM;
- 
-+	stream->partial_drain = true;
- 	retval = stream->ops->trigger(stream, SND_COMPR_TRIGGER_PARTIAL_DRAIN);
- 	if (retval) {
- 		pr_debug("Partial drain returned failure\n");
+> And a few larger things in the following.
+> The larger things is releated to prepare the bridge driver to live in a
+> world with chained bridges.
+
+Sure, so that entails adding the callbacks specified below right or is
+there anything else required to do?
+
+> > +#include <linux/gpio/consumer.h>
+> > +#include <linux/interrupt.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of_graph.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/regmap.h>
+> > +#include <linux/regulator/consumer.h>
+> > +#include <sound/hdmi-codec.h>
+> > +#include <drm/drm_probe_helper.h>
+> > +#include <drm/drm_atomic_helper.h>
+> > +#include <drm/drm_bridge.h>
+> > +#include <drm/drm_mipi_dsi.h>
+> > +#include <drm/drm_print.h>
+> Please add empty lines between each group of includes.
+> They are already sorted within each group and in preferred order - good.
+
+Okay if that is the preference, sure
+
+> > +static int lt9611_mipi_input_analog(struct lt9611 *lt9611)
+> > +{
+> > +	const struct reg_sequence reg_cfg[] = {
+> > +		{ 0x8106, 0x40 }, /*port A rx current*/
+> > +		{ 0x810a, 0xfe }, /*port A ldo voltage set*/
+> > +		{ 0x810b, 0xbf }, /*enable port A lprx*/
+> > +		{ 0x8111, 0x40 }, /*port B rx current*/
+> > +		{ 0x8115, 0xfe }, /*port B ldo voltage set*/
+> > +		{ 0x8116, 0xbf }, /*enable port B lprx*/
+> > +
+> > +		{ 0x811c, 0x03 }, /*PortA clk lane no-LP mode*/
+> > +		{ 0x8120, 0x03 }, /*PortB clk lane with-LP mode*/
+> Add space after "/*" and before closing "*/".
+> Like is done a few lines up in lt9611_modes[]
+
+Oops seems to have missed these, will fix this and others if any
+
+> > +static int lt9611_mipi_input_digital(struct lt9611 *lt9611,
+> > +				     const struct drm_display_mode *mode)
+> > +{
+> > +	struct reg_sequence reg_cfg[] = {
+> > +		{ 0x8300, LT9611_4LANES },
+> > +		{ 0x830a, 0x00 },
+> > +		{ 0x824f, 0x80 },
+> > +		{ 0x8250, 0x10 },
+> > +		{ 0x8302, 0x0a },
+> > +		{ 0x8306, 0x0a },
+> > +	};
+> > +
+> > +	if (mode->hdisplay == 3840)
+> > +		reg_cfg[1].def = 0x03;
+> Please check if some of these constants be replaced by something readable
+> from the datasheet.
+> Same goes for other places where constants are used.
+
+The problem is that the datasheet I have doesn't define register names.
+Worse some of them are not even documented. I did give it a shot to
+define these, but gave up half way due to lack on inventive names :(
+
+I would like to keep the registers and replace them in future if we get
+a good spec from vendor.. or i can define REG_1...REG_N!
+
+> > +static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
+> > +				    const struct drm_display_mode *mode)
+> > +{
+> > +	u32 h_total, h_act, hpw, hfp, hss;
+> > +	u32 v_total, v_act, vpw, vfp, vss;
+> > +
+> > +	h_total = mode->htotal;
+> > +	v_total = mode->vtotal;
+> > +
+> > +	h_act = mode->hdisplay;
+> > +	hpw = mode->hsync_end - mode->hsync_start;
+> > +	hfp = mode->hsync_start - mode->hdisplay;
+> > +	hss = (mode->hsync_end - mode->hsync_start) +
+> > +	      (mode->htotal - mode->hsync_end);
+> > +
+> > +	v_act = mode->vdisplay;
+> > +	vpw = mode->vsync_end - mode->vsync_start;
+> > +	vfp = mode->vsync_start - mode->vdisplay;
+> > +	vss = (mode->vsync_end - mode->vsync_start) +
+> > +	      (mode->vtotal - mode->vsync_end);
+> Using the names from display_timings would make this easier to recognize
+> for the reader.
+> Examples:
+> vfp versus vfront_porch
+> vss versus vsync_len
+> 
+> I do not say the names from display_timing are much better, only that they
+> are more recognizeable.
+
+okay will do
+
+> > +static irqreturn_t lt9611_irq_thread_handler(int irq, void *dev_id)
+> > +{
+> > +	struct lt9611 *lt9611 = dev_id;
+> > +	unsigned int irq_flag0 = 0;
+> > +	unsigned int irq_flag3 = 0;
+> > +
+> > +	regmap_read(lt9611->regmap, 0x820f, &irq_flag3);
+> > +	regmap_read(lt9611->regmap, 0x820c, &irq_flag0);
+> > +
+> > +	pr_debug("%s() irq_flag0: %#x irq_flag3: %#x\n",
+> > +		 __func__, irq_flag0, irq_flag3);
+> debug artifact you can delete now?
+
+Okay, will remove this and rest
+
+> 
+> > +
+> > +	 /* hpd changed low */
+> Drop extra space in indent of this comment and following comments as
+> well.
+
+Ok
+
+> > +static int lt9611_bridge_attach(struct drm_bridge *bridge,
+> > +				enum drm_bridge_attach_flags flags)
+> > +{
+> > +	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
+> > +	int ret;
+> > +
+> > +	dev_dbg(lt9611->dev, "bridge attach\n");
+> > +
+> > +	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR) {
+> > +		DRM_ERROR("Fix bridge driver to make connector optional!");
+> > +		return -EINVAL;
+> > +	}
+> Please fix bridge so connector creation is optional.
+> for new bridge driver this is mandatory.
+
+Can you elaborate what is means by fixing bridge here, what are the
+things that should be done and are expected for new bridge drivers
+
+> > +static const struct drm_bridge_funcs lt9611_bridge_funcs = {
+> > +	.attach = lt9611_bridge_attach,
+> > +	.detach = lt9611_bridge_detach,
+> > +	.mode_valid = lt9611_bridge_mode_valid,
+> > +	.enable = lt9611_bridge_enable,
+> > +	.disable = lt9611_bridge_disable,
+> > +	.post_disable = lt9611_bridge_post_disable,
+> > +	.mode_set = lt9611_bridge_mode_set,
+> 
+> Add relevant bridge functions - .get_edid, .detect looks like
+> candidates.
+> See other bridge drivers for inspiration.
+
+Any good examples?
 -- 
-2.26.2
-
+~Vinod
