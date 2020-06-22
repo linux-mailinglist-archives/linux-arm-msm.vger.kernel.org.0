@@ -2,114 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CABD8204010
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 21:19:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF3E20402F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 21:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728557AbgFVTTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 15:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45812 "EHLO
+        id S1728050AbgFVT0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 15:26:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728538AbgFVTTl (ORCPT
+        with ESMTP id S1726308AbgFVT0J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 15:19:41 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD9FC06179A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:40 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id d4so14078616otk.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:40 -0700 (PDT)
+        Mon, 22 Jun 2020 15:26:09 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF6CC061573;
+        Mon, 22 Jun 2020 12:26:08 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id w6so7848204ejq.6;
+        Mon, 22 Jun 2020 12:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YIazu2RiYqWy+wLjTZlhFuFMzL0wUDBze0yedPUrnMk=;
-        b=rF8znHBG1+wbr507/H4zIJpBiygQSLn5iMVT7/IHb9kHNVnPutLYZ1QtxmlZSchb5q
-         vK/gOdkb6X9ngylTLc+GTaJZm0Fp76zz/jc/gXPRUtqcpgChoP3qgFj6bm9pn9e3YBOj
-         njS6L9EqhsJkSslXOPjntPjJdvBe90oH5yJSanndoBxIj7puBLZhwadw4Aru/D0Qn3Bi
-         D5XyInJTmjuAH4I+4EQS4n8YBGhmAPd2aqeXx+yX715fFOsfmav3EBOhvVoIyxfpMcqW
-         9XHsu4GS4AJ6edJ4vsDuhoeFsPaVOzRV4u6oEmAbsTvXDf0fwKCf3PI4IO0hd5SJPxob
-         ryMA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+HdQGf8AeeZRegXNcVVI803kxK+9B394fTQRhPgBEJw=;
+        b=rgJFTLWtpK6HV/xUgz6uEKz42am8tmm8d6/fTDnWa92XngtSicbRIbVSWCz06swyLc
+         LRBTDK3jNgmdq3qjrVu6ZPa3Q+D5QNPeCWLNS17VPTqSS9PPgj22/8EIV9yq/CY3zVtX
+         gai4TG7llx7Vav6yj4F2cX9sFa0sLhquzoWcAcwW5aYkni0khP+G2UOozySbEjh4Ecy+
+         2o78hLMTmiIujtZS5RuRltcR7pyvNk7H6LAu2qSdmq8C2pLQKbUjAoHUSjpJpZw1pE/T
+         tzX/BUcFE3wK1PMGSbM7oCh3VgLbEtH6+1xl3hZfVLzXDSOfEUeUpttqhe7bkWteHK9O
+         s8RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YIazu2RiYqWy+wLjTZlhFuFMzL0wUDBze0yedPUrnMk=;
-        b=du/ihKlIDd7tvkELAibhxB69mQWuV90YVlFRBv0C4kIkm2d2QbrAJv3pAzRnNoOO2i
-         xMYfCOA9htD4P+nnqnIa+8E3LnA9PbjGA0lipB9i4LWxNgMXDN1sQQ06k+zw1rzyKZjU
-         cHJTdx9pZKhznmVDIS7zHCRcIHNYqETVlJSsIkWIQjhyLt40HCBz4BZF/Y1vM+dvvNzJ
-         6X6EM7E52/4WovhwzhgdUd1XBdexJCEHU+9J+83EQ13EdDL2WwDbV7LCFMkufMFWMtxF
-         hdIS8ge3fWb+3ntIk7svZss/2s+w7tYo0z3f8TjiLsMNMPHjJF1JyMTB8sj0jLWkBrcj
-         cWdg==
-X-Gm-Message-State: AOAM532aNRFpV4Zv0pBLjF8ZT4wDCy2usg7yCu2P5yGAL6WClyfQIid0
-        03QPHPXzY8ODV+VVvGzIAFPBcHFycA0=
-X-Google-Smtp-Source: ABdhPJxiPUw6lHoXiRB0erNWvg5b58rqok96gMq7oOv2h2m7u4oT7tlhKuvuWvugubZR8nhuG0abtg==
-X-Received: by 2002:a9d:1722:: with SMTP id i34mr14228083ota.6.1592853580165;
-        Mon, 22 Jun 2020 12:19:40 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m84sm3348294oif.32.2020.06.22.12.19.38
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+HdQGf8AeeZRegXNcVVI803kxK+9B394fTQRhPgBEJw=;
+        b=UBwc6wxiy9SE8MIvJ7z9jbN2dU0ZWGwHn/2cOCXpZHugKL+PzL81ep+cjBx/QQXEon
+         Dwphz1GKH7JGs1AQd+T2aSrPzWSgUTb7b7BPAs6qztn7DqSG+R2SBuJoNkkKBPJbdLup
+         jgCsPawRdswNx986PrGlQ6un6nWYf+zqCQ5+j3657DWV1riESiVsyrqC5jHAkl7gBD3N
+         IUJpdvYcmU5iQmnZQbFo1thgv7tdW4BUbIwu4Rqff/prKLU8XIbqVAQwp4N88g/mYsyI
+         3oP7e3/G15GrAfTPsIAlyVEyjT84PtdLr+1LUnV4tTvXVB+vzYqmmOs5glPWxE/1q6/d
+         nQFw==
+X-Gm-Message-State: AOAM533wGymbsD4cxOk7NBgtzpxzUUIjsqHqHvHjen5EeOfEYaJBW3yH
+        jjzPZOKShff7FsA8AwBVFXM=
+X-Google-Smtp-Source: ABdhPJzpYEMSbX2ijdGUKIsAGuoFgTRy6+0EdJZzJjegCr26ZxUju7lYEPsEttt2zGCy/fnx/w0gOA==
+X-Received: by 2002:a17:906:94c4:: with SMTP id d4mr4132675ejy.232.1592853967406;
+        Mon, 22 Jun 2020 12:26:07 -0700 (PDT)
+Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
+        by smtp.googlemail.com with ESMTPSA id d16sm4043336ejo.31.2020.06.22.12.26.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 12:19:39 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 22 Jun 2020 12:26:06 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+To:     skrzynka@konradybcio.pl
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v7 5/5] arm64: dts: qcom: sdm845: Add IMEM and PIL info region
-Date:   Mon, 22 Jun 2020 12:19:42 -0700
-Message-Id: <20200622191942.255460-6-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200622191942.255460-1-bjorn.andersson@linaro.org>
-References: <20200622191942.255460-1-bjorn.andersson@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: [PATCH v3 0/7] Add support for Sony SDM630-based boards
+Date:   Mon, 22 Jun 2020 21:25:50 +0200
+Message-Id: <20200622192558.152828-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a simple-mfd representing IMEM on SDM845 and define the PIL
-relocation info region, so that post mortem tools will be able to locate
-the loaded remoteprocs.
+changes since v3:
+- order nodes by address (I might have
+made some mistakes but I tried hard..)
+- remove qcom,sdm630-mtp
+- use pretty device names instead of
+codenames
+- fix an overlooked indentation
+- add a compatible for sdm660 for mailbox
+and document it
+- drop the already-applied socinfo patch
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Konrad Dybcio (6):
+  pinctrl: qcom: spmi-gpio: Add pm660(l) compatibility
+  Documentation: Document pm660(l) SPMI GPIOs compatible
+  arm64: dts: qcom: pm660(l): Add base dts files
+  arm64: dts: qcom: sdm630: Add sdm630 dts file
+  arm64: dts: qcom: Add support for Sony Xperia XA2/Plus/Ultra (Nile
+    platform)
+  mailbox: qcom: Add sdm660 hmss compatible
 
-Changes since v6:
-- None
+Martin Botka (1):
+  arm64: dts: qcom: Add support for Sony Xperia 10/10 Plus (Ganges
+    platform)
 
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../mailbox/qcom,apcs-kpss-global.yaml        |    1 +
+ .../bindings/pinctrl/qcom,pmic-gpio.txt       |    2 +
+ arch/arm64/boot/dts/qcom/Makefile             |    5 +
+ arch/arm64/boot/dts/qcom/pm660.dtsi           |   50 +
+ arch/arm64/boot/dts/qcom/pm660l.dtsi          |   36 +
+ .../qcom/sdm630-sony-xperia-ganges-kirin.dts  |   13 +
+ .../dts/qcom/sdm630-sony-xperia-ganges.dtsi   |   40 +
+ .../sdm630-sony-xperia-nile-discovery.dts     |   13 +
+ .../qcom/sdm630-sony-xperia-nile-pioneer.dts  |   13 +
+ .../qcom/sdm630-sony-xperia-nile-voyager.dts  |   20 +
+ .../dts/qcom/sdm630-sony-xperia-nile.dtsi     |  136 ++
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          | 1174 +++++++++++++++++
+ .../sdm636-sony-xperia-ganges-mermaid.dts     |   20 +
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c       |    5 +
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |    4 +
+ 15 files changed, 1532 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm660.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/pm660l.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm630.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dts
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 8eb5a31346d2..fee50d979dc3 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3724,6 +3724,21 @@ spmi_bus: spmi@c440000 {
- 			cell-index = <0>;
- 		};
- 
-+		imem@146bf000 {
-+			compatible = "simple-mfd";
-+			reg = <0 0x146bf000 0 0x1000>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			ranges = <0 0 0x146bf000 0x1000>;
-+
-+			pil-reloc@94c {
-+				compatible = "qcom,pil-reloc-info";
-+				reg = <0x94c 0xc8>;
-+			};
-+		};
-+
- 		apps_smmu: iommu@15000000 {
- 			compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
- 			reg = <0 0x15000000 0 0x80000>;
 -- 
-2.26.2
+2.27.0
 
