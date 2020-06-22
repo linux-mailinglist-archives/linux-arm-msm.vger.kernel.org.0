@@ -2,101 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DD0B20368C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 14:16:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F8DF2036FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 14:41:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728080AbgFVMQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 08:16:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36468 "EHLO
+        id S1728189AbgFVMlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 08:41:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728041AbgFVMQH (ORCPT
+        with ESMTP id S1726652AbgFVMlX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 08:16:07 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B5CC061795
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 05:16:07 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id l12so17758314ejn.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 05:16:07 -0700 (PDT)
+        Mon, 22 Jun 2020 08:41:23 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDD0CC061795
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 05:41:21 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id j4so7529854plk.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 05:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=o/ro2YmLKE6FM1LgS90pHWONDXbjsAavRPCkFKtA03s=;
-        b=NP4UNvpq7Uxbc5NBFE80rgGELfOHDtsI0Xk2SNh+FKY3LF7EZoPKpWNh9Q8lkQNQVi
-         RnaVYrG+H6Xf1MUvNOKHyMVU4SiS4b1Jj1GMUQW4TmZefePwEBMrbNrrYzKorvpfCUsi
-         r241VlNH+JLY9T+RqnGrwF4LdTvZVZh6vi+nvvg/ffBUxY0hSndxnTFcVzhh0PaC2dm7
-         Ts6Q8yXGInXa0wQR6gD21WbiHZm2HuYecRRq3yPD425fZURj6FU8OI8CA9wBBE0OQ13S
-         9thLoTAEVAQXx0FBf/vuDImJktf+5evv/EoXqqxsLzy72BuiDta4GRtDs1lhATCjgkiZ
-         xjvA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fq5dVVlXW8qg+ASmc5eHI9qkJpaHLFgd8jV55IoO3ds=;
+        b=wcSTbWr12KM0AKzvczAYGpY8oNBlPcfTlSqXSviRt6OVkzWhCDYP9/vasBpxVa159T
+         vZMShpuchPupvThg/UKN4QPPDmfiT1u7wmr3KcRRsd8+9ZzOLxdvwSYoiYH0M0ITVWIp
+         AEIqdLRy2K0grOOM48kvK15Np7sRxIjAz85bJKWF0mOFTFGhw6D80NKy8xkZQd4/1QzT
+         xPKuFKJQ7UKYWCA50gU9EcDEdbOMRxt86AZ9SH8u+auHNZsoUbF9YDee4c7i10JsZUqU
+         4tHiNTvD1eLzQbXCpmq19w5ln2UemzsLBWF0ThxGAFg581DionEgeCstmoE5U29SWFlh
+         bcuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=o/ro2YmLKE6FM1LgS90pHWONDXbjsAavRPCkFKtA03s=;
-        b=Z423FKoADdvHcx2O9QQqoLdFPhdH6h/OZ/eyoQE/SFeSbc4vooUZhkrobJ17NnbK07
-         OVgTauE9HkmPuXcCAB64YIAF7J9AvOvf3RZbQ/QKJR1csxBXJJFuDZxhm7sZaMF6jIuI
-         1DcycOvws95OGP6K92smsAGpKRDlePknt0UGxYZVXF6CtAUoxrFBb59TE+8w8GjXhmdU
-         pCROkGXmfIX4rHGXUdG9sV1UmYDJ2wIPSJ2BTQnXuQEFgGV0R1CsPvzHmmi9APj2z0x6
-         kwu5b4wdY7BrCH9c9VPEX0ChGbNqu1em2Cm+YrPqk1Zq2+ePeJnqqef/AhHcIdlqfLWs
-         xEpw==
-X-Gm-Message-State: AOAM531ooeZ2nu7mQIdtnDDiX6LsGAiO6b8EZQdmc/XwEnObVpdVRRrc
-        9DS4Mll/9ERBX8S/mQB2zy7D1g==
-X-Google-Smtp-Source: ABdhPJxt8NMIIKopS3nj+aVADQxXOK9EER2n4UrtIrDoBU2g6DLdTa7cqzPgBvQcCBoTW72bgrkmCQ==
-X-Received: by 2002:a17:907:209b:: with SMTP id pv27mr9071317ejb.501.1592828166101;
-        Mon, 22 Jun 2020 05:16:06 -0700 (PDT)
-Received: from localhost.localdomain (212-5-158-237.ip.btc-net.bg. [212.5.158.237])
-        by smtp.gmail.com with ESMTPSA id q21sm11228417ejd.30.2020.06.22.05.16.04
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fq5dVVlXW8qg+ASmc5eHI9qkJpaHLFgd8jV55IoO3ds=;
+        b=R+jLl7sP6dhRBRAhER1F/MiCAgly791cgo1ofqNMtubENqhEp/6E6oO0vXj3sSSEKI
+         32YyuwO0GPQDSpiMU4QQgHHwOelC6BUIbxDbImFvdV33MMMlUDtZQo8GSeDvbC9/Tuhf
+         FljkNOfyO7cYQLxTkpt0ZWBykRMprz7D7trRwOaOrLoGdtGsQ7AcIySjr6OKf20xG5uy
+         qHaNVjtBrE1tUgbLPzMncWeX5QAUrcTPQIsWmhxN4ummVmbgE5fqmencYVoPTc+dY9/A
+         e4r+gOvSg3oB/gkMytARh4zocr99oRzsM9ljsOtqzMIYaLsVXbGV86g6hVLAWePJuCrn
+         eeuA==
+X-Gm-Message-State: AOAM530dzgh4CKGxN1mkwjWwQBmcMLIDwuGgsjgenpBxIhqLDT+soHLg
+        QhU0iQ7n/3FtDpiqHiQneGw99A==
+X-Google-Smtp-Source: ABdhPJwjlbEAiUJF8l5uuQoy02B2OXMWAyP1HFiJcPrgxtCoWUakvFFTfhJvx+tjDSCep+YvLypuKg==
+X-Received: by 2002:a17:90a:36d0:: with SMTP id t74mr16600778pjb.27.1592829680949;
+        Mon, 22 Jun 2020 05:41:20 -0700 (PDT)
+Received: from nagraj.local ([49.206.21.239])
+        by smtp.gmail.com with ESMTPSA id i62sm14590581pfg.90.2020.06.22.05.41.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 05:16:05 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     dianders@chromium.org, mansur@codeaurora.org,
-        stable@vger.kernel.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v3] venus: fix multiple encoder crash
-Date:   Mon, 22 Jun 2020 15:15:48 +0300
-Message-Id: <20200622121548.27882-1-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        Mon, 22 Jun 2020 05:41:19 -0700 (PDT)
+From:   Sumit Semwal <sumit.semwal@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org
+Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        kgunda@codeaurora.org, rnayak@codeaurora.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: [PATCH v5 0/4] Qualcomm labibb regulator driver
+Date:   Mon, 22 Jun 2020 18:11:06 +0530
+Message-Id: <20200622124110.20971-1-sumit.semwal@linaro.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Mansur Alisha Shaik <mansur@codeaurora.org>
+This series adds a driver for LAB/IBB regulators found on some Qualcomm SoCs.
+These regulators provide positive and/or negative boost power supplies
+for LCD/LED display panels connected to the SoC.
 
-Currently we are considering the instances which are available
-in core->inst list for load calculation in min_loaded_core()
-function, but this is incorrect because by the time we call
-decide_core() for second instance, the third instance not
-filled yet codec_freq_data pointer.
+This series adds the support for pmi8998 PMIC found in SDM845 family of SoCs.
 
-Solve this by considering the instances whose session has started.
+Changes from v4:
+- v4 Review comments incorporated
+  - simplified the driver: removed of_get_child_by_name(); use ENABLE_CTL
+    register and switch over to use the regulator_*_regmap helpers
+  - improved kerneldoc
+  - From the dt-bindings, removed interrupt-names, changed to dual license,
+    added unevaluatedProperties: false, removed interrupt-names, since there
+    is only one interrupt per node
+  - Since the Short Circuit handling needs more details from QC engineers,
+    drop the SC handling patch from this series, to submit it later
 
-Cc: stable@vger.kernel.org # v5.7+
-Fixes: 4ebf969375bc ("media: venus: introduce core selection")
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
+Changes from v3:
+- Handled review comments from v3
+- In core, swapped the meaning of enable_time and poll_enabled_time; so we
+   wait for total enable_time delay, and poll in-between at poll_enabled_time
+   interval now.
+- fixed dt_bindings_check issues in dt-bindings patch.
+- Cleanup of register_labibb_regulator(), and adapted to updated meaning of
+   poll_enabled_time.
 
-v3: Cc stable and add Fixes tag.
+Changes from v2:
+- Review comments from v2
+- Moved the poll-to-check-enabled functionality to regulator core.
+- Used more core features to simplify enable/disable functions.
+- Moved the devicetree binding to yaml.
+- Updated interrupt-names and simplified handling.
 
- drivers/media/platform/qcom/venus/pm_helpers.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Changes from v1:
+- Incorporated review comments from v1
+- Changed from virtual-regulator based handling to individual regulator based
+  handling.
+- Reworked the core to merge most of enable/disable functions, combine the
+  regulator_ops into one and allow for future variations.
+- is_enabled() is now _really_ is_enabled()
+- Simplified the SC interrupt handling - use regmap_read_poll_timeout,
+  REGULATOR_EVENT_OVER_CURRENT handling and notification to clients.
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index abf93158857b..531e7a41658f 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -496,6 +496,10 @@ min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load)
- 	list_for_each_entry(inst_pos, &core->instances, list) {
- 		if (inst_pos == inst)
- 			continue;
-+
-+		if (inst_pos->state != INST_START)
-+			continue;
-+
- 		vpp_freq = inst_pos->clk_data.codec_freq_data->vpp_freq;
- 		coreid = inst_pos->clk_data.core_id;
- 
+Nisha Kumari (3):
+  dt-bindings: regulator: Add labibb regulator
+  arm64: dts: qcom: pmi8998: Add nodes for LAB and IBB regulators
+  regulator: qcom: Add labibb driver
+
+Sumit Semwal (1):
+  regulator: Allow regulators to verify enabled during enable()
+
+ .../regulator/qcom-labibb-regulator.yaml      |  70 +++++++
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  12 ++
+ drivers/regulator/Kconfig                     |  10 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/core.c                      |  63 ++++++-
+ drivers/regulator/qcom-labibb-regulator.c     | 175 ++++++++++++++++++
+ include/linux/regulator/driver.h              |   5 +
+ 7 files changed, 335 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+ create mode 100644 drivers/regulator/qcom-labibb-regulator.c
+
 -- 
-2.17.1
+2.27.0
 
