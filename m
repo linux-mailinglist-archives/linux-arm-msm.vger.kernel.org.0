@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04886204019
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 21:19:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E71F204017
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 21:19:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728526AbgFVTTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1728532AbgFVTTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 22 Jun 2020 15:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45802 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728489AbgFVTTh (ORCPT
+        with ESMTP id S1728512AbgFVTTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 15:19:37 -0400
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FA38C061573
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:36 -0700 (PDT)
-Received: by mail-oi1-x243.google.com with SMTP id p70so16618195oic.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:36 -0700 (PDT)
+        Mon, 22 Jun 2020 15:19:38 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BCD4C061799
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:38 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id a21so16651696oic.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YDklUAlI6bHbMEfvS3rwfyZb5ytTzpIXJfmJrHuuOsM=;
-        b=OPtZjkUSGtiBYUCUGNcJAwEiuhXja+slcfyFtGDUFWt2uhdHFQcecKAJtq/5Jby1mG
-         bKkc7dFIcHEXAJRNhHBLqz3miAhjkDemNqHN93iblDtrGduNnVmJy/qODLPFTuFeR3kP
-         rmw9rtt2DA7M4q9guToFp5koAdIJ/6220rjcghPh9DN4O1gCMZjpyII+P3ayJZgf+3NC
-         +tMKZGkt+/otEnsJkMfuFYwIeLlLAspjEUN+99NC40xpSQNRYQ1iv/KF/WpzV1uYp0X1
-         nRMyCh87ZqCYqqc6IndFK9LuTdSgTJxadMLc+7/1jJjuXUZYahKfbn0nuC58geE9LU6k
-         Yecw==
+        bh=T7aDthwfVK4X3zkJhuLT621NaM0SCkvfXrIC1UxtpAo=;
+        b=WenEuPK6bKXoYKUBm6U9eecNOGvp86TCjIZoXl3kBie5ZlBhBi3X9FaoFd37hzOryK
+         OVZlz5nI+SiAwjF8/4hP409pvaRsGuQWHCSWwt8YSFLg8iRRlT9T0XVMW3qWtzB4GhFb
+         Uer2+myuvaAUczwiSayX0x23mbIqILkrv+M4ixrOZVQpYCqI0oUeI6j1CzOivKnRtU0k
+         DqrPipdWM+uuuzFRghGAoqzCLO5nGhWaFvyGyDf7se1G0OUTigri/GRNOF9cLe95WbpO
+         LTUp6XaxBfkDE8cIFp3yW+qFWJUF3Gme3V8f2ZCfVJO35BcLi1YAw+Qx9trEa9mHkPm1
+         7+4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YDklUAlI6bHbMEfvS3rwfyZb5ytTzpIXJfmJrHuuOsM=;
-        b=ZJu9q2rCa7kaYiS4CCIIrVwISFPBfgAm4BC2mcADkq7i5e8vGCTvaf07OCUy1n5nYr
-         jYwxjwZbPLH+GkiIehrogl7W94AYkEkGxxa/dESUjaB94ZMrBPSUBfIMGX1g/A1Cnivp
-         Ze+T7S/tuKoK0+Kkcm9rLcVqYr9WE+w8uUleYVX/XQqL01HvIVWRc+OLZqjQNTXoiwFh
-         J0s+paCHiswNub5aw+DfMn/u7wHnsoXFvXLmQI7vHSw82zLbVzinGhZVgGWCjSPN+i6B
-         ByaA87JLrSZkHMdepWjaZjgtHBboJrZi1xxiIqjPaEIFSe22GIiqP4hk1ZKWZ3bNKBV/
-         JQWw==
-X-Gm-Message-State: AOAM531foTSIryTRHKbSinqE8m2kCpz2HbCkPUCwu1YlDmNzUyemf7it
-        lRH4E17O92Ws0stDrSzPdUbjVQ==
-X-Google-Smtp-Source: ABdhPJx7t3TqZVcy5yeIwugnMO5BGpCYHhl19+pD2ZyaKB8+aVzJJhzGQBCWgTWUsQi1HddAOxzJ5g==
-X-Received: by 2002:aca:6c6:: with SMTP id 189mr13217866oig.134.1592853575882;
-        Mon, 22 Jun 2020 12:19:35 -0700 (PDT)
+        bh=T7aDthwfVK4X3zkJhuLT621NaM0SCkvfXrIC1UxtpAo=;
+        b=CeDREN4KMDn0igJ+5lEIPqEZWf2igeIRcOvpel/Y+tlx7wixlSAYLPGtFwA1G1yn2R
+         q+g2ZH2fa8gZfh6GJBMt5dj0XYSwHd8+0jlo/MOp5i76mk+fzSWLPVNatLQmxfiY6JXf
+         D1AXennh5bm+A+agFRynWfM6AzzUu+0f7QywFVAL08+LH4MZT4kb6ZgleimZbeJzXiVF
+         /D+jgeJXCTQU+Y6vs3tsYNFB9EdzYPUyCr5KowiiBwPY8ruc9qA0U3wpZtv/5rthrPH3
+         cmsJ4xvsMpspfW4TWz2R4xPvIzIwErFlF1WBs4uMuomEMjxLJ2LYClrBubMFjXZjxMYZ
+         +v5w==
+X-Gm-Message-State: AOAM532+d2OOhmOe6+LuwmOk7wyOMCqYnX0X5kPUw1evGOelkTn0zYny
+        3wtYEYgSv+GRi7sMGe9AyMGuQg==
+X-Google-Smtp-Source: ABdhPJypJOLGJL50IlRQ9kZNx8lrF9IJzBPVgdagxePgmBlwtc4cYdaVKa1B37z2K17mhRjOEy9wOQ==
+X-Received: by 2002:a05:6808:6d9:: with SMTP id m25mr12862254oih.111.1592853577397;
+        Mon, 22 Jun 2020 12:19:37 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id m84sm3348294oif.32.2020.06.22.12.19.34
+        by smtp.gmail.com with ESMTPSA id m84sm3348294oif.32.2020.06.22.12.19.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 12:19:35 -0700 (PDT)
+        Mon, 22 Jun 2020 12:19:36 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Ohad Ben-Cohen <ohad@wizery.com>
 Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v7 2/5] remoteproc: qcom: Introduce helper to store pil info in IMEM
-Date:   Mon, 22 Jun 2020 12:19:39 -0700
-Message-Id: <20200622191942.255460-3-bjorn.andersson@linaro.org>
+        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH v7 3/5] remoteproc: qcom: Update PIL relocation info on load
+Date:   Mon, 22 Jun 2020 12:19:40 -0700
+Message-Id: <20200622191942.255460-4-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200622191942.255460-1-bjorn.andersson@linaro.org>
 References: <20200622191942.255460-1-bjorn.andersson@linaro.org>
@@ -70,207 +69,254 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A region in IMEM is used to communicate load addresses of remoteproc to
-post mortem debug tools. Implement a helper function that can be used to
-store this information in order to enable these tools to process
-collected ramdumps.
+Update the PIL relocation information in IMEM with information about
+where the firmware for various remoteprocs are loaded.
 
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
 
 Changes since v6:
-- Replaced entry struct and usage of offset_of with a comment and defined offsets
-- Renamed pil_reloc_lock
-- Write out upper 32 bits of the address
-- Include header from implementation
-- Add linux/types.h to the header file
+- None
 
- drivers/remoteproc/Kconfig         |   3 +
- drivers/remoteproc/Makefile        |   1 +
- drivers/remoteproc/qcom_pil_info.c | 129 +++++++++++++++++++++++++++++
- drivers/remoteproc/qcom_pil_info.h |   9 ++
- 4 files changed, 142 insertions(+)
- create mode 100644 drivers/remoteproc/qcom_pil_info.c
- create mode 100644 drivers/remoteproc/qcom_pil_info.h
+ drivers/remoteproc/Kconfig          |  5 +++++
+ drivers/remoteproc/qcom_q6v5_adsp.c | 16 +++++++++++++---
+ drivers/remoteproc/qcom_q6v5_mss.c  |  3 +++
+ drivers/remoteproc/qcom_q6v5_pas.c  | 15 ++++++++++++---
+ drivers/remoteproc/qcom_q6v5_wcss.c | 14 +++++++++++---
+ drivers/remoteproc/qcom_wcnss.c     | 14 +++++++++++---
+ 6 files changed, 55 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-index c4d1731295eb..f4bd96d1a1a3 100644
+index f4bd96d1a1a3..3e8d5d1a2b9e 100644
 --- a/drivers/remoteproc/Kconfig
 +++ b/drivers/remoteproc/Kconfig
-@@ -116,6 +116,9 @@ config KEYSTONE_REMOTEPROC
- 	  It's safe to say N here if you're not interested in the Keystone
- 	  DSPs or just want to use a bare minimum kernel.
+@@ -135,6 +135,7 @@ config QCOM_Q6V5_ADSP
+ 	depends on RPMSG_QCOM_GLINK_SMEM || RPMSG_QCOM_GLINK_SMEM=n
+ 	depends on QCOM_SYSMON || QCOM_SYSMON=n
+ 	select MFD_SYSCON
++	select QCOM_PIL_INFO
+ 	select QCOM_MDT_LOADER
+ 	select QCOM_Q6V5_COMMON
+ 	select QCOM_RPROC_COMMON
+@@ -151,6 +152,7 @@ config QCOM_Q6V5_MSS
+ 	depends on QCOM_SYSMON || QCOM_SYSMON=n
+ 	select MFD_SYSCON
+ 	select QCOM_MDT_LOADER
++	select QCOM_PIL_INFO
+ 	select QCOM_Q6V5_COMMON
+ 	select QCOM_Q6V5_IPA_NOTIFY
+ 	select QCOM_RPROC_COMMON
+@@ -167,6 +169,7 @@ config QCOM_Q6V5_PAS
+ 	depends on RPMSG_QCOM_GLINK_SMEM || RPMSG_QCOM_GLINK_SMEM=n
+ 	depends on QCOM_SYSMON || QCOM_SYSMON=n
+ 	select MFD_SYSCON
++	select QCOM_PIL_INFO
+ 	select QCOM_MDT_LOADER
+ 	select QCOM_Q6V5_COMMON
+ 	select QCOM_RPROC_COMMON
+@@ -185,6 +188,7 @@ config QCOM_Q6V5_WCSS
+ 	depends on QCOM_SYSMON || QCOM_SYSMON=n
+ 	select MFD_SYSCON
+ 	select QCOM_MDT_LOADER
++	select QCOM_PIL_INFO
+ 	select QCOM_Q6V5_COMMON
+ 	select QCOM_RPROC_COMMON
+ 	select QCOM_SCM
+@@ -218,6 +222,7 @@ config QCOM_WCNSS_PIL
+ 	depends on QCOM_SMEM
+ 	depends on QCOM_SYSMON || QCOM_SYSMON=n
+ 	select QCOM_MDT_LOADER
++	select QCOM_PIL_INFO
+ 	select QCOM_RPROC_COMMON
+ 	select QCOM_SCM
+ 	help
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index d2a2574dcf35..efb2c1aa80a3 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -26,6 +26,7 @@
+ #include <linux/soc/qcom/smem_state.h>
  
-+config QCOM_PIL_INFO
-+	tristate
-+
- config QCOM_RPROC_COMMON
- 	tristate
- 
-diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
-index e8b886e511f0..fe398f82d550 100644
---- a/drivers/remoteproc/Makefile
-+++ b/drivers/remoteproc/Makefile
-@@ -16,6 +16,7 @@ obj-$(CONFIG_OMAP_REMOTEPROC)		+= omap_remoteproc.o
- obj-$(CONFIG_WKUP_M3_RPROC)		+= wkup_m3_rproc.o
- obj-$(CONFIG_DA8XX_REMOTEPROC)		+= da8xx_remoteproc.o
- obj-$(CONFIG_KEYSTONE_REMOTEPROC)	+= keystone_remoteproc.o
-+obj-$(CONFIG_QCOM_PIL_INFO)		+= qcom_pil_info.o
- obj-$(CONFIG_QCOM_RPROC_COMMON)		+= qcom_common.o
- obj-$(CONFIG_QCOM_Q6V5_COMMON)		+= qcom_q6v5.o
- obj-$(CONFIG_QCOM_Q6V5_ADSP)		+= qcom_q6v5_adsp.o
-diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-new file mode 100644
-index 000000000000..0536e3904669
---- /dev/null
-+++ b/drivers/remoteproc/qcom_pil_info.c
-@@ -0,0 +1,129 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2019-2020 Linaro Ltd.
-+ */
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/mutex.h>
-+#include <linux/of_address.h>
+ #include "qcom_common.h"
 +#include "qcom_pil_info.h"
-+
-+/*
-+ * The PIL relocation information region is used to communicate memory regions
-+ * occupied by co-processor firmware for post mortem crash analysis.
-+ *
-+ * It consists of an array of entries with an 8 byte textual identifier of the
-+ * region followed by a 64 bit base address and 32 bit size, both little
-+ * endian.
-+ */
-+#define PIL_RELOC_NAME_LEN	8
-+#define PIL_RELOC_ENTRY_SIZE	(PIL_RELOC_NAME_LEN + sizeof(__le64) + sizeof(__le32))
-+
-+struct pil_reloc {
-+	void __iomem *base;
-+	size_t num_entries;
-+};
-+
-+static struct pil_reloc _reloc __read_mostly;
-+static DEFINE_MUTEX(pil_reloc_lock);
-+
-+static int qcom_pil_info_init(void)
-+{
-+	struct device_node *np;
-+	struct resource imem;
-+	void __iomem *base;
+ #include "qcom_q6v5.h"
+ #include "remoteproc_internal.h"
+ 
+@@ -82,6 +83,7 @@ struct qcom_adsp {
+ 	unsigned int halt_lpass;
+ 
+ 	int crash_reason_smem;
++	const char *info_name;
+ 
+ 	struct completion start_done;
+ 	struct completion stop_done;
+@@ -164,10 +166,17 @@ static int qcom_adsp_shutdown(struct qcom_adsp *adsp)
+ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
 +	int ret;
 +
-+	/* Already initialized? */
-+	if (_reloc.base)
-+		return 0;
-+
-+	np = of_find_compatible_node(NULL, NULL, "qcom,pil-reloc-info");
-+	if (!np)
-+		return -ENOENT;
-+
-+	ret = of_address_to_resource(np, 0, &imem);
-+	of_node_put(np);
-+	if (ret < 0)
++	ret = qcom_mdt_load_no_init(adsp->dev, fw, rproc->firmware, 0,
++				    adsp->mem_region, adsp->mem_phys,
++				    adsp->mem_size, &adsp->mem_reloc);
++	if (ret)
 +		return ret;
 +
-+	base = ioremap(imem.start, resource_size(&imem));
-+	if (!base) {
-+		pr_err("failed to map PIL relocation info region\n");
-+		return -ENOMEM;
-+	}
-+
-+	memset_io(base, 0, resource_size(&imem));
-+
-+	_reloc.base = base;
-+	_reloc.num_entries = resource_size(&imem) / PIL_RELOC_ENTRY_SIZE;
-+
++	qcom_pil_info_store(adsp->info_name, adsp->mem_phys, adsp->mem_size);
+ 
+-	return qcom_mdt_load_no_init(adsp->dev, fw, rproc->firmware, 0,
+-			     adsp->mem_region, adsp->mem_phys, adsp->mem_size,
+-			     &adsp->mem_reloc);
 +	return 0;
-+}
+ }
+ 
+ static int adsp_start(struct rproc *rproc)
+@@ -436,6 +445,7 @@ static int adsp_probe(struct platform_device *pdev)
+ 	adsp = (struct qcom_adsp *)rproc->priv;
+ 	adsp->dev = &pdev->dev;
+ 	adsp->rproc = rproc;
++	adsp->info_name = desc->sysmon_name;
+ 	platform_set_drvdata(pdev, adsp);
+ 
+ 	ret = adsp_alloc_memory_region(adsp);
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 903b2bb97e12..4b8567f970f9 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -30,6 +30,7 @@
+ 
+ #include "remoteproc_internal.h"
+ #include "qcom_common.h"
++#include "qcom_pil_info.h"
+ #include "qcom_q6v5.h"
+ 
+ #include <linux/qcom_scm.h>
+@@ -1190,6 +1191,8 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 	else if (ret < 0)
+ 		dev_err(qproc->dev, "MPSS authentication failed: %d\n", ret);
+ 
++	qcom_pil_info_store("modem", qproc->mpss_phys, qproc->mpss_size);
 +
-+/**
-+ * qcom_pil_info_store() - store PIL information of image in IMEM
-+ * @image:	name of the image
-+ * @base:	base address of the loaded image
-+ * @size:	size of the loaded image
-+ *
-+ * Return: 0 on success, negative errno on failure
-+ */
-+int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
-+{
-+	char buf[PIL_RELOC_NAME_LEN];
-+	void __iomem *entry;
+ release_firmware:
+ 	release_firmware(fw);
+ out:
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 61791a03f648..3837f23995e0 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -25,6 +25,7 @@
+ #include <linux/soc/qcom/smem_state.h>
+ 
+ #include "qcom_common.h"
++#include "qcom_pil_info.h"
+ #include "qcom_q6v5.h"
+ #include "remoteproc_internal.h"
+ 
+@@ -64,6 +65,7 @@ struct qcom_adsp {
+ 	int pas_id;
+ 	int crash_reason_smem;
+ 	bool has_aggre2_clk;
++	const char *info_name;
+ 
+ 	struct completion start_done;
+ 	struct completion stop_done;
+@@ -117,11 +119,17 @@ static void adsp_pds_disable(struct qcom_adsp *adsp, struct device **pds,
+ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
 +	int ret;
-+	int i;
-+
-+	mutex_lock(&pil_reloc_lock);
-+	ret = qcom_pil_info_init();
-+	if (ret < 0) {
-+		mutex_unlock(&pil_reloc_lock);
+ 
+-	return qcom_mdt_load(adsp->dev, fw, rproc->firmware, adsp->pas_id,
+-			     adsp->mem_region, adsp->mem_phys, adsp->mem_size,
+-			     &adsp->mem_reloc);
++	ret = qcom_mdt_load(adsp->dev, fw, rproc->firmware, adsp->pas_id,
++			    adsp->mem_region, adsp->mem_phys, adsp->mem_size,
++			    &adsp->mem_reloc);
++	if (ret)
 +		return ret;
-+	}
-+
-+	for (i = 0; i < _reloc.num_entries; i++) {
-+		entry = _reloc.base + i * PIL_RELOC_ENTRY_SIZE;
-+
-+		memcpy_fromio(buf, entry, PIL_RELOC_NAME_LEN);
-+
-+		/*
-+		 * An empty record means we didn't find it, given that the
-+		 * records are packed.
-+		 */
-+		if (!buf[0])
-+			goto found_unused;
-+
-+		if (!strncmp(buf, image, PIL_RELOC_NAME_LEN))
-+			goto found_existing;
-+	}
-+
-+	pr_warn("insufficient PIL info slots\n");
-+	mutex_unlock(&pil_reloc_lock);
-+	return -ENOMEM;
-+
-+found_unused:
-+	memcpy_toio(entry, image, PIL_RELOC_NAME_LEN);
-+found_existing:
-+	/* Use two writel() as base is only aligned to 4 bytes on odd entries */
-+	writel(base, entry + PIL_RELOC_NAME_LEN);
-+	writel(base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
-+	writel(size, entry + PIL_RELOC_NAME_LEN + sizeof(__le64));
-+	mutex_unlock(&pil_reloc_lock);
+ 
++	qcom_pil_info_store(adsp->info_name, adsp->mem_phys, adsp->mem_size);
 +
 +	return 0;
-+}
-+EXPORT_SYMBOL_GPL(qcom_pil_info_store);
+ }
+ 
+ static int adsp_start(struct rproc *rproc)
+@@ -405,6 +413,7 @@ static int adsp_probe(struct platform_device *pdev)
+ 	adsp->rproc = rproc;
+ 	adsp->pas_id = desc->pas_id;
+ 	adsp->has_aggre2_clk = desc->has_aggre2_clk;
++	adsp->info_name = desc->sysmon_name;
+ 	platform_set_drvdata(pdev, adsp);
+ 
+ 	device_wakeup_enable(adsp->dev);
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index 88c76b9417fa..8846ef0b0f1a 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -14,6 +14,7 @@
+ #include <linux/reset.h>
+ #include <linux/soc/qcom/mdt_loader.h>
+ #include "qcom_common.h"
++#include "qcom_pil_info.h"
+ #include "qcom_q6v5.h"
+ 
+ #define WCSS_CRASH_REASON		421
+@@ -424,10 +425,17 @@ static void *q6v5_wcss_da_to_va(struct rproc *rproc, u64 da, size_t len)
+ static int q6v5_wcss_load(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	struct q6v5_wcss *wcss = rproc->priv;
++	int ret;
 +
-+static void __exit pil_reloc_exit(void)
-+{
-+	mutex_lock(&pil_reloc_lock);
-+	iounmap(_reloc.base);
-+	_reloc.base = NULL;
-+	mutex_unlock(&pil_reloc_lock);
-+}
-+module_exit(pil_reloc_exit);
++	ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
++				    0, wcss->mem_region, wcss->mem_phys,
++				    wcss->mem_size, &wcss->mem_reloc);
++	if (ret)
++		return ret;
 +
-+MODULE_DESCRIPTION("Qualcomm PIL relocation info");
-+MODULE_LICENSE("GPL v2");
-diff --git a/drivers/remoteproc/qcom_pil_info.h b/drivers/remoteproc/qcom_pil_info.h
-new file mode 100644
-index 000000000000..0dce6142935e
---- /dev/null
-+++ b/drivers/remoteproc/qcom_pil_info.h
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __QCOM_PIL_INFO_H__
-+#define __QCOM_PIL_INFO_H__
++	qcom_pil_info_store("wcnss", wcss->mem_phys, wcss->mem_size);
+ 
+-	return qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
+-				     0, wcss->mem_region, wcss->mem_phys,
+-				     wcss->mem_size, &wcss->mem_reloc);
++	return ret;
+ }
+ 
+ static const struct rproc_ops q6v5_wcss_ops = {
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 5d65e1a9329a..e2573f79a137 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -27,6 +27,7 @@
+ 
+ #include "qcom_common.h"
+ #include "remoteproc_internal.h"
++#include "qcom_pil_info.h"
+ #include "qcom_wcnss.h"
+ 
+ #define WCNSS_CRASH_REASON_SMEM		422
+@@ -145,10 +146,17 @@ void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
+ static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
++	int ret;
 +
-+#include <linux/types.h>
++	ret = qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
++			    wcnss->mem_region, wcnss->mem_phys,
++			    wcnss->mem_size, &wcnss->mem_reloc);
++	if (ret)
++		return ret;
 +
-+int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size);
-+
-+#endif
++	qcom_pil_info_store("wcnss", wcnss->mem_phys, wcnss->mem_size);
+ 
+-	return qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
+-			     wcnss->mem_region, wcnss->mem_phys,
+-			     wcnss->mem_size, &wcnss->mem_reloc);
++	return 0;
+ }
+ 
+ static void wcnss_indicate_nv_download(struct qcom_wcnss *wcnss)
 -- 
 2.26.2
 
