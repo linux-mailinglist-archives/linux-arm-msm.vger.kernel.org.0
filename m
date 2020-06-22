@@ -2,102 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06FEA202FA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 08:18:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AAE1202FAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 08:20:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731226AbgFVGSv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 02:18:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731219AbgFVGSu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 02:18:50 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA7CC061794
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 23:18:49 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id z9so17852911ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2020 23:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EwHajz3b3OzliZZ0iljg79Qo0FRnx6yIvPIMoMPNCF0=;
-        b=L680i4qLfffD6qOBHAVVNs/RTGmimhbH54HePc+aAEEFMZsU+KwUMLtg0o3/KjZxwi
-         AsJtSTQQ9TWWeiUXdQ6E95DBB6nBEu9Bw9RHmSduuUFi5efeqeK0TwchSwQmEm1b/LR9
-         guCuBfe2PDw3TrUU4GG5GeGv7DXpvHYmlHIldJ2LtIJ7sYX6q2DjQR1wjBtOZiQOZo0Z
-         c9Wg8EN9kOlCKoKR3DMaVb8rhfL6NJ6XMN3s8YaoUJrXHuvkQxL1kSCVF2HJjwP4WKbo
-         VBXH7bVYaJLr5EKRWY/wyAk5DctM3eO6l3XrzLPT9iajAEGxLTpci91ZvZNz83XG70eE
-         IcaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EwHajz3b3OzliZZ0iljg79Qo0FRnx6yIvPIMoMPNCF0=;
-        b=qmHuZ/xWjdNfaOsIM/Sp4KPpx93ruCVOkT4ZmyyAl6CfzH5+AfXuEjuUHl8P2oQcCz
-         QyW54gNhwFdxdUvJPxdOhnqMmGhqcf33JKWQC2KQwGTvyEBA/V6EUa2OScEI3VHEqJxT
-         ac2LWMuH986gT6+Jx0hk2lWg0FpkfSFxayN8q0eCY7QJPtO12J8Negkj2xRig2A4eyBg
-         frSs/PXd60eXeoWLuJnSH3QhXI78XdjeW9WjFhG3RWpWW6d8fLsTeZXi6E6fpdTeLGZ9
-         lW6UuxhP3K7cAUGTc+9Gn3DPilUwRGtuyqbZVxG8/f8e7X0tfqYp8UZsJzVBB7+frbgT
-         ya8A==
-X-Gm-Message-State: AOAM531Mb2eUWCOJxAahekxYo4MbbvWDusFpaCFu+ISdp3jetM82ZMwk
-        ByLk3Qcb1Dym/14CHmkhLqgNbZtY/c/SOhRB9CFzLw==
-X-Google-Smtp-Source: ABdhPJzk1dBKVTKlDCM/pQw++y3L1fqg3Nln3xfdv33XwAIbfQ+dtjXOSdb7gqcWA/t3i5e0VbW2AJq+r8s5HIFRXi8=
-X-Received: by 2002:a2e:9116:: with SMTP id m22mr7607612ljg.431.1592806727377;
- Sun, 21 Jun 2020 23:18:47 -0700 (PDT)
+        id S1731243AbgFVGUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 02:20:55 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:27461 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731238AbgFVGUz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 02:20:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592806854; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=5I7VSl/4Rul7O9mJZbZ9v3pTVJhuCI7n/dCMG5x7Lq4=;
+ b=xcY/bSyOVziuvenlFANflww/FJNuerN1lIQ26GPoYvJUhaMrZ6p77KgigqLq566jST2v2QZq
+ s66YRpAYria3RcunODwJVBOvU/BZp1PVfj+1zE3Sq0jfy2Gc8YCxk6L7C25SOwBIO7SZxADk
+ iPnamulhvw1+s8IX2Pg6dehAmjA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5ef04dc586de6ccd44e5cfc7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Jun 2020 06:20:53
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9EFBAC4339C; Mon, 22 Jun 2020 06:20:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0DBB5C433C6;
+        Mon, 22 Jun 2020 06:20:52 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200617065658.27567-1-naresh.kamboju@linaro.org> <20200621074003.GJ128451@builder.lan>
-In-Reply-To: <20200621074003.GJ128451@builder.lan>
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Mon, 22 Jun 2020 11:48:35 +0530
-Message-ID: <CA+G9fYvOSRL5WaU1tYTxe4Y16h_kBbNsOibsH6Od5dc1tcmK6Q@mail.gmail.com>
-Subject: Re: [PATCH] remoteproc: qcom: q6v5-mss: Fix kfree build error
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, inux-remoteproc@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Vinod Koul <vinod.koul@linaro.org>, agross@kernel.org,
-        Ohad Ben Cohen <ohad@wizery.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-remoteproc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 22 Jun 2020 11:50:52 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCHv3 0/2] Convert QCOM watchdog timer bindings to YAML
+In-Reply-To: <20200621073320.GI128451@builder.lan>
+References: <cover.1581459151.git.saiprakash.ranjan@codeaurora.org>
+ <c2b8fabcf82b27c7334482bd53ebba62@codeaurora.org>
+ <20200621073320.GI128451@builder.lan>
+Message-ID: <ce4c2b44cb15af12b04c09f1786a6c1a@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 21 Jun 2020 at 13:12, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Tue 16 Jun 23:56 PDT 2020, Naresh Kamboju wrote:
->
-> > This patch adds linux/slab.h to fix build error in qcom_q6v5_mss.c
-> >
-> > Build error:
-> >  ../drivers/remoteproc/qcom_q6v5_mss.c:
-> >   In function =E2=80=98q6v5_mpss_init_image=E2=80=99:
-> >  ../drivers/remoteproc/qcom_q6v5_mss.c:772:3:
-> >   error: implicit declaration of function =E2=80=98kfree=E2=80=99;
-> >   did you mean =E2=80=98vfree=E2=80=99? [-Werror=3Dimplicit-function-de=
-claration]
-> >    772 |   kfree(metadata);
-> >        |   ^~~~~
-> >        |   vfree
-> >
-> > Signed-off-by: Naresh Kamboju <naresh.kamboju@linaro.org>
->
-> Thanks for the patch Naresh, it looks correct but I've not seen this
-> build error myself. Could you please let me know what you built to get
-> this and if you have any suggestion on what caused it? (So we can add a
-> Fixes: tag etc)
+On 2020-06-21 13:03, Bjorn Andersson wrote:
+> On Tue 16 Jun 23:56 PDT 2020, Sai Prakash Ranjan wrote:
+> 
+>> Hi Bjorn,
+>> 
+> 
+> Hi Sai,
+> 
+>> On 2020-02-12 03:54, Sai Prakash Ranjan wrote:
+>> > This series converts QCOM watchdog timer bindings to YAML. Also
+>> > it adds the missing SoC-specific compatible for QCS404, SC7180,
+>> > SDM845 and SM8150 SoCs.
+>> >
+>> > v1:
+>> > https://lore.kernel.org/lkml/cover.1576211720.git.saiprakash.ranjan@codeaurora.org/
+>> > v2:
+>> > https://lore.kernel.org/lkml/cover.1580570160.git.saiprakash.ranjan@codeaurora.org/
+>> >
+>> > Changes since v2:
+>> >  * Add missing compatibles to enum.
+>> >
+>> > Changes since v1:
+>> >  As per Rob's suggestion:
+>> >   * Replaced oneOf+const with enum.
+>> >   * Removed timeout-sec and included watchdog.yaml.
+>> >   * Removed repeated use of const:qcom,kpss-wdt and made use of enum.
+>> >
+>> > Sai Prakash Ranjan (2):
+>> >   dt-bindings: watchdog: Convert QCOM watchdog timer bindings to YAML
+>> >   dt-bindings: watchdog: Add compatible for QCS404, SC7180, SDM845,
+>> >     SM8150
+>> >
+>> >  .../devicetree/bindings/watchdog/qcom-wdt.txt | 28 -----------
+>> >  .../bindings/watchdog/qcom-wdt.yaml           | 48 +++++++++++++++++++
+>> >  2 files changed, 48 insertions(+), 28 deletions(-)
+>> >  delete mode 100644
+>> > Documentation/devicetree/bindings/watchdog/qcom-wdt.txt
+>> >  create mode 100644
+>> > Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>> 
+>> 
+>> Gentle ping!
+>> 
+> 
+> This should better go through the watchdog tree, so I believe Guenter
+> would be the one to pick this up.
+> 
 
-Thanks for the review.
-This was an arm64 modules build failure on linux -next 20200616 tag.
-This fix has already been taken care of by
-Herbert Xu <herbert@gondor.apana.org.au> and got merged.
-Fixes: f0187db056dc ("iov_iter: Move unnecessary inclusion of...")
+Ah right, then a gentle ping for Guenter.
 
-ref:
-https://lore.kernel.org/lkml/20200616010502.GA28834@gondor.apana.org.au/
+Thanks,
+Sai
 
-- Naresh
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
