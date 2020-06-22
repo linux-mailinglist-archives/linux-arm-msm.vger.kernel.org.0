@@ -2,153 +2,281 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C5D8203D33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 18:55:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87A61203E2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 19:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729945AbgFVQzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 12:55:50 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:49082 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729808AbgFVQzu (ORCPT
+        id S1730038AbgFVRlg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 13:41:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58710 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729605AbgFVRlf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 12:55:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592844949; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=E1xy9Gx0hTkrEu6KUPmiiRl49qJNoU7hD/Q9T7ORmy0=; b=sWrhWVtJMARvGzK0SJiMzEiLBwRi6bRZcrli88OPtvPDiOWW99gyHoD1DqACQe8cvbQUUetH
- Q+WB5Q/dxK3Q5oEgA7QYvIQoVya/Ah7Og9B/LSNneuwFVJ38JDV7ncMLh6t+AgqFNsZbQP5p
- 7YTCqP5b9EYSr6fdY7xr9YJQAsg=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5ef0e294c4bb4f886dba47fd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Jun 2020 16:55:48
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF774C433B6; Mon, 22 Jun 2020 16:55:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E005AC433CB;
-        Mon, 22 Jun 2020 16:55:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E005AC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Joerg Roedel <jroedel@suse.de>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, tongtiangen <tongtiangen@huawei.com>
-Subject: [PATCH] drm/msm: Fix up the rest of the messed up address sizes
-Date:   Mon, 22 Jun 2020 10:55:38 -0600
-Message-Id: <20200622165539.9247-1-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        Mon, 22 Jun 2020 13:41:35 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F67C061795
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:41:35 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id k15so13744996otp.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:41:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dp8vvD2CI6znDHHfd68Sf9CL9jtb/dkv5bravtbMg7A=;
+        b=Wm31U41Y8LtB0XivKMN8OXczcrfTJ+xdbLxBxhT6nCXCHdV2c3QkPn8neJ5NSYfXlZ
+         igvQSF8PjyoQ2Dq3PyQpGsyrGftMb40MlpdsiWJ8PTC+nSayXqDhervGxUet+8hk1eqf
+         rEwrHjbbetFFr05CU4r57mPUTFJVo2HeXjCl4tz7I8ct3v7ybioFhg/IbqoXv1/990yT
+         UVHl1EQaflUDsNMO640JWPcSxuzm5ZLYsUkU9Jo5RamkrF4DjRjD1MzZS2T9VYVBcL/W
+         gFxu+1/c/jjfx5CL2TM4Cl2p9MQhOxYM5x1b+USeGyEl+Wp50VjhBkYfnQvUmLd+8X3F
+         llHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dp8vvD2CI6znDHHfd68Sf9CL9jtb/dkv5bravtbMg7A=;
+        b=fBFip4JZ3jSbERXLQoPKQCW8PcqQF5qYPu7+xWL5+RoHk5jhljNMznsx+lm5r9sJh6
+         UwH85b+IzOskCnZKPPQ5aoY2+Izkq4ASMyrPEjWZ+FpX+sduUdNJiOZJ5hRanYfpTxid
+         e8L2hp3IRSNEVq+Uvsz/k9pG9U1zdWxgIb6lLOUvCjfR+wOb98/sDACFqi4css/XrNfP
+         p/NldOKoabXWtdfgOT5TxIARpgNq/BZOQWJuKUCiLiOJB1tZKJCHkC0jW+1iYFKaQyzC
+         eC1hg69bHc3oiDDbMAJlzqvCO8gTMvUiZ4p6tZ8FE5vZtJcEUeAu1/VYrOLziddnueM4
+         reZg==
+X-Gm-Message-State: AOAM532oregE6kvH1hWWq02Hl16zVYWs03dBZ9VsOMx5/JUoQcKFJG+o
+        Dc+mAX1oXXDy8ndTWAKaVj3dIEXO75Y=
+X-Google-Smtp-Source: ABdhPJxU47N0XE/3K90NJgWY/Y5EeYU97hoLQGnqSmlFe+zILC8u6n0gXCC/3WKOYcliNydMfKml3g==
+X-Received: by 2002:a05:6830:2004:: with SMTP id e4mr15096660otp.85.1592847693553;
+        Mon, 22 Jun 2020 10:41:33 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j2sm3420573otk.61.2020.06.22.10.41.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2020 10:41:32 -0700 (PDT)
+Date:   Mon, 22 Jun 2020 10:38:48 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] clk: qcom: gcc-msm8994: Add missing clocks,
+ resets and GDSCs
+Message-ID: <20200622173848.GF2421@builder.lan>
+References: <20200622091843.57589-1-konradybcio@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200622091843.57589-1-konradybcio@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-msm_gem_address_space_create() changed to take a start/length instead
-of a start/end for the iova space but all of the callers were just
-cut and pasted from the old usage. Most of the mistakes have been fixed
-up so just catch up the rest.
+On Mon 22 Jun 02:18 PDT 2020, Konrad Dybcio wrote:
 
-Fixes: ccac7ce373c1 ("drm/msm: Refactor address space initialization")
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+> changes since v1:
+> - refrain from reordering defines in the header
 
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c    | 2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c    | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 2 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+The changelog goes after '---' below.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-index 60f6472a3e58..6021f8d9efd1 100644
---- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-@@ -408,7 +408,7 @@ a2xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
- 	struct msm_gem_address_space *aspace;
- 
- 	aspace = msm_gem_address_space_create(mmu, "gpu", SZ_16M,
--		SZ_16M + 0xfff * SZ_64K);
-+		0xfff * SZ_64K);
- 
- 	if (IS_ERR(aspace) && !IS_ERR(mmu))
- 		mmu->funcs->destroy(mmu);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 096be97ce9f9..21e77d67151f 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1121,7 +1121,7 @@ static int a6xx_gmu_memory_probe(struct a6xx_gmu *gmu)
- 		return -ENODEV;
- 
- 	mmu = msm_iommu_new(gmu->dev, domain);
--	gmu->aspace = msm_gem_address_space_create(mmu, "gmu", 0x0, 0x7fffffff);
-+	gmu->aspace = msm_gem_address_space_create(mmu, "gmu", 0x0, 0x80000000);
- 	if (IS_ERR(gmu->aspace)) {
- 		iommu_domain_free(domain);
- 		return PTR_ERR(gmu->aspace);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index b8615d4fe8a3..680527e28d09 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -780,7 +780,7 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
- 
- 	mmu = msm_iommu_new(dpu_kms->dev->dev, domain);
- 	aspace = msm_gem_address_space_create(mmu, "dpu1",
--		0x1000, 0xfffffff);
-+		0x1000, 0x100000000 - 0x1000);
- 
- 	if (IS_ERR(aspace)) {
- 		mmu->funcs->destroy(mmu);
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 08897184b1d9..fc6a3f8134c7 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -514,7 +514,7 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
- 			config->iommu);
- 
- 		aspace  = msm_gem_address_space_create(mmu,
--			"mdp4", 0x1000, 0xffffffff);
-+			"mdp4", 0x1000, 0x100000000 - 0x1000);
- 
- 		if (IS_ERR(aspace)) {
- 			if (!IS_ERR(mmu))
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 54631fbd9389..8586d2cf1d94 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -641,7 +641,7 @@ struct msm_kms *mdp5_kms_init(struct drm_device *dev)
- 		mmu = msm_iommu_new(iommu_dev, config->platform.iommu);
- 
- 		aspace = msm_gem_address_space_create(mmu, "mdp5",
--			0x1000, 0xffffffff);
-+			0x1000, 0x100000000 - 0x1000);
- 
- 		if (IS_ERR(aspace)) {
- 			if (!IS_ERR(mmu))
--- 
-2.17.1
+> 
+> This change adds GDSCs, resets and most of the missing
+> clocks to the msm8994 GCC driver. The remaining ones
+> are of local_vote_clk and gate_clk type, which are not
+> yet supported upstream. Also reorder them to match the
+> original downstream driver.
+> 
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> ---
+>  drivers/clk/qcom/gcc-msm8994.c               | 388 ++++++++++++++++++-
+>  include/dt-bindings/clock/qcom,gcc-msm8994.h |  36 ++
+>  2 files changed, 423 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-msm8994.c b/drivers/clk/qcom/gcc-msm8994.c
+> index b7fc8c7ba195..144d2ba7a9be 100644
+> --- a/drivers/clk/qcom/gcc-msm8994.c
+> +++ b/drivers/clk/qcom/gcc-msm8994.c
+> @@ -20,6 +20,7 @@
+>  #include "clk-rcg.h"
+>  #include "clk-branch.h"
+>  #include "reset.h"
+> +#include "gdsc.h"
+>  
+>  enum {
+>  	P_XO,
+> @@ -1772,6 +1773,32 @@ static struct clk_branch gcc_gp3_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_lpass_q6_axi_clk = {
+> +	.halt_reg = 0x0280,
+> +	.clkr = {
+> +		.enable_reg = 0x0280,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_lpass_q6_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gcc_mss_q6_bimc_axi_clk = {
+> +	.halt_reg = 0x0284,
+> +	.clkr = {
+> +		.enable_reg = 0x0284,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_mss_q6_bimc_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_pcie_0_aux_clk = {
+>  	.halt_reg = 0x1ad4,
+>  	.clkr = {
+> @@ -1790,6 +1817,32 @@ static struct clk_branch gcc_pcie_0_aux_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_pcie_0_cfg_ahb_clk = {
+> +	.halt_reg = 0x1ad0,
+> +	.clkr = {
+> +		.enable_reg = 0x1ad0,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pcie_0_cfg_ahb_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gcc_pcie_0_mstr_axi_clk = {
+> +	.halt_reg = 0x1acc,
+> +	.clkr = {
+> +		.enable_reg = 0x1acc,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pcie_0_mstr_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_pcie_0_pipe_clk = {
+>  	.halt_reg = 0x1ad8,
+>  	.halt_check = BRANCH_HALT_DELAY,
+> @@ -1809,6 +1862,20 @@ static struct clk_branch gcc_pcie_0_pipe_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_pcie_0_slv_axi_clk = {
+> +	.halt_reg = 0x1ac8,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x1ac8,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pcie_0_slv_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_pcie_1_aux_clk = {
+>  	.halt_reg = 0x1b54,
+>  	.clkr = {
+> @@ -1827,6 +1894,32 @@ static struct clk_branch gcc_pcie_1_aux_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_pcie_1_cfg_ahb_clk = {
+> +	.halt_reg = 0x1b54,
+> +	.clkr = {
+> +		.enable_reg = 0x1b54,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pcie_1_cfg_ahb_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gcc_pcie_1_mstr_axi_clk = {
+> +	.halt_reg = 0x1b50,
+> +	.clkr = {
+> +		.enable_reg = 0x1b50,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pcie_1_mstr_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_pcie_1_pipe_clk = {
+>  	.halt_reg = 0x1b58,
+>  	.halt_check = BRANCH_HALT_DELAY,
+> @@ -1846,6 +1939,19 @@ static struct clk_branch gcc_pcie_1_pipe_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_pcie_1_slv_axi_clk = {
+> +	.halt_reg = 0x1b48,
+> +	.clkr = {
+> +		.enable_reg = 0x1b48,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pcie_1_slv_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_pdm2_clk = {
+>  	.halt_reg = 0x0ccc,
+>  	.clkr = {
+> @@ -1864,6 +1970,19 @@ static struct clk_branch gcc_pdm2_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_pdm_ahb_clk = {
+> +	.halt_reg = 0x0cc4,
+> +	.clkr = {
+> +		.enable_reg = 0x0cc4,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_pdm_ahb_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct clk_branch gcc_sdcc1_apps_clk = {
+>  	.halt_reg = 0x04c4,
+>  	.clkr = {
+> @@ -1899,6 +2018,23 @@ static struct clk_branch gcc_sdcc1_ahb_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_sdcc2_ahb_clk = {
+> +	.halt_reg = 0x0508,
+> +	.clkr = {
+> +		.enable_reg = 0x0508,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data)
+> +		{
+> +			.name = "gcc_sdcc2_ahb_clk",
+> +			.parent_names = (const char *[]){
 
+Please convert these to use .parent_data instead.
+
+Regards,
+Bjorn
