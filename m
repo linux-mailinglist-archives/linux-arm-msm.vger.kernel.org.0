@@ -2,226 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60DBB2031B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 10:12:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7C342031D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 10:17:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbgFVIMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 04:12:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55202 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726126AbgFVIMb (ORCPT
+        id S1726422AbgFVIRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 04:17:12 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:45406 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726391AbgFVIRL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 04:12:31 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 892E5C061797
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 01:12:30 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id k15so12363417otp.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 01:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4RpwlAyFnjmq4it4DvV6HICg0Qx2ws7Bbf9XwDlyvNU=;
-        b=L8MOP02tH082ssrMnlQVK6MgCCFguURnrHOyjjmPEn46O6qiMW89ifsdfxtdB5k3Su
-         tBOwlwpzkpqwPU+WuXm1lbyDJ6BvoO5G2yb3IhT7bypKJom7G8RzMQwA4RFhz4o0FciI
-         t3cJSDB8HrSMkY4mo9soGsiG8VJ73joqoDLPrYtOwIxsqndMyZXKdd3vaWWQLODw9HNT
-         dAXQ7Ki58sLJQKkSd+TAdrSpiSbuDyV9SXvr4EzjiHfFGNLkAW4qJkfoTNNMdTWcLz9f
-         YW3YddKGxbnrWmTa62JO21S5kcnlohu6HAUPTCczwwIdoOSVIhBA5ImWnAalwxM0FHxy
-         4QtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4RpwlAyFnjmq4it4DvV6HICg0Qx2ws7Bbf9XwDlyvNU=;
-        b=UGAQVAlRUjJOgX+17kZurMXk8NmFfOxzIcgaZqdilkApj4XUnYwor2GQXR08uKczuf
-         1ZQ/Tt6ZOYUJmlvYzh5RuyTXEhG4NMM5xahQ/43bCzMw/NhTUsPDhvK4t0GiVanjnJHX
-         AcroY1hcL6ZPUAoQoYCLdUy8VWm/PRdmQSbyeWYQMxZBhs2H1/BkLW+6HXPiOHHbu7lj
-         HZVg3kQntTBeqIw6NHt6lst8n4xPM51SWBTZXvVtfeXaJ9UFqswJ9ROIlrPO7N8Iq1wi
-         IQtT7+RqF/1mPaii0SHliSmv0w8RkazKH6o63IhmUK6wV7MPLQqlR61ocXzJJP8ee5IH
-         DL+Q==
-X-Gm-Message-State: AOAM533Ak/fVjMsph4Dg2eeEWzhUFfOgH8l0fwjIWuC2T+cRyeZp3CCX
-        XNISfIqW0Xxw++aHP4lkgPsOfA==
-X-Google-Smtp-Source: ABdhPJyRltu6da/7EU8mqyL2GmxT6IdSGCN9QFVNL+cZ6aMNKXWOP7pN+tWyS1cGEm2kIWwqmVPAeQ==
-X-Received: by 2002:a9d:611c:: with SMTP id i28mr12578642otj.361.1592813549698;
-        Mon, 22 Jun 2020 01:12:29 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g2sm3194522otq.9.2020.06.22.01.12.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 01:12:29 -0700 (PDT)
-Date:   Mon, 22 Jun 2020 01:09:43 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 5/8] arm64: dts: qcom: pm660(l): Add base dts files
-Message-ID: <20200622080943.GE2421@builder.lan>
-References: <20200622075749.21925-1-konradybcio@gmail.com>
- <20200622075749.21925-6-konradybcio@gmail.com>
+        Mon, 22 Jun 2020 04:17:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592813830; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=JqD4rQ/7H9u9A4vYuO3dpeXtRmsDu9f2oa3njpuXPM0=; b=pLd5L6MnvB8mpKjNRQRZ//WdbkN9GFbVLJz+Gxp/Ko4rCJDrrKc5o1jzj5UqOtJog2oWcjba
+ oWOZt5Y41dbqwdPH82NjuWS6Fh/V+za1UOm+DTwXqaKtpZHZwFDfRRV+cbOwIInR+7OhUgAr
+ ++MeRoPVlJR3iWCtGdy4KUuz26Q=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5ef069036f2ee827da32b72d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Jun 2020 08:17:07
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A68D4C433C6; Mon, 22 Jun 2020 08:17:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F84BC433CA;
+        Mon, 22 Jun 2020 08:17:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6F84BC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        georgi.djakov@linaro.org, saravanak@google.com, mka@chromium.org
+Cc:     nm@ti.com, bjorn.andersson@linaro.org, agross@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, vincent.guittot@linaro.org,
+        amit.kucheria@linaro.org, lukasz.luba@arm.com,
+        sudeep.holla@arm.com, smasetty@codeaurora.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v6 0/5] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
+Date:   Mon, 22 Jun 2020 13:46:44 +0530
+Message-Id: <20200622081649.27280-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200622075749.21925-6-konradybcio@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 22 Jun 00:57 PDT 2020, Konrad Dybcio wrote:
+This patch series aims to extend cpu based scaling support to L3/DDR on
+SDM845 and SC7180 SoCs.
 
-> Add base DTS files for pm660(l) along with GPIOs, power-on and
-> rtc nodes.
-> 
-> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/pm660.dtsi  | 60 ++++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/pm660l.dtsi | 46 +++++++++++++++++++++
->  2 files changed, 106 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm660.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/pm660l.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-> new file mode 100644
-> index 000000000000..041f45264255
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-> @@ -0,0 +1,60 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, Konrad Dybcio
-> + */
-> +
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/input/linux-event-codes.h>
+Patches [1-2] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
+Patches [3-5] - Update bw levels based on cpu frequency change
 
-Please keep things alphabetically sorted.
+V7:
+ * Fixup comments for correctness [Matthias]
+ * Initialize icc_scaling_enabled to false [Matthias]
+ * Make use of the increased per line character limit [Matthias]
 
-> +
-> +&spmi_bus {
-> +
-> +	pmic@0 {
-> +		compatible = "qcom,pm660", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		rtc@6000 {
-> +			compatible = "qcom,pm8941-rtc";
-> +			reg = <0x6000>, <0x6100>;
-> +			reg-names = "rtc", "alarm";
-> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
-> +		};
-> +
-> +		pon: pon@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +
-> +			reg = <0x800>;
-> +
-> +			pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +			};
-> +
-> +		};
-> +
-> +		pm660_gpios: gpios@c000 {
-> +			compatible = "qcom,pm660-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupts = <0 0xc0 0 IRQ_TYPE_NONE>,
+V6:
+ * Add global flag to distinguish between voltage update and opp add.
+   Use the same flag before trying to scale ddr/l3 bw [Viresh]
+ * Use dev_pm_opp_find_freq_ceil to grab all opps [Viresh] 
+ * Move dev_pm_opp_of_find_icc_paths into probe [Viresh]
 
-The spmi gpio driver now relies on hierarchical irq chips to map its
-pins to the interrupt controller's. So you shouldn't list the interrupts
-anymore.
+V5:
+ * Pick up R-bs from Amit
+ * Drop icc tag support/dt changes till the a consensus is achieved
+ * Use dev_pm_opp_adjust_voltage instead [Viresh]
+ * Drop dev_pm_opp_get_path_count [Saravana]
+ * Rework dev_pm_opp_set_bw
 
-But it should be an "interrupt-controller" and you need "gpio-ranges".
+V4:
+ * Migrate to using Georgi's new bindings
+ * Misc fixups based on Matthias comments
+ * API fixups based on Bjorn's comments on v2
+ * Picked up a few R-bs from Matthias
 
-> +				     <0 0xc1 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc2 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc3 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc4 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc5 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc6 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc7 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc8 0 IRQ_TYPE_NONE>,
-> +				     <0 0xc9 0 IRQ_TYPE_NONE>,
-> +				     <0 0xca 0 IRQ_TYPE_NONE>,
-> +				     <0 0xcb 0 IRQ_TYPE_NONE>,
-> +				     <0 0xcc 0 IRQ_TYPE_NONE>;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-> new file mode 100644
-> index 000000000000..5e0f1a6e3966
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-> @@ -0,0 +1,46 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2020, Konrad Dybcio
-> + */
-> +
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +#include <dt-bindings/input/linux-event-codes.h>
-> +
-> +&spmi_bus {
-> +
-> +	pmic@2 {
-> +		compatible = "qcom,pm660l", "qcom,spmi-pmic";
-> +		reg = <0x2 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pm660l_gpios: gpios@c000 {
-> +			compatible = "qcom,pm660l-gpio", "qcom,spmi-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			#interrupt-cells = <2>;
-> +			interrupts = <0x2 0xc0 0x0 IRQ_TYPE_NONE>,
+v3:
+ * Migrated to using Saravana's opp-kBps bindings [1]
+ * Fixed some misc comments from Rajendra
+ * Added support for SC7180
 
-As above.
+v2:
+ * Incorporated Viresh's comments from:
+ https://lore.kernel.org/lkml/20190410102429.r6j6brm5kspmqxc3@vireshk-i7/
+ https://lore.kernel.org/lkml/20190410112516.gnh77jcwawvld6et@vireshk-i7/
+ * Dropped cpufreq-map passive governor
 
-Regards,
-Bjorn
+Sibi Sankar (5):
+  cpufreq: blacklist SDM845 in cpufreq-dt-platdev
+  cpufreq: blacklist SC7180 in cpufreq-dt-platdev
+  OPP: Add and export helper to set bandwidth
+  cpufreq: qcom: Update the bandwidth levels on frequency change
+  cpufreq: qcom: Disable fast switch when scaling DDR/L3
 
-> +					 <0x2 0xc1 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc2 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc3 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc4 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc5 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc6 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc7 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc8 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xc9 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xca 0x0 IRQ_TYPE_NONE>,
-> +					 <0x2 0xcb 0x0 IRQ_TYPE_NONE>;
-> +		};
-> +	};
-> +
-> +	pmic@3 {
-> +		compatible = "qcom,pm660l", "qcom,spmi-pmic";
-> +		reg = <0x3 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +	};
-> +};
-> +
-> -- 
-> 2.27.0
-> 
+ drivers/cpufreq/cpufreq-dt-platdev.c |  2 +
+ drivers/cpufreq/qcom-cpufreq-hw.c    | 86 ++++++++++++++++++++++++++--
+ drivers/opp/core.c                   | 31 ++++++++++
+ include/linux/pm_opp.h               |  6 ++
+ 4 files changed, 121 insertions(+), 4 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
