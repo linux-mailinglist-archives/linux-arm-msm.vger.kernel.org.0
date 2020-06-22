@@ -2,89 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFB5D203647
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 13:58:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49B4220365A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 14:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727906AbgFVL6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 07:58:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56524 "EHLO mail.kernel.org"
+        id S1727956AbgFVMEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 08:04:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60552 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727821AbgFVL6l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 07:58:41 -0400
-Received: from localhost (unknown [171.61.66.58])
+        id S1727864AbgFVMEL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 08:04:11 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A7649206EB;
-        Mon, 22 Jun 2020 11:58:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 12E432071A;
+        Mon, 22 Jun 2020 12:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592827121;
-        bh=vs4+pF8zCbPo5SX2paUNobqlBDYLTJ+ieB7qsSqtQK4=;
+        s=default; t=1592827451;
+        bh=OtCXs6qM/P9EkBQOGbFbsuL3yixXLWMZlDM2pS2KULw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wvIhqatZx4FwXxwifIernm1iEymbEe8Qp2gXIL7YcKv2LgXS4AFqw0GR6ksDlw8Do
-         wxXtR9Mu6K0SCxpeDGJVoX/zMLaCX9aiiF9JUZ70iJny/AW1aPnDa0cBu46J6NLx5q
-         s5Ug8wlWWpPlBfNzqqEOTLAQvP1jjypGb20Nw4zU=
-Date:   Mon, 22 Jun 2020 17:28:37 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        sanyog.r.kale@intel.com, pierre-louis.bossart@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soundwire: qcom: Constify static structs
-Message-ID: <20200622115837.GL2324254@vkoul-mobl>
-References: <20200609230029.69802-1-rikard.falkeborn@gmail.com>
+        b=lLSiwOPq3kFltNjGmVtUTR8bqdRAZLMPunIKPq/ormr3CcYLEKhYqR99c7sOWbm6j
+         QGDp3guukz+KDDmVFZZbM801EPjtvCQJHQ1Jn22iv/gzYz0+zqTS2g6Agann7ySK64
+         D7rgZz7rr4H84BwzotL1cGZN6bQDlsmoSWEjnkqs=
+Date:   Mon, 22 Jun 2020 13:04:09 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Pantelis Antoniou <pantelis.antoniou@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthew Porter <mporter@konsulko.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: sound: Device tree bindings for the
+ apq8039 sound complex
+Message-ID: <20200622120409.GD4560@sirena.org.uk>
+References: <20200619193831.12528-1-pantelis.antoniou@linaro.org>
+ <20200619193831.12528-2-pantelis.antoniou@linaro.org>
+ <20200619214126.GA1251@gerhold.net>
+ <2070B433-83E0-4ACE-A470-36401934FC5A@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zS7rBR6csb6tI2e1"
 Content-Disposition: inline
-In-Reply-To: <20200609230029.69802-1-rikard.falkeborn@gmail.com>
+In-Reply-To: <2070B433-83E0-4ACE-A470-36401934FC5A@linaro.org>
+X-Cookie: laser, n.:
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-06-20, 01:00, Rikard Falkeborn wrote:
-> qcom_swrm_port_ops and qcom_swrm_ops are not modified and can be made
-> const to allow the compiler to put them in read-only memory.
-> 
-> Before:
->    text    data     bss     dec     hex filename
->   18266    3056     256   21578    544a drivers/soundwire/qcom.o
-> 
-> After:
->    text    data     bss     dec     hex filename
->   18426    2896     256   21578    544a drivers/soundwire/qcom.o
 
-Applied, thanks
+--zS7rBR6csb6tI2e1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
-> ---
->  drivers/soundwire/qcom.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index a1c2a44a3b4d..915c2cf0c274 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -406,13 +406,13 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
->  	return ctrl->reg_write(ctrl, reg, val);
->  }
->  
-> -static struct sdw_master_port_ops qcom_swrm_port_ops = {
-> +static const struct sdw_master_port_ops qcom_swrm_port_ops = {
->  	.dpn_set_port_params = qcom_swrm_port_params,
->  	.dpn_set_port_transport_params = qcom_swrm_transport_params,
->  	.dpn_port_enable_ch = qcom_swrm_port_enable,
->  };
->  
-> -static struct sdw_master_ops qcom_swrm_ops = {
-> +static const struct sdw_master_ops qcom_swrm_ops = {
->  	.xfer_msg = qcom_swrm_xfer_msg,
->  	.pre_bank_switch = qcom_swrm_pre_bank_switch,
->  };
-> -- 
-> 2.27.0
+On Mon, Jun 22, 2020 at 02:34:23PM +0300, Pantelis Antoniou wrote:
 
--- 
-~Vinod
+> > This looks much like a replacement for ALSA UCM and userspace audio jack
+> > detection coded into the device tree.
+
+> I wouldn=E2=80=99t call it a replacement exactly. It=E2=80=99s merely a w=
+ay to bundle all
+> of this information about codec glue in the kernel (where it should belon=
+g IMO).
+
+No, you're encoding use case decisions into the DT here - for example
+your example will break use cases like ring tones and shutter sounds
+which should play through both speaker and headphones.  It's also
+setting volumes which may be inappropriate or may be not and interferes
+with userspace using those same physical volume controls.
+
+--zS7rBR6csb6tI2e1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7wnjgACgkQJNaLcl1U
+h9Dz/Af/ajnJ98C2qreuaWAPQ8PgLd/GE3P0ukq/sBXHzyMUg16weomHiWdIrtEZ
+/78/EQEqwb8rigyHLVLC7P/BBmLH2XqpNu0tB0hhv4iN5ywyvri2U6LbDUIlSdKM
+VieAO/eLiOmM7lC34jf5n6JJllQJGAFQlsJMeSdsBMim/xILhPXPAZ8Vw10PakkK
+VWBCA2z5kQLlqU7R/90f9HqXaQFegxQJzJN4otivtTr0bNq3fYVnjs/l8cGoIM78
+hHTm7Gg5dIPxG6u5SL+s6073hlMRzS1NOPCjz/9nuJgNV49BR9kvHT25GE2wPmLP
+Pbq2xpkHMsSQSpnRaK81eKX9f3gp1Q==
+=IFZO
+-----END PGP SIGNATURE-----
+
+--zS7rBR6csb6tI2e1--
