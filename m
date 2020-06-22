@@ -2,96 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 886EF203E40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 19:46:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D200C203E48
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 19:47:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730139AbgFVRq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 13:46:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59480 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730131AbgFVRq2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 13:46:28 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF8D9C061798
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:46:27 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id g7so13719611oti.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 10:46:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+PoE8yiRYasvpVTcmOB/KM09iEzE1JRP/lNZ3k5npcg=;
-        b=X6lFlikLjM57gw/5/KFf4WYh17y5pOO2Nd1bjA1AMFtYVBiSjVsW17Tj/7u5AZivQM
-         umURivbWdUVI4Dv1pVwIrReNSuJDyC8dR0afrvIcTuuK1sji1ftuMW+u/N+iz55GH/ri
-         oUC58t4kl6Hgnf0uh3I6Ry4/7A2nmwlB+5U65UdHO5s4I2QtwUvUbu+Snhk64GJLrMM7
-         k6So4J7ewwHay12xDDthdTKN8td7+Uvpz5QY94/U+VXmGzHCebhIrkUOGPNzWKWsuFRJ
-         GT+XDOTxZY1FtkUsWFckwSq6dsLlq/urXW0nbXEjwWcs79Dj3apXWpEdcaCt5fRPQE1I
-         izdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+PoE8yiRYasvpVTcmOB/KM09iEzE1JRP/lNZ3k5npcg=;
-        b=IKPdEIvdO6DWKNMZ/S6pI2mjFIg9NoLPicaEsGhOjT6tFix6/MoXjGH92iYy7lruyY
-         iaLwfdfyByTwFeZs/GTtRjScsHfdge3j+fDCIxf3HxcZpwEpB+E4HLvl48Sw2aM778/E
-         A8NdbM9GUxezobzC72T+fjQdakQmE+cGLhy8FgGnYYIQTPgF6qmp98NnI3dV5Gk74Kwz
-         U/ixBeDYbLxoas3Rhh7qxhhHebINBo9AVX6FSUBtpbWyynTKo4v+e6QgqZeYJB93OAWm
-         zCPP/4RM00lRiLA+oAMSWixoFhKjxe38C2ckYGAZVgIPR+T9tqs8rqGXhWrYciwT0TXS
-         LvWg==
-X-Gm-Message-State: AOAM530uKy8+ativuQZ418M4MoVXPgBNlv+MGntzVth1bkidd2/Zf5DK
-        U4KYTFN+4ZhcFnM6+6cYmReHmw==
-X-Google-Smtp-Source: ABdhPJyUdRtRq9tztqPkA0Ij9COzUJcM37XZ1xYZCEeJmqizxWTn8SkN0elI/ub/TlCx51fdAkVsvQ==
-X-Received: by 2002:a05:6830:4a1:: with SMTP id l1mr4509025otd.215.1592847986993;
-        Mon, 22 Jun 2020 10:46:26 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id e25sm3434158otj.73.2020.06.22.10.46.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 10:46:26 -0700 (PDT)
-Date:   Mon, 22 Jun 2020 10:43:41 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
+        id S1730185AbgFVRrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 13:47:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:28890 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729975AbgFVRrW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 13:47:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1592848041; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=RdP8Coca9hXqgxUVPdVNLur18MQ21Zv0dAHtp2pVhLs=; b=lgMvVrQJeGIWiZwDTk8cyTRnZ0/eV3Wl4gQVRgCTCkFPZ+19nvZ7sJe7yZWRguDMrrY20CGt
+ kRBiKdbvKvUmc5F8vNQv5M7bTY2vqMvILxi8WpQobM05a5fJbOdUtWtPgAJB/irWg/HAWkO5
+ H4TUbzgwSbWg97fPDEyao2jlWE8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5ef0ee9fad153efa347caef1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Jun 2020 17:47:11
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4A2F1C433A0; Mon, 22 Jun 2020 17:47:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.87.234] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7603AC433C8;
+        Mon, 22 Jun 2020 17:47:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7603AC433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH v3 2/6] dt-bindings: usb: Add Qualcomm PMIC type C
+ controller dt-binding
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org, DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 3/8] soc: qcom: socinfo: Add socinfo entry for SDM630
-Message-ID: <20200622174341.GR128451@builder.lan>
-References: <20200622075749.21925-1-konradybcio@gmail.com>
- <20200622075749.21925-4-konradybcio@gmail.com>
- <20200622080503.GQ128451@builder.lan>
- <CAMS8qEWrnHc3CWrW-vzwxu+PR8FL9hcvCtBpS4oK9ZYXgGfLJg@mail.gmail.com>
+        devicetree@vger.kernel.org,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Jun Li <lijun.kernel@gmail.com>
+References: <20200617180209.5636-1-wcheng@codeaurora.org>
+ <20200617180209.5636-3-wcheng@codeaurora.org>
+ <CAL_Jsq+fhXWGJvYxUDygd6hKs3dc8GKxKCz_Q+_C1AjK0J0N+w@mail.gmail.com>
+ <fb448691-2bda-ada6-799f-ee389e647710@codeaurora.org>
+ <CAL_JsqLGWY_bBUzr6r0czxH32vvDnsR6=MzS=zH4tJ-5PEobZw@mail.gmail.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <9414034c-3f71-bdc1-bda2-6b3dc7758003@codeaurora.org>
+Date:   Mon, 22 Jun 2020 10:47:08 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMS8qEWrnHc3CWrW-vzwxu+PR8FL9hcvCtBpS4oK9ZYXgGfLJg@mail.gmail.com>
+In-Reply-To: <CAL_JsqLGWY_bBUzr6r0czxH32vvDnsR6=MzS=zH4tJ-5PEobZw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 22 Jun 01:37 PDT 2020, Konrad Dybcio wrote:
 
-> Hi Bjorn,
+
+On 6/18/2020 3:23 PM, Rob Herring wrote:
+> On Thu, Jun 18, 2020 at 2:09 PM Wesley Cheng <wcheng@codeaurora.org> wrote:
+>>
+>>
+>> On 6/18/2020 11:33 AM, Rob Herring wrote:
+>>> On Wed, Jun 17, 2020 at 12:02 PM Wesley Cheng <wcheng@codeaurora.org> wrote:
+>>>
+>>> You are duplicating everything in usb-connector.yaml. You should have
+>>> a $ref to it.
+>>>
+>>
+>> Hi Rob,
+>>
+>> Sure, I will add a reference to that doc.
+>>
+>>>
+>>> This is wrong. The connector binding says port 0 is the connection the
+>>> USB HS controller.
+>>>
+>>> What's a type C mux node? Is there a binding for that? There's an
+>>> ongoing discussion with the CrOS folks on how to describe Alt mode
+>>> mux/switches.
+>>
+>> I reviewed the connector binding previously, and couldn't seem to come
+>> up with a model which fit a design where the type C controller (ie the
+>> entity which does the CC orientation and role detection) does not have
+>> the SS lane mux included.  The SS lane mux is the HW which handles the
+>> selection of the SS lanes to utilize based on cable orientation.
 > 
-> you said "Applied" - so should I omit this patch when sending a v3 of
-> the series or keep it in there?
+> The intent was the controller would be the parent node of the connector.
 > 
 
-Seems I missed pushing out the drivers-for-5.9 branch, but the change is
-staged for 5.9 here:
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=for-next
+Hi Rob,
 
-So you can omit it from now on.
+Correct, I agree with that point, and in the changes uploaded, the QCOM
+PMIC type C controller will be the parent node for the connector.
 
-Regards,
-Bjorn
+> How the SS lane mux is represented is what needs to be figured out. I
+> don't know what that looks like, but it needs to be something that
+> works for multiple designs. Ideally, that's an extension of the
+> existing 'usb-c-connector' binding, but if there's good reasons to
+> redesign it that can happen.
+> 
+> Rob
+> 
+
+We probably wouldn't need to redesign it, but maybe if we can remove the
+connector port assignments requirement, it would allow for some
+flexibility.  From my knowledge, I don't think any driver is actually
+utilizing or checking the port number assignments, so there isn't a
+limitation on what could be defined in there.
+
+Here's a simplified diagram of the FUSB302 reference design from the
+data sheet.  The I2C bus is just for CSR access to the FUSB302.
+
+				   _______		 _______
+                            ______|FUSB302|		|SOC	|
+			   |	  |Type C |		|	|
+			   |      |Cntrl  |__I2C_______	|	|
+			   |	  |_______|		|	|
+ ___                       |       			|	|
+|   |______ CC1/2 _________|				|	|
+|   |______ HS DP/DM __________________________________	|	|
+|   |							|	|
+				   ________		|	|
+|   |______ SS RX/TX1 ____________|FUSB304 |__SS RX/TX_	|	|
+|   |______ SS RX/TX2 ____________|USB Mux |		|_______|
+|   |                             |________|
+|   |
+|___|
+
+
+Otherwise, we can just simply add another port definition for external
+SS lane muxes if possible.
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
