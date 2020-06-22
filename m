@@ -2,86 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB8A8203F27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 20:29:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9113720400D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 21:19:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730264AbgFVS3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 14:29:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38026 "EHLO
+        id S1728490AbgFVTTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 15:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730139AbgFVS3p (ORCPT
+        with ESMTP id S1728225AbgFVTTf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 14:29:45 -0400
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD63C061573;
-        Mon, 22 Jun 2020 11:29:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-         s=the; h=Content-Type:MIME-Version:Message-ID:Subject:Cc:To:From:Date:Sender
-        :Reply-To:Content-Transfer-Encoding:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=CHDPQRCF8RcUn1ZfKaD8qjSY2WQnALFRzpAXrVpnKI0=; b=izC/D2DnG2aP9tepJ2H+BFC2Ug
-        JmxyKdCL6mkil1f9KdbZtEzf5zpYswLlpRJdw6bFUlydhcq9hcCKGr58lrKn99BiLzNLAxb4V8TGi
-        rEvMoKFqE0s/Q0GTDTx7WpJkwBjtQjlh6R3qwswx2zaL73Ds6QhadbawwNTxdbZ9dpfSeOIi/oOT8
-        mBIQOfrjgxfsU44yloKOvNlwGRqYQtp+u4Zwrbpl8ZvjRxg/uC0oXKgcWsdEXdD/yUdeiiCg0YH96
-        WHR7QVCiY9J5wGPv2B06iVP4ArqXPlyUFtxocDOubenxs7phzDiTanRq7cN7Zz1XZ8kOFNEV6ZGCW
-        6CYixE6Q==;
-Received: from noodles by the.earth.li with local (Exim 4.92)
-        (envelope-from <noodles@earth.li>)
-        id 1jnRCO-00020W-KS; Mon, 22 Jun 2020 19:29:40 +0100
-Date:   Mon, 22 Jun 2020 19:29:40 +0100
-From:   Jonathan McDowell <noodles@earth.li>
-To:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Mathieu Olivari <mathieu@codeaurora.org>
-Cc:     Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        David Miller <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: [RFC PATCH] net: stmmac: Set FIFO sizes for ipq806x
-Message-ID: <20200622182940.GA6991@earth.li>
+        Mon, 22 Jun 2020 15:19:35 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6DCC061796
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:34 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id a3so16670994oid.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 12:19:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Jus7DNDunfIMFweSDWGPXAjkcv1IrAfG0u9GMpZ5ilM=;
+        b=sK9YTPQH86hVUZWWh2ZdcBb/PzqD9yI/NEShdhMoHRASS6z2MQFuV6zJtyVmEmyShb
+         coR9ZTY2FwG+evLcoI8Xy/beUUMV7wx4p7cx+UhqlCK35HpYDK1SyF92VVmLiRfAXp8B
+         2j9XssWJSfYZgGjNy1U2ueJoZrxdEaxhLypxJksE2wmHI06gQ0zbTpvj2lMCI2eI9cDj
+         4MzmooZ1MTZ4due3PgoKScdqrTgVxMjuPS2sNa5ZgyO5Hl1206ARWa9Thadj3mEXHe5G
+         9R6sGw7oWmxfrvh7aFq0SGY8TlufZwdrpYZVJrmXb7BFnxF9xRLL8c8bL17qYI0/hsts
+         WwSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Jus7DNDunfIMFweSDWGPXAjkcv1IrAfG0u9GMpZ5ilM=;
+        b=ZawbQ3fym1rPlRGohlgNPChiuFjYGpdpjBGO+QUW9xdSfwCRMPDjAJA+KG5IwheCDx
+         tXVaemvgeQI/OO0PQotkzhqdDEjAq7w0n5PXjFFiNYcW4lXZ2ucQEAX9mtDc3l7Up4N8
+         CVb/twwATzhNWllBxQVdM+NqQ0wO46t01hWT3+xBWDIIqyCubr1RKmYQypRpM76jS2qP
+         tMwDDn1EdRsGfrU1FS0GRUPlWYTF5sxq420bxmEqqASIrBSTNPtcZjS96BZsl/8j8T2a
+         GnidJZnap0oGrA2QlUcwK1/Rut9w7/NK1yD8r/7zxL1mvKL0Ys2Xuh7X4+POlJoA0zed
+         nw9g==
+X-Gm-Message-State: AOAM531s7nhZDnCEOtn1GMkLD5zYRZhc5BFtHiT8obucnIaAa7p75F0m
+        d6yqCZlLe1oSaBFSxM36IEwtpe08lNs=
+X-Google-Smtp-Source: ABdhPJyOBaULh6qkKqzgj2z7VWM3cokDJpP59eooGuNB9sW1HfLepA6lCCyygGhAzkFdIUOln482kw==
+X-Received: by 2002:a05:6808:487:: with SMTP id z7mr14223890oid.166.1592853572847;
+        Mon, 22 Jun 2020 12:19:32 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id m84sm3348294oif.32.2020.06.22.12.19.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2020 12:19:32 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v7 0/5]  remoteproc: qcom: PIL info support
+Date:   Mon, 22 Jun 2020 12:19:37 -0700
+Message-Id: <20200622191942.255460-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(This is an RFC in the hope someone with better knowledge of the
-Qualcomm IPQ806x hardware can confirm 8k is the correct FIFO depth. I've
-plucked that value from the MikroTik kernel patch, and it works for me,
-and 0 definitely isn't the right value.)
+Introduce support for filling out the relocation information in IMEM, to aid
+post mortem debug tools to locate the various remoteprocs.
 
-Commit eaf4fac47807 ("net: stmmac: Do not accept invalid MTU values")
-started using the TX FIFO size to verify what counts as a valid MTU
-request for the stmmac driver.  This is unset for the ipq806x variant.
-Looking at older patches for this it seems the RX + TX buffers can be
-up to 8k, so set appropriately.
+Bjorn Andersson (5):
+  dt-bindings: remoteproc: Add Qualcomm PIL info binding
+  remoteproc: qcom: Introduce helper to store pil info in IMEM
+  remoteproc: qcom: Update PIL relocation info on load
+  arm64: dts: qcom: qcs404: Add IMEM and PIL info region
+  arm64: dts: qcom: sdm845: Add IMEM and PIL info region
 
-Signed-off-by: Jonathan McDowell <noodles@earth.li>
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../bindings/remoteproc/qcom,pil-info.yaml    |  44 ++++++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  15 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  15 ++
+ drivers/remoteproc/Kconfig                    |   8 ++
+ drivers/remoteproc/Makefile                   |   1 +
+ drivers/remoteproc/qcom_pil_info.c            | 129 ++++++++++++++++++
+ drivers/remoteproc/qcom_pil_info.h            |   9 ++
+ drivers/remoteproc/qcom_q6v5_adsp.c           |  16 ++-
+ drivers/remoteproc/qcom_q6v5_mss.c            |   3 +
+ drivers/remoteproc/qcom_q6v5_pas.c            |  15 +-
+ drivers/remoteproc/qcom_q6v5_wcss.c           |  14 +-
+ drivers/remoteproc/qcom_wcnss.c               |  14 +-
+ 12 files changed, 271 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+ create mode 100644 drivers/remoteproc/qcom_pil_info.c
+ create mode 100644 drivers/remoteproc/qcom_pil_info.h
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
-index 02102c781a8c..546b37ebd3b0 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
-@@ -351,6 +351,8 @@ static int ipq806x_gmac_probe(struct platform_device *pdev)
- 	plat_dat->has_gmac = true;
- 	plat_dat->bsp_priv = gmac;
- 	plat_dat->fix_mac_speed = ipq806x_gmac_fix_mac_speed;
-+	plat_dat->tx_fifo_size = 8192;
-+	plat_dat->rx_fifo_size = 8192;
- 
- 	err = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
- 	if (err)
 -- 
-2.20.1
+2.26.2
 
