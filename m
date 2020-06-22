@@ -2,89 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1B26203288
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 10:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD0D12032B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 11:03:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbgFVIvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 04:51:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35478 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725958AbgFVIvn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 04:51:43 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 11EED20708;
-        Mon, 22 Jun 2020 08:51:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592815903;
-        bh=zZU2CHuLFqnK4HbBINlII1Iia0QVhzVmBgAshjaxrEs=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=b4AYHwLCJMc9D7WFTeQ0tGime4u9LvggVD8RioNpey4HMM+dSCByUCdS6Lm9sZSXv
-         goQKp6s1D6vW80tHcmh+YHp+sQ8UpNQEskeqN7ePmbSH+V7hWJOSerxOaq/6srUXSG
-         O810vXpD4UWW3mSvIYjUuVpiqrAY2IwDtnTVN1Bk=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200620182010.395097-1-konradybcio@gmail.com>
-References: <20200620182010.395097-1-konradybcio@gmail.com>
-Subject: Re: [PATCH 1/1] clk: qcom: gcc-msm8994: Add missing clocks, resets and GDSCs
-From:   Stephen Boyd <sboyd@kernel.org>
+        id S1726296AbgFVJDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 05:03:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbgFVJDM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 22 Jun 2020 05:03:12 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3057C061794;
+        Mon, 22 Jun 2020 02:03:11 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id e22so2336071edq.8;
+        Mon, 22 Jun 2020 02:03:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/2hdXSzXuuINYgcxwY7OV52VQ4Z9wZkog/Fb//kF9Ho=;
+        b=T3mdIbBqjUUpQBHd1FH3RXBx9VytQp3smKLRnD+g180ol8wXg7aLuEidceO65D9XxC
+         Rego3P9Fg1se0AOnEVOO49UiE5aQFMFolUWorloIXtbLOf5kmNYEh8xlDninb8BLL0X1
+         MDwvqmgQXHmfkjvKyQugTnvzadbfhWngPIPyzCqtr1KSOy4lD2hC8KJ+9ZbsiReA4hVk
+         okoqO56dtG9xy5jm3RFl6thOKBcNq6CD0vkGp9e8FqivC58iCaLXVAD6dxaRA0CE7kMQ
+         vklQFAPRNzF+U1hDGYFntJFtkyzBEJ0vkBqUOS1PbFxnPsf+DkhVwN6ZxGPQ87klhTXG
+         ru+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/2hdXSzXuuINYgcxwY7OV52VQ4Z9wZkog/Fb//kF9Ho=;
+        b=gvCRBJBn6ljNM6i6QLlsB/1aQYeu0PZ21G4kjFx8LZ8hSaBg/c5PgKB0XoHbIrRzO8
+         v3S+kbpWWMtolTtkkJD5vplWDkuBI5Z9GT1uv2ao0iYABqKf88TZNhbUxqXlX71qN4ja
+         wCFBnqfxhsmo86umk+kEzGMt2mpXsyoS2vBQOJOk7sStMsLZJ14786soBomZAR8mEUUB
+         tiBBPszZ3+dW29Yal4gUtMI4CuTBHCvvntAAvUmGZi1sgy/WHESBR08J52HrOoG5cxP3
+         PS/hMDC8t5I1kyHT3wa6E8oIErot/Ak8yhMu/ymRs3RsXF/NewjWMzQRk+VAViFSzFm4
+         bdFA==
+X-Gm-Message-State: AOAM532c3LBXdA0XMtTrNHGmSYf6U9RUJoWtAyWKCn//DSbad2o51bLj
+        FVwxiHKwSFuZlUo1HgBrzAs=
+X-Google-Smtp-Source: ABdhPJxbAXBm1/G9y3DJ0Yp0NBnPPwATa2M1RZXdjxuidmxnhXMAvzPZJMuOSzfdMEGuKkNjGs7DPw==
+X-Received: by 2002:aa7:c80c:: with SMTP id a12mr16339227edt.140.1592816590463;
+        Mon, 22 Jun 2020 02:03:10 -0700 (PDT)
+Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
+        by smtp.googlemail.com with ESMTPSA id b18sm5385811ejl.52.2020.06.22.02.03.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2020 02:03:10 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-To:     Konrad Dybcio <konradybcio@gmail.com>, skrzynka@konradybcio.pl
-Date:   Mon, 22 Jun 2020 01:51:42 -0700
-Message-ID: <159281590234.62212.14723968355916401794@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/1] clk: qcom: smd: Add support for SDM660 rpm clocks
+Date:   Mon, 22 Jun 2020 11:02:52 +0200
+Message-Id: <20200622090252.36568-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2020-06-20 11:20:09)
-> diff --git a/include/dt-bindings/clock/qcom,gcc-msm8994.h b/include/dt-bi=
-ndings/clock/qcom,gcc-msm8994.h
-> index 938969309e00..d32c3fd2500c 100644
-> --- a/include/dt-bindings/clock/qcom,gcc-msm8994.h
-> +++ b/include/dt-bindings/clock/qcom,gcc-msm8994.h
-> @@ -106,25 +106,62 @@
->  #define GCC_GP1_CLK                            96
->  #define GCC_GP2_CLK                            97
->  #define GCC_GP3_CLK                            98
-> -#define GCC_PCIE_0_AUX_CLK                     99
-> -#define GCC_PCIE_0_PIPE_CLK                    100
-> -#define GCC_PCIE_1_AUX_CLK                     101
-> -#define GCC_PCIE_1_PIPE_CLK                    102
-> -#define GCC_PDM2_CLK                           103
-> -#define GCC_SDCC1_APPS_CLK                     104
-> -#define GCC_SDCC2_APPS_CLK                     105
-> -#define GCC_SDCC3_APPS_CLK                     106
-> -#define GCC_SDCC4_APPS_CLK                     107
-> -#define GCC_SYS_NOC_UFS_AXI_CLK                        108
-> -#define GCC_SYS_NOC_USB3_AXI_CLK               109
-> -#define GCC_TSIF_REF_CLK                       110
-> -#define GCC_UFS_AXI_CLK                                111
-> -#define GCC_UFS_RX_CFG_CLK                     112
-> -#define GCC_UFS_TX_CFG_CLK                     113
-> -#define GCC_USB30_MASTER_CLK                   114
-> -#define GCC_USB30_MOCK_UTMI_CLK                        115
-> -#define GCC_USB3_PHY_AUX_CLK                   116
-> -#define GCC_USB_HS_SYSTEM_CLK                  117
-> -#define GCC_SDCC1_AHB_CLK                      118
-> +#define GCC_LPASS_Q6_AXI_CLK            99
-> +#define GCC_MSS_Q6_BIMC_AXI_CLK         100
-> +#define GCC_PCIE_0_AUX_CLK                     101
+Add rpm smd clocks, PMIC and bus clocks which are required on
+SDM630/660 (and APQ variants) for clients to vote on.
 
-You can't do this. The numbers are an ABI that should not change. Just
-keep tacking on new numbers and new defines instead.
+changes since v2:
+- separate from SDM630 enablement series
+- fix indentation in Docs
+- sort compatible strings alphabetically
+- drop an accidental newline
 
-> +#define GCC_PCIE_0_CFG_AHB_CLK      102
-> +#define GCC_PCIE_0_MSTR_AXI_CLK     103
-> +#define GCC_PCIE_0_PIPE_CLK                    104
-> +#define GCC_PCIE_0_SLV_AXI_CLK      105
-> +#define GCC_PCIE_1_AUX_CLK                     106
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+---
+ .../devicetree/bindings/clock/qcom,rpmcc.txt  |  1 +
+ drivers/clk/qcom/clk-smd-rpm.c                | 76 +++++++++++++++++++
+ include/dt-bindings/clock/qcom,rpmcc.h        | 10 +++
+ 3 files changed, 87 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+index 90a1349bc713..86190acc71bc 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
++++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+@@ -20,6 +20,7 @@ Required properties :
+ 			"qcom,rpmcc-msm8996", "qcom,rpmcc"
+ 			"qcom,rpmcc-msm8998", "qcom,rpmcc"
+ 			"qcom,rpmcc-qcs404", "qcom,rpmcc"
++			"qcom,rpmcc-sdm660", "qcom,rpmcc"
+ 
+ - #clock-cells : shall contain 1
+ 
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 52f63ad787ba..643bc355df5c 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -766,6 +766,81 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8998 = {
+ 	.num_clks = ARRAY_SIZE(msm8998_clks),
+ };
+ 
++/* sdm660 */
++DEFINE_CLK_SMD_RPM_BRANCH(sdm660, bi_tcxo, bi_tcxo_a, QCOM_SMD_RPM_MISC_CLK, 0,
++								19200000);
++DEFINE_CLK_SMD_RPM(sdm660, snoc_clk, snoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 1);
++DEFINE_CLK_SMD_RPM(sdm660, cnoc_clk, cnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 2);
++DEFINE_CLK_SMD_RPM(sdm660, cnoc_periph_clk, cnoc_periph_a_clk,
++						QCOM_SMD_RPM_BUS_CLK, 0);
++DEFINE_CLK_SMD_RPM(sdm660, bimc_clk, bimc_a_clk, QCOM_SMD_RPM_MEM_CLK, 0);
++DEFINE_CLK_SMD_RPM(sdm660, mmssnoc_axi_clk, mmssnoc_axi_a_clk,
++						   QCOM_SMD_RPM_MMAXI_CLK, 0);
++DEFINE_CLK_SMD_RPM(sdm660, ipa_clk, ipa_a_clk, QCOM_SMD_RPM_IPA_CLK, 0);
++DEFINE_CLK_SMD_RPM(sdm660, ce1_clk, ce1_a_clk, QCOM_SMD_RPM_CE_CLK, 0);
++DEFINE_CLK_SMD_RPM(sdm660, aggre2_noc_clk, aggre2_noc_a_clk,
++						QCOM_SMD_RPM_AGGR_CLK, 2);
++DEFINE_CLK_SMD_RPM_QDSS(sdm660, qdss_clk, qdss_a_clk,
++						QCOM_SMD_RPM_MISC_CLK, 1);
++DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, rf_clk1, rf_clk1_a, 4);
++DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, div_clk1, div_clk1_a, 11);
++DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, ln_bb_clk1, ln_bb_clk1_a, 1);
++DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, ln_bb_clk2, ln_bb_clk2_a, 2);
++DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, ln_bb_clk3, ln_bb_clk3_a, 3);
++
++DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(sdm660, rf_clk1_pin, rf_clk1_a_pin, 4);
++DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(sdm660, ln_bb_clk1_pin,
++							ln_bb_clk1_pin_a, 1);
++DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(sdm660, ln_bb_clk2_pin,
++							ln_bb_clk2_pin_a, 2);
++DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(sdm660, ln_bb_clk3_pin,
++							ln_bb_clk3_pin_a, 3);
++static struct clk_smd_rpm *sdm660_clks[] = {
++	[RPM_SMD_XO_CLK_SRC] = &sdm660_bi_tcxo,
++	[RPM_SMD_XO_A_CLK_SRC] = &sdm660_bi_tcxo_a,
++	[RPM_SMD_SNOC_CLK] = &sdm660_snoc_clk,
++	[RPM_SMD_SNOC_A_CLK] = &sdm660_snoc_a_clk,
++	[RPM_SMD_CNOC_CLK] = &sdm660_cnoc_clk,
++	[RPM_SMD_CNOC_A_CLK] = &sdm660_cnoc_a_clk,
++	[RPM_SMD_CNOC_PERIPH_CLK] = &sdm660_cnoc_periph_clk,
++	[RPM_SMD_CNOC_PERIPH_A_CLK] = &sdm660_cnoc_periph_a_clk,
++	[RPM_SMD_BIMC_CLK] = &sdm660_bimc_clk,
++	[RPM_SMD_BIMC_A_CLK] = &sdm660_bimc_a_clk,
++	[RPM_SMD_MMSSNOC_AXI_CLK] = &sdm660_mmssnoc_axi_clk,
++	[RPM_SMD_MMSSNOC_AXI_CLK_A] = &sdm660_mmssnoc_axi_a_clk,
++	[RPM_SMD_IPA_CLK] = &sdm660_ipa_clk,
++	[RPM_SMD_IPA_A_CLK] = &sdm660_ipa_a_clk,
++	[RPM_SMD_CE1_CLK] = &sdm660_ce1_clk,
++	[RPM_SMD_CE1_A_CLK] = &sdm660_ce1_a_clk,
++	[RPM_SMD_AGGR2_NOC_CLK] = &sdm660_aggre2_noc_clk,
++	[RPM_SMD_AGGR2_NOC_A_CLK] = &sdm660_aggre2_noc_a_clk,
++	[RPM_SMD_QDSS_CLK] = &sdm660_qdss_clk,
++	[RPM_SMD_QDSS_A_CLK] = &sdm660_qdss_a_clk,
++	[RPM_SMD_RF_CLK1] = &sdm660_rf_clk1,
++	[RPM_SMD_RF_CLK1_A] = &sdm660_rf_clk1_a,
++	[RPM_SMD_DIV_CLK1] = &sdm660_div_clk1,
++	[RPM_SMD_DIV_A_CLK1] = &sdm660_div_clk1_a,
++	[RPM_SMD_LN_BB_CLK] = &sdm660_ln_bb_clk1,
++	[RPM_SMD_LN_BB_A_CLK] = &sdm660_ln_bb_clk1_a,
++	[RPM_SMD_LN_BB_CLK2] = &sdm660_ln_bb_clk2,
++	[RPM_SMD_LN_BB_CLK2_A] = &sdm660_ln_bb_clk2_a,
++	[RPM_SMD_LN_BB_CLK3] = &sdm660_ln_bb_clk3,
++	[RPM_SMD_LN_BB_CLK3_A] = &sdm660_ln_bb_clk3_a,
++	[RPM_SMD_RF_CLK1_PIN] = &sdm660_rf_clk1_pin,
++	[RPM_SMD_RF_CLK1_A_PIN] = &sdm660_rf_clk1_a_pin,
++	[RPM_SMD_LN_BB_CLK1_PIN] = &sdm660_ln_bb_clk1_pin,
++	[RPM_SMD_LN_BB_CLK1_A_PIN] = &sdm660_ln_bb_clk1_pin_a,
++	[RPM_SMD_LN_BB_CLK2_PIN] = &sdm660_ln_bb_clk2_pin,
++	[RPM_SMD_LN_BB_CLK2_A_PIN] = &sdm660_ln_bb_clk2_pin_a,
++	[RPM_SMD_LN_BB_CLK3_PIN] = &sdm660_ln_bb_clk3_pin,
++	[RPM_SMD_LN_BB_CLK3_A_PIN] = &sdm660_ln_bb_clk3_pin_a,
++};
++
++static const struct rpm_smd_clk_desc rpm_clk_sdm660 = {
++	.clks = sdm660_clks,
++	.num_clks = ARRAY_SIZE(sdm660_clks),
++};
++
+ static const struct of_device_id rpm_smd_clk_match_table[] = {
+ 	{ .compatible = "qcom,rpmcc-msm8916", .data = &rpm_clk_msm8916 },
+ 	{ .compatible = "qcom,rpmcc-msm8974", .data = &rpm_clk_msm8974 },
+@@ -773,6 +848,7 @@ static const struct of_device_id rpm_smd_clk_match_table[] = {
+ 	{ .compatible = "qcom,rpmcc-msm8996", .data = &rpm_clk_msm8996 },
+ 	{ .compatible = "qcom,rpmcc-msm8998", .data = &rpm_clk_msm8998 },
+ 	{ .compatible = "qcom,rpmcc-qcs404",  .data = &rpm_clk_qcs404  },
++	{ .compatible = "qcom,rpmcc-sdm660",  .data = &rpm_clk_sdm660  },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, rpm_smd_clk_match_table);
+diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
+index ae74c43c485d..d1afa634b58d 100644
+--- a/include/dt-bindings/clock/qcom,rpmcc.h
++++ b/include/dt-bindings/clock/qcom,rpmcc.h
+@@ -133,5 +133,15 @@
+ #define RPM_SMD_RF_CLK3_A			87
+ #define RPM_SMD_RF_CLK3_PIN			88
+ #define RPM_SMD_RF_CLK3_A_PIN			89
++#define RPM_SMD_MMSSNOC_AXI_CLK			90
++#define RPM_SMD_MMSSNOC_AXI_CLK_A		91
++#define RPM_SMD_CNOC_PERIPH_CLK			92
++#define RPM_SMD_CNOC_PERIPH_A_CLK		93
++#define RPM_SMD_LN_BB_CLK3			94
++#define RPM_SMD_LN_BB_CLK3_A			95
++#define RPM_SMD_LN_BB_CLK1_PIN			96
++#define RPM_SMD_LN_BB_CLK1_A_PIN		97
++#define RPM_SMD_LN_BB_CLK2_PIN			98
++#define RPM_SMD_LN_BB_CLK2_A_PIN		99
+ 
+ #endif
+-- 
+2.27.0
+
