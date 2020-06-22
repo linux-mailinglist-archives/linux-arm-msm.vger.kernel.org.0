@@ -2,153 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C49EF203A89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 17:18:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A500203AEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2020 17:30:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729497AbgFVPSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 11:18:43 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.84]:21953 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729462AbgFVPSm (ORCPT
+        id S1729337AbgFVPaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 11:30:11 -0400
+Received: from sonic310-21.consmr.mail.gq1.yahoo.com ([98.137.69.147]:36595
+        "EHLO sonic310-21.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729262AbgFVPaL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 11:18:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1592839117;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=eUybk80IehW1UzAjbTnyoIiCZjoRefk+5Fnl2dnnB/0=;
-        b=dLDFsdNE26KSiHN4HyWxKF8TX+r6x0UzNaDmXBM+UdVL0a+hv+sOBpwkBr6p3s5e8G
-        bq6Kl0uodSfZw0xSbY9tFuuozunnHS5nxcj/UlfFaXhShz+JEJo/FwuzUC6oOxZ7gfSE
-        +6NPfFq+nXUNEQtjc0K2ERpErmV1l26U5OP7CEqT4YhvVKV6z3xbmqQmkgzdgBgQ7g4a
-        Hx2hjpjJC3YOCr3FWPbBBodboQIsuiZsSstc+h3kXjCWqmck2r4rdkWl0dBteFOnA1VB
-        0J/KO/vS2N1qcw/9eNzcPuK9Ul6rVyosJRIbMMpQ67O3Rx6ZALyXVmV09GB8MobiJQVP
-        LSrQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB4G6OIUPH"
-X-RZG-CLASS-ID: mo00
-Received: from localhost.localdomain
-        by smtp.strato.de (RZmta 46.10.4 DYNA|AUTH)
-        with ESMTPSA id 6005e9w5MFIY5Xz
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 22 Jun 2020 17:18:34 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Michael Srba <michael.srba@seznam.cz>
-Subject: [PATCH 4/4] arm64: dts: qcom: msm8916-samsung-a2015: Add accelerometer/magnetometer
-Date:   Mon, 22 Jun 2020 17:17:51 +0200
-Message-Id: <20200622151751.408995-5-stephan@gerhold.net>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200622151751.408995-1-stephan@gerhold.net>
-References: <20200622151751.408995-1-stephan@gerhold.net>
+        Mon, 22 Jun 2020 11:30:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048; t=1592839811; bh=ZrqH4CkkktGM5U4f9eYdkRlGgwNo9TU/U6UyKhhS7Nk=; h=Date:From:Subject:To:Cc:References:In-Reply-To:From:Subject; b=FMooE4Fd+vL4bOCsF19oFQ+8koe0SIaIvvnGdNGfg2bY9knR5NmK7OICT9TR/C4FomIL9cKp+4yWwn+F6H2vlvCQsslSqNrU3R5XJIZ+X3cjerWqjIpY8zb9ydg7gue/6Xc4vqKJOS1EsEMOrpmE2Nv5tvLGQneg7LWwmDotsRzxkX1Wih8HHzws+RGqUypcRFtQLFLn1F+oLy+uSiVoNGeOSvWvy4dlO53/Cs55fitsnVg2Cl8z3JSvTv8QAJz7Fv2TewSJX57O433tT8/QBqo7Xuvbg6idLtQHo9zE9a2gE+v5/0hP+Z6L/rHNzJlToMcYh2Jh4sas0IgFWTyXnQ==
+X-YMail-OSG: Cr3SZHIVM1nhNBz0ZZsYMs_M_FiwKACLBt6kQJYR4K4mF8rlKRnT_f7fT.t2sCC
+ DipgYeUhA4EqFw.SkQWXpFDSR9OEwLAwPhxJrNDrZntjEiUyBxrucSuQHm_QF14U8f.b2eKVT72N
+ qLFP7qiHUNKXQ4SYEPcuZ_q_hvbnxXiCXViFhbZeefE03ucrFdRs4EM21.p1dmjv5xm1mLoCeWIN
+ jkgvvhLmjrY8f5pm5D.I7cSGPM0XP4TaGG6w.i1Rm9gkDs8YL.9moWBhj1cX2qg6nJLn_YP9zuaP
+ 0j4YBbovs_HxALABkTP.KUcbU5likQB6ekjU..0CB5QQqi81Q0Hy7bFSr7FHxVMM12ot7uWaEinI
+ JzMYBL7BgegWMHyrDLq0BukuCBzZhQ7HtVDiFAb6SLzynuhFE2s0oduA4_8TuEHwugSN8ABWWMon
+ VPs76OFaHB4AiH8rlzDNUDvCs7hdVL4wp9PFB6nn9gIroi814lkRYshQ4SiMu8.x1LxzVQKuj_1K
+ AuI6G4xS5qHgGm9tql95oMLMkoCQ_OChr1GN3vdf3AkF.9X9Wc6QF3ClqlTETxkAJr74XyNRNefG
+ KKhCUU2Mb6kqNBNzFDJhl1nBfl4J3BT0UE0D3HzQ.zUoHGifRb9ATfXlzwDHyItKsky9dMsmfqtp
+ i6TMZweDPyfDW5BjQ.MZTGyShESLRfuuUEljOv8zB54h_Fy7RVp.TsJfycEpERk0eoEc8YtNTOHf
+ CcMXxFXSBJJWfuCSoiKgkmgJ.tWI9GYciX5ptLM5SO5ucVKruIh5YWFPlCwnk7h.bBmMVMK6JbYY
+ FIzEK18BG84ne8qJn5HcUc4YGExVQ_0VdZ68jSrZOOgnALE7w0Yh7P.5FEyFgcDv5CQRtTlDa9XV
+ 332GOILLb4zJJheQ0JFSPElT9FH3CBrDs5LCQxJomwN4y7xwltOYhRMK83otrU_Fj_y_eHeotXp5
+ XEoZNPauow06YAJ6iF5IF8YixALM0Q7iN05wMbk0d_uc0b55OOLVDb3x3VUYpis0YS82.POsP32I
+ ulBQXux3NQlclxawhgWzTJz.jykMGFqABOqUbZETOIhVNH9HkQalW_F5SQXc82W2mLThpOJ_x082
+ G.nYAFFP6Iozy3gvrmlA27ubLrteMzz7DLQIULn80k0_6JJr84FSeEkkQDHO2PSnfc8bmvPlGVvp
+ 18BXWE0ViDKr5zEztaQIMuEjnaJYCCDIS0FBU4hrX67yVYFDBT0y6ZYXCS4tbw1UClE62qzLiBIP
+ UN3eLZ.VIszJNb86Rf9A8WrGMP2tM7.UAiknCB.VtjckyXwujOVTk01wBBbAFbL0YYDxIOdYmGmw
+ oInI7KsCeCE6pCvJGjT60utyj2RwD2L_Yt9unDDKpSoj3x.XhDmB.
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.gq1.yahoo.com with HTTP; Mon, 22 Jun 2020 15:30:11 +0000
+Received: by smtp418.mail.gq1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA ID 402ae077068331dedde2e55d9ced12f3;
+          Mon, 22 Jun 2020 15:30:08 +0000 (UTC)
+Date:   Mon, 22 Jun 2020 11:30:04 -0400
+From:   "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Subject: Re: AMD IOMMU + SME + amdgpu regression
+To:     Joerg Roedel <jroedel@suse.de>
+Cc:     Andy Gross <agross@kernel.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Drake <drake@endlessm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        jonathan.derrick@intel.com, Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>, Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        David Rientjes <rientjes@google.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        virtualization@lists.linux-foundation.org,
+        Will Deacon <will@kernel.org>
+References: <1591915710.rakbpzst8h.none.ref@localhost>
+        <1591915710.rakbpzst8h.none@localhost> <20200622100257.GD31822@suse.de>
+In-Reply-To: <20200622100257.GD31822@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-Id: <1592839701.mxvvths2x9.none@localhost>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.16138 hermes_yahoo Apache-HttpAsyncClient/4.1.4 (Java/11.0.7)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A3U/A5U both use a Bosch BMC150 accelerometer/magnetometer combo.
-The chip provides two separate I2C devices for the accelerometer
-and magnetometer that are already supported by the bmc150-accel
-and bmc150-magn driver.
+Excerpts from Joerg Roedel's message of June 22, 2020 6:02 am:
+> Hi Alex,
+>=20
+> On Thu, Jun 11, 2020 at 07:05:21PM -0400, Alex Xu (Hello71) wrote:
+>> I am using an ASRock B450 Pro4 with Ryzen 1600 and ASUS RX 480. I don't=20
+>> understand this code at all, but let me know what I can do to=20
+>> troubleshoot.
+>=20
+> Does it boot without SME enabled?
+>=20
+>=20
+> Regards,
+>=20
+> 	Joerg
+>=20
 
-The only difference between A3U/A5U is the way the sensor is
-mounted on the mainboard - set the mount-matrix in the
-device-specific device tree part to handle that difference.
-
-Co-developed-by: Michael Srba <michael.srba@seznam.cz>
-Signed-off-by: Michael Srba <michael.srba@seznam.cz>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- .../qcom/msm8916-samsung-a2015-common.dtsi    | 27 +++++++++++++++++++
- .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts |  6 +++++
- .../boot/dts/qcom/msm8916-samsung-a5u-eur.dts |  6 +++++
- 3 files changed, 39 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index 58485d055241..a0c00d9d62c4 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -167,6 +167,25 @@ muic: sm5502@25 {
- 	};
- };
- 
-+&blsp_i2c2 {
-+	status = "okay";
-+
-+	accelerometer: accelerometer@10 {
-+		compatible = "bosch,bmc150_accel";
-+		reg = <0x10>;
-+		interrupt-parent = <&msmgpio>;
-+		interrupts = <115 IRQ_TYPE_EDGE_RISING>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&accel_int_default>;
-+	};
-+
-+	magnetometer@12 {
-+		compatible = "bosch,bmc150_magn";
-+		reg = <0x12>;
-+	};
-+};
-+
- &spmi_bus {
- 	pm8916@0 {
- 		pon@800 {
-@@ -294,6 +313,14 @@ l18 {
- };
- 
- &msmgpio {
-+	accel_int_default: accel-int-default {
-+		pins = "gpio115";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	gpio_keys_default: gpio-keys-default {
- 		pins = "gpio107", "gpio109";
- 		function = "gpio";
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
-index 33160a3687ce..410c7d199f96 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
-@@ -22,6 +22,12 @@ reg_panel_vdd3: regulator-panel-vdd3 {
- 	};
- };
- 
-+&accelerometer {
-+	mount-matrix = "0", "1", "0",
-+		       "1", "0", "0",
-+		       "0", "0", "1";
-+};
-+
- &dsi0 {
- 	panel@0 {
- 		reg = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
-index e4b6fa18ca25..e39c04d977c2 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
-@@ -9,6 +9,12 @@ / {
- 	compatible = "samsung,a5u-eur", "qcom,msm8916";
- };
- 
-+&accelerometer {
-+	mount-matrix = "-1", "0", "0",
-+			"0", "1", "0",
-+			"0", "0", "1";
-+};
-+
- &blsp_i2c5 {
- 	status = "okay";
- 
--- 
-2.27.0
-
+Yes, it works with SME off with dbed452a078 ("dma-pool: decouple=20
+DMA_REMAP from DMA_COHERENT_POOL") applied.
