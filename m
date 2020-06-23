@@ -2,109 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D052020486E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 06:06:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BE2A204864
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 06:05:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732109AbgFWEGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 00:06:01 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:46741 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732078AbgFWEGB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 00:06:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592885160; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=8fgyorfpK/VFkEZLYoMBhJ8V5MCNVB2/DTEqyisSt14=; b=QH6+RY1rsOJf56LQI7X1ohyhhCg4E1MP12hUqQlcvGxBdtiuAO0xqKALPE7oNAkSPywfiNCs
- bAFzKgIsK6NuV7xzxwcyhqMqh19ekh+a9orVOp2KxeZZafnHhaAlLKk+pFrADI1rIRUc+9lS
- LSOcGD3Xi7NfFImFbTo1bl6WlKE=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5ef17f89c76a4e7a2abcd71d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Jun 2020 04:05:29
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F11F5C433A0; Tue, 23 Jun 2020 04:05:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mdtipton-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726359AbgFWEFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 00:05:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45324 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726088AbgFWEFY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Jun 2020 00:05:24 -0400
+Received: from localhost (unknown [171.61.66.58])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 238E2C4339C;
-        Tue, 23 Jun 2020 04:05:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 238E2C4339C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
-From:   Mike Tipton <mdtipton@codeaurora.org>
-To:     georgi.djakov@linaro.org
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Mike Tipton <mdtipton@codeaurora.org>
-Subject: [PATCH 2/2] interconnect: qcom: Don't redefine bucket/tag macros
-Date:   Mon, 22 Jun 2020 21:05:15 -0700
-Message-Id: <20200623040515.23317-3-mdtipton@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200623040515.23317-1-mdtipton@codeaurora.org>
-References: <20200623040515.23317-1-mdtipton@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 887A92076A;
+        Tue, 23 Jun 2020 04:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592885123;
+        bh=UVz4+oAosUXKAyVWZlcgGKdvRIQ5BClYVUWNS+XZFDA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hXzxBbbbYe1Wcpmfu1Vz6vMkRUo6uf50URq/g8XmTvPPrXQwP+nwvV1CoiBtf1ybY
+         h8kdo+GlNGbyxaKIyEfiImk1mXOJtq2zfXFAKPfcVsP2hGArGjcvzaXEohAPCuNiTk
+         UtGmZ1sMlto+F+fvvAleTPgWTnblr8bIr/XgR0u0=
+Date:   Tue, 23 Jun 2020 09:35:17 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc:     Takashi Iwai <tiwai@suse.com>, Jaroslav Kysela <perex@perex.cz>,
+        alsa-devel@alsa-project.org,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] ALSA: compress: document the compress audio state
+ machine
+Message-ID: <20200623040517.GO2324254@vkoul-mobl>
+References: <20200622065811.221485-1-vkoul@kernel.org>
+ <20200622065811.221485-2-vkoul@kernel.org>
+ <800a2632-b263-500f-707e-c1ce94ce92d4@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <800a2632-b263-500f-707e-c1ce94ce92d4@linux.intel.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace internal bucket/tag macros with those defined in dt-bindings.
+On 22-06-20, 08:28, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 6/22/20 1:58 AM, Vinod Koul wrote:
+> > So we had some discussions of the stream states, so I thought it is a
+> > good idea to document the state transitions, so add it documentation
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >   .../sound/designs/compress-offload.rst        | 52 +++++++++++++++++++
+> >   1 file changed, 52 insertions(+)
+> > 
+> > diff --git a/Documentation/sound/designs/compress-offload.rst b/Documentation/sound/designs/compress-offload.rst
+> > index ad4bfbdacc83..6f86db82298b 100644
+> > --- a/Documentation/sound/designs/compress-offload.rst
+> > +++ b/Documentation/sound/designs/compress-offload.rst
+> > @@ -151,6 +151,58 @@ Modifications include:
+> >   - Addition of encoding options when required (derived from OpenMAX IL)
+> >   - Addition of rateControlSupported (missing in OpenMAX AL)
+> > +State Machine
+> > +=============
+> > +
+> > +The compressed audio stream state machine is described below ::
+> > +
+> > +                                        +----------+
+> > +                                        |          |
+> > +                                        |   OPEN   |
+> > +                                        |          |
+> > +                                        +----------+
+> > +                                             |
+> > +                                             |
+> > +                                             | compr_set_params()
+> > +                                             |
+> > +                                             v
+> > +         compr_free()                   +----------+
+> > +  +-------------------------------------|          |
+> > +  |                                     |   SETUP  |
+> > +  |           +------------------------>|          |<---------------------------------+
+> > +  |           | compr_drain_notify()    +----------+                                  |
+> > +  |           |                              |                                        |
+> > +  |           |                              |                                        |
+> > +  |           |                              | compr_write()                          |
+> > +  |           |                              |                                        |
+> > +  |           |                              v                                        |
+> > +  |           |                         +----------+                                  |
+> > +  |           |                         |          |                                  |
+> > +  |           |                         |  PREPARE |                                  |
+> > +  |           |                         |          |                                  |
+> > +  |           |                         +----------+                                  |
+> > +  |           |                              |                                        |
+> > +  |           |                              |                                        |
+> > +  |           |                              | compr_start()                          |
+> > +  |           |                              |                                        |
+> > +  |           |                              v                                        |
+> > +  |     +----------+                    +----------+  compr_pause()  +----------+     |
+> > +  |     |          |    compr_drain()   |          |---------------->|          |     |
+> > +  |     |  DRAIN   |<-------------------|  RUNNING |                 |  PAUSE   |     |
+> > +  |     |          |                    |          |<----------------|          |     |
+> > +  |     +----------+                    +----------+  compr_resume() +----------+     |
+> > +  |           |                           |      |                                    |
+> > +  |           |                           |      |                                    |
+> > +  |           |                           |      |                                    |
+> > +  |           |                           |      |          compr_stop()              |
+> > +  |           |                           |      +------------------------------------+
+> > +  |           |       +----------+        |
+> > +  |           |       |          |        |
+> > +  +-----------+------>|          |<-------+
+> > +     compr_free()     |   FREE   |  compr_free()
+> > +                      |          |
+> > +                      +----------+
+> > +
+> 
+> Sorry, this confuses me even more...
 
-Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
----
- drivers/interconnect/qcom/icc-rpmh.h | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+Oops
 
-diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
-index 903d25e61984..cb736b745e1a 100644
---- a/drivers/interconnect/qcom/icc-rpmh.h
-+++ b/drivers/interconnect/qcom/icc-rpmh.h
-@@ -6,6 +6,8 @@
- #ifndef __DRIVERS_INTERCONNECT_QCOM_ICC_RPMH_H__
- #define __DRIVERS_INTERCONNECT_QCOM_ICC_RPMH_H__
- 
-+#include <dt-bindings/interconnect/qcom,icc.h>
-+
- #define to_qcom_provider(_provider) \
- 	container_of(_provider, struct qcom_icc_provider, provider)
- 
-@@ -44,22 +46,6 @@ struct bcm_db {
- #define MAX_BCM_PER_NODE	3
- #define MAX_VCD			10
- 
--/*
-- * The AMC bucket denotes constraints that are applied to hardware when
-- * icc_set_bw() completes, whereas the WAKE and SLEEP constraints are applied
-- * when the execution environment transitions between active and low power mode.
-- */
--#define QCOM_ICC_BUCKET_AMC		0
--#define QCOM_ICC_BUCKET_WAKE		1
--#define QCOM_ICC_BUCKET_SLEEP		2
--#define QCOM_ICC_NUM_BUCKETS		3
--#define QCOM_ICC_TAG_AMC		BIT(QCOM_ICC_BUCKET_AMC)
--#define QCOM_ICC_TAG_WAKE		BIT(QCOM_ICC_BUCKET_WAKE)
--#define QCOM_ICC_TAG_SLEEP		BIT(QCOM_ICC_BUCKET_SLEEP)
--#define QCOM_ICC_TAG_ACTIVE_ONLY	(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE)
--#define QCOM_ICC_TAG_ALWAYS		(QCOM_ICC_TAG_AMC | QCOM_ICC_TAG_WAKE |\
--					 QCOM_ICC_TAG_SLEEP)
--
- /**
-  * struct qcom_icc_node - Qualcomm specific interconnect nodes
-  * @name: the node name used in debugfs
+> a) can you clarify if we can go from running to free directly? is this
+> really a legit transition? There's already the option of doing a stop and a
+> a drain.
+
+As Charles pointed it is legit one, but then from SM we should remove
+running->free arrow to clarify. Internally, free in running, draining
+and paused triggers a stop and then free.
+
+> b) no way to go back to SETUP from PREPARE? What happens if the app never
+> starts but want to tear down the resources?
+
+See above, free would trigger an internal step to stop (setup) and then
+freed.
+
+Btw I am not adding changes to code but documenting the 'existing'
+behaviour, so a code lookup will help
+
+> c) no way to stop a paused stream?
+
+Yes missed that, will add.
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+~Vinod
