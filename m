@@ -2,94 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9DE920439D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 00:28:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA2972046A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 03:21:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730928AbgFVW2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Jun 2020 18:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47004 "EHLO
+        id S1731678AbgFWBVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Jun 2020 21:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731081AbgFVW1r (ORCPT
+        with ESMTP id S1731572AbgFWBVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Jun 2020 18:27:47 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAA89C0617BB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 15:27:45 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id s13so14586716otd.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 15:27:45 -0700 (PDT)
+        Mon, 22 Jun 2020 21:21:18 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4E7C061573;
+        Mon, 22 Jun 2020 18:21:16 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id t85so8422822ili.5;
+        Mon, 22 Jun 2020 18:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+juBxJkHGKzzKKvIVu7gHfkhqodYtvY6iJYcZHkOhCc=;
-        b=y41so2TCCnlvbDE+KJrDyfB6UPI6hcbuYXAEZjoDONYl/f7tF2Y3Tc0KHevx/97i+/
-         XnVL449Msiltwz4Mcp9I6pdCo6O7w4RyxH54lz1DoZzm9SREMfG1x4ub1BinKJ4kGJa1
-         ijQFzPzDF77aN+rfnft5wLoDXEiZ15dVBt/NBcn6CzQoC77yPsQHXdm5l5ALG1hr27SX
-         UUQd25MVCtOnc1HawsKpPIA9ntV6xWoIS+/gbFOuKC55dJA8DJ+xZQEylm7jq3jfJFXx
-         fjk3/bq9z91ALoqLA7HYwYCIicA60bw+WsK2rqTEHuptB87nrJFiWqUFvo4SieH66Ux0
-         bgNA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KhdGsndwHFxm5Fp3MmCQGP1IyrRRJHSC/HQA9VsGSeg=;
+        b=NyWrRyvlVt7C8BfTJYfvuvXPl8iLEwICqLIhEcVj2RVnhMnxArqfgIknGPbxUTwWao
+         iDHZ0YssBrCUnjki6osEE308QUMvFzhYPxpyzIS0PEI2Fgs+WGvt37viTne1VhL+PSHJ
+         FBRFjZxonJ36JMmI0guwKY2JAdW9j2FiONX/DGy4QeYxi4R8Ta128W2fOk0RQqexwT+d
+         ncO/M1lNiKWo3IzH/t8AHAVnK/hBHrIWDBhdEy69CaQygtWOdyWTxA58po/8IV1m+NVL
+         0DxdfqaRgybeUH21Veep3GQWAx999zHQoA0V7uE0C9K0Tpm/qGJ/Hljql+egFTy/UTH2
+         g2kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+juBxJkHGKzzKKvIVu7gHfkhqodYtvY6iJYcZHkOhCc=;
-        b=qjEKmL7SS4ZOxNNnjTOX20y6u9CP1OKuVod2sA4onnYyB0mON8g1uw+AbpUjerJFLG
-         6q1bB2rESU0Zd7ZRRWIDd7PR1leZBrypBBNH/EXcSVsWCDADDhf7zCNI5Cr91tp3r1Iu
-         D3NUDtFuDgrumpF8jLj5ULzQhwcHj7/U4zRYBgeReP0LHfauNGJKnUug4qlNYXIqXR2A
-         6T1vwmpey9nSNoUSf/3aeuhLSg3mx/RRj84jTR97UXNgPaRB+kuLEa4nBwXM0G4//xqw
-         3TJkqWwbzptkIU2xaq6XRLQtsRE0b8C0k5XWluQfM2664reT7igHgJNiebvsTKPfX+OF
-         46+w==
-X-Gm-Message-State: AOAM530OrnlAoeGCW/ku7CrOH5UuMB7u+8GqtMDQrE4d+mD5u1de3Yy0
-        nFZ2NlVJ1tcJTdeTIq36LtLf5w==
-X-Google-Smtp-Source: ABdhPJzGgP62muNTyA44IB7D3xkRwJUqX16W9zjWiUZgOSB7gVom5EmeKYmkBce9IQOufHUmRXJ9xg==
-X-Received: by 2002:a9d:664e:: with SMTP id q14mr16811881otm.49.1592864865002;
-        Mon, 22 Jun 2020 15:27:45 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id h36sm3589304oth.37.2020.06.22.15.27.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 15:27:44 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 6/6] arm64: defconfig: Enable Qualcomm IPCC driver
-Date:   Mon, 22 Jun 2020 15:27:47 -0700
-Message-Id: <20200622222747.717306-7-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200622222747.717306-1-bjorn.andersson@linaro.org>
-References: <20200622222747.717306-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KhdGsndwHFxm5Fp3MmCQGP1IyrRRJHSC/HQA9VsGSeg=;
+        b=ZAlG/NjCTKPG1dZBcDflK17UmHErlyAdewZdFq9Rbk/gtm7rxKmygOeHqlEvoZSNzZ
+         e3iGFfOLgEmc2yQ/BIozhwMv4vAT9pCVHzZ5WfyDTWQMadxn123JwVx5nEW8vF7NbXCj
+         pWSp5G6Dx1tEQ6x2scT0r5Pq6ze8Fgt/nZShnGblbrfeBjQmPv09/nbMkEgneBxfvDLD
+         lmOtWGcAOYIz2lQMNR6RCuMMr+pBvT4VoJM+hWNpfnpwaNKCl2lqgPblQhU5V4ZR0wDG
+         YWuCcGCVfVR44/sJOCLqEB7Jwhhb3oiWN/gDXl51gA/Q1zJILvRAbLr5DiZjcmsIHkt9
+         CBmA==
+X-Gm-Message-State: AOAM530yiGGsenkpCv9LcUC/T5PbP+Lezp0w7ri4wNgwFIb6w36MbFYC
+        jhUuEqPfn+dG7TZRfUwm2TN1pxm6x6iCcIf4k5XO8A==
+X-Google-Smtp-Source: ABdhPJwUOYKyHRh+39pF9jFUDmuhLJaJg8Qk3hT27V1809kQadXBeResMx7Xf1RVRNeIGp8WoPZW4qIZTV2fZo2T8/Y=
+X-Received: by 2002:a92:849c:: with SMTP id y28mr4696835ilk.33.1592875275542;
+ Mon, 22 Jun 2020 18:21:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200622220048.717073-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20200622220048.717073-1-bjorn.andersson@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Mon, 22 Jun 2020 19:21:04 -0600
+Message-ID: <CAOCk7Noj5E19PPtSV34wnAyQG4qE-5NC3vbQW9egTUJNpm3+6g@mail.gmail.com>
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SM8250 pinctrl driver
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The IPCC hardware block provides a mechanism for triggering interrupts
-between co-processors in recent Qualcomm SoCs. This is used as basis for
-most form of communication between co-processors, so enable this
-support.
+On Mon, Jun 22, 2020 at 4:03 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> The SM8250 pinctrl driver provides pin configuration, pin muxing and
+> GPIO pin control for many pins on the SM8250 SoC.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Looks sane to me.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5848799dcad0..b3d13e1a052a 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -834,6 +834,7 @@ CONFIG_IMX_MBOX=y
- CONFIG_PLATFORM_MHU=y
- CONFIG_BCM2835_MBOX=y
- CONFIG_QCOM_APCS_IPC=y
-+CONFIG_QCOM_IPCC=y
- CONFIG_ROCKCHIP_IOMMU=y
- CONFIG_TEGRA_IOMMU_SMMU=y
- CONFIG_ARM_SMMU=y
--- 
-2.26.2
-
+Reviewed-by: Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
