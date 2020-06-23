@@ -2,82 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0B37204BDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 10:03:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EF25204BE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 10:04:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731606AbgFWIDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 04:03:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50908 "EHLO
+        id S1731579AbgFWIEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 04:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731534AbgFWIDO (ORCPT
+        with ESMTP id S1731516AbgFWIEM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 04:03:14 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE9CC061573;
-        Tue, 23 Jun 2020 01:03:14 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id h28so3445993edz.0;
-        Tue, 23 Jun 2020 01:03:14 -0700 (PDT)
+        Tue, 23 Jun 2020 04:04:12 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2321FC061573;
+        Tue, 23 Jun 2020 01:04:12 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id d10so6892294pls.5;
+        Tue, 23 Jun 2020 01:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2rPds0/G6EcL2nawpDhmBWpfMm0TyFqHBbBHy9o57w0=;
-        b=B2bNXSqLuEsu8gf7GVyhIgx9TT8yKSIML+JRlieMW/cGH0XYqBkF6Dxev7Ut9w8CDc
-         jTFmGd/3K4PaxRUDlYvMYqR1NpHxdHDxmToLFDI43BWiJPJB5syXRDmNhvt1+uRTQ+y/
-         PQVigefkF3mTwJ4TfKt4gs8m8npdbBzsFhJp6fMlaqteyfmGJ/YJCIeUcqdb+uhxMxqT
-         19bJKP7hJdrn4dTQ1BtdxaOnKGOyet/61UuMl8Q05HK2Hz9Ar++Z2Y0U8qd1WT+MyyDv
-         JxuT2wj1MwtgOtXLHEuhghLdD3TMNwGhr5vKLi6AgoxfKhpZQ6C4UPKCRflguDZkGe25
-         C0LA==
+        bh=gQQ6b8/L+9sBz/aiKlXca9tRv5gX+sjabdZJB9mU9RE=;
+        b=alyRb/xuu63Uprh7RDa9xQ4rmpLhmeZbNXp0OLqJlJ2k/omRlsKHSrPar0/n6J0iil
+         l16u+1Rlo77I1yBuOqTMhjrG1uYoIzzpFFhUVw8xHlLa2yfVOC56onewRfXob4Qfh+rI
+         jQLz9Zv71H5G5Y+s3tAfQU6Sp6Op2K0CgjbOcG/JD3Y03PZSJZiCNuclmuUgyMqJ2Vcp
+         Qv4nYIi5f0RUF4ShwGHnF3bCyVryU6vEMIztg1mo3Je/+GYsK2GZYL1UBekpLWPD3YuN
+         7Hg2GijtFcUaixhesxGUIOpEL6V13+ckVR/2SC0WK9RGZwqAoWZPrHxFzjVIthuJC90z
+         WQJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2rPds0/G6EcL2nawpDhmBWpfMm0TyFqHBbBHy9o57w0=;
-        b=rflxtQBivgi2zWud7rpEVo4hAxF2L8p3MYeRGZIDkXV/f6snIfD43qTDSCIg4dSvAI
-         060avyEhpGXbkqXCw8FI7JgOEJOWOOQgblRPd5QODaf2IkNpcTzFsT56AluS3atimatf
-         NHnyXIlWqZidQVrdxZoQnsM/Ezmh46h7HC1TylTAOf/bEV0Np/znajwuDNZJI9f/oIVK
-         nxo2g7tABjQsaRsiaafzQxfZAzweGarcZmr2EYIzFu382eBsBb6KtjCuc45QV+B9t+sz
-         1NGEpE5v0kezqJRhS4OzdbnrbSTLhLGQ4g5BN3DWsbVsLZTt4X0oYQ4ucPFQtMWcB/pt
-         bXNQ==
-X-Gm-Message-State: AOAM5301OXq3WKybV5tndxyF0vVYTOF/3NSCRBpoRjPil2o1fTeMLKYm
-        /g3jXTXA1Tuoa7Edx/wWoJ6xnX9KEGyV8IPjTgA=
-X-Google-Smtp-Source: ABdhPJxnTEC/7IMkbPEIMk4DJSmNqD8oNigmUD2kQb5Tg7dzsWj+iVEI5HhsukquaXBoDUo3B64tHTOC9luNNG2CLmE=
-X-Received: by 2002:aa7:c756:: with SMTP id c22mr20940182eds.239.1592899393084;
- Tue, 23 Jun 2020 01:03:13 -0700 (PDT)
+        bh=gQQ6b8/L+9sBz/aiKlXca9tRv5gX+sjabdZJB9mU9RE=;
+        b=ps6pVC2yU707bQWi3U1FMNqjgKeZ11a5MJCL3OW6srn6n+FqvxiBveEAgtQbfgcrF/
+         LI5DY20gCvu4/ejMod7aBdqmfNDxyD5WD4GOVuotfzaI/p/OEvNqwXvfByKwLBL7Rw3C
+         FEdmpkmqTAhPz3P9TR6nsAmhTkXsF3KRp1wyGJrq//xVK9uHNXZEvLa7Mejm23jIoDWw
+         oKAuaTotW2bSPIH0eOzB8oKQppfdnCw6Gq0PyBZOCoIAlVZThiRbvMbJY3cqFK9qc0Ts
+         4pAydCYMbRbTr7Em0ljYnl5TImzNKHo06Qn1xWi6OcVrgvaKHvjKsvGBoYt4nbdZyYP8
+         OkUw==
+X-Gm-Message-State: AOAM533tWk2dw0Xw/sqpRizec+GUCmKpbo/Supl5cUzo2fQInM3bPUVf
+        OrpheTgk3z9eNNv9dz29pQtjzvdIJrT19awyQmw=
+X-Google-Smtp-Source: ABdhPJwNa0rny5GUWzYvpOwoLS8vL/Q94xTUMDogzOmjviOFyXXHjtdD6h5tWeOr8wax60CpPKWwbjtIVzpGXxUa/Ew=
+X-Received: by 2002:a17:90a:b30d:: with SMTP id d13mr21917940pjr.181.1592899451496;
+ Tue, 23 Jun 2020 01:04:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200622192558.152828-1-konradybcio@gmail.com>
- <20200622192558.152828-2-konradybcio@gmail.com> <20200623072624.GY128451@builder.lan>
-In-Reply-To: <20200623072624.GY128451@builder.lan>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Tue, 23 Jun 2020 10:02:37 +0200
-Message-ID: <CAMS8qEWZ6hg1-n737ZDop6qsL4k3aNLPt_pJJqTwStNtRKhTcA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] pinctrl: qcom: spmi-gpio: Add pm660(l) compatibility
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
+References: <1592897399-24089-1-git-send-email-jprakash@codeaurora.org> <1592897399-24089-6-git-send-email-jprakash@codeaurora.org>
+In-Reply-To: <1592897399-24089-6-git-send-email-jprakash@codeaurora.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Tue, 23 Jun 2020 11:03:58 +0300
+Message-ID: <CAHp75VcvvQJOqrarS8BvneZkX+DusUtGV5DS34_T4BOFKpGECQ@mail.gmail.com>
+Subject: Re: [PATCH V7 5/7] iio: adc: Update return value checks
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree <devicetree@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-gpio@vger.kernel.org
+        Matthias Kaehlcke <mka@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        smohanad@codeaurora.org, kgunda@codeaurora.org,
+        aghayal@codeaurora.org, Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org,
+        linux-iio <linux-iio@vger.kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Yes, you did.
+On Tue, Jun 23, 2020 at 10:31 AM Jishnu Prakash <jprakash@codeaurora.org> wrote:
+>
+> Clean up some return value checks to make code more compact.
+>
 
-This was a mistake on my end and I realized it
- after sending the v3, but I figured there's no
- point in sending it yet again exclusively for this reason.
-Hope you don't mind.
+FWIW,
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 
-Regards
-Konrad
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
+> ---
+>  drivers/iio/adc/qcom-spmi-adc5.c | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> index dcc7599..3022313 100644
+> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> @@ -301,7 +301,7 @@ static int adc5_configure(struct adc5_chip *adc,
+>
+>         /* Read registers 0x42 through 0x46 */
+>         ret = adc5_read(adc, ADC5_USR_DIG_PARAM, buf, sizeof(buf));
+> -       if (ret < 0)
+> +       if (ret)
+>                 return ret;
+>
+>         /* Digital param selection */
+> @@ -388,7 +388,7 @@ static int adc5_do_conversion(struct adc5_chip *adc,
+>
+>         if (adc->poll_eoc) {
+>                 ret = adc5_poll_wait_eoc(adc);
+> -               if (ret < 0) {
+> +               if (ret) {
+>                         pr_err("EOC bit not set\n");
+>                         goto unlock;
+>                 }
+> @@ -398,7 +398,7 @@ static int adc5_do_conversion(struct adc5_chip *adc,
+>                 if (!ret) {
+>                         pr_debug("Did not get completion timeout.\n");
+>                         ret = adc5_poll_wait_eoc(adc);
+> -                       if (ret < 0) {
+> +                       if (ret) {
+>                                 pr_err("EOC bit not set\n");
+>                                 goto unlock;
+>                         }
+> @@ -516,8 +516,6 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
+>         default:
+>                 return -EINVAL;
+>         }
+> -
+> -       return 0;
+>  }
+>
+>  static int adc7_read_raw(struct iio_dev *indio_dev,
+> @@ -761,7 +759,7 @@ static int adc5_get_dt_channel_data(struct adc5_chip *adc,
+>
+>                 ret = adc5_read(adc, ADC5_USR_REVISION1, dig_version,
+>                                                         sizeof(dig_version));
+> -               if (ret < 0) {
+> +               if (ret) {
+>                         dev_err(dev, "Invalid dig version read %d\n", ret);
+>                         return ret;
+>                 }
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
+
+-- 
+With Best Regards,
+Andy Shevchenko
