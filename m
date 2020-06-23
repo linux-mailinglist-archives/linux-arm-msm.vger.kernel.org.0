@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0538420682B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 01:18:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07FE9206830
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 01:19:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387704AbgFWXSl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 19:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
+        id S2387825AbgFWXS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 19:18:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387465AbgFWXSk (ORCPT
+        with ESMTP id S2387718AbgFWXSz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 19:18:40 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 053ACC061573
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 16:18:40 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id k6so134693pll.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 16:18:40 -0700 (PDT)
+        Tue, 23 Jun 2020 19:18:55 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59371C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 16:18:55 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id j12so145568pfn.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 16:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=0v96ac/leez1FdRm3ShEMVPeysWT8iB1v45wX2mCpIM=;
-        b=aRORO8o+nqm0mE17Kc1Nc9GsbcGXWmVGCFNn9ZXXMn821qjSFWp7c8OnDP1jwDLgMH
-         E13wrKo8PCLQp2Xsb8cluhdrpDe/FwwUqvkJ9sXF4hK7da04PDrd7mgWkieFE+3oteP6
-         f7oFZaCoy91XPcUkhQLRzDFDM+vwCC1KRi91+e80brRRQpQAtmUTYQWvaXrNp/IEDvhN
-         NKimV3EH/8GO2Gxy0gvmnhigASjTQcfqy5JkjtPS2IYLskBqHlZliyVC/B54hY+dLmzz
-         BaIEtpzCQIfj05ZFL1tCbdab078xleDKh8yQkvWLFdul3nXpx+5DMXA9SaIT97hZJs4Q
-         xNJw==
+        bh=owfnTjDg726NQtD8/qpHi9DHMAEWYAz9K7YSNYTVBdM=;
+        b=axVFq7kEpzc0dZ9A34HiMdj61yFalJrUM23DWP9yRZk52sePC29vY9KXZguGt9UnTd
+         R2lP2oCjUYJ47auAhoIl0cnMZJbnuAJwOWA7cSJD/huM4YhUJhxli5Jsoh71Ps9iwuvU
+         9al7bH1MI24TstseeTj6WwVU0wdOxix/wnF74p7kDjODXvt4Z15HXASEAotwmUvU+pKU
+         pnMo6iAvksTVm97jtBuWQdAsxxAHAQwOBSaiYb6ihu90IFOnjDHHONcQM3zGfrikE0kI
+         gaDWaALK7PEAJFMt8OclbWgTODw1MCGX36h1hDU3aFHU2NtlhBiRLxE/rLUAdVp0qF7r
+         Ylhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=0v96ac/leez1FdRm3ShEMVPeysWT8iB1v45wX2mCpIM=;
-        b=nte+vfIN6nYCIoQTrwfzVTAXFVYqjZ15tLLeCV52uLGwwcXgqH2LNj72YusAhRimxR
-         H7DRLQrmFIj2yeNox8Dw2FCHXIe3GpeQGuY9ZnHI6Meha5xBAw6Bbd/0fmD5prqxi3We
-         zysKRN67Cw1q0phGVoGyuZAO1XU2xYzmONQ3q7Vj9Hl+UbAZAORMZoJNQ6JCOaJsFJXO
-         DtcoZSEftRH2AMSmwIw77EqUnkYQSCWU5Vw9hCadnZ6uJ6rzYmHsQOWXnpmPvK1/HVbt
-         oPuANgfZMyL2SkTi2NaVb3ze9XkAd9aa7faEG4n1iMzQTzcE3bm1Lm6hO8qGUdmg5Zl8
-         8F2A==
-X-Gm-Message-State: AOAM533uMV+1UZLGKTuumhUZ5BzQtAoNxigUjJXZ9nhPSVE7XStf/uWe
-        FfWoCLQz0z0M5JiPen2ROXo3uw==
-X-Google-Smtp-Source: ABdhPJwqwUenAMlMsZ6tp1FrBJrXVkaOur2qDdhej0ImlRcHJrseQcotofWyOJamvq1ST5/QPq+YCg==
-X-Received: by 2002:a17:902:6ac2:: with SMTP id i2mr25300027plt.243.1592954319500;
-        Tue, 23 Jun 2020 16:18:39 -0700 (PDT)
+        bh=owfnTjDg726NQtD8/qpHi9DHMAEWYAz9K7YSNYTVBdM=;
+        b=keuiae4Nh5Bxajn+8qhQtuCV8Rqlqt00QE52BTUHa68riTutkeDAVjS9P/9GKskDNl
+         uNm3EfKy6z6qB0EJBElDU7hXhKe7xSMVXc1T8Y/FTFoEsz2ir4G/g/KmvwsR47gruLA6
+         X5fZAIWjAgRCeZU8lpzom+Eh/P/V/oHKLa5VCF3Ny4uIhhmTp+I8J6fIzQfEdkbTubDy
+         1liPNiodsK5eXMSgonAKR2Jy9nihnBkaELcUqsVapR0HeqSqaS5mBafvv3IsTkaRib0g
+         P3EmYyfLroZ0G2tp+mfNOPXwYNwEwEm7R5aYaN/ZjTM17jR96T3oQ5Ia9lb9Fs2NfIbe
+         khNw==
+X-Gm-Message-State: AOAM530HT/yAIa2jq/2PnONiSR+wRfRzbV7fUpYGIpcwxVusx2Vaqi98
+        TcWAmbOcZXgZ9XjEnvlg3cfluQ==
+X-Google-Smtp-Source: ABdhPJx06TX5OOHzlhkijzzldNPalHmTdguWii291hg2tgJdJvb1x61rBEowix+fbi8F4IW1FhWEXg==
+X-Received: by 2002:a62:ee1a:: with SMTP id e26mr26388637pfi.228.1592954334821;
+        Tue, 23 Jun 2020 16:18:54 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r9sm18816543pfq.31.2020.06.23.16.18.38
+        by smtp.gmail.com with ESMTPSA id 2sm3375297pfa.110.2020.06.23.16.18.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 16:18:38 -0700 (PDT)
-Date:   Tue, 23 Jun 2020 16:15:56 -0700
+        Tue, 23 Jun 2020 16:18:54 -0700 (PDT)
+Date:   Tue, 23 Jun 2020 16:16:11 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Konrad Dybcio <konradybcio@gmail.com>
 Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
@@ -58,15 +58,14 @@ Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Colin Cross <ccross@android.com>,
         Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 02/12] arm64: dts: qcom: msm8994: Add SPMI PMIC
- arbiter device
-Message-ID: <20200623231556.GI128451@builder.lan>
+Subject: Re: [PATCH v2 03/12] arm64: dts: qcom: msm8994: Add a proper CPU map
+Message-ID: <20200623231611.GJ128451@builder.lan>
 References: <20200623224813.297077-1-konradybcio@gmail.com>
- <20200623224813.297077-3-konradybcio@gmail.com>
+ <20200623224813.297077-4-konradybcio@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200623224813.297077-3-konradybcio@gmail.com>
+In-Reply-To: <20200623224813.297077-4-konradybcio@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -74,44 +73,147 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 23 Jun 15:48 PDT 2020, Konrad Dybcio wrote:
 
-> Add SPMI PMIC arbiter device to communicate with PMICs
-> attached to SPMI bus.
+> Add a proper CPU map to enable the use of all 8 cores.
 > 
 > Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 
 Applied, thanks
 
 > ---
->  arch/arm64/boot/dts/qcom/msm8994.dtsi | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  arch/arm64/boot/dts/qcom/msm8994.dtsi | 112 +++++++++++++++++++++++---
+>  1 file changed, 102 insertions(+), 10 deletions(-)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-> index 79e6e46798c8..23e50c30669b 100644
+> index 23e50c30669b..e7f4b06eb12c 100644
 > --- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-> @@ -169,6 +169,22 @@ restart@fc4ab000 {
->  			reg = <0xfc4ab000 0x4>;
->  		};
+> @@ -28,24 +28,116 @@ sleep_clk: sleep_clk {
+>  	};
 >  
-> +		spmi_bus: spmi@fc4c0000 {
-> +			compatible = "qcom,spmi-pmic-arb";
-> +			reg = <0xfc4cf000 0x1000>,
-> +			      <0xfc4cb000 0x1000>,
-> +			      <0xfc4ca000 0x1000>;
-> +			reg-names = "core", "intr", "cnfg";
-> +			interrupt-names = "periph_irq";
-> +			interrupts = <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,ee = <0>;
-> +			qcom,channel = <0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <4>;
+>  	cpus {
+> -		#address-cells = <1>;
+> +		#address-cells = <2>;
+>  		#size-cells = <0>;
+> +
+> +		CPU0: cpu@0 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x0 0x0>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_0>;
+> +			L2_0: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +			};
 > +		};
 > +
->  		tcsr_mutex_regs: syscon@fd484000 {
->  			compatible = "syscon";
->  			reg = <0xfd484000 0x2000>;
+> +		CPU1: cpu@1 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x0 0x1>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_0>;
+> +		};
+> +
+> +		CPU2: cpu@2 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x0 0x2>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_0>;
+> +		};
+> +
+> +		CPU3: cpu@3 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a53";
+> +			reg = <0x0 0x3>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_0>;
+> +		};
+> +
+> +		CPU4: cpu@100 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a57";
+> +			reg = <0x0 0x100>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_1>;
+> +			L2_1: l2-cache {
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +			};
+> +		};
+> +
+> +		CPU5: cpu@101 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a57";
+> +			reg = <0x0 0x101>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_1>;
+> +		};
+> +
+> +		CPU6: cpu@102 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a57";
+> +			reg = <0x0 0x101>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_1>;
+> +		};
+> +
+> +		CPU7: cpu@103 {
+> +			device_type = "cpu";
+> +			compatible = "arm,cortex-a57";
+> +			reg = <0x0 0x101>;
+> +			enable-method = "psci";
+> +			next-level-cache = <&L2_1>;
+> +		};
+> +
+>  		cpu-map {
+>  			cluster0 {
+>  				core0 {
+>  					cpu = <&CPU0>;
+>  				};
+> +
+> +				core1 {
+> +					cpu = <&CPU1>;
+> +				};
+> +
+> +				core2 {
+> +					cpu = <&CPU2>;
+> +				};
+> +
+> +				core3 {
+> +					cpu = <&CPU3>;
+> +				};
+>  			};
+> -		};
+>  
+> -		CPU0: cpu@0 {
+> -			device_type = "cpu";
+> -			compatible = "arm,cortex-a53";
+> -			reg = <0x0>;
+> -			next-level-cache = <&L2_0>;
+> -			L2_0: l2-cache {
+> -			      compatible = "cache";
+> -			      cache-level = <2>;
+> +			cluster1 {
+> +				core0 {
+> +					cpu = <&CPU4>;
+> +				};
+> +
+> +				core1 {
+> +					cpu = <&CPU5>;
+> +				};
+> +
+> +				core2 {
+> +					cpu = <&CPU6>;
+> +				};
+> +
+> +				core3 {
+> +					cpu = <&CPU7>;
+> +				};
+>  			};
+>  		};
+>  	};
 > -- 
 > 2.27.0
 > 
