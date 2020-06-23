@@ -2,166 +2,347 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 884DB204B3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 09:32:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E420204B52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 09:38:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731799AbgFWHba (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 03:31:30 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:53504 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731740AbgFWHb3 (ORCPT
+        id S1731169AbgFWHiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 03:38:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47008 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730951AbgFWHiA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 03:31:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592897489; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=lakqupZmsNZf5TreKphxpnROhQ0dpQJl4y7QgjtKSMI=; b=IDvlLT4QnKBqDcfJdEmGy4zmipFVTJdTQZN6iNusTcvaqIQWcSGii+Zn8u8cKm14JmIwyYNy
- dCjiB14SqUTXKTF/p/ocoWP5UW9HjU9ZU5KIDXOtFwxoPVY4IZteEwFpX5cWtkuN+tNK7EeD
- Y8/8UqftQCbWWRQzN50/uv8maTg=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n14.prod.us-west-2.postgun.com with SMTP id
- 5ef1afd05866879c76642e46 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Jun 2020 07:31:28
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 92F30C433B1; Tue, 23 Jun 2020 07:31:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jprakash-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jprakash)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BE071C433C6;
-        Tue, 23 Jun 2020 07:31:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BE071C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jprakash@codeaurora.org
-From:   Jishnu Prakash <jprakash@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, linus.walleij@linaro.org,
-        Jonathan.Cameron@huawei.com, andy.shevchenko@gmail.com,
-        amit.kucheria@verdurent.com, smohanad@codeaurora.org,
-        kgunda@codeaurora.org, aghayal@codeaurora.org,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
-Cc:     linux-arm-msm-owner@vger.kernel.org,
-        Jishnu Prakash <jprakash@codeaurora.org>
-Subject: [PATCH V7 7/7] iio: adc: Combine read functions for PMIC5 and PMIC7
-Date:   Tue, 23 Jun 2020 12:59:59 +0530
-Message-Id: <1592897399-24089-8-git-send-email-jprakash@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1592897399-24089-1-git-send-email-jprakash@codeaurora.org>
-References: <1592897399-24089-1-git-send-email-jprakash@codeaurora.org>
+        Tue, 23 Jun 2020 03:38:00 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7525AC061795
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 00:38:00 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id t6so15608536otk.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 00:38:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=35v059ZSefWiE/94cPIdPsNYSj0+xNFw0zZxXG6+Ru4=;
+        b=yRvE71xHNF6E696AMfCuE+3xfDYcTc3yUU5vc4zZuoFKBV+AuBEygXslM1Ri7FTqUY
+         rkGrksg+O5zIiKwLkV7GOpfoBgKJzecwIZ27dR8MSb3+TqccBwzqIyTgHgCwSOWZ3raO
+         aKjAluRAqMOGafA0LdI9hhJWBES/lxYbZ3AnM4gRHU+rz5SuW4fftU6TBQxdxrUmftk/
+         5XTGJczBhWcJJUDufYD+cbqasMyyd4zLqegwr9rid76/Xx+1wrQ8gKs9VjmRV2jppftX
+         cSnL6ESOX0FImU/i1qcy6CE/5oxJKmIOAEtCqBz/Ghds+X7S7Er8h9++Kd4ydM+eKq+e
+         u6xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=35v059ZSefWiE/94cPIdPsNYSj0+xNFw0zZxXG6+Ru4=;
+        b=kOV73ZmJk7oykxPG04oYNSera7RgXism6TucGyHuxw1LTI/h3PSCiZFXTNpXxs1XiD
+         Xdh1nlrn44FPskdXWkY23Lz2vn1TVHMBm8+75c6/AFl/FRblH08X0RwFXUqD+C/cy+C+
+         yZMLn1mfr6f1gV+iDa4KVKb5PTe9J1SVdcXCc8VH2LSRkuKpI548NOXAfQvfsjLp7u1x
+         a/rmo3DAB2GIjQisPHL99k7PWpgPGEf4VLjjUDKVVpXIJ5lLdfHdSa1yZ8j5I4tEtyl/
+         bdmo4s7ID9Xje2SMdFdVpHi+Wez6LtxfIhHPDTVjfOQ7/OUHYzhS6ayh83tSPxyunTJC
+         P+AQ==
+X-Gm-Message-State: AOAM531g7OgRDymwTIofz2ZrPGdOM3pvVSnDLoLy1/YS/Mh5XMAHN09g
+        2zAHGTmkQRKCk06Eh9YphthTBg==
+X-Google-Smtp-Source: ABdhPJw8UOm3lfPe6w8OyAPXm0lHSGhZgHDMNbj0rIur8GCTV3KPjYo4LH/vcrmVM3xONNX++19JDg==
+X-Received: by 2002:a9d:aaa:: with SMTP id 39mr16361606otq.269.1592897879660;
+        Tue, 23 Jun 2020 00:37:59 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id x194sm154858oix.22.2020.06.23.00.37.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2020 00:37:59 -0700 (PDT)
+Date:   Tue, 23 Jun 2020 00:35:15 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        ??ukasz Patron <priv.luk@gmail.com>
+Subject: Re: [PATCH v3 5/7] arm64: dts: qcom: Add support for Sony Xperia
+ XA2/Plus/Ultra (Nile platform)
+Message-ID: <20200623073515.GA128451@builder.lan>
+References: <20200622192558.152828-1-konradybcio@gmail.com>
+ <20200622192558.152828-6-konradybcio@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200622192558.152828-6-konradybcio@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a common function used for read_raw callback for both PMIC5
-and PMIC7 ADCs.
+On Mon 22 Jun 12:25 PDT 2020, Konrad Dybcio wrote:
 
-Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
----
- drivers/iio/adc/qcom-spmi-adc5.c | 49 ++++++++++++++++------------------------
- 1 file changed, 19 insertions(+), 30 deletions(-)
+> Add device tree support for the Sony Xperia XA2, XA2 Plus and
+> XA2 Ultra smartphones. They are all based on the Sony Nile
+> platform (sdm630) and share a lot of common code. The
+> differences are really minor, so a Nile-common DTSI
+> has been created to reduce clutter.
+> 
+> XA2 - Pioneer
+> XA2 Plus - Voyager
+> XA2 Ultra - Discovery
+> 
+> The boards currently support:
+> * Screen console
+> * SDHCI
+> * I2C
+> * pstore log dump
+> * GPIO keys
+> * PSCI idle states
+> 
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> Tested-by: ??ukasz Patron <priv.luk@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   3 +
+>  .../sdm630-sony-xperia-nile-discovery.dts     |  13 ++
+>  .../qcom/sdm630-sony-xperia-nile-pioneer.dts  |  13 ++
+>  .../qcom/sdm630-sony-xperia-nile-voyager.dts  |  20 +++
+>  .../dts/qcom/sdm630-sony-xperia-nile.dtsi     | 136 ++++++++++++++++++
+>  5 files changed, 185 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 0f2c33d611df..1cad7cb07574 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -16,6 +16,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-lenovo-miix-630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
+> new file mode 100644
+> index 000000000000..8fca0b69fa01
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dts
+> @@ -0,0 +1,13 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Konrad Dybcio
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm630-sony-xperia-nile.dtsi"
+> +
+> +/ {
+> +	model = "Sony Xperia XA2 Ultra";
+> +	compatible = "sony,discovery-row", "qcom,sdm630";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
+> new file mode 100644
+> index 000000000000..90dcd4ebaaed
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dts
+> @@ -0,0 +1,13 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Konrad Dybcio
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm630-sony-xperia-nile.dtsi"
+> +
+> +/ {
+> +	model = "Sony Xperia XA2";
+> +	compatible = "sony,pioneer-row", "qcom,sdm630";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
+> new file mode 100644
+> index 000000000000..fae5f1bb6834
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dts
+> @@ -0,0 +1,20 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Konrad Dybcio
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm630-sony-xperia-nile.dtsi"
+> +
+> +/ {
+> +	model = "Sony Xperia XA2 Plus";
+> +	compatible = "sony,voyager-row", "qcom,sdm630";
+> +
+> +	chosen {
+> +		framebuffer@9d400000 {
+> +			reg = <0 0x9d400000 0 (2160 * 1080 * 4)>;
+> +			height = <2160>;
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+> new file mode 100644
+> index 000000000000..9ba359c848d0
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+> @@ -0,0 +1,136 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2020, Konrad Dybcio
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm630.dtsi"
+> +#include "pm660.dtsi"
+> +#include "pm660l.dtsi"
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +
+> +/ {
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <318 0>;
+> +	qcom,board-id = <8 1>;
+> +	qcom,pmic-id = <0x1001b 0x101011a 0x00 0x00 0x1001b 0x201011a 0x00 0x00>;
+> +
+> +	/* This part enables graphical output via bootloader-enabled display */
+> +	chosen {
+> +		bootargs = "earlycon=tty0 console=tty0";
+> +
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		stdout-path = "framebuffer0";
+> +
+> +		framebuffer0: framebuffer@9d400000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x9d400000 0 (1920 * 1080 * 4)>;
+> +			width = <1080>;
+> +			height = <1920>;
+> +			stride = <(1080 * 4)>;
+> +			format = "a8r8g8b8";
+> +			status= "okay";
+> +		};
+> +	};
+> +
+> +	gpio_keys {
+> +		status = "okay";
+> +		compatible = "gpio-keys";
+> +		input-name = "gpio-keys";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		autorepeat;
+> +
+> +		camera_focus {
+> +			label = "Camera Focus";
+> +			gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_CAMERA_FOCUS>;
+> +			debounce-interval = <15>;
+> +		};
+> +
+> +		camera_snapshot {
+> +			label = "Camera Snapshot";
+> +			gpios = <&tlmm 113 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_CAMERA>;
+> +			debounce-interval = <15>;
+> +		};
+> +
+> +		vol_down {
+> +			label = "Volume Down";
+> +			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_VOLUMEDOWN>;
+> +			gpio-key,wakeup;
+> +			debounce-interval = <15>;
+> +		};
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		ramoops@ffc00000 {
+> +			compatible = "ramoops";
+> +			reg = <0x0 0xffc00000 0x0 0x100000>;
+> +			record-size = <0x10000>;
+> +			console-size = <0x60000>;
+> +			ftrace-size = <0x10000>;
+> +			pmsg-size = <0x20000>;
+> +			ecc-size = <16>;
+> +			status = "okay";
+> +		};
+> +
+> +		debug_region@ffb00000 {
+> +			reg = <0x00 0xffb00000 0x00 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		removed_region@85800000 {
+> +			reg = <0x00 0x85800000 0x00 0x3700000>;
+> +			no-map;
+> +		};
+> +	};
+> +
+> +	soc {
+> +		sdhci@c0c4000 {
 
-diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-index 0f9af66..88efadb 100644
---- a/drivers/iio/adc/qcom-spmi-adc5.c
-+++ b/drivers/iio/adc/qcom-spmi-adc5.c
-@@ -449,6 +449,11 @@ static int adc7_do_conversion(struct adc5_chip *adc,
- 	return ret;
- }
- 
-+typedef int (*adc_do_conversion)(struct adc5_chip *adc,
-+			struct adc5_channel_prop *prop,
-+			struct iio_chan_spec const *chan,
-+			u16 *data_volt, u16 *data_cur);
-+
- static irqreturn_t adc5_isr(int irq, void *dev_id)
- {
- 	struct adc5_chip *adc = dev_id;
-@@ -487,9 +492,9 @@ static int adc7_of_xlate(struct iio_dev *indio_dev,
- 	return -EINVAL;
- }
- 
--static int adc5_read_raw(struct iio_dev *indio_dev,
-+static int adc_read_raw_common(struct iio_dev *indio_dev,
- 			 struct iio_chan_spec const *chan, int *val, int *val2,
--			 long mask)
-+			 long mask, adc_do_conversion do_conv)
- {
- 	struct adc5_chip *adc = iio_priv(indio_dev);
- 	struct adc5_channel_prop *prop;
-@@ -500,8 +505,8 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
- 
- 	switch (mask) {
- 	case IIO_CHAN_INFO_PROCESSED:
--		ret = adc5_do_conversion(adc, prop, chan,
--				&adc_code_volt, &adc_code_cur);
-+		ret = do_conv(adc, prop, chan,
-+					&adc_code_volt, &adc_code_cur);
- 		if (ret)
- 			return ret;
- 
-@@ -518,36 +523,20 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
- 	}
- }
- 
--static int adc7_read_raw(struct iio_dev *indio_dev,
-+static int adc5_read_raw(struct iio_dev *indio_dev,
- 			 struct iio_chan_spec const *chan, int *val, int *val2,
- 			 long mask)
- {
--	struct adc5_chip *adc = iio_priv(indio_dev);
--	struct adc5_channel_prop *prop;
--	u16 adc_code_volt, adc_code_cur;
--	int ret;
--
--	prop = &adc->chan_props[chan->address];
--
--	switch (mask) {
--	case IIO_CHAN_INFO_PROCESSED:
--		ret = adc7_do_conversion(adc, prop, chan,
--					&adc_code_volt, &adc_code_cur);
--		if (ret)
--			return ret;
--
--		ret = qcom_adc5_hw_scale(prop->scale_fn_type,
--			&adc5_prescale_ratios[prop->prescale],
--			adc->data,
--			adc_code_volt, val);
--
--		if (ret)
--			return ret;
-+	return adc_read_raw_common(indio_dev, chan, val, val2,
-+				mask, adc5_do_conversion);
-+}
- 
--		return IIO_VAL_INT;
--	default:
--		return -EINVAL;
--	}
-+static int adc7_read_raw(struct iio_dev *indio_dev,
-+			 struct iio_chan_spec const *chan, int *val, int *val2,
-+			 long mask)
-+{
-+	return adc_read_raw_common(indio_dev, chan, val, val2,
-+				mask, adc7_do_conversion);
- }
- 
- static const struct iio_info adc5_info = {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I believe I forgot to ask you to refer to these nodes by label instead
+of per their structure (i.e. &sdhc_1 { ... outside / {). As we do in
+e.g. sdm845-mtp.dts.
 
+But the patches looks good, so I applied them anyways. When it suits you
+(e.g. when you're populating the i2c nodes below) please update them
+accordingly.
+
+Thanks,
+Bjorn
+
+> +			status = "okay";
+> +
+> +			mmc-ddr-1_8v;
+> +			/* SoMC Nile platform's eMMC doesn't support HS200 mode */
+> +			mmc-hs400-1_8v;
+> +		};
+> +
+> +		i2c@c175000 {
+> +			status = "okay";
+> +
+> +			/* Synaptics touchscreen */
+> +		};
+> +
+> +		i2c@c176000 {
+> +			status = "okay";
+> +
+> +			/* SMB1351 charger */
+> +		};
+> +
+> +		serial@c1af000 {
+> +			status = "okay";
+> +		};
+> +
+> +		/* I2C3, 4, 5, 7 and 8 are disabled on this board. */
+> +
+> +		i2c@c1b6000 {
+> +			status = "okay";
+> +
+> +			/* NXP NFC */
+> +		};
+> +	};
+> +};
+> -- 
+> 2.27.0
+> 
