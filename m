@@ -2,117 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17D8C205960
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 19:40:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61E70205A2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 20:08:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387607AbgFWRkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 13:40:05 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33258 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387517AbgFWRgP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 13:36:15 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6EB03207D0;
-        Tue, 23 Jun 2020 17:36:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1592933774;
-        bh=vAxBLdt3Y/Y1TxUezjMBmZChx3eOzeg6eGD0u+ydckw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=0jJr/4tweJeW2SRQRCrs7trquBwufJORXxkHurkSszYZJT/ujH+yGs0DLtOvPVs02
-         6xf+pVt0WNY2yuYSKSVlrwdo0lzD63k+2BpN2JjTUXR2wu9RYnpcsAsxS8WU6YLYUV
-         gW71YELkLwz3cxhbvWN8rzzF/v+I/R5ze7SIWME8=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 12/24] pinctrl: qcom: spmi-gpio: fix warning about irq chip reusage
-Date:   Tue, 23 Jun 2020 13:35:47 -0400
-Message-Id: <20200623173559.1355728-12-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200623173559.1355728-1-sashal@kernel.org>
-References: <20200623173559.1355728-1-sashal@kernel.org>
+        id S1733112AbgFWSIk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 14:08:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60162 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732549AbgFWSIj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Jun 2020 14:08:39 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B34CC061573;
+        Tue, 23 Jun 2020 11:08:39 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id v3so14029047wrc.1;
+        Tue, 23 Jun 2020 11:08:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=31dgJUvqmMiUjr5/SjwepCwX7LHCXraRa5BeX61GTfI=;
+        b=k0VX6SgyT10NYDAWWRGaAQ4zDZ0897r38KlzWcP1GetAhm91XVV9nJdPWE2BsqLg2F
+         808WRCuE7mtgEExzwXNHd2FT9D8gQI1WeJRBVM17lZDxDARUvruTXOn7c3ecaflXhnWT
+         6S64Yc8Tw0dkjWmbc95nOZI69oSDm+XRh4ZW6yqUe2l48pjwiBmce3IaV0akwGaEpTrw
+         CvphJx0a9/CYS6wggA/U1x+PRW9yIuz5D9QXufQ3ZzNyYwNB1FwGSfjJKBumRBsL8UO6
+         ZhUcQXUOofiPLbkuf3vuaO5G8jqTl00MTDXe1Ivc8tkVL5Ae6dIPh+m/9Uoht4HosoJO
+         wG8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=31dgJUvqmMiUjr5/SjwepCwX7LHCXraRa5BeX61GTfI=;
+        b=OscEEQ5uIBEXIGDl1wCT6flP4DlQWpSVgmrU2o6nFy00bPj4RE3HrYCysx8ML0cEze
+         nOczcPpAZQnqpxbzHtHNASdWe9R2xRpbpvahrMELCqCtFEKBR8/+Ae1CQ2X2+xPE6KN0
+         /FftZ07FV1bBn8UW5z4nK8uDs90l30ApG4LHel6j1n0WzLTGNysBotgQ+8A1axIqZMgH
+         Bw+u7V7dq9FwXAss5eEo0R1fb2OmcztwJbDfzZ7I7QhZydiVtuDqkwqCfZXeeA7+FGCw
+         NFtabTU3BCr9OSql/K/mXJBy2H+3WLfxGjJ1ufv4b5u1MkgVKbzM8Yhqpr/iTCtmRlLS
+         FmNQ==
+X-Gm-Message-State: AOAM531Novt8+q3kz36o5xkLqIazrWWeVj8F6FJhcCdA4wWuAUvcRRrq
+        Q6dbCCUbUfc4GeYpqw1BSug=
+X-Google-Smtp-Source: ABdhPJwQZQAeI0iwVIQ22Ds2N5g7OV0FSAPFVo01fCJvlE+RoPXOKXFaxNnSchApHq1eudJjsRD0rg==
+X-Received: by 2002:a5d:6809:: with SMTP id w9mr27921394wru.182.1592935717856;
+        Tue, 23 Jun 2020 11:08:37 -0700 (PDT)
+Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
+        by smtp.googlemail.com with ESMTPSA id c16sm4719529wml.45.2020.06.23.11.08.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2020 11:08:37 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+To:     skrzynka@konradybcio.pl
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH 0/8] SDM630 and Ninges fixes
+Date:   Tue, 23 Jun 2020 20:08:24 +0200
+Message-Id: <20200623180832.254163-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Disclaimer: Ninges = Nile&Ganges
 
-[ Upstream commit 5e50311556c9f409a85740e3cb4c4511e7e27da0 ]
+This series brings support for RPMPD on 630/660,
+initial tsens support (thermal-zones are WIP so
+dont' want to send them yet), an urgent fix for
+pinctrl (I have made a mistake that only showed
+itself when I tried to add more GPIO-dependent
+stuff...) and some stuff for Ninges, namely
+enablement of BLSP1_UART2 (omitted it previously)
+and temporary removal of Vol- on Nile (which is
+a result of fixing the pinctrl driver so that
+gpio-keys got to the point where it probed it
+and then it died). Also with these changes come
+some cosmetic updates (using phandles instead of
+addresses as per Bjorn's Request).
 
-Fix the following warnings caused by reusage of the same irq_chip
-instance for all spmi-gpio gpio_irq_chip instances. Instead embed
-irq_chip into pmic_gpio_state struct.
+Konrad Dybcio (8):
+  soc: qcom: rpmpd: Add SDM660 power-domains
+  arm64: dts: qcom: sdm630: Add RPM power domains support
+  arm64: dts: qcom: sdm630: Add tsens node
+  arm64: dts: qcom: sdm630: nile: Enable BLSP1_UART2
+  arm64: dts: qcom: sdm630: Fix the pinctrl node
+  arm64: dts: qcom: sdm630: nile: Reserve disabled GPIOs
+  arm64: dts: qcom: sdm630: nile: Remove Volume Down gpio-key
+  arm64: dts: qcom: sdm630: ganges: Change addresses to phandles
 
-gpio gpiochip2: (c440000.qcom,spmi:pmic@2:gpio@c000): detected irqchip that is shared with multiple gpiochips: please fix the driver.
-gpio gpiochip3: (c440000.qcom,spmi:pmic@4:gpio@c000): detected irqchip that is shared with multiple gpiochips: please fix the driver.
-gpio gpiochip4: (c440000.qcom,spmi:pmic@a:gpio@c000): detected irqchip that is shared with multiple gpiochips: please fix the driver.
+ .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
+ .../bindings/thermal/qcom-tsens.yaml          |  1 +
+ .../dts/qcom/sdm630-sony-xperia-ganges.dtsi   | 22 +++---
+ .../dts/qcom/sdm630-sony-xperia-nile.dtsi     | 67 +++++++++---------
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          | 69 +++++++++++++++++--
+ drivers/soc/qcom/rpmpd.c                      | 33 +++++++++
+ include/dt-bindings/power/qcom-rpmpd.h        | 12 ++++
+ 7 files changed, 155 insertions(+), 50 deletions(-)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20200604002817.667160-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index f1fece5b9c06a..3769ad08eadfe 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -170,6 +170,7 @@ struct pmic_gpio_state {
- 	struct regmap	*map;
- 	struct pinctrl_dev *ctrl;
- 	struct gpio_chip chip;
-+	struct irq_chip irq;
- };
- 
- static const struct pinconf_generic_params pmic_gpio_bindings[] = {
-@@ -917,16 +918,6 @@ static int pmic_gpio_populate(struct pmic_gpio_state *state,
- 	return 0;
- }
- 
--static struct irq_chip pmic_gpio_irq_chip = {
--	.name = "spmi-gpio",
--	.irq_ack = irq_chip_ack_parent,
--	.irq_mask = irq_chip_mask_parent,
--	.irq_unmask = irq_chip_unmask_parent,
--	.irq_set_type = irq_chip_set_type_parent,
--	.irq_set_wake = irq_chip_set_wake_parent,
--	.flags = IRQCHIP_MASK_ON_SUSPEND,
--};
--
- static int pmic_gpio_domain_translate(struct irq_domain *domain,
- 				      struct irq_fwspec *fwspec,
- 				      unsigned long *hwirq,
-@@ -1053,8 +1044,16 @@ static int pmic_gpio_probe(struct platform_device *pdev)
- 	if (!parent_domain)
- 		return -ENXIO;
- 
-+	state->irq.name = "spmi-gpio",
-+	state->irq.irq_ack = irq_chip_ack_parent,
-+	state->irq.irq_mask = irq_chip_mask_parent,
-+	state->irq.irq_unmask = irq_chip_unmask_parent,
-+	state->irq.irq_set_type = irq_chip_set_type_parent,
-+	state->irq.irq_set_wake = irq_chip_set_wake_parent,
-+	state->irq.flags = IRQCHIP_MASK_ON_SUSPEND,
-+
- 	girq = &state->chip.irq;
--	girq->chip = &pmic_gpio_irq_chip;
-+	girq->chip = &state->irq;
- 	girq->default_type = IRQ_TYPE_NONE;
- 	girq->handler = handle_level_irq;
- 	girq->fwnode = of_node_to_fwnode(state->dev->of_node);
 -- 
-2.25.1
+2.27.0
 
