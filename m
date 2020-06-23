@@ -2,511 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF33820491D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 07:18:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD84F20498D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 08:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728698AbgFWFSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 01:18:33 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40127 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730544AbgFWFSd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 01:18:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592889511; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=fWOSD62PEEBNnIFjGuPL7z6OKLCNXuAB1dMfCYPmYoY=; b=D9Tv4A/VI8+g+oo4vl847TDn1K02VSjjrVqs+i95rMxGxuPp9kZxquF+FtuTw/BjP5uqgo77
- 2Ffjxx+SssxBK2M4FdqM/T7WpiiwcuUczBLuW6bulatdwFfI6xDwIxZDREnRCFfUmcjSnaZx
- zLC4+Bjk3cixb+hKSbYRQRDv6ZU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5ef190a74c9690533a6c329d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Jun 2020 05:18:31
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CED55C433CA; Tue, 23 Jun 2020 05:18:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1044C433A0;
-        Tue, 23 Jun 2020 05:18:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F1044C433A0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, kathirav@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     sivaprak@codeaurora.org
-Subject: [PATCH V2 6/6] dt-bindings: regulator: convert QCOM SMD-RPM regulator document to YAML schema
-Date:   Tue, 23 Jun 2020 10:47:52 +0530
-Message-Id: <1592889472-6843-7-git-send-email-kathirav@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1592889472-6843-1-git-send-email-kathirav@codeaurora.org>
-References: <1592889472-6843-1-git-send-email-kathirav@codeaurora.org>
+        id S1730395AbgFWGJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 02:09:39 -0400
+Received: from esa1.hgst.iphmx.com ([68.232.141.245]:8157 "EHLO
+        esa1.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728800AbgFWGJj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Jun 2020 02:09:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+  t=1592892579; x=1624428579;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=+7NH40JAXOC6U4zjefkq2Vfu/2vmsV3PMG/QnbUPNF4=;
+  b=mQkR9C9ZxRFRiuRVXVx1wY3zq2O0qvl/3JIqblNztpD29YwDxdHMMB/C
+   me3/TyumWtkvVdmGjB8yuDyg9iDw9hA+cZhj+4bA9gRVXPvRU0Othql0P
+   2pXPdFCHMZ3DRpi1T2VVQoKD7WehPvjXtXFVToqeU9BqCxLc1e7zNlyGS
+   /8U7kTU9Ajj4P3FQWu/abcyn/4fjmhm3gis8rjblwdSDCPs6T2IaPrAjH
+   B3LAAY94o85bdES0BN4P325rhCNqtK7iwwazlu5701xUxvhFhm8lSVMVQ
+   6e+kY/xX+7AhHaTuNNhqloz27q9MDB6GSRX8nqvHyI70TldiBpGc9IVIn
+   A==;
+IronPort-SDR: wqy4DR4MbivfGACvPmzt8PtoaY7C09ipROWQTG5cPkEfHGqkqtDxBeyB0et58ggVMdXqlDbONr
+ gA6kbAT3Diut/SVl1Aglgpw/R60tIxnqkNYaqow3gJo5TBt67ugUJFW9Hk1l8yu1NTfquDmie8
+ iI48sUq5wg2Ow2GnrzzR0Tirsev9QoVS4l0WGs69MuVA2FyNJfVFHMLEFhlYz7a8UluYlwtVxZ
+ TBugFz5hfVGpOune0DqoFjOjSJCdy0v/e7/GmlSah1/l+locNZIBs4ntCHE1NkiFwVDCZWRgn8
+ F0c=
+X-IronPort-AV: E=Sophos;i="5.75,270,1589212800"; 
+   d="scan'208";a="249877222"
+Received: from mail-sn1nam04lp2052.outbound.protection.outlook.com (HELO NAM04-SN1-obe.outbound.protection.outlook.com) ([104.47.44.52])
+  by ob1.hgst.iphmx.com with ESMTP; 23 Jun 2020 14:09:30 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lZJ5SydG+0/gyWV40Y72m4ETPs3IdX+2YeyFC2m6ah0CBzZQc7inXkvyFlbENjKbVFtEbur75wxRTdqCQDYhUosAal7pIEJmORFG1z1tuGdXj+wb0cdP7QgRKhIIWzzFJ7rL8f9pP9bpk3BMj8rrYJS7OadGdW3eE04LkhzZZIc78E9KhID5N03Uy02ZCTEtEBvXwNyE002xc4TxZvCIL02ykAFnFVinLdiVlLxShJONSo2oQSKrGroAkGLWGC1RFbrxHvhCi2dEp59f5frWIgcRHuEw02tikGU0rMPTHZtntHhcXcYXuCt4ued3iXrdVQvSxrF21+jA0lzfzbrMAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+7NH40JAXOC6U4zjefkq2Vfu/2vmsV3PMG/QnbUPNF4=;
+ b=Ck9y3i4CFlCofUb7U1WZgT8SF/bicVT3aRqA91Yj3mSi/t2jumCI4Q24/+YP9tuHwwgfKyCqAANDTQJkW9SfOe77YPyYj810gP557qwcifIv/TW3Jv/CK3B5geJXbpA0zglnZFsmVtPhdBhYI2tPBqouwjTgWxfumAfcsFXCWLDLyJ00+mmtNN78dh98Eua4x9Om2SZdu4XT0CfkDKBkjHWN/4LVU0KSy/Uqc/sjfi3QJPUkhEdtebirBmI0JFbKUPXaZ0ie7NEdATKl+xkPQjtUHq9wegu4SLlD343wAR9lKmmOtVD2CRbZg2n2ebR9d/oQgXaRthJ93jXjdhuNjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+7NH40JAXOC6U4zjefkq2Vfu/2vmsV3PMG/QnbUPNF4=;
+ b=DdqgDDZy2YevS0QnXiRri/6q8dy07OAfGyumYdnmHPM33ZYPJdpSESnusA47p/A9aiaoDry3uZDVnqzRYEyVhGnQahNvD/KNj5N+KdSUXOgCA90URwUYMGJf2UXeLaJISK1gg+3dTXypuFZQDstvckne/jcxhpFugNZvnq91Zl8=
+Received: from SN6PR04MB4640.namprd04.prod.outlook.com (2603:10b6:805:a4::19)
+ by SN6PR04MB5358.namprd04.prod.outlook.com (2603:10b6:805:fd::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3109.22; Tue, 23 Jun
+ 2020 06:09:30 +0000
+Received: from SN6PR04MB4640.namprd04.prod.outlook.com
+ ([fe80::9cbe:995f:c25f:d288]) by SN6PR04MB4640.namprd04.prod.outlook.com
+ ([fe80::9cbe:995f:c25f:d288%6]) with mapi id 15.20.3109.027; Tue, 23 Jun 2020
+ 06:09:29 +0000
+From:   Avri Altman <Avri.Altman@wdc.com>
+To:     Kyuho Choi <chlrbgh0@gmail.com>, Rob Clark <robdclark@gmail.com>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Subhash Jadavani <subhashj@codeaurora.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v1 1/3] scsi: ufs: add write booster feature support
+Thread-Topic: [PATCH v1 1/3] scsi: ufs: add write booster feature support
+Thread-Index: AQHWDe+W7UlEmvGhl0KH0X2uPaojCKjic3aAgACsRFCAAAccgIAAlX+AgAJW9QCAABoVcA==
+Date:   Tue, 23 Jun 2020 06:09:29 +0000
+Message-ID: <SN6PR04MB4640DCE37D9D7F4CD99F2195FC940@SN6PR04MB4640.namprd04.prod.outlook.com>
+References: <cover.1586374414.git.asutoshd@codeaurora.org>
+ <3c186284280c37c76cf77bf482dde725359b8a8a.1586382357.git.asutoshd@codeaurora.org>
+ <CAF6AEGvgmfYoybv4XMVVH85fGMr-eDfpzxdzkFWCx-2N5PEw2w@mail.gmail.com>
+ <SN6PR04MB46402FD7981F9FCA2111AB37FC960@SN6PR04MB4640.namprd04.prod.outlook.com>
+ <20200621075539.GK128451@builder.lan>
+ <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
+ <CAP2JTQJ735yQYSeHgDPqnT0mRUTt1uKVAHacOHmSj3WK48PUog@mail.gmail.com>
+In-Reply-To: <CAP2JTQJ735yQYSeHgDPqnT0mRUTt1uKVAHacOHmSj3WK48PUog@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=wdc.com;
+x-originating-ip: [212.25.79.133]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: c5cb89ce-fcc3-4e14-32bd-08d8173bfda2
+x-ms-traffictypediagnostic: SN6PR04MB5358:
+x-microsoft-antispam-prvs: <SN6PR04MB5358C686E49D9672C1180AFFFC940@SN6PR04MB5358.namprd04.prod.outlook.com>
+wdcipoutbound: EOP-TRUE
+x-ms-oob-tlc-oobclassifiers: OLM:2803;
+x-forefront-prvs: 04433051BF
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: vfz9tYpVAQ7NaDFFIbiaZLz3zMTm0DfteBXCSPNl4PVs9iWQSENvpu9Zagh2hAgjr7djKjkmynUfK3+zAgd+CgOq3/fru6NnqPmKsXpXNQqDyDHrHdtG2A9M5PK+2c3FsdbpJm8nHx9O8bKILNPF4OrQADAALvzfgNlyPgXhqFxOpfUc1mxWMjAa77EuuvLN/Dr266+pDamL/ReSwtxMxGvOAHeCgB/eXiTdcKJFSN5CfU7bnEw0DlNWGulNBoIv5uw6mXi39wxMjM81Kz7jqsP84rdPTMBLf3OIt+CP3VPqIbXqJdFLgQfGgsedg34TMRpMgkwa+nTd66rQ1PXmzg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR04MB4640.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(366004)(136003)(39860400002)(346002)(396003)(376002)(66476007)(66556008)(64756008)(66446008)(558084003)(55016002)(86362001)(5660300002)(7696005)(52536014)(478600001)(26005)(6506007)(316002)(2906002)(110136005)(54906003)(76116006)(66946007)(186003)(7416002)(33656002)(71200400001)(8936002)(4326008)(9686003)(8676002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: es83FsilnyQhwKbVX9murDvnyGnGyy85xIFgZ9yLOfpim8eVn9ynKdbkH0ZLWnDNtLri86+Av4cmIdj6rHntAVQgUpRAuzcqhURBDzfdtetAOOrvIoYIFQ4HaTeQeXJmZf6wW9Sgvw2JE0X8jn0lvp/eS1ezjlkSDE9/1J7I5cJqPHK7prWi5g5+lBOBFX7Y52Ub9T1K35mqQhI+mOqXhKyirjK4vW5Ing3fSVeL3ZNMFBikFgWhkZdOa6JyL21JBiihnHctOin/4+99m86wfwi4kGS/vu6GSE3C4abCjtAuFEkVgHyUzelSNS/pKXhI1dp7nSNdiB0kWqGt5ysHzNgSy8fedAyTvnN+i/509yYw9eR1V1swoOvOrBp9JQqROQB+3FugtPeJld5GNk8fGSEB43OwaSGy4Q4Sx9BtAbDL0MXT1pcyB0Iqxb3ekzohVZfmzEZYkcuTgz688YfHhX1DuITohrUpf7BOa4ddl9U=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c5cb89ce-fcc3-4e14-32bd-08d8173bfda2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jun 2020 06:09:29.7470
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: FiOEl59+75mGcJvIOFBw/RQmorgMND4cQG7pTVATaFyYDE0yW01ZuLl3mXuNNXhNLqDykhC86DYyRSw6ZvUa7w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB5358
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert qcom,smd-rpm-regulator.txt document to YAML schema
-
-Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
----
- .../bindings/regulator/qcom,smd-rpm-regulator.txt  | 321 ---------------------
- .../bindings/regulator/qcom,smd-rpm-regulator.yaml | 106 +++++++
- 2 files changed, 106 insertions(+), 321 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
- create mode 100644 Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
-deleted file mode 100644
-index 728c001..00000000
---- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
-+++ /dev/null
-@@ -1,321 +0,0 @@
--QCOM SMD RPM REGULATOR
--
--The Qualcomm RPM over SMD regulator is modelled as a subdevice of the RPM.
--Because SMD is used as the communication transport mechanism, the RPM resides as
--a subnode of the SMD.  As such, the SMD-RPM regulator requires that the SMD and
--RPM nodes be present.
--
--Please refer to Documentation/devicetree/bindings/soc/qcom/qcom,smd.txt for
--information pertaining to the SMD node.
--
--Please refer to Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt for
--information regarding the RPM node.
--
--== Regulator
--
--Regulator nodes are identified by their compatible:
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,rpm-mp5496-regulators"
--		    "qcom,rpm-pm8841-regulators"
--		    "qcom,rpm-pm8916-regulators"
--		    "qcom,rpm-pm8941-regulators"
--		    "qcom,rpm-pm8950-regulators"
--		    "qcom,rpm-pm8994-regulators"
--		    "qcom,rpm-pm8998-regulators"
--		    "qcom,rpm-pma8084-regulators"
--		    "qcom,rpm-pmi8994-regulators"
--		    "qcom,rpm-pmi8998-regulators"
--		    "qcom,rpm-pms405-regulators"
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_s6-supply:
--- vdd_s7-supply:
--- vdd_s8-supply:
--	Usage: optional (pm8841 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_l1_l2_l3-supply:
--- vdd_l4_l5_l6-supply:
--- vdd_l7-supply:
--- vdd_l8_l9_l10_l11_l12_l13_l14_l15_l16_l17_l18-supply:
--	Usage: optional (pm8916 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_s6-supply:
--- vdd_l1_l19-supply:
--- vdd_l2_l23-supply:
--- vdd_l3-supply:
--- vdd_l4_l5_l6_l7_l16-supply:
--- vdd_l8_l11_l12_l17_l22-supply:
--- vdd_l9_l10_l13_l14_l15_l18-supply:
--- vdd_l20-supply:
--- vdd_l21-supply:
--	Usage: optional (pm8950 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_l1_l3-supply:
--- vdd_l2_lvs1_2_3-supply:
--- vdd_l4_l11-supply:
--- vdd_l5_l7-supply:
--- vdd_l6_l12_l14_l15-supply:
--- vdd_l8_l16_l18_l19-supply:
--- vdd_l9_l10_l17_l22-supply:
--- vdd_l13_l20_l23_l24-supply:
--- vdd_l21-supply:
--- vin_5vs-supply:
--	Usage: optional (pm8941 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_s6-supply:
--- vdd_s7-supply:
--- vdd_s8-supply:
--- vdd_s9-supply:
--- vdd_s10-supply:
--- vdd_s11-supply:
--- vdd_s12-supply:
--- vdd_l1-supply:
--- vdd_l2_l26_l28-supply:
--- vdd_l3_l11-supply:
--- vdd_l4_l27_l31-supply:
--- vdd_l5_l7-supply:
--- vdd_l6_l12_l32-supply:
--- vdd_l5_l7-supply:
--- vdd_l8_l16_l30-supply:
--- vdd_l9_l10_l18_l22-supply:
--- vdd_l9_l10_l18_l22-supply:
--- vdd_l3_l11-supply:
--- vdd_l6_l12_l32-supply:
--- vdd_l13_l19_l23_l24-supply:
--- vdd_l14_l15-supply:
--- vdd_l14_l15-supply:
--- vdd_l8_l16_l30-supply:
--- vdd_l17_l29-supply:
--- vdd_l9_l10_l18_l22-supply:
--- vdd_l13_l19_l23_l24-supply:
--- vdd_l20_l21-supply:
--- vdd_l20_l21-supply:
--- vdd_l9_l10_l18_l22-supply:
--- vdd_l13_l19_l23_l24-supply:
--- vdd_l13_l19_l23_l24-supply:
--- vdd_l25-supply:
--- vdd_l2_l26_l28-supply:
--- vdd_l4_l27_l31-supply:
--- vdd_l2_l26_l28-supply:
--- vdd_l17_l29-supply:
--- vdd_l8_l16_l30-supply:
--- vdd_l4_l27_l31-supply:
--- vdd_l6_l12_l32-supply:
--- vdd_lvs1_2-supply:
--	Usage: optional (pm8994 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_bst_byp-supply:
--	Usage: optional (pmi8994 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_s6-supply:
--- vdd_s7-supply:
--- vdd_s8-supply:
--- vdd_s9-supply:
--- vdd_s10-supply:
--- vdd_s11-supply:
--- vdd_s12-supply:
--- vdd_s13-supply:
--- vdd_l1_l27-supply:
--- vdd_l20_l24-supply:
--- vdd_l26-supply:
--- vdd_l2_l8_l17-supply:
--- vdd_l3_l11-supply:
--- vdd_l4_l5-supply:
--- vdd_l6-supply:
--- vdd_l7_l12_l14_l15-supply:
--- vdd_l9-supply:
--- vdd_l10_l23_l25-supply:
--- vdd_l13_l19_l21-supply:
--- vdd_l16_l28-supply:
--- vdd_l18_l22-supply:
--- vdd_lvs1_lvs2-supply:
--	Usage: optional (pmi8998 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_s6-supply:
--- vdd_s7-supply:
--- vdd_s8-supply:
--- vdd_s9-supply:
--- vdd_s10-supply:
--- vdd_s11-supply:
--- vdd_s12-supply:
--- vdd_l1_l11-supply:
--- vdd_l2_l3_l4_l27-supply:
--- vdd_l5_l7-supply:
--- vdd_l6_l12_l14_l15_l26-supply:
--- vdd_l8-supply:
--- vdd_l9_l10_l13_l20_l23_l24-supply:
--- vdd_l16_l25-supply:
--- vdd_l17-supply:
--- vdd_l18-supply:
--- vdd_l19-supply:
--- vdd_l21-supply:
--- vdd_l22-supply:
--	Usage: optional (pma8084 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_bob-supply:
--	Usage: optional (pmi8998 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--- vdd_s1-supply:
--- vdd_s2-supply:
--- vdd_s3-supply:
--- vdd_s4-supply:
--- vdd_s5-supply:
--- vdd_l1_l2-supply:
--- vdd_l3_l8-supply:
--- vdd_l4-supply:
--- vdd_l5_l6-supply:
--- vdd_l7-supply:
--- vdd_l3_l8-supply:
--- vdd_l9-supply:
--- vdd_l10_l11_l12_l13-supply:
--	Usage: optional (pms405 only)
--	Value type: <phandle>
--	Definition: reference to regulator supplying the input pin, as
--		    described in the data sheet
--
--The regulator node houses sub-nodes for each regulator within the device. Each
--sub-node is identified using the node's name, with valid values listed for each
--of the pmics below.
--
--pm8841:
--	s1, s2, s3, s4, s5, s6, s7, s8
--
--pm8916:
--	s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13,
--	l14, l15, l16, l17, l18
--
--pm8941:
--	s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13,
--	l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, lvs1, lvs2,
--	lvs3, 5vs1, 5vs2
--
--pm8994:
--	s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, l1, l2, l3, l4, l5,
--	l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20,
--	l21, l22, l23, l24, l25, l26, l27, l28, l29, l30, l31, l32, lvs1, lvs2
--
--pm8998:
--	s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, l1, l2, l3, l4,
--	l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19,
--	l20, l21, l22, l23, l24, l25, l26, l27, l28, lvs1, lvs2
--
--pma8084:
--	s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, l1, l2, l3, l4, l5,
--	l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20,
--	l21, l22, l23, l24, l25, l26, l27, lvs1, lvs2, lvs3, lvs4, 5vs1
--
--pmi8994:
--	s1, s2, s3, boost-bypass
--
--pmi8998:
--	bob
--
--pms405:
--	s1, s2, s3, s4, s5, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12,
--	l13
--
--The content of each sub-node is defined by the standard binding for regulators -
--see regulator.txt.
--
--= EXAMPLE
--
--	smd {
--		compatible = "qcom,smd";
--
--		rpm {
--			interrupts = <0 168 1>;
--			qcom,ipc = <&apcs 8 0>;
--			qcom,smd-edge = <15>;
--
--			rpm_requests {
--				compatible = "qcom,rpm-msm8974";
--				qcom,smd-channels = "rpm_requests";
--
--				pm8941-regulators {
--					compatible = "qcom,rpm-pm8941-regulators";
--					vdd_l13_l20_l23_l24-supply = <&pm8941_boost>;
--
--					pm8941_s3: s3 {
--						regulator-min-microvolt = <1800000>;
--						regulator-max-microvolt = <1800000>;
--					};
--
--					pm8941_boost: s4 {
--						regulator-min-microvolt = <5000000>;
--						regulator-max-microvolt = <5000000>;
--					};
--
--					pm8941_l20: l20 {
--						regulator-min-microvolt = <2950000>;
--						regulator-max-microvolt = <2950000>;
--					};
--				};
--			};
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-new file mode 100644
-index 00000000..8d212bd
---- /dev/null
-+++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-@@ -0,0 +1,106 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/regulator/qcom,smd-rpm-regulator.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: QCOM SMD RPM REGULATOR
-+
-+description:
-+  The Qualcomm RPM over SMD regulator is modelled as a subdevice of the RPM.
-+  Because SMD is used as the communication transport mechanism, the RPM
-+  resides as a subnode of the SMD.  As such, the SMD-RPM regulator requires
-+  that the SMD and RPM nodes be present.
-+
-+  Please refer to Documentation/devicetree/bindings/soc/qcom/qcom,smd.txt for
-+  information pertaining to the SMD node.
-+
-+  Please refer to Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-+  for information regarding the RPM node.
-+
-+  The regulator node houses sub-nodes for each regulator within the device.
-+  Each sub-node is identified using the node's name, with valid values listed
-+  for each of the pmics below.
-+
-+  For pm8841, s1, s2, s3, s4, s5, s6, s7, s8
-+
-+  For pm8916, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
-+  l12, l13, l14, l15, l16, l17, l18
-+
-+  For pm8941, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
-+  l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, lvs1, lvs2,
-+  lvs3, 5vs1, 5vs2
-+
-+  For pm8994, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, l1, l2, l3,
-+  l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19,
-+  l20, l21, l22, l23, l24, l25, l26, l27, l28, l29, l30, l31, l32, lvs1, lvs2
-+
-+  For pm8998, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, l1, l2,
-+  l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19,
-+  l20, l21, l22, l23, l24, l25, l26, l27, l28, lvs1, lvs2
-+
-+  For pma8084, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, l1, l2, l3,
-+  l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19,
-+  l20, l21, l22, l23, l24, l25, l26, l27, lvs1, lvs2, lvs3, lvs4, 5vs1
-+
-+  For pmi8994, s1, s2, s3, boost-bypass
-+
-+  For pmi8998, bob
-+
-+  For pms405, s1, s2, s3, s4, s5, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
-+  l12, l13
-+
-+maintainers:
-+  - Kathiravan T <kathirav@codeaurora.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,rpm-mp5496-regulators
-+      - qcom,rpm-pm8841-regulators
-+      - qcom,rpm-pm8916-regulators
-+      - qcom,rpm-pm8941-regulators
-+      - qcom,rpm-pm8950-regulators
-+      - qcom,rpm-pm8994-regulators
-+      - qcom,rpm-pm8998-regulators
-+      - qcom,rpm-pma8084-regulators
-+      - qcom,rpm-pmi8994-regulators
-+      - qcom,rpm-pmi8998-regulators
-+      - qcom,rpm-pms405-regulators
-+
-+patternProperties:
-+  ".*-supply$":
-+    description: Input supply phandle(s) for this node
-+
-+  "^((s|l|lvs|5vs)[0-9]*)|(boost-bypass)|(bob)$":
-+    description: List of regulators and its properties
-+    allOf:
-+     - $ref: regulator.yaml#
-+
-+additionalProperties: false
-+
-+required:
-+  - compatible
-+
-+examples:
-+  - |
-+    pm8941-regulators {
-+        compatible = "qcom,rpm-pm8941-regulators";
-+        vdd_l13_l20_l23_l24-supply = <&pm8941_boost>;
-+
-+        pm8941_s3: s3 {
-+            regulator-min-microvolt = <1800000>;
-+            regulator-max-microvolt = <1800000>;
-+        };
-+
-+        pm8941_boost: s4 {
-+            regulator-min-microvolt = <5000000>;
-+            regulator-max-microvolt = <5000000>;
-+        };
-+
-+        pm8941_l20: l20 {
-+            regulator-min-microvolt = <2950000>;
-+            regulator-max-microvolt = <2950000>;
-+        };
-+    };
-+...
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+PiANCj4gQUZBSUssIHRoaXMgZGV2aWNlIGFyZSB1ZnMgMi4xLiBJdCdzIG5vdCBzdXBwb3J0IHdy
+aXRlYm9vc3Rlci4NCj4gDQo+IEknZCBjaGVjayBsYXRlc3QgbGludXggc2NzaSBicmFuY2ggYW5k
+IHVmc2hjZF93Yl9jb25maWcgZnVuY3Rpb24ncw0KPiBjYWxsZWQgd2l0aG91dCBkZXZpY2UgY2Fw
+YWJpbGl0eSBjaGVjay4NClBsZWFzZSBncmVwIHVmc2hjZF93Yl9wcm9iZS4NCg==
