@@ -2,103 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06A84204AD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 09:17:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5F5204B05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 09:28:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731249AbgFWHRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 03:17:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43886 "EHLO
+        id S1731158AbgFWH2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 03:28:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730957AbgFWHRw (ORCPT
+        with ESMTP id S1731041AbgFWH2U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 03:17:52 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 049E0C061795
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 00:17:52 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id m2so15550122otr.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 00:17:51 -0700 (PDT)
+        Tue, 23 Jun 2020 03:28:20 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9DBC061796
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 00:28:20 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id m2so15574650otr.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 00:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=OrQkyvC22e1MwYWC4yiJoh4JThum+qbMQLILKSvLEQo=;
-        b=RShs6dv7sFJ452LX+nOtFOcGZusftsuBQMDT8SzDKmgtVEJts9p2PoLcI+A8LIbvEX
-         vQBxpR0ooCDzmoXbFw6HlwU7lgGudcAjrrQe5PhR0yDUc7OuEb+rUIa+0tjQbAQBLibM
-         fDIrAfL02eLpmnYqcsE9vkqs/Qq2jYweRTP17/7HMOhsZkH2HHobrQyr0pt+Sq6Gi697
-         40Rli9mSMsWDSnSZAizj8DZkhuwYPJ5A1k9vjER/qUpuYSTy2trHVu6q5Ad50lJ6voGS
-         TR/rnQQu5FopflXbMBbO4Q2tohc85ETIOnqGPVlb2M4k7vU6T4LOF1MK6aqYpNxk8o1e
-         665w==
+        bh=ZleFPD0cvqJ3sKu6UtqPD0rWOKA/Zt+zhrXRP4AOnvg=;
+        b=PDsCvaLKh9mBy736pxT8qsMAQLVP6PLNFR6KI0UWK8e2RkH5jKLIbuAGiOyAu+ML+Z
+         9lOTrwjFNWHvaDYEpBhv2iJT9MIxhUDOH/eVnfRqqHcXtdofBXK8SwdQdic3gNBW/0Tj
+         GU6krAzxByGuLpPL26+OjKOcQsYwz9rGsxEWubx33sS1U6nSJ+hcmlsycuj/JCJ7qj0J
+         1neoBaEOrtod1giKMaAx4BzXEAcHvIJr1P63v0wNw1SeV70Fjqi5O6t/2rexBFGHIkz1
+         TL4D6EPFZQUbkKG7eON2nDTfaO9aJ5yxQNWp8mJVrWtfKgJE9J2GlwI+U74K/KO5tU8b
+         Js4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=OrQkyvC22e1MwYWC4yiJoh4JThum+qbMQLILKSvLEQo=;
-        b=G1728R6qir2jGY7q/XwXXPDIR/5Ndl7kTvlhVNaWT06bYBmQsRDQCHwvRaymrkMa/R
-         0GZ5W+P6+2iqjsNbZM3ib3gGORK+IK8eXlEpiz/inPAkTGAPr7vB20fGR9yoE6i94r3l
-         YLS44/iX7DLaj0fqRbxsrxbliZCITLROW0jQBzLt1WUHMfbKfBiA2/OBNTKzdFjRawfC
-         E3/P4rfO+Md7phZDXt7W6Poauho2Io5YTbHYb/kUlpk6NP/dqUuOwFzAySf//0PmFDax
-         CrhUgG+MBjEUDshhhG4sPZy/dp2h+6nMrXcbQV+iCPRJDiSpMlDOW69qe4V/cnLcV16G
-         ofMw==
-X-Gm-Message-State: AOAM53106hCqeUNUcZKQjMTSP7Xl5L3WRtk0b7R3aiJBjT7CT5d2v/TN
-        I3wLOdxnRT5XQL/2m1OTRooFQbgLgVE=
-X-Google-Smtp-Source: ABdhPJwp+BnWQ4Ps7xLiLjdxtbq87IaPZN18D99VL8cgp/knyF5k0izryN9gIZCA62v1cv85sXBA5w==
-X-Received: by 2002:a05:6830:130b:: with SMTP id p11mr17321671otq.293.1592896671350;
-        Tue, 23 Jun 2020 00:17:51 -0700 (PDT)
+        bh=ZleFPD0cvqJ3sKu6UtqPD0rWOKA/Zt+zhrXRP4AOnvg=;
+        b=mFTVKZ3tP+2sRioTTdx9WwTvc5blgW3e+AphFKR3qhxVH/hn5p7RUgw8/2zEHxSBkU
+         Z1TasOSOoB1etzk0BCPQKls6iT/+ecUPj8QIw3DbJWcRjtcrKi9Qn761Wg3Sn1yAbGmH
+         92qWER4oryI0NfhQsL3y4V+hQcWhzeYFQJ3s8o3bAoA100rnHbq83x6UlZQj24nrtlAy
+         X0FQI3JjrgUy+bafSKEnHOKAukjtv5foR72fhDnohC3/qbO/cnsrfaTusvJyAVXO38G4
+         0wN6QPyrlJs0BnfoBi5kiLI08mfnIkiitB0F3nEiqet6y52vpgPBPgzRrM88G9QG4wUu
+         jqsQ==
+X-Gm-Message-State: AOAM531MiVAvTRxIPEkL52yq4dKVxp8NLA8GIxItlrL+/SI8d0Y8ew+s
+        ktVwSIrcaUcnD0J8xlB1pTlDjA==
+X-Google-Smtp-Source: ABdhPJzzGYHFm3tkDGQDm2FvcqbLAhEc5k7M1RWwN7OHmjbHWoaV4NOnDMqGZlJo3b44MKMZvSLwSA==
+X-Received: by 2002:a05:6830:20d7:: with SMTP id z23mr18042947otq.157.1592897299885;
+        Tue, 23 Jun 2020 00:28:19 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id q10sm3877909otl.40.2020.06.23.00.17.49
+        by smtp.gmail.com with ESMTPSA id d145sm2530080oib.17.2020.06.23.00.28.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 00:17:50 -0700 (PDT)
-Date:   Tue, 23 Jun 2020 00:15:06 -0700
+        Tue, 23 Jun 2020 00:28:19 -0700 (PDT)
+Date:   Tue, 23 Jun 2020 00:25:35 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vincent Knecht <vincent.knecht@mailoo.org>
-Cc:     sboyd@kernel.org, konradybcio@gmail.com,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 3/4] drivers: soc: Add MSM8936 SMD RPM compatible
-Message-ID: <20200623071506.GW128451@builder.lan>
-References: <20200613072745.1249003-1-vincent.knecht@mailoo.org>
- <20200613072745.1249003-4-vincent.knecht@mailoo.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v3 7/7] mailbox: qcom: Add sdm660 hmss compatible
+Message-ID: <20200623072535.GX128451@builder.lan>
+References: <20200622192558.152828-1-konradybcio@gmail.com>
+ <20200622192558.152828-8-konradybcio@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200613072745.1249003-4-vincent.knecht@mailoo.org>
+In-Reply-To: <20200622192558.152828-8-konradybcio@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 13 Jun 00:27 PDT 2020, Vincent Knecht wrote:
+On Mon 22 Jun 12:25 PDT 2020, Konrad Dybcio wrote:
 
-> From: Konrad Dybcio <konradybcio@gmail.com>
+> The Qualcomm SDM660 platform has a APCS HMSS GLOBAL block, add the
+> compatible for this.
 > 
 > Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
 
-Patch 3 and 4 applied.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Thanks,
+Regards,
 Bjorn
 
 > ---
->  drivers/soc/qcom/smd-rpm.c | 1 +
->  1 file changed, 1 insertion(+)
+>  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml   | 1 +
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c                      | 5 +++++
+>  2 files changed, 6 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-> index 005dd30c58fa..8f290c67cb47 100644
-> --- a/drivers/soc/qcom/smd-rpm.c
-> +++ b/drivers/soc/qcom/smd-rpm.c
-> @@ -231,6 +231,7 @@ static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
->  static const struct of_device_id qcom_smd_rpm_of_match[] = {
->  	{ .compatible = "qcom,rpm-apq8084" },
->  	{ .compatible = "qcom,rpm-msm8916" },
-> +	{ .compatible = "qcom,rpm-msm8936" },
->  	{ .compatible = "qcom,rpm-msm8974" },
->  	{ .compatible = "qcom,rpm-msm8976" },
->  	{ .compatible = "qcom,rpm-msm8996" },
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> index 12eff942708d..b4501c6b5c6f 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> @@ -22,6 +22,7 @@ properties:
+>        - qcom,msm8998-apcs-hmss-global
+>        - qcom,qcs404-apcs-apps-global
+>        - qcom,sc7180-apss-shared
+> +      - qcom,sdm660-apcs-hmss-global
+>        - qcom,sdm845-apss-shared
+>        - qcom,sm8150-apss-shared
+>  
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index cec34f0af6ce..ab0275869434 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -49,6 +49,10 @@ static const struct qcom_apcs_ipc_data msm8998_apcs_data = {
+>  	.offset = 8, .clk_name = NULL
+>  };
+>  
+> +static const struct qcom_apcs_ipc_data sdm660_apcs_data = {
+> +	.offset = 8, .clk_name = NULL
+> +};
+> +
+>  static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
+>  	.offset = 12, .clk_name = NULL
+>  };
+> @@ -150,6 +154,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>  	{ .compatible = "qcom,msm8998-apcs-hmss-global", .data = &msm8998_apcs_data },
+>  	{ .compatible = "qcom,qcs404-apcs-apps-global", .data = &msm8916_apcs_data },
+>  	{ .compatible = "qcom,sc7180-apss-shared", .data = &apps_shared_apcs_data },
+> +	{ .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
+>  	{ .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+>  	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+>  	{}
 > -- 
-> 2.25.4
-> 
+> 2.27.0
 > 
