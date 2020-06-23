@@ -2,187 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB8162048DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 06:34:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B33A42048F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 07:07:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728275AbgFWEeb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 00:34:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47130 "EHLO
+        id S1728447AbgFWFHD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 01:07:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726054AbgFWEeb (ORCPT
+        with ESMTP id S1728275AbgFWFHC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 00:34:31 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 901D3C061573;
-        Mon, 22 Jun 2020 21:34:30 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id y6so15331558edi.3;
-        Mon, 22 Jun 2020 21:34:30 -0700 (PDT)
+        Tue, 23 Jun 2020 01:07:02 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E69C061797
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 22:07:02 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id t23so4516400vkt.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 22:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vTeZQMR6ZhnCXik/oXOXmIQqvELc/TxSWzy9uL/31UY=;
-        b=jOKZnD7mXM8FWyNqhibBcX1m9v/qXbf/K1QnOToCJvQrfaf+FrvtIYbh+pzAwMGLCp
-         RwLPI4KlxX/9umR8nqJyBFNravRaH/QVoWxhpuREp7bOtm9/P+415zV3mqhkRyaamDNX
-         xJRhZodyDZU8I/OkbEGc82wzsjZCEXDl6ZrjFHr6wdKR7+l4oQhK1o/B4zYqOJCYDF0w
-         BUTbX5+SeJyhlo54z3B9pdAt8+aNsDIUlf3jdRobgywNV7UkXGpIiJO3Q+ZoLS7G74dI
-         XLJPwMUCpx62ddcULz8Bf6qXF0kv4Hu6/iq2yapYOgKDWOYU8Ts+ShsQzXh3wD9TTLg4
-         Gmgw==
+        bh=7oiDqnOGO+TssYLUtaiAkGZqbTLTe8VBFV4/hAXcsaU=;
+        b=GyM4fscQ4q5oq3dAVNcL2LKqjcJve7N0SZ8ZZHhGKk95SJESE5mehZloXDB+bNh5tp
+         eD5Q2sXcgazzYyaHEaIXxhs4bl/B9ZozpMBCMbM9FGCgjMOGrLh5IWUNBHtQBXkGEfTQ
+         01Z4/4we8JqKj06ttdbLoGxTzqNX9heQz4EGo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vTeZQMR6ZhnCXik/oXOXmIQqvELc/TxSWzy9uL/31UY=;
-        b=ZnasVW1FGDo9P1hlgpmV2BKVNdWGkAsM1hxGk/iqJtX+FA3NpwZLhbX0yURdmzsd3S
-         rgf1aBGrx9qYHO99GDwYpi1ka2fQ4Y0TeBzj/6MjY8Cv8keGZGP8kyCg0EUGOqxGqJlC
-         zrojOXsqPCJqN1nIkWSKzRPzCSWD7moxdcb9dHCo3z5ZOAs2uuXA1DUealGXlPiN4jA/
-         5lsPrahC8AT1+3641Qx8I5oGu9EcJy7G+3gDo/aUkBxlCm96F+XPqcn8j4wYbbSlCGBf
-         GYiZ5AGqFsRVzTbPH5OsuQM9w59tkTHCxUpQklNtEdkJsQnx8ZBGrelscpyYKjD1P2Z0
-         l5Zw==
-X-Gm-Message-State: AOAM532ef8Cqs1YQ3aaOm7y2XJ7CjyA+7MIocrW/IXWPJXr9fnHPmFBg
-        qjZCBloW4ZoQqXHuBtXo6fH3hgOnmYVfKXJJ6A==
-X-Google-Smtp-Source: ABdhPJwp8nsS0JzZJ1ZSjHpZRO/XLcsX7AXTS44UIjHYsZzAdqT1pe8KOQMv32inGY+BU+RajHcFq4WzVgxEJatGs1U=
-X-Received: by 2002:a05:6402:1d10:: with SMTP id dg16mr19754928edb.309.1592886869158;
- Mon, 22 Jun 2020 21:34:29 -0700 (PDT)
+        bh=7oiDqnOGO+TssYLUtaiAkGZqbTLTe8VBFV4/hAXcsaU=;
+        b=siO02IF3VKV7yanpppUj8gLA8UTMQmz7RJj/6VyCZ/fq7NUTUoA5YTJZtSpbRcD0AA
+         M0/oHpzT90omZ09F+yp/U1G4oAxzQ3qJPRsZvi/Ai6bUcpWCm4MbcmLWaIhYV4Xr4iMY
+         O1OtPO4557htB47CbB3V6pRZxfN0b1sJI9EHQhiSsxWvNibP2H62Xzedr/vZrcgNiOLx
+         s1bph1Zo0O/k2DAuB2S1iJsCEFhUaqOXHj4yZwxhaem6mD+QEKdhTF5O3jdeDpcbj5Cp
+         LAB3jWtvHDa0sEcESoSaURU1sL7xtIbG+XJ6Bspxj49rTroOKv5kQgSDSUQcg18eETdO
+         yLMw==
+X-Gm-Message-State: AOAM531mNSLmh9EAnFsWMc4ay4yIyeDer/iP+KbzXeUKGCbL8YWDA4rc
+        qLUcVCCcESgfUTZ53whVzes3oiGlKDE=
+X-Google-Smtp-Source: ABdhPJyLS53zAUIoM2waoRUep5ObTApw2HoKHbZd6RfM/TqIU00+eruyjVoPmVbvoDD3nYxH4OYawA==
+X-Received: by 2002:a1f:1f04:: with SMTP id f4mr17935852vkf.73.1592888821693;
+        Mon, 22 Jun 2020 22:07:01 -0700 (PDT)
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
+        by smtp.gmail.com with ESMTPSA id g5sm2118352vsp.26.2020.06.22.22.07.00
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jun 2020 22:07:00 -0700 (PDT)
+Received: by mail-vs1-f50.google.com with SMTP id l10so10985069vsr.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2020 22:07:00 -0700 (PDT)
+X-Received: by 2002:a67:e445:: with SMTP id n5mr18647007vsm.73.1592888819511;
+ Mon, 22 Jun 2020 22:06:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:aa7:ca0e:0:0:0:0:0 with HTTP; Mon, 22 Jun 2020 21:34:28
- -0700 (PDT)
-In-Reply-To: <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
-References: <cover.1586374414.git.asutoshd@codeaurora.org> <3c186284280c37c76cf77bf482dde725359b8a8a.1586382357.git.asutoshd@codeaurora.org>
- <CAF6AEGvgmfYoybv4XMVVH85fGMr-eDfpzxdzkFWCx-2N5PEw2w@mail.gmail.com>
- <SN6PR04MB46402FD7981F9FCA2111AB37FC960@SN6PR04MB4640.namprd04.prod.outlook.com>
- <20200621075539.GK128451@builder.lan> <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
-From:   Kyuho Choi <chlrbgh0@gmail.com>
-Date:   Tue, 23 Jun 2020 13:34:28 +0900
-Message-ID: <CAP2JTQJ735yQYSeHgDPqnT0mRUTt1uKVAHacOHmSj3WK48PUog@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] scsi: ufs: add write booster feature support
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Avri Altman <Avri.Altman@wdc.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        "cang@codeaurora.org" <cang@codeaurora.org>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+References: <1591682194-32388-1-git-send-email-akashast@codeaurora.org> <1591682194-32388-5-git-send-email-akashast@codeaurora.org>
+In-Reply-To: <1591682194-32388-5-git-send-email-akashast@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 22 Jun 2020 22:06:48 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XwV-8J9-j1j2gwQ08oF8izDv=hB9vj_SogbagOBQfN6Q@mail.gmail.com>
+Message-ID: <CAD=FV=XwV-8J9-j1j2gwQ08oF8izDv=hB9vj_SogbagOBQfN6Q@mail.gmail.com>
+Subject: Re: [PATCH V7 RESEND 4/7] spi: spi-geni-qcom: Add interconnect support
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@the-dreams.de>,
+        Mark Brown <broonie@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-spi <linux-spi@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Subhash Jadavani <subhashj@codeaurora.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        open list <linux-kernel@vger.kernel.org>
+        linux-serial@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        Evan Green <evgreen@chromium.org>, msavaliy@codeaurora.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hi,
 
-On 6/22/20, Rob Clark <robdclark@gmail.com> wrote:
-> On Sun, Jun 21, 2020 at 12:58 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
->>
->> On Sun 21 Jun 00:40 PDT 2020, Avri Altman wrote:
->>
->> >
->> > >
->> > > On Wed, Apr 8, 2020 at 3:00 PM Asutosh Das <asutoshd@codeaurora.org>
->> > > wrote:
->> > > >
->> > > > The write performance of TLC NAND is considerably
->> > > > lower than SLC NAND. Using SLC NAND as a WriteBooster
->> > > > Buffer enables the write request to be processed with
->> > > > lower latency and improves the overall write performance.
->> > > >
->> > > > Adds support for shared-buffer mode WriteBooster.
->> > > >
->> > > > WriteBooster enable: SW enables it when clocks are
->> > > > scaled up, thus it's enabled only in high load conditions.
->> > > >
->> > > > WriteBooster disable: SW will disable the feature,
->> > > > when clocks are scaled down. Thus writes would go as normal
->> > > > writes.
->> > >
->> > > btw, in v5.8-rc1 (plus handful of remaining patches for lenovo c630
->> > > laptop (sdm850)), I'm seeing a lot of:
->> > >
->> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_query_flag: Sending flag query
->> > > for
->> > > idn 14 failed, err = 253
->> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_query_flag: Sending flag query
->> > > for
->> > > idn 14 failed, err = 253
->> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_query_flag_retry: query
->> > > attribute,
->> > > opcode 6, idn 14, failed with error 253 after 3 retires
->> > >   ufshcd-qcom 1d84000.ufshc: ufshcd_wb_ctrl write booster enable
->> > > failed 253
->> > >
->> > > and at least subjectively, compiling mesa seems slower, which seems
->> > > like it might be related?
->> > This looks like a device issue to be taken with the flash vendor:
->>
->> There's no way for a end-user to file a bug report with the flash vendor
->> on a device bought from an OEM and even if they would accept the bug
->> report they wouldn't re-provision the flash in an shipped device.
->>
->> So you will have to work around this in the driver.
+On Mon, Jun 8, 2020 at 10:57 PM Akash Asthana <akashast@codeaurora.org> wrote:
 >
-> oh, ugg.. well I think these msgs from dmesg identify the part if we
-> end up needing to use a denylist:
+> Get the interconnect paths for SPI based Serial Engine device
+> and vote according to the current bus speed of the driver.
 >
-> scsi 0:0:0:49488: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0
-> ANSI: 6
-> scsi 0:0:0:49476: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0
-> ANSI: 6
-> scsi 0:0:0:49456: Well-known LUN    SKhynix  H28S8Q302CMR     A102 PQ: 0
-> ANSI: 6
-> scsi 0:0:0:0: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI:
-> 6
-> scsi 0:0:0:1: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI:
-> 6
-> sd 0:0:0:0: [sda] 29765632 4096-byte logical blocks: (122 GB/114 GiB)
-> sd 0:0:0:0: [sda] Write Protect is off
-> sd 0:0:0:0: [sda] Mode Sense: 00 32 00 10
-> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports
-> DPO and FUA
-> sd 0:0:0:0: [sda] Optimal transfer size 786432 bytes
-> scsi 0:0:0:2: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI:
-> 6
-> scsi 0:0:0:3: Direct-Access     SKhynix  H28S8Q302CMR     A102 PQ: 0 ANSI:
-> 6
+> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> Changes in V2:
+>  - As per Bjorn's comment, removed se == NULL check from geni_spi_icc_get
+>  - As per Bjorn's comment, removed code to set se->icc_path* to NULL in failure
+>  - As per Bjorn's comment, introduced and using devm_of_icc_get API for getting
+>    path handle
+>  - As per Matthias comment, added error handling for icc_set_bw call
 >
+> Changes in V3:
+>  - As per Matthias's comment, use helper ICC function from geni-se driver.
+>
+> Changes in V4:
+>  - Move peak_bw guess as twice of avg_bw if nothing mentioned explicitly
+>    to ICC core.
+>
+> Changes in V5:
+>  - Use icc_enable/disable in power on/off call.
+>  - Save some non-zero avg/peak value to ICC core by calling geni_icc_set_bw
+>    from probe so that when resume/icc_enable is called NOC are running at
+>    some non-zero value. No need to call icc_disable after BW vote because
+>    device will resume and suspend before probe return and will leave ICC in
+>    disabled state.
+>
+> Changes in V6:
+>  - No change
+>
+> Changes in V7:
+>  - As per Matthias's comment removed usage of peak_bw variable because we don't
+>    have explicit peak requirement, we were voting peak = avg and this can be
+>    tracked using single variable for avg bw.
+>
+>  drivers/spi/spi-geni-qcom.c | 29 ++++++++++++++++++++++++++++-
+>  1 file changed, 28 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index c397242..2ace5c5 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -234,6 +234,12 @@ static int setup_fifo_params(struct spi_device *spi_slv,
+>                 return ret;
+>         }
+>
+> +       /* Set BW quota for CPU as driver supports FIFO mode only. */
+> +       se->icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(mas->cur_speed_hz);
+> +       ret = geni_icc_set_bw(se);
+> +       if (ret)
+> +               return ret;
+> +
 
-AFAIK, this device are ufs 2.1. It's not support writebooster.
+I haven't done a deep review of your patch, but a quick drive-by
+review since I happened to notice it while looking at this driver.
+You should probably also update the other path that's adjusting the
+"mas->cur_speed_hz" variable.  Specifically see setup_fifo_xfer().
 
-I'd check latest linux scsi branch and ufshcd_wb_config function's
-called without device capability check.
+For bonus points, you could even unify the two paths.  Perhaps you
+could pick <https://crrev.com/c/2259624> and include it in your series
+(remove the WIP if you do).
 
-ufshcd_wb_config
- -> ufshcd_is_wb_allowed
-     -> only check about hba caps with writebooster
 
-Asutosh's first patch already check about device's capability in here.
-
-IMO, it would be need to fixing in ufshcd_probe_hba or ufshcd_wb_config.
-
->
-> (otoh I guess the driver could just notice that writeboost keeps
-> failing and stop trying to use it)
->
-> BR,
-> -R
->
->
->> Regards,
->> Bjorn
->>
->> > The device reports that it supports wd, but returns inalid idn for flag
->> > 0xe...
->> >
->> > Thanks,
->> > Avri
->
+-Doug
