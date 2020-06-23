@@ -2,88 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 337F1204F6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 12:44:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1DB204FA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2020 12:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732227AbgFWKoh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Jun 2020 06:44:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47664 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732172AbgFWKog (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Jun 2020 06:44:36 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 771C6C061795
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 03:44:36 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id i4so1388262pjd.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 03:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dqfTmGA2mr5owmX+JGgs4wffhJI7qn1ybWwfAl5Tutk=;
-        b=qEhagxofi4lJjgjFsYM/B4xrt5iSXZggcDW/kcsd+R9YlLkUfQ6qUaM9vbBGQchmRq
-         UKJPIpGbwvei4iG3Q2PHL2yOADHfnNxAvy+q+ZEL1N/ym8vu7FGmA3Mif+7VIpVKqB/A
-         UkwROGWtz2qkjpSJ3R7vXdhB30+TsJdvlPvi0630ubrDAfwhayEUYp7t0nX1GTOCIoKa
-         50x1AYl9qqHgwJtoVqgmR+L/7VkoFMLfsuP16aEg2CRfwQTfflF+JBY6KzfSJozQZJJO
-         mcoOR7vA98wtpPeKHaKdgEHntcZ7RS5iQjei36/YlU3tvaenW8Y36whnb2nlaF2JUUlm
-         rT9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dqfTmGA2mr5owmX+JGgs4wffhJI7qn1ybWwfAl5Tutk=;
-        b=Jp3WfJQGz+JIDSm/w1XnKYl0+I/CIXfT6g2E8z9Zb8YZ9hoLMhdS2fUtoem8d3ArzB
-         bvnLahXsF0hbDBnC3/1I/RX2RQBWYGKNR1/W8LB6KkrIRel9hndF3UXPy2HgzDCaU8e8
-         UyeBPPNlT4SD/3pVmYee7ynyLFLL8Ncq9OeymPpFUBhAfpjONftJp3DOZS1RQsM2nA03
-         DXNK2eToP7yXxkl8hfSxbNCk29dOGivQXJfFAuBKRCT8Rmxuos0RL0nt8S/p3S8/wIGK
-         OkzgcrCPpr1eGZkBph611chB5ixYoZqB3rYJuVCrcO/l0M7WIX7qbUcLWVPXI5tcykTV
-         4wLA==
-X-Gm-Message-State: AOAM530h9iwmpemUBqMuJqgkho7qvCqyxt4t/gZvPchrZDsTULBhJWhO
-        3mvDeCuNhrrJCYH3QYULYUDAig==
-X-Google-Smtp-Source: ABdhPJx9+rNoGm24t+RpfH7bcHHY3qoa0VPMsj1T3NW/lZd6uiuTe2Ua9qxjs0tXPhyzFqgCwOhM4A==
-X-Received: by 2002:a17:90b:1292:: with SMTP id fw18mr21924791pjb.183.1592909075801;
-        Tue, 23 Jun 2020 03:44:35 -0700 (PDT)
-Received: from localhost ([122.172.111.76])
-        by smtp.gmail.com with ESMTPSA id j19sm16484355pfn.109.2020.06.23.03.44.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Jun 2020 03:44:35 -0700 (PDT)
-Date:   Tue, 23 Jun 2020 16:14:33 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     sboyd@kernel.org, georgi.djakov@linaro.org, saravanak@google.com,
-        mka@chromium.org, nm@ti.com, bjorn.andersson@linaro.org,
-        agross@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        vincent.guittot@linaro.org, amit.kucheria@linaro.org,
-        lukasz.luba@arm.com, sudeep.holla@arm.com, smasetty@codeaurora.org
-Subject: Re: [PATCH v6 0/5] DDR/L3 Scaling support on SDM845 and SC7180 SoCs
-Message-ID: <20200623104433.ok3vepuc55m7bxoi@vireshk-i7>
-References: <20200622081649.27280-1-sibis@codeaurora.org>
+        id S1732269AbgFWK4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Jun 2020 06:56:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42632 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732205AbgFWK4V (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Jun 2020 06:56:21 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 81C3920738;
+        Tue, 23 Jun 2020 10:56:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1592909781;
+        bh=GcdPSTmUcdlbjUfE2Yq4Ao5q+WO+t3w2mG4xYnD4PRg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=xrLsXbjnLLak6sPIRkEdh3NPbEtXbhTVMJRlRcBWJjteeNgxv7l5thVYSTBTolaXf
+         mgIuqRb9QPC3FjxhZrwCaXVTCREVzvp5tQz2L1ZbzR3Jbp2bC3nu9o8jNIQrrKSWMN
+         gMuAIu9OxvxvgH6si1jVCJVnFQGGYxIQghXUK/QI=
+Date:   Tue, 23 Jun 2020 11:56:18 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, wsa@the-dreams.de,
+        linux-i2c@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, mka@chromium.org,
+        dianders@chromium.org, evgreen@codeaurora.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V8 5/8] spi: spi-geni-qcom: Combine the clock setting code
+Message-ID: <20200623105618.GB5582@sirena.org.uk>
+References: <1592908737-7068-1-git-send-email-akashast@codeaurora.org>
+ <1592908737-7068-6-git-send-email-akashast@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4bRzO86E/ozDv8r1"
 Content-Disposition: inline
-In-Reply-To: <20200622081649.27280-1-sibis@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <1592908737-7068-6-git-send-email-akashast@codeaurora.org>
+X-Cookie: No motorized vehicles allowed.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-06-20, 13:46, Sibi Sankar wrote:
-> This patch series aims to extend cpu based scaling support to L3/DDR on
-> SDM845 and SC7180 SoCs.
-> 
-> Patches [1-2] - Blacklist SDM845 and SC7180 in cpufreq-dt-platdev
-> Patches [3-5] - Update bw levels based on cpu frequency change
-> 
-> V7:
->  * Fixup comments for correctness [Matthias]
->  * Initialize icc_scaling_enabled to false [Matthias]
->  * Make use of the increased per line character limit [Matthias]
 
-Applied. Thanks.
+--4bRzO86E/ozDv8r1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-viresh
+On Tue, Jun 23, 2020 at 04:08:54PM +0530, Akash Asthana wrote:
+> From: Douglas Anderson <dianders@chromium.org>
+>=20
+> There is code for adjusting the clock both in setup_fifo_params()
+> (called from prepare_message()) and in setup_fifo_xfer() (called from
+> transfer_one()).  The code is the same.  Abstract it out to a shared
+> function.
+
+Acked-by: Mark Brown <broonie@kernel.org>
+
+--4bRzO86E/ozDv8r1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7x39EACgkQJNaLcl1U
+h9AHegf9GdXSnZ+4rXpEBgq/XNwTZFM8JsHNOn3DtEe+NzYdU5bX+U8TOu6QfI9E
+gaa4dw8m0NgBrMbnh2lrij4efQFe6DfVlNqP6fUJ8eEtIN7g4hMoDWLyxms3v4Ra
+hILk8cOv1Vu3FURcHfrsEDyhMzHCVS6hI1Gr/ENgI5gqfvobLoOIKx88xJZI5Ixi
+TXqbrYXH0TB+/4KOFxEB33+OWX01M2+Qc9vvoP9E5Phu0LOczxwWE/CjEHokTpbH
+Q3ctSTqc5/O/ZlT5dn6EE4VJG0WeKv9VrJQ0fTxye4tJzZEK0sNYzsfWdWWdn19V
+PC1qSpXSenBMCj/dmSxo0Jcp8lR7XA==
+=boUF
+-----END PGP SIGNATURE-----
+
+--4bRzO86E/ozDv8r1--
