@@ -2,75 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DEB32207670
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 17:04:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE616207683
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 17:04:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403781AbgFXPCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 11:02:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55618 "EHLO
+        id S2404076AbgFXPEE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 11:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404255AbgFXPC1 (ORCPT
+        with ESMTP id S2403833AbgFXPED (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 11:02:27 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C85BC0613ED;
-        Wed, 24 Jun 2020 08:02:27 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id e15so1744084edr.2;
-        Wed, 24 Jun 2020 08:02:27 -0700 (PDT)
+        Wed, 24 Jun 2020 11:04:03 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6915DC061573;
+        Wed, 24 Jun 2020 08:04:03 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id n24so2821894ejd.0;
+        Wed, 24 Jun 2020 08:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=joaqSzO9YrunPdmQExA2g6tAJBLWEu7X/4bAmZ8Um/4=;
-        b=fGLKEPfmpfyDVfYFXgXYsN+ra45eqMzfoxlE5fEQq2E/nJlHkb3aLLEjASyTdxD0Jh
-         +azO0HVFjVl2/2A/s38XUzjfiLxD9o7Nlu0Mw+VBWhW6rymHPfENV5SXmIstGF3ITmL5
-         lpiHMvnjinZehwBoLMIs4FZv2qc6PRH5il+rtve0m8NIj/csmPfzKCyMnuV2PaWONWJt
-         uvZM4HPJ4IPqUXK7qJA5fRfSKYpcoTO44cEXFLc30/fnJpzKaLiXjo7QQ+Y97+D5I+RA
-         pQWfrIqsaosnoRb470LdJUW7z15by2RA49MHwX/B8AidCSBEDUPfUTb6E6T/QWxNkcVQ
-         FTBA==
+        bh=dme5DwerOP4a/33k4zY8N9L2LwVlVtgR/+J6XV+j5XY=;
+        b=ZLR51D3aVpq+oLmRtsnBhmVJHoW7H8XiCZj78ee1BKubpn68Z4ymn8GBWzKX3R5sRk
+         I+VYjxVET4FE3uMVzbIxS1YiI5z8fI1l5Vbfrfrqie9f3NBiXIS57Mh/T5uoK3jxzfE1
+         V0wLB3Spbjq8PJgoPV1dRoVqxe9cET8Bp8Hoy8hsm6C32gDDFicPQP8aS61JPy1gVN/t
+         Pu1nN9GkCk+JOvNhapfE8Dmrm+5wgZeuXorA45Q9Gqp6MO+TA7m64PPrKlzCOzIiATPp
+         cS6DRxFVd83sUre3opKDZAE58VkkotFlnLeuCoLOf37ICEpStREptMR8Dc3G3rze8BPo
+         BmlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=joaqSzO9YrunPdmQExA2g6tAJBLWEu7X/4bAmZ8Um/4=;
-        b=LJgFstwVId7Gj1PEa9S0JUX669uDIiMYeZGsAdJ8yrTh0rHYpCn0DIYgY8pkbGCNyD
-         Lf7I7l9DMs1jxKQm/tK3/v/hUfdQASLUylPC8K1rC4QVCYW/hpNFL/XjjtMaUWCTTJTZ
-         BCSzW1PYP8fpv/EG7BAyTBOjkhsleTRHTvUUB+29ViaAMrnudibv95mTF34SI9Bu95Bw
-         AZjrRXPuXjUZ7DOmueWZo4x/TPewboC/VscsPY8sctsYdKhFnLPYpgSadLy+MYpANYt0
-         1drfeZMM7FyASo68FyTsnD6JFsBmRToIi8D8i24IVrLq5YUyoip1XbKgmkRz7ZIhpBCt
-         UogA==
-X-Gm-Message-State: AOAM530iLMyTtY+HSvYnzrjQ4E9VO27dEmcBpjr1d4gz1OnQYT7H7Rdx
-        bVkDtoM7BkXrucb8esFrPk9TRqTiB/Fj5ZEBd1UV3V10
-X-Google-Smtp-Source: ABdhPJybRDss19kJA/nU6b6NvS3HVIs6RZo/E76NGJSVeOzB8R3k6aWf/LXpQbE9UooKYCG8cGulykoWdAXpdAGvXJ0=
-X-Received: by 2002:aa7:c756:: with SMTP id c22mr27583864eds.239.1593010946270;
- Wed, 24 Jun 2020 08:02:26 -0700 (PDT)
+        bh=dme5DwerOP4a/33k4zY8N9L2LwVlVtgR/+J6XV+j5XY=;
+        b=ZcVk9NAy1HCMNAWofLd4oRhETup1z/otsO9jqx/KsONaRGQhqxxxLB1B3r8bREn/2J
+         dWyiu8AYHH006ihKmYlX/3ucYDjI+PRUiCarqzsQAqzdSgnMGxZ/m5dEXuwYaxB8xqAE
+         us1HZHdj8YODWHK4aQBFg5RKnwRlfh5zKmSvdw8OG5rzcUVpFvsEL57TTgjQ1icMIA2T
+         xXsQl89z6St7jrAnbqXu5JYjYxzXP6qmGcI3gtayCO+NBhJ8ge39+RX3W4aPdOpqpNRP
+         WyT31YRqhqcNpsq2hH2hSPQcYETf3uQfRNtKjqeZvk1kLkBeV9vwzB0AN3beU+w+0OMS
+         ABcA==
+X-Gm-Message-State: AOAM533/aHHhFuLyNpsJChELfzsLVcd7yslvaskbFKBwccmguZ1sSvvT
+        8rG6JRGo3tZhHHP17NJruI2E/NBTt97/lJtzXF4=
+X-Google-Smtp-Source: ABdhPJxmr1mazRfYjmNndeIkLvLIYQSPJ4fYFdHtf/8k917e0w6qkhHOfg3iji8aSD97TYI0qaJhvQZJzURXRq9+xxI=
+X-Received: by 2002:a17:906:1386:: with SMTP id f6mr25481615ejc.66.1593011042218;
+ Wed, 24 Jun 2020 08:04:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200623180832.254163-1-konradybcio@gmail.com>
- <20200623180832.254163-4-konradybcio@gmail.com> <CAHLCerOAM5j+gZWP9MUuGZ+TQfBg4Z=GoEdUfxBTwtEs5TqUuw@mail.gmail.com>
-In-Reply-To: <CAHLCerOAM5j+gZWP9MUuGZ+TQfBg4Z=GoEdUfxBTwtEs5TqUuw@mail.gmail.com>
+References: <20200623224813.297077-1-konradybcio@gmail.com>
+ <20200623224813.297077-5-konradybcio@gmail.com> <20200623231541.GH128451@builder.lan>
+ <CAMS8qEV9hwL1MpEHzVC+w2rkQhdZ1aH3Dy8Mn1X_2Eu7W2naWA@mail.gmail.com> <20200624064011.GS128451@builder.lan>
+In-Reply-To: <20200624064011.GS128451@builder.lan>
 From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Wed, 24 Jun 2020 17:01:50 +0200
-Message-ID: <CAMS8qEUT+Kdq-gqZn25X7W2V8HacuXFbeoTDz=N7C7MNpSfOHA@mail.gmail.com>
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: sdm630: Add tsens node
-To:     Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Wed, 24 Jun 2020 17:03:26 +0200
+Message-ID: <CAMS8qEWO2xGzi7cuC7_eVBqFC21Rf+mOu-nzKDaOdyNn-EBmCg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/12] arm64: dts: qcom: msm8994: Add support for SMD RPM
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Interesting, the downstream DTS only mentions the 0x010AD one..
-Are you sure you're not looking at 636/660?
+> Can you please extend qcom-apcs-ipc-mailbox and its binding to add
+> MSM8994 and use mboxes = <&apcs 0>; here instead?
+
+I have in fact converted it into a mailbox and sent in the v3, but
+unfortunately it looks like the SMD RPM driver hasn't been updated
+for "mboxes =", so I stuck with the "qcom,ipc =" binding.
 
 Regards
 Konrad
