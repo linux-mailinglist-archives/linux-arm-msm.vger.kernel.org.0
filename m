@@ -2,99 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C2FC20747B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 15:29:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9406A2074F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 15:54:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389513AbgFXN2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 09:28:11 -0400
-Received: from aserp2120.oracle.com ([141.146.126.78]:47144 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390974AbgFXN2C (ORCPT
+        id S2391161AbgFXNyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 09:54:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45046 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391150AbgFXNyg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 09:28:02 -0400
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 05ODRs5W109583;
-        Wed, 24 Jun 2020 13:27:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : mime-version : content-type; s=corp-2020-01-29;
- bh=j6/7W4tb/N2hxcHDBOkkKqKNz+kQYnpwjPfAfmGIR+0=;
- b=JUSj3YuQhJoqS24c/nVq29ZA8v8k8nVOEckl+GVYCaFzN9mqvVkb9oN99MBGmmWUmP4k
- hpnkf6cqtbvlW7E+QpK7YvdR7zAEs5PZ5OrYLXCquqR3H4NZiY9gzZi01bpgtyc1bPvk
- unV5heD/2mtauAnY1h06byUVmvyecl6hHAlCEDS4t0X8mPsT6a+QyssaYzd4j0t5+IYs
- WhczVIVRqSHw/K8QZrb8Mem1lG+ouiQhZDGj3HXAvlOxOOGKiKM/mvx32rcFdiCf2Qu1
- qjdMYmdJAMETEOrT5AZmXPLcTwjJP62IJ+VREyls2g9iHUi3AUqQ8us4dd637GXDnlIh 9g== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by aserp2120.oracle.com with ESMTP id 31uusttuf6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 24 Jun 2020 13:27:54 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 05ODNqvw059673;
-        Wed, 24 Jun 2020 13:27:53 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by aserp3030.oracle.com with ESMTP id 31uuqyr5dm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 24 Jun 2020 13:27:53 +0000
-Received: from abhmp0019.oracle.com (abhmp0019.oracle.com [141.146.116.25])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 05ODRpOX026733;
-        Wed, 24 Jun 2020 13:27:52 GMT
-Received: from mwanda (/41.57.98.10)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Wed, 24 Jun 2020 13:27:51 +0000
-Date:   Wed, 24 Jun 2020 16:27:44 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Andy Gross <agross@kernel.org>,
-        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jslaby@suse.com>, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: [PATCH] tty: serial: qcom_geni_serial: Clean up an ARRAY_SIZE() vs
- sizeof()
-Message-ID: <20200624132744.GD9972@mwanda>
+        Wed, 24 Jun 2020 09:54:36 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8924C061573
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 06:54:35 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id o15so1403026vsp.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 06:54:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=W6p40MsHSjWo5H0Bxrz9MYk9ZRj7p6reI+RPdQAxE94=;
+        b=LT6KTMwzqi9u/IBPmxy4zhm6Oi65biD58CVNoanp3EsX3NEk35jvumPLyeQN7zWy5Q
+         pkXb/u3XGnyXyhh+PofR7VhwO3otsMdBVyyV7Y22RFM4ucFacJTaHJmSENLovLghLfJM
+         C9gk+K3Gb5lu0d4mnwGBo2cHQQJ6k4Vh2Etm0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=W6p40MsHSjWo5H0Bxrz9MYk9ZRj7p6reI+RPdQAxE94=;
+        b=uTaRO43WeKmtKIJdS7ZD6nqPuNpAL/FzZBj91DHFlD2m4rxzHV5BAt+zQs30bhDMeU
+         uc00BN/mRWRPgbrv8VYM+h9Lr2rRcQkdvRrupiNPO7GbeTu0nE3Vrr5lV4DDTJiTvnEU
+         db+ruFj2N13tTetE2lGItz9gmLKgqLvrTTgWs3zQprj3ZQwQ1i8+7M6p9CzLaqD4/ey8
+         dhpCxMHZr8t/hrPxjTBGxmT0NUjxQacK0MxFKqwWUK9b++xwsG6HH2RY76YEKjoajOnQ
+         PWk+1g2JRZnLWvpGGWK3PeUjdXJM+jdQiYU8MvEWpEbp2diyW8GmEkRlwslw2Sb9kwpp
+         Xn2Q==
+X-Gm-Message-State: AOAM531844vOr82er10cBS3atcRSnFwjDD9AOtj5/WFo9HsrFFax9OvD
+        8naM1bFzpFZQZu6+lO5o1cOFjl09Nhw=
+X-Google-Smtp-Source: ABdhPJx4Pnw1hBBZT5oXuGLJUFIj5YXo4WbOe2EPq9J+/GZSot0e7hL5agTgp/WFggr0hPbBLx6agQ==
+X-Received: by 2002:a67:a64c:: with SMTP id r12mr23936396vsh.127.1593006874708;
+        Wed, 24 Jun 2020 06:54:34 -0700 (PDT)
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com. [209.85.222.53])
+        by smtp.gmail.com with ESMTPSA id v201sm3209496vkv.2.2020.06.24.06.54.32
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jun 2020 06:54:33 -0700 (PDT)
+Received: by mail-ua1-f53.google.com with SMTP id e3so713437uan.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 06:54:32 -0700 (PDT)
+X-Received: by 2002:ab0:6e8e:: with SMTP id b14mr20672618uav.0.1593006871986;
+ Wed, 24 Jun 2020 06:54:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9661 signatures=668680
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=999
- adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2004280000 definitions=main-2006240097
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9661 signatures=668680
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 bulkscore=0
- cotscore=-2147483648 malwarescore=0 mlxscore=0 clxscore=1011
- lowpriorityscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
- spamscore=0 impostorscore=0 adultscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006240097
+References: <20200624123406.3472-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20200624123406.3472-1-saiprakash.ranjan@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 24 Jun 2020 06:54:20 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UAa7RNsHJem1pPT-FAWfSzSzfBsd9aeMg_Ty6CH5jP2g@mail.gmail.com>
+Message-ID: <CAD=FV=UAa7RNsHJem1pPT-FAWfSzSzfBsd9aeMg_Ty6CH5jP2g@mail.gmail.com>
+Subject: Re: [PATCH] arm64: kpti: Add KRYO{3,4}XX silver CPU cores to kpti safelist
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The ARRAY_SIZE() is the number of elements but we want the number of
-bytes so sizeof() is more appropriate.  Fortunately, it's the same
-thing here because this is an array of u8 so this doesn't change
-runtime.
+Hi,
 
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
----
- drivers/tty/serial/qcom_geni_serial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Jun 24, 2020 at 5:34 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> QCOM KRYO{3,4}XX silver/LITTLE CPU cores are based on Cortex-A55
+> and are meltdown safe, hence add them to kpti_safe_list[].
+>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  arch/arm64/kernel/cpufeature.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 457c0bf8cbf8..1ed3d354e16d 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -718,7 +718,7 @@ static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
- 		u8 buf[sizeof(u32)];
- 		int c;
- 
--		memset(buf, 0, ARRAY_SIZE(buf));
-+		memset(buf, 0, sizeof(buf));
- 		tx_bytes = min_t(size_t, remaining, port->tx_bytes_pw);
- 
- 		for (c = 0; c < tx_bytes ; c++) {
--- 
-2.27.0
-
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
