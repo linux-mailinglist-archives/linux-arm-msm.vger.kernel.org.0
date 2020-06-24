@@ -2,94 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0C66206C5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 08:30:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23FFB206CC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 08:43:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388491AbgFXGak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 02:30:40 -0400
-Received: from mail.zju.edu.cn ([61.164.42.155]:10678 "EHLO zju.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2388262AbgFXGaj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 02:30:39 -0400
-Received: from localhost.localdomain (unknown [210.32.144.65])
-        by mail-app3 (Coremail) with SMTP id cC_KCgBn0ngB8_JeaRw2AQ--.20084S4;
-        Wed, 24 Jun 2020 14:30:29 +0800 (CST)
-From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
-To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] [v2] media: venus: core: Fix runtime PM imbalance in venus_probe
-Date:   Wed, 24 Jun 2020 14:30:24 +0800
-Message-Id: <20200624063024.17059-1-dinghao.liu@zju.edu.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: cC_KCgBn0ngB8_JeaRw2AQ--.20084S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7ZrWkur1fur1xGw48ur4DArb_yoW8Gry8pr
-        4qgayIyry0ganFkw18Jw17WF9xC3yftFWUWFyDuwn7Z3yrG3Z8tF1FyFyYyF1DAFWDAa4U
-        JaySqrW3ZFWFvF7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUvI1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
-        w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
-        IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJr0_GcWl84ACjcxK6I8E
-        87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c
-        8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_
-        JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
-        xGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK67AK6r47MxAIw28IcxkI7VAKI48J
-        MxAIw28IcVCjz48v1sIEY20_GFWkJr1UJwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c
-        02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_
-        GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7
-        CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6rWUJVWrZr1UMIIF0xvEx4A2jsIE
-        14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf
-        9x0JUkhLnUUUUU=
-X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAggBBlZdtOzhhgABs4
+        id S2388360AbgFXGm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 02:42:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35120 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389208AbgFXGmz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jun 2020 02:42:55 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA49EC061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 23:42:54 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 207so527739pfu.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2020 23:42:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Tj0+81OU8cxNaHayJ+mmXmO7Wvd4r9c8QxGXifG1n9Y=;
+        b=UTruSnbrMSy7HPcjG2EqSPJ5bg9XDfYYee9/v77xhD9Fu66HCiLBkfJy63S+lBc99T
+         54/cezpIKfy3s6gyjrJDYFaKrKnwlQQEzl/1TZz+JQjKsJyAngBK6l681EaVDerSExFt
+         88c2BaKe5pRRfG1wcqldTriuqGqRYKVC10oS25CXVi46Q0ZcMJx/FtgsBPReiCWBAOZ2
+         9DCu5vWuZT0vMQwDOHRRvCWu9FjgrzpXVl/9qC+hUex9JDm0xqsu6fzS+gw5ejrfMQN8
+         0fiAKZJz8ytUOriMX+O48kLvFLHwc727rYM2QzuCRpSXeSlSObAFzwDU0+qM9oVe5NNa
+         fTHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Tj0+81OU8cxNaHayJ+mmXmO7Wvd4r9c8QxGXifG1n9Y=;
+        b=iv+EZfv/QdpuIE3PC6mcwwFV02aRQjQJfREsNoKo8p6cpt1P3w9RTJZ/gzioAMsMB8
+         Fjijfjc5KdYvh/tahXVzd669UrpfVUqIpYR8tQbKvZfzXDQxvLKWuPf0mJxmH1MmvEDW
+         Lrq5j9ZJUia0bLVrEKsK3iJoUEP39KQLqKhBRHTjRh5+0+cBv5LNjfnS0t6E0ySoTzAQ
+         HTr1zdNtJ48GGaIKy76qDykBXcY8mWxw77Khwzk1erl4QmuiWgCZVB+XWSNMvCNhYbV6
+         EaqUoBW4UBgaQ6MSh+JQG7AmeN8+CO9IIL6lqVhG5nfYJ4xvcVCTjNYmZpwbmNV5LHD9
+         eA+w==
+X-Gm-Message-State: AOAM530VYQMB+w+tqJCHAGFuKL4RC07/AgvilOOGGrb/4l1VBWUGsPk5
+        oSnB36bq2rA/NMlhpQTP2tADPg==
+X-Google-Smtp-Source: ABdhPJyLAa86tYAyEj6sHwS099W3IjsyooK7AqBRLX7K4JauXP05JDgN7rvIqaPNaU/8hbO/PkifOg==
+X-Received: by 2002:a05:6a00:2b4:: with SMTP id q20mr2225873pfs.74.1592980974097;
+        Tue, 23 Jun 2020 23:42:54 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o22sm18800222pfd.114.2020.06.23.23.42.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2020 23:42:53 -0700 (PDT)
+Date:   Tue, 23 Jun 2020 23:40:11 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 04/12] arm64: dts: qcom: msm8994: Add support for SMD
+ RPM
+Message-ID: <20200624064011.GS128451@builder.lan>
+References: <20200623224813.297077-1-konradybcio@gmail.com>
+ <20200623224813.297077-5-konradybcio@gmail.com>
+ <20200623231541.GH128451@builder.lan>
+ <CAMS8qEV9hwL1MpEHzVC+w2rkQhdZ1aH3Dy8Mn1X_2Eu7W2naWA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMS8qEV9hwL1MpEHzVC+w2rkQhdZ1aH3Dy8Mn1X_2Eu7W2naWA@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-pm_runtime_get_sync() increments the runtime PM usage counter even
-when it returns an error code. Thus a pairing decrement is needed on
-the error handling path to keep the counter balanced. For other error
-paths after this call, things are the same.
+On Tue 23 Jun 16:34 PDT 2020, Konrad Dybcio wrote:
 
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
----
+> Thanks for your review.
+> 
+> I will send the regulators/rpm patch very soon.
+> 
+> Regarding the mbox, do you know whether it should include any clocks
+> on 8992/4? What comes to my head is a53/57pll, but that's not there yet..
+> So perhaps I should just add it with .clk_name = NULL?
+> 
 
-Changelog:
+I don't remember how the clocks are controlled on this platform, so my
+suggestion is that you just skip that for now.
 
-v2: - Add pm_runtime_get_noresume() on failure of
-      pm_runtime_put_sync() to balance PM counter instead of
-      releasing everything here.
----
- drivers/media/platform/qcom/venus/core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 203c6538044f..b0b932bf8c02 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -287,8 +287,10 @@ static int venus_probe(struct platform_device *pdev)
- 		goto err_core_deinit;
- 
- 	ret = pm_runtime_put_sync(dev);
--	if (ret)
-+	if (ret) {
-+		pm_runtime_get_noresume(dev);
- 		goto err_dev_unregister;
-+	}
- 
- 	return 0;
- 
-@@ -299,6 +301,7 @@ static int venus_probe(struct platform_device *pdev)
- err_venus_shutdown:
- 	venus_shutdown(core);
- err_runtime_disable:
-+	pm_runtime_put_noidle(dev);
- 	pm_runtime_set_suspended(dev);
- 	pm_runtime_disable(dev);
- 	hfi_destroy(core);
--- 
-2.17.1
-
+Regards,
+Bjorn
