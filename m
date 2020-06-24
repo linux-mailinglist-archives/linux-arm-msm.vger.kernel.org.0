@@ -2,150 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27EA520719F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 12:57:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC0E2207267
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 13:44:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390552AbgFXK5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 06:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46000 "EHLO
+        id S2390663AbgFXLoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 07:44:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390542AbgFXK5O (ORCPT
+        with ESMTP id S2390651AbgFXLoU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 06:57:14 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E239CC061797
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 03:57:12 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id j13so1138504vsn.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 03:57:12 -0700 (PDT)
+        Wed, 24 Jun 2020 07:44:20 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA816C061796
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 04:44:19 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id m25so1188374vsp.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 04:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Vn4droilz5xGM4KfZXgTLDdDZ7pkVwg0FkXdJSTh6us=;
-        b=jsrHEYsjYaln2VseebXDq9KSHpUlVCIp31IbwlZNiLEWvQQUW3jOQYJyYJ7ilWsi8t
-         N4yIdR3YaRGUPVNKe7i4mRT46gYHqXTnBpAYFx6g326/StBM1zMIZgqE/Il1qOv3STOn
-         fxiahpFUpRclnlN6ofiAe89/gsyxluoR8eawmKIV9o+dvNVy1/F0Jl2dJ7hK2dxOREOc
-         YXbt1vQ34xDe+W0KAHfmGph3WghyiCvx0EDecfobr2KxmbamtlyrwfbCgjpWvdza+gsD
-         BGzm8TnsM3OhMG8PgIzFCF995Q9nxS7OXOXKBdJQhWQ7HGO4f0RZSlTPw1OZeUPe4Fex
-         JV0A==
+        bh=16YY60PN6u62CsdqXTLtpXufTnOGYMQ6hrz0Z45FFTE=;
+        b=qrkILIM/s15IymScgPDkRT1VNzSP3DtSXREEISXmBPELBhZGmSqntU6JBRWu3sHJV2
+         fToYdChv2KKFGXEnrMeL89QCU6jJEtDxA0Gt7gZi/EnUZqjzEbnmxkZ0oZ0HbB0+JeHw
+         WJ2FxT3ToAFsUdr0vBXqLoRihW0XMuGwLOO9Fc11lM6dL6BJJ+xeNRfpJsMokDdu990b
+         0y0QtWK+mkLZIvYZ26xJhJlObd2NgjTOto02VWkKgel4YI6f87qhR5nSu7avR5ihmNN/
+         73YFZspRgx0gdTYKjYwYIiC6wRRzPt0UDPy0+r2HrxjgM2OThCIvg8sWNqxr645btU2+
+         0z0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Vn4droilz5xGM4KfZXgTLDdDZ7pkVwg0FkXdJSTh6us=;
-        b=tXqAlDF/FXbT3O6KLiVypc09sEtu2O9L4u2zdsb1SV0kQQMnbwIphMYR72JjWzoLAT
-         VzZ2PN70bikn72TyKhba09ToqVcfMOrroYsWba6WoAZpN+XFXiz3LfdytWPjUYnRnzMi
-         Xs6U1eDN5u+OM24L8rTjqjJb3qZbYxlELfSF905rikjn3RI8Q42gI+U/jev4dEPtm9EH
-         7OzPPHLfZzqgU/NHaQ89WAmJl8oIc1nyHBCDHVNuxKboDxw5d9S6hQgPscE8nStzt/C7
-         Q2R4soBP96CqoUddbNY3VvHEs8yfZ9HOyrnAsi8fQorsF9xxtte/01xKla+qVe1vWwpD
-         hzqA==
-X-Gm-Message-State: AOAM5305IbBetumC9zQPY0bKaIqZfaNhLmzbwRq2I+OL6ZiUveLi39k1
-        OfIikMdzdAwpvPI4SrFrro5RfPGtqJ1QgcbmLF+yig==
-X-Google-Smtp-Source: ABdhPJwsxJpI/X+t50qo0pfoptqsNIIaJYL0e6gqFMktW+4P7dgIwXfmwMKeXKnC5Tvh/SK00ZCwC18Bi+FEfhZtYJ4=
-X-Received: by 2002:a67:e10d:: with SMTP id d13mr23383320vsl.27.1592996231712;
- Wed, 24 Jun 2020 03:57:11 -0700 (PDT)
+        bh=16YY60PN6u62CsdqXTLtpXufTnOGYMQ6hrz0Z45FFTE=;
+        b=GPwWNXsScoiSu0iVrq4d9dZOyFABNm1qSgWxfP4Clxidz0Tt3TE1SIQ2odzBLOnrAO
+         QX4jMSvuDX9Qd0IDO4CeodMFd4/MrPEx6JJeJOfrum/zhrXR58ZznHIhxFMRe/62XlnU
+         T1Yp1/BBrgBWScr8Anbc3RpSfScSU5OYXIscCu3MmBqQ6Flh9hFdKvJzBKUipNMjzWrI
+         FAreaH0LAw/uhWeaWUk248NonwqkapBIb9ozGPhpY/XI3tfDquzovNkwSPqTm61jzNco
+         9Lv31OiXII4JV30tCZs/g2PV80Kbkzq3fMtVhASCcI9bQfHc3LEsdyaZSY03vyG5NzLX
+         rG1Q==
+X-Gm-Message-State: AOAM532xtJ2pxnCw9bn7kc652+zzlwHvgGu1M/LfmnPqgTziVz3eFnoC
+        ed1uh/OAGWiKvoiJGhXGDOqwznVvhhKrC7dsMBYuvA==
+X-Google-Smtp-Source: ABdhPJwSbBWkN2a607O0g2Tqflb4gBZwf9N00qj0wn7y+Nwy7jnGNQy5diTDA2kS6Fwm7lkEuJZI9MmVwAUK3tCIlRo=
+X-Received: by 2002:a67:885:: with SMTP id 127mr23594427vsi.182.1592999058930;
+ Wed, 24 Jun 2020 04:44:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <cbd70c2f0f5ddae0d8e418fcb1e03101e408f6c2.1585753313.git.amit.kucheria@linaro.org>
- <20200414164357.GA11178@bogus>
-In-Reply-To: <20200414164357.GA11178@bogus>
+References: <20200623180832.254163-1-konradybcio@gmail.com> <20200623180832.254163-4-konradybcio@gmail.com>
+In-Reply-To: <20200623180832.254163-4-konradybcio@gmail.com>
 From:   Amit Kucheria <amit.kucheria@linaro.org>
-Date:   Wed, 24 Jun 2020 16:27:00 +0530
-Message-ID: <CAHLCerM7hwKS=jNtMLnoCXr6z9ckOo1879e-MR-BnOC0JO=adA@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: thermal: Get rid of thermal.txt and replace references
-To:     Rob Herring <robh@kernel.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Jean Delvare <jdelvare@suse.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Vasily Khoruzhick <anarsoul@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, Talel Shenhar <talel@amazon.com>,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        "maintainer:BROADCOM STB AVS TMON DRIVER" 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
+Date:   Wed, 24 Jun 2020 17:14:08 +0530
+Message-ID: <CAHLCerOAM5j+gZWP9MUuGZ+TQfBg4Z=GoEdUfxBTwtEs5TqUuw@mail.gmail.com>
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: sdm630: Add tsens node
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Mans Rullgard <mans@mansr.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        lakml <linux-arm-kernel@lists.infradead.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-hwmon@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-mediatek@lists.infradead.org
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 14, 2020 at 10:14 PM Rob Herring <robh@kernel.org> wrote:
+On Tue, Jun 23, 2020 at 11:39 PM Konrad Dybcio <konradybcio@gmail.com> wrote:
 >
-> On Wed,  1 Apr 2020 20:35:50 +0530, Amit Kucheria wrote:
-> > Now that we have yaml bindings for the thermal subsystem, get rid of the
-> > old bindings (thermal.txt).
-> >
-> > Replace all references to thermal.txt in the Documentation with a link
-> > to the appropriate YAML bindings using the following search and replace
-> > pattern:
-> >  - If the reference is specific to the thermal-sensor-cells property,
-> >  replace with a pointer to thermal-sensor.yaml
-> >  - If the reference is to the cooling-cells property, replace with a
-> >  pointer to thermal-cooling-devices.yaml
-> >  - If the reference is generic thermal bindings, replace with a
-> >  reference to thermal*.yaml.
-> >
-> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
-> > ---
-> >  .../devicetree/bindings/arm/arm,scmi.txt      |   2 +-
-> >  .../devicetree/bindings/arm/arm,scpi.txt      |   2 +-
-> >  .../arm/marvell/ap80x-system-controller.txt   |   2 +-
-> >  .../arm/marvell/cp110-system-controller.txt   |   2 +-
-> >  .../bindings/cpufreq/cpufreq-dt.txt           |   3 +-
-> >  .../bindings/cpufreq/cpufreq-mediatek.txt     |   4 +-
-> >  .../devicetree/bindings/hwmon/gpio-fan.txt    |   3 +-
-> >  .../devicetree/bindings/hwmon/lm90.txt        |   4 +-
-> >  .../thermal/allwinner,sun8i-a83t-ths.yaml     |   2 +-
-> >  .../bindings/thermal/amazon,al-thermal.txt    |   2 +-
-> >  .../bindings/thermal/brcm,avs-ro-thermal.yaml |   2 +-
-> >  .../bindings/thermal/brcm,bcm2835-thermal.txt |   2 +-
-> >  .../bindings/thermal/hisilicon-thermal.txt    |   2 +-
-> >  .../bindings/thermal/max77620_thermal.txt     |   6 +-
-> >  .../bindings/thermal/mediatek-thermal.txt     |   2 +-
-> >  .../thermal/nvidia,tegra124-soctherm.txt      |  10 +-
-> >  .../thermal/nvidia,tegra186-bpmp-thermal.txt  |   2 +-
-> >  .../bindings/thermal/qcom-spmi-temp-alarm.txt |   2 +-
-> >  .../bindings/thermal/rockchip-thermal.txt     |   2 +-
-> >  .../bindings/thermal/tango-thermal.txt        |   2 +-
-> >  .../bindings/thermal/thermal-generic-adc.txt  |   2 +-
-> >  .../devicetree/bindings/thermal/thermal.txt   | 586 ------------------
-> >  .../bindings/thermal/uniphier-thermal.txt     |   2 +-
-> >  23 files changed, 33 insertions(+), 615 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/thermal/thermal.txt
-> >
+> Enable tsens on this SoC using tsens-v2 driver.
 >
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> ---
+>  .../devicetree/bindings/thermal/qcom-tsens.yaml       |  1 +
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi                  | 11 +++++++++++
+>  2 files changed, 12 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index d7be931b42d2..d89d5acd6e2a 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -39,6 +39,7 @@ properties:
+>                - qcom,msm8996-tsens
+>                - qcom,msm8998-tsens
+>                - qcom,sc7180-tsens
+> +              - qcom,sdm630-tsens
+>                - qcom,sdm845-tsens
+>            - const: qcom,tsens-v2
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index ea85f28032d2..92bf4ae6a590 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -566,6 +566,17 @@ anoc2_smmu: iommu@16c0000 {
+>                                 <GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
+>                 };
+>
+> +               tsens: thermal-sensor@10ae000 {
+> +                       compatible = "qcom,sdm630-tsens", "qcom,tsens-v2";
+> +                       reg = <0x010ae000 0x1000>, /* TM */
+> +                                 <0x010ad000 0x1000>; /* SROT */
+> +                       #qcom,sensors = <12>;
+> +                       interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
+> +                                        <GIC_SPI 430 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "uplow", "critical";
+> +                       #thermal-sensor-cells = <1>;
+> +               };
+> +
 
-Daniel, Rob,
+There should be 2 tsens controllers on this platform, the first at
+0x010AA000, the other at 0x010AD000.
 
-This seems to have been missed in the 5.8 merge window. I suspect this
-should go in through the thermal tree.
-
-Regards,
-Amit
+>                 tcsr_mutex_regs: syscon@1f40000 {
+>                         compatible = "syscon";
+>                         reg = <0x01f40000 0x20000>;
+> --
+> 2.27.0
+>
