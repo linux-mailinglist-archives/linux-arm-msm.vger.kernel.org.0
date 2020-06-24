@@ -2,129 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9225A206B53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 06:41:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 132F9206C3C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 08:14:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728690AbgFXEl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 00:41:58 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:51058 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727056AbgFXEl6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 00:41:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1592973717; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=0dYginMgi1k67n62RpmbKWeGpkiw6FuM0+tyuL4cBzo=; b=WtEBzFOPlITSiTQAd+kzh+tdXtd0legAHae9Wo2BsRqxU+FXOfOtvLCSiYklZKG8hprmt3VU
- XaRLyvmyhoKRtLx/R7+iIY/JjfsiFLxSsDCMEesdhB3E6UzglW8HbT5xDtqst2BlVoNV113y
- SRTQQKxdIVh1DClZ3pSPkafWgdM=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
- 5ef2d9953a8a8b20b8f36000 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Jun 2020 04:41:57
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D510BC433CB; Wed, 24 Jun 2020 04:41:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.73.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 411B9C433C6;
-        Wed, 24 Jun 2020 04:41:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 411B9C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Don't use ktime for timeout in
- write_tcs_reg_sync()
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+        id S2388226AbgFXGO0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 02:14:26 -0400
+Received: from spam.zju.edu.cn ([61.164.42.155]:8768 "EHLO zju.edu.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2387817AbgFXGOZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jun 2020 02:14:25 -0400
+Received: by ajax-webmail-mail-app3 (Coremail) ; Wed, 24 Jun 2020 14:14:14
+ +0800 (GMT+08:00)
+X-Originating-IP: [210.32.144.65]
+Date:   Wed, 24 Jun 2020 14:14:14 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From:   dinghao.liu@zju.edu.cn
+To:     "Stanimir Varbanov" <stanimir.varbanov@linaro.org>
+Cc:     kjlu@umn.edu, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <2eb7c28e-d7af-8bc8-c308-46f4df5c995c@codeaurora.org>
-Date:   Wed, 24 Jun 2020 10:11:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+Subject: Re: Re: [PATCH] media: venus: vdec: Fix runtime PM imbalance in
+ vdec_open
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190906(84e8bf8f)
+ Copyright (c) 2002-2020 www.mailtech.cn zju.edu.cn
+In-Reply-To: <5d88210d-db4c-e171-5d4b-5dffe22d4d48@linaro.org>
+References: <20200522111357.2613-1-dinghao.liu@zju.edu.cn>
+ <5d88210d-db4c-e171-5d4b-5dffe22d4d48@linaro.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-In-Reply-To: <20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Message-ID: <516b94f.24c29.172e4f66de8.Coremail.dinghao.liu@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: cC_KCgBXwng27_Jekt81AQ--.45803W
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgUBBlZdtOzhLwABsc
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJTRUUUbXIS07vEb7Iv0x
+        C_JF4lV2xY67kC6x804xWlV2xY67CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DMIAI
+        bVAFxVCF77xC64kEw24lV2xY67C26IkvcIIF6IxKo4kEV4ylV2xY628lY4IE4IxF12IF4w
+        CS07vE84x0c7CEj48ve4kI8wCS07vE84ACjcxK6xIIjxv20xvE14v26w1j6s0DMIAIbVA2
+        z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UMIAIbVA2z4x0Y4vEx4A2jsIE14v26r
+        xl6s0DMIAIbVA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lV2xY62AIxVAIcxkEcVAq
+        07x20xvEncxIr21lV2xY6c02F40EFcxC0VAKzVAqx4xG6I80ewCS07vEYx0E2Ix0cI8IcV
+        AFwI0_Jr0_Jr4lV2xY6cIj6I8E87Iv67AKxVWUJVW8JwCS07vEOx8S6xCaFVCjc4AY6r1j
+        6r4UMIAIbVCjxxvEw4WlV2xY6xkIecxEwVAFwVW8AwCS07vEc2IjII80xcxEwVAKI48JMI
+        AIbVCF04k20xvE74AGY7Cv6cx26r4fKr1UJr1lV2xY6xCjnVCjjxCrMIAIbVCFx2IqxVCF
+        s4IE7xkEbVWUJVW8JwCS07vEx2IqxVAqx4xG67AKxVWUJVWUGwCS07vEx2IqxVCjr7xvwV
+        AFwI0_JrI_JrWlV2xY6I8E67AF67kF1VAFwI0_Jw0_GFylV2xY6IIF0xvE2Ix0cI8IcVAF
+        wI0_Jr0_JF4lV2xY6IIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCS07vEIxAIcVCF04
+        k26cxKx2IYs7xG6rW3Jr0E3s1lV2xY6IIF0xvEx4A2jsIE14v26r1j6r4UMIAIbVCI42IY
+        6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73U
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
-
-Thanks,
-Maulik
-
-On 5/28/2020 8:18 PM, Douglas Anderson wrote:
-> The write_tcs_reg_sync() may be called after timekeeping is suspended
-> so it's not OK to use ktime.  The readl_poll_timeout_atomic() macro
-> implicitly uses ktime.  This was causing a warning at suspend time.
->
-> Change to just loop 1000000 times with a delay of 1 us between loops.
-> This may give a timeout of more than 1 second but never less and is
-> safe even if timekeeping is suspended.
->
-> NOTE: I don't have any actual evidence that we need to loop here.
-> It's possibly that all we really need to do is just read the value
-> back to ensure that the pipes are cleaned and the looping/comparing is
-> totally not needed.  I never saw the loop being needed in my tests.
-> However, the loop shouldn't hurt.
->
-> Fixes: 91160150aba0 ("soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()")
-> Reported-by: Maulik Shah <mkshah@codeaurora.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
->   drivers/soc/qcom/rpmh-rsc.c | 18 +++++++++++++-----
->   1 file changed, 13 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index 076fd27f3081..906778e2c1fa 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -175,13 +175,21 @@ static void write_tcs_reg(const struct rsc_drv *drv, int reg, int tcs_id,
->   static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, int tcs_id,
->   			       u32 data)
->   {
-> -	u32 new_data;
-> +	int i;
->   
->   	writel(data, tcs_reg_addr(drv, reg, tcs_id));
-> -	if (readl_poll_timeout_atomic(tcs_reg_addr(drv, reg, tcs_id), new_data,
-> -				      new_data == data, 1, USEC_PER_SEC))
-> -		pr_err("%s: error writing %#x to %d:%#x\n", drv->name,
-> -		       data, tcs_id, reg);
-> +
-> +	/*
-> +	 * Wait until we read back the same value.  Use a counter rather than
-> +	 * ktime for timeout since this may be called after timekeeping stops.
-> +	 */
-> +	for (i = 0; i < USEC_PER_SEC; i++) {
-> +		if (readl(tcs_reg_addr(drv, reg, tcs_id)) == data)
-> +			return;
-> +		udelay(1);
-> +	}
-> +	pr_err("%s: error writing %#x to %d:%#x\n", drv->name,
-> +	       data, tcs_id, reg);
->   }
->   
->   /**
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+SGkgU3RhbmltaXIsCgo+IAo+IFRoaXMgcGF0Y2ggaXMgbm90IGFwcGxpY2FibGUgYW55bW9yZSBh
+ZnRlciBbMV0uCj4gCj4gWzFdIDYzMzQyYWZlYTY1ZSAoIm1lZGlhOiB2ZW51czogdmRlYzogVXNl
+IHBtcnVudGltZSBhdXRvc3VzcGVuZCIpCj4gCgpTaW5jZSBwbV9ydW50aW1lX2dldF9zeW5jKCkg
+aGFzIGJlZW4gcmVtb3ZlZCBmcm9tIHZkZWNfb3BlbigpLCAKdGhpcyBwYXRjaCBpcyBubyBsb25n
+ZXIgbmVlZGVkLgoKUmVnYXJkcywKRGluZ2hhbw==
