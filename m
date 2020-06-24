@@ -2,109 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DB55207A70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 19:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4DCA207A78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 19:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405587AbgFXRjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 13:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52022 "EHLO
+        id S2405522AbgFXRoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 13:44:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405449AbgFXRju (ORCPT
+        with ESMTP id S2405612AbgFXRoA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 13:39:50 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857AEC061795
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 10:39:50 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id 35so1337747ple.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 10:39:50 -0700 (PDT)
+        Wed, 24 Jun 2020 13:44:00 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BFC9C061795
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 10:44:00 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id k1so1336874pls.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 10:44:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=icPG8hObHg8yafPJKwf2o4eaI571GeN/laooKjhqnGA=;
-        b=ccU9fEXoNSEIM7OOQ/yadogIOyX0u9hfrmr0o3aOPCOthUpjuoBld3sSt+PdY3i0Qr
-         XrYjEd28vcqX+7L5zyThYAz5CZMd1Rx4YAfvSNHxP8Vf+rBZyFqtdiKeuZ67i/ak9icd
-         O3ksW4NGLZpdaE9RP9XJC3jE75u/oa2nEAAJI=
+        bh=blPOdTajVn4OJWy527Nm/cJEP9dim0oSKgwxjjYh5Yk=;
+        b=Wca+aKs6OCeCLlQZHE2jtvWB9Igz6JI4h9CAPSmdajSZfhp2ZUPUCRDHujdfiLw847
+         RY+1k9HzrWuintQ1IOg0AvP8qZaBBwDF4rut0xOtMGygpnJK8PHQskMf03hSw+HiPVN1
+         oxn1UkEEkBskJoSBUGnoEZcMTz1dNz834ktawILifAj0yQ4aUyK9pBs6xHm+h0Ljrf+y
+         rFbYYzWRA5j14xgc5ygP+TrFiJ3HazqFe2tZLTx5XJ8stS8GbnLwxdSUQj0nGIGycoYP
+         ZeXu3B8KwzSYDlcjgCzItlFn+A2QCmb5X4lC1VIJd3pDehc2NmqWTjMxU68j3EGSHcex
+         Gr5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=icPG8hObHg8yafPJKwf2o4eaI571GeN/laooKjhqnGA=;
-        b=ghiDAzZUfHK/UyVTYZ62k6rFxH6EoPqnmN9vst9yTJBlDP7x5Kwf4zgWcwo+wmAs13
-         dObXDh4mQMGk63vz7IhtxRnUVC+m//fN1Wtd2wfm3W7riUyfJPIKoCT1mGBMfKYnGmDD
-         KrkYtsu+G+haIFIjEhr9vtB8qsf7mTVX7+6AW53PGyL7NanFmbLfXp2Ixp9oFVmv2JZw
-         MfZ40Rb72d2CLfqpmnMhwWvLcT71O2Jsk5yKmoF2A6loEwPUqX3iv0H1/tito6hwcBeW
-         XrUjTmrTC8oGa1Zyu2tMPLdOu55wPg6lWHFE65YqhS6yGmef4vRoSk8VXoWHtgr5/O55
-         tA6w==
-X-Gm-Message-State: AOAM530K2SeCVVxjI1+ZrbDNgyCuN7yHOVTbjQLvR41oKlDDoIfDNBRA
-        9beDC7hkowYdkXmRbgzQrQ4JyA==
-X-Google-Smtp-Source: ABdhPJxEB785qbfd6S3Vxd6Ma7a0jVEjXIBDvEs8LRmaTNVuKN6yFPJfwMEa04arCunvtaU7Med6og==
-X-Received: by 2002:a17:902:b60f:: with SMTP id b15mr29521587pls.248.1593020389993;
-        Wed, 24 Jun 2020 10:39:49 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
-        by smtp.gmail.com with ESMTPSA id z5sm501869pfb.1.2020.06.24.10.39.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jun 2020 10:39:49 -0700 (PDT)
-Date:   Wed, 24 Jun 2020 10:39:48 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org, robdclark@gmail.com, robdclark@chromium.org,
-        stanimir.varbanov@linaro.org, viresh.kumar@linaro.org,
-        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH v6 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
- state
-Message-ID: <20200624173948.GC39073@google.com>
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <1592222564-13556-7-git-send-email-rnayak@codeaurora.org>
- <20200624170933.GB39073@google.com>
- <20200624171537.GL5472@sirena.org.uk>
+        bh=blPOdTajVn4OJWy527Nm/cJEP9dim0oSKgwxjjYh5Yk=;
+        b=McyHTnWRTYWLNlTLoAdLHCKwk21Inog/J9Y6xp5X7ZQDIwTqREZ8FzRiK+oUUbpJRo
+         pzGe6GQKpbgiEJaySeTlEJtrvPjm+YNUtYYGQELZx2lQ0ulh/1OI4ss96aIrEB/DYZoc
+         KJIcNBzn76rZtGQn5dFY5TrSzdtlC5mWo0hnrrI7EbrtiMu1Ep3zhpiIK+HU+qw8CfCF
+         o0hBQuHjoEbe0WzE1TKKALayRXs+DJhJY/0JFDy4GdNh+1BWN/Mn7QrG4t4GqiUKq2/c
+         hs1Mb3627xZif1B44t7BT1g6QQ+SKsv+XhHoH2tZlHMquUPicjA9az0DphS8gmJ7FSDW
+         HLwg==
+X-Gm-Message-State: AOAM530UL5vQfDI3g+n2TuB4HcCGreqD0rbV8VD8jFvzqb+MMD/SluyI
+        Hgh5xd6neNiuqmyxsXA1n+dCGg==
+X-Google-Smtp-Source: ABdhPJyNVz7Caxp0j/OEjoO/h6oiEfmM/aIeAAklNOAuzgysJYahbgohTEF9YUzi6hvucALYQ5uqlg==
+X-Received: by 2002:a17:90b:238d:: with SMTP id mr13mr30519050pjb.19.1593020639461;
+        Wed, 24 Jun 2020 10:43:59 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id h13sm20588371pfk.25.2020.06.24.10.43.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2020 10:43:58 -0700 (PDT)
+Date:   Wed, 24 Jun 2020 10:41:17 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Sivaprakash Murugesan <sivaprak@codeaurora.org>, agross@kernel.org,
+        kishon@ti.com, robh+dt@kernel.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH V3 0/5] Enable USB support in IPQ8074
+Message-ID: <20200624174117.GU128451@builder.lan>
+References: <1591625479-4483-1-git-send-email-sivaprak@codeaurora.org>
+ <20200624171834.GH2324254@vkoul-mobl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200624171537.GL5472@sirena.org.uk>
+In-Reply-To: <20200624171834.GH2324254@vkoul-mobl>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 24, 2020 at 06:15:37PM +0100, Mark Brown wrote:
-> On Wed, Jun 24, 2020 at 10:09:33AM -0700, Matthias Kaehlcke wrote:
-> > Hi Mark,
-> > 
-> > do you plan to land this in your tree?
-> > 
-> > I know you hate contentless pings, but since you acked this patch and
-> > usually don't seem to do that when patches go through your tree I want
-> > to make sure we aren't in a situation where everybody thinks that the
-> > patch will go through someone else's tree.
+On Wed 24 Jun 10:18 PDT 2020, Vinod Koul wrote:
+
+> On 08-06-20, 19:41, Sivaprakash Murugesan wrote:
+> > IPQ8074 has two super speed USB ports, with QMP and QUSB2 PHYs.
+> > This patch set enables the USB PHYs and USB dwc3 in IPQ8074.
 > 
-> Aren't there dependencies on earlier patches in the series?
+> Applied 1 thru 4. Bjorn can take the 5th one, thanks
+> 
 
-Not to my knowledge. Patch "[2/6] spi: spi-geni-qcom: Use OPP API to set
-clk/perf state" depends on a change in 'include/linux/qcom-geni-se.h' made
-by "1/6] tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state",
-however that's not true for this patch.
+Thanks Vinod, I've applied and pushed out patch 5.
 
-I wonder if it would have been better to split this series into individual
-patches/mini-series, to avoid this kind of confusion.
-
-> In general if someone acks something for their tree that means they don't
-> expect to apply it themselves.
-
-Yes, that was my understanding and prompted me to clarify this with you.
-
-The patch could go through the QCOM tree, but to my knowledge there is no
-reason for it.
-
-Btw, the patch "[V8,7/8] spi: spi-qcom-qspi: Add interconnect support"
-(https://patchwork.kernel.org/patch/11620285/) is in a similar situation.
-Another patch of the series for the 'spi-geni-qcom' driver has to go
-through the QCOM change due to changes in geni, but the QSPI driver
-doesn't use geni and could therefore go through your tree.
-
-Ultimately I don't really care too much through which tree the patches
-land as long as you and Bjorn agree on it :)
+Regards,
+Bjorn
