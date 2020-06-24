@@ -2,82 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E1632075FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 16:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CF95207698
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 17:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403781AbgFXOp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 10:45:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52890 "EHLO
+        id S2404373AbgFXPEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 11:04:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389583AbgFXOp1 (ORCPT
+        with ESMTP id S2404368AbgFXPEw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 10:45:27 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39699C061573;
-        Wed, 24 Jun 2020 07:45:27 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id m21so1672703eds.13;
-        Wed, 24 Jun 2020 07:45:27 -0700 (PDT)
+        Wed, 24 Jun 2020 11:04:52 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5314CC061798
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 08:04:52 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id a6so4708482wmm.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 08:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lIqE2NUHHN1jnUVxaUmChf7C6YexvjrFTau9YkSeGiI=;
-        b=K9pv2nHlMVvSHQxXmeTLh5YhPo9Sh8Wa0zWK8/oJRYyq/CxzmT6VibZSbU2AJfOJoD
-         YLLAaqK232+a5+4euM+JfWcfO/W3Bu+vexN4cJJAr2VQU1V0DrrUSecC//LcB9Hos5io
-         ey63LchdWVEMuDX5ydsGrtLiHsbW2sLirb9GmhBOj7a9Fay5YE+Vz/PjkHm3gStQzG/K
-         rFNDqack3cRru/QmKslBSZniphwZHwtDn22yQWkQ8ft8cNEKKhiNmOlB26Xpp5k3zt2H
-         AAC8EfonHmBHH4tt7EEbIzzP3S8qG1fIujJPqJtg8hUi25fxyPsNjVLMczj9rKCBii0y
-         apWw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kCGt1BLBXUDbnvT6cymu5MVAxH+kTuMsl5c+6aP/lLY=;
+        b=jMGyaf2YOvnwdGALr7/G0emGXXMlzRVlYnFPWVRjaQMIqVwugRAnJc3hlq5hiW8h5c
+         UlNYM5fXvpEjkCbgvKcR0hRU6Z7v6cS74QrqdBYQQwaf72KYCZRj32ckrnmu0aG5wzCh
+         oQv/67iegU98VlySub1xjGVNx32ddSLk55uKDXkUIrvbzXltQVC60J2oVznaWMR03k3X
+         c88NZ/cwdn2lcyWwoIaMvjTZKlgnZ3OueIPy8vYEViLHA8IFnXW05jOkLP4xaKWjAreX
+         6dOPEbwj+fmCGzpLHvYH0loVrVQGULW0wojhwots1TLiid7Psoh58sITpdd5KWwWa8ll
+         /faw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lIqE2NUHHN1jnUVxaUmChf7C6YexvjrFTau9YkSeGiI=;
-        b=rhgrIldcMbHil8S+YvBAlZbJw/PzzES4AljkRE439zM0X08ttzAXNFJntEa4UeCdj8
-         1s1oL21ZNwFjzctYaMxy5MwHzoszpp51t9JG/14/VSdLG8S78OJ5TTwv5CyvsuEkNkDL
-         h8xQmbcbwcCB13hwknMs2tHislkoPuzRy0wa0XwvrAciZ1Wp/PENzvkxfxpLV8pjlUhc
-         IT40apqt/ta8ZDKrsq04hc6XpL8H8e9M/eFAusb4k3X7Ucwpasi7qDeCl33aAp6a23gN
-         QyV2y98JrS18aCDAo0qpt3Qq5iBZLb74bGun+3eYrcXe9RCjcGlf7RMzTzuAG6tICO2x
-         FUxw==
-X-Gm-Message-State: AOAM5335vb7jt4IzEgIq56oVEORz70VX4oxHDpaK3Odjq6/ZgE5+7r7C
-        3ngeHDMGVDy3OOUhU94g4LRh3xcY/NXBtPf5NnQ=
-X-Google-Smtp-Source: ABdhPJzKndG7kjOCV6qRQ1De7msGegvxr+SwDBcGbUH2E5WIx6mrl3d5FCmeYs2bOfsAruUh15NvQ6YhfaxPpkA0kao=
-X-Received: by 2002:a50:e08c:: with SMTP id f12mr27130963edl.233.1593009925988;
- Wed, 24 Jun 2020 07:45:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kCGt1BLBXUDbnvT6cymu5MVAxH+kTuMsl5c+6aP/lLY=;
+        b=B7G3NLM3AvL0/kNbxfLHjvwDCjG1VgBlm1OaW4Jsu+u66ysee8m7wS3hjJ+k+CpfQw
+         NWGeWcmPxfIwQgqoFd5JbR4HJqldFHQGWn9IR/tr6+qTAZ9mcYzszpfnc+2SnBMrYs9e
+         gGbmn5p3Q+7ffWzhVwMqVerW9fPc3XvRcNbx+u/crBUlSK8dJC+QWi6UD6UEM4Yh1IS/
+         D6nEB7fbvAGxML7GBT+wFK3jT8z95lXDrN+e3VTuQkIKWEkkETVsdEABfItFWYmaftey
+         unLfr4V+cnqi8GX2s5AS31TF4x97Q0vDv/YC5e/tDy0qjmeCMkxqaUhQDPW/fxDTXS/R
+         2YbA==
+X-Gm-Message-State: AOAM533RTby35jwKg2iA7ariBaxgzXQ3bXNc+bQnrOPGa/0JAho1amr0
+        inAeNWQr2tivcCtQhYkzTGKd+A==
+X-Google-Smtp-Source: ABdhPJwGu9kMwIGOcSohIfYJ+NIxZfevAbg2JhUjdK0aeG9zHaTGKntdmr01NhaUWdU13TxN2I2yTw==
+X-Received: by 2002:a1c:a5d6:: with SMTP id o205mr20552487wme.125.1593011091041;
+        Wed, 24 Jun 2020 08:04:51 -0700 (PDT)
+Received: from localhost.localdomain ([2.27.35.144])
+        by smtp.gmail.com with ESMTPSA id f186sm8200319wmf.29.2020.06.24.08.04.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2020 08:04:50 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     daniel.thompson@linaro.org, jingoohan1@gmail.com,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>, stable@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 8/8] backlight: qcom-wled: Remove unused configs for LED3 and LED4
+Date:   Wed, 24 Jun 2020 15:57:21 +0100
+Message-Id: <20200624145721.2590327-9-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200624145721.2590327-1-lee.jones@linaro.org>
+References: <20200624145721.2590327-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-References: <20200623224813.297077-1-konradybcio@gmail.com>
- <20200623224813.297077-13-konradybcio@gmail.com> <20200623232705.GR128451@builder.lan>
-In-Reply-To: <20200623232705.GR128451@builder.lan>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Wed, 24 Jun 2020 16:44:50 +0200
-Message-ID: <CAMS8qEVzThnfonhczz_X_idXQr28EzhwbCW6T9UhZKb_dDfSuA@mail.gmail.com>
-Subject: Re: [PATCH v2 12/12] arm64: dts: qcom: Add support for Sony Xperia Z5
- (SoMC Sumire-RoW)
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->This does worry me...
+Fixes W=1 warnings:
 
-Yeah, sadly the only way to get SMP on every msm8916/39 and
-*some* 92/94 mobile devices is to use something along this: [1]
+ drivers/video/backlight/qcom-wled.c:1294:34: warning: ‘wled4_string_cfg’ defined but not used [-Wunused-const-variable=]
+ 1294 | static const struct wled_var_cfg wled4_string_cfg = {
+ | ^~~~~~~~~~~~~~~~
+ drivers/video/backlight/qcom-wled.c:1290:34: warning: ‘wled3_string_cfg’ defined but not used [-Wunused-const-variable=]
+ 1290 | static const struct wled_var_cfg wled3_string_cfg = {
+ | ^~~~~~~~~~~~~~~~
 
-But for now, 1 core is enough. We will worry when more peripherals
-are brought up.
+Cc: <stable@vger.kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/video/backlight/qcom-wled.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-[1] https://github.com/msm8916-mainline/linux/commit/1b12cb1f8e718175bcff5734cdb3903e83d8aa89
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index 4c8c34b994414..c25c31199952c 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1287,14 +1287,6 @@ static const struct wled_var_cfg wled4_string_i_limit_cfg = {
+ 	.size = ARRAY_SIZE(wled4_string_i_limit_values),
+ };
+ 
+-static const struct wled_var_cfg wled3_string_cfg = {
+-	.size = 8,
+-};
+-
+-static const struct wled_var_cfg wled4_string_cfg = {
+-	.size = 16,
+-};
+-
+ static const struct wled_var_cfg wled5_mod_sel_cfg = {
+ 	.size = 2,
+ };
+-- 
+2.25.1
 
-Regards
-Konrad
