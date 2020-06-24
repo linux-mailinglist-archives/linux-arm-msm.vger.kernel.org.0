@@ -2,99 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6B3F206DCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 09:32:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27EA520719F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 12:57:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389776AbgFXHcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 03:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42734 "EHLO
+        id S2390552AbgFXK5P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 06:57:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389642AbgFXHcL (ORCPT
+        with ESMTP id S2390542AbgFXK5O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 03:32:11 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F14C061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 00:32:11 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id n2so696053pld.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 00:32:11 -0700 (PDT)
+        Wed, 24 Jun 2020 06:57:14 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E239CC061797
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 03:57:12 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id j13so1138504vsn.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 03:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XiffTKYWfkRx2OuMiP/252mjsVT01Skep/qWi8vbGWk=;
-        b=Ope4PDxZMKqo33DrekdQIdllBSDMkIlNiHCxw3yYG5stm7pwHar0QsGYxUv1ivqW1Z
-         SRN16VM0aa5Mc9iKJyZnIz0LvX4yjs+p4eJ3aQeOtnZOvdchEvfZpHiutoDpAlcQwMug
-         OSmVWqM98/0yw7XUkxvFRykp2Q2gCAgkNvEe7k+WplncMKqzuaatAWOXW+/8cGV1DBRP
-         LjeBl/8cO8V89B5ICJpFG3VSGMgKkIIAuiJ3yfS5KGpv9inZK1+xFpgLIUzbieNES2lS
-         NXgVHWc7cn5EjOaUNf3CDQumo78W0+VhABf/oM3A5Fb7M4cME54HpW8KUiEGo4oeauq3
-         jMDQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Vn4droilz5xGM4KfZXgTLDdDZ7pkVwg0FkXdJSTh6us=;
+        b=jsrHEYsjYaln2VseebXDq9KSHpUlVCIp31IbwlZNiLEWvQQUW3jOQYJyYJ7ilWsi8t
+         N4yIdR3YaRGUPVNKe7i4mRT46gYHqXTnBpAYFx6g326/StBM1zMIZgqE/Il1qOv3STOn
+         fxiahpFUpRclnlN6ofiAe89/gsyxluoR8eawmKIV9o+dvNVy1/F0Jl2dJ7hK2dxOREOc
+         YXbt1vQ34xDe+W0KAHfmGph3WghyiCvx0EDecfobr2KxmbamtlyrwfbCgjpWvdza+gsD
+         BGzm8TnsM3OhMG8PgIzFCF995Q9nxS7OXOXKBdJQhWQ7HGO4f0RZSlTPw1OZeUPe4Fex
+         JV0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XiffTKYWfkRx2OuMiP/252mjsVT01Skep/qWi8vbGWk=;
-        b=rpqnmSCxYFLiIg4ub6rjIpSlROKzYPvP8AncnNPtdVsA8SHVJJdg0SNyPMLWveAEfx
-         C5H9XpNUu4+Q6YtOKI3R/dwaK92g7WLAg9Yo79kLZG3Nfz1ErwTkk88UB30mBLfuRvGE
-         FYXQbSBxmMCRIVg9fUknzOz2cBujycuIKpOcxDKYxQ8PTTAtttgeq/mgUkUz9PLKNeZ8
-         9fKGFr3d/63ksum0OHxgg+8MoXZBx+Dsys+RN3EmJfg9rGW3Dh3psI9EHcfVEealIO0J
-         aGOHKkumaeyjPsXRINR7d9mdZ1lcIcGGkr3R4KlUEI4zUuXZfp87+u4qC4H4iq/Cfx5a
-         EuuQ==
-X-Gm-Message-State: AOAM532EW7MZLPkLSoVbsNkRD3lsBHrWY7b+IaZd+sgF86ZJz6199eHS
-        yf1pls0lULNgLliOW6ENL88VlA==
-X-Google-Smtp-Source: ABdhPJzmmQR87baMbd/6VHklCBu0rFXvmKlmotKOEGTSQbtK8VLZjuez9jqsDKFhQIepFUxhRZLPwQ==
-X-Received: by 2002:a17:90a:5c82:: with SMTP id r2mr16853142pji.161.1592983930591;
-        Wed, 24 Jun 2020 00:32:10 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g21sm18765157pfh.134.2020.06.24.00.32.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2020 00:32:09 -0700 (PDT)
-Date:   Wed, 24 Jun 2020 00:29:27 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 06/12] arm64: dts: qcom: msm8994: Add SCM node
-Message-ID: <20200624072927.GT128451@builder.lan>
-References: <20200623224813.297077-1-konradybcio@gmail.com>
- <20200623224813.297077-7-konradybcio@gmail.com>
- <20200623231919.GL128451@builder.lan>
- <CAMS8qEXeFO0vNKHoJeDKKprdECFLVtXOWnphc6iRjOBigeFe1Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Vn4droilz5xGM4KfZXgTLDdDZ7pkVwg0FkXdJSTh6us=;
+        b=tXqAlDF/FXbT3O6KLiVypc09sEtu2O9L4u2zdsb1SV0kQQMnbwIphMYR72JjWzoLAT
+         VzZ2PN70bikn72TyKhba09ToqVcfMOrroYsWba6WoAZpN+XFXiz3LfdytWPjUYnRnzMi
+         Xs6U1eDN5u+OM24L8rTjqjJb3qZbYxlELfSF905rikjn3RI8Q42gI+U/jev4dEPtm9EH
+         7OzPPHLfZzqgU/NHaQ89WAmJl8oIc1nyHBCDHVNuxKboDxw5d9S6hQgPscE8nStzt/C7
+         Q2R4soBP96CqoUddbNY3VvHEs8yfZ9HOyrnAsi8fQorsF9xxtte/01xKla+qVe1vWwpD
+         hzqA==
+X-Gm-Message-State: AOAM5305IbBetumC9zQPY0bKaIqZfaNhLmzbwRq2I+OL6ZiUveLi39k1
+        OfIikMdzdAwpvPI4SrFrro5RfPGtqJ1QgcbmLF+yig==
+X-Google-Smtp-Source: ABdhPJwsxJpI/X+t50qo0pfoptqsNIIaJYL0e6gqFMktW+4P7dgIwXfmwMKeXKnC5Tvh/SK00ZCwC18Bi+FEfhZtYJ4=
+X-Received: by 2002:a67:e10d:: with SMTP id d13mr23383320vsl.27.1592996231712;
+ Wed, 24 Jun 2020 03:57:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMS8qEXeFO0vNKHoJeDKKprdECFLVtXOWnphc6iRjOBigeFe1Q@mail.gmail.com>
+References: <cbd70c2f0f5ddae0d8e418fcb1e03101e408f6c2.1585753313.git.amit.kucheria@linaro.org>
+ <20200414164357.GA11178@bogus>
+In-Reply-To: <20200414164357.GA11178@bogus>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Wed, 24 Jun 2020 16:27:00 +0530
+Message-ID: <CAHLCerM7hwKS=jNtMLnoCXr6z9ckOo1879e-MR-BnOC0JO=adA@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: thermal: Get rid of thermal.txt and replace references
+To:     Rob Herring <robh@kernel.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Vasily Khoruzhick <anarsoul@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Talel Shenhar <talel@amazon.com>,
+        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        "maintainer:BROADCOM STB AVS TMON DRIVER" 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Mans Rullgard <mans@mansr.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        lakml <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-hwmon@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 23 Jun 16:30 PDT 2020, Konrad Dybcio wrote:
-
-> >Shouldn't this be "qcom,scm-msm8992", "qcom,scm" ?
+On Tue, Apr 14, 2020 at 10:14 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed,  1 Apr 2020 20:35:50 +0530, Amit Kucheria wrote:
+> > Now that we have yaml bindings for the thermal subsystem, get rid of the
+> > old bindings (thermal.txt).
 > >
-> >(Or rather "qcom,scm-msm8994", "qcom,scm")
-> 
-> Some DTs only have the SoC-specific one, and some also
-> have the generic one. But I can add the generic one if
-> you wish.
-> 
-> I went with 8992, as I added it in the 8992 series
-> (gonna update that one soon, too, so we can get it merged)
-> and I didn't want to needlessly duplicate it. Ideally maybe we
-> could switch to just qcom,scm for clockless SCM compats?
-> 
+> > Replace all references to thermal.txt in the Documentation with a link
+> > to the appropriate YAML bindings using the following search and replace
+> > pattern:
+> >  - If the reference is specific to the thermal-sensor-cells property,
+> >  replace with a pointer to thermal-sensor.yaml
+> >  - If the reference is to the cooling-cells property, replace with a
+> >  pointer to thermal-cooling-devices.yaml
+> >  - If the reference is generic thermal bindings, replace with a
+> >  reference to thermal*.yaml.
+> >
+> > Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> > ---
+> >  .../devicetree/bindings/arm/arm,scmi.txt      |   2 +-
+> >  .../devicetree/bindings/arm/arm,scpi.txt      |   2 +-
+> >  .../arm/marvell/ap80x-system-controller.txt   |   2 +-
+> >  .../arm/marvell/cp110-system-controller.txt   |   2 +-
+> >  .../bindings/cpufreq/cpufreq-dt.txt           |   3 +-
+> >  .../bindings/cpufreq/cpufreq-mediatek.txt     |   4 +-
+> >  .../devicetree/bindings/hwmon/gpio-fan.txt    |   3 +-
+> >  .../devicetree/bindings/hwmon/lm90.txt        |   4 +-
+> >  .../thermal/allwinner,sun8i-a83t-ths.yaml     |   2 +-
+> >  .../bindings/thermal/amazon,al-thermal.txt    |   2 +-
+> >  .../bindings/thermal/brcm,avs-ro-thermal.yaml |   2 +-
+> >  .../bindings/thermal/brcm,bcm2835-thermal.txt |   2 +-
+> >  .../bindings/thermal/hisilicon-thermal.txt    |   2 +-
+> >  .../bindings/thermal/max77620_thermal.txt     |   6 +-
+> >  .../bindings/thermal/mediatek-thermal.txt     |   2 +-
+> >  .../thermal/nvidia,tegra124-soctherm.txt      |  10 +-
+> >  .../thermal/nvidia,tegra186-bpmp-thermal.txt  |   2 +-
+> >  .../bindings/thermal/qcom-spmi-temp-alarm.txt |   2 +-
+> >  .../bindings/thermal/rockchip-thermal.txt     |   2 +-
+> >  .../bindings/thermal/tango-thermal.txt        |   2 +-
+> >  .../bindings/thermal/thermal-generic-adc.txt  |   2 +-
+> >  .../devicetree/bindings/thermal/thermal.txt   | 586 ------------------
+> >  .../bindings/thermal/uniphier-thermal.txt     |   2 +-
+> >  23 files changed, 33 insertions(+), 615 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/thermal/thermal.txt
+> >
+>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-It's fairly common practice to specify both a specific and a generic
-compatible, this would allow us to in the driver do special handling of
-the specific in the future if we need to - without having to update the
-devicetree.
+Daniel, Rob,
+
+This seems to have been missed in the 5.8 merge window. I suspect this
+should go in through the thermal tree.
 
 Regards,
-Bjorn
+Amit
