@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F5D20766B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 17:04:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC1F020767C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 17:04:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404108AbgFXPBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 11:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
+        id S2390829AbgFXPDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 11:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404102AbgFXPBe (ORCPT
+        with ESMTP id S2404074AbgFXPBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 11:01:34 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F7EDC061573;
-        Wed, 24 Jun 2020 08:01:34 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id o2so2844109wmh.2;
-        Wed, 24 Jun 2020 08:01:34 -0700 (PDT)
+        Wed, 24 Jun 2020 11:01:38 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55605C061797;
+        Wed, 24 Jun 2020 08:01:37 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id q5so2608300wru.6;
+        Wed, 24 Jun 2020 08:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bVP8UZ4IHKrL+X8gjnWR8bdS5bGguU8e2dXcySpdCyo=;
-        b=txxQqYanhxjipxL7sbiuRoaplL6XH1yoiMXbPpam3DlZQQQCPEo89KUSvsIwOFnCpE
-         XPgDt3TMKRiGVbqV/ocfa0PtnuQVnA1cXDs+9pKY3Jepyf7g7/vm4WfAB90k+PEYTHJG
-         HquMXSy7G0l0C2YKUuk/CeWWVFNaQcsEPMN3jm7QozCQ6idLmuynOOOgOw5W9ASYbPif
-         UZkPer+wR1Kvblddgq/bVI374V1irJVBciGM8LH7kJl7He2wGxY8mrNX2Vym6T3ycOx4
-         QVpH+aaA4DIMVOv27o6Rjp57CAzdxnqfyf2KuJ4axu+JK+mpzYo9S2C8dbJDHnvDLSns
-         WJLQ==
+        bh=xGorQfVoMZ+iUqaW92DxUbanNK0hY2uxj/Pn+f4/4FY=;
+        b=nqfRdppQ7wb2SmZSudqseQh0laa6ufOSNlKBSb9OMzpdGXRmD0WZjWlfsi7TGU4QvI
+         efw51ziM1lG8+eer2dOg46sExqXuB/+U8xb6bBJLYYpFvVvLScB7o0OCzJMTISt6iPxR
+         4/TptLjNbDYVifYDFMwnPaKyflHHw5T6znEBcgTyhucemB+hnZOzgRuGEcibK5jAX1Dd
+         Rk7JwxEmyVemkFI9C5mSEnddAK6gBKHh3IVm5Xo/8nZIs+cL/Iza1JU8ztf4Xue9xh/9
+         KMlgZPRnk4vVO9/QbXfZK624a83Y/PLEaAGZlHIL2vVlEHravG2Lv9pFliPmeXnHKVww
+         xeIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bVP8UZ4IHKrL+X8gjnWR8bdS5bGguU8e2dXcySpdCyo=;
-        b=EA7IeyJXSAp+6Mb11i8gbKektzurktOpianKn6XFyycUeIKseYyaarvAPInOAatBuY
-         um7XC1R4c13uERH32U0UreU6CDOAqJzGbFuFhuy5HI2lJbWi/cs9lz7Y4ZGxcx7MFkOq
-         sinjoueDP9Rk+Jv1jKYwi2ZVYpXlYWSBMnlPG6NC8WsOTcSljRsi6Ph0L/dsFBfiUoog
-         n9eKbiPGq7gD5D6FPdkhLyw6ionx1s53JMQKgu/VIbvmLIZh8X2Lecz+8Uw2GZ+7ugcI
-         OHiH7NG6joVlvVbuY94RqKdsZljRxVOZ6bAp3DP8kmMS3lWOEgUntWmuJCXGcsy9EZZp
-         xgNg==
-X-Gm-Message-State: AOAM5332h5/3qUdl0OooBCN10bitKn6pYkQyK50FYL8FmxFDFA13+PPj
-        41frYcUVfefNySHS1IL44RE=
-X-Google-Smtp-Source: ABdhPJwsj3r17OahPuQ/1bBpEarwkSDglbOUxSUYkoEdopFSJoCPQHptlXiIXYnlLKwN8GKOtMqQJg==
-X-Received: by 2002:a05:600c:2dc1:: with SMTP id e1mr17000897wmh.108.1593010893119;
-        Wed, 24 Jun 2020 08:01:33 -0700 (PDT)
+        bh=xGorQfVoMZ+iUqaW92DxUbanNK0hY2uxj/Pn+f4/4FY=;
+        b=fMEP5bsVvUpj6f3HAskuuCYjaXgwadWVImJv/CZr2ja/FWRnL8BSYFWsVZCIWuOuPZ
+         8Ff6NQLxPwAF2REB8dznVJjOhb6hiuvWHYdFuJVYLljxhR9cU7sG8pXZe+r25SA5Wdgn
+         DVqhtvUuPE3d49kIjWKIcET6ZpmKY7R15Sm5zRQtCB/s1O41usTEZsiSONcJng4LJ10h
+         Sk01/5bcJMtQcKL/VlC3VYNH50LMJfJI/itYI8rputRAQFsP/FoQKRMk0tatPAE5PcoF
+         D5dtVFDiIhDKAdeTNRhkUj2F+ELXgazD5YO0V6Xo6uerG/pgZ+oWGUQWCHgUwaGmG9X9
+         C4mw==
+X-Gm-Message-State: AOAM531jL8+DGtVRikHAN+WIX1wAfp5DlLT3AhNBwUBnBOJwLqUk/lL/
+        dydm+Se4F612dtTrk3semdM=
+X-Google-Smtp-Source: ABdhPJxNVNapZG5qULGdKNo0tydvp+YoV+TiiJlp1hlDDGxJ52qcRJsAPdNPjn0DTojsRd/qhAIagw==
+X-Received: by 2002:a5d:60d0:: with SMTP id x16mr1745972wrt.5.1593010896085;
+        Wed, 24 Jun 2020 08:01:36 -0700 (PDT)
 Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
-        by smtp.googlemail.com with ESMTPSA id s8sm21339390wru.38.2020.06.24.08.01.31
+        by smtp.googlemail.com with ESMTPSA id s8sm21339390wru.38.2020.06.24.08.01.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2020 08:01:32 -0700 (PDT)
+        Wed, 24 Jun 2020 08:01:35 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
@@ -62,9 +62,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Sivaprakash Murugesan <sivaprak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 5/8] mailbox: qcom: Add msm8994 apcs compatible
-Date:   Wed, 24 Jun 2020 17:01:03 +0200
-Message-Id: <20200624150107.76234-6-konradybcio@gmail.com>
+Subject: [PATCH v3 6/8] arm64: dts: qcom: msm8994: Add support for SMD RPM
+Date:   Wed, 24 Jun 2020 17:01:04 +0200
+Message-Id: <20200624150107.76234-7-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200624150107.76234-1-konradybcio@gmail.com>
 References: <20200624150107.76234-1-konradybcio@gmail.com>
@@ -75,51 +75,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8994 has an APCS block similar to 8916, but
-with a different clock driver due to the former
-one having 2 clusters.
+Add support for SMD RPM, including pm8994 and pmi8994
+regulators.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml   | 1 +
- drivers/mailbox/qcom-apcs-ipc-mailbox.c                      | 5 +++++
- 2 files changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 43 +++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-index 12eff942708d..5125ca3533d2 100644
---- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-+++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-@@ -18,6 +18,7 @@ properties:
-     enum:
-       - qcom,ipq8074-apcs-apps-global
-       - qcom,msm8916-apcs-kpss-global
-+      - qcom,msm8994-apcs-kpss-global
-       - qcom,msm8996-apcs-hmss-global
-       - qcom,msm8998-apcs-hmss-global
-       - qcom,qcs404-apcs-apps-global
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index cec34f0af6ce..6d892136e0e6 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -41,6 +41,10 @@ static const struct qcom_apcs_ipc_data msm8916_apcs_data = {
- 	.offset = 8, .clk_name = "qcom-apcs-msm8916-clk"
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index bf5aa7308b63..cd1476dfeca4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -175,9 +175,31 @@ smem_mem: smem_region@6a00000 {
+ 		};
+ 	};
+ 
++	smd {
++		compatible = "qcom,smd";
++		rpm {
++			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
++			qcom,ipc = <&apcs 8 0>;
++			qcom,smd-edge = <15>;
++			qcom,local-pid = <0>;
++			qcom,remote-pid = <6>;
++
++			rpm_requests: rpm-requests {
++				compatible = "qcom,rpm-msm8994";
++				qcom,smd-channels = "rpm_requests";
++
++				rpmcc: rpmcc {
++					compatible = "qcom,rpmcc-msm8994";
++					#clock-cells = <1>;
++				};
++			};
++		};
++	};
++
+ 	smem {
+ 		compatible = "qcom,smem";
+ 		memory-region = <&smem_mem>;
++		qcom,rpm-msg-ram = <&rpm_msg_ram>;
+ 		hwlocks = <&tcsr_mutex 3>;
+ 	};
+ 
+@@ -196,6 +218,12 @@ intc: interrupt-controller@f9000000 {
+ 				  <0xf9002000 0x1000>;
+ 		};
+ 
++		apcs: mailbox@f900d000 {
++			compatible = "qcom,msm8994-apcs-kpss-global", "syscon";
++			reg = <0xf900d000 0x2000>;
++			#mbox-cells = <1>;
++		};
++
+ 		timer@f9020000 {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -451,6 +479,11 @@ gcc: clock-controller@fc400000 {
+ 			reg = <0xfc400000 0x2000>;
+ 		};
+ 
++		rpm_msg_ram: memory@fc428000 {
++			compatible = "qcom,rpm-msg-ram";
++			reg = <0xfc428000 0x4000>;
++		};
++
+ 		restart@fc4ab000 {
+ 			compatible = "qcom,pshold";
+ 			reg = <0xfc4ab000 0x4>;
+@@ -668,5 +701,15 @@ timer {
+ 					<1 4 0xff08>,
+ 					<1 1 0xff08>;
+ 	};
++
++	vreg_vph_pwr: vreg-vph-pwr {
++		compatible = "regulator-fixed";
++		regulator-name = "vph-pwr";
++
++		regulator-min-microvolt = <3600000>;
++		regulator-max-microvolt = <3600000>;
++
++		regulator-always-on;
++	};
  };
  
-+static const struct qcom_apcs_ipc_data msm8994_apcs_data = {
-+	.offset = 8, .clk_name = NULL
-+};
-+
- static const struct qcom_apcs_ipc_data msm8996_apcs_data = {
- 	.offset = 16, .clk_name = NULL
- };
-@@ -146,6 +150,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
- 	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
- 	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq8074_apcs_data },
- 	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
-+	{ .compatible = "qcom,msm8994-apcs-kpss-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,msm8996-apcs-hmss-global", .data = &msm8996_apcs_data },
- 	{ .compatible = "qcom,msm8998-apcs-hmss-global", .data = &msm8998_apcs_data },
- 	{ .compatible = "qcom,qcs404-apcs-apps-global", .data = &msm8916_apcs_data },
 -- 
 2.27.0
 
