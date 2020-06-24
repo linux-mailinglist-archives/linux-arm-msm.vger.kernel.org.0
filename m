@@ -2,91 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2318207374
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 14:35:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C2FC20747B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 15:29:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390656AbgFXMeb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 08:34:31 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:15938 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390616AbgFXMe1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 08:34:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593002066; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=pj8/0Ubz9CNAhcpDUVr9idQFgMJauC3hf2tZfvnxXVM=; b=nb48uKunD/ZB7zSp4aWRkI4+SpOxo7C9uEpfLJNWJOIGSGceAKzfNMQoRKkih86z5w/lq4/W
- poYdjUy9SSZ8xTNjT8ze95DNG6IyOc1arW+rhg1Alskv7DtWobRbV/IejKWAOSlXsh220e1Y
- KZ55MlkLZKjugNZiRY9YEroHkzk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
- 5ef348516f2ee827dab49a97 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Jun 2020 12:34:25
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 19F7AC433B1; Wed, 24 Jun 2020 12:34:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 303F0C433C8;
-        Wed, 24 Jun 2020 12:34:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 303F0C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] arm64: kpti: Add KRYO{3,4}XX silver CPU cores to kpti safelist
-Date:   Wed, 24 Jun 2020 18:04:06 +0530
-Message-Id: <20200624123406.3472-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
+        id S2389513AbgFXN2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 09:28:11 -0400
+Received: from aserp2120.oracle.com ([141.146.126.78]:47144 "EHLO
+        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390974AbgFXN2C (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jun 2020 09:28:02 -0400
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 05ODRs5W109583;
+        Wed, 24 Jun 2020 13:27:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : mime-version : content-type; s=corp-2020-01-29;
+ bh=j6/7W4tb/N2hxcHDBOkkKqKNz+kQYnpwjPfAfmGIR+0=;
+ b=JUSj3YuQhJoqS24c/nVq29ZA8v8k8nVOEckl+GVYCaFzN9mqvVkb9oN99MBGmmWUmP4k
+ hpnkf6cqtbvlW7E+QpK7YvdR7zAEs5PZ5OrYLXCquqR3H4NZiY9gzZi01bpgtyc1bPvk
+ unV5heD/2mtauAnY1h06byUVmvyecl6hHAlCEDS4t0X8mPsT6a+QyssaYzd4j0t5+IYs
+ WhczVIVRqSHw/K8QZrb8Mem1lG+ouiQhZDGj3HXAvlOxOOGKiKM/mvx32rcFdiCf2Qu1
+ qjdMYmdJAMETEOrT5AZmXPLcTwjJP62IJ+VREyls2g9iHUi3AUqQ8us4dd637GXDnlIh 9g== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by aserp2120.oracle.com with ESMTP id 31uusttuf6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 24 Jun 2020 13:27:54 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 05ODNqvw059673;
+        Wed, 24 Jun 2020 13:27:53 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by aserp3030.oracle.com with ESMTP id 31uuqyr5dm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 24 Jun 2020 13:27:53 +0000
+Received: from abhmp0019.oracle.com (abhmp0019.oracle.com [141.146.116.25])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 05ODRpOX026733;
+        Wed, 24 Jun 2020 13:27:52 GMT
+Received: from mwanda (/41.57.98.10)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 24 Jun 2020 13:27:51 +0000
+Date:   Wed, 24 Jun 2020 16:27:44 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Andy Gross <agross@kernel.org>,
+        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jslaby@suse.com>, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: [PATCH] tty: serial: qcom_geni_serial: Clean up an ARRAY_SIZE() vs
+ sizeof()
+Message-ID: <20200624132744.GD9972@mwanda>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9661 signatures=668680
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxlogscore=999
+ adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2004280000 definitions=main-2006240097
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9661 signatures=668680
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 bulkscore=0
+ cotscore=-2147483648 malwarescore=0 mlxscore=0 clxscore=1011
+ lowpriorityscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
+ spamscore=0 impostorscore=0 adultscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2006240097
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCOM KRYO{3,4}XX silver/LITTLE CPU cores are based on Cortex-A55
-and are meltdown safe, hence add them to kpti_safe_list[].
+The ARRAY_SIZE() is the number of elements but we want the number of
+bytes so sizeof() is more appropriate.  Fortunately, it's the same
+thing here because this is an array of u8 so this doesn't change
+runtime.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 ---
- arch/arm64/kernel/cpufeature.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index 4ae41670c2e6..9f63053a63a9 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -1290,6 +1290,8 @@ static bool unmap_kernel_at_el0(const struct arm64_cpu_capabilities *entry,
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A73),
- 		MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
- 		MIDR_ALL_VERSIONS(MIDR_NVIDIA_CARMEL),
-+		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
-+		MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
- 		{ /* sentinel */ }
- 	};
- 	char const *str = "kpti command line option";
-
-base-commit: cfafde3c949cae39483639c03c5da5fd91bb234e
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 457c0bf8cbf8..1ed3d354e16d 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -718,7 +718,7 @@ static void qcom_geni_serial_handle_tx(struct uart_port *uport, bool done,
+ 		u8 buf[sizeof(u32)];
+ 		int c;
+ 
+-		memset(buf, 0, ARRAY_SIZE(buf));
++		memset(buf, 0, sizeof(buf));
+ 		tx_bytes = min_t(size_t, remaining, port->tx_bytes_pw);
+ 
+ 		for (c = 0; c < tx_bytes ; c++) {
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.27.0
 
