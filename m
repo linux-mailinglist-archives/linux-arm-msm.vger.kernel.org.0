@@ -2,93 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 945B7207A07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 19:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58C59207A11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2020 19:18:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405318AbgFXRPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 13:15:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37946 "EHLO mail.kernel.org"
+        id S2405371AbgFXRSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 13:18:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38842 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405292AbgFXRPk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 13:15:40 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        id S2405280AbgFXRSj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jun 2020 13:18:39 -0400
+Received: from localhost (unknown [171.61.66.58])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6E53F20823;
-        Wed, 24 Jun 2020 17:15:39 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C7E1320823;
+        Wed, 24 Jun 2020 17:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593018939;
-        bh=Muq+h5RYuFlDZVPELmKhrcpkrd1VTQiWegUXOVEQr1g=;
+        s=default; t=1593019118;
+        bh=aGZUjn6wDrdbHrCzqvlIqiJqUkFrUgMNUt+T2vibI6c=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EwnifoCn7+IjqF6gtLKCpT85y16GjBg4C1wB0knqp9+yOWx/tzQoxANfVG/aLwPIu
-         +5REGHHF03iRm70UHm/pZ05+JxovR7H1Zp0D9a12TcHDhXbX/ItF5FDLzH0Q4yrLBO
-         01oaDGxcfWHjBatC8wBwrm85pmI1JrV00GwTqdlI=
-Date:   Wed, 24 Jun 2020 18:15:37 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org, robdclark@gmail.com, robdclark@chromium.org,
-        stanimir.varbanov@linaro.org, viresh.kumar@linaro.org,
-        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH v6 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
- state
-Message-ID: <20200624171537.GL5472@sirena.org.uk>
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <1592222564-13556-7-git-send-email-rnayak@codeaurora.org>
- <20200624170933.GB39073@google.com>
+        b=U0jRajIBQUNqhxod6nx6oIW481SqqJzySK2W6vtNXd8PDKxfp7WKynpUTXCyxTlkN
+         pr7pTbX1Vy+oIzs8h7W2PS9Fg3rJyS1ollTGmecUGFD2xMD2Qe9bxgJqm4w/U5SLzz
+         MKMuGLVj4mzdgzm/TBipJ2CsweI99ZqprPKpFqG0=
+Date:   Wed, 24 Jun 2020 22:48:34 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        robh+dt@kernel.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH V3 0/5] Enable USB support in IPQ8074
+Message-ID: <20200624171834.GH2324254@vkoul-mobl>
+References: <1591625479-4483-1-git-send-email-sivaprak@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5LiOUhUlsRX0HDkW"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200624170933.GB39073@google.com>
-X-Cookie: So this is it.  We're going to die.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1591625479-4483-1-git-send-email-sivaprak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 08-06-20, 19:41, Sivaprakash Murugesan wrote:
+> IPQ8074 has two super speed USB ports, with QMP and QUSB2 PHYs.
+> This patch set enables the USB PHYs and USB dwc3 in IPQ8074.
 
---5LiOUhUlsRX0HDkW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied 1 thru 4. Bjorn can take the 5th one, thanks
 
-On Wed, Jun 24, 2020 at 10:09:33AM -0700, Matthias Kaehlcke wrote:
-> Hi Mark,
->=20
-> do you plan to land this in your tree?
->=20
-> I know you hate contentless pings, but since you acked this patch and
-> usually don't seem to do that when patches go through your tree I want
-> to make sure we aren't in a situation where everybody thinks that the
-> patch will go through someone else's tree.
-
-Aren't there dependencies on earlier patches in the series?  In general
-if someone acks something for their tree that means they don't expect to
-apply it themselves.
-
-Please don't top post, reply in line with needed context.  This allows
-readers to readily follow the flow of conversation and understand what
-you are talking about and also helps ensure that everything in the
-discussion is being addressed.
-
---5LiOUhUlsRX0HDkW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7zijgACgkQJNaLcl1U
-h9BO2gf/QRx6r/ogT5x8Wf/Nod0og1iZ+SvUc2La5+7SYbzUfNrPdN5YM07zphJH
-hRFrjNyxG1fBSG8P2ZxAgMMyjdpN2KPnLfvRmMwGqh6MfdyOcABDFLYiqKh2aLj8
-QkhwAsGCf3VI2EPmXzmCSxpEQirBs7wMZIt0X+OouO1oGpXvTFAj/4mSbrTtqo3+
-37uCx/ns42Bkypc0svYcZ+ysll9gzUGiUCe+tUkcydTCnUwxbZeNCjQ078VbJ+wu
-7k62lSnNucReS+menq32Cy6mHBY3v7iIkhaqJjIEqmhamRQ5WqUogFSkOACKGB2r
-Jm8gJ0a2KsJuJ2Oy8AE0Hj+izo/Eqg==
-=BWYp
------END PGP SIGNATURE-----
-
---5LiOUhUlsRX0HDkW--
+-- 
+~Vinod
