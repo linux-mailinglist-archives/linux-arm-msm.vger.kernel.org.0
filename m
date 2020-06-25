@@ -2,88 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34F1F20A60C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 21:42:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FC2320A630
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 21:55:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406461AbgFYTm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 15:42:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406069AbgFYTm3 (ORCPT
+        id S2406893AbgFYTzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 15:55:00 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:49842 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2406743AbgFYTzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 15:42:29 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9963BC08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 12:42:28 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id d21so3861932lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 12:42:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qqOtE9pf+vADynm60513eX4noVoy/Y+X3v6nlzQzbtQ=;
-        b=pYiQVql9Rw2juLICgPCa1oGJ7iBQQ4226I524m4p+uW6aOkcQrOckSzd8MlLM667j+
-         Qla0189UJHHFDOGdFKtAy9MQh5kO34fAaSYqA/4XBbi9s+N145R6+TkOfUutfeA7DkwR
-         2UPSdF9AKmz+y29uVhNr01/fqh1CXbeUckJ91jfQ/6jZ8M9M4tOIRs1v4r2xXXn4Mg4x
-         y+Xy4tzBq4BfordUDR38y4H+6HQ/GZfHvQq/O3J4VTmYwlgBEnD5uobXkfb48T9IOYtu
-         zrdNPo2yTwj2WCi/N9ip+y+JyVUFj3y9Z5ZANUycqWTQ+YWC1ZK37zaoiQqTkQWB1RKK
-         GUyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qqOtE9pf+vADynm60513eX4noVoy/Y+X3v6nlzQzbtQ=;
-        b=lGoYFzg4i/RGbXOqqr/PJXzCGgilyAIZLDaqkH8z2ZWBmTq+Tg5BS1UKwQ4fCut48E
-         6RgUmRofRdjrAROTkhK40pD7qiydOq5lPNxASkmdHHN4MXFz2AyQlBbR48B42XkCHD70
-         hupqEXPaWXgVomskN9U6vy2jA11tsUk8PM5kAk03rXGpTEkuAZluNuIC4iUwhkXF0utC
-         GSLrYh2mDX6EpaAcwgDVJKokof6miKq78r/E/57N2qmKFMj154jaG8vObA4jsdiyyw5d
-         TJ0ZbGez+s6Fmg/42aNSJZ0Sb2Xg2Jc5+9rubIuurhlb0xXKQApj9NAJQxYPnFg1gLzT
-         GE8g==
-X-Gm-Message-State: AOAM531ZwiQsM9lYW6W0FYTLSij8EULudN/zAiBwRzHPYhhLScK/pQgm
-        TwYjOmPJEa7N7etdddAKOFnidQ==
-X-Google-Smtp-Source: ABdhPJyhkNBhO+MljMG+su9jY4L/TwP6XUf7v6nKmEa7JlRT+pUqOYmjpSbNk0AEtJteaIhp0/m6iA==
-X-Received: by 2002:ac2:4550:: with SMTP id j16mr19306070lfm.37.1593114147133;
-        Thu, 25 Jun 2020 12:42:27 -0700 (PDT)
-Received: from [192.168.1.211] ([188.162.64.162])
-        by smtp.gmail.com with ESMTPSA id l16sm6158085lfg.2.2020.06.25.12.42.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jun 2020 12:42:26 -0700 (PDT)
-Subject: Re: [PATCH 3/3] phy: qcom-qmp: Add QMP V4 USB3 PHY support for sm8250
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-kernel@vger.kernel.org>
-References: <20200524021416.17049-1-jonathan@marek.ca>
- <20200524021416.17049-4-jonathan@marek.ca>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <47e016a4-b7c8-e8c1-f9fd-b6b049e9e0b7@linaro.org>
-Date:   Thu, 25 Jun 2020 22:42:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Thu, 25 Jun 2020 15:55:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593114899; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=PhZyeDiU4gx67xTuq558n6PbKCvNKL0jNS20e961ie0=; b=IDOksNO2vpItVWCVpEmnJz2IaL/YvGNmWH0MNUPt/0rIQKng4Ido/lYgxgKw5Ldr+3Ini6Bu
+ W7J839LRRYWK1khfJD/MK6UxxsxBed38GAPNsAH28EB3jh5WT4rHbrcriwxK9Q+jkckENP0q
+ JDgROlxYNXSFOBMRXvMct/iMR+Y=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n14.prod.us-east-1.postgun.com with SMTP id
+ 5ef50112c4bb4f886d2369a7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 19:54:58
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 06A54C4339C; Thu, 25 Jun 2020 19:54:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 403FBC433CA;
+        Thu, 25 Jun 2020 19:54:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 403FBC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     kishon@ti.com, vkoul@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v3 0/2] phy: qcom-snps: Add runtime suspend and resume handlers
+Date:   Thu, 25 Jun 2020 12:54:42 -0700
+Message-Id: <20200625195444.15130-1-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <20200524021416.17049-4-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/05/2020 05:14, Jonathan Marek wrote:
-> Add both the DP and UNI PHY for primary/secondary usb controllers.
-> 
-> The tables are very similar to sm8150 (serdes_tbl is identical), but there
-> are some differences.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Changes in v3:
+ - Fixed strict checkpatch warnings due to alignment
+ - Remove debug artifacts from prints
+ - Split the set mode callback addition to another patch
+ - Removed suspended parameter
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes in v2:
+ - Addressed checkpatch alignment/line length warnings.
+ - Removed superfluous init in qcom_snps_hsphy_resume().
 
+Adds a set mode callback and runtime suspend/resume handlers to the
+phy-qcom-snps-femto-v2 driver.  The set mode is used to enable certain
+power management features in the PHY during suspend/resume.
+
+Wesley Cheng (2):
+  phy: qcom-snps: Add runtime suspend and resume handlers
+  phy: qcom-snps: Add a set mode callback
+
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 85 +++++++++++++++++++
+ 1 file changed, 85 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
