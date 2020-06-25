@@ -2,103 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FBE520971E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 01:22:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A892209753
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 02:03:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388735AbgFXXW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 19:22:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388737AbgFXXWZ (ORCPT
+        id S2388061AbgFYADS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 20:03:18 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:28091 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2387843AbgFYADR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 19:22:25 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F627C061795
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 16:22:24 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id n5so3621070otj.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 16:22:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ixR4kIucjZXiRtwMzxKSRPAHfL+FLubXnd+GvW1h77s=;
-        b=Z7YPQvc6norraPne8OACkSUlKBVmLzg0FP9LZ7gduh3U4fiXJckSxRV8Rw/M6ozRWJ
-         CjO2/AkaXd9R+o9hVzdrRw1hQuKb2mCZ1GENwhRmQMvXPb4YogDL9Anl/z4vNHibhS7O
-         NK3IrFNQK8cYxuy21niT7Scw64KVhXT99fgZQNoQLHaS4zd3qSpDwRBNF69Va9CI3Su1
-         XOZeXBH0cz4qgxb4LruxmpvoG9P53uUpxNMeGz+7XTSEjo/48iNu+ULMKQcpWyfIRnzG
-         WGAjrfnyEm3aD+QzMcQW7ICI5L5cy+GzJeuU+I+SuwLYvFoAuMEzV69tL1xuT3vPCjHY
-         qcNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ixR4kIucjZXiRtwMzxKSRPAHfL+FLubXnd+GvW1h77s=;
-        b=uWtQmAXgXjlnQU867fxVmQdz9Xmx//AE21mYO6JAvhayd/DMU0diP4UylZKWGNsfIw
-         HA9l6jRzGQZXsxf2oAta3FASCTEEk3HzYd+XhviL45dwWxCqJT/Ir78H7Cx7e/9vnu2l
-         o8GRJ9ea+kSKuARD6GM0O7uK/qDXeqZRcfTt9/YQrL2QK3v4WSQfXWkrOkMqwQ8d6Lv9
-         3eXEN/B6SWrU/kQ59m42IIeN2DCz3pd4NVBtt034+j79Kc2sXewvSAt55eQpNDiILKJs
-         YCX5bwz68Awc3ccs9+e0+fjfhyQNaOKywNapQzZIUIG5BG62irNWCYtCZAEiMP7GATNh
-         +6UA==
-X-Gm-Message-State: AOAM533Z2i0yr55kUnChO1eWnnLjeGd0mRvjBlYys/JQYFdZ6KyCvcU1
-        AyoHcXMi11QBQMiJKG132E/o57zx2pZArY/iilXxng==
-X-Google-Smtp-Source: ABdhPJyDeT0KDPGBY+XrtAn4IpWyHShWZgknfbRvrpyv5ICBQ0JbfIvQE3n6cpvnMFZ4tsBYi4nHf3OPeZeTeb/2RbY=
-X-Received: by 2002:a05:6830:1e13:: with SMTP id s19mr9494408otr.102.1593040943632;
- Wed, 24 Jun 2020 16:22:23 -0700 (PDT)
+        Wed, 24 Jun 2020 20:03:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593043396; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3INbwNDUP/wezgbPwIovPzcDp4TH4ao4dSsadBi2Wxk=; b=E2FN6sytQmCLbkFbbRn+SiHrLDe2W+Mho47q75EuZRIBPiPnhalumbE0gtzMFx1Kq8egp0My
+ /+Z7+NgaNLP4MmDiV5BlYrQbtRgEjCtHpRycrwbvCampRDEFqbHFRsGdKO61VCs48QTF+ZgQ
+ TrGTcxmfRzItl/DzOEgAM2L0FwY=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n18.prod.us-east-1.postgun.com with SMTP id
+ 5ef3e9c386de6ccd447a4b4e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 00:03:15
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AA7EEC43391; Thu, 25 Jun 2020 00:03:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EB0FBC433C8;
+        Thu, 25 Jun 2020 00:03:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EB0FBC433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v3 2/4] bus: mhi: core: Move MHI_MAX_MTU to external
+ header file
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org
+References: <1591899224-3403-1-git-send-email-hemantk@codeaurora.org>
+ <1591899224-3403-3-git-send-email-hemantk@codeaurora.org>
+ <20200619053353.GB3245@Mani-XPS-13-9360>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <a6babc13-e646-d08c-6f53-4d6961745ce0@codeaurora.org>
+Date:   Wed, 24 Jun 2020 17:03:13 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20200616061338.109499-1-john.stultz@linaro.org>
- <20200616061338.109499-5-john.stultz@linaro.org> <20200621060055.GA2421@builder.lan>
-In-Reply-To: <20200621060055.GA2421@builder.lan>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Wed, 24 Jun 2020 16:22:12 -0700
-Message-ID: <CALAqxLUhi4qQpz5b+6hc8T5mA2E6ugg6UD44WA+Dc2+=Hjm=DQ@mail.gmail.com>
-Subject: Re: [RFC][PATCH 4/5] pinctrl: qcom: Allow pinctrl-msm code to be
- loadable as a module
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200619053353.GB3245@Mani-XPS-13-9360>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 20, 2020 at 11:03 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Mon 15 Jun 23:13 PDT 2020, John Stultz wrote:
->
-> > Tweaks to allow pinctrl-msm code to be loadable as a module.
-> > This is needed in order to support having the qcom-scm driver,
-> > which pinctrl-msm calls into, configured as a module.
-> >
->
-> This means that we need a "depends on QCOM_SCM || QCOM_SCM=n" on all
-> entries in the Kconfig that selects PINCTRL_MSM, or switch PINCTRL_MSM
-> to be user selectable and make all the others depend on it.
+Hi Mani
 
-Oh, good point! I already had to fix that in a different tree, but
-forgot to move the fix over to my upstreaming tree.
+On 6/18/20 10:33 PM, Manivannan Sadhasivam wrote:
+> On Thu, Jun 11, 2020 at 11:13:42AM -0700, Hemant Kumar wrote:
+>> Currently this macro is defined in internal MHI header as
+>> a TRE length mask. Moving it to external header allows MHI
+>> client drivers to set this upper bound for the transmit
+>> buffer size.
+>>
+> 
+> So we have 2 definitions for MHI_MAX_MTU now? Why can't you remove the one
+> available internally?
+Good catch, let me fix that in next patch series.
+> 
+> Thanks,
+> Mani
+> 
+>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>> ---
+>>   include/linux/mhi.h | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+>> index a39b77d..ce43f74 100644
+>> --- a/include/linux/mhi.h
+>> +++ b/include/linux/mhi.h
+>> @@ -16,6 +16,9 @@
+>>   #include <linux/wait.h>
+>>   #include <linux/workqueue.h>
+>>   
+>> +/* MHI client drivers to set this upper bound for tx buffer */
+>> +#define MHI_MAX_MTU 0xffff
+>> +
+>>   #define MHI_VOTE_BUS BIT(0) /* do not disable the mhi bus */
+>>   #define MHI_VOTE_DEVICE BIT(1) /* prevent mhi device from entering lpm */
+>>   
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
 
-
-> >
-> > +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. pinctrl-msm driver");
->
-> It's the "Qualcomm Technologies, Inc. TLMM driver"
->
-> > +MODULE_LICENSE("GPL v2");
-> > +
->
-> Please don't retain my empty line at the end of this file :)
-
-Done and done. Thanks so much for the review!
--john
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
