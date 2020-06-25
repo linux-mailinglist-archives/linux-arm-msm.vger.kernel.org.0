@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B86420A4D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 20:22:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8044220A4AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 20:21:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404971AbgFYSWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 14:22:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
+        id S2390658AbgFYSVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 14:21:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390556AbgFYSV3 (ORCPT
+        with ESMTP id S2389648AbgFYSVb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 14:21:29 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8479C08C5C1;
-        Thu, 25 Jun 2020 11:21:28 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id w6so6888024ejq.6;
-        Thu, 25 Jun 2020 11:21:28 -0700 (PDT)
+        Thu, 25 Jun 2020 14:21:31 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75654C08C5C1;
+        Thu, 25 Jun 2020 11:21:31 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id a1so6852689ejg.12;
+        Thu, 25 Jun 2020 11:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+puFNw9Af4Mq8TedQJihgmoj5SF8nSnYlnfkgvsEedk=;
-        b=lw/G9AZ0JhLp6mKFGbUXgOhKEJq6WIJ7cIQOw5MJE0Yux3vjHzXe8U0oR1NAWc0cLy
-         La6AtEa19/sN5MXoc8F06zOdtlkueZ1HPwZiMD1IZ7WGO4X85dOvDSfc9cKkm+XjyQA6
-         cwGTTnYWb3gvJkKgCCLpHpU2LNuKmOLac9/FW30w9TRTUP9FqQJMOcNva+kyU1R6vVAo
-         B2+c2BEdIusCEVNGCdCJ/n9yP/LOkb/pjTXkh/9KYYCtJ3F2ppyZPc6p/8HLjj7xCoGf
-         dfYoaV1xG/2/hRXH6FFX/BgM5EbFodVsVdE4abAdYm0Qh1Ujw/CKfPIoV6M56ENb3oOS
-         zb/A==
+        bh=wyyTfoYKUal+Im2XFp9aLfEoAp0H4cTyYoV6q1T4GSs=;
+        b=PEobQgKoEMEyUg8apMi927oZD8vIUM5Vx61Zcb0XYEKgk7OCQy44rz/H7p364Aw1QM
+         KX2XuJls+eqCLGFYYJOTeaQvC7D5ejt2X559pNy16Nw55LETU6LXHeID9ICxFNTPge72
+         9wiUrKOIXeoajpUDMsJ1Fum9SsHkdbdsyIda3OLUBv8IhvFmql7WFGhMVgHeiBbh28iE
+         vxE1I/dCJ0f8Z+7NuEt73SwRQ0Vj1YjsOEKbKstrGlNspcMlSD9yTY9GXD9kTBa1Ea85
+         TmLntu4Kg2ePJ7Tth8AFgOoLtfc/kxstLf9yGSdfUeuEo7zZ82zzcMnyVwfD0PXy5wBI
+         94dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+puFNw9Af4Mq8TedQJihgmoj5SF8nSnYlnfkgvsEedk=;
-        b=XjZqrUiFSrJtk5XBtNFjYNAaTIKBqMlOLYOpUwmNrjNhOkz85yRqAq7QVRktXd351p
-         NQ+xYIc3hriLLOMFqVZoh4ECEuNA9Zf3khe9ekyVG+joKFRX1nlHegm8TkFMGZYHQR2a
-         UawdaeZeFxk11Aix5OWG2bLDFFlpFJjfGBQ+RYD8H+jdG5UE1vipz7vPYIGZajQK5+CH
-         ebQ/EgLWtoriS6o762VO694pqsTD3sEZ11I3I01KcreSaIQd32hLPVFmdAU2W/aWzf8/
-         ME4qcvseDN/xGv4x33pmKI6hgn9IBMjISEwZs4j1jJJejN09EPNewDRUh/DpFebwZtpI
-         9l7w==
-X-Gm-Message-State: AOAM5329FJHIBCk9iM5M/MS2yIZN5xszhiVSLE/PRTNg29cP5Uu5uV6W
-        NqbRUZU8aI7TYHNWYjS/LHA=
-X-Google-Smtp-Source: ABdhPJwYbZsIVqcWEZ6FdDlOUbZjB+V3Gp3dC4XjE1TgMUPnOnF6TRL429WIWYcwe8CIBGAOyCkohA==
-X-Received: by 2002:a17:906:3042:: with SMTP id d2mr9618978ejd.420.1593109287647;
-        Thu, 25 Jun 2020 11:21:27 -0700 (PDT)
+        bh=wyyTfoYKUal+Im2XFp9aLfEoAp0H4cTyYoV6q1T4GSs=;
+        b=ablDQX4AXMqrAjO4LtEnUzYtQ/hEJumDxkHWcdwmPWwdY4VpFdG3m15gooUS7nNhlt
+         e5vVAc4kU1M/LE2gl30sCylVlYsTvW5s2PalqpooxztK5RBeTJZjF/+cxJJOPYdvB4fR
+         sCnGZBvqdd9HDf6JcPcF4vZUOSHMiOC78M4JgU5sAXE8U67xDj+JunVpC61laaDQJ6Wb
+         EWFGnXO2PiO1VJoOlnuZYJ8MUyRezSr/8Q0gPZ/qQqv+JFCzVVmvk9D+kVbzZgKazehA
+         079Cqe2pJrAyNds37ByiYv+N2vRUQQ0lz3+fKOk2NcCrGgcoOdkQ+ri2EmfAbs6C+MMp
+         74DQ==
+X-Gm-Message-State: AOAM532X+a0P80onay28AVsWZUKpr8VrDU0zLJLKZJ6LHgxoh3ERgt/g
+        aqNPzJPpdGrpPL6rWWrtrW4=
+X-Google-Smtp-Source: ABdhPJxnomW7lt+1hVr9XadS5o1FSgjDDK7gmE17NGMsjJSOo+qmfY0FFhWDbsA3eiCykt4+H6oMEg==
+X-Received: by 2002:a17:906:ecef:: with SMTP id qt15mr30155704ejb.91.1593109290233;
+        Thu, 25 Jun 2020 11:21:30 -0700 (PDT)
 Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
-        by smtp.googlemail.com with ESMTPSA id lm22sm1523448ejb.109.2020.06.25.11.21.26
+        by smtp.googlemail.com with ESMTPSA id lm22sm1523448ejb.109.2020.06.25.11.21.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 11:21:27 -0700 (PDT)
+        Thu, 25 Jun 2020 11:21:29 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
@@ -59,9 +59,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Colin Cross <ccross@android.com>,
         Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 02/13] arm64: dts: qcom: msm8992: Fix SDHCI1
-Date:   Thu, 25 Jun 2020 20:21:06 +0200
-Message-Id: <20200625182118.131476-3-konradybcio@gmail.com>
+Subject: [PATCH v3 03/13] arm64: dts: qcom: bullhead: Add qcom,msm-id
+Date:   Thu, 25 Jun 2020 20:21:07 +0200
+Message-Id: <20200625182118.131476-4-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200625182118.131476-1-konradybcio@gmail.com>
 References: <20200625182118.131476-1-konradybcio@gmail.com>
@@ -72,76 +72,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit ensures the correct IRQ type is set
-and disables the device by default.
-The mmc-hs400-1_8v property is also moved to
-Bullhead as it might not be present on all boards.
-
-The node has been renamed to sdhci@ instead of mmc@
-and the phandle was changed to sdhc_1 to comply with
-the newer DTS style.
+Add the property required for the bootloader to select
+the correct device tree blob. It has been removed from
+the SoC device tree as it should be set on a per-device
+basis.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- .../boot/dts/qcom/msm8992-bullhead-rev-101.dts   |  6 ++++++
- arch/arm64/boot/dts/qcom/msm8992.dtsi            | 16 +++++++++-------
- 2 files changed, 15 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-index a2de69292d28..1061fd5404aa 100644
+index 1061fd5404aa..4f70681e730d 100644
 --- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-@@ -271,3 +271,9 @@ pm8994_l32: l32 {
- 		};
- 	};
- };
-+
-+&sdhc_1 {
-+	status = "okay";
-+
-+	mmc-hs400-1_8v;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index 43b2e4cd26f0..8ef1cb8ba8ef 100644
---- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -158,18 +158,19 @@ frame@f9028000 {
- 			};
- 		};
+@@ -11,6 +11,7 @@ / {
+ 	model = "LG Nexus 5X";
+ 	compatible = "lg,bullhead", "qcom,msm8992";
+ 	/* required for bootloader to select correct board */
++	qcom,msm-id = <251 0>, <252 0>;
+ 	qcom,board-id = <0xb64 0>;
+ 	qcom,pmic-id = <0x10009 0x1000A 0x0 0x0>;
  
--		sdhci1: mmc@f9824900 {
-+		sdhc_1: sdhci@f9824900 {
- 			compatible = "qcom,sdhci-msm-v4";
- 			reg = <0xf9824900 0x1a0>, <0xf9824000 0x800>;
- 			reg-names = "hc_mem", "core_mem";
- 
--			interrupts = <GIC_SPI 123 IRQ_TYPE_NONE>,
--					<GIC_SPI 138 IRQ_TYPE_NONE>;
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
- 			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
--				<&gcc GCC_SDCC1_AHB_CLK>;
--			clock-names = "core", "iface";
-+				<&gcc GCC_SDCC1_AHB_CLK>,
-+				<&xo_board>;
-+			clock-names = "core", "iface", "xo";
- 
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on
-@@ -179,8 +180,9 @@ sdhci1: mmc@f9824900 {
- 
- 			regulator-always-on;
- 			bus-width = <8>;
--			mmc-hs400-1_8v;
--			status = "okay";
-+			non-removable;
-+
-+			status = "disabled";
- 		};
- 
- 		blsp1_uart2: serial@f991e000 {
 -- 
 2.27.0
 
