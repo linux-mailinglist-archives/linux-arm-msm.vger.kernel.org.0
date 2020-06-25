@@ -2,95 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA6DE20A5D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 21:29:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7AF820A5FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 21:41:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406335AbgFYT3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 15:29:34 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:34401 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406303AbgFYT3d (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 15:29:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593113372; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=bZEXLpiFS2CTcQQYib0XcL0ZOSWmr7D6wUi6jTv1x9A=; b=PGbVQJ0VtYaiwn09VzQml6yG0ElWRYA/HLf6vvAgRlWc0gpHzvgKUwDDtsuqo5lROfTQWLr6
- NoRAOdTIiy3FbMTnnaO5OIkukYPnGrVbRGf8LWpmDSMoaYRwl+QCAhvI+/Kg+NPXUsB/RTaz
- ZaezJ1V8H++d7f8gD2+qgWs0m7A=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
- 5ef4fb1bfe1db4db892ca91b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 19:29:31
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 65246C43395; Thu, 25 Jun 2020 19:29:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B5F9BC433CA;
-        Thu, 25 Jun 2020 19:29:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B5F9BC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Guenter Roeck <linux@roeck-us.net>, linux-watchdog@vger.kernel.org,
-        Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
+        id S2406523AbgFYTl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 15:41:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406116AbgFYTl2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Jun 2020 15:41:28 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED851C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 12:41:27 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id s9so7809296ljm.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 12:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0zChu5NuqK8iQIUSN8hc0V6TgI7jS8t8rrc66RrTyMg=;
+        b=IJEluxN5ynq0LgPGOYBOvKULgCl5INb0OLYzWbyx+0W0SCmpcuiXuHILiZ0lMhqt3s
+         GNPoTUQOirD6NBSicG79/NGxt2qaplIrFoe6mGjhqfQ0ChVaghjL+t79fI5t+gn3vIBZ
+         ImuTzMnodSyyKZH1+cAbw/iBrBebnKVEInFUyCQrevpxVTE8ScP/ZpN90ZgYHPo0gSGe
+         ULTzWcwBwlDDvfnWxhTRiTqV6cOxCdGmsiSUcoij1XxBb8H+ZONZNZzAlJBtR9AoJrB2
+         trXlHnAP9U+O2XbsdPn5oAPh026OQG0YbwySQFlt6Tiw8Qttz5s1wD3ghAsLaiM+I0Et
+         X4aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0zChu5NuqK8iQIUSN8hc0V6TgI7jS8t8rrc66RrTyMg=;
+        b=fMlwjTPPmZ6ef5Z5bPfaTZTI8CDJYTYfPQi1C/YpCglwW86uFotWTOkE2cFNv+pt13
+         qbPm+hbRfOW+iADXakw75LJSB1bQgqkhPd5pfuQfuwK91c5qSVLeDwWyhrtitNUzHWFF
+         obROTidnV2gDokISA7WUW0Gj6L653sSWN0GC669vJcTrgGH9Q2EsljfqxOqLIvyrI9z4
+         mpgKvdOJrAsZmTw+2k6Fs4wFXfiF0OdweDed1hMR9VEYkGU2a+Iph1Y7yuG9Ne04ZMZU
+         zE2SFnN4EZInMUfR9MNogL2IH1QWpg/P5e8Wb37SXB2w1SwT4aFllcGqAhn4Xb7pHaWA
+         6DAA==
+X-Gm-Message-State: AOAM530EtR7QcPEOlIwVYGkka5o8EAeijkcFZtdgkrBuxoyAM0u+2Lq1
+        JmJi013/jhzX45ic7vTSSaRytj0hBZU=
+X-Google-Smtp-Source: ABdhPJxWlayAdWCqXaDjcJJF3JFPeAfVeVjewllhoyJZXszj3c3iBM9r3KCGLR2HjEB4QptldoNOFA==
+X-Received: by 2002:a2e:859a:: with SMTP id b26mr17894874lji.191.1593114086377;
+        Thu, 25 Jun 2020 12:41:26 -0700 (PDT)
+Received: from [192.168.1.211] ([188.162.64.162])
+        by smtp.gmail.com with ESMTPSA id f9sm4226746ljf.27.2020.06.25.12.41.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jun 2020 12:41:25 -0700 (PDT)
+Subject: Re: [PATCH 1/3] phy: qcom-qmp: Allow different values for second lane
+To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rob Herring <robh@kernel.org>
-Subject: [RESEND PATCHv3 2/2] dt-bindings: watchdog: Add compatible for QCS404, SC7180, SDM845, SM8150
-Date:   Fri, 26 Jun 2020 00:59:05 +0530
-Message-Id: <09da1ba319dc4a27ef4e4e177e67e68f1cb4f35b.1593112534.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <cover.1593112534.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1593112534.git.saiprakash.ranjan@codeaurora.org>
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:GENERIC PHY FRAMEWORK" <linux-kernel@vger.kernel.org>
+References: <20200524021416.17049-1-jonathan@marek.ca>
+ <20200524021416.17049-2-jonathan@marek.ca>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <fa5edd52-cce3-e9b6-ec8a-57bb8a676fff@linaro.org>
+Date:   Thu, 25 Jun 2020 22:41:24 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200524021416.17049-2-jonathan@marek.ca>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing compatible for watchdog timer on QCS404,
-SC7180, SDM845 and SM8150 SoCs.
+On 24/05/2020 05:14, Jonathan Marek wrote:
+> The primary USB PHY on sm8250 sets some values differently for the second
+> lane. This makes it possible to represent that.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Acked-by: Rob Herring <robh@kernel.org>
----
- Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-index 5448cc537a03..0709ddf0b6a5 100644
---- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-@@ -15,6 +15,10 @@ allOf:
- properties:
-   compatible:
-     enum:
-+      - qcom,apss-wdt-qcs404
-+      - qcom,apss-wdt-sc7180
-+      - qcom,apss-wdt-sdm845
-+      - qcom,apss-wdt-sm8150
-       - qcom,kpss-timer
-       - qcom,kpss-wdt
-       - qcom,kpss-wdt-apq8064
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+With best wishes
+Dmitry
