@@ -2,314 +2,322 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E11A12098C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 05:35:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2F8B20992E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 06:49:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389663AbgFYDfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 23:35:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388485AbgFYDfe (ORCPT
+        id S2389701AbgFYEty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 00:49:54 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:40180 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389467AbgFYEty (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 23:35:34 -0400
-Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8447C061795
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 20:35:33 -0700 (PDT)
-Received: by mail-ua1-x943.google.com with SMTP id r9so1436607ual.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 20:35:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zt5YvFe/0F+bWJgTS3kII0SGfZuZaLK6nHaXi0WGsWM=;
-        b=i00CCZjmDKwYuQM+UKH0th2PYsJzYpCI3wpvtwLt0Tt9OYWvWAntwVBLeZ6x7AY3ic
-         f5RUb7l7DAjCwgbPXYqffaL+hZkRg3TTfqd22Ja7UWuHwacMErgsCczKs3H6fbHtNy1u
-         N8aAnNBLzPktP3hBHOY7gPnq/Z8w2LfsCKK/s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zt5YvFe/0F+bWJgTS3kII0SGfZuZaLK6nHaXi0WGsWM=;
-        b=MvGCfrm0PwmgDEgKSynKNaigBRlYTF5KujWgbJAP7S2///92cHf64vI3UC2l9P/H7l
-         TSHEZm5E1V2ZedShzAqae95sx72cEEMc7lnoZbvPAudf0RcEVbB1nl/VzkN1BM5DyJiJ
-         MAcKAn+mkKjDwYrlIQ4sglhLHSTPrrYxYOHxVcjtp7MksF8P3M+cGk3HL5nnRABvtjNa
-         PZI1Z4NrZvgzGMZq6J3cFVq5iFgGh+uOG+5MiAN6UgNbqLMi+PhyIKxP5TZIXQMYwJBx
-         kCXcYzxP+va+lD5bgbYLrDzTwE/vQVuycU899KgdewKYhuoqzCjpUe7JJhXjx6oGdv39
-         ZLvw==
-X-Gm-Message-State: AOAM530Sz9fvsM5MB4elCzsVwRN3XnMAXbA6zlMhAUCTnJ+lQr/6XNxZ
-        RGSY5oEmEhtLLYllH7nr2ASd8dNggDo=
-X-Google-Smtp-Source: ABdhPJwPyqiQt0WvGMj/SH3rT4m2XQqIBpcVH/zMu08jJVuPnf6ZSNvRX7ENTuKXjrcdktVSXP/RhQ==
-X-Received: by 2002:ab0:3043:: with SMTP id x3mr20587391ual.10.1593056132075;
-        Wed, 24 Jun 2020 20:35:32 -0700 (PDT)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id t74sm1842099vkc.12.2020.06.24.20.35.30
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jun 2020 20:35:31 -0700 (PDT)
-Received: by mail-vs1-f48.google.com with SMTP id v1so2759182vsb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 20:35:30 -0700 (PDT)
-X-Received: by 2002:a67:2fc6:: with SMTP id v189mr9563477vsv.198.1593056130302;
- Wed, 24 Jun 2020 20:35:30 -0700 (PDT)
+        Thu, 25 Jun 2020 00:49:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593060593; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=OAekuKPG8AcnOQgpwGj/drOBj/ycITN2NYqHAMTWD0Q=;
+ b=jEYe39/nEBAPl6IwdZyKDRObCZL/yckQ121kwTvTpDddUi7B8ssuQvU9RF24aMz5ySZUM6UG
+ JsHFUYJCG7a2smMCKBGQUA6EG6HzuVPEleuMD5gASPYXmOpFNbwcABaGAdbMRaJIs8KM3UrH
+ x2RAb77c/EVD012WNLXDrL87EkU=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5ef42c906bebe35deb2409c0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 04:48:16
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CC37EC433C8; Thu, 25 Jun 2020 04:48:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B69E9C433C6;
+        Thu, 25 Jun 2020 04:48:14 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200624170746.1.I997a428f58ef9d48b37a27a028360f34e66c00ec@changeid>
- <159304830840.62212.6716845486281369794@swboyd.mtv.corp.google.com>
-In-Reply-To: <159304830840.62212.6716845486281369794@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 24 Jun 2020 20:35:16 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X=hbrT4o-PDs70zodAMUKEyLty7L92GtkyYBKQX_tt+w@mail.gmail.com>
-Message-ID: <CAD=FV=X=hbrT4o-PDs70zodAMUKEyLty7L92GtkyYBKQX_tt+w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Switch SPI to use GPIO for CS
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 25 Jun 2020 10:18:14 +0530
+From:   dikshita@codeaurora.org
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, majja@codeaurora.org
+Subject: Re: [PATCH] venus: move platform specific data to platform file
+In-Reply-To: <1590736053-30323-1-git-send-email-dikshita@codeaurora.org>
+References: <1590736053-30323-1-git-send-email-dikshita@codeaurora.org>
+Message-ID: <44d4b589bf8f6d9ef25ae50705ead4d2@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Stanimir,
 
-On Wed, Jun 24, 2020 at 6:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Douglas Anderson (2020-06-24 17:08:04)
-> > The geni SPI protocol appears to have been designed without taking
-> > Linux needs into account.  In all the normal flows it takes care of
-> > setting chip select itself.  However, Linux likes to manage the chip
-> > select so it can do fancy things.
-> >
-> > Back when we first landed the geni SPI driver we worked around this
-> > by:
-> > - Always setting the FRAGMENTATION bit in transfers, which (I believe)
-> >   tells the SPI controller not to mess with the chip select during
-> >   transfers.
-> > - Controlling the chip select manually by sending the SPI controller
-> >   commands to assert or deassert the chip select.
-> >
-> > Our workaround was fine and it's been working OK, but it's really
-> > quite inefficient.  A normal SPI transaction now needs to do:
-> > 1. Start a command to set the chip select.
-> > 2. Wait for an interrupt from controller saying chip select done.
-> > 3. Do a transfer.
-> > 4. Start a command to unset the chip select.
-> > 5. Wait for an interrupt from controller saying chip select done.
->
-> I thought the GENI hardware was supposed to be able to queue commands up
-> and then plow through them to interrupt the CPU when it finished. If
-> that was supported would there be any problems? I assume we could remove
-> the wait for CS disable and interrupt on step 5 and also the wait for
-> CS/interrupt on step 2 because it is bundled with the transfer in step
-> 3.
+A gentle reminder for the review.
 
-Do you have any details or pointers to documentation on said ability
-to queue commands?  I don't think I've ever heard of it.
-
-How exactly would it work, anyway?  There's no sequence number or
-anything in GENI and there's a single "DONE" interrupt that signals
-both "CS Done" and "Transfer Done", so without some really good docs
-I'd have a really hard time figuring out how this is supposed to work.
-
-
-> Where is the delay? On step 2 where we wait to transfer or at step 5
-> when we wait for CS to be dropped, or both?
-
-Presumably every CS change takes the same amount of time?  ...so I'd
-say "both".  If it really matters I can try to measure.
-
-
-> > Things are made a bit worse because the Linux GPIO framework assumes
-> > that setting a chip select is quick.  Thus the SPI core can be seen to
-> > tell us to set our chip select even when it's already in the right
-> > state and we were dutifully kicking off commands and waiting for
-> > interrupts.  While we could optimize that particular case, we'd still
-> > be left with the slowness when we actually needed to toggle the chip
-> > select.
->
-> One thing to note is that the GPIO driver doesn't tell us that it has
-> actually asserted/deasserted the GPIO. It writes to the controller and
-> moves on so we don't know when it has actually gone into effect.
-> Hopefully moving to GPIO mode doesn't mean we get weird problems where
-> CS isn't asserted yet and a transfer starts wiggling the lines.
-
-cs-gpios is a pretty normal Linux concept and not something I
-invented.  It's documented to work just fine and I can't see this as
-being a real problem.
-
-
-> > All the chip select lines can actually be muxed to be GPIOs and
-> > there's really no downside in doing so.  Now Linux can assert and
-> > deassert the chip select at will with a simple MMIO write.
-> >
-> > The SPI driver will still have the ability to set the chip select, but
-> > not we just won't use it.
->
-> s/not/now/?
-
-Sigh.  I always make that typo.  I can spin if need be to fix.
-
-
-> > With this change I tested reading the firmware off the EC connected to
-> > a ChromeOS device (flashrom -p ec -r ...).  I saw about a 25% speedup
-> > in total runtime of the command and a 30% reduction in interrupts
-> > generated (measured by /proc/interrupts).
->
-> I see nothing wrong with specifying the CS gpios in DT. Seems like that
-> should always be there and then the driver should decide to use GPIO
-> mode or not. So
->
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->
-> for that part.
-
-I appreciate the tag, but I'm not sure it's working the way you're
-thinking it does?  See:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/spi/spi-controller.yaml
-
-From there, when you specify spi-gpios it's saying: definitely use
-this GPIO as the chip select, don't use your native one.  The bindings
-explicitly show how you would specify the native GPIO.
-
-If we wanted the SPI controller to decide one way or the other on its
-own, I guess we'd need an entirely new property saying that if it
-wanted to control its chip select with GPIO then here's the GPIO and
-then we'd need to provide a pinmux config for that.  That feels
-overkill to me since I really see no reason not to use it as a GPIO.
-
-It's kinda like saying: if an SoC provided two different ways to set a
-pin, one of which always delayed 50 us to assert and one that asserted
-instantly, do we really need to write drivers to support both modes?
-No.  The mode which delays 50 us is useless and there was no good
-reason for the SoC to invent that mode and no reason to try to support
-it in software.
-
-
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 57 ++++++++++++++++++++++++----
-> >  1 file changed, 49 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index 3a8076c8bdbf..74c8503b560e 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -1204,65 +1213,97 @@ pinmux {
-> >                         qup_spi0_default: qup-spi0-default {
-> >                                 pinmux {
-> >                                         pins = "gpio34", "gpio35",
-> > -                                              "gpio36", "gpio37";
-> > +                                              "gpio36";
-> >                                         function = "qup00";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio37";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi1_default: qup-spi1-default {
-> >                                 pinmux {
-> >                                         pins = "gpio0", "gpio1",
-> > -                                              "gpio2", "gpio3";
-> > +                                              "gpio2";
-> >                                         function = "qup01";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio3";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi3_default: qup-spi3-default {
-> >                                 pinmux {
-> >                                         pins = "gpio38", "gpio39",
-> > -                                              "gpio40", "gpio41";
-> > +                                              "gpio40";
-> >                                         function = "qup03";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio41";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi5_default: qup-spi5-default {
-> >                                 pinmux {
-> >                                         pins = "gpio25", "gpio26",
-> > -                                              "gpio27", "gpio28";
-> > +                                              "gpio27";
-> >                                         function = "qup05";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio28";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi6_default: qup-spi6-default {
-> >                                 pinmux {
-> >                                         pins = "gpio59", "gpio60",
-> > -                                              "gpio61", "gpio62";
-> > +                                              "gpio61";
-> >                                         function = "qup10";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio62";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi8_default: qup-spi8-default {
-> >                                 pinmux {
-> >                                         pins = "gpio42", "gpio43",
-> > -                                              "gpio44", "gpio45";
-> > +                                              "gpio44";
-> >                                         function = "qup12";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio45";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi10_default: qup-spi10-default {
-> >                                 pinmux {
-> >                                         pins = "gpio86", "gpio87",
-> > -                                              "gpio88", "gpio89";
-> > +                                              "gpio88";
-> >                                         function = "qup14";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio89";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
-> >
-> >                         qup_spi11_default: qup-spi11-default {
-> >                                 pinmux {
-> >                                         pins = "gpio53", "gpio54",
-> > -                                              "gpio55", "gpio56";
-> > +                                              "gpio55";
-> >                                         function = "qup15";
-> >                                 };
-> > +                               pinmux-cs {
-> > +                                       pins = "gpio56";
-> > +                                       function = "gpio";
-> > +                               };
-> >                         };
->
-> Perhaps we should have qup-spiN-default and qup-spiN-cs-gpio though?
-> That way the driver can properly mux the pin to be gpio mode if it wants
-> to. I don't see a way to mux the pin to be "qup" until the driver
-> decides it doesn't want that.
-
-This seems like extra complexity.  Why would the SPI controller ever
-need to control the GPIO itself.  If we ever do come up with a reason
-we can solve it then?
-
--Doug
+On 2020-05-29 12:37, Dikshita Agarwal wrote:
+> Move all data specific to platform into a separate file.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/Makefile         |  3 +-
+>  drivers/media/platform/qcom/venus/core.c           | 20 ++-----------
+>  drivers/media/platform/qcom/venus/core.h           | 10 +------
+>  drivers/media/platform/qcom/venus/helpers.c        |  6 ++--
+>  .../media/platform/qcom/venus/hfi_platform_data.c  | 35 
+> ++++++++++++++++++++++
+>  .../media/platform/qcom/venus/hfi_platform_data.h  | 27 
+> +++++++++++++++++
+>  drivers/media/platform/qcom/venus/pm_helpers.c     |  1 +
+>  7 files changed, 73 insertions(+), 29 deletions(-)
+>  create mode 100644 
+> drivers/media/platform/qcom/venus/hfi_platform_data.c
+>  create mode 100644 
+> drivers/media/platform/qcom/venus/hfi_platform_data.h
+> 
+> diff --git a/drivers/media/platform/qcom/venus/Makefile
+> b/drivers/media/platform/qcom/venus/Makefile
+> index dfc6368..3878bc9 100644
+> --- a/drivers/media/platform/qcom/venus/Makefile
+> +++ b/drivers/media/platform/qcom/venus/Makefile
+> @@ -3,7 +3,8 @@
+> 
+>  venus-core-objs += core.o helpers.o firmware.o \
+>  		   hfi_venus.o hfi_msgs.o hfi_cmds.o hfi.o \
+> -		   hfi_parser.o pm_helpers.o dbgfs.o
+> +		   hfi_parser.o pm_helpers.o dbgfs.o \
+> +		   hfi_platform_data.o
+> 
+>  venus-dec-objs += vdec.o vdec_ctrls.o
+>  venus-enc-objs += venc.o venc_ctrls.o
+> diff --git a/drivers/media/platform/qcom/venus/core.c
+> b/drivers/media/platform/qcom/venus/core.c
+> index bbb394c..4fde4aa 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -20,6 +20,7 @@
+>  #include "core.h"
+>  #include "firmware.h"
+>  #include "pm_helpers.h"
+> +#include "hfi_platform_data.h"
+> 
+>  static void venus_event_notify(struct venus_core *core, u32 event)
+>  {
+> @@ -222,6 +223,8 @@ static int venus_probe(struct platform_device 
+> *pdev)
+>  			return ret;
+>  	}
+> 
+> +	core->hfi_data = venus_get_hfi_platform(core->res->hfi_version);
+> +
+>  	ret = dma_set_mask_and_coherent(dev, core->res->dma_mask);
+>  	if (ret)
+>  		return ret;
+> @@ -461,17 +464,6 @@ static __maybe_unused int
+> venus_runtime_resume(struct device *dev)
+>  	{  244800, 100000000 },	/* 1920x1080@30 */
+>  };
+> 
+> -static const struct codec_freq_data sdm845_codec_freq_data[] =  {
+> -	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> -	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> -	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> -	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> -};
+> -
+>  static const struct bw_tbl sdm845_bw_table_enc[] = {
+>  	{ 1944000, 1612000, 0, 2416000, 0 },	/* 3840x2160@60 */
+>  	{  972000,  951000, 0, 1434000, 0 },	/* 3840x2160@30 */
+> @@ -493,8 +485,6 @@ static __maybe_unused int
+> venus_runtime_resume(struct device *dev)
+>  	.bw_tbl_enc_size = ARRAY_SIZE(sdm845_bw_table_enc),
+>  	.bw_tbl_dec = sdm845_bw_table_dec,
+>  	.bw_tbl_dec_size = ARRAY_SIZE(sdm845_bw_table_dec),
+> -	.codec_freq_data = sdm845_codec_freq_data,
+> -	.codec_freq_data_size = ARRAY_SIZE(sdm845_codec_freq_data),
+>  	.clks = {"core", "iface", "bus" },
+>  	.clks_num = 3,
+>  	.vcodec0_clks = { "core", "bus" },
+> @@ -516,8 +506,6 @@ static __maybe_unused int
+> venus_runtime_resume(struct device *dev)
+>  	.bw_tbl_enc_size = ARRAY_SIZE(sdm845_bw_table_enc),
+>  	.bw_tbl_dec = sdm845_bw_table_dec,
+>  	.bw_tbl_dec_size = ARRAY_SIZE(sdm845_bw_table_dec),
+> -	.codec_freq_data = sdm845_codec_freq_data,
+> -	.codec_freq_data_size = ARRAY_SIZE(sdm845_codec_freq_data),
+>  	.clks = {"core", "iface", "bus" },
+>  	.clks_num = 3,
+>  	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
+> @@ -562,8 +550,6 @@ static __maybe_unused int
+> venus_runtime_resume(struct device *dev)
+>  	.bw_tbl_enc_size = ARRAY_SIZE(sc7180_bw_table_enc),
+>  	.bw_tbl_dec = sc7180_bw_table_dec,
+>  	.bw_tbl_dec_size = ARRAY_SIZE(sc7180_bw_table_dec),
+> -	.codec_freq_data = sdm845_codec_freq_data,
+> -	.codec_freq_data_size = ARRAY_SIZE(sdm845_codec_freq_data),
+>  	.clks = {"core", "iface", "bus" },
+>  	.clks_num = 3,
+>  	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
+> diff --git a/drivers/media/platform/qcom/venus/core.h
+> b/drivers/media/platform/qcom/venus/core.h
+> index 82438f1..86dc443 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -34,13 +34,6 @@ struct reg_val {
+>  	u32 value;
+>  };
+> 
+> -struct codec_freq_data {
+> -	u32 pixfmt;
+> -	u32 session_type;
+> -	unsigned long vpp_freq;
+> -	unsigned long vsp_freq;
+> -};
+> -
+>  struct bw_tbl {
+>  	u32 mbs_per_sec;
+>  	u32 avg;
+> @@ -59,8 +52,6 @@ struct venus_resources {
+>  	unsigned int bw_tbl_dec_size;
+>  	const struct reg_val *reg_tbl;
+>  	unsigned int reg_tbl_size;
+> -	const struct codec_freq_data *codec_freq_data;
+> -	unsigned int codec_freq_data_size;
+>  	const char * const clks[VIDC_CLKS_NUM_MAX];
+>  	unsigned int clks_num;
+>  	const char * const vcodec0_clks[VIDC_VCODEC_CLKS_NUM_MAX];
+> @@ -176,6 +167,7 @@ struct venus_core {
+>  	bool sys_error;
+>  	const struct hfi_core_ops *core_ops;
+>  	const struct venus_pm_ops *pm_ops;
+> +	const struct venus_hfi_platform_data *hfi_data;
+>  	struct mutex pm_lock;
+>  	unsigned long enc_codecs;
+>  	unsigned long dec_codecs;
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c
+> b/drivers/media/platform/qcom/venus/helpers.c
+> index 115a9a2..62d1197 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -14,6 +14,7 @@
+>  #include "helpers.h"
+>  #include "hfi_helper.h"
+>  #include "pm_helpers.h"
+> +#include "hfi_platform_data.h"
+> 
+>  struct intbuf {
+>  	struct list_head list;
+> @@ -811,8 +812,9 @@ int venus_helper_init_codec_freq_data(struct
+> venus_inst *inst)
+>  	if (!IS_V4(inst->core))
+>  		return 0;
+> 
+> -	data = inst->core->res->codec_freq_data;
+> -	data_size = inst->core->res->codec_freq_data_size;
+> +	data = inst->core->hfi_data->codec_freq_data;
+> +	data_size = inst->core->hfi_data->codec_freq_data_size;
+> +
+>  	pixfmt = inst->session_type == VIDC_SESSION_TYPE_DEC ?
+>  			inst->fmt_out->pixfmt : inst->fmt_cap->pixfmt;
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_data.c
+> b/drivers/media/platform/qcom/venus/hfi_platform_data.c
+> new file mode 100644
+> index 0000000..9d9035f
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform_data.c
+> @@ -0,0 +1,35 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +#include "hfi_platform_data.h"
+> +#include "core.h"
+> +
+> +static struct codec_freq_data hfi4_codec_freq_data[] =  {
+> +{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
+> +	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 10 },
+> +};
+> +
+> +static const struct venus_hfi_platform_data hfi4_data = {
+> +	.codec_freq_data = hfi4_codec_freq_data,
+> +	.codec_freq_data_size = ARRAY_SIZE(hfi4_codec_freq_data),
+> +};
+> +
+> +const struct venus_hfi_platform_data *venus_get_hfi_platform
+> +	(enum hfi_version version)
+> +{
+> +	switch (version) {
+> +	case HFI_VERSION_4XX:
+> +		return &hfi4_data;
+> +	default:
+> +		return NULL;
+> +	}
+> +	return NULL;
+> +}
+> +
+> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_data.h
+> b/drivers/media/platform/qcom/venus/hfi_platform_data.h
+> new file mode 100644
+> index 0000000..1b4bfb6
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/venus/hfi_platform_data.h
+> @@ -0,0 +1,27 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef __HFI_PLATFORM_DATA_H__
+> +#define __HFI_PLATFORM_DATA_H__
+> +
+> +#include "core.h"
+> +
+> +struct codec_freq_data {
+> +	u32 pixfmt;
+> +	u32 session_type;
+> +	unsigned long vpp_freq;
+> +	unsigned long vsp_freq;
+> +};
+> +
+> +struct venus_hfi_platform_data {
+> +	const struct codec_freq_data *codec_freq_data;
+> +	unsigned int codec_freq_data_size;
+> +};
+> +
+> +const struct venus_hfi_platform_data *venus_get_hfi_platform
+> +	(enum hfi_version version);
+> +
+> +#endif
+> +
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c
+> b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index f33fc70..4ed5689 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -17,6 +17,7 @@
+>  #include "hfi_parser.h"
+>  #include "hfi_venus_io.h"
+>  #include "pm_helpers.h"
+> +#include "hfi_platform_data.h"
+> 
+>  static bool legacy_binding;
