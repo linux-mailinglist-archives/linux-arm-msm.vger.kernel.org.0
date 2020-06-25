@@ -2,110 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF80F20A691
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 22:17:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9A4020A752
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 23:18:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404531AbgFYURP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 16:17:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44354 "EHLO
+        id S2405821AbgFYVSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 17:18:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405473AbgFYURO (ORCPT
+        with ESMTP id S2404016AbgFYVSM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 16:17:14 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A96C08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 13:17:14 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id b92so3839621pjc.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 13:17:14 -0700 (PDT)
+        Thu, 25 Jun 2020 17:18:12 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFFB6C08C5C1;
+        Thu, 25 Jun 2020 14:18:11 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id y18so3366241plr.4;
+        Thu, 25 Jun 2020 14:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZfbKgemW+h2MxakeR0KWqGEyeZapu5dTocFIrlzaeTk=;
-        b=koaPYN2wBZx0y+NwH0a3Pgb4IbwCzVKE0QofUhT/yNqkp3+2eOH+J3TeQKgs0AJIid
-         yhijL7J+yBwsg1advmT17TkrfJsnIbPlHhgkbXgw68uBlowbo+9465HUE7eFCjrYKhDZ
-         wqV5Ff+vqqyUJDn+B85ahXC8e2Yxtom8h2Ls0=
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ml0ZT7PzS1Kij+Cv5CAAQj/ZaDAV3sSYmcfaMZxaUMw=;
+        b=bhvqaCc2cTcis1QzUVntpKJ/7N7yQRCtXy76KJIrrkUvO75HpCSjA3POorsRqYgda6
+         RSQeMtSZbdid1VofDezQgA494f7/88dieNdvjIY6I9QXUqRyA1d+/b/A3HVrw41g9LJJ
+         PZkrXQWu7TdBeR3tT8EpHTZmIfY8BDUXnRM7lK71UMi+m4SCXZWWsoOE8AC0FaRo3DeS
+         OwA26bQ4BCQuWn1UNa65D5yudfFGE543miaynvU3ObB09/toLdKEcToTE36eRHz2y0OJ
+         NRf3NQItPWKJP2W9nGIF/YqcamIUda2EHHhvOC8VOKZhNmXOHt3TjZsemUewUb63fDrs
+         h1NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZfbKgemW+h2MxakeR0KWqGEyeZapu5dTocFIrlzaeTk=;
-        b=SaKKaeOWr5uHKCVJO7RXjasSq/goLXSAiwPfJcnT9miZZTCJIourRJg0TG53KNsMFL
-         mXYokRu7Qzutam7SpZVrFDPdcJ2gr2+uJ17jEZC26a8ef18pxoBIICGGO3317kvYPMdW
-         czRN/sTcnXPu9IdBJH/cHF+FgTy0GsLuPfaDb4PuQq918wRfB4Ch1qtBLPEv1CQK2evp
-         p3cRFhqyt17Q3G6RICLwfGLtmllFVi6vGQRClBw3kW8jByDJU8xwhfJnW5KkgNGZsWRL
-         9yePCsfU1MrLF4S3SD3aHs3J67auysMVD8O/aN056XoRUDImb0P5aG6pwmZnu9HTvnc+
-         LTWQ==
-X-Gm-Message-State: AOAM532kM54uS38Cxvogi894oVX5X4trPP/LiOa2uupi6Edupq/kUa+k
-        Eb8kQjw0VGwND/NOdrcWHwZ6dSu4uhU=
-X-Google-Smtp-Source: ABdhPJwPiKQ2jBtfYOBSS7xaUWBbx2DJaXUSav4Q73TNrW9/BI70Esu/z3iw48+y0xzuhrISTm+Jyg==
-X-Received: by 2002:a17:902:207:: with SMTP id 7mr35561059plc.169.1593116234073;
-        Thu, 25 Jun 2020 13:17:14 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id t4sm2067565pjs.39.2020.06.25.13.17.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 13:17:13 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Evan Green <evgreen@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rakesh Pillai <pillair@codeaurora.org>,
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ml0ZT7PzS1Kij+Cv5CAAQj/ZaDAV3sSYmcfaMZxaUMw=;
+        b=iTt2jcG9SmU6i0B70Ra03ovgwzDKDJu81rZRAulNve44lOn9o7pHYCauCT6zoBMU0T
+         +bFFVkgBXesT8beMrqerlNMPNIRcYCQA+g1Kd3nkumEni3YJrjgMmJ8Mv9iIpfubXUBw
+         40YH7jslBfiXu3/3+CPVCTLEo+n4bM5YEjYfYRrtBYgUkI5nrdsbkYaz5MvwrnV32Eqq
+         adWuMlsQk7vRxS9GOW9h7OpkJoBgf1Ursok5jo4W0139P/Llu/8WrEnW30hrcbwlQVNd
+         MBrV8M4gxdclfZ7cvx4MisaPwhvRN2be0n4ANyKDlm9GI28avvu9ZQ1EM0x0KU65f8Rz
+         tsLA==
+X-Gm-Message-State: AOAM532dWH8Zs7ZaPDBrzk79BY5PgGSuYGUkR7FxLoiaxh3eG3Xym1Qe
+        3ANxsxy1fuyolOWRog7/bpk=
+X-Google-Smtp-Source: ABdhPJwBDHD5iDgvxSTDTxa1YGry9WHhTtOhbcAmuwMxCTvF8qfwECcQrmnwFhDbZvIeONBdYLkXJA==
+X-Received: by 2002:a17:902:70ca:: with SMTP id l10mr31673217plt.31.1593119891399;
+        Thu, 25 Jun 2020 14:18:11 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id x8sm9903077pff.54.2020.06.25.14.18.10
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 25 Jun 2020 14:18:10 -0700 (PDT)
+Date:   Thu, 25 Jun 2020 14:18:09 -0700
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [REPOST PATCH] arm64: dts: qcom: Fix WiFi supplies on sc7180-idp
-Date:   Thu, 25 Jun 2020 13:17:09 -0700
-Message-Id: <20200625131658.REPOST.1.I32960cd32bb84d6db4127c906d7e371fa29caebf@changeid>
-X-Mailer: git-send-email 2.27.0.212.ge8ba1cc988-goog
+        Guenter Roeck <groeck7@gmail.com>
+Subject: Re: [PATCHv3 0/2] Convert QCOM watchdog timer bindings to YAML
+Message-ID: <20200625211809.GA175066@roeck-us.net>
+References: <cover.1581459151.git.saiprakash.ranjan@codeaurora.org>
+ <c2b8fabcf82b27c7334482bd53ebba62@codeaurora.org>
+ <20200621073320.GI128451@builder.lan>
+ <ce4c2b44cb15af12b04c09f1786a6c1a@codeaurora.org>
+ <20200625160042.GC149301@roeck-us.net>
+ <3e3cf81452e33c9385900177d0630a11@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3e3cf81452e33c9385900177d0630a11@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The WiFi supplies that were added recently can't have done anything
-useful because they were missing the "-supply" suffix.  Booting
-without the "-supply" suffix would give these messages:
+On Fri, Jun 26, 2020 at 12:52:31AM +0530, Sai Prakash Ranjan wrote:
+> > > 
+> > I don't think the watchdog mailing list has been copied on this series,
+> > meaning I don't have a copy that I could apply if I wanted to.
+> 
+> I kept you in CC for all the revisions but missed adding watchdog list.
+> Will resend with the appropriate lists added.
+> 
 
-ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-0.8-cx-mx not found, using dummy regulator
-ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-1.8-xo not found, using dummy regulator
-ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-1.3-rfa not found, using dummy regulator
-ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-3.3-ch0 not found, using dummy regulator
+I use patchwork to track patches, tags, and my responses. No patchwork,
+no patch, no tags, and no tracking.
 
-Let's add the "-supply" suffix.
+> > I also see
+> > no evidence for a Reviewed-by: tag from Rob or any other DT maintainer.
+> > 
+> 
+> Not sure why you think I would add reviewed-by tag from Rob without him
+> giving one.
 
-Fixes: 1e7594a38f37 ("arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-I don't have an IDP setup but I have a similar board.  Testing on IDP
-would, of course, be appreciated.
+Same response as above.
 
-Repost because I screwed up the "after-the-cut" notes on first post.
-
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 39dbfc89689e..472f7f41cc93 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -391,10 +391,10 @@ video-firmware {
- 
- &wifi {
- 	status = "okay";
--	vdd-0.8-cx-mx = <&vreg_l9a_0p6>;
--	vdd-1.8-xo = <&vreg_l1c_1p8>;
--	vdd-1.3-rfa = <&vreg_l2c_1p3>;
--	vdd-3.3-ch0 = <&vreg_l10c_3p3>;
-+	vdd-0.8-cx-mx-supply = <&vreg_l9a_0p6>;
-+	vdd-1.8-xo-supply = <&vreg_l1c_1p8>;
-+	vdd-1.3-rfa-supply = <&vreg_l2c_1p3>;
-+	vdd-3.3-ch0-supply = <&vreg_l10c_3p3>;
- 	wifi-firmware {
- 		iommus = <&apps_smmu 0xc2 0x1>;
- 	};
--- 
-2.27.0.212.ge8ba1cc988-goog
-
+Guenter
