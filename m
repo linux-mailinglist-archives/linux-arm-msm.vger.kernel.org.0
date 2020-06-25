@@ -2,234 +2,386 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2163020A0B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 16:17:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EBDC20A1B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 17:17:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405189AbgFYORQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 10:17:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45066 "EHLO
+        id S2405650AbgFYPRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 11:17:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404890AbgFYORP (ORCPT
+        with ESMTP id S2405632AbgFYPRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 10:17:15 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04BC3C08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 07:17:14 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id b15so4335182edy.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 07:17:14 -0700 (PDT)
+        Thu, 25 Jun 2020 11:17:17 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EEF2C08C5DB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 08:17:17 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id i4so3375405pjd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 08:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cdctTPCjofPW/Ta/A9vkWBzY7n4XOH3deCFtDx9USSw=;
-        b=Zu6dFeCGBgJVUya4NOJ79BFnuOqKW/MeF8Uq0OHHLi3UtLEeEN3ZacFpGETOvE50iy
-         XrOMigqObeJyTLV42EdQPTU/zbg6nRKLoOWoHuiBXK8Qig4r2Z/2L9IUlULaVzbNsj+I
-         Y6ByW9O6Pn0DE0BwO3YicPPgWFN6bWy4EeUFPYSXTYDRyd8oXt8BoUpXwYJbHOg2vjk6
-         mAVNWyafGlJKgZIM5AySEjko7hgyezqE6ztfi5WSFntH3p24U+j8w9S2eVyvKWxCnL1T
-         EtdBUohwd2qiif0c4L0PXLs+g4lFWlK2lRix4u3dEbCYM3PXXCwwVDbB61Ijs/Hro25G
-         W8LQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rH3zkglepBahSd9IX1c75pcis6Uc/eb/JPbk2O7tSmk=;
+        b=MaHYka52QScOhrdXtHQC1gIcx4Dyvz26if9PDHp1EVLPiMmBQPeQwEF6pnjVHBvInK
+         weoFFjzpWeqxRVgi7QRvLgcKq+W6NcqAcGzqEGBUHYq6KbPnyfvyxtwlHEoMY2XqT+SC
+         cTS6qpbgW04cLrorTlXutjhq72Hk3WqNCJVks=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cdctTPCjofPW/Ta/A9vkWBzY7n4XOH3deCFtDx9USSw=;
-        b=EHu+wpA3Tsx69AfgNV3OnFpm43EvRFrERrDl/tGsJ7YvN9hwMCOKkI/Rb/Xv3JRI3+
-         Hb0Qw+ieRdb4zz78EYmQ1m1JSHjiIGBpOl/4awayguJYLKu5jIIM0zE3ZaOLhdAhrjRV
-         aQQpnTbpIcTkZ1UtKfszQIPomQ1C2gkpoIa7iKdDzcsnsvWzxDm93y7PpUVdrEzgruY5
-         868ACWYjPo4i5Xai8NcPgB3cwQu/TwcdrPUJcKzUNWkP+pno+YMvFxt6GqibKOLTrpR/
-         0zdgsFJ0vH8nhx18mgzuruPQqi10gM8mgUPc4Z0KcWp+pxjR6Fo1+UP9DZgoWHLSJeNK
-         lt9w==
-X-Gm-Message-State: AOAM533qR23M1ktMR2TNlGIPbkMD5ZPsmSEH+bxHU0pOFGWdz1oorQFJ
-        PSKuxCuDY1fok1gv9JNY4gTnLe62sL0SSlVs7Vg8lt9g
-X-Google-Smtp-Source: ABdhPJyFxoVEIoyWhGQnR3z/YgDaTwDfxr+poZm78l9xLER68fng5o4s3fI+HNgXsHARB76sl5L2YRxpiNHSOKaCrMQ=
-X-Received: by 2002:a05:6402:1512:: with SMTP id f18mr32934277edw.101.1593094633460;
- Thu, 25 Jun 2020 07:17:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rH3zkglepBahSd9IX1c75pcis6Uc/eb/JPbk2O7tSmk=;
+        b=nLONpdg5bxNFwf07/bGHa43E7eqwHWTtMuDCNK8+C3NAfki/jk5S/qj2ZxKFJIJ11N
+         hwpCcwS8SUuMWVWoteYXKYi736d887SXbrbku5MMTwbPzEL/IDXyeanRQNF9b6KF2AdS
+         h7DUPjZTIizo/EwTkbqkLq4WFqA3a8/Ig1cdtVE8zZQwph+LyNPxcNxgmGeb+mtL8elk
+         gg6vPvxksUw2RJNXFjbOxQ4l28qTxT3/gnpducz/QyUe6qbm64hfTkbFnIFLo1THsVF8
+         iwfkmpgLlIdmC8kGBJWegtKHHd/ysC0lHFKcWVAr1aMpWFKxyouaE7haQRx4MR6TeW01
+         S7Bg==
+X-Gm-Message-State: AOAM531dt8j6Pxed277Iva1dDbX8sKFjU0tXz0wyYZ+2pjYyytXzZYQC
+        Q6ayNAPgqsLlEVHq3tSQClHroQ==
+X-Google-Smtp-Source: ABdhPJyUX+tn/N6OlkqVwlbjw4CKCpKjnFXHqmfwRQv9TkChDD6Yx9e+Ac4EStM+cmhIIN9n0/oCIA==
+X-Received: by 2002:a17:902:d352:: with SMTP id l18mr33405732plk.68.1593098236608;
+        Thu, 25 Jun 2020 08:17:16 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:4fff:7a6b:a335:8fde])
+        by smtp.gmail.com with ESMTPSA id x29sm5953573pfj.190.2020.06.25.08.17.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jun 2020 08:17:14 -0700 (PDT)
+Date:   Thu, 25 Jun 2020 08:17:13 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 04/17] arm64: dts: sc7180: Add OPP table for all qup
+ devices
+Message-ID: <20200625151713.GF39073@google.com>
+References: <1588080785-6812-1-git-send-email-rnayak@codeaurora.org>
+ <1588080785-6812-5-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <20200625115746.13396-1-shawnguo@kernel.org> <CAKMK7uGoDnizoE4t47houeyK2y5sLQbvCM3LDMWcEeV3oB5rPA@mail.gmail.com>
-In-Reply-To: <CAKMK7uGoDnizoE4t47houeyK2y5sLQbvCM3LDMWcEeV3oB5rPA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 25 Jun 2020 07:17:42 -0700
-Message-ID: <CAF6AEGuaFFxWSqYDXE0XukeQHOS7H5s6E8WfjVS7EfotWfZmQA@mail.gmail.com>
-Subject: Re: [PATCH] drm/atomic_helper: duplicate state for drm_private_obj
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Boris Brezillon <boris.brezillon@bootlin.com>,
-        Shawn Guo <shawn.guo@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1588080785-6812-5-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 25, 2020 at 5:35 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
->
-> On Thu, Jun 25, 2020 at 1:58 PM Shawn Guo <shawnguo@kernel.org> wrote:
-> >
-> > From: Shawn Guo <shawn.guo@linaro.org>
-> >
-> > The msm/mdp5 driver uses drm_private_obj as its global atomic state,
-> > which keeps the assignment of hwpipe to plane.  With drm_private_obj
-> > missing from duplicate state call, mdp5 suspend works with no problem
-> > only for the very first time.  Any subsequent suspend will hit the
-> > following warning, because hwpipe assignment doesn't get duplicated for
-> > suspend state.  Adding drm_private_obj handling for duplicate state call
-> > fixes the problem.
->
-> If the driver needs a private state, it's supposed to duplicate that
-> in its atomic_check functionality. This isn't the helper's job.
->
-> If this is a bug in msm code, then pretty sure if you try hard enough,
-> you can hit the exact same bug from userspace too. Maybe good idea to
-> try and reproduce this with igt or something.
+Hi Rajendra,
 
-The problem is how duplicate_state is used by the atomic
-suspend/resume helpers.  They duplicate the running state on suspend,
-forgetting to duplicate the global state.  Then everything is
-disabled, the driver correctly duplicates and updates it's global
-atomic state releasing the hwpipe.
+On Tue, Apr 28, 2020 at 07:02:52PM +0530, Rajendra Nayak wrote:
+> qup has a requirement to vote on the performance state of the CX domain
+> in sc7180 devices. Add OPP tables for these and also add power-domains
+> property for all qup instances.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 79 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 79 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 998f101..efba600 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -417,6 +417,25 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		qup_opp_table: qup-opp-table {
+> +			compatible = "operating-points-v2";
+> +
+> +			opp-75000000 {
+> +				opp-hz = /bits/ 64 <75000000>;
+> +				required-opps = <&rpmhpd_opp_low_svs>;
+> +			};
+> +
+> +			opp-100000000 {
+> +				opp-hz = /bits/ 64 <100000000>;
+> +				required-opps = <&rpmhpd_opp_svs>;
+> +			};
+> +
+> +			opp-128000000 {
+> +				opp-hz = /bits/ 64 <128000000>;
+> +				required-opps = <&rpmhpd_opp_nom>;
+> +			};
+> +		};
+> +
+>  		qupv3_id_0: geniqup@8c0000 {
+>  			compatible = "qcom,geni-se-qup";
+>  			reg = <0 0x008c0000 0 0x6000>;
 
-But then on resume, we are re-applying plane state that thinks it
-already has a hwpipe assigned (because that is part of the plane state
-that was duplicated), without reapplying the matching global state.
 
-On a normal atomic commit, we would duplicate the plane state that has
-the hwpipe disabled, which would be in sync with the drivers global
-state.  But since that is not what the atomic resume helper does, we
-hit the situation where the plane state and the global state are out
-of sync.
+no entries for i2c0?
 
-So the driver is dtrt, the problem really is with the helpers.  I
-think this patch is the right thing to do.  It is incorrect for the
-suspend/resume helpers to assume that they can re-apply duplicated
-state without including the global state.
+> @@ -452,6 +471,8 @@
+>  				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -463,6 +484,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart0_default>;
+>  				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -476,6 +499,8 @@
+>  				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -489,6 +514,8 @@
+>  				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -500,6 +527,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart1_default>;
+>  				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -513,6 +542,8 @@
+>  				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -524,6 +555,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart2_default>;
+>  				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -537,6 +570,8 @@
+>  				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -550,6 +585,8 @@
+>  				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -561,6 +598,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart3_default>;
+>  				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -574,6 +613,8 @@
+>  				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -585,6 +626,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart4_default>;
+>  				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -598,6 +641,8 @@
+>  				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -611,6 +656,8 @@
+>  				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -622,6 +669,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart5_default>;
+>  				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  		};
 
-BR,
--R
+no entries for i2c6?
 
-> -Daniel
->
->
-> > $ echo mem > /sys/power/state
-> > [   38.111144] PM: suspend entry (deep)
-> > [   38.111185] PM: Syncing filesystems ... done.
-> > [   38.114630] Freezing user space processes ... (elapsed 0.001 seconds) done.
-> > [   38.115912] OOM killer disabled.
-> > [   38.115914] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
-> > [   38.122170] ------------[ cut here ]------------
-> > [   38.122212] WARNING: CPU: 0 PID: 1747 at drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c:145 mdp5_pipe_release+0x90/0xc0
-> > [   38.122215] Modules linked in:
-> > [   38.122222] CPU: 0 PID: 1747 Comm: sh Not tainted 4.19.107-00515-g9d5e4d7a33ed-dirty #323
-> > [   38.122224] Hardware name: Square, Inc. T2 Devkit (DT)
-> > [   38.122228] pstate: 40000005 (nZcv daif -PAN -UAO)
-> > [   38.122230] pc : mdp5_pipe_release+0x90/0xc0
-> > [   38.122233] lr : mdp5_pipe_release+0x90/0xc0
-> > [   38.122235] sp : ffff00000d13b7f0
-> > [   38.122236] x29: ffff00000d13b7f0 x28: 0000000000000000
-> > [   38.122240] x27: 0000000000000002 x26: ffff800079adce00
-> > [   38.122243] x25: ffff800079405200 x24: 0000000000000000
-> > [   38.122246] x23: ffff80007a78cc08 x22: ffff80007b1cc018
-> > [   38.122249] x21: ffff80007b1cc000 x20: ffff80007b317080
-> > [   38.122252] x19: ffff80007a78ce80 x18: 0000000000020000
-> > [   38.122255] x17: 0000000000000000 x16: 0000000000000000
-> > [   38.122258] x15: 00000000fffffff0 x14: ffff000008c3fb48
-> > [   38.122261] x13: ffff000008cdac4a x12: ffff000008c3f000
-> > [   38.122264] x11: 0000000000000000 x10: ffff000008cda000
-> > [   38.122267] x9 : 0000000000000000 x8 : ffff000008ce4a40
-> > [   38.122269] x7 : 0000000000000000 x6 : 0000000039ea41a9
-> > [   38.122272] x5 : 0000000000000000 x4 : 0000000000000000
-> > [   38.122275] x3 : ffffffffffffffff x2 : c7580c109cae4500
-> > [   38.122278] x1 : 0000000000000000 x0 : 0000000000000024
-> > [   38.122281] Call trace:
-> > [   38.122285]  mdp5_pipe_release+0x90/0xc0
-> > [   38.122288]  mdp5_plane_atomic_check+0x2c0/0x448
-> > [   38.122294]  drm_atomic_helper_check_planes+0xd0/0x208
-> > [   38.122298]  drm_atomic_helper_check+0x38/0xa8
-> > [   38.122302]  drm_atomic_check_only+0x3e8/0x630
-> > [   38.122305]  drm_atomic_commit+0x18/0x58
-> > [   38.122309]  __drm_atomic_helper_disable_all.isra.12+0x15c/0x1a8
-> > [   38.122312]  drm_atomic_helper_suspend+0x80/0xf0
-> > [   38.122316]  msm_pm_suspend+0x4c/0x70
-> > [   38.122320]  dpm_run_callback.isra.6+0x20/0x68
-> > [   38.122323]  __device_suspend+0x110/0x308
-> > [   38.122326]  dpm_suspend+0x100/0x1f0
-> > [   38.122329]  dpm_suspend_start+0x64/0x70
-> > [   38.122334]  suspend_devices_and_enter+0x110/0x500
-> > [   38.122336]  pm_suspend+0x268/0x2c0
-> > [   38.122339]  state_store+0x88/0x110
-> > [   38.122345]  kobj_attr_store+0x14/0x28
-> > [   38.122352]  sysfs_kf_write+0x3c/0x50
-> > [   38.122355]  kernfs_fop_write+0x118/0x1e0
-> > [   38.122360]  __vfs_write+0x30/0x168
-> > [   38.122363]  vfs_write+0xa4/0x1a8
-> > [   38.122366]  ksys_write+0x64/0xe8
-> > [   38.122368]  __arm64_sys_write+0x18/0x20
-> > [   38.122374]  el0_svc_common+0x6c/0x178
-> > [   38.122377]  el0_svc_compat_handler+0x1c/0x28
-> > [   38.122381]  el0_svc_compat+0x8/0x18
-> > [   38.122383] ---[ end trace 24145b7d8545345b ]---
-> > [   38.491552] Disabling non-boot CPUs ...
-> >
-> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > ---
-> >  drivers/gpu/drm/drm_atomic_helper.c | 16 ++++++++++++++++
-> >  1 file changed, 16 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-> > index 85d163f16801..024985a92156 100644
-> > --- a/drivers/gpu/drm/drm_atomic_helper.c
-> > +++ b/drivers/gpu/drm/drm_atomic_helper.c
-> > @@ -3140,6 +3140,7 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
-> >         struct drm_atomic_state *state;
-> >         struct drm_connector *conn;
-> >         struct drm_connector_list_iter conn_iter;
-> > +       struct drm_private_obj *priv_obj;
-> >         struct drm_plane *plane;
-> >         struct drm_crtc *crtc;
-> >         int err = 0;
-> > @@ -3184,6 +3185,16 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
-> >         }
-> >         drm_connector_list_iter_end(&conn_iter);
-> >
-> > +       drm_for_each_privobj(priv_obj, dev) {
-> > +               struct drm_private_state *priv_state;
-> > +
-> > +               priv_state = drm_atomic_get_private_obj_state(state, priv_obj);
-> > +               if (IS_ERR(priv_state)) {
-> > +                       err = PTR_ERR(priv_state);
-> > +                       goto free;
-> > +               }
-> > +       }
-> > +
-> >         /* clear the acquire context so that it isn't accidentally reused */
-> >         state->acquire_ctx = NULL;
-> >
-> > @@ -3278,6 +3289,8 @@ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
-> >         struct drm_connector_state *new_conn_state;
-> >         struct drm_crtc *crtc;
-> >         struct drm_crtc_state *new_crtc_state;
-> > +       struct drm_private_state *new_priv_state;
-> > +       struct drm_private_obj *priv_obj;
-> >
-> >         state->acquire_ctx = ctx;
-> >
-> > @@ -3290,6 +3303,9 @@ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
-> >         for_each_new_connector_in_state(state, connector, new_conn_state, i)
-> >                 state->connectors[i].old_state = connector->state;
-> >
-> > +       for_each_new_private_obj_in_state(state, priv_obj, new_priv_state, i)
-> > +               state->private_objs[i].old_state = priv_obj->state;
-> > +
-> >         ret = drm_atomic_commit(state);
-> >
-> >         state->acquire_ctx = NULL;
-> > --
-> > 2.17.1
-> >
->
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+> @@ -661,6 +710,8 @@
+>  				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -672,6 +723,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart6_default>;
+>  				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -685,6 +738,8 @@
+>  				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -696,6 +751,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart7_default>;
+>  				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -709,6 +766,8 @@
+>  				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -722,6 +781,8 @@
+>  				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -733,6 +794,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart8_default>;
+>  				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -746,6 +809,8 @@
+>  				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -757,6 +822,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart9_default>;
+>  				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -770,6 +837,8 @@
+>  				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -783,6 +852,8 @@
+>  				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -794,6 +865,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart10_default>;
+>  				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -807,6 +880,8 @@
+>  				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -820,6 +895,8 @@
+>  				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  
+> @@ -831,6 +908,8 @@
+>  				pinctrl-names = "default";
+>  				pinctrl-0 = <&qup_uart11_default>;
+>  				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+> +				power-domains = <&rpmhpd SC7180_CX>;
+> +				operating-points-v2 = <&qup_opp_table>;
+>  				status = "disabled";
+>  			};
+>  		}
