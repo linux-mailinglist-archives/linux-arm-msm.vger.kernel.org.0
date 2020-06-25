@@ -2,101 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9A4020A752
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 23:18:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A28A20A82D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 00:21:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405821AbgFYVSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 17:18:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53882 "EHLO
+        id S2404546AbgFYWVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 18:21:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404016AbgFYVSM (ORCPT
+        with ESMTP id S2404242AbgFYWVa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 17:18:12 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFFB6C08C5C1;
-        Thu, 25 Jun 2020 14:18:11 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id y18so3366241plr.4;
-        Thu, 25 Jun 2020 14:18:11 -0700 (PDT)
+        Thu, 25 Jun 2020 18:21:30 -0400
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC40C08C5DB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 15:21:30 -0700 (PDT)
+Received: by mail-vs1-xe32.google.com with SMTP id m25so4458184vsp.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 15:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ml0ZT7PzS1Kij+Cv5CAAQj/ZaDAV3sSYmcfaMZxaUMw=;
-        b=bhvqaCc2cTcis1QzUVntpKJ/7N7yQRCtXy76KJIrrkUvO75HpCSjA3POorsRqYgda6
-         RSQeMtSZbdid1VofDezQgA494f7/88dieNdvjIY6I9QXUqRyA1d+/b/A3HVrw41g9LJJ
-         PZkrXQWu7TdBeR3tT8EpHTZmIfY8BDUXnRM7lK71UMi+m4SCXZWWsoOE8AC0FaRo3DeS
-         OwA26bQ4BCQuWn1UNa65D5yudfFGE543miaynvU3ObB09/toLdKEcToTE36eRHz2y0OJ
-         NRf3NQItPWKJP2W9nGIF/YqcamIUda2EHHhvOC8VOKZhNmXOHt3TjZsemUewUb63fDrs
-         h1NA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HiC4BtBcvypNi0TT+uKmaMyQomfNIooMQQ9SMeSvJuE=;
+        b=hQeh5IvCT9+c5THqtc6WWb2AHU0aYgWF5ReZ+qFjCCpfIqgW19aaZnB90R90eRy0XI
+         aqqBosgZeXnP5zp2JACRzpjqBvLLkUVWfrSy6pNESy7bXlN8NAGyTcPtiDfqcYQkAXxh
+         Dtax+BMxyCZeltX5LaizJxMHd1OeZVgKaCSgM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ml0ZT7PzS1Kij+Cv5CAAQj/ZaDAV3sSYmcfaMZxaUMw=;
-        b=iTt2jcG9SmU6i0B70Ra03ovgwzDKDJu81rZRAulNve44lOn9o7pHYCauCT6zoBMU0T
-         +bFFVkgBXesT8beMrqerlNMPNIRcYCQA+g1Kd3nkumEni3YJrjgMmJ8Mv9iIpfubXUBw
-         40YH7jslBfiXu3/3+CPVCTLEo+n4bM5YEjYfYRrtBYgUkI5nrdsbkYaz5MvwrnV32Eqq
-         adWuMlsQk7vRxS9GOW9h7OpkJoBgf1Ursok5jo4W0139P/Llu/8WrEnW30hrcbwlQVNd
-         MBrV8M4gxdclfZ7cvx4MisaPwhvRN2be0n4ANyKDlm9GI28avvu9ZQ1EM0x0KU65f8Rz
-         tsLA==
-X-Gm-Message-State: AOAM532dWH8Zs7ZaPDBrzk79BY5PgGSuYGUkR7FxLoiaxh3eG3Xym1Qe
-        3ANxsxy1fuyolOWRog7/bpk=
-X-Google-Smtp-Source: ABdhPJwBDHD5iDgvxSTDTxa1YGry9WHhTtOhbcAmuwMxCTvF8qfwECcQrmnwFhDbZvIeONBdYLkXJA==
-X-Received: by 2002:a17:902:70ca:: with SMTP id l10mr31673217plt.31.1593119891399;
-        Thu, 25 Jun 2020 14:18:11 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id x8sm9903077pff.54.2020.06.25.14.18.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Jun 2020 14:18:10 -0700 (PDT)
-Date:   Thu, 25 Jun 2020 14:18:09 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Guenter Roeck <groeck7@gmail.com>
-Subject: Re: [PATCHv3 0/2] Convert QCOM watchdog timer bindings to YAML
-Message-ID: <20200625211809.GA175066@roeck-us.net>
-References: <cover.1581459151.git.saiprakash.ranjan@codeaurora.org>
- <c2b8fabcf82b27c7334482bd53ebba62@codeaurora.org>
- <20200621073320.GI128451@builder.lan>
- <ce4c2b44cb15af12b04c09f1786a6c1a@codeaurora.org>
- <20200625160042.GC149301@roeck-us.net>
- <3e3cf81452e33c9385900177d0630a11@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HiC4BtBcvypNi0TT+uKmaMyQomfNIooMQQ9SMeSvJuE=;
+        b=Y9mompEfL/VAHu+67MmncIsMXubNP3EWxA1FaVibI0s6TJP9DbgrQtR2rK1HdQXpcY
+         Cc85zy/LsKwkd/lzzXb9pRaN+jtNbY2Xffor77zuOhrlIkYTT8KrOvxXDEvBOW35CGIZ
+         I409olFsSpLoRkw6ccVCyhFQhzBA/SlpFbgYgfUKE2eBLSJIdTSlPEAz5aRp0e7jLH7p
+         UAZXTXW0tgXEeXRjBn/c5dSWhXcjWpoXc+6EDVouMSnpyOOo+k3fo2XzwuRmFIZkKqKT
+         IKflSG+tbTE/gFPqyWACibuJaoPmU5RtjWv43m9bguvXACk5Xs1QFKzphL09yEId7xh6
+         6ydw==
+X-Gm-Message-State: AOAM531fAstQs3w8338A5wcfyuZyxI9OIDfgRBxjdDdN48bU/X1MrPgh
+        IWc/oLHwW6LpVJhim6JRp2NOWRHXb14=
+X-Google-Smtp-Source: ABdhPJzLUxBqyvXf9Ku2vloYMYXZH0Q9lEHqOQpOE43OBKhGJH/9Rg4u+P2Q8M+zh2Z+lS3WYYVJDg==
+X-Received: by 2002:a67:2605:: with SMTP id m5mr350695vsm.69.1593123689272;
+        Thu, 25 Jun 2020 15:21:29 -0700 (PDT)
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
+        by smtp.gmail.com with ESMTPSA id z201sm289375vsz.22.2020.06.25.15.21.27
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jun 2020 15:21:27 -0700 (PDT)
+Received: by mail-vs1-f50.google.com with SMTP id k7so3109065vso.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 15:21:27 -0700 (PDT)
+X-Received: by 2002:a05:6102:20c8:: with SMTP id i8mr347826vsr.106.1593123686688;
+ Thu, 25 Jun 2020 15:21:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3e3cf81452e33c9385900177d0630a11@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <1593087419-903-1-git-send-email-kalyan_t@codeaurora.org>
+In-Reply-To: <1593087419-903-1-git-send-email-kalyan_t@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 25 Jun 2020 15:21:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VXAQagbM-dn7MWGm08DdBxefc4jHNbkvHzuBjSM_jWnw@mail.gmail.com>
+Message-ID: <CAD=FV=VXAQagbM-dn7MWGm08DdBxefc4jHNbkvHzuBjSM_jWnw@mail.gmail.com>
+Subject: Re: [v2] drm/msm/dpu: add support for dither block in display
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        mkrishn@codeaurora.org, travitej@codeaurora.org,
+        nganji@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 12:52:31AM +0530, Sai Prakash Ranjan wrote:
-> > > 
-> > I don't think the watchdog mailing list has been copied on this series,
-> > meaning I don't have a copy that I could apply if I wanted to.
-> 
-> I kept you in CC for all the revisions but missed adding watchdog list.
-> Will resend with the appropriate lists added.
-> 
+Hi,
 
-I use patchwork to track patches, tags, and my responses. No patchwork,
-no patch, no tags, and no tracking.
+On Thu, Jun 25, 2020 at 5:17 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+>
+> This change enables dither block for primary interface
+> in display.
+>
+> Enabled for 6bpc in the current version.
+>
+> Changes in v1:
+>  - Remove redundant error checks (Rob).
+>
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c     | 39 +++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 63 +++++++++++++++++++++----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h | 28 +++++++++++
+>  3 files changed, 121 insertions(+), 9 deletions(-)
 
-> > I also see
-> > no evidence for a Reviewed-by: tag from Rob or any other DT maintainer.
-> > 
-> 
-> Not sure why you think I would add reviewed-by tag from Rob without him
-> giving one.
-
-Same response as above.
-
-Guenter
+Tested-by: Douglas Anderson <dianders@chromium.org>
