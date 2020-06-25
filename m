@@ -2,195 +2,443 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 437CA2099D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 08:27:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C08E2099D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 08:28:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389995AbgFYG1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 02:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57126 "EHLO
+        id S2390078AbgFYG15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 02:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389751AbgFYG1J (ORCPT
+        with ESMTP id S1726742AbgFYG1z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 02:27:09 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86B46C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:27:09 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id d6so2738884pjs.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:27:09 -0700 (PDT)
+        Thu, 25 Jun 2020 02:27:55 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879A2C061573
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:27:54 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id b92so2735632pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cC+bIQGI4vbDez97R62VYhumMBGPjOeUnjK9anAQ43g=;
-        b=xRyvkj1SfcKEwwIXmGGmO21KVbKVHlhyafW5P/kEECnsPWNg9NjnhSoYjj6KP/WG/j
-         7NBcHTsxdxG9q20wFIMT7j4pOPr0omlrPPNOcxM4zVY0zMt6R6sPHvA4bRES+VZgN7bM
-         JIgeatSDFwzZ4WGpd6tFFNhjRTV9lU1lfgWWDq83Y0WHZhmGwxzdIQ34cBtG0JdoLtF6
-         qJNG3RIzqKU0A5jtQ67pBMivhzr16jsWCmKBLUgqnkFkImRQo1JGUBlVJbof6DH87u6D
-         D3DcKIh2+TCs+Vua0oFVYs8mkLU6NZRYIPKKIKUfYBXCBkcQR2JkOZe1UsSHZDQFufLg
-         y/7g==
+        h=from:to:cc:subject:date:message-id;
+        bh=TgWJpFfsoANUf4+TV9NlFO66psoAXSjhvdHbUWkpKpw=;
+        b=M4m+z7kYPLxF1PcuDQugNvy1YLF7K0njQy/KUXEE2SifJIUvoPfgirZka1tD3R4pRU
+         ynz4ECFp+b0ZYqKsy4WLLLfqN4AjogbXDbxVM6Ush5W5HIcvqjRjQ5cP62hxggWdavGY
+         9P7Ga7xUgpoN0qNUqO7hZy7sPngHXnUfoYlr/D0OlhJ/pSu53pcOZO/FDhva3/IS0MuZ
+         8aWEzf9sGtBRmLrTV4/K1fYs9PRdT0IKDBV2e/yeLXKElzZ6exiSSyKoocwD1eshIkRc
+         qmVFym+pSQjaUTPzPfawyUs3XkoEH7B6tVcrZW4DIrYROo6zhwn1jQGFkdjQG9TANFbN
+         jo5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cC+bIQGI4vbDez97R62VYhumMBGPjOeUnjK9anAQ43g=;
-        b=aoBVUOJc8TH6aQMjyqeGFr20y3ZA38gs21HO5UHDZOt6Bn1Ndii7NA1CUE985mkN2U
-         6BGYcj3SwLIx7KRHy9KCgIM+sqdwPqiigWyGW90aeWxN69nAki4gwE2GClRdVFC3mS1z
-         5NgmSL39vNclVeDrAVZPlfmGR82XdeJLkxc3xtSVXrGC2on4XbnjDF1mUbjNxLvPX5GD
-         a+qiNq25m0IJvnumXuRmH/K3EwJsKQQWxE1sLdUx+B1AWXl8JLSfu9tQs20KFdUcemPf
-         Ab+6RZh5Unr/Sgx4Y3Udk3nC0pXoMYfTX7MKZHAt8F17GKjTmp1Arz+TFW9jMz9muLFF
-         yEDg==
-X-Gm-Message-State: AOAM533qYOjo0Ku2pb8uGTODKa0hLhItz/w+Fog7Qsx1/WmX6nxesTz4
-        7h6gJzaruk2sRBbQf0i6ykRi
-X-Google-Smtp-Source: ABdhPJzGrFQplgXXaCrxKu+iLIp37MqIeZOGvhVdfso+4wEIlz4LBA4npRXVs6NlKQMi/LxfqN+2MQ==
-X-Received: by 2002:a17:902:d20c:: with SMTP id t12mr6597766ply.291.1593066428726;
-        Wed, 24 Jun 2020 23:27:08 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id m10sm7006836pjs.27.2020.06.24.23.27.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Jun 2020 23:27:08 -0700 (PDT)
-Date:   Thu, 25 Jun 2020 11:57:00 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org
-Subject: Re: [PATCH v3 3/4] docs: Add documentation for user space client
- interface
-Message-ID: <20200625062700.GB6965@Mani-XPS-13-9360>
-References: <1591899224-3403-1-git-send-email-hemantk@codeaurora.org>
- <1591899224-3403-4-git-send-email-hemantk@codeaurora.org>
- <20200619063948.GC3245@Mani-XPS-13-9360>
- <7b64f78e-40c7-7c65-3832-4bbc5da93674@codeaurora.org>
- <20200625062327.GA6965@Mani-XPS-13-9360>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200625062327.GA6965@Mani-XPS-13-9360>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=TgWJpFfsoANUf4+TV9NlFO66psoAXSjhvdHbUWkpKpw=;
+        b=sJ5AL2ix9nhWlPj8eBmNLTCbeP9VgtE7UJjLC9k1HANb9EdJwXwgVwGipQlbHVMrDB
+         UJ43JFvc8Ct5eTAUJfPJ5KO9oJJZIRROxgKbeBgVAiC1KIZWOUf2j+B2mPVQW02mn5XI
+         jzsXzYe4v1exogWaeimvgonEhD8qlFOqNUlA2rTJl4vuWl/kgLPlVKdBt/vItwgoYuoR
+         crt0SutidTUPhdFfpOQyzzka3IR35iktoITJEDi/Vqw/UjR/oZlBojtwpUQEPRUHABNo
+         4qxcxodDBayE/Y8aJBTUbVbXcDNQEF7F8Hj86u17iv5q3LGkc1PVFkdSvO4XDo0y4Pid
+         YIOw==
+X-Gm-Message-State: AOAM5303eWIuu+6fYqh8CHS8Ara3do1VNi9mExFPrBWjAbp6OmN91B6M
+        3wQnJi5vxjzEqyEG/rVN747F+w==
+X-Google-Smtp-Source: ABdhPJy9t58hLgK5gK91DmiL2kRZa9BQEiXq4Q+vNk7LlF8D+hi/bxL2tyGL4e0YpFtJyD4bTbTzNw==
+X-Received: by 2002:a17:90a:a47:: with SMTP id o65mr1744056pjo.70.1593066474052;
+        Wed, 24 Jun 2020 23:27:54 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:6c01:7729:bce3:d6d3:79b:2d5e])
+        by smtp.gmail.com with ESMTPSA id z144sm23417981pfc.195.2020.06.24.23.27.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Jun 2020 23:27:53 -0700 (PDT)
+From:   Amit Pundir <amit.pundir@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: [PATCH] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
+Date:   Thu, 25 Jun 2020 11:57:47 +0530
+Message-Id: <1593066467-25870-1-git-send-email-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 25, 2020 at 11:53:27AM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Jun 24, 2020 at 06:52:20PM -0700, Hemant Kumar wrote:
-> > Hi Mani,
-> > 
-> > On 6/18/20 11:39 PM, Manivannan Sadhasivam wrote:
-> > > On Thu, Jun 11, 2020 at 11:13:43AM -0700, Hemant Kumar wrote:
-> > > > MHI user space client driver is creating device file node
-> > > > for user application to perform file operations. File
-> > > > operations are handled by MHI core driver. Currently
-> > > > Loopback MHI channel is supported by this driver.
-> > > > 
-> > > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > > > ---
-> > > >   Documentation/mhi/index.rst |  1 +
-> > > >   Documentation/mhi/uci.rst   | 19 +++++++++++++++++++
-> > > >   2 files changed, 20 insertions(+)
-> > > >   create mode 100644 Documentation/mhi/uci.rst
-> > > > 
-> > > > diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
-> > > > index 1d8dec3..c75a371 100644
-> > > > --- a/Documentation/mhi/index.rst
-> > > > +++ b/Documentation/mhi/index.rst
-> > > > @@ -9,6 +9,7 @@ MHI
-> > > >      mhi
-> > > >      topology
-> > > > +   uci
-> > > >   .. only::  subproject and html
-> > > > diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
-> > > > new file mode 100644
-> > > > index 0000000..a5c5c4f
-> > > > --- /dev/null
-> > > > +++ b/Documentation/mhi/uci.rst
-> > > > @@ -0,0 +1,19 @@
-> > > > +.. SPDX-License-Identifier: GPL-2.0
-> > > > +
-> > > > +=================================
-> > > > +User space Client Interface (UCI)
-> > > 
-> > > Stick to 'Userspace' everywhere.
-> > Done.
-> > > 
-> > > > +=================================
-> > > > +
-> > > > +UCI driver enables user space clients to communicate to external MHI devices
-> > > > +like modem and WLAN. It creates standard character device file nodes for user
-> > > 
-> > > UCI driver creates a single char device, isn't it?
-> > No, it is created per device name. For example Loopback has its own char
-> > device file node. if we add another channel for a new mhi device new device
-> > file node would be created.
-> 
-> Okay, then please add a line saying that there will be separate chardev nodes
-> for each channel specified.
-> 
-> > > 
-> > > > +space clients to perform open, read, write, pool and close file operations.
-> > > > +
-> > > 
-> > > poll? Btw, you need to mention explicitly how this char device can be used.
-> > > You are just mentioning standard file operations.
-> > Will fix poll.My idea was indeed to mention generic file operations so that
-> > we dont have to be specific with use case. Any userspace entity who wants to
-> > communicate over mhi can use the driver. Reason we have this driver is to
-> > abstract the mhi core specific details. Even for loopback use case,
-> > userspace can echo to device file node on one channel and get a same in
-> > response from another channel back. I can add more examples of
-> > other user space drivers use case if that helps.
-> 
-> Yes, just add couple of examples.
-> 
+Add initial dts support for Xiaomi Poco F1 (Beryllium).
 
-Or.. just add loopback as an example for now and then if we add more channels in
-future let's make sure to document those here.
+This initial support is based on upstream Dragonboard 845c
+(sdm845) device. With this dts patch Beryllium boots AOSP up
+to ADB shell over USB-C.
 
-Thanks,
-Mani
+Supported functionality includes UFS, USB-C (peripheral),
+microSD card and Vol+/Vol-/power keys. Bluetooth should work
+too but couldn't be verified from adb command line, it is
+verified when enabled from UI with few WIP display patches.
 
-> > > 
-> > > > +Device file node is created with format:-
-> > > > +
-> > > > +/dev/mhi_<controller_name>_<mhi_device_name>
-> > > > +
-> > > > +controller_name is the name of underlying bus used to transfer data.
-> > > 
-> > > underlying controller instance.
-> > Done.
-> > > 
-> > > > +mhi_device_name is the name of the MHI channel being used by MHI client
-> > > 
-> > > What do you mean by MHI client here? Are you referring to userspace client?
-> > yes. i can say "MHI client in userspace"?
-> 
-> Okay. The naming conventions used in MHI are a bit weird. So from the start
-> itself I stuck with some fixed names and client is one of them. The term client
-> itself refers to both client device and a driver used to talk to the device in
-> the host. So we should explicitly mention if it is a userspace client driver
-> or the client device.
-> 
-> Thanks,
-> Mani
-> 
-> > > 
-> > > > +to send or receive data using MHI protocol. MHI channels are statically
-> > > > +defined by MHI specification. Driver currently supports LOOPBACK channel
-> > > > +index 0 (Host to device) and 1 (Device to Host).
-> > > 
-> > > s/index/identifier
-> > Done.
-> > > 
-> > > And explain a bit on how this LOOPBACK channel is getting used.
-> > Done.
-> > > 
-> > > Thanks,
-> > > Mani
-> > > 
-> > > > -- 
-> > > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > > > a Linux Foundation Collaborative Project
-> > > > 
-> > 
-> > -- 
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
+Just like initial db845c support, initializing the SMMU is
+clearing the mapping used for the splash screen framebuffer,
+which causes the device to hang during boot and recovery
+needs a hard power reset. This can be worked around using:
+
+    fastboot oem select-display-panel none
+
+To switch ON the display back run:
+
+    fastboot oem select-display-panel
+
+But this only works on Beryllium devices running bootloader
+version BOOT.XF.2.0-00369-SDM845LZB-1 that shipped with
+Android-9 based release. Newer bootloader version do not
+support switching OFF the display panel at all. So we need
+a couple of additional smmu patches (under review) from here
+to boot to shell:
+https://github.com/pundiramit/linux/commits/beryllium-mainline
+
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sdm845-beryllium.dts | 320 ++++++++++++++++++++++++++
+ 2 files changed, 321 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 0f2c33d611df..3ef1b48bc0cb 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-beryllium.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
+new file mode 100644
+index 000000000000..68ccf53d88ca
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
+@@ -0,0 +1,320 @@
++// SPDX-License-Identifier: GPL-2.0
++
++/dts-v1/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include "sdm845.dtsi"
++#include "pm8998.dtsi"
++#include "pmi8998.dtsi"
++
++/ {
++	model = "Xiaomi Technologies, Inc. Beryllium";
++	compatible = "qcom,sdm845";
++	/* required for bootloader to select correct board */
++	qcom,board-id = <69 0>;
++	qcom,msm-id = <321 0x20001>;
++
++	aliases {
++		hsuart0 = &uart6;
++	};
++
++	dc12v: dc12v-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "DC12V";
++		regulator-min-microvolt = <12000000>;
++		regulator-max-microvolt = <12000000>;
++		regulator-always-on;
++	};
++
++	gpio_keys {
++		compatible = "gpio-keys";
++		autorepeat;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&vol_up_pin_a>;
++
++		vol-up {
++			label = "Volume Up";
++			linux,code = <KEY_VOLUMEUP>;
++			gpios = <&pm8998_gpio 6 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	vbat: vbat-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "VBAT";
++
++		vin-supply = <&dc12v>;
++		regulator-min-microvolt = <4200000>;
++		regulator-max-microvolt = <4200000>;
++		regulator-always-on;
++	};
++
++	vbat_som: vbat-som-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "VBAT_SOM";
++
++		vin-supply = <&dc12v>;
++		regulator-min-microvolt = <4200000>;
++		regulator-max-microvolt = <4200000>;
++		regulator-always-on;
++	};
++
++	vdc_3v3: vdc-3v3-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "VDC_3V3";
++		vin-supply = <&dc12v>;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on;
++	};
++
++	vdc_5v: vdc-5v-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "VDC_5V";
++
++		vin-supply = <&dc12v>;
++		regulator-min-microvolt = <500000>;
++		regulator-max-microvolt = <500000>;
++		regulator-always-on;
++	};
++
++	vreg_s4a_1p8: vreg-s4a-1p8 {
++		compatible = "regulator-fixed";
++		regulator-name = "vreg_s4a_1p8";
++
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-always-on;
++	};
++};
++
++&apps_rsc {
++	pm8998-rpmh-regulators {
++		compatible = "qcom,pm8998-rpmh-regulators";
++		qcom,pmic-id = "a";
++
++		vreg_l1a_0p875: ldo1 {
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7a_1p8: ldo7 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l12a_1p8: ldo12 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l13a_2p95: ldo13 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l17a_1p3: ldo17 {
++			regulator-min-microvolt = <1304000>;
++			regulator-max-microvolt = <1304000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l20a_2p95: ldo20 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2968000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l21a_2p95: ldo21 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2968000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l24a_3p075: ldo24 {
++			regulator-min-microvolt = <3088000>;
++			regulator-max-microvolt = <3088000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l25a_3p3: ldo25 {
++			regulator-min-microvolt = <3300000>;
++			regulator-max-microvolt = <3312000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l26a_1p2: ldo26 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++};
++
++&gcc {
++	protected-clocks = <GCC_QSPI_CORE_CLK>,
++			   <GCC_QSPI_CORE_CLK_SRC>,
++			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
++};
++
++&pm8998_gpio {
++	vol_up_pin_a: vol-up-active {
++		pins = "gpio6";
++		function = "normal";
++		input-enable;
++		bias-pull-up;
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
++	};
++};
++
++&pm8998_pon {
++	resin {
++		compatible = "qcom,pm8941-resin";
++		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
++		debounce = <15625>;
++		bias-pull-up;
++		linux,code = <KEY_VOLUMEDOWN>;
++	};
++};
++
++&qupv3_id_0 {
++	status = "okay";
++};
++
++&sdhc_2 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
++
++	vmmc-supply = <&vreg_l21a_2p95>;
++	vqmmc-supply = <&vreg_l13a_2p95>;
++
++	bus-width = <4>;
++	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
++};
++
++&tlmm {
++	gpio-reserved-ranges = <0 4>, <81 4>;
++
++	sdc2_default_state: sdc2-default {
++		clk {
++			pins = "sdc2_clk";
++			bias-disable;
++
++			/*
++			 * It seems that mmc_test reports errors if drive
++			 * strength is not 16 on clk, cmd, and data pins.
++			 */
++			drive-strength = <16>;
++		};
++
++		cmd {
++			pins = "sdc2_cmd";
++			bias-pull-up;
++			drive-strength = <10>;
++		};
++
++		data {
++			pins = "sdc2_data";
++			bias-pull-up;
++			drive-strength = <10>;
++		};
++	};
++
++	sdc2_card_det_n: sd-card-det-n {
++		pins = "gpio126";
++		function = "gpio";
++		bias-pull-up;
++	};
++};
++
++&uart6 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn3990-bt";
++
++		vddio-supply = <&vreg_s4a_1p8>;
++		vddxo-supply = <&vreg_l7a_1p8>;
++		vddrf-supply = <&vreg_l17a_1p3>;
++		vddch0-supply = <&vreg_l25a_3p3>;
++		max-speed = <3200000>;
++	};
++};
++
++&usb_1 {
++	status = "okay";
++};
++
++&usb_1_dwc3 {
++	dr_mode = "peripheral";
++};
++
++&usb_1_hsphy {
++	status = "okay";
++
++	vdd-supply = <&vreg_l1a_0p875>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
++	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
++
++	qcom,imp-res-offset-value = <8>;
++	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
++	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
++	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
++};
++
++&usb_1_qmpphy {
++	status = "okay";
++
++	vdda-phy-supply = <&vreg_l26a_1p2>;
++	vdda-pll-supply = <&vreg_l1a_0p875>;
++};
++
++&ufs_mem_hc {
++	status = "okay";
++
++	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
++
++	vcc-supply = <&vreg_l20a_2p95>;
++	vcc-max-microamp = <800000>;
++};
++
++&ufs_mem_phy {
++	status = "okay";
++
++	vdda-phy-supply = <&vreg_l1a_0p875>;
++	vdda-pll-supply = <&vreg_l26a_1p2>;
++};
++
++/* PINCTRL - additions to nodes defined in sdm845.dtsi */
++
++&qup_uart6_default {
++	pinmux {
++		pins = "gpio45", "gpio46", "gpio47", "gpio48";
++		function = "qup6";
++	};
++
++	cts {
++		pins = "gpio45";
++		bias-disable;
++	};
++
++	rts-tx {
++		pins = "gpio46", "gpio47";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	rx {
++		pins = "gpio48";
++		bias-pull-up;
++	};
++};
+-- 
+2.7.4
+
