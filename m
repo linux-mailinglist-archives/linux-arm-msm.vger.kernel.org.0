@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6700E20A49B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 20:14:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6CAA20A47A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 20:13:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436523AbgFYSOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 14:14:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53418 "EHLO
+        id S2407043AbgFYSNZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 14:13:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407020AbgFYSNQ (ORCPT
+        with ESMTP id S2407029AbgFYSNS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 14:13:16 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB3EC08C5C1;
-        Thu, 25 Jun 2020 11:13:15 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id w6so6865104ejq.6;
-        Thu, 25 Jun 2020 11:13:15 -0700 (PDT)
+        Thu, 25 Jun 2020 14:13:18 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CC6C08C5C1;
+        Thu, 25 Jun 2020 11:13:18 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id n24so6884965ejd.0;
+        Thu, 25 Jun 2020 11:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wyyTfoYKUal+Im2XFp9aLfEoAp0H4cTyYoV6q1T4GSs=;
-        b=cKNbPpYZkMPGKNjYYC/5Wr0d5HgXe9m0rOfLOWuQtlbUbx6x5A3BjgnCoP9VC2GfCH
-         56Z32Zv3lT8II6SvnLv5PtHwYmx3X5rKRBC35oSvivonP3oFT8/3WOxrk47380nhKzdx
-         NZ1Qeg90WSpl9lQOHj9SharKmnym8eUsGZWdiKrRSOtoQDp+B/YkmlCRqcYQu2+XPW89
-         b+sUF6yv0vzYOz8Y0oa0iPpR6A/eDWOAWlIUnJLE6PfA7s7RXDyU1qHxeYGpgzsifm6Q
-         C+zSHXfcKOF8TkonNwS9utmkpcY6/vfWL8SYXDlqHZdq0cdQIdcHEe0ewUG7Z1S3crJ8
-         LneA==
+        bh=YaqwY05/r3k7x6kZ9wCj64JmBphdqzDzvJ/AelDNrH0=;
+        b=a2ehGRGI6AlMtvlsLGnRsJR3dq4x0ZAyn+2UIQIloRnNPZ67Tg+nFXRIIRkT2VtrWR
+         T4Y6Rm/n/KjtbZFYQ+1iGh3lnXiEdJhBPEeopn8z9D5OLg/zBeRP65zFZx8H3NM9J2Ak
+         bF7fmgnf9dLdSetSXQPU1WjSEHEhXohRBWtQPOvrDHWVeL/Tc8bD8vqD9535m10Mb/JH
+         +vjwwQnatRH+P0AwYybNUwroJUEOkfJCvbCPqKRp8TSFqLbiUnXIPyjbgsEBde8yov0o
+         noPee9hbRLjyj8m0N+U/yA23S0ZOUsrFhNNBipiJszq6v7V0b3GyYRcekmUDj9gkRefl
+         UoPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wyyTfoYKUal+Im2XFp9aLfEoAp0H4cTyYoV6q1T4GSs=;
-        b=XqHjchvK4SpBKUqAfckizsuE+F/CCz1yJWUSyVvxicNCcthexTm21cS249YMlTCe5T
-         FDb6o+KKd2B9hz5UGxvxrYaDZLem4SnF2CkDOB7TeeUmdaNGs0xCd2YiHDinUP2c+fbm
-         8aiSvMNlXVDzOXvolFb5XsVWIpg8oqPnwIr3iQhXCMBMuPbSkW4LLoslow0DgmgLEyE2
-         3hbMQ2j5VgalOiHbgCmpnzhWik07SsOzT9tI8CUlGYZDDFGhrrEeyy+tYiOzdIAwGrYc
-         hyxonFMrWfP+iABAmGMXuQxqRUdlWPBhWmazElxtF0J/vbPmJhJeduwTCZf8Ktbahdzu
-         WIAg==
-X-Gm-Message-State: AOAM5304KtBUUgOppEHPGCiglTETp3WG4M+sLYHg8XsRnmI5ahU2tc2K
-        MW+Fz6/8mw682VM6uvEc19Q=
-X-Google-Smtp-Source: ABdhPJyFL0qB4dqYmzJYms3J9dUCA7vTO3T6chZCbVWy26cw2gNhuRmNhDwxXstpLxPNuMObkM+Twg==
-X-Received: by 2002:a17:906:3b4b:: with SMTP id h11mr6346796ejf.433.1593108794646;
-        Thu, 25 Jun 2020 11:13:14 -0700 (PDT)
+        bh=YaqwY05/r3k7x6kZ9wCj64JmBphdqzDzvJ/AelDNrH0=;
+        b=BdRZVqfI1/vIuW7TNvpXMJXRnu4izKMUY0N2XFhESVv0TFbx85OY0AwZ9Ud30rmIDJ
+         Ys2UtlIm4QKrO+tzIX/kQy+hRJ3BubKdSc4blR+x5e+9SgoCpNRVtrld0cyTLucKEEhD
+         vt7E5nTh8af/g5eNq5Njea75Piyg0Or+pjRtLsIFPzUDPJsm9rxy6TeAI3G4K0QGcY2Q
+         F+mF8J/bBdPopCrzKMcRsZcL8HA2sqgkAKOA5JM0tPi+StVTtlLwh+K9q7hTTKA58wPZ
+         7+Qi30vVnGgTXPXybmySUrBnxGqSryr5aXEU+hmnuLY3Eezue4iMZ7IKnHbIgVZVBXPn
+         UWsA==
+X-Gm-Message-State: AOAM531y5MG9whLPlpt6EagJYpwwOgKxNq4ypZ5oIKqb2UevXFflzOGP
+        CS2E7VYilLa9QX2EAh53bAD77CIyID0=
+X-Google-Smtp-Source: ABdhPJwTZxgljQFiscKjkufCd+SPF5kR/74nvJYDnDu7vD4FHB5L24T7FUtTYCnpt/lMjqbUiRu8vA==
+X-Received: by 2002:a17:906:5496:: with SMTP id r22mr31993911ejo.449.1593108797147;
+        Thu, 25 Jun 2020 11:13:17 -0700 (PDT)
 Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
-        by smtp.googlemail.com with ESMTPSA id p4sm19511112edj.64.2020.06.25.11.13.13
+        by smtp.googlemail.com with ESMTPSA id p4sm19511112edj.64.2020.06.25.11.13.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 11:13:14 -0700 (PDT)
+        Thu, 25 Jun 2020 11:13:16 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     skrzynka@konradybcio.pl
 Cc:     Konrad Dybcio <konradybcio@gmail.com>,
@@ -59,9 +59,9 @@ Cc:     Konrad Dybcio <konradybcio@gmail.com>,
         Colin Cross <ccross@android.com>,
         Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 03/13] arm64: dts: qcom: bullhead: Add qcom,msm-id
-Date:   Thu, 25 Jun 2020 20:12:51 +0200
-Message-Id: <20200625181303.129874-4-konradybcio@gmail.com>
+Subject: [PATCH v2 04/13] arm64: dts: qcom: bullhead: Move UART pinctrl to SoC
+Date:   Thu, 25 Jun 2020 20:12:52 +0200
+Message-Id: <20200625181303.129874-5-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200625181303.129874-1-konradybcio@gmail.com>
 References: <20200625181303.129874-1-konradybcio@gmail.com>
@@ -72,28 +72,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the property required for the bootloader to select
-the correct device tree blob. It has been removed from
-the SoC device tree as it should be set on a per-device
-basis.
+This pinout is common for every 8992-based device and
+should therefore reside in the SoC device tree.
+
+Also convert addresses into phandles.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts | 1 +
- 1 file changed, 1 insertion(+)
+ .../boot/dts/qcom/msm8992-bullhead-rev-101.dts      | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-index 1061fd5404aa..4f70681e730d 100644
+index 4f70681e730d..5969b5cfdc85 100644
 --- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-@@ -11,6 +11,7 @@ / {
- 	model = "LG Nexus 5X";
- 	compatible = "lg,bullhead", "qcom,msm8992";
- 	/* required for bootloader to select correct board */
-+	qcom,msm-id = <251 0>, <252 0>;
- 	qcom,board-id = <0xb64 0>;
- 	qcom,pmic-id = <0x10009 0x1000A 0x0 0x0>;
+@@ -23,15 +23,6 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
  
+-	soc {
+-		serial@f991e000 {
+-			status = "okay";
+-			pinctrl-names = "default", "sleep";
+-			pinctrl-0 = <&blsp1_uart2_default>;
+-			pinctrl-1 = <&blsp1_uart2_sleep>;
+-		};
+-	};
+-
+ 	reserved-memory {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+@@ -48,6 +39,10 @@ ramoops@1ff00000 {
+ 	};
+ };
+ 
++&blsp1_uart2 {
++	status = "okay";
++};
++
+ &rpm_requests {
+ 	pm8994-regulators {
+ 		compatible = "qcom,rpm-pm8994-regulators";
 -- 
 2.27.0
 
