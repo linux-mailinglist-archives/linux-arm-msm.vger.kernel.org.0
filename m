@@ -2,443 +2,357 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C08E2099D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 08:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A133209A72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 09:28:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390078AbgFYG15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 02:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726742AbgFYG1z (ORCPT
+        id S2390262AbgFYH2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 03:28:18 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:38707 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390227AbgFYH2Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 02:27:55 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879A2C061573
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:27:54 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id b92so2735632pjc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=TgWJpFfsoANUf4+TV9NlFO66psoAXSjhvdHbUWkpKpw=;
-        b=M4m+z7kYPLxF1PcuDQugNvy1YLF7K0njQy/KUXEE2SifJIUvoPfgirZka1tD3R4pRU
-         ynz4ECFp+b0ZYqKsy4WLLLfqN4AjogbXDbxVM6Ush5W5HIcvqjRjQ5cP62hxggWdavGY
-         9P7Ga7xUgpoN0qNUqO7hZy7sPngHXnUfoYlr/D0OlhJ/pSu53pcOZO/FDhva3/IS0MuZ
-         8aWEzf9sGtBRmLrTV4/K1fYs9PRdT0IKDBV2e/yeLXKElzZ6exiSSyKoocwD1eshIkRc
-         qmVFym+pSQjaUTPzPfawyUs3XkoEH7B6tVcrZW4DIrYROo6zhwn1jQGFkdjQG9TANFbN
-         jo5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=TgWJpFfsoANUf4+TV9NlFO66psoAXSjhvdHbUWkpKpw=;
-        b=sJ5AL2ix9nhWlPj8eBmNLTCbeP9VgtE7UJjLC9k1HANb9EdJwXwgVwGipQlbHVMrDB
-         UJ43JFvc8Ct5eTAUJfPJ5KO9oJJZIRROxgKbeBgVAiC1KIZWOUf2j+B2mPVQW02mn5XI
-         jzsXzYe4v1exogWaeimvgonEhD8qlFOqNUlA2rTJl4vuWl/kgLPlVKdBt/vItwgoYuoR
-         crt0SutidTUPhdFfpOQyzzka3IR35iktoITJEDi/Vqw/UjR/oZlBojtwpUQEPRUHABNo
-         4qxcxodDBayE/Y8aJBTUbVbXcDNQEF7F8Hj86u17iv5q3LGkc1PVFkdSvO4XDo0y4Pid
-         YIOw==
-X-Gm-Message-State: AOAM5303eWIuu+6fYqh8CHS8Ara3do1VNi9mExFPrBWjAbp6OmN91B6M
-        3wQnJi5vxjzEqyEG/rVN747F+w==
-X-Google-Smtp-Source: ABdhPJy9t58hLgK5gK91DmiL2kRZa9BQEiXq4Q+vNk7LlF8D+hi/bxL2tyGL4e0YpFtJyD4bTbTzNw==
-X-Received: by 2002:a17:90a:a47:: with SMTP id o65mr1744056pjo.70.1593066474052;
-        Wed, 24 Jun 2020 23:27:54 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:6c01:7729:bce3:d6d3:79b:2d5e])
-        by smtp.gmail.com with ESMTPSA id z144sm23417981pfc.195.2020.06.24.23.27.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jun 2020 23:27:53 -0700 (PDT)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
-Date:   Thu, 25 Jun 2020 11:57:47 +0530
-Message-Id: <1593066467-25870-1-git-send-email-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 25 Jun 2020 03:28:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593070094; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Pk69TsKcvcFF728yS08rHP6g4KpN2nzBQua1JjMfKo4=;
+ b=ZTdue19M3V06maDR9Wc5RYzJdarFJqAZa7BnKrRg38BNnrYXVKWfQ8NVN7WSDc+ob2mjGsVu
+ MOzmwL/jVDsFTXcy5dSC2wq3TzXsIgKPHd9nDbAw2DWsZ5qCxvdBOGVvS5IVTAUSkkdbmbBC
+ xNU9el96XbtQDw9OLNsT0wgupTA=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5ef4520ebfb34e631cc9288c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 07:28:14
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2034DC43395; Thu, 25 Jun 2020 07:28:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kalyan_t)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F0DC9C433C8;
+        Thu, 25 Jun 2020 07:28:11 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 25 Jun 2020 12:58:11 +0530
+From:   kalyan_t@codeaurora.org
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: add support for dither block in
+ display
+In-Reply-To: <CAF6AEGs_E+8p=-o1BHkAbAa8qY1ZaU8rPJsfzqV5L4wBBhvcAg@mail.gmail.com>
+References: <1592999796-30501-1-git-send-email-kalyan_t@codeaurora.org>
+ <CAF6AEGs_E+8p=-o1BHkAbAa8qY1ZaU8rPJsfzqV5L4wBBhvcAg@mail.gmail.com>
+Message-ID: <47db87caf70028779eb2323b7ede7168@codeaurora.org>
+X-Sender: kalyan_t@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial dts support for Xiaomi Poco F1 (Beryllium).
+On 2020-06-25 01:55, Rob Clark wrote:
+> On Wed, Jun 24, 2020 at 4:57 AM Kalyan Thota <kalyan_t@codeaurora.org> 
+> wrote:
+>> 
+>> This change enables dither block for primary interface
+>> in display.
+>> 
+>> Enabled for 6bpc in the current version.
+>> 
+>> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c     | 45 
+>> +++++++++++++++++
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 66 
+>> +++++++++++++++++++++----
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h | 28 +++++++++++
+>>  3 files changed, 130 insertions(+), 9 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 63976dc..26e870a 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -208,6 +208,42 @@ struct dpu_encoder_virt {
+>> 
+>>  #define to_dpu_encoder_virt(x) container_of(x, struct 
+>> dpu_encoder_virt, base)
+>> 
+>> +static u32 dither_matrix[DITHER_MATRIX_SZ] = {
+>> +       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
+>> +};
+>> +
+>> +static void _dpu_encoder_setup_dither(struct dpu_encoder_phys *phys)
+>> +{
+>> +       struct dpu_hw_dither_cfg dither_cfg = { 0 };
+>> +       struct drm_display_info *info;
+>> +
+>> +       if (!phys || !phys->connector || !phys->hw_pp ||
+>> +               !phys->hw_pp->ops.setup_dither)
+>> +               return;
+> 
+> it looks like other than phys->hw_pp->ops.setup_dither, you shouldn't
+> need to check most of these conditions.
+> 
+>> +
+>> +       info = &phys->connector->display_info;
+>> +       if (!info)
+> 
+> and definitely not this one
+> 
+>> +               return;
+>> +
+>> +       switch (phys->connector->display_info.bpc) {
+>> +       case 6:
+>> +               dither_cfg.c0_bitdepth = 6;
+>> +               dither_cfg.c1_bitdepth = 6;
+>> +               dither_cfg.c2_bitdepth = 6;
+>> +               dither_cfg.c3_bitdepth = 6;
+>> +               dither_cfg.temporal_en = 0;
+>> +               break;
+>> +       default:
+>> +               phys->hw_pp->ops.setup_dither(phys->hw_pp, NULL);
+>> +               return;
+>> +       }
+>> +
+>> +       memcpy(&dither_cfg.matrix, dither_matrix,
+>> +                       sizeof(u32) * DITHER_MATRIX_SZ);
+>> +
+>> +       phys->hw_pp->ops.setup_dither(phys->hw_pp, &dither_cfg);
+>> +}
+>> +
+>>  void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys 
+>> *phys_enc,
+>>                 enum dpu_intr_idx intr_idx)
+>>  {
+>> @@ -1082,6 +1118,7 @@ static void 
+>> _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
+>>         struct dpu_encoder_virt *dpu_enc = NULL;
+>>         struct msm_drm_private *priv;
+>>         struct dpu_kms *dpu_kms;
+>> +       int i;
+>> 
+>>         if (!drm_enc || !drm_enc->dev) {
+>>                 DPU_ERROR("invalid parameters\n");
+>> @@ -1104,6 +1141,14 @@ static void 
+>> _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
+>>                                 dpu_kms->catalog);
+>> 
+>>         _dpu_encoder_update_vsync_source(dpu_enc, 
+>> &dpu_enc->disp_info);
+>> +
+>> +       if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+>> +               for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+>> +                       struct dpu_encoder_phys *phys = 
+>> dpu_enc->phys_encs[i];
+>> +
+>> +                       _dpu_encoder_setup_dither(phys);
+>> +               }
+>> +       }
+>>  }
+>> 
+>>  void dpu_encoder_virt_runtime_resume(struct drm_encoder *drm_enc)
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+>> index d110a40..cf7603d 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+>> @@ -28,6 +28,16 @@
+>>  #define PP_FBC_BUDGET_CTL               0x038
+>>  #define PP_FBC_LOSSY_MODE               0x03C
+>> 
+>> +#define PP_DITHER_EN                   0x000
+>> +#define PP_DITHER_BITDEPTH             0x004
+>> +#define PP_DITHER_MATRIX               0x008
+>> +
+>> +#define DITHER_DEPTH_MAP_INDEX 9
+>> +
+>> +static u32 dither_depth_map[DITHER_DEPTH_MAP_INDEX] = {
+>> +       0, 0, 0, 0, 0, 0, 0, 1, 2
+>> +};
+>> +
+>>  static const struct dpu_pingpong_cfg *_pingpong_offset(enum 
+>> dpu_pingpong pp,
+>>                 const struct dpu_mdss_cfg *m,
+>>                 void __iomem *addr,
+>> @@ -49,6 +59,40 @@ static const struct dpu_pingpong_cfg 
+>> *_pingpong_offset(enum dpu_pingpong pp,
+>>         return ERR_PTR(-EINVAL);
+>>  }
+>> 
+>> +static void dpu_hw_pp_setup_dither(struct dpu_hw_pingpong *pp,
+>> +                                   struct dpu_hw_dither_cfg *cfg)
+>> +{
+>> +       struct dpu_hw_blk_reg_map *c;
+>> +       u32 i, base, data = 0;
+>> +
+>> +       if (!pp)
+>> +               return;
+> 
+> can this ever be NULL..  at least currently you are checking this both
+> here and in _dpu_encoder_setup_dither()
+> 
+> BR,
+> -R
+> 
+Sure, will fix them. I guess got habituated to add checks so that static 
+code analyzers don't complain :-)
 
-This initial support is based on upstream Dragonboard 845c
-(sdm845) device. With this dts patch Beryllium boots AOSP up
-to ADB shell over USB-C.
+Kalyan
 
-Supported functionality includes UFS, USB-C (peripheral),
-microSD card and Vol+/Vol-/power keys. Bluetooth should work
-too but couldn't be verified from adb command line, it is
-verified when enabled from UI with few WIP display patches.
-
-Just like initial db845c support, initializing the SMMU is
-clearing the mapping used for the splash screen framebuffer,
-which causes the device to hang during boot and recovery
-needs a hard power reset. This can be worked around using:
-
-    fastboot oem select-display-panel none
-
-To switch ON the display back run:
-
-    fastboot oem select-display-panel
-
-But this only works on Beryllium devices running bootloader
-version BOOT.XF.2.0-00369-SDM845LZB-1 that shipped with
-Android-9 based release. Newer bootloader version do not
-support switching OFF the display panel at all. So we need
-a couple of additional smmu patches (under review) from here
-to boot to shell:
-https://github.com/pundiramit/linux/commits/beryllium-mainline
-
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- arch/arm64/boot/dts/qcom/sdm845-beryllium.dts | 320 ++++++++++++++++++++++++++
- 2 files changed, 321 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0f2c33d611df..3ef1b48bc0cb 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-beryllium.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
-new file mode 100644
-index 000000000000..68ccf53d88ca
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
-@@ -0,0 +1,320 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sdm845.dtsi"
-+#include "pm8998.dtsi"
-+#include "pmi8998.dtsi"
-+
-+/ {
-+	model = "Xiaomi Technologies, Inc. Beryllium";
-+	compatible = "qcom,sdm845";
-+	/* required for bootloader to select correct board */
-+	qcom,board-id = <69 0>;
-+	qcom,msm-id = <321 0x20001>;
-+
-+	aliases {
-+		hsuart0 = &uart6;
-+	};
-+
-+	dc12v: dc12v-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "DC12V";
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+		regulator-always-on;
-+	};
-+
-+	gpio_keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vol_up_pin_a>;
-+
-+		vol-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm8998_gpio 6 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	vbat: vbat-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VBAT";
-+
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <4200000>;
-+		regulator-max-microvolt = <4200000>;
-+		regulator-always-on;
-+	};
-+
-+	vbat_som: vbat-som-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VBAT_SOM";
-+
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <4200000>;
-+		regulator-max-microvolt = <4200000>;
-+		regulator-always-on;
-+	};
-+
-+	vdc_3v3: vdc-3v3-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VDC_3V3";
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-always-on;
-+	};
-+
-+	vdc_5v: vdc-5v-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VDC_5V";
-+
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <500000>;
-+		regulator-max-microvolt = <500000>;
-+		regulator-always-on;
-+	};
-+
-+	vreg_s4a_1p8: vreg-s4a-1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	pm8998-rpmh-regulators {
-+		compatible = "qcom,pm8998-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vreg_l1a_0p875: ldo1 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_2p95: ldo13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17a_1p3: ldo17 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l20a_2p95: ldo20 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l21a_2p95: ldo21 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l24a_3p075: ldo24 {
-+			regulator-min-microvolt = <3088000>;
-+			regulator-max-microvolt = <3088000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l25a_3p3: ldo25 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l26a_1p2: ldo26 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&gcc {
-+	protected-clocks = <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
-+};
-+
-+&pm8998_gpio {
-+	vol_up_pin_a: vol-up-active {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+};
-+
-+&pm8998_pon {
-+	resin {
-+		compatible = "qcom,pm8941-resin";
-+		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+		debounce = <15625>;
-+		bias-pull-up;
-+		linux,code = <KEY_VOLUMEDOWN>;
-+	};
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
-+
-+	vmmc-supply = <&vreg_l21a_2p95>;
-+	vqmmc-supply = <&vreg_l13a_2p95>;
-+
-+	bus-width = <4>;
-+	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <81 4>;
-+
-+	sdc2_default_state: sdc2-default {
-+		clk {
-+			pins = "sdc2_clk";
-+			bias-disable;
-+
-+			/*
-+			 * It seems that mmc_test reports errors if drive
-+			 * strength is not 16 on clk, cmd, and data pins.
-+			 */
-+			drive-strength = <16>;
-+		};
-+
-+		cmd {
-+			pins = "sdc2_cmd";
-+			bias-pull-up;
-+			drive-strength = <10>;
-+		};
-+
-+		data {
-+			pins = "sdc2_data";
-+			bias-pull-up;
-+			drive-strength = <10>;
-+		};
-+	};
-+
-+	sdc2_card_det_n: sd-card-det-n {
-+		pins = "gpio126";
-+		function = "gpio";
-+		bias-pull-up;
-+	};
-+};
-+
-+&uart6 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn3990-bt";
-+
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdd-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l12a_1p8>;
-+	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
-+
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l26a_1p2>;
-+	vdda-pll-supply = <&vreg_l1a_0p875>;
-+};
-+
-+&ufs_mem_hc {
-+	status = "okay";
-+
-+	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l20a_2p95>;
-+	vcc-max-microamp = <800000>;
-+};
-+
-+&ufs_mem_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l26a_1p2>;
-+};
-+
-+/* PINCTRL - additions to nodes defined in sdm845.dtsi */
-+
-+&qup_uart6_default {
-+	pinmux {
-+		pins = "gpio45", "gpio46", "gpio47", "gpio48";
-+		function = "qup6";
-+	};
-+
-+	cts {
-+		pins = "gpio45";
-+		bias-disable;
-+	};
-+
-+	rts-tx {
-+		pins = "gpio46", "gpio47";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	rx {
-+		pins = "gpio48";
-+		bias-pull-up;
-+	};
-+};
--- 
-2.7.4
-
+>> +
+>> +       c = &pp->hw;
+>> +       base = pp->caps->sblk->dither.base;
+>> +       if (!cfg) {
+>> +               DPU_REG_WRITE(c, base + PP_DITHER_EN, 0);
+>> +               return;
+>> +       }
+>> +
+>> +       data = dither_depth_map[cfg->c0_bitdepth] & REG_MASK(2);
+>> +       data |= (dither_depth_map[cfg->c1_bitdepth] & REG_MASK(2)) << 
+>> 2;
+>> +       data |= (dither_depth_map[cfg->c2_bitdepth] & REG_MASK(2)) << 
+>> 4;
+>> +       data |= (dither_depth_map[cfg->c3_bitdepth] & REG_MASK(2)) << 
+>> 6;
+>> +       data |= (cfg->temporal_en) ? (1 << 8) : 0;
+>> +
+>> +       DPU_REG_WRITE(c, base + PP_DITHER_BITDEPTH, data);
+>> +
+>> +       for (i = 0; i < DITHER_MATRIX_SZ - 3; i += 4) {
+>> +               data = (cfg->matrix[i] & REG_MASK(4)) |
+>> +                       ((cfg->matrix[i + 1] & REG_MASK(4)) << 4) |
+>> +                       ((cfg->matrix[i + 2] & REG_MASK(4)) << 8) |
+>> +                       ((cfg->matrix[i + 3] & REG_MASK(4)) << 12);
+>> +               DPU_REG_WRITE(c, base + PP_DITHER_MATRIX + i, data);
+>> +       }
+>> +       DPU_REG_WRITE(c, base + PP_DITHER_EN, 1);
+>> +}
+>> +
+>>  static int dpu_hw_pp_setup_te_config(struct dpu_hw_pingpong *pp,
+>>                 struct dpu_hw_tear_check *te)
+>>  {
+>> @@ -180,15 +224,19 @@ static u32 dpu_hw_pp_get_line_count(struct 
+>> dpu_hw_pingpong *pp)
+>>         return line;
+>>  }
+>> 
+>> -static void _setup_pingpong_ops(struct dpu_hw_pingpong_ops *ops,
+>> -       const struct dpu_pingpong_cfg *hw_cap)
+>> +static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+>> +                               unsigned long features)
+>>  {
+>> -       ops->setup_tearcheck = dpu_hw_pp_setup_te_config;
+>> -       ops->enable_tearcheck = dpu_hw_pp_enable_te;
+>> -       ops->connect_external_te = dpu_hw_pp_connect_external_te;
+>> -       ops->get_vsync_info = dpu_hw_pp_get_vsync_info;
+>> -       ops->poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+>> -       ops->get_line_count = dpu_hw_pp_get_line_count;
+>> +       c->ops.setup_tearcheck = dpu_hw_pp_setup_te_config;
+>> +       c->ops.enable_tearcheck = dpu_hw_pp_enable_te;
+>> +       c->ops.connect_external_te = dpu_hw_pp_connect_external_te;
+>> +       c->ops.get_vsync_info = dpu_hw_pp_get_vsync_info;
+>> +       c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+>> +       c->ops.get_line_count = dpu_hw_pp_get_line_count;
+>> +
+>> +       if (test_bit(DPU_PINGPONG_DITHER, &features) &&
+>> +               IS_SC7180_TARGET(c->hw.hwversion))
+>> +               c->ops.setup_dither = dpu_hw_pp_setup_dither;
+>>  };
+>> 
+>>  static struct dpu_hw_blk_ops dpu_hw_ops;
+>> @@ -212,7 +260,7 @@ struct dpu_hw_pingpong *dpu_hw_pingpong_init(enum 
+>> dpu_pingpong idx,
+>> 
+>>         c->idx = idx;
+>>         c->caps = cfg;
+>> -       _setup_pingpong_ops(&c->ops, c->caps);
+>> +       _setup_pingpong_ops(c, c->caps->features);
+>> 
+>>         dpu_hw_blk_init(&c->base, DPU_HW_BLK_PINGPONG, idx, 
+>> &dpu_hw_ops);
+>> 
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+>> index d73cb73..065996b 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+>> @@ -10,6 +10,8 @@
+>>  #include "dpu_hw_util.h"
+>>  #include "dpu_hw_blk.h"
+>> 
+>> +#define DITHER_MATRIX_SZ 16
+>> +
+>>  struct dpu_hw_pingpong;
+>> 
+>>  struct dpu_hw_tear_check {
+>> @@ -35,6 +37,26 @@ struct dpu_hw_pp_vsync_info {
+>>  };
+>> 
+>>  /**
+>> + * struct dpu_hw_dither_cfg - dither feature structure
+>> + * @flags: for customizing operations
+>> + * @temporal_en: temperal dither enable
+>> + * @c0_bitdepth: c0 component bit depth
+>> + * @c1_bitdepth: c1 component bit depth
+>> + * @c2_bitdepth: c2 component bit depth
+>> + * @c3_bitdepth: c2 component bit depth
+>> + * @matrix: dither strength matrix
+>> + */
+>> +struct dpu_hw_dither_cfg {
+>> +       u64 flags;
+>> +       u32 temporal_en;
+>> +       u32 c0_bitdepth;
+>> +       u32 c1_bitdepth;
+>> +       u32 c2_bitdepth;
+>> +       u32 c3_bitdepth;
+>> +       u32 matrix[DITHER_MATRIX_SZ];
+>> +};
+>> +
+>> +/**
+>>   *
+>>   * struct dpu_hw_pingpong_ops : Interface to the pingpong Hw driver 
+>> functions
+>>   *  Assumption is these functions will be called after clocks are 
+>> enabled
+>> @@ -82,6 +104,12 @@ struct dpu_hw_pingpong_ops {
+>>          * Obtain current vertical line counter
+>>          */
+>>         u32 (*get_line_count)(struct dpu_hw_pingpong *pp);
+>> +
+>> +       /**
+>> +        * Setup dither matix for pingpong block
+>> +        */
+>> +       void (*setup_dither)(struct dpu_hw_pingpong *pp,
+>> +                       struct dpu_hw_dither_cfg *cfg);
+>>  };
+>> 
+>>  struct dpu_hw_pingpong {
+>> --
+>> 1.9.1
+>> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
