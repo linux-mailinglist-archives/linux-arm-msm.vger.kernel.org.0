@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F20420A67C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 22:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF80F20A691
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 22:17:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407077AbgFYUOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 16:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43970 "EHLO
+        id S2404531AbgFYURP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 16:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405370AbgFYUOv (ORCPT
+        with ESMTP id S2405473AbgFYURO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 16:14:51 -0400
+        Thu, 25 Jun 2020 16:17:14 -0400
 Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE68C08C5DB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 13:14:51 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id m2so3841432pjv.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 13:14:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A96C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 13:17:14 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id b92so3839621pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 13:17:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=QwiovEhB7CAH1O8yfDM92FVkjjdutFaUMailucDFpaY=;
-        b=mULvLsLXB9T++eTvRcP6eutLh1Lp2WQuaMPhWZFBbv5WjoxH3CxTo2/ZGxYV9+HAQg
-         Ei2SJwymRinQcnTD5S5zmtAnZ/57nNOpEIADbRVhvdewYAvhlPG64ATi/EonqpqeZ4bK
-         CI9cGy2nhHJh1J9NYcU0K3rGgp9lwce90CnIw=
+        bh=ZfbKgemW+h2MxakeR0KWqGEyeZapu5dTocFIrlzaeTk=;
+        b=koaPYN2wBZx0y+NwH0a3Pgb4IbwCzVKE0QofUhT/yNqkp3+2eOH+J3TeQKgs0AJIid
+         yhijL7J+yBwsg1advmT17TkrfJsnIbPlHhgkbXgw68uBlowbo+9465HUE7eFCjrYKhDZ
+         wqV5Ff+vqqyUJDn+B85ahXC8e2Yxtom8h2Ls0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=QwiovEhB7CAH1O8yfDM92FVkjjdutFaUMailucDFpaY=;
-        b=b3wAvlm1oLBnIikYYGvr5OPI/H9R0XzGsyPYXyFJDXTB3GI06yp0yW1O8ZtdigJR2Q
-         6Pg+AY/cMt6lP5AxA01vyVEIkn3pC4eqhsAwtAiRgi72oDMSlqhldtpgWKBA5TOwHe3E
-         hxz2qCgvTK5ngv33rUUNCpcF18olkiiOcBafwv+dcH9zfsNknGwNWkTk3scJmHQHTO9K
-         Wc8j42pFpWPOfmPKGcdesjoJr220SBUgA1dWcbON4z0ZHfdWhTY/ZjqjJ+lIebZzvWge
-         3WUvKpqCSDbzv9NBzkHCm8+w5m5R1moldCtEpl94FoDXvYrDZBYz1NFbBelbJQ9reuvd
-         /iIg==
-X-Gm-Message-State: AOAM533Jc8rF7K0/LdP8sqAtFVk8krl+NrRVD1kERX6iUNKlXpGmdw+e
-        y3Co+MgYRhUk3FOzBoOe+dt1uA==
-X-Google-Smtp-Source: ABdhPJzoxfKLASLthYbW6n/lROcyoV7GspKguRh2ivt+5Ys1KCi9I/vVwGulO0AJzCEQ7twOEEmR2A==
-X-Received: by 2002:a17:90b:1497:: with SMTP id js23mr5328080pjb.30.1593116090737;
-        Thu, 25 Jun 2020 13:14:50 -0700 (PDT)
+        bh=ZfbKgemW+h2MxakeR0KWqGEyeZapu5dTocFIrlzaeTk=;
+        b=SaKKaeOWr5uHKCVJO7RXjasSq/goLXSAiwPfJcnT9miZZTCJIourRJg0TG53KNsMFL
+         mXYokRu7Qzutam7SpZVrFDPdcJ2gr2+uJ17jEZC26a8ef18pxoBIICGGO3317kvYPMdW
+         czRN/sTcnXPu9IdBJH/cHF+FgTy0GsLuPfaDb4PuQq918wRfB4Ch1qtBLPEv1CQK2evp
+         p3cRFhqyt17Q3G6RICLwfGLtmllFVi6vGQRClBw3kW8jByDJU8xwhfJnW5KkgNGZsWRL
+         9yePCsfU1MrLF4S3SD3aHs3J67auysMVD8O/aN056XoRUDImb0P5aG6pwmZnu9HTvnc+
+         LTWQ==
+X-Gm-Message-State: AOAM532kM54uS38Cxvogi894oVX5X4trPP/LiOa2uupi6Edupq/kUa+k
+        Eb8kQjw0VGwND/NOdrcWHwZ6dSu4uhU=
+X-Google-Smtp-Source: ABdhPJwPiKQ2jBtfYOBSS7xaUWBbx2DJaXUSav4Q73TNrW9/BI70Esu/z3iw48+y0xzuhrISTm+Jyg==
+X-Received: by 2002:a17:902:207:: with SMTP id 7mr35561059plc.169.1593116234073;
+        Thu, 25 Jun 2020 13:17:14 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:24fa:e766:52c9:e3b2])
-        by smtp.gmail.com with ESMTPSA id t6sm2824521pfd.140.2020.06.25.13.14.49
+        by smtp.gmail.com with ESMTPSA id t4sm2067565pjs.39.2020.06.25.13.17.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 13:14:50 -0700 (PDT)
+        Thu, 25 Jun 2020 13:17:13 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Evan Green <evgreen@chromium.org>,
-        Rakesh Pillai <pillair@codeaurora.org>,
         Sibi Sankar <sibis@codeaurora.org>,
+        Rakesh Pillai <pillair@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: Fix WiFi supplies on sc7180-idp
-Date:   Thu, 25 Jun 2020 13:11:44 -0700
-Message-Id: <20200625131130.1.I32960cd32bb84d6db4127c906d7e371fa29caebf@changeid>
+Subject: [REPOST PATCH] arm64: dts: qcom: Fix WiFi supplies on sc7180-idp
+Date:   Thu, 25 Jun 2020 13:17:09 -0700
+Message-Id: <20200625131658.REPOST.1.I32960cd32bb84d6db4127c906d7e371fa29caebf@changeid>
 X-Mailer: git-send-email 2.27.0.212.ge8ba1cc988-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,13 +76,13 @@ ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-3.3-ch0 not found, using dum
 
 Let's add the "-supply" suffix.
 
-I don't have an IDP setup but I have a similar board.  Testing on IDP
-would, of course, be appreciated.
-END
-
 Fixes: 1e7594a38f37 ("arm64: dts: qcom: sc7180: Add WCN3990 WLAN module device node")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
+I don't have an IDP setup but I have a similar board.  Testing on IDP
+would, of course, be appreciated.
+
+Repost because I screwed up the "after-the-cut" notes on first post.
 
  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
