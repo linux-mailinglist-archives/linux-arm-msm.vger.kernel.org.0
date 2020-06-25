@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C88920A00D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 15:35:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A524520A046
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 15:48:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405155AbgFYNew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 09:34:52 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:55578 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S2404887AbgFYNev (ORCPT
+        id S2404890AbgFYNsS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 09:48:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40552 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404888AbgFYNsR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 09:34:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1593092089;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=09+fTYNd95SDGGKDwt8BrhJmqNTFAjuqhVxVc40SVsI=;
-        b=V90esOam2b9nvpySBF/3qNLfisRtWbXS6bDW9x+yrwljorFyPenMX0hvrX7Lmss8ynAVO9
-        fhMI3XX3B+yoizCZ+GXTI/dWXjLHGie09DYgvok89hNxlBLH2n5s1RzSvI6n5BJM7QqOXb
-        MMxDNTLfr5nxupKd4o9X+kcVuqAXe7U=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-197-XgAs5RouNHa5xSizlWBozw-1; Thu, 25 Jun 2020 09:34:47 -0400
-X-MC-Unique: XgAs5RouNHa5xSizlWBozw-1
-Received: by mail-wr1-f72.google.com with SMTP id h28so6785816wrc.18
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 06:34:47 -0700 (PDT)
+        Thu, 25 Jun 2020 09:48:17 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9504C08C5C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 06:48:17 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id e6so2281817vsm.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 06:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qcjptYLlu8YiX/3FPEXIl1WOzbmhaUe5lplH8CkoFv4=;
+        b=YZUaAsN3Cfoe4wVRvvlXqZvom5U/mXmUVhgRgW0RrvQ5RwkdVPOaUeSi4rqPeCKG0G
+         k9kKuXiXjkKCeUymnoUjqf3I3TRhDXpxecMXGOOg6DTr5vJXkLQTFjY8iGvl+JMBW6lV
+         ZA5unte6LgSFrrEua1UonyayueBsmqg7utHt0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=09+fTYNd95SDGGKDwt8BrhJmqNTFAjuqhVxVc40SVsI=;
-        b=ZLhfacNDuK5iOA5UeWTr0gGcqoyqLj/gRfnpoHu3s2E3VPwgqmvgvsWKH4/dHp71EF
-         EUWCVF5K6RlBNNxgLbo2Uo3YTEFMCA6ThZjS7NZqtDvBpAYCeaTtA2koZ4/7hRRLZYNB
-         omEgZ9Ha7nzIX5nwMtyg8BO7k/AvESRYPjHmljraN5kZb7vDYDBTmStNZww15zHVRaej
-         OMKaGlat+phdkeV1XWc5x9JmOey0oJi8enbdGMgSAIhuMuBmpaP7OEPkE4grjZi9OLFI
-         0DT1c052wLiY07s1ERXlKKwAH7WbY5/c+kpX1IgHtD9/okLRMF8Yex0GlBcIX/xxYECN
-         fYQA==
-X-Gm-Message-State: AOAM533w1AR4FR2g0qmIs2YIgHmjqOqUZDU0uKYUHYcWXIgQrB4xu5zf
-        lr+PorrNoMY8ydqOsVThP0lO2j2TmwqXmgl1DD2GjDoE5AGq4ENm2qEhp8SqP0Y2iR2FIkZx+Q/
-        YDwPpz58mHgivhtBNQzP5XqJJGw==
-X-Received: by 2002:a5d:4607:: with SMTP id t7mr29457167wrq.251.1593092086514;
-        Thu, 25 Jun 2020 06:34:46 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyVs80JYUKeuedepRXnHMw9aA0kaFHrIbJMxp3wkfoS+pI6CTS5+7LKDDYqfG3a6oNxXWhJqA==
-X-Received: by 2002:a5d:4607:: with SMTP id t7mr29457132wrq.251.1593092086206;
-        Thu, 25 Jun 2020 06:34:46 -0700 (PDT)
-Received: from localhost.localdomain ([151.29.187.107])
-        by smtp.gmail.com with ESMTPSA id d28sm34118699wrc.50.2020.06.25.06.34.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 06:34:45 -0700 (PDT)
-Date:   Thu, 25 Jun 2020 15:34:43 +0200
-From:   Juri Lelli <juri.lelli@redhat.com>
-To:     Sai Harshini Nimmala <snimmala@codeaurora.org>
-Cc:     mingo@redhat.com, peterz@infradead.org, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
-        mgorman@suse.de, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, adharmap@codeaurora.org,
-        shalagra@codeaurora.org, dickey@codeaurora.org,
-        satyap@codeaurora.org, pkondeti@codeaurora.org,
-        clingutla@codeaurora.org, aiquny@codeaurora.org,
-        rgottimu@codeaurora.org, Puja Gupta <pujag@codeaurora.org>
-Subject: Re: [PATCH] Revert "sched/deadline: Remove cpu_active_mask from
- cpudl_find()"
-Message-ID: <20200625133443.GJ5763@localhost.localdomain>
-References: <1593065595-17794-1-git-send-email-snimmala@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qcjptYLlu8YiX/3FPEXIl1WOzbmhaUe5lplH8CkoFv4=;
+        b=swfkxztO1udPCLyZ/QtG1Mqz53WH4ZRSQjqy9GQVqey/u3CsasydvyK4Gm4mhY9tWe
+         3gefdwyEXnJeMMlK7qESFRBYmuD75aWmzXf1XebdXF7ScGtm4UCvFqYOmYJLqe04ccUn
+         wQvidfUoqx6yk2eZeLE5UUPxpA5GFFMzwhGB3Ouud+o0itm5+iGS8ZmEfdZT1LcIiUX+
+         AQfpi2RNffFlwaGam/QS6015oI41qxi5wKIQE3bJhRo2ZvqBvvMDkkHZMZ+q6+XTn8ZH
+         kuWtzYd4xpnsfsmIdbqF/NjCklMNBZaBW7NO6sajkFMn9wRBis/qvXBs/0PUasKSKMey
+         ulpg==
+X-Gm-Message-State: AOAM531YQSre7aEAIBT0wqzVQEgfV58mJWRH5Ths2CKD/vFiT9SS+Xof
+        YGg0a0eUDrBLaXH45GX/DcIw0u6en68=
+X-Google-Smtp-Source: ABdhPJxPctD7NOHsG1E1pnUC44cEhSX+u38FROs2YSfnfm3f3mpEi/+JFxLIO6uSRnQYiLeiu8+XxQ==
+X-Received: by 2002:a67:1e45:: with SMTP id e66mr26115331vse.95.1593092896683;
+        Thu, 25 Jun 2020 06:48:16 -0700 (PDT)
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com. [209.85.217.52])
+        by smtp.gmail.com with ESMTPSA id b21sm2052613uap.15.2020.06.25.06.48.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jun 2020 06:48:15 -0700 (PDT)
+Received: by mail-vs1-f52.google.com with SMTP id r11so3570524vsj.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2020 06:48:15 -0700 (PDT)
+X-Received: by 2002:a67:62c4:: with SMTP id w187mr25684156vsb.109.1593092894920;
+ Thu, 25 Jun 2020 06:48:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1593065595-17794-1-git-send-email-snimmala@codeaurora.org>
+References: <20200625103123.7240-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20200625103123.7240-1-saiprakash.ranjan@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 25 Jun 2020 06:48:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WONg5C0Twm7b=aED21VLb6GLk4K6DMmYcSXVLAtdkUZg@mail.gmail.com>
+Message-ID: <CAD=FV=WONg5C0Twm7b=aED21VLb6GLk4K6DMmYcSXVLAtdkUZg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: Add KRYO{3,4}XX silver CPU cores to SSB safelist
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -77,57 +75,28 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On 24/06/20 23:13, Sai Harshini Nimmala wrote:
-> The original commit 9659e1ee removes checking the cpu_active_mask
-> while finding the best cpu to place a deadline task, citing the reason that
-> this mask rarely changes and removing the check will give performance
-> gains.
-> However, on hotplugging, the cpu dying path has a brief duration between
-> the CPUHP_TEARDOWN_CPU and CPUHP_AP_SCHED_STARTING hotplug states where
-> the DL task can be scheduled on this cpu because the corresponding cpu
-> bit in cpu->free_cpus has not been cleared yet. Without the
-> cpu_active_mask check we could end up putting a DL task on such cpus
-> leading to a BUG.
-> The cpu_active_mask will be updated promptly before either of these
-> states and will provide a more accurate check for the use case above.
-> 
-> Signed-off-by: Puja Gupta <pujag@codeaurora.org>
-> Signed-off-by: Sai Harshini Nimmala <snimmala@codeaurora.org>
+On Thu, Jun 25, 2020 at 3:31 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> QCOM KRYO{3,4}XX silver/LITTLE CPU cores are based on
+> Cortex-A55 and are SSB safe, hence add them to SSB
+> safelist -> arm64_ssb_cpus[].
+>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  kernel/sched/cpudeadline.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
-> index 5cc4012..0346837 100644
-> --- a/kernel/sched/cpudeadline.c
-> +++ b/kernel/sched/cpudeadline.c
-> @@ -120,7 +120,8 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
->  	const struct sched_dl_entity *dl_se = &p->dl;
->  
->  	if (later_mask &&
-> -	    cpumask_and(later_mask, cp->free_cpus, p->cpus_ptr)) {
-> +	    cpumask_and(later_mask, cp->free_cpus, p->cpus_ptr) &&
-> +	    cpumask_and(later_mask, later_mask, cpu_active_mask)) {
->  		return 1;
->  	} else {
->  		int best_cpu = cpudl_maximum(cp);
+>  arch/arm64/kernel/cpu_errata.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+> index ad06d6802d2e..cf50c53e9357 100644
+> --- a/arch/arm64/kernel/cpu_errata.c
+> +++ b/arch/arm64/kernel/cpu_errata.c
+> @@ -460,6 +460,8 @@ static const struct midr_range arm64_ssb_cpus[] = {
+>         MIDR_ALL_VERSIONS(MIDR_CORTEX_A53),
+>         MIDR_ALL_VERSIONS(MIDR_CORTEX_A55),
+>         MIDR_ALL_VERSIONS(MIDR_BRAHMA_B53),
+> +       MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
+> +       MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
 
-So, I believe the patch you want to revert only removed the condition
-above.
-
-> @@ -128,6 +129,7 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
->  		WARN_ON(best_cpu != -1 && !cpu_present(best_cpu));
->  
->  		if (cpumask_test_cpu(best_cpu, p->cpus_ptr) &&
-> +		    cpumask_test_cpu(best_cpu, cpu_active_mask) &&
->  		    dl_time_before(dl_se->deadline, cp->elements[0].dl)) {
->  			if (later_mask)
->  				cpumask_set_cpu(best_cpu, later_mask);
-
-Did you actually experience issues with this second part as well? I'm
-thinking the WARN_ON should have fired in that case, no?
-
-Thanks,
-
-Juri
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
