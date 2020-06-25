@@ -2,165 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A60BD209855
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 03:52:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50ECB2098C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 05:29:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389239AbgFYBwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 21:52:41 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:62860 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389238AbgFYBwl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 21:52:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593049960; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=8B6Pxy32SmGdNLfWwVSEcjH7KvONhou3Vtz1xrwMALQ=; b=lo5wCOnDnvSOu/AlzGWamg6PUE+LhE/HaejaOctFGo14qUuyKLFBrp0ksUBu6WbHR8tpPcM8
- I5oC0xSfZjSxbsydGJotnhJ+2J06k9pabGkyc43+vebA4OvbjV0FHGjBK/U1+nU3OD3jszfs
- MJUpU86b/ZRppVrk/JA+D5doVsc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n17.prod.us-east-1.postgun.com with SMTP id
- 5ef403570206ad41d12b1014 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 01:52:23
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 58EFBC433C8; Thu, 25 Jun 2020 01:52:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70DB7C433C6;
-        Thu, 25 Jun 2020 01:52:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70DB7C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v3 3/4] docs: Add documentation for user space client
- interface
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org
-References: <1591899224-3403-1-git-send-email-hemantk@codeaurora.org>
- <1591899224-3403-4-git-send-email-hemantk@codeaurora.org>
- <20200619063948.GC3245@Mani-XPS-13-9360>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <7b64f78e-40c7-7c65-3832-4bbc5da93674@codeaurora.org>
-Date:   Wed, 24 Jun 2020 18:52:20 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S2389457AbgFYD3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 23:29:30 -0400
+Received: from mailgw02.mediatek.com ([210.61.82.184]:48767 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S2388470AbgFYD33 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jun 2020 23:29:29 -0400
+X-UUID: f498513048ee4020b3433167c376d291-20200625
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=fENOmocMCM9mBEK5ON5YZH5NV6oEQvRnIxeaSBkgVCI=;
+        b=IfIPZ6PQ5A7++3XjqWHG9l/8AuET2XF7hYLHV2B05fR/IM2rGyJMKUAjijG7kxdEER7oVxFSUupXU1066e2+wD8uqDCnHeqhA0jwVIFaO73Dei8V5U45/Hg+qQs6QWxGJ01UL9JfqEbwZCGl7e6pGkS8xf0azVOj82uo8JVf9Vo=;
+X-UUID: f498513048ee4020b3433167c376d291-20200625
+Received: from mtkcas10.mediatek.inc [(172.21.101.39)] by mailgw02.mediatek.com
+        (envelope-from <stanley.chu@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.10 Build 0809 with TLS)
+        with ESMTP id 2081894202; Thu, 25 Jun 2020 11:29:26 +0800
+Received: from mtkcas08.mediatek.inc (172.21.101.126) by
+ mtkmbs05n2.mediatek.inc (172.21.101.140) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Thu, 25 Jun 2020 11:29:23 +0800
+Received: from mtkcas08.mediatek.inc (172.21.101.126) by mtkcas08.mediatek.inc
+ (172.21.101.126) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 25 Jun
+ 2020 11:29:22 +0800
+Received: from [172.21.77.33] (172.21.77.33) by mtkcas08.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Thu, 25 Jun 2020 11:29:22 +0800
+Message-ID: <1593055764.3278.5.camel@mtkswgap22>
+Subject: Re: [PATCH v1 1/3] scsi: ufs: add write booster feature support
+From:   Stanley Chu <stanley.chu@mediatek.com>
+To:     Steev Klimaszewski <steev@kali.org>
+CC:     Kyuho Choi <chlrbgh0@gmail.com>, Avri Altman <Avri.Altman@wdc.com>,
+        "Rob Clark" <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        "Bart Van Assche" <bvanassche@acm.org>,
+        open list <linux-kernel@vger.kernel.org>
+Date:   Thu, 25 Jun 2020 11:29:24 +0800
+In-Reply-To: <cd531342-cf8a-b3c1-0672-1101f7e4cb52@kali.org>
+References: <cover.1586374414.git.asutoshd@codeaurora.org>
+         <3c186284280c37c76cf77bf482dde725359b8a8a.1586382357.git.asutoshd@codeaurora.org>
+         <CAF6AEGvgmfYoybv4XMVVH85fGMr-eDfpzxdzkFWCx-2N5PEw2w@mail.gmail.com>
+         <SN6PR04MB46402FD7981F9FCA2111AB37FC960@SN6PR04MB4640.namprd04.prod.outlook.com>
+         <20200621075539.GK128451@builder.lan>
+         <CAF6AEGuG3XAqN_sedxk9GRm_9yK+a4OH56CZPmbHx+SW-FNVPQ@mail.gmail.com>
+         <CAP2JTQJ735yQYSeHgDPqnT0mRUTt1uKVAHacOHmSj3WK48PUog@mail.gmail.com>
+         <SN6PR04MB4640DCE37D9D7F4CD99F2195FC940@SN6PR04MB4640.namprd04.prod.outlook.com>
+         <CAP2JTQKu77risdNFBy5zwHoRU3qZw2dMi5Hxfi5Tyf6b9GB3XQ@mail.gmail.com>
+         <9d3afac3-c245-a746-b029-77aa66c93f9d@kali.org>
+         <1592963601.3278.1.camel@mtkswgap22>
+         <cd531342-cf8a-b3c1-0672-1101f7e4cb52@kali.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 MIME-Version: 1.0
-In-Reply-To: <20200619063948.GC3245@Mani-XPS-13-9360>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+SGkgU3RlZXYsDQoNCk9uIFdlZCwgMjAyMC0wNi0yNCBhdCAxMToxNSAtMDUwMCwgU3RlZXYgS2xp
+bWFzemV3c2tpIHdyb3RlOg0KPiBPbiA2LzIzLzIwIDg6NTMgUE0sIFN0YW5sZXkgQ2h1IHdyb3Rl
+Og0KPiA+IEhpIFN0ZWV2LA0KPiA+DQo+ID4gUGxlYXNlIGhlbHAgdHJ5IGJlbG93IHNpbXBsZSBw
+YXRjaCB0byBzZWUgaWYgYWJvdmUgV3JpdGVCb29zdGVyIG1lc3NhZ2VzDQo+ID4gY2FuIGJlIGVs
+aW1pbmF0ZWQuDQo+ID4NCj4gPg0KPiA+IC0tLQ0KPiA+ICBkcml2ZXJzL3Njc2kvdWZzL3Vmc2hj
+ZC5jIHwgMiArKw0KPiA+ICAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspDQo+ID4NCj4g
+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9zY3NpL3Vmcy91ZnNoY2QuYyBiL2RyaXZlcnMvc2NzaS91
+ZnMvdWZzaGNkLmMNCj4gPiBpbmRleCBmMTczYWQxYmQ3OWYuLjA4OWMwNzg1ZjBiMyAxMDA2NDQN
+Cj4gPiAtLS0gYS9kcml2ZXJzL3Njc2kvdWZzL3Vmc2hjZC5jDQo+ID4gKysrIGIvZHJpdmVycy9z
+Y3NpL3Vmcy91ZnNoY2QuYw0KPiA+IEBAIC02OTg1LDYgKzY5ODUsOCBAQCBzdGF0aWMgaW50IHVm
+c19nZXRfZGV2aWNlX2Rlc2Moc3RydWN0IHVmc19oYmENCj4gPiAqaGJhKQ0KPiA+ICAJICAgIGRl
+dl9pbmZvLT53c3BlY3ZlcnNpb24gPT0gMHgyMjAgfHwNCj4gPiAgCSAgICAoaGJhLT5kZXZfcXVp
+cmtzICYgVUZTX0RFVklDRV9RVUlSS19TVVBQT1JUX0VYVEVOREVEX0ZFQVRVUkVTKSkNCj4gPiAg
+CQl1ZnNoY2Rfd2JfcHJvYmUoaGJhLCBkZXNjX2J1Zik7DQo+ID4gKwllbHNlDQo+ID4gKwkJaGJh
+LT5jYXBzICY9IH5VRlNIQ0RfQ0FQX1dCX0VOOw0KPiA+ICANCj4gPiAgCS8qDQo+ID4gIAkgKiB1
+ZnNoY2RfcmVhZF9zdHJpbmdfZGVzYyByZXR1cm5zIHNpemUgb2YgdGhlIHN0cmluZw0KPiANCj4g
+SGkgU3RhbmxleSwNCj4gDQo+IFRoYXQgd29ya2VkLg0KPiANCj4gDQo+ICAxLg0KPiAgICAgWyAg
+ICAwLjcwNDc3NV0gdWZzaGNkLXFjb20gMWQ4NDAwMC51ZnNoYzogdWZzaGNkX3BvcHVsYXRlX3Zy
+ZWc6DQo+ICAgICBVbmFibGUgdG8gZmluZCB2ZGQtaGJhLXN1cHBseSByZWd1bGF0b3IsIGFzc3Vt
+aW5nIGVuYWJsZWQNCj4gIDIuDQo+ICAgICBbICAgIDAuNzA0NzgxXSB1ZnNoY2QtcWNvbSAxZDg0
+MDAwLnVmc2hjOiB1ZnNoY2RfcG9wdWxhdGVfdnJlZzoNCj4gICAgIFVuYWJsZSB0byBmaW5kIHZj
+Y3Etc3VwcGx5IHJlZ3VsYXRvciwgYXNzdW1pbmcgZW5hYmxlZA0KPiAgMy4NCj4gICAgIFsgICAg
+MC43MDQ3ODNdIHVmc2hjZC1xY29tIDFkODQwMDAudWZzaGM6IHVmc2hjZF9wb3B1bGF0ZV92cmVn
+Og0KPiAgICAgVW5hYmxlIHRvIGZpbmQgdmNjcTItc3VwcGx5IHJlZ3VsYXRvciwgYXNzdW1pbmcg
+ZW5hYmxlZA0KPiAgNC4NCj4gICAgIFsgICAgMC43MDU2MThdIHVmc2hjZC1xY29tIDFkODQwMDAu
+dWZzaGM6IEZvdW5kIFFDIElubGluZSBDcnlwdG8NCj4gICAgIEVuZ2luZSAoSUNFKSB2My4xLjc1
+DQo+ICA1Lg0KPiAgICAgWyAgICAwLjcwNzQ5Nl0gc2NzaSBob3N0MDogdWZzaGNkDQo+ICA2Lg0K
+PiAgICAgWyAgICAwLjcyMDQxNV0gQUxTQSBkZXZpY2UgbGlzdDoNCj4gIDcuDQo+ICAgICBbICAg
+IDAuNzIwNDIyXSAgIE5vIHNvdW5kY2FyZHMgZm91bmQuDQo+ICA4Lg0KPiAgICAgWyAgICAwLjcz
+NDI0NV0gdWZzaGNkLXFjb20gMWQ4NDAwMC51ZnNoYzogdWZzaGNkX3ByaW50X3B3cl9pbmZvOltS
+WCwNCj4gICAgIFRYXTogZ2Vhcj1bMSwgMV0sIGxhbmVbMSwgMV0sIHB3cltTTE9XQVVUT19NT0RF
+LCBTTE9XQVVUT19NT0RFXSwNCj4gICAgIHJhdGUgPSAwDQo+ICA5Lg0KPiAgICAgWyAgICAwLjg0
+NTE1OV0gdWZzaGNkLXFjb20gMWQ4NDAwMC51ZnNoYzogdWZzaGNkX3ByaW50X3B3cl9pbmZvOltS
+WCwNCj4gICAgIFRYXTogZ2Vhcj1bMywgM10sIGxhbmVbMiwgMl0sIHB3cltGQVNUIE1PREUsIEZB
+U1QgTU9ERV0sIHJhdGUgPSAyDQo+IDEwLg0KPiAgICAgWyAgICAwLjg0NjM5OV0gdWZzaGNkLXFj
+b20gMWQ4NDAwMC51ZnNoYzoNCj4gICAgIHVmc2hjZF9maW5kX21heF9zdXBfYWN0aXZlX2ljY19s
+ZXZlbDogUmVndWxhdG9yIGNhcGFiaWxpdHkgd2FzIG5vdA0KPiAgICAgc2V0LCBhY3R2SWNjTGV2
+ZWw9MA0KPiAxMS4NCj4gICAgIFsgICAgMC44NDkyNThdIHNjc2kgMDowOjA6NDk0ODg6IFdlbGwt
+a25vd24gTFVOICAgIFNBTVNVTkcNCj4gICAgICBLTFVERzRVMUVBLUIwQzEgIDA1MDAgUFE6IDAg
+QU5TSTogNg0KPiAxMi4NCj4gICAgIFsgICAgMC44NTMzNzJdIHNjc2kgMDowOjA6NDk0NzY6IFdl
+bGwta25vd24gTFVOICAgIFNBTVNVTkcNCj4gICAgICBLTFVERzRVMUVBLUIwQzEgIDA1MDAgUFE6
+IDAgQU5TSTogNg0KPiAxMy4NCj4gICAgIFsgICAgMC44NTUxMzVdIHNjc2kgMDowOjA6NDk0NTY6
+IFdlbGwta25vd24gTFVOICAgIFNBTVNVTkcNCj4gICAgICBLTFVERzRVMUVBLUIwQzEgIDA1MDAg
+UFE6IDAgQU5TSTogNg0KPiAxNC4NCj4gICAgIFsgICAgMC44NTcwNTBdIHNjc2kgMDowOjA6MDog
+RGlyZWN0LUFjY2VzcyAgICAgU0FNU1VORw0KPiAgICAgIEtMVURHNFUxRUEtQjBDMSAgMDUwMCBQ
+UTogMCBBTlNJOiA2DQo+IDE1Lg0KPiAgICAgWyAgICAwLjg1ODI5N10gc2QgMDowOjA6MDogUG93
+ZXItb24gb3IgZGV2aWNlIHJlc2V0IG9jY3VycmVkDQo+IDE2Lg0KPiAgICAgWyAgICAwLjg1OTk4
+NV0gc2NzaSAwOjA6MDoxOiBEaXJlY3QtQWNjZXNzICAgICBTQU1TVU5HDQo+ICAgICAgS0xVREc0
+VTFFQS1CMEMxICAwNTAwIFBROiAwIEFOU0k6IDYNCj4gMTcuDQo+ICAgICBbICAgIDAuODYwNzAy
+XSBzZCAwOjA6MDowOiBbc2RhXSAyOTc2NTYzMiA0MDk2LWJ5dGUgbG9naWNhbCBibG9ja3M6DQo+
+ICAgICAoMTIyIEdCLzExNCBHaUIpDQo+IA0KPiAoZnVsbCBkbWVzZyBvdXRwdXQgYXQgaHR0cHM6
+Ly9wYXN0ZWJpbi5jb20vUHZmcWU0MlAgKQ0KPiANCj4gSSBndWVzcyB5b3UgY2FuIHRocm93IG15
+IFRlc3RlZC1ieSBvbiB0aGVyZS4NCj4gDQoNClRoYW5rcyBzbyBtdWNoIGZvciB0aGUgdGVzdCEN
+CkkgaGF2ZSByZS1zZW50IHRoZSBwYXRjaCB3aXRoIHlvdXIgIlRlc3RlZC1CeSIgdGFnIDogKQ0K
+DQpUaGFua3MgYSBsb3QsDQpTdGFubGV5IENodQ0KDQoNCg==
 
-On 6/18/20 11:39 PM, Manivannan Sadhasivam wrote:
-> On Thu, Jun 11, 2020 at 11:13:43AM -0700, Hemant Kumar wrote:
->> MHI user space client driver is creating device file node
->> for user application to perform file operations. File
->> operations are handled by MHI core driver. Currently
->> Loopback MHI channel is supported by this driver.
->>
->> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
->> ---
->>   Documentation/mhi/index.rst |  1 +
->>   Documentation/mhi/uci.rst   | 19 +++++++++++++++++++
->>   2 files changed, 20 insertions(+)
->>   create mode 100644 Documentation/mhi/uci.rst
->>
->> diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
->> index 1d8dec3..c75a371 100644
->> --- a/Documentation/mhi/index.rst
->> +++ b/Documentation/mhi/index.rst
->> @@ -9,6 +9,7 @@ MHI
->>   
->>      mhi
->>      topology
->> +   uci
->>   
->>   .. only::  subproject and html
->>   
->> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
->> new file mode 100644
->> index 0000000..a5c5c4f
->> --- /dev/null
->> +++ b/Documentation/mhi/uci.rst
->> @@ -0,0 +1,19 @@
->> +.. SPDX-License-Identifier: GPL-2.0
->> +
->> +=================================
->> +User space Client Interface (UCI)
-> 
-> Stick to 'Userspace' everywhere.
-Done.
-> 
->> +=================================
->> +
->> +UCI driver enables user space clients to communicate to external MHI devices
->> +like modem and WLAN. It creates standard character device file nodes for user
-> 
-> UCI driver creates a single char device, isn't it?
-No, it is created per device name. For example Loopback has its own char 
-device file node. if we add another channel for a new mhi device new 
-device file node would be created.
-> 
->> +space clients to perform open, read, write, pool and close file operations.
->> +
-> 
-> poll? Btw, you need to mention explicitly how this char device can be used.
-> You are just mentioning standard file operations.
-Will fix poll.My idea was indeed to mention generic file operations so 
-that we dont have to be specific with use case. Any userspace entity who 
-wants to communicate over mhi can use the driver. Reason we have this 
-driver is to abstract the mhi core specific details. Even for loopback 
-use case, userspace can echo to device file node on one channel and get 
-a same in response from another channel back. I can add more examples of
-other user space drivers use case if that helps.
-> 
->> +Device file node is created with format:-
->> +
->> +/dev/mhi_<controller_name>_<mhi_device_name>
->> +
->> +controller_name is the name of underlying bus used to transfer data.
-> 
-> underlying controller instance.
-Done.
-> 
->> +mhi_device_name is the name of the MHI channel being used by MHI client
-> 
-> What do you mean by MHI client here? Are you referring to userspace client?
-yes. i can say "MHI client in userspace"?
-> 
->> +to send or receive data using MHI protocol. MHI channels are statically
->> +defined by MHI specification. Driver currently supports LOOPBACK channel
->> +index 0 (Host to device) and 1 (Device to Host).
-> 
-> s/index/identifier
-Done.
-> 
-> And explain a bit on how this LOOPBACK channel is getting used.
-Done.
-> 
-> Thanks,
-> Mani
-> 
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
