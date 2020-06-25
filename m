@@ -2,109 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66DC42099BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 08:13:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EABFF2099CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 08:23:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389693AbgFYGNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 02:13:54 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:52190 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727800AbgFYGNy (ORCPT
+        id S2389998AbgFYGXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Jun 2020 02:23:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56584 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389859AbgFYGXf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 02:13:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593065634; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=OokbzRGBh4vM/wAytBHd5gph7Yx4DvpSixDVA2ZxHJ4=; b=LRUs5CEqZU6046Y8yCVVmc+wUOh/uxrb2H/cBpaOGw2bVPg8jvUNFP95asJXNu6OgHdEkkr1
- KGjQxsceBeSzKCRmmD5b9VbJqYQNT39w0idhcPSSh+faeRw0+1WYu0IS/sl1Lx9XXEvk2lSK
- MzNm64P/x2ih77g6RBtm/CYptzY=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-east-1.postgun.com with SMTP id
- 5ef4408ba6e154319f53344c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 06:13:31
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A6ABCC43395; Thu, 25 Jun 2020 06:13:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from snimmala-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: snimmala)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EECCCC433C6;
-        Thu, 25 Jun 2020 06:13:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EECCCC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=snimmala@codeaurora.org
-From:   Sai Harshini Nimmala <snimmala@codeaurora.org>
-To:     mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Sai Harshini Nimmala <snimmala@codeaurora.org>,
-        adharmap@codeaurora.org, shalagra@codeaurora.org,
-        dickey@codeaurora.org, satyap@codeaurora.org,
-        pkondeti@codeaurora.org, clingutla@codeaurora.org,
-        aiquny@codeaurora.org, rgottimu@codeaurora.org,
-        Puja Gupta <pujag@codeaurora.org>
-Subject: [PATCH] Revert "sched/deadline: Remove cpu_active_mask from cpudl_find()"
-Date:   Wed, 24 Jun 2020 23:13:15 -0700
-Message-Id: <1593065595-17794-1-git-send-email-snimmala@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 25 Jun 2020 02:23:35 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D73DC0613ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:23:35 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id j1so2570155pfe.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 23:23:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/l5lZUAwAOiLrNXEv1gvSMAQqUbQiJYKCiZiNEaYUM8=;
+        b=U0hJmRHWVGxpMRi8vUYCo71xeUUnavayuQF7tn8jVEa5OmqrLq0l8OCVSkL4Dfl+v8
+         dCv8RrNBQSSLW2Kluh2RQ7/4qOe7ruDjrfo2MbTZSs6ai2a9Od2OouoWgYFX/0uQI0Tw
+         ww8sIZ4UKYuXN9wnsQ5H0ikJqIZLCnfSkGK+wJtI2cYbXUqLWCU6iRFetUK4GM4gWmlr
+         3VDSdfqHN4ngxdlffOyDZKFG7I3rdXwJrHbyAttp5SW7APOM8/KZTCa9F9H8SkUzvtwv
+         yOu+8Sf5kEfz+U95YblnReoeMblfWBA5vmlTWN/yFt94TWCxTPP93GSGAPXQxvXC7ZBh
+         rE7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/l5lZUAwAOiLrNXEv1gvSMAQqUbQiJYKCiZiNEaYUM8=;
+        b=hKoFzSmkadh/fFq/YUFvtCquXUcTilwumvOUkeUoOjtp9GVKKPdIkSPzPUHth7jgJH
+         6HwbS5Vo4YO5O2NtluPGQTkDI1GwfohE82k+y8wSueMZjbDSpbB67wN4vYlKzZECIfeH
+         OhICm+x31W1Ek2KJ0FRuggIlNpw6F2a0flyTl8J5VWZqdVumRl+8m4l6R1a7X+8m8LKV
+         AsIf+hMFm/VKDeyR588GnChCY0D6UvXs16BNWoP4GAeY/P3bR9dzAZ3suR30LutzsEIb
+         /A9klviaP9QfiFPPwDRaYx608Cj1ZUuMWF7rPB1Ahd1UBZgTitlBv48omjY7BcmsVwJl
+         jo2A==
+X-Gm-Message-State: AOAM531qkgcg0boVZm7djDM33SDObXr84lp2Dyep2A6Qhve8wLFZUlDG
+        bHkNfUu1S43lQFNR29ZqCFslFd9+1Q==
+X-Google-Smtp-Source: ABdhPJzWDZNU4b7m/1RZxdo/B/wqAes/B5eEk3KQ8pd3S3r5nMg/dgAmTM438eteq25dwOTXwJa8Og==
+X-Received: by 2002:a63:d208:: with SMTP id a8mr24550351pgg.351.1593066214532;
+        Wed, 24 Jun 2020 23:23:34 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id y12sm22058672pfm.158.2020.06.24.23.23.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Jun 2020 23:23:33 -0700 (PDT)
+Date:   Thu, 25 Jun 2020 11:53:27 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org
+Subject: Re: [PATCH v3 3/4] docs: Add documentation for user space client
+ interface
+Message-ID: <20200625062327.GA6965@Mani-XPS-13-9360>
+References: <1591899224-3403-1-git-send-email-hemantk@codeaurora.org>
+ <1591899224-3403-4-git-send-email-hemantk@codeaurora.org>
+ <20200619063948.GC3245@Mani-XPS-13-9360>
+ <7b64f78e-40c7-7c65-3832-4bbc5da93674@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7b64f78e-40c7-7c65-3832-4bbc5da93674@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The original commit 9659e1ee removes checking the cpu_active_mask
-while finding the best cpu to place a deadline task, citing the reason that
-this mask rarely changes and removing the check will give performance
-gains.
-However, on hotplugging, the cpu dying path has a brief duration between
-the CPUHP_TEARDOWN_CPU and CPUHP_AP_SCHED_STARTING hotplug states where
-the DL task can be scheduled on this cpu because the corresponding cpu
-bit in cpu->free_cpus has not been cleared yet. Without the
-cpu_active_mask check we could end up putting a DL task on such cpus
-leading to a BUG.
-The cpu_active_mask will be updated promptly before either of these
-states and will provide a more accurate check for the use case above.
+On Wed, Jun 24, 2020 at 06:52:20PM -0700, Hemant Kumar wrote:
+> Hi Mani,
+> 
+> On 6/18/20 11:39 PM, Manivannan Sadhasivam wrote:
+> > On Thu, Jun 11, 2020 at 11:13:43AM -0700, Hemant Kumar wrote:
+> > > MHI user space client driver is creating device file node
+> > > for user application to perform file operations. File
+> > > operations are handled by MHI core driver. Currently
+> > > Loopback MHI channel is supported by this driver.
+> > > 
+> > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> > > ---
+> > >   Documentation/mhi/index.rst |  1 +
+> > >   Documentation/mhi/uci.rst   | 19 +++++++++++++++++++
+> > >   2 files changed, 20 insertions(+)
+> > >   create mode 100644 Documentation/mhi/uci.rst
+> > > 
+> > > diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
+> > > index 1d8dec3..c75a371 100644
+> > > --- a/Documentation/mhi/index.rst
+> > > +++ b/Documentation/mhi/index.rst
+> > > @@ -9,6 +9,7 @@ MHI
+> > >      mhi
+> > >      topology
+> > > +   uci
+> > >   .. only::  subproject and html
+> > > diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
+> > > new file mode 100644
+> > > index 0000000..a5c5c4f
+> > > --- /dev/null
+> > > +++ b/Documentation/mhi/uci.rst
+> > > @@ -0,0 +1,19 @@
+> > > +.. SPDX-License-Identifier: GPL-2.0
+> > > +
+> > > +=================================
+> > > +User space Client Interface (UCI)
+> > 
+> > Stick to 'Userspace' everywhere.
+> Done.
+> > 
+> > > +=================================
+> > > +
+> > > +UCI driver enables user space clients to communicate to external MHI devices
+> > > +like modem and WLAN. It creates standard character device file nodes for user
+> > 
+> > UCI driver creates a single char device, isn't it?
+> No, it is created per device name. For example Loopback has its own char
+> device file node. if we add another channel for a new mhi device new device
+> file node would be created.
 
-Signed-off-by: Puja Gupta <pujag@codeaurora.org>
-Signed-off-by: Sai Harshini Nimmala <snimmala@codeaurora.org>
----
- kernel/sched/cpudeadline.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Okay, then please add a line saying that there will be separate chardev nodes
+for each channel specified.
 
-diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
-index 5cc4012..0346837 100644
---- a/kernel/sched/cpudeadline.c
-+++ b/kernel/sched/cpudeadline.c
-@@ -120,7 +120,8 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
- 	const struct sched_dl_entity *dl_se = &p->dl;
- 
- 	if (later_mask &&
--	    cpumask_and(later_mask, cp->free_cpus, p->cpus_ptr)) {
-+	    cpumask_and(later_mask, cp->free_cpus, p->cpus_ptr) &&
-+	    cpumask_and(later_mask, later_mask, cpu_active_mask)) {
- 		return 1;
- 	} else {
- 		int best_cpu = cpudl_maximum(cp);
-@@ -128,6 +129,7 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
- 		WARN_ON(best_cpu != -1 && !cpu_present(best_cpu));
- 
- 		if (cpumask_test_cpu(best_cpu, p->cpus_ptr) &&
-+		    cpumask_test_cpu(best_cpu, cpu_active_mask) &&
- 		    dl_time_before(dl_se->deadline, cp->elements[0].dl)) {
- 			if (later_mask)
- 				cpumask_set_cpu(best_cpu, later_mask);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> > 
+> > > +space clients to perform open, read, write, pool and close file operations.
+> > > +
+> > 
+> > poll? Btw, you need to mention explicitly how this char device can be used.
+> > You are just mentioning standard file operations.
+> Will fix poll.My idea was indeed to mention generic file operations so that
+> we dont have to be specific with use case. Any userspace entity who wants to
+> communicate over mhi can use the driver. Reason we have this driver is to
+> abstract the mhi core specific details. Even for loopback use case,
+> userspace can echo to device file node on one channel and get a same in
+> response from another channel back. I can add more examples of
+> other user space drivers use case if that helps.
 
+Yes, just add couple of examples.
+
+> > 
+> > > +Device file node is created with format:-
+> > > +
+> > > +/dev/mhi_<controller_name>_<mhi_device_name>
+> > > +
+> > > +controller_name is the name of underlying bus used to transfer data.
+> > 
+> > underlying controller instance.
+> Done.
+> > 
+> > > +mhi_device_name is the name of the MHI channel being used by MHI client
+> > 
+> > What do you mean by MHI client here? Are you referring to userspace client?
+> yes. i can say "MHI client in userspace"?
+
+Okay. The naming conventions used in MHI are a bit weird. So from the start
+itself I stuck with some fixed names and client is one of them. The term client
+itself refers to both client device and a driver used to talk to the device in
+the host. So we should explicitly mention if it is a userspace client driver
+or the client device.
+
+Thanks,
+Mani
+
+> > 
+> > > +to send or receive data using MHI protocol. MHI channels are statically
+> > > +defined by MHI specification. Driver currently supports LOOPBACK channel
+> > > +index 0 (Host to device) and 1 (Device to Host).
+> > 
+> > s/index/identifier
+> Done.
+> > 
+> > And explain a bit on how this LOOPBACK channel is getting used.
+> Done.
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > -- 
+> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > > a Linux Foundation Collaborative Project
+> > > 
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
