@@ -2,261 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 395DB209836
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 03:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A60BD209855
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2020 03:52:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388977AbgFYBZL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Jun 2020 21:25:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39236 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388930AbgFYBZL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Jun 2020 21:25:11 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE865C061795
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 18:25:10 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id f9so2231638pfn.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2020 18:25:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=m3/wAfDopqLqGYnRmo8UqA/J5isUr1IvnmUUrUey3ng=;
-        b=jjcJaC9t2Zw//ZqFTxDolCBwP6t5Cul/FDBHEPhMcbtunRr788BYn41C5eb2wRAel1
-         CQPzpHLtZy/sWu7oLEVobefErbEKWbxZ7QCUnKz205KdbbCTKBFWk9Pffk3/mMzycwcu
-         ybP/e+kLOd6OQMHQEN/4dlBqR9yeQiGDSNK+g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=m3/wAfDopqLqGYnRmo8UqA/J5isUr1IvnmUUrUey3ng=;
-        b=B9UYBoeimtPJL5PHVwacMSQpo56hIUz05bWVhAKDyn6UER4+dYp+ewyBc+BMKF7q4Q
-         5iqEQ8w8VT/ligLNMzFbO0whEnamupHCoUs1SKI6SiIUBp9o1Mfpu/xbQyww5l3dkLyE
-         Rl5RgwMQvZiwLwVqmYGFIIWe6mNwtAAa3xrWc62hKPHX6NfCT1nlE72xe8nhP4jHsBDy
-         Zi7HeGPEkxagNcatn/5kMm1dwdAtk5GDSsSaN65/eKaHyWc1lb1GkxcCophI/W2BAlt+
-         3P2Q6E2Kio2SUmEpA7BRPux04bCduN/CbGcHO8F56f7x0MMPetbYB5o1wWCzL36xAz11
-         yWlA==
-X-Gm-Message-State: AOAM531tfEEnaR72vetMt1bkUvicwsmANwtE/2KFAhJqihGNDSY6CAvG
-        9gCrAYzvciSPCOmZo1O4Do4v/Swc6gs=
-X-Google-Smtp-Source: ABdhPJx1fCeBRUXodkZylAdXFohaDuXXT1rMom+9iZ4wqDv2csLv6+U6Xd4DxR+EHj+M2X14D4gfTA==
-X-Received: by 2002:a63:b30f:: with SMTP id i15mr24640936pgf.42.1593048309953;
-        Wed, 24 Jun 2020 18:25:09 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id w30sm4481777pjj.3.2020.06.24.18.25.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2020 18:25:09 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S2389239AbgFYBwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Jun 2020 21:52:41 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:62860 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389238AbgFYBwl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Jun 2020 21:52:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593049960; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=8B6Pxy32SmGdNLfWwVSEcjH7KvONhou3Vtz1xrwMALQ=; b=lo5wCOnDnvSOu/AlzGWamg6PUE+LhE/HaejaOctFGo14qUuyKLFBrp0ksUBu6WbHR8tpPcM8
+ I5oC0xSfZjSxbsydGJotnhJ+2J06k9pabGkyc43+vebA4OvbjV0FHGjBK/U1+nU3OD3jszfs
+ MJUpU86b/ZRppVrk/JA+D5doVsc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n17.prod.us-east-1.postgun.com with SMTP id
+ 5ef403570206ad41d12b1014 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 25 Jun 2020 01:52:23
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 58EFBC433C8; Thu, 25 Jun 2020 01:52:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70DB7C433C6;
+        Thu, 25 Jun 2020 01:52:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70DB7C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v3 3/4] docs: Add documentation for user space client
+ interface
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org
+References: <1591899224-3403-1-git-send-email-hemantk@codeaurora.org>
+ <1591899224-3403-4-git-send-email-hemantk@codeaurora.org>
+ <20200619063948.GC3245@Mani-XPS-13-9360>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <7b64f78e-40c7-7c65-3832-4bbc5da93674@codeaurora.org>
+Date:   Wed, 24 Jun 2020 18:52:20 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200624170746.1.I997a428f58ef9d48b37a27a028360f34e66c00ec@changeid>
-References: <20200624170746.1.I997a428f58ef9d48b37a27a028360f34e66c00ec@changeid>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Switch SPI to use GPIO for CS
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Date:   Wed, 24 Jun 2020 18:25:08 -0700
-Message-ID: <159304830840.62212.6716845486281369794@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+In-Reply-To: <20200619063948.GC3245@Mani-XPS-13-9360>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-06-24 17:08:04)
-> The geni SPI protocol appears to have been designed without taking
-> Linux needs into account.  In all the normal flows it takes care of
-> setting chip select itself.  However, Linux likes to manage the chip
-> select so it can do fancy things.
->=20
-> Back when we first landed the geni SPI driver we worked around this
-> by:
-> - Always setting the FRAGMENTATION bit in transfers, which (I believe)
->   tells the SPI controller not to mess with the chip select during
->   transfers.
-> - Controlling the chip select manually by sending the SPI controller
->   commands to assert or deassert the chip select.
->=20
-> Our workaround was fine and it's been working OK, but it's really
-> quite inefficient.  A normal SPI transaction now needs to do:
-> 1. Start a command to set the chip select.
-> 2. Wait for an interrupt from controller saying chip select done.
-> 3. Do a transfer.
-> 4. Start a command to unset the chip select.
-> 5. Wait for an interrupt from controller saying chip select done.
+Hi Mani,
 
-I thought the GENI hardware was supposed to be able to queue commands up
-and then plow through them to interrupt the CPU when it finished. If
-that was supported would there be any problems? I assume we could remove
-the wait for CS disable and interrupt on step 5 and also the wait for
-CS/interrupt on step 2 because it is bundled with the transfer in step
-3.
+On 6/18/20 11:39 PM, Manivannan Sadhasivam wrote:
+> On Thu, Jun 11, 2020 at 11:13:43AM -0700, Hemant Kumar wrote:
+>> MHI user space client driver is creating device file node
+>> for user application to perform file operations. File
+>> operations are handled by MHI core driver. Currently
+>> Loopback MHI channel is supported by this driver.
+>>
+>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>> ---
+>>   Documentation/mhi/index.rst |  1 +
+>>   Documentation/mhi/uci.rst   | 19 +++++++++++++++++++
+>>   2 files changed, 20 insertions(+)
+>>   create mode 100644 Documentation/mhi/uci.rst
+>>
+>> diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
+>> index 1d8dec3..c75a371 100644
+>> --- a/Documentation/mhi/index.rst
+>> +++ b/Documentation/mhi/index.rst
+>> @@ -9,6 +9,7 @@ MHI
+>>   
+>>      mhi
+>>      topology
+>> +   uci
+>>   
+>>   .. only::  subproject and html
+>>   
+>> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
+>> new file mode 100644
+>> index 0000000..a5c5c4f
+>> --- /dev/null
+>> +++ b/Documentation/mhi/uci.rst
+>> @@ -0,0 +1,19 @@
+>> +.. SPDX-License-Identifier: GPL-2.0
+>> +
+>> +=================================
+>> +User space Client Interface (UCI)
+> 
+> Stick to 'Userspace' everywhere.
+Done.
+> 
+>> +=================================
+>> +
+>> +UCI driver enables user space clients to communicate to external MHI devices
+>> +like modem and WLAN. It creates standard character device file nodes for user
+> 
+> UCI driver creates a single char device, isn't it?
+No, it is created per device name. For example Loopback has its own char 
+device file node. if we add another channel for a new mhi device new 
+device file node would be created.
+> 
+>> +space clients to perform open, read, write, pool and close file operations.
+>> +
+> 
+> poll? Btw, you need to mention explicitly how this char device can be used.
+> You are just mentioning standard file operations.
+Will fix poll.My idea was indeed to mention generic file operations so 
+that we dont have to be specific with use case. Any userspace entity who 
+wants to communicate over mhi can use the driver. Reason we have this 
+driver is to abstract the mhi core specific details. Even for loopback 
+use case, userspace can echo to device file node on one channel and get 
+a same in response from another channel back. I can add more examples of
+other user space drivers use case if that helps.
+> 
+>> +Device file node is created with format:-
+>> +
+>> +/dev/mhi_<controller_name>_<mhi_device_name>
+>> +
+>> +controller_name is the name of underlying bus used to transfer data.
+> 
+> underlying controller instance.
+Done.
+> 
+>> +mhi_device_name is the name of the MHI channel being used by MHI client
+> 
+> What do you mean by MHI client here? Are you referring to userspace client?
+yes. i can say "MHI client in userspace"?
+> 
+>> +to send or receive data using MHI protocol. MHI channels are statically
+>> +defined by MHI specification. Driver currently supports LOOPBACK channel
+>> +index 0 (Host to device) and 1 (Device to Host).
+> 
+> s/index/identifier
+Done.
+> 
+> And explain a bit on how this LOOPBACK channel is getting used.
+Done.
+> 
+> Thanks,
+> Mani
+> 
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
 
-Where is the delay? On step 2 where we wait to transfer or at step 5
-when we wait for CS to be dropped, or both?
-
->=20
-> Things are made a bit worse because the Linux GPIO framework assumes
-> that setting a chip select is quick.  Thus the SPI core can be seen to
-> tell us to set our chip select even when it's already in the right
-> state and we were dutifully kicking off commands and waiting for
-> interrupts.  While we could optimize that particular case, we'd still
-> be left with the slowness when we actually needed to toggle the chip
-> select.
-
-One thing to note is that the GPIO driver doesn't tell us that it has
-actually asserted/deasserted the GPIO. It writes to the controller and
-moves on so we don't know when it has actually gone into effect.
-Hopefully moving to GPIO mode doesn't mean we get weird problems where
-CS isn't asserted yet and a transfer starts wiggling the lines.
-
->=20
-> All the chip select lines can actually be muxed to be GPIOs and
-> there's really no downside in doing so.  Now Linux can assert and
-> deassert the chip select at will with a simple MMIO write.
->=20
-> The SPI driver will still have the ability to set the chip select, but
-> not we just won't use it.
-
-s/not/now/?
-
->=20
-> With this change I tested reading the firmware off the EC connected to
-> a ChromeOS device (flashrom -p ec -r ...).  I saw about a 25% speedup
-> in total runtime of the command and a 30% reduction in interrupts
-> generated (measured by /proc/interrupts).
-
-I see nothing wrong with specifying the CS gpios in DT. Seems like that
-should always be there and then the driver should decide to use GPIO
-mode or not. So
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
-for that part.
-
->=20
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->=20
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 57 ++++++++++++++++++++++++----
->  1 file changed, 49 insertions(+), 8 deletions(-)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> index 3a8076c8bdbf..74c8503b560e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1204,65 +1213,97 @@ pinmux {
->                         qup_spi0_default: qup-spi0-default {
->                                 pinmux {
->                                         pins =3D "gpio34", "gpio35",
-> -                                              "gpio36", "gpio37";
-> +                                              "gpio36";
->                                         function =3D "qup00";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio37";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi1_default: qup-spi1-default {
->                                 pinmux {
->                                         pins =3D "gpio0", "gpio1",
-> -                                              "gpio2", "gpio3";
-> +                                              "gpio2";
->                                         function =3D "qup01";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio3";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi3_default: qup-spi3-default {
->                                 pinmux {
->                                         pins =3D "gpio38", "gpio39",
-> -                                              "gpio40", "gpio41";
-> +                                              "gpio40";
->                                         function =3D "qup03";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio41";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi5_default: qup-spi5-default {
->                                 pinmux {
->                                         pins =3D "gpio25", "gpio26",
-> -                                              "gpio27", "gpio28";
-> +                                              "gpio27";
->                                         function =3D "qup05";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio28";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi6_default: qup-spi6-default {
->                                 pinmux {
->                                         pins =3D "gpio59", "gpio60",
-> -                                              "gpio61", "gpio62";
-> +                                              "gpio61";
->                                         function =3D "qup10";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio62";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi8_default: qup-spi8-default {
->                                 pinmux {
->                                         pins =3D "gpio42", "gpio43",
-> -                                              "gpio44", "gpio45";
-> +                                              "gpio44";
->                                         function =3D "qup12";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio45";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi10_default: qup-spi10-default {
->                                 pinmux {
->                                         pins =3D "gpio86", "gpio87",
-> -                                              "gpio88", "gpio89";
-> +                                              "gpio88";
->                                         function =3D "qup14";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio89";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-> =20
->                         qup_spi11_default: qup-spi11-default {
->                                 pinmux {
->                                         pins =3D "gpio53", "gpio54",
-> -                                              "gpio55", "gpio56";
-> +                                              "gpio55";
->                                         function =3D "qup15";
->                                 };
-> +                               pinmux-cs {
-> +                                       pins =3D "gpio56";
-> +                                       function =3D "gpio";
-> +                               };
->                         };
-
-Perhaps we should have qup-spiN-default and qup-spiN-cs-gpio though?
-That way the driver can properly mux the pin to be gpio mode if it wants
-to. I don't see a way to mux the pin to be "qup" until the driver
-decides it doesn't want that.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
