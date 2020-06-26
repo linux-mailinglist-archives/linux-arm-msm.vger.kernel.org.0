@@ -2,79 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C95020BA4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 22:27:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB56C20BAD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 23:02:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725781AbgFZU1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 16:27:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42204 "EHLO
+        id S1725793AbgFZVCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 17:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725780AbgFZU1t (ORCPT
+        with ESMTP id S1725930AbgFZVCA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 16:27:49 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C393C03E979
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 13:27:49 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id o2so6177668vsr.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 13:27:49 -0700 (PDT)
+        Fri, 26 Jun 2020 17:02:00 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119FEC03E979
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 14:02:00 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id e15so7948800edr.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 14:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7bYsvRQj/KxO7y6dcHjKoVfFZMfrtTcsCp4sG21kGBU=;
-        b=cVnSP+/m+7yKuZx6yu96KuQZagQE2QwRL8rlUKUdf7JB8RzaML0YfYX0XCNHk3q2AL
-         1sEoS7KqNSGVHu8R9gM8PQc7xETIM3LxOnV1tHenKcyY7IWU/uqES3yBkHhO6rUuWOlw
-         3F5uTuzCOzTOE8hRDq9rJCCArcCMLmk11dPUs=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LXYsPzxFqoIvncAosoNMRVHsqqhFjqQaZzr24JDv6GU=;
+        b=NkxXjwkadDehAxKBt5qCyqwJyMFjmm/tsHOXqKWLWtzcy08j6wps8G9hI84I2QbI7v
+         JmPlb/jN0cduge6+zra8/rgtL1+VK0S8hNlbMgSv++L1OXl007Qgil5l6t2HYzNs2Fjv
+         lKOEST9O7PwzOnyo7s1M+grpXcRcpYNaK8HJO7Xn+IyE4sfdot72A0q4TtrtOOs1eJpa
+         Cu6xnc0AxSAzv0OVXC58pW5Z1HP/B7EKMvEiujSD7ZDggQool5FV/RdZ+HoKFrL67X39
+         Hzmubt8ojRcl4Cbv3nsfwA7ejoobNmg3XQtNNJakalPzYE9PWqShM/bJsqWa3kA8g07d
+         XqyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7bYsvRQj/KxO7y6dcHjKoVfFZMfrtTcsCp4sG21kGBU=;
-        b=gUbBMQ6mkmKH0dnUJTUCZ1EkavPkpw99Ragt2NWl79VoBqH0KUqKT7p2tkaaRfpmXj
-         8c9SD/BPXTitzgGg+H4L96P/+DHmc2l7cyb6nJyogvEAydMyq37vAG9jcRDnWh0+HNTq
-         mn6brekHL8KLJ7SmNXtaz0G98tcCBdClnsSjzxHvAvC6JRLL+AA54RpzNArdvRnWqUyJ
-         eOwft1ain3TZaJhfofg1iocOwirSZWRFkTJ7VgBTZlnd9f3ue7Ph+fjowMGEVSjGbPIA
-         JBuLKZqQGx8x6RZlr3WPBsVAS2vn45zN+1MtNdOkV++4cewo+In5TI89Vhd5Uj2Vms7C
-         IY0w==
-X-Gm-Message-State: AOAM532YKZs6XlKx81azJSO8MiIaW7NZrpc3Xpg+kT03w0JqKYBYH/7C
-        gUgx2Hr7Etd5WcLF2G5U5Tq4GXuZqt8=
-X-Google-Smtp-Source: ABdhPJyjZyUwqs8u82ugNxJGIon9s+sstAiUjU5Hus0Wky0SJLex5073nZvNJqw74CTutvI+QJrs4Q==
-X-Received: by 2002:a67:eacd:: with SMTP id s13mr3832516vso.171.1593203268201;
-        Fri, 26 Jun 2020 13:27:48 -0700 (PDT)
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
-        by smtp.gmail.com with ESMTPSA id g10sm801899vkm.35.2020.06.26.13.27.47
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LXYsPzxFqoIvncAosoNMRVHsqqhFjqQaZzr24JDv6GU=;
+        b=L1fvQlfHUChFXS4YZQGM4PT2cqGyHIIJajUlbAFE7X0So7FoqiwUu7+v+oy/z2FYc7
+         uHD2ZQZvp1b6j1f7ImNMws6WD3tX+CB1TTlLHW4H6zK6jm4yUKCjUid0YUBbbummb5Ux
+         xMHgeNAY7WGkK9txGI8nhezXd7CemY1HDHR3GSqpGnhczYAbu+TNlhAJIDkZ5LB+uiCG
+         bqi8P5QgNNnBMmkobwF4k3vtdsnfeG+uePU6qBPBj0zkg2/0sNfxdL854IWcm0vwwMAA
+         6KRMKVBSx1uLip+sl5ZZZPD0vm0fG2tLlnzuwuHz/UxlxomBA+doBJtJFCWHFye+38K6
+         HYcw==
+X-Gm-Message-State: AOAM533HhFA+y6ds5ereBzm9GMhsT4sRzRnY9VBhzlP6vQYDwSEMxj9Y
+        eyUVqXxnhLdXy6ejpO1igi9iBQ==
+X-Google-Smtp-Source: ABdhPJz4VyPgTDG4D3ybw9iMwdqQtilkEccK+e+ObiNd3vOfbKOSHwpWfeZklQ7XDUsrmMUMFhiOUQ==
+X-Received: by 2002:a50:a721:: with SMTP id h30mr5397597edc.153.1593205317868;
+        Fri, 26 Jun 2020 14:01:57 -0700 (PDT)
+Received: from [192.168.1.4] (212-5-158-166.ip.btc-net.bg. [212.5.158.166])
+        by smtp.googlemail.com with ESMTPSA id u19sm13890982edd.62.2020.06.26.14.01.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2020 13:27:48 -0700 (PDT)
-Received: by mail-ua1-f50.google.com with SMTP id z47so3445380uad.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 13:27:47 -0700 (PDT)
-X-Received: by 2002:ab0:2eab:: with SMTP id y11mr3463084uay.22.1593202929409;
- Fri, 26 Jun 2020 13:22:09 -0700 (PDT)
+        Fri, 26 Jun 2020 14:01:57 -0700 (PDT)
+Subject: Re: [PATCH] [v2] media: venus: core: Fix runtime PM imbalance in
+ venus_probe
+To:     dinghao.liu@zju.edu.cn
+Cc:     kjlu@umn.edu, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200624063024.17059-1-dinghao.liu@zju.edu.cn>
+ <812ead80-766b-1dad-1447-ffab5d7d2ee8@linaro.org>
+ <35c749cf.28af7.172ee1e4ac3.Coremail.dinghao.liu@zju.edu.cn>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <f49040ee-a5c5-c106-2b51-cd48646306b0@linaro.org>
+Date:   Sat, 27 Jun 2020 00:01:55 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <20200626190808.8716-1-sibis@codeaurora.org>
-In-Reply-To: <20200626190808.8716-1-sibis@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 26 Jun 2020 13:21:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X_0s-YOCj72F3rzu0oFkNBx82MeHsP2Yqrj0=LAOF_tg@mail.gmail.com>
-Message-ID: <CAD=FV=X_0s-YOCj72F3rzu0oFkNBx82MeHsP2Yqrj0=LAOF_tg@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Add cpu OPP tables
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Evan Green <evgreen@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <35c749cf.28af7.172ee1e4ac3.Coremail.dinghao.liu@zju.edu.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -82,31 +77,82 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, Jun 26, 2020 at 12:09 PM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> Add OPP tables required to scale DDR/L3 per freq-domain on SC7180 SoCs.
->
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->
-> v2:
->  * drop interconnect-tag property
->
-> v1: https://patchwork.kernel.org/patch/11527597/
->
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 160 +++++++++++++++++++++++++++
->  1 file changed, 160 insertions(+)
+On 6/26/20 3:54 AM, dinghao.liu@zju.edu.cn wrote:
+> 
+>> Hi Dinghao,
+>>
+>> On 6/24/20 9:30 AM, Dinghao Liu wrote:
+>>> pm_runtime_get_sync() increments the runtime PM usage counter even
+>>> when it returns an error code. Thus a pairing decrement is needed on
+>>> the error handling path to keep the counter balanced. For other error
+>>> paths after this call, things are the same.
+>>>
+>>> Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+>>> ---
+>>>
+>>> Changelog:
+>>>
+>>> v2: - Add pm_runtime_get_noresume() on failure of
+>>>       pm_runtime_put_sync() to balance PM counter instead of
+>>>       releasing everything here.
 
-This is a huge perf boost and I'd love to see it land while waiting
-for the interconnect-tag stuff to get resolved.  In theory I guess we
-could land the sdm845 one too...
+Could you reword this and add it to the patch description.
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+>>
+>> You are adding pm_runtime_get_noresume in pm_runtime_put_sync error path
+>> but the patch description is referring to pm_runtime_get_sync. I'm confused.
+>>
+> 
+> When pm_runtime_put_sync failed, the control flow will jump to 
+> err_dev_unregister, where has already been a pm_runtime_put_noidle. 
+> If we don't add an extra pm_runtime_get_noresume here, we will 
+> decrease PM usage counter twice.
+> 
+> Anyway, this may seem a little strange. Do you have a better
+> strategy to reorder the labels?
 
-I'm also not really an expert here, but the patch seems sane to me, so
-I'd give it a weak:
+No, it looks fine. With above addition to patch description:
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
+> 
+> Regards,
+> Dinghao
+> 
+>>> ---
+>>>  drivers/media/platform/qcom/venus/core.c | 5 ++++-
+>>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>>> index 203c6538044f..b0b932bf8c02 100644
+>>> --- a/drivers/media/platform/qcom/venus/core.c
+>>> +++ b/drivers/media/platform/qcom/venus/core.c
+>>> @@ -287,8 +287,10 @@ static int venus_probe(struct platform_device *pdev)
+>>>  		goto err_core_deinit;
+>>>  
+>>>  	ret = pm_runtime_put_sync(dev);
+>>> -	if (ret)
+>>> +	if (ret) {
+>>> +		pm_runtime_get_noresume(dev);
+>>>  		goto err_dev_unregister;
+>>> +	}
+>>>  
+>>>  	return 0;
+>>>  
+>>> @@ -299,6 +301,7 @@ static int venus_probe(struct platform_device *pdev)
+>>>  err_venus_shutdown:
+>>>  	venus_shutdown(core);
+>>>  err_runtime_disable:
+>>> +	pm_runtime_put_noidle(dev);
+>>>  	pm_runtime_set_suspended(dev);
+>>>  	pm_runtime_disable(dev);
+>>>  	hfi_destroy(core);
+>>>
+>>
+>> -- 
+>> regards,
+>> Stan
 
--Doug
+-- 
+regards,
+Stan
