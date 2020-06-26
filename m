@@ -2,116 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AB3D20B4B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 17:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36ECE20B535
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 17:48:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbgFZPfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 11:35:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
+        id S1729992AbgFZPsd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 11:48:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbgFZPfw (ORCPT
+        with ESMTP id S1726013AbgFZPsd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 11:35:52 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE25C03E979
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 08:35:52 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id d15so7245612edm.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 08:35:52 -0700 (PDT)
+        Fri, 26 Jun 2020 11:48:33 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC57C03E979;
+        Fri, 26 Jun 2020 08:48:33 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id t9so5410272lfl.5;
+        Fri, 26 Jun 2020 08:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=nxgdI0PHS9fZd2ASUWxvxCPW2bkr766GJBjvOuZLk+k=;
-        b=CRHD68toCt/9VGp07w4mYOLHRn3hIGw+Vm8TkX4eh2Y+RpKuLPkP5OLY2ZhV0PNHZU
-         ls3VbZ8XlFfN2Uv6fW1mNwvgwQiPhKrzl5JYmjvsi6bIIEPHr4+ryG+7c4jVr4NO9Jhd
-         M4/P49jxmgv9JZ2HkPy3TGGmsPX49kQKUDoRnuuSuuDqBt8Gfd8UIMYb5y0pnSboFAVf
-         XXxn4gTZViPoINfrRWO7tj6oNl5/3GxFuOgyaLrlV4d4UK3WKDWpkx/obpsKGwu0I7w3
-         gOwYHpf5O2SF2eqYbfTXi3QqAvsKKrZ+jOKzCI/RYfCL06csxokDz1Z5g0O+2ViiVMas
-         trBQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1go9gTeNkzcp6wQgoMl3JBGyFoxtum7G6W5ccT4ChgU=;
+        b=jFHTsIfpHCkFW7ktHRSc5xD5/1Wl1pdZ2ho0kG9586G37qcNfbz62vcshRhpABE1Bh
+         gssdWlK1xhz4VPmNQdT0xFvCANzldpP4RYKt8h8J9TcZcMH0lxnNwgkdBKCoFEkZ5z0O
+         sLddbsk/qU0nTtvSqO0qLmMbxfmZGH7ewczTKTS9+2fLqeOEB/49xN75tciCYU/IlAD8
+         Bguvmxo+IpqGtnXwx6O/iM09pL6JVCLwFhCYatiwcGSwQoFXkGUvqUWyBlmo547g303v
+         uDflF3WgyAj6Z/AD32Roq42ZrtnAo9LOQzRIlaa/WG7oz2Ih7dlHZV+cWeMl/z6nVSk0
+         onUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=nxgdI0PHS9fZd2ASUWxvxCPW2bkr766GJBjvOuZLk+k=;
-        b=ZnO18hY6QlUuTlklgdPTLN2ddjpIslFYb85Glfuuw5YblXpHgTdvcAhL7mxP7CgFBQ
-         mCtfa6SkHR8h2GALR80sD9DtDt/+UTCX01RLMQijIATEQJ/Q5Siyf9M2ac6YjItPxeat
-         k52OhxUH/q3ufovYGyM4Dmg7Q4f+gGnf584jC5vmGM3uSM1rshMDwntfQ7fE2fpsRsHX
-         c20FXUy95t97p0YCXeAChKSFYxIGGLizsSWLmI2FTpQyQVOwnEVG/Gs76Hxw9KAjI38X
-         Rfc96JNhi9x/fHH2Pr3qvlhM8w2Qj2CErLIcahOwMY9qoxFTn8c3gwLDd5WBcyEkl9oC
-         xyMQ==
-X-Gm-Message-State: AOAM532cv+evFEWuQ4NOTacmM+LA+iXHL8anWCPw+lfl/nAaGHjDObV+
-        Sojo3Q3VdChjqDEk1412sIaVnQR7jAobujGth8I=
-X-Google-Smtp-Source: ABdhPJyKflh7rbf7+P3RC95QxeqWSkrhiz5R9M1XvZ0YJ8a1m63hDgbcRRE25gjcqOQX/Z7qVhDK6qWOXmd7ovRzO3U=
-X-Received: by 2002:a50:eb02:: with SMTP id y2mr1417044edp.281.1593185751055;
- Fri, 26 Jun 2020 08:35:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1go9gTeNkzcp6wQgoMl3JBGyFoxtum7G6W5ccT4ChgU=;
+        b=LQo1NFH0GCHmtoYb9QMh40z6bHpj2ajwqRkgAsP2+Vn3Tf1x4aLo4qzQc1lVhY5DFL
+         UnV9PMqOXVCVhj+fDhwM0EFw/idABZ08Y3E3It64i2jeZtxmZlkIZrt5fdnGg9XQk8Ii
+         fWT/FfzrrG5sqkVgEC0Q3sJJ+C4NRPxYvPIwNNfNX5RsKwGkuDs61CkvISIu3GUtvlyy
+         fmakbHLGwlx/jahD6/kixgJR+oWE/fq0eSB3gtqRU2Cw9NouCl9tU+jd0SSpU9ifQjdJ
+         Hr6ZtdGNPOBG92Fdwxwi59DMN4UQrvzCnQZE3DQsglM8MUYvXAaV0L1rGfVv86pb8iiT
+         VKHA==
+X-Gm-Message-State: AOAM532u0ouF/S3kjTaIwxL54KgpPV4D7GLJQ+5VYwhKUqXcfHUSjk+7
+        351aptiqgdBJIAwR8CR8aNl9o4xnZCatfUR6Sol1gL163bU4cw==
+X-Google-Smtp-Source: ABdhPJxilQxR1MaNe3ZEOGBRsalVgzi1it09jwDjJkA5kV/h2MumLQpv701P2RRWj6LtJVpPyV/zqHzt+QB6iffvHhs=
+X-Received: by 2002:a05:6512:31d1:: with SMTP id j17mr2068193lfe.148.1593186511374;
+ Fri, 26 Jun 2020 08:48:31 -0700 (PDT)
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 26 Jun 2020 08:36:21 -0700
-Message-ID: <CAF6AEGv0SSXArdYs=mOLqJPJdkvk8CpxaJGecqgbOGazQ2n5og@mail.gmail.com>
-Subject: [pull] drm/msm: msm-fixes for 5.8-rc3
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
+References: <20200622192558.152828-1-konradybcio@gmail.com>
+ <20200622192558.152828-8-konradybcio@gmail.com> <20200623072535.GX128451@builder.lan>
+In-Reply-To: <20200623072535.GX128451@builder.lan>
+From:   Alexey Minnekhanov <alexey.min@gmail.com>
+Date:   Fri, 26 Jun 2020 18:48:20 +0300
+Message-ID: <CANi4RBQY8dXU=74JfB3hHZYMqMgVwtHoQsLZXV7CpwZ8ue2icw@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] mailbox: qcom: Add sdm660 hmss compatible
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Konrad Dybcio <konradybcio@gmail.com>, skrzynka@konradybcio.pl,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(retry with $subject)
+Tue, 23 Jun. 2020. 10:29, Bjorn Andersson <bjorn.andersson@linaro.org>:
+>
+> On Mon 22 Jun 12:25 PDT 2020, Konrad Dybcio wrote:
+>
+> > Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
 
-Hi Dave,
-
-A few fixes, mostly fallout from the address space refactor and dpu
-color processing.
-
-
-The following changes since commit 1cb2c4a2c89b2004a36399860c85a1af9b3fcba7:
-
-  Revert "drm/msm/dpu: add support for clk and bw scaling for display"
-(2020-06-01 20:56:18 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2020-06-25
-
-for you to fetch changes up to 30480e6ed508e3ff7a3e03c975696aa5196ffe8a:
-
-  drm/msm: Fix up the rest of the messed up address sizes (2020-06-22
-12:12:29 -0700)
-
-----------------------------------------------------------------
-Bernard Zhao (1):
-      drm/msm: fix potential memleak in error branch
-
-Chen Tao (1):
-      drm/msm/dpu: fix error return code in dpu_encoder_init
-
-Eric Anholt (2):
-      drm/msm: Fix address space size after refactor.
-      drm/msm: Fix setup of a6xx create_address_space.
-
-John Stultz (1):
-      drm/msm: Fix 0xfffflub in "Refactor address space initialization"
-
-Jordan Crouse (1):
-      drm/msm: Fix up the rest of the messed up address sizes
-
-Kalyan Thota (1):
-      drm/msm/dpu: request for display color blocks based on hw catalog entry
-
-Krishna Manikandan (1):
-      drm/msm/dpu: allow initialization of encoder locks during encoder init
-
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c       |  2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |  2 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 18 +++++++++++-------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c    |  2 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c    |  2 +-
- drivers/gpu/drm/msm/msm_submitqueue.c       |  4 +++-
- 9 files changed, 21 insertions(+), 15 deletions(-)
+Hi, I can see dts file in linux-next using compatible
+"qcom,sdm660-apcs-hmss-global",
+but not this patch that adds it into the driver?
