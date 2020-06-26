@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FD5F20B8CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 20:56:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F2CC20B8D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 20:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbgFZSzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 14:55:47 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13413 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726096AbgFZSzp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 14:55:45 -0400
+        id S1726073AbgFZS4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 14:56:06 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:53333 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725928AbgFZSzl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jun 2020 14:55:41 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593197745; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1593197740; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=jAnXM5CLYetIoTCfX0FEVFBAqUqxfjLXBqpTDvDUR7s=; b=Wf2vynkZ1Ct6KWFpLF1VBVC23oN6al1EfgRSTpWZa4tp+FSI57vNq3ADyxU1VVUsHU/aZq/e
- jH46DdyGZ87WF9gFilz6BFpDkuKfEMTPtCZ1MdVE5oODcECLzekH3gtyuAeK44yZe7FV+eXD
- ZsIcOFyqAyvYChz6UHT1WWsypBg=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ Sender; bh=ulss9HHbM4ZJcwJ3mp+I9k0MAc5jrVWcm1JkPzBgFEg=; b=CfYXRop1r2MQ6ydG7mLKld+F6Pi2HVd007TIKzfMGkWvqRzzo2S6lYwz5TwSRQhPBBJDigex
+ BDnI/9IG6KsPqTapGxkhlxn89VZMWro3QJf0YnEYRk8vc2i2alIeApPAMNN8F2RvDvm2pNBG
+ 6UxdBc/p0d/dAXLiK1Y2sNo9lnk=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5ef6449e0206ad41d16a6dac (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Jun 2020 18:55:26
+ smtp-out-n14.prod.us-east-1.postgun.com with SMTP id
+ 5ef6449f8fe116ddd9a0779b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Jun 2020 18:55:27
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 050D2C433CB; Fri, 26 Jun 2020 18:55:25 +0000 (UTC)
+        id D56DBC4339C; Fri, 26 Jun 2020 18:55:26 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +37,9 @@ Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EC46C433CA;
-        Fri, 26 Jun 2020 18:55:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EC46C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76FCBC433C8;
+        Fri, 26 Jun 2020 18:55:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 76FCBC433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
 From:   Wesley Cheng <wcheng@codeaurora.org>
@@ -50,9 +51,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
         jackp@codeaurora.org, rdunlap@infradead.org,
         Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v4 5/6] dt-bindings: regulator: Add dt-binding for QCOM PMIC VBUS output regulator
-Date:   Fri, 26 Jun 2020 11:55:15 -0700
-Message-Id: <20200626185516.18018-6-wcheng@codeaurora.org>
+Subject: [PATCH v4 6/6] arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
+Date:   Fri, 26 Jun 2020 11:55:16 -0700
+Message-Id: <20200626185516.18018-7-wcheng@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200626185516.18018-1-wcheng@codeaurora.org>
 References: <20200626185516.18018-1-wcheng@codeaurora.org>
@@ -63,64 +64,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This describes how to enable the Qualcomm PMIC VBUS booster used for
-providing power to connected USB peripherals when the USB role is host
-mode.  The driver itself will register the vbus_usb regulator, so that
-external drivers can utilize the enable/disable regulator APIs.
+Add the required DTS node for the USB VBUS output regulator, which is
+available on PM8150B.  This will provide the VBUS source to connected
+peripherals.
 
 Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
 ---
- .../regulator/qcom,usb-vbus-regulator.yaml    | 41 +++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi   | 6 ++++++
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-new file mode 100644
-index 000000000000..12ed98c28aaa
---- /dev/null
-+++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-@@ -0,0 +1,41 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/regulator/qcom,usb-vbus-regulator.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+index 91b870345dda..18f64bca73bc 100644
+--- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
+@@ -22,6 +22,12 @@ power-on@800 {
+ 			status = "disabled";
+ 		};
+ 
++		 pm8150b_vbus: dcdc@1100 {
++			compatible = "qcom,pm8150b-vbus-reg";
++			status = "disabled";
++			reg = <0x1100>;
++		};
 +
-+title: The Qualcomm PMIC VBUS output regulator driver
+ 		pm8150b_typec: typec@1500 {
+ 			compatible = "qcom,pm8150b-usb-typec";
+ 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+index 6c6325c3af59..ba3b5b802954 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+@@ -409,6 +409,10 @@ &ufs_mem_phy {
+ 	vdda-pll-max-microamp = <19000>;
+ };
+ 
++&pm8150b_vbus {
++	status = "okay";
++};
 +
-+maintainers:
-+  - Wesley Cheng <wcheng@codeaurora.org>
-+
-+description: |
-+  This regulator driver controls the VBUS output by the Qualcomm PMIC.  This
-+  regulator will be enabled in situations where the device is required to
-+  provide power to the connected peripheral.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pm8150b-vbus-reg
-+
-+  reg:
-+    maxItems: 1
-+    description: VBUS output base address
-+
-+required:
-+  - compatible
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+     pm8150b {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        pm8150b_vbus: dcdc@1100 {
-+            compatible = "qcom,pm8150b-vbus-reg";
-+            reg = <0x1100>;
-+        };
-+     };
-+...
+ &usb_1_hsphy {
+ 	status = "okay";
+ 	vdda-pll-supply = <&vdd_usb_hs_core>;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
