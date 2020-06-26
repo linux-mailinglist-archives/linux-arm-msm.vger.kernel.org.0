@@ -2,96 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 534C020A9EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 02:54:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A08020AC13
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 08:07:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726531AbgFZAyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Jun 2020 20:54:31 -0400
-Received: from mail.zju.edu.cn ([61.164.42.155]:39628 "EHLO zju.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725834AbgFZAyb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Jun 2020 20:54:31 -0400
-Received: by ajax-webmail-mail-app2 (Coremail) ; Fri, 26 Jun 2020 08:54:22
- +0800 (GMT+08:00)
-X-Originating-IP: [210.32.144.65]
-Date:   Fri, 26 Jun 2020 08:54:22 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From:   dinghao.liu@zju.edu.cn
-To:     "Stanimir Varbanov" <stanimir.varbanov@linaro.org>
-Cc:     kjlu@umn.edu, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH] [v2] media: venus: core: Fix runtime PM imbalance
- in venus_probe
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190906(84e8bf8f)
- Copyright (c) 2002-2020 www.mailtech.cn zju.edu.cn
-In-Reply-To: <812ead80-766b-1dad-1447-ffab5d7d2ee8@linaro.org>
-References: <20200624063024.17059-1-dinghao.liu@zju.edu.cn>
- <812ead80-766b-1dad-1447-ffab5d7d2ee8@linaro.org>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S1728195AbgFZGHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 02:07:17 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:43114 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728194AbgFZGHQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jun 2020 02:07:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593151636; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=kpNpS5FXksDhKX01QPjtTgzG0vgpwu5AuVAt8JX2QKM=;
+ b=Ha5axPlYMft9PAifW/fBBVOYKM6za1UmKcgSnDHindRiWxiwY/h8PGEXQ5TZB+XWnx7p5GAX
+ hfIxumUr0JgnpZGAnvlQCSE0fAjdS4A47hKh1u5vXwyHB4e2oeRdpUqrVRCrApHJQ6ThWiz4
+ N3xxhOvA/v3uhuook1WCBQRKZBk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n11.prod.us-east-1.postgun.com with SMTP id
+ 5ef590890206ad41d1ec1723 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Jun 2020 06:07:05
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0233FC43395; Fri, 26 Jun 2020 06:07:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D55DAC433C8;
+        Fri, 26 Jun 2020 06:07:03 +0000 (UTC)
 MIME-Version: 1.0
-Message-ID: <35c749cf.28af7.172ee1e4ac3.Coremail.dinghao.liu@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: by_KCgBXITQ+R_Ve_Rt9AA--.16565W
-X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgMDBlZdtO0wNAABsT
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJTRUUUbGCS07vEb7Iv0x
-        C_Cr1lV2xY67kC6x804xWlV2xY67CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DMIAI
-        bVAFxVCF77xC64kEw24lV2xY67C26IkvcIIF6IxKo4kEV4ylV2xY628lY4IE4IxF12IF4w
-        CS07vE84x0c7CEj48ve4kI8wCS07vE84ACjcxK6xIIjxv20xvE14v26w1j6s0DMIAIbVA2
-        z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UMIAIbVA2z4x0Y4vEx4A2jsIE14v26r
-        xl6s0DMIAIbVA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lV2xY62AIxVAIcxkEcVAq
-        07x20xvEncxIr21lV2xY6c02F40EFcxC0VAKzVAqx4xG6I80ewCS07vEYx0E2Ix0cI8IcV
-        AFwI0_Jr0_Jr4lV2xY6cIj6I8E87Iv67AKxVWUJVW8JwCS07vEOx8S6xCaFVCjc4AY6r1j
-        6r4UMIAIbVCjxxvEw4WlV2xY6xkIecxEwVAFwVWDMIAIbVCY0x0Ix7I2Y4AK64vIr41lV2
-        xY6xAIw28IcVCjz48v1sIEY20_GFWkJr1UJwCS07vE4x8a6x804xWlV2xY6xC20s026xCa
-        FVCjc4AY6r1j6r4UMIAIbVC20s026c02F40E14v26r1j6r18MIAIbVC20s026x8GjcxK67
-        AKxVWUGVWUWwCS07vEx4CE17CEb7AF67AKxVWUtVW8ZwCS07vEIxAIcVC0I7IYx2IY67AK
-        xVWUJVWUCwCS07vEIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIAIbVCI42IY6xAIw2
-        0EY4v20xvaj40_WFyUJVCq3wCS07vEIxAIcVC2z280aVAFwI0_Jr0_Gr1lV2xY6IIF0xvE
-        x4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 26 Jun 2020 11:37:03 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Guenter Roeck <linux@roeck-us.net>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Guenter Roeck <groeck7@gmail.com>
+Subject: Re: [PATCHv3 0/2] Convert QCOM watchdog timer bindings to YAML
+In-Reply-To: <20200625211809.GA175066@roeck-us.net>
+References: <cover.1581459151.git.saiprakash.ranjan@codeaurora.org>
+ <c2b8fabcf82b27c7334482bd53ebba62@codeaurora.org>
+ <20200621073320.GI128451@builder.lan>
+ <ce4c2b44cb15af12b04c09f1786a6c1a@codeaurora.org>
+ <20200625160042.GC149301@roeck-us.net>
+ <3e3cf81452e33c9385900177d0630a11@codeaurora.org>
+ <20200625211809.GA175066@roeck-us.net>
+Message-ID: <055b46ca29e4d54981116f2a55ed0b77@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cj4gSGkgRGluZ2hhbywKPiAKPiBPbiA2LzI0LzIwIDk6MzAgQU0sIERpbmdoYW8gTGl1IHdyb3Rl
-Ogo+ID4gcG1fcnVudGltZV9nZXRfc3luYygpIGluY3JlbWVudHMgdGhlIHJ1bnRpbWUgUE0gdXNh
-Z2UgY291bnRlciBldmVuCj4gPiB3aGVuIGl0IHJldHVybnMgYW4gZXJyb3IgY29kZS4gVGh1cyBh
-IHBhaXJpbmcgZGVjcmVtZW50IGlzIG5lZWRlZCBvbgo+ID4gdGhlIGVycm9yIGhhbmRsaW5nIHBh
-dGggdG8ga2VlcCB0aGUgY291bnRlciBiYWxhbmNlZC4gRm9yIG90aGVyIGVycm9yCj4gPiBwYXRo
-cyBhZnRlciB0aGlzIGNhbGwsIHRoaW5ncyBhcmUgdGhlIHNhbWUuCj4gPiAKPiA+IFNpZ25lZC1v
-ZmYtYnk6IERpbmdoYW8gTGl1IDxkaW5naGFvLmxpdUB6anUuZWR1LmNuPgo+ID4gLS0tCj4gPiAK
-PiA+IENoYW5nZWxvZzoKPiA+IAo+ID4gdjI6IC0gQWRkIHBtX3J1bnRpbWVfZ2V0X25vcmVzdW1l
-KCkgb24gZmFpbHVyZSBvZgo+ID4gICAgICAgcG1fcnVudGltZV9wdXRfc3luYygpIHRvIGJhbGFu
-Y2UgUE0gY291bnRlciBpbnN0ZWFkIG9mCj4gPiAgICAgICByZWxlYXNpbmcgZXZlcnl0aGluZyBo
-ZXJlLgo+IAo+IFlvdSBhcmUgYWRkaW5nIHBtX3J1bnRpbWVfZ2V0X25vcmVzdW1lIGluIHBtX3J1
-bnRpbWVfcHV0X3N5bmMgZXJyb3IgcGF0aAo+IGJ1dCB0aGUgcGF0Y2ggZGVzY3JpcHRpb24gaXMg
-cmVmZXJyaW5nIHRvIHBtX3J1bnRpbWVfZ2V0X3N5bmMuIEknbSBjb25mdXNlZC4KPiAKCldoZW4g
-cG1fcnVudGltZV9wdXRfc3luYyBmYWlsZWQsIHRoZSBjb250cm9sIGZsb3cgd2lsbCBqdW1wIHRv
-IAplcnJfZGV2X3VucmVnaXN0ZXIsIHdoZXJlIGhhcyBhbHJlYWR5IGJlZW4gYSBwbV9ydW50aW1l
-X3B1dF9ub2lkbGUuIApJZiB3ZSBkb24ndCBhZGQgYW4gZXh0cmEgcG1fcnVudGltZV9nZXRfbm9y
-ZXN1bWUgaGVyZSwgd2Ugd2lsbCAKZGVjcmVhc2UgUE0gdXNhZ2UgY291bnRlciB0d2ljZS4gCgpB
-bnl3YXksIHRoaXMgbWF5IHNlZW0gYSBsaXR0bGUgc3RyYW5nZS4gRG8geW91IGhhdmUgYSBiZXR0
-ZXIKc3RyYXRlZ3kgdG8gcmVvcmRlciB0aGUgbGFiZWxzPyAKClJlZ2FyZHMsCkRpbmdoYW8KCj4g
-PiAtLS0KPiA+ICBkcml2ZXJzL21lZGlhL3BsYXRmb3JtL3Fjb20vdmVudXMvY29yZS5jIHwgNSAr
-KysrLQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkK
-PiA+IAo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcWNvbS92ZW51cy9j
-b3JlLmMgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL3Fjb20vdmVudXMvY29yZS5jCj4gPiBpbmRl
-eCAyMDNjNjUzODA0NGYuLmIwYjkzMmJmOGMwMiAxMDA2NDQKPiA+IC0tLSBhL2RyaXZlcnMvbWVk
-aWEvcGxhdGZvcm0vcWNvbS92ZW51cy9jb3JlLmMKPiA+ICsrKyBiL2RyaXZlcnMvbWVkaWEvcGxh
-dGZvcm0vcWNvbS92ZW51cy9jb3JlLmMKPiA+IEBAIC0yODcsOCArMjg3LDEwIEBAIHN0YXRpYyBp
-bnQgdmVudXNfcHJvYmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikKPiA+ICAJCWdvdG8g
-ZXJyX2NvcmVfZGVpbml0Owo+ID4gIAo+ID4gIAlyZXQgPSBwbV9ydW50aW1lX3B1dF9zeW5jKGRl
-dik7Cj4gPiAtCWlmIChyZXQpCj4gPiArCWlmIChyZXQpIHsKPiA+ICsJCXBtX3J1bnRpbWVfZ2V0
-X25vcmVzdW1lKGRldik7Cj4gPiAgCQlnb3RvIGVycl9kZXZfdW5yZWdpc3RlcjsKPiA+ICsJfQo+
-ID4gIAo+ID4gIAlyZXR1cm4gMDsKPiA+ICAKPiA+IEBAIC0yOTksNiArMzAxLDcgQEAgc3RhdGlj
-IGludCB2ZW51c19wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQo+ID4gIGVycl92
-ZW51c19zaHV0ZG93bjoKPiA+ICAJdmVudXNfc2h1dGRvd24oY29yZSk7Cj4gPiAgZXJyX3J1bnRp
-bWVfZGlzYWJsZToKPiA+ICsJcG1fcnVudGltZV9wdXRfbm9pZGxlKGRldik7Cj4gPiAgCXBtX3J1
-bnRpbWVfc2V0X3N1c3BlbmRlZChkZXYpOwo+ID4gIAlwbV9ydW50aW1lX2Rpc2FibGUoZGV2KTsK
-PiA+ICAJaGZpX2Rlc3Ryb3koY29yZSk7Cj4gPiAKPiAKPiAtLSAKPiByZWdhcmRzLAo+IFN0YW4K
+On 2020-06-26 02:48, Guenter Roeck wrote:
+> On Fri, Jun 26, 2020 at 12:52:31AM +0530, Sai Prakash Ranjan wrote:
+>> > >
+>> > I don't think the watchdog mailing list has been copied on this series,
+>> > meaning I don't have a copy that I could apply if I wanted to.
+>> 
+>> I kept you in CC for all the revisions but missed adding watchdog 
+>> list.
+>> Will resend with the appropriate lists added.
+>> 
+> 
+> I use patchwork to track patches, tags, and my responses. No patchwork,
+> no patch, no tags, and no tracking.
+> 
 
+Now resent with watchdog list added - 
+https://lore.kernel.org/patchwork/cover/1263944/
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
