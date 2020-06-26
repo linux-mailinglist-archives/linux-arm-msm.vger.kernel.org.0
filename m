@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EF8F20B9D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 22:04:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDACD20B9C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 22:04:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725828AbgFZUEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 16:04:53 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:62416 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725855AbgFZUEw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 16:04:52 -0400
+        id S1725897AbgFZUEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 16:04:46 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:28648 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725864AbgFZUEp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jun 2020 16:04:45 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593201891; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1593201885; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=D85sGJCwjjAQqj2vSMlo3N0ypP1ykjFcdiizwNh3ejQ=; b=tGnSp7bb5xWE+hgwnBSu+//o1UdTWYFOJkgQEfMBhXFRtThCPcyRl9K2j02BAYfLms8a1wS+
- GQKR46I+lW0g5uygpt1pmZDPr/Onu9c8u2VPCeJOY8gCriHwM1o909J/6Hir4+24/W83n3kc
- lEHFyUL/hAIlLtSgZfhdnlcnK8w=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ bh=LdWbyAz364u7P6m0IEZru9FONBE/gZvu9Gt+jgjI10I=; b=Gj1QS6r3mCm1djou6wZLcMtttwmzJ+r9rOur+Po+XbxosOHUHTbrVK7++qq2FZqUBnlk2scj
+ GV1M7X4AQB7CrMfH5T2wq8FlYTxyxNbTrwJbemM0zI/Eve0mUDBeK/HkGhMwJD8jVEdo74gn
+ qTxD6mgXEk3gFbJkYb4uI9gMw6w=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n18.prod.us-east-1.postgun.com with SMTP id
- 5ef654cfa3d8a447438e8eb8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Jun 2020 20:04:31
+ smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
+ 5ef654d2bfb34e631c1a7c1f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Jun 2020 20:04:34
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 035E5C4344B; Fri, 26 Jun 2020 20:04:30 +0000 (UTC)
+        id 78ECFC433C8; Fri, 26 Jun 2020 20:04:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +36,9 @@ Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.2
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C5522C433A0;
-        Fri, 26 Jun 2020 20:04:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C5522C433A0
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96B86C433C6;
+        Fri, 26 Jun 2020 20:04:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 96B86C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
@@ -47,13 +46,19 @@ To:     linux-arm-msm@vger.kernel.org
 Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         iommu@lists.linux-foundation.org,
         John Stultz <john.stultz@linaro.org>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Eric Anholt <eric@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 5/6] drm/msm: Add support for address space instances
-Date:   Fri, 26 Jun 2020 14:04:13 -0600
-Message-Id: <20200626200414.14382-6-jcrouse@codeaurora.org>
+Subject: [PATCH v2 6/6] drm/msm/a6xx: Add support for per-instance pagetables
+Date:   Fri, 26 Jun 2020 14:04:14 -0600
+Message-Id: <20200626200414.14382-7-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200626200414.14382-1-jcrouse@codeaurora.org>
 References: <20200626200414.14382-1-jcrouse@codeaurora.org>
@@ -62,161 +67,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for allocating an address space instance. Targets that support
-per-instance pagetables should implement their own function to allocate a
-new instance. The default will return the existing generic address space.
+Add support for using per-instance pagetables if all the dependencies are
+available.
 
 Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
 
- drivers/gpu/drm/msm/msm_drv.c     | 15 +++++++++------
- drivers/gpu/drm/msm/msm_drv.h     |  4 ++++
- drivers/gpu/drm/msm/msm_gem_vma.c |  9 +++++++++
- drivers/gpu/drm/msm/msm_gpu.c     | 17 +++++++++++++++++
- drivers/gpu/drm/msm/msm_gpu.h     |  5 +++++
- 5 files changed, 44 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 43 +++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_ringbuffer.h  |  1 +
+ 2 files changed, 44 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 6c57cc72d627..092c49552ddd 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -588,7 +588,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
- 
- 	msm_submitqueue_init(dev, ctx);
- 
--	ctx->aspace = priv->gpu ? priv->gpu->aspace : NULL;
-+	ctx->aspace = msm_gpu_address_space_instance(priv->gpu);
- 	file->driver_priv = ctx;
- 
- 	return 0;
-@@ -607,6 +607,8 @@ static int msm_open(struct drm_device *dev, struct drm_file *file)
- static void context_close(struct msm_file_private *ctx)
- {
- 	msm_submitqueue_close(ctx);
-+
-+	msm_gem_address_space_put(ctx->aspace);
- 	kfree(ctx);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index aa53f47b7e8b..95ed2ceac121 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -79,6 +79,34 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
+ 	OUT_RING(ring, upper_32_bits(iova));
  }
  
-@@ -771,18 +773,19 @@ static int msm_ioctl_gem_cpu_fini(struct drm_device *dev, void *data,
- }
- 
- static int msm_ioctl_gem_info_iova(struct drm_device *dev,
--		struct drm_gem_object *obj, uint64_t *iova)
-+		struct drm_file *file, struct drm_gem_object *obj,
-+		uint64_t *iova)
- {
--	struct msm_drm_private *priv = dev->dev_private;
-+	struct msm_file_private *ctx = file->driver_priv;
- 
--	if (!priv->gpu)
-+	if (!ctx->aspace)
- 		return -EINVAL;
- 
- 	/*
- 	 * Don't pin the memory here - just get an address so that userspace can
- 	 * be productive
- 	 */
--	return msm_gem_get_iova(obj, priv->gpu->aspace, iova);
-+	return msm_gem_get_iova(obj, ctx->aspace, iova);
- }
- 
- static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
-@@ -821,7 +824,7 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
- 		args->value = msm_gem_mmap_offset(obj);
- 		break;
- 	case MSM_INFO_GET_IOVA:
--		ret = msm_ioctl_gem_info_iova(dev, obj, &args->value);
-+		ret = msm_ioctl_gem_info_iova(dev, file, obj, &args->value);
- 		break;
- 	case MSM_INFO_SET_NAME:
- 		/* length check should leave room for terminating null: */
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index e2d6a6056418..983a8b7e5a74 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -249,6 +249,10 @@ int msm_gem_map_vma(struct msm_gem_address_space *aspace,
- void msm_gem_close_vma(struct msm_gem_address_space *aspace,
- 		struct msm_gem_vma *vma);
- 
-+
-+struct msm_gem_address_space *
-+msm_gem_address_space_get(struct msm_gem_address_space *aspace);
-+
- void msm_gem_address_space_put(struct msm_gem_address_space *aspace);
- 
- struct msm_gem_address_space *
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 5f6a11211b64..29cc1305cf37 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -27,6 +27,15 @@ void msm_gem_address_space_put(struct msm_gem_address_space *aspace)
- 		kref_put(&aspace->kref, msm_gem_address_space_destroy);
- }
- 
-+struct msm_gem_address_space *
-+msm_gem_address_space_get(struct msm_gem_address_space *aspace)
++static void a6xx_set_pagetable(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
++		struct msm_file_private *ctx)
 +{
-+	if (!IS_ERR_OR_NULL(aspace))
-+		kref_get(&aspace->kref);
++	phys_addr_t ttbr;
++	u32 asid;
 +
-+	return aspace;
-+}
++	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
++		return;
 +
- /* Actually unmap memory for the vma */
- void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
- 		struct msm_gem_vma *vma)
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 86a138641477..0fa614430799 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -821,6 +821,23 @@ static int get_clocks(struct platform_device *pdev, struct msm_gpu *gpu)
- 	return 0;
- }
- 
-+/* Return a new address space instance */
-+struct msm_gem_address_space *
-+msm_gpu_address_space_instance(struct msm_gpu *gpu)
-+{
-+	if (!gpu)
-+		return NULL;
++	/* Execute the table update */
++	OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
++	OUT_RING(ring, lower_32_bits(ttbr));
++	OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
++	/* CONTEXTIDR is currently unused */
++	OUT_RING(ring, 0);
++	/* CONTEXTBANK is currently unused */
++	OUT_RING(ring, 0);
 +
 +	/*
-+	 * If the GPU doesn't support instanced address spaces return the
-+	 * default address space
++	 * Write the new TTBR0 to the memstore. This is good for debugging.
 +	 */
-+	if (!gpu->funcs->address_space_instance)
-+		return msm_gem_address_space_get(gpu->aspace);
-+
-+	return gpu->funcs->address_space_instance(gpu);
++	OUT_PKT7(ring, CP_MEM_WRITE, 4);
++	OUT_RING(ring, lower_32_bits(rbmemptr(ring, ttbr0)));
++	OUT_RING(ring, upper_32_bits(rbmemptr(ring, ttbr0)));
++	OUT_RING(ring, lower_32_bits(ttbr));
++	OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
 +}
 +
- int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		struct msm_gpu *gpu, const struct msm_gpu_funcs *funcs,
- 		const char *name, struct msm_gpu_config *config)
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 429cb40f7931..f1762b77bea8 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -64,6 +64,8 @@ struct msm_gpu_funcs {
- 	void (*gpu_set_freq)(struct msm_gpu *gpu, unsigned long freq);
- 	struct msm_gem_address_space *(*create_address_space)
- 		(struct msm_gpu *gpu, struct platform_device *pdev);
-+	struct msm_gem_address_space *(*address_space_instance)
-+		(struct msm_gpu *gpu);
+ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+ 	struct msm_file_private *ctx)
+ {
+@@ -89,6 +117,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
+ 	struct msm_ringbuffer *ring = submit->ring;
+ 	unsigned int i;
+ 
++	a6xx_set_pagetable(gpu, ring, ctx);
++
+ 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
+ 		rbmemptr_stats(ring, index, cpcycles_start));
+ 
+@@ -872,6 +902,18 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+ 	return (unsigned long)busy_time;
+ }
+ 
++struct msm_gem_address_space *a6xx_address_space_instance(struct msm_gpu *gpu)
++{
++	struct msm_mmu *mmu;
++
++	mmu = msm_iommu_pagetable_create(gpu->aspace->mmu);
++	if (IS_ERR(mmu))
++		return msm_gem_address_space_get(gpu->aspace);
++
++	return msm_gem_address_space_create(mmu,
++		"gpu", 0x100000000ULL, 0x1ffffffffULL);
++}
++
+ static const struct adreno_gpu_funcs funcs = {
+ 	.base = {
+ 		.get_param = adreno_get_param,
+@@ -895,6 +937,7 @@ static const struct adreno_gpu_funcs funcs = {
+ 		.gpu_state_put = a6xx_gpu_state_put,
+ #endif
+ 		.create_address_space = adreno_iommu_create_address_space,
++		.address_space_instance = a6xx_address_space_instance,
+ 	},
+ 	.get_timestamp = a6xx_get_timestamp,
+ };
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
+index 7764373d0ed2..0987d6bf848c 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.h
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+@@ -31,6 +31,7 @@ struct msm_rbmemptrs {
+ 	volatile uint32_t fence;
+ 
+ 	volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
++	volatile u64 ttbr0;
  };
  
- struct msm_gpu {
-@@ -286,6 +288,9 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		struct msm_gpu *gpu, const struct msm_gpu_funcs *funcs,
- 		const char *name, struct msm_gpu_config *config);
- 
-+struct msm_gem_address_space *
-+msm_gpu_address_space_instance(struct msm_gpu *gpu);
-+
- void msm_gpu_cleanup(struct msm_gpu *gpu);
- 
- struct msm_gpu *adreno_load_gpu(struct drm_device *dev);
+ struct msm_ringbuffer {
 -- 
 2.17.1
 
