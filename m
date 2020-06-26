@@ -2,124 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76FD420AD6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 09:42:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3FF220AE07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 10:07:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728826AbgFZHm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 03:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728804AbgFZHm5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 03:42:57 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CFA3C08C5DB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 00:42:57 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id cv18so1383461pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 00:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=OJIUC4k1mJAJPg8NhZJ50NxPEO+zBVx140Q/CxvWNvw=;
-        b=JuHGdSRcBQGE3Lde78F313PsAZcPMsnhx/4TiHSLZEfd0kKmZO8VUORbl2ywLlLNYP
-         SybuYbIXipyAqOoCEFVzfX+cyu1u//qdxZmUFkk1BZIbhZiDVvkT+r3ys2yo80bHbGon
-         SsdxDCae+9fy02JYCpW6exl43BLdPHw76Jn1k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=OJIUC4k1mJAJPg8NhZJ50NxPEO+zBVx140Q/CxvWNvw=;
-        b=PQCn1bXU7lP8yqe3k41OLMatNfrLIzIxZgztDTHGFEH9dQ/+3q4plfjPIMp/gTq/tc
-         JK11sL2Myl1+C5OKYbEPaxeMbwRk77nTAXZfx3OHUCxMZWcBXlwsxbC9puBrfX+Q5zOM
-         oQG6jeSAvBRgfDQm1DrRfs38inSrth7rAEfgsMVnqSalrdo9+xC+T62GtxPHIbdJrBAj
-         JE83TzcZAgQh+6T6X2QcPXEMqMsgc+BuTGUb8/B+/PXeaWbAEFNwOtpj9kQ7XIz62t33
-         Z59iSToRNzJeBSXEisbH1HLhChtRTS2L9TPbEJbzqZK4m9JgJEckLeT1YCUiTFJf9x53
-         AUmQ==
-X-Gm-Message-State: AOAM531c8vvPLi1PhrcCsRdzbPTuIT2gWjzXEVFyTpa8pCqeumxY6g6n
-        3eNvi2ALIcWed5Av5Dc5ojKa/A==
-X-Google-Smtp-Source: ABdhPJxJiBdKBJCg9hkKXPvaAZ1SMFSV7dxt8ZkrJwCH6KsPe6VyOeT252b+sGAmU5335uuNU45W2w==
-X-Received: by 2002:a17:90a:1546:: with SMTP id y6mr2153667pja.92.1593157376534;
-        Fri, 26 Jun 2020 00:42:56 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
-        by smtp.gmail.com with ESMTPSA id jz23sm10479542pjb.2.2020.06.26.00.42.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2020 00:42:56 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200625001039.56174-4-john.stultz@linaro.org>
-References: <20200625001039.56174-1-john.stultz@linaro.org> <20200625001039.56174-4-john.stultz@linaro.org>
-Subject: Re: [PATCH v2 3/5] irqchip: Allow QCOM_PDC to be loadable as a permanent module
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
+        id S1729214AbgFZIGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 04:06:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37190 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729234AbgFZIGM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jun 2020 04:06:12 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.235])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 53DB920836;
+        Fri, 26 Jun 2020 08:06:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593158772;
+        bh=9+1hSzgiVymwCB66UaU86LnUIVfzzROZydYB5/Idn/A=;
+        h=From:To:Cc:Subject:Date:From;
+        b=nkZ4z8taddylf4E5+kh0l367oPcPA0QW/oY/a+n2LoWkSiCkyIKlqn91cbrZBaK/R
+         /5BdKB/meaL2UhyPlQO5M5BJfTwIYUXCawB5vj15Eyys/w3WP9Z/LH2FSRqSdvRa8g
+         DhbMWqO3qsDMmvs6CDOGEQqhIn+FqNqO3DVdmV2I=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-To:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Date:   Fri, 26 Jun 2020 00:42:55 -0700
-Message-ID: <159315737502.62212.16093934831673347066@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: Align L2 cache-controller nodename with dtschema
+Date:   Fri, 26 Jun 2020 10:06:07 +0200
+Message-Id: <20200626080607.3848-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting John Stultz (2020-06-24 17:10:37)
-> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-> index 6ae9e1f0819d..3fee8b655da1 100644
-> --- a/drivers/irqchip/qcom-pdc.c
-> +++ b/drivers/irqchip/qcom-pdc.c
-> @@ -430,4 +432,33 @@ static int qcom_pdc_init(struct device_node *node, s=
-truct device_node *parent)
->         return ret;
->  }
-> =20
-> +#ifdef MODULE
-> +static int qcom_pdc_probe(struct platform_device *pdev)
-> +{
-> +       struct device_node *np =3D pdev->dev.of_node;
-> +       struct device_node *parent =3D of_irq_find_parent(np);
-> +
-> +       return qcom_pdc_init(np, parent);
-> +}
-> +
-> +static const struct of_device_id qcom_pdc_match_table[] =3D {
-> +       { .compatible =3D "qcom,pdc" },
-> +       {}
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
-> +
-> +static struct platform_driver qcom_pdc_driver =3D {
-> +       .probe =3D qcom_pdc_probe,
-> +       .driver =3D {
-> +               .name =3D "qcom-pdc",
-> +               .of_match_table =3D qcom_pdc_match_table,
-> +               .suppress_bind_attrs =3D true,
-> +       },
-> +};
-> +module_platform_driver(qcom_pdc_driver);
-> +#else
->  IRQCHIP_DECLARE(qcom_pdc, "qcom,pdc", qcom_pdc_init);
+Fix dtschema validator warnings like:
+    l2-cache@2040000: $nodename:0:
+        'l2-cache@2040000' does not match '^(cache-controller|cpu)(@[0-9a-f,]+)*$'
 
-Is there any reason to use IRQCHIP_DECLARE if this can work as a
-platform device driver?
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ arch/arm/boot/dts/qcom-mdm9615.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +#endif
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller"=
-);
-> +MODULE_LICENSE("GPL v2");
+diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+index 347b4f7d7889..dda2ceec6591 100644
+--- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
++++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+@@ -98,7 +98,7 @@
+ 		ranges;
+ 		compatible = "simple-bus";
+ 
+-		L2: l2-cache@2040000 {
++		L2: cache-controller@2040000 {
+ 			compatible = "arm,pl310-cache";
+ 			reg = <0x02040000 0x1000>;
+ 			arm,data-latency = <2 2 0>;
+-- 
+2.17.1
+
