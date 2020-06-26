@@ -2,168 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDACD20B9C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 22:04:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C95020BA4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 22:27:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725897AbgFZUEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 16:04:46 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:28648 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725864AbgFZUEp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 16:04:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593201885; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=LdWbyAz364u7P6m0IEZru9FONBE/gZvu9Gt+jgjI10I=; b=Gj1QS6r3mCm1djou6wZLcMtttwmzJ+r9rOur+Po+XbxosOHUHTbrVK7++qq2FZqUBnlk2scj
- GV1M7X4AQB7CrMfH5T2wq8FlYTxyxNbTrwJbemM0zI/Eve0mUDBeK/HkGhMwJD8jVEdo74gn
- qTxD6mgXEk3gFbJkYb4uI9gMw6w=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
- 5ef654d2bfb34e631c1a7c1f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Jun 2020 20:04:34
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 78ECFC433C8; Fri, 26 Jun 2020 20:04:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96B86C433C6;
-        Fri, 26 Jun 2020 20:04:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 96B86C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        iommu@lists.linux-foundation.org,
-        John Stultz <john.stultz@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Eric Anholt <eric@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 6/6] drm/msm/a6xx: Add support for per-instance pagetables
-Date:   Fri, 26 Jun 2020 14:04:14 -0600
-Message-Id: <20200626200414.14382-7-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200626200414.14382-1-jcrouse@codeaurora.org>
-References: <20200626200414.14382-1-jcrouse@codeaurora.org>
+        id S1725781AbgFZU1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 16:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725780AbgFZU1t (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Jun 2020 16:27:49 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C393C03E979
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 13:27:49 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id o2so6177668vsr.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 13:27:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7bYsvRQj/KxO7y6dcHjKoVfFZMfrtTcsCp4sG21kGBU=;
+        b=cVnSP+/m+7yKuZx6yu96KuQZagQE2QwRL8rlUKUdf7JB8RzaML0YfYX0XCNHk3q2AL
+         1sEoS7KqNSGVHu8R9gM8PQc7xETIM3LxOnV1tHenKcyY7IWU/uqES3yBkHhO6rUuWOlw
+         3F5uTuzCOzTOE8hRDq9rJCCArcCMLmk11dPUs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7bYsvRQj/KxO7y6dcHjKoVfFZMfrtTcsCp4sG21kGBU=;
+        b=gUbBMQ6mkmKH0dnUJTUCZ1EkavPkpw99Ragt2NWl79VoBqH0KUqKT7p2tkaaRfpmXj
+         8c9SD/BPXTitzgGg+H4L96P/+DHmc2l7cyb6nJyogvEAydMyq37vAG9jcRDnWh0+HNTq
+         mn6brekHL8KLJ7SmNXtaz0G98tcCBdClnsSjzxHvAvC6JRLL+AA54RpzNArdvRnWqUyJ
+         eOwft1ain3TZaJhfofg1iocOwirSZWRFkTJ7VgBTZlnd9f3ue7Ph+fjowMGEVSjGbPIA
+         JBuLKZqQGx8x6RZlr3WPBsVAS2vn45zN+1MtNdOkV++4cewo+In5TI89Vhd5Uj2Vms7C
+         IY0w==
+X-Gm-Message-State: AOAM532YKZs6XlKx81azJSO8MiIaW7NZrpc3Xpg+kT03w0JqKYBYH/7C
+        gUgx2Hr7Etd5WcLF2G5U5Tq4GXuZqt8=
+X-Google-Smtp-Source: ABdhPJyjZyUwqs8u82ugNxJGIon9s+sstAiUjU5Hus0Wky0SJLex5073nZvNJqw74CTutvI+QJrs4Q==
+X-Received: by 2002:a67:eacd:: with SMTP id s13mr3832516vso.171.1593203268201;
+        Fri, 26 Jun 2020 13:27:48 -0700 (PDT)
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
+        by smtp.gmail.com with ESMTPSA id g10sm801899vkm.35.2020.06.26.13.27.47
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Jun 2020 13:27:48 -0700 (PDT)
+Received: by mail-ua1-f50.google.com with SMTP id z47so3445380uad.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 13:27:47 -0700 (PDT)
+X-Received: by 2002:ab0:2eab:: with SMTP id y11mr3463084uay.22.1593202929409;
+ Fri, 26 Jun 2020 13:22:09 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200626190808.8716-1-sibis@codeaurora.org>
+In-Reply-To: <20200626190808.8716-1-sibis@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 26 Jun 2020 13:21:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X_0s-YOCj72F3rzu0oFkNBx82MeHsP2Yqrj0=LAOF_tg@mail.gmail.com>
+Message-ID: <CAD=FV=X_0s-YOCj72F3rzu0oFkNBx82MeHsP2Yqrj0=LAOF_tg@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Add cpu OPP tables
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Evan Green <evgreen@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for using per-instance pagetables if all the dependencies are
-available.
+Hi,
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+On Fri, Jun 26, 2020 at 12:09 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Add OPP tables required to scale DDR/L3 per freq-domain on SC7180 SoCs.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>
+> v2:
+>  * drop interconnect-tag property
+>
+> v1: https://patchwork.kernel.org/patch/11527597/
+>
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 160 +++++++++++++++++++++++++++
+>  1 file changed, 160 insertions(+)
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 43 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_ringbuffer.h  |  1 +
- 2 files changed, 44 insertions(+)
+This is a huge perf boost and I'd love to see it land while waiting
+for the interconnect-tag stuff to get resolved.  In theory I guess we
+could land the sdm845 one too...
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index aa53f47b7e8b..95ed2ceac121 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -79,6 +79,34 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
- 	OUT_RING(ring, upper_32_bits(iova));
- }
- 
-+static void a6xx_set_pagetable(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
-+		struct msm_file_private *ctx)
-+{
-+	phys_addr_t ttbr;
-+	u32 asid;
-+
-+	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
-+		return;
-+
-+	/* Execute the table update */
-+	OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
-+	OUT_RING(ring, lower_32_bits(ttbr));
-+	OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
-+	/* CONTEXTIDR is currently unused */
-+	OUT_RING(ring, 0);
-+	/* CONTEXTBANK is currently unused */
-+	OUT_RING(ring, 0);
-+
-+	/*
-+	 * Write the new TTBR0 to the memstore. This is good for debugging.
-+	 */
-+	OUT_PKT7(ring, CP_MEM_WRITE, 4);
-+	OUT_RING(ring, lower_32_bits(rbmemptr(ring, ttbr0)));
-+	OUT_RING(ring, upper_32_bits(rbmemptr(ring, ttbr0)));
-+	OUT_RING(ring, lower_32_bits(ttbr));
-+	OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
-+}
-+
- static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 	struct msm_file_private *ctx)
- {
-@@ -89,6 +117,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 	struct msm_ringbuffer *ring = submit->ring;
- 	unsigned int i;
- 
-+	a6xx_set_pagetable(gpu, ring, ctx);
-+
- 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
- 		rbmemptr_stats(ring, index, cpcycles_start));
- 
-@@ -872,6 +902,18 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
- 	return (unsigned long)busy_time;
- }
- 
-+struct msm_gem_address_space *a6xx_address_space_instance(struct msm_gpu *gpu)
-+{
-+	struct msm_mmu *mmu;
-+
-+	mmu = msm_iommu_pagetable_create(gpu->aspace->mmu);
-+	if (IS_ERR(mmu))
-+		return msm_gem_address_space_get(gpu->aspace);
-+
-+	return msm_gem_address_space_create(mmu,
-+		"gpu", 0x100000000ULL, 0x1ffffffffULL);
-+}
-+
- static const struct adreno_gpu_funcs funcs = {
- 	.base = {
- 		.get_param = adreno_get_param,
-@@ -895,6 +937,7 @@ static const struct adreno_gpu_funcs funcs = {
- 		.gpu_state_put = a6xx_gpu_state_put,
- #endif
- 		.create_address_space = adreno_iommu_create_address_space,
-+		.address_space_instance = a6xx_address_space_instance,
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
- };
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index 7764373d0ed2..0987d6bf848c 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -31,6 +31,7 @@ struct msm_rbmemptrs {
- 	volatile uint32_t fence;
- 
- 	volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
-+	volatile u64 ttbr0;
- };
- 
- struct msm_ringbuffer {
--- 
-2.17.1
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
+I'm also not really an expert here, but the patch seems sane to me, so
+I'd give it a weak:
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+
+-Doug
