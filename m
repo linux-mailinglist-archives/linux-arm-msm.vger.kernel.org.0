@@ -2,204 +2,353 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B07C520B104
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 13:55:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6EAB20B2D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2020 15:46:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgFZLzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Jun 2020 07:55:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47766 "EHLO
+        id S1728751AbgFZNqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Jun 2020 09:46:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726532AbgFZLzV (ORCPT
+        with ESMTP id S1728782AbgFZNqq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Jun 2020 07:55:21 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB6D0C08C5DB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 04:55:21 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g75so8561579wme.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 04:55:21 -0700 (PDT)
+        Fri, 26 Jun 2020 09:46:46 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3886BC03E979
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 06:46:46 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id s10so9539744wrw.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2020 06:46:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:autocrypt:organization:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZYdt4gQWBtJQecWrxgjcZRySxIabHfJby6/MGUebw0s=;
-        b=jpX/3wozpDBWzQux0qF3QyqBy9feIYajR5bJ9ymLYvhvBkJK/kkJFDKN0U56fvoJ3q
-         uzP4tu0DLCCJYhanx1Z78MpLM5frZV5bolYKICUkEhwG/qVeVMlQ7LT3OrRAL+Dl0mUU
-         1GIIt8JKAKszLjvLvqLvN/F+8uHMNkHhwWDj7DaZwpAMdQc7JvWKxsuYXUBPInIXJm0c
-         TXwF4RzrJhCYGf26tAmrLfT0kKfHwJqZ+JMZPMP44sSO5eISXmy1XvmYXJE9n3MxbNG3
-         GIy2+qSW7jGpPDvlwnfwxXmfkAJMOZHsESJ1TFoOpXgX21dla4ZDIFytL8eYnachGhfm
-         GmFQ==
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JnmhWsqMZmydU3bW6sByEonvR0pfK7HW3y6U5yzw87o=;
+        b=P8oPqY82WyqVX4drM174PT9q8EYMgvfFsEcgrnbSkPSsjS4A1uTOQnXNZ0wPkUYW7Z
+         SbuCD8Ytoati0GJgSyewKCHbi/Asf8aMVvDj/jFVkBWclubWfm0lJ5mZaV/kld8u63c3
+         Q079OUbf8XWVmBD32Y/m1wfn34ijzuFUE8f6g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :organization:message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ZYdt4gQWBtJQecWrxgjcZRySxIabHfJby6/MGUebw0s=;
-        b=Dj9ue5SH+OBG+Hmx3UNi5tGCojHseXHDuvCvumwJjGIugbPLx3crCgFmnLtTKBuGgj
-         XjM5thegMvinHeHb1PW02Qy8Ge0Xmiyf4UeyhXKxVPF+YO16YjjK6VXa75+kGrS7Kote
-         Ie02NAngKbrms77Djjgkl4BCvZlKx1GQ7wODHrKcU1CPkiihrH9mib9YG+/fK9cRZODN
-         7eniMyDEXWyzpNs7XfwHZdTzuyCoYbBxVR9CBcjg+zODsnOsfpACF32Jl/25TSjcYlp7
-         zmCc2tCfOZD3cX91QoT8O0q9/FbhxaQ3fD/rU09LWz8sFFS0Wx5C5sfz2wAe8F5lHHOm
-         AM+Q==
-X-Gm-Message-State: AOAM533sfRV6qLFwx2ITfqQ8VR5v9NqTovyThT0xlu+Ongnz2e+y5kw8
-        OKyDZlzbEIpRIfuBsz6wjqGOZA==
-X-Google-Smtp-Source: ABdhPJy1xHuHs5H4vkG7tlNhlbwO4oRZmm6noYx2GQkUfK+F+v00YALGwgVJs1tFnCo/RWCXv2wU/Q==
-X-Received: by 2002:a1c:1dc7:: with SMTP id d190mr3010814wmd.36.1593172519840;
-        Fri, 26 Jun 2020 04:55:19 -0700 (PDT)
-Received: from [10.1.3.173] (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
-        by smtp.gmail.com with ESMTPSA id t16sm15557658wru.9.2020.06.26.04.55.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2020 04:55:18 -0700 (PDT)
-Subject: Re: [v3] drm/bridge: ti-sn65dsi86: ensure bridge suspend happens
- during PM sleep
-To:     Doug Anderson <dianders@chromium.org>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Andrzej Hajda <a.hajda@samsung.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JnmhWsqMZmydU3bW6sByEonvR0pfK7HW3y6U5yzw87o=;
+        b=HsSwyAvaxwEPEeIx1WiNZE8hA0zluEM4IbfThauf5gSj7AifGy3buk320INxcbICv9
+         qg4I59xT5f0qunpSz9wQGG2pHtxzKG8G4Yd2FRU5Y6EQGOFGRmcodT2wyZ9NqQdIOlP8
+         GmgSgV4xRx9fTLCQDbrb5Jyt4k7wizMKmzLCXpV2gy3KgeWdHVY/G/YCPoVoOxGguWlw
+         GRUq7KxArBz+vO1eJj+hepHEX9o/IZdAAjKY5REsN2hpV2ErpI9GhkjCbVnFTSrY9Qxn
+         ejJ6C++GQJBKMxG7jVAvkbhCKWElKWKIrZjDyHapD0qj9TeP6ga9VoxFV8RSixthP9Vq
+         sO7Q==
+X-Gm-Message-State: AOAM5302z43sovGKMkwNe12pCchu+s7WR9LZnVzAWGYHOrXAuwXEgnaF
+        WasNUBMZs4loXLOO80AXsQmRDQ==
+X-Google-Smtp-Source: ABdhPJwJBLS5pL1KkwPxrFNboOb9nNtI6xLi+Us82bFi4xx0WAH2BkYpcbfMQDYRGoIQodviPe3mWw==
+X-Received: by 2002:a5d:6846:: with SMTP id o6mr3844132wrw.370.1593179204812;
+        Fri, 26 Jun 2020 06:46:44 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id g3sm41403548wrb.46.2020.06.26.06.46.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2020 06:46:44 -0700 (PDT)
+Date:   Fri, 26 Jun 2020 15:46:42 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Shawn Guo <shawnguo@kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>, nganji@codeaurora.org,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>
-References: <20200609120455.20458-1-harigovi@codeaurora.org>
- <CAD=FV=XHHAAWNkJGMJESf4C=hcbaswFamGVeyMJ9eRd6dWAy8Q@mail.gmail.com>
-From:   Neil Armstrong <narmstrong@baylibre.com>
-Autocrypt: addr=narmstrong@baylibre.com; prefer-encrypt=mutual; keydata=
- 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
- BSwxi7g3Mu7u5kUByanqHyA=
-Organization: Baylibre
-Message-ID: <0d408a69-b5ef-d082-aaef-e6d0a9541d08@baylibre.com>
-Date:   Fri, 26 Jun 2020 13:55:17 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        Boris Brezillon <boris.brezillon@bootlin.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH] drm/atomic_helper: duplicate state for drm_private_obj
+Message-ID: <20200626134642.GF3278063@phenom.ffwll.local>
+References: <20200625115746.13396-1-shawnguo@kernel.org>
+ <CAKMK7uGoDnizoE4t47houeyK2y5sLQbvCM3LDMWcEeV3oB5rPA@mail.gmail.com>
+ <CAF6AEGuaFFxWSqYDXE0XukeQHOS7H5s6E8WfjVS7EfotWfZmQA@mail.gmail.com>
+ <CAKMK7uHDYSZBBKByxgaAhQMEs0gFmKe_QUCZsqt5wcgYZFYcOQ@mail.gmail.com>
+ <CAF6AEGs8vyFrNoGYTDaf81f28CkFqQsaqhAHrW3nBuHBzRCf7g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=XHHAAWNkJGMJESf4C=hcbaswFamGVeyMJ9eRd6dWAy8Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGs8vyFrNoGYTDaf81f28CkFqQsaqhAHrW3nBuHBzRCf7g@mail.gmail.com>
+X-Operating-System: Linux phenom 5.6.0-1-amd64 
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Jun 25, 2020 at 09:24:38AM -0700, Rob Clark wrote:
+> On Thu, Jun 25, 2020 at 8:55 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+> >
+> > On Thu, Jun 25, 2020 at 4:17 PM Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > On Thu, Jun 25, 2020 at 5:35 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+> > > >
+> > > > On Thu, Jun 25, 2020 at 1:58 PM Shawn Guo <shawnguo@kernel.org> wrote:
+> > > > >
+> > > > > From: Shawn Guo <shawn.guo@linaro.org>
+> > > > >
+> > > > > The msm/mdp5 driver uses drm_private_obj as its global atomic state,
+> > > > > which keeps the assignment of hwpipe to plane.  With drm_private_obj
+> > > > > missing from duplicate state call, mdp5 suspend works with no problem
+> > > > > only for the very first time.  Any subsequent suspend will hit the
+> > > > > following warning, because hwpipe assignment doesn't get duplicated for
+> > > > > suspend state.  Adding drm_private_obj handling for duplicate state call
+> > > > > fixes the problem.
+> > > >
+> > > > If the driver needs a private state, it's supposed to duplicate that
+> > > > in its atomic_check functionality. This isn't the helper's job.
+> > > >
+> > > > If this is a bug in msm code, then pretty sure if you try hard enough,
+> > > > you can hit the exact same bug from userspace too. Maybe good idea to
+> > > > try and reproduce this with igt or something.
+> > >
+> > > The problem is how duplicate_state is used by the atomic
+> > > suspend/resume helpers.  They duplicate the running state on suspend,
+> > > forgetting to duplicate the global state.  Then everything is
+> > > disabled, the driver correctly duplicates and updates it's global
+> > > atomic state releasing the hwpipe.
+> > >
+> > > But then on resume, we are re-applying plane state that thinks it
+> > > already has a hwpipe assigned (because that is part of the plane state
+> > > that was duplicated), without reapplying the matching global state.
+> > >
+> > > On a normal atomic commit, we would duplicate the plane state that has
+> > > the hwpipe disabled, which would be in sync with the drivers global
+> > > state.  But since that is not what the atomic resume helper does, we
+> > > hit the situation where the plane state and the global state are out
+> > > of sync.
+> > >
+> > > So the driver is dtrt, the problem really is with the helpers.  I
+> > > think this patch is the right thing to do.  It is incorrect for the
+> > > suspend/resume helpers to assume that they can re-apply duplicated
+> > > state without including the global state.
+> >
+> > Hm, this is a bit awkward. Generally the assumption is that you should
+> > be recomputing the derived state (like hwpipe) no matter what. If your
+> > driver doesn't do that, then all kinds of things can leak from the
+> > pre-resume to the post-resume side of things, that's kinda why I'm not
+> > thrilled with this patch, I think it has good potential to open up a
+> > can of worms. Iirc this patch has come up in the past, and in those
+> > cases it was a driver bug.
+> >
+> > For this case, why is msm reusing a hw pipe assignment of a disabled plane?
+> 
+> Because it is part of the plane state that is being restored.
+> 
+> Since resume uses the old state saved before the
+> drm_atomic_helper_disable_all(), rather than duplicating the current
+> state, we end up with this mismatch between global and plane state.  I
+> think stashing away the old state is probably ok, but we can't just do
+> it piecemeal without including the global state.
+> 
+> I suppose part of the problem is the hwpipe (and other such
+> dynamically assigned resources) touch both private and plane (and
+> crtc) state.  The global state object knows which resources are
+> assigned to which plane/crtc.  But the plane/crtc state knows which of
+> the (potentially) two hwpipe/mixers is "left" (primary) and "right"
+> (secondary).
 
-On 19/06/2020 00:09, Doug Anderson wrote:
-> Hi,
-> 
-> On Tue, Jun 9, 2020 at 5:05 AM Harigovindan P <harigovi@codeaurora.org> wrote:
->>
->> ti-sn65dsi86 bridge is enumerated as a runtime device. When
->> suspend is triggered, PM core adds a refcount on all the
->> devices and calls device suspend, since usage count is
->> already incremented, runtime suspend will not be called
->> and it kept the bridge regulators and gpios ON which resulted
->> in platform not entering into XO shutdown.
->>
->> Add changes to force suspend on the runtime device during pm sleep.
->>
->> Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
->> ---
->>
->> Changes in v2:
->>         - Include bridge name in the commit message and
->>         remove dependent patchwork link from the commit
->>         text as bridge is independent of OEM(Stephen Boyd)
->>
->> Changes in v3:
->>         - Updating changelog to explain the need for patch
->>
->>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
->>  1 file changed, 2 insertions(+)
-> 
-> I think this patch is good to go now (has both Stephen's and my
-> reviews).  I noticed that Neil landed my other patches to this driver
-> recently (thanks!) and wondered why he didn't land this one.  Then, I
-> realized that you didn't send it to him or the other bridge
-> maintainer.  :(  Have you tried running get_maintainer?
-> 
-> $ ./scripts/get_maintainer.pl -f drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> Andrzej Hajda <a.hajda@samsung.com> (maintainer:DRM DRIVERS FOR BRIDGE CHIPS)
-> Neil Armstrong <narmstrong@baylibre.com> (maintainer:DRM DRIVERS FOR
-> BRIDGE CHIPS)
-> Laurent Pinchart <Laurent.pinchart@ideasonboard.com> (reviewer:DRM
-> DRIVERS FOR BRIDGE CHIPS)
-> Jonas Karlman <jonas@kwiboo.se> (reviewer:DRM DRIVERS FOR BRIDGE CHIPS)
-> Jernej Skrabec <jernej.skrabec@siol.net> (reviewer:DRM DRIVERS FOR BRIDGE CHIPS)
-> David Airlie <airlied@linux.ie> (maintainer:DRM DRIVERS)
-> Daniel Vetter <daniel@ffwll.ch> (maintainer:DRM DRIVERS)
-> dri-devel@lists.freedesktop.org (open list:DRM DRIVERS)
-> linux-kernel@vger.kernel.org (open list)
-> 
-> In any case, unless someone has extra feedback on this patch I think
-> it's ready to land.
-> 
-> Neil: If you're willing to land this patch too, can you let
-> Harigovindan know if it needs to be re-sent with you in the "To:" list
-> or if you can find it on the dri-devel list?
+Yeah I get all that, what I meant is: Why don't you just blindly recompute
+the hwpipe assignment every time a full modeset is done? Caching it for
+pure plane flips makes sense, but drm_crtc_needs_modset == true and just
+throw it all overboard and assign new ones I think would also solve this
+problem. Since the hwpipe global state would indicate that all pipes are
+unallocated that should work (I hope).
 
-Sorry missed this one,
+Imo just recomputing state is a good atomic pattern, it avoids drivers
+getting stuck in a corner somewhere you can't reset them out of anymore.
 
-Applying to drm-misc-next
+My question here was, why can't you do that?
 
-Neil
+> > Unfortunately we can't copy the drm state into the overall structure
+> > to solve this, since that would miss driver-private properties. So
+> > unfortunately we can't make this match a real atomic commit from
+> > userspace perfectly.
+> 
+> I'm not sure I understand this?  The driver private properties
+> would/should be part of one of the state objs (plane/crtc/global)?  If
+> the atomic state (including global) represents the entirety of the hw
+> state, you should be able to stash off N different versions of them
+> and re-apply them in any order you want because they are all
+> self-consistent.
+
+So for normal atomic commit we have:
+
+1. duplicate current state
+2. set properties
+
+But for resume helpers it's some random older state, so the expectations
+break a bit. We could approximate that using something like:
+
+1. duplicate current state into curr_state
+2. set properties using a memcpy of the drm core state structure, leaving
+the driver private stuff as-is.
+
+But a) there's also some non-property state in drm state structures and b)
+properties which are driver extensions and set into the driver part of the
+state would get lost.
+
+So also not great.
+
+> > Another option would be if msm just copies the private state it needs
+> > to not go boom.
+> >
+> > Doing this unconditionally might break other drivers that rely on
+> > private state not being duplicated, but I guess that would also be
+> > somewhat of a driver bug.
+> 
+> I guess we could duplicate our own version of
+> drm_atomic_helper_suspend().. or maybe add a 'duplicate_global' param
+> to drm_atomic_helper_suspend().
+> 
+> I'm not too sure how many drivers these days are using global atomic
+> state, so not sure how many would be potentially broken, but opting in
+> to duplicating global state seems reasonable if necessary.
+
+dp mst uses it to track it's stuff at least, and I think it's spreading
+quite a bit into drivers using them to track all kinds of things, not just
+a single global state.
+-Daniel
 
 > 
-> Thanks!
+> BR,
+> -R
 > 
-> -Doug
-> 
+> > -Daniel
+> >
+> > >
+> > > BR,
+> > > -R
+> > >
+> > > > -Daniel
+> > > >
+> > > >
+> > > > > $ echo mem > /sys/power/state
+> > > > > [   38.111144] PM: suspend entry (deep)
+> > > > > [   38.111185] PM: Syncing filesystems ... done.
+> > > > > [   38.114630] Freezing user space processes ... (elapsed 0.001 seconds) done.
+> > > > > [   38.115912] OOM killer disabled.
+> > > > > [   38.115914] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+> > > > > [   38.122170] ------------[ cut here ]------------
+> > > > > [   38.122212] WARNING: CPU: 0 PID: 1747 at drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c:145 mdp5_pipe_release+0x90/0xc0
+> > > > > [   38.122215] Modules linked in:
+> > > > > [   38.122222] CPU: 0 PID: 1747 Comm: sh Not tainted 4.19.107-00515-g9d5e4d7a33ed-dirty #323
+> > > > > [   38.122224] Hardware name: Square, Inc. T2 Devkit (DT)
+> > > > > [   38.122228] pstate: 40000005 (nZcv daif -PAN -UAO)
+> > > > > [   38.122230] pc : mdp5_pipe_release+0x90/0xc0
+> > > > > [   38.122233] lr : mdp5_pipe_release+0x90/0xc0
+> > > > > [   38.122235] sp : ffff00000d13b7f0
+> > > > > [   38.122236] x29: ffff00000d13b7f0 x28: 0000000000000000
+> > > > > [   38.122240] x27: 0000000000000002 x26: ffff800079adce00
+> > > > > [   38.122243] x25: ffff800079405200 x24: 0000000000000000
+> > > > > [   38.122246] x23: ffff80007a78cc08 x22: ffff80007b1cc018
+> > > > > [   38.122249] x21: ffff80007b1cc000 x20: ffff80007b317080
+> > > > > [   38.122252] x19: ffff80007a78ce80 x18: 0000000000020000
+> > > > > [   38.122255] x17: 0000000000000000 x16: 0000000000000000
+> > > > > [   38.122258] x15: 00000000fffffff0 x14: ffff000008c3fb48
+> > > > > [   38.122261] x13: ffff000008cdac4a x12: ffff000008c3f000
+> > > > > [   38.122264] x11: 0000000000000000 x10: ffff000008cda000
+> > > > > [   38.122267] x9 : 0000000000000000 x8 : ffff000008ce4a40
+> > > > > [   38.122269] x7 : 0000000000000000 x6 : 0000000039ea41a9
+> > > > > [   38.122272] x5 : 0000000000000000 x4 : 0000000000000000
+> > > > > [   38.122275] x3 : ffffffffffffffff x2 : c7580c109cae4500
+> > > > > [   38.122278] x1 : 0000000000000000 x0 : 0000000000000024
+> > > > > [   38.122281] Call trace:
+> > > > > [   38.122285]  mdp5_pipe_release+0x90/0xc0
+> > > > > [   38.122288]  mdp5_plane_atomic_check+0x2c0/0x448
+> > > > > [   38.122294]  drm_atomic_helper_check_planes+0xd0/0x208
+> > > > > [   38.122298]  drm_atomic_helper_check+0x38/0xa8
+> > > > > [   38.122302]  drm_atomic_check_only+0x3e8/0x630
+> > > > > [   38.122305]  drm_atomic_commit+0x18/0x58
+> > > > > [   38.122309]  __drm_atomic_helper_disable_all.isra.12+0x15c/0x1a8
+> > > > > [   38.122312]  drm_atomic_helper_suspend+0x80/0xf0
+> > > > > [   38.122316]  msm_pm_suspend+0x4c/0x70
+> > > > > [   38.122320]  dpm_run_callback.isra.6+0x20/0x68
+> > > > > [   38.122323]  __device_suspend+0x110/0x308
+> > > > > [   38.122326]  dpm_suspend+0x100/0x1f0
+> > > > > [   38.122329]  dpm_suspend_start+0x64/0x70
+> > > > > [   38.122334]  suspend_devices_and_enter+0x110/0x500
+> > > > > [   38.122336]  pm_suspend+0x268/0x2c0
+> > > > > [   38.122339]  state_store+0x88/0x110
+> > > > > [   38.122345]  kobj_attr_store+0x14/0x28
+> > > > > [   38.122352]  sysfs_kf_write+0x3c/0x50
+> > > > > [   38.122355]  kernfs_fop_write+0x118/0x1e0
+> > > > > [   38.122360]  __vfs_write+0x30/0x168
+> > > > > [   38.122363]  vfs_write+0xa4/0x1a8
+> > > > > [   38.122366]  ksys_write+0x64/0xe8
+> > > > > [   38.122368]  __arm64_sys_write+0x18/0x20
+> > > > > [   38.122374]  el0_svc_common+0x6c/0x178
+> > > > > [   38.122377]  el0_svc_compat_handler+0x1c/0x28
+> > > > > [   38.122381]  el0_svc_compat+0x8/0x18
+> > > > > [   38.122383] ---[ end trace 24145b7d8545345b ]---
+> > > > > [   38.491552] Disabling non-boot CPUs ...
+> > > > >
+> > > > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > > > ---
+> > > > >  drivers/gpu/drm/drm_atomic_helper.c | 16 ++++++++++++++++
+> > > > >  1 file changed, 16 insertions(+)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+> > > > > index 85d163f16801..024985a92156 100644
+> > > > > --- a/drivers/gpu/drm/drm_atomic_helper.c
+> > > > > +++ b/drivers/gpu/drm/drm_atomic_helper.c
+> > > > > @@ -3140,6 +3140,7 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> > > > >         struct drm_atomic_state *state;
+> > > > >         struct drm_connector *conn;
+> > > > >         struct drm_connector_list_iter conn_iter;
+> > > > > +       struct drm_private_obj *priv_obj;
+> > > > >         struct drm_plane *plane;
+> > > > >         struct drm_crtc *crtc;
+> > > > >         int err = 0;
+> > > > > @@ -3184,6 +3185,16 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> > > > >         }
+> > > > >         drm_connector_list_iter_end(&conn_iter);
+> > > > >
+> > > > > +       drm_for_each_privobj(priv_obj, dev) {
+> > > > > +               struct drm_private_state *priv_state;
+> > > > > +
+> > > > > +               priv_state = drm_atomic_get_private_obj_state(state, priv_obj);
+> > > > > +               if (IS_ERR(priv_state)) {
+> > > > > +                       err = PTR_ERR(priv_state);
+> > > > > +                       goto free;
+> > > > > +               }
+> > > > > +       }
+> > > > > +
+> > > > >         /* clear the acquire context so that it isn't accidentally reused */
+> > > > >         state->acquire_ctx = NULL;
+> > > > >
+> > > > > @@ -3278,6 +3289,8 @@ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
+> > > > >         struct drm_connector_state *new_conn_state;
+> > > > >         struct drm_crtc *crtc;
+> > > > >         struct drm_crtc_state *new_crtc_state;
+> > > > > +       struct drm_private_state *new_priv_state;
+> > > > > +       struct drm_private_obj *priv_obj;
+> > > > >
+> > > > >         state->acquire_ctx = ctx;
+> > > > >
+> > > > > @@ -3290,6 +3303,9 @@ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
+> > > > >         for_each_new_connector_in_state(state, connector, new_conn_state, i)
+> > > > >                 state->connectors[i].old_state = connector->state;
+> > > > >
+> > > > > +       for_each_new_private_obj_in_state(state, priv_obj, new_priv_state, i)
+> > > > > +               state->private_objs[i].old_state = priv_obj->state;
+> > > > > +
+> > > > >         ret = drm_atomic_commit(state);
+> > > > >
+> > > > >         state->acquire_ctx = NULL;
+> > > > > --
+> > > > > 2.17.1
+> > > > >
+> > > >
+> > > >
+> > > > --
+> > > > Daniel Vetter
+> > > > Software Engineer, Intel Corporation
+> > > > http://blog.ffwll.ch
+> >
+> >
+> >
+> > --
+> > Daniel Vetter
+> > Software Engineer, Intel Corporation
+> > http://blog.ffwll.ch
 
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
