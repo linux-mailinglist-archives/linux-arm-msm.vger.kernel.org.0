@@ -2,221 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B48F20C11F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2020 13:53:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4475020C163
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2020 15:11:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725926AbgF0Lxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Jun 2020 07:53:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59886 "EHLO mail.kernel.org"
+        id S1726639AbgF0NLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Jun 2020 09:11:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35626 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725900AbgF0Lxf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Jun 2020 07:53:35 -0400
-Received: from localhost.localdomain (unknown [80.251.214.228])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726439AbgF0NLY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 27 Jun 2020 09:11:24 -0400
+Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 916AF21473;
-        Sat, 27 Jun 2020 11:53:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DEF33207E8;
+        Sat, 27 Jun 2020 13:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593258813;
-        bh=fJ3YzNx8ZMcLfEV7pns/B9Sjilur3m/NJGKdbVo6TUc=;
-        h=From:To:Cc:Subject:Date:From;
-        b=spTs11h7TtOBtdDbJcIGU2aeZGvmEMTtSXx/GaSwyyS1Zrjhr0RsyoinPdbKinR0T
-         +nnCU4aO94GW+TduT3kjdn6KFx6NR89S0fiXMRCI/+d4sOMlWhvIE/c7MHXYU0J8MF
-         FmhORJNf5hyXug+8J1cK6r0a0e+wBBy5oT8zbBTI=
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Boris Brezillon <boris.brezillon@bootlin.com>,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2] drm/atomic_helper: add a flag for duplicating drm_private_obj state
-Date:   Sat, 27 Jun 2020 19:52:45 +0800
-Message-Id: <20200627115245.5925-1-shawnguo@kernel.org>
-X-Mailer: git-send-email 2.17.1
+        s=default; t=1593263483;
+        bh=TcBMrqRjXWcw8ga4N0865jJrdI0oTOwN6bqoO7ZV6/A=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=n31t26JPZtZBQNfnzcI3/CfV9K1FLVi2uruQunOCF99BrU5NXTM5o3hz75vkuTAuT
+         TT8qTVUhKj82n1CxK6HN53AaW9bFp4P2SsGZuJjKKkwjoC/+xgo/X7OInnKGMBQag9
+         ROj/I/rZ4tKoUkQdCXsH45gHz0afoL2Z0GAcR45Y=
+Date:   Sat, 27 Jun 2020 14:11:17 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Jishnu Prakash <jprakash@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, linus.walleij@linaro.org,
+        Jonathan.Cameron@huawei.com, andy.shevchenko@gmail.com,
+        amit.kucheria@verdurent.com, smohanad@codeaurora.org,
+        kgunda@codeaurora.org, aghayal@codeaurora.org,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH V7 7/7] iio: adc: Combine read functions for PMIC5 and
+ PMIC7
+Message-ID: <20200627141117.4f4593d3@archlinux>
+In-Reply-To: <1592897399-24089-8-git-send-email-jprakash@codeaurora.org>
+References: <1592897399-24089-1-git-send-email-jprakash@codeaurora.org>
+        <1592897399-24089-8-git-send-email-jprakash@codeaurora.org>
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Shawn Guo <shawn.guo@linaro.org>
+On Tue, 23 Jun 2020 12:59:59 +0530
+Jishnu Prakash <jprakash@codeaurora.org> wrote:
 
-The msm/mdp5 driver uses state of drm_private_obj as its global atomic
-state, which keeps the assignment of hwpipe to plane.  With
-drm_private_obj missing from duplicate state call in context of atomic
-suspend/resume helpers, mdp5 suspend works with no problem only for the
-very first time.  Any subsequent suspend will hit the following warning,
-because hwpipe assignment doesn't get duplicated for suspend state.
+> Add a common function used for read_raw callback for both PMIC5
+> and PMIC7 ADCs.
+> 
+> Signed-off-by: Jishnu Prakash <jprakash@codeaurora.org>
 
-$ echo mem > /sys/power/state
-[   38.111144] PM: suspend entry (deep)
-[   38.111185] PM: Syncing filesystems ... done.
-[   38.114630] Freezing user space processes ... (elapsed 0.001 seconds) done.
-[   38.115912] OOM killer disabled.
-[   38.115914] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
-[   38.122170] ------------[ cut here ]------------
-[   38.122212] WARNING: CPU: 0 PID: 1747 at drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c:145 mdp5_pipe_release+0x90/0xc0
-[   38.122215] Modules linked in:
-[   38.122222] CPU: 0 PID: 1747 Comm: sh Not tainted 4.19.107-00515-g9d5e4d7a33ed-dirty #323
-[   38.122224] Hardware name: Square, Inc. T2 Devkit (DT)
-[   38.122228] pstate: 40000005 (nZcv daif -PAN -UAO)
-[   38.122230] pc : mdp5_pipe_release+0x90/0xc0
-[   38.122233] lr : mdp5_pipe_release+0x90/0xc0
-[   38.122235] sp : ffff00000d13b7f0
-[   38.122236] x29: ffff00000d13b7f0 x28: 0000000000000000
-[   38.122240] x27: 0000000000000002 x26: ffff800079adce00
-[   38.122243] x25: ffff800079405200 x24: 0000000000000000
-[   38.122246] x23: ffff80007a78cc08 x22: ffff80007b1cc018
-[   38.122249] x21: ffff80007b1cc000 x20: ffff80007b317080
-[   38.122252] x19: ffff80007a78ce80 x18: 0000000000020000
-[   38.122255] x17: 0000000000000000 x16: 0000000000000000
-[   38.122258] x15: 00000000fffffff0 x14: ffff000008c3fb48
-[   38.122261] x13: ffff000008cdac4a x12: ffff000008c3f000
-[   38.122264] x11: 0000000000000000 x10: ffff000008cda000
-[   38.122267] x9 : 0000000000000000 x8 : ffff000008ce4a40
-[   38.122269] x7 : 0000000000000000 x6 : 0000000039ea41a9
-[   38.122272] x5 : 0000000000000000 x4 : 0000000000000000
-[   38.122275] x3 : ffffffffffffffff x2 : c7580c109cae4500
-[   38.122278] x1 : 0000000000000000 x0 : 0000000000000024
-[   38.122281] Call trace:
-[   38.122285]  mdp5_pipe_release+0x90/0xc0
-[   38.122288]  mdp5_plane_atomic_check+0x2c0/0x448
-[   38.122294]  drm_atomic_helper_check_planes+0xd0/0x208
-[   38.122298]  drm_atomic_helper_check+0x38/0xa8
-[   38.122302]  drm_atomic_check_only+0x3e8/0x630
-[   38.122305]  drm_atomic_commit+0x18/0x58
-[   38.122309]  __drm_atomic_helper_disable_all.isra.12+0x15c/0x1a8
-[   38.122312]  drm_atomic_helper_suspend+0x80/0xf0
-[   38.122316]  msm_pm_suspend+0x4c/0x70
-[   38.122320]  dpm_run_callback.isra.6+0x20/0x68
-[   38.122323]  __device_suspend+0x110/0x308
-[   38.122326]  dpm_suspend+0x100/0x1f0
-[   38.122329]  dpm_suspend_start+0x64/0x70
-[   38.122334]  suspend_devices_and_enter+0x110/0x500
-[   38.122336]  pm_suspend+0x268/0x2c0
-[   38.122339]  state_store+0x88/0x110
-[   38.122345]  kobj_attr_store+0x14/0x28
-[   38.122352]  sysfs_kf_write+0x3c/0x50
-[   38.122355]  kernfs_fop_write+0x118/0x1e0
-[   38.122360]  __vfs_write+0x30/0x168
-[   38.122363]  vfs_write+0xa4/0x1a8
-[   38.122366]  ksys_write+0x64/0xe8
-[   38.122368]  __arm64_sys_write+0x18/0x20
-[   38.122374]  el0_svc_common+0x6c/0x178
-[   38.122377]  el0_svc_compat_handler+0x1c/0x28
-[   38.122381]  el0_svc_compat+0x8/0x18
-[   38.122383] ---[ end trace 24145b7d8545345b ]---
-[   38.491552] Disabling non-boot CPUs ...
+Looks good. Applied to the togreg branch of iio.git and pushed out as
+testing for the autobuilders to poke at it.
 
-Let's add a flag for duplicating the state of drm_private_obj and set
-the flag from msm/mdp5 driver, so that the problem can be fixed while
-other drivers using drm_private_obj stay unaffected.
+Thanks,
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
-Changes for v2:
- - Add a flag to duplicate the state of drm_private_obj conditionally,
-   so that other drivers using drm_private_obj stay unaffected.
+Jonathan
 
- drivers/gpu/drm/drm_atomic_helper.c      | 22 ++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  7 +++++++
- include/drm/drm_atomic.h                 | 11 +++++++++++
- 3 files changed, 40 insertions(+)
-
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index 85d163f16801..4bf041730b9e 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -3140,6 +3140,7 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
- 	struct drm_atomic_state *state;
- 	struct drm_connector *conn;
- 	struct drm_connector_list_iter conn_iter;
-+	struct drm_private_obj *priv_obj;
- 	struct drm_plane *plane;
- 	struct drm_crtc *crtc;
- 	int err = 0;
-@@ -3184,6 +3185,19 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
- 	}
- 	drm_connector_list_iter_end(&conn_iter);
- 
-+	drm_for_each_privobj(priv_obj, dev) {
-+		struct drm_private_state *priv_state;
-+
-+		if (!priv_obj->needs_duplicate_state)
-+			continue;
-+
-+		priv_state = drm_atomic_get_private_obj_state(state, priv_obj);
-+		if (IS_ERR(priv_state)) {
-+			err = PTR_ERR(priv_state);
-+			goto free;
-+		}
-+	}
-+
- 	/* clear the acquire context so that it isn't accidentally reused */
- 	state->acquire_ctx = NULL;
- 
-@@ -3278,6 +3292,8 @@ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
- 	struct drm_connector_state *new_conn_state;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *new_crtc_state;
-+	struct drm_private_state *new_priv_state;
-+	struct drm_private_obj *priv_obj;
- 
- 	state->acquire_ctx = ctx;
- 
-@@ -3290,6 +3306,12 @@ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
- 	for_each_new_connector_in_state(state, connector, new_conn_state, i)
- 		state->connectors[i].old_state = connector->state;
- 
-+	for_each_new_private_obj_in_state(state, priv_obj, new_priv_state, i) {
-+		if (!priv_obj->needs_duplicate_state)
-+			continue;
-+		state->private_objs[i].old_state = priv_obj->state;
-+	}
-+
- 	ret = drm_atomic_commit(state);
- 
- 	state->acquire_ctx = NULL;
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 19ec48695ffb..20971c75f3a2 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -139,6 +139,13 @@ static int mdp5_global_obj_init(struct mdp5_kms *mdp5_kms)
- 	drm_atomic_private_obj_init(mdp5_kms->dev, &mdp5_kms->glob_state,
- 				    &state->base,
- 				    &mdp5_global_state_funcs);
-+
-+	/*
-+	 * Set needs_duplicate_state flag, as we have assignment of hwpipe in
-+	 * global atomic state that needs to be duplicated for suspend state.
-+	 */
-+	mdp5_kms->glob_state.needs_duplicate_state = true;
-+
- 	return 0;
- }
- 
-diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
-index 7b6cb4774e7d..72d35ca7b59e 100644
---- a/include/drm/drm_atomic.h
-+++ b/include/drm/drm_atomic.h
-@@ -273,6 +273,17 @@ struct drm_private_obj {
- 	 * &drm_private_state_funcs.
- 	 */
- 	const struct drm_private_state_funcs *funcs;
-+
-+	/**
-+	 * @needs_duplicate_state:
-+	 *
-+	 * A flag that's set by driver in order to duplicate the state of this
-+	 * private object in drm_atomic_helper_duplicate_state(). It's required
-+	 * by drivers like msm/mdp5 where the state is used as the driver global
-+	 * atomic state, and needs to be duplicated in context of suspend helper
-+	 * drm_atomic_helper_suspend(), restored on drm_atomic_helper_resume().
-+	 */
-+	bool needs_duplicate_state;
- };
- 
- /**
--- 
-2.17.1
+> ---
+>  drivers/iio/adc/qcom-spmi-adc5.c | 49 ++++++++++++++++------------------------
+>  1 file changed, 19 insertions(+), 30 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> index 0f9af66..88efadb 100644
+> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> @@ -449,6 +449,11 @@ static int adc7_do_conversion(struct adc5_chip *adc,
+>  	return ret;
+>  }
+>  
+> +typedef int (*adc_do_conversion)(struct adc5_chip *adc,
+> +			struct adc5_channel_prop *prop,
+> +			struct iio_chan_spec const *chan,
+> +			u16 *data_volt, u16 *data_cur);
+> +
+>  static irqreturn_t adc5_isr(int irq, void *dev_id)
+>  {
+>  	struct adc5_chip *adc = dev_id;
+> @@ -487,9 +492,9 @@ static int adc7_of_xlate(struct iio_dev *indio_dev,
+>  	return -EINVAL;
+>  }
+>  
+> -static int adc5_read_raw(struct iio_dev *indio_dev,
+> +static int adc_read_raw_common(struct iio_dev *indio_dev,
+>  			 struct iio_chan_spec const *chan, int *val, int *val2,
+> -			 long mask)
+> +			 long mask, adc_do_conversion do_conv)
+>  {
+>  	struct adc5_chip *adc = iio_priv(indio_dev);
+>  	struct adc5_channel_prop *prop;
+> @@ -500,8 +505,8 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
+>  
+>  	switch (mask) {
+>  	case IIO_CHAN_INFO_PROCESSED:
+> -		ret = adc5_do_conversion(adc, prop, chan,
+> -				&adc_code_volt, &adc_code_cur);
+> +		ret = do_conv(adc, prop, chan,
+> +					&adc_code_volt, &adc_code_cur);
+>  		if (ret)
+>  			return ret;
+>  
+> @@ -518,36 +523,20 @@ static int adc5_read_raw(struct iio_dev *indio_dev,
+>  	}
+>  }
+>  
+> -static int adc7_read_raw(struct iio_dev *indio_dev,
+> +static int adc5_read_raw(struct iio_dev *indio_dev,
+>  			 struct iio_chan_spec const *chan, int *val, int *val2,
+>  			 long mask)
+>  {
+> -	struct adc5_chip *adc = iio_priv(indio_dev);
+> -	struct adc5_channel_prop *prop;
+> -	u16 adc_code_volt, adc_code_cur;
+> -	int ret;
+> -
+> -	prop = &adc->chan_props[chan->address];
+> -
+> -	switch (mask) {
+> -	case IIO_CHAN_INFO_PROCESSED:
+> -		ret = adc7_do_conversion(adc, prop, chan,
+> -					&adc_code_volt, &adc_code_cur);
+> -		if (ret)
+> -			return ret;
+> -
+> -		ret = qcom_adc5_hw_scale(prop->scale_fn_type,
+> -			&adc5_prescale_ratios[prop->prescale],
+> -			adc->data,
+> -			adc_code_volt, val);
+> -
+> -		if (ret)
+> -			return ret;
+> +	return adc_read_raw_common(indio_dev, chan, val, val2,
+> +				mask, adc5_do_conversion);
+> +}
+>  
+> -		return IIO_VAL_INT;
+> -	default:
+> -		return -EINVAL;
+> -	}
+> +static int adc7_read_raw(struct iio_dev *indio_dev,
+> +			 struct iio_chan_spec const *chan, int *val, int *val2,
+> +			 long mask)
+> +{
+> +	return adc_read_raw_common(indio_dev, chan, val, val2,
+> +				mask, adc7_do_conversion);
+>  }
+>  
+>  static const struct iio_info adc5_info = {
 
