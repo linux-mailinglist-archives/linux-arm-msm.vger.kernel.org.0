@@ -2,70 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E6E5320C567
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2020 04:26:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9DF720C647
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2020 07:38:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725880AbgF1C0K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Jun 2020 22:26:10 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:6841 "EHLO huawei.com"
+        id S1726051AbgF1FiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Jun 2020 01:38:18 -0400
+Received: from mail.zju.edu.cn ([61.164.42.155]:52054 "EHLO zju.edu.cn"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725866AbgF1C0K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Jun 2020 22:26:10 -0400
-Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id D9BCCFCDA9277C50F1BA;
-        Sun, 28 Jun 2020 10:26:07 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
- 14.3.487.0; Sun, 28 Jun 2020 10:25:57 +0800
-From:   Wei Yongjun <weiyongjun1@huawei.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>
-CC:     Wei Yongjun <weiyongjun1@huawei.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <kernel-janitors@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
-Subject: [PATCH -next] clk: qcom: Fix return value check in apss_ipq6018_probe()
-Date:   Sun, 28 Jun 2020 02:30:55 +0000
-Message-ID: <20200628023055.50608-1-weiyongjun1@huawei.com>
-X-Mailer: git-send-email 2.20.1
+        id S1725965AbgF1FiS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 28 Jun 2020 01:38:18 -0400
+Received: by ajax-webmail-mail-app3 (Coremail) ; Sun, 28 Jun 2020 13:38:05
+ +0800 (GMT+08:00)
+X-Originating-IP: [10.192.85.18]
+Date:   Sun, 28 Jun 2020 13:38:05 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From:   dinghao.liu@zju.edu.cn
+To:     "Stanimir Varbanov" <stanimir.varbanov@linaro.org>
+Cc:     kjlu@umn.edu, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: Re: [PATCH] [v2] media: venus: core: Fix runtime PM imbalance
+ in venus_probe
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190906(84e8bf8f)
+ Copyright (c) 2002-2020 www.mailtech.cn zju.edu.cn
+In-Reply-To: <f49040ee-a5c5-c106-2b51-cd48646306b0@linaro.org>
+References: <20200624063024.17059-1-dinghao.liu@zju.edu.cn>
+ <812ead80-766b-1dad-1447-ffab5d7d2ee8@linaro.org>
+ <35c749cf.28af7.172ee1e4ac3.Coremail.dinghao.liu@zju.edu.cn>
+ <f49040ee-a5c5-c106-2b51-cd48646306b0@linaro.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Originating-IP: [10.175.113.25]
-X-CFilter-Loop: Reflected
+Message-ID: <54284223.2ce40.172f96ec3b3.Coremail.dinghao.liu@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: cC_KCgCH_0K9LPhegiVmAQ--.47661W
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgoDBlZdtO0x6gAfsb
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJTRUUUblvS07vEb7Iv0x
+        C_Jr1lV2xY67kC6x804xWlV2xY67CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DMIAI
+        bVAFxVCF77xC64kEw24lV2xY67C26IkvcIIF6IxKo4kEV4ylV2xY628lY4IE4IxF12IF4w
+        CS07vE84x0c7CEj48ve4kI8wCS07vE84ACjcxK6xIIjxv20xvE14v26w1j6s0DMIAIbVA2
+        z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJr0_GcWlV2xY628EF7xvwVC2z280aVAFwI0_Gc
+        CE3s1lV2xY628EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wCS07vEe2I262IYc4CY6c8I
+        j28IcVAaY2xG8wCS07vE5I8CrVACY4xI64kE6c02F40Ex7xfMIAIbVAv7VC0I7IYx2IY67
+        AKxVWUJVWUGwCS07vEYx0Ex4A2jsIE14v26r1j6r4UMIAIbVAm72CE4IkC6x0Yz7v_Jr0_
+        Gr1lV2xY6x02cVAKzwCS07vEc2IjII80xcxEwVAKI48JMIAIbVCF04k20xvE74AGY7Cv6c
+        x26r4fKr1UJr1lV2xY6xCjnVCjjxCrMIAIbVCFx2IqxVCFs4IE7xkEbVWUJVW8JwCS07vE
+        x2IqxVAqx4xG67AKxVWUJVWUGwCS07vEx2IqxVCjr7xvwVAFwI0_JrI_JrWlV2xY6I8E67
+        AF67kF1VAFwI0_Jw0_GFylV2xY6IIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lV2xY6IIF0xvE
+        2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCS07vEIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s
+        1lV2xY6IIF0xvEx4A2jsIE14v26r1j6r4UMIAIbVCI42IY6I8E87Iv6xkF7I0E14v26r1j
+        6r4UYxBIdaVFxhVjvjDU=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In case of error, the function dev_get_regmap() returns NULL pointer
-not ERR_PTR(). The IS_ERR() test in the return value check should be
-replaced with NULL test.
-
-Fixes: 5e77b4ef1b19 ("clk: qcom: Add ipq6018 apss clock controller")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
----
- drivers/clk/qcom/apss-ipq6018.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
-index 004f7e1ecdc2..d78ff2f310bf 100644
---- a/drivers/clk/qcom/apss-ipq6018.c
-+++ b/drivers/clk/qcom/apss-ipq6018.c
-@@ -87,8 +87,8 @@ static int apss_ipq6018_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 
- 	regmap = dev_get_regmap(pdev->dev.parent, NULL);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	if (!regmap)
-+		return -ENODEV;
- 
- 	return qcom_cc_really_probe(pdev, &apss_ipq6018_desc, regmap);
- }
-
-
-
+CgoKPiAKPiBDb3VsZCB5b3UgcmV3b3JkIHRoaXMgYW5kIGFkZCBpdCB0byB0aGUgcGF0Y2ggZGVz
+Y3JpcHRpb24uCj4gCgpGaW5lLiBJIHdpbGwgZml4IHRoaXMgaW4gdGhlIG5leHQgdmVyc2lvbiBv
+ZiBwYXRjaC4KClJlZ2FyZHMsCkRpbmdoYW8=
