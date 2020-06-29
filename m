@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88C7320E25F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:00:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F04A020E1B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 23:59:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390125AbgF2VEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 17:04:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43350 "EHLO
+        id S2389950AbgF2U6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 16:58:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731103AbgF2TMo (ORCPT
+        with ESMTP id S1731251AbgF2TNC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:12:44 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB4DBC00E3F4;
-        Mon, 29 Jun 2020 05:13:59 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id d16so5980115edz.12;
-        Mon, 29 Jun 2020 05:13:59 -0700 (PDT)
+        Mon, 29 Jun 2020 15:13:02 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E6AC00E3F8;
+        Mon, 29 Jun 2020 05:16:09 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id o18so11889056eje.7;
+        Mon, 29 Jun 2020 05:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Af8MV+kVnTa7zdW0E2E5KjHeensJMBWL2+gQQwCUvNQ=;
-        b=Mt6YICf2k3JascEFwPr+DhVRtQVII9mitVMQBW+uLVMO8/WmyQT80jOuzZcBOBRepN
-         3tzXW2b8Mjlq8B8TpjQH2Tm4bNtSxoR7BC3Ghx5abmvL9u/vB1JdEbT44qNQyVO7ATqh
-         vhiHpEgAX3qNWmGPTqSgTxz1V9WXJ70C8RxRSdOpBFQEs+omcOyaBtsZEvBYihgp9WGg
-         2buf1O+ocG/M3upbbAGl/w2ACJOYmw68GTIfmYtflzMC3yjUY+Bi+IDmAIHhyHnMsxY9
-         hb78RlB/eUGpN8EF8ikWLyk9OuAjyuLVWBi8wDqq3TbqdoCE/aFcJv10R/pPmR2yCAyw
-         qAOQ==
+        bh=soXbhE7fjamRPVpZww01jKbOBo61CZjTIZgKR2wcZEM=;
+        b=Es+y1ZcaFE2vyCcFPTaEYe17yllLj4xwPgelB6vNVhT6If85EMMEEoqcEXGHKlO5j9
+         r9I7EmCPe2amg3d60HJp9VhsfrvguLKNGZxpFyaJnNYmAMWlc22X/9D4KnoMJUkKpIk7
+         wVkcc9u2zPA3Woe/4vuUiI+eZzUSE/zj3U/shduIu+ZaZYvzjzxZ0yjKmuWfC63Ia16q
+         VUD/BrbSbMhGRCd8+q5RVU8LDnvePf0HL9m70oPYoG09tLusSgOhSCFM44UoTQvie1cL
+         De2k7jXdx3A4vDrzulA2jsFfkVGWbqnvjG4/ZDcGk/yTg6Tx36oChwqyqphcb0laxjeY
+         Xhrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Af8MV+kVnTa7zdW0E2E5KjHeensJMBWL2+gQQwCUvNQ=;
-        b=oFW2Lxj1CtqT32ZG8i8M/PS0hhpXotD7aL7aG3tzjZJ1/DauOurLYbcU2x/STLA36q
-         x7AB39z0oq3IvzG0w6mVNCBpky10GdL6G5Q+Cy5PhfGlQvHFfcPTl6oSHBGuGS0MSP50
-         0PgySA/IyLJ2BfnIylcfHpYS0kNrQc0VFvVUJLvEet/YYIsh93GKOvGxrSKQcaYkUsYJ
-         x/+FNNNof/USi6M907qtWIFJ0ArGZFNs72IPPBC5w/i1SKgX0i1NcKIsRTXV++u4okJS
-         X3l8qHVH65QyjJJy6Ps8qMm+mNLr08Qp6visdbEkt6MqbI8pXHQtD3iTeT+WCTqFzSfn
-         Z/QQ==
-X-Gm-Message-State: AOAM530rMQoSdMfCpNCtipfPBYu6ygGkR0qN6aY1tFVTMmE1oNHJ/O5c
-        mSH4BnOk836TtYfVSuhUW9ZPBiQ8bEkFQ74wIls=
-X-Google-Smtp-Source: ABdhPJx8GL2/LtvhYYnPZOnTG4JvnILLNC3i/hbToZbdsMBix31WyuKYxSB8w2InTRozYPvAU2y9b9ASSm/xVcLNwMA=
-X-Received: by 2002:a50:ec8f:: with SMTP id e15mr16899806edr.70.1593432838641;
- Mon, 29 Jun 2020 05:13:58 -0700 (PDT)
+        bh=soXbhE7fjamRPVpZww01jKbOBo61CZjTIZgKR2wcZEM=;
+        b=L0kdPZ4uxOA3be8s1CDoQsFWc0Q/y9qgH+r5gBpihg921a3ACsCFFXCi/FVMJvxlWD
+         hgnqXm82qxf5kC1cM4BBI9JRPDHNQKn/hw/9PYzZ6eAa9V3w9RN3bIlQk4s5vmtmUQY1
+         JC8T+d6OxZzc/o0Q92+22fh7az5e+Zw4hBLSrTdxm86FQJnfzZcXNTA3iPWgzv49Lg5L
+         4rNAydAa9poxcKfN5+VU/LvHZ4SNz4cUpCrg2pwbmXW29WmaOU0sWNmZpPbuvDC67Zvy
+         a5VycNsNZzykZbaZw7ZsrDVCrNQrdAHBfJATmGae3Qg/4O6r2cLKdytZUHRpEXogSa0Q
+         PGQg==
+X-Gm-Message-State: AOAM531Nh+5nUTMZjkk5Mbwj8F3jCo4n+GvUDJuJU7R4GTgEd/1K5VH0
+        ynF8pYguCDtcWObhMfhFDw1h+iasPuGbEEH2GZk=
+X-Google-Smtp-Source: ABdhPJxibo/BsVYpl4Oy+gCRpolTV0ZDAlF/gJWHHVyBTDNjk0EwwwBF7+zdsNd3Zc80ngr8WBE4JutDoPOiK7iCNno=
+X-Received: by 2002:a17:907:264d:: with SMTP id ar13mr9310992ejc.504.1593432967918;
+ Mon, 29 Jun 2020 05:16:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200621213806.551879-1-konradybcio@gmail.com>
- <20200621213806.551879-9-konradybcio@gmail.com> <20200629120918.GB1319@bug>
-In-Reply-To: <20200629120918.GB1319@bug>
+ <20200621213806.551879-8-konradybcio@gmail.com> <20200629120911.GA1319@bug>
+In-Reply-To: <20200629120911.GA1319@bug>
 From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Mon, 29 Jun 2020 14:13:22 +0200
-Message-ID: <CAMS8qEVaJ0ZpZ1HE8U9DbPfV0-cc=_qyLYdA1g7NYfz-WcE+aA@mail.gmail.com>
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: Add support for Sony Xperia 10/10
- Plus (Ganges platform)
+Date:   Mon, 29 Jun 2020 14:15:32 +0200
+Message-ID: <CAMS8qEXdoX1Zpm660sOMM9b2rni9qXM_7rAi9kkzFBQYmL3EgQ@mail.gmail.com>
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: Add support for Sony Xperia
+ XA2/Plus/Ultra (Nile platform)
 To:     Pavel Machek <pavel@ucw.cz>
 Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -67,19 +67,20 @@ Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         linux-clk@vger.kernel.org, DTML <devicetree@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-gpio@vger.kernel.org, Martin Botka <martin.botka1@gmail.com>
+        linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> This is not usual comment style.
+> Do you really want autorepeat on keys like camera focus?
 
-This was fixed in a later revision and is currently applied to
-qcom/linux in the correct form. [1]
+I miiiight want to reconsider that when it will actually be in use :)
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=234d7d6b4cbfab0e900f12658053689bb3376141
+> No volume up?
+
+On this board, vol up is managed by pm660 resin.
 
 Regards
 Konrad
