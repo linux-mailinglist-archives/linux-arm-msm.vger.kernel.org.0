@@ -2,127 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4FC420E8B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 01:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D12920E932
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 01:21:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729378AbgF2W0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 18:26:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46314 "EHLO
+        id S1728256AbgF2XR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 19:17:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727054AbgF2W0Q (ORCPT
+        with ESMTP id S1727817AbgF2XR1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 18:26:16 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D749C061755;
-        Mon, 29 Jun 2020 15:26:15 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id w6so18450736ejq.6;
-        Mon, 29 Jun 2020 15:26:15 -0700 (PDT)
+        Mon, 29 Jun 2020 19:17:27 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 872BAC03E979
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:17:27 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id y18so7694787plr.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:17:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uLrF+jjxF5OBkT9A4ZfGcSFTtJNvBwrUYxVPDIS2euc=;
-        b=ljl6F57/XOyWQURIpW+SYGe4bHNcdPifrgDCw24RC+hnGGqwpRlyGiY/mzZuA4sSbx
-         TeYo3z8Ufl89Li/087qtQtJ9yTEh++OJ9m71n+SXhpzAK2T4jGhl7JXDxspZyWsnKxBu
-         k7P9M0GtxOH6/gRBRnh9oUvWtpzmGljW6RVoQ3oU9OPOlmiVnyvdkhXZAVXFvXUf/tCr
-         Tzz4eNbn/yV6INdTYHThjjxpw+43Ld5UmMcnks2I9V2HJlS/jAGLCxbe9ppqLydxFDLg
-         8MRFCWGFJ3/f7cwHeSirkNItjyDGoJY5aXLch5LHVxMUKjAivXcrodHjiWs9Zq1Gpc5A
-         iGeQ==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=p5nptZDL0+e6uOVQKeig1P+xdgwO7UYCGAQCU2CHOBY=;
+        b=DhpzuUF5hJ2fsxVANchsWjPwpNaKPAB0PU+nDaTYjzV1NWG6dSsUv6ml5iImoRIkJ0
+         v/vW3ekNXoiPJtuD8mKtdnBa13b1XPEZmnsY7xjX0rWStArzgU8n63yIMBkF9gpaIS4J
+         05s9eYKsvyr6uILsyxFVRMcmxDvIdmVav2AUE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uLrF+jjxF5OBkT9A4ZfGcSFTtJNvBwrUYxVPDIS2euc=;
-        b=Af+WQLx3TfmbH2C3ZDRuyfL7mruSENAq54LDCIs1wOZXiHtH6tNKU7oBGNR48xrwmz
-         qNJNkuPnhgC0jnrc2dqSsOdSfqwbO2s18Nrq7g6P6Is6F1IuFJF+Xk47PU1CiwXSktdF
-         2rf3A/iuOzCK7Tu2ryWSXNoIFu1qYR27HtSSMR3Y7kXNRBK0QhNH2lURoWv7AbHpihR7
-         NyEfTHDzWvcRkUC+4vebU+B/k3ry07g3KVNQzXC5TyADiWXer8w3OKShIGr7SpPG6W/X
-         jrf4Z6hKEbpxv658FojQ9AMaxvuW7vYLsMrx/5fdzXAu4GrwEjchIRS0iDGAcwcIbYma
-         fF8w==
-X-Gm-Message-State: AOAM530ll0wd8ObgTeTBBNLjQ74DdfZzBEkFiEtHfGEy+G1eHulfpEmY
-        wY0JGVtpB3h9BlFxNenHKSg=
-X-Google-Smtp-Source: ABdhPJxu0f3tnqjZ6HdE27eVb1JqxXjsWLvQl9OFzp7badrN8VqEab5KFGVI1t8l0ZpWVCoHu0dtXA==
-X-Received: by 2002:a17:906:12cd:: with SMTP id l13mr16230422ejb.96.1593469574315;
-        Mon, 29 Jun 2020 15:26:14 -0700 (PDT)
-Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
-        by smtp.googlemail.com with ESMTPSA id y21sm592877ejo.4.2020.06.29.15.26.13
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=p5nptZDL0+e6uOVQKeig1P+xdgwO7UYCGAQCU2CHOBY=;
+        b=dUj9/1IliBv/iRsa5DOiK+lU3EjNMDuOghPpyYe+hufV9Ojmvs4e1bR1PvH6t4u1Q8
+         HUP6lOg4K+cB8wB8grkL3MnjWm95FsO/n5hrJY9s2qtHCBhRSpfKYzjphiRl8UIq/OBr
+         qd7nhyPXjb+KhObVTkjrOYiCLBDypx7qOYF1KHCCxLrNiR6UkY0Pc/gfMh572NDBmMlO
+         sjoOp1IdWqQOZv7/D5bojfhx7HzMrZsh/CsQ0QDKwi0RBgOUsYePN0E7+BtOyh0+8YWu
+         j8FZqweXR2GjkM0mwP/uSYlukrB1ba+ECRNww9Dzs2FvL5tuIwC/RzeXNk6/l4Pkshmj
+         TNRA==
+X-Gm-Message-State: AOAM530mEtBM9BZnY7SRzVDRJz9T/1fFDZV+JGixBvNZQ251Z66fU4EE
+        ihagv8LE+Lhn/mdUg6QCWpZB0w==
+X-Google-Smtp-Source: ABdhPJwK6CbKettJAyZjmCgDQyGjAdS1Yfm3DIvJxTAITfG4XxT8lPIX/GXfCbxUOqQA/Ej+PhV1Nw==
+X-Received: by 2002:a17:90a:a58b:: with SMTP id b11mr20230936pjq.107.1593472646911;
+        Mon, 29 Jun 2020 16:17:26 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id d7sm639974pfh.78.2020.06.29.16.17.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 15:26:13 -0700 (PDT)
-From:   Konrad Dybcio <konradybcio@gmail.com>
-To:     skrzynka@konradybcio.pl
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH -next] arm64: dts: sdm630: Temporarily disable SMMUs by default
-Date:   Tue, 30 Jun 2020 00:26:10 +0200
-Message-Id: <20200629222610.168511-1-konradybcio@gmail.com>
-X-Mailer: git-send-email 2.27.0
+        Mon, 29 Jun 2020 16:17:26 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1592222564-13556-2-git-send-email-rnayak@codeaurora.org>
+References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org> <1592222564-13556-2-git-send-email-rnayak@codeaurora.org>
+Subject: Re: [PATCH v6 1/6] tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     viresh.kumar@linaro.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-serial@vger.kernel.org
+To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@chromium.org,
+        robdclark@gmail.com, stanimir.varbanov@linaro.org
+Date:   Mon, 29 Jun 2020 16:17:25 -0700
+Message-ID: <159347264530.1987609.11350620235820019545@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There happens to be an issue between how kernel handles
-qcom-smmuv2 and how the hypervisor would like it to be
-handled. That results in the platform hanging completely
-after the SMMUs are probed.
+Quoting Rajendra Nayak (2020-06-15 05:02:39)
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
+com_geni_serial.c
+> index 457c0bf..a90f8ec 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -9,6 +9,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+>  #include <linux/of_device.h>
+> +#include <linux/pm_opp.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_runtime.h>
+>  #include <linux/pm_wakeirq.h>
+> @@ -962,7 +963,7 @@ static void qcom_geni_serial_set_termios(struct uart_=
+port *uport,
+>                 goto out_restart_rx;
+> =20
+>         uport->uartclk =3D clk_rate;
+> -       clk_set_rate(port->se.clk, clk_rate);
+> +       dev_pm_opp_set_rate(uport->dev, clk_rate);
 
-Hence, disable the SMMU nodes temporarily, until the
-issue is rectified.
+If there isn't an OPP table for the device because it is optional then
+how can we unconditionally call dev_pm_opp_set_rate()?
 
-This has been overlooked by me in the initial
-porting stage, as my defconfig has SMMU disabled.
+>         ser_clk_cfg =3D SER_CLK_EN;
+>         ser_clk_cfg |=3D clk_div << CLK_DIV_SHFT;
+> =20
+> @@ -1231,8 +1232,11 @@ static void qcom_geni_serial_pm(struct uart_port *=
+uport,
+>         if (new_state =3D=3D UART_PM_STATE_ON && old_state =3D=3D UART_PM=
+_STATE_OFF)
+>                 geni_se_resources_on(&port->se);
+>         else if (new_state =3D=3D UART_PM_STATE_OFF &&
+> -                       old_state =3D=3D UART_PM_STATE_ON)
+> +                       old_state =3D=3D UART_PM_STATE_ON) {
+> +               /* Drop the performance state vote */
+> +               dev_pm_opp_set_rate(uport->dev, 0);
+>                 geni_se_resources_off(&port->se);
+> +       }
+>  }
+> =20
+>  static const struct uart_ops qcom_geni_console_pops =3D {
+> @@ -1351,13 +1355,25 @@ static int qcom_geni_serial_probe(struct platform=
+_device *pdev)
+>         if (of_property_read_bool(pdev->dev.of_node, "cts-rts-swap"))
+>                 port->cts_rts_swap =3D true;
+> =20
+> +       port->se.opp_table =3D dev_pm_opp_set_clkname(&pdev->dev, "se");
+> +       if (IS_ERR(port->se.opp_table))
+> +               return PTR_ERR(port->se.opp_table);
+> +       /* OPP table is optional */
+> +       ret =3D dev_pm_opp_of_add_table(&pdev->dev);
+> +       if (!ret) {
+> +               port->se.has_opp_table =3D true;
+> +       } else if (ret !=3D -ENODEV) {
+> +               dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+> +               return ret;
+> +       }
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 88efe8200c80..deb928d303c2 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -518,6 +518,8 @@ anoc2_smmu: iommu@16c0000 {
- 				<GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			status = "disabled";
- 		};
- 
- 		tcsr_mutex_regs: syscon@1f40000 {
-@@ -749,6 +751,8 @@ kgsl_smmu: iommu@5040000 {
- 				<GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 349 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 350 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			status = "disabled";
- 		};
- 
- 		lpass_smmu: iommu@5100000 {
-@@ -778,6 +782,8 @@ lpass_smmu: iommu@5100000 {
- 				<GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 310 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			status = "disabled";
- 		};
- 
- 		spmi_bus: spmi@800f000 {
-@@ -1074,6 +1080,8 @@ mmss_smmu: iommu@cd00000 {
- 				<GIC_SPI 274 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>,
- 				<GIC_SPI 276 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			status = "disabled";
- 		};
- 
- 		apcs_glb: mailbox@17911000 {
--- 
-2.27.0
-
+At least it looks optional here.
