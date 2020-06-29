@@ -2,85 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F04A020E1B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 23:59:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B1AA20DD97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 23:51:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389950AbgF2U6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 16:58:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43362 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731251AbgF2TNC (ORCPT
+        id S1732057AbgF2TTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 15:19:37 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:49941 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730507AbgF2TTe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:13:02 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E6AC00E3F8;
-        Mon, 29 Jun 2020 05:16:09 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id o18so11889056eje.7;
-        Mon, 29 Jun 2020 05:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=soXbhE7fjamRPVpZww01jKbOBo61CZjTIZgKR2wcZEM=;
-        b=Es+y1ZcaFE2vyCcFPTaEYe17yllLj4xwPgelB6vNVhT6If85EMMEEoqcEXGHKlO5j9
-         r9I7EmCPe2amg3d60HJp9VhsfrvguLKNGZxpFyaJnNYmAMWlc22X/9D4KnoMJUkKpIk7
-         wVkcc9u2zPA3Woe/4vuUiI+eZzUSE/zj3U/shduIu+ZaZYvzjzxZ0yjKmuWfC63Ia16q
-         VUD/BrbSbMhGRCd8+q5RVU8LDnvePf0HL9m70oPYoG09tLusSgOhSCFM44UoTQvie1cL
-         De2k7jXdx3A4vDrzulA2jsFfkVGWbqnvjG4/ZDcGk/yTg6Tx36oChwqyqphcb0laxjeY
-         Xhrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=soXbhE7fjamRPVpZww01jKbOBo61CZjTIZgKR2wcZEM=;
-        b=L0kdPZ4uxOA3be8s1CDoQsFWc0Q/y9qgH+r5gBpihg921a3ACsCFFXCi/FVMJvxlWD
-         hgnqXm82qxf5kC1cM4BBI9JRPDHNQKn/hw/9PYzZ6eAa9V3w9RN3bIlQk4s5vmtmUQY1
-         JC8T+d6OxZzc/o0Q92+22fh7az5e+Zw4hBLSrTdxm86FQJnfzZcXNTA3iPWgzv49Lg5L
-         4rNAydAa9poxcKfN5+VU/LvHZ4SNz4cUpCrg2pwbmXW29WmaOU0sWNmZpPbuvDC67Zvy
-         a5VycNsNZzykZbaZw7ZsrDVCrNQrdAHBfJATmGae3Qg/4O6r2cLKdytZUHRpEXogSa0Q
-         PGQg==
-X-Gm-Message-State: AOAM531Nh+5nUTMZjkk5Mbwj8F3jCo4n+GvUDJuJU7R4GTgEd/1K5VH0
-        ynF8pYguCDtcWObhMfhFDw1h+iasPuGbEEH2GZk=
-X-Google-Smtp-Source: ABdhPJxibo/BsVYpl4Oy+gCRpolTV0ZDAlF/gJWHHVyBTDNjk0EwwwBF7+zdsNd3Zc80ngr8WBE4JutDoPOiK7iCNno=
-X-Received: by 2002:a17:907:264d:: with SMTP id ar13mr9310992ejc.504.1593432967918;
- Mon, 29 Jun 2020 05:16:07 -0700 (PDT)
+        Mon, 29 Jun 2020 15:19:34 -0400
+X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Jun 2020 15:19:33 EDT
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 29 Jun 2020 06:52:10 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Jun 2020 06:52:08 -0700
+Received: from harigovi-linux.qualcomm.com ([10.204.66.157])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 29 Jun 2020 19:21:47 +0530
+Received: by harigovi-linux.qualcomm.com (Postfix, from userid 2332695)
+        id 31D671FC2; Mon, 29 Jun 2020 19:21:46 +0530 (IST)
+From:   Harigovindan P <harigovi@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Harigovindan P <harigovi@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: [v4] arm64: dts: sc7180: add nodes for idp display
+Date:   Mon, 29 Jun 2020 19:21:44 +0530
+Message-Id: <20200629135144.8265-1-harigovi@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <20200621213806.551879-1-konradybcio@gmail.com>
- <20200621213806.551879-8-konradybcio@gmail.com> <20200629120911.GA1319@bug>
-In-Reply-To: <20200629120911.GA1319@bug>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Mon, 29 Jun 2020 14:15:32 +0200
-Message-ID: <CAMS8qEXdoX1Zpm660sOMM9b2rni9qXM_7rAi9kkzFBQYmL3EgQ@mail.gmail.com>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: Add support for Sony Xperia
- XA2/Plus/Ultra (Nile platform)
-To:     Pavel Machek <pavel@ucw.cz>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org, DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Do you really want autorepeat on keys like camera focus?
+Add nodes for IDP display. The display is Visionox RM69299.
 
-I miiiight want to reconsider that when it will actually be in use :)
+Signed-off-by: Harigovindan P <harigovi@codeaurora.org>
+---
+Changes in v2:
+	- Adding dependency patchwork series
+	- Removing suspend configuration
+	- Adding blank before space curly brace
+Changes in v3:
+	- Updating status for mdp and mdss node to get the
+	display working
+	- Change in commit text
+Changes in v4:
+	- Added pinconf subnode
+	- Using macros for function and drive-strength
 
-> No volume up?
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts | 65 +++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-On this board, vol up is managed by pm660 resin.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 39dbfc89689e..5e0b7e4b2545 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -9,6 +9,7 @@
+ 
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include "sc7180.dtsi"
+ #include "pm6150.dtsi"
+ #include "pm6150l.dtsi"
+@@ -287,6 +288,57 @@ vreg_bob: bob {
+ 	};
+ };
+ 
++&dsi0 {
++	status = "okay";
++
++	vdda-supply = <&vreg_l3c_1p2>;
++
++	panel@0 {
++		compatible = "visionox,rm69299-1080p-display";
++		reg = <0>;
++
++		vdda-supply = <&vreg_l8c_1p8>;
++		vdd3p3-supply = <&vreg_l18a_2p8>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&disp_pins>;
++
++		reset-gpios = <&pm6150l_gpio 3 GPIO_ACTIVE_HIGH>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			port@0 {
++				reg = <0>;
++				panel0_in: endpoint {
++					remote-endpoint = <&dsi0_out>;
++				};
++			};
++		};
++	};
++
++	ports {
++		port@1 {
++			endpoint {
++				remote-endpoint = <&panel0_in>;
++				data-lanes = <0 1 2 3>;
++			};
++		};
++	};
++};
++
++&dsi_phy {
++	status = "okay";
++};
++
++&mdp {
++	status = "okay";
++};
++
++&mdss {
++	status = "okay";
++};
++
+ &qspi {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+@@ -402,6 +454,19 @@ wifi-firmware {
+ 
+ /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+ 
++&pm6150l_gpio {
++	disp_pins: disp-pins {
++		pinconf {
++			pins = "gpio3";
++			function = PMIC_GPIO_FUNC_FUNC1;
++			qcom,drive-strength = <PMIC_GPIO_STRENGTH_MED>;
++			power-source = <0>;
++			bias-disable;
++			output-low;
++		};
++	};
++};
++
+ &qspi_clk {
+ 	pinconf {
+ 		pins = "gpio63";
+-- 
+2.27.0
 
-Regards
-Konrad
