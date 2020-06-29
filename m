@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AE6320D95A
+	by mail.lfdr.de (Postfix) with ESMTP id 799C720D95B
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 22:11:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388108AbgF2Tqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 15:46:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49194 "EHLO
+        id S1732797AbgF2Tqv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 15:46:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388107AbgF2Tqq (ORCPT
+        with ESMTP id S2388109AbgF2Tqt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:46:46 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8B8C061755;
-        Mon, 29 Jun 2020 12:46:46 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id q7so6368082ljm.1;
-        Mon, 29 Jun 2020 12:46:46 -0700 (PDT)
+        Mon, 29 Jun 2020 15:46:49 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA3DBC061755;
+        Mon, 29 Jun 2020 12:46:47 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id 9so19610509ljv.5;
+        Mon, 29 Jun 2020 12:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T/OMHqZ86SJeaGWyDotYaSZcb7px6lqir7gslCqzv1k=;
-        b=MHuLcZlmgbGhNOvjrWRpYhkPgRqu6iGL2Jau3NRwzaJs10OcSwdmCK5iTjlu18FuBh
-         g+6CnxvIgtGmA8q/PzYNk9Ym69l2MlbHnyE68J7+thTUsHbwpWhYuRQ/v2c30+SfiqsK
-         HpET6QiJiy3YFmeJENKdjNM0u58prIbaFFvQadn3buGBanvMb0ilm5pTljsXpDciz7tW
-         5GjyoVB6YZtnd6CUiISUehtBkHnGBA/JVJjXZKjU0ABd+mxylBSSZt3AzEFJad5vR1R+
-         4ynpUyB7D7L8n/NmJseFZa0TqRHSka15i9CiW7eEsGEoAbv6xCZtkxkJAM29YsJTcvmL
-         ILrA==
+        bh=2SQrH6OLRIdCV3u3TyexljDPzLXrQVLpJKvgZnIkG2I=;
+        b=TPiSvFkt5xeFRoD4jV5BSfmCJLioRZm4cmEdxFI6njLQbVzDrVig6fViStyGvz66Zn
+         SRrGJ8xANuTdnjPccP3mNJp8gal/qrmE9mzodm4tR6RuE2xiVqVvtIYd7yi78n+z4yVx
+         uzAAb7iXG3knfwBLem39r/c85al/Io52C1Yqee+X9yBa5YOaHMoSffMqFSqhyrcvX1kO
+         U1JrvWcppxo0clHBpkSYKdDc5ViM+3LCenG9x2CIwUjF30I3dWKx4ZKv1u50oGhhDbpq
+         nVt/psQOI9jsElpPmS/xoseOaGAUO9QSXc6nTPR0OZs4vIFYiv7fKpeFTYMT1iNn+nJ0
+         IwOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T/OMHqZ86SJeaGWyDotYaSZcb7px6lqir7gslCqzv1k=;
-        b=irUpHwkdEU7JEwiKAB2CmuLUkb2xkiNP1waJgBv+ggLG1VLdeyyl5FVK3tTR1n8fLW
-         ndvHoaqPSy3sK2I0X412WL7BnpGRIJjZVAmfNMmJPUMm3Kyuat2nN1n//QpsSPtYoBHG
-         Hnm0YuDqiEA7NXli2ZONdVUrzBoSV1ySqKGJjNrgJAirmPnZfO9Y/+RprIPCzUVl13zD
-         /g7tcQEQOngzH27skz+o0fWdhocaRuN2fKcv9VE4a9CUiDwNIlUpV20UK17yGa56f3AS
-         3DmCCZUlw+/bBhpLHWponSph6N25cpBjiKMiF42aWzgId2G8YqG6IkluVJAooqq1MEIL
-         bhtg==
-X-Gm-Message-State: AOAM533q6FlmoMZn6kDmcONrDE/9/U9aER8gFVHr1o3pWsh34T2rkSAo
-        wMU7RXjiMQWhzzOtTNdqCzo=
-X-Google-Smtp-Source: ABdhPJxgMTgE3GGEeA7Ska/OrpjB2V841FbL8tvegAEb0wWPmqFFA/hVOVgY9jxseztXoVmba3vqjA==
-X-Received: by 2002:a05:651c:106f:: with SMTP id y15mr9256317ljm.32.1593460005068;
-        Mon, 29 Jun 2020 12:46:45 -0700 (PDT)
+        bh=2SQrH6OLRIdCV3u3TyexljDPzLXrQVLpJKvgZnIkG2I=;
+        b=BGvLAfUC1nW5JkMo2mggDgxWWe79Rlsf09L2ZoBdETaaClNxEXm9u3JkL7ImKh3dDt
+         R+h5xu8CSJ3zHWag7B8IAsy+YQJUZDFRxZl0kIhLf+xezosT17vo9UBiurMkCGQmkqJF
+         RiyYa8kZiYOakprhsP6Uzzv+N5hkK4Be+wolAKRbzsb0xuubAnYuqqtwoaYZazCIeXOI
+         mevl/Xto/jWrzavP5cCdqeKDB2fDB5gvi7fCcs347vxKARwPjcexwI/hgfIrZDnyrQwi
+         VkmFgkUSP+qCsdPa+oE77E/2K2k0kNZ32cD6ca9knEt1FFxVWPoERNQPtqoiK3Fc9XJe
+         k75g==
+X-Gm-Message-State: AOAM531OSN3iNYkdAO/wyMa4JBA6glwKaGM8QRz7Dn5WUjoNk3cjy5Cr
+        DpRFqdkbb1xnTFmDTNAAChQ=
+X-Google-Smtp-Source: ABdhPJzlWbnH4NSBzQDgB9bNAkZOHiN0uxEO0aXOOgf52q7yAs7Tis6PI5ZVN84mzIWIjBC/SlD4Aw==
+X-Received: by 2002:a2e:547:: with SMTP id 68mr8045494ljf.115.1593460006259;
+        Mon, 29 Jun 2020 12:46:46 -0700 (PDT)
 Received: from localhost.localdomain (h-98-128-228-147.NA.cust.bahnhof.se. [98.128.228.147])
-        by smtp.gmail.com with ESMTPSA id q128sm154750ljb.140.2020.06.29.12.46.44
+        by smtp.gmail.com with ESMTPSA id q128sm154750ljb.140.2020.06.29.12.46.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 12:46:44 -0700 (PDT)
+        Mon, 29 Jun 2020 12:46:45 -0700 (PDT)
 From:   Rikard Falkeborn <rikard.falkeborn@gmail.com>
 To:     agross@kernel.org, bjorn.andersson@linaro.org
 Cc:     lgirdwood@gmail.com, broonie@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Subject: [PATCH 1/2] regulator: qcom_rpm: Constify struct regulator_ops
-Date:   Mon, 29 Jun 2020 21:46:31 +0200
-Message-Id: <20200629194632.8147-2-rikard.falkeborn@gmail.com>
+Subject: [PATCH 2/2] regulator: qcom_spmi: Constify struct regulator_ops
+Date:   Mon, 29 Jun 2020 21:46:32 +0200
+Message-Id: <20200629194632.8147-3-rikard.falkeborn@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200629194632.8147-1-rikard.falkeborn@gmail.com>
 References: <20200629194632.8147-1-rikard.falkeborn@gmail.com>
@@ -71,48 +71,129 @@ put them in read-only memory.
 
 Before:
    text    data     bss     dec     hex filename
-  17485     500       8   17993    4649 drivers/regulator/qcom_rpm-regulator.o
+  20362    2592     152   23106    5a42 drivers/regulator/qcom_spmi-regulator.o
 
 After:
    text    data     bss     dec     hex filename
-  17881     104       8   17993    4649 drivers/regulator/qcom_rpm-regulator.o
+  21814    1140     152   23106    5a42 drivers/regulator/qcom_spmi-regulator.o
 
 Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
 ---
- drivers/regulator/qcom_rpm-regulator.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/regulator/qcom_spmi-regulator.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/regulator/qcom_rpm-regulator.c b/drivers/regulator/qcom_rpm-regulator.c
-index 0066f850f15d..7f9d66ac37ff 100644
---- a/drivers/regulator/qcom_rpm-regulator.c
-+++ b/drivers/regulator/qcom_rpm-regulator.c
-@@ -407,7 +407,7 @@ static int rpm_reg_set_load(struct regulator_dev *rdev, int load_uA)
- 	return ret;
- }
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 95737e4dd6bb..5ee7c5305d95 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -380,7 +380,7 @@ struct spmi_regulator_mapping {
+ 	enum spmi_regulator_logical_type	logical_type;
+ 	u32					revision_min;
+ 	u32					revision_max;
+-	struct regulator_ops			*ops;
++	const struct regulator_ops		*ops;
+ 	struct spmi_voltage_set_points		*set_points;
+ 	int					hpm_min_load;
+ };
+@@ -1261,7 +1261,7 @@ spmi_regulator_saw_set_voltage(struct regulator_dev *rdev, unsigned selector)
  
--static struct regulator_ops uV_ops = {
-+static const struct regulator_ops uV_ops = {
- 	.list_voltage = regulator_list_voltage_linear_range,
+ static struct regulator_ops spmi_saw_ops = {};
  
- 	.set_voltage_sel = rpm_reg_set_uV_sel,
-@@ -420,7 +420,7 @@ static struct regulator_ops uV_ops = {
- 	.set_load = rpm_reg_set_load,
+-static struct regulator_ops spmi_smps_ops = {
++static const struct regulator_ops spmi_smps_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1276,7 +1276,7 @@ static struct regulator_ops spmi_smps_ops = {
+ 	.set_pull_down		= spmi_regulator_common_set_pull_down,
  };
  
--static struct regulator_ops mV_ops = {
-+static const struct regulator_ops mV_ops = {
- 	.list_voltage = regulator_list_voltage_linear_range,
- 
- 	.set_voltage_sel = rpm_reg_set_mV_sel,
-@@ -433,7 +433,7 @@ static struct regulator_ops mV_ops = {
- 	.set_load = rpm_reg_set_load,
+-static struct regulator_ops spmi_ldo_ops = {
++static const struct regulator_ops spmi_ldo_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1293,7 +1293,7 @@ static struct regulator_ops spmi_ldo_ops = {
+ 	.set_soft_start		= spmi_regulator_common_set_soft_start,
  };
  
--static struct regulator_ops switch_ops = {
-+static const struct regulator_ops switch_ops = {
- 	.enable = rpm_reg_switch_enable,
- 	.disable = rpm_reg_switch_disable,
- 	.is_enabled = rpm_reg_is_enabled,
+-static struct regulator_ops spmi_ln_ldo_ops = {
++static const struct regulator_ops spmi_ln_ldo_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1305,7 +1305,7 @@ static struct regulator_ops spmi_ln_ldo_ops = {
+ 	.get_bypass		= spmi_regulator_common_get_bypass,
+ };
+ 
+-static struct regulator_ops spmi_vs_ops = {
++static const struct regulator_ops spmi_vs_ops = {
+ 	.enable			= spmi_regulator_vs_enable,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1316,7 +1316,7 @@ static struct regulator_ops spmi_vs_ops = {
+ 	.get_mode		= spmi_regulator_common_get_mode,
+ };
+ 
+-static struct regulator_ops spmi_boost_ops = {
++static const struct regulator_ops spmi_boost_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1327,7 +1327,7 @@ static struct regulator_ops spmi_boost_ops = {
+ 	.set_input_current_limit = spmi_regulator_set_ilim,
+ };
+ 
+-static struct regulator_ops spmi_ftsmps_ops = {
++static const struct regulator_ops spmi_ftsmps_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1342,7 +1342,7 @@ static struct regulator_ops spmi_ftsmps_ops = {
+ 	.set_pull_down		= spmi_regulator_common_set_pull_down,
+ };
+ 
+-static struct regulator_ops spmi_ult_lo_smps_ops = {
++static const struct regulator_ops spmi_ult_lo_smps_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1356,7 +1356,7 @@ static struct regulator_ops spmi_ult_lo_smps_ops = {
+ 	.set_pull_down		= spmi_regulator_common_set_pull_down,
+ };
+ 
+-static struct regulator_ops spmi_ult_ho_smps_ops = {
++static const struct regulator_ops spmi_ult_ho_smps_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1371,7 +1371,7 @@ static struct regulator_ops spmi_ult_ho_smps_ops = {
+ 	.set_pull_down		= spmi_regulator_common_set_pull_down,
+ };
+ 
+-static struct regulator_ops spmi_ult_ldo_ops = {
++static const struct regulator_ops spmi_ult_ldo_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1388,7 +1388,7 @@ static struct regulator_ops spmi_ult_ldo_ops = {
+ 	.set_soft_start		= spmi_regulator_common_set_soft_start,
+ };
+ 
+-static struct regulator_ops spmi_ftsmps426_ops = {
++static const struct regulator_ops spmi_ftsmps426_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -1403,7 +1403,7 @@ static struct regulator_ops spmi_ftsmps426_ops = {
+ 	.set_pull_down		= spmi_regulator_common_set_pull_down,
+ };
+ 
+-static struct regulator_ops spmi_hfs430_ops = {
++static const struct regulator_ops spmi_hfs430_ops = {
+ 	.enable			= regulator_enable_regmap,
+ 	.disable		= regulator_disable_regmap,
+ 	.is_enabled		= regulator_is_enabled_regmap,
 -- 
 2.27.0
 
