@@ -2,233 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 883B620E5CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:07:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF19620E4CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732878AbgF2Vl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 17:41:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37558 "EHLO
+        id S1732474AbgF2V3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 17:29:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727926AbgF2Sh6 (ORCPT
+        with ESMTP id S1728960AbgF2Smm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:37:58 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC5C0C031C41
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:19 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id o38so13434367qtf.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:19 -0700 (PDT)
+        Mon, 29 Jun 2020 14:42:42 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D076C031C47
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:27:09 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id b185so5393366qkg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DqAKdt3lk82f18skm9MplMyKRKUbc8f3Yv5d4peK0Jw=;
-        b=w5i6SQNv/k+D73je2CRcdyD+0Az5V4KBSj88gUxaNU9octr3t+vYWR1z9dbIMJj/1F
-         PaGfgCqeVeOZhH0syXM4R1Zk+2GqLopRZpjR+7jKyeAFSAZyq+uQiaVLtr5tzj4FqO3u
-         x00S0zaaOyA4NhkmlXy9lJlxPHpJd7c6hv9QxDfNMSuusi0N5rCEY7jLOK9DBmEdEJMV
-         lsmvJyoKgPlPeuE6sfmWOCrmAWngDxCGrNReUqv9F0zwoL9a7NDubghRYQa6Yv7ySY36
-         If73t3/CtelKI7xYjNdKnrgRRyUmA9jQRvHuq75pkOoDhN1m7c8ETQMnYY3rY796K0Bo
-         fgtA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pqe14MaPsMfgtT/LBcuvaSN2cytXk1SleFgshIkTKVM=;
+        b=USGV60ZzR1pxKQN2xImazAMTEN9Qly93rcztD+sYyGT3yq/2h+C2ZfM6tWNpO2TSuW
+         sI+F0KtJIs/Rz04s9xPFkJ6DTpB5pPPAprIj3AnIMP4sEaqqcurmdjYTdABfIZZ40Awr
+         ck9UYLevqJHyUS4oEHxtxwTJ6+9/xo1gykYlCpdGmF+khLkasVMr0e8eMjVr7eSur2Hl
+         zCQK8g35HbE5WDa5bKhJmyaMG+KMygFxJkSi6qYWbZsQ3Cms7DeKU2Du8peGOUpdqvEH
+         7h199ie9F89cNHIX9BXnlcW832fl9cx4Yo0HLEglG8PnZM5iD1OX6Sbr1P9Jnusg65cJ
+         bQ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DqAKdt3lk82f18skm9MplMyKRKUbc8f3Yv5d4peK0Jw=;
-        b=P2Ni9AaThjB+plQALW7Nwfcckvkp+LSD1LGfBkdw9W9hy+yOgPv+1s/cgx6L+RV7Z3
-         kdklzzCkmfvM3luIUTaibi3/+pSJ1UChUgRA5BefOBfinW4cmRB9f+DcVHkzUCNNWLy5
-         9OYSYF3Px+ZwPiEKwS33jbvyUoWd+NFIIvtnHqQU9mQfHUorYrplhVuIyFI+5OC1AXS3
-         qSN65kyhr4Co6MxONJkai4xzJg2+ZQjA4BWBNwwjtYtzZFJdd0lCyTmuxEJSQlkWAaUw
-         jDcg0Uieh4XFED+srROaF6GfeLBeXJS/PCzqoJxSJIn2wOBzou0imLMuwJZwNqqTnwrZ
-         9TTw==
-X-Gm-Message-State: AOAM531w1d42qUtYvV6gW/kBRVzt/g4q8v7q5hxK/IDwE/cSLQq1tCcl
-        5Uah46vn9yBKgkmrHPJ9nqR9/l/gyYU=
-X-Google-Smtp-Source: ABdhPJzoX9t8EnEg8SA3ZjJG2lajLSBPeU7HyGvl3rLXCaUCHfg2zKcEyUNd/+m0kAxQSeLfsPAnYQ==
-X-Received: by 2002:ac8:36d8:: with SMTP id b24mr16512566qtc.315.1593451278675;
-        Mon, 29 Jun 2020 10:21:18 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id q5sm408363qtf.12.2020.06.29.10.21.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 10:21:18 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pqe14MaPsMfgtT/LBcuvaSN2cytXk1SleFgshIkTKVM=;
+        b=UD5HMd69tsO70RV7ejAAU9RE41h2QADOSQb+IsgkxDmvkw7GPM3tnpDZniS9Xj/K8b
+         TTjpGxI0clpm5fYCICt0ZSPAE4189iAnA53OEKXzXsLfHzdd5kX1YhdfsuNf0xEjJa7K
+         RSMXId02uUBkerqOzysqj0DcAWLqTHT+gtgv4NqlMAQyl0arhSDwkO9GmeNbZVDlOTuL
+         nEP8WISgfpqd9OFarBLtpWmBMQM420kvtBYGu5Fkkd1gVskMlRH6ZtGOMvHSY/uMND5F
+         NYwYu319KtRPB7S+XydN1cDGeTFFgrUyLmvRxMVi03kkVBQfZh//4Bts5WV83td0SPQO
+         C8Rg==
+X-Gm-Message-State: AOAM533Ue0x+9Q9CJU8jUEkyl+ukMyc0ksSMrSordVA73+YBaUqBHYGp
+        7Kkk8JVGWyavp+wtcxUydy2xmA==
+X-Google-Smtp-Source: ABdhPJz6/7Q13mZzwNNVBWoMSVx5buOlaqi44+cTUPkY+oXRmbqWOckeIL2jAiQfaU3iBb439UfzvA==
+X-Received: by 2002:a37:7741:: with SMTP id s62mr4110200qkc.263.1593451628633;
+        Mon, 29 Jun 2020 10:27:08 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id x19sm372668qtc.36.2020.06.29.10.27.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jun 2020 10:27:08 -0700 (PDT)
+Subject: Re: [PATCH 07/10] clk: qcom: Add graphics clock controller driver for
+ SM8150
+To:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 12/13] arm64: dts: qcom: add sm8150 GPU nodes
-Date:   Mon, 29 Jun 2020 13:20:42 -0400
-Message-Id: <20200629172049.30452-13-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20200629172049.30452-1-jonathan@marek.ca>
-References: <20200629172049.30452-1-jonathan@marek.ca>
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20200524210615.17035-1-jonathan@marek.ca>
+ <20200524210615.17035-8-jonathan@marek.ca>
+ <159056904079.88029.16161248455546031414@swboyd.mtv.corp.google.com>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <231bd673-aa99-6223-fa74-54e9a488833e@marek.ca>
+Date:   Mon, 29 Jun 2020 13:27:21 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <159056904079.88029.16161248455546031414@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This brings up the GPU. Tested on HDK855 by running vulkan CTS.
+On 5/27/20 4:44 AM, Stephen Boyd wrote:
+> Quoting Jonathan Marek (2020-05-24 14:06:08)
+>> diff --git a/drivers/clk/qcom/gpucc-sm8150.c b/drivers/clk/qcom/gpucc-sm8150.c
+>> new file mode 100644
+>> index 000000000000..6e1fff0cde75
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/gpucc-sm8150.c
+>> @@ -0,0 +1,429 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/module.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/regmap.h>
+>> +
+>> +#include <dt-bindings/clock/qcom,gpucc-sm8150.h>
+> [..]
+>> +
+>> +static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+>> +       .cmd_rcgr = 0x1120,
+>> +       .mnd_width = 0,
+>> +       .hid_width = 5,
+>> +       .parent_map = gpu_cc_parent_map_0,
+>> +       .freq_tbl = ftbl_gpu_cc_gmu_clk_src,
+>> +       .clkr.hw.init = &(struct clk_init_data){
+>> +               .name = "gpu_cc_gmu_clk_src",
+>> +               .parent_names = gpu_cc_parent_names_0,
+>> +               .num_parents = 6,
+>> +               .flags = CLK_SET_RATE_PARENT,
+>> +               .ops = &clk_rcg2_ops,
+>> +       },
+>> +};
+>> +
+>> +static struct clk_branch gpu_cc_ahb_clk = {
+>> +       .halt_reg = 0x1078,
+>> +       .halt_check = BRANCH_HALT_DELAY,
+>> +       .clkr = {
+>> +               .enable_reg = 0x1078,
+>> +               .enable_mask = BIT(0),
+>> +               .hw.init = &(struct clk_init_data){
+>> +                       .name = "gpu_cc_ahb_clk",
+>> +                       .flags = CLK_IS_CRITICAL,
+> 
+> Why is this CLK_IS_CRITICAL? Why not just enable the clk manually with
+> a register write in probe and then remove this clk from the system? We
+> can save some memory that way.
+> 
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 136 +++++++++++++++++++++++++++
- 1 file changed, 136 insertions(+)
+I copied this from downstream, so I don't know why. It works without it, 
+so I removed the CLK_IS_CRITICAL in my v2 (from both sm8150 and sm8250).
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index f928ef9fa3a3..2be39eb0ce7f 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -10,6 +10,7 @@
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,gcc-sm8150.h>
-+#include <dt-bindings/clock/qcom,gpucc-sm8150.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -540,6 +541,141 @@ glink-edge {
- 			};
- 		};
- 
-+		gpu: gpu@2c00000 {
-+			/*
-+			 * note: the amd,imageon compatible makes it possible
-+			 * to use the drm/msm driver without the display node,
-+			 * make sure to remove it when display node is added
-+			 */
-+			compatible = "qcom,adreno-640.1",
-+				     "qcom,adreno",
-+				     "amd,imageon";
-+			#stream-id-cells = <16>;
-+
-+			reg = <0 0x2c00000 0 0x40000>;
-+			reg-names = "kgsl_3d0_reg_memory";
-+
-+			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			iommus = <&adreno_smmu 0 0x401>;
-+
-+			operating-points-v2 = <&gpu_opp_table>;
-+
-+			qcom,gmu = <&gmu>;
-+
-+			zap-shader {
-+				memory-region = <&gpu_mem>;
-+			};
-+
-+			/* note: downstream checks gpu binning for 675 Mhz */
-+			gpu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-675000000 {
-+					opp-hz = /bits/ 64 <675000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+				};
-+
-+				opp-585000000 {
-+					opp-hz = /bits/ 64 <585000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+				};
-+
-+				opp-499200000 {
-+					opp-hz = /bits/ 64 <499200000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+				};
-+
-+				opp-427000000 {
-+					opp-hz = /bits/ 64 <427000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+				};
-+
-+				opp-345000000 {
-+					opp-hz = /bits/ 64 <345000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+				};
-+
-+				opp-257000000 {
-+					opp-hz = /bits/ 64 <257000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+				};
-+			};
-+		};
-+
-+		gmu: gmu@2c6a000 {
-+			compatible="qcom,adreno-gmu-640.1", "qcom,adreno-gmu";
-+
-+			reg = <0 0x2c6a000 0 0x30000>,
-+			      <0 0xb290000 0 0x10000>,
-+			      <0 0xb490000 0 0x10000>;
-+			reg-names = "gmu", "gmu_pdc", "gmu_pdc_seq";
-+
-+			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hfi", "gmu";
-+
-+			clocks = <&gpucc GPU_CC_AHB_CLK>,
-+				 <&gpucc GPU_CC_CX_GMU_CLK>,
-+			         <&gpucc GPU_CC_CXO_CLK>,
-+				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
-+			clock-names = "ahb", "gmu", "cxo", "axi", "memnoc";
-+
-+			power-domains = <&gpucc GPU_CX_GDSC>,
-+					<&gpucc GPU_GX_GDSC>;
-+			power-domain-names = "cx", "gx";
-+
-+			iommus = <&adreno_smmu 5 0x400>;
-+
-+			operating-points-v2 = <&gmu_opp_table>;
-+
-+			gmu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-200000000 {
-+					opp-hz = /bits/ 64 <200000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+				};
-+			};
-+		};
-+
-+		gpucc: clock-controller@2c90000 {
-+			compatible = "qcom,sm8150-gpucc";
-+			reg = <0 0x2c90000 0 0x9000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			clock-names = "bi_tcxo",
-+				      "gcc_gpu_gpll0_clk_src",
-+				      "gcc_gpu_gpll0_div_clk_src";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		adreno_smmu: iommu@2ca0000 {
-+			compatible = "qcom,sm8150-smmu-500", "arm,mmu-500";
-+			reg = <0 0x2ca0000 0 0x10000>;
-+			#iommu-cells = <2>;
-+			#global-interrupts = <1>;
-+			interrupts = <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
-+				<GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gpucc GPU_CC_AHB_CLK>,
-+				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+			         <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>;
-+			clock-names = "ahb", "bus", "iface";
-+
-+			power-domains = <&gpucc GPU_CX_GDSC>;
-+		};
-+
- 		tlmm: pinctrl@3100000 {
- 			compatible = "qcom,sm8150-pinctrl";
- 			reg = <0x0 0x03100000 0x0 0x300000>,
--- 
-2.26.1
+>> +                       .ops = &clk_branch2_ops,
+>> +               },
+>> +       },
+>> +};
+>> +
+> [...]
+>> +
+>> +static struct gdsc gpu_cx_gdsc = {
+>> +       .gdscr = 0x106c,
+>> +       .gds_hw_ctrl = 0x1540,
+>> +       .pd = {
+>> +               .name = "gpu_cx_gdsc",
+>> +       },
+>> +       .pwrsts = PWRSTS_OFF_ON,
+>> +       .flags = VOTABLE,
+>> +};
+>> +
+>> +/* see comment in gpucc-sdm845 about this */
+>> +static int gx_gdsc_enable(struct generic_pm_domain *domain)
+>> +{
+>> +       /* Do nothing but give genpd the impression that we were successful */
+>> +       return 0;
+>> +}
+> 
+> Maybe we should export a helper from gdsc.c for this with the comment
+> and it named something obvious? gx_gdsc_do_nothing_enable()?
+> 
 
+Made this change in my v2.
+
+>> +
+>> +static struct gdsc gpu_gx_gdsc = {
+>> +       .gdscr = 0x100c,
+>> +       .clamp_io_ctrl = 0x1508,
+>> +       .pd = {
+>> +               .name = "gpu_gx_gdsc",
+>> +               .power_on = gx_gdsc_enable,
+>> +       },
+>> +       .pwrsts = PWRSTS_OFF_ON,
+>> +       .flags = CLAMP_IO | AON_RESET | POLL_CFG_GDSCR,
+>> +};
+>> +
