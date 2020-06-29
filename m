@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1899020E5FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:08:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0100820E5E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:08:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727870AbgF2Vn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 17:43:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37588 "EHLO
+        id S1727897AbgF2Vmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 17:42:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727867AbgF2Shu (ORCPT
+        with ESMTP id S1727901AbgF2Shz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:37:50 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC92C03142A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:07 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id q198so15989853qka.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:07 -0700 (PDT)
+        Mon, 29 Jun 2020 14:37:55 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 679B2C03142E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:09 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id m8so3792094qvk.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=acMY/PDEeXIX2iUBf49C2Sg8svQXM/66G883KF7yr14=;
-        b=0Vr/iUCTL0YCeERQJU5A4XFXP9WRqstSxzdmUQD6ykn1ca7JzGnnei2ewZDfArLcSu
-         CYypdB2pqO57zT6zodFJ+ZD2IJlbzrIK+M+0o5ZTdkG8QVZhgL9zkp0H1qxCaw466lPK
-         6Bvj8YaLOMYtN4/izEybXm6/6yU52gkFLcOx+I3rM5FhrNY74YEXLbbNt48iXwhoEPPu
-         iXBbUAWO7sDhCLWBK888xnmlUL60CSL1wubqDtYE+gsqRKrAtDHB1OF8tXE7vDS8nrL4
-         PTrSsSyc3GZc2W9tFD0ZGVWlquLpWeYBoT0Xyb1zNWMo124SuQuu2KPXpOSkUPdRlH8B
-         rUHg==
+        bh=fNFf1AHiZrCdSiYdBqYQtf+nkqBR/m0y7WTyi1yw8FM=;
+        b=VWtqmuPqPQ/Wmey41mf2SgkPFEQeVhfHg2KV97SKy14BZK+kLMSbjYN+ZPvMGC5i0Y
+         +r4q9jtPqzscxAPUihxpI+WhVY4fA2fOb5wNdVYpsw7mHOTtH58z96/Me2kJL2riWq1/
+         Ri2ca9uK/R3fhW8iFGRWnFah8BahMMXcCU19Dc5bqR+XweDTz9Bs6jxVG0mGLwyN2okP
+         y35pEgnQfrTJ39nlz4rC58djQsnMs3TyogejJSjEdxLWK4354Bmk8SX4uWlf82+Yf5yB
+         tUrfhKqMTiJD8nKznciNwm0aDEqSDMW6Hb5j9mXpIPahzmXfvyGuwkkpd48KuK7PXvCn
+         +Yfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=acMY/PDEeXIX2iUBf49C2Sg8svQXM/66G883KF7yr14=;
-        b=I7ROUwK3UIiU/So9m33oELOq7UquwoRQoBGfjzMVtwU2u39+Q7oHbfpUl3P9ZH2hYg
-         yc4BRwhodJOHcqS0bWSiGAX2Z46rw50ojwClqskAMFI2WSyZ2ny4gI9MOClyxggD7D8Y
-         0RsedqXSksimqgwsFlPqL3+NCI+XJS3qFRVsMUXZ8N/VjLBoOdPKBMHcx/onMzxcgopp
-         DhaV/SdsoSol9Gx/869EcUVrdf/TTFzbJGoIbiUuXvDv7XkhFjosQ47ctBlVN1Xs9Lxh
-         lcRfIVmPCaP7EJRN0q8J61r2QzxHZK7bt3OBdeFv21Z0sh1jNlElG+WbgVqFXTBVJKJb
-         Kq4A==
-X-Gm-Message-State: AOAM531UAVm2ufDp5DqYvZ00f3PZp6ioWwBOonIv/D2D5cDO5TFZUgCa
-        KqYmzzbjIqd4WsdzBUdE8no4vkcWVNs=
-X-Google-Smtp-Source: ABdhPJyEZvgI7BCAXGHakCfxARGoDPMIkgxM8m5Edq3X5e6ibIASdaGalKlTTXkySTsiXwmys77+LA==
-X-Received: by 2002:a05:620a:483:: with SMTP id 3mr15187886qkr.299.1593451266376;
-        Mon, 29 Jun 2020 10:21:06 -0700 (PDT)
+        bh=fNFf1AHiZrCdSiYdBqYQtf+nkqBR/m0y7WTyi1yw8FM=;
+        b=TxPr2Kh1ITE9CZ3NSvGm2t2ehWkSNvs334nDI75HC7Woi+Wu6gzkpCKdWWD3qIXiUd
+         Y/W6vQ1bM7DnYJ3x/8PzNcKTldR3nYSTYFnyBJ5Su7tVBfioJ6EGMh/0HKhCXX6wg/rW
+         Ru2RMKd/v9modng4Uj7lKbqHMNKVaO2uZ5wXehgBdvDO9NNHAGYumuyd0qx6HJznKZKK
+         psy4i/EIi/q2kGOEXQmeDTplgM5Uo6Jriuxh/IG5lWXEXvIJK+yM5DSlxVWTDNRrsz5q
+         HUD8oOVQyXlz+vbZ/47VxAffqH2ixFjNw/siecyzMW2f2iGYNeKK8fb9t5WII9Cor3oW
+         3qAA==
+X-Gm-Message-State: AOAM530HcDPvbNaCiItJT2c8A8aJAu9FuynubbpypRUQgGwtiut8hQNj
+        ZfumfZqc6RJDeYHYiYDdusRqJ94JPkM=
+X-Google-Smtp-Source: ABdhPJyflHo+JB8zV+2M63HtV4/+CmvoKImlgNTrNPL+fJa4r4o9hHcti8JR5R4KbbSHo/VHx0tpug==
+X-Received: by 2002:a05:6214:13c6:: with SMTP id cg6mr16481717qvb.160.1593451268441;
+        Mon, 29 Jun 2020 10:21:08 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id q5sm408363qtf.12.2020.06.29.10.21.05
+        by smtp.gmail.com with ESMTPSA id q5sm408363qtf.12.2020.06.29.10.21.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 10:21:06 -0700 (PDT)
+        Mon, 29 Jun 2020 10:21:08 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 05/13] clk: qcom: gcc: remove unnecessary vco_table from SM8150
-Date:   Mon, 29 Jun 2020 13:20:35 -0400
-Message-Id: <20200629172049.30452-6-jonathan@marek.ca>
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 06/13] dt-bindings: clock: Introduce SM8150 QCOM Graphics clock bindings
+Date:   Mon, 29 Jun 2020 13:20:36 -0400
+Message-Id: <20200629172049.30452-7-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20200629172049.30452-1-jonathan@marek.ca>
 References: <20200629172049.30452-1-jonathan@marek.ca>
@@ -69,51 +71,143 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The fixed alpha pll ops only use it for clamping in round_rate, which is
-unnecessary. This is consistent with SM8250 GCC not using vco_table.
+Add device tree bindings for graphics clock controller for
+Qualcomm Technology Inc's SM8150 SoCs.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/clk/qcom/gcc-sm8150.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ .../bindings/clock/qcom,sm8150-gpucc.yaml     | 74 +++++++++++++++++++
+ include/dt-bindings/clock/qcom,gpucc-sm8150.h | 40 ++++++++++
+ 2 files changed, 114 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8150.h
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index d7778def37da..8e9b5b3cceaf 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -34,14 +34,8 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static const struct pll_vco trion_vco[] = {
--	{ 249600000, 2000000000, 0 },
--};
--
- static struct clk_alpha_pll gpll0 = {
- 	.offset = 0x0,
--	.vco_table = trion_vco,
--	.num_vco = ARRAY_SIZE(trion_vco),
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
- 	.clkr = {
- 		.enable_reg = 0x52000,
-@@ -85,8 +79,6 @@ static struct clk_alpha_pll_postdiv gpll0_out_even = {
- 
- static struct clk_alpha_pll gpll7 = {
- 	.offset = 0x1a000,
--	.vco_table = trion_vco,
--	.num_vco = ARRAY_SIZE(trion_vco),
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
- 	.clkr = {
- 		.enable_reg = 0x52000,
-@@ -105,8 +97,6 @@ static struct clk_alpha_pll gpll7 = {
- 
- static struct clk_alpha_pll gpll9 = {
- 	.offset = 0x1c000,
--	.vco_table = trion_vco,
--	.num_vco = ARRAY_SIZE(trion_vco),
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
- 	.clkr = {
- 		.enable_reg = 0x52000,
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml
+new file mode 100644
+index 000000000000..683b50dd3492
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml
+@@ -0,0 +1,74 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sm8150-gpucc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Graphics Clock & Reset Controller Binding for SM8150
++
++maintainers:
++  -
++
++description: |
++  Qualcomm graphics clock control module which supports the clocks, resets and
++  power domains on SM8150.
++
++  See also dt-bindings/clock/qcom,gpucc-sm8150.h.
++
++properties:
++  compatible:
++    const: qcom,sm8150-gpucc
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: GPLL0 main branch source
++      - description: GPLL0 div branch source
++
++  clock-names:
++    items:
++      - const: bi_tcxo
++      - const: gcc_gpu_gpll0_clk_src
++      - const: gcc_gpu_gpll0_div_clk_src
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sm8150.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@2c90000 {
++      compatible = "qcom,sm8150-gpucc";
++      reg = <0x2c90000 0x9000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&gcc GCC_GPU_GPLL0_CLK_SRC>,
++               <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
++      clock-names = "bi_tcxo",
++                    "gcc_gpu_gpll0_clk_src",
++                    "gcc_gpu_gpll0_div_clk_src";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,gpucc-sm8150.h b/include/dt-bindings/clock/qcom,gpucc-sm8150.h
+new file mode 100644
+index 000000000000..e7cac7fe9739
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,gpucc-sm8150.h
+@@ -0,0 +1,40 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8150_H
++#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8150_H
++
++/* GPU_CC clock registers */
++#define GPU_CC_AHB_CLK				0
++#define GPU_CC_CRC_AHB_CLK			1
++#define GPU_CC_CX_APB_CLK			2
++#define GPU_CC_CX_GMU_CLK			3
++#define GPU_CC_CX_QDSS_AT_CLK			4
++#define GPU_CC_CX_QDSS_TRIG_CLK			5
++#define GPU_CC_CX_QDSS_TSCTR_CLK		6
++#define GPU_CC_CX_SNOC_DVM_CLK			7
++#define GPU_CC_CXO_AON_CLK			8
++#define GPU_CC_CXO_CLK				9
++#define GPU_CC_GMU_CLK_SRC			10
++#define GPU_CC_GX_GMU_CLK			11
++#define GPU_CC_GX_QDSS_TSCTR_CLK		12
++#define GPU_CC_GX_VSENSE_CLK			13
++#define GPU_CC_PLL1				14
++#define GPU_CC_PLL_TEST_CLK			15
++#define GPU_CC_SLEEP_CLK			16
++
++/* GPU_CC Resets */
++#define GPUCC_GPU_CC_CX_BCR			0
++#define GPUCC_GPU_CC_GFX3D_AON_BCR		1
++#define GPUCC_GPU_CC_GMU_BCR			2
++#define GPUCC_GPU_CC_GX_BCR			3
++#define GPUCC_GPU_CC_SPDM_BCR			4
++#define GPUCC_GPU_CC_XO_BCR			5
++
++/* GPU_CC GDSCRs */
++#define GPU_CX_GDSC				0
++#define GPU_GX_GDSC				1
++
++#endif
 -- 
 2.26.1
 
