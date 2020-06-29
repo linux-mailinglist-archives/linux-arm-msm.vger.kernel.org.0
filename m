@@ -2,99 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0E1E20E76B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:11:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58B7F20E7E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:11:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403923AbgF2V5M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 17:57:12 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:37081 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404693AbgF2V5L (ORCPT
+        id S2404862AbgF2WBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 18:01:23 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:52970 "EHLO
+        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404683AbgF2WBX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 17:57:11 -0400
-Received: by mail-il1-f194.google.com with SMTP id r12so8660504ilh.4;
-        Mon, 29 Jun 2020 14:57:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PfqS3OG1vRy132QSpT7juMRTX02P9BHgaTSVVVztCHs=;
-        b=DfNPn8nSieYrxwZR4kiLsm5q02mjI1zLF6jaju7c5LVQaTnUtQ73iNsJ0b7aZIjBVz
-         zi2WfH6d9xMTGMj+tjJBIADasYixGuXhcMLUofck3f0pOBKdBx4fOGDsTYdT3p9FhWf5
-         lQrNnOEd0BtgDD/c+ujEBRxmOrApSX8KUqBKXu2pIe88v+ZLNMEHV5BWPCLpcVly3KWx
-         wfieq2K6yvfH2iSUAGFxudO/HyyLTFlZVyGOVl0g3ipZBQwitKwQFSUNvk1eqnYkZ7sS
-         lJJ96LsjgL2Bgud6Jld3Zv9JJWwngNhMfpkY48n6ukIdBZIXL7sm5VBx6ioh6x9NVmEV
-         zeGA==
-X-Gm-Message-State: AOAM5327a4cQzBiqqphjaMzp+zSTfdlYgXt4ye2BnF2pV9+JTHLaLxf0
-        odKNSyKEtRwjHukWefUNAg==
-X-Google-Smtp-Source: ABdhPJw0pDnSmcQd55WjOydr5ed57EqP4M5g0HlMaKpmBlY4fMmFnosgqPZ9g8WdnUknA418MQ3pSg==
-X-Received: by 2002:a92:cd01:: with SMTP id z1mr355216iln.103.1593467830459;
-        Mon, 29 Jun 2020 14:57:10 -0700 (PDT)
-Received: from xps15 ([64.188.179.255])
-        by smtp.gmail.com with ESMTPSA id k126sm540191iof.50.2020.06.29.14.57.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 14:57:09 -0700 (PDT)
-Received: (nullmailer pid 3003522 invoked by uid 1000);
-        Mon, 29 Jun 2020 21:57:08 -0000
-Date:   Mon, 29 Jun 2020 15:57:08 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amit.kucheria@verdurent.com>,
-        Vinod Koul <vkoul@kernel.org>,
+        Mon, 29 Jun 2020 18:01:23 -0400
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 213821C0C82; Tue, 30 Jun 2020 00:01:21 +0200 (CEST)
+Date:   Tue, 30 Jun 2020 00:01:20 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hartmut Knaack <knaack.h@gmx.de>, devicetree@vger.kernel.org,
-        linux-iio@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: Re: [PATCH 1/5] dt-bindings: thermal: qcom: add adc-thermal monitor
- bindings
-Message-ID: <20200629215708.GA3003126@bogus>
-References: <20200621193549.2070434-1-dmitry.baryshkov@linaro.org>
- <20200621193549.2070434-2-dmitry.baryshkov@linaro.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk@vger.kernel.org, DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-gpio@vger.kernel.org
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: Add support for Sony Xperia
+ XA2/Plus/Ultra (Nile platform)
+Message-ID: <20200629220120.GC26513@amd>
+References: <20200621213806.551879-1-konradybcio@gmail.com>
+ <20200621213806.551879-8-konradybcio@gmail.com>
+ <20200629120911.GA1319@bug>
+ <CAMS8qEXdoX1Zpm660sOMM9b2rni9qXM_7rAi9kkzFBQYmL3EgQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="R+My9LyyhiUvIEro"
 Content-Disposition: inline
-In-Reply-To: <20200621193549.2070434-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAMS8qEXdoX1Zpm660sOMM9b2rni9qXM_7rAi9kkzFBQYmL3EgQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 21 Jun 2020 22:35:45 +0300, Dmitry Baryshkov wrote:
-> Add bindings for thermal monitor, part of Qualcomm PMIC5 chips. It is a
-> close counterpart of VADC part of those PMICs.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   | 143 ++++++++++++++++++
->  1 file changed, 143 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-> 
 
+--R+My9LyyhiUvIEro
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My bot found errors running 'make dt_binding_check' on your patch:
+On Mon 2020-06-29 14:15:32, Konrad Dybcio wrote:
+> > Do you really want autorepeat on keys like camera focus?
+>=20
+> I miiiight want to reconsider that when it will actually be in use
+> :)
 
-Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml:  while scanning a block scalar
-  in "<unicode string>", line 114, column 5
-found a tab character where an indentation space is expected
-  in "<unicode string>", line 115, column 1
-Documentation/devicetree/bindings/Makefile:20: recipe for target 'Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.example.dts' failed
-make[1]: *** [Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-Makefile:1347: recipe for target 'dt_binding_check' failed
-make: *** [dt_binding_check] Error 2
+Heh.
 
+Okay, so... I want a Linux phone. I have N900 and Droid 4 at the
+moment. I'll have something useful real soon now --
+https://maemo-leste.github.io/maemo-leste-thirteenth-update-april-may-june-=
+2020.html
+=2E
 
-See https://patchwork.ozlabs.org/patch/1313977
+OTOH... if you get useful mainline support for XA2 (or any other
+modern Sony)... be sure to let me know. Droid 4 has only 1GB RAM :-(.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
+Best regards,
 
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+									Pavel
+--=20
+(english) http://www.livejournal.com/~pavelmachek
+(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blo=
+g.html
 
-Please check and re-submit.
+--R+My9LyyhiUvIEro
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAl76ZLAACgkQMOfwapXb+vIGtACfXOLd6RroYBKp7PosAeOohWKK
+Fk0AnR8eCWQ3Q7TeKYd4CS7/dEgHQy5s
+=cMLV
+-----END PGP SIGNATURE-----
+
+--R+My9LyyhiUvIEro--
