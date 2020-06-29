@@ -2,78 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D17920E4FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:06:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FEFA20E865
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:12:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391134AbgF2VbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 17:31:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60608 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728814AbgF2SlR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:41:17 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725807AbgF2SfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 14:35:15 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:59599 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726003AbgF2SfP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:35:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593455713; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=7RTKsK1vkgMcrQEAHJsfsvSNG30HIOc0GMqPzPCA89A=;
+ b=YT4EFUJX1mgFD9po+mnfkNHQur5HwGRWrFm79Xa6in6K2WsXtw6RDU3vzERCaIuUO7SYjTGE
+ /+Alstrder7qRY0gK0yqi91hmiEvuu5ztVPHyCyB8c+FcykU54Zv2GyQq0BnwcU5H4sr8v81
+ fEEHVL+yMf7015Y6NYSHvyMBies=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5ef9f192c4bb4f886d603936 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 13:50:10
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A36BDC43395; Mon, 29 Jun 2020 13:50:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A881B23CD3;
-        Mon, 29 Jun 2020 11:53:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593431599;
-        bh=QifnuQ3OqevnySCb9bfo+3KcLPSxAMMMZIagAZ6227s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e0aWtAUPAo87GHfZKyQbhiRqWa3TOxxpCGs+PthoYpE3SRwz9IL9vDqQ0KlAdyPtP
-         n4ZFnebis5MOWojN2HFXlCLy1nXDZPuw/hP353dnE/d0Vo0OSHmufFYbQ0YJ6uT7E/
-         vhLIv/zXwk8VMLcqD1NnztBgdw/i1JRu28SeW2RE=
-Date:   Mon, 29 Jun 2020 12:53:17 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        Dilip Kota <dkota@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH] spi: spi-geni-qcom: Don't set the cs if it was already
- right
-Message-ID: <20200629115316.GB5499@sirena.org.uk>
-References: <20200626151946.1.I06134fd669bf91fd387dc6ecfe21d44c202bd412@changeid>
+        (Authenticated sender: harigovi)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1502AC433C8;
+        Mon, 29 Jun 2020 13:50:09 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XOIedfhf+7KOe/yw"
-Content-Disposition: inline
-In-Reply-To: <20200626151946.1.I06134fd669bf91fd387dc6ecfe21d44c202bd412@changeid>
-X-Cookie: Real programs don't eat cache.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 29 Jun 2020 19:20:09 +0530
+From:   harigovi@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: Re: [v3] arm64: dts: sc7180: add nodes for idp display
+In-Reply-To: <159304723830.62212.5069780400830519255@swboyd.mtv.corp.google.com>
+References: <20200217085842.28333-1-harigovi@codeaurora.org>
+ <159304723830.62212.5069780400830519255@swboyd.mtv.corp.google.com>
+Message-ID: <5c2265e82af8f755d649c0c36a462f19@codeaurora.org>
+X-Sender: harigovi@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
---XOIedfhf+7KOe/yw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Fri, Jun 26, 2020 at 03:19:50PM -0700, Douglas Anderson wrote:
-> Setting the chip select on the Qualcomm geni SPI controller isn't
-> exactly cheap.  Let's cache the current setting and avoid setting the
-> chip select if it's already right.
-
-Seems like it'd be worth pushing this up to the core - if we're
-constantly setting the same CS value then perhaps we ought to just stop
-doing that?
-
---XOIedfhf+7KOe/yw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl751iwACgkQJNaLcl1U
-h9AU/wf/bpfHFtT9ACyBIK96npjnnQz/vQ3t3lRL7uqyIfHIA/19K26V0j6Dbvwd
-aBYPo5xPqYDwqUHbobABbdZ5O1N6trSA8IO0I9+9MvV9vH0velLuDQIcsGEkVv8p
-8U+JrjDe2kjr7hRrqlYJvvFpbeT81Rcii6tN8cqz/Ek+eaRl7+ZOwOvanyYnzC8Y
-P5GZaxID2aTSx31RjkXiTsVzivPbZdRpQ8bE2MqhnGgyOsBVSpqOqYxLy6laSITN
-DCEwaCo+0FK+B9Fwy1/CjR4DAprkpm4tC1C3yw9Lyw1JVA9asTU4f8cG5MmiEDTT
-4XADNhyWNp+53XX+tudxCtkO84nsfQ==
-=Hcvu
------END PGP SIGNATURE-----
-
---XOIedfhf+7KOe/yw--
+On 2020-06-25 06:37, Stephen Boyd wrote:
+> Quoting Harigovindan P (2020-02-17 00:58:42)
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts 
+>> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> index 388f50ad4fde..349db8fe78a5 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> @@ -232,6 +233,57 @@ vreg_bob: bob {
+>>         };
+>>  };
+>> 
+>> +&dsi0 {
+>> +       status = "okay";
+>> +
+>> +       vdda-supply = <&vreg_l3c_1p2>;
+>> +
+>> +       panel@0 {
+>> +               compatible = "visionox,rm69299-1080p-display";
+>> +               reg = <0>;
+>> +
+>> +               vdda-supply = <&vreg_l8c_1p8>;
+>> +               vdd3p3-supply = <&vreg_l18a_2p8>;
+>> +
+>> +               pinctrl-names = "default";
+>> +               pinctrl-0 = <&disp_pins>;
+>> +
+>> +               reset-gpios = <&pm6150l_gpio 3 GPIO_ACTIVE_HIGH>;
+>> +
+>> +               ports {
+>> +                       #address-cells = <1>;
+>> +                       #size-cells = <0>;
+>> +                       port@0 {
+>> +                               reg = <0>;
+>> +                               panel0_in: endpoint {
+>> +                                       remote-endpoint = <&dsi0_out>;
+>> +                               };
+>> +                       };
+>> +               };
+>> +       };
+>> +
+>> +       ports {
+>> +               port@1 {
+>> +                       endpoint {
+>> +                               remote-endpoint = <&panel0_in>;
+>> +                               data-lanes = <0 1 2 3>;
+> 
+> Is this property needed? If it's the default assumption it would be 
+> nice
+> to omit it so that we don't have to think about it.
+> This property is needed during panel probe. If this is not mentioned 
+> here,
+mipi_dsi_attach() will fail during panel probe. In dsi_host.c, 
+dsi_host_attach()
+fails since dsi lanes are greater than msm_host lanes. msm_host lanes 
+are updated
+as part of dsi_host_parse_dt. If we dont provide data-lanes in dt, it'll 
+have default
+value and fail in dsi_host_attach().
+>> +                       };
+>> +               };
+>> +       };
+>> +};
+>> +
+>> +&dsi_phy {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&mdp {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&mdss {
+>> +       status = "okay";
+>> +};
+>> +
+>>  &qspi {
+>>         status = "okay";
+>>         pinctrl-names = "default";
+>> @@ -289,6 +341,17 @@ &usb_1_qmpphy {
+>> 
+>>  /* PINCTRL - additions to nodes defined in sc7180.dtsi */
+>> 
+>> +&pm6150l_gpio {
+>> +       disp_pins: disp-pins {
+> 
+> Curious how this works. It looks like PMIC GPIOS are expecting the node
+> to look like:
+> 
+> 	disp_pins: disp-pins {
+> 		pinconf {
+> 			pins = "gpio3";
+> 			function = PMIC_GPIO_FUNC_FUNC1;
+> 			qcom,drive-strength = <PMIC_GPIO_STRENGTH_MED>;
+> 			power-source = <PM6150_GPIO_VPH>;
+> 			bias-disable;
+> 			output-low;
+> 		};
+> 
+> but this doesn't use the macros or the subnode for pinconf. Why? Also,
+> the PM6150_GPIO_VPH macro doesn't exist.
+We are discussing with PMIC team to have that macro in the header file.
+Will add other macros as part of next version.
+> 
+>> +               pins = "gpio3";
+>> +               function = "func1";
+>> +               qcom,drive-strength = <2>;
+>> +               power-source = <0>;
+>> +               bias-disable;
+>> +               output-low;
+>> +       };
+>> +};
+>> +
