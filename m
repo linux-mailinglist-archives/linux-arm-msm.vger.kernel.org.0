@@ -2,97 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48A4320E98E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 01:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4739620E9A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 02:02:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726847AbgF2Xpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 19:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58714 "EHLO
+        id S1728415AbgF2XtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 19:49:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726616AbgF2Xpo (ORCPT
+        with ESMTP id S1728166AbgF2XtY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 19:45:44 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35019C03E979
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:45:44 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id 66so729377vka.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:45:44 -0700 (PDT)
+        Mon, 29 Jun 2020 19:49:24 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281F7C03E979
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:49:24 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id dm12so8492033qvb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:49:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fYI3mC1TPWWNCe5dapKUu8m35ZbqtEKTTLgsE9b3Fkw=;
-        b=TUksazA+FGM3tucKqjgqZrt9NinjymNomhfIBEhZ4zMzZqHhHj+tz5ZLgmJ2Zd0pbP
-         jOtLn2445dpX0VSLOa02xXSbZVWvTtP8p6O5h+oU67hNQPp3Kn8EbdweXGQly9MscT6r
-         sNzdpzM4hLW9cT6jYanMVyeZC5rRI6yB6SolM=
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kuWeoCHuc/prOGvBHvvx+Eyg6Z2nKOC6TsX81jgFqt4=;
+        b=aak1v9uve4kyxwvd+x7Df+Wf6cXWmrmolKMAuKVWTghvCHOXv6e4A10ENI3HjVU0bP
+         fdE32jJE9unnlHaqKcU1ukM5EDT5GxPEeE2Nu3XiiSlZfSZ7z+BPihLMAPzz4dvsC8Xs
+         vYFOTsLonPjpRIBTdDDoAomMyt6GdC88yGQ+NnVK9UmVc3lr1WLljWoBoa/HFFeD9EFR
+         PCZkK4UGPuPfstmsQnXvzjo9mF3J+cgKol/v0YghliTA8MZmdmeQZEss0NqM8FuPYf9Y
+         vZBk10824u4vmj/sT7jLgKWasVPSVO3s7a4OdN7GUipsNh8XGS6nEEVRxzSsEfZ7CnAW
+         qcUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fYI3mC1TPWWNCe5dapKUu8m35ZbqtEKTTLgsE9b3Fkw=;
-        b=o2VJ16+1qgCJeX2T9AuF2O9L6IGXpyVrbC8QsaruxYsC8/8xIiF9jrzlTOfacCGzsD
-         /4GbiEWnt6vgNbd/7+ROqLrHE2cyb+FWK8Jr7UAFYnJ697DYaHDfHaba/XvbLqw44Rdh
-         m78ke7L+o9NNjb0DPEM9HVhdAW88B3nX+1c5sPo/jni4LjoPOgCXh/YETc3pTDIIXDZO
-         4c1CreOgHSLiN/jaKjMD2JZm2KXxmk68rXofDywii5YZZWE4HNfkD/AE+FB35Afqyjq1
-         A3s8aRBPRTs226UlL6R6Ryzhr7KXaHdvr9zfthXqDRAW4I48+Ho97jRTLyG+iWguCCsS
-         otzg==
-X-Gm-Message-State: AOAM533S/qyHWIJdUvQ/lQGemzk3SgQ1VVP9uHxnFvWPxp605QAL/wbU
-        adspOwMSRf3WLLyqIxfJ9kvl25CZOiE=
-X-Google-Smtp-Source: ABdhPJwO4VEFdB4Wt1TibarHyROCjODHJSKcnxAUfNI15hRSSXQf1t3kgC1dZTlINDRSTgN6roD68A==
-X-Received: by 2002:a1f:280c:: with SMTP id o12mr11421434vko.92.1593474343102;
-        Mon, 29 Jun 2020 16:45:43 -0700 (PDT)
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
-        by smtp.gmail.com with ESMTPSA id u125sm193817vkg.32.2020.06.29.16.45.42
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jun 2020 16:45:42 -0700 (PDT)
-Received: by mail-vs1-f47.google.com with SMTP id r5so10167823vso.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 16:45:42 -0700 (PDT)
-X-Received: by 2002:a67:ec58:: with SMTP id z24mr8146370vso.109.1593474341915;
- Mon, 29 Jun 2020 16:45:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200626151946.1.I06134fd669bf91fd387dc6ecfe21d44c202bd412@changeid>
- <20200629115316.GB5499@sirena.org.uk>
-In-Reply-To: <20200629115316.GB5499@sirena.org.uk>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 29 Jun 2020 16:45:30 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=ULboyqRb1-1o1dq9Z7FGQ2gwb3oJi2bWLwZsXu6cybpw@mail.gmail.com>
-Message-ID: <CAD=FV=ULboyqRb1-1o1dq9Z7FGQ2gwb3oJi2bWLwZsXu6cybpw@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Don't set the cs if it was already right
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dilip Kota <dkota@codeaurora.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kuWeoCHuc/prOGvBHvvx+Eyg6Z2nKOC6TsX81jgFqt4=;
+        b=N2a0hMroyDDZ6nsXG5IKpTtA3QdRazM9D+1GJZj0ARnSjXNvJ1+kBuzkqjHEN21xcR
+         Vf9SIiJCiW5SXHC6UshEK5uTNQkic6hFylaPb6bhZCYYYtYzEIDmngiEowR8C3JebJG8
+         GaE6RvpOwPXuoc90cGKwyMyptcKDJidYBiF+717FAdDAX1/ESVsSLkVIV8SoP4pwU2d7
+         WCIZutg1g3Z6ILEFi7AH9vqwgG/nneBQ67ztBf60YIQjcpbcgxBqEYLLLk+GBGpUJ1xS
+         8FTQYY0Cxi+OZ/tW79BmNvQ+X7bAPM+EOrEjbEgMZHmSv3TmtruBsvb3Y7y8izbKaGFX
+         nBnw==
+X-Gm-Message-State: AOAM5309IGeFmj7NdEhc9LO6Krxa+LbPkh1oM1Q8MaGkKZNKgzfGgJWV
+        8GJ9WhM+kNVTsO7yiad7xYnNzA==
+X-Google-Smtp-Source: ABdhPJyJ2d0tCp5izifxJz64EqQHHdsaCCZq5JobW3wQx1DkNT/z73gSlzRnTXVU5Cqq6pptF4ym9w==
+X-Received: by 2002:a0c:f788:: with SMTP id s8mr17077923qvn.169.1593474563286;
+        Mon, 29 Jun 2020 16:49:23 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id n64sm1541076qke.77.2020.06.29.16.49.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2020 16:49:22 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     freedreno@lists.freedesktop.org
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Brian Masney <masneyb@onstation.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Eric Anholt <eric@anholt.net>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Wambui Karuga <wambui.karugax@gmail.com>
+Subject: [PATCH 0/2] drm/msm/a6xx: add A640/A650 hwcg
+Date:   Mon, 29 Jun 2020 19:49:12 -0400
+Message-Id: <20200629234921.3511-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Initialize hardware clock-gating registers on A640 and A650 GPUs.
 
-On Mon, Jun 29, 2020 at 4:53 AM Mark Brown <broonie@kernel.org> wrote:
->
-> On Fri, Jun 26, 2020 at 03:19:50PM -0700, Douglas Anderson wrote:
-> > Setting the chip select on the Qualcomm geni SPI controller isn't
-> > exactly cheap.  Let's cache the current setting and avoid setting the
-> > chip select if it's already right.
->
-> Seems like it'd be worth pushing this up to the core - if we're
-> constantly setting the same CS value then perhaps we ought to just stop
-> doing that?
+I put the hwcg tables in adreno_device.c, but maybe it makes more
+sense to keep them in a6xx_gpu.c? (this would allow switching a5xx
+to use the gpulist too.. it isn't possible to include both a6xx.xml.h
+and a5xx.xml.h in adreno_device.c)
 
-Posted:
+Jonathan Marek (2):
+  drm/msm/a6xx: hwcg tables in gpulist
+  drm/msm/a6xx: add A640/A650 hwcg
 
-spi: Avoid setting the chip select if we don't need to
-https://lore.kernel.org/r/20200629164103.1.Ied8e8ad8bbb2df7f947e3bc5ea1c315e041785a2@changeid
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h      |   8 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 140 ++-----------
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 219 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   7 +
+ 4 files changed, 251 insertions(+), 123 deletions(-)
 
-I see that you applied my patch to "spi-geni-qcom".  If the patch to
-the core looks OK to you and lands, I think the one for the driver can
-be reverted (though it doesn't hurt).
+-- 
+2.26.1
 
--Doug
