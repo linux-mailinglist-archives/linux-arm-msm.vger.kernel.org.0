@@ -2,121 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB23720D3D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 21:13:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 232BC20D2DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 21:11:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726119AbgF2TCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 15:02:34 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:52563 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727018AbgF2TCF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:02:05 -0400
+        id S1726974AbgF2SxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 14:53:10 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:10502 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729365AbgF2SxH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:53:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593457324; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=vO5cQ9r6C1BPb1i55IQPk0kf5dp76XCzv2CyuUd7XPI=; b=ZvxUOkbFN6N5twlE7MFyWzsSJDPI1klt71sT+Mvox2pTybaXH0TkR68KIbtSA9Ui0AAzUK5P
- +5Co/NBF6z5/OFvQqTZRsLmiiop4vPL+oRXMSlDZUwcLnxlWu5HWABLlye8iGS1wfnqrhkS4
- YzkpFRh3mQf2uS8KE740huGoKRs=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1593456787; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=MGpgHTPanseMUSP/5lHDa6o1Mxq+oOakQ9xuKUP30WY=; b=FVxtl/98/m6pVp284Ofjs4Rdk4SY5RRNPaL96wtoQeWKzMICGY/iM4rPH3dGrOsl7tsBZ2AZ
+ dNDxf8ptMFqOA5d44QZuzpvtCgBUOl8QUjKh7hN9pA4i0PMsH0/YhfjOs7u2u964oHPA27bd
+ MQtsORgUn6WYBRAHPnG03Fkqwxo=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5ef9d0db3a8a8b20b8dd2086 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 11:30:35
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5efa1958fe1db4db892338cc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 16:39:52
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CEB54C4339C; Mon, 29 Jun 2020 11:30:35 +0000 (UTC)
+        id 621F0C433C6; Mon, 29 Jun 2020 16:39:52 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.50.61.98] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC8BDC433C6;
-        Mon, 29 Jun 2020 11:30:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC8BDC433C6
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C6CBEC433C8;
+        Mon, 29 Jun 2020 16:39:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C6CBEC433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v6 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
- state
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org, robdclark@gmail.com, robdclark@chromium.org,
-        stanimir.varbanov@linaro.org, viresh.kumar@linaro.org,
-        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Alok Chauhan <alokc@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-spi@vger.kernel.org
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <1592222564-13556-7-git-send-email-rnayak@codeaurora.org>
- <20200624170933.GB39073@google.com> <20200624171537.GL5472@sirena.org.uk>
- <20200624173948.GC39073@google.com> <20200624174417.GM5472@sirena.org.uk>
- <20200624175536.GD39073@google.com> <20200624180005.GO5472@sirena.org.uk>
- <20200624181245.GE39073@google.com> <20200625152527.GG39073@google.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <d35e45f3-faf6-6879-e9e3-19e395bdd77c@codeaurora.org>
-Date:   Mon, 29 Jun 2020 17:00:28 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
-MIME-Version: 1.0
-In-Reply-To: <20200625152527.GG39073@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v4 0/9] Introduce features and debugfs/sysfs entries for MHI
+Date:   Mon, 29 Jun 2020 09:39:33 -0700
+Message-Id: <1593448782-8385-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Introduce independent bus and device voting mechanism for clients and save
+hardware information from BHI.
+Allow reading and modifying some MHI variables for debug, test, and
+informational purposes using debugfs.
+Read values for device specific hardware information to be used by OEMs in
+factory testing such as serial number and PK hash using sysfs.
 
-On 6/25/2020 8:55 PM, Matthias Kaehlcke wrote:
-> On Wed, Jun 24, 2020 at 11:12:45AM -0700, Matthias Kaehlcke wrote:
->> On Wed, Jun 24, 2020 at 07:00:05PM +0100, Mark Brown wrote:
->>> On Wed, Jun 24, 2020 at 10:55:36AM -0700, Matthias Kaehlcke wrote:
->>>> On Wed, Jun 24, 2020 at 06:44:17PM +0100, Mark Brown wrote:
->>>
->>>>> Wait, so *some* of the series should go together but not other bits?
->>>>> But you want them split up for some reason?
->>>
->>>> Yes, this will almost certainly be the case, even if not for this patch.
->>>> I brought this up earlier (https://patchwork.kernel.org/cover/11604623/#23428709).
->>>
->>> I'm not really reading any of this stuff for the series as a whole, as
->>> far as I could tell I'd reviewed all my bits and was hoping whatever
->>> random platform stuff needs sorting out was going to be sorted out so I
->>> stopped getting copied on revisions :(
->>
->> Sorry this caused you extra work, I only fully realized this when the series
->> was basically ready to land :(
->>
->> Avoiding unnecessary revision spam is another good reason to not combine
->> technically unrelated patches in a single series.
->>
->> If I notice similar series in the future I'll try to bring it up early.
->>
->>>> For the QSPI patch you could argue to just take it through QCOM since the SPI
->>>> patch of this series goes through this tree, up to you, I just want to make
->>>> sure everybody is on the same page.
->>>
->>> If there are some part of this that don't have a connection with the
->>> rest of the series and should be applied separately please split them
->>> out and send them separately so it's clear what's going on.
->>
->> Rajendra, IIUC you have to re-spin this series anyway, please split it
->> up in self-contained chunks.
-> 
-> One more thing: when you do the split it seems it would make sense to
-> include the DT changes that were initially part of this series
-> (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=278691&state=*)
+This set of patches was tested on arm64 and x86.
 
-Sure, I'll send the ones out for which driver changes are already merged/pulled in,
-like sdhc, geni-uart and geni-spi.
-For the rest, I will include them with the driver changes.
+v4:
+-Removed bus: mhi: core: Introduce independent voting mechanism patch
+-Removed bus vote function from debugfs due to independent voting removal
+-Added helper resume APIs to aid consolidation of spread out code
+-Added a clean-up patch and a missing host resume in voting API
+
+v3:
+-Add patch to check for pending packets in suspend as a dependency for the
+independent voting mechanism introduction
+-Include register dump entry for debugfs to dump MHI, BHI, and BHIe registers
+-Update commit message for the debugfs patch
+-Updated Documentation/ABI with the required info for sysfs
+-Updated debugfs patch to include a new KConfig entry and dependencies
+-Updated reviewed-by for some patches
+
+v2:
+-Added a new debugfs.c file for specific debugfs entries and code
+-Updated commit text and addressed some comments for voting change
+-Made sure sysfs is only used for serial number and OEM PK hash usage
+
+Bhaumik Bhatt (9):
+  bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task()
+    declaration
+  bus: mhi: core: Abort suspends due to outgoing pending packets
+  bus: mhi: core: Use helper API to trigger a non-blocking host resume
+  bus: mhi: core: Trigger a host resume when device vote is requested
+  bus: mhi: core: Use generic name field for an MHI device
+  bus: mhi: core: Introduce helper function to check device state
+  bus: mhi: core: Introduce debugfs entries and counters for MHI
+  bus: mhi: core: Read and save device hardware information from BHI
+  bus: mhi: core: Introduce sysfs entries for MHI
+
+ Documentation/ABI/stable/sysfs-bus-mhi |  25 ++
+ MAINTAINERS                            |   1 +
+ drivers/bus/mhi/Kconfig                |   8 +
+ drivers/bus/mhi/core/Makefile          |   5 +-
+ drivers/bus/mhi/core/boot.c            |  17 +-
+ drivers/bus/mhi/core/debugfs.c         | 444 +++++++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/init.c            |  65 ++++-
+ drivers/bus/mhi/core/internal.h        |  38 ++-
+ drivers/bus/mhi/core/main.c            |  27 +-
+ drivers/bus/mhi/core/pm.c              |  19 +-
+ include/linux/mhi.h                    |  18 +-
+ 11 files changed, 633 insertions(+), 34 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+ create mode 100644 drivers/bus/mhi/core/debugfs.c
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
