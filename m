@@ -2,236 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 79B3F20D24D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 20:51:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D20420D119
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 20:41:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729109AbgF2SsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 14:48:15 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:16235 "EHLO m43-7.mailgun.net"
+        id S1728041AbgF2Si2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 14:38:28 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:44394 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729355AbgF2SsN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:48:13 -0400
+        id S1728021AbgF2Si2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:38:28 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593456493; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=tNiuQ+4uhjgZPnPAVe1RZE3rFmZ//xK6MB4wZLBlQDU=; b=BLNUryuePDIMrNxkEdYM0PCi/4aJAQ8NVxi6/le2WAoG4FbCbAtrDJFbApF6A1NuIqIv3SwW
- oEr8UTnk6UK2z9JHCxnFBEVtr4v7OuDDQIa9nHXNppFKR2TTfCAn4n8PjCPfQwbb0jFMlevi
- OfToaFL1Rr06TVlVqb3cmw03CYY=
+ s=smtp; t=1593455907; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Ky6EgIpsLXuCQ1ZyQQj8TAObCq/x3v8ZEUf9hqB0i5U=; b=Rah27Kd5qJDXh8xgu8ItLH+f2unonsK8CthtqFeQWwEDib5ztUY9RDC0uanHPlEeOdCqlb2O
+ H4ubXY9yn08lYefrUJhI+77LlVbLxjMtGHdK//ZunPSZ/oXrT0QRxazmA/Wtz2TTg4s+Yiz/
+ DUhF7An7Jnk84WMwWBR7CoSxPcg=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5efa01398fe116ddd906311a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 14:56:57
+ smtp-out-n14.prod.us-west-2.postgun.com with SMTP id
+ 5efa0e78f3deea03f3b21907 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 15:53:28
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1124BC43395; Mon, 29 Jun 2020 14:56:56 +0000 (UTC)
+        id B1D31C43395; Mon, 29 Jun 2020 15:53:28 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D5F8C433C8;
-        Mon, 29 Jun 2020 14:56:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6D5F8C433C8
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36CB3C433C8;
+        Mon, 29 Jun 2020 15:53:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36CB3C433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 29 Jun 2020 08:56:50 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Eric Anholt <eric@anholt.net>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>, " <iommu@lists.linux-foundation.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Emil Velikov <emil.velikov@collabora.com>
-Subject: Re: [Freedreno] [PATCH v2 6/6] drm/msm/a6xx: Add support for
- per-instance pagetables
-Message-ID: <20200629145650.GC25740@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>, David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Eric Anholt <eric@anholt.net>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>, " <iommu@lists.linux-foundation.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Emil Velikov <emil.velikov@collabora.com>
-References: <20200626200414.14382-1-jcrouse@codeaurora.org>
- <20200626200414.14382-7-jcrouse@codeaurora.org>
- <CAF6AEGvFPtiFcBg5j3An5piPWy3Sg3=-o2k8Xzzf6anzVi9_ZA@mail.gmail.com>
- <CAF6AEGtOcA1V33KgaYKjn=FBk9_q4u8fF5Tgoyq7Y3vUp2pKjg@mail.gmail.com>
+        Emil Velikov <emil.velikov@collabora.com>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv3 1/7] iommu/arm-smmu: Add a init_context_bank implementation hook
+Date:   Mon, 29 Jun 2020 21:22:44 +0530
+Message-Id: <cdcc6a1c95a84e774790389dc8b3b7feeee490dc.1593344119.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1593344119.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1593344119.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGtOcA1V33KgaYKjn=FBk9_q4u8fF5Tgoyq7Y3vUp2pKjg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 27, 2020 at 01:11:14PM -0700, Rob Clark wrote:
-> On Sat, Jun 27, 2020 at 12:56 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Fri, Jun 26, 2020 at 1:04 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
-> > >
-> > > Add support for using per-instance pagetables if all the dependencies are
-> > > available.
-> > >
-> > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > > ---
-> > >
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 43 +++++++++++++++++++++++++++
-> > >  drivers/gpu/drm/msm/msm_ringbuffer.h  |  1 +
-> > >  2 files changed, 44 insertions(+)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > index aa53f47b7e8b..95ed2ceac121 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > @@ -79,6 +79,34 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
-> > >         OUT_RING(ring, upper_32_bits(iova));
-> > >  }
-> > >
-> > > +static void a6xx_set_pagetable(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
-> > > +               struct msm_file_private *ctx)
-> > > +{
-> > > +       phys_addr_t ttbr;
-> > > +       u32 asid;
-> > > +
-> > > +       if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
-> > > +               return;
-> > > +
-> > > +       /* Execute the table update */
-> > > +       OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
-> > > +       OUT_RING(ring, lower_32_bits(ttbr));
-> > > +       OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
-> > > +       /* CONTEXTIDR is currently unused */
-> > > +       OUT_RING(ring, 0);
-> > > +       /* CONTEXTBANK is currently unused */
-> > > +       OUT_RING(ring, 0);
-> > > +
-> > > +       /*
-> > > +        * Write the new TTBR0 to the memstore. This is good for debugging.
-> > > +        */
-> > > +       OUT_PKT7(ring, CP_MEM_WRITE, 4);
-> > > +       OUT_RING(ring, lower_32_bits(rbmemptr(ring, ttbr0)));
-> > > +       OUT_RING(ring, upper_32_bits(rbmemptr(ring, ttbr0)));
-> > > +       OUT_RING(ring, lower_32_bits(ttbr));
-> > > +       OUT_RING(ring, (((u64) asid) << 48) | upper_32_bits(ttbr));
-> > > +}
-> > > +
-> > >  static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
-> > >         struct msm_file_private *ctx)
-> > >  {
-> > > @@ -89,6 +117,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
-> > >         struct msm_ringbuffer *ring = submit->ring;
-> > >         unsigned int i;
-> > >
-> > > +       a6xx_set_pagetable(gpu, ring, ctx);
-> > > +
-> > >         get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
-> > >                 rbmemptr_stats(ring, index, cpcycles_start));
-> > >
-> > > @@ -872,6 +902,18 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
-> > >         return (unsigned long)busy_time;
-> > >  }
-> > >
-> > > +struct msm_gem_address_space *a6xx_address_space_instance(struct msm_gpu *gpu)
-> > > +{
-> > > +       struct msm_mmu *mmu;
-> > > +
-> > > +       mmu = msm_iommu_pagetable_create(gpu->aspace->mmu);
-> > > +       if (IS_ERR(mmu))
-> > > +               return msm_gem_address_space_get(gpu->aspace);
-> > > +
-> > > +       return msm_gem_address_space_create(mmu,
-> > > +               "gpu", 0x100000000ULL, 0x1ffffffffULL);
-> > > +}
-> > > +
-> > >  static const struct adreno_gpu_funcs funcs = {
-> > >         .base = {
-> > >                 .get_param = adreno_get_param,
-> > > @@ -895,6 +937,7 @@ static const struct adreno_gpu_funcs funcs = {
-> > >                 .gpu_state_put = a6xx_gpu_state_put,
-> > >  #endif
-> > >                 .create_address_space = adreno_iommu_create_address_space,
-> > > +               .address_space_instance = a6xx_address_space_instance,
-> >
-> > Hmm, maybe instead of .address_space_instance, something like
-> > .create_context_address_space?
-> >
-> > Since like .create_address_space, it is creating an address space..
-> > the difference is that it is a per context/process aspace..
-> >
+From: Jordan Crouse <jcrouse@codeaurora.org>
 
-This is a good suggestion. I'm always open to changing function names.
+Add a new implementation hook to allow the implementation specific code
+to tweek the context bank configuration just before it gets written.
+The first user will be the Adreno GPU implementation to turn on
+SCTLR.HUPCF to ensure that a page fault doesn't terminating pending
+transactions. Doing so could hang the GPU if one of the terminated
+transactions is a CP read.
 
-> 
-> 
-> or maybe just .create_pgtable and return the 'struct msm_mmu' (which
-> is itself starting to become less of a great name)..
-> 
-> The only other thing a6xx_address_space_instance() adds is knowing
-> where the split is between the kernel and user pgtables, and I suppose
-> that isn't a thing that would really be changing between gens?
+This depends on the arm-smmu adreno SMMU implementation [1].
 
-In theory the split is determined by the hardware but its been the same for all
-a5xx/a6xx targets.
+[1] https://lore.kernel.org/patchwork/patch/1264452/
 
-Jordan
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/arm-smmu-qcom.c | 13 +++++++++++++
+ drivers/iommu/arm-smmu.c      | 29 +++++++++++++----------------
+ drivers/iommu/arm-smmu.h      | 12 ++++++++++++
+ 3 files changed, 38 insertions(+), 16 deletions(-)
 
-> BR,
-> -R
-> 
-> > BR,
-> > -R
-> >
-> > >         },
-> > >         .get_timestamp = a6xx_get_timestamp,
-> > >  };
-> > > diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-> > > index 7764373d0ed2..0987d6bf848c 100644
-> > > --- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-> > > +++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-> > > @@ -31,6 +31,7 @@ struct msm_rbmemptrs {
-> > >         volatile uint32_t fence;
-> > >
-> > >         volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
-> > > +       volatile u64 ttbr0;
-> > >  };
-> > >
-> > >  struct msm_ringbuffer {
-> > > --
-> > > 2.17.1
-> > >
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
-
+diff --git a/drivers/iommu/arm-smmu-qcom.c b/drivers/iommu/arm-smmu-qcom.c
+index cb2acb6b19dd..6462fb00f493 100644
+--- a/drivers/iommu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm-smmu-qcom.c
+@@ -17,6 +17,18 @@ static bool qcom_adreno_smmu_is_gpu_device(struct arm_smmu_domain *smmu_domain)
+ 	return of_device_is_compatible(smmu_domain->dev->of_node, "qcom,adreno");
+ }
+ 
++static void qcom_adreno_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
++		struct arm_smmu_cb *cb)
++{
++	/*
++	 * On the GPU device we want to process subsequent transactions after a
++	 * fault to keep the GPU from hanging
++	 */
++
++	if (qcom_adreno_smmu_is_gpu_device(smmu_domain))
++		cb->sctlr |= ARM_SMMU_SCTLR_HUPCF;
++}
++
+ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+ 		struct io_pgtable_cfg *pgtbl_cfg)
+ {
+@@ -92,6 +104,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
+ 	.init_context = qcom_adreno_smmu_init_context,
+ 	.def_domain_type = qcom_smmu_def_domain_type,
+ 	.reset = qcom_smmu500_reset,
++	.init_context_bank = qcom_adreno_smmu_init_context_bank,
+ };
+ 
+ 
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 4bd247dfd703..b2564f93d685 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -86,14 +86,6 @@ struct arm_smmu_smr {
+ 	bool				valid;
+ };
+ 
+-struct arm_smmu_cb {
+-	u64				ttbr[2];
+-	u32				tcr[2];
+-	u32				mair[2];
+-	struct arm_smmu_cfg		*cfg;
+-	atomic_t			aux;
+-};
+-
+ struct arm_smmu_master_cfg {
+ 	struct arm_smmu_device		*smmu;
+ 	s16				smendx[];
+@@ -580,6 +572,18 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
+ 			cb->mair[1] = pgtbl_cfg->arm_lpae_s1_cfg.mair >> 32;
+ 		}
+ 	}
++
++	cb->sctlr = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
++		ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
++
++	if (stage1)
++		cb->sctlr |= ARM_SMMU_SCTLR_S1_ASIDPNE;
++	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
++		cb->sctlr |= ARM_SMMU_SCTLR_E;
++
++	/* Give the implementation a chance to adjust the configuration */
++	if (smmu_domain->smmu->impl && smmu_domain->smmu->impl->init_context_bank)
++		smmu_domain->smmu->impl->init_context_bank(smmu_domain, cb);
+ }
+ 
+ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
+@@ -658,14 +662,7 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
+ 	}
+ 
+ 	/* SCTLR */
+-	reg = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
+-	      ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
+-	if (stage1)
+-		reg |= ARM_SMMU_SCTLR_S1_ASIDPNE;
+-	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
+-		reg |= ARM_SMMU_SCTLR_E;
+-
+-	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
++	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, cb->sctlr);
+ }
+ 
+ /*
+diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+index 79d441024043..4a335ef3d97a 100644
+--- a/drivers/iommu/arm-smmu.h
++++ b/drivers/iommu/arm-smmu.h
+@@ -142,6 +142,7 @@ enum arm_smmu_cbar_type {
+ 
+ #define ARM_SMMU_CB_SCTLR		0x0
+ #define ARM_SMMU_SCTLR_S1_ASIDPNE	BIT(12)
++#define ARM_SMMU_SCTLR_HUPCF		BIT(8)
+ #define ARM_SMMU_SCTLR_CFCFG		BIT(7)
+ #define ARM_SMMU_SCTLR_CFIE		BIT(6)
+ #define ARM_SMMU_SCTLR_CFRE		BIT(5)
+@@ -349,6 +350,15 @@ struct arm_smmu_domain {
+ 	bool				aux;
+ };
+ 
++struct arm_smmu_cb {
++	u64			ttbr[2];
++	u32			tcr[2];
++	u32			mair[2];
++	u32			sctlr;
++	struct arm_smmu_cfg	*cfg;
++	atomic_t		aux;
++};
++
+ static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
+ {
+ 	u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
+@@ -403,6 +413,8 @@ struct arm_smmu_impl {
+ 	void (*tlb_sync)(struct arm_smmu_device *smmu, int page, int sync,
+ 			 int status);
+ 	int (*def_domain_type)(struct device *dev);
++	void (*init_context_bank)(struct arm_smmu_domain *smmu_domain,
++			struct arm_smmu_cb *cb);
+ };
+ 
+ static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
