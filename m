@@ -2,391 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A59120D20A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 20:50:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EA0320D1E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 20:50:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727981AbgF2SqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 14:46:02 -0400
-Received: from mga02.intel.com ([134.134.136.20]:40916 "EHLO mga02.intel.com"
+        id S1729244AbgF2Sou (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 14:44:50 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:12999 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728088AbgF2Sn6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:43:58 -0400
-IronPort-SDR: vbJ+wb12l2XX+Uk8XxHQwhDRmdRW3cC81sEATNtnI0WauT3+X980ap4F/7sp5YmcYEVVqPwN6p
- zB7FD8f2ubLw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9666"; a="134238586"
-X-IronPort-AV: E=Sophos;i="5.75,294,1589266800"; 
-   d="scan'208";a="134238586"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2020 00:22:12 -0700
-IronPort-SDR: IK2B93vrGxkOX3auaaON3OXDiOil8mKogsFsuQ/9caFcYPW5aDAI8cfqTDzf6d5lchEqEI53Ly
- joke4krAoRFw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,294,1589266800"; 
-   d="scan'208";a="386316237"
-Received: from kuha.fi.intel.com ([10.237.72.162])
-  by fmsmga001.fm.intel.com with SMTP; 29 Jun 2020 00:22:03 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 29 Jun 2020 10:22:02 +0300
-Date:   Mon, 29 Jun 2020 10:22:02 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     agross@kernel.org, mark.rutland@arm.com,
-        bjorn.andersson@linaro.org, gregkh@linuxfoundation.org,
-        broonie@kernel.org, lgirdwood@gmail.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-        jackp@codeaurora.org, rdunlap@infradead.org
-Subject: Re: [PATCH v4 1/6] usb: typec: Add QCOM PMIC typec detection driver
-Message-ID: <20200629072202.GA856968@kuha.fi.intel.com>
-References: <20200626185516.18018-1-wcheng@codeaurora.org>
- <20200626185516.18018-2-wcheng@codeaurora.org>
+        id S1729236AbgF2Sot (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:44:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593456287; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=SBDpthJsACP4X9l/XtUwp2evGNFSv28FhmlHvAnZ2bs=; b=StgK928NR4pT0FPc7pteJnKt51gq0EoSLeRK51KKlrdKfQoS7rA6xaZTRDB/bLdrRIq2Rhy3
+ Y6PxJkjMxpo3/+8VWtxqbGHExtmJUnMK0/mGANTuNvUAeRDDjp37L5533RlXcmryEOr85BOv
+ hC/A2AYo+p7Xlqa+wUQ+l/LO4Bc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n15.prod.us-east-1.postgun.com with SMTP id
+ 5efa001ba3d8a4474330b27b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 14:52:11
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0B4CDC433AF; Mon, 29 Jun 2020 14:52:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A262AC433C6;
+        Mon, 29 Jun 2020 14:52:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A262AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 29 Jun 2020 08:52:04 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Takashi Iwai <tiwai@suse.de>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Brian Masney <masneyb@onstation.org>
+Subject: Re: [Freedreno] [PATCH v9 6/7] drm/msm: Set the global virtual
+ address range from the IOMMU domain
+Message-ID: <20200629145203.GB25740@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Takashi Iwai <tiwai@suse.de>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>, Shawn Guo <shawn.guo@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Brian Masney <masneyb@onstation.org>
+References: <20200626200042.13713-1-jcrouse@codeaurora.org>
+ <20200626200042.13713-7-jcrouse@codeaurora.org>
+ <CAF6AEGuNSAYNMG6CH6VMuyjiz5dfRoLWQ9OAFxPJrFmBrHe+Wg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200626185516.18018-2-wcheng@codeaurora.org>
+In-Reply-To: <CAF6AEGuNSAYNMG6CH6VMuyjiz5dfRoLWQ9OAFxPJrFmBrHe+Wg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 11:55:11AM -0700, Wesley Cheng wrote:
-> The QCOM SPMI typec driver handles the role and orientation detection, and
-> notifies client drivers using the USB role switch framework.   It registers
-> as a typec port, so orientation can be communicated using the typec switch
-> APIs.  The driver also attains a handle to the VBUS output regulator, so it
-> can enable/disable the VBUS source when acting as a host/device.
+On Sat, Jun 27, 2020 at 10:10:14AM -0700, Rob Clark wrote:
+> On Fri, Jun 26, 2020 at 1:01 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
+> >
+> > Use the aperture settings from the IOMMU domain to set up the virtual
+> > address range for the GPU. This allows us to transparently deal with
+> > IOMMU side features (like split pagetables).
+> >
+> > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> > ---
+> >
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 13 +++++++++++--
+> >  drivers/gpu/drm/msm/msm_iommu.c         |  7 +++++++
+> >  2 files changed, 18 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > index 5db06b590943..3e717c1ebb7f 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > @@ -192,9 +192,18 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+> >         struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
+> >         struct msm_mmu *mmu = msm_iommu_new(&pdev->dev, iommu);
+> >         struct msm_gem_address_space *aspace;
+> > +       u64 start, size;
+> >
+> > -       aspace = msm_gem_address_space_create(mmu, "gpu", SZ_16M,
+> > -               0xffffffff - SZ_16M);
+> > +       /*
+> > +        * Use the aperture start or SZ_16M, whichever is greater. This will
+> > +        * ensure that we align with the allocated pagetable range while still
+> > +        * allowing room in the lower 32 bits for GMEM and whatnot
+> > +        */
+> > +       start = max_t(u64, SZ_16M, iommu->geometry.aperture_start);
+> > +       size = iommu->geometry.aperture_end - start + 1;
+> > +
+> > +       aspace = msm_gem_address_space_create(mmu, "gpu",
+> > +               start & GENMASK(48, 0), size);
 > 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> hmm, I kinda think this isn't going to play well for the 32b gpus
+> (pre-a5xx).. possibly we should add address space size to 'struct
+> adreno_info'?
 
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+I checked and qcom-iommu sets the aperture correctly so this should be okay for
+everybody. To be honest, I'm nots sure if we even need to mask the start to 49
+bits. It seems that all of the iommu implementations do the right thing.  Of
+course it would be worth a check if you have a 4xx handy.
 
-> ---
->  drivers/usb/typec/Kconfig           |  12 ++
->  drivers/usb/typec/Makefile          |   1 +
->  drivers/usb/typec/qcom-pmic-typec.c | 275 ++++++++++++++++++++++++++++
->  3 files changed, 288 insertions(+)
->  create mode 100644 drivers/usb/typec/qcom-pmic-typec.c
+> Or I guess it is always going to be the same for all devices within a
+> generation?  So it could just be passed in to adreno_gpu_init()
+
+We can do that easily if we are worried about it (see also: a2xx). I just
+figured this might save us a bit of code.
+
+> Hopefully that makes things smoother if we someday had more than 48bits..
+
+We'll be at 49 bits for as far ahead as I can see. 49 bits has a special
+meaning in the SMMU so it is a natural fit for the GPU hardware. If we change in
+N generations we can just shift to a family specific function at that point.
+
+Jordan
+
+> BR,
+> -R
 > 
-> diff --git a/drivers/usb/typec/Kconfig b/drivers/usb/typec/Kconfig
-> index b4f2aac7ae8a..595c14766e99 100644
-> --- a/drivers/usb/typec/Kconfig
-> +++ b/drivers/usb/typec/Kconfig
-> @@ -72,6 +72,18 @@ config TYPEC_TPS6598X
->  	  If you choose to build this driver as a dynamically linked module, the
->  	  module will be called tps6598x.ko.
->  
-> +config TYPEC_QCOM_PMIC
-> +	tristate "Qualcomm PMIC USB Type-C driver"
-> +	depends on ARCH_QCOM
-> +	help
-> +	  Driver for supporting role switch over the Qualcomm PMIC.  This will
-> +	  handle the USB Type-C role and orientation detection reported by the
-> +	  QCOM PMIC if the PMIC has the capability to handle USB Type-C
-> +	  detection.
-> +
-> +	  It will also enable the VBUS output to connected devices when a
-> +	  DFP connection is made.
-> +
->  source "drivers/usb/typec/mux/Kconfig"
->  
->  source "drivers/usb/typec/altmodes/Kconfig"
-> diff --git a/drivers/usb/typec/Makefile b/drivers/usb/typec/Makefile
-> index 7753a5c3cd46..cceffd987643 100644
-> --- a/drivers/usb/typec/Makefile
-> +++ b/drivers/usb/typec/Makefile
-> @@ -6,4 +6,5 @@ obj-$(CONFIG_TYPEC_TCPM)	+= tcpm/
->  obj-$(CONFIG_TYPEC_UCSI)	+= ucsi/
->  obj-$(CONFIG_TYPEC_HD3SS3220)	+= hd3ss3220.o
->  obj-$(CONFIG_TYPEC_TPS6598X)	+= tps6598x.o
-> +obj-$(CONFIG_TYPEC_QCOM_PMIC)	+= qcom-pmic-typec.o
->  obj-$(CONFIG_TYPEC)		+= mux/
-> diff --git a/drivers/usb/typec/qcom-pmic-typec.c b/drivers/usb/typec/qcom-pmic-typec.c
-> new file mode 100644
-> index 000000000000..5ae3af03c638
-> --- /dev/null
-> +++ b/drivers/usb/typec/qcom-pmic-typec.c
-> @@ -0,0 +1,275 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/regmap.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/slab.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of_device.h>
-> +#include <linux/usb/role.h>
-> +#include <linux/usb/typec_mux.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +#define TYPEC_MISC_STATUS		0xb
-> +#define CC_ATTACHED			BIT(0)
-> +#define CC_ORIENTATION			BIT(1)
-> +#define SNK_SRC_MODE			BIT(6)
-> +#define TYPEC_MODE_CFG			0x44
-> +#define TYPEC_DISABLE_CMD		BIT(0)
-> +#define EN_SNK_ONLY			BIT(1)
-> +#define EN_SRC_ONLY			BIT(2)
-> +#define TYPEC_VCONN_CONTROL		0x46
-> +#define VCONN_EN_SRC			BIT(0)
-> +#define VCONN_EN_VAL			BIT(1)
-> +#define TYPEC_EXIT_STATE_CFG		0x50
-> +#define SEL_SRC_UPPER_REF		BIT(2)
-> +#define TYPEC_INTR_EN_CFG_1		0x5e
-> +#define TYPEC_INTR_EN_CFG_1_MASK	GENMASK(7, 0)
-> +
-> +struct qcom_pmic_typec {
-> +	struct device		*dev;
-> +	struct fwnode_handle	*fwnode;
-> +	struct regmap		*regmap;
-> +	u32			base;
-> +
-> +	struct typec_capability *cap;
-> +	struct typec_port	*port;
-> +	struct usb_role_switch *role_sw;
-> +
-> +	struct regulator	*vbus_reg;
-> +	bool			vbus_enabled;
-> +};
-> +
-> +static void qcom_pmic_typec_enable_vbus_regulator(struct qcom_pmic_typec
-> +							*qcom_usb, bool enable)
-> +{
-> +	int ret = 0;
-> +
-> +	if (enable == qcom_usb->vbus_enabled)
-> +		return;
-> +
-> +	if (!qcom_usb->vbus_reg) {
-> +		qcom_usb->vbus_reg = devm_regulator_get(qcom_usb->dev,
-> +							"usb_vbus");
-> +		if (IS_ERR(qcom_usb->vbus_reg)) {
-> +			qcom_usb->vbus_reg = NULL;
-> +			return;
-> +		}
-> +	}
-> +
-> +	if (enable) {
-> +		ret = regulator_enable(qcom_usb->vbus_reg);
-> +		if (ret)
-> +			return;
-> +	} else {
-> +		ret = regulator_disable(qcom_usb->vbus_reg);
-> +		if (ret)
-> +			return;
-> +	}
-> +	qcom_usb->vbus_enabled = enable;
-> +}
-> +
-> +static void qcom_pmic_typec_check_connection(struct qcom_pmic_typec *qcom_usb)
-> +{
-> +	enum typec_orientation orientation;
-> +	enum usb_role role;
-> +	unsigned int stat;
-> +	bool enable_vbus;
-> +
-> +	regmap_read(qcom_usb->regmap, qcom_usb->base + TYPEC_MISC_STATUS,
-> +		    &stat);
-> +
-> +	if (stat & CC_ATTACHED) {
-> +		orientation = ((stat & CC_ORIENTATION) >> 1) ?
-> +				TYPEC_ORIENTATION_REVERSE :
-> +				TYPEC_ORIENTATION_NORMAL;
-> +		typec_set_orientation(qcom_usb->port, orientation);
-> +
-> +		role = (stat & SNK_SRC_MODE) ? USB_ROLE_HOST : USB_ROLE_DEVICE;
-> +		if (role == USB_ROLE_HOST)
-> +			enable_vbus = true;
-> +		else
-> +			enable_vbus = false;
-> +	} else {
-> +		role = USB_ROLE_NONE;
-> +		enable_vbus = false;
-> +	}
-> +
-> +	qcom_pmic_typec_enable_vbus_regulator(qcom_usb, enable_vbus);
-> +	usb_role_switch_set_role(qcom_usb->role_sw, role);
-> +}
-> +
-> +static irqreturn_t qcom_pmic_typec_interrupt(int irq, void *_qcom_usb)
-> +{
-> +	struct qcom_pmic_typec *qcom_usb = _qcom_usb;
-> +
-> +	qcom_pmic_typec_check_connection(qcom_usb);
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static void qcom_pmic_typec_typec_hw_init(struct qcom_pmic_typec *qcom_usb)
-> +{
-> +	u8 mode = 0;
-> +
-> +	regmap_update_bits(qcom_usb->regmap,
-> +			   qcom_usb->base + TYPEC_INTR_EN_CFG_1,
-> +			   TYPEC_INTR_EN_CFG_1_MASK, 0);
-> +
-> +	if (qcom_usb->cap->type != TYPEC_PORT_DRP)
-> +		mode = (qcom_usb->cap->type == TYPEC_PORT_SNK) ?
-> +					EN_SNK_ONLY : EN_SRC_ONLY;
-> +	regmap_update_bits(qcom_usb->regmap, qcom_usb->base + TYPEC_MODE_CFG,
-> +			   EN_SNK_ONLY | EN_SRC_ONLY, mode);
-> +
-> +	regmap_update_bits(qcom_usb->regmap,
-> +			   qcom_usb->base + TYPEC_VCONN_CONTROL,
-> +			   VCONN_EN_SRC | VCONN_EN_VAL, VCONN_EN_SRC);
-> +	regmap_update_bits(qcom_usb->regmap,
-> +			   qcom_usb->base + TYPEC_EXIT_STATE_CFG,
-> +			   SEL_SRC_UPPER_REF, SEL_SRC_UPPER_REF);
-> +}
-> +
-> +static int qcom_pmic_typec_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct qcom_pmic_typec *qcom_usb;
-> +	struct typec_capability *cap;
-> +	const char *buf;
-> +	int ret, irq, role;
-> +	u32 reg;
-> +
-> +	ret = of_property_read_u32(dev->of_node, "reg", &reg);
-> +	if (ret < 0) {
-> +		dev_err(dev, "missing base address");
-> +		return ret;
-> +	}
-> +
-> +	qcom_usb = devm_kzalloc(dev, sizeof(*qcom_usb), GFP_KERNEL);
-> +	if (!qcom_usb)
-> +		return -ENOMEM;
-> +
-> +	qcom_usb->dev = dev;
-> +	qcom_usb->base = reg;
-> +
-> +	qcom_usb->regmap = dev_get_regmap(dev->parent, NULL);
-> +	if (!qcom_usb->regmap) {
-> +		dev_err(dev, "Failed to get regmap\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq < 0) {
-> +		dev_err(dev, "Failed to get CC irq\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = devm_request_threaded_irq(qcom_usb->dev, irq, NULL,
-> +					qcom_pmic_typec_interrupt, IRQF_ONESHOT,
-> +					"qcom-pmic-typec", qcom_usb);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "Could not request IRQ\n");
-> +		return ret;
-> +	}
-> +
-> +	qcom_usb->fwnode = device_get_named_child_node(dev, "connector");
-> +	if (!qcom_usb->fwnode)
-> +		return -EINVAL;
-> +
-> +	cap = devm_kzalloc(dev, sizeof(*cap), GFP_KERNEL);
-> +	if (!cap) {
-> +		ret = -ENOMEM;
-> +		goto err_put_node;
-> +	}
-> +
-> +	ret = fwnode_property_read_string(qcom_usb->fwnode, "power-role", &buf);
-> +	if (!ret) {
-> +		role = typec_find_port_power_role(buf);
-> +		if (role < 0)
-> +			role = TYPEC_PORT_SNK;
-> +	} else {
-> +		role = TYPEC_PORT_SNK;
-> +	}
-> +	cap->type = role;
-> +
-> +	ret = fwnode_property_read_string(qcom_usb->fwnode, "data-role", &buf);
-> +	if (!ret) {
-> +		role = typec_find_port_data_role(buf);
-> +		if (role < 0)
-> +			role = TYPEC_PORT_UFP;
-> +	} else {
-> +		role = TYPEC_PORT_UFP;
-> +	}
-> +	cap->data = role;
-> +
-> +	cap->prefer_role = TYPEC_NO_PREFERRED_ROLE;
-> +	cap->fwnode = qcom_usb->fwnode;
-> +	qcom_usb->port = typec_register_port(dev, cap);
-> +	if (IS_ERR(qcom_usb->port)) {
-> +		ret = PTR_ERR(qcom_usb->port);
-> +		dev_err(dev, "Failed to register type c port %d\n", ret);
-> +		goto err_put_node;
-> +	}
-> +
-> +	qcom_usb->cap = cap;
-> +
-> +	qcom_usb->role_sw = fwnode_usb_role_switch_get(qcom_usb->fwnode);
-> +	if (IS_ERR(qcom_usb->role_sw)) {
-> +		if (PTR_ERR(qcom_usb->role_sw) != -EPROBE_DEFER)
-> +			dev_err(dev, "failed to get role switch\n");
-> +		ret = PTR_ERR(qcom_usb->role_sw);
-> +		goto err_typec_port;
-> +	}
-> +
-> +	platform_set_drvdata(pdev, qcom_usb);
-> +	qcom_pmic_typec_typec_hw_init(qcom_usb);
-> +	qcom_pmic_typec_check_connection(qcom_usb);
-> +
-> +	return 0;
-> +
-> +err_typec_port:
-> +	typec_unregister_port(qcom_usb->port);
-> +err_put_node:
-> +	fwnode_handle_put(qcom_usb->fwnode);
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_pmic_typec_remove(struct platform_device *pdev)
-> +{
-> +	struct qcom_pmic_typec *qcom_usb = platform_get_drvdata(pdev);
-> +
-> +	usb_role_switch_set_role(qcom_usb->role_sw, USB_ROLE_NONE);
-> +	qcom_pmic_typec_enable_vbus_regulator(qcom_usb, 0);
-> +
-> +	typec_unregister_port(qcom_usb->port);
-> +	usb_role_switch_put(qcom_usb->role_sw);
-> +	fwnode_handle_put(qcom_usb->fwnode);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id qcom_pmic_typec_table[] = {
-> +	{ .compatible = "qcom,pm8150b-usb-typec" },
-> +	{ },
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_pmic_typec_table);
-> +
-> +static struct platform_driver qcom_pmic_typec = {
-> +	.driver = {
-> +		.name = "qcom,pmic-typec",
-> +		.of_match_table = qcom_pmic_typec_table,
-> +	},
-> +	.probe = qcom_pmic_typec_probe,
-> +	.remove = qcom_pmic_typec_remove,
-> +};
-> +
-> +module_platform_driver(qcom_pmic_typec);
-> +
-> +MODULE_DESCRIPTION("QCOM PMIC USB type C driver");
-> +MODULE_LICENSE("GPL v2");
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-
-thanks,
+> >
+> >         if (IS_ERR(aspace) && !IS_ERR(mmu))
+> >                 mmu->funcs->destroy(mmu);
+> > diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> > index 3a381a9674c9..1b6635504069 100644
+> > --- a/drivers/gpu/drm/msm/msm_iommu.c
+> > +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> > @@ -36,6 +36,10 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+> >         struct msm_iommu *iommu = to_msm_iommu(mmu);
+> >         size_t ret;
+> >
+> > +       /* The arm-smmu driver expects the addresses to be sign extended */
+> > +       if (iova & BIT_ULL(48))
+> > +               iova |= GENMASK_ULL(63, 49);
+> > +
+> >         ret = iommu_map_sg(iommu->domain, iova, sgt->sgl, sgt->nents, prot);
+> >         WARN_ON(!ret);
+> >
+> > @@ -46,6 +50,9 @@ static int msm_iommu_unmap(struct msm_mmu *mmu, uint64_t iova, size_t len)
+> >  {
+> >         struct msm_iommu *iommu = to_msm_iommu(mmu);
+> >
+> > +       if (iova & BIT_ULL(48))
+> > +               iova |= GENMASK_ULL(63, 49);
+> > +
+> >         iommu_unmap(iommu->domain, iova, len);
+> >
+> >         return 0;
+> > --
+> > 2.17.1
+> >
+> > _______________________________________________
+> > Freedreno mailing list
+> > Freedreno@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/freedreno
 
 -- 
-heikki
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
