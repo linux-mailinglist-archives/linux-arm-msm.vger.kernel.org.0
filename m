@@ -2,104 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19DF120D12D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 20:41:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C08F20D2FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2020 21:11:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbgF2SjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 14:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37556 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727948AbgF2Sh7 (ORCPT
+        id S1727111AbgF2Syb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 14:54:31 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:10502 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727079AbgF2SyV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:37:59 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12EB8C031421
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:03 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id k18so15954585qke.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 10:21:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fem3XNP+K3JU9MCaDCRGbzpn3Qjj+S6fTPpAXuau47M=;
-        b=IXmyZM/yRnHMX0W2VsnzlDaWZI/gIrdOGnVPWgA+2Kxtlsm4yBGwSUeP2xGUDv1KYx
-         ysOEPUN0Yf1dqDn3fjal1FFDnykYcc3fT8m1LMbYmnJ8CNQrn90e8PjsxNEWrn0fVA0h
-         lJk/GqLz6CmqU1mS/49tGnXa7GVxX3PRcW+YfeBzAPwpO86IUfVtSRYapv8eyk+gissX
-         in9N5q8c6+M6KL58t09k47Q5dcwMInAFOEFjr37pQ6Njfopi7K6y5rCTvKyjmaWA3Jmo
-         HPr2+RQ2/30V9ckiCKd+BkFCselNoTY+vcSiaP2qs3iVoEn5dEkE0ilLhDgW3Sw5wXoD
-         79AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fem3XNP+K3JU9MCaDCRGbzpn3Qjj+S6fTPpAXuau47M=;
-        b=jj6Hb7XanCq3ovohFv7nNjRzJ3iJI2Url23T9IOqWcOK/rVsFW/KLzWYLZTSbo+a27
-         2L9YokbQdA0DJlEpo+e/rqY8i9TNgDbhz4wpprg3TIjayjZiFfEo2He6tojWjCM4nSLC
-         RiVAnqhlPq0NetJq1eD0Bo4NNG4iEPPtSETtgQ8tTysi/KxfDsY/LdXMJrCpauz3j9/3
-         aBG0apouU6/L+0msNrboVdBnFHAlRTLj9pU7nULIs5yA3px+tJ/c+Ls9NJTOwGDup8SW
-         /PFdeiOXuPiPYqV3h6meqnesZdhrItUGlp25smUet18z0gFd/HPu8vbBLXnLn4vQmjjx
-         thQA==
-X-Gm-Message-State: AOAM532wVRnOympw7nz3RaPuSsMAtom9ekiGK3nmCF5pP1RvNASCZPyP
-        YigFN8AUynBaZvRnz2cKs2vevFTCfuQ=
-X-Google-Smtp-Source: ABdhPJxy3AW0ebQa1q0sqz4u/+GdjEeyX7bZO37gJSu74AUtCI+D1DWF+pQRCB+c38adJFkCFtGJJg==
-X-Received: by 2002:a37:e4e:: with SMTP id 75mr16083443qko.81.1593451262110;
-        Mon, 29 Jun 2020 10:21:02 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id q5sm408363qtf.12.2020.06.29.10.21.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 10:21:01 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 02/13] clk: qcom: clk-alpha-pll: remove unused/incorrect PLL_CAL_VAL
-Date:   Mon, 29 Jun 2020 13:20:32 -0400
-Message-Id: <20200629172049.30452-3-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20200629172049.30452-1-jonathan@marek.ca>
-References: <20200629172049.30452-1-jonathan@marek.ca>
+        Mon, 29 Jun 2020 14:54:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593456861; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=6GnZAkEI1r1nA5A52DYDoAMItSEI8yJzTvouDxd8dkQ=; b=nLJ4Uxn8WLsSXnIDw6zabig4QRrZpEUOk5cGkhCDGd5IDqgUeljerENvpTNCLgEFXhVc7IRl
+ CZLgIlUXcdd8QC0kR4IvmfdJ9ny7NTz5efzRYz9XQgJUwjs2za2VsDWXLcR+fcsWDgKgu6NM
+ xiPawlx4WgZjmb6C+z2SNXyjVlY=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5ef9c91a117610c7fffdca66 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Jun 2020 10:57:30
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AD12AC433CB; Mon, 29 Jun 2020 10:57:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.50.61.98] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E426C433C6;
+        Mon, 29 Jun 2020 10:57:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E426C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v6 6/6] spi: spi-qcom-qspi: Use OPP API to set clk/perf
+ state
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, robdclark@gmail.com,
+        robdclark@chromium.org, stanimir.varbanov@linaro.org,
+        viresh.kumar@linaro.org, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-spi@vger.kernel.org
+References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
+ <1592222564-13556-7-git-send-email-rnayak@codeaurora.org>
+ <20200624170933.GB39073@google.com> <20200624171537.GL5472@sirena.org.uk>
+ <20200624173948.GC39073@google.com> <20200624174417.GM5472@sirena.org.uk>
+ <20200624175536.GD39073@google.com> <20200624180005.GO5472@sirena.org.uk>
+ <20200624181245.GE39073@google.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <9f622661-480a-c207-3c15-65b4a4f1b65c@codeaurora.org>
+Date:   Mon, 29 Jun 2020 16:27:21 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200624181245.GE39073@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-0x44 isn't a register offset, it is the value that goes into CAL_L_VAL.
 
-Fixes: 548a909597d5 ("clk: qcom: clk-alpha-pll: Add support for Trion PLLs")
+On 6/24/2020 11:42 PM, Matthias Kaehlcke wrote:
+> On Wed, Jun 24, 2020 at 07:00:05PM +0100, Mark Brown wrote:
+>> On Wed, Jun 24, 2020 at 10:55:36AM -0700, Matthias Kaehlcke wrote:
+>>> On Wed, Jun 24, 2020 at 06:44:17PM +0100, Mark Brown wrote:
+>>
+>>>> Wait, so *some* of the series should go together but not other bits?
+>>>> But you want them split up for some reason?
+>>
+>>> Yes, this will almost certainly be the case, even if not for this patch.
+>>> I brought this up earlier (https://patchwork.kernel.org/cover/11604623/#23428709).
+>>
+>> I'm not really reading any of this stuff for the series as a whole, as
+>> far as I could tell I'd reviewed all my bits and was hoping whatever
+>> random platform stuff needs sorting out was going to be sorted out so I
+>> stopped getting copied on revisions :(
+> 
+> Sorry this caused you extra work, I only fully realized this when the series
+> was basically ready to land :(
+> 
+> Avoiding unnecessary revision spam is another good reason to not combine
+> technically unrelated patches in a single series.
+> 
+> If I notice similar series in the future I'll try to bring it up early.
+> 
+>>> For the QSPI patch you could argue to just take it through QCOM since the SPI
+>>> patch of this series goes through this tree, up to you, I just want to make
+>>> sure everybody is on the same page.
+>>
+>> If there are some part of this that don't have a connection with the
+>> rest of the series and should be applied separately please split them
+>> out and send them separately so it's clear what's going on.
+> 
+> Rajendra, IIUC you have to re-spin this series anyway, please split it
+> up in self-contained chunks.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/clk/qcom/clk-alpha-pll.c | 2 --
- 1 file changed, 2 deletions(-)
+Thanks, I'll respin these as separate patches, the only reason to club them
+was because they all added 'similar' support in all these different drivers.
+Sorry for the delay, I had been out a bit and I just got back.
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 9b2dfa08acb2..1325139173c9 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -56,7 +56,6 @@
- #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
- #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
- #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
--#define PLL_CAL_VAL(p)		((p)->offset + (p)->regs[PLL_OFF_CAL_VAL])
- 
- const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 	[CLK_ALPHA_PLL_TYPE_DEFAULT] =  {
-@@ -115,7 +114,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_STATUS] = 0x30,
- 		[PLL_OFF_OPMODE] = 0x38,
- 		[PLL_OFF_ALPHA_VAL] = 0x40,
--		[PLL_OFF_CAL_VAL] = 0x44,
- 	},
- 	[CLK_ALPHA_PLL_TYPE_LUCID] =  {
- 		[PLL_OFF_L_VAL] = 0x04,
 -- 
-2.26.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
