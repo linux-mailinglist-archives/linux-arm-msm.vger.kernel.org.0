@@ -2,91 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 357E820E879
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 00:13:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4FC420E8B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 01:14:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731375AbgF2WHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 18:07:42 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:40503 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730358AbgF2WHl (ORCPT
+        id S1729378AbgF2W0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Jun 2020 18:26:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727054AbgF2W0Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 18:07:41 -0400
-Received: by mail-il1-f194.google.com with SMTP id e18so5226053ilr.7;
-        Mon, 29 Jun 2020 15:07:40 -0700 (PDT)
+        Mon, 29 Jun 2020 18:26:16 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D749C061755;
+        Mon, 29 Jun 2020 15:26:15 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id w6so18450736ejq.6;
+        Mon, 29 Jun 2020 15:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uLrF+jjxF5OBkT9A4ZfGcSFTtJNvBwrUYxVPDIS2euc=;
+        b=ljl6F57/XOyWQURIpW+SYGe4bHNcdPifrgDCw24RC+hnGGqwpRlyGiY/mzZuA4sSbx
+         TeYo3z8Ufl89Li/087qtQtJ9yTEh++OJ9m71n+SXhpzAK2T4jGhl7JXDxspZyWsnKxBu
+         k7P9M0GtxOH6/gRBRnh9oUvWtpzmGljW6RVoQ3oU9OPOlmiVnyvdkhXZAVXFvXUf/tCr
+         Tzz4eNbn/yV6INdTYHThjjxpw+43Ld5UmMcnks2I9V2HJlS/jAGLCxbe9ppqLydxFDLg
+         8MRFCWGFJ3/f7cwHeSirkNItjyDGoJY5aXLch5LHVxMUKjAivXcrodHjiWs9Zq1Gpc5A
+         iGeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nnDzFwxtFG9f7VF90LCCUZA5nyXTH/oVzSfnrfIHYp4=;
-        b=G3NfjryIXlZhHvIqA0mDh+iYoivTLsTreT8fJknrWjf8UqlzDEs0Qnck6wOisb6e/d
-         +xZsYosHuABCchrPUbB5RemRXI1JLQ7gPdkix5zHgYDh9gggO9ji+J+K9DnbZekmcCbQ
-         8ZQYCTCjNevT7aBYdDmYi5RSc9nsjtxi088hD6vHHw/i2q3nYbPo8JpzLS1ZGxe/slld
-         Y/McOQWLQWyiWhU95kzNIcqCesQw1nKZIw8Fj6O5GroINhO5zXQAjTdjaiB9Ilucvv1w
-         Z4d7fgC5bsJxMKt3iQVGHUTw11fI2xp7WVQvO32yY+1Z8dcqu/uXWuZch/vR1MBKNMcv
-         5kFA==
-X-Gm-Message-State: AOAM531n3XHp2aYu/5R9GdV1VDHYcfqv2BrdZaAJW1HeZlrTQZiPsia3
-        4+syKsUGhPIV8HoxjqmX2A==
-X-Google-Smtp-Source: ABdhPJx4cPfy3pr5C+e02wlBVD5JeOddg6MDYpBU+7VS+0bIZyME4z2DTGIFLncaLT9VHWLyYw3ZtA==
-X-Received: by 2002:a92:c8c5:: with SMTP id c5mr8979452ilq.47.1593468460223;
-        Mon, 29 Jun 2020 15:07:40 -0700 (PDT)
-Received: from xps15 ([64.188.179.255])
-        by smtp.gmail.com with ESMTPSA id m2sm634034iln.1.2020.06.29.15.07.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uLrF+jjxF5OBkT9A4ZfGcSFTtJNvBwrUYxVPDIS2euc=;
+        b=Af+WQLx3TfmbH2C3ZDRuyfL7mruSENAq54LDCIs1wOZXiHtH6tNKU7oBGNR48xrwmz
+         qNJNkuPnhgC0jnrc2dqSsOdSfqwbO2s18Nrq7g6P6Is6F1IuFJF+Xk47PU1CiwXSktdF
+         2rf3A/iuOzCK7Tu2ryWSXNoIFu1qYR27HtSSMR3Y7kXNRBK0QhNH2lURoWv7AbHpihR7
+         NyEfTHDzWvcRkUC+4vebU+B/k3ry07g3KVNQzXC5TyADiWXer8w3OKShIGr7SpPG6W/X
+         jrf4Z6hKEbpxv658FojQ9AMaxvuW7vYLsMrx/5fdzXAu4GrwEjchIRS0iDGAcwcIbYma
+         fF8w==
+X-Gm-Message-State: AOAM530ll0wd8ObgTeTBBNLjQ74DdfZzBEkFiEtHfGEy+G1eHulfpEmY
+        wY0JGVtpB3h9BlFxNenHKSg=
+X-Google-Smtp-Source: ABdhPJxu0f3tnqjZ6HdE27eVb1JqxXjsWLvQl9OFzp7badrN8VqEab5KFGVI1t8l0ZpWVCoHu0dtXA==
+X-Received: by 2002:a17:906:12cd:: with SMTP id l13mr16230422ejb.96.1593469574315;
+        Mon, 29 Jun 2020 15:26:14 -0700 (PDT)
+Received: from localhost.localdomain (abag196.neoplus.adsl.tpnet.pl. [83.6.170.196])
+        by smtp.googlemail.com with ESMTPSA id y21sm592877ejo.4.2020.06.29.15.26.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 15:07:39 -0700 (PDT)
-Received: (nullmailer pid 3027667 invoked by uid 1000);
-        Mon, 29 Jun 2020 22:07:37 -0000
-Date:   Mon, 29 Jun 2020 16:07:37 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     jackp@codeaurora.org, gregkh@linuxfoundation.org,
-        rdunlap@infradead.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, broonie@kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org, agross@kernel.org,
-        mark.rutland@arm.com, heikki.krogerus@linux.intel.com,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v4 2/6] dt-bindings: usb: Add Qualcomm PMIC type C
- controller dt-binding
-Message-ID: <20200629220737.GA3027039@bogus>
-References: <20200626185516.18018-1-wcheng@codeaurora.org>
- <20200626185516.18018-3-wcheng@codeaurora.org>
+        Mon, 29 Jun 2020 15:26:13 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+To:     skrzynka@konradybcio.pl
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH -next] arm64: dts: sdm630: Temporarily disable SMMUs by default
+Date:   Tue, 30 Jun 2020 00:26:10 +0200
+Message-Id: <20200629222610.168511-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200626185516.18018-3-wcheng@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 26 Jun 2020 11:55:12 -0700, Wesley Cheng wrote:
-> Introduce the dt-binding for enabling USB type C orientation and role
-> detection using the PM8150B.  The driver will be responsible for receiving
-> the interrupt at a state change on the CC lines, reading the orientation/role,
-> and communicating this information to the remote clients, which can include
-> a role switch node and a type C switch.
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  .../bindings/usb/qcom,pmic-typec.yaml         | 126 ++++++++++++++++++
->  1 file changed, 126 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-> 
+There happens to be an issue between how kernel handles
+qcom-smmuv2 and how the hypervisor would like it to be
+handled. That results in the platform hanging completely
+after the SMMUs are probed.
 
+Hence, disable the SMMU nodes temporarily, until the
+issue is rectified.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+This has been overlooked by me in the initial
+porting stage, as my defconfig has SMMU disabled.
 
-Documentation/devicetree/bindings/usb/qcom,pmic-typec.example.dts:40.54-42.31: Warning (unit_address_vs_reg): /example-0/pm8150b/typec@1500/connector/ports/port@1/endpoint@0: node has a unit name, but no reg or ranges property
-Documentation/devicetree/bindings/usb/qcom,pmic-typec.example.dts:43.51-45.31: Warning (unit_address_vs_reg): /example-0/pm8150b/typec@1500/connector/ports/port@1/endpoint@1: node has a unit name, but no reg or ranges property
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-
-See https://patchwork.ozlabs.org/patch/1317984
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 88efe8200c80..deb928d303c2 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -518,6 +518,8 @@ anoc2_smmu: iommu@16c0000 {
+ 				<GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
++
++			status = "disabled";
+ 		};
+ 
+ 		tcsr_mutex_regs: syscon@1f40000 {
+@@ -749,6 +751,8 @@ kgsl_smmu: iommu@5040000 {
+ 				<GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 349 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 350 IRQ_TYPE_LEVEL_HIGH>;
++
++			status = "disabled";
+ 		};
+ 
+ 		lpass_smmu: iommu@5100000 {
+@@ -778,6 +782,8 @@ lpass_smmu: iommu@5100000 {
+ 				<GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 310 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>;
++
++			status = "disabled";
+ 		};
+ 
+ 		spmi_bus: spmi@800f000 {
+@@ -1074,6 +1080,8 @@ mmss_smmu: iommu@cd00000 {
+ 				<GIC_SPI 274 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 276 IRQ_TYPE_LEVEL_HIGH>;
++
++			status = "disabled";
+ 		};
+ 
+ 		apcs_glb: mailbox@17911000 {
+-- 
+2.27.0
 
