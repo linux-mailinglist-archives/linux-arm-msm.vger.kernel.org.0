@@ -2,114 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36F0920ED1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 07:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F2FC20EE3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 08:22:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbgF3FGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 01:06:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51432 "EHLO
+        id S1730044AbgF3GWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 02:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726032AbgF3FG3 (ORCPT
+        with ESMTP id S1730005AbgF3GWm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 01:06:29 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C502AC061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 22:06:29 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id 190so10472034vsr.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 22:06:29 -0700 (PDT)
+        Tue, 30 Jun 2020 02:22:42 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FBAC03E979
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 23:22:41 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id g67so8560301pgc.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2020 23:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d2uK/hi+Brt2pyT8LlHzAvwg6MH09+PI7YkbZr7ga+Q=;
-        b=1w04gmdNQ9631ByNUaIX12DL4x7KugjLTxDBq6DWEzjTB+Bj7ylamNrLVKFrmZgtNa
-         k7fgYt6AF9A/t2fCLvOrWTTlBmnMvX0dZSy7zrb4NVScTeipGAlp9d48kt2sRd6jxGWj
-         FUC8F4z5WWmpAB8WHygOoDg35N/GVKFNH575j/jXhKtR3+CULVQQopTznDJnXzXHnTeb
-         eUwtKBE7OXcYowlpfj6CtOGL6VTYlPcitOhYYBog+f4Jiwd51v9oWG4d4/Md1lTpFb3B
-         7VNsRaU3vmOM7cMKRGgp7dQqe2wIVC2ervcfdFIHkzBW4x0pPMfVV/OnFAs//Z+U/gHX
-         oj7g==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yxI0dB1QFgZNIVokC1hI+G+Iqlv6A0nmADwj9+78Tks=;
+        b=CdZajyIJHDjOv65E77khrmmw03A7NqdRALdHclmEq43x0A5YERCb9uk8uLW+tX46JL
+         zSfex5IBG8VNGN9gNc70Fxurl907/DAYftlHGmLH9BFvsGGy8nIXnFHWNmHXHSpaSCz/
+         qDqUQZaZcpY5ijqfUZnFDGCWEx6Lgt2HkKvc8oc/Ao9Z0RLEFiXPgur13RH4msc0NuBO
+         7hSiDCK2LgMP9EW7nWsi0kh1ymWFCECLq47QkmJ+3IeZnRZoEHNQl8Zxe/GFOuFd5Q0D
+         YXp8LhRkXDNS1eig3k5dfutAxsToJhnqtQW+V4e/4F7uLVYKOPTTAG6CHrxxWGv12DlY
+         WthQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d2uK/hi+Brt2pyT8LlHzAvwg6MH09+PI7YkbZr7ga+Q=;
-        b=rR61tQn6d0VH1GqGvUGYQBBxRrQX4yznLrOIJ21OlhniwdHJYEfhbdLxTqlouTCkz+
-         JBOrGcZsJRsXmNJLy6lVvAjBgVyhjSnpUN7TMSwZma7tV2tLxkCY0C5uNN0DKd8YSlXo
-         OEaueEfpascMdeSOhbJpiEX/dhl1xiXD08aNfnvt0Rvn1VKMG72BQ94yncTFlGIfazr4
-         5haS4Un6XPY3dYD/HzsPUHNxwp2M8gbGFxPAulqilTiXQuezMqIoocykraTnSbEhUer2
-         KyJ7O5cQFi4bz82OX/eNlLUAk8hhLQw7pi9VTYTw+Hn+JMPMcKmEUcLy63Pggl7uBB/T
-         L6dg==
-X-Gm-Message-State: AOAM533tnBIub5TlXTF0i0HsSB+RN0maMsPt+RLstKsMQ6sGAwn3he20
-        JU0pV9uUnzqQ4wuYquBO8k+ujvg85wlGvdgDLNrH4A==
-X-Google-Smtp-Source: ABdhPJyJeJB83cxwO/XegM9Yw4FjPp35g425s3MnN+uM3+yvSRh2sWTu7OFfztRHesCvhTzAgHB9mldeqJIayobuIF8=
-X-Received: by 2002:a67:f557:: with SMTP id z23mr13521181vsn.27.1593493588999;
- Mon, 29 Jun 2020 22:06:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200621193549.2070434-1-dmitry.baryshkov@linaro.org> <20200621193549.2070434-6-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20200621193549.2070434-6-dmitry.baryshkov@linaro.org>
-From:   Amit Kucheria <amit.kucheria@verdurent.com>
-Date:   Tue, 30 Jun 2020 10:36:18 +0530
-Message-ID: <CAHLCerOqWWr3i32tRgGfep12YfDufw-WU80VWUsUNpDDZ13D-w@mail.gmail.com>
-Subject: Re: [PATCH 5/5] arm64: dts: sm8250-dts: add thermal zones using
- pmic's adc-tm5
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yxI0dB1QFgZNIVokC1hI+G+Iqlv6A0nmADwj9+78Tks=;
+        b=n3Fa9x5VC4ngOUgGY/guwdBOPQvNjKuOf9mqpysESgMTfquXeGeh/2UzYYmVtIR8hF
+         GpSjpOp+XZnDHDjn5hmMFQbrI41Cxx86SyOAMoIKv2QyP3zLVJ38oKxAqXP3Jl+u0e0D
+         WKyu6TnEj9Ym71XqIWslUsThLmZIkH/Fzzmh1/PwZPRwGu8v4MAnQTC0qJtmdyUfB9Jq
+         b+COhs8rMzXeuFiWPB6Krg11mx3XMLiKppQBsH4cWhjmwnHeBets5u5f4KaEtFRYckOm
+         Egf4SKP04rxv41TnbOaT0oLTKsB8S4FUfQT7qX/0iFdATb25GYJcIifN1Hz7MyQTtXUB
+         8YtQ==
+X-Gm-Message-State: AOAM531hwjDNrLA50t9Zbp3Xc3bjR2BMggBat1n9xeZj1/0baLiae3x0
+        qMB3WjHpyuUzS3xWYqJhxAbHWQ==
+X-Google-Smtp-Source: ABdhPJwkpX+UqkRhUMU2StSSepg0T7aIZhYVKhSZq4GziMwUla8dN0NFMDLDBH2U3p99v/31HC6nbw==
+X-Received: by 2002:aa7:8f08:: with SMTP id x8mr2228098pfr.41.1593498161157;
+        Mon, 29 Jun 2020 23:22:41 -0700 (PDT)
+Received: from localhost ([103.208.69.16])
+        by smtp.gmail.com with ESMTPSA id n37sm1486372pgl.82.2020.06.29.23.22.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2020 23:22:39 -0700 (PDT)
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+To:     linux-kernel@vger.kernel.org, daniel.lezcano@linaro.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-iio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: update Amit Kucheria's email to a single email address
+Date:   Tue, 30 Jun 2020 11:52:32 +0530
+Message-Id: <8cbb7004a6a9b846a8d827f514f33f1a265dd5d4.1593498024.git.amit.kucheria@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Emails currently go to different mailboxes. Switch to the kernel.org
+address so I can forward them to a single mailbox.
 
-On Mon, Jun 22, 2020 at 1:06 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Port thermal zones definitions from msm-4.19 tree. Enable and add
-> channel configuration to PMIC's ADC-TM definitions. Declare thermal
-> zones and respective trip points.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 237 ++++++++++++++++++++++++
->  1 file changed, 237 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+---
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 2 +-
+ MAINTAINERS                                               | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-IMO, this should be separated in the pmic dts file like we do for
-other QC platforms since the PMICs tend to be used in multiple
-platforms.
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index d7be931b42d22..0985e65a9d871 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -8,7 +8,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: QCOM SoC Temperature Sensor (TSENS)
+ 
+ maintainers:
+-  - Amit Kucheria <amit.kucheria@linaro.org>
++  - Amit Kucheria <amitk@kernel.org>
+ 
+ description: |
+   QCOM SoCs have TSENS IP to allow temperature measurement. There are currently
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 496fd4eafb68c..f80cb6185662f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14230,7 +14230,7 @@ F:	drivers/net/ethernet/qualcomm/rmnet/
+ F:	include/linux/if_rmnet.h
+ 
+ QUALCOMM TSENS THERMAL DRIVER
+-M:	Amit Kucheria <amit.kucheria@linaro.org>
++M:	Amit Kucheria <amitk@kernel.org>
+ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+@@ -16930,7 +16930,7 @@ F:	drivers/media/radio/radio-raremono.c
+ THERMAL
+ M:	Zhang Rui <rui.zhang@intel.com>
+ M:	Daniel Lezcano <daniel.lezcano@linaro.org>
+-R:	Amit Kucheria <amit.kucheria@verdurent.com>
++R:	Amit Kucheria <amitk@kernel.org>
+ L:	linux-pm@vger.kernel.org
+ S:	Supported
+ Q:	https://patchwork.kernel.org/project/linux-pm/list/
+-- 
+2.25.1
 
-> index aa37eb112d85..78f0cf582a9a 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> @@ -24,6 +24,104 @@ chosen {
->                 stdout-path = "serial0:115200n8";
->         };
->
-> +       thermal-zones {
-> +               xo-therm {
-> +                       polling-delay-passive = <0>;
-> +                       polling-delay = <0>;
-> +                       thermal-sensors = <&pm8150_adc_tm 0>;
-> +                       trips {
-> +                               active-config0 {
-> +                                       temperature = <125000>;
-> +                                       hysteresis = <1000>;
-> +                                       type = "passive";
-> +                               };
-> +                       };
-> +               };
-> +
