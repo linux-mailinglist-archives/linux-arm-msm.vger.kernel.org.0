@@ -2,122 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34DB820F4A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 14:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B5E520F6C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 16:09:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730095AbgF3Mb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 08:31:58 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:64113 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732804AbgF3Mb5 (ORCPT
+        id S2388565AbgF3OJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 10:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50572 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730339AbgF3OJd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 08:31:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593520316; h=Message-ID: References: In-Reply-To: Subject:
- To: From: Date: Content-Transfer-Encoding: Content-Type: MIME-Version:
- Sender; bh=k0MdTyKtV4z22dAVkmjS3nxPgaMUlZ3id20kmVJEhWM=; b=SW1W7SjzQaJmflcCUa3wNrXvZQ8C19FiI+I9A4AYL1ZyNJPh81PmWpSrhLKxwmNFxFwOBcCG
- LaXU/pdacKq27BDE2Co86zsRIsSX9V3/OrS1zsWJ11n8hhjoyk2GFtSSmrcXGSHUW20MfnHB
- Vg8gUqGSXXi/jB2HYS8gUirhZhY=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
- 5efb30b1c4bb4f886db6ea4c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Jun 2020 12:31:45
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4C166C4339C; Tue, 30 Jun 2020 12:31:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: gokulsri)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A0D0C433C8;
-        Tue, 30 Jun 2020 12:31:43 +0000 (UTC)
+        Tue, 30 Jun 2020 10:09:33 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31ECC061755;
+        Tue, 30 Jun 2020 07:09:31 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id d16so9716662edz.12;
+        Tue, 30 Jun 2020 07:09:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2aw9SI1zZwxufKdUMmejN/ekatHE+VAVco1DX+Y+FY4=;
+        b=rwwK6jpRJsEHiK4BoMlll0ENItVNp+mdP+ONVk1jZq6ohef/P76F/DtnarxckVKWQR
+         BHstHgSub3cksT46FLvW/F7jYFucwEKwfUFffHse00k8NakI4sbCQ9vz0plj5z07KmDf
+         BTLyYoWByVhXIV03J20RrH5AggIqbGVQX6NIDTbA29FuEaTzHo4q8a1jiHUVmzHpFp/0
+         TMJbg4tqasK+gCNNOsAoHBhHFJZzPXjvl4foU3+d2v2ayU9l2jVRQVUCb+HrkwknRPWa
+         Vk5VHuvga0SXfiYcEkRQSoCZU+cAzet08TBKBBim/+5oiohSWDy9gBHOTfdf8b+gI/8Y
+         9UKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2aw9SI1zZwxufKdUMmejN/ekatHE+VAVco1DX+Y+FY4=;
+        b=C3IuiKKQeKdsNdLTTMPX1NjWuE0Vj1pLHGQRG9yU3UM3GLpb9j8TieUqbfRk9ii/+L
+         ARByIZDXSwq8MlkM58039z6nPI61xv5kxlN94dwu6mM6xFat65t789K9Zl0cQh2ZmGwo
+         F7g27YEbuq3mfExxSXA+MHLQf/UAwXs+S2eRYiSugf99YJFYKnx8qle9EjXUuULoY63m
+         Iy6DOAvc4ASlACbDWuJk0gkx4AJwH8DKkESPGqFogdUZ+G+3igkuhpSY+W9FJ0gJMIMv
+         SbwNZZF+BwtE/sqEmI5NhtyXNwntyKxTeIlTCUEcqGVT7/rpynkaUzm+DB0HxyeLbcWR
+         Timw==
+X-Gm-Message-State: AOAM5336znGWlqK4yY5c0BTB9zez7d2MlEaxGHWSFENPoPK6KZH/GTB2
+        3MBza5kebfQyrKxXlDFb/iY=
+X-Google-Smtp-Source: ABdhPJzYXiy/R6+9eFuU9RewJe73bnv8r6K5lsqiboSZRIHamXRSwLD42BFEmfwnH2m+rnpJO5sLYQ==
+X-Received: by 2002:a50:9dc8:: with SMTP id l8mr23076742edk.248.1593526170484;
+        Tue, 30 Jun 2020 07:09:30 -0700 (PDT)
+Received: from localhost ([213.191.183.145])
+        by smtp.gmail.com with ESMTPSA id b98sm2982891edf.24.2020.06.30.07.09.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jun 2020 07:09:29 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH 0/7] ARM: dts: qcom: msm8974: klte: Enable some hardware
+Date:   Tue, 30 Jun 2020 17:09:05 +0300
+Message-Id: <20200630140912.260294-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 30 Jun 2020 18:01:43 +0530
-From:   gokulsri@codeaurora.org
-To:     gokulsri@codeaurora.org, sboyd@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, david.brown@linaro.org,
-        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
-        robh+dt@kernel.org, sricharan@codeaurora.org,
-        nprakash@codeaurora.org
-Subject: Re: [PATCH V5 00/10] remoteproc: qcom: q6v5-wcss: Add support for
- secure pil
-In-Reply-To: <1589362265-22702-1-git-send-email-gokulsri@codeaurora.org>
-References: <1589362265-22702-1-git-send-email-gokulsri@codeaurora.org>
-Message-ID: <14579d9dbcc06bca392b41ace1b0ce49@codeaurora.org>
-X-Sender: gokulsri@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-  Hi Bjorn,
-  My below patch series (https://patchwork.kernel.org/cover/11545511/) 
-with all the review comments addressed and this is on top of
-  Govind's series (https://patchwork.kernel.org/cover/11060629/) "[v5] 
-"Add non PAS wcss Q6 support for QCS404".
-  Need your help to know how should I proceed further to merge these 
-patches.
+Enable support for various hw found on the Samsung Galaxy S5:
+- touchkey (the two buttons around the home button)
+- touchscreen
+- notification led
+- wifi
+- external SD card
 
-  Regards,
-  Gokul
+Please note that for working wifi the correct firmware is needed. Check [1]
+for links and locations.
 
-On 2020-05-13 15:00, Gokul Sriram Palanisamy wrote:
-> IPQ8074 needs support for secure pil as well.
-> Also, currently only unified firmware is supported.
-> IPQ8074 supports split firmware for q6 and m3, so
-> adding support for that.
-> 
-> This series is based on Govind's
-> "[v5] Add non PAS wcss Q6 support for QCS404"
-> 
-> changes since v4:
->  - Rebased patch 8
-> 
-> changes since v3:
->  - In patch 10, Added release_firmware to free up
->    memory requested for m3 firmware.
-> 
-> changes since v2:
->  - In patch 5, Added a driver data 'bcr_reset_required'
->    to select if bcr reset is required
->  - In patch 10, Removed syscon implementation and moved
->    to mailbox framework to access APCS IPC
-> 
-> changes since v1:
->  - In patch 10, Addressed minor review comments.
-> 
-> Gokul Sriram Palanisamy (10):
->   remoteproc: qcom: Add PRNG proxy clock
->   remoteproc: qcom: Add secure PIL support
->   remoteproc: qcom: Add support for split q6 + m3 wlan firmware
->   remoteproc: qcom: Add ssr subdevice identifier
->   remoteproc: qcom: Update regmap offsets for halt register
->   dt-bindings: clock: qcom: Add reset for WCSSAON
->   clk: qcom: Add WCSSAON reset
->   dt-bindings: firmware: qcom: Add compatible for IPQ8074 SoC
->   arm64: dts: Add support for scm on IPQ8074 SoCs
->   arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-> 
->  .../devicetree/bindings/firmware/qcom,scm.txt      |   1 +
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 127 
-> +++++++++++++++++
->  drivers/clk/qcom/gcc-ipq8074.c                     |   1 +
->  drivers/remoteproc/qcom_q6v5_wcss.c                | 157 
-> +++++++++++++++++----
->  include/dt-bindings/clock/qcom,gcc-ipq8074.h       |   1 +
->  5 files changed, 258 insertions(+), 29 deletions(-)
+Also note, that to actually run a mainline kernel on the klte, you'd need
+to apply this patch [2]. Any feedback on getting this to run on pure
+mainline are welcome.
+
+[1] https://gitlab.com/postmarketOS/pmaports/-/blob/master/firmware/firmware-samsung-klte/APKBUILD
+[2] https://gitlab.com/postmarketOS/linux-postmarketos/-/commit/765f55b248cd3b231af8431fe2f2aeca263b4e4b
+
+Iskren Chernev (7):
+  ARM: dts: qcom: msm8974-klte: Merge pinctrl nodes
+  ARM: dts: qcom: msm8974-klte: Add support for touchkey
+  ARM: dts: qcom: msm8974-klte: Add support for touchscreen
+  ARM: dts: qcom: msm8974-klte: Add support for led
+  ARM: dts: qcom: msm8974-klte: Add gpio expander chip
+  ARM: dts: qcom: msm8974-klte: Add support for wifi
+  ARM: dts: qcom: msm8974-klte: Add support for SD card
+
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 301 +++++++++++++++++-
+ 1 file changed, 292 insertions(+), 9 deletions(-)
+
+
+base-commit: c28e58ee9dadc99f79cf16ca805221feddd432ad
+--
+2.27.0
+
