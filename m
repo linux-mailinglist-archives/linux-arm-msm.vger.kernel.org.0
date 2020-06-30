@@ -2,57 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F90520FD23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 21:57:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF7C820FD9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 22:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728697AbgF3T5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 15:57:37 -0400
-Received: from mail.farq.edu.uy ([164.73.217.22]:41194 "EHLO mail.fadu.edu.uy"
+        id S1728824AbgF3U06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 16:26:58 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26373 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728327AbgF3T5h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 15:57:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.fadu.edu.uy (Postfix) with ESMTP id 850FE12D3B81;
-        Tue, 30 Jun 2020 16:57:35 -0300 (-03)
-Received: from mail.fadu.edu.uy ([127.0.0.1])
-        by localhost (mail.fadu.edu.uy [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 2P2WfEyjIa5W; Tue, 30 Jun 2020 16:57:35 -0300 (-03)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.fadu.edu.uy (Postfix) with ESMTP id B6B3C12D3BAB;
-        Tue, 30 Jun 2020 16:57:34 -0300 (-03)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.fadu.edu.uy B6B3C12D3BAB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fadu.edu.uy;
-        s=08C1D22E-0AE4-11EA-9527-FE35185E3364; t=1593547054;
-        bh=tHFPtCFx0BDWVwVcWdH8KRQcAjs3niQpGC6JpvplSsc=;
-        h=MIME-Version:To:From:Date:Message-Id;
-        b=qzMIK4kVvRTmlJAV08VVA/5ptWvoWis1baHsS+4Yk4YYar76ZupHNfah01BY7x/Dg
-         QTXOPLmwppFMeLPnOH/MLm2Tr3O4RP0WnLb72z+rY97Gj8NBfOpeTCWPxYIdGBHDiW
-         mwD+5i9aXEIPabFfiKGddbjgtyxGaKdjAwRrbI5r0L60i9SLKQxav6g7nQ8XRUacN2
-         xDdBPx26CO1YV2c8nWAGrTQo9UvejYmouu3ZuhGeWY1+gU79XyaGX+FbmiZqTreH34
-         NEm9yrf4OCXbwlCtL9fgANdvxhwTnOokk5ExaU7RAMXLQElUnfAf8fePCwSLtHw4ah
-         InuuNmPwZRt3A==
-X-Virus-Scanned: amavisd-new at fadu.edu.uy
-Received: from mail.fadu.edu.uy ([127.0.0.1])
-        by localhost (mail.fadu.edu.uy [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id GAtsEpb8DKBs; Tue, 30 Jun 2020 16:57:34 -0300 (-03)
-Received: from [172.20.10.7] (unknown [129.205.113.76])
-        by mail.fadu.edu.uy (Postfix) with ESMTPSA id B2AD112D3B46;
-        Tue, 30 Jun 2020 16:57:11 -0300 (-03)
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1726051AbgF3U05 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Jun 2020 16:26:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593548817; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=dqxuWzf6XuS04cq7vFT3rZkwpSupq9TrDFJEIb72eMo=; b=RP3sCTBXyRKmT816ALepfM8KDS1/N3zPN/pBdvWNuqHF59UJOLTHcAABjf6nqJKrnn9sRkh2
+ 3HdDIJzIwj2mMx0Bv4v/jaGYQYhhDIOfVxDRaz70WSCnI3GEiGhFS64wzIliJdL8UQi7SYId
+ RnNx+9xzywW0wYnIXnLvId22jA8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5efb9ffffe1db4db8947a3c2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Jun 2020 20:26:39
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B764AC433CA; Tue, 30 Jun 2020 20:26:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0C706C433C8;
+        Tue, 30 Jun 2020 20:26:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0C706C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Tue, 30 Jun 2020 14:26:38 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     rjw@rjwysocki.net, daniel.lezcano@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpuidle: governor: export cpuidle_register_governor
+Message-ID: <20200630202638.GA16096@codeaurora.org>
+References: <20200630191308.23611-1-ilina@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: EINZELHEITEN
-To:     Recipients <info@fadu.edu.uy>
-From:   "DONNA AND DAVID STICKLEY" <info@fadu.edu.uy>
-Date:   Tue, 30 Jun 2020 12:56:44 -0700
-Reply-To: david_and_donna.stickley2020@outlook.com
-Message-Id: <20200630195711.B2AD112D3B46@mail.fadu.edu.uy>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20200630191308.23611-1-ilina@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-FAMILIENSPENDE KOMMEN SIE F=DCR MEHR DETAILS ZU UNS ZUR=DCCK. david.donna.s=
-tickley2020@outlook.com
+Please ignore this patch. Will re-send.
 
+Thanks,
+Lina
+
+On Tue, Jun 30 2020 at 13:13 -0600, Lina Iyer wrote:
+>Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
+>capability of registering cpuidle governors. With this change, let's
+>bring the capability back to allow cpuidle governors to be registered
+>from a module.
+>
+>Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>---
+> drivers/cpuidle/governor.c | 1 +
+> include/linux/cpuidle.h    | 1 +
+> 2 files changed, 2 insertions(+)
+>
+>diff --git a/drivers/cpuidle/governor.c b/drivers/cpuidle/governor.c
+>index 29acaf48e575..480ec58cffa9 100644
+>--- a/drivers/cpuidle/governor.c
+>+++ b/drivers/cpuidle/governor.c
+>@@ -102,6 +102,7 @@ int cpuidle_register_governor(struct cpuidle_governor *gov)
+>
+> 	return ret;
+> }
+>+EXPORT_SYMBOL_GPL(cpuidle_register_governor);
+>
+> /**
+>  * cpuidle_governor_latency_req - Compute a latency constraint for CPU
+>diff --git a/include/linux/cpuidle.h b/include/linux/cpuidle.h
+>index ec2ef63771f0..cc02ce7eab6c 100644
+>--- a/include/linux/cpuidle.h
+>+++ b/include/linux/cpuidle.h
+>@@ -264,6 +264,7 @@ struct cpuidle_governor {
+> 					bool *stop_tick);
+> 	void (*reflect)		(struct cpuidle_device *dev, int index);
+> };
+>+EXPORT_SYMBOL_GPL(cpuidle_governor);
+>
+> #ifdef CONFIG_CPU_IDLE
+> extern int cpuidle_register_governor(struct cpuidle_governor *gov);
+>-- 
+>The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>a Linux Foundation Collaborative Project
+>
