@@ -2,141 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B716420F37C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 13:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D233B20F3F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 13:57:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732933AbgF3LS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 07:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728534AbgF3LS2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 07:18:28 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 843D6C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 04:18:28 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id u9so4743376pls.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 04:18:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LHh/mq3ow+xCsXk724CoAAWxx6QThTTgxukvsFRYnJE=;
-        b=rIHmElLsi9YcvMd8jayIy9PWbf0IcN8bgFAL7oFI2jvpM9dYw32oQGIB9WtwqoD/ww
-         Dl6xrXsvJWwl/2rV9O1Ijo06Rn4gsPRMfmUJjSZ+Tz7FqmusI6zFBQGSduArrSGefdsG
-         8y4hnM6jE/pM7FJDV2pCVdgec2xt5jNHhjuOCbmcAJ6KbOrPS2Nah5g6HxmEIjyWJ1tE
-         w1UrYenGzvODcwUxv+5Jv4zwH7W9ks4wc0Dmok+cogQBmJV0MPYyN04pb+45nTKfwRdD
-         wkuJfnoDJHpS4aYnM9mdoBTd6jFhRfE/hb/2/RYYL+d7ql2+uG3TZ4b+4DRozi61UkVf
-         OgJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LHh/mq3ow+xCsXk724CoAAWxx6QThTTgxukvsFRYnJE=;
-        b=VyAaPymk2AEVux8gt7WP24Wrlfcp9RQ2Pxd24K70ywdLuy0rsY4MARDGJYfFL4nwfZ
-         ApjCVo1loRSmot8iIu7h0MEfhS5BUD8gap/hxqUOCiB+L/uHojBUuuJ0LEa+HVMuGC+X
-         s+2hx9kOl4KCTZHYKvwbAnh6woBfNgrphQIIVvZeswVOZZchLKmhLmGnMYRi481x5GL6
-         Q/XE11YGeoqtRnN0W3RUN612eZlIf6EG6tdu3Yx1lqRMRAfIUBwXrGT6edzQ+Gy2CiQM
-         v+ZunfpUydzrRxdvU0CFrElLyjJa/cX+xvMY+v8KqWsFedaQMf5t7T4Y169TdRp3+ArJ
-         pevw==
-X-Gm-Message-State: AOAM531D05uIJ3J8uwhI7Uyc5Y1hoo+F7STjmxlcM2LzzaZwUQ+jPjQV
-        AgpwgycdtA2KHwt/3B6zBsBzBf+LvqU=
-X-Google-Smtp-Source: ABdhPJyaYSNucbiKWDKitlJ+4RuATFLrFB7x0b4LuXYGumiY0eMucAbeVT9Z3RiVU9JRanWj4oqExQ==
-X-Received: by 2002:a17:902:b603:: with SMTP id b3mr17581792pls.1.1593515907869;
-        Tue, 30 Jun 2020 04:18:27 -0700 (PDT)
-Received: from dragon ([80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id x10sm2534249pfp.80.2020.06.30.04.18.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Jun 2020 04:18:27 -0700 (PDT)
-Date:   Tue, 30 Jun 2020 19:18:20 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] nvmem: qfprom: increase id to support multiple devices
-Message-ID: <20200630111819.GE8343@dragon>
-References: <20200629133204.23279-1-shawn.guo@linaro.org>
- <04022e2b-e028-b942-811d-a9c8ac836fcc@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <04022e2b-e028-b942-811d-a9c8ac836fcc@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S1733203AbgF3L4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 07:56:49 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:19827 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1733197AbgF3L4r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Jun 2020 07:56:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593518206; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=SmYTLnNpkoDIf6PQYp/bYgNnjLKYi/RBNugVXmRrIRU=; b=wIR3jAVaj+0RZ2KOnggtsnFTcyzGtEYgdsx6+NtMfGPriqvbcV2CvRjFeVCbHIDRK98jI/T5
+ kwvPHfMYS2Iq0KvPjJsMJ/LH8/qtFTiaAVCcJsFVijuRV8vopMdQt0RTj9xRZqhOheW53YDz
+ KqXsKt++FEWYoLtDrJ41tY5FtKs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n13.prod.us-west-2.postgun.com with SMTP id
+ 5efb287dfe1db4db89f40bfa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Jun 2020 11:56:45
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8C5F3C433A0; Tue, 30 Jun 2020 11:56:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30920C433C6;
+        Tue, 30 Jun 2020 11:56:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 30920C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH 0/4] DVFS support for dpu and dsi
+Date:   Tue, 30 Jun 2020 17:26:12 +0530
+Message-Id: <1593518176-24450-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srini,
+These patches add DVFS support for DPU and DSI. Where posted
+earlier as part of a series with multiple different drivers [1]
+I have split them into specific driver changes in order to avoid
+confusion on dependencies. Also added the corresponding device tree
+changes for sdm845 and sc7180 platforms.
 
-On Tue, Jun 30, 2020 at 10:41:24AM +0100, Srinivas Kandagatla wrote:
-> TBH, this functionality need to go into core driver which already has IDR to
-> allocated ID's for nvmem providers.
-> 
-> Can you try this patch:
+These patches have no other dependency and will need to be merged in
+via the MSM DRM tree.
 
-The patch doesn't apply to v5.8-rc, so I manually applied it for
-testing. It works like a charm.
+DT patches will need to land via the msm tree.
 
-Tested-by: Shawn Guo <shawn.guo@linaro.org>
+[1] https://lkml.org/lkml/2020/6/15/535
 
-Please copy me when you post it, so that I can pick it up for my
-project.  Thanks!
+Rajendra Nayak (4):
+  drm/msm/dpu: Use OPP API to set clk/perf state
+  drm/msm: dsi: Use OPP API to set clk/perf state
+  arm64: dts: sdm845: Add DSI and MDP OPP tables and power-domains
+  arm64: dts: sc7180: Add DSI and MDP OPP tables and power-domains
 
-Shawn
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 49 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 59 +++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 26 +++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 ++
+ drivers/gpu/drm/msm/dsi/dsi.h                 |  2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c             |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c            | 58 ++++++++++++++++++++++++++
+ 8 files changed, 201 insertions(+), 4 deletions(-)
 
-> 
-> ---------------------------->cut<---------------------------------diff --git
-> a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-> index 927eb5f6003f..aa87bd6415ab 100644
-> --- a/drivers/nvmem/core.c
-> +++ b/drivers/nvmem/core.c
-> @@ -629,12 +629,18 @@ struct nvmem_device *nvmem_register(const struct
-> nvmem_config *config)
->         if (!config->no_of_node)
->                 nvmem->dev.of_node = config->dev->of_node;
-> 
-> -       if (config->id == -1 && config->name) {
-> +       switch (config->id) {
-> +       case NVMEM_DEVID_NONE:
->                 dev_set_name(&nvmem->dev, "%s", config->name);
-> -       } else {
-> +               break;
-> +       case NVMEM_DEVID_AUTO:
-> +               dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
-> +               break;
-> +       default:
->                 dev_set_name(&nvmem->dev, "%s%d",
->                              config->name ? : "nvmem",
->                              config->name ? config->id : nvmem->id);
-> +               break;
->         }
-> 
->         nvmem->read_only = device_property_present(config->dev, "read-only")
-> ||
-> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> index 8a91717600be..8b425f8d847d 100644
-> --- a/drivers/nvmem/qfprom.c
-> +++ b/drivers/nvmem/qfprom.c
-> @@ -31,6 +31,7 @@ static struct nvmem_config econfig = {
->         .name = "qfprom",
->         .stride = 1,
->         .word_size = 1,
-> +       .id = NVMEM_DEVID_AUTO,
->         .reg_read = qfprom_reg_read,
->  };
-> 
-> diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provider.h
-> index 6d6f8e5d24c9..06409a6c40bc 100644
-> --- a/include/linux/nvmem-provider.h
-> +++ b/include/linux/nvmem-provider.h
-> @@ -27,6 +27,9 @@ enum nvmem_type {
->         NVMEM_TYPE_BATTERY_BACKED,
->  };
-> 
-> +#define NVMEM_DEVID_NONE       (-1)
-> +#define NVMEM_DEVID_AUTO       (-2)
-> +
->  /**
->   * struct nvmem_config - NVMEM device configuration
->   *
-> ---------------------------->cut<---------------------------------
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
