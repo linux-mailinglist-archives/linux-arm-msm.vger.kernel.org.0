@@ -2,107 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BBAF20F45F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 14:17:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34DB820F4A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 14:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733167AbgF3MRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 08:17:22 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:64900 "EHLO
+        id S1730095AbgF3Mb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 08:31:58 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:64113 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1733176AbgF3MRU (ORCPT
+        by vger.kernel.org with ESMTP id S1732804AbgF3Mb5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 08:17:20 -0400
+        Tue, 30 Jun 2020 08:31:57 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593519439; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=kGYY4QcFYgkLdyV7Im78BrVJWki2PPpmLykzIJ/ZNLs=; b=UbMGzN6+PqBf5Wxi6jkFvCk6hTIix60BW+wf/irfCgYVtp+dKUnqfb3mCnDJU1jICJgHgr7r
- PvLxmY2GS0Ce0+uqtgs2OWVtYlTaiRAV8GqnOdmuDld7PgiMXcCKa+lVUBAn7r86OoHhiVz9
- T53LhOcHYT+i12GAtZggMliVzlM=
+ s=smtp; t=1593520316; h=Message-ID: References: In-Reply-To: Subject:
+ To: From: Date: Content-Transfer-Encoding: Content-Type: MIME-Version:
+ Sender; bh=k0MdTyKtV4z22dAVkmjS3nxPgaMUlZ3id20kmVJEhWM=; b=SW1W7SjzQaJmflcCUa3wNrXvZQ8C19FiI+I9A4AYL1ZyNJPh81PmWpSrhLKxwmNFxFwOBcCG
+ LaXU/pdacKq27BDE2Co86zsRIsSX9V3/OrS1zsWJ11n8hhjoyk2GFtSSmrcXGSHUW20MfnHB
+ Vg8gUqGSXXi/jB2HYS8gUirhZhY=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5efb2d3c3a8a8b20b84098d9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Jun 2020 12:17:00
+ smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
+ 5efb30b1c4bb4f886db6ea4c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Jun 2020 12:31:45
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9855FC433A0; Tue, 30 Jun 2020 12:17:00 +0000 (UTC)
+        id 4C166C4339C; Tue, 30 Jun 2020 12:31:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.50.61.98] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A62D8C433C8;
-        Tue, 30 Jun 2020 12:16:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A62D8C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v6 1/6] tty: serial: qcom_geni_serial: Use OPP API to set
- clk/perf state
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, robdclark@gmail.com, robdclark@chromium.org,
-        stanimir.varbanov@linaro.org, viresh.kumar@linaro.org,
-        sboyd@kernel.org, mka@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-serial@vger.kernel.org
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <1592222564-13556-2-git-send-email-rnayak@codeaurora.org>
- <20200625050808.GW128451@builder.lan>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <a7f5978b-6858-c99f-77e3-16e333b93e43@codeaurora.org>
-Date:   Tue, 30 Jun 2020 17:46:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        (Authenticated sender: gokulsri)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A0D0C433C8;
+        Tue, 30 Jun 2020 12:31:43 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200625050808.GW128451@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Tue, 30 Jun 2020 18:01:43 +0530
+From:   gokulsri@codeaurora.org
+To:     gokulsri@codeaurora.org, sboyd@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, david.brown@linaro.org,
+        devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
+        robh+dt@kernel.org, sricharan@codeaurora.org,
+        nprakash@codeaurora.org
+Subject: Re: [PATCH V5 00/10] remoteproc: qcom: q6v5-wcss: Add support for
+ secure pil
+In-Reply-To: <1589362265-22702-1-git-send-email-gokulsri@codeaurora.org>
+References: <1589362265-22702-1-git-send-email-gokulsri@codeaurora.org>
+Message-ID: <14579d9dbcc06bca392b41ace1b0ce49@codeaurora.org>
+X-Sender: gokulsri@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+  Hi Bjorn,
+  My below patch series (https://patchwork.kernel.org/cover/11545511/) 
+with all the review comments addressed and this is on top of
+  Govind's series (https://patchwork.kernel.org/cover/11060629/) "[v5] 
+"Add non PAS wcss Q6 support for QCS404".
+  Need your help to know how should I proceed further to merge these 
+patches.
 
-On 6/25/2020 10:38 AM, Bjorn Andersson wrote:
-> On Mon 15 Jun 05:02 PDT 2020, Rajendra Nayak wrote:
+  Regards,
+  Gokul
+
+On 2020-05-13 15:00, Gokul Sriram Palanisamy wrote:
+> IPQ8074 needs support for secure pil as well.
+> Also, currently only unified firmware is supported.
+> IPQ8074 supports split firmware for q6 and m3, so
+> adding support for that.
 > 
->> geni serial needs to express a perforamnce state requirement on CX
->> powerdomain depending on the frequency of the clock rates.
->> Use OPP table from DT to register with OPP framework and use
->> dev_pm_opp_set_rate() to set the clk/perf state.
->>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> Cc: Akash Asthana <akashast@codeaurora.org>
->> Cc: linux-serial@vger.kernel.org
+> This series is based on Govind's
+> "[v5] Add non PAS wcss Q6 support for QCS404"
 > 
-> Picked up patch 1 and 2 through the qcom tree.
-
-thanks Bjorn
-
-> As Mark requested, please don't lump together patches that doesn't
-> actually depend on each other in the same series - it's quite confusing
-> to know what to pick and not.
-
-Sorry for the confusion, I will try and split them into driver specific patches henceforth.
-For this series though, I see that you have merged the entire ICC series for
-QUP and QSPI into for-next of the qcom tree.
-In which case it perhaps makes sense for you to pull in the QSPI change from this series
-as well? i.e PATCH 6/6.
-If so, I will rebase the patch on your for-next and resend (Its already Ack'ed by Mark)
-
-thanks,
-Rajendra
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> changes since v4:
+>  - Rebased patch 8
+> 
+> changes since v3:
+>  - In patch 10, Added release_firmware to free up
+>    memory requested for m3 firmware.
+> 
+> changes since v2:
+>  - In patch 5, Added a driver data 'bcr_reset_required'
+>    to select if bcr reset is required
+>  - In patch 10, Removed syscon implementation and moved
+>    to mailbox framework to access APCS IPC
+> 
+> changes since v1:
+>  - In patch 10, Addressed minor review comments.
+> 
+> Gokul Sriram Palanisamy (10):
+>   remoteproc: qcom: Add PRNG proxy clock
+>   remoteproc: qcom: Add secure PIL support
+>   remoteproc: qcom: Add support for split q6 + m3 wlan firmware
+>   remoteproc: qcom: Add ssr subdevice identifier
+>   remoteproc: qcom: Update regmap offsets for halt register
+>   dt-bindings: clock: qcom: Add reset for WCSSAON
+>   clk: qcom: Add WCSSAON reset
+>   dt-bindings: firmware: qcom: Add compatible for IPQ8074 SoC
+>   arm64: dts: Add support for scm on IPQ8074 SoCs
+>   arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
+> 
+>  .../devicetree/bindings/firmware/qcom,scm.txt      |   1 +
+>  arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 127 
+> +++++++++++++++++
+>  drivers/clk/qcom/gcc-ipq8074.c                     |   1 +
+>  drivers/remoteproc/qcom_q6v5_wcss.c                | 157 
+> +++++++++++++++++----
+>  include/dt-bindings/clock/qcom,gcc-ipq8074.h       |   1 +
+>  5 files changed, 258 insertions(+), 29 deletions(-)
