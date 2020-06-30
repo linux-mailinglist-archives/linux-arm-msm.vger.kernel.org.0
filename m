@@ -2,154 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4035520F3F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 13:57:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A87720F429
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 14:10:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733198AbgF3L5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 07:57:03 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:53611 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1733223AbgF3L5B (ORCPT
+        id S1731654AbgF3MK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 08:10:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60332 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733047AbgF3MK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 07:57:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593518220; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=YNd3ulVbfor35J6wI22mTXvXYzUcfdxe/W/Y6c2HoRs=; b=mAIuVAQc8N1ZEppyrAu6Q+anlyFb46Z/t1kO2vF+w5sm7A9584r8dd/GyJH8GHqaMJ0lExwF
- GWeyPBA1oAo+UkLzSZqhPeAddmV9KEPKAZfZzQgS1U4Fq3jClBl51tNgjk5HGUDfvWWFnmFb
- aQNRS02XgpCcs6aDe57WzN2CTb0=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5efb288ca3d8a44743742f65 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Jun 2020 11:57:00
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 245A4C433A1; Tue, 30 Jun 2020 11:56:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 75140C433C8;
-        Tue, 30 Jun 2020 11:56:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 75140C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH 4/4] arm64: dts: sc7180: Add DSI and MDP OPP tables and power-domains
-Date:   Tue, 30 Jun 2020 17:26:16 +0530
-Message-Id: <1593518176-24450-5-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1593518176-24450-1-git-send-email-rnayak@codeaurora.org>
-References: <1593518176-24450-1-git-send-email-rnayak@codeaurora.org>
+        Tue, 30 Jun 2020 08:10:26 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2929C03E979
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 05:10:25 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id t18so5390796otq.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 05:10:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NAGbdMKehJWxVlFr926dVUaKEFdL3dy5MG19MRyLbvI=;
+        b=o31V1ZHOjDOtIAN1jxax4laiARUXPgXnugPc1/4XM8WMjPSFHvToHuXOCwr8b6553o
+         DD3YKEwTm4+CfJahjqIORUg/UTHjboKMM5TuFnY2zKY2I0dmFZI87Ij9hA4NRF4+KFG4
+         yWkH5zKmFhH4uQhUHJarZjzMSM2qE589nU27UPRDXFhnOkO7Y2YZ51mOLE8dy8Cb46rR
+         R8IcfZCVXQdvau7deKcyFFPXLBa1L5e/C97DU15/1cSl5GvQXExB+gKMiKt1Wt1Yx18c
+         OfjxNkK53zUySfTva7QQ/7kjE8TYr12Zol3Ot8Fkb/jmXreYFq0y5WdK2C/E1ThLoXHd
+         TS8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NAGbdMKehJWxVlFr926dVUaKEFdL3dy5MG19MRyLbvI=;
+        b=QXMFwbjARn5On982/PcOQcz0zLwePOQBYrx12Tvqmyd3C2AhqYOH7KsVcZN3V/cgxB
+         vGALzXT7h/Ac3k4yFsJbiEGRfe+9jVhz/a17jFIOepHwYWggDqwrpciRKxKLdCsp4Sm2
+         9svp1jrzsukx6q3hfcA7EfiskDVCqAXIU+prFoPvU0cvhJZ96n9FVSBYZjCAZ/+sng1K
+         OFHfey142jKpQMifNr0RHjeU1kf56pdMLZlnt3mAhUUzziMOMUfk4JqQA4JO+2ItDW9l
+         3OZOBCbmrekToRjsnRpOOyg1hlA/ia03cbSAV/eYwrih+5yMphuGfj+TW75OWtAhkKeV
+         nvMw==
+X-Gm-Message-State: AOAM532TLfq/zx5IIhbIEzfoED/W2Oo+j2eJCR1XrYEMZ1D3cUCRzn1D
+        yQPyYuLABs1R/eyKXvK+ISTCfgnoL+aQfM8vnPimzwmJBsg=
+X-Google-Smtp-Source: ABdhPJw2q4etsQZ39OpngsI1fW2rJDW4wZr4IX5R00YqLdMFCViWYY17CGQyW/rchwxHK0PaipZZaeBJGlqE8HeogaI=
+X-Received: by 2002:a9d:39f5:: with SMTP id y108mr17820882otb.262.1593519025244;
+ Tue, 30 Jun 2020 05:10:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200621193549.2070434-1-dmitry.baryshkov@linaro.org>
+ <20200621193549.2070434-6-dmitry.baryshkov@linaro.org> <CAHLCerOqWWr3i32tRgGfep12YfDufw-WU80VWUsUNpDDZ13D-w@mail.gmail.com>
+In-Reply-To: <CAHLCerOqWWr3i32tRgGfep12YfDufw-WU80VWUsUNpDDZ13D-w@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 30 Jun 2020 15:10:13 +0300
+Message-ID: <CAA8EJppAQgmS7VVCjVe8QST2RQU46mXO2jtUPFY30mH9sVu_rQ@mail.gmail.com>
+Subject: Re: [PATCH 5/5] arm64: dts: sm8250-dts: add thermal zones using
+ pmic's adc-tm5
+To:     Amit Kucheria <amit.kucheria@verdurent.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the OPP tables for DSI and MDP based on the perf state/clk
-requirements, and add the power-domains property to specify the
-scalable power domain.
+Hi,
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 49 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+On Tue, 30 Jun 2020 at 08:06, Amit Kucheria <amit.kucheria@verdurent.com> wrote:
+> On Mon, Jun 22, 2020 at 1:06 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Port thermal zones definitions from msm-4.19 tree. Enable and add
+> > channel configuration to PMIC's ADC-TM definitions. Declare thermal
+> > zones and respective trip points.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 237 ++++++++++++++++++++++++
+> >  1 file changed, 237 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+>
+> IMO, this should be separated in the pmic dts file like we do for
+> other QC platforms since the PMICs tend to be used in multiple
+> platforms.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index ad57df2..3430c33f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2482,6 +2482,8 @@
- 						       <19200000>,
- 						       <19200000>,
- 						       <19200000>;
-+				operating-points-v2 = <&mdp_opp_table>;
-+				power-domains = <&rpmhpd SC7180_CX>;
- 
- 				interrupt-parent = <&mdss>;
- 				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2499,6 +2501,31 @@
- 						};
- 					};
- 				};
-+
-+				mdp_opp_table: mdp-opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-200000000 {
-+						opp-hz = /bits/ 64 <200000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-300000000 {
-+						opp-hz = /bits/ 64 <300000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-345000000 {
-+						opp-hz = /bits/ 64 <345000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-460000000 {
-+						opp-hz = /bits/ 64 <460000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+
- 			};
- 
- 			dsi0: dsi@ae94000 {
-@@ -2522,6 +2549,9 @@
- 					      "iface",
- 					      "bus";
- 
-+				operating-points-v2 = <&dsi_opp_table>;
-+				power-domains = <&rpmhpd SC7180_CX>;
-+
- 				phys = <&dsi_phy>;
- 				phy-names = "dsi";
- 
-@@ -2547,6 +2577,25 @@
- 						};
- 					};
- 				};
-+
-+				dsi_opp_table: dsi-opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-187500000 {
-+						opp-hz = /bits/ 64 <187500000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-300000000 {
-+						opp-hz = /bits/ 64 <300000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-358000000 {
-+						opp-hz = /bits/ 64 <358000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+				};
- 			};
- 
- 			dsi_phy: dsi-phy@ae94400 {
+Unlike other PMIC/tsens thermal zones, these definitions are quite
+specific to the board from my point of view.
+
+> > index aa37eb112d85..78f0cf582a9a 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > @@ -24,6 +24,104 @@ chosen {
+> >                 stdout-path = "serial0:115200n8";
+> >         };
+> >
+> > +       thermal-zones {
+> > +               xo-therm {
+> > +                       polling-delay-passive = <0>;
+> > +                       polling-delay = <0>;
+> > +                       thermal-sensors = <&pm8150_adc_tm 0>;
+> > +                       trips {
+> > +                               active-config0 {
+> > +                                       temperature = <125000>;
+> > +                                       hysteresis = <1000>;
+> > +                                       type = "passive";
+> > +                               };
+> > +                       };
+> > +               };
+> > +
+
+
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+With best wishes
+Dmitry
