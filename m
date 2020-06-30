@@ -2,106 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF26720EC11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 05:35:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D30A120ECF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 06:54:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729204AbgF3Dfu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Jun 2020 23:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37498 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728949AbgF3Dfu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Jun 2020 23:35:50 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6D0C061755;
-        Mon, 29 Jun 2020 20:35:49 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id l12so18955467ejn.10;
-        Mon, 29 Jun 2020 20:35:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aJmSmwrsaH1bBcOCXi7RMW99NT7rqTSYgM8PKCwsCVQ=;
-        b=qDEvnMum80gV5DvWSU5LwQhbLXk5TfinUIQ/IMpus0k6Rw+VScCW9Yv1HA7db8lJ8E
-         sS0nOnrkDYcOTrQ7N55qSxOB+vBYLLNN5+f7ee8WhBC0DIvpmoujM4v/TXmTo7RCb211
-         b1qW0H1YU2AGgcLuswKtS/A+kAdIrTbKnNhRGaOR7OEuN40xea79yJxzoSEIn4rUmcK1
-         xEt1v/X1I1X0FDC2+42Q7u2bczAIjNLPly7sSY/lwpdQnDpYdUXfh3olM3AQeJaHTqfE
-         SFoebc9xy3rDlLgua88QRc+TiL/NDg1ZZezu+PnwlPtUY6LOIeCDthEY5hSDFQkdcYYh
-         houA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aJmSmwrsaH1bBcOCXi7RMW99NT7rqTSYgM8PKCwsCVQ=;
-        b=gM9aAjdK7VIN31271KVcyM2jvf9W4b/CBJFmubQjQKIaxiFlwd8BGGydkpj7/Uk96v
-         o0a+e5ymnE1z+c4/Hq3RY7AGJl5FMou5R+wObvD1QzSq+v2dA/C05ZYrMX13/JXvW5Gy
-         toOEhmVk4av18e2o8FHse0O9Osp+hdtnWFGJl1GVsmnnBDLYxpDTpBFHSaI/gCw9+SaL
-         TZN99n/oF+V37xhcfxA/b9/+VZr975BeSt1HmiSqY+RfsC0dAlKaVNpSZLiDGjuHc7jU
-         cC0N9vA0b3vJkda2qfJyEO9EFzfy4uqyyArFVz1Kb7tuU8o9gvWgkHc+shjdqZaRD/Yx
-         1E/A==
-X-Gm-Message-State: AOAM533T7LCteTF+waItVhG8wzWUVV/DIu4gyAGUE3oh+fsrhdDdUrtS
-        aC1v/xfsx0QLAgvuui1ldEOu1d2wWRfzunYi5yw=
-X-Google-Smtp-Source: ABdhPJxIln0jXR4HaSVjKUP56QmC1imF/pnulXgJu7ASsZsBlTWTXsrX/u1Fk9SDVfSNOKBCkCqdGImbFFK86KhXx1Y=
-X-Received: by 2002:a17:906:ca4c:: with SMTP id jx12mr15323864ejb.231.1593488148574;
- Mon, 29 Jun 2020 20:35:48 -0700 (PDT)
+        id S1729291AbgF3Eyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 00:54:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33646 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725805AbgF3Eyb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Jun 2020 00:54:31 -0400
+Received: from localhost (unknown [122.182.251.219])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1FDEA206A1;
+        Tue, 30 Jun 2020 04:54:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593492871;
+        bh=iUL0HzRFaOYTRUyFURJ92azHcCmB0zlQui/uvTPtioc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HZABgPCGAudx4VuJtLiLRoLEutKQ0W1Ulfm1VV6VNR94Xj8TKWywqAHrnhAeHdWo3
+         0OdrU47BSwGh7jCS/H0scAaNhDvnHcdeKjO3qrvP4zWObanp2nrpF1dgSIHn3ts0nC
+         2u0QW/9dx+4/gK9SMYwsHEWi2OMBzfoyx8Xlqcew=
+Date:   Tue, 30 Jun 2020 10:24:26 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom: remove ufs qmp phy driver
+Message-ID: <20200630045426.GO2599@vkoul-mobl>
+References: <20200629145452.123035-1-vkoul@kernel.org>
+ <20200629192416.GJ388985@builder.lan>
 MIME-Version: 1.0
-References: <20200629234921.3511-1-jonathan@marek.ca>
-In-Reply-To: <20200629234921.3511-1-jonathan@marek.ca>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 29 Jun 2020 20:36:18 -0700
-Message-ID: <CAF6AEGtEbAKo21YNMrV58FWiXSSKR7odycXYp=cW9Mso=qFATA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] drm/msm/a6xx: add A640/A650 hwcg
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>, Eric Anholt <eric@anholt.net>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200629192416.GJ388985@builder.lan>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 29, 2020 at 4:49 PM Jonathan Marek <jonathan@marek.ca> wrote:
->
-> Initialize hardware clock-gating registers on A640 and A650 GPUs.
->
-> I put the hwcg tables in adreno_device.c, but maybe it makes more
-> sense to keep them in a6xx_gpu.c? (this would allow switching a5xx
-> to use the gpulist too.. it isn't possible to include both a6xx.xml.h
-> and a5xx.xml.h in adreno_device.c)
+Hi Bjorn,
 
+On 29-06-20, 12:24, Bjorn Andersson wrote:
+> On Mon 29 Jun 07:54 PDT 2020, Vinod Koul wrote:
+> 
+> > UFS QMP phy drivers are duplicate as we are supposed to use common QMP
+> > phy driver which is working fine on various platforms. So remove the
+> > unused driver
+> > 
+> 
+> This describes the current state, but the UFS QMP driver had a purpose
+> not that long ago and I would like the commit message to describe what
+> changed and why it's now fine to remove the driver.
 
-yeah, I've kinda tried to avoid "crossing the streams".. maybe these
-should move to adreno_gpu
+Would below look better, also feel free to suggest as you have the
+more history on this :)
 
-BR,
--R
+"UFS QMP driver is dedicated driver for QMP phy for UFS variant. We
+also have a common QMP phy driver which works not only for UFS but
+USB and PCIe as well, so retire this driver in favour of the common
+driver"
 
->
-> Jonathan Marek (2):
->   drm/msm/a6xx: hwcg tables in gpulist
->   drm/msm/a6xx: add A640/A650 hwcg
->
->  drivers/gpu/drm/msm/adreno/a6xx.xml.h      |   8 +
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 140 ++-----------
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 219 +++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   7 +
->  4 files changed, 251 insertions(+), 123 deletions(-)
->
-> --
-> 2.26.1
->
+> 
+> I'm happy with the patch itself (i.e. the removal of the driver) though.
+
+Thanks
+-- 
+~Vinod
