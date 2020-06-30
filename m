@@ -2,104 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3825020FDD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2020 22:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D23E210025
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 00:42:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729848AbgF3UjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Jun 2020 16:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54174 "EHLO
+        id S1725845AbgF3Wms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Jun 2020 18:42:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729341AbgF3UjE (ORCPT
+        with ESMTP id S1726171AbgF3Wmr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Jun 2020 16:39:04 -0400
+        Tue, 30 Jun 2020 18:42:47 -0400
 Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3324EC061755;
-        Tue, 30 Jun 2020 13:39:04 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id m22so108173pgv.9;
-        Tue, 30 Jun 2020 13:39:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E268C03E97A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 15:42:47 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id t6so10671826pgq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 15:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SQiFOaLh1j0WoaGW8HU6ASOHGGkIHwej9YhMbLkGD8g=;
-        b=g+V9UwcbjoJZzicB/JpaUeCKluYowoLvLMVisPV+jeRGBTkI7Nz6RPIzsGk12F0fH4
-         zq/A8QQj7ER1s5L2bebyDMf6pcf4jJrFqPWsz8Nf6m0g+E9DkiBSX/L5ca6pNqUeCCcw
-         iu1N4qUwaKLe25xgQCJ55rIiIZhS9Jk/Mn1DheWX9BumrVflAOe0cqTGIDEAl2iLhDDq
-         yEsH105D84RpOGz42JNSKMcQ/fBYJZ6v5H+5+9SpjyGb2U435gTzdIYaTB+IqQSAkHYy
-         PWalaZd40GHE5Q60lwbIZU0JyTULWHVU9DbPFz8cUzJJVBeh160NzRcC6d1Gu+WZR29m
-         CsQQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=4tROU8ZvuaZmWV6LdzAj+Y7SH66ciOTu1ejGe3Zbx7g=;
+        b=LxyjdAIywfy8mpHg/UCwyfeBn1oqjhdpvahNe8MRAGNa7JtFwFsq1QwLBC/3SX7Kdb
+         YVT5aUyFbdm3ymn87UDXszbHtGmYeCBewAfTWKAq+AfmmVaGFRyKa0VbfisJUzdjpv5q
+         l8cQV3Axlkn0WliH+I/GxNsJ/+vho4NyGUpDk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SQiFOaLh1j0WoaGW8HU6ASOHGGkIHwej9YhMbLkGD8g=;
-        b=AVc6+mbv1r3LFj1+3t44r3k1NaSmP/mmOsAvBgGX0a0vjFT6umw1/ngR+nX6ijsS1w
-         8JwX8bTQu3f8ThrswynZ/ChSYZJuA8L1JML/vtZceHReBzWiEW/q/OaDh9ZIT2mGYfPF
-         OUdISTxrQ4R6ck45snD9N5Nzr8mM0DE4uqI0RJGt2o1yrRCI9K8QJYaEnqpuX2CW78h/
-         HYtq1cvHO+3W9OiYw9Y76ibIlVWADRFOtVH1m6n4UfH2jkrOi4AGmhbAC2Jla7Ey89un
-         aTeisQYtBK+pAUwuI9zamx+j32bH+4NFla9WJmuwb6zg1uFeLTuTTY+2325+wvInSiKR
-         bnBQ==
-X-Gm-Message-State: AOAM533CfYMJp7cQkfiYwZ9n3e/JWc9azHsTY1/evGys1l63C4bTtTTh
-        iwF+by4GLZwTggUD7k2WUnk=
-X-Google-Smtp-Source: ABdhPJwBbu9XaH6Gaawzg4apz35khgge11T7VS3A9pjCwqj0I3uOdYn6Igtq9M7Fe91d4sXCDCowiw==
-X-Received: by 2002:a05:6a00:1507:: with SMTP id q7mr19535233pfu.131.1593549543796;
-        Tue, 30 Jun 2020 13:39:03 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 19sm3576756pfy.193.2020.06.30.13.39.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Jun 2020 13:39:03 -0700 (PDT)
-Date:   Tue, 30 Jun 2020 13:39:02 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     linux-watchdog@vger.kernel.org,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Douglas Anderson <dianders@chromium.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=4tROU8ZvuaZmWV6LdzAj+Y7SH66ciOTu1ejGe3Zbx7g=;
+        b=jgJOChKCmwcG+6K1E/c/1FO4Y3SdIXpJu8UH0j/XFnUBhHFBHCbgRTpO0U95feJwZF
+         Hhp6EEVdsPy6OUEQMgXBykjUG9hoGLDKbe8z6rxfsiJlIiTI+6wTRCJ2tVWAc6wAjaGg
+         O1KuM4oi7ZqcDxuin5A/xDu7gi9r/0XDBHez37KmTlHcGByQ7B3luhXrNVu///YIKDN/
+         gpwZ2cZGCsgChXisdwusuAKMwHjGdTlFvkXWQPyeoIVbslRCwEV89s7MDQn5dbeYfgPe
+         gn13r3sNV1NmPLvgzNSvPONhbQYCiD6rfyfyo6Yl28qYvD8jIALWQl3LkJVDLx9lGIbM
+         8lXw==
+X-Gm-Message-State: AOAM531rAqh02O0pSlQykCVVER1PvUvjSeL0fBU+WvgF8A/0f/j/2Vp4
+        Z8jb3fkecuaHi8v+Og9NGr9IwA==
+X-Google-Smtp-Source: ABdhPJyyGyCtwY89tsA86dQ/YzcNfbjxiw5iep2NF0+/vWQluONrY1x97dC3KTcCgfgrkw2S2iRjNQ==
+X-Received: by 2002:a62:7847:: with SMTP id t68mr12871243pfc.112.1593556966449;
+        Tue, 30 Jun 2020 15:42:46 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id j70sm3781054pfd.208.2020.06.30.15.42.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jun 2020 15:42:45 -0700 (PDT)
+Date:   Tue, 30 Jun 2020 15:42:43 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: Re: [RESEND PATCHv3 2/2] dt-bindings: watchdog: Add compatible for
- QCS404, SC7180, SDM845, SM8150
-Message-ID: <20200630203902.GA20540@roeck-us.net>
-References: <cover.1593112534.git.saiprakash.ranjan@codeaurora.org>
- <09da1ba319dc4a27ef4e4e177e67e68f1cb4f35b.1593112534.git.saiprakash.ranjan@codeaurora.org>
+        Doug Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: Re: [PATCH v7 2/4] usb: dwc3: qcom: Add interconnect support in dwc3
+ driver
+Message-ID: <20200630224243.GH39073@google.com>
+References: <1585718145-29537-1-git-send-email-sanm@codeaurora.org>
+ <1585718145-29537-3-git-send-email-sanm@codeaurora.org>
+ <159120577830.69627.13288547914742515702@swboyd.mtv.corp.google.com>
+ <d9ccf188-4f00-d3ac-ba0f-73f06c087553@codeaurora.org>
+ <159126939154.69627.13027312816468830595@swboyd.mtv.corp.google.com>
+ <20200615194239.GW4525@google.com>
+ <3f8fcb0e-387d-e902-9f6b-1fde9d6ae404@codeaurora.org>
+ <20200616203849.GY4525@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <09da1ba319dc4a27ef4e4e177e67e68f1cb4f35b.1593112534.git.saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200616203849.GY4525@google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 12:59:05AM +0530, Sai Prakash Ranjan wrote:
-> Add missing compatible for watchdog timer on QCS404,
-> SC7180, SDM845 and SM8150 SoCs.
+On Tue, Jun 16, 2020 at 01:38:49PM -0700, Matthias Kaehlcke wrote:
+> On Tue, Jun 16, 2020 at 10:22:47AM +0530, Sandeep Maheswaram (Temp) wrote:
+> > 
+> > On 6/16/2020 1:12 AM, Matthias Kaehlcke wrote:
+> > > On Thu, Jun 04, 2020 at 04:16:31AM -0700, Stephen Boyd wrote:
+> > > > Quoting Sandeep Maheswaram (Temp) (2020-06-04 02:43:09)
+> > > > > On 6/3/2020 11:06 PM, Stephen Boyd wrote:
+> > > > > > Quoting Sandeep Maheswaram (2020-03-31 22:15:43)
+> > > > > > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > > > > index 1dfd024..d33ae86 100644
+> > > > > > > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > > > > > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > > > > @@ -285,6 +307,101 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+> > > > > > >           return 0;
+> > > > > > >    }
+> > > > > > > +
+> > > > > > > +/**
+> > > > > > > + * dwc3_qcom_interconnect_init() - Get interconnect path handles
+> > > > > > > + * @qcom:                      Pointer to the concerned usb core.
+> > > > > > > + *
+> > > > > > > + */
+> > > > > > > +static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+> > > > > > > +{
+> > > > > > > +       struct device *dev = qcom->dev;
+> > > > > > > +       int ret;
+> > > > > > > +
+> > > > > > > +       if (!device_is_bound(&qcom->dwc3->dev))
+> > > > > > > +               return -EPROBE_DEFER;
+> > > > > > How is this supposed to work? I see that this was added in an earlier
+> > > > > > revision of this patch series but there isn't any mention of why
+> > > > > > device_is_bound() is used here. It would be great if there was a comment
+> > > > > > detailing why this is necessary. It sounds like maximum_speed is
+> > > > > > important?
+> > > > > > 
+> > > > > > Furthermore, dwc3_qcom_interconnect_init() is called by
+> > > > > > dwc3_qcom_probe() which is the function that registers the device for
+> > > > > > qcom->dwc3->dev. If that device doesn't probe between the time it is
+> > > > > > registered by dwc3_qcom_probe() and this function is called then we'll
+> > > > > > fail dwc3_qcom_probe() with -EPROBE_DEFER. And that will remove the
+> > > > > > qcom->dwc3->dev device from the platform bus because we call
+> > > > > > of_platform_depopulate() on the error path of dwc3_qcom_probe().
+> > > > > > 
+> > > > > > So isn't this whole thing racy and can potentially lead us to a driver
+> > > > > > probe loop where the wrapper (dwc3_qcom) and the core (dwc3) are probing
+> > > > > > and we're trying to time it just right so that driver for dwc3 binds
+> > > > > > before we setup interconnects? I don't know if dwc3 can communicate to
+> > > > > > the wrapper but that would be more of a direct way to do this. Or maybe
+> > > > > > the wrapper should try to read the DT property for maximum speed and
+> > > > > > fallback to a worst case high bandwidth value if it can't figure it out
+> > > > > > itself without help from dwc3 core.
+> > > > > > 
+> > > > > This was added in V4 to address comments from Matthias in V3
+> > > > > 
+> > > > > https://patchwork.kernel.org/patch/11148587/
+> > > > > 
+> > > > Yes, that why I said:
+> > > > 
+> > > > "I see that this was added in an earlier
+> > > >   revision of this patch series but there isn't any mention of why
+> > > >   device_is_bound() is used here. It would be great if there was a comment
+> > > >   detailing why this is necessary. It sounds like maximum_speed is
+> > > >   important?"
+> > > > 
+> > > > Can you please respond to the rest of my email?
+> > > I agree with Stephen that using device_is_bound() isn't a good option
+> > > in this case, when I suggested it I wasn't looking at the big picture
+> > > of how probing the core driver is triggered, sorry about that.
+> > > 
+> > > Reading the speed from the DT with usb_get_maximum_speed() as Stephen
+> > > suggests would be an option, the inconvenient is that we then
+> > > essentially require the property to be defined, while the core driver
+> > > gets a suitable value from hardware registers. Not sure if the wrapper
+> > > driver could read from the same registers.
+> > > 
+> > > One option could be to poll device_is_bound() for 100 ms (or so), with
+> > > sleeps between polls. It's not elegant but would probably work if we
+> > > don't find a better solution.
+> > if (np)
+> >         ret = dwc3_qcom_of_register_core(pdev);
+> >     else
+> >         ret = dwc3_qcom_acpi_register_core(pdev);
+> > 
+> >     if (ret) {
+> >         dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
+> >         goto depopulate;
+> >     }
+> > 
+> >     ret = dwc3_qcom_interconnect_init(qcom);
+> >     if (ret)
+> >         goto depopulate;
+> > 
+> >     qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
+> > 
+> > Before calling dwc3_qcom_interconnect_init we are checking
+> > 
+> >     if (ret) {
+> >         dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
+> >         goto depopulate;
+> >     }
+> > 
+> > Doesn't  this condition confirm the core driver is probed?
 > 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-
-> ---
->  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+> Not really:
 > 
-> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> index 5448cc537a03..0709ddf0b6a5 100644
-> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> @@ -15,6 +15,10 @@ allOf:
->  properties:
->    compatible:
->      enum:
-> +      - qcom,apss-wdt-qcs404
-> +      - qcom,apss-wdt-sc7180
-> +      - qcom,apss-wdt-sdm845
-> +      - qcom,apss-wdt-sm8150
->        - qcom,kpss-timer
->        - qcom,kpss-wdt
->        - qcom,kpss-wdt-apq8064
+> // called under the hood by of_platform_populate()
+> static int really_probe(struct device *dev, struct device_driver *drv)
+> {
+> 	...
+> 
+> 	if (dev->bus->probe) {
+> 		ret = dev->bus->probe(dev);
+> 		if (ret)
+> 			goto probe_failed;
+> 	} else if (drv->probe) {
+> 		ret = drv->probe(dev);
+> 	        if (ret)
+> 	       		goto probe_failed;
+>         }
+> 
+> 	...
+> 
+> probe_failed:
+> 	...
+> 
+> 	/*
+>          * Ignore errors returned by ->probe so that the next driver can try
+>          * its luck.
+>          */
+>         ret = 0;
+> 
+> 	...
+> 
+> 	return ret;
+> }
+> 
+> As a result of_platform_populate() in dwc3_qcom_of_register_core()
+> returns 0 even when probing the device failed:
+> 
+> [    0.244339] dwc3-qcom a6f8800.usb: DBG: populate
+> [    0.244772] dwc3 a600000.dwc3: DBG: dwc3_probe
+> [    0.245237] dwc3 a600000.dwc3: DBG: dwc3_probe err: -517
+> [    0.245264] dwc3-qcom a6f8800.usb: DBG: populate (done)
+> [    0.245317] dwc3-qcom a6f8800.usb: DBG: dwc3_qcom_interconnect_init() failed: -517
+> 
+> Probe fails because the interconnect stuff isn't ready yet, otherwise
+> it could access invalid data.
+> 
+> A later _populate() is successful and the probing of the core is done
+> synchronously, i.e. after _populate() the core driver is fully
+> initialized:
+> 
+> [    3.898106] dwc3-qcom a6f8800.usb: DBG: populate
+> [    3.908356] dwc3 a600000.dwc3: DBG: dwc3_probe
+> [    4.205104] dwc3 a600000.dwc3: DBG: dwc3_probe (done)
+> [    4.210305] dwc3-qcom a6f8800.usb: DBG: populate (done)
+> 
+> The synchronous probing in _populate() suggests that using device_is_bound()
+> would actually be a valid option, either the core device was successfully
+> probed or not, there should be no race.
+> 
+> I sent a patch that adds this check to dwc3_qcom_of_register_core(), which
+> is less confusing and makes clear that the core device is valid unless
+> this function returns an error:
+> 
+>   https://lore.kernel.org/patchwork/patch/1257279/
+> 
+> It might make sense to add your "driver core:Export the symbol
+> device_is_bound" patch, mine and this one to a single series.
+
+From the discussion on "driver core:Export the symbol device_is_bound"
+(https://patchwork.kernel.org/patch/11584225/) it is clear that
+this won't fly. The split dwc3 driver is considered a broken
+design.
+
+This is what Rob Herring said:
+
+  We never should have had this split either in the DT binding nor
+  driver(s) as if the SoC wrapper crap and licensed IP block are
+  independent things. The thing to do here is either make the DWC3 code
+  a library which drivers call (e.g. SDHCI) or add hooks into the DWC3
+  driver for platform specifics (e.g. Designware PCI). Neither is a
+  simple solution though.
+
+That seems to be the desirable solution in the longer term, but it
+doesn't seem reasonable to me to expect you to fix this design issue
+to add interconnect support.
+
+Some possible options to move forward:
+
+- try to determine the max speed without involving the core device
+- select a reasonable default when 'maximum-speed' is not specified
+- use the core device to determine the max speed and pray
