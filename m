@@ -2,240 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB2212102F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 06:27:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B611721039B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 08:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725263AbgGAE1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 00:27:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41566 "EHLO
+        id S1726904AbgGAGGK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 02:06:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726021AbgGAE1J (ORCPT
+        with ESMTP id S1725272AbgGAGGI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 00:27:09 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D8F3C03E979
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 21:27:08 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id h23so17529952qtr.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 21:27:08 -0700 (PDT)
+        Wed, 1 Jul 2020 02:06:08 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2246C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 23:06:08 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id g14so7320003ual.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2020 23:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0wIgs3VKhIuaXHVPWmnow5qLXIDMbpb3CKsGv/tv2Rk=;
-        b=fvMTkwlF68FklyfTloViaxEICph/kC2zKCH6JBOpKRAJfLRbgiI9qaQ18FIKeKVtiz
-         ff95WfXrYG/YuNqsgmNCwmXASHNY0fdZ9CyOvShO3Wa1sIPTsRv+hBq4sLDia52UUk4N
-         V4/3hyKf2UWqBGesZq5Anle8Nwic/sftQD3Pt46sFTW9V87syXv/AwHhjXhbesDR2neJ
-         q/W9tHv/qIlcmxQtWUcgEzSrgcZxxopLyK4uncNWGQ/zwIjBAFTdylUWCDA+rbQE+0c9
-         LOu3lyF8B4cPY7KiKbGTqSQ2HED35AGoYdlJh0VMWpgzD5GkREYoNfZswzOIEmBDzG7H
-         Kwjw==
+        d=verdurent-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QlAVndFTQSyDLHMBObLaphwylvj91OJ+ZG/+4hBUq2U=;
+        b=R8g/FGm1exwsXXqZdZONmVu9Gsg1coRo6Ha/j73IUWoR6p6F6htou6M6xm4DT3Y41z
+         JhQvxzhXo0AiV7R/DLh51C7aujewYAT0/mxobXVwT13ZuOGbhWPUV4/1+k1WPBwDgisj
+         r0r1AePr1ixOTfhkxyHEhC1LHuNFc+mqt+ZpO84W524n+p82CVnYy0KYLE+/IYc8pZvk
+         AM0vMmgwAB/+9BL+7iZoQwMNT0bDXY41e3/uxmg78ECzrWLbkqggeL8Yi5j6Z4gyDu55
+         5uke7CfqsWOVwVMViM3Dl9eo4ZSW/Ynxoyd3rtSfvnYrtKGCr/QoKlG5ylMmq+ScA/w8
+         vMuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0wIgs3VKhIuaXHVPWmnow5qLXIDMbpb3CKsGv/tv2Rk=;
-        b=OVQlmCAxDv6IK+t20hsSzCwLNCeNJsWhDDF0k9nfetVIZL2jqsIEyn+0c96tQ9lp8r
-         GgIruSPWLVVmLAdtUm8i9pr4xtPr8Yg2hnmTkAxnvCptuwbDr0OXETBe1R58xgCniJnf
-         QZ/DzVWmPrQgul+PD8+mDqGQ82sR3u7ksaXR9q5huzalu0++3jSBwNGCYyAa3UqydcBs
-         3IvJus/DE4QsyDjoTVxCiJdI1PMfu9zDZ+hBFxVuRFopqsbg77tELlokKX9zKr/fL5rA
-         9Il7iwkBrDWicbrgX7QTVh4BtQNVS0+W2VhegVqb3633ZNYVr7wxkIaXXyOIdPFvMFTy
-         472A==
-X-Gm-Message-State: AOAM533UFwh3qWdy5GHNYw82Gsbwhn71hANtT4b6/m2B6Eer26jHouSE
-        lwOM7wrkkdIvPtpziYZoCJiHRYqx2P4Viw==
-X-Google-Smtp-Source: ABdhPJzgIuK/4NY14D4tI2IOCwMzUL2HpMoesgwdny5dP+EQJUm13F7z14AXMpnBiliTjyAcrD+F0Q==
-X-Received: by 2002:aed:3904:: with SMTP id l4mr20927805qte.370.1593577626394;
-        Tue, 30 Jun 2020 21:27:06 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id 195sm4816483qkl.37.2020.06.30.21.27.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2020 21:27:05 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        kbuild test robot <lkp@intel.com>,
-        linux-kernel@vger.kernel.org (open list),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-pm@vger.kernel.org (open list:INTERCONNECT API)
-Subject: [RFC PATCH] interconnect: qcom: add functions to query addr/cmds for a path
-Date:   Wed,  1 Jul 2020 00:25:25 -0400
-Message-Id: <20200701042528.12321-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QlAVndFTQSyDLHMBObLaphwylvj91OJ+ZG/+4hBUq2U=;
+        b=J0x82FJxWiZLMyAubtpPbKMwvt0g6FSAjkZuFO67diXqY5mS6MCYm/37NuPLm/jVFB
+         ucda/bkOkhwUggoU8MAM/HwwAPBX44UTf3CDa6LHBEss6rkvFooORkLqF5pk4DlfyI1M
+         DoFy2qfkWyexHcPcOFGpe/Ui7cx6J8AQAKC5W1DVWl25pe+KtLkWVz2LulguozYR4DuB
+         DNQvLNwM2n890sNYSsb4yEGcBqb8c3Uvtsx+hXodl3B3E/guvUh7SQThEOWSXAYHkROs
+         9zk0oWdh+GhQvtX4bTwy2W7zYvhJ9zsnwgfu0TL8Ey9LHGLSNPc0IY3blV3U/KXmTe/L
+         6e4g==
+X-Gm-Message-State: AOAM533d9556P9uNANYzWJnWS63s1xym174VggTHjWJYSbS550ZO8Buh
+        6tC71u2ep+TffIvK+siiARBNkIHLq/y6GTKboKCeSw==
+X-Google-Smtp-Source: ABdhPJwlUYtAuuGOocORy/hw8rvM8jnxT5xv3HDRCgeYljriIwoh0+tU0DVYJ9VcvzZYWuAKIXYNWmuh4hBPO1RRgFE=
+X-Received: by 2002:ab0:7056:: with SMTP id v22mr10319965ual.67.1593583567791;
+ Tue, 30 Jun 2020 23:06:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200621193549.2070434-1-dmitry.baryshkov@linaro.org>
+ <20200621193549.2070434-6-dmitry.baryshkov@linaro.org> <CAHLCerOqWWr3i32tRgGfep12YfDufw-WU80VWUsUNpDDZ13D-w@mail.gmail.com>
+ <CAA8EJppAQgmS7VVCjVe8QST2RQU46mXO2jtUPFY30mH9sVu_rQ@mail.gmail.com>
+In-Reply-To: <CAA8EJppAQgmS7VVCjVe8QST2RQU46mXO2jtUPFY30mH9sVu_rQ@mail.gmail.com>
+From:   Amit Kucheria <amit.kucheria@verdurent.com>
+Date:   Wed, 1 Jul 2020 11:35:56 +0530
+Message-ID: <CAHLCerM8KwUhpossD=vyhU4q22FnrZse_zhiS0ZobZM0J9X8PA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] arm64: dts: sm8250-dts: add thermal zones using
+ pmic's adc-tm5
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The a6xx GMU can vote for ddr and cnoc bandwidth, but it needs to be able
-to query the interconnect driver for bcm addresses and commands.
+On Tue, Jun 30, 2020 at 5:40 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Hi,
+>
+> On Tue, 30 Jun 2020 at 08:06, Amit Kucheria <amit.kucheria@verdurent.com> wrote:
+> > On Mon, Jun 22, 2020 at 1:06 AM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > Port thermal zones definitions from msm-4.19 tree. Enable and add
+> > > channel configuration to PMIC's ADC-TM definitions. Declare thermal
+> > > zones and respective trip points.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 237 ++++++++++++++++++++++++
+> > >  1 file changed, 237 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> >
+> > IMO, this should be separated in the pmic dts file like we do for
+> > other QC platforms since the PMICs tend to be used in multiple
+> > platforms.
+>
+> Unlike other PMIC/tsens thermal zones, these definitions are quite
+> specific to the board from my point of view.
 
-I'm not sure what is the best way to go about implementing this, this is
-what I came up with.
+How so? Can you describe what is different about this PMIC?
 
-I included a quick example of how this can be used by the a6xx driver to
-fill out the GMU bw_table (two ddr bandwidth levels in this example, note
-this would be using the frequency table in dts and not hardcoded values).
-
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 20 ++++-------
- drivers/interconnect/qcom/icc-rpmh.c  | 50 +++++++++++++++++++++++++++
- include/soc/qcom/icc.h                | 11 ++++++
- 3 files changed, 68 insertions(+), 13 deletions(-)
- create mode 100644 include/soc/qcom/icc.h
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index ccd44d0418f8..1fb8f0480be3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -4,6 +4,7 @@
- #include <linux/completion.h>
- #include <linux/circ_buf.h>
- #include <linux/list.h>
-+#include <soc/qcom/icc.h>
- 
- #include "a6xx_gmu.h"
- #include "a6xx_gmu.xml.h"
-@@ -320,24 +321,18 @@ static void a640_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
- 	msg->cnoc_cmds_data[1][2] =  0x60000001;
- }
- 
--static void a650_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
-+static void a650_build_bw_table(struct a6xx_hfi_msg_bw_table *msg, struct icc_path *path)
- {
- 	/*
- 	 * Send a single "off" entry just to get things running
- 	 * TODO: bus scaling
- 	 */
--	msg->bw_level_num = 1;
--
--	msg->ddr_cmds_num = 3;
-+	msg->bw_level_num = 2;
- 	msg->ddr_wait_bitmask = 0x01;
- 
--	msg->ddr_cmds_addrs[0] = 0x50000;
--	msg->ddr_cmds_addrs[1] = 0x50004;
--	msg->ddr_cmds_addrs[2] = 0x5007c;
--
--	msg->ddr_cmds_data[0][0] =  0x40000000;
--	msg->ddr_cmds_data[0][1] =  0x40000000;
--	msg->ddr_cmds_data[0][2] =  0x40000000;
-+	msg->ddr_cmds_num = qcom_icc_query_addr(path, msg->ddr_cmds_addrs);
-+	qcom_icc_query_cmd(path, msg->ddr_cmds_data[0], 0, 0);
-+	qcom_icc_query_cmd(path, msg->ddr_cmds_data[1], 0, 7216000);
- 
- 	/*
- 	 * These are the CX (CNOC) votes - these are used by the GMU but the
-@@ -388,7 +383,6 @@ static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
- 	msg->cnoc_cmds_data[1][2] =  0x60000001;
- }
- 
--
- static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
- {
- 	struct a6xx_hfi_msg_bw_table msg = { 0 };
-@@ -400,7 +394,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
- 	else if (adreno_is_a640(adreno_gpu))
- 		a640_build_bw_table(&msg);
- 	else if (adreno_is_a650(adreno_gpu))
--		a650_build_bw_table(&msg);
-+		a650_build_bw_table(&msg, adreno_gpu->base.icc_path);
- 	else
- 		a6xx_build_bw_table(&msg);
- 
-diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-index 3ac5182c9ab2..3ce2920330f9 100644
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -9,6 +9,7 @@
- 
- #include "bcm-voter.h"
- #include "icc-rpmh.h"
-+#include "../internal.h"
- 
- /**
-  * qcom_icc_pre_aggregate - cleans up stale values from prior icc_set
-@@ -92,6 +93,55 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- }
- EXPORT_SYMBOL_GPL(qcom_icc_set);
- 
-+static u32 bcm_query(struct qcom_icc_bcm *bcm, u64 sum_avg, u64 max_peak)
-+{
-+	u64 temp, agg_peak = 0;
-+	int i;
-+
-+	for (i = 0; i < bcm->num_nodes; i++) {
-+		temp = max_peak * bcm->aux_data.width;
-+		do_div(temp, bcm->nodes[i]->buswidth);
-+		agg_peak = max(agg_peak, temp);
-+	}
-+
-+	temp = agg_peak * 1000ULL;
-+	do_div(temp, bcm->aux_data.unit);
-+
-+	// TODO vote_x
-+
-+	return BCM_TCS_CMD(true, temp != 0, 0, temp);
-+}
-+
-+int qcom_icc_query_addr(struct icc_path *path, u32 *addr)
-+{
-+	struct qcom_icc_node *qn;
-+	int i, j, k = 0;
-+
-+	for (i = 0; i < path->num_nodes; i++) {
-+		qn = path->reqs[i].node->data;
-+		for (j = 0; j < qn->num_bcms; j++, k++)
-+			addr[k] = qn->bcms[j]->addr;
-+	}
-+
-+	return k;
-+}
-+EXPORT_SYMBOL_GPL(qcom_icc_query_addr);
-+
-+int qcom_icc_query_cmd(struct icc_path *path, u32 *cmd, u64 avg, u64 max)
-+{
-+	struct qcom_icc_node *qn;
-+	int i, j, k = 0;
-+
-+	for (i = 0; i < path->num_nodes; i++) {
-+		qn = path->reqs[i].node->data;
-+		for (j = 0; j < qn->num_bcms; j++, k++)
-+			cmd[k] = bcm_query(qn->bcms[j], avg, max);
-+	}
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(qcom_icc_query_cmd);
-+
- /**
-  * qcom_icc_bcm_init - populates bcm aux data and connect qnodes
-  * @bcm: bcm to be initialized
-diff --git a/include/soc/qcom/icc.h b/include/soc/qcom/icc.h
-new file mode 100644
-index 000000000000..8d0ddde49739
---- /dev/null
-+++ b/include/soc/qcom/icc.h
-@@ -0,0 +1,11 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef __SOC_QCOM_ICC_H__
-+#define __SOC_QCOM_ICC_H__
-+
-+#include <linux/interconnect.h>
-+
-+int qcom_icc_query_addr(struct icc_path *path, u32 *addr);
-+int qcom_icc_query_cmd(struct icc_path *path, u32 *cmd, u64 avg, u64 max);
-+
-+#endif /* __SOC_QCOM_ICC_H__ */
--- 
-2.26.1
-
+> > > index aa37eb112d85..78f0cf582a9a 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > > @@ -24,6 +24,104 @@ chosen {
+> > >                 stdout-path = "serial0:115200n8";
+> > >         };
+> > >
+> > > +       thermal-zones {
+> > > +               xo-therm {
+> > > +                       polling-delay-passive = <0>;
+> > > +                       polling-delay = <0>;
+> > > +                       thermal-sensors = <&pm8150_adc_tm 0>;
+> > > +                       trips {
+> > > +                               active-config0 {
+> > > +                                       temperature = <125000>;
+> > > +                                       hysteresis = <1000>;
+> > > +                                       type = "passive";
+> > > +                               };
+> > > +                       };
+> > > +               };
+> > > +
