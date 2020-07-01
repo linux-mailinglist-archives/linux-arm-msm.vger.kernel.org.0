@@ -2,95 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9B5210838
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 11:33:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A80812108AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 11:53:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729146AbgGAJdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 05:33:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57866 "EHLO mail.kernel.org"
+        id S1726343AbgGAJxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 05:53:34 -0400
+Received: from smtp.asem.it ([151.1.184.197]:64358 "EHLO smtp.asem.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727090AbgGAJdT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 05:33:19 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5E30D20722;
-        Wed,  1 Jul 2020 09:33:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593595998;
-        bh=Q7gpEoPkh6bA0z/x1q2X8NK5Oy7GN6NSJUFo0hDV3Ng=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PrJBBnhirtBPQWA1S4Fe5yOp4m1YwcWuw+kJWJzQeh8DmWBMvOrftcVAB2jzQZq3I
-         Yv6fql3efRC0U3g4T0nYdGG3FEh4PMtNJnglU76jgyiBCfdDHIblP4PpGtEo+0SdT2
-         T/oapkBtbN3MvbHxUtzPFCToKaXzGJzI/uSncBY4=
-Date:   Wed, 1 Jul 2020 10:33:16 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     "Ardelean, Alexandru" <alexandru.Ardelean@analog.com>
-Cc:     "dianders@chromium.org" <dianders@chromium.org>,
-        "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "enric.balletbo@collabora.com" <enric.balletbo@collabora.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "bleung@chromium.org" <bleung@chromium.org>
-Subject: Re: [PATCH] spi: Avoid setting the chip select if we don't need to
-Message-ID: <20200701093316.GA5385@sirena.org.uk>
-References: <20200629164103.1.Ied8e8ad8bbb2df7f947e3bc5ea1c315e041785a2@changeid>
- <522b1d9297604a1cfa93fdc54a3cd0773cf7580a.camel@analog.com>
+        id S1729823AbgGAJxd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Jul 2020 05:53:33 -0400
+Received: from webmail.asem.it
+        by asem.it (smtp.asem.it)
+        (SecurityGateway 6.5.2)
+        with ESMTP id SG000352730.MSG 
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2020 11:53:28 +0200S
+Received: from ASAS044.asem.intra (172.16.16.44) by ASAS044.asem.intra
+ (172.16.16.44) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 1 Jul
+ 2020 11:53:25 +0200
+Received: from flavio-x.asem.intra (172.16.17.208) by ASAS044.asem.intra
+ (172.16.16.44) with Microsoft SMTP Server id 15.1.1979.3 via Frontend
+ Transport; Wed, 1 Jul 2020 11:53:25 +0200
+From:   Flavio Suligoi <f.suligoi@asem.it>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Flavio Suligoi <f.suligoi@asem.it>
+Subject: [PATCH v1 1/1] mmc: host: sdhci-msm: fix spelling mistake
+Date:   Wed, 1 Jul 2020 11:53:13 +0200
+Message-ID: <20200701095313.27507-1-f.suligoi@asem.it>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FCuugMFkClbJLl1L"
-Content-Disposition: inline
-In-Reply-To: <522b1d9297604a1cfa93fdc54a3cd0773cf7580a.camel@analog.com>
-X-Cookie: marriage, n.:
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-SGHeloLookup-Result: pass smtp.helo=webmail.asem.it (ip=172.16.16.44)
+X-SGSPF-Result: none (smtp.asem.it)
+X-SGOP-RefID: str=0001.0A090209.5EFC5D16.0032,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0 (_st=1 _vt=0 _iwf=0)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fix typo: "trigered" --> "triggered"
 
---FCuugMFkClbJLl1L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+---
+v1: add Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 
-On Wed, Jul 01, 2020 at 06:26:24AM +0000, Ardelean, Alexandru wrote:
-> On Mon, 2020-06-29 at 16:41 -0700, Douglas Anderson wrote:
+ drivers/mmc/host/sdhci-msm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> > +	spi->controller->last_cs_enable = enable;
-> > +	spi->controller->last_cs_mode_high = spi->mode & SPI_CS_HIGH;
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index b277dd7fbdb5..3f615d0ccb61 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1362,7 +1362,7 @@ static inline void sdhci_msm_complete_pwr_irq_wait(
+  * To what state the register writes will change the IO lines should be passed
+  * as the argument req_type. This API will check whether the IO line's state
+  * is already the expected state and will wait for power irq only if
+- * power irq is expected to be trigerred based on the current IO line state
++ * power irq is expected to be triggered based on the current IO line state
+  * and expected IO line state.
+  */
+ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+-- 
+2.17.1
 
-> I don't feel like this is the best approach for the SPI CS handling,
-> because it's pretty difficult to guess the last CS state, and whether this
-> return would cause other weirder issues [like not toggling CS when it
-> should].
-
-There's no guesswork involved here - the only thing that should be
-setting the chip select is the SPI core so other than at startup we
-always know the state of the chip select.
-
-> Maybe a question is: when should this CS be toggled [or not]?
-> Is it between 2 calls of spi_transfer_one_message() or between 2
-> spi_transfers?
-> Or, is "xfer->cs_change == 1" where it shouldn't be?
-
-This is well documented, it's asserted while a message is being
-transferred unless changed by cs_change in which case we do whatever the
-opposite of the default action is.
-
---FCuugMFkClbJLl1L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl78WFgACgkQJNaLcl1U
-h9CK7gf+Mr0ecVOXY5ISDr+Ey9IaXHmxgN6V0Z8Clkb7HJ6BM3T1BaHq9IoB8Sag
-ZluyKjIzXpzKgUwXHwWuwVAB+N4TNMsNn8tvDsEDtqw+Bdt0TSrDCp8jHsNIkq4g
-vDCqDsjiVNe67ouQLATkV1hMfn4GN72hNvjLR7waEnztE0e0GbIkVjq5Qa+zcXta
-6fUl9EKYcoTUFqeFgp8b1WuIuvi4zLW7ryiQLYDEIKVJOrmdYrE5t7PWbmLfeivJ
-uGCFHgUCdHRhc1wOGVd+7DZZo404A+AobO+/gBj7mzx8sDnbr6vCtEOt2iUA3rFZ
-C+6N6Xh4an71mefmNEqWH2YJ08kHVw==
-=KyJ9
------END PGP SIGNATURE-----
-
---FCuugMFkClbJLl1L--
