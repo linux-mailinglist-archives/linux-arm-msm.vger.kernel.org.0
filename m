@@ -2,56 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB65B2113FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 22:00:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3809211477
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 22:35:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726444AbgGAUAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 16:00:24 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:64715 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726049AbgGAUAY (ORCPT
+        id S1726287AbgGAUfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 16:35:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726144AbgGAUf3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 16:00:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593633623; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=+Pn1474j/5xsTytr2L5ZmcpTGg1W/hqe1WIx/N9tLNU=; b=o4Bzc4FhAaSn3N+tKEB4icSaK+wJ76YB8Plv+Jc0U5XGigbdE2Jgn3soJ2Hy7e6nZChpLeou
- V91CUoNUgcolks+zZhB0c+ns0sg8TqrXxNPnTtdwIMQxBKPpplrHJxMyCzT3Y58MAxZ4bUE7
- 55xYxyozbWGARGxe3HUDFMQRfR8=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
- 5efceb496f2ee827da04f368 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Jul 2020 20:00:09
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 497D5C433CB; Wed,  1 Jul 2020 20:00:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1CF91C433CA;
-        Wed,  1 Jul 2020 20:00:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1CF91C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, rishabhb@codeaurora.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, tsoni@codeaurora.org,
-        sidgup@codeaurora.org, stable@vger.kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [RESEND v1] soc: qcom: pdr: Reorder the PD state indication ack
-Date:   Thu,  2 Jul 2020 01:29:54 +0530
-Message-Id: <20200701195954.9007-1-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
+        Wed, 1 Jul 2020 16:35:29 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B55A4C08C5C1;
+        Wed,  1 Jul 2020 13:35:29 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id j1so11488581pfe.4;
+        Wed, 01 Jul 2020 13:35:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HJ9TTMafjAv2n6VF7CyukcttktdVGJm2gJrszfZ6yf0=;
+        b=eLGWVeTElNhUAoI1bkt1Q/YJF+W9Y/Hj92NiYYHjzJ7FEnGOfAZ5vU0qxI12qZ5uAE
+         pTqPszrGg4gMawg+/HY/3BmpMvqa9tP16eqWJoFiQ/YOKEr4IVhcikEAeAylh+Vs7VBl
+         Mh+iaDh+l2PJuxj8p+ulSBQwNW4YH3FnuSfSv+g2iXed9wknURQdO5lXe3gPKUlecsIJ
+         QhNq+F/2OLLNVmR94Qfr1Wno7ZnCTqViWaTrNoXX++ZgS7F8a05Ynqes8exHMMkao+G2
+         ekiGg0CZk/4OD1S1w0xiJBatcngizTOKVe+AgZIzs78aPjOcMcoD4yh738b3UXKXMKdT
+         YnzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HJ9TTMafjAv2n6VF7CyukcttktdVGJm2gJrszfZ6yf0=;
+        b=ACyDupmSyhfxoR7aR4uuJebytGeYsMZ1pWuo0xN74z41hMQT5Nq0Twf0VwxiAw0vyH
+         QcfaLLiC8TSoLVmVqkS+rheqgNNi8GylIloqX3stj/mO2BsRIkEQJBaH2cogTujQGB3e
+         YqlPdb0c+hnyNeEbKubBZc0PgCk09Rj3NtuQX5heLjnddkff+cUo8n1ygQqawBId05rF
+         KpjoDGTljpfDnO0T13L7JrhDumBCouGDLtlcslaRSBR2NfT7HkrVANphTz2dDZBcHZ/F
+         C1ksoIsb1YR1MIa2ii+04PVE+JnI7thrkvHaE0yr57gHAuf3yjwijojk+YaKMMq2REMb
+         IGXw==
+X-Gm-Message-State: AOAM533wjBFkARYlLm/Soa5VyY3rLss0kOBVaf56w+7EJ3Qyu9fB+iGO
+        ZMuAvB6dTVzOWrQnsT/FVLU=
+X-Google-Smtp-Source: ABdhPJxUoiCn4AGn+fNLW0zKG5dEHRnT9pCAwHcIWzYq8IHBBFjU9ONd0ScleoT7eOV/MMwBuRTZBw==
+X-Received: by 2002:a63:4c08:: with SMTP id z8mr20807693pga.201.1593635729136;
+        Wed, 01 Jul 2020 13:35:29 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id e3sm3195919pjv.47.2020.07.01.13.35.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jul 2020 13:35:28 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Hongbo Yao <yaohongbo@huawei.com>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: ratelimit crtc event overflow error
+Date:   Wed,  1 Jul 2020 13:36:00 -0700
+Message-Id: <20200701203602.1272157-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -59,44 +72,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Protection Domains (PD) have a mechanism to keep its resources
-enabled until the PD down indication is acked. Reorder the PD state
-indication ack so that clients get to release the relevant resources
-before the PD goes down.
+From: Rob Clark <robdclark@chromium.org>
 
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-Reported-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+This can happen a lot when things go pear shaped.  Lets not flood dmesg
+when this happens.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I couldn't find the previous patch on patchworks. Resending the patch
-since it would need to land on stable trees as well
-
- drivers/soc/qcom/pdr_interface.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-index a90d707da6894..088dc99f77f3f 100644
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -279,13 +279,15 @@ static void pdr_indack_work(struct work_struct *work)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index e15b42a780e0..969d95aa873c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -389,7 +389,7 @@ static void dpu_crtc_frame_event_cb(void *data, u32 event)
+ 	spin_unlock_irqrestore(&dpu_crtc->spin_lock, flags);
  
- 	list_for_each_entry_safe(ind, tmp, &pdr->indack_list, node) {
- 		pds = ind->pds;
--		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
+ 	if (!fevent) {
+-		DRM_ERROR("crtc%d event %d overflow\n", crtc->base.id, event);
++		DRM_ERROR_RATELIMITED("crtc%d event %d overflow\n", crtc->base.id, event);
+ 		return;
+ 	}
  
- 		mutex_lock(&pdr->status_lock);
- 		pds->state = ind->curr_state;
- 		pdr->status(pds->state, pds->service_path, pdr->priv);
- 		mutex_unlock(&pdr->status_lock);
- 
-+		/* Ack the indication after clients release the PD resources */
-+		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
-+
- 		mutex_lock(&pdr->list_lock);
- 		list_del(&ind->node);
- 		mutex_unlock(&pdr->list_lock);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.26.2
 
