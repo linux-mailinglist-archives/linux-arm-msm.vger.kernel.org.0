@@ -2,136 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 417D72109CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB7FB210A34
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 13:21:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730160AbgGAK4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 06:56:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729892AbgGAK4P (ORCPT
+        id S1730239AbgGALVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 07:21:14 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:12342 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730216AbgGALVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:56:15 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 124FCC03E979
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2020 03:56:16 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id 12so13716507oir.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2020 03:56:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9R1819T+AMdAOtCQQNpTxAKlBNbGEf7KSfYXQ+RjODU=;
-        b=aYHAkQYkS6JUqmaJPF5BVtaNalhoghvq/swOD0R3FZXxx7mUsV4ECOXfnvppWngu+R
-         9Z9Dh5k1WLPz7Vyk8L3ruAXXX1rV75XEYzFQHi0sHv353WD+DOUSpmHnPS0pc/gsVvEd
-         KYRrv7z57XqyisydWQUOZ5+OhtMmpXmrRbxqYuSrGyAWygKr5tFar35r1uEzWGQD9+KB
-         kSViPFnIiFmZ1beM9Cd69yd8pkLuOU4fSnFXKJwtHT45bP/6WVgEUxfOCy4Oopso12yO
-         6Ie1EjRAbSYb2AUj59lbogW+A4ezR3M9NEhRW7yiOHKcQG8o9RbCRNdHx9pXxmBJcg3/
-         3U/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9R1819T+AMdAOtCQQNpTxAKlBNbGEf7KSfYXQ+RjODU=;
-        b=WDCLeijmhxZaqohy2d6KRsQfPcSL6YX/OiwjxP5Gs6O7ilrX/PyKZ1Ab5OJlYZGD/m
-         PAhDUKJqSyYeJ+zw3WBYVEez9Gs2Xqu096Ng8tL8vjkelEXQHESkeWw1VayLuVvKuyGh
-         I3vB06A+uC/0ofk+bOfAhFxpoDm8dsg0mT+GVg6CFPDeYYLIes25gNfJKFZUBAFa/PwF
-         VxAsY7CTfX28wWehnTpWZEl9O/GwjojeCDbiQxeTr3CXJ3bqQgrjwBjQbNyT03nqrJZn
-         1IneedGIVbnIKGFTJEGuJyzcnkkjy5AbXzv77cbD0q4bjQp3siLyEUbSUpjBltHQAllU
-         VdaA==
-X-Gm-Message-State: AOAM533vIQel7pTNCwdvMXsljlx7o2Evza0PKVDMuLp9GvNVk5QYxBKz
-        WERsmntsAFgssIN2N+NlIQhXJqHtftohzyIJ69b+5Q==
-X-Google-Smtp-Source: ABdhPJwiMZdnEdNGjW368fqv2h6n7DhHfnsnINvnj5udm0TiFLaMmVcbKkxd2ebZrlhbN1BozXl0HotXeXWCkUe0k78=
-X-Received: by 2002:a54:4399:: with SMTP id u25mr20479018oiv.177.1593600975413;
- Wed, 01 Jul 2020 03:56:15 -0700 (PDT)
+        Wed, 1 Jul 2020 07:21:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593602473; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=n9dv+4uh/SqsbO43SuymhrpHyZhUe1aTGaZYaxpJrSM=; b=ngOPaMsaRXmApgg2JQjTxNH5m9rAjUw/6xIVRdH1AezMLMgKxR1NBAUs+NGJP0xIVeLySOYN
+ AJXGwLFN/TI0DRPJh2PQ9EOoYOSSQLKSA+0iHozygDKppltrGqCCf/Dy4Q7lfhm2pPaAvgjo
+ 86yU12/7qHnAXIB8twTve3NeEXI=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5efc718f8fe116ddd9e7ecea (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Jul 2020 11:20:47
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2B195C433CB; Wed,  1 Jul 2020 11:20:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.50.36.152] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53A55C433C6;
+        Wed,  1 Jul 2020 11:20:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53A55C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v2] dt-bindings: media: venus: Add an optional power
+ domain for perf voting
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+References: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
+ <20200527193638.GA2604206@bogus>
+ <448cc4c0-0714-dc62-df19-7fa8fba91758@codeaurora.org>
+Message-ID: <1e8c07c8-0954-462a-cfe6-a1ccde1bedea@codeaurora.org>
+Date:   Wed, 1 Jul 2020 16:50:39 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <20200621193549.2070434-1-dmitry.baryshkov@linaro.org>
- <20200621193549.2070434-6-dmitry.baryshkov@linaro.org> <CAHLCerOqWWr3i32tRgGfep12YfDufw-WU80VWUsUNpDDZ13D-w@mail.gmail.com>
- <CAA8EJppAQgmS7VVCjVe8QST2RQU46mXO2jtUPFY30mH9sVu_rQ@mail.gmail.com> <CAHLCerM8KwUhpossD=vyhU4q22FnrZse_zhiS0ZobZM0J9X8PA@mail.gmail.com>
-In-Reply-To: <CAHLCerM8KwUhpossD=vyhU4q22FnrZse_zhiS0ZobZM0J9X8PA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 1 Jul 2020 13:56:03 +0300
-Message-ID: <CAA8EJprc4hET7MoTSj80==OdE-o-iho6vcrGgSPAQFaOLfFi2w@mail.gmail.com>
-Subject: Re: [PATCH 5/5] arm64: dts: sm8250-dts: add thermal zones using
- pmic's adc-tm5
-To:     Amit Kucheria <amit.kucheria@verdurent.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-iio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <448cc4c0-0714-dc62-df19-7fa8fba91758@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 1 Jul 2020 at 09:06, Amit Kucheria <amit.kucheria@verdurent.com> wrote:
->
-> On Tue, Jun 30, 2020 at 5:40 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > Hi,
-> >
-> > On Tue, 30 Jun 2020 at 08:06, Amit Kucheria <amit.kucheria@verdurent.com> wrote:
-> > > On Mon, Jun 22, 2020 at 1:06 AM Dmitry Baryshkov
-> > > <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > Port thermal zones definitions from msm-4.19 tree. Enable and add
-> > > > channel configuration to PMIC's ADC-TM definitions. Declare thermal
-> > > > zones and respective trip points.
-> > > >
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >  arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 237 ++++++++++++++++++++++++
-> > > >  1 file changed, 237 insertions(+)
-> > > >
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> > >
-> > > IMO, this should be separated in the pmic dts file like we do for
-> > > other QC platforms since the PMICs tend to be used in multiple
-> > > platforms.
-> >
-> > Unlike other PMIC/tsens thermal zones, these definitions are quite
-> > specific to the board from my point of view.
->
-> How so? Can you describe what is different about this PMIC?
 
-It is not about this PMIC, but rather about particular thermistors
-being placed up in different places on the board itself.
+On 6/1/2020 11:26 AM, Rajendra Nayak wrote:
+> 
+> On 5/28/2020 1:06 AM, Rob Herring wrote:
+>> On Wed, May 13, 2020 at 11:33:27AM +0530, Rajendra Nayak wrote:
+>>> Add an optional power domain which when specified can be used for
+>>> setting the performance state of Venus.
+>>>
+>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>>> ---
+>>>   Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
+>>>   Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
+>>>   2 files changed, 10 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+>>> index 764affa..ac1ed64 100644
+>>> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+>>> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+>>> @@ -25,12 +25,16 @@ properties:
+>>>       maxItems: 1
+>>>     power-domains:
+>>> -    maxItems: 2
+>>> +    minItems: 2
+>>> +    maxItems: 3
+>>>     power-domain-names:
+>>> +    minItems: 2
+>>> +    maxItems: 3
+>>>       items:
+>>>         - const: venus
+>>>         - const: vcodec0
+>>> +      - const: opp-pd
+>>
+>> Humm, looks suspicious. This is a phyical power island in this block?
+> 
+> yes, this is used to represent the physical 'cx' power island in the SoC
+> (Its a shared power island, not a power island specific to this block)
+> that can be scaled to different 'performance levels' based on the frequency
+> the codec is expected to run at.
 
-> > > > index aa37eb112d85..78f0cf582a9a 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> > > > +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> > > > @@ -24,6 +24,104 @@ chosen {
-> > > >                 stdout-path = "serial0:115200n8";
-> > > >         };
-> > > >
-> > > > +       thermal-zones {
-> > > > +               xo-therm {
-> > > > +                       polling-delay-passive = <0>;
-> > > > +                       polling-delay = <0>;
-> > > > +                       thermal-sensors = <&pm8150_adc_tm 0>;
-> > > > +                       trips {
-> > > > +                               active-config0 {
-> > > > +                                       temperature = <125000>;
-> > > > +                                       hysteresis = <1000>;
-> > > > +                                       type = "passive";
-> > > > +                               };
-> > > > +                       };
-> > > > +               };
-> > > > +
-
-
+Rob, Did you have any other concerns here? Should I be re-posting this?
 
 -- 
-With best wishes
-Dmitry
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
