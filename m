@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB7FB210A34
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 13:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65F53210A48
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 13:28:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730239AbgGALVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 07:21:14 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:12342 "EHLO
+        id S1730240AbgGAL21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 07:28:27 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:48003 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730216AbgGALVO (ORCPT
+        by vger.kernel.org with ESMTP id S1730238AbgGAL20 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 07:21:14 -0400
+        Wed, 1 Jul 2020 07:28:26 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593602473; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
- Subject: Sender; bh=n9dv+4uh/SqsbO43SuymhrpHyZhUe1aTGaZYaxpJrSM=; b=ngOPaMsaRXmApgg2JQjTxNH5m9rAjUw/6xIVRdH1AezMLMgKxR1NBAUs+NGJP0xIVeLySOYN
- AJXGwLFN/TI0DRPJh2PQ9EOoYOSSQLKSA+0iHozygDKppltrGqCCf/Dy4Q7lfhm2pPaAvgjo
- 86yU12/7qHnAXIB8twTve3NeEXI=
+ s=smtp; t=1593602905; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=ELbkVNkvv2QKPq9yfmUAk6/gAsnRwgGG4Ne3CuTu8y4=; b=UfOtJ+xSTEc5rjxZD6eKZyKQhO27bLM9HLyFmWh74POcXwiLcFCoVx5YlaHAnN2sQja51YLs
+ X7ljbHpL7hdeT0zscrnf2cEuCrLeE+p/eL1RRdECFKBa3FROx2/a1OeO8uxTspdLDIejumox
+ FuKT5+Xvytqck1awHsokWOJcuoM=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5efc718f8fe116ddd9e7ecea (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Jul 2020 11:20:47
+ smtp-out-n15.prod.us-east-1.postgun.com with SMTP id
+ 5efc73560206ad41d14c5668 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Jul 2020 11:28:22
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2B195C433CB; Wed,  1 Jul 2020 11:20:46 +0000 (UTC)
+        id 10C4CC433CB; Wed,  1 Jul 2020 11:28:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,28 +37,31 @@ Received: from [10.50.36.152] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53A55C433C6;
-        Wed,  1 Jul 2020 11:20:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53A55C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6E245C433C6;
+        Wed,  1 Jul 2020 11:28:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6E245C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v2] dt-bindings: media: venus: Add an optional power
- domain for perf voting
+Subject: Re: [PATCH v6 0/6] DVFS for IO devices on sdm845 and sc7180
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, robdclark@gmail.com,
+        robdclark@chromium.org, viresh.kumar@linaro.org, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
+ <20200617221546.GC4525@google.com>
+ <4f3d4c91-2a01-8ef5-1ad0-73ed354f930a@codeaurora.org>
+ <9bb7fbb6-6309-3f30-dd4f-2ee3d187c074@linaro.org>
+ <3ec9bc56-3e31-64fe-320a-2dc153a81f98@codeaurora.org>
+ <d715708b-db7a-efb7-5861-aa5bb8dfcd86@linaro.org>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org
-References: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
- <20200527193638.GA2604206@bogus>
- <448cc4c0-0714-dc62-df19-7fa8fba91758@codeaurora.org>
-Message-ID: <1e8c07c8-0954-462a-cfe6-a1ccde1bedea@codeaurora.org>
-Date:   Wed, 1 Jul 2020 16:50:39 +0530
+Message-ID: <9bcf3419-d394-268e-c2af-c7b71574ab8e@codeaurora.org>
+Date:   Wed, 1 Jul 2020 16:58:13 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <448cc4c0-0714-dc62-df19-7fa8fba91758@codeaurora.org>
+In-Reply-To: <d715708b-db7a-efb7-5861-aa5bb8dfcd86@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -67,46 +70,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey Stan,
 
-On 6/1/2020 11:26 AM, Rajendra Nayak wrote:
-> 
-> On 5/28/2020 1:06 AM, Rob Herring wrote:
->> On Wed, May 13, 2020 at 11:33:27AM +0530, Rajendra Nayak wrote:
->>> Add an optional power domain which when specified can be used for
->>> setting the performance state of Venus.
->>>
->>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->>> ---
->>>   Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
->>>   Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
->>>   2 files changed, 10 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->>> index 764affa..ac1ed64 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
->>> @@ -25,12 +25,16 @@ properties:
->>>       maxItems: 1
->>>     power-domains:
->>> -    maxItems: 2
->>> +    minItems: 2
->>> +    maxItems: 3
->>>     power-domain-names:
->>> +    minItems: 2
->>> +    maxItems: 3
->>>       items:
->>>         - const: venus
->>>         - const: vcodec0
->>> +      - const: opp-pd
 >>
->> Humm, looks suspicious. This is a phyical power island in this block?
-> 
-> yes, this is used to represent the physical 'cx' power island in the SoC
-> (Its a shared power island, not a power island specific to this block)
-> that can be scaled to different 'performance levels' based on the frequency
-> the codec is expected to run at.
+>> Hey Stan,
+>>   
+>>> On 6/18/20 7:47 AM, Rajendra Nayak wrote:
+>>>> Hey Matthias, thanks for summarizing this.
+>>>>
+>>>> On 6/18/2020 3:45 AM, Matthias Kaehlcke wrote:
+>>>>> What is the plan for landing these, it seems not all must/should
+>>>>> go through the QCOM tree.
+>>>>>
+>>>>> My guesses:
+>>>>>
+>>>>> tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state
+>>>>> spi: spi-geni-qcom: Use OPP API to set clk/perf state
+>>>>>      QCOM tree due to shared dependency on change in
+>>>>> include/linux/qcom-geni-se.h
+>>>>
+>>>> That's correct, Bjorn/Andy, can these be pulled in now for 5.9?
+>>>> They have acks from Greg for serial and Mark for the spi patch.
+>>>>   
+>>>>> drm/msm/dpu: Use OPP API to set clk/perf state
+>>>>> drm/msm: dsi: Use OPP API to set clk/perf state
+>>>>>      drm/msm tree
+>>>>
+>>>> Correct, the dsi patch is still not reviewed by Rob, so once that's
+>>>> done,
+>>>> I am guessing Rob would pull both of these.
+>>>>
+>>>>>
+>>>>> media: venus: core: Add support for opp tables/perf voting
+>>>>>      venus tree
+>>>>
+>>>> correct, this is pending review/ack from Stan.
+>>>
+>>> I tested the changes in the driver, and they looks fine. But when
+>>> applied the corresponding change in the DT node I see this message when
+>>> the streaming is stopping:
+>>>
+>>> qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x30000
+>>>
+>>> I tested on v5.7 (linaro-integration). Should I be worried ?
 
-Rob, Did you have any other concerns here? Should I be re-posting this?
+I had a look at this message and also spoke to Maulik, and it seems
+like its fairly harmless. It just suggests we had to wait a while to
+get a TCS, and then retry, So nothing to worry about.
+
+thanks,
+Rajendra
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
