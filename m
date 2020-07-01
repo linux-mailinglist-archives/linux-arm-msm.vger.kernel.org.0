@@ -2,84 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FADF2109BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:53:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9026C2109C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:55:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730104AbgGAKxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 06:53:13 -0400
-Received: from foss.arm.com ([217.140.110.172]:57020 "EHLO foss.arm.com"
+        id S1730148AbgGAKy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 06:54:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54342 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729892AbgGAKxN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:53:13 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B597030E;
-        Wed,  1 Jul 2020 03:53:12 -0700 (PDT)
-Received: from [10.57.21.32] (unknown [10.57.21.32])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BB9483F73C;
-        Wed,  1 Jul 2020 03:53:08 -0700 (PDT)
-Subject: Re: [PATCH v3 00/34] iommu: Move iommu_group setup to IOMMU core code
-To:     Qian Cai <cai@lca.pw>, Joerg Roedel <joro@8bytes.org>
-Cc:     Heiko Stuebner <heiko@sntech.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-tegra@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Daniel Drake <drake@endlessm.com>,
-        Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org,
+        id S1729892AbgGAKy6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Jul 2020 06:54:58 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id EBABC20772;
+        Wed,  1 Jul 2020 10:54:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593600898;
+        bh=kFLbdxE6sSIcNsnsddE2qZP4FZAiRNNpfl5wA+Xrld0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=MgR12O8nRyvqokAVh6wbQMK5Ovx61t7pTRUxsEqpRRgDam5/Wioi2uTYGRtF0oUav
+         o/j3NjcDMdGIPdHvroRHw/22S4Z24639UdcXlTEFTN86GEtAlsdP2Ra69RDntWcqHT
+         NyOMy7+IXZOsU0q3rmsKRSXbY9aO+mEX1zvBlEZs=
+Date:   Wed, 1 Jul 2020 11:54:54 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         iommu@lists.linux-foundation.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        jonathan.derrick@intel.com, linux-s390@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        virtualization@lists.linux-foundation.org,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        linux-kernel@vger.kernel.org, Kukjin Kim <kgene@kernel.org>
-References: <20200429133712.31431-1-joro@8bytes.org>
- <20200701004020.GA6221@lca.pw>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <9b0ef27a-f249-a90b-9899-e53b946f83cc@arm.com>
-Date:   Wed, 1 Jul 2020 11:53:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Thierry Reding <thierry.reding@gmail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-tegra@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+Message-ID: <20200701105453.GG14959@willie-the-truck>
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder>
+ <20200514193249.GE279327@builder.lan>
+ <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
+ <20200527110343.GD11111@willie-the-truck>
+ <20200602063210.GT11847@yoga>
+ <a1f9ee83-66cd-1f04-3e78-3281b3cafd07@arm.com>
+ <20200701074050.GO388985@builder.lan>
 MIME-Version: 1.0
-In-Reply-To: <20200701004020.GA6221@lca.pw>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200701074050.GO388985@builder.lan>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-01 01:40, Qian Cai wrote:
-> Looks like this patchset introduced an use-after-free on arm-smmu-v3.
+On Wed, Jul 01, 2020 at 12:40:50AM -0700, Bjorn Andersson wrote:
+> On Wed 03 Jun 04:00 PDT 2020, Robin Murphy wrote:
+> > at that point I'm inclined to suggest we give up and stop trying to
+> > drive these things with arm-smmu. The XZR thing was bad enough, but if
+> > they're not even going to pretend to implement the architecture correctly
+> > then I'm not massively keen to continue tying the architectural driver in
+> > further knots if innocent things like CONFIG_IOMMU_DEFAULT_PASSTHROUGH are
+> > going to unexpectedly and catastrophically fail. We have qcom-iommu for
+> > hypervisor-mediated SMMUs, and this new hypervisor behaviour sounds to me
+> > more like "qcom-iommu++" with reassignable stream-to-context mappings,
+> > rather than a proper Arm SMMU emulation.
+> > 
 > 
-> Reproduced using mlx5,
+> I've been going through over and over, hoping to perhaps be able to
+> evolve qcom_iommu into a qcom-iommu++, but afaict the new hypervisor is
+> different enough that this isn't feasible. In particular, the platforms
+> using qcom_iommu relies entirely on the hypervisor to configure stream
+> mapping etc - and we can't even read most of the registers.
 > 
-> # echo 1 > /sys/class/net/enp11s0f1np1/device/sriov_numvfs
-> # echo 0 > /sys/class/net/enp11s0f1np1/device/sriov_numvfs
+> On the other hand I agree with you that we're messing around quite a bit
+> with the arm-smmu driver, and I'm uncertain where we are on supporting
+> the various GPU features, so I'm adding Jordan to the thread.
 > 
-> The .config,
-> https://github.com/cailca/linux-mm/blob/master/arm64.config
+> So, afaict we have the options of either shoehorning this too into the
+> arm-smmu driver or we essentially fork arm-smmu.c to create a
+> qcom-smmu.c.
 > 
-> Looking at the free stack,
-> 
-> iommu_release_device->iommu_group_remove_device
-> 
-> was introduced in 07/34 ("iommu: Add probe_device() and release_device()
-> call-backs").
+> While I don't fancy the code duplication, it would allow us to revert
+> the Qualcomm quirks from arm-smmu and would unblock a number of
+> activities that we have depending on getting the SMMU enabled on various
+> platforms.
 
-Right, iommu_group_remove_device can tear down the group and call 
-->domain_free before the driver has any knowledge of the last device 
-going away via the ->release_device call.
+We added the impl hooks to cater for implementation differences, so I'd
+still prefer to see this done as part of arm-smmu than introduce another
+almost-the-same-but-not-quite IOMMU driver that has the lifetime of
+a single SoC.
 
-I guess the question is do we simply flip the call order in 
-iommu_release_device() so drivers can easily clean up their internal 
-per-device state first, or do we now want them to be robust against 
-freeing domains with devices still nominally attached?
-
-Robin.
+Will
