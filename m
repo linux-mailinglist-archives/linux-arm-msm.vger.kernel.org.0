@@ -2,93 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9026C2109C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:55:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 417D72109CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730148AbgGAKy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 06:54:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54342 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729892AbgGAKy6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:54:58 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EBABC20772;
-        Wed,  1 Jul 2020 10:54:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593600898;
-        bh=kFLbdxE6sSIcNsnsddE2qZP4FZAiRNNpfl5wA+Xrld0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MgR12O8nRyvqokAVh6wbQMK5Ovx61t7pTRUxsEqpRRgDam5/Wioi2uTYGRtF0oUav
-         o/j3NjcDMdGIPdHvroRHw/22S4Z24639UdcXlTEFTN86GEtAlsdP2Ra69RDntWcqHT
-         NyOMy7+IXZOsU0q3rmsKRSXbY9aO+mEX1zvBlEZs=
-Date:   Wed, 1 Jul 2020 11:54:54 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        linux-tegra@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
-Message-ID: <20200701105453.GG14959@willie-the-truck>
-References: <20191209150748.2471814-1-thierry.reding@gmail.com>
- <20200228025700.GA856087@builder>
- <20200514193249.GE279327@builder.lan>
- <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
- <20200527110343.GD11111@willie-the-truck>
- <20200602063210.GT11847@yoga>
- <a1f9ee83-66cd-1f04-3e78-3281b3cafd07@arm.com>
- <20200701074050.GO388985@builder.lan>
+        id S1730160AbgGAK4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 06:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729892AbgGAK4P (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Jul 2020 06:56:15 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 124FCC03E979
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2020 03:56:16 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id 12so13716507oir.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2020 03:56:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9R1819T+AMdAOtCQQNpTxAKlBNbGEf7KSfYXQ+RjODU=;
+        b=aYHAkQYkS6JUqmaJPF5BVtaNalhoghvq/swOD0R3FZXxx7mUsV4ECOXfnvppWngu+R
+         9Z9Dh5k1WLPz7Vyk8L3ruAXXX1rV75XEYzFQHi0sHv353WD+DOUSpmHnPS0pc/gsVvEd
+         KYRrv7z57XqyisydWQUOZ5+OhtMmpXmrRbxqYuSrGyAWygKr5tFar35r1uEzWGQD9+KB
+         kSViPFnIiFmZ1beM9Cd69yd8pkLuOU4fSnFXKJwtHT45bP/6WVgEUxfOCy4Oopso12yO
+         6Ie1EjRAbSYb2AUj59lbogW+A4ezR3M9NEhRW7yiOHKcQG8o9RbCRNdHx9pXxmBJcg3/
+         3U/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9R1819T+AMdAOtCQQNpTxAKlBNbGEf7KSfYXQ+RjODU=;
+        b=WDCLeijmhxZaqohy2d6KRsQfPcSL6YX/OiwjxP5Gs6O7ilrX/PyKZ1Ab5OJlYZGD/m
+         PAhDUKJqSyYeJ+zw3WBYVEez9Gs2Xqu096Ng8tL8vjkelEXQHESkeWw1VayLuVvKuyGh
+         I3vB06A+uC/0ofk+bOfAhFxpoDm8dsg0mT+GVg6CFPDeYYLIes25gNfJKFZUBAFa/PwF
+         VxAsY7CTfX28wWehnTpWZEl9O/GwjojeCDbiQxeTr3CXJ3bqQgrjwBjQbNyT03nqrJZn
+         1IneedGIVbnIKGFTJEGuJyzcnkkjy5AbXzv77cbD0q4bjQp3siLyEUbSUpjBltHQAllU
+         VdaA==
+X-Gm-Message-State: AOAM533vIQel7pTNCwdvMXsljlx7o2Evza0PKVDMuLp9GvNVk5QYxBKz
+        WERsmntsAFgssIN2N+NlIQhXJqHtftohzyIJ69b+5Q==
+X-Google-Smtp-Source: ABdhPJwiMZdnEdNGjW368fqv2h6n7DhHfnsnINvnj5udm0TiFLaMmVcbKkxd2ebZrlhbN1BozXl0HotXeXWCkUe0k78=
+X-Received: by 2002:a54:4399:: with SMTP id u25mr20479018oiv.177.1593600975413;
+ Wed, 01 Jul 2020 03:56:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200701074050.GO388985@builder.lan>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200621193549.2070434-1-dmitry.baryshkov@linaro.org>
+ <20200621193549.2070434-6-dmitry.baryshkov@linaro.org> <CAHLCerOqWWr3i32tRgGfep12YfDufw-WU80VWUsUNpDDZ13D-w@mail.gmail.com>
+ <CAA8EJppAQgmS7VVCjVe8QST2RQU46mXO2jtUPFY30mH9sVu_rQ@mail.gmail.com> <CAHLCerM8KwUhpossD=vyhU4q22FnrZse_zhiS0ZobZM0J9X8PA@mail.gmail.com>
+In-Reply-To: <CAHLCerM8KwUhpossD=vyhU4q22FnrZse_zhiS0ZobZM0J9X8PA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 1 Jul 2020 13:56:03 +0300
+Message-ID: <CAA8EJprc4hET7MoTSj80==OdE-o-iho6vcrGgSPAQFaOLfFi2w@mail.gmail.com>
+Subject: Re: [PATCH 5/5] arm64: dts: sm8250-dts: add thermal zones using
+ pmic's adc-tm5
+To:     Amit Kucheria <amit.kucheria@verdurent.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 01, 2020 at 12:40:50AM -0700, Bjorn Andersson wrote:
-> On Wed 03 Jun 04:00 PDT 2020, Robin Murphy wrote:
-> > at that point I'm inclined to suggest we give up and stop trying to
-> > drive these things with arm-smmu. The XZR thing was bad enough, but if
-> > they're not even going to pretend to implement the architecture correctly
-> > then I'm not massively keen to continue tying the architectural driver in
-> > further knots if innocent things like CONFIG_IOMMU_DEFAULT_PASSTHROUGH are
-> > going to unexpectedly and catastrophically fail. We have qcom-iommu for
-> > hypervisor-mediated SMMUs, and this new hypervisor behaviour sounds to me
-> > more like "qcom-iommu++" with reassignable stream-to-context mappings,
-> > rather than a proper Arm SMMU emulation.
-> > 
-> 
-> I've been going through over and over, hoping to perhaps be able to
-> evolve qcom_iommu into a qcom-iommu++, but afaict the new hypervisor is
-> different enough that this isn't feasible. In particular, the platforms
-> using qcom_iommu relies entirely on the hypervisor to configure stream
-> mapping etc - and we can't even read most of the registers.
-> 
-> On the other hand I agree with you that we're messing around quite a bit
-> with the arm-smmu driver, and I'm uncertain where we are on supporting
-> the various GPU features, so I'm adding Jordan to the thread.
-> 
-> So, afaict we have the options of either shoehorning this too into the
-> arm-smmu driver or we essentially fork arm-smmu.c to create a
-> qcom-smmu.c.
-> 
-> While I don't fancy the code duplication, it would allow us to revert
-> the Qualcomm quirks from arm-smmu and would unblock a number of
-> activities that we have depending on getting the SMMU enabled on various
-> platforms.
+On Wed, 1 Jul 2020 at 09:06, Amit Kucheria <amit.kucheria@verdurent.com> wrote:
+>
+> On Tue, Jun 30, 2020 at 5:40 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Hi,
+> >
+> > On Tue, 30 Jun 2020 at 08:06, Amit Kucheria <amit.kucheria@verdurent.com> wrote:
+> > > On Mon, Jun 22, 2020 at 1:06 AM Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > Port thermal zones definitions from msm-4.19 tree. Enable and add
+> > > > channel configuration to PMIC's ADC-TM definitions. Declare thermal
+> > > > zones and respective trip points.
+> > > >
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 237 ++++++++++++++++++++++++
+> > > >  1 file changed, 237 insertions(+)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > >
+> > > IMO, this should be separated in the pmic dts file like we do for
+> > > other QC platforms since the PMICs tend to be used in multiple
+> > > platforms.
+> >
+> > Unlike other PMIC/tsens thermal zones, these definitions are quite
+> > specific to the board from my point of view.
+>
+> How so? Can you describe what is different about this PMIC?
 
-We added the impl hooks to cater for implementation differences, so I'd
-still prefer to see this done as part of arm-smmu than introduce another
-almost-the-same-but-not-quite IOMMU driver that has the lifetime of
-a single SoC.
+It is not about this PMIC, but rather about particular thermistors
+being placed up in different places on the board itself.
 
-Will
+> > > > index aa37eb112d85..78f0cf582a9a 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > > > +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> > > > @@ -24,6 +24,104 @@ chosen {
+> > > >                 stdout-path = "serial0:115200n8";
+> > > >         };
+> > > >
+> > > > +       thermal-zones {
+> > > > +               xo-therm {
+> > > > +                       polling-delay-passive = <0>;
+> > > > +                       polling-delay = <0>;
+> > > > +                       thermal-sensors = <&pm8150_adc_tm 0>;
+> > > > +                       trips {
+> > > > +                               active-config0 {
+> > > > +                                       temperature = <125000>;
+> > > > +                                       hysteresis = <1000>;
+> > > > +                                       type = "passive";
+> > > > +                               };
+> > > > +                       };
+> > > > +               };
+> > > > +
+
+
+
+-- 
+With best wishes
+Dmitry
