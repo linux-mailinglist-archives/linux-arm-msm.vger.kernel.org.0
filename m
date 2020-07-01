@@ -2,160 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 081C32108FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A15F5210983
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 12:37:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729847AbgGAKLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 06:11:07 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:26034 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729793AbgGAKLH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:11:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593598266; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=amiqoJGPjX9RNHOLVHTe5Q2mOjhh5iGIl3d/MtXJOIs=;
- b=klJWoWQj2Memq5yCwOsgscVbjLRTXuQKSZKwTXxTsBas6yfpx/UCmToaAzbt3H0QdzS9u/Ws
- m40mWJw3jNTzr50hjGX25nE5felUcxTK4nYuFy0kKmoVpSYGyvzJg3tjwojh74D7nlpmiA8E
- Qnl9QzhpdwqI6A8m9GWHIK3frrk=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
- 5efc6139117610c7ff405ea8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Jul 2020 10:11:05
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2A470C433AD; Wed,  1 Jul 2020 10:11:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1729927AbgGAKhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 06:37:19 -0400
+Received: from onstation.org ([52.200.56.107]:45296 "EHLO onstation.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729939AbgGAKhT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Jul 2020 06:37:19 -0400
+X-Greylist: delayed 396 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Jul 2020 06:37:18 EDT
+Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6F35C433C8;
-        Wed,  1 Jul 2020 10:11:03 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 01 Jul 2020 15:41:03 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        John Stultz <john.stultz@linaro.org>,
-        freedreno@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        Andy Gross <agross@kernel.org>,
+        (Authenticated sender: masneyb)
+        by onstation.org (Postfix) with ESMTPSA id 48FFB3E8F8;
+        Wed,  1 Jul 2020 10:30:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
+        s=default; t=1593599442;
+        bh=AfMnHuNqEFE1eiUXfPAPZcZ71kvTA3HP878CQfPF7ts=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k/IMfhNWmQ6NBOOlZ3+aH0ZSqT5p2sLBdcXiWAFZevUiEknrJ5Ec1X/PJdCdMmIry
+         qjvlc+VNsWJUYWbD4U70mHL5/SsRJrCUsshAkVFRXdDTckyP7UUI6iRZqiriucny6T
+         F8w3FHpaKymodReo+y62bolSB++U2keyCZlQJg34=
+Date:   Wed, 1 Jul 2020 06:30:41 -0400
+From:   Brian Masney <masneyb@onstation.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        Shawn Guo <shawn.guo@linaro.org>, Takashi Iwai <tiwai@suse.de>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v9 0/7] iommu/arm-smmu: Enable split pagetable support
-In-Reply-To: <20200626200042.13713-1-jcrouse@codeaurora.org>
-References: <20200626200042.13713-1-jcrouse@codeaurora.org>
-Message-ID: <bdc2a4348230f430138d320e49e188c0@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/7] ARM: dts: qcom: msm8974: klte: Enable some hardware
+Message-ID: <20200701103041.GA3246@onstation.org>
+References: <20200630140912.260294-1-iskren.chernev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200630140912.260294-1-iskren.chernev@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Will, Robin,
+Hi Iskren,
 
-On 2020-06-27 01:30, Jordan Crouse wrote:
-> Another iteration of the split-pagetable support for arm-smmu and the 
-> Adreno GPU
-> SMMU. After email discussions [1] we opted to make a arm-smmu 
-> implementation for
-> specifically for the Adreno GPU and use that to enable split pagetable 
-> support
-> and later other implementation specific bits that we need.
+On Tue, Jun 30, 2020 at 05:09:05PM +0300, Iskren Chernev wrote:
+> Enable support for various hw found on the Samsung Galaxy S5:
+> - touchkey (the two buttons around the home button)
+> - touchscreen
+> - notification led
+> - wifi
+> - external SD card
 > 
-> On the hardware side this is very close to the same code from before 
-> [2] only
-> the TTBR1 quirk is turned on by the implementation and not a domain 
-> attribute.
-> In drm/msm we use the returned size of the aperture as a clue to let us 
-> know
-> which virtual address space we should use for global memory objects.
+> Please note that for working wifi the correct firmware is needed. Check [1]
+> for links and locations.
 > 
-> There are two open items that you should be aware of. First, in the
-> implementation specific code we have to check the compatible string of 
-> the
-> device so that we only enable TTBR1 for the GPU (SID 0) and not the GMU 
-> (SID 4).
-> I went back and forth trying to decide if I wanted to use the 
-> compatible string
-> or the SID as the filter and settled on the compatible string but I 
-> could be
-> talked out of it.
+> Also note, that to actually run a mainline kernel on the klte, you'd need
+> to apply this patch [2]. Any feedback on getting this to run on pure
+> mainline are welcome.
 > 
-> The other open item is that in drm/msm the hardware only uses 49 bits 
-> of the
-> address space but arm-smmu expects the address to be sign extended all 
-> the way
-> to 64 bits. This isn't a problem normally unless you look at the 
-> hardware
-> registers that contain a IOVA and then the upper bits will be zero. I 
-> opted to
-> restrict the internal drm/msm IOVA range to only 49 bits and then sign 
-> extend
-> right before calling iommu_map / iommu_unmap. This is a bit wonky but I 
-> thought
-> that matching the hardware would be less confusing when debugging a 
-> hang.
-> 
-> v9: Fix bot-detected merge conflict
-> v7: Add attached device to smmu_domain to pass to implementation 
-> specific
-> functions
-> 
-> [1] 
-> https://lists.linuxfoundation.org/pipermail/iommu/2020-May/044537.html
-> [2] https://patchwork.kernel.org/patch/11482591/
-> 
-> 
-> Jordan Crouse (7):
->   iommu/arm-smmu: Pass io-pgtable config to implementation specific
->     function
->   iommu/arm-smmu: Add support for split pagetables
->   dt-bindings: arm-smmu: Add compatible string for Adreno GPU SMMU
->   iommu/arm-smmu: Add a pointer to the attached device to smmu_domain
->   iommu/arm-smmu: Add implementation for the adreno GPU SMMU
->   drm/msm: Set the global virtual address range from the IOMMU domain
->   arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
-> 
->  .../devicetree/bindings/iommu/arm,smmu.yaml   |  4 ++
->  arch/arm64/boot/dts/qcom/sdm845.dtsi          |  2 +-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c       | 13 +++++-
->  drivers/gpu/drm/msm/msm_iommu.c               |  7 +++
->  drivers/iommu/arm-smmu-impl.c                 |  6 ++-
->  drivers/iommu/arm-smmu-qcom.c                 | 45 ++++++++++++++++++-
->  drivers/iommu/arm-smmu.c                      | 38 +++++++++++-----
->  drivers/iommu/arm-smmu.h                      | 30 ++++++++++---
->  8 files changed, 120 insertions(+), 25 deletions(-)
+> [1] https://gitlab.com/postmarketOS/pmaports/-/blob/master/firmware/firmware-samsung-klte/APKBUILD
+> [2] https://gitlab.com/postmarketOS/linux-postmarketos/-/commit/765f55b248cd3b231af8431fe2f2aeca263b4e4b
 
-Any chance reviewing this?
+Good to see more msm8974 support upstream!
 
-Thanks,
-Sai
+Regarding the second patch, that should only be needed in order to
+use the GPU on these devices. I hope that patch won't be needed once
+IOMMU support is added, which is the last major missing piece in order
+to have the GPU working upstream. I posted a RFC patch [3] in January
+but didn't get any suggestions. I suspect some kind of memory corruption
+since the board gets unstable with that patch.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+If that hack patch is still needed to use the GPU once IOMMU support is
+in place, then I planned to troubleshoot it further by adding some log
+statements to various probe functions with and without that patch to see
+the probe order between the various subsystems. I suspect the issue is
+that a clock isn't ticking yet.
+
+[3] https://lore.kernel.org/lkml/20200109002606.35653-1-masneyb@onstation.org/T/#u
+
+Brian
