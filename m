@@ -2,179 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5BF92103F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 08:26:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2112D21053D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2020 09:43:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727071AbgGAG0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 02:26:31 -0400
-Received: from mx0a-00128a01.pphosted.com ([148.163.135.77]:45520 "EHLO
-        mx0a-00128a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726746AbgGAG0b (ORCPT
+        id S1728351AbgGAHnW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 03:43:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43658 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728322AbgGAHnV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 02:26:31 -0400
-Received: from pps.filterd (m0167089.ppops.net [127.0.0.1])
-        by mx0a-00128a01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 0616H0lw021669;
-        Wed, 1 Jul 2020 02:26:26 -0400
-Received: from nam11-dm6-obe.outbound.protection.outlook.com (mail-dm6nam11lp2175.outbound.protection.outlook.com [104.47.57.175])
-        by mx0a-00128a01.pphosted.com with ESMTP id 31x315kmnx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Jul 2020 02:26:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BxYrMLsqUsearSMTgkyxHTVV8FHYYpfoLA/jfHk+OrKDw+IGmoY9+PC0rWsXrvtOtivvuBHh0ZP8bhuGZ/98EcxHvNQiYyXJJXTuEn67HZhcEG3TdddDsBXgo6FOnU9tcFjVCp9BmIq5ToRtBMIlvjFmHlCpuqyKDtSy5hsm+gaAGcKBwEt0Is8Fy9pxe1hgpnzZt6fSINIraliiwh8UwD/GleB6dqyEX7lFH0FcxAMSVQaon/xhfcOucP2Amfa2RMu8n2XOv5KF+6GBzk1YQN9RvTW2EZJnbyZV+kqqzIvRrtkKLZE4h1QQagkuK8hJgRw1KnjGC+ZnX3q8ipdpSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3Gh0bzUkB8YWiD1/dZide7Rt8i7U1vrMd8brH99I/k4=;
- b=hDQBGsRTBrIPTjmjEgvwBgilZt86hOhvABHQruqGvMJDJXVk0AQ7rgZoIW7oV3U9n0/mDCTIxLiKkSl3uCB37dFtVOPAQAwArqgtgdCShD5BOrLVjhe88tM4Fprl/RCXD9Jkfbv0lort7JdaDUuY2lkXouq9BQqAzHa3jX864/HIELML2KBuk+id+BBShGY3XtgQ0jMB1z1mfRXGB1S85dyKEkvtDpEnkc7zmCvDnf147NPP5cXMbf7fbzGO7b76lWtxVVRsY+3RBOcMlJEzIv7qJEdHXpANXTjggPPGk99ektp1nAPYHPj8SisczuHE0d59ZMZEmGN1c6P4OvqZQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=analog.com; dmarc=pass action=none header.from=analog.com;
- dkim=pass header.d=analog.com; arc=none
+        Wed, 1 Jul 2020 03:43:21 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3C6C061755
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2020 00:43:21 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id x11so9576239plo.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2020 00:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=analog.onmicrosoft.com; s=selector2-analog-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3Gh0bzUkB8YWiD1/dZide7Rt8i7U1vrMd8brH99I/k4=;
- b=E3lrrUOq0GkiDMZAkXH/9r8AR9GoTJPwDuUknnRDrkE46NTzAmpbMKAaty2r2n3gJ6XaEdaQkgGXOSMt8z0jzhjFnMkbkKu+KMEkzdn+g0RjEfXNyoBgIIhRguZZ1Bst/2A+09TnE5Noll1HMtdk+cCMvuKt7uwlC0g/Z7sg8mY=
-Received: from DM6PR03MB4411.namprd03.prod.outlook.com (2603:10b6:5:10f::14)
- by DM6PR03MB3851.namprd03.prod.outlook.com (2603:10b6:5:46::28) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3131.25; Wed, 1 Jul
- 2020 06:26:24 +0000
-Received: from DM6PR03MB4411.namprd03.prod.outlook.com
- ([fe80::e02f:b3c0:d1e9:5eaf]) by DM6PR03MB4411.namprd03.prod.outlook.com
- ([fe80::e02f:b3c0:d1e9:5eaf%3]) with mapi id 15.20.3131.030; Wed, 1 Jul 2020
- 06:26:24 +0000
-From:   "Ardelean, Alexandru" <alexandru.Ardelean@analog.com>
-To:     "dianders@chromium.org" <dianders@chromium.org>,
-        "broonie@kernel.org" <broonie@kernel.org>
-CC:     "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "enric.balletbo@collabora.com" <enric.balletbo@collabora.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "bleung@chromium.org" <bleung@chromium.org>
-Subject: Re: [PATCH] spi: Avoid setting the chip select if we don't need to
-Thread-Topic: [PATCH] spi: Avoid setting the chip select if we don't need to
-Thread-Index: AQHWTm8Wd+QNJOrWKE+ouXjZn5VwUqjyRDUA
-Date:   Wed, 1 Jul 2020 06:26:24 +0000
-Message-ID: <522b1d9297604a1cfa93fdc54a3cd0773cf7580a.camel@analog.com>
-References: <20200629164103.1.Ied8e8ad8bbb2df7f947e3bc5ea1c315e041785a2@changeid>
-In-Reply-To: <20200629164103.1.Ied8e8ad8bbb2df7f947e3bc5ea1c315e041785a2@changeid>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: chromium.org; dkim=none (message not signed)
- header.d=none;chromium.org; dmarc=none action=none header.from=analog.com;
-x-originating-ip: [188.27.128.12]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 83bc389c-127f-4a95-6619-08d81d87ad99
-x-ms-traffictypediagnostic: DM6PR03MB3851:
-x-microsoft-antispam-prvs: <DM6PR03MB385112E709C57104CFB48ED1F96C0@DM6PR03MB3851.namprd03.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 04519BA941
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: h2L0pUrnplK39il8WrKFO5ZLlTtQFDwkIHByg0oqaZFyqW6xdfx5AbL3i2eCvgXYEUWz+j2Zmb3k+bMlLUDoLhWjEPsBf4TliXXCVJaDu2U4pfJO6qH+FtORjvozmUjpII2IyYZP7Nw88A839wO5be6qN6zWP3TU1cnuvFEF2FFDgrX+qJqrmDzD97WmSJJM1FMlZOLKUnQZ741bsVVG6JFS8tMthCdDDB7HV7YZCYQLUSGz0excflCB+eChg+wENa3WncI2VUhNnKnLv/5HJnO9BxUgpp7AT0SIao9sjhkRfD/7QydxLoX5ELUR+PtA
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR03MB4411.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(136003)(396003)(366004)(39860400002)(376002)(346002)(2906002)(6512007)(8936002)(4326008)(5660300002)(66556008)(26005)(66946007)(2616005)(91956017)(478600001)(76116006)(66446008)(66476007)(64756008)(186003)(6506007)(36756003)(6486002)(71200400001)(86362001)(316002)(83380400001)(54906003)(110136005)(8676002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: w06RPpwOfFII1OrEYOqDQjJVX1ITCSdkoJx/N/EHCKaQImSewcrXwsayy78tBh8F1qAlgNddQJePDpkNXKdJuvbJqRqlYT3l+nt6zTTuICJ1+uLNF186yAgQzFraZg8emTCyM4t6QhYxeLnrjY7n2Z0Zwn++aHT5ofM1l9hRYWdr96QNA3zOp8x/Wgnw/5Uwh7eOaNpmK7bhmucbYHY2kbNGaIsfcJs+5+SjzqTR1UoCpJ5gapEZXksENc0v/ZvdHrB/l6+A6Xv3TP6MJKgzbwN72ZEhXKjE+JNuvf5+4nmb5nPAM0/t/t8qaTjUz/leygIdc1dHe+T8pl4+2VbaiF/eNF/aAk0uvnRjKoscIX58cNmmgGY9Qzb+GzmcT792l1RhCpkDkMXEifou7sMWRmx+ZkUVvzCrViWGvwpv2dQV2oWIz0XPGE7YCRLhyv5+TOBi5MvaVV31eDI9L8549R3aNVMFPg+TKKAPIr/MuKM=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <188B8C4A3D6B0E4BA7B9C32F7FFFD88B@namprd03.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mMc4j54dN6DGlrcAqYRepJM/zjg8dpWwhkXIc71CpRM=;
+        b=pLKbZZQz699m9ep5n7JNbNAW4iGjn2GzhIMO1VK8z6xG7jJZllkF9eJQxZvqQakG+r
+         cCvgzmQKi/fxXwLUEdpmpejSjMhUUICNjC/7HeBymyCTd7XOTB2BjQA5sUy5z8/Axb3P
+         +66uKaLYAMCpL+/uPEEQpxqBngQCJ/p7fYumOT0oj4XzuUIIVkhtycpIInKz6c/yR9XD
+         dzqT6OpazBf171fl16G0U02U9b4oMTQE8i3BvOVdYq3zAl0pSsouU8kYG8KdQ7+VZKxw
+         k+nLQMyo4LLaiQsKdxK2TLGqSm2ZPtP1R9JH93n8ROP10RGmsHqj/c/b7g03l9oAcYiK
+         ZXQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mMc4j54dN6DGlrcAqYRepJM/zjg8dpWwhkXIc71CpRM=;
+        b=kmvJZHU/E4if0vjUD8BZA4SJQ/S7lOoF5grK3Agd6qFocUtxd34lXFoxBU/v9OIuf/
+         m/Kg3OmtxsJ04RGa0SgufiEFTtWakzs9otJd7cP8VBfH9SB+xgMIXC95Kl0vXXbwSwHz
+         UlSZfVuvhX0F72lcDgKyhjssAjG14CYw0U0Hm3GeRPx9ZMcD2zK/ya+tjI9+DYh+5nL5
+         zsOPk7KbkBkFIzL24sP2HcTfdDLkbNV2/4Fc5hDKrTPI86mDJRAiZAOWJWRnSXXNaciU
+         985oHoNbsbM0QJE9gL1LSAqHGf7sbqirmmx4jBVaYVLok7HJcDoVoRSiR/1YOEEOAizS
+         /NLw==
+X-Gm-Message-State: AOAM533XxoWxdjcAl/J5uOrBBao5WZHzUTkViIWWoEIad4dAbI7TZFDE
+        LJcnHfBbfxxL5+je/wfKWQbPH29ouk0=
+X-Google-Smtp-Source: ABdhPJyg3Qti0THsh6aqjIZZdBzHaPEk786n7W2tpFF3WMt35frdw7VtGVYf8BCKUT6IxdM9ULX4SQ==
+X-Received: by 2002:a17:902:8c8a:: with SMTP id t10mr18544088plo.153.1593589401062;
+        Wed, 01 Jul 2020 00:43:21 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id 25sm4804965pfi.7.2020.07.01.00.43.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jul 2020 00:43:20 -0700 (PDT)
+Date:   Wed, 1 Jul 2020 00:40:50 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-tegra@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [RFC 0/2] iommu: arm-smmu: Add support for early direct mappings
+Message-ID: <20200701074050.GO388985@builder.lan>
+References: <20191209150748.2471814-1-thierry.reding@gmail.com>
+ <20200228025700.GA856087@builder>
+ <20200514193249.GE279327@builder.lan>
+ <CALAqxLVmomdKJCwh=e-PX+8-seDX0RXA81FzmG4sEyJmbXBh9A@mail.gmail.com>
+ <20200527110343.GD11111@willie-the-truck>
+ <20200602063210.GT11847@yoga>
+ <a1f9ee83-66cd-1f04-3e78-3281b3cafd07@arm.com>
 MIME-Version: 1.0
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR03MB4411.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83bc389c-127f-4a95-6619-08d81d87ad99
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jul 2020 06:26:24.1568
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: gJ1YpIzksbfEexRyb11ZmFM0kA8CAeszajoSVRlo0ZLPdKtr1UVvf+50bq8fHeTELfBg1iYT7+Ekcs87y+k9uikT7CGmrRX6QGg8EtXykIU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR03MB3851
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
- definitions=2020-07-01_03:2020-07-01,2020-07-01 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- mlxscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 spamscore=0 clxscore=1011 suspectscore=0
- cotscore=-2147483648 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2004280000 definitions=main-2007010045
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a1f9ee83-66cd-1f04-3e78-3281b3cafd07@arm.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gTW9uLCAyMDIwLTA2LTI5IGF0IDE2OjQxIC0wNzAwLCBEb3VnbGFzIEFuZGVyc29uIHdyb3Rl
-Og0KPiBbRXh0ZXJuYWxdDQo+IA0KPiBPbiBzb21lIFNQSSBjb250cm9sbGVycyAobGlrZSBzcGkt
-Z2VuaS1xY29tKSBzZXR0aW5nIHRoZSBjaGlwIHNlbGVjdA0KPiBpcyBhIGhlYXZ5IG9wZXJhdGlv
-bi4gIEZvciBpbnN0YW5jZSBvbiBzcGktZ2VuaS1xY29tLCB3aXRoIHRoZSBjdXJyZW50DQo+IGNv
-ZGUsIGlzIHdhcyBtZWFzdXJlZCBhcyB0YWtpbmcgdXB3YXJkcyBvZiAyMCB1cy4gIEV2ZW4gb24g
-U1BJDQo+IGNvbnRyb2xsZXJzIHRoYXQgYXJlbid0IGFzIGhlYXZ5LCBzZXR0aW5nIHRoZSBjaGlw
-IHNlbGVjdCBpcyBhdCBsZWFzdA0KPiBzb21ldGhpbmcgbGlrZSBhIE1NSU8gb3BlcmF0aW9uIG92
-ZXIgc29tZSBwZXJpcGhlcmFsIGJ1cyB3aGljaCBpc24ndA0KPiBhcyBmYXN0IGFzIGEgUkFNIGFj
-Y2Vzcy4NCj4gDQo+IFdoaWxlIGl0IHdvdWxkIGJlIGdvb2QgdG8gZmluZCB3YXlzIHRvIG1pdGln
-YXRlIHByb2JsZW1zIGxpa2UgdGhpcyBpbg0KPiB0aGUgZHJpdmVycyBmb3IgdGhvc2UgU1BJIGNv
-bnRyb2xsZXJzLCBpdCBjYW4gYWxzbyBiZSBub3RlZCB0aGF0IHRoZQ0KPiBTUEkgZnJhbWV3b3Jr
-IGNvdWxkIGFsc28gaGVscCBvdXQuICBTcGVjaWZpY2FsbHksIGluIHNvbWUgc2l0dWF0aW9ucywN
-Cj4gd2UgY2FuIHNlZSB0aGUgU1BJIGZyYW1ld29yayBjYWxsaW5nIHRoZSBkcml2ZXIncyBzZXRf
-Y3MoKSB3aXRoIHRoZQ0KPiBzYW1lIHBhcmFtZXRlciBzZXZlcmFsIHRpbWVzIGluIGEgcm93LiAg
-VGhpcyBpcyBzcGVjaWZpY2FsbHkgb2JzZXJ2ZWQNCj4gd2hlbiBsb29raW5nIGF0IHRoZSB3YXkg
-dGhlIENocm9tZSBPUyBFQyBTUEkgZHJpdmVyIChjcm9zX2VjX3NwaSkNCj4gd29ya3MgYnV0IG90
-aGVyIGRyaXZlcnMgbGlrZWx5IHRyaXAgaXQgdG8gc29tZSBleHRlbnQuDQo+IA0KPiBMZXQncyBz
-b2x2ZSB0aGlzIGJ5IGNhY2hpbmcgdGhlIGNoaXAgc2VsZWN0IHN0YXRlIGluIHRoZSBjb3JlIGFu
-ZCBvbmx5DQo+IGNhbGxpbmcgaW50byB0aGUgY29udHJvbGxlciBpZiB0aGVyZSB3YXMgYSBjaGFu
-Z2UuICBXZSBjaGVjayBub3Qgb25seQ0KPiB0aGUgImVuYWJsZSIgc3RhdGUgYnV0IGFsc28gdGhl
-IGNoaXAgc2VsZWN0IG1vZGUgKGFjdGl2ZSBoaWdoIG9yDQo+IGFjdGl2ZSBsb3cpIHNpbmNlIGNv
-bnRyb2xsZXJzIG1heSBjYXJlIGFib3V0IGJvdGggdGhlIG1vZGUgYW5kIHRoZQ0KPiBlbmFibGUg
-ZmxhZyBpbiB0aGVpciBjYWxsYmFjay4NCg0KSSB0aGluayBjaGVja3BhdGNoIHN1Z2dlc3RlZCBJ
-IGJlIGFkZGVkIGhlcmUsIHNpbmNlIEkgdG91Y2hlZCBzb21lIHBhcnRzIG9mDQp0aGUgZGVsYXkv
-dGltaW5ncyBjb2RlLg0KDQo+IFNpZ25lZC1vZmYtYnk6IERvdWdsYXMgQW5kZXJzb24gPGRpYW5k
-ZXJzQGNocm9taXVtLm9yZz4NCj4gLS0tDQo+IA0KPiAgZHJpdmVycy9zcGkvc3BpLmMgICAgICAg
-fCAxMSArKysrKysrKysrKw0KPiAgaW5jbHVkZS9saW51eC9zcGkvc3BpLmggfCAgNCArKysrDQo+
-ICAyIGZpbGVzIGNoYW5nZWQsIDE1IGluc2VydGlvbnMoKykNCj4gDQo+IGRpZmYgLS1naXQgYS9k
-cml2ZXJzL3NwaS9zcGkuYyBiL2RyaXZlcnMvc3BpL3NwaS5jDQo+IGluZGV4IDZmYTU2NTkwYmJh
-Mi4uZDRiYTcyM2EzMGRhIDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJzL3NwaS9zcGkuYw0KPiArKysg
-Yi9kcml2ZXJzL3NwaS9zcGkuYw0KPiBAQCAtNzc4LDYgKzc3OCwxNyBAQCBzdGF0aWMgdm9pZCBz
-cGlfc2V0X2NzKHN0cnVjdCBzcGlfZGV2aWNlICpzcGksIGJvb2wNCj4gZW5hYmxlKQ0KPiAgew0K
-PiAgCWJvb2wgZW5hYmxlMSA9IGVuYWJsZTsNCj4gIA0KPiArCS8qDQo+ICsJICogQXZvaWQgY2Fs
-bGluZyBpbnRvIHRoZSBkcml2ZXIgKG9yIGRvaW5nIGRlbGF5cykgaWYgdGhlIGNoaXANCj4gc2Vs
-ZWN0DQo+ICsJICogaXNuJ3QgYWN0dWFsbHkgY2hhbmdpbmcgZnJvbSB0aGUgbGFzdCB0aW1lIHRo
-aXMgd2FzIGNhbGxlZC4NCj4gKwkgKi8NCj4gKwlpZiAoKHNwaS0+Y29udHJvbGxlci0+bGFzdF9j
-c19lbmFibGUgPT0gZW5hYmxlKSAmJg0KPiArCSAgICAoc3BpLT5jb250cm9sbGVyLT5sYXN0X2Nz
-X21vZGVfaGlnaCA9PSAoc3BpLT5tb2RlICYNCj4gU1BJX0NTX0hJR0gpKSkNCj4gKwkJcmV0dXJu
-Ow0KPiArDQo+ICsJc3BpLT5jb250cm9sbGVyLT5sYXN0X2NzX2VuYWJsZSA9IGVuYWJsZTsNCj4g
-KwlzcGktPmNvbnRyb2xsZXItPmxhc3RfY3NfbW9kZV9oaWdoID0gc3BpLT5tb2RlICYgU1BJX0NT
-X0hJR0g7DQo+ICsNCg0KSSBkb24ndCBmZWVsIGxpa2UgdGhpcyBpcyB0aGUgYmVzdCBhcHByb2Fj
-aCBmb3IgdGhlIFNQSSBDUyBoYW5kbGluZywNCmJlY2F1c2UgaXQncyBwcmV0dHkgZGlmZmljdWx0
-IHRvIGd1ZXNzIHRoZSBsYXN0IENTIHN0YXRlLCBhbmQgd2hldGhlciB0aGlzDQpyZXR1cm4gd291
-bGQgY2F1c2Ugb3RoZXIgd2VpcmRlciBpc3N1ZXMgW2xpa2Ugbm90IHRvZ2dsaW5nIENTIHdoZW4g
-aXQNCnNob3VsZF0uDQoNCk1heWJlIGEgcXVlc3Rpb24gaXM6IHdoZW4gc2hvdWxkIHRoaXMgQ1Mg
-YmUgdG9nZ2xlZCBbb3Igbm90XT8NCklzIGl0IGJldHdlZW4gMiBjYWxscyBvZiBzcGlfdHJhbnNm
-ZXJfb25lX21lc3NhZ2UoKSBvciBiZXR3ZWVuIDINCnNwaV90cmFuc2ZlcnM/DQpPciwgaXMgInhm
-ZXItPmNzX2NoYW5nZSA9PSAxIiB3aGVyZSBpdCBzaG91bGRuJ3QgYmU/DQoNCkkgdGhpbmssIHRo
-ZXJlIGFyZSBzb21lIHdheXMgdG8gbm90IHRvZ2dsZSBDUyBiZXR3ZWVuIHNvbWUgb2YgdGhlc2Us
-IG9yIGlmDQp0aGVyZSBhcmVuJ3QsIHNvbWUgY29udHJvbHMgY291bGQgYmUgYWRkZWQvcHJvcG9z
-ZWQgdG8gYXZvaWQgdG9nZ2xpbmcgQ1MsDQp2cyBkb2luZyBjYWNoaW5nLg0KDQo+ICAJaWYgKCFz
-cGktPmNvbnRyb2xsZXItPnNldF9jc190aW1pbmcpIHsNCj4gIAkJaWYgKGVuYWJsZTEpDQo+ICAJ
-CQlzcGlfZGVsYXlfZXhlYygmc3BpLT5jb250cm9sbGVyLT5jc19zZXR1cCwgTlVMTCk7DQo+IGRp
-ZmYgLS1naXQgYS9pbmNsdWRlL2xpbnV4L3NwaS9zcGkuaCBiL2luY2x1ZGUvbGludXgvc3BpL3Nw
-aS5oDQo+IGluZGV4IGI0OTE3ZGY3OTYzNy4uMGU2N2E5YTNhMWQzIDEwMDY0NA0KPiAtLS0gYS9p
-bmNsdWRlL2xpbnV4L3NwaS9zcGkuaA0KPiArKysgYi9pbmNsdWRlL2xpbnV4L3NwaS9zcGkuaA0K
-PiBAQCAtMzY4LDYgKzM2OCw4IEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBzcGlfdW5yZWdpc3Rlcl9k
-cml2ZXIoc3RydWN0DQo+IHNwaV9kcml2ZXIgKnNkcnYpDQo+ICAgKiBAY3VyX21zZ19wcmVwYXJl
-ZDogc3BpX3ByZXBhcmVfbWVzc2FnZSB3YXMgY2FsbGVkIGZvciB0aGUgY3VycmVudGx5DQo+ICAg
-KiAgICAgICAgICAgICAgICAgICAgaW4tZmxpZ2h0IG1lc3NhZ2UNCj4gICAqIEBjdXJfbXNnX21h
-cHBlZDogbWVzc2FnZSBoYXMgYmVlbiBtYXBwZWQgZm9yIERNQQ0KPiArICogQGxhc3RfY3NfZW5h
-YmxlOiB3YXMgZW5hYmxlIHRydWUgb24gdGhlIGxhc3QgY2FsbCB0byBzZXRfY3MuDQo+ICsgKiBA
-bGFzdF9jc19tb2RlX2hpZ2g6IHdhcyAobW9kZSAmIFNQSV9DU19ISUdIKSB0cnVlIG9uIHRoZSBs
-YXN0IGNhbGwgdG8NCj4gc2V0X2NzLg0KPiAgICogQHhmZXJfY29tcGxldGlvbjogdXNlZCBieSBj
-b3JlIHRyYW5zZmVyX29uZV9tZXNzYWdlKCkNCj4gICAqIEBidXN5OiBtZXNzYWdlIHB1bXAgaXMg
-YnVzeQ0KPiAgICogQHJ1bm5pbmc6IG1lc3NhZ2UgcHVtcCBpcyBydW5uaW5nDQo+IEBAIC02MDQs
-NiArNjA2LDggQEAgc3RydWN0IHNwaV9jb250cm9sbGVyIHsNCj4gIAlib29sCQkJCWF1dG9fcnVu
-dGltZV9wbTsNCj4gIAlib29sICAgICAgICAgICAgICAgICAgICAgICAgICAgIGN1cl9tc2dfcHJl
-cGFyZWQ7DQo+ICAJYm9vbAkJCQljdXJfbXNnX21hcHBlZDsNCj4gKwlib29sCQkJCWxhc3RfY3Nf
-ZW5hYmxlOw0KPiArCWJvb2wJCQkJbGFzdF9jc19tb2RlX2hpZ2g7DQo+ICAJYm9vbCAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBmYWxsYmFjazsNCj4gIAlzdHJ1Y3QgY29tcGxldGlvbiAgICAg
-ICAgICAgICAgIHhmZXJfY29tcGxldGlvbjsNCj4gIAlzaXplX3QJCQkJbWF4X2RtYV9sZW47DQo=
+On Wed 03 Jun 04:00 PDT 2020, Robin Murphy wrote:
+
+> On 2020-06-02 07:32, Bjorn Andersson wrote:
+> > On Wed 27 May 04:03 PDT 2020, Will Deacon wrote:
+> > 
+> > > Hi John, Bjorn,
+> > > 
+> > > On Tue, May 26, 2020 at 01:34:45PM -0700, John Stultz wrote:
+> > > > On Thu, May 14, 2020 at 12:34 PM <bjorn.andersson@linaro.org> wrote:
+> > > > > 
+> > > > > On Thu 27 Feb 18:57 PST 2020, Bjorn Andersson wrote:
+> > > > > 
+> > > > > Rob, Will, we're reaching the point where upstream has enough
+> > > > > functionality that this is becoming a critical issue for us.
+> > > > > 
+> > > > > E.g. Lenovo Yoga C630 is lacking this and a single dts patch to boot
+> > > > > mainline with display, GPU, WiFi and audio working and the story is
+> > > > > similar on several devboards.
+> > > > > 
+> > > > > As previously described, the only thing I want is the stream mapping
+> > > > > related to the display controller in place, either with the CB with
+> > > > > translation disabled or possibly with a way to specify the framebuffer
+> > > > > region (although this turns out to mess things up in the display
+> > > > > driver...)
+> > > > > 
+> > > > > I did pick this up again recently and concluded that by omitting the
+> > > > > streams for the USB controllers causes an instability issue seen on one
+> > > > > of the controller to disappear. So I would prefer if we somehow could
+> > > > > have a mechanism to only pick the display streams and the context
+> > > > > allocation for this.
+> > > > > 
+> > > > > 
+> > > > > Can you please share some pointers/insights/wishes for how we can
+> > > > > conclude on this subject?
+> > > > 
+> > > > Ping? I just wanted to follow up on this discussion as this small
+> > > > series is crucial for booting mainline on the Dragonboard 845c
+> > > > devboard. It would be really valuable to be able to get some solution
+> > > > upstream so we can test mainline w/o adding additional patches.
+> > > 
+> > > Sorry, it's been insanely busy recently and I haven't had a chance to think
+> > > about this on top of everything else. We're also carrying a hack in Android
+> > > for you :)
+> > > 
+> > 
+> > Thanks for taking the time to get back to us on this!
+> > 
+> > > > The rest of the db845c series has been moving forward smoothly, but
+> > > > this set seems to be very stuck with no visible progress since Dec.
+> > > > 
+> > > > Are there any pointers for what folks would prefer to see?
+> > > 
+> > > I've had a chat with Robin about this. Originally, I was hoping that
+> > > people would all work together towards an idyllic future where firmware
+> > > would be able to describe arbitrary pre-existing mappings for devices,
+> > > irrespective of the IOMMU through which they master and Linux could
+> > > inherit this configuration. However, that hasn't materialised (there was
+> > > supposed to be an IORT update, but I don't know what happened to that)
+> > > and, in actual fact, the problem that you have on db845 is /far/ more
+> > > restricted than the general problem.
+> > > 
+> > > Could you please try hacking something along the following lines and see
+> > > how you get on? You may need my for-joerg/arm-smmu/updates branch for
+> > > all the pieces:
+> > > 
+> > >    1. Use the ->cfg_probe() callback to reserve the SMR/S2CRs you need
+> > >       "pinning" and configure for bypass.
+> > > 
+> > >    2. Use the ->def_domain_type() callback to return IOMMU_DOMAIN_IDENTITY
+> > >       for the display controller
+> > > 
+> > > I /think/ that's sufficient, but note that it differs from the current
+> > > approach because we don't end up reserving a CB -- bypass is configured
+> > > in the S2CR instead. Some invalidation might therefore be needed in
+> > > ->cfg_probe() after unhooking the CB.
+> > > 
+> > > Thanks, and please yell if you run into problems with this approach.
+> > > 
+> > 
+> > This sounded straight forward and cleaner, so I implemented it...
+> > 
+> > Unfortunately the hypervisor is playing tricks on me when writing to
+> > S2CR registers:
+> > - TRANS writes lands as requested
+> > - BYPASS writes ends up in the register as requested, with type FAULT
+> > - FAULT writes are ignored
+> > 
+> > In other words, the Qualcomm firmware prevents us from relying on
+> > marking the relevant streams as BYPASS type.
+> 
+> Sigh...
+
+I agree.
+
+> at that point I'm inclined to suggest we give up and stop trying to
+> drive these things with arm-smmu. The XZR thing was bad enough, but if
+> they're not even going to pretend to implement the architecture correctly
+> then I'm not massively keen to continue tying the architectural driver in
+> further knots if innocent things like CONFIG_IOMMU_DEFAULT_PASSTHROUGH are
+> going to unexpectedly and catastrophically fail. We have qcom-iommu for
+> hypervisor-mediated SMMUs, and this new hypervisor behaviour sounds to me
+> more like "qcom-iommu++" with reassignable stream-to-context mappings,
+> rather than a proper Arm SMMU emulation.
+> 
+
+I've been going through over and over, hoping to perhaps be able to
+evolve qcom_iommu into a qcom-iommu++, but afaict the new hypervisor is
+different enough that this isn't feasible. In particular, the platforms
+using qcom_iommu relies entirely on the hypervisor to configure stream
+mapping etc - and we can't even read most of the registers.
+
+On the other hand I agree with you that we're messing around quite a bit
+with the arm-smmu driver, and I'm uncertain where we are on supporting
+the various GPU features, so I'm adding Jordan to the thread.
+
+So, afaict we have the options of either shoehorning this too into the
+arm-smmu driver or we essentially fork arm-smmu.c to create a
+qcom-smmu.c.
+
+While I don't fancy the code duplication, it would allow us to revert
+the Qualcomm quirks from arm-smmu and would unblock a number of
+activities that we have depending on getting the SMMU enabled on various
+platforms.
+
+
+NB. As mentioned briefly before, "this" means: for a given compatible,
+search SMR for a specific stream mapping and ensure it remains after
+initialization and make sure the associated context bank is "allocated".
+
+> > Instead Qualcomm seems to implement "bypass" by setting up stream
+> > mapping, of TRANS type, pointing to a context bank without
+> > ARM_SMMU_SCTLR_M set.
+> 
+> ...which arm-smmu specifically does not do because it's a silly waste of
+> resources - typically context banks are even scarcer than S2CRs.
+> 
+
+Agreed.
+
+Thanks,
+Bjorn
