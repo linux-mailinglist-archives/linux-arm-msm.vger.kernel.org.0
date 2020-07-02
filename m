@@ -2,67 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C3BB62122C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 13:57:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 982012123A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 14:47:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728797AbgGBL5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jul 2020 07:57:03 -0400
-Received: from youngberry.canonical.com ([91.189.89.112]:41569 "EHLO
-        youngberry.canonical.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726475AbgGBL5D (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jul 2020 07:57:03 -0400
-Received: from 1.general.cking.uk.vpn ([10.172.193.212] helo=localhost)
-        by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.86_2)
-        (envelope-from <colin.king@canonical.com>)
-        id 1jqxpr-0006Wj-Fy; Thu, 02 Jul 2020 11:56:59 +0000
-From:   Colin King <colin.king@canonical.com>
-To:     Andy Gross <agross@kernel.org>,
+        id S1729036AbgGBMrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jul 2020 08:47:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49146 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728966AbgGBMrI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Jul 2020 08:47:08 -0400
+Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8D42220885;
+        Thu,  2 Jul 2020 12:47:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593694028;
+        bh=e52KfrOAoMFua+ex5dMpRSFt/rx8yhQwiZyYniko0NY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IaChonXNCyIH75JDe1zZpx1241XNNJbUGyLnm0hmYUoqoFcDV5vJdxAHGLuUsT7+M
+         knV3f8mRD8HEdxPYTQFqvEWpdcmap5c40ycDrhyzIg8DYBMgJNlLU5l1kN6l8AvKWK
+         cHQwII/n/RzoqV2cNaPsx4jYf0pll27hDfJ1I0Ak=
+Date:   Thu, 2 Jul 2020 14:47:11 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH][next] regulator: fix null pointer check on regmap
-Date:   Thu,  2 Jul 2020 12:56:59 +0100
-Message-Id: <20200702115659.38208-1-colin.king@canonical.com>
-X-Mailer: git-send-email 2.27.0
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20200702124711.GA1883721@kroah.com>
+References: <20200625001039.56174-1-john.stultz@linaro.org>
+ <20200625001039.56174-6-john.stultz@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200625001039.56174-6-john.stultz@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Colin Ian King <colin.king@canonical.com>
+On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
+> Allow the qcom_scm driver to be loadable as a
+> permenent module.
+> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Jason Cooper <jason@lakedaemon.net>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-gpio@vger.kernel.org
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
 
-The null pointer check on regmap that checks for a dev_get_regmap failure
-is currently returning -ENOENT if the regmap succeeded. Fix this by adding
-in the missing ! operator.
 
-Addresses-Coverity: ("Dereference after null check")
-Fixes: 4fe66d5a62fb ("regulator: Add support for QCOM PMIC VBUS booster")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
----
- drivers/regulator/qcom_usb_vbus-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
-index 342d92373598..8ba947f3585f 100644
---- a/drivers/regulator/qcom_usb_vbus-regulator.c
-+++ b/drivers/regulator/qcom_usb_vbus-regulator.c
-@@ -49,7 +49,7 @@ static int qcom_usb_vbus_regulator_probe(struct platform_device *pdev)
- 	}
- 
- 	regmap = dev_get_regmap(dev->parent, NULL);
--	if (regmap) {
-+	if (!regmap) {
- 		dev_err(dev, "Failed to get regmap\n");
- 		return -ENOENT;
- 	}
--- 
-2.27.0
-
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
