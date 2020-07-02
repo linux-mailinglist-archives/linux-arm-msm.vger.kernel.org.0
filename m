@@ -2,82 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 964DE212D02
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 21:18:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBFEA212D78
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 21:58:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725994AbgGBTSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jul 2020 15:18:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35790 "EHLO
+        id S1726017AbgGBT6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jul 2020 15:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725915AbgGBTSu (ORCPT
+        with ESMTP id S1726003AbgGBT6U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jul 2020 15:18:50 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0CEC08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2020 12:18:49 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id d4so24990105otk.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2020 12:18:49 -0700 (PDT)
+        Thu, 2 Jul 2020 15:58:20 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D536EC08C5C1;
+        Thu,  2 Jul 2020 12:58:19 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id l17so28716654wmj.0;
+        Thu, 02 Jul 2020 12:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jRIEBzGgN4d7YlR7st1P/jWdFL9XQ3Vl0E8DBG5inJM=;
-        b=uptIQwwuu7LLhQ5BebZnRucA4yx79hkX9MsCaNgPXHc+4sW6fYb8Ma0WG/QZ6fYDkL
-         7CdXciQXPoZxefKXg1aZlVZGomC5VgFvYZCCemrYwiAPfqPIaUh79kgKi/RAkg9NRpIv
-         AjNvVa2FLRKmfGQ/C+ofSk4ZhzxoQdi9jDHGlirho0fHOyp+rCJ0YlEl11rhG/0s5zrE
-         QI0PanE9bioGWA7kRhJuQwMURFJnvxBrc6k43Qo+XGhB+BEYvu00QTsAmH7fhkF+ZWxZ
-         XHkhl2rsZQPDiwm67Y1VvB0XPSN50TfH5XsIbY8Us3IK3Vsy6Qv0fkUNBNL1oMFKSuLj
-         zn2w==
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=wC+zZCNyKVhch9fm+otFty88VRPg/0Jc+M1DZ5xEFf4=;
+        b=gfP+3NH252b3V7MJrH3IOUF/KOnB4tPiudsZzWOw7IOLrLh9hGuWFf+AGDnXQAzEH8
+         RvqJ9xBO29et9XUf9Wmz0/VDVg7y48eBcJ335U/XjAOLE4XqXamZaLqwwTWoKxtRJ+gl
+         9q52aacbZwZcpK2XK7p8NcR6hjjLSj0B/Ytdll6gjwOC/62S9/p8ewg82vDXQKVAI0rW
+         asRFbHU56HcVBZytz+Q15PFANd2iJ7dZBm1qAAUzaFDzHZCMoNCavOKv/t6yZm4mS/x0
+         1JWbUvQro9c+vPq9AwhC0DT1NDy6zuHP+vS53FlSu3ZoqKD9MNnww852aMcm0VoIpujk
+         CtSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jRIEBzGgN4d7YlR7st1P/jWdFL9XQ3Vl0E8DBG5inJM=;
-        b=OSvai0KLNDw5WdEtq12F+/pfMAmD6J406xQCJu9NHZ3X9xDV+osWUL1Fx9ZrottoVu
-         IDCHVKHelDbdPtpaz/rMcJcl80pMyMFMkNPbXk+c7ko+sVtUmIanzyc7AcNDh7+weqVn
-         tfX6VwSEdAFQV3I4XaCwNv9J/BraE1UU9UreePqI5NT3f5M5CFfHXKoFBVzQ44DC6Sbi
-         Ij2m57veVl1cZg2FDM+sqjFOw+ikx/3/alriMIb861MaQpxMxe8Y1l/StwuP84yNJgAT
-         7KYsCQZsUKMWja94/+EzVe1xZ+LUNKYAkoiOMMZiWcQcKQHSLSu8324ne2MSdTay0LBz
-         Mmcg==
-X-Gm-Message-State: AOAM532wok+QvjMqaiST33hahz+9bp4jMR6jNTBnTCT4ZCWstaYK2yTl
-        O+2FHw64w7ESb6QAh2AaXjyPL8FoYbzcAw/07EXIoEVT+fc=
-X-Google-Smtp-Source: ABdhPJyE9o5qsn4mmfg/bTi/do0nytBCytI9l2XHtzasMOIfuZopADxFdFg4hQFCUv8pGK/sonqdb5SzWJU+UiPGXwM=
-X-Received: by 2002:a9d:69c9:: with SMTP id v9mr28599024oto.66.1593717529169;
- Thu, 02 Jul 2020 12:18:49 -0700 (PDT)
-MIME-Version: 1.0
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wC+zZCNyKVhch9fm+otFty88VRPg/0Jc+M1DZ5xEFf4=;
+        b=hNrpXMZuArYW6vRNhoB9XcqfyJ0x3kHysJsfIVIYhM19W0lpsxGlv8ao5bFCU9O01J
+         Tt+bN21h8/YqU7+oVkuXiK3U3IWnLbXOinAF0JQZ3gD3jKpDA1NnXJQKVQBX/ei2E0PU
+         IcmHzUhv8usQd4gTG2DvIR1fcWKJIYgBLK9toczebWdrNxT/2v+lz/m6vIGqnhiuW7rN
+         QWLeAgpvZTtoKqZO9otjOuSqtRqycfTvepWEgrRCNjZn7U19CpGEKr8zX8E5Z21TOqRc
+         bSq/rWFrE/Em+HUMs4JBqNlgKRh5bhiFC65T1qesLze5GvYzunKSEsqFHsYyz2PbsP7b
+         zVgg==
+X-Gm-Message-State: AOAM5300WnQ54ZaApmDryyWamIZTO3YZVK+/3uRLeLLNCLhuCy1PLAe1
+        99LWt/3v555eZXf3E3bc1a8=
+X-Google-Smtp-Source: ABdhPJyS5o3QkxtoTq28hJhbwfOeQRJTZO9mu/ToqnB5o0vBUapCv4R7pRaM0IUtJw+vYOTlm/ojsg==
+X-Received: by 2002:a7b:c841:: with SMTP id c1mr13922306wml.25.1593719898535;
+        Thu, 02 Jul 2020 12:58:18 -0700 (PDT)
+Received: from [192.168.1.3] (ip68-111-84-250.oc.oc.cox.net. [68.111.84.250])
+        by smtp.gmail.com with ESMTPSA id y77sm1178183wmd.36.2020.07.02.12.58.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jul 2020 12:58:17 -0700 (PDT)
+Subject: Re: [net-next,PATCH 1/4] net: mdio-ipq4019: change defines to upper
+ case
+To:     Robert Marko <robert.marko@sartura.hr>, andrew@lunn.ch,
+        hkallweit1@gmail.com, linux@armlinux.org.uk, davem@davemloft.net,
+        kuba@kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
 References: <20200702103001.233961-1-robert.marko@sartura.hr>
- <20200702103001.233961-5-robert.marko@sartura.hr> <20200702133842.GK730739@lunn.ch>
-In-Reply-To: <20200702133842.GK730739@lunn.ch>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Thu, 2 Jul 2020 21:18:38 +0200
-Message-ID: <CA+HBbNGcV0H4L4gzWOUs8GDkiMEOaGdeVhAbtfcT5-PGmVJjfA@mail.gmail.com>
-Subject: Re: [net-next,PATCH 4/4] dt-bindings: mdio-ipq4019: add clock support
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
-        David Miller <davem@davemloft.net>, kuba@kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ <20200702103001.233961-2-robert.marko@sartura.hr>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+Message-ID: <52169697-d7e8-6c28-01d4-eb02b92ae552@gmail.com>
+Date:   Thu, 2 Jul 2020 12:58:14 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Firefox/68.0 Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20200702103001.233961-2-robert.marko@sartura.hr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 2, 2020 at 3:38 PM Andrew Lunn <andrew@lunn.ch> wrote:
->
-> > +  clock-frequency:
-> > +    default: 100000000
->
-> IEEE 802.3 says the default should be 2.5MHz. Some PHYs will go
-> faster, but 100MHz seems unlikely!
-This MDIO controller has an internal divider, by default its set for
-100MHz clock.
-In IPQ4019 MDIO clock is not controllable but in IPQ6018 etc it's controllable.
-That is the only combination I have currently seen used by Qualcomm.
->
->      Andrew
+
+
+On 7/2/2020 3:29 AM, Robert Marko wrote:
+> In the commit adding the IPQ4019 MDIO driver, defines for timeout and sleep partially used lower case.
+> Lets change it to upper case in line with the rest of driver defines.
+> 
+> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
