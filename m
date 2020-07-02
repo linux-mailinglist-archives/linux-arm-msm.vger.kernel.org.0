@@ -2,68 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96972212D80
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 21:59:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13A3A212D94
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 22:04:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726112AbgGBT7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jul 2020 15:59:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41994 "EHLO
+        id S1726017AbgGBUEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jul 2020 16:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725915AbgGBT7P (ORCPT
+        with ESMTP id S1725915AbgGBUEn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jul 2020 15:59:15 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC27CC08C5C1;
-        Thu,  2 Jul 2020 12:59:14 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id o8so28704897wmh.4;
-        Thu, 02 Jul 2020 12:59:14 -0700 (PDT)
+        Thu, 2 Jul 2020 16:04:43 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0052CC08C5C1;
+        Thu,  2 Jul 2020 13:04:42 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id g10so9696459wmc.1;
+        Thu, 02 Jul 2020 13:04:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Sn8FkMa3krbqM8mmfm6ud5V1sSg7l8Y8Fkbs+NZhIHk=;
-        b=pW3OTAOnVEGuX+d9PS4rXy5WEU6yN/BeJXnezhxh50m2JTgSCrclOfQ1qWilAtkUw1
-         IuPFMFAy7M2qwsfmJvM5Ws9EuLGFyg+eTqx6EfNWdVmWl5Qhnf9Iz4zUwp4iPBHErUf+
-         VW6wdvFAp4AXrMO2912e/baqJVly/MFmcSOKnw6nfHRueOIhudKE6TmCTs3V6OzJ9mNG
-         Hkp9ihaNJG9RCwaCpJfnLpsUQa+97HWfJ18DuBDNnxNIJtSRgt77S7FPVirQrd9DfRCH
-         A7fP4tKYte+W0Oq4HM2jPs7W3kgHpC+y9yE/cKXxGczDGflwQXkzygMPb7441UDHtspg
-         JL/w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pXq9disgHLt9GBV0pwwRmM40yiapw6jXrYFzU9ELtYE=;
+        b=dKCPjOpmYL9C4m73nq3Bb1NKmDYjXgXmdng67PHDhQPObjGKzqS3BJ0vmTFBbr62Jr
+         9D80+DX+He0RerTsGOvLbjLqC9W3NoJ8jvq2pdbW66jZZFJ0dQ22RY7KJIYzGDutYZL+
+         3YkL3qjkXoEtPknTR3cUebjRMG0WpBXG60oYsycec8q9ZdwHWG/qMeHxl9ljkAhF+rEJ
+         Uf09n3Ylgjac1IAU2yZvjueQsI/haWiE8mWxZ7EdTGIwRFtyDc8BcJuuJJFLoQDfg9vL
+         iW0YolB6LKEhtWPXw4P0iaZG/e6tzLpJSBkjQimmbvo/xMoBd8VkoNoQug0RhSFgcOvL
+         i1LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Sn8FkMa3krbqM8mmfm6ud5V1sSg7l8Y8Fkbs+NZhIHk=;
-        b=HRKQJCR0K9hB7vBbbUw/e5hG2PfvI3iQE9D5mBcpx6ZBi+GsBZTGU0QzfyZR3PSRa/
-         g4cF3bF8I0w48PsR1fdOpoo/u6gLMxiojT3zG/PSAVw2hQI7dEgD38QUoRlIDOZ1AMX7
-         YfBAbX+suBalh7TRCFVtKyr3hDnLQ1rOjffwhc7H+9TnrpS3L6KcolgUmH+nD0GszK/B
-         +n++iT0EFOowstc7OFW9Kdtut1vlccIxL1dTWnpVfFSZ8UKtP94v/A9+T2tqr3eLuGYj
-         WjEvNJ9rV3seuNUDPTp4g5kBqbuxI870VbfHRi7tu8RM1ltzzpXlVU9BAZDsLHXcp/2r
-         nYXw==
-X-Gm-Message-State: AOAM533oFmVroDjPhe6GId8mLuTk0Ygv4d7a8Bzhd2Q1llbKJ4fLKJHI
-        0Rde00GNLDq9igW8wnDsaDs=
-X-Google-Smtp-Source: ABdhPJwJiDR/PXzZEsvkH2mruteSVvKaUqVs/VBrynpu4Ag0rUBsGLoSfBkfYHGnonZIkZozd2RLjQ==
-X-Received: by 2002:a1c:f60d:: with SMTP id w13mr34925368wmc.51.1593719953696;
-        Thu, 02 Jul 2020 12:59:13 -0700 (PDT)
-Received: from [192.168.1.3] (ip68-111-84-250.oc.oc.cox.net. [68.111.84.250])
-        by smtp.gmail.com with ESMTPSA id j24sm13143317wrd.43.2020.07.02.12.59.10
+        bh=pXq9disgHLt9GBV0pwwRmM40yiapw6jXrYFzU9ELtYE=;
+        b=Xi6XEh9/zUVxVruOiBPnUQvXKlE+i/xbCMAGgx3zOJF0dWIpb5mAtb2dKuG6/niK/K
+         /g4dvk206Cji7BNlOWSoA79/QjDrE8paE42xgSp5myVzOB0afnq0mELwcUn4Uz5nA/No
+         HkrW7EQ2rLUbPadZa3QEMo6xldIXh2TL6YMjmVjcsK3b/ucMkjL/FL3gL+1lPe8LfrpJ
+         DB9EeWTR5jMiFfcW7n+gewokn/xpY/q4qR+QgQRqIFz/Jr0WKN1Bni3iswhkxpvKTtIE
+         8Nbkgd4R7/cNdXg1eRdAxyFoNcJXwz75SPmuArSX9RfoH7Iy0Rd1If8whXCuq9QKVDTd
+         UF3Q==
+X-Gm-Message-State: AOAM53122aTj5WvPJVKneToY/y/MN0i7osRb0RyABxnVKOVdI4OKtZfv
+        A/lzTCuPNulBrmoxQcwiiYs=
+X-Google-Smtp-Source: ABdhPJwUZcL1Xeu7gExBO2h9ZoAaNCI8QVciXggW2GVVON9/DsAkuiBiamu0YWMY0kXQ1AtCcyJRIw==
+X-Received: by 2002:a05:600c:2f17:: with SMTP id r23mr31598111wmn.167.1593720281729;
+        Thu, 02 Jul 2020 13:04:41 -0700 (PDT)
+Received: from [10.230.30.107] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id w17sm12674826wra.42.2020.07.02.13.04.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jul 2020 12:59:13 -0700 (PDT)
-Subject: Re: [net-next,PATCH 2/4] net: mdio-ipq4019: add clock support
-To:     Robert Marko <robert.marko@sartura.hr>, andrew@lunn.ch,
-        hkallweit1@gmail.com, linux@armlinux.org.uk, davem@davemloft.net,
-        kuba@kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
+        Thu, 02 Jul 2020 13:04:41 -0700 (PDT)
+Subject: Re: [net-next,PATCH 4/4] dt-bindings: mdio-ipq4019: add clock support
+To:     Robert Marko <robert.marko@sartura.hr>,
+        Andrew Lunn <andrew@lunn.ch>
+Cc:     Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        David Miller <davem@davemloft.net>, kuba@kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robh+dt@kernel.org
 References: <20200702103001.233961-1-robert.marko@sartura.hr>
- <20200702103001.233961-3-robert.marko@sartura.hr>
+ <20200702103001.233961-5-robert.marko@sartura.hr>
+ <20200702133842.GK730739@lunn.ch>
+ <CA+HBbNGcV0H4L4gzWOUs8GDkiMEOaGdeVhAbtfcT5-PGmVJjfA@mail.gmail.com>
 From:   Florian Fainelli <f.fainelli@gmail.com>
-Message-ID: <e4921b83-0c80-65ad-6ddd-be2a12347d9c@gmail.com>
-Date:   Thu, 2 Jul 2020 12:59:09 -0700
+Message-ID: <42ebc500-35ba-48f6-c4d1-3743abde1852@gmail.com>
+Date:   Thu, 2 Jul 2020 13:04:37 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Firefox/68.0 Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20200702103001.233961-3-robert.marko@sartura.hr>
+In-Reply-To: <CA+HBbNGcV0H4L4gzWOUs8GDkiMEOaGdeVhAbtfcT5-PGmVJjfA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,34 +81,23 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7/2/2020 3:29 AM, Robert Marko wrote:
-> Some newer SoC-s have a separate MDIO clock that needs to be enabled.
-> So lets add support for handling the clocks to the driver.
-> 
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> ---
->  drivers/net/phy/mdio-ipq4019.c | 28 +++++++++++++++++++++++++++-
->  1 file changed, 27 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/phy/mdio-ipq4019.c b/drivers/net/phy/mdio-ipq4019.c
-> index 0e78830c070b..7660bf006da0 100644
-> --- a/drivers/net/phy/mdio-ipq4019.c
-> +++ b/drivers/net/phy/mdio-ipq4019.c
-> @@ -9,6 +9,7 @@
->  #include <linux/iopoll.h>
->  #include <linux/of_address.h>
->  #include <linux/of_mdio.h>
-> +#include <linux/clk.h>
->  #include <linux/phy.h>
->  #include <linux/platform_device.h>
->  
-> @@ -24,8 +25,12 @@
->  #define IPQ4019_MDIO_TIMEOUT	10000
->  #define IPQ4019_MDIO_SLEEP		10
->  
-> +#define QCA_MDIO_CLK_DEFAULT_RATE	100000000
+On 7/2/2020 12:18 PM, Robert Marko wrote:
+> On Thu, Jul 2, 2020 at 3:38 PM Andrew Lunn <andrew@lunn.ch> wrote:
+>>
+>>> +  clock-frequency:
+>>> +    default: 100000000
+>>
+>> IEEE 802.3 says the default should be 2.5MHz. Some PHYs will go
+>> faster, but 100MHz seems unlikely!
+> This MDIO controller has an internal divider, by default its set for
+> 100MHz clock.
+> In IPQ4019 MDIO clock is not controllable but in IPQ6018 etc it's controllable.
+> That is the only combination I have currently seen used by Qualcomm.
 
-100MHz? Is not that going to be a tad too much for most MDIO devices out
-there?
+Not sure I understand here, the 'clock-frequency' is supposed to denote
+the MDIO bus output clock frequency, that is the frequency at which all
+MDIO devices are going to operate at. Is this 100MHz a clock that feeds
+into the MDIO block and get internally divided by a programmable
+register to obtain an output MDIO clock?
 -- 
 Florian
