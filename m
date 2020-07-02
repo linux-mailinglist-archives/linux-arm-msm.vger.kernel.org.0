@@ -2,185 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D1D2212DCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 22:22:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6991212DFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 22:43:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725954AbgGBUWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jul 2020 16:22:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45568 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbgGBUWH (ORCPT
+        id S1726035AbgGBUni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jul 2020 16:43:38 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:34711 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725915AbgGBUni (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jul 2020 16:22:07 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493D1C08C5C1;
-        Thu,  2 Jul 2020 13:22:07 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id d18so19660839edv.6;
-        Thu, 02 Jul 2020 13:22:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LJqRalz8nhd1uucT/hW2AoacNEdXpfTo9tORErtQ+CY=;
-        b=A7yLVEUdkzu0U9R4Gydu8ALB+orKv8jxKoFtu9XmVALASxtFPW+Va6LJ5qJhI72YNO
-         9Xv4iYY5bNsUh4qm4m+LioK2uUta+u/jnJbYpH5humUCWvYsMBgJboDYhKhHZZUx+Y2t
-         CDichgejEQLfWBWPDxoXBh4pejxijkeFbK9MuXnJAFs5KNJlHJCDWrK9c/h1hkSFn1Q4
-         i5mh2FvofLz5G0TU14GFgd8kGAENZrFOlC0+nycGxTpVBcCABFThDjY47tWqwP7ogWZm
-         0gGGJU4NXyM42SPgXXtcGIsWvfmWkLee6PiI8Na2c1rFNSlo/xXzsM8i1cmZ6bAwIOqg
-         4fkQ==
+        Thu, 2 Jul 2020 16:43:38 -0400
+Received: by mail-io1-f65.google.com with SMTP id q74so6762638iod.1;
+        Thu, 02 Jul 2020 13:43:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LJqRalz8nhd1uucT/hW2AoacNEdXpfTo9tORErtQ+CY=;
-        b=C9Xr9tTivuCaC8wgLRz7/pN/3lqlyjiCVKqZpfvQOPaCFWYQpk6yxpUnNjRnbQLjgs
-         H4/+LrFHaWCAMlwcuEo/4UOi4f61NYnpkMhVS5aA3p98e7qKIujs5yoPIpzROdLmTYwk
-         1zlynbe+QqyGiV8OjdSTj/Kc01G8ve9EycZh+4tmZD2sDitqQGy1MXX0FpnnO1k7j/NX
-         +JhXuNf9sy/TqwZlfemCUh8ueonhLx0q9XH1BjsJBVWlbLlkbeerp3nvqMysHuoV4ngu
-         Z679KZQqqOHHo3cCrIdts6CMivTe9xV0PMuE5BUan634E8JzU03tsVyQZhIqIFlJsajC
-         NqaQ==
-X-Gm-Message-State: AOAM5332Eau2wUtf/ecfcgSwl/uZPFBWWTY/VySu6rwbjUe3VlM8Hwri
-        GzjJ53J/CZJv9tcxpLwNQVPQfjlwJZttbOFMLCYOx8s+
-X-Google-Smtp-Source: ABdhPJzZ45bUaTYoAMc4+7tytjU6jg5rAHFG6yHcGC5gt16WN/ceKbzpc4PdmYV+WosMNX1otFsQabXOGlQkVzfbrmw=
-X-Received: by 2002:a50:f392:: with SMTP id g18mr14487895edm.151.1593721325980;
- Thu, 02 Jul 2020 13:22:05 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9CKNLJgI2E2dmsPxA89wHeetvVZ0mTwZVWuoJtaPM1Q=;
+        b=JF3CozeEEKEU5ux7KtdB82EsDIcBTR7hw82cNZDvKMgz2jGRgoU8gJdiuxRdPRfLzk
+         TMMg9IYXgHCxZsJwReuwSAOCqcEzOuqXZfA1OmDsboCvjjISVaaUnd11bmp05yirWHub
+         atzIdyJIRMO9J47fIuJXRmJF1ylmaggCerbisYh4ag3L9HaWgABC5Xo/J7ldXRv38Agb
+         roQkMiy2VpRkOGPWlt4TGJi32NyLY/NbIpVAQNKYgT4M86bT1rxZNycIqU79YpwzJJBi
+         j3tSohkeyJlTTJ9BG4i9/L66scU1noTGxIhRCuHFODfz5PPV5/hYi/hrg6Jz2LEtJI2V
+         R5Kw==
+X-Gm-Message-State: AOAM532CCf+uf4K98SC7xolm3nSE5WEjcRvh8eUyF0OiCfJmo+Et3fqO
+        0Lp2YdO/CkkqvOBhkHzzWQ==
+X-Google-Smtp-Source: ABdhPJxDkpcg7Zn4SUV67PNen92IBqdZprC/69RObQpyOE8clGJd3InVDF2S7lRIlvsVgWUIdYReIQ==
+X-Received: by 2002:a02:b18b:: with SMTP id t11mr31938785jah.46.1593722616772;
+        Thu, 02 Jul 2020 13:43:36 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id w4sm4979794ioc.23.2020.07.02.13.43.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jul 2020 13:43:36 -0700 (PDT)
+Received: (nullmailer pid 1658496 invoked by uid 1000);
+        Thu, 02 Jul 2020 20:43:35 -0000
+Date:   Thu, 2 Jul 2020 14:43:35 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [RESEND PATCH v2 06/13] dt-bindings: clock: Introduce SM8150
+ QCOM Graphics clock bindings
+Message-ID: <20200702204335.GA1657238@bogus>
+References: <20200629211725.2592-1-jonathan@marek.ca>
+ <20200629211725.2592-7-jonathan@marek.ca>
 MIME-Version: 1.0
-References: <20200626200042.13713-1-jcrouse@codeaurora.org> <20200626200042.13713-3-jcrouse@codeaurora.org>
-In-Reply-To: <20200626200042.13713-3-jcrouse@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 2 Jul 2020 13:22:36 -0700
-Message-ID: <CAF6AEGuN6b5a0=Ava53vyv8E57=XCPBTZAjYrRNxtNv41VOp4Q@mail.gmail.com>
-Subject: Re: [PATCH v9 2/7] iommu/arm-smmu: Add support for split pagetables
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        John Stultz <john.stultz@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200629211725.2592-7-jonathan@marek.ca>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 1:01 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> Enable TTBR1 for a context bank if IO_PGTABLE_QUIRK_ARM_TTBR1 is selected
-> by the io-pgtable configuration.
->
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+On Mon, 29 Jun 2020 17:17:12 -0400, Jonathan Marek wrote:
+> Add device tree bindings for graphics clock controller for
+> Qualcomm Technology Inc's SM8150 SoCs.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->
->  drivers/iommu/arm-smmu.c | 21 ++++++++++++++++-----
->  drivers/iommu/arm-smmu.h | 25 +++++++++++++++++++------
->  2 files changed, 35 insertions(+), 11 deletions(-)
->
-> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
-> index 8a3a6c8c887a..048de2681670 100644
-> --- a/drivers/iommu/arm-smmu.c
-> +++ b/drivers/iommu/arm-smmu.c
-> @@ -555,11 +555,15 @@ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
->                         cb->ttbr[0] = pgtbl_cfg->arm_v7s_cfg.ttbr;
->                         cb->ttbr[1] = 0;
->                 } else {
-> -                       cb->ttbr[0] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> -                       cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> -                                                 cfg->asid);
-> +                       cb->ttbr[0] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> +                               cfg->asid);
->                         cb->ttbr[1] = FIELD_PREP(ARM_SMMU_TTBRn_ASID,
-> -                                                cfg->asid);
-> +                               cfg->asid);
+>  .../bindings/clock/qcom,sm8150-gpucc.yaml     | 74 +++++++++++++++++++
+>  include/dt-bindings/clock/qcom,gpucc-sm8150.h | 40 ++++++++++
+>  2 files changed, 114 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm8150.h
+> 
 
-above looks like stray whitespace changes?
 
-> +
-> +                       if (pgtbl_cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1)
-> +                               cb->ttbr[1] |= pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
-> +                       else
-> +                               cb->ttbr[0] |= pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
->                 }
->         } else {
->                 cb->ttbr[0] = pgtbl_cfg->arm_lpae_s2_cfg.vttbr;
-> @@ -824,7 +828,14 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
->
->         /* Update the domain's page sizes to reflect the page table format */
->         domain->pgsize_bitmap = pgtbl_cfg.pgsize_bitmap;
-> -       domain->geometry.aperture_end = (1UL << ias) - 1;
-> +
-> +       if (pgtbl_cfg.quirks & IO_PGTABLE_QUIRK_ARM_TTBR1) {
-> +               domain->geometry.aperture_start = ~0UL << ias;
-> +               domain->geometry.aperture_end = ~0UL;
-> +       } else {
-> +               domain->geometry.aperture_end = (1UL << ias) - 1;
-> +       }
-> +
->         domain->geometry.force_aperture = true;
->
->         /* Initialise the context bank with our page table cfg */
-> diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> index 38b041530a4f..5f2de20e883b 100644
-> --- a/drivers/iommu/arm-smmu.h
-> +++ b/drivers/iommu/arm-smmu.h
-> @@ -168,10 +168,12 @@ enum arm_smmu_cbar_type {
->  #define ARM_SMMU_CB_TCR                        0x30
->  #define ARM_SMMU_TCR_EAE               BIT(31)
->  #define ARM_SMMU_TCR_EPD1              BIT(23)
-> +#define ARM_SMMU_TCR_A1                        BIT(22)
->  #define ARM_SMMU_TCR_TG0               GENMASK(15, 14)
->  #define ARM_SMMU_TCR_SH0               GENMASK(13, 12)
->  #define ARM_SMMU_TCR_ORGN0             GENMASK(11, 10)
->  #define ARM_SMMU_TCR_IRGN0             GENMASK(9, 8)
-> +#define ARM_SMMU_TCR_EPD0              BIT(7)
->  #define ARM_SMMU_TCR_T0SZ              GENMASK(5, 0)
->
->  #define ARM_SMMU_VTCR_RES1             BIT(31)
-> @@ -347,12 +349,23 @@ struct arm_smmu_domain {
->
->  static inline u32 arm_smmu_lpae_tcr(struct io_pgtable_cfg *cfg)
->  {
-> -       return ARM_SMMU_TCR_EPD1 |
-> -              FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-> -              FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
-> -              FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
-> -              FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
-> -              FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
-> +       u32 tcr = FIELD_PREP(ARM_SMMU_TCR_TG0, cfg->arm_lpae_s1_cfg.tcr.tg) |
-> +               FIELD_PREP(ARM_SMMU_TCR_SH0, cfg->arm_lpae_s1_cfg.tcr.sh) |
-> +               FIELD_PREP(ARM_SMMU_TCR_ORGN0, cfg->arm_lpae_s1_cfg.tcr.orgn) |
-> +               FIELD_PREP(ARM_SMMU_TCR_IRGN0, cfg->arm_lpae_s1_cfg.tcr.irgn) |
-> +               FIELD_PREP(ARM_SMMU_TCR_T0SZ, cfg->arm_lpae_s1_cfg.tcr.tsz);
-> +
-> +       /*
-> +       * When TTBR1 is selected shift the TCR fields by 16 bits and disable
-> +       * translation in TTBR0
-> +       */
-> +       if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1) {
-> +               tcr = (tcr << 16) & ~ARM_SMMU_TCR_A1;
-> +               tcr |= ARM_SMMU_TCR_EPD0;
-> +       } else
-> +               tcr |= ARM_SMMU_TCR_EPD1;
+My bot found errors running 'make dt_binding_check' on your patch:
 
-I'm not personally a fan of if/else ladders that mix {}'s, but
-Will/Robin may have a different opinion
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml: maintainers:0: None is not of type 'string'
+Documentation/devicetree/bindings/Makefile:20: recipe for target 'Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.example.dts' failed
+make[1]: *** [Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml: ignoring, error in schema: maintainers: 0
+warning: no schema found in file: ./Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml: ignoring, error in schema: maintainers: 0
+warning: no schema found in file: ./Documentation/devicetree/bindings/clock/qcom,sm8150-gpucc.yaml
+Makefile:1347: recipe for target 'dt_binding_check' failed
+make: *** [dt_binding_check] Error 2
 
-BR,
--R
 
-> +
-> +       return tcr;
->  }
->
->  static inline u32 arm_smmu_lpae_tcr2(struct io_pgtable_cfg *cfg)
-> --
-> 2.17.1
->
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+See https://patchwork.ozlabs.org/patch/1319320
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
+
