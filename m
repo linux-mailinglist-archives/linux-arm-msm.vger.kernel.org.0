@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1232212E68
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 23:01:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 833F7212E6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 23:02:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725954AbgGBVBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jul 2020 17:01:30 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:60829 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726014AbgGBVB2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jul 2020 17:01:28 -0400
+        id S1726033AbgGBVCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jul 2020 17:02:47 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38799 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726028AbgGBVCp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Jul 2020 17:02:45 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593723688; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1593723765; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=MrJDxWrf2N4TbGJfco8+HjKPzeQQULCNLSgOC4TTleI=; b=BTENlgfRu4Xg3tUaLtSwp0Na+lCkyMxFbaTH2OWzDNhSs499qsIgo0MmsNNR0KaSLVaofOfO
- LYfjuhcX7SRKEQKzWBPmRWAJhGfzRHE1v2QV6ZJJ5s35YHP1oDe+G+VX9bvu6rMF/NcMY05X
- Z4sHLPnz7yspIkxN6Hy8tdhECUM=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ Subject: Sender; bh=N0Ded94Yw/A97ejOt/Byw9brMZzuEH1tTLERSwoMMfg=; b=NhfGoWhg0ivnEDij2j9XmIQJHWv0M/VlPCK9gIKUQrcDFz2sZ8ICZmBd8IOS9y286LRgoRtt
+ LAc8KfeSSent+m8OhjjFN+JDJauXesttSAYwz4XH22caYNYm1/Eiq/K5k0PmThX0SOVxpqHR
+ a8wjld9RsVpZYWK0QCTNDNxfWz4=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5efe4b13bfb34e631cf7c2dd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Jul 2020 21:01:07
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5efe4b63117610c7ff6eed25 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Jul 2020 21:02:27
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 54286C433C6; Thu,  2 Jul 2020 21:01:06 +0000 (UTC)
+        id B5E81C43391; Thu,  2 Jul 2020 21:02:26 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,27 +36,27 @@ Received: from [192.168.1.117] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C29E8C433C8;
-        Thu,  2 Jul 2020 21:01:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C29E8C433C8
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C160DC433C6;
+        Thu,  2 Jul 2020 21:02:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C160DC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
-Subject: Re: [PATCH 1/4] interconnect: qcom: Support bcm-voter-specific TCS
- wait behavior
+Subject: Re: [PATCH 4/4] interconnect: qcom: Fix small BW votes being
+ truncated to zero
 To:     Georgi Djakov <georgi.djakov@linaro.org>
 Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
         linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20200623040814.23791-1-mdtipton@codeaurora.org>
- <20200623040814.23791-2-mdtipton@codeaurora.org>
- <fee03dda-4c17-701b-bb1a-bf9482cc476d@linaro.org>
+ <20200623040814.23791-5-mdtipton@codeaurora.org>
+ <09f21847-33bc-64fb-aeb7-df5bafa5593c@linaro.org>
 From:   Mike Tipton <mdtipton@codeaurora.org>
-Message-ID: <9833fdac-2790-d488-e998-93fd077dfb03@codeaurora.org>
-Date:   Thu, 2 Jul 2020 14:01:03 -0700
+Message-ID: <d093fed9-dede-93dc-2990-80769d0d4439@codeaurora.org>
+Date:   Thu, 2 Jul 2020 14:02:21 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <fee03dda-4c17-701b-bb1a-bf9482cc476d@linaro.org>
+In-Reply-To: <09f21847-33bc-64fb-aeb7-df5bafa5593c@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -66,38 +65,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/2/2020 2:02 AM, Georgi Djakov wrote:
+On 7/2/2020 4:11 AM, Georgi Djakov wrote:
 > Hi Mike,
 > 
 > On 6/23/20 07:08, Mike Tipton wrote:
->> Currently, all bcm-voters set tcs_cmd::wait=true for the last VCD
->> command in each TCS (AMC, WAKE, and SLEEP). However, some bcm-voters
->> don't need the completion and instead need to optimize for latency. For
->> instance, disabling wait-for-completion in the WAKE set can decrease
->> resume latency and allow for certain operations to occur in parallel
->> with the WAKE TCS triggering. This is only safe in very specific
->> situations. Keep the default behavior of always waiting, but allow it to
->> be overridden in devicetree.
+>> Small BW votes that translate to less than a single BCM unit are
+>> currently truncated to zero. Ensure that non-zero BW requests always
+>> result in at least a vote of 1 to BCM.
 >>
+>> Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
 >> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
 >> ---
->>   drivers/interconnect/qcom/bcm-voter.c | 32 ++++++++++++++++++---------
->>   1 file changed, 21 insertions(+), 11 deletions(-)
+>>   drivers/interconnect/qcom/bcm-voter.c | 27 +++++++++++++++++++--------
+>>   1 file changed, 19 insertions(+), 8 deletions(-)
 >>
 >> diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-> [..]
->> @@ -336,7 +342,11 @@ static int qcom_icc_bcm_voter_probe(struct platform_device *pdev)
->>   		return -ENOMEM;
+>> index a68c858ca6b7..9e2612fe7fad 100644
+>> --- a/drivers/interconnect/qcom/bcm-voter.c
+>> +++ b/drivers/interconnect/qcom/bcm-voter.c
+>> @@ -54,8 +54,20 @@ static int cmp_vcd(void *priv, struct list_head *a, struct list_head *b)
+>>   		return 1;
+>>   }
 >>   
->>   	voter->dev = &pdev->dev;
->> -	voter->np = pdev->dev.of_node;
->> +	voter->np = np;
+>> +static u64 bcm_div(u64 num, u64 base)
+>> +{
+>> +	/* Ensure that small votes aren't lost. */
+>> +	if (num && num < base)
+>> +		return 1;
 >> +
->> +	if (of_property_read_u32(np, "qcom,tcs-wait", &voter->tcs_wait))
+>> +	do_div(num, base);
 > 
-> This DT property needs to be documented.
-Whoops, will do.
+> do_div() does a 64-by-32 division, which will truncate these to 32-bit.
+I can change base to a u32. It doesn't need anything more than that.
 
+> 
+>> +
+>> +	return num;
+>> +}
+>> +
+>>   static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+>>   {
+>> +	struct qcom_icc_node *node;
+>>   	size_t i, bucket;
+>>   	u64 agg_avg[QCOM_ICC_NUM_BUCKETS] = {0};
+>>   	u64 agg_peak[QCOM_ICC_NUM_BUCKETS] = {0};
+>> @@ -63,22 +75,21 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+>>   
+>>   	for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
+>>   		for (i = 0; i < bcm->num_nodes; i++) {
+>> -			temp = bcm->nodes[i]->sum_avg[bucket] * bcm->aux_data.width;
+>> -			do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
+>> +			node = bcm->nodes[i];
+>> +			temp = bcm_div(node->sum_avg[bucket] * bcm->aux_data.width,
+>> +				       node->buswidth * node->channels);
+>>   			agg_avg[bucket] = max(agg_avg[bucket], temp);
+>>   
+>> -			temp = bcm->nodes[i]->max_peak[bucket] * bcm->aux_data.width;
+>> -			do_div(temp, bcm->nodes[i]->buswidth);
+>> +			temp = bcm_div(node->max_peak[bucket] * bcm->aux_data.width,
+>> +				       node->buswidth);
+>>   			agg_peak[bucket] = max(agg_peak[bucket], temp);
+>>   		}
+>>   
+>>   		temp = agg_avg[bucket] * bcm->vote_scale;
+>> -		do_div(temp, bcm->aux_data.unit);
+>> -		bcm->vote_x[bucket] = temp;
+>> +		bcm->vote_x[bucket] = bcm_div(temp, bcm->aux_data.unit);
+>>   
+>>   		temp = agg_peak[bucket] * bcm->vote_scale;
+>> -		do_div(temp, bcm->aux_data.unit);
+>> -		bcm->vote_y[bucket] = temp;
+>> +		bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
+>>   	}
+>>   
+>>   	if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
+>>
+> 
+> The rest looks good.
 > 
 > Thanks,
 > Georgi
