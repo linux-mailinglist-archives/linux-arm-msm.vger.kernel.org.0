@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42B702125F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 16:18:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 250D2212872
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 17:47:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728216AbgGBOSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Jul 2020 10:18:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48770 "EHLO mail.kernel.org"
+        id S1726117AbgGBPrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Jul 2020 11:47:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59944 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728041AbgGBOSb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Jul 2020 10:18:31 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        id S1725878AbgGBPrK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Jul 2020 11:47:10 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9E49A20772;
-        Thu,  2 Jul 2020 14:18:28 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 23ECB2088E;
+        Thu,  2 Jul 2020 15:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593699511;
-        bh=OUQQW1JU24wJrZp3dLNN4aZNP+OkKamWFoOkvma1MWc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AybHI1SNLDlZLjJHhnUxl1vNrkcBryZEHUtTXKlejzlQSYoGW1ipuNN987H7J4DY3
-         X27y+baEEdaxlSIiZwvoLfoxIquGj2HAFLURbjU84wkSlY024jbgft/RsH+6u99FCs
-         R9ApqJA5yvh7QYn+K7yymrEJe25TxhG7yBX2Cy4w=
-Date:   Thu, 2 Jul 2020 15:18:25 +0100
-From:   Will Deacon <will@kernel.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        s=default; t=1593704829;
+        bh=QzXEbm91ZHjeK+U2ufKA+zyN3DYIjWJ/5Ng9zrnJgPU=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=I/da2YHGzWZ+Auh0JgtvgMU4K3Q2xGbjFSad2+s+VaG9S7CRXzGy7ILl6bYjstoCP
+         GGtyA1VW3Dut6mB/3BHxLqx7jkcAt7XYwS3KkH/5syFoVfVV4Uk8qRVTnrB5MOYEuL
+         +UjHfeV2TBIT9aBuSFi7bxXiNac+D5u/BLRN1tdk=
+Date:   Thu, 02 Jul 2020 16:47:07 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Wesley Cheng <wcheng@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-Message-ID: <20200702141825.GA16941@willie-the-truck>
-References: <20200625001039.56174-1-john.stultz@linaro.org>
- <20200625001039.56174-6-john.stultz@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200625001039.56174-6-john.stultz@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        linux-arm-msm@vger.kernel.org,
+        Colin King <colin.king@canonical.com>
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20200702115659.38208-1-colin.king@canonical.com>
+References: <20200702115659.38208-1-colin.king@canonical.com>
+Subject: Re: [PATCH][next] regulator: fix null pointer check on regmap
+Message-Id: <159370481231.5599.12177973052182986447.b4-ty@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index b510f67dfa49..714893535dd2 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
->  config ARM_SMMU
->  	tristate "ARM Ltd. System MMU (SMMU) Support"
->  	depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
-> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
->  	select IOMMU_API
->  	select IOMMU_IO_PGTABLE_LPAE
->  	select ARM_DMA_USE_IOMMU if ARM
+On Thu, 2 Jul 2020 12:56:59 +0100, Colin King wrote:
+> The null pointer check on regmap that checks for a dev_get_regmap failure
+> is currently returning -ENOENT if the regmap succeeded. Fix this by adding
+> in the missing ! operator.
 
-This looks like a giant hack. Is there another way to handle this?
+Applied to
 
-Will
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/1] regulator: fix null pointer check on regmap
+      commit: 94462138f368a5e079d53d578509276e4366d0c1
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
