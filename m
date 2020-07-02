@@ -2,201 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 018EA21175A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 02:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82E512119CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2020 03:53:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbgGBApn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Jul 2020 20:45:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728055AbgGBApg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Jul 2020 20:45:36 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9984CC08C5DB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2020 17:45:36 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id gc9so5172445pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2020 17:45:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=l0ar211YP+36NHOe0RGdo5xX/ajG/sfFSQ8f60VejD0=;
-        b=K8dryPtevEWJdF6SRZtGa+5PKQFaWzwvHBySR6u2HjiruZ2Nj2GDh3biDtq0WsOzqS
-         pEtk2XCHBg+9pAZYqGRL3g2nGdU6WPHoQ/sX4dI4/0W1+LpIuTUyIIH9/CdxbxVSEzwf
-         ZaU54QAtbJBTg/Td+Fqip/FVCLcj9oyQ7SnuE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=l0ar211YP+36NHOe0RGdo5xX/ajG/sfFSQ8f60VejD0=;
-        b=oNHe36iNqLQt/ofmf3Tjx7RwX3D4Fbgx9XZEDsyUwGjfVGwh6CIWGB8gtForsy0gol
-         ezzgwGVHtUafyUE2Sf9BnRuEGphad+evLS3qz0vxDLMDQAIVBbn/Es10dhtqzvuBSHxK
-         XmFSFJVwIJzCOPRnEq8oZdck8RGlfueaofPak6rEhMDFhFMK/+1vpa+VSdg82UHtHi2T
-         wuQXRYAsz0Ehi82jpEumVMHDk0VDCLehhFGaU9jCeB3qL+d7yX+HO6/fnKsbDq/6iQVy
-         vh8BzCLG0HWWwW+lZ+FZEEKiJ2nh44Lgwzy/5/lgyhrIIPRPu/7x4CDx8qyXz5tqS0+W
-         UHyg==
-X-Gm-Message-State: AOAM533+amrU2x5ZReOQAN3jpH+ys9rJb56CO9jyRGxUHfPvoOr+wXdJ
-        jibHaI1CXVbHwunxDx5g+jmmJA==
-X-Google-Smtp-Source: ABdhPJwhyy/qWqaGb8JH1N+a/tD9m0LydHWyYXMgG+Not2qxrJ+qYYncwwDbkuIMPoZEPcSqyStrCg==
-X-Received: by 2002:a17:902:b60f:: with SMTP id b15mr24662170pls.248.1593650736141;
-        Wed, 01 Jul 2020 17:45:36 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id w4sm6966212pfd.39.2020.07.01.17.45.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 17:45:35 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     akashast@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        mkshah@codeaurora.org, swboyd@chromium.org,
-        georgi.djakov@linaro.org, ctheegal@codeaurora.org,
-        mka@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-Subject: [PATCH 3/3] spi: spi-geni-qcom: Get rid of most overhead in prepare_message()
-Date:   Wed,  1 Jul 2020 17:45:09 -0700
-Message-Id: <20200701174506.3.I2b3d7aeb1ea622335482cce60c58d2f8381e61dd@changeid>
-X-Mailer: git-send-email 2.27.0.383.g050319c2ae-goog
-In-Reply-To: <20200702004509.2333554-1-dianders@chromium.org>
-References: <20200702004509.2333554-1-dianders@chromium.org>
+        id S1727803AbgGBBxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Jul 2020 21:53:44 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:6796 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726735AbgGBBxo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Jul 2020 21:53:44 -0400
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id 43B3E84ECBEA05F2FC52;
+        Thu,  2 Jul 2020 09:53:41 +0800 (CST)
+Received: from kernelci-master.huawei.com (10.175.101.6) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 2 Jul 2020 09:53:33 +0800
+From:   Wei Yongjun <weiyongjun1@huawei.com>
+To:     Wei Yongjun <weiyongjun1@huawei.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        "Sahitya Tummala" <stummala@codeaurora.org>
+CC:     Hulk Robot <hulkci@huawei.com>, <linux-mmc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH -next] mmc: sdhci-msm: Make function sdhci_msm_dump_vendor_regs() static
+Date:   Thu, 2 Jul 2020 10:03:47 +0800
+Message-ID: <20200702020347.77214-1-weiyongjun1@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.175.101.6]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's a bunch of overhead in spi-geni-qcom's prepare_message.  Get
-rid of it.  Before this change spi_geni_prepare_message() took around
-14.5 us.  After this change, spi_geni_prepare_message() takes about
-1.75 us (as measured by ftrace).
+From: Hulk Robot <hulkci@huawei.com>
 
-What's here:
-* We're always in FIFO mode, so no need to call it for every transfer.
-  This avoids a whole ton of readl/writel calls.
-* We don't need to write a whole pile of config registers if the mode
-  isn't changing.  Cache the last mode and only do the work if needed.
-* For several registers we were trying to do read/modify/write, but
-  there was no reason.  The registers only have one thing in them, so
-  just write them.
+Fix sparse build warning:
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+drivers/mmc/host/sdhci-msm.c:1888:6: warning:
+ symbol 'sdhci_msm_dump_vendor_regs' was not declared. Should it be static?
+
+Signed-off-by: Hulk Robot <hulkci@huawei.com>
 ---
+ drivers/mmc/host/sdhci-msm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/spi/spi-geni-qcom.c | 54 +++++++++++++++++--------------------
- 1 file changed, 24 insertions(+), 30 deletions(-)
-
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index f51279608fc7..97fac5ea6afd 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -77,6 +77,7 @@ struct spi_geni_master {
- 	u32 tx_fifo_depth;
- 	u32 fifo_width_bits;
- 	u32 tx_wm;
-+	u32 last_mode;
- 	unsigned long cur_speed_hz;
- 	unsigned int cur_bits_per_word;
- 	unsigned int tx_rem_bytes;
-@@ -177,8 +178,6 @@ static void spi_setup_word_len(struct spi_geni_master *mas, u16 mode,
- 	struct geni_se *se = &mas->se;
- 	u32 word_len;
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 15c42b059240..66f755f94d2c 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1885,7 +1885,7 @@ static void sdhci_msm_reset(struct sdhci_host *host, u8 mask)
+ #define SDHCI_MSM_DUMP(f, x...) \
+ 	pr_err("%s: " DRIVER_NAME ": " f, mmc_hostname(host->mmc), ## x)
  
--	word_len = readl(se->base + SE_SPI_WORD_LEN);
--
- 	/*
- 	 * If bits_per_word isn't a byte aligned value, set the packing to be
- 	 * 1 SPI word per FIFO word.
-@@ -187,10 +186,9 @@ static void spi_setup_word_len(struct spi_geni_master *mas, u16 mode,
- 		pack_words = mas->fifo_width_bits / bits_per_word;
- 	else
- 		pack_words = 1;
--	word_len &= ~WORD_LEN_MSK;
--	word_len |= ((bits_per_word - MIN_WORD_LEN) & WORD_LEN_MSK);
- 	geni_se_config_packing(&mas->se, bits_per_word, pack_words, msb_first,
- 								true, true);
-+	word_len = (bits_per_word - MIN_WORD_LEN) & WORD_LEN_MSK;
- 	writel(word_len, se->base + SE_SPI_WORD_LEN);
- }
- 
-@@ -238,38 +236,34 @@ static int setup_fifo_params(struct spi_device *spi_slv,
+-void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
++static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
  {
- 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
- 	struct geni_se *se = &mas->se;
--	u32 loopback_cfg, cpol, cpha, demux_output_inv;
-+	u32 loopback_cfg = 0, cpol = 0, cpha = 0, demux_output_inv = 0;
- 	u32 demux_sel;
- 
--	loopback_cfg = readl(se->base + SE_SPI_LOOPBACK);
--	cpol = readl(se->base + SE_SPI_CPOL);
--	cpha = readl(se->base + SE_SPI_CPHA);
--	demux_output_inv = 0;
--	loopback_cfg &= ~LOOPBACK_MSK;
--	cpol &= ~CPOL;
--	cpha &= ~CPHA;
-+	if (mas->last_mode != spi_slv->mode) {
-+		if (spi_slv->mode & SPI_LOOP)
-+			loopback_cfg = LOOPBACK_ENABLE;
- 
--	if (spi_slv->mode & SPI_LOOP)
--		loopback_cfg |= LOOPBACK_ENABLE;
-+		if (spi_slv->mode & SPI_CPOL)
-+			cpol = CPOL;
- 
--	if (spi_slv->mode & SPI_CPOL)
--		cpol |= CPOL;
-+		if (spi_slv->mode & SPI_CPHA)
-+			cpha = CPHA;
- 
--	if (spi_slv->mode & SPI_CPHA)
--		cpha |= CPHA;
-+		if (spi_slv->mode & SPI_CS_HIGH)
-+			demux_output_inv = BIT(spi_slv->chip_select);
- 
--	if (spi_slv->mode & SPI_CS_HIGH)
--		demux_output_inv = BIT(spi_slv->chip_select);
-+		demux_sel = spi_slv->chip_select;
-+		mas->cur_bits_per_word = spi_slv->bits_per_word;
- 
--	demux_sel = spi_slv->chip_select;
--	mas->cur_bits_per_word = spi_slv->bits_per_word;
-+		spi_setup_word_len(mas, spi_slv->mode, spi_slv->bits_per_word);
-+		writel(loopback_cfg, se->base + SE_SPI_LOOPBACK);
-+		writel(demux_sel, se->base + SE_SPI_DEMUX_SEL);
-+		writel(cpha, se->base + SE_SPI_CPHA);
-+		writel(cpol, se->base + SE_SPI_CPOL);
-+		writel(demux_output_inv, se->base + SE_SPI_DEMUX_OUTPUT_INV);
- 
--	spi_setup_word_len(mas, spi_slv->mode, spi_slv->bits_per_word);
--	writel(loopback_cfg, se->base + SE_SPI_LOOPBACK);
--	writel(demux_sel, se->base + SE_SPI_DEMUX_SEL);
--	writel(cpha, se->base + SE_SPI_CPHA);
--	writel(cpol, se->base + SE_SPI_CPOL);
--	writel(demux_output_inv, se->base + SE_SPI_DEMUX_OUTPUT_INV);
-+		mas->last_mode = spi_slv->mode;
-+	}
- 
- 	return geni_spi_set_clock_and_bw(mas, spi_slv->max_speed_hz);
- }
-@@ -279,9 +273,7 @@ static int spi_geni_prepare_message(struct spi_master *spi,
- {
- 	int ret;
- 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
--	struct geni_se *se = &mas->se;
- 
--	geni_se_select_mode(se, GENI_SE_FIFO);
- 	ret = setup_fifo_params(spi_msg->spi, spi);
- 	if (ret)
- 		dev_err(mas->dev, "Couldn't select mode %d\n", ret);
-@@ -322,6 +314,8 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	else
- 		mas->oversampling = 1;
- 
-+	geni_se_select_mode(se, GENI_SE_FIFO);
-+
- 	pm_runtime_put(mas->dev);
- 	return 0;
- }
--- 
-2.27.0.383.g050319c2ae-goog
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
 
