@@ -2,75 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15FE6213CD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 17:38:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80A85213CDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 17:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726447AbgGCPia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 11:38:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42100 "EHLO mail.kernel.org"
+        id S1726147AbgGCPkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 11:40:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43436 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726147AbgGCPia (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 11:38:30 -0400
+        id S1726035AbgGCPkd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jul 2020 11:40:33 -0400
 Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D794421927;
-        Fri,  3 Jul 2020 15:38:27 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 989D92088E;
+        Fri,  3 Jul 2020 15:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593790709;
-        bh=EaZyRGMJ3DZGnCZucHhtrQQ2FHW+M2zRfFOKdqaQ88Q=;
+        s=default; t=1593790832;
+        bh=Csd/koDiDw1K1inIpkFWBNC1R6v7CBb2CU5Zmf57acc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=snFx2Z60KTiip9uWRHw81DrSwKdtITBeMj0S7UBYCn7duUGPMMevfo6FRnHEaSEaJ
-         z8EYaMQgdT7ISklcQDM7jy8dgai4MALaQhWlxe4mgs1kX2bKwQuxoSn1TYjaKtYuUy
-         02dgEQmdo241zSeWdyXwXIRJOCRXfhw/TFhz7QQ8=
-Date:   Fri, 3 Jul 2020 16:38:24 +0100
+        b=elkxLORLhsNPysnTycAsiV9dFFqH0sJrERhvHzdVnSoWd31u24otySgv6AFBrN1xi
+         20i17gBg/JBftX4eTBohoOLJbWQxcuzwVPUj4482fpgRShUysZjsxNRm6OrzzFkGzP
+         JyEoNBGIJ+mor3VD4UbEyhZTuwVDS+N5L2VhAXhA=
+Date:   Fri, 3 Jul 2020 16:40:26 +0100
 From:   Will Deacon <will@kernel.org>
 To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Douglas Anderson <dianders@chromium.org>,
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
         Stephen Boyd <swboyd@chromium.org>,
-        Andre Przywara <andre.przywara@arm.com>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: Re: [PATCH 3/3] arm64: Add KRYO4XX silver CPU cores to erratum list
- 1530923 and 1024718
-Message-ID: <20200703153824.GA19327@willie-the-truck>
-References: <7335e7fa1303a56a5e60339ed0c5d619@codeaurora.org>
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCHv3 7/7] drm/msm/a6xx: Add support for using system
+ cache(LLC)
+Message-ID: <20200703154025.GB19327@willie-the-truck>
+References: <cover.1593344119.git.saiprakash.ranjan@codeaurora.org>
+ <449a6544b10f0035d191ac52283198343187c153.1593344120.git.saiprakash.ranjan@codeaurora.org>
+ <20200703133732.GD18953@willie-the-truck>
+ <ecfda7ca80f6d7b4ff3d89b8758f4dc9@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7335e7fa1303a56a5e60339ed0c5d619@codeaurora.org>
+In-Reply-To: <ecfda7ca80f6d7b4ff3d89b8758f4dc9@codeaurora.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 03, 2020 at 08:04:04PM +0530, Sai Prakash Ranjan wrote:
-> On 2020-07-03 19:25, Will Deacon wrote:
-> > On Tue, Jun 30, 2020 at 11:30:55PM +0530, Sai Prakash Ranjan wrote:
-> > > KRYO4XX silver/LITTLE CPU cores with revision r1p0 are affected by
-> > > erratum 1530923 and 1024718, so add them to the respective list.
-> > > The variant and revision bits are implementation defined and are
-> > > different from the their Cortex CPU counterparts on which they are
-> > > based on, i.e., r1p0 is equivalent to rdpe.
+On Fri, Jul 03, 2020 at 08:23:07PM +0530, Sai Prakash Ranjan wrote:
+> On 2020-07-03 19:07, Will Deacon wrote:
+> > On Mon, Jun 29, 2020 at 09:22:50PM +0530, Sai Prakash Ranjan wrote:
+> > > diff --git a/drivers/gpu/drm/msm/msm_iommu.c
+> > > b/drivers/gpu/drm/msm/msm_iommu.c
+> > > index f455c597f76d..bd1d58229cc2 100644
+> > > --- a/drivers/gpu/drm/msm/msm_iommu.c
+> > > +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> > > @@ -218,6 +218,9 @@ static int msm_iommu_map(struct msm_mmu *mmu,
+> > > uint64_t iova,
+> > >  		iova |= GENMASK_ULL(63, 49);
+> > > 
+> > > 
+> > > +	if (mmu->features & MMU_FEATURE_USE_SYSTEM_CACHE)
+> > > +		prot |= IOMMU_SYS_CACHE_ONLY;
 > > 
-> > So just to confirm, revisions prior to rdpe are unaffected, or do those
-> > parts simply not exist?
+> > Given that I think this is the only user of IOMMU_SYS_CACHE_ONLY, then
+> > it
+> > looks like it should actually be a property on the domain because we
+> > never
+> > need to configure it on a per-mapping basis within a domain, and
+> > therefore
+> > it shouldn't be exposed by the IOMMU API as a prot flag.
+> > 
+> > Do you agree?
 > > 
 > 
-> There is one revision prior to this r0p1(r7pc) which has a different part
-> number and are used in v1 of SoCs which are limited to only internal test
-> platforms in the early stages of bringup and not used in actual devices out
-> there, so I did not add it to the list but they are affected. Plus we would
-> need to add another MIDR_QCOM_KRYO_4XX_SILVER_V1 if we are supporting them
-> which I thought was not worth it when devices with those CPUs are not
-> available.
+> GPU being the only user is for now, but there are other clients which can
+> use this.
+> Plus how do we set the memory attributes if we do not expose this as prot
+> flag?
 
-Thanks, just wanted to make sure. Sounds like we can safely assume those
-parts don't exist.
+I just don't understand the need for it to be per-map operation. Put another
+way, if we extended the domain attribute to apply to cacheable mappings
+on the domain and not just the table walk, what would break?
 
 Will
