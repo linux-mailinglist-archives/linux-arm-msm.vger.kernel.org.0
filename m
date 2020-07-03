@@ -2,67 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16C6F213B10
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 15:35:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C534C213B1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 15:37:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbgGCNfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 09:35:22 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:45512 "EHLO vps0.lunn.ch"
+        id S1726053AbgGCNhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 09:37:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34110 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726035AbgGCNfW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 09:35:22 -0400
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94)
-        (envelope-from <andrew@lunn.ch>)
-        id 1jrLqT-003T6y-SU; Fri, 03 Jul 2020 15:35:13 +0200
-Date:   Fri, 3 Jul 2020 15:35:13 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
-        David Miller <davem@davemloft.net>, kuba@kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org
-Subject: Re: [net-next,PATCH 2/4] net: mdio-ipq4019: add clock support
-Message-ID: <20200703133513.GB807334@lunn.ch>
-References: <20200702103001.233961-1-robert.marko@sartura.hr>
- <20200702103001.233961-3-robert.marko@sartura.hr>
- <e4921b83-0c80-65ad-6ddd-be2a12347d9c@gmail.com>
- <CA+HBbNHbyS3viFc90KDWW=dwkA9yRSuQ15fg9EzApmrP8JSR3Q@mail.gmail.com>
+        id S1726022AbgGCNhj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jul 2020 09:37:39 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3EF09206A1;
+        Fri,  3 Jul 2020 13:37:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593783459;
+        bh=h4AWXK1OzAabGjzRp78Qq4E/Pvb4iF6SmMTMkbta69E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Zsco0pFHiu8uFn++3g+2aWZOGtMeDwXe2RdiKWXSiB1NAwLZTkzuswi6E4rPfoFgc
+         zQygwRBRrnKJMJ6YgutuQW39JaKYOgP2fttYqHsRZiFYssPejgjJ+6IYnBSkwhnVMp
+         cs70jkYqgCEvqEZxEg9urRaC6/8frYrllSxaMCbY=
+Date:   Fri, 3 Jul 2020 14:37:33 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCHv3 7/7] drm/msm/a6xx: Add support for using system
+ cache(LLC)
+Message-ID: <20200703133732.GD18953@willie-the-truck>
+References: <cover.1593344119.git.saiprakash.ranjan@codeaurora.org>
+ <449a6544b10f0035d191ac52283198343187c153.1593344120.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+HBbNHbyS3viFc90KDWW=dwkA9yRSuQ15fg9EzApmrP8JSR3Q@mail.gmail.com>
+In-Reply-To: <449a6544b10f0035d191ac52283198343187c153.1593344120.git.saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 03, 2020 at 01:37:48PM +0200, Robert Marko wrote:
-> This is not the actual MDIO bus clock, that is the clock frequency
-> that SoC clock generator produces.
-> MDIO controller has an internal divider set up for that 100MHz, I
-> don't know the actual MDIO bus clock
-> frequency as it's not listed anywhere.
+On Mon, Jun 29, 2020 at 09:22:50PM +0530, Sai Prakash Ranjan wrote:
+> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> index f455c597f76d..bd1d58229cc2 100644
+> --- a/drivers/gpu/drm/msm/msm_iommu.c
+> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> @@ -218,6 +218,9 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+>  		iova |= GENMASK_ULL(63, 49);
+>  
+>  
+> +	if (mmu->features & MMU_FEATURE_USE_SYSTEM_CACHE)
+> +		prot |= IOMMU_SYS_CACHE_ONLY;
 
-Hi Robert
+Given that I think this is the only user of IOMMU_SYS_CACHE_ONLY, then it
+looks like it should actually be a property on the domain because we never
+need to configure it on a per-mapping basis within a domain, and therefore
+it shouldn't be exposed by the IOMMU API as a prot flag.
 
-From Documentation/devicetree/bindings/net/mdio.yaml 
+Do you agree?
 
-  clock-frequency:
-    description:
-      Desired MDIO bus clock frequency in Hz. Values greater than IEEE 802.3
-      defined 2.5MHz should only be used when all devices on the bus support
-      the given clock speed.
-
-You have to use that definition for clock-frequency. It means the MDIO
-bus frequency. It would be good if you can get an oscilloscope onto
-the bus and measure it. Otherwise, we have to assume the divider is
-40, in order to give a standards compliment 2.5MHz. You can then work
-out what value to pass to the clk_ API to get the correct input clock
-frequency for the MDIO block.
-
-	  Andrew
+Will
