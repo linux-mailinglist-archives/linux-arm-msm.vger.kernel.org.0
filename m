@@ -2,109 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DB5121396F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 13:38:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FC37213A04
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 14:23:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726286AbgGCLiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 07:38:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45022 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726228AbgGCLiA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 07:38:00 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6D2C08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2020 04:38:00 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id d4so26503558otk.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2020 04:38:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dyp1m58oAyQtsHXm22tL6xxuBEsc0oVbE4YcBDP5SuA=;
-        b=gwcpJzWtocnEZpNrUX3T+fJGP8MREn3ffK4uAC5bYVo/jo2LcOKAEIK0I56mXw8Yf+
-         PTWj6fZ2LirhELghw8oVXWL24pbM7Ghp/9E4BY1cpElUCsZf3tCd+CEBZho0wKzMjpWM
-         6Fq1fH+kMkTB1zHXgu3MlJ+iHmVMN+UxjjRJz4Ugccu5hkhDK+EF3rfHExECUg7hRYBn
-         HLtpMtFVIACf/JkE2ur7k0QK7NJ3+AL5jFSjXMKHgQZlgvEYjq+aPznKfFHnvkY1shaL
-         jaUUgtdQgbFhI8J6NuwfDwXiyH2i1Hxkm6oB34xlbZYhR15Udv/Nk9yIrWCWxoTO8cL+
-         xzxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dyp1m58oAyQtsHXm22tL6xxuBEsc0oVbE4YcBDP5SuA=;
-        b=UevQxdrhtwZZOArkFbvt7W6jjsZFWNidpgwgzP2A7oWzFYOb7mj+TaXpajmKode98g
-         bEnOewpRkqBMIqlEu3rd9kAdzzrvE/X9LCBt94HtPuz9NjvRpP2f9phyVvO5QKiZd3sY
-         O9UDIcWS6e1pWyY045dls0XCy/A6NkPhKZ5UOfLvF9zLrwx+VkLJr+oICFfLcWeePyi8
-         fy/IBkzMvnlgJ+ZQ+OMSshZU42barbbYgMYsV5S7lUx1muZY1Zhrft6fTR572m7GEv05
-         MpgkVKAaOmwLZbBQAjeezRsyLzqg412+YgKNlbRlPAckBkwy9iyaWB0OEv1P4GEE6He2
-         5rgw==
-X-Gm-Message-State: AOAM530QgD5vHkc3EEos9ToRbMeWmPfInXBEqk6KdZJIGgz5pAqclh0R
-        IJeis0r15L2UO+zelvMJpRmN2Ck+RcI8bL6jEfQp6w==
-X-Google-Smtp-Source: ABdhPJy8b53E4/ch5xCgMcf3cIE+8dqAJ1flSUnTR++fzzjUTdp0KDGByy6n2PThI12LZgWutzc4FGsaIDtXmwNDXqo=
-X-Received: by 2002:a05:6830:18f6:: with SMTP id d22mr13766166otf.243.1593776279661;
- Fri, 03 Jul 2020 04:37:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200702103001.233961-1-robert.marko@sartura.hr>
- <20200702103001.233961-3-robert.marko@sartura.hr> <e4921b83-0c80-65ad-6ddd-be2a12347d9c@gmail.com>
-In-Reply-To: <e4921b83-0c80-65ad-6ddd-be2a12347d9c@gmail.com>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Fri, 3 Jul 2020 13:37:48 +0200
-Message-ID: <CA+HBbNHbyS3viFc90KDWW=dwkA9yRSuQ15fg9EzApmrP8JSR3Q@mail.gmail.com>
-Subject: Re: [net-next,PATCH 2/4] net: mdio-ipq4019: add clock support
-To:     Florian Fainelli <f.fainelli@gmail.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
-        David Miller <davem@davemloft.net>, kuba@kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        id S1726035AbgGCMXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 08:23:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34470 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725984AbgGCMXu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jul 2020 08:23:50 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3873A20826;
+        Fri,  3 Jul 2020 12:23:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1593779029;
+        bh=vd4djFKYd31yL3oupRmWE2lyv4ORZWuNlPzVgna7t2M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WHs4GUDV2uRZU81RtdyMa3DLQpqpW5ngrnYAQ1k44tF5fi8qTpHzmkCTSxkOaQfsU
+         ntwU/A6Q0tZmFwA2MHJT/daqj1pZj6k2/Gzr7OZ4f0ZTXz1sxwbv7GuoFKbK7+n9lU
+         9INFciuKTMlV0H2WvUhE6AI4h2hCgkVbDcetQZXk=
+Date:   Fri, 3 Jul 2020 13:23:44 +0100
+From:   Will Deacon <will@kernel.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     Marc Zyngier <maz@kernel.org>, lkml <linux-kernel@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+Subject: Re: [RFC][PATCH 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20200703122343.GB18652@willie-the-truck>
+References: <20200616061338.109499-1-john.stultz@linaro.org>
+ <20200616061338.109499-6-john.stultz@linaro.org>
+ <0be86735238a0f8b0c25934e2ed39eee@kernel.org>
+ <CALAqxLUZBdiLBRcp1GW9rGxt1KhgNVQ86MuPXZcXdx2wFLZk6w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALAqxLUZBdiLBRcp1GW9rGxt1KhgNVQ86MuPXZcXdx2wFLZk6w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 2, 2020 at 9:59 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
->
->
->
-> On 7/2/2020 3:29 AM, Robert Marko wrote:
-> > Some newer SoC-s have a separate MDIO clock that needs to be enabled.
-> > So lets add support for handling the clocks to the driver.
+On Tue, Jun 16, 2020 at 01:52:32PM -0700, John Stultz wrote:
+> On Tue, Jun 16, 2020 at 12:55 AM Marc Zyngier <maz@kernel.org> wrote:
+> > On 2020-06-16 07:13, John Stultz wrote:
+> > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> > > index b510f67dfa49..714893535dd2 100644
+> > > --- a/drivers/iommu/Kconfig
+> > > +++ b/drivers/iommu/Kconfig
+> > > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
+> > >  config ARM_SMMU
+> > >       tristate "ARM Ltd. System MMU (SMMU) Support"
+> > >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) &&
+> > > MMU
+> > > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
 > >
-> > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> > ---
-> >  drivers/net/phy/mdio-ipq4019.c | 28 +++++++++++++++++++++++++++-
-> >  1 file changed, 27 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/net/phy/mdio-ipq4019.c b/drivers/net/phy/mdio-ipq4019.c
-> > index 0e78830c070b..7660bf006da0 100644
-> > --- a/drivers/net/phy/mdio-ipq4019.c
-> > +++ b/drivers/net/phy/mdio-ipq4019.c
-> > @@ -9,6 +9,7 @@
-> >  #include <linux/iopoll.h>
-> >  #include <linux/of_address.h>
-> >  #include <linux/of_mdio.h>
-> > +#include <linux/clk.h>
-> >  #include <linux/phy.h>
-> >  #include <linux/platform_device.h>
-> >
-> > @@ -24,8 +25,12 @@
-> >  #define IPQ4019_MDIO_TIMEOUT 10000
-> >  #define IPQ4019_MDIO_SLEEP           10
-> >
-> > +#define QCA_MDIO_CLK_DEFAULT_RATE    100000000
->
-> 100MHz? Is not that going to be a tad too much for most MDIO devices out
-> there?
-This is not the actual MDIO bus clock, that is the clock frequency
-that SoC clock generator produces.
-MDIO controller has an internal divider set up for that 100MHz, I
-don't know the actual MDIO bus clock
-frequency as it's not listed anywhere.
-> --
-> Florian
+> > This looks a bit ugly. Could you explain why we need this at the SMMU
+> > level? I'd have expected the dependency to flow the other way around...
+> 
+> Yea, so the arm-smmu-qcom.c file calls directly into the qcom-scm code
+> via qcom_scm_qsmmu500_wait_safe_toggle()
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm-smmu-qcom.c?h=v5.8-rc1#n44
+> 
+> So if ARM_SMMU=y and QCOM_SCM=m we get:
+> drivers/iommu/arm-smmu-qcom.o: In function `qcom_smmu500_reset':
+> arm-smmu-qcom.c:(.text+0xb4): undefined reference to
+> `qcom_scm_qsmmu500_wait_safe_toggle'
+> 
+> Do you have a suggestion for an alternative approach?
+
+Can you use symbol_get() or something like that? How are module dependencies
+handled by other drivers?
+
+Will
