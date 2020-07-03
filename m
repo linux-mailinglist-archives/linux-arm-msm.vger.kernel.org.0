@@ -2,117 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54B72213C1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 16:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B81AA213C4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 17:03:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726039AbgGCOxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 10:53:14 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:31066 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726098AbgGCOxN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 10:53:13 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1593787992; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=qnO8dgt8kPgCd7OkCwm5OGmXgYl4ROSS5lJBIbWqa6I=;
- b=O6EDBr9BEbfaFwnbnQj1mCyl4GmDp/yg/bbu9e8tG2Ssr4Scc/unj4PMxHgJiJGYLQbDVdV1
- uuFqDJHma1G8SrVqDr4hc1qwGQGaNmkadyoHvLwOl2FS5E4T5fAfP8mWsErGS3h1+SfYrtra
- H25J4TJWZ5B0X1Hqa/pq1CCRPuU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5eff4656c76a4e7a2a430097 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Jul 2020 14:53:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8C3E0C433AD; Fri,  3 Jul 2020 14:53:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99A3BC433C8;
-        Fri,  3 Jul 2020 14:53:07 +0000 (UTC)
+        id S1726152AbgGCPD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 11:03:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48374 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726437AbgGCPD5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jul 2020 11:03:57 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A87ADC08C5DE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2020 08:03:56 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id z24so12461216ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2020 08:03:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=XiN8AHTEZpKcIkUcY5Ag518B1TWxGfBcPRGyhGmTdOg=;
+        b=qqQzhKHn5URSX6FPZQiis7MXQSa6PtMenlonovuzdGI4l8WTvYJT95+Y4JGJmYiwzC
+         J+o4aO/whzQlX5kHFr3KcroexvVeWzBwE8cRCj1r/U8r/DMGWjNxGkZafQPCqV90wPek
+         hnqch4vSSK7bdY9p9euYr0/YUPNV99Pdcg6Xw37mE22B+FWslmYjTXoIqmBuUeO4WY30
+         c8d11hyEmRpSictv6U0MoJbN8Vs4VwK8D9gk0jKEoG4J6hY2ts2EjqrOBgYjFMxLaq6O
+         QIMb3aGSlGkNp9LAbB2zLUfE2zocA1YxI2sR2eLh24/+Fv7bac2MaR4W3bPWyqrE3bzX
+         y/2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=XiN8AHTEZpKcIkUcY5Ag518B1TWxGfBcPRGyhGmTdOg=;
+        b=mEQF4fR2EVYiOvOVXw0+MEAFBKn4QBdJwzLR1mz/WQm2cZmoyF9ShZli7IqLKb5r9M
+         COqVmK4uhAEg0MXk7rNbRnSOmfZjWN0xMeQyfNIaqnncRDuxc1eYgPFRlFBekXsxDDGn
+         qIKqMvdxJiS4s43ZKhn2KxalQKujc+CDbJeNJ6g+inWHfb36YKmB02y9TAJtHaK/JbpV
+         LQcrEpGZViMGvAsyp76QGHHF8wCFTCmCpFCMfnaRr4abSKZ+Vzeou/rtEMuIMliDbpV4
+         wyUmPTyBSDYtnjF/6ryWo9Xfz2ZhCQI01lW3G3u6Lc1//G9jlHhWhIPOiOO1m+WE1mwQ
+         xAdQ==
+X-Gm-Message-State: AOAM5301PRoxbWXPgc6KDAtlFD1Qx73qEK221RM/ZCawn489VB4Nts4U
+        8xPRUcPaw+/NXujYl8a2ne+9Sw==
+X-Google-Smtp-Source: ABdhPJzCk+UBWfJxrbrsI+ayi1PqnpX1K3N3fB85MVaEeUGq/660GDdjHB3Kv/HObDJ8c7k5t4fI+g==
+X-Received: by 2002:a2e:9f13:: with SMTP id u19mr17473543ljk.427.1593788635055;
+        Fri, 03 Jul 2020 08:03:55 -0700 (PDT)
+Received: from [192.168.1.211] ([94.25.229.165])
+        by smtp.gmail.com with ESMTPSA id y13sm4182807ljd.20.2020.07.03.08.03.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jul 2020 08:03:54 -0700 (PDT)
+Subject: Re: [RESEND PATCH v2 00/13] Enable GPU for SM8150 and SM8250
+To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Deepak Katragadda <dkatraga@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
+References: <20200629211725.2592-1-jonathan@marek.ca>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <011a1f99-46bb-12f2-ee07-8cd14d891947@linaro.org>
+Date:   Fri, 3 Jul 2020 18:03:49 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200629211725.2592-1-jonathan@marek.ca>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 03 Jul 2020 20:23:07 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCHv3 7/7] drm/msm/a6xx: Add support for using system
- cache(LLC)
-In-Reply-To: <20200703133732.GD18953@willie-the-truck>
-References: <cover.1593344119.git.saiprakash.ranjan@codeaurora.org>
- <449a6544b10f0035d191ac52283198343187c153.1593344120.git.saiprakash.ranjan@codeaurora.org>
- <20200703133732.GD18953@willie-the-truck>
-Message-ID: <ecfda7ca80f6d7b4ff3d89b8758f4dc9@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Will,
-
-On 2020-07-03 19:07, Will Deacon wrote:
-> On Mon, Jun 29, 2020 at 09:22:50PM +0530, Sai Prakash Ranjan wrote:
->> diff --git a/drivers/gpu/drm/msm/msm_iommu.c 
->> b/drivers/gpu/drm/msm/msm_iommu.c
->> index f455c597f76d..bd1d58229cc2 100644
->> --- a/drivers/gpu/drm/msm/msm_iommu.c
->> +++ b/drivers/gpu/drm/msm/msm_iommu.c
->> @@ -218,6 +218,9 @@ static int msm_iommu_map(struct msm_mmu *mmu, 
->> uint64_t iova,
->>  		iova |= GENMASK_ULL(63, 49);
->> 
->> 
->> +	if (mmu->features & MMU_FEATURE_USE_SYSTEM_CACHE)
->> +		prot |= IOMMU_SYS_CACHE_ONLY;
+On 30/06/2020 00:17, Jonathan Marek wrote:
+> This series adds the missing clock drivers and dts nodes to enable
+> the GPU on both SM8150 and SM8250.
 > 
-> Given that I think this is the only user of IOMMU_SYS_CACHE_ONLY, then 
-> it
-> looks like it should actually be a property on the domain because we 
-> never
-> need to configure it on a per-mapping basis within a domain, and 
-> therefore
-> it shouldn't be exposed by the IOMMU API as a prot flag.
+> Note an extra patch [1] is still required for GPU to work on SM8250.
 > 
-> Do you agree?
+> Changes in V2:
+> * Added "clk: qcom: gcc: fix sm8150 GPU and NPU clocks" to fix the newly added
+>    SM8150 GPU gcc clocks
+> * Added "Fixes:" tag to "clk: qcom: clk-alpha-pll: remove unused/incorrect PLL_CAL_VAL"
+> * Added yaml schemas to gpucc dt-bindings patches
+> * Added "clk: qcom: add common gdsc_gx_do_nothing_enable for gpucc drivers" and changed
+>    gpucc patches to use it.
+> * Removed CLK_IS_CRITICAL from gpu_cc_ahb_clk
+> * Added missing rpmh regulator level for sm8250 GPU clock levels
+> * Use sm8150/sm8250 iommu compatibles in dts
+> * Add gcc_gpu_gpll0_clk_src/gcc_gpu_gpll0_div_clk_src to gpucc clocks in dts
 > 
+> [1] https://gist.github.com/flto/784f1aca761ebf2fe6c105719a4a04ca
 
-GPU being the only user is for now, but there are other clients which 
-can use this.
-Plus how do we set the memory attributes if we do not expose this as 
-prot flag?
+With your patches applied:
 
-Thanks,
-Sai
+[   56.751977] msm msm: [drm:adreno_request_fw] loaded qcom/a650_sqe.fw 
+from new location
+[   56.760166] msm msm: [drm:adreno_request_fw] loaded qcom/a650_gmu.bin 
+from new location
+[   56.768485] arm-smmu 3da0000.iommu: genpd_runtime_resume()
+[   56.774196] PM: gpu_cx_gdsc: Power-on latency exceeded, new value 
+49531 ns
+[   56.781730] arm-smmu 3da0000.iommu: resume latency exceeded, 462604 ns
+[   56.799559] platform 3d6a000.gmu: [drm:a6xx_gmu_resume] *ERROR* GMU 
+firmware initialization timed out
+[   56.809260] arm-smmu 3da0000.iommu: genpd_runtime_suspend()
+[   56.813062] msm msm: [drm:adreno_load_gpu] *ERROR* Couldn't power up 
+the GPU: -110
+
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+With best wishes
+Dmitry
