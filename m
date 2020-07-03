@@ -2,82 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C944F213A48
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 14:52:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9A4E213ABC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 15:18:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbgGCMwk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 08:52:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46690 "EHLO mail.kernel.org"
+        id S1726074AbgGCNSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 09:18:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55924 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726022AbgGCMwj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 08:52:39 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        id S1726022AbgGCNSW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jul 2020 09:18:22 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0F90B20B80;
-        Fri,  3 Jul 2020 12:52:38 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 99CC620675;
+        Fri,  3 Jul 2020 13:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593780759;
-        bh=tHVvGtkSl7bYJvZhNMXbvQk/XxuWeRiGzO4sWMx9IWY=;
+        s=default; t=1593782302;
+        bh=hyOXqqhxaTbYH3dAER82uU6aZvMqfBZ1enbuyWaVgsQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=xzoWZVPMoAYAqKrcLiWHawP6a6JjIWmEDh8WUckHT0qumaH/PV2Kk7Yez5ElgcD7D
-         ClUTWBsb3WbvJx7pkpcZrDoW+f34+1I+tOuQy4DfgkRaKNROhjd4mbVJr+gGrIWh86
-         HpCYn6OAa+bayffklwNrPWTkIVHd/8MR9iwItAyg=
-Date:   Fri, 3 Jul 2020 13:52:37 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     lgirdwood@gmail.com, mark.rutland@arm.com, agross@kernel.org,
-        heikki.krogerus@linux.intel.com, robh+dt@kernel.org,
-        gregkh@linuxfoundation.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jackp@codeaurora.org, rdunlap@infradead.org,
-        bryan.odonoghue@linaro.org
-Subject: Re: [PATCH v5 4/6] regulator: Add support for QCOM PMIC VBUS booster
-Message-ID: <20200703125236.GA5417@sirena.org.uk>
-References: <20200703015102.27295-1-wcheng@codeaurora.org>
- <20200703015102.27295-5-wcheng@codeaurora.org>
+        b=lIvdqTtcw8q09KXuP8gWfWbNF4gJVhhQYfZK4umAM4xHu81em8G2FnNsvTwCRHxsf
+         CrvfYNMD3XaErxs+5NH5WCpCmLrIjpXqhiEEtlwCkqyHQm2VVNQuTRAfJw8c+Yb7AM
+         DyifJGR2yO9eKReHfTqYwjy6TDwdM424+Pz3CImo=
+Date:   Fri, 3 Jul 2020 14:18:17 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, bjorn.andersson@linaro.org,
+        Mark Rutland <mark.rutland@arm.com>, mturquette@baylibre.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Ilia Lin <ilialin@codeaurora.org>
+Subject: Re: [PATCH v2 1/4] soc: qcom: Separate kryo l2 accessors from PMU
+ driver
+Message-ID: <20200703131816.GC18953@willie-the-truck>
+References: <1591266927-24976-1-git-send-email-loic.poulain@linaro.org>
+ <1591266927-24976-2-git-send-email-loic.poulain@linaro.org>
+ <159261263640.62212.5877307994739570385@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HlL+5n6rz5pIUxbD"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200703015102.27295-5-wcheng@codeaurora.org>
-X-Cookie: You need not be present to win.
+In-Reply-To: <159261263640.62212.5877307994739570385@swboyd.mtv.corp.google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Jun 19, 2020 at 05:23:56PM -0700, Stephen Boyd wrote:
+> Quoting Loic Poulain (2020-06-04 03:35:24)
+> > From: Ilia Lin <ilialin@codeaurora.org>
+> > 
+> > The driver provides kernel level API for other drivers
+> > to access the MSM8996 L2 cache registers.
+> > Separating the L2 access code from the PMU driver and
+> > making it public to allow other drivers use it.
+> > The accesses must be separated with a single spinlock,
+> > maintained in this driver.
+> > 
+> > Signed-off-by: Ilia Lin <ilialin@codeaurora.org>
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > ---
+> 
+> This needs an ack from perf maintainers. Leaving the rest of the patch
+> intact to help provide context.
 
---HlL+5n6rz5pIUxbD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Looks fine to me:
 
-On Thu, Jul 02, 2020 at 06:51:00PM -0700, Wesley Cheng wrote:
-> Some Qualcomm PMICs have the capability to source the VBUS output to
-> connected peripherals.  This driver will register a regulator to the
-> regulator list to enable or disable this source by an external driver.
+Acked-by: Will Deacon <will@kernel.org>
 
-Please do not submit new versions of already applied patches, please
-submit incremental updates to the existing code.  Modifying existing
-commits creates problems for other users building on top of those
-commits so it's best practice to only change pubished git commits if
-absolutely essential.
+(I can't get my head round the MSR; ISB; spin_unlock() ordering, but this
+is just moving code so I don't want to open that box of fun here).
 
---HlL+5n6rz5pIUxbD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl7/KhQACgkQJNaLcl1U
-h9DbaQf/Wn1umae5C1ME7+FMgKDOFXFlSpprrYcQpuTvaPIjeXxeKcprAdP+rmS1
-C8yCog08z4Oy1H7KoXigS130MBOVajvjnX5lokFDq3ceNKHbO2Jj2qrQFpzlJ4xW
-vqbaSDD64DW4qHhqSoKbDAmmtYQRyG4+diCgQuIEkNpwVZxI73AkYpnIqmx9FhQN
-KjzXq4rBFdaEqpYfh298Cu/3JZztAHThrwpTFUV3Iu85gHSH4Yem4zZ25adZwglB
-xMnd4ntO8SI0A3tI8AXHuux5U7s+cG9XCFYQxd2EOy6px3proHG5+9fvWnPLxTz2
-4hQQ8EMqwcCZD0gRHrZBw92i08GUEQ==
-=VYnx
------END PGP SIGNATURE-----
-
---HlL+5n6rz5pIUxbD--
+Will
