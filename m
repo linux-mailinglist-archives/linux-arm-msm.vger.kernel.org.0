@@ -2,99 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8058213559
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 09:45:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16F1921357C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 09:49:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726315AbgGCHoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 03:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37426 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726107AbgGCHoz (ORCPT
+        id S1726033AbgGCHtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 03:49:05 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:44989 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725764AbgGCHtF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 03:44:55 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A58C08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2020 00:44:55 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id h1so3888884otq.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2020 00:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uJUNruquod8lCt683yVuejQKs29C8gyjwm0S1vFEk6s=;
-        b=vTgyNyGltANNMjyV9zloyYEpXRui/NLWoErlduHYuRfTYlazFCHpjEUH8VQ6mOnqYm
-         xPa+NnsXnRxCyVrn5ZYIXn5i7latFLgISDnwIY12U90Iu1YezLv/Rs1Bzlyje1wnEp5d
-         SuSYeZniNaiusn8NTGjusIXW0+SzAp199udfY+ULMO0mg+uB8N2pPaZg9vZa8IooDVaH
-         iTAAzZVDjikeXb9t39JBxJJ1q50LiAAD2YkwCtV1yYjf5Jj8VGhZLrj0XLnzsix6qb8r
-         ixuErhqWl78OboHWxuxueeRafcGG4/hibXwI7AKgkeXVtIIjLurASfH4jTQvMe+Xpu+4
-         N0Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uJUNruquod8lCt683yVuejQKs29C8gyjwm0S1vFEk6s=;
-        b=hAE3yFvW1PkurBh+GXmXBY8au2S+Fj+zOEO+CdZBePecvpJoiAvy8wQVrFypFSby8t
-         6/4ODVvdA5gGK4zx5PPuwTld8V315FleH+2X+t5SP8cifx46j7B1GDc9VcbZh2oD3FH+
-         6IAezzEwbR/0wM3S8FuQ1Q++hGpJwwqoiBmxU4qFGW7Cqk0rcoUVMP4PFqrpH3jTq16D
-         BTUhUit42+YLPhK+9GDPKosMa0DG83+vWSqWfdnjyNSRMOTu1/EQhXdKxdK6NDeR69WE
-         Nx/YLFaFdpR0etrp2T5//kfqa7kLpfNY5LCECSb5B+pinCE+nDfFgktFF6gerRZqjbbQ
-         wH4g==
-X-Gm-Message-State: AOAM532E66Gs91m2M2H+J1KoDqa4r2FgTPRAOZy9QWQNSgEC2LQh/M/Y
-        zgu/b4cmuA5QNPEeMbxUeW6glA3lTJN/tM3h2mcaQg==
-X-Google-Smtp-Source: ABdhPJySQQvEITt77PfQTvma2h+w6OARamY7QXSVOHO45DRH0thjyzyMVpq6po+6kGkzMh5DG8x5CuuIBmxC/9AuhQs=
-X-Received: by 2002:a05:6830:18f6:: with SMTP id d22mr13105205otf.243.1593762294473;
- Fri, 03 Jul 2020 00:44:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200702103001.233961-1-robert.marko@sartura.hr>
- <20200702103001.233961-5-robert.marko@sartura.hr> <20200702133842.GK730739@lunn.ch>
- <CA+HBbNGcV0H4L4gzWOUs8GDkiMEOaGdeVhAbtfcT5-PGmVJjfA@mail.gmail.com> <42ebc500-35ba-48f6-c4d1-3743abde1852@gmail.com>
-In-Reply-To: <42ebc500-35ba-48f6-c4d1-3743abde1852@gmail.com>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Fri, 3 Jul 2020 09:44:43 +0200
-Message-ID: <CA+HBbNGfELm9hYZgJ3KDghE4gDdr3g8Df3oqsTefEL2NvBRdYA@mail.gmail.com>
-Subject: Re: [net-next,PATCH 4/4] dt-bindings: mdio-ipq4019: add clock support
-To:     Florian Fainelli <f.fainelli@gmail.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
-        David Miller <davem@davemloft.net>, kuba@kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 3 Jul 2020 03:49:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1593762545; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=F8C4p45eDeF3kiFralAK4R76DZV1JAilKVV14GqSHNI=; b=MgV2rarjnkDzhoD5jEPkIH+BGqDDRVDOY/WLNNUS1iZeHQDYf8r2Uv9GOgHV2gLD5kQKLriJ
+ G/XinDXCxDWL0lRTUJDdHKO7Uata6Wk2K1CqaVqnqjjMFZH8Y6qNRg3CIqxiwUWE7nRVr+Y/
+ Xn5qjf5zNYaUg3dl/3fRtb0TKTg=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5efee2e6117610c7ff3e9ebf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Jul 2020 07:48:54
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8F366C433CB; Fri,  3 Jul 2020 07:48:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6199CC433CA;
+        Fri,  3 Jul 2020 07:48:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6199CC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mkshah@codeaurora.org,
+        ilina@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2] pinctrl: qcom: sc7180: Make gpio28 non wakeup capable for google,lazor
+Date:   Fri,  3 Jul 2020 13:18:26 +0530
+Message-Id: <1593762506-32680-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 2, 2020 at 10:04 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
->
->
->
-> On 7/2/2020 12:18 PM, Robert Marko wrote:
-> > On Thu, Jul 2, 2020 at 3:38 PM Andrew Lunn <andrew@lunn.ch> wrote:
-> >>
-> >>> +  clock-frequency:
-> >>> +    default: 100000000
-> >>
-> >> IEEE 802.3 says the default should be 2.5MHz. Some PHYs will go
-> >> faster, but 100MHz seems unlikely!
-> > This MDIO controller has an internal divider, by default its set for
-> > 100MHz clock.
-> > In IPQ4019 MDIO clock is not controllable but in IPQ6018 etc it's controllable.
-> > That is the only combination I have currently seen used by Qualcomm.
->
-> Not sure I understand here, the 'clock-frequency' is supposed to denote
-> the MDIO bus output clock frequency, that is the frequency at which all
-> MDIO devices are going to operate at. Is this 100MHz a clock that feeds
-> into the MDIO block and get internally divided by a programmable
-> register to obtain an output MDIO clock?
-Yes, in this case that 100MHz comes from the GCC clock controller and
-is then internally divided by the MDIO.
-I do not know what is the actual output MDIO bus frequency as
-datasheet only denotes that MDC divide
-bits in the mode register are set for 100MHz incoming clock.
-> --
-> Florian
+The PDC irqchip driver currently does not handle dual-edge interrupts,
+and we have google,lazor board with sc7180 designed to configure gpio28
+as a dual-edge interrupt. This interrupt is however not expected to be
+wakeup capable on this board, so an easy way to fix this, seems to be to
+make this gpio non wakeup capable and let TLMM handle it (which is capable
+of handling dual-edge irqs)
+
+To be able to do so only on this board, so other boards designed with
+this SoC can continue to use gpio28 as a wakeup capable one, make a
+copy of msm_gpio_wakeirq_map for lazor and remove gpio28 from the
+list.
+
+Reported-by: Jimmy Cheng-Yi Chiang <cychiang@google.com>
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ drivers/pinctrl/qcom/pinctrl-sc7180.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+index 1b6465a..0668933 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+@@ -1135,7 +1135,24 @@ static const struct msm_gpio_wakeirq_map sc7180_pdc_map[] = {
+ 	{117, 114}, {118, 119},
+ };
+ 
+-static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
++/* Dropped gpio28 from the map for the google,lazor board */
++static const struct msm_gpio_wakeirq_map sc7180_lazor_pdc_map[] = {
++	{0, 40}, {3, 50}, {4, 42}, {5, 70}, {6, 41}, {9, 35},
++	{10, 80}, {11, 51}, {16, 20}, {21, 55}, {22, 90}, {23, 21},
++	{24, 61}, {26, 52}, {30, 100}, {31, 33}, {32, 81},
++	{33, 62}, {34, 43}, {36, 91}, {37, 53}, {38, 63}, {39, 72},
++	{41, 101}, {42, 7}, {43, 34}, {45, 73}, {47, 82}, {49, 17},
++	{52, 109}, {53, 102}, {55, 92}, {56, 56}, {57, 57}, {58, 83},
++	{59, 37}, {62, 110}, {63, 111}, {64, 74}, {65, 44}, {66, 93},
++	{67, 58}, {68, 112}, {69, 32}, {70, 54}, {72, 59}, {73, 64},
++	{74, 71}, {78, 31}, {82, 30}, {85, 103}, {86, 38}, {87, 39},
++	{88, 45}, {89, 46}, {90, 47}, {91, 48}, {92, 60}, {93, 49},
++	{94, 84}, {95, 94}, {98, 65}, {101, 66}, {104, 67}, {109, 104},
++	{110, 68}, {113, 69}, {114, 113}, {115, 108}, {116, 121},
++	{117, 114}, {118, 119},
++};
++
++static struct msm_pinctrl_soc_data sc7180_pinctrl = {
+ 	.pins = sc7180_pins,
+ 	.npins = ARRAY_SIZE(sc7180_pins),
+ 	.functions = sc7180_functions,
+@@ -1151,6 +1168,10 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+ 
+ static int sc7180_pinctrl_probe(struct platform_device *pdev)
+ {
++	if (of_machine_is_compatible("google,lazor")) {
++		sc7180_pinctrl.wakeirq_map = sc7180_lazor_pdc_map;
++		sc7180_pinctrl.nwakeirq_map = ARRAY_SIZE(sc7180_lazor_pdc_map);
++	}
+ 	return msm_pinctrl_probe(pdev, &sc7180_pinctrl);
+ }
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
