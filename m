@@ -2,73 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9A4E213ABC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 15:18:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16C6F213B10
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 15:35:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726074AbgGCNSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 09:18:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55924 "EHLO mail.kernel.org"
+        id S1726063AbgGCNfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 09:35:22 -0400
+Received: from vps0.lunn.ch ([185.16.172.187]:45512 "EHLO vps0.lunn.ch"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726022AbgGCNSW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 09:18:22 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 99CC620675;
-        Fri,  3 Jul 2020 13:18:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1593782302;
-        bh=hyOXqqhxaTbYH3dAER82uU6aZvMqfBZ1enbuyWaVgsQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lIvdqTtcw8q09KXuP8gWfWbNF4gJVhhQYfZK4umAM4xHu81em8G2FnNsvTwCRHxsf
-         CrvfYNMD3XaErxs+5NH5WCpCmLrIjpXqhiEEtlwCkqyHQm2VVNQuTRAfJw8c+Yb7AM
-         DyifJGR2yO9eKReHfTqYwjy6TDwdM424+Pz3CImo=
-Date:   Fri, 3 Jul 2020 14:18:17 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>, bjorn.andersson@linaro.org,
-        Mark Rutland <mark.rutland@arm.com>, mturquette@baylibre.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Ilia Lin <ilialin@codeaurora.org>
-Subject: Re: [PATCH v2 1/4] soc: qcom: Separate kryo l2 accessors from PMU
- driver
-Message-ID: <20200703131816.GC18953@willie-the-truck>
-References: <1591266927-24976-1-git-send-email-loic.poulain@linaro.org>
- <1591266927-24976-2-git-send-email-loic.poulain@linaro.org>
- <159261263640.62212.5877307994739570385@swboyd.mtv.corp.google.com>
+        id S1726035AbgGCNfW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Jul 2020 09:35:22 -0400
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94)
+        (envelope-from <andrew@lunn.ch>)
+        id 1jrLqT-003T6y-SU; Fri, 03 Jul 2020 15:35:13 +0200
+Date:   Fri, 3 Jul 2020 15:35:13 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     Florian Fainelli <f.fainelli@gmail.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King - ARM Linux admin <linux@armlinux.org.uk>,
+        David Miller <davem@davemloft.net>, kuba@kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robh+dt@kernel.org
+Subject: Re: [net-next,PATCH 2/4] net: mdio-ipq4019: add clock support
+Message-ID: <20200703133513.GB807334@lunn.ch>
+References: <20200702103001.233961-1-robert.marko@sartura.hr>
+ <20200702103001.233961-3-robert.marko@sartura.hr>
+ <e4921b83-0c80-65ad-6ddd-be2a12347d9c@gmail.com>
+ <CA+HBbNHbyS3viFc90KDWW=dwkA9yRSuQ15fg9EzApmrP8JSR3Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <159261263640.62212.5877307994739570385@swboyd.mtv.corp.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CA+HBbNHbyS3viFc90KDWW=dwkA9yRSuQ15fg9EzApmrP8JSR3Q@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 19, 2020 at 05:23:56PM -0700, Stephen Boyd wrote:
-> Quoting Loic Poulain (2020-06-04 03:35:24)
-> > From: Ilia Lin <ilialin@codeaurora.org>
-> > 
-> > The driver provides kernel level API for other drivers
-> > to access the MSM8996 L2 cache registers.
-> > Separating the L2 access code from the PMU driver and
-> > making it public to allow other drivers use it.
-> > The accesses must be separated with a single spinlock,
-> > maintained in this driver.
-> > 
-> > Signed-off-by: Ilia Lin <ilialin@codeaurora.org>
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > ---
-> 
-> This needs an ack from perf maintainers. Leaving the rest of the patch
-> intact to help provide context.
+On Fri, Jul 03, 2020 at 01:37:48PM +0200, Robert Marko wrote:
+> This is not the actual MDIO bus clock, that is the clock frequency
+> that SoC clock generator produces.
+> MDIO controller has an internal divider set up for that 100MHz, I
+> don't know the actual MDIO bus clock
+> frequency as it's not listed anywhere.
 
-Looks fine to me:
+Hi Robert
 
-Acked-by: Will Deacon <will@kernel.org>
+From Documentation/devicetree/bindings/net/mdio.yaml 
 
-(I can't get my head round the MSR; ISB; spin_unlock() ordering, but this
-is just moving code so I don't want to open that box of fun here).
+  clock-frequency:
+    description:
+      Desired MDIO bus clock frequency in Hz. Values greater than IEEE 802.3
+      defined 2.5MHz should only be used when all devices on the bus support
+      the given clock speed.
 
-Will
+You have to use that definition for clock-frequency. It means the MDIO
+bus frequency. It would be good if you can get an oscilloscope onto
+the bus and measure it. Otherwise, we have to assume the divider is
+40, in order to give a standards compliment 2.5MHz. You can then work
+out what value to pass to the clk_ API to get the correct input clock
+frequency for the MDIO block.
+
+	  Andrew
