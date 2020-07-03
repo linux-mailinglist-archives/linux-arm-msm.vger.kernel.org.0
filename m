@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 282FB2136A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 10:44:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D6ED2136AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2020 10:44:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726039AbgGCIog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Jul 2020 04:44:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46610 "EHLO
+        id S1726074AbgGCIoh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Jul 2020 04:44:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725779AbgGCIog (ORCPT
+        with ESMTP id S1725972AbgGCIoh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Jul 2020 04:44:36 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 029DDC08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2020 01:44:36 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g75so31250154wme.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2020 01:44:35 -0700 (PDT)
+        Fri, 3 Jul 2020 04:44:37 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082AAC08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2020 01:44:37 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id s10so31758560wrw.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2020 01:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EnE6Ie1AshEC9kkSkD1phqKDaIW4ZsPLXsjnuMEgDU4=;
-        b=aw1ohUsBoxDniIyHNA7v9rnOKSNC66sjlVpOBM5APjRG6gPP9i9mIa341pwrvaLg4c
-         j0R6Tn7xEcRao5qhNSmg6FSwQQrxxEdzl5dbI0lXVMLmFRklohnafoWqhI/tFYAJYvRO
-         ExBwhDJMvblHQDUUqgVG1xN2i4T0iiLGXJdWd3k+9CIMMLUclDFwJYhEK/KrRr402XN3
-         rE+LaYWyl+Ho3w2nVfZTLc0Gj54XoSR6rE5N67g3VIkZMJ4pdG4/XRUIwzID7U/0tnqv
-         L9WV+RFdSoUKXLYobGtfzYb+xjwm9ROcv/44pZHSuQGcFlRD35YCasG2NvRzLHjKg6bO
-         AlvQ==
+        bh=heZQEJKtev2CQI/n8g2TDagbZY/W2wQcpaekNIFJuUs=;
+        b=oXKO0um9JGJucUuqoRrg1eckGzmk9EiJkX406TycN89Cj+gQhG6pZ9pP008sY7A8t1
+         v/qojMVeotxZeuYJEQFstqjC/OvSmt407kNmr/da5QgTyD3rwmTmrd8FADbEhoe+/UOY
+         dNHBuUKODs3pLDUGY4Vp48ZfVPLPkQVSEGj6IGPlHb5kP8hVqA2fNh+jP/YqMHejb3XL
+         bbzwrD9gO9OA7BEIB3xVQbzFNRZKurenj8rcroOt8WqBQQQ9/X4C0mkygLptNJDpbEf8
+         A+MQ4EfNe/kiwYm53RMxJwc7C0+gsPJpuZkU7xTVvp1L9qneb/DYktjEsEG6sAMlijzN
+         Y9Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=EnE6Ie1AshEC9kkSkD1phqKDaIW4ZsPLXsjnuMEgDU4=;
-        b=M9TUUetKXSUJQIvYj0kGu/goIj+m9RhL5ZSO4f5QJ2A32zrIzty4eEMfc2oduKRlrQ
-         gvoOArCSMELOq3l4fC45kf4R9Tj6XVOKZ/qcR/5P6I4bdTfuh1TKlPgkVfIvK9x0f2+O
-         Qw9iS+wOOQpEaHRtfqfuC/aUpGQsNXWmTwVGkuutJtTvxKGmBhLFEIS/O/95W0gP8j57
-         vJmuoXxEbxp5FS3fKglEDxnKAmDoZkfW1I82xpMhX7mEqEn6JR/Dz/FCyhldlEGwVtag
-         mPVVSU4IR45ERhICRgwI5RHHsEPQRvSeHyuLT5xAa+Tclp0Aujom4qrB7SO5+4hSFy5x
-         w7sA==
-X-Gm-Message-State: AOAM5339CAskd1AWWGf9CuBmOdGdU+XG1Q74QrHVd0sEQsXrNKDDyWpa
-        X+1Cdjf91B6FmcbfTFXdg5ffmQ==
-X-Google-Smtp-Source: ABdhPJzHaGuRIryFRfqDYj/1ac3PdTPEdE2FmP9y5RQ8kfQ08roaBOYWoRuACMf9TgqTfaMZpACkBw==
-X-Received: by 2002:a1c:e209:: with SMTP id z9mr36019759wmg.153.1593765874676;
-        Fri, 03 Jul 2020 01:44:34 -0700 (PDT)
+        bh=heZQEJKtev2CQI/n8g2TDagbZY/W2wQcpaekNIFJuUs=;
+        b=VRy/pTCphRNSBubbKWQDjD5huJgGxtpLX8QFMp5u6C5L3qxXpyPkNzyrJ0OAzuSULC
+         yNcvfPQG1w6B4fKq08HIG9nk3DMYLP8rQkO93jp2tdIN0JMRlNDmGtCNqm5lurzleWQS
+         I6nK/wqIZOk9E7Y/tHBILS3/bQx5U34OwEe801jf54IcZlUQ3ylf7fANO2CKB9iWqYag
+         dNM0sJPGRv3s6VaFwhFS25e38Fb/PgXUdwDn/Ka08Zi00thxg8EPYjzlD/Gn+QXAvJW7
+         D6UwE4UkUBaa+4rL6qtqOOPWlb/jeCEzQkilKGaTTorbspJ/Xqow3J5ka4ZhZ7Gdhxth
+         //Og==
+X-Gm-Message-State: AOAM531hDbKiU1IMX471pPeVvpJ9wo6hQqHTpFad63K1slDyn79tpka9
+        0iSY1xl4XHWgSrQlcU0TMNPPCA==
+X-Google-Smtp-Source: ABdhPJxUXl2heKO9gxro45V92Au16BctO9pymyBSwFNBucpMC8BSlU0pNeEX8JvgNI2nQJV2Hp9g3g==
+X-Received: by 2002:adf:9524:: with SMTP id 33mr34155726wrs.156.1593765875740;
+        Fri, 03 Jul 2020 01:44:35 -0700 (PDT)
 Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id b18sm4213116wrs.46.2020.07.03.01.44.33
+        by smtp.gmail.com with ESMTPSA id b18sm4213116wrs.46.2020.07.03.01.44.35
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Jul 2020 01:44:34 -0700 (PDT)
+        Fri, 03 Jul 2020 01:44:35 -0700 (PDT)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     sboyd@kernel.org, bjorn.andersson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        amit.kucheria@linaro.org, Ilia Lin <ilialin@codeaurora.org>
-Subject: [PATCH v5 3/5] dt-bindings: clk: qcom: Add bindings for CPU clock for msm8996
-Date:   Fri,  3 Jul 2020 10:49:43 +0200
-Message-Id: <1593766185-16346-4-git-send-email-loic.poulain@linaro.org>
+        amit.kucheria@linaro.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v5 4/5] arch: arm64: dts: msm8996: Rename speedbin node
+Date:   Fri,  3 Jul 2020 10:49:44 +0200
+Message-Id: <1593766185-16346-5-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1593766185-16346-1-git-send-email-loic.poulain@linaro.org>
 References: <1593766185-16346-1-git-send-email-loic.poulain@linaro.org>
@@ -62,115 +62,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ilia Lin <ilialin@codeaurora.org>
+The speedbin value blown in the efuse is used to determine is used to
+determine the voltage and frequency value for different IPs, including
+GPU, CPUs... So it's really not a gpu specific information.
 
-Each of the CPU clusters (Power and Perf) on msm8996 are
-clocked via 2 PLLs, a primary and alternate. There are also
-2 Mux'es, a primary and secondary all connected together
-as shown below
+This patch simply renames 'gpu_speed_bin' node to 'speedbin'.
 
-                             +-------+
-              XO             |       |
-          +------------------>0      |
-                             |       |
-                   PLL/2     | SMUX  +----+
-                     +------->1      |    |
-                     |       |       |    |
-                     |       +-------+    |    +-------+
-                     |                    +---->0      |
-                     |                         |       |
-+---------------+    |             +----------->1      | CPU clk
-|Primary PLL    +----+ PLL_EARLY   |           |       +------>
-|               +------+-----------+    +------>2 PMUX |
-+---------------+      |                |      |       |
-                       |   +------+     |   +-->3      |
-                       +--^+  ACD +-----+   |  +-------+
-+---------------+          +------+         |
-|Alt PLL        |                           |
-|               +---------------------------+
-+---------------+         PLL_EARLY
-
-The primary PLL is what drives the CPU clk, except for times
-when we are reprogramming the PLL itself (for rate changes) when
-we temporarily switch to an alternate PLL. A subsequent patch adds
-support to switch between primary and alternate PLL during rate
-changes.
-
-The primary PLL operates on a single VCO range, between 600MHz
-and 3GHz. However the CPUs do support OPPs with frequencies
-between 300MHz and 600MHz. In order to support running the CPUs
-at those frequencies we end up having to lock the PLL at twice
-the rate and drive the CPU clk via the PLL/2 output and SMUX.
-
-Signed-off-by: Ilia Lin <ilialin@codeaurora.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- .../bindings/clock/qcom,msm8996-apcc.yaml          | 56 ++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
-new file mode 100644
-index 0000000..d673ede
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
-@@ -0,0 +1,56 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,kryocc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm clock controller for MSM8996 CPUs
-+
-+maintainers:
-+  - Loic Poulain <loic.poulain@linaro.org>
-+
-+description: |
-+  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for Power cluster
-+  and clock 1 is for Perf cluster.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,msm8996-apcc
-+
-+  reg:
-+    maxItems: 1
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  clocks:
-+    items:
-+      - description: Primary PLL clock for power cluster (little)
-+      - description: Primary PLL clock for perf cluster (big)
-+      - description: Alternate PLL clock for power cluster (little)
-+      - description: Alternate PLL clock for perf cluster (big)
-+
-+  clock-names:
-+    items:
-+      - const: pwrcl_pll
-+      - const: perfcl_pll
-+      - const: pwrcl_alt_pll
-+      - const: perfcl_alt_pll
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#clock-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  # Example for msm8996
-+  - |
-+    kryocc: clock-controller@6400000 {
-+        compatible = "qcom,msm8996-apcc";
-+        reg = <0x6400000 0x90000>;
-+        #clock-cells = <1>;
-+  };
-+...
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 9951286..2811b8c1 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -424,7 +424,7 @@
+ 				bits = <1 4>;
+ 			};
+ 
+-			gpu_speed_bin: gpu_speed_bin@133 {
++			speedbin_efuse: speedbin@133 {
+ 				reg = <0x133 0x1>;
+ 				bits = <5 3>;
+ 			};
+@@ -642,7 +642,7 @@
+ 			power-domains = <&mmcc GPU_GX_GDSC>;
+ 			iommus = <&adreno_smmu 0>;
+ 
+-			nvmem-cells = <&gpu_speed_bin>;
++			nvmem-cells = <&speedbin_efuse>;
+ 			nvmem-cell-names = "speed_bin";
+ 
+ 			qcom,gpu-quirk-two-pass-use-wfi;
 -- 
 2.7.4
 
