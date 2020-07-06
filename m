@@ -2,115 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21B29215DE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 20:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE358215FA8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 21:50:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729716AbgGFSEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 14:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32898 "EHLO
+        id S1726883AbgGFTum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 15:50:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729632AbgGFSEk (ORCPT
+        with ESMTP id S1726834AbgGFTul (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 14:04:40 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C25C061794
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 11:04:40 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id u185so15243922pfu.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 11:04:40 -0700 (PDT)
+        Mon, 6 Jul 2020 15:50:41 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6609CC08C5DF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 12:50:41 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id k15so23305639lfc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 12:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mt7RscZq1TJMb1tWvWuPIetOt+Q1/nE1Zx/gXdxvawg=;
-        b=q23x4gWkEKgxG/i1z9YbYrVkvHDm9PQY1dG75p9Cq/6mHNPUrcfflET/MB6PpKClEG
-         nbkV2v9/v5x4Q6IvTO67PADDQYppWAbpP3oqjBUUc/eLhCHVZkTx4APdBzBvfT49KnS1
-         MXoHMXH+BMegcK10pJS4MuRM7B0ybit5zVlcjqkneRyDJU0/7KTQhJ+JXJB43YBOQ9gc
-         p8Hwv+oNtkdlkpLvDz2yask5Vrb9t3aQ6jRrmrCF8A0rYiXekArNovlbNq/GGvMGvAwo
-         4sTSY329v9qgn7X919roRObd1DpAStVWsLbEF3Bl0QJ1sqivhjCKUNN3i6J7D7OXFnwG
-         35UQ==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=NCyDxdA9jbr8iFhSed0FBGtcvm2XFbja7uTb50VYerI=;
+        b=HsJWl1n6nz2NaVWTq/rj8cNLUuuf9ZutpSP2XhGHlIQ/D6yK7Apt0pFdMGWj8h2ev7
+         aXh5HYYGJIdKjPy2kTov6EuhdwlhJuWvT6m9FbbUnDuEyj2uav/MOmOhfb1Km5Jjh1DX
+         1VKyRRtPQfALLXobl9TIEbN5u8+7E8uY28oTN3ZMzGXcFLknH0G0vj9yB19PBq6Gtnst
+         lGB2pZiGQjz3GUCxRU3ZskiDMsaRMJhXawZPT71qryXLX+jkjpIYuffuFRis7D3smRO+
+         DePhXslskO2xsRfyNJIE8M/eTr6QYljBZf9HvE/RORYRzFXYrL9giS1QlewU29CM5LIL
+         PHcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mt7RscZq1TJMb1tWvWuPIetOt+Q1/nE1Zx/gXdxvawg=;
-        b=mit2guTqegw0OIATqfTQImvqGBybwSrzoMLJ81wyOl/haxJ/44Tjz1aZPUsBLqXVaX
-         v9wgZIE2Cz4FXEZNJLULNAcfltWb3XzFr6vlobZZMok/sMTUkp/DzJ+JkRmGh1QkoKt2
-         zgMPrqP8mmStFUYISlD1E7ntRKiXp6KQoHYObnaL6bY/q2nTOEi4uYbMUmSEy0kkh0w7
-         fEih5Hop92/I+fqKvEWuGEHuQKb62N1gfgHnQAeeehXN09rdTTf6WTVzY/6VAzN47ClK
-         W3UBnou3n2L8cybCZL4ldnNdcLW9ueFrLUAgKBwp1scIk90bWzPJOIt7xCDmzjEAIgBu
-         mjmw==
-X-Gm-Message-State: AOAM530TVVvlc4LcucrlZxwoYiGLemkJU52R0EuOukP5fj1qvK4vt6M4
-        YT9+F2eV+z6YrpBZkWfmkuoTag==
-X-Google-Smtp-Source: ABdhPJyaUf4iyVeVudOQqfvRRfSSiadh+8eBe/LyFvtUQy7eIyw5mrvdsAsQTwxI347UihI7KpSf3A==
-X-Received: by 2002:aa7:952b:: with SMTP id c11mr18629395pfp.186.1594058679877;
-        Mon, 06 Jul 2020 11:04:39 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id u74sm20051365pgc.58.2020.07.06.11.04.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2020 11:04:39 -0700 (PDT)
-Date:   Mon, 6 Jul 2020 12:04:37 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Deepak Kumar Singh <deesin@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, clew@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V5 0/4] Signaling api support in glink/rpmsg clients
-Message-ID: <20200706180437.GB614737@xps15>
-References: <1593182819-30747-1-git-send-email-deesin@codeaurora.org>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=NCyDxdA9jbr8iFhSed0FBGtcvm2XFbja7uTb50VYerI=;
+        b=YLvDEDp3FxocYQC0cyN+e+FmAv7edPRUsLLEi5xB6KiUxhNTVBLISa8LfvdIXwRtlH
+         k7Lo2mFUXVr8gHHB0olySlc2cEdSwxuNjDPZP2Z/Eg4ykJBwlEawTndPvMCOF7itgxJK
+         JCTl7ghXK0QFJAujwz2EgDlboYhTQXzxB0lEpuAKbzniPZh7AgKo2s0HW9SZHKTTFASx
+         sfKkkJ0WKSOS5MMtCp5zMP06rQhK9hfae8E0Zn6UhaErCUbWnJflnqvav332T9js1TcT
+         bEUvKkwH7SwaHz2+bvh+jATDQ3FiWfqHTTdpEP+nH/89mg+Ocgwesza8ogQKjIRtRTY8
+         TEzQ==
+X-Gm-Message-State: AOAM530B3dfeHQbOEFW+iOQkJvvD+ONoO6E9IrcJrnKx2rw5MQHFnkCG
+        TCgI0e3N5ac+06BNCuzEe3vAjw==
+X-Google-Smtp-Source: ABdhPJxTjEEO35HzKrr2LIMwiPAI7yzu1DxL0zTecG7kI1hmtz7d2aU29lCEeEJ/RJbUqXJULxrfqg==
+X-Received: by 2002:a19:7407:: with SMTP id v7mr29481882lfe.4.1594065039708;
+        Mon, 06 Jul 2020 12:50:39 -0700 (PDT)
+Received: from [192.168.1.211] ([188.162.64.1])
+        by smtp.gmail.com with ESMTPSA id m15sm10604335ljp.45.2020.07.06.12.50.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jul 2020 12:50:38 -0700 (PDT)
+Subject: Re: [RESEND PATCH v2 00/13] Enable GPU for SM8150 and SM8250
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Deepak Katragadda <dkatraga@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
+References: <20200629211725.2592-1-jonathan@marek.ca>
+ <011a1f99-46bb-12f2-ee07-8cd14d891947@linaro.org>
+Message-ID: <25c2015a-8a3b-4f21-cf75-0fbe729cf216@linaro.org>
+Date:   Mon, 6 Jul 2020 22:50:37 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1593182819-30747-1-git-send-email-deesin@codeaurora.org>
+In-Reply-To: <011a1f99-46bb-12f2-ee07-8cd14d891947@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Deepak,
+On 03/07/2020 18:03, Dmitry Baryshkov wrote:
+> On 30/06/2020 00:17, Jonathan Marek wrote:
+>> This series adds the missing clock drivers and dts nodes to enable
+>> the GPU on both SM8150 and SM8250.
+>>
+>> Note an extra patch [1] is still required for GPU to work on SM8250.
+>>
+>> Changes in V2:
+>> * Added "clk: qcom: gcc: fix sm8150 GPU and NPU clocks" to fix the 
+>> newly added
+>>    SM8150 GPU gcc clocks
+>> * Added "Fixes:" tag to "clk: qcom: clk-alpha-pll: remove 
+>> unused/incorrect PLL_CAL_VAL"
+>> * Added yaml schemas to gpucc dt-bindings patches
+>> * Added "clk: qcom: add common gdsc_gx_do_nothing_enable for gpucc 
+>> drivers" and changed
+>>    gpucc patches to use it.
+>> * Removed CLK_IS_CRITICAL from gpu_cc_ahb_clk
+>> * Added missing rpmh regulator level for sm8250 GPU clock levels
+>> * Use sm8150/sm8250 iommu compatibles in dts
+>> * Add gcc_gpu_gpll0_clk_src/gcc_gpu_gpll0_div_clk_src to gpucc clocks 
+>> in dts
+>>
+>> [1] https://gist.github.com/flto/784f1aca761ebf2fe6c105719a4a04ca
+> 
+> With your patches applied:
+> 
+> [   56.751977] msm msm: [drm:adreno_request_fw] loaded qcom/a650_sqe.fw 
+> from new location
+> [   56.760166] msm msm: [drm:adreno_request_fw] loaded qcom/a650_gmu.bin 
+> from new location
+> [   56.768485] arm-smmu 3da0000.iommu: genpd_runtime_resume()
+> [   56.774196] PM: gpu_cx_gdsc: Power-on latency exceeded, new value 
+> 49531 ns
+> [   56.781730] arm-smmu 3da0000.iommu: resume latency exceeded, 462604 ns
+> [   56.799559] platform 3d6a000.gmu: [drm:a6xx_gmu_resume] *ERROR* GMU 
+> firmware initialization timed out
+> [   56.809260] arm-smmu 3da0000.iommu: genpd_runtime_suspend()
+> [   56.813062] msm msm: [drm:adreno_load_gpu] *ERROR* Couldn't power up 
+> the GPU: -110
 
-On Fri, Jun 26, 2020 at 08:16:55PM +0530, Deepak Kumar Singh wrote:
-> Change from version 5
-> [V5,4/4] rpmsg: char: Add signal callback and POLLPRI support
-> Updated for sparse warning. Replaced POLLPRI => EPOLLPRI to fix
-> warning.
-> 
-> Change from version 4
-> I am taking over these patches from aneela@codeaurora.org
-> Fixed all the trivial review comments.
-> 
-> Signal conversion to and from native signal as done in patch V4,2/4
-> is intentional.
-> 
-> Arun Kumar Neelakantam (3):
->   rpmsg: glink: Add support to handle signals command
->   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
->   rpmsg: char: Add signal callback and POLLPRI support
-> 
-> Deepak Kumar Singh (1):
->   rpmsg: core: Add signal API support
 
-I'm confused here - V5 (or what I think it is) was sent out on June 24th without
-a cover letter.  This set has a cover letter but it is labeled V5.  So is this
-the cover letter that should have been sent out on the 24th and the content
-herein relevent to that set?  Or is it accurate and the label on the cover
-letter of this set is wrong and should have been V6?
-
-I have little confidence in both sets and as such won't be reviewing them.
-Please send a new revision that is properly labeled.
-
-Thanks,
-Mathieu   
+Confirmed to be a firmware issue. With older firmware proposed patches 
+work fine. A patch to support newer firmware releases will be submitted 
+separately.
 
 
-> 
->  drivers/rpmsg/qcom_glink_native.c | 125 ++++++++++++++++++++++++++++++++++++++
->  drivers/rpmsg/rpmsg_char.c        |  76 ++++++++++++++++++++++-
->  drivers/rpmsg/rpmsg_core.c        |  40 ++++++++++++
->  drivers/rpmsg/rpmsg_internal.h    |   5 ++
->  include/linux/rpmsg.h             |  27 ++++++++
->  5 files changed, 270 insertions(+), 3 deletions(-)
-> 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+-- 
+With best wishes
+Dmitry
