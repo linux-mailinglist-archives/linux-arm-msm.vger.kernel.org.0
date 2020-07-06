@@ -2,149 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1AC32157A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 14:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48E9A21586B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 15:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728989AbgGFMxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 08:53:35 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:55735 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728967AbgGFMxf (ORCPT
+        id S1729381AbgGFNeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 09:34:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47320 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729376AbgGFNeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 08:53:35 -0400
-Received: from mail-qk1-f173.google.com ([209.85.222.173]) by
- mrelayeu.kundenserver.de (mreue012 [212.227.15.129]) with ESMTPSA (Nemesis)
- id 1MIbzB-1k6Szp411J-00EeSP; Mon, 06 Jul 2020 14:53:33 +0200
-Received: by mail-qk1-f173.google.com with SMTP id r22so34530382qke.13;
-        Mon, 06 Jul 2020 05:53:32 -0700 (PDT)
-X-Gm-Message-State: AOAM533C4qiqSnhL+DaWcXtlmE9qzODh0CXgeCswjA4hZDegvpwEZ20g
-        iwEHFv9CYvYO2nZS0+UGqsULH/Igtcf+/hHlXd0=
-X-Google-Smtp-Source: ABdhPJzLxzzD0oWLR8gLB+UZOumRyReNJRxw2eFk+0tK/K4zKW/yb78heESjoajcTacz1okTabKhg+kBVFSTBDtiDao=
-X-Received: by 2002:a05:620a:1654:: with SMTP id c20mr39946815qko.138.1594040011521;
- Mon, 06 Jul 2020 05:53:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+G9fYvqW-RQxt3kSoNkh5Y2REoe0QQB_dTz_KPzhJzcwiM5OA@mail.gmail.com>
-In-Reply-To: <CA+G9fYvqW-RQxt3kSoNkh5Y2REoe0QQB_dTz_KPzhJzcwiM5OA@mail.gmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 6 Jul 2020 14:53:15 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a1Lda8HhsDvDREf-cOgb4RkCgEKK5Q-Zj+UhK8tsAaBLw@mail.gmail.com>
-Message-ID: <CAK8P3a1Lda8HhsDvDREf-cOgb4RkCgEKK5Q-Zj+UhK8tsAaBLw@mail.gmail.com>
-Subject: Re: [qemu] boot failed: Unable to handle kernel NULL pointer
- dereference at virtual address 0000000000000000
-To:     Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc:     linux-serial@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Jiri Slaby <jslaby@suse.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>, jirislaby@kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mon, 6 Jul 2020 09:34:21 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA29C08C5DF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 06:34:21 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id o8so39368661wmh.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 06:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JwlPz1VQoWtw/PPAMkJDslP79wmZUbGedUK151UzPVM=;
+        b=NVlmUCpq/lKEqVs2LNex5jpihdjoioJToXMlmV7xJlur5bBqqxQQ0ZA/CPEMp/YFYN
+         zo06ci+Iy0l18umuNeYhgFhN14h8r6U7kxH24seP3QCInrax1OBWeKQ1SE9H70pcJnMY
+         Y+3zvLqxSlGJHUh9Rzg3ntB0br++CashYLBwH4dCl6PYtf69SG4bkCjzXWpVyre6jT7Z
+         bs9jKtCs/nALiRvYyYsz/k1abSGU0I7VVN+9TLc1NZl+ZuCNQZNWPap0lcFqJXgO9nJp
+         JQTT4IqiZ5ED2DtL16qAF0f01uKhcxkAIoUDFBjNrhu/dSUyHaMzolCNKJUKIkCUvEqy
+         +HuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JwlPz1VQoWtw/PPAMkJDslP79wmZUbGedUK151UzPVM=;
+        b=F+Gwacgc+ZcwFKvlWkkVEqg5e5ylwqn9GGQhUI2DQ9DLrG+v6tLN583abUDcUH3VH9
+         RQytUwolTIk5GnrGTELsdLNj2rBNQzNxTcqlTYmItUU4o4IoAT/5xsOTB6NegdhX/BN8
+         2BwxWg6smeGi/gKIbk1E+7bAtnNvcyWSW1GSvAmJ5Dj5vLIuVxmyopgI4l1Vb0DUM3P5
+         IvKpsWIYV1413xsPwueKaBzR2LB4OXbi2vaLHpIbtnt9eHYThW8hU4liZ7rjs+ZPsMHd
+         gEI6lOIxdTS9nQvyUW88/Sv+bW8lQrDeomuS0ZnNeaVankEuEN8XQP9OBU61QP1sNwvW
+         4LaA==
+X-Gm-Message-State: AOAM531rayo+vx6jOX5FZgOK/rpjmo9DjwWWonUaEPkUsvCaz1lW05Gx
+        U4KqrEZspJRisnL+wKp0/0Isag==
+X-Google-Smtp-Source: ABdhPJwWAM9YUcyOeIqwvk9EC4yw+4vx9TJztDtgcS6azkPjILD4VT5pv7bUKjKcnm3I1NN1jBI33A==
+X-Received: by 2002:a1c:e914:: with SMTP id q20mr47372571wmc.145.1594042459982;
+        Mon, 06 Jul 2020 06:34:19 -0700 (PDT)
+Received: from localhost.localdomain ([2.27.35.206])
+        by smtp.gmail.com with ESMTPSA id v18sm25416082wrv.49.2020.07.06.06.34.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2020 06:34:19 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ldewangan@nvidia.com, Thierry Reding <thierry.reding@gmail.com>,
-        Jon Hunter <jonathanh@nvidia.com>, Qian Cai <cai@lca.pw>,
-        lkft-triage@lists.linaro.org, Dave Jiang <dave.jiang@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:7h2WIgJfUR8umEdQGzTQUYjL3+PVFsfHCxAO7m96RjRNmNGPw9N
- sHuWludrvhH8Rnl+cxeVAHKtw8Mww8bjjpS4LhYBlM+RdWcgUfVQT9YyUTm/iTF8lDS61Lj
- krhupWRzRsZhQ7u5PH5zmLIx+MmhwwxSckm7TgxDFTGte3rMYKWdPIKDiTjobw2zcQJ0Hhj
- xBc9GNT7CuiTl1d1brLNQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:05WRbZZwKYE=:1ZH7KIls0ynpOir4F2/d62
- j9meVUQU3kApE1/XOTpf3LT7oTPEqy09bFOmfv2/10XjbgPo7FLCwlv7n+bJ3BZzHOT939QrS
- 0nnDepXpChMAgH6z3stpbszXbXJMWNI/3RqzzuAd11r02D6aVfCbogmad/bE2ewyNAs63DVr7
- F2jjH21Qipjl9NEvf6YYpFTHnK6hz70tgnyUhiL8Aw+HYSBlSUcXQK9Tu5OFrdJDBdtLERi83
- wAjHzX5aSE66qtz4HzyYwMpyt6o6ezkdnlE7CmDs02pbWr/cohE14c+Xi5ENgRGtFvakZR1NT
- qAUrpcZXAm65mV1VEWuPJLtgmOsU2aIUjdizcKQx5fBxZbvGcPC9ks6lhsgMReOreKvECfYY9
- PGMjdIoxkeXxB9PPcZMPbC18Joyb7j8YO4HNZq/1OCQjac+XgDmN+5A4PgmbYhyD0j9v00dKR
- kviv8CHn5gY04gqr0BAFOJTkjURWfG1mLRvkG9Yn/Mu8I9iN07qJUYGxYnU3wxDA+oCI0tHPF
- amwe41B/B9cZG6zdqDQvDUcqe5rDddTxFwIlMsJTYJgoixAx6GtHed529R3jmx02arSMtuP1p
- sl7h5jKHFp+/aDE8i/5apxYaLfVpaql3d4zlIviFf7IFElXn2IKxu237u/JTnvGlo/7VC+Wie
- ocpBS7Ia3HN8j4Ms0o+XGyeApsBlfJx0ehCsHk38Rgm2aFQ9tV6xgLKpjJ5uXevNaC7ZTFdIx
- y8kDxuL8eKn6tzjxJoTMZ6GnBwbNUHFnm5Kuhl4EazvFSS8yBldbFAUirGpzrmT3Iji9fILCw
- sZOn512pmpqNKNZBcYPUToOJ8sKnPuT+A1GErANP/bKZ4RJXzg=
+        Felipe Balbi <balbi@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 29/32] usb: dwc3: dwc3-qcom: Do not define 'struct acpi_device_id' when !CONFIG_ACPI
+Date:   Mon,  6 Jul 2020 14:33:38 +0100
+Message-Id: <20200706133341.476881-30-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200706133341.476881-1-lee.jones@linaro.org>
+References: <20200706133341.476881-1-lee.jones@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 6, 2020 at 1:03 PM Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> While booting qemu_arm64 and qemu_arm with Linux version 5.8.0-rc3-next-20200706
-> the kernel panic noticed due to kernel NULL pointer dereference.
->
-> metadata:
->   git branch: master
->   git repo: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
->   git commit: 5680d14d59bddc8bcbc5badf00dbbd4374858497
->   git describe: next-20200706
->   make_kernelversion: 5.8.0-rc3
->   kernel-config:
-> https://builds.tuxbuild.com/Glr-Ql1wbp3qN3cnHogyNA/kernel.config
->
-> qemu arm64 boot crash log,
->
-> [    0.972053] Unable to handle kernel NULL pointer dereference at
-> virtual address 0000000000000000
-> [    0.975301] Mem abort info:
-> [    0.976316]   ESR = 0x96000004
-> [    0.977378]   EC = 0x25: DABT (current EL), IL = 32 bits
-> [    0.979363]   SET = 0, FnV = 0
-> [    0.980458]   EA = 0, S1PTW = 0
-> [    0.981583] Data abort info:
-> [    0.982634]   ISV = 0, ISS = 0x00000004
-> [    0.984213]   CM = 0, WnR = 0
-> [    0.985260] [0000000000000000] user address but active_mm is swapper
-> [    0.987600] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-> [    0.989557] Modules linked in:
-> [    0.990671] CPU: 2 PID: 1 Comm: swapper/0 Not tainted
-> 5.8.0-rc3-next-20200706 #1
-> [    0.993711] Hardware name: linux,dummy-virt (DT)
-> [    0.995708] pstate: 00000005 (nzcv daif -PAN -UAO BTYPE=--)
-> [    0.998168] pc : pl011_dma_probe+0x90/0x360
+Since ACPI_PTR() is used to NULLify the value when !CONFIG_ACPI,
+struct dwc3_qcom_acpi_match becomes defined by unused.
 
-This is the code from you vmlinux file:
+Also need to place the platform data obtained via the matching process
+inside the #ifdef, else that becomes unused too.
 
-ffff8000107233e4:       b90087e2        str     w2, [sp, #132]
-ffff8000107233e8:       97fcf14c        bl      ffff80001065f918
-<dma_request_chan>
-ffff8000107233ec:       aa0003f4        mov     x20, x0
-ffff8000107233f0:       b140041f        cmn     x0, #0x1, lsl #12
-ffff8000107233f4:       54000488        b.hi    ffff800010723484
-<pl011_dma_probe+0x11c>  // b.pmore
-ffff8000107233f8:       f9400280        ldr     x0, [x20]
-ffff8000107233fc:       f9409c02        ldr     x2, [x0, #312]
-ffff800010723400:       b4000082        cbz     x2, ffff800010723410
-<pl011_dma_probe+0xa8>
+Fixes the following W=1 kernel build warning(s):
 
-It's the "ldr     x0, [x20]" dereferencing 'chan' in pl011_dma_probe() after
-checking it for an error value. However it's a NULL pointer, not an
-error pointer, indicating that there is a bug in the dmaengine driver
-that you use here, or in the dmaengine core code.
+ drivers/usb/dwc3/dwc3-qcom.c:761:36: warning: ‘dwc3_qcom_acpi_match’ defined but not used [-Wunused-const-variable=]
+ 761 | static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
+ | ^~~~~~~~~~~~~~~~~~~~
 
-I don't see anything suspicious in dmaengine drivers, but there is a
-recent series
-from Dave Jiang that might explain it. Could you try reverting  commit
-deb9541f5052 ("dmaengine: check device and channel list for empty")?
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Felipe Balbi <balbi@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-I think the broken change is this one:
-
-@@ -819,6 +850,11 @@ struct dma_chan *dma_request_chan(struct device
-*dev, const char *name)
-
-        /* Try to find the channel via the DMA filter map(s) */
-        mutex_lock(&dma_list_mutex);
-+       if (list_empty(&dma_device_list)) {
-+               mutex_unlock(&dma_list_mutex);
-+               return NULL;
-+       }
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 1dfd024cd06b1..e1e78e9824b16 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -540,16 +540,6 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
+-	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
+-	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
+-	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
+-	.hs_phy_irq_index = 1,
+-	.dp_hs_phy_irq_index = 4,
+-	.dm_hs_phy_irq_index = 3,
+-	.ss_phy_irq_index = 2
+-};
+-
+ static int dwc3_qcom_probe(struct platform_device *pdev)
+ {
+ 	struct device_node	*np = pdev->dev.of_node;
+@@ -758,11 +748,23 @@ static const struct of_device_id dwc3_qcom_of_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
+ 
++#ifdef CONFIG_ACPI
++static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
++	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
++	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
++	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
++	.hs_phy_irq_index = 1,
++	.dp_hs_phy_irq_index = 4,
++	.dm_hs_phy_irq_index = 3,
++	.ss_phy_irq_index = 2
++};
 +
-        list_for_each_entry_safe(d, _d, &dma_device_list, global_node) {
-                dma_cap_mask_t mask;
-                const struct dma_slave_map *map = dma_filter_match(d,
-name, dev);
+ static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
+ 	{ "QCOM2430", (unsigned long)&sdm845_acpi_pdata },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
++#endif
+ 
+ static struct platform_driver dwc3_qcom_driver = {
+ 	.probe		= dwc3_qcom_probe,
+-- 
+2.25.1
 
-which needs to return an error code like -ENODEV instead of NULL. There
-may be other changes in the same patch that introduce the same bug
-elsewhere.
-
-     Arnd
