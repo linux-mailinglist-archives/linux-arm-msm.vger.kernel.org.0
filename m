@@ -2,115 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48541215D4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 19:37:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21B29215DE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 20:04:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729668AbgGFRhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 13:37:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56822 "EHLO
+        id S1729716AbgGFSEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 14:04:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729708AbgGFRhL (ORCPT
+        with ESMTP id S1729632AbgGFSEk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 13:37:11 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52EE0C08C5E0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 10:37:11 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id t25so41840060lji.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 10:37:11 -0700 (PDT)
+        Mon, 6 Jul 2020 14:04:40 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C25C061794
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 11:04:40 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id u185so15243922pfu.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 11:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Sz11DYsL5zwVjqYhEKLPrxOF4tzgDMf1vz98/XjZCxY=;
-        b=tLMYUVfHZtxO9KgWzxxOdD9mlQ3dFXlKr7srKRmLWLyKcglJiohqNiQztHYlHwWNUo
-         iP0ZMLRORAtfja/bxFn0wg13a/z0XXiAoY7sxH9g5CvV5ifmaV+6HUOxwMqyNNBa7OXd
-         Pk33QdLTy8IiiwRldr6OC7wSgyp7WcbNDd5KR/Do8+xNqy7KOuO660gFYGVH1OA3SxJL
-         oqVXNWDxaJEO55b67x+Q5VVrZm/aaObRxxyZ6nahPibVE/3egwpX0Puzu7/MWuFuWzgr
-         XtoIxoCAaZ1i2RBQeSzE6JIqCvmWPnrlM3qNEX5tILBOkQd00yt52r8ovQGzGTUUPPbi
-         nqMA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mt7RscZq1TJMb1tWvWuPIetOt+Q1/nE1Zx/gXdxvawg=;
+        b=q23x4gWkEKgxG/i1z9YbYrVkvHDm9PQY1dG75p9Cq/6mHNPUrcfflET/MB6PpKClEG
+         nbkV2v9/v5x4Q6IvTO67PADDQYppWAbpP3oqjBUUc/eLhCHVZkTx4APdBzBvfT49KnS1
+         MXoHMXH+BMegcK10pJS4MuRM7B0ybit5zVlcjqkneRyDJU0/7KTQhJ+JXJB43YBOQ9gc
+         p8Hwv+oNtkdlkpLvDz2yask5Vrb9t3aQ6jRrmrCF8A0rYiXekArNovlbNq/GGvMGvAwo
+         4sTSY329v9qgn7X919roRObd1DpAStVWsLbEF3Bl0QJ1sqivhjCKUNN3i6J7D7OXFnwG
+         35UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Sz11DYsL5zwVjqYhEKLPrxOF4tzgDMf1vz98/XjZCxY=;
-        b=Xrn6PRa7F0TjAA8sLf1umKvlDWP80/OW5aE5VDG+ttZoSplKWXCQ7nimRAECSxwQth
-         Gqm3J2wa1r/2wf//Bg/F5wAKuoJAtGFiNwWTVCev+oVwSQO7a0Tfn0yetTjymJojgcal
-         IFAwfTSSe2DYDky5GTP6FJW7Yw61LcsTPi+NeW1R8JFM8aNll5hiMDqH0kI9oa6Vrngb
-         jyDeukjrGcb9UYRBi1Il7RJH8SVgAwTa/vmyuLMqrNH2d1Np1NDPRST8P/m+pS6FzqNa
-         jxDDXaI3LYxVf0TzKCh/WtmFPD+y9XjfZLUgmCIo4ut51zxjllvxs+4x9GPgNkM3AM2r
-         Y9Tw==
-X-Gm-Message-State: AOAM5328rrBmTG6w3taXOR7R59s3ejifOLvVmEEiObE0LgrNDeV1d32b
-        7KzP97143ndpSQzJbn0Zw/zwKcRhUl+pUwEiapNzMw==
-X-Google-Smtp-Source: ABdhPJzFmLIfcVR5FzO4+AEovpNtwMZuiGYvPgfuVk+fhy5MWgeKKsdNiLip/9aWdgIrjSmnfdgotnU2gIr3mk7bFbw=
-X-Received: by 2002:a2e:7401:: with SMTP id p1mr4753087ljc.366.1594057029609;
- Mon, 06 Jul 2020 10:37:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mt7RscZq1TJMb1tWvWuPIetOt+Q1/nE1Zx/gXdxvawg=;
+        b=mit2guTqegw0OIATqfTQImvqGBybwSrzoMLJ81wyOl/haxJ/44Tjz1aZPUsBLqXVaX
+         v9wgZIE2Cz4FXEZNJLULNAcfltWb3XzFr6vlobZZMok/sMTUkp/DzJ+JkRmGh1QkoKt2
+         zgMPrqP8mmStFUYISlD1E7ntRKiXp6KQoHYObnaL6bY/q2nTOEi4uYbMUmSEy0kkh0w7
+         fEih5Hop92/I+fqKvEWuGEHuQKb62N1gfgHnQAeeehXN09rdTTf6WTVzY/6VAzN47ClK
+         W3UBnou3n2L8cybCZL4ldnNdcLW9ueFrLUAgKBwp1scIk90bWzPJOIt7xCDmzjEAIgBu
+         mjmw==
+X-Gm-Message-State: AOAM530TVVvlc4LcucrlZxwoYiGLemkJU52R0EuOukP5fj1qvK4vt6M4
+        YT9+F2eV+z6YrpBZkWfmkuoTag==
+X-Google-Smtp-Source: ABdhPJyaUf4iyVeVudOQqfvRRfSSiadh+8eBe/LyFvtUQy7eIyw5mrvdsAsQTwxI347UihI7KpSf3A==
+X-Received: by 2002:aa7:952b:: with SMTP id c11mr18629395pfp.186.1594058679877;
+        Mon, 06 Jul 2020 11:04:39 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id u74sm20051365pgc.58.2020.07.06.11.04.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2020 11:04:39 -0700 (PDT)
+Date:   Mon, 6 Jul 2020 12:04:37 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Deepak Kumar Singh <deesin@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, clew@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V5 0/4] Signaling api support in glink/rpmsg clients
+Message-ID: <20200706180437.GB614737@xps15>
+References: <1593182819-30747-1-git-send-email-deesin@codeaurora.org>
 MIME-Version: 1.0
-References: <CA+G9fYvqW-RQxt3kSoNkh5Y2REoe0QQB_dTz_KPzhJzcwiM5OA@mail.gmail.com>
- <CAK8P3a1Lda8HhsDvDREf-cOgb4RkCgEKK5Q-Zj+UhK8tsAaBLw@mail.gmail.com> <51d6e5bb-3de1-36dc-15a4-c341b23ca8cd@intel.com>
-In-Reply-To: <51d6e5bb-3de1-36dc-15a4-c341b23ca8cd@intel.com>
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Mon, 6 Jul 2020 23:06:58 +0530
-Message-ID: <CA+G9fYvEqr8Wdi6vCTyAFT8eq3yL53E+WW4_Tzeea_HMKSOjQA@mail.gmail.com>
-Subject: Re: [qemu] boot failed: Unable to handle kernel NULL pointer
- dereference at virtual address 0000000000000000
-To:     Dave Jiang <dave.jiang@intel.com>, Arnd Bergmann <arnd@arndb.de>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-serial@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Jiri Slaby <jslaby@suse.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>, jirislaby@kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ldewangan@nvidia.com, Thierry Reding <thierry.reding@gmail.com>,
-        Jon Hunter <jonathanh@nvidia.com>, Qian Cai <cai@lca.pw>,
-        lkft-triage@lists.linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1593182819-30747-1-git-send-email-deesin@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Arnd,
-> I'm looking at the pl001_dma_probe(), I think we could make it more robust if it
-> uses IS_ERR_OR_NULL(chan) instead of IS_ERR(). Should I send a patch for it? I
-> suppose looking at the comment header for dma_request_chan() it does say return
-> chan ptr or error ptr. Sorry I missed that.
->
->
-> Vinod,
-> It looks like the only fix for dmaengine for the patch is where Arnd pointed out
-> as far as I can tell after auditing it. Let me know how you want to handle this.
-> Thanks!
+Hi Deepak,
 
-This proposed fix patch applied on top of linux next ( 20200706 tag )
-and boot test PASS.
+On Fri, Jun 26, 2020 at 08:16:55PM +0530, Deepak Kumar Singh wrote:
+> Change from version 5
+> [V5,4/4] rpmsg: char: Add signal callback and POLLPRI support
+> Updated for sparse warning. Replaced POLLPRI => EPOLLPRI to fix
+> warning.
+> 
+> Change from version 4
+> I am taking over these patches from aneela@codeaurora.org
+> Fixed all the trivial review comments.
+> 
+> Signal conversion to and from native signal as done in patch V4,2/4
+> is intentional.
+> 
+> Arun Kumar Neelakantam (3):
+>   rpmsg: glink: Add support to handle signals command
+>   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+>   rpmsg: char: Add signal callback and POLLPRI support
+> 
+> Deepak Kumar Singh (1):
+>   rpmsg: core: Add signal API support
 
-The reported problem got fixed.
+I'm confused here - V5 (or what I think it is) was sent out on June 24th without
+a cover letter.  This set has a cover letter but it is labeled V5.  So is this
+the cover letter that should have been sent out on the 24th and the content
+herein relevent to that set?  Or is it accurate and the label on the cover
+letter of this set is wrong and should have been V6?
 
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+I have little confidence in both sets and as such won't be reviewing them.
+Please send a new revision that is properly labeled.
 
->
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index 0d6529eff66f..48e159e83cf5 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-> @@ -852,7 +852,7 @@ struct dma_chan *dma_request_chan(struct device *dev, const
-> char *name)
->          mutex_lock(&dma_list_mutex);
->          if (list_empty(&dma_device_list)) {
->                  mutex_unlock(&dma_list_mutex);
-> -               return NULL;
-> +               return ERR_PTR(-ENODEV);
->          }
->
->          list_for_each_entry_safe(d, _d, &dma_device_list, global_node) {
+Thanks,
+Mathieu   
 
-ref:
-https://lkft.validation.linaro.org/scheduler/job/1542630#L510
 
--- 
-Linaro LKFT
-https://lkft.linaro.org
+> 
+>  drivers/rpmsg/qcom_glink_native.c | 125 ++++++++++++++++++++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_char.c        |  76 ++++++++++++++++++++++-
+>  drivers/rpmsg/rpmsg_core.c        |  40 ++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h    |   5 ++
+>  include/linux/rpmsg.h             |  27 ++++++++
+>  5 files changed, 270 insertions(+), 3 deletions(-)
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
