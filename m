@@ -2,60 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8A012159FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 16:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED841215A00
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 16:50:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729288AbgGFOty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 10:49:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
+        id S1729505AbgGFOuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 10:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729466AbgGFOtw (ORCPT
+        with ESMTP id S1729454AbgGFOuH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 10:49:52 -0400
+        Mon, 6 Jul 2020 10:50:07 -0400
 Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FD7AC08C5DF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 07:49:52 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id f24so20724164vsg.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 07:49:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7640FC061755
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 07:50:07 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id v1so20726128vsb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 07:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=InByvEjJPlQ7gTBk+VqXmPI+tHOV3mOPt/I3k/Qwrbw=;
-        b=o1y7v38NkkoYxogRzwqgVzvL9W57wSuo9qqOEgxk/wXAT0aJcGb7V2kwmKgSjRXbCQ
-         8YDhUi1ZRA3DxqqGX5oKE+UPROSVKnLTtkFs0up6GgDSaajq9qruFaag7xXX69XYBx8t
-         KeR/kdKwiVRghrGaV6CKTZkVoaDm19lkYkKXWeFqEajTUKsGGVOrT0QX5xNAdIoR6fWe
-         tkwwIt+LSPvw8a+oJh9qM1s25LgtOjoClipA3DDj1d7oX9Lne7O8GJcH3p4/EeYkLt2q
-         HM060lgIsDiMlyGNYFiJWaUNlPSO43KMRfYQlLE5+gRocuB+GGoZJOTJ25QOUGT6efMQ
-         irmA==
+        bh=0jgzx8S2zel50+AI2lNsRTv/LDC6V8ujl1bHkcaYHdg=;
+        b=tnPmmVS3iWzXBi2KxDXNk1ixWHlWq/ttuWoD79PgGPCxKO0NQ2ZGtrlUb3nLd5cG4I
+         p1tBScUMOyN1WqqfRFVENjE3Qzqy4RpF7zR1rJahW0SYZ67sSo7O7kSxJlr/vaBZQaRU
+         7lZpjjiMTinVy+5/fWb4jUSzydLCh7thAPRJKGSwhGY0ZE7KlInuOwwXWiKbwl5Vh8OZ
+         fyZ0VikOC+jHkJTYtjZq/tnQtszE9CHmPZIzfJ/g69pryW9LWA0o5v9ZwgobIKYB+LZm
+         v97Vv88ccNIW5/hbE4o7vMhcCEVt8rJUXncp6eCUSEwu8Oqm1nh5Hbe/yiIiYwcj1MRK
+         vBYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=InByvEjJPlQ7gTBk+VqXmPI+tHOV3mOPt/I3k/Qwrbw=;
-        b=ou4UtNjReFZvztjgpRiFl70wLtVDUE6+xFmwRkp46JM9TkJdi7XNQqKVJykHsfXmeV
-         Io68xEJR6PH7fCqVDFCGLc5pP+1oYElA/h/I0vGTFwQA/frTWy8hOp36+QEkgfYxxAGU
-         TxVZ9SwjhYfP16RyDzxAyis1HFukHEThkhj3tW2X3w12/weE8L2VnvIyV96TGcFX+y+2
-         NXbQf0PJBrSFOjgyi+0BflBRxEY1v9QszaMKVlNtnxIBUF93OazRlw8gG/HT3LYQ1e83
-         yP6IcSawO4UXZ1sARZIBx+26toRjEBc/CWXSxt7BAzUvjaDJNCjMK4480+JNQPuQMpkm
-         7/gw==
-X-Gm-Message-State: AOAM530QKplup+p2VDWjrqXbyp91KANTbiOnDLvl8NgTWP3/qqP7lGAX
-        9RMXnhN3h/2pcArfhEzJBO1JuDRL3fpCA6yOtb2HFA==
-X-Google-Smtp-Source: ABdhPJwHbcQaTYD4fA5nzc1T5GJQgwoDZYjR82xJf+ip+IRJpiePRBEm6QefPXd0QWsTQnUoffZcXdPTOSvhjqUTpJQ=
-X-Received: by 2002:a67:d01a:: with SMTP id r26mr17252391vsi.200.1594046991485;
- Mon, 06 Jul 2020 07:49:51 -0700 (PDT)
+        bh=0jgzx8S2zel50+AI2lNsRTv/LDC6V8ujl1bHkcaYHdg=;
+        b=hS5tQtW6E7AZLmpNZ/aTAsdWc+woadKMX2tta8JMUmuRz8Xl63+RctzIwiLBfxbuh9
+         cqqT+UbW4bxb6krfoW3Z6JUYWuZsy11S3f3lwzrW6BUfy5CK4PS0m7NFyk48oagr9DH+
+         7GS7K0tTxF2pIJnWZJeB1CzFSzovdpqDb6gryjY+btt0lZo/r+TBwBCG2QtLgxuwtKrC
+         7Lu4Sg16MM907W/S0NKLr5hpNveRsyfgHvZYlWytrwlQdrCakXWEzQDJ+w+4M1BrG1c8
+         yiVFW2Aj4ArIGbsRxX+Xigaw5fyc0T0z7LLTsHwv1tjaPPvevz7GvyZxz2Krnl91WmbC
+         6i+A==
+X-Gm-Message-State: AOAM531/roJ043R7sd2hwy8g1asgmSMVJrNBL4KAtFW0K0kQbWdCKR3j
+        rKhG2zU/bd9zdKu9y8na4YkV9RtZKredXfESXHaUZTNgCA8=
+X-Google-Smtp-Source: ABdhPJzOFx3QfsC8+J2WvA203K0R/jNjTQwyfi62ngWT1XbOsrJp1wOj7GDIwC7amY0tc7W9xU7oKwmdoJzYUdTGQU0=
+X-Received: by 2002:a67:f888:: with SMTP id h8mr15844401vso.165.1594047006751;
+ Mon, 06 Jul 2020 07:50:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <1589541535-8523-1-git-send-email-vbadigan@codeaurora.org> <1592919288-1020-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1592919288-1020-1-git-send-email-vbadigan@codeaurora.org>
+References: <20200702020347.77214-1-weiyongjun1@huawei.com>
+In-Reply-To: <20200702020347.77214-1-weiyongjun1@huawei.com>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 6 Jul 2020 16:49:14 +0200
-Message-ID: <CAPDyKFqG5iVda4A2swYx9-3nE__R+sSYKtJJyKAMwsQJ9z96gA@mail.gmail.com>
-Subject: Re: [PATCH V5 0/3] Internal voltage control for qcom SDHC
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+Date:   Mon, 6 Jul 2020 16:49:29 +0200
+Message-ID: <CAPDyKFrxqdOG6c=E4Lhaa-h7Jp9qsX_ZqBnYcz7cEyGe=g-oHw@mail.gmail.com>
+Subject: Re: [PATCH -next] mmc: sdhci-msm: Make function sdhci_msm_dump_vendor_regs()
+ static
+To:     Wei Yongjun <weiyongjun1@huawei.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        Hulk Robot <hulkci@huawei.com>,
         "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -63,66 +66,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Jun 2020 at 15:35, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
+On Thu, 2 Jul 2020 at 03:53, Wei Yongjun <weiyongjun1@huawei.com> wrote:
 >
-> On qcom SD host controllers voltage switching be done after the HW
-> is ready for it. The HW informs its readiness through power irq.
-> The voltage switching should happen only then.
+> From: Hulk Robot <hulkci@huawei.com>
 >
-> So added support to register voltage regulators from the msm driver
-> and use them.
+> Fix sparse build warning:
 >
-> This patchset was posted long back but not actively pursued
-> https://lore.kernel.org/linux-arm-msm/1539004739-32060-1-git-send-email-vbadigan@codeaurora.org/
-> So posting it as fresh patchset.
+> drivers/mmc/host/sdhci-msm.c:1888:6: warning:
+>  symbol 'sdhci_msm_dump_vendor_regs' was not declared. Should it be static?
 >
-> Changes since V4:
->         - Added clear comments on condtion which allows either to
->           tunf off/on Vqmmc or to set load.
->         - Added mmc_card_removable() to the condtion whcih checks
->           if the card is eMMC or other card.
->         - Rerturning error for unsupported voltagtes in
->           sdhci_msm_start_signal_voltage_switch()
->         - Moved setting ios.power_mode to mmc_alloc_host().
->
-> Changes since V3:
->         - Dropped reading of regulator load values from device tree.
->         - Dropped documentaiton chagne.
->         - Since only Vqmmc supply of eMMC would be kept On during suspend,
->           setting load only for this regulator so that it can go to LPM.
->           And since this Load reamins same, load value is hard-coded in the driver.
->
-> Changes since V2:
->         - Removed redundant log from sdhci_msm_set_vmmc.
->         - Added the condition for skiping disabling of vqmmc for eMMC.
->         - Updated logic such that, setting load for vqmmc only if
->           it is kept ON.
->         - Retained ack by Adrian for second patch.
->         - Updated dt properties names as per Robs comments.
->
-> Changes since V1:
->         - Removed setting load for Vmmc regulator while turning it on/off.
->           Instead setting the active load once during probe.
->         - Simplified handlng of supplies for BUS_ON/OFF cases in shci_msm_handle_pwr_irq().
->         - Moved common code out of switch case in sdhci_msm_start_signal_voltage_switch().
->         - Updated variable name to sdhci_core_to_disable_vqmmc.
->         - Updated pr_err logs to dev_err logs.
-> Veerabhadrarao Badiganti (2):
->   mmc: core: Set default power mode in mmc_alloc_host
->   mmc: sdhci-msm: Use internal voltage control
->
-> Vijay Viswanath (1):
->   mmc: sdhci: Allow platform controlled voltage switching
->
->  drivers/mmc/core/host.c      |   1 +
->  drivers/mmc/host/sdhci-msm.c | 206 +++++++++++++++++++++++++++++++++++++++++--
->  drivers/mmc/host/sdhci.c     |  32 ++++---
->  drivers/mmc/host/sdhci.h     |   1 +
->  4 files changed, 218 insertions(+), 22 deletions(-)
->
+> Signed-off-by: Hulk Robot <hulkci@huawei.com>
 
-V5 applied for next (did some minor amendment to patch 2), thanks!
+Applied for next, thanks!
 
 Kind regards
 Uffe
+
+
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 15c42b059240..66f755f94d2c 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -1885,7 +1885,7 @@ static void sdhci_msm_reset(struct sdhci_host *host, u8 mask)
+>  #define SDHCI_MSM_DUMP(f, x...) \
+>         pr_err("%s: " DRIVER_NAME ": " f, mmc_hostname(host->mmc), ## x)
+>
+> -void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
+> +static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
+>  {
+>         struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>         struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>
