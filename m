@@ -2,102 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED841215A00
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 16:50:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 853BC215A26
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 17:01:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729505AbgGFOuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 10:50:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729454AbgGFOuH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 10:50:07 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7640FC061755
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 07:50:07 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id v1so20726128vsb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 07:50:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0jgzx8S2zel50+AI2lNsRTv/LDC6V8ujl1bHkcaYHdg=;
-        b=tnPmmVS3iWzXBi2KxDXNk1ixWHlWq/ttuWoD79PgGPCxKO0NQ2ZGtrlUb3nLd5cG4I
-         p1tBScUMOyN1WqqfRFVENjE3Qzqy4RpF7zR1rJahW0SYZ67sSo7O7kSxJlr/vaBZQaRU
-         7lZpjjiMTinVy+5/fWb4jUSzydLCh7thAPRJKGSwhGY0ZE7KlInuOwwXWiKbwl5Vh8OZ
-         fyZ0VikOC+jHkJTYtjZq/tnQtszE9CHmPZIzfJ/g69pryW9LWA0o5v9ZwgobIKYB+LZm
-         v97Vv88ccNIW5/hbE4o7vMhcCEVt8rJUXncp6eCUSEwu8Oqm1nh5Hbe/yiIiYwcj1MRK
-         vBYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0jgzx8S2zel50+AI2lNsRTv/LDC6V8ujl1bHkcaYHdg=;
-        b=hS5tQtW6E7AZLmpNZ/aTAsdWc+woadKMX2tta8JMUmuRz8Xl63+RctzIwiLBfxbuh9
-         cqqT+UbW4bxb6krfoW3Z6JUYWuZsy11S3f3lwzrW6BUfy5CK4PS0m7NFyk48oagr9DH+
-         7GS7K0tTxF2pIJnWZJeB1CzFSzovdpqDb6gryjY+btt0lZo/r+TBwBCG2QtLgxuwtKrC
-         7Lu4Sg16MM907W/S0NKLr5hpNveRsyfgHvZYlWytrwlQdrCakXWEzQDJ+w+4M1BrG1c8
-         yiVFW2Aj4ArIGbsRxX+Xigaw5fyc0T0z7LLTsHwv1tjaPPvevz7GvyZxz2Krnl91WmbC
-         6i+A==
-X-Gm-Message-State: AOAM531/roJ043R7sd2hwy8g1asgmSMVJrNBL4KAtFW0K0kQbWdCKR3j
-        rKhG2zU/bd9zdKu9y8na4YkV9RtZKredXfESXHaUZTNgCA8=
-X-Google-Smtp-Source: ABdhPJzOFx3QfsC8+J2WvA203K0R/jNjTQwyfi62ngWT1XbOsrJp1wOj7GDIwC7amY0tc7W9xU7oKwmdoJzYUdTGQU0=
-X-Received: by 2002:a67:f888:: with SMTP id h8mr15844401vso.165.1594047006751;
- Mon, 06 Jul 2020 07:50:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200702020347.77214-1-weiyongjun1@huawei.com>
-In-Reply-To: <20200702020347.77214-1-weiyongjun1@huawei.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 6 Jul 2020 16:49:29 +0200
-Message-ID: <CAPDyKFrxqdOG6c=E4Lhaa-h7Jp9qsX_ZqBnYcz7cEyGe=g-oHw@mail.gmail.com>
-Subject: Re: [PATCH -next] mmc: sdhci-msm: Make function sdhci_msm_dump_vendor_regs()
- static
-To:     Wei Yongjun <weiyongjun1@huawei.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1729322AbgGFPBG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 11:01:06 -0400
+Received: from mga04.intel.com ([192.55.52.120]:25978 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729197AbgGFPBG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Jul 2020 11:01:06 -0400
+IronPort-SDR: hBdLNDZoHhjxPDCwyH6WCLAVB5bXxR1Y/sNDtSdh2IjXxtBZUDqk9EIPqMAPY9ciw2U40F+BIk
+ GR0/uDfn6M+A==
+X-IronPort-AV: E=McAfee;i="6000,8403,9673"; a="144931809"
+X-IronPort-AV: E=Sophos;i="5.75,320,1589266800"; 
+   d="scan'208";a="144931809"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2020 08:01:05 -0700
+IronPort-SDR: +vpazag5h9NFqzMeig/fARcURoClfchVzLi7o//zaDevGgoHM+ZHjMU0IFuM4npR/dFu61cflc
+ n/xFFyy/gD9Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,320,1589266800"; 
+   d="scan'208";a="313985346"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.212.168.148]) ([10.212.168.148])
+  by orsmga008.jf.intel.com with ESMTP; 06 Jul 2020 08:01:04 -0700
+Subject: Re: [qemu] boot failed: Unable to handle kernel NULL pointer
+ dereference at virtual address 0000000000000000
+To:     Arnd Bergmann <arnd@arndb.de>,
+        Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc:     linux-serial@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Jiri Slaby <jslaby@suse.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>, jirislaby@kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        Hulk Robot <hulkci@huawei.com>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        ldewangan@nvidia.com, Thierry Reding <thierry.reding@gmail.com>,
+        Jon Hunter <jonathanh@nvidia.com>, Qian Cai <cai@lca.pw>,
+        lkft-triage@lists.linaro.org
+References: <CA+G9fYvqW-RQxt3kSoNkh5Y2REoe0QQB_dTz_KPzhJzcwiM5OA@mail.gmail.com>
+ <CAK8P3a1Lda8HhsDvDREf-cOgb4RkCgEKK5Q-Zj+UhK8tsAaBLw@mail.gmail.com>
+From:   Dave Jiang <dave.jiang@intel.com>
+Message-ID: <51d6e5bb-3de1-36dc-15a4-c341b23ca8cd@intel.com>
+Date:   Mon, 6 Jul 2020 08:01:03 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <CAK8P3a1Lda8HhsDvDREf-cOgb4RkCgEKK5Q-Zj+UhK8tsAaBLw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Jul 2020 at 03:53, Wei Yongjun <weiyongjun1@huawei.com> wrote:
->
-> From: Hulk Robot <hulkci@huawei.com>
->
-> Fix sparse build warning:
->
-> drivers/mmc/host/sdhci-msm.c:1888:6: warning:
->  symbol 'sdhci_msm_dump_vendor_regs' was not declared. Should it be static?
->
-> Signed-off-by: Hulk Robot <hulkci@huawei.com>
-
-Applied for next, thanks!
-
-Kind regards
-Uffe
 
 
-> ---
->  drivers/mmc/host/sdhci-msm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 15c42b059240..66f755f94d2c 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -1885,7 +1885,7 @@ static void sdhci_msm_reset(struct sdhci_host *host, u8 mask)
->  #define SDHCI_MSM_DUMP(f, x...) \
->         pr_err("%s: " DRIVER_NAME ": " f, mmc_hostname(host->mmc), ## x)
->
-> -void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
-> +static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
->  {
->         struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->         struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->
+On 7/6/2020 5:53 AM, Arnd Bergmann wrote:
+> On Mon, Jul 6, 2020 at 1:03 PM Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>>
+>> While booting qemu_arm64 and qemu_arm with Linux version 5.8.0-rc3-next-20200706
+>> the kernel panic noticed due to kernel NULL pointer dereference.
+>>
+>> metadata:
+>>    git branch: master
+>>    git repo: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+>>    git commit: 5680d14d59bddc8bcbc5badf00dbbd4374858497
+>>    git describe: next-20200706
+>>    make_kernelversion: 5.8.0-rc3
+>>    kernel-config:
+>> https://builds.tuxbuild.com/Glr-Ql1wbp3qN3cnHogyNA/kernel.config
+>>
+>> qemu arm64 boot crash log,
+>>
+>> [    0.972053] Unable to handle kernel NULL pointer dereference at
+>> virtual address 0000000000000000
+>> [    0.975301] Mem abort info:
+>> [    0.976316]   ESR = 0x96000004
+>> [    0.977378]   EC = 0x25: DABT (current EL), IL = 32 bits
+>> [    0.979363]   SET = 0, FnV = 0
+>> [    0.980458]   EA = 0, S1PTW = 0
+>> [    0.981583] Data abort info:
+>> [    0.982634]   ISV = 0, ISS = 0x00000004
+>> [    0.984213]   CM = 0, WnR = 0
+>> [    0.985260] [0000000000000000] user address but active_mm is swapper
+>> [    0.987600] Internal error: Oops: 96000004 [#1] PREEMPT SMP
+>> [    0.989557] Modules linked in:
+>> [    0.990671] CPU: 2 PID: 1 Comm: swapper/0 Not tainted
+>> 5.8.0-rc3-next-20200706 #1
+>> [    0.993711] Hardware name: linux,dummy-virt (DT)
+>> [    0.995708] pstate: 00000005 (nzcv daif -PAN -UAO BTYPE=--)
+>> [    0.998168] pc : pl011_dma_probe+0x90/0x360
+> 
+> This is the code from you vmlinux file:
+> 
+> ffff8000107233e4:       b90087e2        str     w2, [sp, #132]
+> ffff8000107233e8:       97fcf14c        bl      ffff80001065f918
+> <dma_request_chan>
+> ffff8000107233ec:       aa0003f4        mov     x20, x0
+> ffff8000107233f0:       b140041f        cmn     x0, #0x1, lsl #12
+> ffff8000107233f4:       54000488        b.hi    ffff800010723484
+> <pl011_dma_probe+0x11c>  // b.pmore
+> ffff8000107233f8:       f9400280        ldr     x0, [x20]
+> ffff8000107233fc:       f9409c02        ldr     x2, [x0, #312]
+> ffff800010723400:       b4000082        cbz     x2, ffff800010723410
+> <pl011_dma_probe+0xa8>
+> 
+> It's the "ldr     x0, [x20]" dereferencing 'chan' in pl011_dma_probe() after
+> checking it for an error value. However it's a NULL pointer, not an
+> error pointer, indicating that there is a bug in the dmaengine driver
+> that you use here, or in the dmaengine core code.
+
+Arnd,
+I'm looking at the pl001_dma_probe(), I think we could make it more robust if it 
+uses IS_ERR_OR_NULL(chan) instead of IS_ERR(). Should I send a patch for it? I 
+suppose looking at the comment header for dma_request_chan() it does say return 
+chan ptr or error ptr. Sorry I missed that.
+
+
+Vinod,
+It looks like the only fix for dmaengine for the patch is where Arnd pointed out 
+as far as I can tell after auditing it. Let me know how you want to handle this. 
+Thanks!
+
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 0d6529eff66f..48e159e83cf5 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -852,7 +852,7 @@ struct dma_chan *dma_request_chan(struct device *dev, const 
+char *name)
+         mutex_lock(&dma_list_mutex);
+         if (list_empty(&dma_device_list)) {
+                 mutex_unlock(&dma_list_mutex);
+-               return NULL;
++               return ERR_PTR(-ENODEV);
+         }
+
+         list_for_each_entry_safe(d, _d, &dma_device_list, global_node) {
+
+
+> 
+> I don't see anything suspicious in dmaengine drivers, but there is a
+> recent series
+> from Dave Jiang that might explain it. Could you try reverting  commit
+> deb9541f5052 ("dmaengine: check device and channel list for empty")?
+> 
+> I think the broken change is this one:
+> 
+> @@ -819,6 +850,11 @@ struct dma_chan *dma_request_chan(struct device
+> *dev, const char *name)
+> 
+>          /* Try to find the channel via the DMA filter map(s) */
+>          mutex_lock(&dma_list_mutex);
+> +       if (list_empty(&dma_device_list)) {
+> +               mutex_unlock(&dma_list_mutex);
+> +               return NULL;
+> +       }
+> +
+>          list_for_each_entry_safe(d, _d, &dma_device_list, global_node) {
+>                  dma_cap_mask_t mask;
+>                  const struct dma_slave_map *map = dma_filter_match(d,
+> name, dev);
+> 
+> which needs to return an error code like -ENODEV instead of NULL. There
+> may be other changes in the same patch that introduce the same bug
+> elsewhere.
+> 
+>       Arnd
+> 
