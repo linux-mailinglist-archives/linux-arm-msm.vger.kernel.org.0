@@ -2,130 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE358215FA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 21:50:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B24B421603A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2020 22:24:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbgGFTum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 15:50:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49172 "EHLO
+        id S1727057AbgGFUYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 16:24:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726834AbgGFTul (ORCPT
+        with ESMTP id S1726280AbgGFUYe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 15:50:41 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6609CC08C5DF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 12:50:41 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id k15so23305639lfc.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 12:50:41 -0700 (PDT)
+        Mon, 6 Jul 2020 16:24:34 -0400
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F41EC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2020 13:24:34 -0700 (PDT)
+Received: by mail-vk1-xa43.google.com with SMTP id g22so4696066vke.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 13:24:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=NCyDxdA9jbr8iFhSed0FBGtcvm2XFbja7uTb50VYerI=;
-        b=HsJWl1n6nz2NaVWTq/rj8cNLUuuf9ZutpSP2XhGHlIQ/D6yK7Apt0pFdMGWj8h2ev7
-         aXh5HYYGJIdKjPy2kTov6EuhdwlhJuWvT6m9FbbUnDuEyj2uav/MOmOhfb1Km5Jjh1DX
-         1VKyRRtPQfALLXobl9TIEbN5u8+7E8uY28oTN3ZMzGXcFLknH0G0vj9yB19PBq6Gtnst
-         lGB2pZiGQjz3GUCxRU3ZskiDMsaRMJhXawZPT71qryXLX+jkjpIYuffuFRis7D3smRO+
-         DePhXslskO2xsRfyNJIE8M/eTr6QYljBZf9HvE/RORYRzFXYrL9giS1QlewU29CM5LIL
-         PHcw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DGql7KgjF3RRgjYDtLO8zSCx9KVGEva8Jd1iGMAKsuA=;
+        b=XFn63Oot/wsEytB33U8ac66WHBUC15SLm8s9frUm+6TLATnElKo+THw+QkWGAtRjNC
+         l3EfWubMzIa7XPYcMMYE+kaDG42fw4t3ZUcI2q/FAymaNfvCndJrMwKZzoL0RlgTOmy0
+         rCHuNo3gjO+BTa9HzlNpm9WAQ9oWNcS8MlAvM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NCyDxdA9jbr8iFhSed0FBGtcvm2XFbja7uTb50VYerI=;
-        b=YLvDEDp3FxocYQC0cyN+e+FmAv7edPRUsLLEi5xB6KiUxhNTVBLISa8LfvdIXwRtlH
-         k7Lo2mFUXVr8gHHB0olySlc2cEdSwxuNjDPZP2Z/Eg4ykJBwlEawTndPvMCOF7itgxJK
-         JCTl7ghXK0QFJAujwz2EgDlboYhTQXzxB0lEpuAKbzniPZh7AgKo2s0HW9SZHKTTFASx
-         sfKkkJ0WKSOS5MMtCp5zMP06rQhK9hfae8E0Zn6UhaErCUbWnJflnqvav332T9js1TcT
-         bEUvKkwH7SwaHz2+bvh+jATDQ3FiWfqHTTdpEP+nH/89mg+Ocgwesza8ogQKjIRtRTY8
-         TEzQ==
-X-Gm-Message-State: AOAM530B3dfeHQbOEFW+iOQkJvvD+ONoO6E9IrcJrnKx2rw5MQHFnkCG
-        TCgI0e3N5ac+06BNCuzEe3vAjw==
-X-Google-Smtp-Source: ABdhPJxTjEEO35HzKrr2LIMwiPAI7yzu1DxL0zTecG7kI1hmtz7d2aU29lCEeEJ/RJbUqXJULxrfqg==
-X-Received: by 2002:a19:7407:: with SMTP id v7mr29481882lfe.4.1594065039708;
-        Mon, 06 Jul 2020 12:50:39 -0700 (PDT)
-Received: from [192.168.1.211] ([188.162.64.1])
-        by smtp.gmail.com with ESMTPSA id m15sm10604335ljp.45.2020.07.06.12.50.37
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DGql7KgjF3RRgjYDtLO8zSCx9KVGEva8Jd1iGMAKsuA=;
+        b=SKBB+D1PNWHqkGCHltyj1IBWI7pTd7RpdmDIFOrAT00TcYUgJ5q4Ah/YVzN9QI/sAP
+         CLmTwQnP593EdT+TZrOiAXp7ToACGALv3AjnDSoBKcRzzYLiGf6rOo8SF2zU6rbYx7kP
+         Va54YHc1Sq7GJq7y8QPmloxZmXISXiW5Z7FmMcpRffQ0glRfGUx2OCgi3gWjVyssyRWr
+         ExgMwypS2DHk929j9D6Vv7+ccFmkU9ZEVcW/iXoZ+Gvf+DMLpdG2MysL34dEIqxbTbnL
+         sPnQE6BcXkKlFpN3gk4YjsbC3Oer25ZhAnC9rgropakld+FE2nBltYNPL7p1yFTXouEF
+         ZySw==
+X-Gm-Message-State: AOAM533LiHQpIZrJecVZleYVHPEdUIDQObRcLF9Tr8twzoHLZ37YNVw3
+        EFwDg7zll1eQJlwhsqakXexqbeZbZeM=
+X-Google-Smtp-Source: ABdhPJx8pjDfdEMdAXEG1W7OMy6q+zULRa1W6NkXz0WzXKNO8Y303ClT7L67ypQcWinMvz8vJ7CsfA==
+X-Received: by 2002:a1f:ac51:: with SMTP id v78mr33737988vke.78.1594067072459;
+        Mon, 06 Jul 2020 13:24:32 -0700 (PDT)
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
+        by smtp.gmail.com with ESMTPSA id x79sm238523vsx.17.2020.07.06.13.24.31
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2020 12:50:38 -0700 (PDT)
-Subject: Re: [RESEND PATCH v2 00/13] Enable GPU for SM8150 and SM8250
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
-References: <20200629211725.2592-1-jonathan@marek.ca>
- <011a1f99-46bb-12f2-ee07-8cd14d891947@linaro.org>
-Message-ID: <25c2015a-8a3b-4f21-cf75-0fbe729cf216@linaro.org>
-Date:   Mon, 6 Jul 2020 22:50:37 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Mon, 06 Jul 2020 13:24:31 -0700 (PDT)
+Received: by mail-vs1-f50.google.com with SMTP id m25so21275112vsp.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2020 13:24:31 -0700 (PDT)
+X-Received: by 2002:a05:6102:94:: with SMTP id t20mr22923661vsp.106.1594067070957;
+ Mon, 06 Jul 2020 13:24:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <011a1f99-46bb-12f2-ee07-8cd14d891947@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1593762506-32680-1-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1593762506-32680-1-git-send-email-rnayak@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 6 Jul 2020 13:24:18 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WyhJ6g0DZS=ysT-AyXJoiRX=UFE9fXY2NEHfuUHYUXCQ@mail.gmail.com>
+Message-ID: <CAD=FV=WyhJ6g0DZS=ysT-AyXJoiRX=UFE9fXY2NEHfuUHYUXCQ@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: sc7180: Make gpio28 non wakeup capable
+ for google,lazor
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LinusW <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/07/2020 18:03, Dmitry Baryshkov wrote:
-> On 30/06/2020 00:17, Jonathan Marek wrote:
->> This series adds the missing clock drivers and dts nodes to enable
->> the GPU on both SM8150 and SM8250.
->>
->> Note an extra patch [1] is still required for GPU to work on SM8250.
->>
->> Changes in V2:
->> * Added "clk: qcom: gcc: fix sm8150 GPU and NPU clocks" to fix the 
->> newly added
->>    SM8150 GPU gcc clocks
->> * Added "Fixes:" tag to "clk: qcom: clk-alpha-pll: remove 
->> unused/incorrect PLL_CAL_VAL"
->> * Added yaml schemas to gpucc dt-bindings patches
->> * Added "clk: qcom: add common gdsc_gx_do_nothing_enable for gpucc 
->> drivers" and changed
->>    gpucc patches to use it.
->> * Removed CLK_IS_CRITICAL from gpu_cc_ahb_clk
->> * Added missing rpmh regulator level for sm8250 GPU clock levels
->> * Use sm8150/sm8250 iommu compatibles in dts
->> * Add gcc_gpu_gpll0_clk_src/gcc_gpu_gpll0_div_clk_src to gpucc clocks 
->> in dts
->>
->> [1] https://gist.github.com/flto/784f1aca761ebf2fe6c105719a4a04ca
-> 
-> With your patches applied:
-> 
-> [   56.751977] msm msm: [drm:adreno_request_fw] loaded qcom/a650_sqe.fw 
-> from new location
-> [   56.760166] msm msm: [drm:adreno_request_fw] loaded qcom/a650_gmu.bin 
-> from new location
-> [   56.768485] arm-smmu 3da0000.iommu: genpd_runtime_resume()
-> [   56.774196] PM: gpu_cx_gdsc: Power-on latency exceeded, new value 
-> 49531 ns
-> [   56.781730] arm-smmu 3da0000.iommu: resume latency exceeded, 462604 ns
-> [   56.799559] platform 3d6a000.gmu: [drm:a6xx_gmu_resume] *ERROR* GMU 
-> firmware initialization timed out
-> [   56.809260] arm-smmu 3da0000.iommu: genpd_runtime_suspend()
-> [   56.813062] msm msm: [drm:adreno_load_gpu] *ERROR* Couldn't power up 
-> the GPU: -110
+Hi,
+
+On Fri, Jul 3, 2020 at 12:49 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+> The PDC irqchip driver currently does not handle dual-edge interrupts,
+> and we have google,lazor board with sc7180 designed to configure gpio28
+> as a dual-edge interrupt. This interrupt is however not expected to be
+> wakeup capable on this board, so an easy way to fix this, seems to be to
+> make this gpio non wakeup capable and let TLMM handle it (which is capable
+> of handling dual-edge irqs)
+>
+> To be able to do so only on this board, so other boards designed with
+> this SoC can continue to use gpio28 as a wakeup capable one, make a
+> copy of msm_gpio_wakeirq_map for lazor and remove gpio28 from the
+> list.
+>
+> Reported-by: Jimmy Cheng-Yi Chiang <cychiang@google.com>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sc7180.c | 23 ++++++++++++++++++++++-
+>  1 file changed, 22 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+> index 1b6465a..0668933 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+> @@ -1135,7 +1135,24 @@ static const struct msm_gpio_wakeirq_map sc7180_pdc_map[] = {
+>         {117, 114}, {118, 119},
+>  };
+>
+> -static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+> +/* Dropped gpio28 from the map for the google,lazor board */
+> +static const struct msm_gpio_wakeirq_map sc7180_lazor_pdc_map[] = {
+> +       {0, 40}, {3, 50}, {4, 42}, {5, 70}, {6, 41}, {9, 35},
+> +       {10, 80}, {11, 51}, {16, 20}, {21, 55}, {22, 90}, {23, 21},
+> +       {24, 61}, {26, 52}, {30, 100}, {31, 33}, {32, 81},
+> +       {33, 62}, {34, 43}, {36, 91}, {37, 53}, {38, 63}, {39, 72},
+> +       {41, 101}, {42, 7}, {43, 34}, {45, 73}, {47, 82}, {49, 17},
+> +       {52, 109}, {53, 102}, {55, 92}, {56, 56}, {57, 57}, {58, 83},
+> +       {59, 37}, {62, 110}, {63, 111}, {64, 74}, {65, 44}, {66, 93},
+> +       {67, 58}, {68, 112}, {69, 32}, {70, 54}, {72, 59}, {73, 64},
+> +       {74, 71}, {78, 31}, {82, 30}, {85, 103}, {86, 38}, {87, 39},
+> +       {88, 45}, {89, 46}, {90, 47}, {91, 48}, {92, 60}, {93, 49},
+> +       {94, 84}, {95, 94}, {98, 65}, {101, 66}, {104, 67}, {109, 104},
+> +       {110, 68}, {113, 69}, {114, 113}, {115, 108}, {116, 121},
+> +       {117, 114}, {118, 119},
+> +};
+> +
+> +static struct msm_pinctrl_soc_data sc7180_pinctrl = {
+>         .pins = sc7180_pins,
+>         .npins = ARRAY_SIZE(sc7180_pins),
+>         .functions = sc7180_functions,
+> @@ -1151,6 +1168,10 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+>
+>  static int sc7180_pinctrl_probe(struct platform_device *pdev)
+>  {
+> +       if (of_machine_is_compatible("google,lazor")) {
+> +               sc7180_pinctrl.wakeirq_map = sc7180_lazor_pdc_map;
+> +               sc7180_pinctrl.nwakeirq_map = ARRAY_SIZE(sc7180_lazor_pdc_map);
+> +       }
+
+As much as I want patches landed and things working, the above just
+doesn't feel like a viable solution.  I guess it could work as a short
+term hack but it's going to become untenable pretty quickly.  As we
+have more variants of this we're going to have to just keep piling
+more machines in here, right?  ...this is also already broken for us
+because not all boards will have the "google,lazor" compatible.  From
+the current Chrome OS here are the compatibles for various revs/SKUs
+
+compatible = "google,lazor-rev0", "qcom,sc7180";
+compatible = "google,lazor-rev0-sku0", "qcom,sc7180";
+compatible = "google,lazor", "qcom,sc7180";
+compatible = "google,lazor-sku0", "qcom,sc7180";
+compatible = "google,lazor-rev2", "qcom,sc7180";
+
+...so of the 5 boards you'll only match one of them.
 
 
-Confirmed to be a firmware issue. With older firmware proposed patches 
-work fine. A patch to support newer firmware releases will be submitted 
-separately.
+Maybe I'm jumping into a situation again where I'm ignorant since I
+haven't followed all the prior conversation, but is it really that
+hard to just add dual edge support to the PDC irqchip driver?  ...or
+maybe it's just easier to change the pinctrl driver to emulate dual
+edge itself and that can work around the problem in the PDC?  There
+seem to be a few samples you could copy from:
+
+$ git log --oneline --no-merges --grep=emulate drivers/pinctrl/
+3221f40b7631 pinctrl: mediatek: emulate GPIO interrupt on both-edges
+5a92750133ff pinctrl: rockchip: emulate both edge triggered interrupts
+
+...and if you look at those two commits they refer to other examples.
+The mediatek one says:
+
+> This follows an example of drivers/gpio/gpio-mxc.c.
+
+...and the Rockchip one says:
+
+> implement a solution similar to pinctrl-coh901
+
+That means you have at least 4 samples to look at?
 
 
--- 
-With best wishes
-Dmitry
+-Doug
