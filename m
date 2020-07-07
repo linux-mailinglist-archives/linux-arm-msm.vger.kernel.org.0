@@ -2,89 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B5802169F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 12:20:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67AEA216A70
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 12:36:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727094AbgGGKTS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 06:19:18 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:32973 "EHLO m43-7.mailgun.net"
+        id S1727058AbgGGKgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 06:36:31 -0400
+Received: from foss.arm.com ([217.140.110.172]:38584 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727072AbgGGKTF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 06:19:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594117144; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=U16+debOHtwEq7B+uUcy9cvpCddjmZwXlFWTCLzWx88=; b=vdnTe3moz4HzNN9roX1LHMavuZnaj7LEoAOkkdN5bBgORMtLXsVwZjpnDUZKjxDqVbSM9xi8
- RXG7yubizi7DuH7Eu7saKIC8pspD7jadQ1kZ7VIrfTKgu7D9+EdAYZcch9adBUlCp6j5vbeQ
- 9RI21dPn3JBzHBvdoctqY+lhUqI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n19.prod.us-east-1.postgun.com with SMTP id
- 5f044c1819b27ae9cecfb284 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Jul 2020 10:19:04
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D1B76C43465; Tue,  7 Jul 2020 10:19:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.15] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83F8AC4345B;
-        Tue,  7 Jul 2020 10:18:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 83F8AC4345B
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH 2/3] spi: spi-geni-qcom: Set an autosuspend delay of 250
- ms
-To:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, mkshah@codeaurora.org,
-        swboyd@chromium.org, georgi.djakov@linaro.org,
-        ctheegal@codeaurora.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-References: <20200702004509.2333554-1-dianders@chromium.org>
- <20200701174506.2.I9b8f6bb1e7e6d8847e2ed2cf854ec55678db427f@changeid>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <1638cb01-d0f3-8e19-dc1f-89667da53cd1@codeaurora.org>
-Date:   Tue, 7 Jul 2020 15:48:54 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1725874AbgGGKga (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jul 2020 06:36:30 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 575EEC0A;
+        Tue,  7 Jul 2020 03:36:30 -0700 (PDT)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 089BC3F71E;
+        Tue,  7 Jul 2020 03:36:28 -0700 (PDT)
+Date:   Tue, 7 Jul 2020 11:36:17 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Dinghao Liu <dinghao.liu@zju.edu.cn>
+Cc:     kjlu@umn.edu, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] [v2] PCI: qcom: Fix runtime PM imbalance on error
+Message-ID: <20200707103617.GA14581@e121166-lin.cambridge.arm.com>
+References: <20200707055000.9453-1-dinghao.liu@zju.edu.cn>
 MIME-Version: 1.0
-In-Reply-To: <20200701174506.2.I9b8f6bb1e7e6d8847e2ed2cf854ec55678db427f@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200707055000.9453-1-dinghao.liu@zju.edu.cn>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Jul 07, 2020 at 01:50:00PM +0800, Dinghao Liu wrote:
+> pm_runtime_get_sync() increments the runtime PM usage counter even
+> it returns an error code. Thus a pairing decrement is needed on
+> the error handling path to keep the counter balanced.
+> 
+> Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+> ---
+> 
+> Changelog:
+> 
+> v2: - Remove redundant brackets.
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 
-On 7/2/2020 6:15 AM, Douglas Anderson wrote:
-> In commit 0e3b8a81f5df ("spi: spi-geni-qcom: Add interconnect
-> support") the spi_geni_runtime_suspend() and spi_geni_runtime_resume()
-> became a bit slower.  Measuring on my hardware I see numbers in the
-> hundreds of microseconds now.
->
-> Let's use autosuspend to help avoid some of the overhead.  Now if
-> we're doing a bunch of transfers we won't need to be constantly
-> chruning.
->
-> The number 250 ms for the autosuspend delay was picked a bit
-> arbitrarily, so if someone has measurements showing a better value we
-> could easily change this.
+Applied to pci/runtime-pm, thanks.
 
-Reviewed-by: Akash Asthana<akashast@codeaurora.org>
+Lorenzo
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 138e1a2d21cc..12abdfbff5ca 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1339,10 +1339,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pm_runtime_enable(dev);
+>  	ret = pm_runtime_get_sync(dev);
+> -	if (ret < 0) {
+> -		pm_runtime_disable(dev);
+> -		return ret;
+> -	}
+> +	if (ret < 0)
+> +		goto err_pm_runtime_put;
+>  
+>  	pci->dev = dev;
+>  	pci->ops = &dw_pcie_ops;
+> -- 
+> 2.17.1
+> 
