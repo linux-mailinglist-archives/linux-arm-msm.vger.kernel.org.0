@@ -2,86 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E81C216603
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 07:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64B7F216794
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 09:40:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728037AbgGGFuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 01:50:24 -0400
-Received: from mail.zju.edu.cn ([61.164.42.155]:14118 "EHLO zju.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727789AbgGGFuY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 01:50:24 -0400
-Received: from localhost.localdomain (unknown [210.32.144.65])
-        by mail-app4 (Coremail) with SMTP id cS_KCgB3GeQJDQRfcPgrAw--.5099S4;
-        Tue, 07 Jul 2020 13:50:05 +0800 (CST)
-From:   Dinghao Liu <dinghao.liu@zju.edu.cn>
-To:     dinghao.liu@zju.edu.cn, kjlu@umn.edu
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] [v2] PCI: qcom: Fix runtime PM imbalance on error
-Date:   Tue,  7 Jul 2020 13:50:00 +0800
-Message-Id: <20200707055000.9453-1-dinghao.liu@zju.edu.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: cS_KCgB3GeQJDQRfcPgrAw--.5099S4
-X-Coremail-Antispam: 1UD129KBjvdXoWrKrW5ZF15Jr17CrWrKFy7trb_yoWfKFgE9r
-        Z8ZFsrCrs0grZavr9Fy3W3ZrySvasrX3W0ganYyF43ZFZa9rn8JrykZFZ8Aws8WF45Zr1k
-        t3yqvF1fCFWUCjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUb-8Fc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
-        wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
-        vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26rxl6s0DM28EF7xvwVC2z280
-        aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07
-        x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18
-        McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr4
-        1lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04v7MxkIecxEwVAF
-        wVW8WwCF04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26r4fKr1UJr1l4I8I3I0E4I
-        kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
-        WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
-        0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWr
-        Zr1j6s0DMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
-        1UYxBIdaVFxhVjvjDU0xZFpf9x0JUP5rcUUUUU=
-X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgwNBlZdtO+R4gACsk
+        id S1726946AbgGGHkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 03:40:05 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:12809 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726478AbgGGHkD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jul 2020 03:40:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594107602; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=ynmxLQggstB9XGLc/Af3iGhS0qhtnRihyG/QMgVXDzg=; b=ZH/mXKVid+2aln2UCx++v694JxfeOsNh3FknaSAAaz43bM5NwqKsgIcjQW8u/DNhQcADEZYr
+ FeWHmuCxvqQoqc8a2BaBeIF7l+UrN7eQ0bZPfEcbSzNlTCPgljiGXy1xIaKxVtWWv+Ir66z+
+ xifWIt8UMuMswnZy5lwfi9ELQDU=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f0426d2c9789fa9061ff8f9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Jul 2020 07:40:02
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B300EC43387; Tue,  7 Jul 2020 07:40:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3E56FC433C8;
+        Tue,  7 Jul 2020 07:39:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3E56FC433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     sivaprak@codeaurora.org, srichara@codeaurora.org,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+Subject: [PATCH V2] pinctrl: qcom: ipq8074: route gpio interrupts to APPS
+Date:   Tue,  7 Jul 2020 13:09:48 +0530
+Message-Id: <1594107588-17055-1-git-send-email-kathirav@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-pm_runtime_get_sync() increments the runtime PM usage counter even
-it returns an error code. Thus a pairing decrement is needed on
-the error handling path to keep the counter balanced.
+set target proc as APPS to route the gpio interrupts to APPS
 
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
 ---
+ drivers/pinctrl/qcom/pinctrl-ipq8074.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changelog:
-
-v2: - Remove redundant brackets.
----
- drivers/pci/controller/dwc/pcie-qcom.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 138e1a2d21cc..12abdfbff5ca 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1339,10 +1339,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_get_sync(dev);
--	if (ret < 0) {
--		pm_runtime_disable(dev);
--		return ret;
--	}
-+	if (ret < 0)
-+		goto err_pm_runtime_put;
- 
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
+diff --git a/drivers/pinctrl/qcom/pinctrl-ipq8074.c b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
+index 0edd41c..aec68b1 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ipq8074.c
++++ b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
+@@ -50,6 +50,7 @@
+ 		.intr_enable_bit = 0,		\
+ 		.intr_status_bit = 0,		\
+ 		.intr_target_bit = 5,		\
++		.intr_target_kpss_val = 3,	\
+ 		.intr_raw_status_bit = 4,	\
+ 		.intr_polarity_bit = 1,		\
+ 		.intr_detection_bit = 2,	\
 -- 
-2.17.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
