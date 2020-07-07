@@ -2,111 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23581216281
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 01:49:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E91A2163AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 04:14:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726869AbgGFXts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Jul 2020 19:49:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39412 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726280AbgGFXts (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Jul 2020 19:49:48 -0400
-Received: from localhost (mobile-166-175-191-139.mycingular.net [166.175.191.139])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5E448206E9;
-        Mon,  6 Jul 2020 23:49:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594079387;
-        bh=rcSfzqKMqTAG4cZgVNbjNYrKd7WW6S5TsXMAfz2WtHw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=OAk1XCEw69JFMDD5mSVljMjA3rJmzjhckHDUt8Howp5kh3Q2cnjFGujMp0Mzf+1BC
-         wGBhKk5ONavqe465bLIanMAJmPWgNLe8cfQR/cLQJXK0mZG7n/176obN0Rt+FBMoQq
-         AsxoAbxA0sLkGyDy6r70vGsM2xTUBmBmaVo1aXh8=
-Date:   Mon, 6 Jul 2020 18:49:45 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        robh+dt@kernel.org, kishon@ti.com, vkoul@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, svarbanov@mm-sol.com,
-        lorenzo.pieralisi@arm.com, p.zabel@pengutronix.de,
-        mgautam@codeaurora.org, smuthayy@codeaurora.org,
-        varada@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 0/9] Add PCIe support for IPQ8074
-Message-ID: <20200706234945.GA171874@bjorn-Precision-5520>
+        id S1726961AbgGGCOH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Jul 2020 22:14:07 -0400
+Received: from spam.zju.edu.cn ([61.164.42.155]:42968 "EHLO zju.edu.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726434AbgGGCOG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Jul 2020 22:14:06 -0400
+Received: by ajax-webmail-mail-app4 (Coremail) ; Tue, 7 Jul 2020 10:13:52
+ +0800 (GMT+08:00)
+X-Originating-IP: [210.32.144.65]
+Date:   Tue, 7 Jul 2020 10:13:52 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From:   dinghao.liu@zju.edu.cn
+To:     "Lorenzo Pieralisi" <lorenzo.pieralisi@arm.com>
+Cc:     kjlu@umn.edu, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Stanimir Varbanov" <svarbanov@mm-sol.com>,
+        "Rob Herring" <robh@kernel.org>,
+        "Bjorn Helgaas" <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: Re: [PATCH] PCI: qcom: fix runtime pm imbalance on error
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190906(84e8bf8f)
+ Copyright (c) 2002-2020 www.mailtech.cn zju.edu.cn
+In-Reply-To: <20200706095821.GB26377@e121166-lin.cambridge.arm.com>
+References: <20200520085837.1399-1-dinghao.liu@zju.edu.cn>
+ <20200706095821.GB26377@e121166-lin.cambridge.arm.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1593940680-2363-1-git-send-email-sivaprak@codeaurora.org>
+Message-ID: <6269091e.4c120.173270d082d.Coremail.dinghao.liu@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: cS_KCgCHIARg2gNfDI4nAw--.64370W
+X-CM-SenderInfo: qrrzjiaqtzq6lmxovvfxof0/1tbiAgwNBlZdtO+R4gABsn
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJTRUUUbuCS07vEb7Iv0x
+        C_Cr1lV2xY67kC6x804xWlV2xY67CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DMIAI
+        bVAFxVCF77xC64kEw24lV2xY67C26IkvcIIF6IxKo4kEV4ylV2xY628lY4IE4IxF12IF4w
+        CS07vE84x0c7CEj48ve4kI8wCS07vE84ACjcxK6xIIjxv20xvE14v26w1j6s0DMIAIbVA2
+        z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW0oVCq3wCS07vE84ACjcxK6I8E87Iv67AKxVW0oV
+        Cq3wCS07vE84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DMIAIbVAS0I0E0xvYzxvE52x0
+        82IY62kv0487MIAIbVAqx4xG64xvF2IEw4CE5I8CrVC2j2WlV2xY6cIj6xIIjxv20xvE14
+        v26r1j6r18MIAIbVAv7VC2z280aVAFwI0_Jr0_Gr1lV2xY6cvjeVCFs4IE7xkEbVWUJVW8
+        JwCS07vEFIxGxcIEc7CjxVA2Y2ka0xkIwI1lV2xY6x02cVAKzwCS07vEc2xSY4AK67AK6r
+        4UMIAIbVCY0x0Ix7I2Y4AK64vIr41lV2xY6xAIw28IcVCjz48v1sIEY20_GFWkJr1UJwCS
+        07vE4x8a6x804xWlV2xY6xC20s026xCaFVCjc4AY6r1j6r4UMIAIbVC20s026c02F40E14
+        v26r1j6r18MIAIbVC20s026x8GjcxK67AKxVWUGVWUWwCS07vEx4CE17CEb7AF67AKxVWU
+        tVW8ZwCS07vEIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCS07vEIxAIcVC0I7IYx2IY6xkF7I
+        0E14v26r1j6r4UMIAIbVCI42IY6xAIw20EY4v20xvaj40_WFyUJVCq3wCS07vEIxAIcVC2
+        z280aVAFwI0_Jr0_Gr1lV2xY6IIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2Kf
+        nxnUU==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 05, 2020 at 02:47:51PM +0530, Sivaprakash Murugesan wrote:
-> IPQ8074 has two PCIe ports both are based on synopsis designware PCIe
-> controller. while it was assumed that PCIe support for IPQ8074 was already
-> available. PCIe was not functional until now.
-> 
-> This patch series adds support for PCIe ports on IPQ8074.
-> 
-> First PCIe port is of gen2 synposis version is 2_3_2 which has already been
-> enabled. But it had some problems on phy init and needed dt updates.
-> 
-> Second PCIe port is gen3 synopsis version is 2_9_0. This series adds
-> support for this PCIe port while fixing dt nodes.
-> 
-> Patch 1 on this series depends on qcom pcie bindings patch
-> https://lkml.org/lkml/2020/6/24/162
-> 
-> Sivaprakash Murugesan (9):
->   dt-bindings: pci: Add ipq8074 gen3 pci compatible
->   dt-bindings: phy: qcom,qmp: Add dt-binding for ipq8074 gen3 pcie phy
->   clk: qcom: ipq8074: Add missing bindings for pcie
->   clk: qcom: ipq8074: Add missing clocks for pcie
->   phy: qcom-qmp: use correct values for ipq8074 gen2 pcie phy init
->   phy: qcom-qmp: Add compatible for ipq8074 pcie gen3 qmp phy
->   pci: dwc: qcom: do phy power on before pcie init
->   pci: qcom: Add support for ipq8074 pci controller
->   arm64: dts: ipq8074: Fixup pcie dts nodes
-
-No comment on the patches themselves, but please update the subject
-lines so they follow the conventions:
-
-  dt-bindings: PCI: qcom: Add ipq8074 PCIe Gen3 support
-  dt-bindings: phy: qcom,qmp: Add ipq8074 PCIe Gen3 phy
-  clk: qcom: ipq8074: Add missing bindings for PCIe
-  clk: qcom: ipq8074: Add missing clocks for PCIe
-  phy: qcom-qmp: Use correct values for ipq8074 PCIe Gen2 PHY init
-  PCI: qcom: Do PHY power on before PCIe init
-  PCI: qcom: Add ipq8074 PCIe controller support
-  arm64: dts: ipq8074: Fixup PCIe DTS nodes
-
-Also fix the same things in the commit logs, e.g., consistently use
-"PCIe" instead of "pcie", "Gen2" instead of "gen2", etc.  For example:
-
-  ipq8074 has two PCIe ports while the support for gen2 pcie port ...
-
-What's the point of using "PCIe" for the first and "pcie" for the
-second?
-
-You can learn all this by using "git log" and "git log --online".
-
->  .../devicetree/bindings/pci/qcom,pcie.yaml         |  47 ++++++
->  .../devicetree/bindings/phy/qcom,qmp-phy.yaml      |   1 +
->  arch/arm64/boot/dts/qcom/ipq8074-hk01.dts          |   8 +-
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 109 ++++++++----
->  drivers/clk/qcom/gcc-ipq8074.c                     |  60 +++++++
->  drivers/pci/controller/dwc/pcie-qcom.c             | 187 +++++++++++++++++++-
->  drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h          | 132 +++++++++++++++
->  drivers/phy/qualcomm/phy-qcom-qmp.c                | 188 ++++++++++++++++++++-
->  drivers/phy/qualcomm/phy-qcom-qmp.h                |   2 +
->  include/dt-bindings/clock/qcom,gcc-ipq8074.h       |   4 +
->  10 files changed, 683 insertions(+), 55 deletions(-)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
-> 
-> -- 
-> 2.7.4
-> 
+PiA+IHBtX3J1bnRpbWVfZ2V0X3N5bmMoKSBpbmNyZW1lbnRzIHRoZSBydW50aW1lIFBNIHVzYWdl
+IGNvdW50ZXIgZXZlbgo+ID4gaXQgcmV0dXJucyBhbiBlcnJvciBjb2RlLiBUaHVzIGEgcGFpcmlu
+ZyBkZWNyZW1lbnQgaXMgbmVlZGVkIG9uCj4gPiB0aGUgZXJyb3IgaGFuZGxpbmcgcGF0aCB0byBr
+ZWVwIHRoZSBjb3VudGVyIGJhbGFuY2VkLgo+ID4gCj4gPiBTaWduZWQtb2ZmLWJ5OiBEaW5naGFv
+IExpdSA8ZGluZ2hhby5saXVAemp1LmVkdS5jbj4KPiA+IC0tLQo+ID4gIGRyaXZlcnMvcGNpL2Nv
+bnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jIHwgMyArLS0KPiA+ICAxIGZpbGUgY2hhbmdlZCwgMSBp
+bnNlcnRpb24oKyksIDIgZGVsZXRpb25zKC0pCj4gPiAKPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJz
+L3BjaS9jb250cm9sbGVyL2R3Yy9wY2llLXFjb20uYyBiL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIv
+ZHdjL3BjaWUtcWNvbS5jCj4gPiBpbmRleCAxMzhlMWEyZDIxY2MuLjM1Njg2OTMwZGYxZCAxMDA2
+NDQKPiA+IC0tLSBhL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUtcWNvbS5jCj4gPiAr
+KysgYi9kcml2ZXJzL3BjaS9jb250cm9sbGVyL2R3Yy9wY2llLXFjb20uYwo+ID4gQEAgLTEzNDAs
+OCArMTM0MCw3IEBAIHN0YXRpYyBpbnQgcWNvbV9wY2llX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9k
+ZXZpY2UgKnBkZXYpCj4gPiAgCXBtX3J1bnRpbWVfZW5hYmxlKGRldik7Cj4gPiAgCXJldCA9IHBt
+X3J1bnRpbWVfZ2V0X3N5bmMoZGV2KTsKPiA+ICAJaWYgKHJldCA8IDApIHsKPiA+IC0JCXBtX3J1
+bnRpbWVfZGlzYWJsZShkZXYpOwo+ID4gLQkJcmV0dXJuIHJldDsKPiA+ICsJCWdvdG8gZXJyX3Bt
+X3J1bnRpbWVfcHV0Owo+IAo+IEkgdGhpbmsgeW91IG5lZWQgdG8gcmVtb3ZlIHRoZSBicmFja2V0
+cyAtIHRoaXMgYmVjb21lIGEgc2luZ2xlIGxpbmUKPiBpZiBzdGF0ZW1lbnQuCj4gCgpUaGFuayB5
+b3UgZm9yIHlvdXIgYWR2aWNlISBJIHdpbGwgZml4IHRoaXMgaW4gdGhlIG5leHQgdmVyc2lvbiBv
+ZiBwYXRjaC4KClJlZ2FyZHMsCkRpbmdoYW8K
