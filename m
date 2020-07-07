@@ -2,81 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7645A216C75
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 14:03:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66532216C86
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 14:08:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728047AbgGGMDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 08:03:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57892 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728029AbgGGMDG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 08:03:06 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F2EC08C5E0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 05:03:06 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id f5so33717631ljj.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 05:03:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YH/VxHJ3AGs6CZr/wDufvaXGnXEL37As4napaZvmJwI=;
-        b=Bgh1b8lny6xvbW6+ct6t0vaU1Jiuk1+UbOS0d8piluPPBGIXBoT6fW7BVBSL7RHC63
-         fEwHuYtJRRgTOHhbS2rN6Tjv4NtcokJr8Fuoa7BvDxlhthTf17pY3yOCrhuNLV3gkrYG
-         Q4R3d+gPzj9akoo0jD0im55k7lI7uXK4QpdEzdJsmEJxDe4Nb2ojQJhKD+UQ+YtvdV8H
-         ZTjUu6RzuTMzq6LAahoT55UVyxUCAbEEUhKJ/VvC7TrN4hv/IrpXz4dTMVhhSmFMYZNM
-         xcw1PbLOYtWC79erbC2q965s5SZDvI1mznoOTC7Wo6tcIWKecnXnph1xJwDHHTVaozHM
-         aPBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YH/VxHJ3AGs6CZr/wDufvaXGnXEL37As4napaZvmJwI=;
-        b=TQdQI9p6H/NHMB2AUkYK4sfDLDc6REah7P9p5cr4BX9strgO7oMDpQfCK87C/Gg1Vh
-         O+Y8w7aQs1t8X9eR4gO2+7u+u6LYG4YjccyC/LcBo0Jn5iHiEWy/yHrvXTMsRRnvCVgY
-         gQhPXobNIXhMM33fmiWWy1DP+G7UUghOmV4EoVLwCTU0x+Ntwh9IR+m44ev5IeTU9J8X
-         39KmQg1CH7rOPBykH50u6R3kgW4xari7OMEK8WrBxKdrL7hSBw6WQfeG5Gj8Y/uf7cbE
-         VZV2M56aWFYxc9Qcdld7tr3s+WH/RHnzh0YFNJ29uSEMfx3ujO90exYS6RK2ZHNSUomU
-         a58w==
-X-Gm-Message-State: AOAM5332VrZ34/SIsAzbkIK4sTmNuiVBkyNoQcOyJywcL6liJjffuvog
-        qvi9jQO0OVF52z+4vANT8Gvwx9TCko9r3DKG05R0Zg==
-X-Google-Smtp-Source: ABdhPJyR5v0EwI80g1kmy1SXVGsVqQpkid61MlRrKwlnDjYgLnU+qYwazQ3V+EyiCn9ABxFKleq7Kr5Bjuu2lykaDYY=
-X-Received: by 2002:a2e:8597:: with SMTP id b23mr14035216lji.338.1594123384691;
- Tue, 07 Jul 2020 05:03:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200622192558.152828-1-konradybcio@gmail.com> <20200622192558.152828-3-konradybcio@gmail.com>
-In-Reply-To: <20200622192558.152828-3-konradybcio@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 7 Jul 2020 14:02:54 +0200
-Message-ID: <CACRpkda7b5a95ZpLmZ07awzSHenfxyzxFR46s0cUa_5JzYQ3tw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/7] Documentation: Document pm660(l) SPMI GPIOs compatible
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
+        id S1726839AbgGGMIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 08:08:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58930 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726745AbgGGMIR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jul 2020 08:08:17 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 96812206F6;
+        Tue,  7 Jul 2020 12:08:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594123697;
+        bh=XhUGgZi7navlJCLWgGMz/XjSfHJuz5CPo+3UciovSag=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CuNUIn+K3SQH8i5HdQyx7cycZjoqqhU024jJ/sk+4O5w57LuC87QdpYVxbfE2E6qA
+         QZHpaYOJlQ7MWzFGdgJqcyux18cFE9A7epBU2c1k+TWMy6+td1ggprYH+uVgQFGqIy
+         m/SrSAQSfh/kn4NJ3tww8dRfXG+in3mqDlvWGn4c=
+Date:   Tue, 7 Jul 2020 13:08:12 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        akashast@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        mkshah@codeaurora.org, swboyd@chromium.org,
+        georgi.djakov@linaro.org, ctheegal@codeaurora.org,
+        mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: Re: [PATCH 1/3] spi: spi-geni-qcom: Avoid clock setting if not needed
+Message-ID: <20200707120812.GA22129@sirena.org.uk>
+References: <20200702004509.2333554-1-dianders@chromium.org>
+ <20200701174506.1.Icfdcee14649fc0a6c38e87477b28523d4e60bab3@changeid>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
+Content-Disposition: inline
+In-Reply-To: <20200701174506.1.Icfdcee14649fc0a6c38e87477b28523d4e60bab3@changeid>
+X-Cookie: Will stain.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 22, 2020 at 9:26 PM Konrad Dybcio <konradybcio@gmail.com> wrote:
 
-> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+--0OAP2g/MAC+5xKAE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Patch applied.
+On Wed, Jul 01, 2020 at 05:45:07PM -0700, Douglas Anderson wrote:
+> Every SPI transfer could have a different clock rate.  The
+> spi-geni-qcom controller code to deal with this was never very well
+> optimized and has always had a lot of code plus some calls into the
 
-Yours,
-Linus Walleij
+This doesn't apply against current code, please check and resend.
+
+--0OAP2g/MAC+5xKAE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl8EZasACgkQJNaLcl1U
+h9B7xwf/cKBIWXIVZ7cgKhUTJ72jK/0YZXW8VirUPNemWNCqngPLthyNfEf+33CC
+IHqGoYhy1Ya6ZSVa1q9U04w7LNrbOB/VlafagzTETNWKL9nDl9vTtVZ4RohypJ6H
+LAgu83k42Bj6IWqb03bNq6tk+Rm6YNfcOKr1dCNI6eqy7xwCUhdVTIFVx8U+4ueK
+EQc36sJNVdn21yrhDDr5Xbv+Xrf/IqXKWNbd44B5ibuAsvqM0hyUhtBDmGm3L5xf
+qyBkgN0dtRq7GsCIt4osSyFbM+lejB1wqbDdj41xTw2wm6TpX1/7WRXEZTR8Tuqp
+REkgStRcA7qB8zipvOXgAoO6jes6ug==
+=8FuU
+-----END PGP SIGNATURE-----
+
+--0OAP2g/MAC+5xKAE--
