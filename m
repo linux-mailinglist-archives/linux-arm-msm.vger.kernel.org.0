@@ -2,73 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFBF1217985
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 22:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83BB12179BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 22:53:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728909AbgGGUgx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 16:36:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53302 "EHLO
+        id S1728349AbgGGUxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 16:53:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727995AbgGGUgw (ORCPT
+        with ESMTP id S1728550AbgGGUx0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 16:36:52 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F521C061755;
-        Tue,  7 Jul 2020 13:36:52 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id x8so16315231plm.10;
-        Tue, 07 Jul 2020 13:36:52 -0700 (PDT)
+        Tue, 7 Jul 2020 16:53:26 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF37C08C5E1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 13:53:26 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id g13so32863201qtv.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 13:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hZeUOpJQcEzlGIlg9oeO7yAlZJGbtEx7VcHRTHdaPHU=;
-        b=gWh2/ziM4dgkXVl4R62ETmGK47WH9z9pI1OxYS/fPuNTPSw729Q8CqUHHwRh2Q1Jc7
-         kAKXrPrjsrtGGQveWol+5BdvwVMO/08Ryzh1jzWuVpE8XuvkmbHblPXJkYRowrUSr4Nr
-         T5q6y8KbmCQXldRgh9W5k4FwxiRQZvimCzAUIRDKdfkJF8ihgrci9e/gThaxPdS+gd1S
-         P7ANwWYgsBOpZ7yCeJrEPV5j54iw15NEe5AA+t6H98xXV6fuH7kpHUiVRbXkZSvZVVwH
-         qsOfNzq9q9pIsuwz96/Y6BZuk/yVoEa2jxjzcpMwd8hf+Fx5a7mF2/Cum24To9d5I6Ve
-         q5zA==
+        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=gVwyaiMqcfGbS600r67tXUN/Mh1ymbebPktZ0iNyAv8=;
+        b=x8kgdAMi4yziKrr1m6MqTMNrrNV/FBHrOGIO8Fl9jJzyaH6NicPXmekV2gY8dse7KU
+         65hGnYCllVL9JRoaHECH9YRpyAhOl1ICNQiBvdk5jY252vlmjJt4VHHy1cLWZkp1zcoB
+         lpk8W3y0P11xN6BI1YkxxcExh44ZswP8UGAarNYPVshNhinMQjjw/ru3+Qy7If+picrt
+         P56ZETR3nAQWrZpOL4amYYklVoAB6I6cRsBy4q5wISfSy7CVzPgonrigxUU3lee3gBfh
+         PM435qdK2q96dCxoJS/S4Qoc7mFkrVFmQo1KzkYPpbio1/qWmXRB0cWk5vG6KuZ2mwrf
+         d03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hZeUOpJQcEzlGIlg9oeO7yAlZJGbtEx7VcHRTHdaPHU=;
-        b=cXTgUYBVyscCRA0FVLXTOgAh6S6RtnyN/k9w2W+r3NO3TisiSQaS4i2bILm3CHLQqQ
-         CyBb0X/7InmMmkX4mac2AIpxViv06VNSFFqzuEWrtQd+aSMm1XYRyjyMx8ztj/CULk5j
-         kAIdcxD53kQtHVT6lM8o1eE5Op8ZnNl0o64iNqjdex2eQ5Zm+99BEy7KTt4z6eF5G5En
-         VdSfZrlMBYjzs4Ue/xxd4HLrDJneeLC+ZVQqFRZohKaVmKDzMU33Gx8C73vPfZcU/8MV
-         Z5KCE3gaGUtsYl2hEJzX6QGC5s4/znHZlPf3bUM4/Gv94E1OGJIvE6R4qItcMmfBp54l
-         jJdg==
-X-Gm-Message-State: AOAM532VFj0FfyI/9S+j9dys6Jecf77JhDHornXTvXZm4uDDvlOKDcbY
-        EQ+eBpW1+3vDBYqNAXAVRuU=
-X-Google-Smtp-Source: ABdhPJzLLECROxtVUUBHzDccmAZZ9FM/J/JHF97igPeg9tNrbfzr45IRJdns8aTkdIz+FrDboJGQ+w==
-X-Received: by 2002:a17:90a:148:: with SMTP id z8mr6497903pje.197.1594154211785;
-        Tue, 07 Jul 2020 13:36:51 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id u13sm3069925pjy.40.2020.07.07.13.36.50
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=gVwyaiMqcfGbS600r67tXUN/Mh1ymbebPktZ0iNyAv8=;
+        b=BCMBbNtLdLM8edFN0v0BSQjTIlYjgQIQ6n+ND6axYbuX+AHDs6wF6PugLCdFjPsO12
+         O6gM/uLKAS52NMkRjRkIlksiDC4t2FadcoFkdnOPyhGmsCWX1oeAzwksbFecqq5fwbtM
+         v1q7ANjUAexu2wDW1PlMLVxmbrjaXLbL8syovKRac1s57CtQ4mE0C0sdKit3VBTMALwl
+         iAoroYz4VO8aRmbjSUfgQqPEWUlpstioMwEWPQ1F/zSYwkP4yEWsgo+SlO1Cm6Q4lZT1
+         obsVE+viH4zYNCq3iwaPJAEkUDd5k6CktY3GBKFMuuJoIdJOZamtrPsSSo5yU3quNmzC
+         lUgA==
+X-Gm-Message-State: AOAM5318UB0jZMo9lmyJ0YJ1nqcxQzPPE3ZYcp92t0EWNzYI8MtF4HBc
+        w3gL84QdADO3GAgd5hN+BWYjSwScIRA=
+X-Google-Smtp-Source: ABdhPJzdtSLRhZBaASMAhuILnWWGKdU7vh+lCfymS/JvG2R3j/dlE/NjZWrDLUzBTaYP9M4xbsdXxw==
+X-Received: by 2002:ac8:7208:: with SMTP id a8mr59313451qtp.355.1594155205372;
+        Tue, 07 Jul 2020 13:53:25 -0700 (PDT)
+Received: from skullcanyon ([192.222.193.21])
+        by smtp.gmail.com with ESMTPSA id p186sm25121241qkf.33.2020.07.07.13.53.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 13:36:50 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Eric Anholt <eric@anholt.net>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm/adreno: un-open-code some packets
-Date:   Tue,  7 Jul 2020 13:35:00 -0700
-Message-Id: <20200707203529.2098979-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200707203529.2098979-1-robdclark@gmail.com>
-References: <20200707203529.2098979-1-robdclark@gmail.com>
+        Tue, 07 Jul 2020 13:53:24 -0700 (PDT)
+Message-ID: <e9ce36f9de4ef216028832dd78fd7ebc88d6ecb1.camel@ndufresne.ca>
+Subject: Re: [PATCH 1/4] media: v4l2-ctrl: Add frame-skip std encoder control
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Maheshwar Ajja <majja@codeaurora.org>
+Date:   Tue, 07 Jul 2020 16:53:23 -0400
+In-Reply-To: <20200705121128.5250-2-stanimir.varbanov@linaro.org>
+References: <20200705121128.5250-1-stanimir.varbanov@linaro.org>
+         <20200705121128.5250-2-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.3 (3.36.3-1.fc32) 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -76,75 +73,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Le dimanche 05 juillet 2020 à 15:11 +0300, Stanimir Varbanov a écrit :
+> Adds encoders standard v4l2 control for frame-skip. The control
+> is a copy of a custom encoder control so that other v4l2 encoder
+> drivers can use it.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  .../media/v4l/ext-ctrls-codec.rst             | 32 +++++++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c          | 10 ++++++
+>  include/uapi/linux/v4l2-controls.h            |  6 ++++
+>  3 files changed, 48 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index d0d506a444b1..a8b4c0b40747 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -592,6 +592,38 @@ enum v4l2_mpeg_video_bitrate_mode -
+>      the average video bitrate. It is ignored if the video bitrate mode
+>      is set to constant bitrate.
+>  
+> +``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE (enum)``
+> +
+> +enum v4l2_mpeg_video_frame_skip_mode -
+> +    Indicates in what conditions the encoder should skip frames. If
+> +    encoding a frame would cause the encoded stream to be larger then a
+> +    chosen data limit then the frame will be skipped. Possible values
+> +    are:
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  5 +++--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++----
- 2 files changed, 10 insertions(+), 6 deletions(-)
+I have nothing against this API, in fact it's really nice to generalize
+as this is very common. Though, I think we are missing two things. This
+documentation refer to the "chosen data limit". Is there controls to
+configure these *chosen* limit ? The other issue is the vagueness of
+the documented mode, see lower...
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index d95970a73fb4..7f4526b3283d 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -186,7 +186,8 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 	 * timestamp is written to the memory and then triggers the interrupt
- 	 */
- 	OUT_PKT7(ring, CP_EVENT_WRITE, 4);
--	OUT_RING(ring, CACHE_FLUSH_TS | (1 << 31));
-+	OUT_RING(ring, CP_EVENT_WRITE_0_EVENT(CACHE_FLUSH_TS) |
-+		CP_EVENT_WRITE_0_IRQ);
- 	OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));
- 	OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
- 	OUT_RING(ring, submit->seqno);
-@@ -730,7 +731,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 	 */
- 	if (adreno_is_a530(adreno_gpu)) {
- 		OUT_PKT7(gpu->rb[0], CP_EVENT_WRITE, 1);
--		OUT_RING(gpu->rb[0], 0x0F);
-+		OUT_RING(gpu->rb[0], CP_EVENT_WRITE_0_EVENT(STAT_EVENT));
- 
- 		gpu->funcs->flush(gpu, gpu->rb[0]);
- 		if (!a5xx_idle(gpu, gpu->rb[0]))
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 7768557cdfb2..1ed325bea430 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -74,7 +74,9 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
- 		u64 iova)
- {
- 	OUT_PKT7(ring, CP_REG_TO_MEM, 3);
--	OUT_RING(ring, counter | (1 << 30) | (2 << 18));
-+	OUT_RING(ring, CP_REG_TO_MEM_0_REG(counter) |
-+		CP_REG_TO_MEM_0_CNT(2) |
-+		CP_REG_TO_MEM_0_64B);
- 	OUT_RING(ring, lower_32_bits(iova));
- 	OUT_RING(ring, upper_32_bits(iova));
- }
-@@ -102,10 +104,10 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 
- 	/* Invalidate CCU depth and color */
- 	OUT_PKT7(ring, CP_EVENT_WRITE, 1);
--	OUT_RING(ring, PC_CCU_INVALIDATE_DEPTH);
-+	OUT_RING(ring, CP_EVENT_WRITE_0_EVENT(PC_CCU_INVALIDATE_DEPTH));
- 
- 	OUT_PKT7(ring, CP_EVENT_WRITE, 1);
--	OUT_RING(ring, PC_CCU_INVALIDATE_COLOR);
-+	OUT_RING(ring, CP_EVENT_WRITE_0_EVENT(PC_CCU_INVALIDATE_COLOR));
- 
- 	/* Submit the commands */
- 	for (i = 0; i < submit->nr_cmds; i++) {
-@@ -139,7 +141,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit,
- 	 * timestamp is written to the memory and then triggers the interrupt
- 	 */
- 	OUT_PKT7(ring, CP_EVENT_WRITE, 4);
--	OUT_RING(ring, CACHE_FLUSH_TS | (1 << 31));
-+	OUT_RING(ring, CP_EVENT_WRITE_0_EVENT(CACHE_FLUSH_TS) |
-+		CP_EVENT_WRITE_0_IRQ);
- 	OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));
- 	OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
- 	OUT_RING(ring, submit->seqno);
--- 
-2.26.2
+> +
+> +
+> +.. tabularcolumns:: |p{9.2cm}|p{8.3cm}|
+> +
+> +.. raw:: latex
+> +
+> +    \small
+> +
+> +.. flat-table::
+> +    :header-rows:  0
+> +    :stub-columns: 0
+> +
+> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_DISABLED``
+> +      - Frame skip mode is disabled.
+> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_LEVEL_LIMIT``
+> +      - Frame skip mode enabled and buffer limit is set by the chosen
+> +	level and is defined by the standard.
+
+At least for H.264, a level is compose of 3 limits. One is the maximum
+number of macroblocks, this is is evidently not use for frame skipping
+and already constrained in V4L2 (assuming the driver does not ignore
+the level control of course). The two other limits are decoded
+macroblocks/s and encoded kbits/s. Both are measure over time, which
+means the M2M encoder needs to be timing aware. I think the time source
+should be documented. Perhaps it is mandatory to set a frame interval
+for this to work ? Or we need some timestamp to allow variable frame
+interval ? (I don't think the second is really an option without
+extending the API again, and confusingly, since I think we have used
+the timestamp for other purpose already)
+
+> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_BUF_LIMIT``
+> +      - Frame skip mode enabled and buffer limit is set by the VBV
+> +	(MPEG1/2/4) or CPB (H264) buffer size control.
+
+The notion of VBV an CPB is unlikely well known. If my memory is right,
+these are constrained in buffering: in bytes (VBV) or bits per frame
+over a window of n-frames (or the gop size for some less flexible
+encoder) (CPB). I think these should be somehow chosen by application
+(with controls), directly or indirectly, and documented here to ensure
+we get consistent implementation across drivers.
+
+> +
+> +.. raw:: latex
+> +
+> +    \normalsize
+> +
+>  ``V4L2_CID_MPEG_VIDEO_TEMPORAL_DECIMATION (integer)``
+>      For every captured frame, skip this many subsequent frames (default
+>      0).
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index 3f3fbcd60cc6..d088acfa6dd8 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -590,6 +590,12 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
+>  		"External",
+>  		NULL,
+>  	};
+> +	static const char * const mpeg_video_frame_skip[] = {
+> +		"Disabled",
+> +		"Level Limit",
+> +		"VBV/CPB Limit",
+> +		NULL,
+> +	};
+>  
+>  	switch (id) {
+>  	case V4L2_CID_MPEG_AUDIO_SAMPLING_FREQ:
+> @@ -651,6 +657,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
+>  		return flash_strobe_source;
+>  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
+>  		return header_mode;
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
+> +		return mpeg_video_frame_skip;
+>  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
+>  		return multi_slice;
+>  	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
+> @@ -844,6 +852,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:			return "H264 MB Level Rate Control";
+>  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
+>  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
+>  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
+>  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
+>  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
+> @@ -1265,6 +1274,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_FLASH_LED_MODE:
+>  	case V4L2_CID_FLASH_STROBE_SOURCE:
+>  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
+>  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
+>  	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
+>  	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index 62271418c1be..4e1526175a4c 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -742,6 +742,12 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
+>  #define V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
+>  #define V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
+>  #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
+> +#define V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE		(V4L2_CID_MPEG_BASE + 645)
+> +enum v4l2_mpeg_video_frame_skip_mode {
+> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED	= 0,
+> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
+> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
+> +};
+>  
+>  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
+>  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
 
