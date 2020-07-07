@@ -2,217 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83BB12179BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 22:53:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EA16217B7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 01:05:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728349AbgGGUxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 16:53:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55852 "EHLO
+        id S1728863AbgGGXDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 19:03:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728550AbgGGUx0 (ORCPT
+        with ESMTP id S1728001AbgGGXDp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 16:53:26 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF37C08C5E1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 13:53:26 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id g13so32863201qtv.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 13:53:26 -0700 (PDT)
+        Tue, 7 Jul 2020 19:03:45 -0400
+Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBD2C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 16:03:44 -0700 (PDT)
+Received: by mail-ua1-x941.google.com with SMTP id o25so16733uar.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 16:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=gVwyaiMqcfGbS600r67tXUN/Mh1ymbebPktZ0iNyAv8=;
-        b=x8kgdAMi4yziKrr1m6MqTMNrrNV/FBHrOGIO8Fl9jJzyaH6NicPXmekV2gY8dse7KU
-         65hGnYCllVL9JRoaHECH9YRpyAhOl1ICNQiBvdk5jY252vlmjJt4VHHy1cLWZkp1zcoB
-         lpk8W3y0P11xN6BI1YkxxcExh44ZswP8UGAarNYPVshNhinMQjjw/ru3+Qy7If+picrt
-         P56ZETR3nAQWrZpOL4amYYklVoAB6I6cRsBy4q5wISfSy7CVzPgonrigxUU3lee3gBfh
-         PM435qdK2q96dCxoJS/S4Qoc7mFkrVFmQo1KzkYPpbio1/qWmXRB0cWk5vG6KuZ2mwrf
-         d03w==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0brjpEwt3LWgIWnZnDwkYUdaWWiwXptJrmC/ZFcX/HQ=;
+        b=BqgHANLQsFif0HG55ITqpadVS6fjfIF2CV8dhok0vezrpOEEAmex2bupgTL+ftP6CW
+         4n+9IuBOME0XbSyOmYoUwvFRGwLkvbU9IC8rIbNlIdOoKxLek3hL61Dj7ZAot96xzdUF
+         K9SHLz6w7+TQ9spWWnMYYb28XBBQO4yFAQwV4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=gVwyaiMqcfGbS600r67tXUN/Mh1ymbebPktZ0iNyAv8=;
-        b=BCMBbNtLdLM8edFN0v0BSQjTIlYjgQIQ6n+ND6axYbuX+AHDs6wF6PugLCdFjPsO12
-         O6gM/uLKAS52NMkRjRkIlksiDC4t2FadcoFkdnOPyhGmsCWX1oeAzwksbFecqq5fwbtM
-         v1q7ANjUAexu2wDW1PlMLVxmbrjaXLbL8syovKRac1s57CtQ4mE0C0sdKit3VBTMALwl
-         iAoroYz4VO8aRmbjSUfgQqPEWUlpstioMwEWPQ1F/zSYwkP4yEWsgo+SlO1Cm6Q4lZT1
-         obsVE+viH4zYNCq3iwaPJAEkUDd5k6CktY3GBKFMuuJoIdJOZamtrPsSSo5yU3quNmzC
-         lUgA==
-X-Gm-Message-State: AOAM5318UB0jZMo9lmyJ0YJ1nqcxQzPPE3ZYcp92t0EWNzYI8MtF4HBc
-        w3gL84QdADO3GAgd5hN+BWYjSwScIRA=
-X-Google-Smtp-Source: ABdhPJzdtSLRhZBaASMAhuILnWWGKdU7vh+lCfymS/JvG2R3j/dlE/NjZWrDLUzBTaYP9M4xbsdXxw==
-X-Received: by 2002:ac8:7208:: with SMTP id a8mr59313451qtp.355.1594155205372;
-        Tue, 07 Jul 2020 13:53:25 -0700 (PDT)
-Received: from skullcanyon ([192.222.193.21])
-        by smtp.gmail.com with ESMTPSA id p186sm25121241qkf.33.2020.07.07.13.53.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 13:53:24 -0700 (PDT)
-Message-ID: <e9ce36f9de4ef216028832dd78fd7ebc88d6ecb1.camel@ndufresne.ca>
-Subject: Re: [PATCH 1/4] media: v4l2-ctrl: Add frame-skip std encoder control
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Jeongtae Park <jtp.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Maheshwar Ajja <majja@codeaurora.org>
-Date:   Tue, 07 Jul 2020 16:53:23 -0400
-In-Reply-To: <20200705121128.5250-2-stanimir.varbanov@linaro.org>
-References: <20200705121128.5250-1-stanimir.varbanov@linaro.org>
-         <20200705121128.5250-2-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.3 (3.36.3-1.fc32) 
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0brjpEwt3LWgIWnZnDwkYUdaWWiwXptJrmC/ZFcX/HQ=;
+        b=TkZPKnzxIyjl5JN2VOiCZ5qYncY37AR115ovl94FUQVOq35YL4Gy3XyHSUtOuFYZqR
+         AVQas5xk0jSlk5RhYavRcYbXah2zXDcL8wRfWR7D789ZuASaYbQptO+g+KhVbJmfUMG5
+         nyEfj1HYubG2+2WHS+Y7ReC6nAmSePQOG5/l3zjuhPmFnFKkJbDGzXskuAyjmw7mZNPN
+         0rkNheItPz4+YBOTG7U4X9a+E1DIdckDO/RSDY0ffOuw1Ql2dxhtQytj7C/u7Zbidi0t
+         bi3pLP78EgEeheD3sO6+IhyJua40tBH7tOpzkkWvb1cJOvWOFyK+xlRT58E7WvfnbkQL
+         Yf8A==
+X-Gm-Message-State: AOAM532x/pVrhuiFZZN5luRl8n2GyiwDTrH2YsuCm+0HQ8rCFkHJxgRb
+        GL5cpzExCPBjwDlqFLbJVYrZE8XR1V4=
+X-Google-Smtp-Source: ABdhPJxC9u/OzkLJwwXM1PWyH9MEVdsvvb6NLAXI0BjDyWW89+I+P9EAQtfLhVjIzfDEaNMzwEH9oQ==
+X-Received: by 2002:ab0:3083:: with SMTP id h3mr40750813ual.18.1594163022081;
+        Tue, 07 Jul 2020 16:03:42 -0700 (PDT)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id t17sm245566vsp.0.2020.07.07.16.03.40
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2020 16:03:41 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id x13so18707024vsx.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 16:03:40 -0700 (PDT)
+X-Received: by 2002:a67:6546:: with SMTP id z67mr34808529vsb.169.1594163019992;
+ Tue, 07 Jul 2020 16:03:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1593762506-32680-1-git-send-email-rnayak@codeaurora.org>
+ <CAD=FV=WyhJ6g0DZS=ysT-AyXJoiRX=UFE9fXY2NEHfuUHYUXCQ@mail.gmail.com>
+ <20200706203805.GS388985@builder.lan> <c747043d-c69e-4153-f2ca-16f1fc3063c2@codeaurora.org>
+In-Reply-To: <c747043d-c69e-4153-f2ca-16f1fc3063c2@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 7 Jul 2020 16:03:28 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xs9Z37hv=CPgLEALoSoX=Uyir0s=ker=YKecA+Lhy1Qg@mail.gmail.com>
+Message-ID: <CAD=FV=Xs9Z37hv=CPgLEALoSoX=Uyir0s=ker=YKecA+Lhy1Qg@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: qcom: sc7180: Make gpio28 non wakeup capable
+ for google,lazor
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LinusW <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le dimanche 05 juillet 2020 à 15:11 +0300, Stanimir Varbanov a écrit :
-> Adds encoders standard v4l2 control for frame-skip. The control
-> is a copy of a custom encoder control so that other v4l2 encoder
-> drivers can use it.
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  .../media/v4l/ext-ctrls-codec.rst             | 32 +++++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ctrls.c          | 10 ++++++
->  include/uapi/linux/v4l2-controls.h            |  6 ++++
->  3 files changed, 48 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index d0d506a444b1..a8b4c0b40747 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -592,6 +592,38 @@ enum v4l2_mpeg_video_bitrate_mode -
->      the average video bitrate. It is ignored if the video bitrate mode
->      is set to constant bitrate.
->  
-> +``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE (enum)``
-> +
-> +enum v4l2_mpeg_video_frame_skip_mode -
-> +    Indicates in what conditions the encoder should skip frames. If
-> +    encoding a frame would cause the encoded stream to be larger then a
-> +    chosen data limit then the frame will be skipped. Possible values
-> +    are:
+Hi,
 
-I have nothing against this API, in fact it's really nice to generalize
-as this is very common. Though, I think we are missing two things. This
-documentation refer to the "chosen data limit". Is there controls to
-configure these *chosen* limit ? The other issue is the vagueness of
-the documented mode, see lower...
+On Mon, Jul 6, 2020 at 9:52 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>
+>
+> []..
+>
+> >>> @@ -1151,6 +1168,10 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+> >>>
+> >>>   static int sc7180_pinctrl_probe(struct platform_device *pdev)
+> >>>   {
+> >>> +       if (of_machine_is_compatible("google,lazor")) {
+> >>> +               sc7180_pinctrl.wakeirq_map = sc7180_lazor_pdc_map;
+> >>> +               sc7180_pinctrl.nwakeirq_map = ARRAY_SIZE(sc7180_lazor_pdc_map);
+> >>> +       }
+> >>
+> >> As much as I want patches landed and things working, the above just
+> >> doesn't feel like a viable solution.  I guess it could work as a short
+> >> term hack but it's going to become untenable pretty quickly.
+> >
+> > I second that.
+> >
+> >> As we
+> >> have more variants of this we're going to have to just keep piling
+> >> more machines in here, right?  ...this is also already broken for us
+> >> because not all boards will have the "google,lazor" compatible.  From
+> >> the current Chrome OS here are the compatibles for various revs/SKUs
+> >>
+> >> compatible = "google,lazor-rev0", "qcom,sc7180";
+> >> compatible = "google,lazor-rev0-sku0", "qcom,sc7180";
+> >> compatible = "google,lazor", "qcom,sc7180";
+> >> compatible = "google,lazor-sku0", "qcom,sc7180";
+> >> compatible = "google,lazor-rev2", "qcom,sc7180";
+> >>
+> >> ...so of the 5 boards you'll only match one of them.
+> >>
+> >>
+> >> Maybe I'm jumping into a situation again where I'm ignorant since I
+> >> haven't followed all the prior conversation, but is it really that
+> >> hard to just add dual edge support to the PDC irqchip driver?  ...or
+>
+> FWIK, this is really a PDC hardware issue (with the specific IP rev that exists
+> on sc7180) so working it around in SW could get ugly.
 
-> +
-> +
-> +.. tabularcolumns:: |p{9.2cm}|p{8.3cm}|
-> +
-> +.. raw:: latex
-> +
-> +    \small
-> +
-> +.. flat-table::
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +
-> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_DISABLED``
-> +      - Frame skip mode is disabled.
-> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_LEVEL_LIMIT``
-> +      - Frame skip mode enabled and buffer limit is set by the chosen
-> +	level and is defined by the standard.
+Ugh.  I guess it's ugly because the workaround would need to be in the
+PDC driver but to properly do the workaround you need to be able to
+read the state of the pin from the PDC driver?  ...and I guess you
+can't do that with the PDC register space so you'd either need to
+violate a layer or 3 of abstraction and snarf into the GPIO register
+space from the PDC driver or you'd have to provide some sort of API
+access from the PDC back down to the GPIO driver?
 
-At least for H.264, a level is compose of 3 limits. One is the maximum
-number of macroblocks, this is is evidently not use for frame skipping
-and already constrained in V4L2 (assuming the driver does not ignore
-the level control of course). The two other limits are decoded
-macroblocks/s and encoded kbits/s. Both are measure over time, which
-means the M2M encoder needs to be timing aware. I think the time source
-should be documented. Perhaps it is mandatory to set a frame interval
-for this to work ? Or we need some timestamp to allow variable frame
-interval ? (I don't think the second is really an option without
-extending the API again, and confusingly, since I think we have used
-the timestamp for other purpose already)
+--
 
-> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_BUF_LIMIT``
-> +      - Frame skip mode enabled and buffer limit is set by the VBV
-> +	(MPEG1/2/4) or CPB (H264) buffer size control.
+Actually, though, I'm still not sure why this would need to be in the
+PDC driver.  Sure, you can't just magically re-use the existing
+dual-edge emulation in pinctrl-msm.c, but you can add some new
+dual-edge emulation for when your parent handles your interrupts,
+can't you?  As per usually, I'm talking out of my rear end, but I
+sorta imagine:
 
-The notion of VBV an CPB is unlikely well known. If my memory is right,
-these are constrained in buffering: in bytes (VBV) or bits per frame
-over a window of n-frames (or the gop size for some less flexible
-encoder) (CPB). I think these should be somehow chosen by application
-(with controls), directly or indirectly, and documented here to ensure
-we get consistent implementation across drivers.
+1. At the head of msm_gpio_irq_set_type() if you detect that
+"skip_wake_irqs" is set and you're on an SoC with this hardware errata
+then you do a loop much like the one in
+msm_gpio_update_dual_edge_pos() except that instead of changing the
+polarity with msm_writel_intr_cfg() you change the polarity with
+"irq_chip_set_type_parent()".
 
-> +
-> +.. raw:: latex
-> +
-> +    \normalsize
-> +
->  ``V4L2_CID_MPEG_VIDEO_TEMPORAL_DECIMATION (integer)``
->      For every captured frame, skip this many subsequent frames (default
->      0).
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index 3f3fbcd60cc6..d088acfa6dd8 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -590,6 +590,12 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		"External",
->  		NULL,
->  	};
-> +	static const char * const mpeg_video_frame_skip[] = {
-> +		"Disabled",
-> +		"Level Limit",
-> +		"VBV/CPB Limit",
-> +		NULL,
-> +	};
->  
->  	switch (id) {
->  	case V4L2_CID_MPEG_AUDIO_SAMPLING_FREQ:
-> @@ -651,6 +657,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		return flash_strobe_source;
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
->  		return header_mode;
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
-> +		return mpeg_video_frame_skip;
->  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
->  		return multi_slice;
->  	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
-> @@ -844,6 +852,7 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:			return "H264 MB Level Rate Control";
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
->  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
->  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
-> @@ -1265,6 +1274,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  	case V4L2_CID_FLASH_LED_MODE:
->  	case V4L2_CID_FLASH_STROBE_SOURCE:
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
->  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
->  	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
->  	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index 62271418c1be..4e1526175a4c 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -742,6 +742,12 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
->  #define V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
->  #define V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
->  #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
-> +#define V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE		(V4L2_CID_MPEG_BASE + 645)
-> +enum v4l2_mpeg_video_frame_skip_mode {
-> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED	= 0,
-> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
-> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
-> +};
->  
->  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
->  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
+2. At the head of msm_gpio_irq_ack() you make the same function call
+if "skip_wake_irqs" is set and you're on an SoC with this hardware
+errata.
 
+It doesn't feel all that ugly to me, assuming I'm understanding it
+correctly.  ...or maybe you can tell me why it'd be harder than that?
+
+
+> >> maybe it's just easier to change the pinctrl driver to emulate dual
+> >> edge itself and that can work around the problem in the PDC?  There
+> >> seem to be a few samples you could copy from:
+> >>
+> >> $ git log --oneline --no-merges --grep=emulate drivers/pinctrl/
+> >> 3221f40b7631 pinctrl: mediatek: emulate GPIO interrupt on both-edges
+> >> 5a92750133ff pinctrl: rockchip: emulate both edge triggered interrupts
+> >>
+> >
+> > pinctrl-msm already supports emulating dual edge, but my understanding
+> > was that the problem lies in that somehow this emulation would have to
+> > be tied to or affect the PDC driver?
+>
+> yes, thats correct, pinctrl-msm already supports it, the problem lies
+> in the fact that PDC does not. This patch, infact was trying to fix the
+> issue by removing all PDC involvement for gpio28 and making pinctrl-msm
+> in charge of it.
+
+If we're going to try to do this, I think we're stuck with one of these:
+
+1. A really really long list that we keep jamming more boards into.
+
+2. Add an entry at the top-level device tree compatible to all
+affected boards _just_ for this purpose.  Seems ugly since we don't
+need it for any other reasons.
+
+3. Add some sort of property to the pinctrl node on these boards.
+Seems ugly since conceivably this _could_ be worked around in
+software.
+
+I don't really like any of those options, so I'm really hoping we can
+find out how to get a workaround in...
+
+-Doug
