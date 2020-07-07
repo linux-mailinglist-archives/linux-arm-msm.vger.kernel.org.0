@@ -2,76 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4907B216F69
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 16:54:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2BC3216F7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 16:57:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728232AbgGGOys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 10:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56346 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727987AbgGGOyr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 10:54:47 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F74C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 07:54:47 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id l2so45355810wmf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 07:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PzICV5P/5fXN0O8oi3hO1LTBadk24TZeOM2WE369Tyc=;
-        b=E+5hkIQUoTRgV1/j/Ma9SS3yMkFKRNhWTaqdcl+5qmDfS9hUkLjwIVZarQFI3ZHI6b
-         rlH5ZDKM/dhHSvMwZX2MnqgX1SpikG1diuKSVaIQmftVBmPxVAD8GFe5942oiEgkbfIf
-         K4MXWdmpgYGbPN9O8fnM2nE4Pd82giJkcvzg/u32INEnyM54iJm2TxQOiHr6WQVF7nrZ
-         fw6huJWr5zZ7djbbyiivbCCGabI6CaY3uAUtQKp6bSNMzUtjeqMPHQzOvyucYIsEPXZy
-         /1QOsJYJF61qDA2Peg5s2ZES6oVye/HAV2m6kD5MAeGhYPCKPuQKvGNpkOEyCai/lPjU
-         /QAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PzICV5P/5fXN0O8oi3hO1LTBadk24TZeOM2WE369Tyc=;
-        b=RAfXFG1E9e8VXNBxodyrdwezvwwaYGn+5RG0zZpzpVXtzZv9lNY1ExiF9ySylJxXx6
-         CxjwrHAPdUmVcQLwoxo2UrAXDOhJUbsl1SH8gdJogy5lGb+52jpjbA/jdeqkOiCYZHoj
-         ++GPqXooGXto3yFQJ/oFOGN9JZrJPKaIy73ykC7YrrofdInGt/MIKJdrvHvGka1ablnd
-         xjgj1Ry2mNXCc3QnS+WZzeoqFlhAuMZZhgmSXJN11Aun4yRl8aXa9egdVAgHhzKHimFY
-         dqx9fUB6rnqvTr0yxXnYFI7TIqPLfcENH/62oQi8ALmevJlREKmfVLphGX1hY1ZpT+Rp
-         7DVw==
-X-Gm-Message-State: AOAM5312J2d2gaL5UPBxM5PuZNH93ha5YjgOIkgD/ElOj4D2/IVzBJNF
-        R0YyhWbVWNUtEaSM2IrJA+bYjQ==
-X-Google-Smtp-Source: ABdhPJyuonfrVFjpjX9TLl886a/7yKFi5J1qixNTUhlNFpixziv4HhnXXZg5sCj4A2JCjd5SaKBJZg==
-X-Received: by 2002:a05:600c:410f:: with SMTP id j15mr4526284wmi.128.1594133686255;
-        Tue, 07 Jul 2020 07:54:46 -0700 (PDT)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id z1sm1363432wru.30.2020.07.07.07.54.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Jul 2020 07:54:45 -0700 (PDT)
-Subject: Re: [PATCH v4 3/4] nvmem: qfprom: Add fuse blowing support
-To:     Doug Anderson <dianders@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S1728029AbgGGO5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 10:57:35 -0400
+Received: from ns.mm-sol.com ([37.157.136.199]:42710 "EHLO extserv.mm-sol.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727987AbgGGO5f (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jul 2020 10:57:35 -0400
+Received: from [192.168.1.3] (212-5-158-112.ip.btc-net.bg [212.5.158.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by extserv.mm-sol.com (Postfix) with ESMTPSA id B1D24D019;
+        Tue,  7 Jul 2020 17:57:30 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
+        t=1594133851; bh=RSbKmHXQ1I0GICjEJnnc9sR7lyOzh5WH8AD+NBKOMPg=;
+        h=Subject:To:Cc:From:Date:From;
+        b=IzX7U71pqTVHOUnO++yZULrFfzx0NWdP+5In4au3xOuwAHzgN50tzRmOF2xaIzmUJ
+         G9PizoDtcAOhIMgaGenRA66J0B2R75Esh/fsoyzvu5zFEAzAbGvgKl6bY9l2W+5161
+         Q9gyYl1CedHlDGb4qvvZhV64NHKjpPUy97UwAMNhmE0BZMYfimcGoyCAUiStqdMsbs
+         46MssHdcH4/EWGkiXUuH2eKT4xYOlXNy7wW2TQxcQ1EoXqyzD7870OlG8jSlDAOv4W
+         LiWPbN6fbZaIfRk8NGkx7ETJFs6XPrfJET8kSz7vQp8AH3JSQ8fKAgoPA5P8/WGca2
+         Kc+9h35OiNf0w==
+Subject: Re: [PATCH v7 00/12] Multiple fixes in PCIe qcom driver
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     mturney@codeaurora.org, Jeffrey Hugo <jhugo@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, dhavalp@codeaurora.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        sparate@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        mkurumel@codeaurora.org, Ravi Kumar Bokka <rbokka@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20200622144929.230498-1-dianders@chromium.org>
- <20200622074845.v4.3.I68222d0b5966f652f29dd3a73ab33551a6e3b7e0@changeid>
- <CAD=FV=UJ9fm0z-6kAm4wDCfb8Ugr53i4RciCHTJT91ec27Mm4A@mail.gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <bf75ef0d-1267-377e-9875-e44be3f5e406@linaro.org>
-Date:   Tue, 7 Jul 2020 15:54:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andrew Murray <amurray@thegoodpenguin.co.uk>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20200615210608.21469-1-ansuelsmth@gmail.com>
+ <20200707140516.GC17163@e121166-lin.cambridge.arm.com>
+From:   Stanimir Varbanov <svarbanov@mm-sol.com>
+Message-ID: <c4407d40-3b9b-5e79-9bf7-5947ce9178e3@mm-sol.com>
+Date:   Tue, 7 Jul 2020 17:57:28 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=UJ9fm0z-6kAm4wDCfb8Ugr53i4RciCHTJT91ec27Mm4A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20200707140516.GC17163@e121166-lin.cambridge.arm.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -79,16 +54,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Lorenzo,
 
-
-On 07/07/2020 15:52, Doug Anderson wrote:
+On 7/7/20 5:05 PM, Lorenzo Pieralisi wrote:
+> On Mon, Jun 15, 2020 at 11:05:56PM +0200, Ansuel Smith wrote:
+>> This contains multiple fix for PCIe qcom driver.
+>> Some optional reset and clocks were missing.
+>> Fix a problem with no PARF programming that cause kernel lock on load.
+>> Add support to force gen 1 speed if needed. (due to hardware limitation)
+>> Add ipq8064 rev 2 support that use a different tx termination offset.
+>>
+>> v7:
+>> * Rework GEN1 patch
+>>
+>> v6:
+>> * Replace custom define
+>> * Move define not used in 07 to 08
+>>
+>> v5:
+>> * Split PCI: qcom: Add ipq8064 rev2 variant and set tx term offset
+>>
+>> v4:
+>> * Fix grammar error across all patch subject
+>> * Use bulk api for clks
+>> * Program PARF only in ipq8064 SoC
+>> * Program tx term only in ipq8064 SoC
+>> * Drop configurable tx-dempth rx-eq
+>> * Make added clk optional
+>>
+>> v3:
+>> * Fix check reported by checkpatch --strict
+>> * Rename force_gen1 to gen
+>>
+>> v2:
+>> * Drop iATU programming (already done in pcie init)
+>> * Use max-link-speed instead of force-gen1 custom definition
+>> * Drop MRRS to 256B (Can't find a realy reason why this was suggested)
+>> * Introduce a new variant for different revision of ipq8064
+>>
+>> Abhishek Sahu (1):
+>>   PCI: qcom: Change duplicate PCI reset to phy reset
+>>
+>> Ansuel Smith (10):
+>>   PCI: qcom: Add missing ipq806x clocks in PCIe driver
+>>   dt-bindings: PCI: qcom: Add missing clks
+>>   PCI: qcom: Add missing reset for ipq806x
+>>   dt-bindings: PCI: qcom: Add ext reset
+>>   PCI: qcom: Use bulk clk api and assert on error
+>>   PCI: qcom: Define some PARF params needed for ipq8064 SoC
+>>   PCI: qcom: Add support for tx term offset for rev 2.1.0
+>>   PCI: qcom: Add ipq8064 rev2 variant
+>>   dt-bindings: PCI: qcom: Add ipq8064 rev 2 variant
+>>   PCI: qcom: Replace define with standard value
+>>
+>> Sham Muthayyan (1):
+>>   PCI: qcom: Support pci speed set for ipq806x
+>>
+>>  .../devicetree/bindings/pci/qcom,pcie.txt     |  15 +-
+>>  drivers/pci/controller/dwc/pcie-qcom.c        | 186 +++++++++++-------
+>>  2 files changed, 128 insertions(+), 73 deletions(-)
 > 
-> Given that I've resolved previous feedback, I've been assuming that
-> the series looks fine and we're sitting waiting for Rob Herring's
-> blessings on the bindings before landing.  Is that correct?
+> ACK missing on patches 8,9,12 please let me know how to proceed,
+> thanks.
 
-That's correct!
+You could use my acked-by for them:
 
---srini
+Acked-by: Stanimir Varbanov <svarbanov@mm-sol.com>
 
+> 
+> Lorenzo
+> 
 
+-- 
+regards,
+Stan
