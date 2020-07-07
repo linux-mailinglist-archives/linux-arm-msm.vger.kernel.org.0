@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 355AE217BF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 01:59:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9263217BFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 01:59:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728294AbgGGX7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 19:59:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56336 "EHLO
+        id S1729415AbgGGX7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 19:59:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728740AbgGGX7C (ORCPT
+        with ESMTP id S1729418AbgGGX7l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 19:59:02 -0400
+        Tue, 7 Jul 2020 19:59:41 -0400
 Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 292E4C08C5EE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 16:59:02 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id w2so19960970pgg.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 16:59:02 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736ECC08C5E3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 16:59:41 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id j19so13900695pgm.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 16:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=rdv9aWYxdWzi7YuZEHxXGYFHP62AjpgpR6iHCVdleuI=;
-        b=E5Bv52U3XPTKQk/JUCHmdsxbrjEBV7kFdiIQaCyIgOqHSS133VrkT0uweCNwnEouhB
-         D6ChoBGorNNXQRd5vuzzcx1j8GUi9ZQpXJ/p70YeFpe/j26iafcL6ByrwDGUqHuT5A/I
-         RFDzv7/AV7eJ4KbBcjAjcMhpYwiZT3d6/TEnI=
+        bh=t+MUHlMV05Venpi+dxgNFy9m2mM7Us7wpJwUgu+0RIA=;
+        b=LafhCb4tq/+15NiiNOG2BKxCpeSoxaozRMft+310cV24Ytgchd8f5pyzQOSHeWZXfw
+         sY1Dm+QXQug+61+HPKC9CsVVEyxHf9zqWNxuuTHnNPhg66oQiL6GpDh7ADEmoCmMSf41
+         2+4zCqnrVxslrHZBmUrwZXf+GBK3TOSDNm1TQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rdv9aWYxdWzi7YuZEHxXGYFHP62AjpgpR6iHCVdleuI=;
-        b=YoEIc+0c3NpVskG6r0gWEzV3aHDMz6WZcUAmDB40OL23tTCrTi05M4O+cubx0FtH00
-         KWOThVimw9fXvqQ+zPi6+NEnlQBCG+wxB4TV8IDXhvf1QwmNtutGYd14HdI+3Re0C8J8
-         dX7Oh2gXgHkd0TzftkTlcbrHjIJpDN4yR3jS8CTXS9T0p0Y8T9J4T4f4LucM6THcMJkY
-         lqj3iEFuGrH+0HzXnQCh+UqSeBcwfqSraf6bXcCc5n8rwsmc8Bxk+mUkpch5oCCDDq7T
-         SpVffBh0DKm/jg3/e4/B5nW8Cvd2dBYI35JE4YGm6qUNC/c16duEuk57mHraPl1bMfbC
-         6l7g==
-X-Gm-Message-State: AOAM533Yo7WDitRCkUS1YrzPyfq+0TWEC78YcUCTdp9KqzLGc07V4anQ
-        ViFib0djEJDlif1EvviIXS8d5Q==
-X-Google-Smtp-Source: ABdhPJzYvJrtZ8JwyO03TQIq0tpFYVl2WHcKj9p5wk7nKZXNGQu8Fct93qp7eRhs4GS/cWugEjuxmw==
-X-Received: by 2002:a62:404:: with SMTP id 4mr53377463pfe.133.1594166341548;
-        Tue, 07 Jul 2020 16:59:01 -0700 (PDT)
+        bh=t+MUHlMV05Venpi+dxgNFy9m2mM7Us7wpJwUgu+0RIA=;
+        b=JqfCBc6/j9phN5cfCMsB2rhYl/rWjWdiEJ0VvZArvUn8rQMjdbw7VNvBFlCC8rc6n7
+         x/rcuRLP0GNYfSVHANqW2afnS88Tb1wtqtdN2ZR7sAiF9dtcheV07r/ywGTj31J0oTah
+         XoE/Hn3beTSRxoW4/0Bbwb7jrAPkjy2Ecx18RvRrZAwnWfF4bXPNwj5Lez0tDnxh2DY5
+         1QKWRYPJVVpBwqk9P0/KcC6HQBqUTR+Q/IGZjgpcj9TbSMFgR6tt0VGfWJfCepju3oDF
+         Rh5ADGXl3c8uDNCOjckv76NXqEXReMSfHy/kSRaDkUsrMC9ePqMbfQWoUPuQUokkIxXv
+         uEbA==
+X-Gm-Message-State: AOAM530j8EqUme4okDkcvqiY06W71Sem74C6bwIa42E0idEGfpRlvJRQ
+        JDji4ihdztEzYkXdeK0WkKZ0Ow==
+X-Google-Smtp-Source: ABdhPJxrg7MIOsckToNcEU8cl8R/PG88U4PcKuHFAM793HgSei/rQl//+UCXuWhNnVDpB4swbIRxQw==
+X-Received: by 2002:aa7:8651:: with SMTP id a17mr44429243pfo.48.1594166381010;
+        Tue, 07 Jul 2020 16:59:41 -0700 (PDT)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id w123sm15793025pfd.2.2020.07.07.16.59.00
+        by smtp.gmail.com with ESMTPSA id 66sm10992837pfg.63.2020.07.07.16.59.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 16:59:00 -0700 (PDT)
-Date:   Tue, 7 Jul 2020 16:58:59 -0700
+        Tue, 07 Jul 2020 16:59:40 -0700 (PDT)
+Date:   Tue, 7 Jul 2020 16:59:39 -0700
 From:   Kees Cook <keescook@chromium.org>
 To:     Scott Branden <scott.branden@broadcom.com>
 Cc:     Luis Chamberlain <mcgrof@kernel.org>,
@@ -69,26 +69,30 @@ Cc:     Luis Chamberlain <mcgrof@kernel.org>,
         Andy Gross <agross@kernel.org>,
         linux-integrity@vger.kernel.org,
         linux-security-module@vger.kernel.org
-Subject: Re: [PATCH v10 3/9] firmware: add request_partial_firmware_into_buf
-Message-ID: <202007071657.55C2CFA57@keescook>
+Subject: Re: [PATCH v10 4/9] test_firmware: add partial read support for
+ request_firmware_into_buf
+Message-ID: <202007071659.38721F7@keescook>
 References: <20200706232309.12010-1-scott.branden@broadcom.com>
- <20200706232309.12010-4-scott.branden@broadcom.com>
+ <20200706232309.12010-5-scott.branden@broadcom.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200706232309.12010-4-scott.branden@broadcom.com>
+In-Reply-To: <20200706232309.12010-5-scott.branden@broadcom.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 06, 2020 at 04:23:03PM -0700, Scott Branden wrote:
-> Add request_partial_firmware_into_buf to allow for portions
-> of firmware file to be read into a buffer.  Necessary where firmware
-> needs to be loaded in portions from file in memory constrained systems.
+On Mon, Jul 06, 2020 at 04:23:04PM -0700, Scott Branden wrote:
+> Add additional hooks to test_firmware to pass in support
+> for partial file read using request_firmware_into_buf.
+> buf_size: size of buffer to request firmware into
+> partial: indicates that a partial file request is being made
+> file_offset: to indicate offset into file to request
+> 
+> Signed-off-by: Scott Branden <scott.branden@broadcom.com>
 
-Just tear out the differing "id" and just use FW_OPT_PARTIAL and I think
-if Luis is happy, you're all set.
+I am a fan of tests. :) If Luis gives an Ack here, you're good.
 
 -- 
 Kees Cook
