@@ -2,103 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AE862167B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 09:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6E722169E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 12:18:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728437AbgGGHpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 03:45:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46234 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727116AbgGGHpj (ORCPT
+        id S1728409AbgGGKSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 06:18:21 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:23976 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728122AbgGGKRJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 03:45:39 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F41C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 00:45:39 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id x11so16410373plo.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 00:45:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OdfdZpdNlsV+8LTmBqKkqZF5iyRO7Rci5zel+rmMCoM=;
-        b=kNCRVKcZ9mjznF/w/m4aPSj+Mym7tEPuOKuif0DcypOHs4zb7snyDKk/NwvKsX5dUg
-         +MsG+ychwHDm0EH9vXYVN+hzv01mZCTXkejxiME7LyK9xH4GQCyhqbhvD/B8xkqY0V4s
-         ha/42bzDA3cT7CPuWoQxQSE01x/7kUcPgzvf/n5AI3J69epWaatvXaKBU2F9gpSXJiLO
-         TjnOvQUVe5zxfeAmTW1FTA1BQXPp6oBI6EvqAXPAlmKxiv/AdLUVvZVHDqBxJDmTnsUr
-         w8+gaXmhPaq5Uf8ooJX+jv2ZJ4zRBbOCuDd+NthaSnd5pnnEZ7vSakB/TTa8AdObqx7+
-         XeCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OdfdZpdNlsV+8LTmBqKkqZF5iyRO7Rci5zel+rmMCoM=;
-        b=S9WlHj7wdt4fLSBugQY+34ix47bAjRfqJIF3/1sx3zoxgh1aK+GM9korj5/n3SEIyW
-         Kr+yyTOTRWIWaesYCmLd3mwZDRXXCbZ3fJjIylOVjJ8Z1OK7KuQSJip4JulBs7DjvHBh
-         uN9k1dJkrwEWcF1PE33rzgvV37XmrGiZsUhjlslj38TVP1chNyIP9ehze7Wx3cW7gWba
-         Fgrfw3aIP8RNZTfWbjCJQSV2fzjmz7yfVLrKbPPOnGCTmufPVyBm2zsghtulw46mFKiS
-         idQUgs7iUfjQdHG0w3VKXNCFtK7s/IRxYmq4yrVnCo/+Ca38xdXAMRfxNMOPKqlFW6fB
-         /N2Q==
-X-Gm-Message-State: AOAM5321vGwnmu9dWyPhrNeuJs5o1Wxa1GrWPgLW6gzitO/gbJX0jZGD
-        F4I29Ow04btBLkzCuhNM/cGmSQlzwb4=
-X-Google-Smtp-Source: ABdhPJzA4pJfLWFX2jkVsjIUyDya1VaRc3xsb5pgU9v38c2IJFu6TU1M06feHzFjmbTZ9lKnVNppLw==
-X-Received: by 2002:a17:902:326:: with SMTP id 35mr19721531pld.151.1594107938544;
-        Tue, 07 Jul 2020 00:45:38 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id z8sm15986pgz.7.2020.07.07.00.45.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 00:45:37 -0700 (PDT)
-Date:   Tue, 7 Jul 2020 00:43:18 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kathiravan T <kathirav@codeaurora.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sivaprak@codeaurora.org,
-        srichara@codeaurora.org,
-        Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-Subject: Re: [PATCH V2] pinctrl: qcom: ipq8074: route gpio interrupts to APPS
-Message-ID: <20200707074318.GT388985@builder.lan>
-References: <1594107588-17055-1-git-send-email-kathirav@codeaurora.org>
+        Tue, 7 Jul 2020 06:17:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594117029; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=BXI021rh3NXH5BcDC2Muu+0d+4q5W0LWbpYi2AY+2A4=; b=Xm2G3VQbsFRMuOZc8KUQY3SOoQ77UrGREw1BmyH9S9q7zidJ8fOKVjYcxRmqlAnJ+k2hb7S3
+ HlflyWabySi6yFYKjm4uSXVeF/AIaPW5bZFZ9qlybUBbz5W4ZH4zKTrZM93wXU4CUElxtA7E
+ /BXm6s+/kpcXtkemNOYrcYxoT+Q=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n17.prod.us-west-2.postgun.com with SMTP id
+ 5f044b93d8ca07a573e8c851 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Jul 2020 10:16:51
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 70EB7C433CA; Tue,  7 Jul 2020 10:16:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.15] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id ACB36C433C6;
+        Tue,  7 Jul 2020 10:16:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ACB36C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 1/3] spi: spi-geni-qcom: Avoid clock setting if not needed
+To:     Douglas Anderson <dianders@chromium.org>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, mkshah@codeaurora.org,
+        swboyd@chromium.org, georgi.djakov@linaro.org,
+        ctheegal@codeaurora.org, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
+References: <20200702004509.2333554-1-dianders@chromium.org>
+ <20200701174506.1.Icfdcee14649fc0a6c38e87477b28523d4e60bab3@changeid>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <1b9f0313-0e8f-0a75-b0a5-b6a768af0a7a@codeaurora.org>
+Date:   Tue, 7 Jul 2020 15:46:22 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1594107588-17055-1-git-send-email-kathirav@codeaurora.org>
+In-Reply-To: <20200701174506.1.Icfdcee14649fc0a6c38e87477b28523d4e60bab3@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Jul 00:39 PDT 2020, Kathiravan T wrote:
 
-> set target proc as APPS to route the gpio interrupts to APPS
-> 
-> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
-> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+On 7/2/2020 6:15 AM, Douglas Anderson wrote:
+> Every SPI transfer could have a different clock rate.  The
+> spi-geni-qcom controller code to deal with this was never very well
+> optimized and has always had a lot of code plus some calls into the
+> clk framework which, at the very least, would grab a mutex.  However,
+> until recently, the overhead wasn't _too_ much.  That changed with
+> commit 0e3b8a81f5df ("spi: spi-geni-qcom: Add interconnect support")
+> we're now calling geni_icc_set_bw(), which leads to a bunch of math
+> plus:
+>    geni_icc_set_bw()
+>      icc_set_bw()
+>        apply_constraints()
+>          qcom_icc_set()
+>            qcom_icc_bcm_voter_commit()
+>              rpmh_invalidate()
+>              rpmh_write_batch()
+> ...and those rpmh commands can be a bit beefy if you call them too
+> often.
 
-Thanks for the quick respin.
+Reviewed-by: Akash Asthana<akashast@codeaurora.org>
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
-Regards,
-Bjorn
-
-> ---
->  drivers/pinctrl/qcom/pinctrl-ipq8074.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-ipq8074.c b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-> index 0edd41c..aec68b1 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-> @@ -50,6 +50,7 @@
->  		.intr_enable_bit = 0,		\
->  		.intr_status_bit = 0,		\
->  		.intr_target_bit = 5,		\
-> +		.intr_target_kpss_val = 3,	\
->  		.intr_raw_status_bit = 4,	\
->  		.intr_polarity_bit = 1,		\
->  		.intr_detection_bit = 2,	\
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-> 
