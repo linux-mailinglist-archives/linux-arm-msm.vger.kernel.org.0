@@ -2,94 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 808A0216D2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 14:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B296216DA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 15:25:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbgGGMxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 08:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37410 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbgGGMxQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 08:53:16 -0400
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 332ACC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 05:53:16 -0700 (PDT)
-Received: by mail-io1-xd42.google.com with SMTP id v6so29333578iob.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 05:53:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=e/YoIMP8c0HJJ+S49WYxsGpiCi+NvL2ww5EeAkEmXVI=;
-        b=QFqebrYRDiE5dakUbLufOg818o7Ardt+uJugcI+HpLGySh/41S/8TV1nwhSvhjJHxB
-         fTXUp6ton6DMP73OMpTlt1paFI/tftk2v57nIYzrWiXqr/kgOcTawXr0fhF5l/f7cXjt
-         0EMSwLaZZMeAml961G+ZnI41KTQleHHP2Zftc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=e/YoIMP8c0HJJ+S49WYxsGpiCi+NvL2ww5EeAkEmXVI=;
-        b=Sqa3uqyTiW3BH/OQFbUqFMiYLZDvx0nHSBTPOHC6ADxsPSjfYxrx51Ky5HOLAaIjBg
-         Eycjx6AI1UjSSBaMGzyCAPBgAmNDxCDXkZFxcRb+iyieblNm70QvgAAPgPPeF6GIgT20
-         CnvbUF7fAPaZi8HXGPVSUQNTIkDCdwwGMPibbgMFCGvjJia1NVrjSgTZiJ9TuvbDpI8D
-         W/1a2PqsbOquwSl1NtJAPi7IGr9vDmDY9LOV5A8YhUSvjLGtEOI9+tNazZK9BVNg3SzA
-         qlHroFNodwdNhQ0EGYpg2N41pWrYg52AqQxcbXaDpG5YbHtKLoqPdjjCuXyYx4SPt65J
-         DYGQ==
-X-Gm-Message-State: AOAM531qEVYYSLGh4SXWi7d4scD48SbuKtyuoinwPQW14daZmZatjb/K
-        42/5pmsczX+8Pw3tY2zR86/iN+kIQq4=
-X-Google-Smtp-Source: ABdhPJxsUQKcdRg5Jv12b5okNFFzRWWb2ma4z9+jIJLufTwcrsHw3kIXE6a1zTFCfsEmn9kRU7zT/w==
-X-Received: by 2002:a05:6602:158b:: with SMTP id e11mr29897273iow.30.1594126395319;
-        Tue, 07 Jul 2020 05:53:15 -0700 (PDT)
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com. [209.85.166.49])
-        by smtp.gmail.com with ESMTPSA id k1sm12625698ilr.35.2020.07.07.05.53.14
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jul 2020 05:53:14 -0700 (PDT)
-Received: by mail-io1-f49.google.com with SMTP id k23so42929930iom.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 05:53:14 -0700 (PDT)
-X-Received: by 2002:a6b:5c07:: with SMTP id z7mr31742004ioh.140.1594126394129;
- Tue, 07 Jul 2020 05:53:14 -0700 (PDT)
+        id S1728053AbgGGNYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 09:24:46 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:64419 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727981AbgGGNYp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jul 2020 09:24:45 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594128285; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=50fFHxqOqiGbl65PO6T3ISd+brFmJjDWNvJZpirTFFk=; b=YjFWlg4K0IYy8GRvI+QDlbTm4Xt56yq8qa8Fb9jU41fPa6Mm7hXkJrLO5Uxaq3fx7eRwR4cN
+ hyYq3B7YpiWhGjnmRHTVuwX3C03PVzWXt0c8HQfGyuCtpZ59IiapL6syMinztQVMnzEYDVU2
+ UYhl11/sirILiJQuSE/ZLApAWKY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5f047787a19992ac6523bd72 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Jul 2020 13:24:23
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7D0E2C43387; Tue,  7 Jul 2020 13:24:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.102] (unknown [182.74.172.118])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B5822C433C6;
+        Tue,  7 Jul 2020 13:24:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B5822C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
+Subject: Re: [PATCH V2 0/6] Add frequency / voltage scaling support for
+ IPQ6018 SoC
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     sivaprak@codeaurora.org, sricharan@codeaurora.org
+References: <1592889472-6843-1-git-send-email-kathirav@codeaurora.org>
+From:   Kathiravan T <kathirav@codeaurora.org>
+Message-ID: <4d8e7bc2-55c9-1ac4-c287-00094e4e7a9c@codeaurora.org>
+Date:   Tue, 7 Jul 2020 18:54:05 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20200702004509.2333554-1-dianders@chromium.org>
- <20200701174506.1.Icfdcee14649fc0a6c38e87477b28523d4e60bab3@changeid> <20200707120812.GA22129@sirena.org.uk>
-In-Reply-To: <20200707120812.GA22129@sirena.org.uk>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 7 Jul 2020 05:53:01 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U5RHh_QuZ1tv9V5JtcsrhRONSa_CerYwUFsHhDOhEqdA@mail.gmail.com>
-Message-ID: <CAD=FV=U5RHh_QuZ1tv9V5JtcsrhRONSa_CerYwUFsHhDOhEqdA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] spi: spi-geni-qcom: Avoid clock setting if not needed
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        ctheegal@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1592889472-6843-1-git-send-email-kathirav@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mark,
+Hi Bjorn, Can you help to review the below patches in this series?
 
-On Tue, Jul 7, 2020 at 5:08 AM Mark Brown <broonie@kernel.org> wrote:
+   dt-bindings: soc: qcom: Add IPQ6018 compatible
+   soc: qcom: smd-rpm: Add IPQ6018 compatible
+
+Hi Rob, Can you help to review the YAML schema in this series?
+
+Thanks,
+
+Kathiravan T.
+
+On 6/23/2020 10:47 AM, Kathiravan T wrote:
+> IPQ6018 SoC uses the PMIC MP5496. SMPA2 and LDOA2 regulator of MP5496
+> controls the APSS and SDCC voltage scaling respectively. Add support
+> for the same.
 >
-> On Wed, Jul 01, 2020 at 05:45:07PM -0700, Douglas Anderson wrote:
-> > Every SPI transfer could have a different clock rate.  The
-> > spi-geni-qcom controller code to deal with this was never very well
-> > optimized and has always had a lot of code plus some calls into the
+> changes since V1:
+> 	- Moved YAML conversion to the last as per Mark's comments
 >
-> This doesn't apply against current code, please check and resend.
+> Kathiravan T (6):
+>    dt-bindings: soc: qcom: Add IPQ6018 compatible
+>    soc: qcom: smd-rpm: Add IPQ6018 compatible
+>    dt-bindings: regulator: add MP5496 regulator compatible
+>    regulator: qcom_smd: Add MP5496 regulators
+>    dt-bindings: soc: qcom: convert the SMD-RPM document to YAML schema
+>    dt-bindings: regulator: convert QCOM SMD-RPM regulator document to
+>      YAML schema
+>
+>   .../bindings/regulator/qcom,smd-rpm-regulator.txt  | 320 ---------------------
+>   .../bindings/regulator/qcom,smd-rpm-regulator.yaml | 106 +++++++
+>   .../devicetree/bindings/soc/qcom/qcom,smd-rpm.txt  |  62 ----
+>   .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |  92 ++++++
+>   drivers/regulator/qcom_smd-regulator.c             |  34 +++
+>   drivers/soc/qcom/smd-rpm.c                         |   1 +
+>   6 files changed, 233 insertions(+), 382 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
+>   create mode 100644 Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>   delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
+>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
-As mentioned in the cover letter, I posted this series against the
-Qualcomm tree.  The commit that it is fixing landed there with your
-Ack so I was hoping this series could land in the Qualcomm tree with
-your Ack as well.  Would that be OK?
-
--Doug
