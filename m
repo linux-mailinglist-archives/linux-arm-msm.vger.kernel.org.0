@@ -2,105 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE917216E59
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 16:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CBFE216E89
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2020 16:18:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728163AbgGGOFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Jul 2020 10:05:22 -0400
-Received: from foss.arm.com ([217.140.110.172]:51942 "EHLO foss.arm.com"
+        id S1728296AbgGGORw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Jul 2020 10:17:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52294 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726805AbgGGOFV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Jul 2020 10:05:21 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E4BDAC0A;
-        Tue,  7 Jul 2020 07:05:20 -0700 (PDT)
-Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 294EF3F68F;
-        Tue,  7 Jul 2020 07:05:19 -0700 (PDT)
-Date:   Tue, 7 Jul 2020 15:05:16 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andrew Murray <amurray@thegoodpenguin.co.uk>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 00/12] Multiple fixes in PCIe qcom driver
-Message-ID: <20200707140516.GC17163@e121166-lin.cambridge.arm.com>
-References: <20200615210608.21469-1-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200615210608.21469-1-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S1727064AbgGGORw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Jul 2020 10:17:52 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 04C1520771;
+        Tue,  7 Jul 2020 14:17:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594131471;
+        bh=pve5QprljZ4UYpaZLR9H+cQw5sf2yLulSSnup7LqVq4=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=v94pGfnpkt+1iWcdy7HEv8hILl70AgmCSFhrQtwKguzL7jcIqUIL5Y6IUkBPwejWt
+         ScKC/u6TYYhseFcnsSnNWy/VvkjLp8lFP7ZEqgih4agghenABndSt+oiIfl5UdsxOR
+         oX4gKT6hXJWiridoPY47IYULindd3ubEA0aZ/jh8=
+Date:   Tue, 07 Jul 2020 15:17:47 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-spi@vger.kernel.org, ctheegal@codeaurora.org,
+        akashast@codeaurora.org, mkshah@codeaurora.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        georgi.djakov@linaro.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20200702004509.2333554-1-dianders@chromium.org>
+References: <20200702004509.2333554-1-dianders@chromium.org>
+Subject: Re: [PATCH 0/3] spi: spi-geni-qcom: Avoid a bunch of per-transfer overhead
+Message-Id: <159413146696.34997.14314538342841889757.b4-ty@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 15, 2020 at 11:05:56PM +0200, Ansuel Smith wrote:
-> This contains multiple fix for PCIe qcom driver.
-> Some optional reset and clocks were missing.
-> Fix a problem with no PARF programming that cause kernel lock on load.
-> Add support to force gen 1 speed if needed. (due to hardware limitation)
-> Add ipq8064 rev 2 support that use a different tx termination offset.
+On Wed, 1 Jul 2020 17:45:06 -0700, Douglas Anderson wrote:
+> This series tries to reduce a whole bunch of overhead in each SPI
+> transfer.  Much of this overhead is new with the recent interconnect
+> changes, but even without those changes we still had some overhead
+> that we could avoid.  Let's avoid all of it.
 > 
-> v7:
-> * Rework GEN1 patch
+> These changes are atop the Qualcomm tree to avoid merge conflicts.  If
+> they look good, the most expedient way to land them is probably to get
+> Ack's from Mark and land then via the Qualcomm tree.
 > 
-> v6:
-> * Replace custom define
-> * Move define not used in 07 to 08
-> 
-> v5:
-> * Split PCI: qcom: Add ipq8064 rev2 variant and set tx term offset
-> 
-> v4:
-> * Fix grammar error across all patch subject
-> * Use bulk api for clks
-> * Program PARF only in ipq8064 SoC
-> * Program tx term only in ipq8064 SoC
-> * Drop configurable tx-dempth rx-eq
-> * Make added clk optional
-> 
-> v3:
-> * Fix check reported by checkpatch --strict
-> * Rename force_gen1 to gen
-> 
-> v2:
-> * Drop iATU programming (already done in pcie init)
-> * Use max-link-speed instead of force-gen1 custom definition
-> * Drop MRRS to 256B (Can't find a realy reason why this was suggested)
-> * Introduce a new variant for different revision of ipq8064
-> 
-> Abhishek Sahu (1):
->   PCI: qcom: Change duplicate PCI reset to phy reset
-> 
-> Ansuel Smith (10):
->   PCI: qcom: Add missing ipq806x clocks in PCIe driver
->   dt-bindings: PCI: qcom: Add missing clks
->   PCI: qcom: Add missing reset for ipq806x
->   dt-bindings: PCI: qcom: Add ext reset
->   PCI: qcom: Use bulk clk api and assert on error
->   PCI: qcom: Define some PARF params needed for ipq8064 SoC
->   PCI: qcom: Add support for tx term offset for rev 2.1.0
->   PCI: qcom: Add ipq8064 rev2 variant
->   dt-bindings: PCI: qcom: Add ipq8064 rev 2 variant
->   PCI: qcom: Replace define with standard value
-> 
-> Sham Muthayyan (1):
->   PCI: qcom: Support pci speed set for ipq806x
-> 
->  .../devicetree/bindings/pci/qcom,pcie.txt     |  15 +-
->  drivers/pci/controller/dwc/pcie-qcom.c        | 186 +++++++++++-------
->  2 files changed, 128 insertions(+), 73 deletions(-)
+> [...]
 
-ACK missing on patches 8,9,12 please let me know how to proceed,
-thanks.
+Applied to
 
-Lorenzo
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+
+Thanks!
+
+[1/3] spi: spi-geni-qcom: Avoid clock setting if not needed
+      (no commit info)
+[2/3] spi: spi-geni-qcom: Set an autosuspend delay of 250 ms
+      commit: e99f0b6ef2679b0abeefcd7bd148cd65651c7857
+[3/3] spi: spi-geni-qcom: Get rid of most overhead in prepare_message()
+      (no commit info)
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
