@@ -2,81 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFC6D2184F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 12:33:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20BCC218506
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 12:36:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728205AbgGHKdH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 06:33:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34442 "EHLO mail.kernel.org"
+        id S1726110AbgGHKgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 06:36:13 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35128 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725972AbgGHKdH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 06:33:07 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        id S1728410AbgGHKgN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 06:36:13 -0400
+Received: from localhost.localdomain (unknown [122.182.251.219])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4E852206F6;
-        Wed,  8 Jul 2020 10:33:06 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C8D0020739;
+        Wed,  8 Jul 2020 10:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594204386;
-        bh=AhnJoMBPbxKfUgHX720jeUrzOme8kKo3MjbmvB/JDAU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EdfRpI1OCGj1tiJyd4YF76KEhAOKiosCRz6S8D71iqM7NZYRdH3E7SJ+EN0Db1a83
-         yObZEvZN6+2kxF805MnfEGD5K+lUgsguzT6g8yAsnWVZieSmcZ5kh2OfPHQq90fbCh
-         zsvJSp8+oRIWVV6QQicJIi2CVqA3Q4DYLBhXRMNI=
-Date:   Wed, 8 Jul 2020 11:33:01 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Rohit kumar <rohitkr@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Ajit Pandey <ajitp@codeaurora.org>
-Subject: Re: [RESEND][PATCH v3 7/8] ASoC: qcom: lpass-sc7180: Add platform
- driver for lpass audio
-Message-ID: <20200708103301.GG4655@sirena.org.uk>
-References: <1594185286-11323-1-git-send-email-rohitkr@codeaurora.org>
+        s=default; t=1594204572;
+        bh=2v5F+PRYQT8vahprdgVWxD5wlP/mcKRGtnE6ta0XxG0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Nzm4hjiYrvSsylJENbbODhuYxwzBqKLLjuIHk/q8Tz047Pla7cP5oDORM+QczIX2l
+         tTvZUiJSGLvPtStViJPy6/fqIHBGYesw4Dr3baWajDbRsoWCrMX9vMnWo3XKSTRa6C
+         n2i4f+H2MGt6razieEBSV20SHUcHq8VRc8LKJEIk=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH v5 0/4] Add LT9611 DSI to HDMI bridge
+Date:   Wed,  8 Jul 2020 16:05:55 +0530
+Message-Id: <20200708103559.132300-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wTWi5aaYRw9ix9vO"
-Content-Disposition: inline
-In-Reply-To: <1594185286-11323-1-git-send-email-rohitkr@codeaurora.org>
-X-Cookie: Oh Dad!  We're ALL Devo!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---wTWi5aaYRw9ix9vO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This series adds driver and bindings for Lontium LT9611 bridge chip which
+takes MIPI DSI as input and HDMI as output.
 
-On Wed, Jul 08, 2020 at 10:44:46AM +0530, Rohit kumar wrote:
-> From: Ajit Pandey <ajitp@codeaurora.org>
->=20
-> Add platform driver for configuring sc7180 lpass core I2S and
-> DMA configuration to support playback & capture to external codecs
-> connected over primary & secondary MI2S interfaces.
+This chip can be found in 96boards RB3 platform [1] commonly called DB845c.
 
-I only have patch 7 here, no other patches or cover letter.  What is
-going on?
+[1]: https://www.96boards.org/product/rb3-platform/
 
---wTWi5aaYRw9ix9vO
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes in v5:
+ - make symbol static, reported by kbuild-bot
 
------BEGIN PGP SIGNATURE-----
+Changes in v4:
+ - Add msm/dsi patch to create connector and support DRM_BRIDGE_ATTACH_NO_CONNECTOR
+ - Fix comments provided by Sam
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl8FoNwACgkQJNaLcl1U
-h9BTIQf+Pzg18KzFR1F83jYFACOsU3RoGhxBsfnTFuUTgZk3ldcDm3SlAKiQ1uwo
-Ol2ArxJ/AJ1llEZO3q3T5yv+Xp59WZWKaGNqIqeksbcSNQIVcmKle48bDspuaq8d
-vrYuPRUmsij4QsaCBO+FZEjIFpMgN1t+hSjneIU4yvbHS5p+uphg8o485E/aqLC1
-KaGwY9njulUK+BYodMNvvLz/MctN5GYaWecf9WonuXHsy0oxg/DLluKqXQpumYWo
-vUgZBasWFJW0uwB/bdB2u0tbTUAH6p2YFuTrHcSfiaiGWXg4P9PD5gjHn3ND3QBp
-EUYKEtftH2KYxmANHezDbVwOBrJt+Q==
-=NjIB
------END PGP SIGNATURE-----
+Changes in v3:
+ - fix kbuild reported error
+ - rebase on v5.8-rc1
 
---wTWi5aaYRw9ix9vO--
+Changes in v2:
+ - Add acks by Rob
+ - Fix comments reported by Emil and rename the file to lontium-lt9611.c
+ - Fix comments reported by Laurent on binding and driver
+ - Add HDMI audio support
+
+Vinod Koul (4):
+  dt-bindings: vendor-prefixes: Add Lontium vendor prefix
+  dt-bindings: display: bridge: Add documentation for LT9611
+  drm/bridge: Introduce LT9611 DSI to HDMI bridge
+  drm/msm/dsi: attach external bridge with
+    DRM_BRIDGE_ATTACH_NO_CONNECTOR
+
+ .../display/bridge/lontium,lt9611.yaml        |  176 +++
+ .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
+ drivers/gpu/drm/bridge/Kconfig                |   13 +
+ drivers/gpu/drm/bridge/Makefile               |    1 +
+ drivers/gpu/drm/bridge/lontium-lt9611.c       | 1142 +++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi.c                 |    7 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c         |   27 +-
+ 7 files changed, 1348 insertions(+), 20 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+ create mode 100644 drivers/gpu/drm/bridge/lontium-lt9611.c
+
+-- 
+2.26.2
+
