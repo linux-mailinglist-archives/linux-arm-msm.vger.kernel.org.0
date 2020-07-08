@@ -2,122 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75F6D218B1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 17:22:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D49B218B23
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 17:24:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730095AbgGHPWW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 11:22:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730050AbgGHPWV (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 11:22:21 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7F9C061A0B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 08:22:21 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id b24so6986920uak.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 08:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KO628LRg0KELEzDGxGBW/eAFQb7hOqQ53yrytEwvgvY=;
-        b=hi5oTWy7PCy7YqHRotH3tuH/k2HpctPr7tYVQrxyXCdwfKApDHb6zk8Hv57vOZr7+T
-         uPq3gVmSKLp0lfFLbDvVPJM0L70JoAwZ4cie7WIwJNK8QhE26q9c5evYUjyZgyWdScU1
-         mb2a+uTp0kfIJg7L3WdoAHaG/3DhMm2oR+B2Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KO628LRg0KELEzDGxGBW/eAFQb7hOqQ53yrytEwvgvY=;
-        b=C/bZr3jzIhNwoGa3BvLYq7NrXxvsW4M2ka/3LHmRBs3G0r9IWLr7CnpRWu+LU3oVXv
-         pfZLXCWVcBvNO9mPzQQjHtAcP3iyrFPL+nNP3+umdqmqkfUzXY1rodEuKFDZw2RnnaqT
-         D/PuDKs0FJ6nZAQ3kUCYcGnxB64C2Lag6mTXE4RsrjKWYl+EPmCdnbn59AcQPAUleQ1l
-         xtu79ZIy2Vmy3rKq8B3HeE+iktSHnJT8m7VBoq11pC06rTG9qlc2FEeAI2kl4DpupGEU
-         bxZPtQs5JiMTt+rb9qx9ndw65k6SeTJ1haALI+chnilbPyDKdVSAyjXJ1lm65zWCyW7X
-         XBRw==
-X-Gm-Message-State: AOAM532STk/MDWz21ooc2xOAzEeOitTkidfrArPX1XABm1kVIR82wRP0
-        eShZfJf2WOie+YrsvSwktXTeNjDoknU=
-X-Google-Smtp-Source: ABdhPJxqDfjqn3ZVbE0a1FhrFtLnURsnXT0eQ9EatxwUDDMl9mCX6D7yQhC6ncMGI8HOd9miTDfU3w==
-X-Received: by 2002:ab0:81c:: with SMTP id a28mr29535408uaf.59.1594221739364;
-        Wed, 08 Jul 2020 08:22:19 -0700 (PDT)
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com. [209.85.222.53])
-        by smtp.gmail.com with ESMTPSA id i2sm19869uac.4.2020.07.08.08.22.17
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2020 08:22:18 -0700 (PDT)
-Received: by mail-ua1-f53.google.com with SMTP id b24so6986873uak.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 08:22:17 -0700 (PDT)
-X-Received: by 2002:ab0:2408:: with SMTP id f8mr34039056uan.91.1594221736757;
- Wed, 08 Jul 2020 08:22:16 -0700 (PDT)
+        id S1729848AbgGHPYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 11:24:41 -0400
+Received: from foss.arm.com ([217.140.110.172]:46630 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729022AbgGHPYk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 11:24:40 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 257D01FB;
+        Wed,  8 Jul 2020 08:24:40 -0700 (PDT)
+Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9361C3F237;
+        Wed,  8 Jul 2020 08:24:38 -0700 (PDT)
+Date:   Wed, 8 Jul 2020 16:24:36 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     wu000273@umn.edu
+Cc:     svarbanov@mm-sol.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh@kernel.org, helgaas@google.com,
+        p.zabel@pengutronix.de, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Markus.Elfring@web.de, kjlu@umn.edu
+Subject: Re: [PATCH V2] PCI: qcom: Improve exception handling in
+ qcom_pcie_probe().
+Message-ID: <20200708152436.GB4238@e121166-lin.cambridge.arm.com>
+References: <20200527025531.32357-1-wu000273@umn.edu>
 MIME-Version: 1.0
-References: <20200702004509.2333554-1-dianders@chromium.org>
- <20200701174506.1.Icfdcee14649fc0a6c38e87477b28523d4e60bab3@changeid>
- <20200707120812.GA22129@sirena.org.uk> <CAD=FV=U5RHh_QuZ1tv9V5JtcsrhRONSa_CerYwUFsHhDOhEqdA@mail.gmail.com>
- <20200708100110.GB4655@sirena.org.uk>
-In-Reply-To: <20200708100110.GB4655@sirena.org.uk>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 8 Jul 2020 08:22:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UFFN+FQhvs1Cdh7jWBRMzDvfHNiC43M_ZqiVqnWf+Y+g@mail.gmail.com>
-Message-ID: <CAD=FV=UFFN+FQhvs1Cdh7jWBRMzDvfHNiC43M_ZqiVqnWf+Y+g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] spi: spi-geni-qcom: Avoid clock setting if not needed
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        ctheegal@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527025531.32357-1-wu000273@umn.edu>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, May 26, 2020 at 09:55:31PM -0500, wu000273@umn.edu wrote:
+> From: Qiushi Wu <wu000273@umn.edu>
+> 
+> This function contained improvable implementation details according to
+> exception handling.
+> 1. pm_runtime_put() should be called after pm_runtime_get_sync() failed,
+> because the reference count will be increased despite of the failure.
+> Thus add the missed function call.
+> 2. pm_runtime_disable() are called twice, after the call of phy_init() and
+> dw_pcie_host_init() failed. Thus remove redundant function calls.
 
-On Wed, Jul 8, 2020 at 3:01 AM Mark Brown <broonie@kernel.org> wrote:
->
-> On Tue, Jul 07, 2020 at 05:53:01AM -0700, Doug Anderson wrote:
-> > On Tue, Jul 7, 2020 at 5:08 AM Mark Brown <broonie@kernel.org> wrote:
->
-> > > This doesn't apply against current code, please check and resend.
->
-> > As mentioned in the cover letter, I posted this series against the
-> > Qualcomm tree.  The commit that it is fixing landed there with your
-> > Ack so I was hoping this series could land in the Qualcomm tree with
-> > your Ack as well.  Would that be OK?
->
-> So I didn't see this until after the patch I applied was queued...  it's
-> looking like it would be good to have a cross-tree merge with the
-> Qualcomm tree if there's stuff like this - is this on a branch which
-> makes that practical?  Otherwise I guess...
+Can you send a patch fixing (2) based on my pci/runtime-pm branch:
 
-It's not too bad.  Of the 5 patches I've sent out (3 for geni SPI, 2
-for quad SPI) you've landed just one.  Here's the summary:
+git://git.kernel.org/pub/scm/linux/kernel/git/lpieralisi/pci.git
 
-a) geni SPI 1/3 (Avoid clock setting): Has your Ack.
-b) geni SPI 2/3 (autosuspend delay): Landed in SPI tree
-c) geni SPI 3/3 (overhead in prepare_message): Has your Ack.
+pci/runtime-pm
 
-d) quad SPI 1/2 (Avoid clock setting): Needs your Ack.
-e) quad SPI 2/2 (autosuspend delay): Needs your Ack.
+Note that (1) is fixed by
 
-Since b) has already landed in your tree, let's just leave it there.
-There'll be a bit of a performance hit in the Qualcomm tree, but it'll
-still be usable.
+https://git.kernel.org/pub/scm/linux/kernel/git/lpieralisi/pci.git/commit/?h=pci/runtime-pm&id=cb52a40202420d3886b84ea13dba699c9da13eb0
 
-Since the rest haven't landed, it would be nice to just land them in
-the Qualcomm tree.
-
-
-I think there's still more work to make the Geni SPI driver more
-optimized, but I don't think it'll be as urgent as those patches and I
-feel like any more major work could wait a cycle.
-
-
--Doug
+> 
+> Fixes: 6e5da6f7d824 ("PCI: qcom: Fix error handling in runtime PM support")
+> Co-developed-by: Markus Elfring <Markus.Elfring@web.de>
+> Signed-off-by: Markus Elfring <Markus.Elfring@web.de>
+> Signed-off-by: Qiushi Wu <wu000273@umn.edu>
+> ---
+>  V2: words adjustments and fix some typos 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 138e1a2d21cc..10393ab607bf 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1340,8 +1340,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	pm_runtime_enable(dev);
+>  	ret = pm_runtime_get_sync(dev);
+>  	if (ret < 0) {
+> -		pm_runtime_disable(dev);
+> -		return ret;
+> +		goto err_pm_runtime_put;
+>  	}
+>  
+>  	pci->dev = dev;
+> @@ -1401,7 +1400,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	ret = phy_init(pcie->phy);
+>  	if (ret) {
+> -		pm_runtime_disable(&pdev->dev);
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> @@ -1410,7 +1408,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	ret = dw_pcie_host_init(pp);
+>  	if (ret) {
+>  		dev_err(dev, "cannot initialize host\n");
+> -		pm_runtime_disable(&pdev->dev);
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> -- 
+> 2.17.1
+> 
