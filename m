@@ -2,84 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FD52218B82
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 17:40:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 058A4218B8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 17:41:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730119AbgGHPkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 11:40:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47324 "EHLO mail.kernel.org"
+        id S1730048AbgGHPlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 11:41:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47628 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729022AbgGHPkd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 11:40:33 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1729858AbgGHPlT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 11:41:19 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5C2392063A;
-        Wed,  8 Jul 2020 15:40:32 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id EF399206DF;
+        Wed,  8 Jul 2020 15:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594222832;
-        bh=f9OKByRreJnmzYiKqsCux5rcWp4GaOz8dutrQOUlyIc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SWOLpOll+7GeFajDdGkhB89ANQgz/DpR82Trf7v+WRGsdd6bSA+b++wqiRWoPKjv+
-         GpK+QyNPriDDBYbfb4T6TvqT4DPq40vdmFa+sQo3voNCP1zXxrOqnBst/N8bRBPzu7
-         do4KgnUhKI9QMKTNXTeHdcyDIQj2IxwR8tFiq/Jg=
-Date:   Wed, 8 Jul 2020 17:40:28 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     "Mukesh, Savaliya" <msavaliy@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>, saravanak@google.com,
-        sspatil@google.com, tkjos@google.com,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V6] serial: msm_geni_serial_console : Add Earlycon support
-Message-ID: <20200708154028.GC715257@kroah.com>
-References: <1592820512-1225-1-git-send-email-akashast@codeaurora.org>
- <20200623194936.GE128451@builder.lan>
- <c2752c91-b203-4224-9ddf-1e5a03b6488b@codeaurora.org>
+        s=default; t=1594222878;
+        bh=jWTJMZSpFMXv1eN4iBy7F5NdaPw4rqs4cZcmn3E18Tk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ywlgMjIZIfbK8x6qVWUDDKaSMLzbqJX32SB0BeBhYW7KwLntTVbbsIgftAB9/Elrn
+         88oq14MhXs7HeuPNHZcpTkZco4hpYWGOglNfzSFm/dYx7kn+IOYLJd2cM2f3NyoBdG
+         X92c60LOpMW/IQfF7B9ANvOjjwkqHzf7deITdjhE=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Bernard Zhao <bernard@vivo.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.7 01/30] drm/msm: fix potential memleak in error branch
+Date:   Wed,  8 Jul 2020 11:40:47 -0400
+Message-Id: <20200708154116.3199728-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c2752c91-b203-4224-9ddf-1e5a03b6488b@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 08, 2020 at 08:06:52PM +0530, Mukesh, Savaliya wrote:
-> 
-> On 6/24/2020 1:19 AM, Bjorn Andersson wrote:
-> > On Mon 22 Jun 03:08 PDT 2020, Akash Asthana wrote:
-> > 
-> > > From: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
-> > > 
-> > > This change enables earlyconsole support as static driver for geni
-> > > based UART. Kernel space UART console driver will be generic for
-> > > console and other usecases of UART.
-> > > 
-> > Is this hardware different from the qcom,geni-debug-uart which we
-> > already have EARLYCON support for?
-> > 
-> > Why is this a separate driver?
-> 
-> The Hardware is same, but for the Generic kernel image we are using
-> downstream driver which can't be a static compiled driver.
+From: Bernard Zhao <bernard@vivo.com>
 
-Why not?  Why not fix that?
+[ Upstream commit 177d3819633cd520e3f95df541a04644aab4c657 ]
 
-> The same driver file has  1.earlyconsole, 2.kernel console and 3.HSUART
-> driver parts.
-> 
-> To make Generic image, 2 and 3 are internal downstream driver and 1st one i
-> am trying to get upstreamed, so that can be pulled into the ACK.
+In function msm_submitqueue_create, the queue is a local
+variable, in return -EINVAL branch, queue didn`t add to ctx`s
+list yet, and also didn`t kfree, this maybe bring in potential
+memleak.
 
-That has nothing to do with us, please do it correctly so that everyone
-benifits.
+Signed-off-by: Bernard Zhao <bernard@vivo.com>
+[trivial commit msg fixup]
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/msm_submitqueue.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> The one with the qcom,genu-debug-uart is not being used for our products.
+diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
+index 001fbf537440a..a1d94be7883a0 100644
+--- a/drivers/gpu/drm/msm/msm_submitqueue.c
++++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+@@ -71,8 +71,10 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+ 	queue->flags = flags;
+ 
+ 	if (priv->gpu) {
+-		if (prio >= priv->gpu->nr_rings)
++		if (prio >= priv->gpu->nr_rings) {
++			kfree(queue);
+ 			return -EINVAL;
++		}
+ 
+ 		queue->prio = prio;
+ 	}
+-- 
+2.25.1
 
-So we can just delete it from the tree?
-
-thanks,
-
-greg k-h
