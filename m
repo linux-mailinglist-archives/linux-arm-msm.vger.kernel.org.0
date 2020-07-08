@@ -2,203 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B9C22191DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 22:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AF19219244
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 23:17:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725915AbgGHUx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 16:53:59 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24905 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725787AbgGHUx7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 16:53:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594241637; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=JXEjENLH7MbraRA/pMvTjsju07jH8KL7dOAaR98y5WU=;
- b=Nd/XePXABCvCE8cPaOiV1raYGbKI8LqWaz1zrXDOQxevfcydbjlJS218XAKq7E4gpoKr653a
- YirOWN9ksAB1MPkENASOLQ2RZd62ctQvDyBAXt3gfIZgLPp1dxf0JaenoKa5OqE1U4GSpFMD
- RtFma+2Aq/O2vfNOzhp5kqxIYDo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n16.prod.us-west-2.postgun.com with SMTP id
- 5f06325da33b1a3dd42fe751 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Jul 2020 20:53:49
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D11E1C433CA; Wed,  8 Jul 2020 20:53:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1A121C433C8;
-        Wed,  8 Jul 2020 20:53:49 +0000 (UTC)
+        id S1726044AbgGHVQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 17:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725915AbgGHVQx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 17:16:53 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF53C08C5CE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 14:16:53 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id d194so18901351pga.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 14:16:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I7Vp4IuLZ1fVFx/6cLby6T01RfWxA+FZRBxb5ymhKT4=;
+        b=DG7Tq5xEaJXFcxP4mcYE+im28DTZQdmZDWvSKnqffveDKPj3fO/xuVFGGKoMptZTQ8
+         LY97zeiSNQNbHLYq6snNwSh90+f3Fnp9Bj5lUrM5x+HMl+04tmbtcdP+LKDw1p3WpkmA
+         PQkWAFIZc+06vjWVjULcB7qsQMylExydLQhwo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I7Vp4IuLZ1fVFx/6cLby6T01RfWxA+FZRBxb5ymhKT4=;
+        b=KoQb9Q8iusyeIx4PenTG9A9KRep7w0mi3Tka2uFYinzjFriV54gD7yvBXg1fca39l8
+         DSZbbpI2q2b+AR7MzbZqx8qF6GLw8oleZ2Cs4hBq9hPXb2tfV++ND1k3T55FYPBx4vSC
+         8sVxAEEkk+17lx0OO9Xl6QDUIKNq7EbeUdlDr17hoP8T8I4xfLi8QN9NKwDfLWqebeL3
+         fgXSa6gz8tfHeOG3FH0Qt5KiPts9jA+7yzSE5RldU22MyzCpf59K1JXPYxU8/mrpMNnD
+         0s/JbBxycH0vbeFuW2TUHvrAYme8IvEI6YCjFE6tsm2GXK/TOwcWrq+rl6iVOBU/NUsH
+         t4Pg==
+X-Gm-Message-State: AOAM5312QpEMLT/XDZuFyCdeQWcoFx/SLQXqlhKngD1Rr/iyddgZdoKF
+        oYpZvVaCeaIc6Uap7LalMm8zlw==
+X-Google-Smtp-Source: ABdhPJxuMVCDqicP0QTyskpceVvBBaKgMk43D7cr7sg5uyWx5sV1LZCBwu7yN9Mi4xs8tEXPi85ctw==
+X-Received: by 2002:aa7:930b:: with SMTP id 11mr51514573pfj.320.1594243012759;
+        Wed, 08 Jul 2020 14:16:52 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id f3sm381600pju.54.2020.07.08.14.16.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2020 14:16:52 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     linus.walleij@linaro.org
+Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        cychiang@chromium.org, ilina@codeaurora.org, agross@kernel.org,
+        rnayak@codeaurora.org, mkshah@codeaurora.org,
+        bjorn.andersson@linaro.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Marc Zyngier <maz@kernel.org>, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: Handle broken PDC dual edge case on sc7180
+Date:   Wed,  8 Jul 2020 14:16:25 -0700
+Message-Id: <20200708141610.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
+X-Mailer: git-send-email 2.27.0.383.g050319c2ae-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 08 Jul 2020 13:53:49 -0700
-From:   bbhatt@codeaurora.org
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH v4 3/9] bus: mhi: core: Use helper API to trigger a
- non-blocking host resume
-In-Reply-To: <20200704144714.GC3066@Mani-XPS-13-9360>
-References: <1593448782-8385-1-git-send-email-bbhatt@codeaurora.org>
- <1593448782-8385-4-git-send-email-bbhatt@codeaurora.org>
- <20200704144714.GC3066@Mani-XPS-13-9360>
-Message-ID: <ed30fd4330863c9743a019b6bd89aabd@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-04 07:47, Manivannan Sadhasivam wrote:
-> On Mon, Jun 29, 2020 at 09:39:36AM -0700, Bhaumik Bhatt wrote:
->> Autonomous low power mode support requires the MHI host to resume from
->> multiple places and post a wakeup source to exit system suspend. This
->> needs to be done in a non-blocking manner. Introduce a helper API to
->> trigger the host resume for data transfers and other non-blocking use
->> cases while supporting implementation of autonomous low power modes.
->> 
-> 
-> Why can't you use pm_wakeup_event() as done in __mhi_device_get_sync()?
-> 
-> Thanks,
-> Mani
-> 
+As per Qualcomm, there is a PDC hardware issue (with the specific IP
+rev that exists on sc7180) that causes the PDC not to work properly
+when configured to handle dual edges.
 
-I forgot to address the __mhi_device_get_sync() function. Thanks for 
-pointing out.
+Let's work around this by emulating only ever letting our parent see
+requests for single edge interrupts on affected hardware.
 
-Is it preferable to always post wakeup source with hard boolean set?
-We do want to wakeup from Suspend-to-Idle if system suspend happens to 
-go that route.
+Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+As far as I can tell everything here should work and the limited
+testing I'm able to give it shows that, in fact, I can detect both
+edges.
 
-As of now, we just by default do regular wakeup event and not hard.
-I figured at some point we might need to distinguish between hard vs 
-regular, hence the option but
-it can be eliminated in favor of one or another.
+Please give this an extra thorough review since it's trying to find
+the exact right place to insert this code and I'm not massively
+familiar with all the frameworks.
 
-Thanks,
-Bhaumik
+If someone has hardware where it's easy to stress test this that'd be
+wonderful too.  The board I happen to have in front of me doesn't have
+any easy-to-toggle GPIOs where I can just poke a button or a switch to
+generate edges.  My testing was done by hacking the "write protect"
+GPIO on my board into gpio-keys as a dual-edge interrupt and then
+sending commands to our security chip to toggle it--not exactly great
+for testing to make sure there are no race conditions if the interrupt
+bounces a lot.
 
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/internal.h |  8 ++++++++
->>  drivers/bus/mhi/core/main.c     | 21 +++++++--------------
->>  drivers/bus/mhi/core/pm.c       |  6 ++----
->>  3 files changed, 17 insertions(+), 18 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/internal.h 
->> b/drivers/bus/mhi/core/internal.h
->> index bcfa7b6..cb32eaf 100644
->> --- a/drivers/bus/mhi/core/internal.h
->> +++ b/drivers/bus/mhi/core/internal.h
->> @@ -599,6 +599,14 @@ int mhi_queue_state_transition(struct 
->> mhi_controller *mhi_cntrl,
->>  int mhi_send_cmd(struct mhi_controller *mhi_cntrl, struct mhi_chan 
->> *mhi_chan,
->>  		 enum mhi_cmd_type cmd);
->> 
->> +static inline void mhi_trigger_resume(struct mhi_controller 
->> *mhi_cntrl,
->> +				      bool hard_wakeup)
->> +{
->> +	pm_wakeup_dev_event(&mhi_cntrl->mhi_dev->dev, 0, hard_wakeup);
->> +	mhi_cntrl->runtime_get(mhi_cntrl);
->> +	mhi_cntrl->runtime_put(mhi_cntrl);
->> +}
->> +
->>  /* Register access methods */
->>  void mhi_db_brstmode(struct mhi_controller *mhi_cntrl, struct db_cfg 
->> *db_cfg,
->>  		     void __iomem *db_addr, dma_addr_t db_val);
->> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> index 1f622ce..8d6ec34 100644
->> --- a/drivers/bus/mhi/core/main.c
->> +++ b/drivers/bus/mhi/core/main.c
->> @@ -909,8 +909,7 @@ void mhi_ctrl_ev_task(unsigned long data)
->>  		 * process it since we are probably in a suspended state,
->>  		 * so trigger a resume.
->>  		 */
->> -		mhi_cntrl->runtime_get(mhi_cntrl);
->> -		mhi_cntrl->runtime_put(mhi_cntrl);
->> +		mhi_trigger_resume(mhi_cntrl, false);
->> 
->>  		return;
->>  	}
->> @@ -971,10 +970,8 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, 
->> enum dma_data_direction dir,
->>  	}
->> 
->>  	/* we're in M3 or transitioning to M3 */
->> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
->> -		mhi_cntrl->runtime_get(mhi_cntrl);
->> -		mhi_cntrl->runtime_put(mhi_cntrl);
->> -	}
->> +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
->> +		mhi_trigger_resume(mhi_cntrl, false);
->> 
->>  	/* Toggle wake to exit out of M2 */
->>  	mhi_cntrl->wake_toggle(mhi_cntrl);
->> @@ -1032,10 +1029,8 @@ int mhi_queue_dma(struct mhi_device *mhi_dev, 
->> enum dma_data_direction dir,
->>  	}
->> 
->>  	/* we're in M3 or transitioning to M3 */
->> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
->> -		mhi_cntrl->runtime_get(mhi_cntrl);
->> -		mhi_cntrl->runtime_put(mhi_cntrl);
->> -	}
->> +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
->> +		mhi_trigger_resume(mhi_cntrl, false);
->> 
->>  	/* Toggle wake to exit out of M2 */
->>  	mhi_cntrl->wake_toggle(mhi_cntrl);
->> @@ -1147,10 +1142,8 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, 
->> enum dma_data_direction dir,
->>  	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
->> 
->>  	/* we're in M3 or transitioning to M3 */
->> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
->> -		mhi_cntrl->runtime_get(mhi_cntrl);
->> -		mhi_cntrl->runtime_put(mhi_cntrl);
->> -	}
->> +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
->> +		mhi_trigger_resume(mhi_cntrl, false);
->> 
->>  	/* Toggle wake to exit out of M2 */
->>  	mhi_cntrl->wake_toggle(mhi_cntrl);
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index 661d704..5e3994e 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -1139,10 +1139,8 @@ void mhi_device_put(struct mhi_device *mhi_dev)
->> 
->>  	mhi_dev->dev_wake--;
->>  	read_lock_bh(&mhi_cntrl->pm_lock);
->> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
->> -		mhi_cntrl->runtime_get(mhi_cntrl);
->> -		mhi_cntrl->runtime_put(mhi_cntrl);
->> -	}
->> +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
->> +		mhi_trigger_resume(mhi_cntrl, false);
->> 
->>  	mhi_cntrl->wake_put(mhi_cntrl, false);
->>  	read_unlock_bh(&mhi_cntrl->pm_lock);
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
+ drivers/pinctrl/qcom/pinctrl-msm.c    | 80 +++++++++++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-msm.h    |  4 ++
+ drivers/pinctrl/qcom/pinctrl-sc7180.c |  1 +
+ 3 files changed, 85 insertions(+)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 83b7d64bc4c1..45ca09ebb7b3 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -860,6 +860,79 @@ static void msm_gpio_irq_ack(struct irq_data *d)
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+ }
+ 
++/**
++ * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
++ * @d: The irq dta.
++ *
++ * This is much like msm_gpio_update_dual_edge_pos() but for IRQs that are
++ * normally handled by the parent irqchip.  The logic here is slightly
++ * different due to what's easy to do with our parent, but in principle it's
++ * the same.
++ */
++static void msm_gpio_update_dual_edge_parent(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
++	unsigned long flags;
++	int loop_limit = 100;
++	unsigned int val;
++	unsigned int type;
++
++	/* Read the value and make a guess about what edge we need to catch */
++	val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
++	type = val ? IRQ_TYPE_EDGE_FALLING : IRQ_TYPE_EDGE_RISING;
++
++	raw_spin_lock_irqsave(&pctrl->lock, flags);
++	do {
++		/* Set the parent to catch the next edge */
++		irq_chip_set_type_parent(d, type);
++
++		/*
++		 * Possibly the line changed between when we last read "val"
++		 * (and decided what edge we needed) and when set the edge.
++		 * If the value didn't change (or changed and then changed
++		 * back) then we're done.
++		 */
++		val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
++		if (type == IRQ_TYPE_EDGE_RISING) {
++			if (!val)
++				break;
++			type = IRQ_TYPE_EDGE_FALLING;
++		} else if (type == IRQ_TYPE_EDGE_FALLING) {
++			if (val)
++				break;
++			type = IRQ_TYPE_EDGE_RISING;
++		}
++	} while (loop_limit-- > 0);
++	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
++
++	if (!loop_limit)
++		dev_err(pctrl->dev, "dual-edge irq failed to stabilize\n");
++}
++
++void msm_gpio_handle_dual_edge_parent_irq(struct irq_desc *desc)
++{
++	struct irq_data	*d = &desc->irq_data;
++
++	/* Make sure we're primed for the next edge */
++	msm_gpio_update_dual_edge_parent(d);
++
++	/* Pass on to the normal interrupt handler */
++	handle_fasteoi_irq(desc);
++}
++
++static bool msm_gpio_needs_dual_edge_parent_workaround(struct irq_data *d,
++						       unsigned int type)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++
++	return type == IRQ_TYPE_EDGE_BOTH &&
++	       pctrl->soc->wakeirq_dual_edge_errata && d->parent_data &&
++	       test_bit(d->hwirq, pctrl->skip_wake_irqs);
++}
++
+ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -868,6 +941,13 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	unsigned long flags;
+ 	u32 val;
+ 
++	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
++		irq_set_handler_locked(d, msm_gpio_handle_dual_edge_parent_irq);
++		msm_gpio_update_dual_edge_parent(d);
++
++		return 0;
++	}
++
+ 	if (d->parent_data)
+ 		irq_chip_set_type_parent(d, type);
+ 
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index 9452da18a78b..7486fe08eb9b 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -113,6 +113,9 @@ struct msm_gpio_wakeirq_map {
+  * @pull_no_keeper: The SoC does not support keeper bias.
+  * @wakeirq_map:    The map of wakeup capable GPIOs and the pin at PDC/MPM
+  * @nwakeirq_map:   The number of entries in @wakeirq_map
++ * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
++ *                            to be aware that their parent can't handle dual
++ *                            edge interrupts.
+  */
+ struct msm_pinctrl_soc_data {
+ 	const struct pinctrl_pin_desc *pins;
+@@ -128,6 +131,7 @@ struct msm_pinctrl_soc_data {
+ 	const int *reserved_gpios;
+ 	const struct msm_gpio_wakeirq_map *wakeirq_map;
+ 	unsigned int nwakeirq_map;
++	bool wakeirq_dual_edge_errata;
+ };
+ 
+ extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+index 1b6465a882f2..1d9acad3c1ce 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+@@ -1147,6 +1147,7 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+ 	.ntiles = ARRAY_SIZE(sc7180_tiles),
+ 	.wakeirq_map = sc7180_pdc_map,
+ 	.nwakeirq_map = ARRAY_SIZE(sc7180_pdc_map),
++	.wakeirq_dual_edge_errata = true,
+ };
+ 
+ static int sc7180_pinctrl_probe(struct platform_device *pdev)
+-- 
+2.27.0.383.g050319c2ae-goog
+
