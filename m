@@ -2,95 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19D2321924B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 23:19:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A0B02193FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 01:03:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726145AbgGHVTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 17:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57316 "EHLO
+        id S1725903AbgGHXDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 19:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbgGHVTf (ORCPT
+        with ESMTP id S1726193AbgGHXDr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 17:19:35 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C73C061A0B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 14:19:35 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id k7so23955072vso.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 14:19:35 -0700 (PDT)
+        Wed, 8 Jul 2020 19:03:47 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E575C061A0B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 16:03:47 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id b185so93504qkg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 16:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/y9ZwmNn+oHS/YG99lAA1vbL+yYfWBpKvPtygJNnx1Y=;
-        b=RbdOVmNLjU1dmqCFDkewrU07toCP6wp5eolc5J+eZG1aV0cymd0po74ugeBqP50Ln5
-         mAerEGGHvwIPfsv/GD4tVXPwsYeKgvvwwJdzSeEtH5wxNt2BIMmDwhaxXREjc6ohOSRe
-         oPjk2ZFYEIOsgoY5s+WuADTF1hRrBpUNm5+WI=
+        bh=To0+Smg43e/9CvTBABgED+cYpEQSStMGVMvi2i5fPzg=;
+        b=RNAYnBEgE2TiqdyUeojImy8gOwbVIOFQQSEjYG9KHdt061+dFG2b6jIUUBiUdQPmWP
+         deilgIVor23VxDCpWJSMXIwqiBgoH2437YnkMzPREaSjNBTwA6LUpqctj7unzQTUdblH
+         y4ikK2xUtF+NbXQGkN8KYqXc1LKB/rvSP17sA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/y9ZwmNn+oHS/YG99lAA1vbL+yYfWBpKvPtygJNnx1Y=;
-        b=SeAorMbk/REogV7+hZYYPXKyhMZBIw/KqAnrimzHbAMy6bb3fgxuZvv7wbA/vRqBpm
-         RTdwuzzUMDnBkn4vNW9udzo/qsUX95+1HSDUbmQQagEQLe2vVEUA2hKmLguEk+W0Oa9w
-         ELXk0PgEDsjJv2pqJwXciF0wubEUinnpc9sZWtxUC8AtN/ooqfSSq3r25uqy5YlVZeHZ
-         HzvKP6YJBRsrLO0pIURQDeqkZhj2dSSgE5G1EKQQWnLvh8YdXfqMw16hHHPgZhztzxoI
-         AM9DwPQJzRx1lkW0F+lorkrXD/hmnCzjtnyoGFhiIGE8hkflqrw265oYqBsbBKXrmgyK
-         rsSg==
-X-Gm-Message-State: AOAM533L/Af3FewNuQiuDgU/8IyEvIy/0SlBLGmiUyNi29+VpFoplouo
-        uSn5wYWKcECw18RKuFkHfBa1RBPILh0=
-X-Google-Smtp-Source: ABdhPJwySgIU3SqSWW8+EOFCuios6IpdjMtUFftSzy9lQGTVTjMkjpWBUa3CXm8OnOsdQk++fzFGpg==
-X-Received: by 2002:a67:f856:: with SMTP id b22mr30147281vsp.123.1594243174525;
-        Wed, 08 Jul 2020 14:19:34 -0700 (PDT)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id v10sm147929vkv.41.2020.07.08.14.19.32
+        bh=To0+Smg43e/9CvTBABgED+cYpEQSStMGVMvi2i5fPzg=;
+        b=DJYCqIFrcZ+uR/7FjYVnvFb8ouLPY1wTY1RrXDXxzM5Fi71W81oKT4gZiPJh2URiUs
+         Od/9BvJ68U/ynWCNt39pkRSwYY6KBBN5ME8Rb7wBpsKWFDeAK+ziJDRfK7Gq78Oynuh2
+         lum6bPz9d+p9enuL7wtAPmWMe1870vwIU1vd5CMuxBj35YT6S3y56fJEo0tf2xUpnDKc
+         ioojnxIfvlER5JmmPPbhqClSR6ZuYLTw26z6ifAOuPmiEJMKfEfiQlxJg3tMv1ucjuqu
+         XYO7vkajEoWi9WabdehmiveUDkllnfWG98g3knNojTUmyomuP3fKP75iY65LhUxvlScS
+         QhVQ==
+X-Gm-Message-State: AOAM533dl3y5XBVN8vxWIaD5H40b63O440WuCASVT+IGZ6sc4YSDuPBi
+        luO8vgbDF9d+ULTUaIu8IOiDtYUssrE=
+X-Google-Smtp-Source: ABdhPJyCWTwsAhMdfv6X+il5uULmtcJgL/Tb/78kqv0D2WOmaLLANiilIDGyfmmeDzT6i//nZHwOfg==
+X-Received: by 2002:a05:620a:1094:: with SMTP id g20mr54235852qkk.309.1594249425927;
+        Wed, 08 Jul 2020 16:03:45 -0700 (PDT)
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com. [209.85.222.174])
+        by smtp.gmail.com with ESMTPSA id o18sm1364598qkk.91.2020.07.08.16.03.42
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2020 14:19:32 -0700 (PDT)
-Received: by mail-vs1-f48.google.com with SMTP id a17so14394135vsq.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 14:19:32 -0700 (PDT)
-X-Received: by 2002:a67:69c1:: with SMTP id e184mr13796424vsc.119.1594243172403;
- Wed, 08 Jul 2020 14:19:32 -0700 (PDT)
+        Wed, 08 Jul 2020 16:03:42 -0700 (PDT)
+Received: by mail-qk1-f174.google.com with SMTP id z63so61367qkb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 16:03:42 -0700 (PDT)
+X-Received: by 2002:a37:b6c6:: with SMTP id g189mr44795113qkf.206.1594249421577;
+ Wed, 08 Jul 2020 16:03:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <1593762506-32680-1-git-send-email-rnayak@codeaurora.org>
- <CAD=FV=WyhJ6g0DZS=ysT-AyXJoiRX=UFE9fXY2NEHfuUHYUXCQ@mail.gmail.com>
- <20200706203805.GS388985@builder.lan> <c747043d-c69e-4153-f2ca-16f1fc3063c2@codeaurora.org>
- <CAD=FV=Xs9Z37hv=CPgLEALoSoX=Uyir0s=ker=YKecA+Lhy1Qg@mail.gmail.com>
- <56fb02df-372d-935a-cc39-c13289d65c0d@codeaurora.org> <CAD=FV=VcBK02CS+ms0HtV0f_t7G7-0rzJ11xDKWdLanGVrx0QA@mail.gmail.com>
-In-Reply-To: <CAD=FV=VcBK02CS+ms0HtV0f_t7G7-0rzJ11xDKWdLanGVrx0QA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 8 Jul 2020 14:19:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WeXKAfWTK9q9u4m7=OU51rqQ975B+NBQDJT_sedPFOfQ@mail.gmail.com>
-Message-ID: <CAD=FV=WeXKAfWTK9q9u4m7=OU51rqQ975B+NBQDJT_sedPFOfQ@mail.gmail.com>
-Subject: Re: [PATCH v2] pinctrl: qcom: sc7180: Make gpio28 non wakeup capable
- for google,lazor
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LinusW <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20200707101712.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
+In-Reply-To: <20200707101712.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
+From:   Brian Norris <briannorris@chromium.org>
+Date:   Wed, 8 Jul 2020 16:03:28 -0700
+X-Gmail-Original-Message-ID: <CA+ASDXMXtwdV4BNL1GSj8DY-3z8-dZ=1hP8Xv_R-AjKvJs0NMw@mail.gmail.com>
+Message-ID: <CA+ASDXMXtwdV4BNL1GSj8DY-3z8-dZ=1hP8Xv_R-AjKvJs0NMw@mail.gmail.com>
+Subject: Re: [PATCH] ath10k: Keep track of which interrupts fired, don't poll them
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Kalle Valo <kvalo@codeaurora.org>,
+        ath10k <ath10k@lists.infradead.org>,
+        saiprakash.ranjan@codeaurora.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        Rakesh Pillai <pillair@codeaurora.org>,
+        Abhishek Kumar <kuabhs@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        "<netdev@vger.kernel.org>" <netdev@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Wed, Jul 8, 2020 at 6:42 AM Doug Anderson <dianders@chromium.org> wrote:
+On Tue, Jul 7, 2020 at 10:18 AM Douglas Anderson <dianders@chromium.org> wrote:
+> diff --git a/drivers/net/wireless/ath/ath10k/ce.h b/drivers/net/wireless/ath/ath10k/ce.h
+> index a440aaf74aa4..666ce384a1d8 100644
+> --- a/drivers/net/wireless/ath/ath10k/ce.h
+> +++ b/drivers/net/wireless/ath/ath10k/ce.h
+...
+> @@ -376,12 +377,9 @@ static inline u32 ath10k_ce_interrupt_summary(struct ath10k *ar)
+>  {
+>         struct ath10k_ce *ce = ath10k_ce_priv(ar);
 >
-> Was there something wrong with my proof of concept patch?  Unless I
-> get swamped with other things, my plan was to try to make that more
-> real and post it unless someone told me why it was wrong...
+> -       if (!ar->hw_params.per_ce_irq)
 
-OK, I spent a bit of time poking at it and cleaning it.  I _think_
-this is right now:
+If I'm reading correctly, you're removing the only remaining use of
+'per_ce_irq'. Should we kill the field entirely? Or perhaps we should
+leave some kind of WARN_ON() (BUG_ON()?) if this function is called
+erroneously with per_ce_irq==true? But I suppose this driver is full
+of landmines if the CE API is used incorrectly.
 
-https://lore.kernel.org/r/20200708141610.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid
+> -               return CE_WRAPPER_INTERRUPT_SUMMARY_HOST_MSI_GET(
+> -                       ce->bus_ops->read32((ar), CE_WRAPPER_BASE_ADDRESS +
+> -                       CE_WRAPPER_INTERRUPT_SUMMARY_ADDRESS));
+> -       else
+> -               return ath10k_ce_gen_interrupt_summary(ar);
+> +       return CE_WRAPPER_INTERRUPT_SUMMARY_HOST_MSI_GET(
+> +               ce->bus_ops->read32((ar), CE_WRAPPER_BASE_ADDRESS +
+> +               CE_WRAPPER_INTERRUPT_SUMMARY_ADDRESS));
+>  }
+>
+>  /* Host software's Copy Engine configuration. */
 
-Please test and/or review.
+> diff --git a/drivers/net/wireless/ath/ath10k/snoc.h b/drivers/net/wireless/ath/ath10k/snoc.h
+> index a3dd06f6ac62..5095d1893681 100644
+> --- a/drivers/net/wireless/ath/ath10k/snoc.h
+> +++ b/drivers/net/wireless/ath/ath10k/snoc.h
+> @@ -78,6 +78,7 @@ struct ath10k_snoc {
+>         unsigned long flags;
+>         bool xo_cal_supported;
+>         u32 xo_cal_data;
+> +       DECLARE_BITMAP(pending_ce_irqs, CE_COUNT_MAX);
 
--Doug
+Do you need to clear this map if the interface goes down or if there's
+a firmware crash? Right now, I don't think there's a guarantee that
+we'll run through a NAPI poll in those cases, which is the only place
+you clear the map, and if the hardware/firmware has been reset, the
+state map is probably not valid.
+
+Otherwise, looks OK to me:
+
+Reviewed-by: Brian Norris <briannorris@chromium.org>
