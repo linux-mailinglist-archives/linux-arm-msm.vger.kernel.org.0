@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A162185C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 13:12:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B45492185CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 13:14:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728877AbgGHLMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 07:12:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47458 "EHLO
+        id S1728724AbgGHLOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 07:14:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728872AbgGHLMh (ORCPT
+        with ESMTP id S1728658AbgGHLOe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 07:12:37 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3762FC08E763
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 04:12:37 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id f139so2516930wmf.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 04:12:37 -0700 (PDT)
+        Wed, 8 Jul 2020 07:14:34 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE08C08C5DC
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 04:14:34 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id 17so2537264wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 04:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=KWMYsCIIwxFSG880I4t0GE07CfKjbPZlJ7KIzjiu+UA=;
-        b=FlRyf2w3IeuJcSIXaRhEyiB+m1dyETGbjVwWInkoQG8zzP6AIOzw1VvGcKTto7BQId
-         i0oztRldanGJbnXrtAhGnGzNA78Qb7acEwIBrg1HxZbDyU+xA0FJWx14yUUgmfe3kAUN
-         ozlTiB6YXLFRcfVPJwoXz0Qe4fmlfBY/5hXxMBNDgYOYwuvQ9GGxnT/05LD05pTtRr0B
-         MH5glHsvUljRB6XBRqxj8wU3tyURW2JY4ug3/wdTOB6gAo8QR3waseZDSgiFiMf7pGKR
-         V2f1HL8APW9sTxoElaVPxGdk34BYPxEDwhO5VHOuEiIjSsE4QDboz+tCRuSmHKtTSPV8
-         ePhg==
+        bh=DMw4+fPRGMaXG7hndNa1cNxYT36XUGUYTrv9BZ28ww0=;
+        b=tmkQJgYxYvMfsw2nQIhiJGMliDc9xePDNklFbCpzEnmfNrhZ3ADzGcnv46CcgNaGG/
+         TFKSX37aEse++WZY8OLMvbdmWIUXkjFPWYjU3NHOZPhAiZhYCM7cjrZIREHauaCOfKYF
+         XJ46tYARoLKrRH/4EDh7CIXNnMHj49uzV9wISO0wXYU87a7ZWF3NDk0S0stf/JLYNkFx
+         jBOOox1kWc21p0taavMn/f6Vxlmh0VDtJ0Vc6nJ6rBfYDzlk+0zXgcAzB+/oTdXZD2/z
+         XyPW1myJ/3l1gggzhq14CczQ++YlSc+X2aibaiUkX71E4umV/JkD2MasEar7DSj+mLBH
+         qPaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KWMYsCIIwxFSG880I4t0GE07CfKjbPZlJ7KIzjiu+UA=;
-        b=Ue8Iju3wUHFuhd919tIaWBlGo83U/GIZwdPJ1JbHqpKfvGgt0Qb7fAae50/yezZ8gL
-         OVAAj0x6et/UhNNHuzAtAYaPr6Oeh0d24QTRM/DdxOxokmQfBh4R2PEXGGs7XoPRFSNu
-         X46DldKPyXe0kKoA27ZlyPM4YFiw5mOCPcuZ1XfJY8mrkX+HckC9yoA+vWzK0cp7d5Gc
-         IqlXTNr/pGRcZTR94NQ3Axsh/cUrZxrPS6ECsxkHqnxlryDJER21dYa6+wKCcQOoE5F1
-         ELERccjBbBPJCFXFHYPfcjnBZCDYmt3F41rbwY/3p3AJ73U25CsW57avOgJT58XesG3e
-         JTWw==
-X-Gm-Message-State: AOAM533yjXuiq9NA6/U91z5+iFdsFknRfuoBnBuxR9TEd17274+NTEov
-        +ZuQiPONbD/sf/yjvfcvj29vTQ==
-X-Google-Smtp-Source: ABdhPJxdNEZSUWxZN120W/Uysct/7lRd/HGK2fWkBPFYCgZ+eyy2mBJwgwJi42FTJzQdl9q4PNhayQ==
-X-Received: by 2002:a1c:2982:: with SMTP id p124mr9232454wmp.26.1594206755934;
-        Wed, 08 Jul 2020 04:12:35 -0700 (PDT)
+        bh=DMw4+fPRGMaXG7hndNa1cNxYT36XUGUYTrv9BZ28ww0=;
+        b=n4Q/oUwyr8XjDRlH1UYBnHsQ3oaKF6MpRS9X0HbApfjXKFcpyiSfTHM7m7m0+zYDwv
+         lupcxDNj0KRwn2IQpwak2WnYb5OCoBJ6mvFt5HDqWLLNRJ35/DzJ20z3GlIBXPV7EmCZ
+         OoAdJvztcncmnLydJSjqO3xoUFiQ1sriQJep/V6CeKV2yGxy7Ca1CGUgjP7qXWyqqFFc
+         As9CRDVP4gDY+IgHEKRbYSFAjv8UQDxZPzx9CJVsiNNRwkHl235cFgW3vc075SShHig6
+         7WwIRddD7p0oURJZxkHDq2oGaTqGMPuGMxpDL6eqrOrnkqUdSRSsX4zJ5XSG3gNXWDMM
+         M08g==
+X-Gm-Message-State: AOAM533H5kzNZc0qO/LIy0brRrRooms+APR46t2GUcQlnvNto0fVjUbm
+        zBNa1HPzJwetjYv5+t4gAl+F5w==
+X-Google-Smtp-Source: ABdhPJxjgpOLdK7XXUd4ThbhV82XPTgdLbJairgMJNL7e604Gj2YRDxht52niQkYjRTjIrae1pu8NA==
+X-Received: by 2002:a1c:e0c4:: with SMTP id x187mr8535587wmg.153.1594206873106;
+        Wed, 08 Jul 2020 04:14:33 -0700 (PDT)
 Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net. [86.9.19.6])
-        by smtp.gmail.com with ESMTPSA id v9sm6410921wri.3.2020.07.08.04.12.34
+        by smtp.gmail.com with ESMTPSA id a3sm5286137wmb.7.2020.07.08.04.14.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2020 04:12:35 -0700 (PDT)
-Date:   Wed, 8 Jul 2020 12:12:33 +0100
+        Wed, 08 Jul 2020 04:14:32 -0700 (PDT)
+Date:   Wed, 8 Jul 2020 12:14:30 +0100
 From:   Daniel Thompson <daniel.thompson@linaro.org>
 To:     Sam Ravnborg <sam@ravnborg.org>
 Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
@@ -71,34 +71,29 @@ Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
         Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
         Peter Ujfalusi <peter.ujfalusi@ti.com>,
         Tomi Valkeinen <tomi.valkeinen@ti.com>
-Subject: Re: [PATCH v4 16/20] backlight: jornada720_bl: introduce
- backlight_is_blank()
-Message-ID: <20200708111233.ui6r6bvdchj3vboj@holly.lan>
+Subject: Re: [PATCH v4 17/20] backlight: use backligt_get_brightness()
+Message-ID: <20200708111430.rkcnqla77hds6wg2@holly.lan>
 References: <20200703184546.144664-1-sam@ravnborg.org>
- <20200703184546.144664-17-sam@ravnborg.org>
+ <20200703184546.144664-18-sam@ravnborg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200703184546.144664-17-sam@ravnborg.org>
+In-Reply-To: <20200703184546.144664-18-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 03, 2020 at 08:45:42PM +0200, Sam Ravnborg wrote:
-> Use the backlight_is_blank() helper to simplify the code a bit.
-> This add support for fb_blank as a side-effect.
+On Fri, Jul 03, 2020 at 08:45:43PM +0200, Sam Ravnborg wrote:
+> Introduce the backlight_get_brightness() helper in all
+> video/backlight/* drivers.
+> This simplifies the code and align the implementation of the
+> update_status() operation across the different backlight drivers.
+> 
+> Some of the drivers gains a little extra functionality by the change
+> as they now respect the fb_blank() ioctl.
 > 
 > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Cc: Daniel Thompson <daniel.thompson@linaro.org>
-> Cc: Jingoo Han <jingoohan1@gmail.com>
-
-This driver exhibits the "how does userspace know what writing brightness zero to
-sysfs actually does" problem so can't use the backlight_get_brightness() helper.
-
-If you respin it would be good to see that in the patch description but
-that's such an extreme nitpick It think, either way, this can be:
 
 Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
