@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55CF5217ED1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 07:09:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE050217ED6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 07:09:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728786AbgGHFJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 01:09:09 -0400
+        id S1729183AbgGHFJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 01:09:15 -0400
 Received: from mail29.static.mailgun.info ([104.130.122.29]:35726 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728770AbgGHFJI (ORCPT
+        by vger.kernel.org with ESMTP id S1728770AbgGHFJP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 01:09:08 -0400
+        Wed, 8 Jul 2020 01:09:15 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594184948; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1594184954; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=1ZujPmmrdXwQj6A/yKkRYaLiKfvr0DLGcZqMZHjYhWM=; b=QWdiw7GgcR1NBA6YnDTxKbZB2cZRopmBtIOd7YFgbRbwOxwAEp5LRDXyeB7+c7FJJtmKdRZr
- a2XN4maYsXCLpIT6Y51aNI6W8CprfODqtMDwMg186slaX7pWk2HTMifT4/PwK0KsqQAx1h7h
- 3N4bu+vj3xh+cNlgJnckgWJsEE4=
+ bh=qjaJOKBhp7VgoLTWess/RFkZK/lwqYe1PHSdCdXb8EM=; b=YcWYSWbQeEDDyduhWG9Z4xlaX1/SUH13VXnRmwjndcJHxN0n/ECFB/BCi1WLQ7Hmcm66MCPx
+ 8tQbnMD/AFcxGntOqTCUCnfzRHXCbiVgrMd4HHfvKEJ9m47RYzNIxKPCh1AocqwXdAerp2jw
+ 2Fzf93DZnDIdylmaoAWQzi9DDJw=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f0554daf97e988aab54c0ad (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Jul 2020 05:08:42
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f0554e1f97e988aab54c6f7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Jul 2020 05:08:49
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DCB14C4339C; Wed,  8 Jul 2020 05:08:42 +0000 (UTC)
+        id A7594C433C8; Wed,  8 Jul 2020 05:08:48 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
+        autolearn=ham autolearn_force=no version=3.4.0
 Received: from rohkumar-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rohitkr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3BDCC433C6;
-        Wed,  8 Jul 2020 05:08:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C3BDCC433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DCF2FC43387;
+        Wed,  8 Jul 2020 05:08:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DCF2FC43387
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
 From:   Rohit kumar <rohitkr@codeaurora.org>
@@ -49,11 +49,10 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Ajit Pandey <ajitp@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>
-Subject: [PATCH v3 1/8] ASoC: qcom: Add common array to initialize soc based core clocks
-Date:   Wed,  8 Jul 2020 10:38:09 +0530
-Message-Id: <1594184896-10629-2-git-send-email-rohitkr@codeaurora.org>
+Cc:     Rohit kumar <rohitkr@codeaurora.org>
+Subject: [PATCH v3 2/8] ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+Date:   Wed,  8 Jul 2020 10:38:10 +0530
+Message-Id: <1594184896-10629-3-git-send-email-rohitkr@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1594184896-10629-1-git-send-email-rohitkr@codeaurora.org>
 References: <1594184896-10629-1-git-send-email-rohitkr@codeaurora.org>
@@ -62,120 +61,201 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ajit Pandey <ajitp@codeaurora.org>
+Ahbix clock is optional clock and not needed for all platforms.
+Move it to lpass-apq8016/ipq806x as it is not needed for sc7180.
 
-LPASS variants have their own soc specific clocks that needs to be
-enabled for MI2S audio support. Added a common variable in drvdata to
-initialize such clocks using bulk clk api. Such clock names is
-defined in variants specific data and needs to fetched during init.
-
-Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
 Signed-off-by: Rohit kumar <rohitkr@codeaurora.org>
 ---
- sound/soc/qcom/lpass-apq8016.c | 39 +++++++++++++++++++--------------------
- sound/soc/qcom/lpass.h         | 10 +++++++---
- 2 files changed, 26 insertions(+), 23 deletions(-)
+ sound/soc/qcom/lpass-apq8016.c | 27 ++++++++++++++++++++++++++
+ sound/soc/qcom/lpass-cpu.c     | 40 ++++++++++-----------------------------
+ sound/soc/qcom/lpass-ipq806x.c | 43 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 80 insertions(+), 30 deletions(-)
 
 diff --git a/sound/soc/qcom/lpass-apq8016.c b/sound/soc/qcom/lpass-apq8016.c
-index b3610d0..8210e37 100644
+index 8210e37..fe4c258 100644
 --- a/sound/soc/qcom/lpass-apq8016.c
 +++ b/sound/soc/qcom/lpass-apq8016.c
-@@ -161,32 +161,27 @@ static int apq8016_lpass_free_dma_channel(struct lpass_data *drvdata, int chan)
- static int apq8016_lpass_init(struct platform_device *pdev)
- {
- 	struct lpass_data *drvdata = platform_get_drvdata(pdev);
-+	struct lpass_variant *variant = drvdata->variant;
- 	struct device *dev = &pdev->dev;
--	int ret;
-+	int ret, i;
- 
--	drvdata->pcnoc_mport_clk = devm_clk_get(dev, "pcnoc-mport-clk");
--	if (IS_ERR(drvdata->pcnoc_mport_clk)) {
--		dev_err(dev, "error getting pcnoc-mport-clk: %ld\n",
--			PTR_ERR(drvdata->pcnoc_mport_clk));
--		return PTR_ERR(drvdata->pcnoc_mport_clk);
--	}
- 
--	ret = clk_prepare_enable(drvdata->pcnoc_mport_clk);
-+	drvdata->clks = devm_kcalloc(dev, variant->num_clks,
-+				     sizeof(*drvdata->clks), GFP_KERNEL);
-+	drvdata->num_clks = variant->num_clks;
-+
-+	for (i = 0; i < drvdata->num_clks; i++)
-+		drvdata->clks[i].id = variant->clk_name[i];
-+
-+	ret = devm_clk_bulk_get(dev, drvdata->num_clks, drvdata->clks);
- 	if (ret) {
--		dev_err(dev, "Error enabling pcnoc-mport-clk: %d\n", ret);
-+		dev_err(dev, "Failed to get clocks %d\n", ret);
+@@ -185,7 +185,33 @@ static int apq8016_lpass_init(struct platform_device *pdev)
  		return ret;
  	}
  
--	drvdata->pcnoc_sway_clk = devm_clk_get(dev, "pcnoc-sway-clk");
--	if (IS_ERR(drvdata->pcnoc_sway_clk)) {
--		dev_err(dev, "error getting pcnoc-sway-clk: %ld\n",
--			PTR_ERR(drvdata->pcnoc_sway_clk));
--		return PTR_ERR(drvdata->pcnoc_sway_clk);
--	}
--
--	ret = clk_prepare_enable(drvdata->pcnoc_sway_clk);
-+	ret = clk_bulk_prepare_enable(drvdata->num_clks, drvdata->clks);
- 	if (ret) {
--		dev_err(dev, "Error enabling pcnoc_sway_clk: %d\n", ret);
-+		dev_err(dev, "apq8016 clk_enable failed\n");
- 		return ret;
- 	}
- 
-@@ -197,8 +192,7 @@ static int apq8016_lpass_exit(struct platform_device *pdev)
- {
- 	struct lpass_data *drvdata = platform_get_drvdata(pdev);
- 
--	clk_disable_unprepare(drvdata->pcnoc_mport_clk);
--	clk_disable_unprepare(drvdata->pcnoc_sway_clk);
++	drvdata->ahbix_clk = devm_clk_get(dev, "ahbix-clk");
++	if (IS_ERR(drvdata->ahbix_clk)) {
++		dev_err(dev, "error getting ahbix-clk: %ld\n",
++				PTR_ERR(drvdata->ahbix_clk));
++		ret = PTR_ERR(drvdata->ahbix_clk);
++		goto err_ahbix_clk;
++	}
++
++	ret = clk_set_rate(drvdata->ahbix_clk, LPASS_AHBIX_CLOCK_FREQUENCY);
++	if (ret) {
++		dev_err(dev, "error setting rate on ahbix_clk: %d\n", ret);
++		goto err_ahbix_clk;
++	}
++	dev_dbg(dev, "set ahbix_clk rate to %lu\n",
++			clk_get_rate(drvdata->ahbix_clk));
++
++	ret = clk_prepare_enable(drvdata->ahbix_clk);
++	if (ret) {
++		dev_err(dev, "error enabling ahbix_clk: %d\n", ret);
++		goto err_ahbix_clk;
++	}
++
+ 	return 0;
++
++err_ahbix_clk:
 +	clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
++	return ret;
+ }
+ 
+ static int apq8016_lpass_exit(struct platform_device *pdev)
+@@ -193,6 +219,7 @@ static int apq8016_lpass_exit(struct platform_device *pdev)
+ 	struct lpass_data *drvdata = platform_get_drvdata(pdev);
+ 
+ 	clk_bulk_disable_unprepare(drvdata->num_clks, drvdata->clks);
++	clk_disable_unprepare(drvdata->ahbix_clk);
  
  	return 0;
  }
-@@ -219,6 +213,11 @@ static struct lpass_variant apq8016_data = {
- 	.wrdma_reg_stride	= 0x1000,
- 	.wrdma_channel_start	= 5,
- 	.wrdma_channels		= 2,
-+	.clk_name		= (const char*[]) {
-+				   "pcnoc-mport-clk",
-+				   "pcnoc-sway-clk",
-+				  },
-+	.num_clks		= 2,
- 	.dai_driver		= apq8016_lpass_cpu_dai_driver,
- 	.num_dai		= ARRAY_SIZE(apq8016_lpass_cpu_dai_driver),
- 	.dai_osr_clk_names	= (const char *[]) {
-diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-index bd19ec5..450020e 100644
---- a/sound/soc/qcom/lpass.h
-+++ b/sound/soc/qcom/lpass.h
-@@ -51,9 +51,9 @@ struct lpass_data {
- 	/* used it for handling interrupt per dma channel */
- 	struct snd_pcm_substream *substream[LPASS_MAX_DMA_CHANNELS];
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index e00a4af..f0c7e93 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -566,8 +566,13 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+ 		return PTR_ERR(drvdata->lpaif_map);
+ 	}
  
--	/* 8016 specific */
--	struct clk *pcnoc_mport_clk;
--	struct clk *pcnoc_sway_clk;
-+	/* SOC specific clock list */
-+	struct clk_bulk_data *clks;
-+	int num_clks;
+-	if (variant->init)
+-		variant->init(pdev);
++	if (variant->init) {
++		ret = variant->init(pdev);
++		if (ret) {
++			dev_err(dev, "error initializing variant: %d\n", ret);
++			return ret;
++		}
++	}
  
+ 	for (i = 0; i < variant->num_dai; i++) {
+ 		dai_id = variant->dai_driver[i].id;
+@@ -594,46 +599,22 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	drvdata->ahbix_clk = devm_clk_get(dev, "ahbix-clk");
+-	if (IS_ERR(drvdata->ahbix_clk)) {
+-		dev_err(dev, "error getting ahbix-clk: %ld\n",
+-			PTR_ERR(drvdata->ahbix_clk));
+-		return PTR_ERR(drvdata->ahbix_clk);
+-	}
+-
+-	ret = clk_set_rate(drvdata->ahbix_clk, LPASS_AHBIX_CLOCK_FREQUENCY);
+-	if (ret) {
+-		dev_err(dev, "error setting rate on ahbix_clk: %d\n", ret);
+-		return ret;
+-	}
+-	dev_dbg(dev, "set ahbix_clk rate to %lu\n",
+-		clk_get_rate(drvdata->ahbix_clk));
+-
+-	ret = clk_prepare_enable(drvdata->ahbix_clk);
+-	if (ret) {
+-		dev_err(dev, "error enabling ahbix_clk: %d\n", ret);
+-		return ret;
+-	}
+-
+ 	ret = devm_snd_soc_register_component(dev,
+ 					      &lpass_cpu_comp_driver,
+ 					      variant->dai_driver,
+ 					      variant->num_dai);
+ 	if (ret) {
+ 		dev_err(dev, "error registering cpu driver: %d\n", ret);
+-		goto err_clk;
++		goto err;
+ 	}
+ 
+ 	ret = asoc_qcom_lpass_platform_register(pdev);
+ 	if (ret) {
+ 		dev_err(dev, "error registering platform driver: %d\n", ret);
+-		goto err_clk;
++		goto err;
+ 	}
+ 
+-	return 0;
+-
+-err_clk:
+-	clk_disable_unprepare(drvdata->ahbix_clk);
++err:
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_platform_probe);
+@@ -645,7 +626,6 @@ int asoc_qcom_lpass_cpu_platform_remove(struct platform_device *pdev)
+ 	if (drvdata->variant->exit)
+ 		drvdata->variant->exit(pdev);
+ 
+-	clk_disable_unprepare(drvdata->ahbix_clk);
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/qcom/lpass-ipq806x.c b/sound/soc/qcom/lpass-ipq806x.c
+index 1987605..b7c0586 100644
+--- a/sound/soc/qcom/lpass-ipq806x.c
++++ b/sound/soc/qcom/lpass-ipq806x.c
+@@ -55,6 +55,47 @@ static struct snd_soc_dai_driver ipq806x_lpass_cpu_dai_driver = {
+ 	.ops    = &asoc_qcom_lpass_cpu_dai_ops,
  };
  
-@@ -89,6 +89,10 @@ struct lpass_variant {
- 	int num_dai;
- 	const char * const *dai_osr_clk_names;
- 	const char * const *dai_bit_clk_names;
++static int ipq806x_lpass_init(struct platform_device *pdev)
++{
++	struct lpass_data *drvdata = platform_get_drvdata(pdev);
++	struct device *dev = &pdev->dev;
++	int ret;
 +
-+	/* SOC specific clocks configuration */
-+	const char **clk_name;
-+	int num_clks;
++	drvdata->ahbix_clk = devm_clk_get(dev, "ahbix-clk");
++	if (IS_ERR(drvdata->ahbix_clk)) {
++		dev_err(dev, "error getting ahbix-clk: %ld\n",
++				PTR_ERR(drvdata->ahbix_clk));
++		ret = PTR_ERR(drvdata->ahbix_clk);
++		goto err_ahbix_clk;
++	}
++
++	ret = clk_set_rate(drvdata->ahbix_clk, LPASS_AHBIX_CLOCK_FREQUENCY);
++	if (ret) {
++		dev_err(dev, "error setting rate on ahbix_clk: %d\n", ret);
++		goto err_ahbix_clk;
++	}
++	dev_dbg(dev, "set ahbix_clk rate to %lu\n",
++			clk_get_rate(drvdata->ahbix_clk));
++
++	ret = clk_prepare_enable(drvdata->ahbix_clk);
++	if (ret) {
++		dev_err(dev, "error enabling ahbix_clk: %d\n", ret);
++		goto err_ahbix_clk;
++	}
++
++err_ahbix_clk:
++	return ret;
++}
++
++static int ipq806x_lpass_exit(struct platform_device *pdev)
++{
++	struct lpass_data *drvdata = platform_get_drvdata(pdev);
++
++	clk_disable_unprepare(drvdata->ahbix_clk);
++
++	return 0;
++}
++
+ static int ipq806x_lpass_alloc_dma_channel(struct lpass_data *drvdata, int dir)
+ {
+ 	if (dir == SNDRV_PCM_STREAM_PLAYBACK)
+@@ -90,6 +131,8 @@ static struct lpass_variant ipq806x_data = {
+ 	.dai_bit_clk_names	= (const char *[]) {
+ 				"mi2s-bit-clk",
+ 				},
++	.init			= ipq806x_lpass_init,
++	.exit			= ipq806x_lpass_exit,
+ 	.alloc_dma_channel	= ipq806x_lpass_alloc_dma_channel,
+ 	.free_dma_channel	= ipq806x_lpass_free_dma_channel,
  };
- 
- /* register the platform driver from the CPU DAI driver */
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
