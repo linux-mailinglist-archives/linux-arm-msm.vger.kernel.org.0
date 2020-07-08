@@ -2,72 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70B00217F19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 07:29:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 892D821800F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 08:59:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725784AbgGHF3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 01:29:44 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:33115 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725848AbgGHF3n (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 01:29:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594186183; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=H1KsZiKBnQeUBGPkmSKwKU0/CScTk+WjfjB+xahfqhQ=; b=RdU8GdYbzPP51Z5wkkVbs3oyT/UinxX9tJ3rEV1SOFzKdMHcB4OopikzeeaJh/o0K5hwbUuH
- sBJiTOK0AxOHKLzcHg+4HhpQUHvBN+yhQYkQRjZFkC9EA69NOKoJaYzicbq8pqh56kiG1w2g
- Z9eqB/GCs5lFl2uW5/QasNw+izM=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f0559c155886724ff59e797 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Jul 2020 05:29:37
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 81348C433C8; Wed,  8 Jul 2020 05:29:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.73.132])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729846AbgGHG7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 02:59:44 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35020 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726194AbgGHG7o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 02:59:44 -0400
+Received: from localhost.localdomain (unknown [122.182.251.219])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 94AA5C433C6;
-        Wed,  8 Jul 2020 05:29:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 94AA5C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH v2] pinctrl: qcom: sc7180: Make gpio28 non wakeup capable
- for google,lazor
-To:     Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LinusW <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>
-References: <1593762506-32680-1-git-send-email-rnayak@codeaurora.org>
- <CAD=FV=WyhJ6g0DZS=ysT-AyXJoiRX=UFE9fXY2NEHfuUHYUXCQ@mail.gmail.com>
- <20200706203805.GS388985@builder.lan>
- <c747043d-c69e-4153-f2ca-16f1fc3063c2@codeaurora.org>
- <CAD=FV=Xs9Z37hv=CPgLEALoSoX=Uyir0s=ker=YKecA+Lhy1Qg@mail.gmail.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <56fb02df-372d-935a-cc39-c13289d65c0d@codeaurora.org>
-Date:   Wed, 8 Jul 2020 10:59:30 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 36DCA2075B;
+        Wed,  8 Jul 2020 06:59:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594191583;
+        bh=XJuInuxOHD6Yk8crXfvZ8un1d/Cyt8V78YS8TieLKLc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=g3Xwsem7Pst2P3nEtC/CFj0f40mHZwdIY6kqx26B9FwEev7lyTd28eQJ7W1sXsMnA
+         16ocXKNteZYT3HtEFA2T6PvrhDFXHixTY6TBBodUDfxcobgxryq4o5Uo+E0KD+lvJU
+         lLrmnNzTg7S0Y9Vu44EOdbsOXP0JuW8Ja0dlaYWg=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH v4 0/4] Add LT9611 DSI to HDMI bridge
+Date:   Wed,  8 Jul 2020 12:29:20 +0530
+Message-Id: <20200708065924.59257-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=Xs9Z37hv=CPgLEALoSoX=Uyir0s=ker=YKecA+Lhy1Qg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -75,134 +51,44 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On 7/8/2020 4:33 AM, Doug Anderson wrote:
-> Hi,
->
-> On Mon, Jul 6, 2020 at 9:52 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>
->> []..
->>
->>>>> @@ -1151,6 +1168,10 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
->>>>>
->>>>>    static int sc7180_pinctrl_probe(struct platform_device *pdev)
->>>>>    {
->>>>> +       if (of_machine_is_compatible("google,lazor")) {
->>>>> +               sc7180_pinctrl.wakeirq_map = sc7180_lazor_pdc_map;
->>>>> +               sc7180_pinctrl.nwakeirq_map = ARRAY_SIZE(sc7180_lazor_pdc_map);
->>>>> +       }
->>>> As much as I want patches landed and things working, the above just
->>>> doesn't feel like a viable solution.  I guess it could work as a short
->>>> term hack but it's going to become untenable pretty quickly.
->>> I second that.
->>>
->>>> As we
->>>> have more variants of this we're going to have to just keep piling
->>>> more machines in here, right?  ...this is also already broken for us
->>>> because not all boards will have the "google,lazor" compatible.  From
->>>> the current Chrome OS here are the compatibles for various revs/SKUs
->>>>
->>>> compatible = "google,lazor-rev0", "qcom,sc7180";
->>>> compatible = "google,lazor-rev0-sku0", "qcom,sc7180";
->>>> compatible = "google,lazor", "qcom,sc7180";
->>>> compatible = "google,lazor-sku0", "qcom,sc7180";
->>>> compatible = "google,lazor-rev2", "qcom,sc7180";
->>>>
->>>> ...so of the 5 boards you'll only match one of them.
->>>>
->>>>
->>>> Maybe I'm jumping into a situation again where I'm ignorant since I
->>>> haven't followed all the prior conversation, but is it really that
->>>> hard to just add dual edge support to the PDC irqchip driver?  ...or
->> FWIK, this is really a PDC hardware issue (with the specific IP rev that exists
->> on sc7180) so working it around in SW could get ugly.
-> Ugh.  I guess it's ugly because the workaround would need to be in the
-> PDC driver but to properly do the workaround you need to be able to
-> read the state of the pin from the PDC driver?  ...and I guess you
-> can't do that with the PDC register space so you'd either need to
-> violate a layer or 3 of abstraction and snarf into the GPIO register
-> space from the PDC driver or you'd have to provide some sort of API
-> access from the PDC back down to the GPIO driver?
->
-> --
->
-> Actually, though, I'm still not sure why this would need to be in the
-> PDC driver.  Sure, you can't just magically re-use the existing
-> dual-edge emulation in pinctrl-msm.c, but you can add some new
-> dual-edge emulation for when your parent handles your interrupts,
-> can't you?  As per usually, I'm talking out of my rear end, but I
-> sorta imagine:
->
-> 1. At the head of msm_gpio_irq_set_type() if you detect that
-> "skip_wake_irqs" is set and you're on an SoC with this hardware errata
-> then you do a loop much like the one in
-> msm_gpio_update_dual_edge_pos() except that instead of changing the
-> polarity with msm_writel_intr_cfg() you change the polarity with
-> "irq_chip_set_type_parent()".
->
-> 2. At the head of msm_gpio_irq_ack() you make the same function call
-> if "skip_wake_irqs" is set and you're on an SoC with this hardware
-> errata.
->
-> It doesn't feel all that ugly to me, assuming I'm understanding it
-> correctly.  ...or maybe you can tell me why it'd be harder than that?
->
->
->>>> maybe it's just easier to change the pinctrl driver to emulate dual
->>>> edge itself and that can work around the problem in the PDC?  There
->>>> seem to be a few samples you could copy from:
->>>>
->>>> $ git log --oneline --no-merges --grep=emulate drivers/pinctrl/
->>>> 3221f40b7631 pinctrl: mediatek: emulate GPIO interrupt on both-edges
->>>> 5a92750133ff pinctrl: rockchip: emulate both edge triggered interrupts
->>>>
->>> pinctrl-msm already supports emulating dual edge, but my understanding
->>> was that the problem lies in that somehow this emulation would have to
->>> be tied to or affect the PDC driver?
->> yes, thats correct, pinctrl-msm already supports it, the problem lies
->> in the fact that PDC does not. This patch, infact was trying to fix the
->> issue by removing all PDC involvement for gpio28 and making pinctrl-msm
->> in charge of it.
-> If we're going to try to do this, I think we're stuck with one of these:
->
-> 1. A really really long list that we keep jamming more boards into.
->
-> 2. Add an entry at the top-level device tree compatible to all
-> affected boards _just_ for this purpose.  Seems ugly since we don't
-> need it for any other reasons.
->
-> 3. Add some sort of property to the pinctrl node on these boards.
-> Seems ugly since conceivably this _could_ be worked around in
-> software.
->
-> I don't really like any of those options, so I'm really hoping we can
-> find out how to get a workaround in...
-Hi Doug,
+This series adds driver and bindings for Lontium LT9611 bridge chip which
+takes MIPI DSI as input and HDMI as output.
 
-The client driver here never uses/needs both the edges at a given time.
-Another option (clean & correct IMO) is to update the driver to request 
-proper irq type its expecting.
+This chip can be found in 96boards RB3 platform [1] commonly called DB845c.
 
-Lets take SD card detect GPIO for example, which uses dual edge interrupt.
-one edge (rising type) can be used as a card insert detect interrupt and 
-another edge (falling type) may be used for card removal detect.
+[1]: https://www.96boards.org/product/rb3-platform/
 
-The sequence of operations, IMO should be..
-1. Driver request a rising type irq to start with (the one that detects 
-card insertion)
-2. once card insertion irq comes in, the driver should change the type 
-to falling which is expected (to detect the card removal)
-3. once card removal irq comes in, it can change type to rising edge (to 
-detect another insertion)
-4. above steps (2,3) continues
+Changes in v4:
+ - Add msm/dsi patch to create connector and support DRM_BRIDGE_ATTACH_NO_CONNECTOR
+ - Fix comments provided by Sam
 
-if above sequence is followed from drivers using dual edge IRQ, we don't 
-need any workaround.
+Changes in v3:
+ - fix kbuild reported error
+ - rebase on v5.8-rc1
 
-Thanks,
-Maulik
->
-> -Doug
+Changes in v2:
+ - Add acks by Rob
+ - Fix comments reported by Emil and rename the file to lontium-lt9611.c
+ - Fix comments reported by Laurent on binding and driver
+ - Add HDMI audio support
+
+Vinod Koul (4):
+  dt-bindings: vendor-prefixes: Add Lontium vendor prefix
+  dt-bindings: display: bridge: Add documentation for LT9611
+  drm/bridge: Introduce LT9611 DSI to HDMI bridge
+  drm/msm/dsi: attach external bridge with DRM_BRIDGE_ATTACH_NO_CONNECTOR
+
+ .../display/bridge/lontium,lt9611.yaml        |  176 +++
+ .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
+ drivers/gpu/drm/bridge/Kconfig                |   13 +
+ drivers/gpu/drm/bridge/Makefile               |    1 +
+ drivers/gpu/drm/bridge/lontium-lt9611.c       | 1174 +++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi.c                 |    7 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c         |   27 +-
+ 7 files changed, 1380 insertions(+), 20 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+ create mode 100644 drivers/gpu/drm/bridge/lontium-lt9611.c
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+2.26.2
 
