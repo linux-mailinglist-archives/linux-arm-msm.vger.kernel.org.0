@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A54A2187FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 14:49:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CA9D218893
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 15:12:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729266AbgGHMtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 08:49:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53910 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729122AbgGHMtM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 08:49:12 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0B4A620775;
-        Wed,  8 Jul 2020 12:49:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594212552;
-        bh=Uqa5Ixx9A8DkN2H2K4w6mWtGsN4oJbAFIYsvEF105uM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oKbE2oFg2VMewf3p7Ik1zsK0oPUYm+PwxqnkQ3WyNwSaGQ+vK8bZ9pf7YiB1ykQXH
-         XU3WCRTnd/8w1PxUBPh0r2Sq+WwCReWyrIGJMMqt77XDx21WOrQ4qLYv3To6Ef4nbj
-         c5RMeN5svZBNGIr/TZziTEiSoPwEkXfcdR2Eldbs=
-Date:   Wed, 8 Jul 2020 13:49:03 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        akashast@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        mkshah@codeaurora.org, swboyd@chromium.org,
-        georgi.djakov@linaro.org, ctheegal@codeaurora.org,
-        mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH 3/3] spi: spi-geni-qcom: Get rid of most overhead in
- prepare_message()
-Message-ID: <20200708124903.GN4655@sirena.org.uk>
-References: <20200702004509.2333554-1-dianders@chromium.org>
- <20200701174506.3.I2b3d7aeb1ea622335482cce60c58d2f8381e61dd@changeid>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Xb8pJpF45Qg/t7GZ"
-Content-Disposition: inline
-In-Reply-To: <20200701174506.3.I2b3d7aeb1ea622335482cce60c58d2f8381e61dd@changeid>
-X-Cookie: Oh Dad!  We're ALL Devo!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1729369AbgGHNM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 09:12:29 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:24034 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729299AbgGHNM1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 09:12:27 -0400
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 08 Jul 2020 06:12:27 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 08 Jul 2020 06:12:25 -0700
+Received: from vbadigan-linux.qualcomm.com ([10.206.24.109])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Jul 2020 18:42:07 +0530
+Received: by vbadigan-linux.qualcomm.com (Postfix, from userid 76677)
+        id 597A84D31; Wed,  8 Jul 2020 18:42:06 +0530 (IST)
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        "Bao D. Nguyen" <nguyenb@codeaurora.org>,
+        Sarthak Garg <sartgarg@codeaurora.org>
+Subject: [PATCH V1] mmc: sdhci-msm: Override DLL_CONFIG only if the valid value is supplied
+Date:   Wed,  8 Jul 2020 18:41:19 +0530
+Message-Id: <1594213888-2780-1-git-send-email-vbadigan@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+During DLL initialization, the DLL_CONFIG register value would be
+updated with the value supplied from the device-tree.
 
---Xb8pJpF45Qg/t7GZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Override this register only if a valid value is supplied.
 
-On Wed, Jul 01, 2020 at 05:45:09PM -0700, Douglas Anderson wrote:
-> There's a bunch of overhead in spi-geni-qcom's prepare_message.  Get
-> rid of it.  Before this change spi_geni_prepare_message() took around
-> 14.5 us.  After this change, spi_geni_prepare_message() takes about
-> 1.75 us (as measured by ftrace).
+Fixes: 03591160ca19 ("mmc: sdhci-msm: Read and use DLL Config property from device tree file")
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+---
+ drivers/mmc/host/sdhci-msm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Acked-by: Mark Brown <broonie@kernel.org>
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index efd2bae1430c..93d67a3a899f 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -626,8 +626,9 @@ static int msm_init_cm_dll(struct sdhci_host *host)
+ 	config &= ~CORE_CLK_PWRSAVE;
+ 	writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
+ 
+-	config = msm_host->dll_config;
+-	writel_relaxed(config, host->ioaddr + msm_offset->core_dll_config);
++	if (msm_host->dll_config)
++		writel_relaxed(msm_host->dll_config,
++				host->ioaddr + msm_offset->core_dll_config);
+ 
+ 	if (msm_host->use_14lpp_dll_reset) {
+ 		config = readl_relaxed(host->ioaddr +
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
 
---Xb8pJpF45Qg/t7GZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl8FwL4ACgkQJNaLcl1U
-h9D4Rgf/Uva2syJm8KRxZ3zqSrynarhaL0MlZwq4rb26hTPp7LnZs8TIOfboQ2aP
-ReLvfYszSbgQhhIFxtZAnJAVpwEz2twAVROsnO0/K26NmqaV5/p0Z1KyPCPfgQfW
-N7LN4MOtDh97n84llxMtJJG8P8Tqoje0YRAuQdwSIC9LkcRCvNe02yRdJ9cnPMzX
-OTOYc4avIDtmWA+t+K7nyDJ1RoQmAqDyejMsUEy32LO1UmlW64hZ8njrNyZRisUu
-+8XdZqLO/aiQOTxuvxXbTH7ZltyFd+kkwlksVqDVVto2THb5RDJ20/+MdU8arQYF
-sN8xdQTvufuZYgkETqAeW5REBVttHQ==
-=/s94
------END PGP SIGNATURE-----
-
---Xb8pJpF45Qg/t7GZ--
