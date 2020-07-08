@@ -2,118 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 768C5217E9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 06:53:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB011217ECB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2020 07:08:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729581AbgGHEvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 00:51:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729545AbgGHEvu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 00:51:50 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E72E1C08C5E2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2020 21:51:49 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g10so3093181wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2020 21:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=YM0IzGADgX2tl1Mp5AFtyEMSY+GtGZFBS0TzG37PEVo=;
-        b=WUXj1hnghzt3S3Xl8PkHIhKgc4y1+imaFlRTqYId1bXkQETCFWvksi9OaC5IchDWnN
-         /G3tZ3QPpXYdo0LQXnUBTJmqJT9KSLHL1W0ppqEv0GzEoRLMsgv7oAFu9hXuZV3qNwUU
-         EmbTjiaI3Wsm/bQlCldA6nvGa0OVis92xbh6I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=YM0IzGADgX2tl1Mp5AFtyEMSY+GtGZFBS0TzG37PEVo=;
-        b=j/Jlfy+RBHcCy0zRZtM9uOlREgTosiXVoikucuUzhx7CN9DR3UnsNpRZsCGNY4BQfI
-         MtlnX7D9fvaAagCNzGhqeCngx523TVhEyHx8zAQD+MA7P0OmAJDxEKWlQOwDsK0ONeZt
-         xkzq/Haa2HVNaM4Vhj7/a7l3pPbU4xwslpITiAHdPKYry+C5K4v7PHxpeGItVOqOPWhk
-         PUl1resJEHq4Oo0mW3onfsgeKUGo9OGUnSdMU5xQ7JxZYH/DLXHL3mco6ZSFzfZRnA/E
-         mozxtMosdFQkwRMuncfQtdLVavo5SEMmaBispdqpRdU+k+8vT6G2DRGYtInd7oL8Qjz6
-         jI+g==
-X-Gm-Message-State: AOAM5305N6jWro1Oh1I8+7UW0aaQhrr0+BTocoXWejLXkuk8aYKBaxrQ
-        dStQ81mvUGwZY3/6uoM4+cEC4w==
-X-Google-Smtp-Source: ABdhPJxCmxanR1p+Zv9NtrwZXxJyNGR3oD42FStMXE5QtLw0GpBvXi6oEnvGhedpl11EqTWK1HD1Eg==
-X-Received: by 2002:a1c:ba0b:: with SMTP id k11mr7135332wmf.140.1594183908367;
-        Tue, 07 Jul 2020 21:51:48 -0700 (PDT)
-Received: from [10.136.13.65] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id y7sm3843597wrt.11.2020.07.07.21.51.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jul 2020 21:51:47 -0700 (PDT)
-Subject: Re: [PATCH v10 0/9] firmware: add request_partial_firmware_into_buf
-To:     Florian Fainelli <f.fainelli@gmail.com>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        David Brown <david.brown@linaro.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>,
-        Shuah Khan <shuah@kernel.org>, bjorn.andersson@linaro.org,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     Mimi Zohar <zohar@linux.ibm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org,
-        BCM Kernel Feedback <bcm-kernel-feedback-list@broadcom.com>,
-        Olof Johansson <olof@lixom.net>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        Kees Cook <keescook@chromium.org>,
-        Takashi Iwai <tiwai@suse.de>, linux-kselftest@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-security-module@vger.kernel.org
-References: <20200706232309.12010-1-scott.branden@broadcom.com>
- <c8bbabe6-0b25-a816-f95d-8af63010eaf2@gmail.com>
-From:   Scott Branden <scott.branden@broadcom.com>
-Message-ID: <6c6126cc-6572-b341-7808-5e573d0cfad8@broadcom.com>
-Date:   Tue, 7 Jul 2020 21:51:39 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <c8bbabe6-0b25-a816-f95d-8af63010eaf2@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        id S1726206AbgGHFIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 01:08:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:35317 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726102AbgGHFIc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Jul 2020 01:08:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594184911; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=J/0rtb7ms4jKYAU3mSlVXiZ7/65ZzPwUSJ72i0ViAwU=; b=ZQK/LuNyqGU77DjrT7w1TyBNO1+7+lyh4SOe0XckxAGUJO/rHnt9lTUbGNUIiv2NHhBgmeWZ
+ dJXBky0FoPFwSzM7dav7eiHKjCIFhFwJC/gUA2H8BPR8dMs4y3Eg2+bhJLG4/Lvitn5Xavv3
+ kmIc1VemBlzyFn0pVaZH7uNcTy0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5f0554ce0082b278486d6af7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Jul 2020 05:08:30
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 678F6C43391; Wed,  8 Jul 2020 05:08:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from rohkumar-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2672C433C6;
+        Wed,  8 Jul 2020 05:08:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A2672C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+From:   Rohit kumar <rohitkr@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Rohit kumar <rohitkr@codeaurora.org>
+Subject: [PATCH v3 0/8] ASoC: qcom: Add support for SC7180 lpass variant
+Date:   Wed,  8 Jul 2020 10:38:08 +0530
+Message-Id: <1594184896-10629-1-git-send-email-rohitkr@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Florian,
+This patch chain add audio support for SC7180 soc by doing the required
+modification in existing common lpass-cpu/lpass-platform driver.
+Below is a brief summary of patch series:
 
-On 2020-07-07 9:38 p.m., Florian Fainelli wrote:
->
-> On 7/6/2020 4:23 PM, Scott Branden wrote:
->> This patch series adds partial read support via a new call
->> request_partial_firmware_into_buf.
->> Such support is needed when the whole file is not needed and/or
->> only a smaller portion of the file will fit into allocated memory
->> at any one time.
->> In order to accept the enhanced API it has been requested that kernel
->> selftests and upstreamed driver utilize the API enhancement and so
->> are included in this patch series.
->>
->> Also in this patch series is the addition of a new Broadcom VK driver
->> utilizing the new request_firmware_into_buf enhanced API.
->>
->> Further comment followed to add IMA support of the partial reads
->> originating from request_firmware_into_buf calls.  And another request
->> to move existing kernel_read_file* functions to its own include file.
-> Do you have any way to separate the VK drivers submission from the
-> request_partial_firmware_into_buf() work that you are doing? It looks
-> like it is going to require quite a few iterations of this patch set for
-> the firmware/fs/IMA part to be ironed out, so if you could get your
-> driver separated out, it might help you achieve partial success here.
-Originally I did not submit the driver.
-But Greg K-H rejected the pread support unless there was an actual user 
-in the kernel.
-Hence the need to submit this all in the patch series.
+PATCH v3 0001 ... 0005: Update lpass-cpu, lpass-platform drivers to make it more generic
+and support newer soc registers configuration. This also updates existing lpass-apq8096.c
+and lpass-ipq806x.c.
+PATCH v2 0005 ... 0007: Add documentation and platform driver for newer SC7180 SOC variant.
+
+Changes since v2:
+	- Moved yaml conversion of Documentation to the end of patch series
+	- Used REG_FIELD_ID instead of REG_FIELD for DMACTL and I2SCTL registers.
+Move reg_fields to struct lpass_variant as suggested by Srinivas.
+
+Ajit Pandey (5):
+  ASoC: qcom: Add common array to initialize soc based core clocks
+  include: dt-bindings: sound: Add sc7180-lpass bindings header
+  ASoC: qcom: lpass-platform: Replace card->dev with component->dev
+  ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
+  dt-bindings: sound: lpass-cpu: Move to yaml format
+
+Rohit kumar (3):
+  ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+  ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
+  dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
+
+ .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  79 --------
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 154 +++++++++++++++
+ include/dt-bindings/sound/sc7180-lpass.h           |  10 +
+ sound/soc/qcom/Kconfig                             |   5 +
+ sound/soc/qcom/Makefile                            |   2 +
+ sound/soc/qcom/lpass-apq8016.c                     |  86 ++++++--
+ sound/soc/qcom/lpass-cpu.c                         | 193 +++++++++---------
+ sound/soc/qcom/lpass-ipq806x.c                     |  67 +++++++
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 157 ++++++++-------
+ sound/soc/qcom/lpass-platform.c                    | 156 +++++++++++----
+ sound/soc/qcom/lpass-sc7180.c                      | 216 +++++++++++++++++++++
+ sound/soc/qcom/lpass.h                             |  63 +++++-
+ 12 files changed, 886 insertions(+), 302 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+ create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
+ create mode 100644 sound/soc/qcom/lpass-sc7180.c
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
