@@ -2,86 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C946219DE8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 12:34:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF17D219EB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:05:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726357AbgGIKev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 06:34:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54088 "EHLO mail.kernel.org"
+        id S1727076AbgGILF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 07:05:29 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40974 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726285AbgGIKev (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 06:34:51 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727028AbgGILF2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jul 2020 07:05:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594292728; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=jsDFDs4zDabaEWDbeRx/lyIO/1u6Uzt/XQpS5ikRQHw=; b=fEY3VopJVHd/3arOEKEd/K8FqStGHQAkIpTA5t6MFUCdhEKqEXIVaZ3sFooR5D/j1Eraz6cI
+ l8eNZ/Ro3O/X+IkZAQ7Hxw3YoSLTFSmJG13JWOYCF4oefORO/aro0qk6VBr2YcFtmVlQQvwO
+ pZGytDe8X4Z5xi/Zj7JzPNE+e1k=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
+ 5f06f9daa33b1a3dd46a2719 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Jul 2020 11:04:58
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B8DC2C43387; Thu,  9 Jul 2020 11:04:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 02AD7206DF;
-        Thu,  9 Jul 2020 10:34:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594290890;
-        bh=Ve16z8d0/OmeosfL6WB4kROdn8JZr9L6Cq+RoMEYqsc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aVwvYBUwBUuEW0pkIHTrs9bE3A4h2qeVhqqez6sjtu2k5HzziDf3u5+O3IDo3PWMl
-         P60+jIRnglEr37wZtmpDJTj0VQ4BN8AG3boz+joAmCDx943/KIvU+mkDgy17J+lJdB
-         0D+MKW4LdlmlWtN9ZR+T7XdnLPKPQD20C+isnMkI=
-Date:   Thu, 9 Jul 2020 11:34:44 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Rohit Kumar <rohitkr@codeaurora.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 6/8] dt-bindings: sound: lpass-cpu: Add sc7180 lpass
- cpu node
-Message-ID: <20200709103444.GA4960@sirena.org.uk>
-References: <1594184896-10629-1-git-send-email-rohitkr@codeaurora.org>
- <1594184896-10629-7-git-send-email-rohitkr@codeaurora.org>
- <6b6b0e38-9c04-e065-8a43-ccfec260d60c@linaro.org>
- <430e0d24-c5c2-84ec-fe7b-b6b27192666d@codeaurora.org>
- <de07f84b-40bc-d9ae-932d-623a5e8341e2@linaro.org>
- <40ca93fe-5bf0-ace3-4f95-90624d29a409@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="82I3+IH0IqGh5yIs"
-Content-Disposition: inline
-In-Reply-To: <40ca93fe-5bf0-ace3-4f95-90624d29a409@codeaurora.org>
-X-Cookie: You will be married within a year.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83C1DC433C6;
+        Thu,  9 Jul 2020 11:04:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 83C1DC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v3 0/4] DVFS support for dpu and dsi
+Date:   Thu,  9 Jul 2020 16:34:30 +0530
+Message-Id: <1594292674-15632-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes in v3
+- Added dev_pm_opp_put_clkname() in the error path
 
---82I3+IH0IqGh5yIs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Changes in v2
+- Patch 2: Dropped dsi_link_clk_set_rate_6g_v2 and dsi_link_clk_disable_6g_v2 as suggested by Matthias
 
-On Thu, Jul 09, 2020 at 03:42:38PM +0530, Rohit Kumar wrote:
-> On 7/9/2020 3:38 PM, Srinivas Kandagatla wrote:
+These patches add DVFS support for DPU and DSI.
 
-> > May be reverse the order, Convert to Yaml first and then add sc7180!
+These patches have no other dependency. Patch 1 and 2 will need to be merged in
+via the MSM DRM tree.
 
-> Actually Mark suggested to keep yaml change at the end of patch series as
-> there
+DT patches will need to land via the msm tree.
 
-Right, there's a huge backlog on YAML reviews so they lead to all the
-other work getting held up waiting for them.
+Rajendra Nayak (4):
+  drm/msm/dpu: Use OPP API to set clk/perf state
+  drm/msm: dsi: Use OPP API to set clk/perf state
+  arm64: dts: sdm845: Add DSI and MDP OPP tables and power-domains
+  arm64: dts: sc7180: Add DSI and MDP OPP tables and power-domains
 
---82I3+IH0IqGh5yIs
-Content-Type: application/pgp-signature; name="signature.asc"
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 49 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 59 +++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 27 +++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 ++
+ drivers/gpu/drm/msm/dsi/dsi_host.c            | 27 +++++++++++-
+ 6 files changed, 165 insertions(+), 4 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl8G8sQACgkQJNaLcl1U
-h9AnEAf/YHvrShAx1/pj+fdRXz49S71JBPuvSBgRcSqt4qlyV3PrDCkwNro0KXYy
-IWTh+2YJGdiJ9yNIvnrKIpIg1g0Lu96uSCKTa+uKHA8obTEFV/ko5+t6KrhJXv6B
-6ISMw+pInNBvj7moHWn+px9+JZw6ygIxro9okvk7pCu9PA4nkpHWvCrzNzlwMVna
-yElISmNvkpgWsg1eqlpOu78MD37akxzqPm9mrPzrq/ge2ktcM+ivm4qOJmBdnc23
-dIES/kgmWtEq6jnuzwZ2cdDn/1FDbKpllkPtj4Q3Ymvz4sGxdlgE8SlyQXrzl/iU
-l0vuLU8mntAPLdpRb9s4neWhCYl7cA==
-=bZZZ
------END PGP SIGNATURE-----
-
---82I3+IH0IqGh5yIs--
