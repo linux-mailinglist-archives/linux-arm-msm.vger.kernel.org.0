@@ -2,104 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82DD62199F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 09:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A28D2199F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 09:32:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726194AbgGIHa4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 03:30:56 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:54316 "EHLO m43-7.mailgun.net"
+        id S1726311AbgGIHcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 03:32:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43504 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726220AbgGIHa4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 03:30:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594279855; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=eX6swdK+GyKO1zLMYL5rWu0Mc8+iIL0pLhWcHpoCOpA=; b=rI0xbyqT1/A7iedCLYImInd70w+LXS59jWg2SE3MJXylUBgN8E43HVZhZA5gLxi/tfnAdkiy
- ZH3RZoxRzpr+JQjgjKjtoFuWQHkiqmjMLR98Vs/6JvCgFFeXnfdVSEUFrzjknokNm30d9Y2J
- 1+0snajKVq6A0rD8ozsZbBK8CBk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f06c7a2a33b1a3dd4234736 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Jul 2020 07:30:42
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 54116C433CB; Thu,  9 Jul 2020 07:30:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.98] (unknown [157.44.103.6])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726184AbgGIHcO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jul 2020 03:32:14 -0400
+Received: from localhost (unknown [122.182.251.219])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7C647C433CA;
-        Thu,  9 Jul 2020 07:30:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7C647C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH] spi: spi-geni-qcom: Set the clock properly at runtime
- resume
-To:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        georgi.djakov@linaro.org, swboyd@chromium.org,
-        mkshah@codeaurora.org, ctheegal@codeaurora.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-References: <20200708163922.1.I0b701fc23eca911a5bde4ae4fa7f97543d7f960e@changeid>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <c7956e65-d21b-8844-45d7-de06b8d3d4f0@codeaurora.org>
-Date:   Thu, 9 Jul 2020 13:00:28 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        by mail.kernel.org (Postfix) with ESMTPSA id C24F220767;
+        Thu,  9 Jul 2020 07:32:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594279934;
+        bh=osjNtW7Vcsl6XAmexC2cVHsdXszVbxZeargjrRySMuA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FgM48asAEyYqqo3pNtHvbbzcmAGnCiHesy6730e5O/fCk7lM/Mi80rry/VUTwf9fP
+         iCxgGhQv7KrE3E5FzDK+J74umYvxzhuYbw2wsqKAURVMoT3Xvwa/Bh2wzI0j2DeJog
+         InFdiK7M+/Xf97CQNv+GgyzC6wUOhANqppmEsb/M=
+Date:   Thu, 9 Jul 2020 13:02:04 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 4/5] iommu/arm-smmu-qcom: Consstently initialize stream
+ mappings
+Message-ID: <20200709073204.GH34333@vkoul-mobl>
+References: <20200709050145.3520931-1-bjorn.andersson@linaro.org>
+ <20200709050145.3520931-5-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20200708163922.1.I0b701fc23eca911a5bde4ae4fa7f97543d7f960e@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200709050145.3520931-5-bjorn.andersson@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+On 08-07-20, 22:01, Bjorn Andersson wrote:
+> Firmware that traps writes to S2CR to translate BYPASS into FAULT also
+> ignores writes of type FAULT. As such booting with "disable_bypass" set
+> will result in all S2CR registers left as configured by the bootloader.
+> 
+> This has been seen to result in indeterministic results, as these
+> mappings might linger and reference context banks that Linux is
+> reconfiguring.
+> 
+> Use the fact that BYPASS writes result in FAULT type to force all stream
+> mappings to FAULT.
 
->   
-> @@ -670,7 +674,13 @@ static int __maybe_unused spi_geni_runtime_resume(struct device *dev)
->   	if (ret)
->   		return ret;
->   
-> -	return geni_se_resources_on(&mas->se);
-> +	ret = geni_se_resources_on(&mas->se);
-> +	if (ret)
-> +		return ret;
-> +
-> +	dev_pm_opp_set_rate(mas->dev, mas->cur_sclk_hz);
-> +
-> +	return 0;
->   }
-
-Should we fail to resume if error is returned from 'opp_set_rate'?
-
-'spi_geni_prepare_message' use to fail for any error from 
-'opp_set_rate'  before patch series "Avoid clock setting if not needed".
-
-But now it's possible that 'prepare_message' can return success even 
-when opp are not at desired state(from previous resume call).
-
-Regards,
-
-Akash
-
->   
->   static int __maybe_unused spi_geni_suspend(struct device *dev)
+s/Consstently/Consistently in patch subject
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+~Vinod
