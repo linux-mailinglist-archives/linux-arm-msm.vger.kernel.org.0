@@ -2,129 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5371021A894
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 22:05:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9167F21A8D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 22:21:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726581AbgGIUFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 16:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42666 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726275AbgGIUFy (ORCPT
+        id S1726269AbgGIUVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 16:21:14 -0400
+Received: from mail-il1-f195.google.com ([209.85.166.195]:37852 "EHLO
+        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726183AbgGIUVO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 16:05:54 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4822C08C5DC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 13:05:54 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id m18so287900vkk.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 13:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AinvQ5PJ9tMDmXSnO6ck/b394CwO1KeWDAa17fxTsYg=;
-        b=YRWjysvDqa2DekkVgn/4ZOp6k855hwYraXOphC7+nCx7SuZ5nn61o38XK5X/azo5P6
-         drSB++in4V2a93h0pcnzC1YcaT7j+hXWsH8/6k6A5t7ABanFshrtH+gezzIZW7I8Hjxc
-         FhYBkILnSTuLzBLAunNFHZckck10Glqgq4A5Q=
+        Thu, 9 Jul 2020 16:21:14 -0400
+Received: by mail-il1-f195.google.com with SMTP id r12so3168679ilh.4;
+        Thu, 09 Jul 2020 13:21:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AinvQ5PJ9tMDmXSnO6ck/b394CwO1KeWDAa17fxTsYg=;
-        b=UKS6J+rR/OKtTk0J8JqFvdTFSh1MLhd2EuuGzoIfEQi831kL89uUPmdUMb/v7oq68K
-         84Hs9mLN7BGLaTnugeAYPmcv+si5nnNjC8NK9otcXtccgdGMI8XFu9DiN3bTs+HLbMTu
-         1W2OXwyGk81wBBf11LgVDtSr85b4URPvRBxhDq6Cwn8udxkCmMbUPIO1SE/Rmd/NFyiw
-         xU1B/jj3KuvfMO3/cg21Tkq13NZzxl7fIysuekd1gnDuHfUaRUtGnmFdZcmLTA6Do5Pz
-         QEdyxYyzqBzuhCwgcDpMgctjNxdFLB2CVXbi2P2rMOkEifglcojpvHHWA52IA+0+4fnp
-         M+oQ==
-X-Gm-Message-State: AOAM533u5BUCNAe77xZRM2QTaJOL28ucvr23NXMWTmJV8dESlEgpKk5d
-        Q+EPKNiyNn0f/ZWuFf2DItMa2voh8U8=
-X-Google-Smtp-Source: ABdhPJxfI55ZyFqQC67Rhfr3pTBDQ5avXTjVKi6u8hXwst+cPmymKQuFoksLvGUmH0uSOqJSYWLcMQ==
-X-Received: by 2002:a1f:a883:: with SMTP id r125mr34943706vke.29.1594325153853;
-        Thu, 09 Jul 2020 13:05:53 -0700 (PDT)
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
-        by smtp.gmail.com with ESMTPSA id b21sm403956uap.15.2020.07.09.13.05.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jul 2020 13:05:53 -0700 (PDT)
-Received: by mail-vs1-f47.google.com with SMTP id a17so1782948vsq.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 13:05:52 -0700 (PDT)
-X-Received: by 2002:a05:6102:30b5:: with SMTP id y21mr26283797vsd.42.1594325151959;
- Thu, 09 Jul 2020 13:05:51 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BXV0V180AwknZfYHAyynQHFPg5VSPY6NPqQkLAdi+aE=;
+        b=lCCGOfaswqoizlYJiopwTXp7ru/LF+b8QP/cuIUI2jXLgVTX6U/PFGImoLLNeA1NiZ
+         WYzt8wS3sOue2A17K7ToCJmoax8mBy4Uv2KVsBep1r9WZzaVSHyNRR2LZnPeTu68CHCX
+         NumsI8VnWyogTAo+h7IbzZR9PLEZsRRVL5Mg/0iaKan+2LZbZu4lDeiIDOBnzu3GV2OJ
+         gw61UF7XRDCQJKZMkN424TKq3EWnbxLpPRPA5H5Vw2es+fMQYADFQznrMf4jSnfBCj3m
+         fedoTDwCkFxfLtwgjGmhc9wpA4xpBZW4cio5GEeo/FEAVOi49kFjQboy0y+WtUm42Soa
+         ZMqw==
+X-Gm-Message-State: AOAM530qMvI3s/C3qWlQ5Y5k0a1mOU4S5F3Zn3CNHj1PQaGuVHGGYwXk
+        lUKzYZ4CcT8IxGq1LPnvRtXMEK0Avg==
+X-Google-Smtp-Source: ABdhPJzj0SDEbPupGqiB9hIaGhSnelTDm9e5oRui4Oma4dLqO3MR6mXAz8yIYZFIyfll+QXWCzlXMA==
+X-Received: by 2002:a92:9e5c:: with SMTP id q89mr49608036ili.265.1594326072689;
+        Thu, 09 Jul 2020 13:21:12 -0700 (PDT)
+Received: from xps15 ([64.188.179.254])
+        by smtp.gmail.com with ESMTPSA id t21sm2720449ioc.0.2020.07.09.13.21.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2020 13:21:12 -0700 (PDT)
+Received: (nullmailer pid 823788 invoked by uid 1000);
+        Thu, 09 Jul 2020 20:21:10 -0000
+Date:   Thu, 9 Jul 2020 14:21:10 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Tanmay Shah <tanmay@codeaurora.org>
+Cc:     swboyd@chromium.org, sam@ravnborg.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        seanpaul@chromium.org, robdclark@gmail.com, daniel@ffwll.ch,
+        airlied@linux.ie, aravindh@codeaurora.org, abhinavk@codeaurora.org,
+        chandanu@codeaurora.org, varar@codeaurora.org
+Subject: Re: [PATCH v8 0/6] Add support for DisplayPort driver on SnapDragon
+Message-ID: <20200709202110.GA814782@bogus>
+References: <20200630184507.15589-1-tanmay@codeaurora.org>
 MIME-Version: 1.0
-References: <1594286253-32244-1-git-send-email-pillair@codeaurora.org>
-In-Reply-To: <1594286253-32244-1-git-send-email-pillair@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 9 Jul 2020 13:05:40 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XQy17ZuKdJXPH20uGTrEtPrDacDXAg+rTA96HBm6hVVw@mail.gmail.com>
-Message-ID: <CAD=FV=XQy17ZuKdJXPH20uGTrEtPrDacDXAg+rTA96HBm6hVVw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add missing properties for Wifi node
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Evan Green <evgreen@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200630184507.15589-1-tanmay@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Jun 30, 2020 at 11:45:01AM -0700, Tanmay Shah wrote:
+> These patches add Display-Port driver on SnapDragon/msm hardware.
+> This series also contains device-tree bindings for msm DP driver.
+> It also contains Makefile and Kconfig changes to compile msm DP driver.
+> 
+> The block diagram of DP driver is shown below:
+> 
+> 
+>                  +-------------+
+>                  |DRM FRAMEWORK|
+>                  +------+------+
+>                         |
+>                    +----v----+
+>                    | DP DRM  |
+>                    +----+----+
+>                         |
+>                    +----v----+
+>      +------------+|   DP    +----------++------+
+>      +        +---+| DISPLAY |+---+      |      |
+>      |        +    +-+-----+-+    |      |      |
+>      |        |      |     |      |      |      |
+>      |        |      |     |      |      |      |
+>      |        |      |     |      |      |      |
+>      v        v      v     v      v      v      v
+>  +------+ +------+ +---+ +----+ +----+ +---+ +-----+
+>  |  DP  | |  DP  | |DP | | DP | | DP | |DP | | DP  |
+>  |PARSER| | HPD  | |AUX| |LINK| |CTRL| |PHY| |POWER|
+>  +--+---+ +---+--+ +---+ +----+ +--+-+ +-+-+ +-----+
+>     |                              |     |
+>  +--v---+                         +v-----v+
+>  |DEVICE|                         |  DP   |
+>  | TREE |                         |CATALOG|
+>  +------+                         +---+---+
+>                                       |
+>                                   +---v----+
+>                                   |CTRL/PHY|
+>                                   |   HW   |
+>                                   +--------+
+> 
+> Changes in v7:
+> 
+> - Modify cover letter description and fix title.
+> - Introduce dp-controller.yaml for common bindings across SOC
+> - Rename dp-sc7180.yaml to dp-controller-sc7180.yaml for SC7180 bindings
+> - Rename compatible string to qcom,sc7180-dp
+> - Add assigned-clocks and assigned-clock-parents properties in bindings
+> - Remove redundant code from driver
+> - Extend series to include HPD detection logic
+> 
+> Changes in v8:
+> 
+> - Add MDSS AHB clock in bindings 
+> - Replace mode->vrefresh use with drm_mode_vrefresh API
+> - Remove redundant aux config code from parser and aux module
+> - Assign default max lanes if data-lanes property is not available
+> - Fix use-after-free during DP driver remove
+> - Unregister hardware clocks during driver cleanup
+> 
+> This series depends-on:
+> 	https://patchwork.freedesktop.org/patch/366159/
 
-On Thu, Jul 9, 2020 at 2:18 AM Rakesh Pillai <pillair@codeaurora.org> wrote:
->
-> The wlan firmware memory is statically mapped in
-> the Trusted Firmware, hence the wlan driver does
-> not need to map/unmap this region dynamically.
->
-> Hence add the property to indicate the wlan driver
-> to not map/unamp the firmware memory region
-> dynamically.
->
-> Also add the chain1 voltage supply for wlan.
->
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
-> This patch is created on top of the change by
-> Douglas Anderson.
-> https://lkml.org/lkml/2020/6/25/817
->
-> Also the dt-bindings for the chain1 voltage supply
-> is added by the below patch series:
-> https://patchwork.kernel.org/project/linux-wireless/list/?series=309137
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 472f7f4..4c64bc1 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -391,10 +391,12 @@
->
->  &wifi {
->         status = "okay";
-> +       qcom,msa-fixed-perm;
+If a single patch is a dependency, please coordinate your work and send 
+as 1 series.
 
-At one point in time I thought +Sibi said that this wouldn't be needed
-once the firmware was fixed.  ...afterwards you said that it was
-needed for SSR (subsystem reset).  Would be good to get confirmation
-from Sibi that this matches his understanding.
+To put it another way, I'm just going to ignore this series until the 
+dependency is sorted out.
+ 
+> 	https://patchwork.freedesktop.org/patch/369859/
 
+Probably the same goes for this too, but I care less as it's not the 
+binding...
 
->         vdd-0.8-cx-mx-supply = <&vreg_l9a_0p6>;
->         vdd-1.8-xo-supply = <&vreg_l1c_1p8>;
->         vdd-1.3-rfa-supply = <&vreg_l2c_1p3>;
->         vdd-3.3-ch0-supply = <&vreg_l10c_3p3>;
-> +       vdd-3.3-ch1-supply = <&vreg_l11c_3p3>;
->         wifi-firmware {
->                 iommus = <&apps_smmu 0xc2 0x1>;
->         };
-
-Other than the one question this looks good to me.
-
--Doug
+> 
+> Chandan Uddaraju (4):
+>   dt-bindings: msm/dp: add bindings of DP/DP-PLL driver for Snapdragon
+>   drm: add constant N value in helper file
+>   drm/msm/dp: add displayPort driver support
+>   drm/msm/dp: add support for DP PLL driver
+> 
+> Jeykumar Sankaran (1):
+>   drm/msm/dpu: add display port support in DPU
+> 
+> Tanmay Shah (1):
+>   drm/msm/dp: Add Display Port HPD feature
+> 
+>  .../display/msm/dp-controller-sc7180.yaml     |  144 ++
+>  .../bindings/display/msm/dp-controller.yaml   |   61 +
+>  .../bindings/display/msm/dpu-sc7180.yaml      |   11 +
+>  drivers/gpu/drm/i915/display/intel_display.c  |    2 +-
+>  drivers/gpu/drm/msm/Kconfig                   |   16 +
+>  drivers/gpu/drm/msm/Makefile                  |   14 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |   29 +-
+>  .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |    8 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   83 +-
+>  drivers/gpu/drm/msm/dp/dp_aux.c               |  510 +++++
+>  drivers/gpu/drm/msm/dp/dp_aux.h               |   29 +
+>  drivers/gpu/drm/msm/dp/dp_catalog.c           | 1060 ++++++++++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h           |  104 +
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c              | 1707 +++++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h              |   35 +
+>  drivers/gpu/drm/msm/dp/dp_display.c           | 1017 ++++++++++
+>  drivers/gpu/drm/msm/dp/dp_display.h           |   31 +
+>  drivers/gpu/drm/msm/dp/dp_drm.c               |  168 ++
+>  drivers/gpu/drm/msm/dp/dp_drm.h               |   18 +
+>  drivers/gpu/drm/msm/dp/dp_hpd.c               |   69 +
+>  drivers/gpu/drm/msm/dp/dp_hpd.h               |   79 +
+>  drivers/gpu/drm/msm/dp/dp_link.c              | 1216 ++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_link.h              |  132 ++
+>  drivers/gpu/drm/msm/dp/dp_panel.c             |  490 +++++
+>  drivers/gpu/drm/msm/dp/dp_panel.h             |   95 +
+>  drivers/gpu/drm/msm/dp/dp_parser.c            |  267 +++
+>  drivers/gpu/drm/msm/dp/dp_parser.h            |  138 ++
+>  drivers/gpu/drm/msm/dp/dp_pll.c               |   99 +
+>  drivers/gpu/drm/msm/dp/dp_pll.h               |   61 +
+>  drivers/gpu/drm/msm/dp/dp_pll_10nm.c          |  917 +++++++++
+>  drivers/gpu/drm/msm/dp/dp_pll_private.h       |  111 ++
+>  drivers/gpu/drm/msm/dp/dp_power.c             |  392 ++++
+>  drivers/gpu/drm/msm/dp/dp_power.h             |  103 +
+>  drivers/gpu/drm/msm/dp/dp_reg.h               |  517 +++++
+>  drivers/gpu/drm/msm/msm_drv.c                 |    2 +
+>  drivers/gpu/drm/msm/msm_drv.h                 |   59 +-
+>  include/drm/drm_dp_helper.h                   |    1 +
+>  37 files changed, 9776 insertions(+), 19 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dp-controller-sc7180.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_display.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_display.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_link.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_link.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll_10nm.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll_private.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_power.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_power.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_reg.h
+> 
+> 
+> base-commit: 0a19b068acc47d05212f03e494381926dc0381e2
+> prerequisite-patch-id: 8058026a54241aa728a91dd1685419afb249959e
+> prerequisite-patch-id: ed730eb83f84501579332a0f0ab98f7ef649e868
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
