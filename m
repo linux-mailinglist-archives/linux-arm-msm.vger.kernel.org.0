@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5494C219EC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:07:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A27A219ECD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:07:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727802AbgGILHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 07:07:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
+        id S1727793AbgGILHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 07:07:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727793AbgGILHM (ORCPT
+        with ESMTP id S1727796AbgGILHN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 07:07:12 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0423AC08C5DC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 04:07:11 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g10so6015874wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 04:07:11 -0700 (PDT)
+        Thu, 9 Jul 2020 07:07:13 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D8D0C061A0B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 04:07:13 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id s10so1859777wrw.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 04:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ATfnw728aYA7yiuUsLy6/P7+SZIW7XuVCwpr30Cblyc=;
-        b=HBmfbmcoS3oSP0tUmNy33ILiAMRLDlbvxZLL28SOIIGZF/C+kBzEUCLS7qyeA4kKG3
-         vEOih1VqibdSZq1YFAnmosKbwgKEHNCdrcv+m6fNf+sHhEw1uS8VPs4HKWvYgYWwfMqI
-         VLqFLLBxuc68NQxsdqxWnD7IX4+4vans68uUZlfQLx8pPjLCzhz2z7ypHzylu2jDCiNG
-         YPDEVoZtr9vTrm7aI+EgsZYl0eXCJI5xYGoQYqZDb4Bw2GX8FItgb2YrNZ0OmT6xBErK
-         0WNs1DPvuhcgxPGPZvqfcUTD5bAoQe1Y8Z+SuxiHUVsvi5tncEnvbI5Qm8gs2600meGB
-         ECMg==
+        bh=QO3JZKihtso+39nMH2ykv6IniQvYNe/2WheGTzYpPuE=;
+        b=miAQ6xvFBcDyc81YMANaoJ8Vj2T+Y6Y4oRgP4DbaKNUZ60jc3Qw5eTnj/8OtFHT9Fw
+         uUD2LrGi6v1GF4Ec9zvV9DwiO0ym1tgQmXcJancBs4W3QengAkduEuW2v+fTrFqqgsge
+         G84AfYwE3GEp4Tx18wngoP8y20BwEbFYuJX6g5vqabGW7kTrWJGHebcQr6b1w3zwCWep
+         ibchTQ4ucOuKtxwNWcEd/nHpzH5hUsk+hz3y1WIx/0veCqUpm7l3n3lcnj7ArlyPkBOx
+         U0XpHZsh+Z1vVze0HNdaJH4fut7gQ6KAUayCYYNsTzUIPEGZmyb8kVfeD9wmZ5EWCoYD
+         MaFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ATfnw728aYA7yiuUsLy6/P7+SZIW7XuVCwpr30Cblyc=;
-        b=QtyINH3G7QUB29SaZCOdiYe9yVrjbpvmMgwNYV9g3xBBIlncWfKJ13Stfy3pURMWxg
-         rsz/18HRfICD+rOTIJ6FfptJhjtOz+DlB7mlkrhtBNwv4Ble0UQXbnnVdMK6EtGCXYI5
-         wZ/gWL+iZdrg/rO2t2Ivpn579dFUQPMrRb8wPugEeIihPHDCVyj3OG/neqNqD6AoBzHA
-         EYZBM7z4mQtnkSerqCQSYRbdp3BxNk2AAO9cJ0OzW+6GQ2WJwky6HWA6/v2aS3Uqq94m
-         dk6mrj5RGcr88c/R0+XaeeJdt+J9Ni1SbWKePvVV0eZVhowipLKR+rQw6I2yHCvQxg5X
-         f1+w==
-X-Gm-Message-State: AOAM5328t4mTdv17NKjmC+a5X7Iq7B2v5waiJORLUOOpD1zrI0PI9ShL
-        gD1mMmYcYytrKcj7nSzLXYP5LA==
-X-Google-Smtp-Source: ABdhPJy638SANQ1lHws0vfG/w0IRWANsMDY7dasDL0vdZGK91DujiB9ZfLBEesPo3yzxE7p1FQd9og==
-X-Received: by 2002:a1c:9650:: with SMTP id y77mr13540564wmd.101.1594292830479;
-        Thu, 09 Jul 2020 04:07:10 -0700 (PDT)
+        bh=QO3JZKihtso+39nMH2ykv6IniQvYNe/2WheGTzYpPuE=;
+        b=QR13+TccMZ6pvyRwr0QFwMfMN4/MEH0mEnHF6OYXYaZIcfDbhJ/lI1Ao573jNZhnSp
+         W+Cn8DomYlNcAO4IxaVMrTcu16S2CPo+J4Rf4iRByzrOAki3HtbdKzDQopNnueWpGyDZ
+         EVu6z2HS4lIk54N8aNz+CWHtYaD1BnfHgLVxWqtCQyvDpY1xgcCXcrrwI0oJFEKG1JCH
+         0VRP50rhIPY+3IUvlBytQZDzEeO9l4ulVz0TUpby7DpM+DZIYOv3OgckO8lk7EwJadYT
+         J1qEeqjIl5vfjjsztyY9YdgMb4i6bVoIVA8lQgBJuLLpYXwpVBIL2gOssvv1UBM2eM+A
+         xaoA==
+X-Gm-Message-State: AOAM531Jq49Ns5VJDekZYmQL7jWjVmGwgIt7Kow6/kuhmn96P/9Jwqj8
+        m7es2/Hgs3eY0plkOPBC6koICg==
+X-Google-Smtp-Source: ABdhPJycuHP4XE2SNs40fwWrwO9C5q8Tgb1PQeOiKtcis5BE5sARpF1cQMXUcm3zUnHxLMZQhSYXig==
+X-Received: by 2002:adf:e944:: with SMTP id m4mr64207464wrn.252.1594292832314;
+        Thu, 09 Jul 2020 04:07:12 -0700 (PDT)
 Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id q7sm5375578wrs.27.2020.07.09.04.07.09
+        by smtp.googlemail.com with ESMTPSA id q7sm5375578wrs.27.2020.07.09.04.07.10
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Jul 2020 04:07:09 -0700 (PDT)
+        Thu, 09 Jul 2020 04:07:11 -0700 (PDT)
 From:   Georgi Djakov <georgi.djakov@linaro.org>
 To:     linux-pm@vger.kernel.org
 Cc:     saravanak@google.com, mdtipton@codeaurora.org,
         okukatla@codeaurora.org, bjorn.andersson@linaro.org,
         vincent.guittot@linaro.org, georgi.djakov@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/4] interconnect: Add sync state support
-Date:   Thu,  9 Jul 2020 14:07:02 +0300
-Message-Id: <20200709110705.30359-2-georgi.djakov@linaro.org>
+Subject: [PATCH 2/4] interconnect: Add get_bw() callback
+Date:   Thu,  9 Jul 2020 14:07:03 +0300
+Message-Id: <20200709110705.30359-3-georgi.djakov@linaro.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200709110705.30359-1-georgi.djakov@linaro.org>
 References: <20200709110705.30359-1-georgi.djakov@linaro.org>
@@ -67,137 +67,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bootloaders often do some initial configuration of the interconnects
-in the system and we want to keep this configuration until all consumers
-have probed and expressed their bandwidth needs. This is because we don't
-want to change the configuration by starting to disable unused paths until
-every user had a chance to request the amount of bandwidth it needs.
-
-To accomplish this we will implement an interconnect specific sync_state
-callback which will synchronize (aggregate and set) the current bandwidth
-settings when all consumers have been probed.
+The interconnect controller hardware may support querying the current
+bandwidth settings, so add a callback for providers to implement this
+functionality if supported.
 
 Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 ---
- drivers/interconnect/core.c           | 56 +++++++++++++++++++++++++++
- include/linux/interconnect-provider.h |  3 ++
- 2 files changed, 59 insertions(+)
+ drivers/interconnect/core.c           | 3 ++-
+ include/linux/interconnect-provider.h | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index e5f998744501..e53adfee1ee3 100644
+index e53adfee1ee3..edbfe8380e83 100644
 --- a/drivers/interconnect/core.c
 +++ b/drivers/interconnect/core.c
-@@ -26,6 +26,8 @@
- 
- static DEFINE_IDR(icc_idr);
- static LIST_HEAD(icc_providers);
-+static int providers_count;
-+static bool synced_state;
- static DEFINE_MUTEX(icc_lock);
- static struct dentry *icc_debugfs_dir;
- 
-@@ -255,6 +257,10 @@ static int aggregate_requests(struct icc_node *node)
- 			continue;
- 		p->aggregate(node, r->tag, r->avg_bw, r->peak_bw,
- 			     &node->avg_bw, &node->peak_bw);
-+
-+		/* during boot use the initial bandwidth as a floor value */
-+		if (!synced_state)
-+			node->peak_bw = max(node->peak_bw, node->init_bw);
- 	}
- 
- 	return 0;
-@@ -919,6 +925,12 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 	node->provider = provider;
+@@ -926,7 +926,8 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
  	list_add_tail(&node->node_list, &provider->nodes);
  
-+	/* get the bandwidth value and sync it with the hardware */
-+	if (node->init_bw && provider->set) {
-+		node->peak_bw = node->init_bw;
-+		provider->set(node, node);
-+	}
-+
- 	mutex_unlock(&icc_lock);
- }
- EXPORT_SYMBOL_GPL(icc_node_add);
-@@ -1014,8 +1026,52 @@ int icc_provider_del(struct icc_provider *provider)
- }
- EXPORT_SYMBOL_GPL(icc_provider_del);
- 
-+static int of_count_icc_providers(struct device_node *np)
-+{
-+	struct device_node *child;
-+	int count = 0;
-+
-+	for_each_available_child_of_node(np, child) {
-+		if (of_property_read_bool(child, "#interconnect-cells"))
-+			count++;
-+		count += of_count_icc_providers(child);
-+	}
-+	of_node_put(np);
-+
-+	return count;
-+}
-+
-+void icc_sync_state(struct device *dev)
-+{
-+	struct icc_provider *p;
-+	struct icc_node *n;
-+	static int count;
-+
-+	count++;
-+
-+	if (count < providers_count)
-+		return;
-+
-+	mutex_lock(&icc_lock);
-+	list_for_each_entry(p, &icc_providers, provider_list) {
-+		dev_dbg(p->dev, "interconnect provider is in synced state\n");
-+		list_for_each_entry(n, &p->nodes, node_list) {
-+			aggregate_requests(n);
-+			p->set(n, n);
-+		}
-+	}
-+	mutex_unlock(&icc_lock);
-+	synced_state = true;
-+}
-+EXPORT_SYMBOL_GPL(icc_sync_state);
-+
- static int __init icc_init(void)
- {
-+	struct device_node *root = of_find_node_by_path("/");
-+
-+	providers_count = of_count_icc_providers(root);
-+	of_node_put(root);
-+
- 	icc_debugfs_dir = debugfs_create_dir("interconnect", NULL);
- 	debugfs_create_file("interconnect_summary", 0444,
- 			    icc_debugfs_dir, NULL, &icc_summary_fops);
+ 	/* get the bandwidth value and sync it with the hardware */
+-	if (node->init_bw && provider->set) {
++	if (provider->get_bw && provider->set) {
++		provider->get_bw(node, &node->init_bw);
+ 		node->peak_bw = node->init_bw;
+ 		provider->set(node, node);
+ 	}
 diff --git a/include/linux/interconnect-provider.h b/include/linux/interconnect-provider.h
-index 0c494534b4d3..153fb7616f96 100644
+index 153fb7616f96..329eccb19f58 100644
 --- a/include/linux/interconnect-provider.h
 +++ b/include/linux/interconnect-provider.h
-@@ -71,6 +71,7 @@ struct icc_provider {
-  * @req_list: a list of QoS constraint requests associated with this node
-  * @avg_bw: aggregated value of average bandwidth requests from all consumers
-  * @peak_bw: aggregated value of peak bandwidth requests from all consumers
-+ * @init_bw: the bandwidth value that is read from the hardware during init
-  * @data: pointer to private data
-  */
- struct icc_node {
-@@ -87,6 +88,7 @@ struct icc_node {
- 	struct hlist_head	req_list;
- 	u32			avg_bw;
- 	u32			peak_bw;
-+	u32			init_bw;
- 	void			*data;
- };
- 
-@@ -103,6 +105,7 @@ void icc_node_del(struct icc_node *node);
- int icc_nodes_remove(struct icc_provider *provider);
- int icc_provider_add(struct icc_provider *provider);
- int icc_provider_del(struct icc_provider *provider);
-+void icc_sync_state(struct device *dev);
- 
- #else
- 
+@@ -38,6 +38,7 @@ struct icc_node *of_icc_xlate_onecell(struct of_phandle_args *spec,
+  * @aggregate: pointer to device specific aggregate operation function
+  * @pre_aggregate: pointer to device specific function that is called
+  *		   before the aggregation begins (optional)
++ * @get_bw: pointer to device specific function to get current bandwidth
+  * @xlate: provider-specific callback for mapping nodes from phandle arguments
+  * @dev: the device this interconnect provider belongs to
+  * @users: count of active users
+@@ -50,6 +51,7 @@ struct icc_provider {
+ 	int (*aggregate)(struct icc_node *node, u32 tag, u32 avg_bw,
+ 			 u32 peak_bw, u32 *agg_avg, u32 *agg_peak);
+ 	void (*pre_aggregate)(struct icc_node *node);
++	int (*get_bw)(struct icc_node *node, u32 *bw);
+ 	struct icc_node* (*xlate)(struct of_phandle_args *spec, void *data);
+ 	struct device		*dev;
+ 	int			users;
