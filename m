@@ -2,78 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 985B7219A09
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 09:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C13F219AF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 10:36:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726302AbgGIHdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 03:33:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44080 "EHLO mail.kernel.org"
+        id S1726245AbgGIIgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 04:36:17 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:58502 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726006AbgGIHdj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 03:33:39 -0400
-Received: from localhost (unknown [122.182.251.219])
+        id S1726247AbgGIIgQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jul 2020 04:36:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594283775; h=Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
+ To: From: Sender; bh=VNqNnxgafwr7RYkJ1Yf6GjVmu/dHflZjtsDnh57E44U=; b=kWemX2P0VzP6o0ObSfWWDu+FBg4CgWM1lgAGPXan40BGQIsMKB0WiA7RVWnZ8iufAi9uSISz
+ g2a5/BRHRc53rC1qeyRT4TKMPJyp56koWPkgu5gd7AcAg0jJOZGWiyKEN62/En2pzODkX+mm
+ zgTwqZ0i5T1wes41/c7kLDtXgh8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f06d6fc71d7ca1d3aa277ff (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Jul 2020 08:36:12
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7F494C43391; Thu,  9 Jul 2020 08:36:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from Pillair (unknown [183.83.71.149])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 43E6520767;
-        Thu,  9 Jul 2020 07:33:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594280019;
-        bh=egKqkdwX9z5kdRrXLcad3F+Q12AeoGgHsWBcKCW0Cbo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nnUpnt8QvxDxM750v0L6hAcTKPWBSNG9X2ixsGlzQPDmWQr+LI9uw4Up43fNMGfXe
-         ktx1qN1AeFuemE2NqUtwNQ9sw1VFX/zyq4kjOGEYtoQ789blkG6kDhW9Bqzn1O6cHk
-         O6NoSnxjJT1tVbhzxZaukzFy1CRHSAd2LqQaXJ+U=
-Date:   Thu, 9 Jul 2020 13:03:30 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/5] iommu/arm-smmu: Support maintaining bootloader
- mappings
-Message-ID: <20200709073330.GI34333@vkoul-mobl>
-References: <20200709050145.3520931-1-bjorn.andersson@linaro.org>
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04226C433C6;
+        Thu,  9 Jul 2020 08:36:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 04226C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=pillair@codeaurora.org
+From:   "Rakesh Pillai" <pillair@codeaurora.org>
+To:     "'Douglas Anderson'" <dianders@chromium.org>,
+        "'Andy Gross'" <agross@kernel.org>,
+        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
+Cc:     "'Evan Green'" <evgreen@chromium.org>,
+        "'Sibi Sankar'" <sibis@codeaurora.org>,
+        "'Rob Herring'" <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20200625131658.REPOST.1.I32960cd32bb84d6db4127c906d7e371fa29caebf@changeid> 
+In-Reply-To: 
+Subject: RE: [REPOST PATCH] arm64: dts: qcom: Fix WiFi supplies on sc7180-idp
+Date:   Thu, 9 Jul 2020 14:06:04 +0530
+Message-ID: <001501d655cb$ff5b8bc0$fe12a340$@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200709050145.3520931-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIJkvzNJ2GrKQD23Wa0Ucd2+v4DjgEVOFggqI++GJA=
+Content-Language: en-us
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-07-20, 22:01, Bjorn Andersson wrote:
-> Based on previous attempts and discussions this is the latest attempt at
-> inheriting stream mappings set up by the bootloader, for e.g. boot splash or
-> efifb.
-> 
-> The first patch is an implementation of Robin's suggestion that we should just
-> mark the relevant stream mappings as BYPASS. Relying on something else to set
-> up the stream mappings wanted - e.g. by reading it back in platform specific
-> implementation code.
-> 
-> The series then tackles the problem seen in most versions of Qualcomm firmware,
-> that the hypervisor intercepts BYPASS writes and turn them into FAULTs. It does
-> this by allocating context banks for identity domains as well, with translation
-> disabled.
-> 
-> Lastly it amends the stream mapping initialization code to allocate a specific
-> identity domain that is used for any mappings inherited from the bootloader, if
-> above Qualcomm quirk is required.
-> 
-> 
-> The series has been tested and shown to allow booting SDM845, SDM850, SM8150,
-> SM8250 with boot splash screen setup by the bootloader. Specifically it also
-> allows the Lenovo Yoga C630 to boot with SMMU and efifb enabled.
 
-This resolves issue on RB3 for me so:
 
-Tested-by: Vinod Koul <vkoul@kernel.org>
+> -----Original Message-----
+> From: Rakesh Pillai <pillair@codeaurora.org>
+> Sent: Friday, June 26, 2020 2:14 PM
+> To: 'Douglas Anderson' <dianders@chromium.org>; 'Andy Gross'
+> <agross@kernel.org>; 'Bjorn Andersson' <bjorn.andersson@linaro.org>
+> Cc: 'Evan Green' <evgreen@chromium.org>; 'Sibi Sankar'
+> <sibis@codeaurora.org>; 'Rob Herring' <robh+dt@kernel.org>;
+> 'devicetree@vger.kernel.org' <devicetree@vger.kernel.org>; 'linux-arm-
+> msm@vger.kernel.org' <linux-arm-msm@vger.kernel.org>; 'linux-
+> kernel@vger.kernel.org' <linux-kernel@vger.kernel.org>
+> Subject: RE: [REPOST PATCH] arm64: dts: qcom: Fix WiFi supplies on sc7180-
+> idp
+> 
+> 
+> 
+> > -----Original Message-----
+> > From: Douglas Anderson <dianders@chromium.org>
+> > Sent: Friday, June 26, 2020 1:47 AM
+> > To: Andy Gross <agross@kernel.org>; Bjorn Andersson
+> > <bjorn.andersson@linaro.org>
+> > Cc: Evan Green <evgreen@chromium.org>; Sibi Sankar
+> > <sibis@codeaurora.org>; Rakesh Pillai <pillair@codeaurora.org>; Douglas
+> > Anderson <dianders@chromium.org>; Rob Herring <robh+dt@kernel.org>;
+> > devicetree@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-
+> > kernel@vger.kernel.org
+> > Subject: [REPOST PATCH] arm64: dts: qcom: Fix WiFi supplies on
+sc7180-idp
+> >
+> > The WiFi supplies that were added recently can't have done anything
+> > useful because they were missing the "-supply" suffix.  Booting
+> > without the "-supply" suffix would give these messages:
+> >
+> > ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-0.8-cx-mx not found,
+> > using dummy regulator
+> > ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-1.8-xo not found,
+> using
+> > dummy regulator
+> > ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-1.3-rfa not found,
+> using
+> > dummy regulator
+> > ath10k_snoc 18800000.wifi: 18800000.wifi supply vdd-3.3-ch0 not found,
+> > using dummy regulator
+> >
+> > Let's add the "-supply" suffix.
+> >
+> > Fixes: 1e7594a38f37 ("arm64: dts: qcom: sc7180: Add WCN3990 WLAN
+> > module device node")
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> Reviewed-by: Rakesh Pillai <pillair@codeaurora.org>
 
--- 
-~Vinod
+
+Tested-by: Rakesh Pillai <pillair@codeaurora.org>
+
+> 
+> I missed this in the DTSI patch, while manually rebasing to the kernel
+tip.
+> 
+> > I don't have an IDP setup but I have a similar board.  Testing on IDP
+> > would, of course, be appreciated.
+> >
+> > Repost because I screwed up the "after-the-cut" notes on first post.
+> >
+> >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > index 39dbfc89689e..472f7f41cc93 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > @@ -391,10 +391,10 @@ video-firmware {
+> >
+> >  &wifi {
+> >  	status = "okay";
+> > -	vdd-0.8-cx-mx = <&vreg_l9a_0p6>;
+> > -	vdd-1.8-xo = <&vreg_l1c_1p8>;
+> > -	vdd-1.3-rfa = <&vreg_l2c_1p3>;
+> > -	vdd-3.3-ch0 = <&vreg_l10c_3p3>;
+> > +	vdd-0.8-cx-mx-supply = <&vreg_l9a_0p6>;
+> > +	vdd-1.8-xo-supply = <&vreg_l1c_1p8>;
+> > +	vdd-1.3-rfa-supply = <&vreg_l2c_1p3>;
+> > +	vdd-3.3-ch0-supply = <&vreg_l10c_3p3>;
+> >  	wifi-firmware {
+> >  		iommus = <&apps_smmu 0xc2 0x1>;
+> >  	};
+> > --
+> > 2.27.0.212.ge8ba1cc988-goog
+
+
