@@ -2,78 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A184219F07
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:23:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5796219F6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:59:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727028AbgGILXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 07:23:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38606 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726315AbgGILXC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 07:23:02 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0C72D206DF;
-        Thu,  9 Jul 2020 11:23:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594293782;
-        bh=GZsuUdV2fR+cexBuBiwATZKR9qC/pImyIYyN7vUt0pA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=U5JnIcYPUUv6cgvWNYHxjV0AGnrzOtGgawN20DWXQ/mJXoDfP3SIJODtTaRKnYLAY
-         j12Q1Gofg6uptdq+dAJzd5rYijGgIDBFLgV1VahuSQvpUxO6N/d21LtWQ795fnwYtt
-         wBvQnHqlfHB+V/KewhYAr4Z+5sz0MUs73mg7Mqq4=
-Date:   Thu, 9 Jul 2020 12:22:57 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
+        id S1726387AbgGIL67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 07:58:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51540 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727123AbgGIL66 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jul 2020 07:58:58 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9595DC08C5DC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 04:58:58 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id f18so2078021wrs.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 04:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=gHgWXTMGTgSJ9NzYNTwxkcCv5i1cvCfL1OrkN27Xvho=;
+        b=tnHPMiKoFwJCftAE8SCg0kw8XH99fwSKXcvrjclQk5KumZPLQx8iVZbjVHV01m5o31
+         b7Ajh+U/4PD7rAc6ZOhSWoQaHUp9f97KeTfDZIwK2Ty9dTc+62IYRmUPf22orpGpxm0a
+         eXacwtRdXeteEBT6ljePIFJsgtXHM8COLkEXPVSwQxguBgqaK0rQBlEouxg7ow+ob0rW
+         /zD4eYoi+YVEJOsQrJXLKPGMUYpSxrZqEHXbEMBeX7FoGShcixB86bnOVYpMQoX9jFXt
+         AjayRUt9ET3KIFz1nMOa8WLOMcCuILTPfTiS/uAMBAumBNj243HdfpxuGlSL0OTT6MQF
+         okEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=gHgWXTMGTgSJ9NzYNTwxkcCv5i1cvCfL1OrkN27Xvho=;
+        b=cYfqQmQ+U+iylik+qr1Io+9WXpHeH86x7hILJlal0XmdUVTCeszgoWK6vMehUMloPu
+         1fcubvt2Joer3CBHU5Als1sZysgVsiyDRkoXmrh3mKLHQBtcuJwpi4j5NMqP3VuUdted
+         twMUPEnOwqS9XzDuvBmeSkEknkaXwE+HFkJSMW80KK91UBPWn4TZwS09h1i8TE114ZpE
+         0A5Ptu7A1vyBMPMjCx8AEM2MFh7+LvAKnZeLf7vNdODVL39M0rLvQHPxbyF7pGU+BNpT
+         3nuXg6lhY/DzJDCqMXhpeiJ7d18t+CGwpCkZdGNQX3RFnevPoEbHkZIt2Pb35s74eu1F
+         F3ow==
+X-Gm-Message-State: AOAM532r8rh+iMQ2XTUTvh+p41PwerDmfFmhLGodL4ijlOKjnPDOFq1Q
+        ewa4/ieMMJAbi37SuXjqNT88SnOFKtzF8Q==
+X-Google-Smtp-Source: ABdhPJyCuhps/FwjgEGCNRrbS5o38e0SWuvhsNtaS+uo0Brld9JdD09WDpyF2aDUN4l3vMi+qlU9vA==
+X-Received: by 2002:adf:e68d:: with SMTP id r13mr59987094wrm.141.1594295937009;
+        Thu, 09 Jul 2020 04:58:57 -0700 (PDT)
+Received: from localhost.localdomain (212-5-158-112.ip.btc-net.bg. [212.5.158.112])
+        by smtp.gmail.com with ESMTPSA id v7sm5140737wrp.45.2020.07.09.04.58.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2020 04:58:56 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, akashast@codeaurora.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        georgi.djakov@linaro.org, swboyd@chromium.org,
-        mkshah@codeaurora.org, ctheegal@codeaurora.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-Subject: Re: [PATCH] spi: spi-geni-qcom: Set the clock properly at runtime
- resume
-Message-ID: <20200709112257.GD4960@sirena.org.uk>
-References: <20200708163922.1.I0b701fc23eca911a5bde4ae4fa7f97543d7f960e@changeid>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pZs/OQEoSSbxGlYw"
-Content-Disposition: inline
-In-Reply-To: <20200708163922.1.I0b701fc23eca911a5bde4ae4fa7f97543d7f960e@changeid>
-X-Cookie: You will be married within a year.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Elliot Berman <eberman@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH 0/2] Venus - fix firmware load failure
+Date:   Thu,  9 Jul 2020 14:58:27 +0300
+Message-Id: <20200709115829.8194-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---pZs/OQEoSSbxGlYw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+These two patches fixed the problem with "failed to reset venus core"
+seen with various firmware versions (including the one from linux-firmware)
+on sdm845 and sdm850.
 
-On Wed, Jul 08, 2020 at 04:39:39PM -0700, Douglas Anderson wrote:
-> In the patch ("spi: spi-geni-qcom: Avoid clock setting if not needed")
-> we avoid a whole pile of clock code.  As part of that, we should have
-> restored the clock at runtime resume.  Do that.
+regards,
+Stan
 
-Acked-by: Mark Brown <broonie@kernel.org>
+Stanimir Varbanov (2):
+  firmware: qcom_scm: Add memory protect virtual address ranges
+  venus: firmware: Set virtual address ranges
 
---pZs/OQEoSSbxGlYw
-Content-Type: application/pgp-signature; name="signature.asc"
+ drivers/firmware/qcom_scm.c                  | 24 ++++++++++++++++++++
+ drivers/firmware/qcom_scm.h                  |  1 +
+ drivers/media/platform/qcom/venus/core.c     |  4 ++++
+ drivers/media/platform/qcom/venus/core.h     |  4 ++++
+ drivers/media/platform/qcom/venus/firmware.c | 18 ++++++++++++++-
+ include/linux/qcom_scm.h                     |  8 ++++++-
+ 6 files changed, 57 insertions(+), 2 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.17.1
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl8G/hAACgkQJNaLcl1U
-h9DnAwf/SUxH1GBgcKZnVJlYTtC7aB9YAOL9mr/WFDRoHJML8jpX7HfaybGJdSml
-MPTLvdHIw5W4f3/o2PdhEzgGT/x5eFsxvDnyiwiSLM53hVJpnMBtWG0DRxCeIpct
-PeRNtSqVsk/VfqHOSMwpwtsE0m1C3CAywDhsw8/6F2AIvDhu083EWK+O9KyHtNaM
-Rl4FyMKX24j9bjGn7madZXnFil8/7Z0JcS0eQ0fqyV61Qwl5HErpkiEAsKyO3HnL
-nJdheDl93MC/lQcqqRoFkz7dAcbdhIRwoCehgxOQID+AHsaLqOlielJAQeTLPpQ9
-Us2Dw5+HjsqZBmVflkGZFLwR9t4t1g==
-=gQBC
------END PGP SIGNATURE-----
-
---pZs/OQEoSSbxGlYw--
