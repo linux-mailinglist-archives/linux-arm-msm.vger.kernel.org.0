@@ -2,110 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 316CC21978C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 06:43:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1C382197A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 07:02:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbgGIEnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 00:43:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41032 "EHLO
+        id S1726140AbgGIFBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 01:01:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbgGIEny (ORCPT
+        with ESMTP id S1726099AbgGIFBl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 00:43:54 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9B9C061A0B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 21:43:54 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id b9so320043plx.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 21:43:54 -0700 (PDT)
+        Thu, 9 Jul 2020 01:01:41 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAD7CC08C5CE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 22:01:40 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id t6so454966pgq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 22:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uYFWXsn6/lmz5ncMBjNDIoIoMFK4tdm/Q5x2mlsCoiI=;
-        b=EaBPBeSfNjYdLPMxKFn3vKHHQTk5DSQ1a6GPgTC0RJBdk3vV5Rz4W5hW1lxLQTcKee
-         SQiBOIbmK4ZEu66KcjHN93aQcF3i+4Y0HkohdNaED7tbe1nNfNA/Je0FMcyEXbEYbwZz
-         yGLL9ktIkHKt3RAYVIW4mdMZEwF87KWgALxa5rFAzeBB9izvi00SM8sXpB+bj5NC3HBO
-         UZlZ9hKFDUZ7F4qkTRn6hSj6Yr6ZPRir36NPKvxiwoP9tDRiXg9ADUi6RCffMQ1XHnNg
-         WkRko8g50tJwH7rXSdhWz61K8WZZv04UhednMu0IK/LAJNzubu0wSqiHsE9NO6WPtLF6
-         JMNg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uN2T4CF/tRygg+rOfQBDGtucvrJg7l2si9rKgMZR/j0=;
+        b=BXPSxo5VbjQ5clTT5R39r8mnuahuMmSnFAX8dVZrldk0UdIVgqWclLWUaFgB9EEvGs
+         5iz3KpwAkAgn90jBHAhrbXixnEOIEYtjcRThFOHPaMP1iW7G5A9VtiBNmc4MAkl+PePn
+         X8Qxrz9Owin3O+N62O6MOn8S4A+iGJ6Wxb9sX2WIiLAY51C87Q29o3eXidoSP6ooqh+D
+         qS6uu3fHwmtVABvqz/lvBdCP/QxOAANNR/YrgTRHreSoizLsqM/gfFPjeLgGJoCsorW3
+         bcPBMKwdryQ+Fp3uaE4IZn7ZWggNMNBSXgKfxkkYCqUvqDoX7YBNX084BbbLThuTS7Ou
+         LIZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uYFWXsn6/lmz5ncMBjNDIoIoMFK4tdm/Q5x2mlsCoiI=;
-        b=bTBFM6tAHh2EDtgFn6auhHyPVTu86f/V7iXPLW8zrCenyzjV1+NWclfqQfQxZ2UBmG
-         PkBysufkYqcaTLZXAy07h+wx02DK9P09qiSkx+AJv5d/KH4K7VVA+Uzwm2Cp980Havi3
-         ZUNmhNHPBXVHWEj8hLKsBT/SHgWivh5PBc3IEkPN4hDZNcGIcliV9j7pUQHp8ggZIsPn
-         DT7j7BErN1qlgVb90bCr+tAgtS4BwwCIWMNB6+QvmzJd0P8QAOsa2w33vcp5LGrMxtfS
-         VlsVXyWaM3ISy7UShvl4hAoEaP2xBIQBEvxpx0UXTJC+oc8MM2/IeMDO4qD5EVmtsEHH
-         pzaQ==
-X-Gm-Message-State: AOAM531R7gOZHoaZjhYKOeDtwNod9U8+oxMPct341zG1VY1PMAQHr5U0
-        UILN7GmOkQs+tJB0f7ceDWDE6g==
-X-Google-Smtp-Source: ABdhPJxJHTDRM74uOKDi3SikC5ArM6o0/DCY1lNNoz2eFTGKxdAZS39R0GDvGntXe5ZbIYSVT0WPQw==
-X-Received: by 2002:a17:902:d698:: with SMTP id v24mr22151646ply.163.1594269833703;
-        Wed, 08 Jul 2020 21:43:53 -0700 (PDT)
-Received: from ripper (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id j26sm1152574pfe.200.2020.07.08.21.43.52
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uN2T4CF/tRygg+rOfQBDGtucvrJg7l2si9rKgMZR/j0=;
+        b=g9OA7CE8EDw/rB4V+VYb9pzVYswpVbCHdggWZZUjfGcpPuOWYPhRBjqjiASgDWill0
+         g3hZkP742lqidp0RLhoyf5e+hwzqslAo0lkps87JTGbF7zDHdNmhPz+H3qke+hRg6uDp
+         yD0scjLeJQ2xVOx1AdBFQf0+5ZGyXp99TGrCG8rNpeduHV6tKEOkyyZ9fteyAv/0Pk6H
+         9nAHYX5u1/6+3ruHMrr27EC7oEHGUVF/YNyY5cROKbF7NFm33AI0w+5A7Bq9RhOr2+eC
+         PrTvJY7E4GDj7kjVVCkyy2tSSyq9TBdiQMyNZtLV6HNWYYzig5ddR6db5SW0WXniIPw1
+         5BkA==
+X-Gm-Message-State: AOAM531TNQz2yU7jRXSxLzfAKEhYV+PpEJ8gKdGHLwAPDqaMx+XyhW0I
+        Lma+d4sdjo4qbE2oOXeEc45VOw==
+X-Google-Smtp-Source: ABdhPJyYxb2sGMCNEAHm5ala37cPOSV+iadH/fkL3XmUf96HbWpfFw5r1l8q9UAC1q8UkeO/UH2wlA==
+X-Received: by 2002:a62:346:: with SMTP id 67mr14522608pfd.111.1594270900163;
+        Wed, 08 Jul 2020 22:01:40 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id h15sm999974pjc.14.2020.07.08.22.01.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2020 21:43:52 -0700 (PDT)
-Date:   Wed, 8 Jul 2020 21:44:20 -0700
+        Wed, 08 Jul 2020 22:01:39 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
-        "moderated list:ARM SMMU DRIVERS" 
-        <linux-arm-kernel@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH v2 0/8] arm64: dts: qcom: smmu/USB nodes and
- HDK855/HDK865 dts
-Message-ID: <20200709044420.GB3453565@ripper>
-References: <20200609194030.17756-1-jonathan@marek.ca>
- <20200703123113.GA18953@willie-the-truck>
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/5] iommu/arm-smmu: Support maintaining bootloader mappings
+Date:   Wed,  8 Jul 2020 22:01:40 -0700
+Message-Id: <20200709050145.3520931-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200703123113.GA18953@willie-the-truck>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 03 Jul 05:31 PDT 2020, Will Deacon wrote:
+Based on previous attempts and discussions this is the latest attempt at
+inheriting stream mappings set up by the bootloader, for e.g. boot splash or
+efifb.
 
-> On Tue, Jun 09, 2020 at 03:40:18PM -0400, Jonathan Marek wrote:
-> > Add dts nodes for apps_smmu and USB for both sm8150 and sm8250.
-> > 
-> > Also add initial dts files for HDK855 and HDK865, based on mtp dts, with a
-> > few changes. Notably, the HDK865 dts has regulator config changed a bit based
-> > on downstream (I think sm8250-mtp.dts is wrong and copied too much from sm8150).
-> > 
-> > V2 changes:
-> > * Added two patches for sm8150 and sm8250 iommu compatibles
-> > * Changed apps_smmu node patches to use new compatibles
-> > * Updated commit messages for apps_smmu patches to be more correct
-> > * Updated HDK dts patches based on Bjorn's comments
-> > 
-> > Jonathan Marek (8):
-> >   dt-bindings: arm-smmu: Add sm8150 and sm8250 compatible strings
-> >   iommu: arm-smmu-impl: Use qcom impl for sm8150 and sm8250 compatibles
-> >   arm64: dts: qcom: sm8150: add apps_smmu node
-> >   arm64: dts: qcom: sm8250: add apps_smmu node
-> >   arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes
-> >   arm64: dts: qcom: sm8250: Add USB and PHY device nodes
-> >   arm64: dts: qcom: add sm8150 hdk dts
-> >   arm64: dts: qcom: add sm8250 hdk dts
-> 
-> What's your plan for merging this? I can take the first two patches
-> via arm-smmu, if you like. Please just let me know.
-> 
+The first patch is an implementation of Robin's suggestion that we should just
+mark the relevant stream mappings as BYPASS. Relying on something else to set
+up the stream mappings wanted - e.g. by reading it back in platform specific
+implementation code.
 
-Please pick up the binding and driver patch through your tree.
+The series then tackles the problem seen in most versions of Qualcomm firmware,
+that the hypervisor intercepts BYPASS writes and turn them into FAULTs. It does
+this by allocating context banks for identity domains as well, with translation
+disabled.
 
-Regards,
-Bjorn
+Lastly it amends the stream mapping initialization code to allocate a specific
+identity domain that is used for any mappings inherited from the bootloader, if
+above Qualcomm quirk is required.
+
+
+The series has been tested and shown to allow booting SDM845, SDM850, SM8150,
+SM8250 with boot splash screen setup by the bootloader. Specifically it also
+allows the Lenovo Yoga C630 to boot with SMMU and efifb enabled.
+
+Bjorn Andersson (5):
+  iommu/arm-smmu: Make all valid stream mappings BYPASS
+  iommu/arm-smmu: Emulate bypass by using context banks
+  iommu/arm-smmu: Move SMR and S2CR definitions to header file
+  iommu/arm-smmu-qcom: Consstently initialize stream mappings
+  iommu/arm-smmu: Setup identity domain for boot mappings
+
+ drivers/iommu/arm-smmu-qcom.c |  48 +++++++++++++
+ drivers/iommu/arm-smmu.c      | 124 +++++++++++++++++++++++++++++-----
+ drivers/iommu/arm-smmu.h      |  21 ++++++
+ 3 files changed, 175 insertions(+), 18 deletions(-)
+
+-- 
+2.26.2
+
