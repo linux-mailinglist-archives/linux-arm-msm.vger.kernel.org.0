@@ -2,112 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C5FE219ECE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:07:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 044D1219EE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 13:09:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727839AbgGILHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 07:07:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43614 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727798AbgGILHR (ORCPT
+        id S1726795AbgGILJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 07:09:45 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:29904 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727108AbgGILJn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 07:07:17 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0134CC08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 04:07:16 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id q15so1362264wmj.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 04:07:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fdwvmHFIIgaNnK77Gxh46Dh+4af85NxewdzZf8almyY=;
-        b=F3BGIIIxCLIBykFtP/eblriQzi1cjmRAs1xHNnvelohkNmxSQjuae+kOtSwEJE17hJ
-         mRgWwk9Xpqw1iQEgw16Kj49km1fIluo72cMIe7ktEfxD7FiS3lthmE9xWf8OT5UrO+8A
-         HXPBdgCopczix3rGZU9Ck+wiFcSmW9XRpF2erZh9jcjcwNDH3HrYlGC93LP0MVi0gOjS
-         JIoInn6K6liNXjY7Euw2fyt1co+efyLYSyIwxnqiq+Aj6sqBOm1yKBtPLm+8C25Q+rIU
-         5IXO3eVcsk07Icu+FspMyvR28i4wP9cchjooabnObW2tgTtLAsG/oUZUmNMsOQBwULRB
-         XVJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fdwvmHFIIgaNnK77Gxh46Dh+4af85NxewdzZf8almyY=;
-        b=Jyxr9XTeMu7+PnF6BBe6oa3gNBVuZlyZT+nR1Lp4Xp9okHuCFycCR4dEsnMfha8RkZ
-         L1OR03fUM2TiUknE0gqx2AcIh+5jRPtcvBqfhq8UAKLuK4NjiZbZTNCz/aGVT5iRANHO
-         bueuTP+82IGv06Pp0rXa+s1MhSIS3TtjX/LqiOP7mmXxTJ2MSNljiqoSnsvVeWCej2SS
-         jD9VDEzN5mC4ZIn71Tdd8HB3m1cFTepfswiK2EbBiG8SN63Qs1YuB7hLWH11KduyK3h7
-         HLrG/tbqlLHSbM4v8/Ivqt105TJYGCV1rryMpARin3dur+YeBMaukbrYFmSwYF+J1+eX
-         K0GA==
-X-Gm-Message-State: AOAM530IcYalUGNPj31izeo6W2jRrbZl9SaAM7Y5LLyTDWBUqAzEb/MC
-        E/VJV+hR27NxJ8p4nW5keNmUew==
-X-Google-Smtp-Source: ABdhPJyzyO6OJ0n74t6D1mB7vLxMXi4nDrnvEj3LRHpoi/iVMt8GDCSwSYvn6vh+UXBJPO3jj2VhAw==
-X-Received: by 2002:a1c:9911:: with SMTP id b17mr13164196wme.135.1594292835740;
-        Thu, 09 Jul 2020 04:07:15 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id q7sm5375578wrs.27.2020.07.09.04.07.14
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Jul 2020 04:07:15 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org
-Cc:     saravanak@google.com, mdtipton@codeaurora.org,
-        okukatla@codeaurora.org, bjorn.andersson@linaro.org,
-        vincent.guittot@linaro.org, georgi.djakov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] interconnect: qcom: osm-l3: Use icc_sync_state
-Date:   Thu,  9 Jul 2020 14:07:05 +0300
-Message-Id: <20200709110705.30359-5-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200709110705.30359-1-georgi.djakov@linaro.org>
-References: <20200709110705.30359-1-georgi.djakov@linaro.org>
+        Thu, 9 Jul 2020 07:09:43 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594292983; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=x4m6NkhtSK7m0N67OblPvMfBvcT5m7GhZdNzWJ4eB+I=; b=TWcMlDgyjeka0CGT34FAOpBGNt5bvl1xT3GWTaVYpTqHiAjZW16M7h11f9A/8zGJBX53C0SG
+ 9fN74Hua2890n71FVheYWRiWNCSMU/PwpEH+ANwOniPen7bWhgDb4XdceU2cmN+b2d+mt9mm
+ iVlUk72ziiiCFLDfWaXjyN+9SYM=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n19.prod.us-west-2.postgun.com with SMTP id
+ 5f06fae50082b278484b5d9e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Jul 2020 11:09:25
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C0706C433CA; Thu,  9 Jul 2020 11:09:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.11] (unknown [61.3.20.152])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A525AC433C6;
+        Thu,  9 Jul 2020 11:09:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A525AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v2] dt-bindings: media: venus: Add an optional power
+ domain for perf voting
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+References: <1589349807-10163-1-git-send-email-rnayak@codeaurora.org>
+ <20200527193638.GA2604206@bogus>
+ <448cc4c0-0714-dc62-df19-7fa8fba91758@codeaurora.org>
+ <1e8c07c8-0954-462a-cfe6-a1ccde1bedea@codeaurora.org>
+Message-ID: <43b6f7ee-503c-1036-3f00-9fbb4d531ea0@codeaurora.org>
+Date:   Thu, 9 Jul 2020 16:39:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <1e8c07c8-0954-462a-cfe6-a1ccde1bedea@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lowering the bandwidth on the bus might have negative consequences if
-it's done before all consumers had a chance to cast their vote. Let's
-return the maximum amount of bandwidth as initial value. This bandwidth
-level would be maintained until all consumers have probed.
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- drivers/interconnect/qcom/osm-l3.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On 7/1/2020 4:50 PM, Rajendra Nayak wrote:
+> 
+> On 6/1/2020 11:26 AM, Rajendra Nayak wrote:
+>>
+>> On 5/28/2020 1:06 AM, Rob Herring wrote:
+>>> On Wed, May 13, 2020 at 11:33:27AM +0530, Rajendra Nayak wrote:
+>>>> Add an optional power domain which when specified can be used for
+>>>> setting the performance state of Venus.
+>>>>
+>>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>>>> ---
+>>>>   Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
+>>>>   Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
+>>>>   2 files changed, 10 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+>>>> index 764affa..ac1ed64 100644
+>>>> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+>>>> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+>>>> @@ -25,12 +25,16 @@ properties:
+>>>>       maxItems: 1
+>>>>     power-domains:
+>>>> -    maxItems: 2
+>>>> +    minItems: 2
+>>>> +    maxItems: 3
+>>>>     power-domain-names:
+>>>> +    minItems: 2
+>>>> +    maxItems: 3
+>>>>       items:
+>>>>         - const: venus
+>>>>         - const: vcodec0
+>>>> +      - const: opp-pd
+>>>
+>>> Humm, looks suspicious. This is a phyical power island in this block?
+>>
+>> yes, this is used to represent the physical 'cx' power island in the SoC
+>> (Its a shared power island, not a power island specific to this block)
+>> that can be scaled to different 'performance levels' based on the frequency
+>> the codec is expected to run at.
+> 
+> Rob, Did you have any other concerns here? Should I be re-posting this?
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index 96fb9ff5ff2e..532d541b71be 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -137,6 +137,13 @@ static int qcom_osm_l3_remove(struct platform_device *pdev)
- 	return icc_provider_del(&qp->provider);
- }
- 
-+static int qcom_osm_l3_get_bw(struct icc_node *node, u32 *bw)
-+{
-+	*bw = INT_MAX;
-+
-+	return 0;
-+}
-+
- static int qcom_osm_l3_probe(struct platform_device *pdev)
- {
- 	u32 info, src, lval, i, prev_freq = 0, freq;
-@@ -215,6 +222,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 	provider->dev = &pdev->dev;
- 	provider->set = qcom_icc_set;
- 	provider->aggregate = icc_std_aggregate;
-+	provider->get_bw = qcom_osm_l3_get_bw;
- 	provider->xlate = of_icc_xlate_onecell;
- 	INIT_LIST_HEAD(&provider->nodes);
- 	provider->data = data;
-@@ -268,6 +276,7 @@ static struct platform_driver osm_l3_driver = {
- 	.driver = {
- 		.name = "osm-l3",
- 		.of_match_table = osm_l3_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(osm_l3_driver);
+Rob, ping.
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
