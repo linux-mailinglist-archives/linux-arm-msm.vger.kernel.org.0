@@ -2,77 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCEF921A9AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 23:23:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD75F21A9EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 23:51:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbgGIVXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 17:23:10 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:26675 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726196AbgGIVXK (ORCPT
+        id S1726523AbgGIVvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 17:51:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726213AbgGIVvo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 17:23:10 -0400
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Jul 2020 14:23:09 -0700
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg05-sd.qualcomm.com with ESMTP; 09 Jul 2020 14:23:09 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 9A89F181; Thu,  9 Jul 2020 14:23:09 -0700 (PDT)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Veera Vegivada <vvegivad@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [PATCH v1 2/2] thermal: qcom-spmi-temp-alarm: Don't suppress negative temp
-Date:   Thu,  9 Jul 2020 14:23:08 -0700
-Message-Id: <db8ac636dc4a2f8cff45f8131bf196998134cd07.1594329558.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <d8b145ca2147e366c1d0fd2fd718dc355cc73483.1594329558.git.gurus@codeaurora.org>
-References: <d8b145ca2147e366c1d0fd2fd718dc355cc73483.1594329558.git.gurus@codeaurora.org>
-In-Reply-To: <d8b145ca2147e366c1d0fd2fd718dc355cc73483.1594329558.git.gurus@codeaurora.org>
-References: <d8b145ca2147e366c1d0fd2fd718dc355cc73483.1594329558.git.gurus@codeaurora.org>
+        Thu, 9 Jul 2020 17:51:44 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A700C08C5CE;
+        Thu,  9 Jul 2020 14:51:44 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id d18so3013618edv.6;
+        Thu, 09 Jul 2020 14:51:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sZgQ/rgXy0f1txD21I1WuNSsdShPGwMiyPEgQmV+/ng=;
+        b=UHBdHivVFTxqrWLNtuH5PWVTxCNw8Jb1ou33pWpC5DrQOgMMeEokn33wlzUDwHL8dm
+         kBRzkfgS7VTxZihteeaPs9vGGEY25tPYkWZO4O3IRerLWcJeebM85HNi0U6BXZsALVDF
+         qdYQ5nt34k68KaXEEc/VUYQkKT6da79x+OJtKQcPTdnBrHJbzH8hGWZs2is9rHf3PSsy
+         I8/g/Fv8GvG01ozf6SohmC/g/1NtvyOeWgRyMWIUuDh1MWVI+Kkd6PyoixFAGSV2Hanv
+         ZpsSLqhlS3noQeaoAmvkKrhxFGZDElpu6CYzCBkp4mrYkEbpOiv1kEpZu3EL/TCZumEH
+         cNYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sZgQ/rgXy0f1txD21I1WuNSsdShPGwMiyPEgQmV+/ng=;
+        b=qmTrJeCBkMT1KTe2Ec3VvAwGIedhrKnCyjPfy9zrBkPXUNiWlONQO4xq+/KG82sHh1
+         FsEQBZByY8Phnm15h6SjC3VRlvdJ/UHbtNAbIrqe0VLyK1wD+v1ONyLgTEdt386P05kM
+         UoYMMbpsezoFpRBEKl+Swrl9t92KhxtD1Np30huoDybknUfBNlq7I0XL6cAnJx5v9DvE
+         lxppOSxgMtW9BZCWRuSdGkrCRLLBbMOQNLk1wbkc/zmstZ2DxnxmOXy4TKj4x6RNtm/a
+         xASvvdEn9P0mnPtrlP4My3Gw1lzPriNGzK9wC3UkrXIbiyez25pa0GXBKRsnw82289fe
+         79Aw==
+X-Gm-Message-State: AOAM533fBBbVsUCMAcHxcNsKjDJESqvTNMZdlHaTPJp4Gr/BqF1kv+tb
+        WhyDpeuZHTaW2s3+6ypRya4=
+X-Google-Smtp-Source: ABdhPJzw5f9c5v4M+O9fs6KhEgVVMRq60AaVUtOw7FiwE0aMNnXhOAKEjnViVMxPCjDxi3fsU2kQIA==
+X-Received: by 2002:a50:cd53:: with SMTP id d19mr75655835edj.300.1594331502912;
+        Thu, 09 Jul 2020 14:51:42 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host-87-16-250-164.retail.telecomitalia.it. [87.16.250.164])
+        by smtp.googlemail.com with ESMTPSA id e16sm2498260ejt.14.2020.07.09.14.51.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2020 14:51:42 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/6] Add support for ipq8064 tsens
+Date:   Thu,  9 Jul 2020 23:51:30 +0200
+Message-Id: <20200709215136.28044-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Veera Vegivada <vvegivad@codeaurora.org>
+Ipq8064 SoCs tsens driver is based on 8960 tsens driver. This patchset expand
+the 8960 unused driver with interrupt support and set_trip point.
+Ipq8064 needs to registed with a syscon phandle as the tsens regs on
+this platform are shared with the gcc controller.
 
-Currently driver is suppressing the negative temperature
-readings from the vadc. Consumers of the thermal zones need
-to read the negative temperature too. Don't suppress the
-readings.
+Ansuel Smith (6):
+  drivers: thermal: tsens: load regmap from phandle for 8960
+  drivers: thermal: tsens: add ipq8064 support
+  dt-bindings: thermal: tsens: document ipq8064 bindings
+  drivers: thermal: tsens: add interrupt support for 9860 driver
+  drivers: thermal: tsens: add support for custom set_trip function
+  drivers: thermal: tsens: add set_trip support for 8960
 
-Signed-off-by: Veera Vegivada <vvegivad@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../bindings/thermal/qcom-tsens.yaml          |  51 +++-
+ drivers/thermal/qcom/tsens-8960.c             | 283 +++++++++++++++++-
+ drivers/thermal/qcom/tsens.c                  |   7 +
+ drivers/thermal/qcom/tsens.h                  |   3 +
+ 4 files changed, 321 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 05a9601..6d8f090 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2011-2015, 2017, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2011-2015, 2017, 2020, The Linux Foundation. All rights reserved.
-  */
- 
- #include <linux/bitops.h>
-@@ -212,7 +212,7 @@ static int qpnp_tm_get_temp(void *data, int *temp)
- 		chip->temp = mili_celsius;
- 	}
- 
--	*temp = chip->temp < 0 ? 0 : chip->temp;
-+	*temp = chip->temp;
- 
- 	return 0;
- }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.27.0
 
