@@ -2,71 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F06D421962B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 04:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC5D52196D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2020 05:46:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726289AbgGICW1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Jul 2020 22:22:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726286AbgGICW0 (ORCPT
+        id S1726323AbgGIDqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Jul 2020 23:46:35 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:36147 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726321AbgGIDqe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Jul 2020 22:22:26 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C2A8C061A0B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2020 19:22:26 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id y22so663896oie.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2020 19:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=DRE+AnxDTPA67RRsyblsDnMJP7GCjkB5PLB0tWpdoQE=;
-        b=nCRjBy6rCZO4tPcusHqvk8I+q8WHCq+AFq8rirKjSah3x23m7XVXGu+vNcFW92y9y7
-         xEhpHOfRp6MpBnynd88ykJtbWvcflOLOnsyQWNTRsMqI1CaqRtcF0EnByTqUhJ8sQ8NQ
-         o25Hd8Nz0k8StgQqM7qU9DzS36rrlze9fWOx6SKlUeKXvI5a0kTfjChPAzqA7AvGciKv
-         GV1xFmOHR6xgXdIVx1mk8jQIyTZIwiphkIwY+k0YJaOlWcUgURjjdHKT4iQhbD0KnWJZ
-         wqySEbUIeroyGlYU2KpcCkrPrhgA6L+7SFD12PLRIs1M8dz3Eyb+x19TnUz1EyYzSgpZ
-         pAUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=DRE+AnxDTPA67RRsyblsDnMJP7GCjkB5PLB0tWpdoQE=;
-        b=YupUvcFS28EU26C3mfoWi47YWBbmPunaTiiZO2qv/k40vZmvRgyW4Y6w+ezus35t8G
-         49DlKhrXWDLPEBKW3ecmAbD883fcQU9ducXQJHFmmBlJmgVj0d3FFFbsySoUAfnRduy/
-         CDuZib7Ru62A5aSjmxRVs2nJi0F3ybSgwPMWkkevEgfPeg//6wUf6APVMmi5rBOURq8F
-         PP/YdtPwGyJJ5C8kFrg9uPnrsIrkvgQQj34DQ4BsxbDl1vPV7aGk9oFHppgI9yFHu/hM
-         3XDim0acGOrwRobR8lj70VnzEj8L0+8cUoDeLcxR1vIxfPIaGr+aytFlDdnsGhDCEMLs
-         ZAGg==
-X-Gm-Message-State: AOAM5309VU6SPNyrQKBh4AZTW7NEDpZDOtHIg2xO70OaQvdGtYnuaVxy
-        jUFTU+Ae+l1vGRYX1jqm2U0aPw==
-X-Google-Smtp-Source: ABdhPJzZ3KYDuqCl2pBVz6ZKWW75HF5fDGCk1N4x5FT6TuFs7kUO2+NXH3DohJjIcwdkm+vq6Qbhew==
-X-Received: by 2002:aca:3307:: with SMTP id z7mr6660836oiz.171.1594261345319;
-        Wed, 08 Jul 2020 19:22:25 -0700 (PDT)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id r19sm290459otn.28.2020.07.08.19.22.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2020 19:22:24 -0700 (PDT)
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845: Add cpu OPP tables
-To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org
-Cc:     viresh.kumar@linaro.org, sboyd@kernel.org,
-        georgi.djakov@linaro.org, agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, saravanak@google.com,
-        dianders@chromium.org, vincent.guittot@linaro.org,
-        amit.kucheria@linaro.org, robdclark@chromium.org
-References: <20200702204643.25785-1-sibis@codeaurora.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <a61c5656-e21f-f071-1149-a3357fe2684e@kali.org>
-Date:   Wed, 8 Jul 2020 21:22:23 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.10.0
+        Wed, 8 Jul 2020 23:46:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594266394; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=ClVKfwV1sejEfp520mgp/j3raQqoqw5b6t+T4bASRgo=; b=lvW2ellQIRrW8+KAwx7Vva1IwwOxB9EIYl1y6knp25DzV932Sr8tOFURQJmq/bX6QEx+Qz1P
+ MZFQ8UG5FEwPsWe8pZ3ul+5jr6q4phDV93kFejSG2+eBWmOBged3yUU2xD0Jxf0FJHJ7bDdG
+ W7ZIhuu/V6mbF5QShuIX4u4G+N4=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5f06931a71d7ca1d3a4fdf90 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Jul 2020 03:46:34
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F024EC433C6; Thu,  9 Jul 2020 03:46:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.129] (unknown [183.83.142.110])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F3ADC433C6;
+        Thu,  9 Jul 2020 03:46:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0F3ADC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+Subject: Re: [PATCH v3 5/8] ASoC: qcom: lpass-platform: Replace card->dev with
+ component->dev
+To:     Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Ajit Pandey <ajitp@codeaurora.org>
+References: <1594184896-10629-1-git-send-email-rohitkr@codeaurora.org>
+ <1594184896-10629-6-git-send-email-rohitkr@codeaurora.org>
+ <20200708165041.GX4655@sirena.org.uk>
+From:   Rohit Kumar <rohitkr@codeaurora.org>
+Message-ID: <79221e43-c4f0-8e75-e97e-f0f255f3f68c@codeaurora.org>
+Date:   Thu, 9 Jul 2020 09:16:11 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20200702204643.25785-1-sibis@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200708165041.GX4655@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -74,34 +70,27 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 7/2/20 3:46 PM, Sibi Sankar wrote:
-> Add OPP tables required to scale DDR/L3 per freq-domain on SDM845 SoCs.
->
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
+On 7/8/2020 10:20 PM, Mark Brown wrote:
+> On Wed, Jul 08, 2020 at 10:38:13AM +0530, Rohit kumar wrote:
+>> From: Ajit Pandey <ajitp@codeaurora.org>
+>>
+>> We are allocating dma memory for component->dev but trying to mmap
+>> such memory for substream->pcm->card->dev. Replace device argument
+>> in mmap with component->dev to fix this.
+> This is a bug fix and should've been at the start of the series (or sent
+> separately) so that it can be applied without the rest of the series.
 
+Thanks Mark for the suggestion. I will send it separately.
 
-Hi Sibi,
+For other patches in series, I will wait for comments before posting next
 
+patchset.
 
-Bjorn asked me to give this patch a whirl, and I have to say, I like it
-but I'm not sure if I'm missing a dependency somewhere...
+Thanks,
 
+Rohit
 
-In 5.8.0-rc4, I'm seeing a couple probe defers
-
-[    0.131341] cpu cpu0: _allocate_opp_table: Error finding interconnect
-paths: -517
-
-[    0.132694] cpu cpu4: _allocate_opp_table: Error finding interconnect
-paths: -517
-
-And then a bit later on,
-
-[    0.625837] cpu cpu0: failed to get clock: -2
-
-
-If these aren't anything to worry about, you can throw my Tested-by on
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the Linux Foundation.
 
