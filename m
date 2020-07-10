@@ -2,138 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A9121AD04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 04:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05AD121ACEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 04:14:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbgGJCUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 22:20:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44454 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726444AbgGJCUh (ORCPT
+        id S1726789AbgGJCOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 22:14:54 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:14378 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726323AbgGJCOx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 22:20:37 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88F7C08C5CE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 19:20:36 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id g22so900514vke.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 19:20:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4Hywc1x9A6pr0CRt+2NvKzTMAzPWDqqcQzWTAgr3WdA=;
-        b=FqMpvwwCb9dpe7UBryM/EcOozRX1lwFdrdBzi6xzDnEKZh2OoMEtN2fjbqcDCUrTRA
-         G/uqyZ8phkRmpHCnbtDwt4L9W1fAWzn3ef/hbpBNScSTumoNlfxcimfhrs002pQgYYMO
-         C5wNeccogggNi/MBtl9XYVeMhj+5M8PkPDZAA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4Hywc1x9A6pr0CRt+2NvKzTMAzPWDqqcQzWTAgr3WdA=;
-        b=ietlqzt8Hg9pXZeTMfPrEdF9XH5EzKPjUAEGuDE3HKwMCQNQ7fxkHVOwJVa6e+kmwt
-         UlGBuhE4UYBT4HNbNKbVL+1FV/MySaDdqezwdG227cktJdUBUiUvPv+66oFHYGNFKrYo
-         FM4JbGTQbKvoy71mpWpjjpeJ7e5JMPDeU+iJe42VZPjvm9kX1ZL34wx9A+h1+TsdGmqI
-         6lFAEC5lTLyYVK36e7NbBQGPGc8a/gcqMSdZZPx0GI4vctcUzB9Nlg5kvMpPV99F2/m0
-         3NPZchQjuBrDuKF7TUVR1WLA40nqtaYX/MAs7a2J/V0xyGANvAwIWt1cK66ank+h1WZl
-         2xSQ==
-X-Gm-Message-State: AOAM531ybeotEfbtT1X3baRSAdcTezrSvrCx2DRyj5f6+ZvYEW08G7SP
-        mr2I6SG7Ih0+2jJBvSYWIInTSZviRjQ=
-X-Google-Smtp-Source: ABdhPJzzCJ6XM/bdVWTCVpND+dy2q3KcbgB0BzeBdx4smTTPUxTh5DbZ7jW4llJkeXh24Ix0pvaqbg==
-X-Received: by 2002:a1f:2ed4:: with SMTP id u203mr12130337vku.72.1594347635714;
-        Thu, 09 Jul 2020 19:20:35 -0700 (PDT)
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
-        by smtp.gmail.com with ESMTPSA id v141sm713629vkd.9.2020.07.09.19.20.34
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jul 2020 19:20:35 -0700 (PDT)
-Received: by mail-ua1-f51.google.com with SMTP id g4so1348331uaq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 19:20:34 -0700 (PDT)
-X-Received: by 2002:ab0:6e8e:: with SMTP id b14mr54133636uav.0.1594347291225;
- Thu, 09 Jul 2020 19:14:51 -0700 (PDT)
+        Thu, 9 Jul 2020 22:14:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594347292; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=pZBbWOAImaAXj4ymXtVBbnn0fW0JrVwullPsUepvzus=; b=ckRu8hZr/0Tfwafo7g6f6YGzjE5OjjHDQmpQaatGsVnmrbhq38iC2J5NIXF5m3292psqjNSy
+ QCdsdmIthitt+iSbSAqg0DW0aEZ49x3bcKy9x8hvg3tlBZJwnkVu4jviEqnFtKQ7f+KpcZ8l
+ 0AYe0r8a3GLvWRoz3pXnNT1AZeI=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f07cf1919b27ae9cecb4116 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 10 Jul 2020 02:14:49
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C34F5C433C8; Fri, 10 Jul 2020 02:14:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.117] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdtipton)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BC953C433C6;
+        Fri, 10 Jul 2020 02:14:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BC953C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
+Subject: Re: [PATCH] interconnect: msm8916: Fix buswidth of pcnoc_s nodes
+To:     Georgi Djakov <georgi.djakov@linaro.org>, linux-pm@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, jun.nie@linaro.org,
+        okukatla@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200709130004.12462-1-georgi.djakov@linaro.org>
+From:   Mike Tipton <mdtipton@codeaurora.org>
+Message-ID: <320b3577-d7cd-886d-7a39-eafa286a8286@codeaurora.org>
+Date:   Thu, 9 Jul 2020 19:14:46 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
- <20200710011935.GA7056@gentoo.org> <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
-In-Reply-To: <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 9 Jul 2020 19:14:40 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UWQsGit6XMCzHn5cBRAC9nAaGReDyMzMM2Su02bfiPyQ@mail.gmail.com>
-Message-ID: <CAD=FV=UWQsGit6XMCzHn5cBRAC9nAaGReDyMzMM2Su02bfiPyQ@mail.gmail.com>
-Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
-To:     steev@kali.org
-Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Steev Klimaszewski <steev@gentoo.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200709130004.12462-1-georgi.djakov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 7/9/2020 6:00 AM, Georgi Djakov wrote:
+> The buswidth of the pcnoc_s_* nodes is actually not 8, but
+> 4 bytes. Let's fix it.
+> 
+> Reported-by: Jun Nie <jun.nie@linaro.org>
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> ---
+>   drivers/interconnect/qcom/msm8916.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 
-On Thu, Jul 9, 2020 at 6:38 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Thu, Jul 9, 2020 at 6:19 PM Steev Klimaszewski <steev@gentoo.org> wrote:
-> >
-> > Hi Doug,
-> >
-> > I've been testing 5.8 and linux-next on the Lenovo Yoga C630, and with this patch applied, there is really bad banding on the display.
-> >
-> > I'm really bad at explaining it, but you can see the differences in the following:
-> >
-> > 24bit (pre-5.8) - https://dev.gentoo.org/~steev/files/image0.jpg
-> >
-> > 18bit (5.8/linux-next) - https://dev.gentoo.org/~steev/files/image1.jpg
->
-> Presumably this means that your panel is defined improperly?  If the
-> panel reports that it's a 6 bits per pixel panel but it's actually an
-> 8 bits per pixel panel then you'll run into this problem.
->
-> I would have to assume you have a bunch of out of tree patches to
-> support your hardware since I don't see any device trees in linuxnext
-> (other than cheza) that use this bridge chip.  Otherwise I could try
-> to check and confirm that was the problem.
+Reviewed-by: Mike Tipton <mdtipton@codeaurora.org>
 
-Ah, interesting.  Maybe you have the panel:
-
-boe,nv133fhm-n61
-
-As far as I can tell from the datasheet (I have the similar
-boe,nv133fhm-n62) this is a 6bpp panel.  ...but if you feed it 8bpp
-the banding goes away!  Maybe the panel itself knows how to dither???
-...or maybe the datasheet / edid are wrong and this is actually an
-8bpp panel.  Seems unlikely...
-
-In any case, one fix is to pick
-<https://lore.kernel.org/dri-devel/1593087419-903-1-git-send-email-kalyan_t@codeaurora.org/>,
-though right now that patch is only enabled for sc7180.  Maybe you
-could figure out how to apply it to your hardware?
-
-...another fix would be to pretend that your panel is 8bpp even though
-it's actually 6bpp.  Ironically if anyone ever tried to configure BPP
-from the EDID they'd go back to 6bpp.  You can read the EDID of your
-panel with this:
-
-bus=$(i2cdetect -l | grep sn65 | sed 's/i2c-\([0-9]*\).*$/\1/')
-i2cdump ${bus} 0x50 i
-
-When I do that and then decode it on the "boe,nv133fhm-n62" panel, I find:
-
-6 bits per primary color channel
-
--Doug
+> 
+> diff --git a/drivers/interconnect/qcom/msm8916.c b/drivers/interconnect/qcom/msm8916.c
+> index e94f3c5228b7..42c6c5581662 100644
+> --- a/drivers/interconnect/qcom/msm8916.c
+> +++ b/drivers/interconnect/qcom/msm8916.c
+> @@ -197,13 +197,13 @@ DEFINE_QNODE(pcnoc_int_0, MSM8916_PNOC_INT_0, 8, -1, -1, MSM8916_PNOC_SNOC_MAS,
+>   DEFINE_QNODE(pcnoc_int_1, MSM8916_PNOC_INT_1, 8, -1, -1, MSM8916_PNOC_SNOC_MAS);
+>   DEFINE_QNODE(pcnoc_m_0, MSM8916_PNOC_MAS_0, 8, -1, -1, MSM8916_PNOC_INT_0);
+>   DEFINE_QNODE(pcnoc_m_1, MSM8916_PNOC_MAS_1, 8, -1, -1, MSM8916_PNOC_SNOC_MAS);
+> -DEFINE_QNODE(pcnoc_s_0, MSM8916_PNOC_SLV_0, 8, -1, -1, MSM8916_SLAVE_CLK_CTL, MSM8916_SLAVE_TLMM, MSM8916_SLAVE_TCSR, MSM8916_SLAVE_SECURITY, MSM8916_SLAVE_MSS);
+> -DEFINE_QNODE(pcnoc_s_1, MSM8916_PNOC_SLV_1, 8, -1, -1, MSM8916_SLAVE_IMEM_CFG, MSM8916_SLAVE_CRYPTO_0_CFG, MSM8916_SLAVE_MSG_RAM, MSM8916_SLAVE_PDM, MSM8916_SLAVE_PRNG);
+> -DEFINE_QNODE(pcnoc_s_2, MSM8916_PNOC_SLV_2, 8, -1, -1, MSM8916_SLAVE_SPDM, MSM8916_SLAVE_BOOT_ROM, MSM8916_SLAVE_BIMC_CFG, MSM8916_SLAVE_PNOC_CFG, MSM8916_SLAVE_PMIC_ARB);
+> -DEFINE_QNODE(pcnoc_s_3, MSM8916_PNOC_SLV_3, 8, -1, -1, MSM8916_SLAVE_MPM, MSM8916_SLAVE_SNOC_CFG, MSM8916_SLAVE_RBCPR_CFG, MSM8916_SLAVE_QDSS_CFG, MSM8916_SLAVE_DEHR_CFG);
+> -DEFINE_QNODE(pcnoc_s_4, MSM8916_PNOC_SLV_4, 8, -1, -1, MSM8916_SLAVE_VENUS_CFG, MSM8916_SLAVE_CAMERA_CFG, MSM8916_SLAVE_DISPLAY_CFG);
+> -DEFINE_QNODE(pcnoc_s_8, MSM8916_PNOC_SLV_8, 8, -1, -1, MSM8916_SLAVE_USB_HS, MSM8916_SLAVE_SDCC_1, MSM8916_SLAVE_BLSP_1);
+> -DEFINE_QNODE(pcnoc_s_9, MSM8916_PNOC_SLV_9, 8, -1, -1, MSM8916_SLAVE_SDCC_2, MSM8916_SLAVE_LPASS, MSM8916_SLAVE_GRAPHICS_3D_CFG);
+> +DEFINE_QNODE(pcnoc_s_0, MSM8916_PNOC_SLV_0, 4, -1, -1, MSM8916_SLAVE_CLK_CTL, MSM8916_SLAVE_TLMM, MSM8916_SLAVE_TCSR, MSM8916_SLAVE_SECURITY, MSM8916_SLAVE_MSS);
+> +DEFINE_QNODE(pcnoc_s_1, MSM8916_PNOC_SLV_1, 4, -1, -1, MSM8916_SLAVE_IMEM_CFG, MSM8916_SLAVE_CRYPTO_0_CFG, MSM8916_SLAVE_MSG_RAM, MSM8916_SLAVE_PDM, MSM8916_SLAVE_PRNG);
+> +DEFINE_QNODE(pcnoc_s_2, MSM8916_PNOC_SLV_2, 4, -1, -1, MSM8916_SLAVE_SPDM, MSM8916_SLAVE_BOOT_ROM, MSM8916_SLAVE_BIMC_CFG, MSM8916_SLAVE_PNOC_CFG, MSM8916_SLAVE_PMIC_ARB);
+> +DEFINE_QNODE(pcnoc_s_3, MSM8916_PNOC_SLV_3, 4, -1, -1, MSM8916_SLAVE_MPM, MSM8916_SLAVE_SNOC_CFG, MSM8916_SLAVE_RBCPR_CFG, MSM8916_SLAVE_QDSS_CFG, MSM8916_SLAVE_DEHR_CFG);
+> +DEFINE_QNODE(pcnoc_s_4, MSM8916_PNOC_SLV_4, 4, -1, -1, MSM8916_SLAVE_VENUS_CFG, MSM8916_SLAVE_CAMERA_CFG, MSM8916_SLAVE_DISPLAY_CFG);
+> +DEFINE_QNODE(pcnoc_s_8, MSM8916_PNOC_SLV_8, 4, -1, -1, MSM8916_SLAVE_USB_HS, MSM8916_SLAVE_SDCC_1, MSM8916_SLAVE_BLSP_1);
+> +DEFINE_QNODE(pcnoc_s_9, MSM8916_PNOC_SLV_9, 4, -1, -1, MSM8916_SLAVE_SDCC_2, MSM8916_SLAVE_LPASS, MSM8916_SLAVE_GRAPHICS_3D_CFG);
+>   DEFINE_QNODE(pcnoc_snoc_mas, MSM8916_PNOC_SNOC_MAS, 8, 29, -1, MSM8916_PNOC_SNOC_SLV);
+>   DEFINE_QNODE(pcnoc_snoc_slv, MSM8916_PNOC_SNOC_SLV, 8, -1, 45, MSM8916_SNOC_INT_0, MSM8916_SNOC_INT_BIMC, MSM8916_SNOC_INT_1);
+>   DEFINE_QNODE(qdss_int, MSM8916_SNOC_QDSS_INT, 8, -1, -1, MSM8916_SNOC_INT_0, MSM8916_SNOC_INT_BIMC);
+> 
