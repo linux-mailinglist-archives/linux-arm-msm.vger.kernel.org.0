@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3808B21C064
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 01:03:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 524A321C062
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 01:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726900AbgGJXCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727017AbgGJXCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 10 Jul 2020 19:02:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38574 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726973AbgGJXCx (ORCPT
+        with ESMTP id S1726989AbgGJXCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 19:02:53 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DB43C08E876
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:02:52 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id q17so2839625pls.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:02:52 -0700 (PDT)
+        Fri, 10 Jul 2020 19:02:54 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF37C08E89D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:02:53 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id j19so3147188pgm.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rE/FJ5cYzpFqRF8eT/aCqXqC9qh4D6JVTbyHc29pzro=;
-        b=W05HtcQbPIXl89xuFzm4GPwHFSTzuwS6hsd6ixbS+qwJmURhFW+04wI+YdXhaXJdwf
-         gZyBNbX0eJuS6UKNz9BnvMBF+eGM4d0cV+AzqPhAvOQ+M/XgJa0mXxXlTlscAKe2+ZEL
-         ji+EXJAV1US4mTdKcZIuo2k2hlDCXBrobBLQw=
+        bh=9Qsyzl86u0xp/Q3AsfuSrATvhmR+NH14naSidgeU2PQ=;
+        b=lq+MGkGphLSf5MfibDTvyQhzb4kbnr6BuiTTOfoYVXvs6hnNVAZTeS4GzeWIxArgee
+         Y/DxQGYcoFo+gk/NY0IejlYOm3y/3+wSh+PT17XFNxMNb8K+oQfFlM+FQezfd3als/7y
+         0D+mf6sp9cX0TEI2MsZR5iuiPVqiJ/+S4Grxc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rE/FJ5cYzpFqRF8eT/aCqXqC9qh4D6JVTbyHc29pzro=;
-        b=tyG4VWQD23GFFHtVnnsO5zvqNN+pP4MYLBHjUh2PsMPvv3m5UuhcllDCYUHT5U3TyG
-         uVkkUHQJkD0iuQ77Zg580dR7cV1hNUXelkIHSMXJJOUbnzLcUGkXk8D8dEyPggkYm4bF
-         6160cGz3MtA9sWjDJBRtlVCs5ohhqYLDb+Y2vsx1rpZh0RNrzl82O9YIIPA1WTSmLpgO
-         5tSCbjXhJHbeZ56xQGGrQPyde3cK9boFOJJkoiWpGgwNEykszy5x7IJqhUP0q5+GDUta
-         h8F4UsyxXcjq7siB4ZJ/jV2OXOct4bU6GpAZjL7odV6AgiAQy3FMGNIfTsx9KgN1m4yz
-         q/AA==
-X-Gm-Message-State: AOAM533/b6l1jLVVDITrX1YLY7YMn6l2XmdNbe8SAcnMO58qgMjSAAPl
-        lCchokE2avkt39xOsd1j/79qXQ==
-X-Google-Smtp-Source: ABdhPJwjcX9D4B+Y8sp8rehAg+DrC8K54299WPrDi2IEEU/9tpv0fAIuMD/Nv1C71frqmllXTO8cGA==
-X-Received: by 2002:a17:902:6906:: with SMTP id j6mr18275162plk.125.1594422172084;
-        Fri, 10 Jul 2020 16:02:52 -0700 (PDT)
+        bh=9Qsyzl86u0xp/Q3AsfuSrATvhmR+NH14naSidgeU2PQ=;
+        b=E9Lkgj4qx2zSledOg7xXZMJgyo6njTBzKzbmSlr7SkkasrEH3Mqn4YxAzfemeEY1pC
+         4mj/1Clmf7PuuZDXGqCYlQzQbDgYu4DmDP+sj6w7QUtOirRa30HZ4KFveYrLkssxj9E7
+         iM/B6FrrbxQ1CLhegq6tjDPlk/dEZPM/P/NIXzobuiA+vvf/s8N0QB6QQ502CrwXuHlo
+         LOrbVy93lUcZd1C3MjLxp1IVlaCDZOtvgkeUOpQ1Xw+tzIqNiuLCr9RVr5OCV4v9swKu
+         LNWBFilTQYEyMsi/yCYf3tPBbiWjfj4/yLgW0I7l+IGAnYkL/rEp28F5Lqvm43IsMkwp
+         FMew==
+X-Gm-Message-State: AOAM533ulDhpmGtFrUnJdW0gVW2ZErd2uEweV9kuimzFbYloqwyRVjQG
+        v7yLzebwNezmJsptWpLhKSk8dUBFnYs=
+X-Google-Smtp-Source: ABdhPJysOX+rXIvX5/wYSLxirccnx0NQRBQKy0k+Iygaxavdr8HbCK/P41qasElxbHYh6Os2dg4vCg==
+X-Received: by 2002:a62:5a45:: with SMTP id o66mr5243667pfb.43.1594422173149;
+        Fri, 10 Jul 2020 16:02:53 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id my9sm7266836pjb.44.2020.07.10.16.02.51
+        by smtp.gmail.com with ESMTPSA id my9sm7266836pjb.44.2020.07.10.16.02.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2020 16:02:51 -0700 (PDT)
+        Fri, 10 Jul 2020 16:02:52 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Rob Herring <robh+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>, Andy Gross <agross@kernel.org>,
@@ -53,9 +53,9 @@ Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 6/9] arm64: dts: qcom: sdm845: Add "simple-bus" to our mdss node
-Date:   Fri, 10 Jul 2020 16:02:21 -0700
-Message-Id: <20200710160131.6.Ie343c226b3566575fcaa9e4a8732674a1ae1b513@changeid>
+Subject: [PATCH 7/9] arm64: dts: qcom: msm8916: Add "simple-bus" to our mdss node
+Date:   Fri, 10 Jul 2020 16:02:22 -0700
+Message-Id: <20200710160131.7.I1605593efa85e3c9260e64fe51aedd0524544d81@changeid>
 X-Mailer: git-send-email 2.27.0.383.g050319c2ae-goog
 In-Reply-To: <20200710230224.2265647-1-dianders@chromium.org>
 References: <20200710230224.2265647-1-dianders@chromium.org>
@@ -79,22 +79,24 @@ populated and it will be a no-op.  When it gets a defer it will then
 depouplate them (even though it didn't populate them) and future calls
 will just populate them again.
 
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
+NOTE: I have no way to test this patch, but I'm assuming it works OK?
+
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index b0d8308a3e95..e52a5e95168a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3582,7 +3582,7 @@ clock_camcc: clock-controller@ad00000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 67cae5f9e47e..491362fe02ac 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1023,7 +1023,7 @@ opp-19200000 {
  		};
  
- 		mdss: mdss@ae00000 {
--			compatible = "qcom,sdm845-mdss";
-+			compatible = "qcom,sdm845-mdss", "simple-bus";
- 			reg = <0 0x0ae00000 0 0x1000>;
- 			reg-names = "mdss";
- 
+ 		mdss: mdss@1a00000 {
+-			compatible = "qcom,mdss";
++			compatible = "qcom,mdss", "simple-bus";
+ 			reg = <0x1a00000 0x1000>,
+ 			      <0x1ac8000 0x3000>;
+ 			reg-names = "mdss_phys", "vbif_phys";
 -- 
 2.27.0.383.g050319c2ae-goog
 
