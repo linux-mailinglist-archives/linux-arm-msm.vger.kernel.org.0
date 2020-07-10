@@ -2,109 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3322421BAF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 18:31:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41E321BB1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 18:36:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727901AbgGJQbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 12:31:22 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43357 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbgGJQbW (ORCPT
+        id S1727097AbgGJQgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 12:36:11 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:35718 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728080AbgGJQgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 12:31:22 -0400
-Received: by mail-io1-f66.google.com with SMTP id k23so6631962iom.10;
-        Fri, 10 Jul 2020 09:31:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ri5Ju8/pmRRLLJvGOFF2lCmuUcpkIXlf+EO6oa9lkeg=;
-        b=nqA8jhOyMWl6zDz1D/rGpo03eDm1D3IS/FdHuyF1LPT26sjCt792sMeuNcIO7mOvL2
-         OUme2VhRUu2LUw5xB/KIpJTaSDWxKohp/V32eTKEb9MBnBcn2tUyyyzpizmNYhZZYG1O
-         22L1C11jZKSJ85zgzMqp2/8NhieoBucz8bLIdfjrHWadipzweQie9XiPB72eHY71kb9h
-         r2t68aE26ZIrP4KdYJtrj5XtPOr9X3iRn3BMf1LV1mbvH+oaBZv984BV0sQcaOGi5Sca
-         70x0K8HnQNPXXdctyZ7Q26RH2MUaxHPybRG0ckrYP1guNH9A7kpKgXuQrF1fdnmfAvE7
-         ykTA==
-X-Gm-Message-State: AOAM532UptoJOIU/48bAvz08dzheXFh6VdzoZlzsLAZkisG5KOc1Bb5i
-        yX66bbthYC/CoHiJp8auAZ6HPfnLCJ9E
-X-Google-Smtp-Source: ABdhPJzvLnRx24MgOhUZQEp05+U4gq81sv1JxrEdwFInJenxWlUIT/AyApoNCnP+LtIFrZS4Zidw3A==
-X-Received: by 2002:a6b:9042:: with SMTP id s63mr49394517iod.195.1594398681647;
-        Fri, 10 Jul 2020 09:31:21 -0700 (PDT)
-Received: from xps15 ([64.188.179.254])
-        by smtp.gmail.com with ESMTPSA id a5sm3706284ilt.71.2020.07.10.09.31.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2020 09:31:20 -0700 (PDT)
-Received: (nullmailer pid 2759342 invoked by uid 1000);
-        Fri, 10 Jul 2020 16:31:19 -0000
-Date:   Fri, 10 Jul 2020 10:31:19 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mike Tipton <mdtipton@codeaurora.org>
-Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/6] dt-bindings: interconnect: Add property to set
- BCM TCS wait behavior
-Message-ID: <20200710163119.GA2753833@bogus>
-References: <20200710015652.19206-1-mdtipton@codeaurora.org>
- <20200710015652.19206-3-mdtipton@codeaurora.org>
+        Fri, 10 Jul 2020 12:36:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594398968; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=/bmwIOUQ2PyZm9JbERBXuu+04sU6dnptUO3MObAQrMQ=;
+ b=NLqZUcGLP0qPHBxv4beu3HKBiYh0ETwti2mqv5W0ISlQvO1FfxvWTHloR+eOTsJ36HbAmshI
+ sKl36rIM369k+1fZEZ/YokYffZuNncGMz1tHst1qPnbFFOf0UOLqGCGVTyNAQiPNEE8xryW8
+ NSurPa3XfXd8GnedDwg36wsoWpM=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f08984ed3d650842235c649 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 10 Jul 2020 16:33:18
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AEF06C43387; Fri, 10 Jul 2020 16:33:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rishabhb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0B44AC433C6;
+        Fri, 10 Jul 2020 16:33:17 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200710015652.19206-3-mdtipton@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 10 Jul 2020 09:33:16 -0700
+From:   rishabhb@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        linux-remoteproc-owner@vger.kernel.org
+Subject: Re: [PATCH v7 1/5] dt-bindings: remoteproc: Add Qualcomm PIL info
+ binding
+In-Reply-To: <20200622191942.255460-2-bjorn.andersson@linaro.org>
+References: <20200622191942.255460-1-bjorn.andersson@linaro.org>
+ <20200622191942.255460-2-bjorn.andersson@linaro.org>
+Message-ID: <f4ee9ee95ad8f9154ab02aaf85a16307@codeaurora.org>
+X-Sender: rishabhb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 09, 2020 at 06:56:48PM -0700, Mike Tipton wrote:
-> Add "qcom,tcs-wait" property to set which TCS should wait for completion
-> when triggering.
+On 2020-06-22 12:19, Bjorn Andersson wrote:
+> Add a devicetree binding for the Qualcomm peripheral image loader
+> relocation information region found in the IMEM.
 > 
-> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../bindings/interconnect/qcom,bcm-voter.yaml       | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
-> index 5971fc1df08d..f0c3d6b01831 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
-> @@ -21,6 +21,16 @@ properties:
->      enum:
->        - qcom,bcm-voter
->  
-> +  qcom,tcs-wait:
-> +    description: |
-> +      Optional mask of which TCSs (Triggered Command Sets) wait for completion
-> +      upon triggering. In most cases, it's necessary to wait in both the AMC
-> +      and WAKE sets to ensure resources are available before use. If a specific
-> +      RSC and its use cases can ensure sufficient delay by other means, then
-> +      this can be overridden to reduce latencies.
-
-I have no idea what any of this means to provide any meaningful comment.
-
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    default: QCOM_ICC_TAG_ACTIVE_ONLY
-
-Can't use defines here.
-
-> +
->  required:
->    - compatible
->  
-> @@ -39,7 +49,10 @@ examples:
->    # as defined in Documentation/devicetree/bindings/soc/qcom/rpmh-rsc.txt
->    - |
->  
-> +    #include <dt-bindings/interconnect/qcom,icc.h>
-> +
->      disp_bcm_voter: bcm_voter {
->          compatible = "qcom,bcm-voter";
-> +        qcom,tcs-wait = <QCOM_ICC_TAG_AMC>;
->      };
->  ...
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> Changes since v6:
+> - None
 > 
+>  .../bindings/remoteproc/qcom,pil-info.yaml    | 44 +++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+>  create mode 100644
+> Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> 
+> diff --git
+> a/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> new file mode 100644
+> index 000000000000..87c52316ddbd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pil-info.yaml
+> @@ -0,0 +1,44 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,pil-info.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm peripheral image loader relocation info binding
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description:
+> +  The Qualcomm peripheral image loader relocation memory region, in 
+> IMEM, is
+> +  used for communicating remoteproc relocation information to post 
+> mortem
+> +  debugging tools.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,pil-reloc-info
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +examples:
+> +  - |
+> +    imem@146bf000 {
+> +      compatible = "syscon", "simple-mfd";
+> +      reg = <0x146bf000 0x1000>;
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <1>;
+> +
+> +      ranges = <0 0x146bf000 0x1000>;
+> +
+> +      pil-reloc@94c {
+> +        compatible = "qcom,pil-reloc-info";
+> +        reg = <0x94c 0xc8>;
+> +      };
+> +    };
+> +...
+Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
