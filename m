@@ -2,144 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9234F21BBF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 19:11:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AACA21BC36
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 19:29:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728194AbgGJRLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 13:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40736 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbgGJRLB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 13:11:01 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9843C08C5DC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 10:11:00 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id s190so1123909ooa.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 10:11:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=myKrcYnB9ONGWrZiACvGtAE7VPtZF9mIixa8UnGi6lk=;
-        b=N1V7lGaZGWwxiYdD9wOB2b2qeBTGFS7LeCUeOyQDGr77E2QdU1l+pzpFOJsZd7MdbH
-         5BZLjBKlMuIpW5aXi2HxkFOY0DXugOgAVEeeRcYv2yL5xtXDHZiZ8suu7RS5pHoNAmYq
-         X0EnB73RKYgutPIphvQ258SDBj6jxQPjVupknICdnY9TA0ycqtw92/IFT/tPp9CH3HaJ
-         9vIgkz7Vfr8kMd09mIW3tqmlktPNU9aI36bFTh9AyHRb/1MRx6H1xRU9XQ4ZQ7/mBdfR
-         KE2rWibNWlq6TEir7pyE6lDz0H8nhkgSuuBm6gtk7gxaBX7D8hd5mrfbBSECypCdxk2V
-         4NOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=myKrcYnB9ONGWrZiACvGtAE7VPtZF9mIixa8UnGi6lk=;
-        b=IB1PdZOd8e139YKmYr6Up8vJbSh5tab7wNgFC6+Hy7FKwqLRj1AHGDCMvKBXVEOwuW
-         EaZ7/U+kPu8JZEwSKPlcj2/zNRzs9GMeHhlqR14uqk8jCCdg35MAhfN/mrFyWChEAeAV
-         UpC5iHO2co//NTLKX/XUiFQo6MLaYY7PgcjZqfl4TczLPviJELVIbdyvCD3FvM9wWVx0
-         wWbpIryk5d9ekcqOQLTNn6F3AwevRt8n8VUBsEm6UarfOCK/UGDxByKxGljCyNru2Zym
-         Yw1ndvYHWF2Us8/B8ByK5ou9+BFaZpiWpngA7n3oWNcANxM1xLgsHOlt5+n3pOjgumd6
-         +Fjg==
-X-Gm-Message-State: AOAM533jh4Wm99ZyL+ZBBM3CL5IqWOpWxpPw87ZIq3BiPkutpzJG8Xhr
-        JJSIcOXHxV4UJRm8Rwyj+mQd7Q==
-X-Google-Smtp-Source: ABdhPJyjAlrVf6Bdz3VCvEYqB3qfK0eEiCjavF7ooSGh3jbEZrY6tG1/lygDevSV4tm2BlzLIZYJMQ==
-X-Received: by 2002:a4a:e381:: with SMTP id l1mr57870309oov.55.1594401060152;
-        Fri, 10 Jul 2020 10:11:00 -0700 (PDT)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id j97sm1184834otj.31.2020.07.10.10.10.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2020 10:10:59 -0700 (PDT)
-Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S1727078AbgGJR3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 13:29:36 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60566 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726925AbgGJR3g (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jul 2020 13:29:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594402175; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=z7xyehWwvZAwmwo9L22CYZ3U7u55HWB00cITqfpNM9o=; b=b+KXbc3d8qkjHhC59Pj4jSy/dPhXuEJC9Junaq4rhbp95qHQjITo7vgeWdJPs/b1Idf+5hfA
+ sALaohnVCeFRMVkDla9FqI+zr0e7EsFBC0AZGrxHZobbpVTxb9SJ0l0E7Z741QNiR4+wnGn5
+ 60ls8y+27UwNavyQOv/FMPfK+ok=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n19.prod.us-west-2.postgun.com with SMTP id
+ 5f08a55cc9bd2efa2e767b8e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 10 Jul 2020 17:29:00
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A2253C433A1; Fri, 10 Jul 2020 17:28:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9FE1AC433C6;
+        Fri, 10 Jul 2020 17:28:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9FE1AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Fri, 10 Jul 2020 11:28:54 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Steev Klimaszewski <steev@gentoo.org>
-References: <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
- <20200710011935.GA7056@gentoo.org>
- <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
- <CAD=FV=UWQsGit6XMCzHn5cBRAC9nAaGReDyMzMM2Su02bfiPyQ@mail.gmail.com>
- <dc786abb-4bc2-2416-7ee5-de408aceb8f1@kali.org>
- <e0702671-3bed-9e3d-c7f4-d050c617eb65@kali.org>
- <bc795659-7dd6-c667-1c93-4331510ecfbc@kali.org>
- <CAD=FV=VC+RP8WfS-yuc65WRN2KokNbAs-F3UdQtQoZjcMMSNFA@mail.gmail.com>
- <f81f0d22-85d6-66eb-c8d9-345757f53959@kali.org>
- <CAD=FV=WB_4xLe9UZX3eVemybQ1neXJVZgzrDCW-xUxbAM6hCTA@mail.gmail.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <8e306b6d-246d-aa7f-cb24-923e13afcd04@kali.org>
-Date:   Fri, 10 Jul 2020 12:10:58 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.10.0
+        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/a6xx: fix crashstate capture for A650
+Message-ID: <20200710172854.GD21059@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200630001010.15194-1-jonathan@marek.ca>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=WB_4xLe9UZX3eVemybQ1neXJVZgzrDCW-xUxbAM6hCTA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200630001010.15194-1-jonathan@marek.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 29, 2020 at 08:10:06PM -0400, Jonathan Marek wrote:
+> A650 has a separate RSCC region, so dump RSCC registers separately, reading
+> them from the RSCC base. Without this change a GPU hang will cause a system
+> reset if CONFIG_DEV_COREDUMP is enabled.
 
-On 7/10/20 9:47 AM, Doug Anderson wrote:
-> Hi,
->
->
-> But should I continue on this path,
-> It's probably worth getting dithering working on your sdm845 anyway in
-> case anyone actually does put a 6bpp panel on this SoC.
->
->
->> or should we be finding others who
->> have an N61 and see what their EDID reports?
-> I have an email out to BOE, but it might take a little while to get a
-> response.  I'll see what they say.  If they say that the panel
-> actually supports 8bpp then it's a no-brainer and we should just
-> switch to 8bpp and be done.
->
-> ...but if they say it's a 6bpp panel that has its own dither logic
-> then it gets more complicated.  Initially one would think there should
-> be very little downside in defining the panel as an 8bpp panel and
-> calling it done.  ...except that it conflicts with some other work
-> that I have in progress.  :-P  Specifically if you treat the panel as
-> 6bpp and then reduce the blanking a tiny bit you can actually save 75
-> mW of total system power on my board (probably similar on your board
-> since you have the same bridge chip).  You can see a patch to do that
-> here:
->
-> https://crrev.com/c/2276384
->
-> ...so I'm hoping to get some clarity from BOE both on the true bits
-> per pixel and whether my proposed timings are valid before moving
-> forward.  Is that OK?
->
->
-> -Doug
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h       |  5 +++++
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 25 +++++++++++++++------
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 12 ++++++----
+>  3 files changed, 31 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index 47df4745db50..c6d2bced8e5d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -127,6 +127,11 @@ static inline u64 gmu_read64(struct a6xx_gmu *gmu, u32 lo, u32 hi)
+>  	readl_poll_timeout((gmu)->mmio + ((addr) << 2), val, cond, \
+>  		interval, timeout)
+>  
+> +static inline u32 gmu_read_rscc(struct a6xx_gmu *gmu, u32 offset)
+> +{
+> +	return msm_readl(gmu->rscc + (offset << 2));
+> +}
+> +
+>  static inline void gmu_write_rscc(struct a6xx_gmu *gmu, u32 offset, u32 value)
+>  {
+>  	return msm_writel(value, gmu->rscc + (offset << 2));
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index d6023ba8033c..959656ad6987 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -736,7 +736,8 @@ static void a6xx_get_ahb_gpu_registers(struct msm_gpu *gpu,
+>  static void _a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>  		struct a6xx_gpu_state *a6xx_state,
+>  		const struct a6xx_registers *regs,
+> -		struct a6xx_gpu_state_obj *obj)
+> +		struct a6xx_gpu_state_obj *obj,
+> +		bool rscc)
+>  {
+>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> @@ -755,9 +756,17 @@ static void _a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>  		u32 count = RANGE(regs->registers, i);
+>  		int j;
+>  
+> -		for (j = 0; j < count; j++)
+> -			obj->data[index++] = gmu_read(gmu,
+> -				regs->registers[i] + j);
+> +		for (j = 0; j < count; j++) {
+> +			u32 offset = regs->registers[i] + j;
+> +			u32 val;
+> +
+> +			if (rscc)
+> +				val = gmu_read_rscc(gmu, offset);
+> +			else
+> +				val = gmu_read(gmu, offset);
+> +
+> +			obj->data[index++] = val;
+> +		}
+>  	}
+>  }
+>  
+> @@ -777,7 +786,9 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>  
+>  	/* Get the CX GMU registers from AHB */
+>  	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[0],
+> -		&a6xx_state->gmu_registers[0]);
+> +		&a6xx_state->gmu_registers[0], false);
+> +	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[1],
+> +		&a6xx_state->gmu_registers[1], true);
+>  
+>  	if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
+>  		return;
+> @@ -785,8 +796,8 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>  	/* Set the fence to ALLOW mode so we can access the registers */
+>  	gpu_write(gpu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
+>  
+> -	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[1],
+> -		&a6xx_state->gmu_registers[1]);
+> +	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[2],
+> +		&a6xx_state->gmu_registers[2], false);
+>  }
+>  
+>  #define A6XX_GBIF_REGLIST_SIZE   1
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+> index 24c974c293e5..846fd5b54c23 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+> @@ -341,10 +341,6 @@ static const u32 a6xx_gmu_cx_registers[] = {
+>  	0x5157, 0x5158, 0x515d, 0x515d, 0x5162, 0x5162, 0x5164, 0x5165,
+>  	0x5180, 0x5186, 0x5190, 0x519e, 0x51c0, 0x51c0, 0x51c5, 0x51cc,
+>  	0x51e0, 0x51e2, 0x51f0, 0x51f0, 0x5200, 0x5201,
+> -	/* GPU RSCC */
+> -	0x8c8c, 0x8c8c, 0x8d01, 0x8d02, 0x8f40, 0x8f42, 0x8f44, 0x8f47,
+> -	0x8f4c, 0x8f87, 0x8fec, 0x8fef, 0x8ff4, 0x902f, 0x9094, 0x9097,
+> -	0x909c, 0x90d7, 0x913c, 0x913f, 0x9144, 0x917f,
+>  	/* GMU AO */
+>  	0x9300, 0x9316, 0x9400, 0x9400,
+>  	/* GPU CC */
+> @@ -357,8 +353,16 @@ static const u32 a6xx_gmu_cx_registers[] = {
+>  	0xbc00, 0xbc16, 0xbc20, 0xbc27,
+>  };
+>  
+> +static const u32 a6xx_gmu_cx_rscc_registers[] = {
+> +	/* GPU RSCC */
+> +	0x008c, 0x008c, 0x0101, 0x0102, 0x0340, 0x0342, 0x0344, 0x0347,
+> +	0x034c, 0x0387, 0x03ec, 0x03ef, 0x03f4, 0x042f, 0x0494, 0x0497,
+> +	0x049c, 0x04d7, 0x053c, 0x053f, 0x0544, 0x057f,
+> +};
+> +
+>  static const struct a6xx_registers a6xx_gmu_reglist[] = {
+>  	REGS(a6xx_gmu_cx_registers, 0, 0),
+> +	REGS(a6xx_gmu_cx_rscc_registers, 0, 0),
+>  	REGS(a6xx_gmu_gx_registers, 0, 0),
+>  };
+>  
+> -- 
+> 2.26.1
+> 
 
-It's fine by me - testing Rob's suggestion of changing
-MAX_HDISPLAY_SPLIT 1080->1920 along with the change to adding IS_SDM845
-does give me a full screen that looks nicer, I'm fine with using the
-hack locally until a proper solution is found.  And I'm always a fan of
-using less power on a laptop.
-
-
-I'll give the patch a spin here if you want as well.
-
-
-Hopefully BOE gets back to you soon, and there's no rush, I'm just an
-end user who is extremely appreciative of all the work everyone on the
-list and the kernel in general put in to make my machines usable.
-
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
