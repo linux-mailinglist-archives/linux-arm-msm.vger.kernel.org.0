@@ -2,61 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D4B621AFB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 08:48:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B44821B000
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 09:21:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727935AbgGJGsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 02:48:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbgGJGsD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 02:48:03 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19284C08C5CE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 23:48:03 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id j19so2083065pgm.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 23:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gSZJQMAGEnmb2CqHFz1MNS8tMejxPEXsK0YNj8SWBOU=;
-        b=iRwK09LZ3BJmibGsyHoCPM9GNX9trLKrPSXtExFzQHWVgWOR89O1D/k+PuICQMvp0k
-         8uI373R2c7W9fJJzkJkk6O7AAPxjodaRHJ1NFg3f71hMp4vWwopxlU8XspS9hh2O5GS/
-         bBX7mQl430mHjYbVQaIpKkORhNrosYA0kCQXE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gSZJQMAGEnmb2CqHFz1MNS8tMejxPEXsK0YNj8SWBOU=;
-        b=ElUG/KYn4p0LJV5ktLR9+mhQ0Xe/1AG6kCJXSH5/oxMS00owUrmFNLqLK5PpeNa9IA
-         1dir93VBCZ5pdJbyCeeoheP5E+LC7WoAvB6xzQedxEheYvEzH9CS5ZyO+SDykpVLzeoF
-         Em+0ZUWfFbPnP/tz/lNEwJhZITlV7o15sZmCRMchGcFy7hWFTpKlKKyP9HUlRWrH3Xk0
-         g84gurKdhy1ANS44Gugl8oMBsU1zqUqTvzICVxXvjBEYeftjC87DIykEGjmT9abWD8vp
-         Wdv2lWj9zlxQ0il0H6yfUEaA1KHzyje27X/Sct3r8obAmLZuSQjeHf/2ufaiD1d8Wihp
-         3uxg==
-X-Gm-Message-State: AOAM532UeFoSs+nKFvwSDW3YIzX1+hn/TUL+4sg3ITylVSDCpJSZCMGP
-        amBxTjlVZcnv8idoJbTSGpQoLQ==
-X-Google-Smtp-Source: ABdhPJwhX2wS73T6Qup7iqhhvrnjvxKp1seCyklGjzfwCEpwkX280YDw9Yjg2xyo/YXFrjL5wGtLeA==
-X-Received: by 2002:a63:4f4d:: with SMTP id p13mr53250980pgl.400.1594363682668;
-        Thu, 09 Jul 2020 23:48:02 -0700 (PDT)
-Received: from drinkcat2.tpe.corp.google.com ([2401:fa00:1:b:7220:84ff:fe09:41dc])
-        by smtp.gmail.com with ESMTPSA id 190sm4639423pfz.41.2020.07.09.23.48.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2020 23:48:02 -0700 (PDT)
-From:   Nicolas Boichat <drinkcat@chromium.org>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Nicolas Boichat <drinkcat@chromium.org>,
+        id S1727003AbgGJHVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 03:21:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57766 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726664AbgGJHVr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jul 2020 03:21:47 -0400
+Received: from sol.hsd1.ca.comcast.net (c-107-3-166-239.hsd1.ca.comcast.net [107.3.166.239])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F093B2078D;
+        Fri, 10 Jul 2020 07:21:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594365707;
+        bh=LiRNEHfVraqslAfnvfcwjy0WDkay/k5QBYtVWhhN1dI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=SzipIGjVqlmcRPeVaM/fXEyT6cBN1HR3/7q0JsRRdqMbYUur6Y4jQL4EEYd+9BVMl
+         zmrZ2SmcOhpfy5SJXqdxbo0Pd63/l0Fc3JuTglQF4rLfAZdgVx/cT0Q4XRW75rcskU
+         7ORk3Oa6McnNwklyDhs4zRJltofrmLTzCe10J3us=
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-Subject: [RESEND PATCH] media: camss: vfe: Use trace_printk for debugging only
-Date:   Fri, 10 Jul 2020 14:47:51 +0800
-Message-Id: <20200710144747.RESEND.1.Ifae7abaacb81af1cdc6475986cc788d71de8a13c@changeid>
-X-Mailer: git-send-email 2.27.0.383.g050319c2ae-goog
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Subject: [PATCH v6 0/5] Inline crypto support on DragonBoard 845c
+Date:   Fri, 10 Jul 2020 00:20:07 -0700
+Message-Id: <20200710072013.177481-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -64,51 +48,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-trace_printk should not be used in production code. Since
-tracing interrupts is presumably latency sensitive, pr_dbg is
-not appropriate, so guard the call with a preprocessor symbol
-that can be defined for debugging purpose.
+Hello,
 
-Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
----
-Sent this before as part of a series (whose 4th patch was a
-change that allows to detect such trace_printk), but maybe it's
-easier to get individual maintainer attention by splitting it.
+This patchset implements UFS inline encryption support on the
+DragonBoard 845c, using the Qualcomm Inline Crypto Engine (ICE)
+that's present on the Snapdragon 845 SoC.
 
- drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 2 ++
- drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 2 ++
- 2 files changed, 4 insertions(+)
+This is based on top of scsi/5.9/scsi-queue, which contains the
+ufshcd-crypto patches by Satya Tangirala.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-index 174a36be6f5d866..0c57171fae4f9e9 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-@@ -936,8 +936,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
- 
- 	vfe->ops->isr_read(vfe, &value0, &value1);
- 
-+#ifdef CAMSS_VFE_TRACE_IRQ
- 	trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
- 		     value0, value1);
-+#endif
- 
- 	if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
- 		vfe->isr_ops.reset_ack(vfe);
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-index 0dca8bf9281e774..307675925e5c779 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-@@ -1058,8 +1058,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
- 
- 	vfe->ops->isr_read(vfe, &value0, &value1);
- 
-+#ifdef CAMSS_VFE_TRACE_IRQ
- 	trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
- 		     value0, value1);
-+#endif
- 
- 	if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
- 		vfe->isr_ops.reset_ack(vfe);
+Most of the logic needed to use ICE is already handled by the blk-crypto
+framework (introduced in v5.8-rc1) and by ufshcd-crypto.  This new
+patchset just adds the vendor-specific parts.  I also only implemented
+support for version 3 of the ICE hardware, which seems to be easier to
+use than older versions.
+
+Due to these factors and others, I was able to greatly simplify the
+driver from the vendor's original.  It works fine in testing with
+fscrypt and with a blk-crypto self-test I'm also working on.
+
+This driver also works on several other Snapdragon SoCs.
+See the commit messages for details.
+
+This patchset is also available in git at:
+    Repo: https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+    Tag: db845c-crypto-v6
+
+(To actually test this with fscrypt, it's also needed to merge the
+master branch of https://git.kernel.org/pub/scm/fs/fscrypt/fscrypt.git
+to get the fscrypt patches.)
+
+Changed v5 => v6:
+    - Rebased onto scsi/5.9/scsi-queue.
+
+Changed v4 => v5:
+    - Rebased onto v5.8-rc1 + the latest ufshcd-crypto patchset.
+    - Refer to the ICE registers by name rather than by index.
+    - Added Tested-by and Acked-by tags.
+
+Changed v3 => v4:
+    - Rebased onto the v12 inline encryption patchset.
+    - A couple small cleanups.
+
+Changed v2 => v3:
+    - Rebased onto the v8 inline encryption patchset.  Now the driver
+      has to opt into inline crypto support rather than opting out.
+    - Switched qcom_scm_ice_set_key() to use dma_alloc_coherent()
+      so that we can reliably zeroing the key without assuming that
+      bounce buffers aren't used.  Also added a comment.
+    - Made the key_size and data_unit_size arguments to
+      qcom_scm_ice_set_key() be 'u32' instead of 'int'.
+
+Changed v1 => v2:
+    - Rebased onto the v7 inline encryption patchset.
+    - Account for all the recent qcom_scm changes.
+    - Don't ignore errors from ->program_key().
+    - Don't dereference NULL hba->vops.
+    - Dropped the patch that added UFSHCD_QUIRK_BROKEN_CRYPTO, as this
+      flag is now included in the main inline encryption patchset.
+    - Many other cleanups.
+
+Eric Biggers (5):
+  firmware: qcom_scm: Add support for programming inline crypto keys
+  scsi: ufs-qcom: name the dev_ref_clk_ctrl registers
+  arm64: dts: sdm845: add Inline Crypto Engine registers and clock
+  scsi: ufs: add program_key() variant op
+  scsi: ufs-qcom: add Inline Crypto Engine support
+
+ MAINTAINERS                          |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |  13 +-
+ drivers/firmware/qcom_scm.c          | 101 +++++++++++
+ drivers/firmware/qcom_scm.h          |   4 +
+ drivers/scsi/ufs/Kconfig             |   1 +
+ drivers/scsi/ufs/Makefile            |   4 +-
+ drivers/scsi/ufs/ufs-qcom-ice.c      | 245 +++++++++++++++++++++++++++
+ drivers/scsi/ufs/ufs-qcom.c          |  15 +-
+ drivers/scsi/ufs/ufs-qcom.h          |  27 +++
+ drivers/scsi/ufs/ufshcd-crypto.c     |  27 +--
+ drivers/scsi/ufs/ufshcd.h            |   3 +
+ include/linux/qcom_scm.h             |  19 +++
+ 12 files changed, 443 insertions(+), 18 deletions(-)
+ create mode 100644 drivers/scsi/ufs/ufs-qcom-ice.c
+
+
+base-commit: b53293fa662e28ae0cdd40828dc641c09f133405
 -- 
-2.27.0.383.g050319c2ae-goog
+2.27.0
 
