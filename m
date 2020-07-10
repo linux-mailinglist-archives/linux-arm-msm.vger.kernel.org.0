@@ -2,108 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 369D121B0BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 09:54:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F02221B0D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 09:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726201AbgGJHyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 03:54:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41666 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725802AbgGJHyT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 03:54:19 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9A68C2077D;
-        Fri, 10 Jul 2020 07:54:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594367658;
-        bh=+CLcnOoiP11vbaLWEE7x8Qo9XjfxI8bf98D7jhYvsTU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sUWC9jE9AeBrFenvWyUJ08C2OMyYdCth41lSdl+CQ2V8fdS58LUZAE5I1XadKMOEA
-         keKID3B78XHkVhh2GKuELnZE3cw3xCKznbwgYEWS5MBQv6Uy9xrKR+Pp2oPgoouL2v
-         gC+YoTwxB9rnjYdo2Ut08PPTzS7aCibv0NhI0Xe8=
-Date:   Fri, 10 Jul 2020 08:54:12 +0100
-From:   Will Deacon <will@kernel.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-Message-ID: <20200710075411.GA30011@willie-the-truck>
-References: <20200625001039.56174-1-john.stultz@linaro.org>
- <20200625001039.56174-6-john.stultz@linaro.org>
- <20200702141825.GA16941@willie-the-truck>
- <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com>
+        id S1726496AbgGJH6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 03:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726369AbgGJH6r (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Jul 2020 03:58:47 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2441C08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 00:58:47 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id e15so2508733vsc.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 00:58:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Diu8FPSk0YQQ/9KsIVHjWkR640rhqQzr3+RMJoJoM1g=;
+        b=gizcXlckz2M67ld6mSAeGM1bMlmeOkCCvNRWT7Vxi1AEXDbep0iGhPQoPlPyNipDCo
+         rDanyYCfqFnKRZVMrCKD+Q/KOeIV0SPfpteq76Qp607FT9oVWpG0vnZ5n3ev5Ih979p0
+         Q8kTOQ8m1JPR1WjyTUWGZaPzoRByowv73z17YAf5lItx0pNj7dNwxJuwHtMWXc81uSdV
+         2JExDCRtZHvk35n6+Is1Gd/whndlmF3a86z+GMgwSMgfm6CAxnOYvENB8qU8bHiP9MAF
+         5bU1xVX02rEFo1o4ntyxe6ndnQRMHh7dBGHhqEtqp70zk5VJ4/tAKZ8CdyRKACRpuUWZ
+         zKtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Diu8FPSk0YQQ/9KsIVHjWkR640rhqQzr3+RMJoJoM1g=;
+        b=cBBCkVDUadXbdh/McsXUtF3rBXOOBIBgOgsOaO5g01O+OlpjoOnifPWgJUYyOcZcwN
+         K05cVgAev536JL/5bsqjGICKqjBLWclk/1bg4LWfFBjJzbFukCJI4rI7jwDX+LWjLj7d
+         G0UtuCXYS9riTWM6jwuRw/3vZEcZF6Hll20jA17W+r6r511Gv15JcXl+wFLwTK7VGloa
+         eHL387KY7INtKd07w5sxouz7ugWs2rGoAM62yBmt5Re6+ICC8HAJD4hiB6GeoeoP5vYL
+         Vbtfx73uu/d6NPGBYEyZI9wEUPbd8ITG/b+9dxyw8zvWLq3me2P7tp8JVtmW1U2fGrZg
+         C0NQ==
+X-Gm-Message-State: AOAM533+ZfGRmrnwKDJGcWHhNboH1Xb8azAgUn4oup+oH3Q2F88o3oAz
+        mPBKe5cUGsiobYgeA8dIEH09mbnXypgRQ0KWt+HmQQ==
+X-Google-Smtp-Source: ABdhPJxPYSpMEhKAbJpUN77i+R+I1788d/Ems0i5GSKwTLANWpFKgAUr6sQNT4PO8IlvGncOYNGftRvmLJTjgk/y7ts=
+X-Received: by 2002:a05:6102:22f3:: with SMTP id b19mr4543062vsh.191.1594367926935;
+ Fri, 10 Jul 2020 00:58:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1594300408-17658-1-git-send-email-vbadigan@codeaurora.org>
+In-Reply-To: <1594300408-17658-1-git-send-email-vbadigan@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 10 Jul 2020 09:58:10 +0200
+Message-ID: <CAPDyKFqYqxA76zh0qdfcJuGb8x7QcbBGYoubXF5STqhPdWjGmQ@mail.gmail.com>
+Subject: Re: [PATCH V1] mmc: sdhci: Fix potential null pointer access while
+ accessing vqmmc
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Vijay Viswanath <vviswana@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 09, 2020 at 08:28:45PM -0700, John Stultz wrote:
-> On Thu, Jul 2, 2020 at 7:18 AM Will Deacon <will@kernel.org> wrote:
-> > On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
-> > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> > > index b510f67dfa49..714893535dd2 100644
-> > > --- a/drivers/iommu/Kconfig
-> > > +++ b/drivers/iommu/Kconfig
-> > > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
-> > >  config ARM_SMMU
-> > >       tristate "ARM Ltd. System MMU (SMMU) Support"
-> > >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
-> > > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
-> > >       select IOMMU_API
-> > >       select IOMMU_IO_PGTABLE_LPAE
-> > >       select ARM_DMA_USE_IOMMU if ARM
-> >
-> > This looks like a giant hack. Is there another way to handle this?
-> 
-> Sorry for the slow response here.
-> 
-> So, I agree the syntax looks strange (requiring a comment obviously
-> isn't a good sign), but it's a fairly common way to ensure drivers
-> don't get built in if they optionally depend on another driver that
-> can be built as a module.
->   See "RFKILL || !RFKILL", "EXTCON || !EXTCON", or "USB_GADGET ||
-> !USB_GADGET" in various Kconfig files.
-> 
-> I'm open to using a different method, and in a different thread you
-> suggested using something like symbol_get(). I need to look into it
-> more, but that approach looks even more messy and prone to runtime
-> failures. Blocking the unwanted case at build time seems a bit cleaner
-> to me, even if the syntax is odd.
+On Thu, 9 Jul 2020 at 15:13, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
+>
+> Don't access vqmmc regulator handler, if it's already invalidated.
+>
+> Fixes: f870b6d480d3 (mmc: sdhci: Allow platform controlled voltage switching)
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-Maybe just split it out then, so that the ARM_SMMU entry doesn't have this,
-as that driver _really_ doesn't care about SoC details like this. In other
-words, add a new entry along the lines of:
+Applied for next, thanks!
 
-	config ARM_SMMU_QCOM_IMPL
-	default y
-	#if QCOM_SCM=m this can't be =y
-	depends on ARM_SMMU & (QCOM_SCM || !QCOM_SCM)
+Kind regards
+Uffe
 
-and then have arm-smmu.h provide a static inline qcom_smmu_impl_init()
-which returns -ENODEV if CONFIG_ARM_SMMU_QCOM_IMPL=n and hack the Makefile
-so that we don't bother to compile arm-smmu-qcom.o in that case.
-
-Would that work?
-
-Will
+> ---
+>  drivers/mmc/host/sdhci.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index e6275c2202b0..d3b62fc5c661 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -4383,11 +4383,6 @@ int sdhci_setup_host(struct sdhci_host *host)
+>         if (!IS_ERR(mmc->supply.vqmmc)) {
+>                 if (enable_vqmmc) {
+>                         ret = regulator_enable(mmc->supply.vqmmc);
+> -                       if (ret) {
+> -                               pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
+> -                                       mmc_hostname(mmc), ret);
+> -                               mmc->supply.vqmmc = ERR_PTR(-EINVAL);
+> -                       }
+>                         host->sdhci_core_to_disable_vqmmc = !ret;
+>                 }
+>
+> @@ -4402,6 +4397,13 @@ int sdhci_setup_host(struct sdhci_host *host)
+>                 if (!regulator_is_supported_voltage(mmc->supply.vqmmc, 2700000,
+>                                                     3600000))
+>                         host->flags &= ~SDHCI_SIGNALING_330;
+> +
+> +               if (ret) {
+> +                       pr_warn("%s: Failed to enable vqmmc regulator: %d\n",
+> +                               mmc_hostname(mmc), ret);
+> +                       mmc->supply.vqmmc = ERR_PTR(-EINVAL);
+> +               }
+> +
+>         }
+>
+>         if (host->quirks2 & SDHCI_QUIRK2_NO_1_8_V) {
+> --
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+>
