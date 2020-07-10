@@ -2,131 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA9BB21ACA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 03:57:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98A9121AD04
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 04:20:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbgGJB5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 21:57:13 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:33725 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726323AbgGJB5M (ORCPT
+        id S1726496AbgGJCUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 22:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726444AbgGJCUh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 21:57:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594346232; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=4F33MECp3PLMA5dVQe508bFwLJi13Gd+zPp0VmPVuUU=; b=EBhRlIDOyKIHpT0aL/K9Quc6OIfk5fPGpCXKDDaiwopUUEl3zi7VjCB/8f7/mbojJIriFbhz
- bisXfWwZIx71Mdxf2esB25HfzMohrp5IMAnHGKPGa2mmFtQWeO3GtpBrK4FGDDfFjeWB2cqd
- TqTQ3jdn/7KPwObQXCySMoFa9pM=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n14.prod.us-east-1.postgun.com with SMTP id
- 5f07caf69f03943e5ca7efe0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 10 Jul 2020 01:57:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 265A8C433CA; Fri, 10 Jul 2020 01:57:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mdtipton-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA6FBC433CB;
-        Fri, 10 Jul 2020 01:57:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CA6FBC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
-From:   Mike Tipton <mdtipton@codeaurora.org>
-To:     georgi.djakov@linaro.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mike Tipton <mdtipton@codeaurora.org>
-Subject: [PATCH v2 6/6] interconnect: qcom: Fix small BW votes being truncated to zero
-Date:   Thu,  9 Jul 2020 18:56:52 -0700
-Message-Id: <20200710015652.19206-7-mdtipton@codeaurora.org>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200710015652.19206-1-mdtipton@codeaurora.org>
-References: <20200710015652.19206-1-mdtipton@codeaurora.org>
+        Thu, 9 Jul 2020 22:20:37 -0400
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88F7C08C5CE
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 19:20:36 -0700 (PDT)
+Received: by mail-vk1-xa44.google.com with SMTP id g22so900514vke.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 19:20:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4Hywc1x9A6pr0CRt+2NvKzTMAzPWDqqcQzWTAgr3WdA=;
+        b=FqMpvwwCb9dpe7UBryM/EcOozRX1lwFdrdBzi6xzDnEKZh2OoMEtN2fjbqcDCUrTRA
+         G/uqyZ8phkRmpHCnbtDwt4L9W1fAWzn3ef/hbpBNScSTumoNlfxcimfhrs002pQgYYMO
+         C5wNeccogggNi/MBtl9XYVeMhj+5M8PkPDZAA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Hywc1x9A6pr0CRt+2NvKzTMAzPWDqqcQzWTAgr3WdA=;
+        b=ietlqzt8Hg9pXZeTMfPrEdF9XH5EzKPjUAEGuDE3HKwMCQNQ7fxkHVOwJVa6e+kmwt
+         UlGBuhE4UYBT4HNbNKbVL+1FV/MySaDdqezwdG227cktJdUBUiUvPv+66oFHYGNFKrYo
+         FM4JbGTQbKvoy71mpWpjjpeJ7e5JMPDeU+iJe42VZPjvm9kX1ZL34wx9A+h1+TsdGmqI
+         6lFAEC5lTLyYVK36e7NbBQGPGc8a/gcqMSdZZPx0GI4vctcUzB9Nlg5kvMpPV99F2/m0
+         3NPZchQjuBrDuKF7TUVR1WLA40nqtaYX/MAs7a2J/V0xyGANvAwIWt1cK66ank+h1WZl
+         2xSQ==
+X-Gm-Message-State: AOAM531ybeotEfbtT1X3baRSAdcTezrSvrCx2DRyj5f6+ZvYEW08G7SP
+        mr2I6SG7Ih0+2jJBvSYWIInTSZviRjQ=
+X-Google-Smtp-Source: ABdhPJzzCJ6XM/bdVWTCVpND+dy2q3KcbgB0BzeBdx4smTTPUxTh5DbZ7jW4llJkeXh24Ix0pvaqbg==
+X-Received: by 2002:a1f:2ed4:: with SMTP id u203mr12130337vku.72.1594347635714;
+        Thu, 09 Jul 2020 19:20:35 -0700 (PDT)
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
+        by smtp.gmail.com with ESMTPSA id v141sm713629vkd.9.2020.07.09.19.20.34
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jul 2020 19:20:35 -0700 (PDT)
+Received: by mail-ua1-f51.google.com with SMTP id g4so1348331uaq.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 19:20:34 -0700 (PDT)
+X-Received: by 2002:ab0:6e8e:: with SMTP id b14mr54133636uav.0.1594347291225;
+ Thu, 09 Jul 2020 19:14:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
+ <20200710011935.GA7056@gentoo.org> <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
+In-Reply-To: <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 9 Jul 2020 19:14:40 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UWQsGit6XMCzHn5cBRAC9nAaGReDyMzMM2Su02bfiPyQ@mail.gmail.com>
+Message-ID: <CAD=FV=UWQsGit6XMCzHn5cBRAC9nAaGReDyMzMM2Su02bfiPyQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
+To:     steev@kali.org
+Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        David Airlie <airlied@linux.ie>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Steev Klimaszewski <steev@gentoo.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Small BW votes that translate to less than a single BCM unit are
-currently truncated to zero. Ensure that non-zero BW requests always
-result in at least a vote of 1 to BCM.
+Hi,
 
-Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
-Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
----
- drivers/interconnect/qcom/bcm-voter.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+On Thu, Jul 9, 2020 at 6:38 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Thu, Jul 9, 2020 at 6:19 PM Steev Klimaszewski <steev@gentoo.org> wrote:
+> >
+> > Hi Doug,
+> >
+> > I've been testing 5.8 and linux-next on the Lenovo Yoga C630, and with this patch applied, there is really bad banding on the display.
+> >
+> > I'm really bad at explaining it, but you can see the differences in the following:
+> >
+> > 24bit (pre-5.8) - https://dev.gentoo.org/~steev/files/image0.jpg
+> >
+> > 18bit (5.8/linux-next) - https://dev.gentoo.org/~steev/files/image1.jpg
+>
+> Presumably this means that your panel is defined improperly?  If the
+> panel reports that it's a 6 bits per pixel panel but it's actually an
+> 8 bits per pixel panel then you'll run into this problem.
+>
+> I would have to assume you have a bunch of out of tree patches to
+> support your hardware since I don't see any device trees in linuxnext
+> (other than cheza) that use this bridge chip.  Otherwise I could try
+> to check and confirm that was the problem.
 
-diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-index be7660b95ccc..887d13721e52 100644
---- a/drivers/interconnect/qcom/bcm-voter.c
-+++ b/drivers/interconnect/qcom/bcm-voter.c
-@@ -54,8 +54,20 @@ static int cmp_vcd(void *priv, struct list_head *a, struct list_head *b)
- 		return 1;
- }
- 
-+static u64 bcm_div(u64 num, u32 base)
-+{
-+	/* Ensure that small votes aren't lost. */
-+	if (num && num < base)
-+		return 1;
-+
-+	do_div(num, base);
-+
-+	return num;
-+}
-+
- static void bcm_aggregate(struct qcom_icc_bcm *bcm)
- {
-+	struct qcom_icc_node *node;
- 	size_t i, bucket;
- 	u64 agg_avg[QCOM_ICC_NUM_BUCKETS] = {0};
- 	u64 agg_peak[QCOM_ICC_NUM_BUCKETS] = {0};
-@@ -63,22 +75,21 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
- 
- 	for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
- 		for (i = 0; i < bcm->num_nodes; i++) {
--			temp = bcm->nodes[i]->sum_avg[bucket] * bcm->aux_data.width;
--			do_div(temp, bcm->nodes[i]->buswidth * bcm->nodes[i]->channels);
-+			node = bcm->nodes[i];
-+			temp = bcm_div(node->sum_avg[bucket] * bcm->aux_data.width,
-+				       node->buswidth * node->channels);
- 			agg_avg[bucket] = max(agg_avg[bucket], temp);
- 
--			temp = bcm->nodes[i]->max_peak[bucket] * bcm->aux_data.width;
--			do_div(temp, bcm->nodes[i]->buswidth);
-+			temp = bcm_div(node->max_peak[bucket] * bcm->aux_data.width,
-+				       node->buswidth);
- 			agg_peak[bucket] = max(agg_peak[bucket], temp);
- 		}
- 
- 		temp = agg_avg[bucket] * bcm->vote_scale;
--		do_div(temp, bcm->aux_data.unit);
--		bcm->vote_x[bucket] = temp;
-+		bcm->vote_x[bucket] = bcm_div(temp, bcm->aux_data.unit);
- 
- 		temp = agg_peak[bucket] * bcm->vote_scale;
--		do_div(temp, bcm->aux_data.unit);
--		bcm->vote_y[bucket] = temp;
-+		bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
- 	}
- 
- 	if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Ah, interesting.  Maybe you have the panel:
 
+boe,nv133fhm-n61
+
+As far as I can tell from the datasheet (I have the similar
+boe,nv133fhm-n62) this is a 6bpp panel.  ...but if you feed it 8bpp
+the banding goes away!  Maybe the panel itself knows how to dither???
+...or maybe the datasheet / edid are wrong and this is actually an
+8bpp panel.  Seems unlikely...
+
+In any case, one fix is to pick
+<https://lore.kernel.org/dri-devel/1593087419-903-1-git-send-email-kalyan_t@codeaurora.org/>,
+though right now that patch is only enabled for sc7180.  Maybe you
+could figure out how to apply it to your hardware?
+
+...another fix would be to pretend that your panel is 8bpp even though
+it's actually 6bpp.  Ironically if anyone ever tried to configure BPP
+from the EDID they'd go back to 6bpp.  You can read the EDID of your
+panel with this:
+
+bus=$(i2cdetect -l | grep sn65 | sed 's/i2c-\([0-9]*\).*$/\1/')
+i2cdump ${bus} 0x50 i
+
+When I do that and then decode it on the "boe,nv133fhm-n62" panel, I find:
+
+6 bits per primary color channel
+
+-Doug
