@@ -2,107 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D7E121AC83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 03:38:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDD7921ACC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 03:58:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbgGJBis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Jul 2020 21:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38056 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726433AbgGJBis (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Jul 2020 21:38:48 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AACFCC08C5DC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 18:38:47 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id j21so1326144ual.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 18:38:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rwZ3DYshMM6TxgS7HlmiJMG3O0eqLFDjVA0qiqONL9c=;
-        b=kxMyTpnOoVqLAx06Eq/BG8dsTt2HetQM+osslhZwLZLc6qwsmlW+bGHiIJ4xrH96dS
-         b8Z4AmXJ6eAlGURzDiRvOaW6caIuXF3dnOU9Me9Ji2G9SrPTWdoTpsd8DSYGzmMWDoCP
-         9QKK+ffBMstJ7DjkzVsc4yRl/QNqfbFX9q+ZY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rwZ3DYshMM6TxgS7HlmiJMG3O0eqLFDjVA0qiqONL9c=;
-        b=NngxFoRye4uB8qws7snkIJnFnAED38mDFhALBmfUV28C6TLzDY3sPZ9ZCfxJ8iYUog
-         f9t57x3iTC0zluNjV/ADCQnMkWxwm8uKqGkEGZnAE+qrVU3w6hVCU1NglAi7QHYGUnGQ
-         cUVXuerGk6snMUdRics+MwdKMcPx1bjTuLKOtjUoNR73kzXdlKUYbRPkpGk7RkAibE5Z
-         vU7bOjYqU029jiz3m9bKxmfGmg9HRS/dZNsat9fdVG8YN5Jtidjdi+lm8CEVYxYypDLW
-         BjKTXFAwqBvMTeJoKMPY69P3h3u6kdUCmdtM9Pg17HYS1/T2LInEtjwamIEPoWC3dXLf
-         SPMw==
-X-Gm-Message-State: AOAM531dVKlZIi5joJC98ZGAM7TgLY9YSNJDDYYurLArsqD9xSYKug9W
-        +apkWyqY1x1NPgweCiujkcFMtaCm2CQ=
-X-Google-Smtp-Source: ABdhPJzTxts4BDPGHBIKTgxeXMEy/z9MEXs9q8WrCg5glZrIqSIyPuHPJ2V8b+IT+INtekP+6cihJw==
-X-Received: by 2002:a9f:320c:: with SMTP id x12mr12597169uad.45.1594345126329;
-        Thu, 09 Jul 2020 18:38:46 -0700 (PDT)
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
-        by smtp.gmail.com with ESMTPSA id i7sm528362vsi.10.2020.07.09.18.38.43
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jul 2020 18:38:44 -0700 (PDT)
-Received: by mail-vs1-f49.google.com with SMTP id a17so2153526vsq.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 18:38:43 -0700 (PDT)
-X-Received: by 2002:a67:e046:: with SMTP id n6mr20302730vsl.6.1594345122863;
- Thu, 09 Jul 2020 18:38:42 -0700 (PDT)
+        id S1727935AbgGJB6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Jul 2020 21:58:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:52134 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727820AbgGJB6H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Jul 2020 21:58:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594346287; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=skG1sNc6a9bKW7iRy/ErFo7Z5EjunK0kUA/gn4pjeGg=; b=gw45VV3n050dgtru5ObkYysqpbm8+gkVcWAtccAMjejADDP4X9UEjk+CQ5h3Dzo8//J5Gk76
+ VweuRNpBNnlmAGxA74sLJsC6yM18Oaqauo9pDPzq3XiyD+NYPclm1xyO6Ej5Y3CmC5UelXPH
+ bZ5HIuEfWVTQ21axuudZS448cNo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
+ 5f07caf278e7807b5eecf9fc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 10 Jul 2020 01:57:06
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 70C59C433C8; Fri, 10 Jul 2020 01:57:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mdtipton-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdtipton)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A72B2C433C6;
+        Fri, 10 Jul 2020 01:57:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A72B2C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
+From:   Mike Tipton <mdtipton@codeaurora.org>
+To:     georgi.djakov@linaro.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mike Tipton <mdtipton@codeaurora.org>
+Subject: [PATCH v2 0/6] interconnect: qcom: Misc bcm-voter changes and fixes
+Date:   Thu,  9 Jul 2020 18:56:46 -0700
+Message-Id: <20200710015652.19206-1-mdtipton@codeaurora.org>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-References: <20191218143416.v3.6.Iaf8d698f4e5253d658ae283d2fd07268076a7c27@changeid>
- <20200710011935.GA7056@gentoo.org>
-In-Reply-To: <20200710011935.GA7056@gentoo.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 9 Jul 2020 18:38:31 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
-Message-ID: <CAD=FV=X3oazamoKR1jHoXm-yCAp9208ahNd8y+NDPt1pU=5xRg@mail.gmail.com>
-Subject: Re: [PATCH v3 6/9] drm/bridge: ti-sn65dsi86: Use 18-bit DP if we can
-To:     steev@kali.org
-Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        David Airlie <airlied@linux.ie>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Steev Klimaszewski <steev@gentoo.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+These changes are mostly unrelated, but there are some dependencies
+between them.
 
-On Thu, Jul 9, 2020 at 6:19 PM Steev Klimaszewski <steev@gentoo.org> wrote:
->
-> Hi Doug,
->
-> I've been testing 5.8 and linux-next on the Lenovo Yoga C630, and with this patch applied, there is really bad banding on the display.
->
-> I'm really bad at explaining it, but you can see the differences in the following:
->
-> 24bit (pre-5.8) - https://dev.gentoo.org/~steev/files/image0.jpg
->
-> 18bit (5.8/linux-next) - https://dev.gentoo.org/~steev/files/image1.jpg
+v2:
+- New patch for generic qcom,icc.h bindings
+- New patch for documenting qcom,tcs-wait property
+- Update bcm_div() 'base' parameter from u64 to u32
 
-Presumably this means that your panel is defined improperly?  If the
-panel reports that it's a 6 bits per pixel panel but it's actually an
-8 bits per pixel panel then you'll run into this problem.
+Mike Tipton (6):
+  dt-bindings: interconnect: Add generic qcom bindings
+  dt-bindings: interconnect: Add property to set BCM TCS wait behavior
+  interconnect: qcom: Support bcm-voter-specific TCS wait behavior
+  interconnect: qcom: Only wait for completion in AMC/WAKE by default
+  interconnect: qcom: Add support for per-BCM scaling factors
+  interconnect: qcom: Fix small BW votes being truncated to zero
 
-I would have to assume you have a bunch of out of tree patches to
-support your hardware since I don't see any device trees in linuxnext
-(other than cheza) that use this bridge chip.  Otherwise I could try
-to check and confirm that was the problem.
+ .../bindings/interconnect/qcom,bcm-voter.yaml | 13 ++++
+ drivers/interconnect/qcom/bcm-voter.c         | 63 ++++++++++++-------
+ drivers/interconnect/qcom/icc-rpmh.c          |  3 +
+ drivers/interconnect/qcom/icc-rpmh.h          | 20 ++----
+ include/dt-bindings/interconnect/qcom,icc.h   | 26 ++++++++
+ 5 files changed, 88 insertions(+), 37 deletions(-)
+ create mode 100644 include/dt-bindings/interconnect/qcom,icc.h
 
--Doug
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
