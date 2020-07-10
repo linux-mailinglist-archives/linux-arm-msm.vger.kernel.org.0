@@ -2,115 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 583B421C0B9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 01:27:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C839F21C0BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 01:28:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726684AbgGJX1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 19:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42640 "EHLO
+        id S1726533AbgGJX2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 19:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726523AbgGJX1r (ORCPT
+        with ESMTP id S1726369AbgGJX2m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 19:27:47 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E2CC08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:27:47 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id x8so2858988plm.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:27:47 -0700 (PDT)
+        Fri, 10 Jul 2020 19:28:42 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39895C08C5DC;
+        Fri, 10 Jul 2020 16:28:42 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id dr13so7759762ejc.3;
+        Fri, 10 Jul 2020 16:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=1KgjCvGYsPEwY3hIMJvN1I+nBQQMZD4O0k3S1JS7Jzc=;
-        b=ZlDt7fatfStgfAIZPJqQmlFZpkGnO9iuPVXSVxTanufGMgMlhHMxUo3jBKYtQE0znR
-         SR+WcB3ZwxCGOtVUKtjcgO3ePLoorGRfPXAf8M25lOws0li5gXoYvmem/P6VagpqImRt
-         nKL/T8GT3xJGbkcTdHWmqEubc/Zzg+gpv+ePc=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OzVgodV2044NdM/Krgytwhtop4ouw4FLMMvBYFt+YIQ=;
+        b=BbBPbcBOOhPXg2G6ZW+NeOzdbInLdxQD0SpviWDEwzFEUtOBoUYVmsdkZxabAh9AY8
+         0PKDTY88rzgWDsYxQdUh2BSSHWpwYLZiWY4F50Ktxmq9BBSPcIXTAhkrjT9GXmJURzJr
+         24oscTpEFyGJomz0OxWsZx0/4VPfrNFU9oYHoaCXZ/FSJUfz0KZGUcuW5ulXv3ISKu2z
+         A/1Y+ESka0YbFLWbjKu5z+H/XWAGQeZdQMXKXIwwFdDpXDbHsNrarZoYibQSLRn3dNmN
+         euGc4l8TwFLVZaW+A5VkqRP2DvJQ0tqRTV1GMXObjpVgA0jX0V+6+dxP3378cafjJK5k
+         te6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=1KgjCvGYsPEwY3hIMJvN1I+nBQQMZD4O0k3S1JS7Jzc=;
-        b=UjFz4oxiIh4GONIwYFi71RdVBmr1LYQcU/ZjY/VR498TrVlazPEtaOtxk7lCng7H4b
-         2W+g0kYj0XhAa0aXxXWJszzdTkrtBvtX/p+JlJtHXRLR7RvKvSOlGmJfaBXnpovnXArG
-         1WfqPVESPHNzTJd7MHqhh2YW4FvQzSSkC0jpJHEYbdmGl3GPe7004kWyLQCUCfY1rYAT
-         dQc+lzIrqUorvUvMRSkt4elom/YO3QAjaRmje3HAgZp7mkpJvGYGnkc0LqdZyKBCdfdQ
-         6+sIs8rtAktd6cIZ9qh5cfXn1GzkhV8XnR3jFR/Z/9PSFzuaQHHnFgt1lAbmN4q8Ocmv
-         EOvw==
-X-Gm-Message-State: AOAM532q6aPxv7AF0/Q0hXj0/4klVp2sdKSbmQ16SGT65eYvmn7PGCL4
-        i6oppLZkapj1mQ9S4BelbGCB8g==
-X-Google-Smtp-Source: ABdhPJwkvHuJGy/BobEJFjeeamXIZFvC9w8oHpTxafgWv0gdfY9kS4v8UzTMQwlP2PwG+JyMcl0n+w==
-X-Received: by 2002:a17:90b:23d5:: with SMTP id md21mr8444282pjb.0.1594423667073;
-        Fri, 10 Jul 2020 16:27:47 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id o17sm6475469pjq.6.2020.07.10.16.27.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2020 16:27:46 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OzVgodV2044NdM/Krgytwhtop4ouw4FLMMvBYFt+YIQ=;
+        b=WXzPchlcoOhXx93bQdHQdUkEFjcxmceXgxxvyITYvZmJkp4mzfDfRlbS5gqqH8xaj1
+         pmtU5CJ6LtC9F2hFog00gW2za55FlLfhqmFPDBZy0MBVAZApMgTcFXVYT5Ddh8OQl623
+         2zVSQGQv0FdNKAlVz3r8h4maLNsgLIrb/pLh73I+rFWOGb5M9l4bmMZHZyJEZqvzt01i
+         NuiaviCM1YEhb+VM8iaWpn/Wkg7uI7Mu8qEervYKmSFfuJv4LxbxdC7uDdked4jsD8NO
+         HPH7TQaqU31ybIE9Iubn2Tzi5v0iRFMRCUZetln9GScKQmjkVssIHBUSRvvmHJ8VBTtd
+         YGtA==
+X-Gm-Message-State: AOAM532Uke5fvN5uEQ5WwRBPuQosxEemH+e86e2ywn380QWjCjh9znzA
+        Pt7V5Xlc13KgtTBuSqyhZlarMJYrnWycFwSSDiJx0IPo
+X-Google-Smtp-Source: ABdhPJxWsXEH4BLy9e7jPFQ1m1LEibFY6E59Se1fE5uCBG4Bt1OTlLlcEPD1O1ydQK/fTFLyaIRv99ZVVV3B1ivPqKs=
+X-Received: by 2002:a17:906:4d4c:: with SMTP id b12mr61930508ejv.506.1594423720898;
+ Fri, 10 Jul 2020 16:28:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CALAqxLW14f4Gn6Q3b89X10y7=Zct2NJSgjagUqxez_bObcp42w@mail.gmail.com>
-References: <20200625001039.56174-1-john.stultz@linaro.org> <20200625001039.56174-4-john.stultz@linaro.org> <159315737502.62212.16093934831673347066@swboyd.mtv.corp.google.com> <CALAqxLVNGar8g+FvHaVHN_e-MOZZ+=ZPmDt_GKKSC8AS-wLFGg@mail.gmail.com> <87wo3setn8.wl-maz@kernel.org> <159436097057.1987609.13993891118929459851@swboyd.mtv.corp.google.com> <CALAqxLW14f4Gn6Q3b89X10y7=Zct2NJSgjagUqxez_bObcp42w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] irqchip: Allow QCOM_PDC to be loadable as a permanent module
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Marc Zyngier <maz@kernel.org>, lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20200709143404.11876-1-jonathan@marek.ca> <CAF6AEGsQFVptXi2wgx_JipyK0AOSUBHOHaDmRF_gG+hSH8mF5A@mail.gmail.com>
+ <3729cda9-2d02-c213-c31a-d3e1316798f8@marek.ca>
+In-Reply-To: <3729cda9-2d02-c213-c31a-d3e1316798f8@marek.ca>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 10 Jul 2020 16:29:11 -0700
+Message-ID: <CAF6AEGuPfgeGBPv=H4xYDiRj3eXUvF+zGC4U8RPTSca_sNeAUQ@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm: handle for EPROBE_DEFER for of_icc_get
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
-To:     John Stultz <john.stultz@linaro.org>
-Date:   Fri, 10 Jul 2020 16:27:45 -0700
-Message-ID: <159442366514.1987609.434612639050774557@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting John Stultz (2020-07-10 15:44:18)
-> On Thu, Jul 9, 2020 at 11:02 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Fri, Jul 10, 2020 at 4:11 PM Jonathan Marek <jonathan@marek.ca> wrote:
+>
+> On 7/9/20 11:15 AM, Rob Clark wrote:
+> > On Thu, Jul 9, 2020 at 7:35 AM Jonathan Marek <jonathan@marek.ca> wrote:
+> >>
+> >> Check for errors instead of silently not using icc if the msm driver
+> >> probes before the interconnect driver.
+> >>
+> >> Allow ENODATA for ocmem path, as it is optional and this error
+> >> is returned when "gfx-mem" path is provided but not "ocmem".
+> >>
+> >> Remove the WARN_ON in msm_gpu_cleanup because INIT_LIST_HEAD won't have
+> >> been called on the list yet when going through the defer error path.
+> >>
+> >> Changes in v2:
+> >> * Changed to not only check for EPROBE_DEFER
+> >>
+> >> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> >> ---
+> >>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 17 ++++++++++++++---
+> >>   drivers/gpu/drm/msm/msm_gpu.c           |  2 --
+> >>   2 files changed, 14 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> index 89673c7ed473..0f5217202eb5 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> @@ -940,12 +940,20 @@ static int adreno_get_pwrlevels(struct device *dev,
+> >>                   */
+> >>                  gpu->icc_path = of_icc_get(dev, NULL);
+> >>          }
+> >> -       if (IS_ERR(gpu->icc_path))
+> >> +       if (IS_ERR(gpu->icc_path)) {
+> >> +               ret = PTR_ERR(gpu->icc_path);
+> >>                  gpu->icc_path = NULL;
+> >> +               return ret;
+> >> +       }
+> >>
+> >>          gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
+> >> -       if (IS_ERR(gpu->ocmem_icc_path))
+> >> +       if (IS_ERR(gpu->ocmem_icc_path)) {
+> >> +               ret = PTR_ERR(gpu->ocmem_icc_path);
+> >>                  gpu->ocmem_icc_path = NULL;
+> >> +               /* allow -ENODATA, ocmem icc is optional */
+> >> +               if (ret != -ENODATA)
+> >> +                       return ret;
+> >> +       }
+> >>
+> >>          return 0;
+> >>   }
+> >> @@ -996,6 +1004,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >>          struct adreno_platform_config *config = pdev->dev.platform_data;
+> >>          struct msm_gpu_config adreno_gpu_config  = { 0 };
+> >>          struct msm_gpu *gpu = &adreno_gpu->base;
+> >> +       int ret;
+> >>
+> >>          adreno_gpu->funcs = funcs;
+> >>          adreno_gpu->info = adreno_info(config->rev);
+> >> @@ -1007,7 +1016,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >>
+> >>          adreno_gpu_config.nr_rings = nr_rings;
+> >>
+> >> -       adreno_get_pwrlevels(&pdev->dev, gpu);
+> >> +       ret = adreno_get_pwrlevels(&pdev->dev, gpu);
+> >> +       if (ret)
+> >> +               return ret;
+> >>
+> >>          pm_runtime_set_autosuspend_delay(&pdev->dev,
+> >>                  adreno_gpu->info->inactive_period);
+> >> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> >> index a22d30622306..ccf9a0dd9706 100644
+> >> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> >> @@ -959,8 +959,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+> >>
+> >>          DBG("%s", gpu->name);
+> >>
+> >> -       WARN_ON(!list_empty(&gpu->active_list));
+> >> -
 > >
-> > Does it work? I haven't looked in detail but I worry that the child
-> > irqdomain (i.e. pinctrl-msm) would need to delay probing until this
-> > parent irqdomain is registered. Or has the hierarchical irqdomain code
-> > been updated to handle the parent child relationship and wait for things
-> > to probe or be loaded?
->=20
-> So I can't say I know the underlying hardware particularly well, but
-> I've been using this successfully on the Dragonboard 845c with both
-> static builds as well as module enabled builds.
-> And the same patch has been in the android-mainline and android-5.4
-> kernels for a while without objections from QCOM.
->=20
-> As to the probe ordering question, Saravana can maybe speak in more
-> detail if it's involved in this case but the fw_devlink code has
-> addressed many of these sorts of ordering issues.
-> However, I'm not sure if I'm lucking into the right probe order, as we
-> have been able to boot android-mainline w/ both fw_devlink=3Don and
-> fw_devlink=3Doff (though in the =3Doff case, we need
-> deferred_probe_timeout=3D30 to give us a bit more time for modules to
-> load after init starts).
->=20
+> > hmm, not a huge fan of removing the WARN_ON().. can we just init the
+> > list head earlier?
+> >
+>
+> There doesn't seem to be a nice way of doing that. Would it be
+> reasonable to instead detect that msm_gpu_init wasn't called (checking
+> if gpu->dev is NULL?), and just skip the msm_gpu_cleanup() call in
+> adreno_gpu_cleanup() in that case?
 
-Ok I looked at the code (sorry for not checking earlier) and I see this in
-msm_gpio_init()
+Hmm, you can't just call msm_gpu_init() before looking up the icc path
+in adreno_gpu_init()?
 
-        np =3D of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
-        if (np) {
-                chip->irq.parent_domain =3D irq_find_matching_host(np,
-                                                 DOMAIN_BUS_WAKEUP);
-                of_node_put(np);
-                if (!chip->irq.parent_domain)
-                        return -EPROBE_DEFER;
+BR,
+-R
 
-so it looks like we'll probe defer the pinctrl driver until the pdc module
-loads. Meaning it should work to have pinctrl builtin and pdc as a module.
+>
+> > BR,
+> > -R
+> >
+> >>          for (i = 0; i < ARRAY_SIZE(gpu->rb); i++) {
+> >>                  msm_ringbuffer_destroy(gpu->rb[i]);
+> >>                  gpu->rb[i] = NULL;
+> >> --
+> >> 2.26.1
+> >>
