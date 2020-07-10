@@ -2,156 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B30E21BFB8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 00:22:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F383721BFD1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 00:32:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbgGJWWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 18:22:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60442 "EHLO
+        id S1726482AbgGJWcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 18:32:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726889AbgGJWWH (ORCPT
+        with ESMTP id S1726407AbgGJWcS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 18:22:07 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B94C08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 15:22:07 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id e4so6076269oib.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 15:22:07 -0700 (PDT)
+        Fri, 10 Jul 2020 18:32:18 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AC53C08C5DC;
+        Fri, 10 Jul 2020 15:32:18 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id n2so5793379edr.5;
+        Fri, 10 Jul 2020 15:32:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=sfPk1+u61DN4Dz/z2Pu4rTndUdKhPwDaWZtZBaUU1jg=;
-        b=CGWgrEwlpWSxGS28p+B9aKE3dWl38zgj4StlTqSCg3W9KgUJXjeDSaY6Jwx8i9lwRi
-         9UpvDUF7JWYl638DQLAuqEazgzf8DbZZ9YxsBc+6s4pA0JeV/ASd0IAshGRT8qT4BX0S
-         xxqg9moE+lu34pnF6PLPa3mQs1nK4VYFyAzoCRitXkydtj0aNPoPsnzkeIETzFjSHGPb
-         shBuYBhaTugM1OgtxES7TxTi/SzCN3mS/hMPilaBmHk0TAg8MoF64kvJ+n7z+8WllDhx
-         AAW0+zB1xhT0lObKRKFabhrxJAJ+RjvomcYh6bFq6juanWOudCq7LiXglEaxQI7fxDia
-         slHA==
+        bh=hC/t/UWj0gzx3eIP1BTTzm43qPL8ICwohGRJ0LMjFVw=;
+        b=GTYlPkhY1rTWLrI0uIyPh775vI/PSmVyK3vjQKl6GOsL86YZIrN/w2snfchxzNBK8F
+         hXfmwHxavHt7jsiRimk5QpuZyvJwpUx9dIuNENC1KRAAaqCIiXhBg5ccsYbFT2e92tMe
+         tjkqoEgnzCagc8LdVzwM+CrrmwRTggHuNdJdRzXfo6vJjHXp2xe/zRvXmgZVTiMiGFeM
+         7k0jV54XZEMNr85He8tbyslR8A+sETHx5pDckKENFBkIyA/2JVXIxgOVYaMXNN2hveuy
+         88R/TYHLO0WUDxyZbCXWNDrO9RK9SJNmYnAi3e6p0CIgBnyX0IFlaSi+IvIIZVkImSbg
+         ig2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=sfPk1+u61DN4Dz/z2Pu4rTndUdKhPwDaWZtZBaUU1jg=;
-        b=th0qDD1HYrbCTQ74qe9T7KoED7EjIu8iOim/LdlLRI8C4VF1mg955GZBnHJfepJErr
-         nsK8Losjx5pep702oMWiOVyyblPEMUnMATSWLBat5YzxRmvDCyVZNxybWDxlg6Qpt/ET
-         4l0fXI9+StTzHjGEtDODzA0N5hWhGMPFudlAdCLJiz+ZplkF+if+3y4vdyzf/HQGXT/5
-         T1Y8U2fRvQTUMBJ0duaqyyczQBqPpiSTqVIRD/51zTRtvgMhWl2gQwcS197ySug/S4Uz
-         XDCqQgFceC13x0Yo/XmHS9bXyqaiPyTUtM3Q1AA+IyCZ8i26YywS4uVv1S2awYlWox9m
-         4C/g==
-X-Gm-Message-State: AOAM530NtWqmrVb6L7rTi+evsS2U91vaOg+Ta/Fx/tyF0+4IVCR00fCS
-        GVmVqCPyU8a5BYUSLjhoWY+HPOaQzV0ufOvThp8DQQ==
-X-Google-Smtp-Source: ABdhPJxLt4Cehy4m7wD0RYUwN5jq18bgpscixR8K5qySY9mHffzEWL0hF8baUYqT7R4HfV0LqTJoVtMk95ufKZmESKg=
-X-Received: by 2002:aca:b5c3:: with SMTP id e186mr5976661oif.10.1594419726479;
- Fri, 10 Jul 2020 15:22:06 -0700 (PDT)
+        bh=hC/t/UWj0gzx3eIP1BTTzm43qPL8ICwohGRJ0LMjFVw=;
+        b=VeIJEXZ6A9p03b7WdxnUalARxZ749LDWS10VM7RWFk0bQ5ztvSa8ofGaKOFy9wIwRC
+         fm3BRQ6qnKQW+KAXEZ6wwAKs+HFtW3gwTV05gUdPdK0+M7jmbdm0f7n1neGKziQ3jSK1
+         t2CuvQUjprdjA4UWnyK3rh4J7Gi5l6yTIsNxbYf1Kh/t68P9pvRRiopfIEdUh7ydmNpg
+         UP36VnfDk7WU10bx//IL6x2x2w4cfwxLw7V4wsnwdgblZ/7E/NNQV3ctIieJ2gE81nrK
+         own5Xbqc3dYzRHIf2CvXkV45WDYU7G669GkCwxITA4QB6x5h8QtTIbGe6MQuAkdVpSc4
+         uWTQ==
+X-Gm-Message-State: AOAM530TnkT7VNSgoj6ou2NkgK93VQ+TyUPngO7tMYa3U5vH2eO+2KSP
+        a/Z63XwlSzzuR/rfZ0vpVs4WH3r7bKjc8A7fZFY=
+X-Google-Smtp-Source: ABdhPJwkVXYq7s6PZW4g2BtXeq8ENJ9m7mJ76wVcUJ3EL/dalxWRMHPdCDGlcWRBNMIU2acGDELFeA6gBPgKHHjwvcY=
+X-Received: by 2002:aa7:c656:: with SMTP id z22mr67419136edr.101.1594420337003;
+ Fri, 10 Jul 2020 15:32:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200625001039.56174-1-john.stultz@linaro.org>
- <20200625001039.56174-6-john.stultz@linaro.org> <20200702141825.GA16941@willie-the-truck>
- <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com> <20200710075411.GA30011@willie-the-truck>
-In-Reply-To: <20200710075411.GA30011@willie-the-truck>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Fri, 10 Jul 2020 15:21:53 -0700
-Message-ID: <CALAqxLWadLrxckRHRAR0Q417RnFKquQJbRfO_DLEVH56cykRow@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-To:     Will Deacon <will@kernel.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+References: <1594324828-9571-1-git-send-email-akhilpo@codeaurora.org>
+ <1594324828-9571-5-git-send-email-akhilpo@codeaurora.org> <CAF6AEGv4Nc6ZAxGoCC1s5KT=rxLR6uZDHfDnWZRnnLhqnegOpA@mail.gmail.com>
+ <17afba8b-dae5-d724-4c8c-8b4c79fcfb84@codeaurora.org>
+In-Reply-To: <17afba8b-dae5-d724-4c8c-8b4c79fcfb84@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 10 Jul 2020 15:32:48 -0700
+Message-ID: <CAF6AEGtramec7yTE1mzLO=Vtic63LOgM1pEuejUS3OrT3_vGng@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v4 4/7] drm: msm: a6xx: use dev_pm_opp_set_bw
+ to scale DDR
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Jonathan <jonathan@marek.ca>,
+        saravanak@google.com,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        dri-devel@freedesktop.org, Viresh Kumar <viresh.kumar@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 10, 2020 at 12:54 AM Will Deacon <will@kernel.org> wrote:
-> On Thu, Jul 09, 2020 at 08:28:45PM -0700, John Stultz wrote:
-> > On Thu, Jul 2, 2020 at 7:18 AM Will Deacon <will@kernel.org> wrote:
-> > > On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
-> > > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> > > > index b510f67dfa49..714893535dd2 100644
-> > > > --- a/drivers/iommu/Kconfig
-> > > > +++ b/drivers/iommu/Kconfig
-> > > > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
-> > > >  config ARM_SMMU
-> > > >       tristate "ARM Ltd. System MMU (SMMU) Support"
-> > > >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
-> > > > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
-> > > >       select IOMMU_API
-> > > >       select IOMMU_IO_PGTABLE_LPAE
-> > > >       select ARM_DMA_USE_IOMMU if ARM
-> > >
-> > > This looks like a giant hack. Is there another way to handle this?
+On Fri, Jul 10, 2020 at 2:03 PM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>
+>
+> On 7/11/2020 1:11 AM, Rob Clark wrote:
+> > On Thu, Jul 9, 2020 at 1:01 PM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+> >> From: Sharat Masetty <smasetty@codeaurora.org>
+> >>
+> >> This patches replaces the previously used static DDR vote and uses
+> >> dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
+> >> GPU frequency. Also since the icc path voting is handled completely
+> >> in the opp driver, remove the icc_path handle and its usage in the
+> >> drm driver.
+> >>
+> >> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> >> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> >> ---
+> >>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 25 +++++++++++++++++--------
+> >>   1 file changed, 17 insertions(+), 8 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> >> index b547339..6fbfd7d 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> >> @@ -123,7 +123,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+> >>
+> >>          if (!gmu->legacy) {
+> >>                  a6xx_hfi_set_freq(gmu, gmu->current_perf_index);
+> >> -               icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
+> >> +               dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
+> > What is the status of the patch to add dev_pm_opp_set_bw()?  If it is
+> > ready to go, and I get an ack-by from the OPP maintainer, I suppose I
+> > could merge it via drm/msm.
 > >
-> > Sorry for the slow response here.
+> > Otherwise should we consider pulling in a private copy of it into
+> > drm/msm (and then drop it to use the helper in, hopefully, the next
+> > cycle)?
 > >
-> > So, I agree the syntax looks strange (requiring a comment obviously
-> > isn't a good sign), but it's a fairly common way to ensure drivers
-> > don't get built in if they optionally depend on another driver that
-> > can be built as a module.
-> >   See "RFKILL || !RFKILL", "EXTCON || !EXTCON", or "USB_GADGET ||
-> > !USB_GADGET" in various Kconfig files.
+> > I'm pulling the patches preceding this one into msm-next-staging to do
+> > some testing.  And the dt patches following this one would normally
+> > get merged via Bjorn.  At the moment, I'm not sure what to do with
+> > this one.
 > >
-> > I'm open to using a different method, and in a different thread you
-> > suggested using something like symbol_get(). I need to look into it
-> > more, but that approach looks even more messy and prone to runtime
-> > failures. Blocking the unwanted case at build time seems a bit cleaner
-> > to me, even if the syntax is odd.
+> > BR,
+> > -R
+> I see Sibi's patch is already picked in opp/linux-next branch.
+> https://kernel.googlesource.com/pub/scm/linux/kernel/git/vireshk/pm/+/b466542f331e221a3628c1cfe5ccff307d7d787f
 >
-> Maybe just split it out then, so that the ARM_SMMU entry doesn't have this,
-> as that driver _really_ doesn't care about SoC details like this. In other
-> words, add a new entry along the lines of:
+
+ok, I guess we can try and do a 2nd late pull-req for msm-next, after
+the opp pull-req lands..
+
+BR,
+-R
+
 >
->         config ARM_SMMU_QCOM_IMPL
->         default y
->         #if QCOM_SCM=m this can't be =y
->         depends on ARM_SMMU & (QCOM_SCM || !QCOM_SCM)
+> Thanks,
+> -Akhil
 >
-> and then have arm-smmu.h provide a static inline qcom_smmu_impl_init()
-> which returns -ENODEV if CONFIG_ARM_SMMU_QCOM_IMPL=n and hack the Makefile
-> so that we don't bother to compile arm-smmu-qcom.o in that case.
->
-> Would that work?
-
-I think this proposal still has problems with the directionality of the call.
-
-The arm-smmu-impl.o calls to arm-smmu-qcom.o which calls qcom_scm.o
-So if qcom_scm.o is part of a module, the calling code in
-arm-smmu-qcom.o also needs to be a module, which means CONFIG_ARM_SMMU
-needs to be a module.
-
-I know you said the arm-smmu driver doesn't care about SoC details,
-but the trouble is that currently the arm-smmu driver does directly
-call the qcom-scm code. So it is a real dependency. However, if
-QCOM_SCM is not configured, it calls stubs and that's ok.  In that
-way, the "depends on QCOM_SCM || !QCOM_SCM" line actually makes sense.
-It looks terrible because we're used to boolean logic, but it's
-ternary.
-
-Maybe can have the ARM_SMMU_QCOM_IMPL approach you suggest above, but
-that just holds the issue out at arms length, because we're still
-going to need to have:
-  depends on ARM_SMMU_QCOM_IMPL || !ARM_SMMU_QCOM_IMPL
-in the ARM_SMMU definition, which I suspect you're wanting to avoid.
-
-Otherwise the only thing I can think of is a deeper reworking of the
-arm-smmu-impl code so that the arm-smmu-qcom code probes itself and
-registers its hooks with the arm-smmu core.
-That way the arm-smmu driver would not directly call any SoC specific
-code (and thus have no dependencies outward). But it's probably a fair
-amount of churn vs the extra depends string.
-
-thanks
--john
+> >>                  return;
+> >>          }
+> >>
+> >> @@ -149,11 +149,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+> >>          if (ret)
+> >>                  dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
+> >>
+> >> -       /*
+> >> -        * Eventually we will want to scale the path vote with the frequency but
+> >> -        * for now leave it at max so that the performance is nominal.
+> >> -        */
+> >> -       icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
+> >> +       dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
+> >>   }
+> >>
+> >>   unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu)
+> >> @@ -840,6 +836,19 @@ static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
+> >>          dev_pm_opp_put(gpu_opp);
+> >>   }
+> >>
+> >> +static void a6xx_gmu_set_initial_bw(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
+> >> +{
+> >> +       struct dev_pm_opp *gpu_opp;
+> >> +       unsigned long gpu_freq = gmu->gpu_freqs[gmu->current_perf_index];
+> >> +
+> >> +       gpu_opp = dev_pm_opp_find_freq_exact(&gpu->pdev->dev, gpu_freq, true);
+> >> +       if (IS_ERR_OR_NULL(gpu_opp))
+> >> +               return;
+> >> +
+> >> +       dev_pm_opp_set_bw(&gpu->pdev->dev, gpu_opp);
+> >> +       dev_pm_opp_put(gpu_opp);
+> >> +}
+> >> +
+> >>   int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+> >>   {
+> >>          struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> >> @@ -864,7 +873,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+> >>          }
+> >>
+> >>          /* Set the bus quota to a reasonable value for boot */
+> >> -       icc_set_bw(gpu->icc_path, 0, MBps_to_icc(3072));
+> >> +       a6xx_gmu_set_initial_bw(gpu, gmu);
+> >>
+> >>          /* Enable the GMU interrupt */
+> >>          gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_CLR, ~0);
+> >> @@ -1040,7 +1049,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+> >>                  a6xx_gmu_shutdown(gmu);
+> >>
+> >>          /* Remove the bus vote */
+> >> -       icc_set_bw(gpu->icc_path, 0, 0);
+> >> +       dev_pm_opp_set_bw(&gpu->pdev->dev, NULL);
+> >>
+> >>          /*
+> >>           * Make sure the GX domain is off before turning off the GMU (CX)
+> >> --
+> >> 2.7.4
+> >>
+> >> _______________________________________________
+> >> Freedreno mailing list
+> >> Freedreno@lists.freedesktop.org
+> >> https://lists.freedesktop.org/mailman/listinfo/freedreno
