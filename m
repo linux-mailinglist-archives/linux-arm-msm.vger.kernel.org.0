@@ -2,102 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA69E21AE94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 07:28:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17FDC21AEAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2020 07:29:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbgGJF0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 01:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44510 "EHLO
+        id S1727863AbgGJF3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 01:29:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727033AbgGJFZe (ORCPT
+        with ESMTP id S1727853AbgGJF3b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 01:25:34 -0400
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D39BDC08C5DD;
-        Thu,  9 Jul 2020 22:25:33 -0700 (PDT)
-Received: by mail-il1-x141.google.com with SMTP id a11so4075514ilk.0;
-        Thu, 09 Jul 2020 22:25:33 -0700 (PDT)
+        Fri, 10 Jul 2020 01:29:31 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA50FC08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2020 22:29:30 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id gc15so4122563pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2020 22:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1cVDfB4v6J4ClnDi/ClpZbQ7jFtPWUjhu9zER11wqP8=;
-        b=HKd+Cf8scR4pDATBdPv9J6bE79bp4QubfdMiZ3HWIifUJzxv80tzeOxDgAmi8ijh9e
-         ba2qJSxjWfstzcK45BHkPk7sfCs9LLn2RCk5MfrIgvx/Kc6gAXyZAwomlnnti59FkegO
-         dS0fyvUAXp5Bmw2w7tfN7uvWfKAsDNTqw4BFji62qVv+80eGdGB7KeY53GgSwsbvcIu5
-         sYQDkjXaGNcgqkHw2Lsf993+nAZZVFJodIWkZVHQZ3TBFoOXAD6ZMGrGxDqSyYofdS3o
-         OB3t6+/eV71jgo8m3oH7oAJ4gM5mYbIGPUbzmOoWqWuWRzZPM/1AUdIOF4XaCheguvh6
-         LYPA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fq5dVVlXW8qg+ASmc5eHI9qkJpaHLFgd8jV55IoO3ds=;
+        b=fSC+TB0W8aTyto0vDTACgNdE+o/xQvY0+T6xDsLXb8pdgoa95Mj8zMAZqwwL++d39S
+         lVWyFoGN+3odNlUh7r3IiowLswEqO1iqmK6kt8zqBamwRNYtPpZ+UVrltGKfoObVSGmg
+         ZqomVJgpYVNQRFbedwWIKVU9uAaDp4HIr85uzOiHAFqOnH/Dok9dMvN2ypcfzVQazEi1
+         6/j6vK8cL9oDX4dC3WH0/3HyKaCTdGzPloRaPMqz6jgIYXipYxr3fPheAh6eI4Bh675I
+         BmDbCj5qK6MMy5KwF4l4Ptu1RycxCp1Bhd//HyFQBPuRkRSYjoP7hy0GzNZIL1kG5kHH
+         llxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1cVDfB4v6J4ClnDi/ClpZbQ7jFtPWUjhu9zER11wqP8=;
-        b=EjeoVctYr/EJkMojp2xNl25Jelpq+ElU2pZ7HGSra4/vBwnlP3axfizC59PxAfZn90
-         xcIjDNOoUkIwJfxfQkMwnq/kVZh/ONCjkKXAK38gYdXGG6aMo8VR89mWObMPEFyAPL6f
-         KDWNFdBWV9fTBfq34HLwM/BKsPj57+f28EO+2sGy5eFL2Roq3N0L5YideeR2tYJyA7Q6
-         P3u1cMEoWDrlTDzUo7xsGwK822GGjqMiqGDLRsqxz0o7QrGBVbET105aP5a0DAk5V5Xq
-         dH0JO2lxeiPdXiDwv2JkZsXxY8wiCx3jhr5zaSUwsSMkvpnr4ksrciqniRZsJPGzw8hl
-         b8tg==
-X-Gm-Message-State: AOAM533OYzGkrvARRFdyW9oTyd52W5KzICgld4FeWSmRbmmR+JCyqvyP
-        lHEC+yWI7LJ8zDRRvSRw6HdOLltCH5SlBwO10t0=
-X-Google-Smtp-Source: ABdhPJw2WPKWI/PMXVjCNufYc0XZl4hZWcBY1ymfaGsvwrEOqU+aXVi0iLdPhxgpzq4Gj739y5aJg/JXvjAEf1A89Rk=
-X-Received: by 2002:a92:c78d:: with SMTP id c13mr50475751ilk.85.1594358733111;
- Thu, 09 Jul 2020 22:25:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fq5dVVlXW8qg+ASmc5eHI9qkJpaHLFgd8jV55IoO3ds=;
+        b=LFA7uG3wCzETYVDFiFFS0Uq9YA6lUuW3SavxZEbPhpWvgACTRbdgi3HjUXvaSFG4SU
+         SBMGLC+3Eu7NJ0SdbpcAay9JYQxiY7OblJoy0S73dMGqfRSYRcS5H2of34DhENgrpoac
+         90az+vs3TheHXdwtAkbN2NGPQvnKK3/QEzHbcJUMkqTM84P54c6CFdDCGMZfhRnJghcZ
+         Oa06AHFlyTC3XWyt7VFDWeRR/pZyzkGdehDvS89SxHTJuK/RA1X9SxL8juQyGwlTe1Nn
+         /Z2iwCy5UMm6o6WzeSNHJFtVng6GKY9dIZ97koYhs1g9DFazwSnvaWbNU3MWRvJDXH+W
+         soIA==
+X-Gm-Message-State: AOAM530TLei7zVYPiEq4lBfhQwnxH6AOZCJCgv5gfWGuNX3a5QP9j29c
+        j/LW56B9QAxpJQlTfuURV8MZsg==
+X-Google-Smtp-Source: ABdhPJyGZ0UdSuIDAqgj791fJ6nEZkauC+BEQanM5UDNKEQvIpcTaJkj0dDI4tcfvYGmn77x60c0Sw==
+X-Received: by 2002:a17:902:a3c7:: with SMTP id q7mr23353866plb.20.1594358970129;
+        Thu, 09 Jul 2020 22:29:30 -0700 (PDT)
+Received: from nagraj.local ([49.206.21.239])
+        by smtp.gmail.com with ESMTPSA id j17sm4168320pgn.87.2020.07.09.22.29.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2020 22:29:29 -0700 (PDT)
+From:   Sumit Semwal <sumit.semwal@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org
+Cc:     nishakumari@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        kgunda@codeaurora.org, rnayak@codeaurora.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: [RESEND: PATCH v5 0/4] Qualcomm labibb regulator driver
+Date:   Fri, 10 Jul 2020 10:59:15 +0530
+Message-Id: <20200710052919.2611-1-sumit.semwal@linaro.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <20200709050145.3520931-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20200709050145.3520931-1-bjorn.andersson@linaro.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Thu, 9 Jul 2020 22:25:19 -0700
-Message-ID: <CANcMJZDsfK35GxiRA0QBcX0wThY8w5tw2st_dZ=BJ9GJqnxePQ@mail.gmail.com>
-Subject: Re: [PATCH 0/5] iommu/arm-smmu: Support maintaining bootloader mappings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        iommu@lists.linux-foundation.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 8, 2020 at 10:02 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> Based on previous attempts and discussions this is the latest attempt at
-> inheriting stream mappings set up by the bootloader, for e.g. boot splash or
-> efifb.
->
-> The first patch is an implementation of Robin's suggestion that we should just
-> mark the relevant stream mappings as BYPASS. Relying on something else to set
-> up the stream mappings wanted - e.g. by reading it back in platform specific
-> implementation code.
->
-> The series then tackles the problem seen in most versions of Qualcomm firmware,
-> that the hypervisor intercepts BYPASS writes and turn them into FAULTs. It does
-> this by allocating context banks for identity domains as well, with translation
-> disabled.
->
-> Lastly it amends the stream mapping initialization code to allocate a specific
-> identity domain that is used for any mappings inherited from the bootloader, if
-> above Qualcomm quirk is required.
->
->
-> The series has been tested and shown to allow booting SDM845, SDM850, SM8150,
-> SM8250 with boot splash screen setup by the bootloader. Specifically it also
-> allows the Lenovo Yoga C630 to boot with SMMU and efifb enabled.
+This series adds a driver for LAB/IBB regulators found on some Qualcomm SoCs.
+These regulators provide positive and/or negative boost power supplies
+for LCD/LED display panels connected to the SoC.
 
-This series allows the db845c to boot successfully! (Without it we crash!)
-It would be really great to have this upstream!
+This series adds the support for pmi8998 PMIC found in SDM845 family of SoCs.
 
-For the series:
-  Tested-by: John Stultz <john.stultz@linaro.org>
+Changes from v4:
+- v4 Review comments incorporated
+  - simplified the driver: removed of_get_child_by_name(); use ENABLE_CTL
+    register and switch over to use the regulator_*_regmap helpers
+  - improved kerneldoc
+  - From the dt-bindings, removed interrupt-names, changed to dual license,
+    added unevaluatedProperties: false, removed interrupt-names, since there
+    is only one interrupt per node
+  - Since the Short Circuit handling needs more details from QC engineers,
+    drop the SC handling patch from this series, to submit it later
 
-Thanks so much!
--john
+Changes from v3:
+- Handled review comments from v3
+- In core, swapped the meaning of enable_time and poll_enabled_time; so we
+   wait for total enable_time delay, and poll in-between at poll_enabled_time
+   interval now.
+- fixed dt_bindings_check issues in dt-bindings patch.
+- Cleanup of register_labibb_regulator(), and adapted to updated meaning of
+   poll_enabled_time.
+
+Changes from v2:
+- Review comments from v2
+- Moved the poll-to-check-enabled functionality to regulator core.
+- Used more core features to simplify enable/disable functions.
+- Moved the devicetree binding to yaml.
+- Updated interrupt-names and simplified handling.
+
+Changes from v1:
+- Incorporated review comments from v1
+- Changed from virtual-regulator based handling to individual regulator based
+  handling.
+- Reworked the core to merge most of enable/disable functions, combine the
+  regulator_ops into one and allow for future variations.
+- is_enabled() is now _really_ is_enabled()
+- Simplified the SC interrupt handling - use regmap_read_poll_timeout,
+  REGULATOR_EVENT_OVER_CURRENT handling and notification to clients.
+
+Nisha Kumari (3):
+  dt-bindings: regulator: Add labibb regulator
+  arm64: dts: qcom: pmi8998: Add nodes for LAB and IBB regulators
+  regulator: qcom: Add labibb driver
+
+Sumit Semwal (1):
+  regulator: Allow regulators to verify enabled during enable()
+
+ .../regulator/qcom-labibb-regulator.yaml      |  70 +++++++
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  12 ++
+ drivers/regulator/Kconfig                     |  10 +
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/core.c                      |  63 ++++++-
+ drivers/regulator/qcom-labibb-regulator.c     | 175 ++++++++++++++++++
+ include/linux/regulator/driver.h              |   5 +
+ 7 files changed, 335 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+ create mode 100644 drivers/regulator/qcom-labibb-regulator.c
+
+-- 
+2.27.0
+
