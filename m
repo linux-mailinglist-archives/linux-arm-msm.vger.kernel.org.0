@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 190AA21C0A7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 01:18:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F00A21C0AE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 01:18:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbgGJXSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Jul 2020 19:18:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41224 "EHLO
+        id S1726914AbgGJXSi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Jul 2020 19:18:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726533AbgGJXSf (ORCPT
+        with ESMTP id S1726796AbgGJXSh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Jul 2020 19:18:35 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E01BC08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:18:35 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id u185so3192762pfu.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:18:35 -0700 (PDT)
+        Fri, 10 Jul 2020 19:18:37 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A1D2C08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:18:37 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id z3so3162117pfn.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2020 16:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qCGYxi6L0dmDdYzHShkkSHiKc6T34aWWoWuQkkFnaWU=;
-        b=Pz1BOCQB0pXjBmo0xAku7n+cwdXdjkY8Qu/3gwY1QOKhNMztkqxXIGamSB0+URD4zJ
-         bWGsle4ItBlbOYOFz3XZNcJ+GUr8J7HxfpiuyudOZpOdtLYbAAwglyH0n3zi4kk2nhcS
-         mvQ133SopxNOT2bwP33RuYrlCnRwVtE3wmrCetH7/Q9qh0nPSPrysb9a3+/s2XmyxP+Y
-         ulNhRUI6X5nAUpZHovYN2PASbHMZkbriStlea5f8FcJEhpZClmWwbmd7xaj0AuMhmyoq
-         xQYYHC0uckxurGhu1x+gXqb2mo/0ksmiHT6dXqmO1uiAHdW9omZK3wwUwJpvSjfFFDWf
-         mi1Q==
+        bh=+LAKpRiBafd2oOjp/6TfYpZhYF0M8uCnrw227kRHd7U=;
+        b=Fb2laGua2O0o3qIqAFaaFHeDOkX2Z7Sq4CysZLHkLud6BHKz7RjNEDQoC5zg+gdNRW
+         l64bwkrGWxENZzaGdE49CdjfCWmeTUpd14CG/9Ea+BuiUN8kv4ApLd2gVTRe3z4magmR
+         /XwHgns0ezmupMVonilKBcWoXcOnMTYozNC5ES7ifUTfqH2sgImqCOF62Phuf4Kszvzl
+         +FemTUwsgBfpnPH36Y1zR/5tLM5bOqN7ha3p8bIkHr1EEnGS56QYXSjXfNoXh3E/MI7e
+         uBh6LC8Nb0jgO/h3+mfxpKQjb79mjvvEB2SbYBWgz1rl4bCt3oeRAQCH+eVBmZ06lORX
+         dcEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qCGYxi6L0dmDdYzHShkkSHiKc6T34aWWoWuQkkFnaWU=;
-        b=CRujGHmYvtvg2Lt5c8jWNa9Pm2emEekL2V6UjyBAZRS7NpDAHgwoM4HcDtkas3m8x4
-         BmDYZjX6gLq7U7u6C1uUxwHp9NTQB0M4e4gG/U1aTfKLC/mp1IDV+j0yYCNvq+5XXC3q
-         vqd4aCWgqaw6qFTzK8dMyc4R1b21vH0v2gF6xzFfNCaACfyGDf7gOObvr9CssKhX4U44
-         If5/Ps8iiDvhM+G6QHuX3Utvf7NZdziai2WOJbZ7N/IGBp0KBKMXMAwg1wLKfDBlWxP3
-         a1XdDp8UJfpa7jyf8A8Ogop2FI8u+qpsDJpWmTTlddTtNyI/Qc9FHjb0ZUdLgY7nuwes
-         ZwJQ==
-X-Gm-Message-State: AOAM531aIVDXxaETDHBTKxysisqwPQAcGpW2YtVvSv7d2dLo4T7JLFIH
-        gPexAnqj3hFePxxwScOKpqQyoA==
-X-Google-Smtp-Source: ABdhPJxxd7gWIsbfCYIPEz7NG3FjvS01GFW7aSmOlHcok8aGrenQft1MCuaHlreDug7QVzY2Ybcl0w==
-X-Received: by 2002:a63:8c5a:: with SMTP id q26mr58143248pgn.312.1594423114697;
-        Fri, 10 Jul 2020 16:18:34 -0700 (PDT)
+        bh=+LAKpRiBafd2oOjp/6TfYpZhYF0M8uCnrw227kRHd7U=;
+        b=hQdq+hviq5zaQwsY8BWBVPN6VQ2obkG6K6+27C7jNnfRT+pk/RRnJXA1UIsY9lZM17
+         /5r7syYnaR5aIM3T1z9+DOuPQe/AbFUM/59ZmvsoYoYL1fIJCZOPSnNDolx6mnDztzxk
+         qCk1yN6OV07vKKwc4f7xu1W7Snyanhwpx+0ElYr9LpkzZ0FeoBYQTXPS5+Wbxxl2gHpB
+         vbwc7fvDYmB50wWrAh6SWTWyMW0/4heMla3sbrJL6NA3WSs6R6ZtoeSwi3R4p/BaRX46
+         ScRLMFojOymebMO6BwZoJ0X+vJ55YkL3GYSeYHbvUiUaZip3PCeBaZVFVxmMCjglYsX5
+         Tk/A==
+X-Gm-Message-State: AOAM532UE6vJ4Je4WrjBW5WBabh36w4GmoKunwnDtvOJm78eZdRLGdsl
+        lLcmZJPEUUr7zAHmSp6wZ28QQg==
+X-Google-Smtp-Source: ABdhPJxazz3b2K1meU8hdEkjra2QvmoMn+ofo3x6qLL7NuVHq/rd+1PfJ28IeoTLBIcjHFUnIpZasQ==
+X-Received: by 2002:a63:fd03:: with SMTP id d3mr60360119pgh.76.1594423116626;
+        Fri, 10 Jul 2020 16:18:36 -0700 (PDT)
 Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id c14sm7296382pfj.82.2020.07.10.16.18.33
+        by smtp.gmail.com with ESMTPSA id c14sm7296382pfj.82.2020.07.10.16.18.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2020 16:18:34 -0700 (PDT)
+        Fri, 10 Jul 2020 16:18:36 -0700 (PDT)
 From:   John Stultz <john.stultz@linaro.org>
 To:     lkml <linux-kernel@vger.kernel.org>
 Cc:     John Stultz <john.stultz@linaro.org>,
@@ -64,9 +64,9 @@ Cc:     John Stultz <john.stultz@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
         linux-gpio@vger.kernel.org
-Subject: [PATCH v3 1/3] irq: irqdomain: Export irq_domain_update_bus_token
-Date:   Fri, 10 Jul 2020 23:18:22 +0000
-Message-Id: <20200710231824.60699-2-john.stultz@linaro.org>
+Subject: [PATCH v3 2/3] irq: irqchip: Export irq_chip_retrigger_hierarchy and irq_chip_set_vcpu_affinity_parent
+Date:   Fri, 10 Jul 2020 23:18:23 +0000
+Message-Id: <20200710231824.60699-3-john.stultz@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200710231824.60699-1-john.stultz@linaro.org>
 References: <20200710231824.60699-1-john.stultz@linaro.org>
@@ -75,9 +75,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add export for irq_domain_update_bus_token() so that
-we can allow drivers like the qcom-pdc driver to be
-loadable as a module.
+Add EXPORT_SYMBOL_GPL entries for irq_chip_retrigger_hierarchy()
+and irq_chip_set_vcpu_affinity_parent() so that we can allow
+drivers like the qcom-pdc driver to be loadable as a module.
 
 Cc: Andy Gross <agross@kernel.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -96,21 +96,30 @@ Cc: iommu@lists.linux-foundation.org
 Cc: linux-gpio@vger.kernel.org
 Signed-off-by: John Stultz <john.stultz@linaro.org>
 ---
- kernel/irq/irqdomain.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/irq/chip.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index a4c2c915511d..ca974d965fda 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -281,6 +281,7 @@ void irq_domain_update_bus_token(struct irq_domain *domain,
+diff --git a/kernel/irq/chip.c b/kernel/irq/chip.c
+index 41e7e37a0928..ba6ce66d7ed6 100644
+--- a/kernel/irq/chip.c
++++ b/kernel/irq/chip.c
+@@ -1478,6 +1478,7 @@ int irq_chip_retrigger_hierarchy(struct irq_data *data)
  
- 	mutex_unlock(&irq_domain_mutex);
+ 	return 0;
  }
-+EXPORT_SYMBOL_GPL(irq_domain_update_bus_token);
++EXPORT_SYMBOL_GPL(irq_chip_retrigger_hierarchy);
  
  /**
-  * irq_domain_add_simple() - Register an irq_domain and optionally map a range of irqs
+  * irq_chip_set_vcpu_affinity_parent - Set vcpu affinity on the parent interrupt
+@@ -1492,7 +1493,7 @@ int irq_chip_set_vcpu_affinity_parent(struct irq_data *data, void *vcpu_info)
+ 
+ 	return -ENOSYS;
+ }
+-
++EXPORT_SYMBOL_GPL(irq_chip_set_vcpu_affinity_parent);
+ /**
+  * irq_chip_set_wake_parent - Set/reset wake-up on the parent interrupt
+  * @data:	Pointer to interrupt specific data
 -- 
 2.17.1
 
