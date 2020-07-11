@@ -2,292 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F1FF21C34C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 11:16:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5426C21C359
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 11:34:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728164AbgGKJQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Jul 2020 05:16:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40538 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727888AbgGKJQa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Jul 2020 05:16:30 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 66B51206F0;
-        Sat, 11 Jul 2020 09:16:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594458989;
-        bh=3kHI0MpfwxWrtgpDGGjNIDO93+S/R3yYU6/0s1gIhkw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=MKyCJmAX3JFgRV9Afr+Q9xYrh1kao3vxYDLbFgyd7y8Xss8OIMpDlXQiMMmgb8Bzr
-         jiAaLsSUuCtPq36XeVmh/1DiC5hartWASgBLLkQsLSPnH5EQ+A/BBq0sfOEORmOFm0
-         vsx9S3PhS7Sp3hsMxD2u/we2XMejmZmwIRZEZIxc=
-Received: from host109-149-250-171.range109-149.btcentralplus.com ([109.149.250.171] helo=wait-a-minute.misterjones.org)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1juBcR-00Ault-Hc; Sat, 11 Jul 2020 10:16:27 +0100
-Date:   Sat, 11 Jul 2020 10:16:26 +0100
-Message-ID: <87sgdyxvh1.wl-maz@kernel.org>
-From:   Marc Zyngier <maz@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     LinusW <linus.walleij@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        id S1728112AbgGKJe2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Jul 2020 05:34:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50560 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728102AbgGKJe1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Jul 2020 05:34:27 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96E47C08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jul 2020 02:34:26 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id by13so6461919edb.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jul 2020 02:34:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uUHOvQ1RnseULY7jjRZbv5heR1BME+nXRNTnFLUAArc=;
+        b=Gh+EAkR6hdE2x+k75yw7F4SbBJRXAVWl+RrXQMi5wmp8S/yPE7ARZjsF7e+APwaCWF
+         /4Qo5LyzEzcfF/TEXr5s9LnO7ZpUOCKWBAvQskUOCGBP9tZ36vBD6p8GsivrDdfTR98d
+         DEnqn/UqpGA7nbAmC/dg5qlU2VEzEBHZyZX14OWxVQTFTSVoQwE2nmyXCt5rbfJP5eIB
+         zbokYLfaIlCE9HwnaVRJlGFTSDdaW6iXrx2jtF0VJFphzabo8EKGgPGYe4ngMXHjkWe2
+         muM2zKG2O8dMWXoQYLcKB/Leas1TIIiliaAur1CpVK9frZBOjkPFkwjavwfmG+x7O9oQ
+         YkVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uUHOvQ1RnseULY7jjRZbv5heR1BME+nXRNTnFLUAArc=;
+        b=t1zGwxnf9YluqdYjn1x0tVJ38oEG5CJNsI89qj4j88GKbGBeOey6UcVAHekk7NSKkG
+         01B7ByHRr6dtpdKs7VlVGZWOmmmLe2AOA+Jocu02fPCkSLSBOLg5NiFjO9dbUK+c4dAN
+         yLYhhS+T8r8SpEQfqkjSh0r6l9ShWQY8y5tWnBV5QiY0s6lQoRmZpiAwEnykbTIiOVue
+         0xT3wkdBcLxPGYpfseDo/dMJoCXJTeREuwqkALiO4IMZfdllJlx+BUCn071usAfCGtq0
+         hXrUD0cehKXvyLN5Rak9V3mb1S96fJi4TZlouEoKEL0se4a4AnoIiYo0h0q1jBX4ofcf
+         YJHQ==
+X-Gm-Message-State: AOAM530i/xw3KR9cY7bdVQ+Ho7Ltqh9DuCYl4j3KdnCAA3K390niT65z
+        QmeBcpsA7fMQZIW0T13ObvwGFMkTIyTfLrCSCh0bZV7ADUE=
+X-Google-Smtp-Source: ABdhPJyI9wVIMb2N1IM1PmqnHYZ5rKdelTTwX2p6FPuzTHr4vTILv7eLxa1LU1eI/fBA/dSZFczU1gdS2YEFalSJ4LI=
+X-Received: by 2002:a05:6402:1655:: with SMTP id s21mr79066131edx.289.1594460064680;
+ Sat, 11 Jul 2020 02:34:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200627115245.5925-1-shawnguo@kernel.org>
+In-Reply-To: <20200627115245.5925-1-shawnguo@kernel.org>
+From:   Shawn Guo <shawn.guo@linaro.org>
+Date:   Sat, 11 Jul 2020 17:34:13 +0800
+Message-ID: <CAAQ0ZWSozns0ZWHJp4G56p78CnJnPdP6pLsoJP5B7-nZhqGzWw@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/atomic_helper: add a flag for duplicating
+ drm_private_obj state
+To:     Shawn Guo <shawnguo@kernel.org>
+Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] pinctrl: qcom: Handle broken PDC dual edge case on sc7180
-In-Reply-To: <CAD=FV=VzhdL67ocBPmAngxbZJsq-dSjhV2QjA8=7Ry+9oYxXHw@mail.gmail.com>
-References: <20200708141610.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
-        <87lfjreo7m.wl-maz@kernel.org>
-        <CAD=FV=VzhdL67ocBPmAngxbZJsq-dSjhV2QjA8=7Ry+9oYxXHw@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 EasyPG/1.0.0 Emacs/26.3
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 109.149.250.171
-X-SA-Exim-Rcpt-To: dianders@chromium.org, linus.walleij@linaro.org, swboyd@chromium.org, linux-arm-msm@vger.kernel.org, cychiang@chromium.org, ilina@codeaurora.org, agross@kernel.org, rnayak@codeaurora.org, mkshah@codeaurora.org, bjorn.andersson@linaro.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Boris Brezillon <boris.brezillon@bootlin.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 10 Jul 2020 17:10:55 +0100,
-Doug Anderson <dianders@chromium.org> wrote:
-> 
-> Hi,
-> 
-> On Fri, Jul 10, 2020 at 2:03 AM Marc Zyngier <maz@kernel.org> wrote:
-> >
-> > Hi Doug,
-
-[...]
-
-> >
-> > > +     type = val ? IRQ_TYPE_EDGE_FALLING : IRQ_TYPE_EDGE_RISING;
-> > > +
-> > > +     raw_spin_lock_irqsave(&pctrl->lock, flags);
-> >
-> > What is this lock protecting you against? In both cases, you are
-> > already under the irq_desc lock, with interrupts disabled.
-> 
-> We are?  I put a breakpoint when the IRQ hits and did a bt.  I see
-> this (I happen to be on 5.4 at the moment, so hopefully the same as
-> mainline):
-> 
->  kgdb_breakpoint+0x3c/0x74
->  msm_gpio_update_dual_edge_parent+0x58/0x17c
->  msm_gpio_handle_dual_edge_parent_irq+0x1c/0x30
->  __handle_domain_irq+0x84/0xc4
->  gic_handle_irq+0x170/0x220
->  el1_irq+0xd0/0x180
-> 
-> I think the stack is missing a few things due to aggressive inlining
-> from my compiler, so the true backtrace would be:
-> 
-> msm_gpio_handle_dual_edge_parent_irq()
-> generic_handle_irq_desc()
-> generic_handle_irq()
-> __handle_domain_irq()
-> handle_domain_irq()
-> gic_handle_irq()
-> 
-> The first place that got the "desc" was generic_handle_irq() and it
-> got it via irq_to_desc().  That doesn't seem to do any locking.  Then
-> generic_handle_irq_desc() just calls a function pointer so no locking
-> there either.
-> 
-> ...ah, but maybe what you're saying is that
-> msm_gpio_handle_dual_edge_parent_irq() should be holding "desc->lock"
-> around the call to msm_gpio_update_dual_edge_parent()?  I can do that.
-
-No, I mentally did a fast-forward to moving this hack into the irq
-flow, rather than doing before entering the flow. handle_fasteoi_irq
-will take the lock, but obviously not with the current state of this
-patch.
-
+On Sat, Jun 27, 2020 at 7:53 PM Shawn Guo <shawnguo@kernel.org> wrote:
 >
-> 
-> > > +     do {
-> > > +             /* Set the parent to catch the next edge */
-> > > +             irq_chip_set_type_parent(d, type);
-> > > +
-> > > +             /*
-> > > +              * Possibly the line changed between when we last read "val"
-> > > +              * (and decided what edge we needed) and when set the edge.
-> > > +              * If the value didn't change (or changed and then changed
-> > > +              * back) then we're done.
-> > > +              */
-> >
-> > If the line changed, shouldn't you actually inject a new interrupt
-> > altogether? By changing the polarity more than once, you are
-> > effectively loosing edges that should have triggered an interrupt.
-> 
-> Are you sure this is needed?  My understanding of edge triggered
-> interrupts is that until the interrupt handler is called that all
-> edges can be coalesced into a single interrupt.
+> From: Shawn Guo <shawn.guo@linaro.org>
+>
+> The msm/mdp5 driver uses state of drm_private_obj as its global atomic
+> state, which keeps the assignment of hwpipe to plane.  With
+> drm_private_obj missing from duplicate state call in context of atomic
+> suspend/resume helpers, mdp5 suspend works with no problem only for the
+> very first time.  Any subsequent suspend will hit the following warning,
+> because hwpipe assignment doesn't get duplicated for suspend state.
+>
+> $ echo mem > /sys/power/state
+> [   38.111144] PM: suspend entry (deep)
+> [   38.111185] PM: Syncing filesystems ... done.
+> [   38.114630] Freezing user space processes ... (elapsed 0.001 seconds) done.
+> [   38.115912] OOM killer disabled.
+> [   38.115914] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+> [   38.122170] ------------[ cut here ]------------
+> [   38.122212] WARNING: CPU: 0 PID: 1747 at drivers/gpu/drm/msm/disp/mdp5/mdp5_pipe.c:145 mdp5_pipe_release+0x90/0xc0
+> [   38.122215] Modules linked in:
+> [   38.122222] CPU: 0 PID: 1747 Comm: sh Not tainted 4.19.107-00515-g9d5e4d7a33ed-dirty #323
+> [   38.122224] Hardware name: Square, Inc. T2 Devkit (DT)
+> [   38.122228] pstate: 40000005 (nZcv daif -PAN -UAO)
+> [   38.122230] pc : mdp5_pipe_release+0x90/0xc0
+> [   38.122233] lr : mdp5_pipe_release+0x90/0xc0
+> [   38.122235] sp : ffff00000d13b7f0
+> [   38.122236] x29: ffff00000d13b7f0 x28: 0000000000000000
+> [   38.122240] x27: 0000000000000002 x26: ffff800079adce00
+> [   38.122243] x25: ffff800079405200 x24: 0000000000000000
+> [   38.122246] x23: ffff80007a78cc08 x22: ffff80007b1cc018
+> [   38.122249] x21: ffff80007b1cc000 x20: ffff80007b317080
+> [   38.122252] x19: ffff80007a78ce80 x18: 0000000000020000
+> [   38.122255] x17: 0000000000000000 x16: 0000000000000000
+> [   38.122258] x15: 00000000fffffff0 x14: ffff000008c3fb48
+> [   38.122261] x13: ffff000008cdac4a x12: ffff000008c3f000
+> [   38.122264] x11: 0000000000000000 x10: ffff000008cda000
+> [   38.122267] x9 : 0000000000000000 x8 : ffff000008ce4a40
+> [   38.122269] x7 : 0000000000000000 x6 : 0000000039ea41a9
+> [   38.122272] x5 : 0000000000000000 x4 : 0000000000000000
+> [   38.122275] x3 : ffffffffffffffff x2 : c7580c109cae4500
+> [   38.122278] x1 : 0000000000000000 x0 : 0000000000000024
+> [   38.122281] Call trace:
+> [   38.122285]  mdp5_pipe_release+0x90/0xc0
+> [   38.122288]  mdp5_plane_atomic_check+0x2c0/0x448
+> [   38.122294]  drm_atomic_helper_check_planes+0xd0/0x208
+> [   38.122298]  drm_atomic_helper_check+0x38/0xa8
+> [   38.122302]  drm_atomic_check_only+0x3e8/0x630
+> [   38.122305]  drm_atomic_commit+0x18/0x58
+> [   38.122309]  __drm_atomic_helper_disable_all.isra.12+0x15c/0x1a8
+> [   38.122312]  drm_atomic_helper_suspend+0x80/0xf0
+> [   38.122316]  msm_pm_suspend+0x4c/0x70
+> [   38.122320]  dpm_run_callback.isra.6+0x20/0x68
+> [   38.122323]  __device_suspend+0x110/0x308
+> [   38.122326]  dpm_suspend+0x100/0x1f0
+> [   38.122329]  dpm_suspend_start+0x64/0x70
+> [   38.122334]  suspend_devices_and_enter+0x110/0x500
+> [   38.122336]  pm_suspend+0x268/0x2c0
+> [   38.122339]  state_store+0x88/0x110
+> [   38.122345]  kobj_attr_store+0x14/0x28
+> [   38.122352]  sysfs_kf_write+0x3c/0x50
+> [   38.122355]  kernfs_fop_write+0x118/0x1e0
+> [   38.122360]  __vfs_write+0x30/0x168
+> [   38.122363]  vfs_write+0xa4/0x1a8
+> [   38.122366]  ksys_write+0x64/0xe8
+> [   38.122368]  __arm64_sys_write+0x18/0x20
+> [   38.122374]  el0_svc_common+0x6c/0x178
+> [   38.122377]  el0_svc_compat_handler+0x1c/0x28
+> [   38.122381]  el0_svc_compat+0x8/0x18
+> [   38.122383] ---[ end trace 24145b7d8545345b ]---
+> [   38.491552] Disabling non-boot CPUs ...
+>
+> Let's add a flag for duplicating the state of drm_private_obj and set
+> the flag from msm/mdp5 driver, so that the problem can be fixed while
+> other drivers using drm_private_obj stay unaffected.
+>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+> Changes for v2:
+>  - Add a flag to duplicate the state of drm_private_obj conditionally,
+>    so that other drivers using drm_private_obj stay unaffected.
 
-It really depends on whether the edges are semantically different, and
-I'm not sure you can decide this at the interrupt controller
-level. The core IRQ code doesn't give you a way to discriminate
-between those, but endpoint drivers could, and could get terminally
-confused if the see two rising edges without a falling edge in
-between.
+Hi Daniel,
 
-> It's only after the
-> interrupt handler is called that it's important to capture new edges.
-> So if you have this:
-> 
-> a) Be busy processing another unrelated interrupt
-> b) 5 edges happen on the line
-> c) Other interrupt finishes
-> d) Edge interrupt is acked and handler is called
-> 
-> You'll only get one call to the interrupt handler even though there
-> were 5 edges, right?  It's only important that you queue another
-> interrupt if that interrupt happens after the true interrupt handler
-> (the one acting on the edge) has started.
-> 
-> ...actually, in theory you'll get _either_ one or two calls to the
-> interrupt handler depending on timing, since the above could also
-> happen as:
-> 
-> a) Be busy processing another unrelated interrupt
-> b) 4 edges happen on the line
-> c) Other interrupt finishes
-> d) Edge interrupt is acked and ...
-> e) 1 more edge happens on the line
-> f) ...handler is called
-> g) Edge interrupt is acked and handler is called
-> 
-> 
-> As long as msm_gpio_update_dual_edge_parent() is called _before_ the
-> true interrupt handler is called then what I have should be fine,
-> right?
+Are you okay with this version?
 
-I don't disagree with any of that, except that being fine at the
-irqchip level doesn't necessarily mean being fine at the endpoint
-driver level. On the other hand, the HW looks terminally broken, so
-maybe it doesn't matter as the drivers will have to be written with
-this limitation in mind...
-
-> 
-> > > +             val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
-> > > +             if (type == IRQ_TYPE_EDGE_RISING) {
-> > > +                     if (!val)
-> > > +                             break;
-> > > +                     type = IRQ_TYPE_EDGE_FALLING;
-> > > +             } else if (type == IRQ_TYPE_EDGE_FALLING) {
-> > > +                     if (val)
-> > > +                             break;
-> > > +                     type = IRQ_TYPE_EDGE_RISING;
-> > > +             }
-> > > +     } while (loop_limit-- > 0);
-> > > +     raw_spin_unlock_irqrestore(&pctrl->lock, flags);
-> > > +
-> > > +     if (!loop_limit)
-> > > +             dev_err(pctrl->dev, "dual-edge irq failed to stabilize\n");
-> > > +}
-> > > +
-> > > +void msm_gpio_handle_dual_edge_parent_irq(struct irq_desc *desc)
-> > > +{
-> > > +     struct irq_data *d = &desc->irq_data;
-> > > +
-> > > +     /* Make sure we're primed for the next edge */
-> > > +     msm_gpio_update_dual_edge_parent(d);
-> >
-> > I would have expected this to happen on EOI or ACK, rather than before
-> > the flow is actually handled, once you have told the interrupt
-> > controller that you were dealing with this interrupt.
-> 
-> Having it on Ack would be ideal, but it appears that the Ack function
-> isn't called in this case.  That's only called if our handler is
-> handle_edge_irq() or handle_level_irq().  See more below.
-
-Easily fixed, see further down.
-
-> 
-> ...I'm pretty sure I don't want it on EOI.  Specifically, if I did it
-> on EOI then I think I _would_ need to re-queue another interrupt if an
-> edge came in msm_gpio_update_dual_edge_parent().  Doing all the edge
-> adjustment before calling the true interrupt handler avoids all
-> that.
-
-Requeuing interrupts would be fine, and we have the retrigger callback
-for that. This can be used when you want to support level interrupts,
-but your interrupt controller only supports edge. Something similar
-could be done to deal with dual edge interrupts.
-
-> 
-> 
-> > > +
-> > > +     /* Pass on to the normal interrupt handler */
-> > > +     handle_fasteoi_irq(desc);
-> >
-> > Is that the right flow? It seems that the current code is using
-> > handle_edge_irq. I guess it has been broken so far, and that this
-> > patch actually fixes it by forcing a fasteoi flow...
-> 
-> The code today only uses handle_level_irq() / handle_edge_irq() if
-> "skip_wake_irqs" wasn't set for this IRQ.  In the case that
-> "skip_wake_irqs" wasn't set then it leaves the handler alone.  I
-> definitely had a hard time following all the flow and interactions
-> between the pinctrl, PDC, and the GICv3 but I definitely did confirm
-> that handle_fasteoi_irq() was the handler that was running when
-> "skip_wake_irqs" was set before I stuck mine in the middle.
-
-OK.
-
-> I believe how things work today with the "skip_wake_irqs" case is
-> that, for the most part, the pinctrl driver stays out of the way for
-> setting up and handling IRQs and just passes some calls onto its
-> parent (the PDC).  The PDC driver is actually quite minimal.  There's
-> no "Ack" in there and no calls to set an IRQ handler--it seems to just
-> rely on the GICv3 doing all that.  It looks there is an implicit Ack
-> as part of gic_handle_irq() since reading the IAR counts as an Ack.
-> 
-> 
-> So to try to sum up my understanding:
-> 
-> 1. In the case of "skip_wake_irqs" today there is no acking / handling
-> code that is part of pinctrl-msm or the PDC.  They just configure
-> things to direct to the GICv3.
-> 
-> 2. For my workaround I just need to make sure to intercept myself and
-> prime the next edge _before_ the end-user interrupt handler gets
-> called.  If edges are coalesced before the end-user interrupt handler
-> is called then that's OK.
-> 
-> 
-> I'll await your reply before sending out the next version.  Thanks
-> much for all your time looking at this!
-
-So here are my suggestions:
-
-- Move your dual edge hack to the irq_ack callback
-
-- On detecting a dual edge interrupt, switch to the
-  handle_fasteoi_ack_irq flow, which will call the irq_ack callback
-
-- Get rid of the now useless locking
-
-I bet you could reuse some of the existing hacks, though I haven't
-looked too hard because it is Saturday and this code really makes my
-eyes bleed.
-
-Thanks,
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+Shawn
