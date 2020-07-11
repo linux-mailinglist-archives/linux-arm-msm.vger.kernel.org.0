@@ -2,105 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 244C021C601
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 21:50:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D7F221C657
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2020 23:11:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727061AbgGKTt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Jul 2020 15:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59840 "EHLO
+        id S1727785AbgGKVLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Jul 2020 17:11:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726544AbgGKTt6 (ORCPT
+        with ESMTP id S1726779AbgGKVLh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Jul 2020 15:49:58 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5394C08C5DE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jul 2020 12:49:58 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id mn17so4039703pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jul 2020 12:49:58 -0700 (PDT)
+        Sat, 11 Jul 2020 17:11:37 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C02C08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jul 2020 14:11:37 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id z24so10355390ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Jul 2020 14:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VoSY9o0RP9wz1n1HlqTdIGycNdQ3hE09iYAJAJNhPFo=;
-        b=kuzkh7Dyi7gvfKHgz0jDxv9ItbDA51VPP8+B5RL67FMOAvkA7sCXY4mkhOD+fGVr1r
-         mv8MlJQnOxtcff2aUtBQEqxn4dYEW2qXEyT4uq7I40BtRfTGXnkfS6hCzl+7Hy8b1nS5
-         B4aP39WQ6DgfKtxK8Hs02ijiAFb6wGHnwJlyMEfxhfKcYWssU3ZkvshdRuk/2no0gAWW
-         rVUvCjAAEOE/RxT5XeZFwnd43ey7L3prJc6BmWh8F3ZXqohoPl6dO+gMg4REiJHoT5ld
-         7iXIFj86iz5L67nqqOwmbrczbF1jGkG+fsiiQHkDFdBHtlNd1a7loILLtxTwGUVlSGyu
-         97FQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hG5d4MXKH7j0YNeql3XedgUwA1S+hEFx8UFAusowRpQ=;
+        b=dXthr0xg2XCQr65fG0RuhCL5iGIPi6+nsbmgiARFHbGL/Uf99W7FHXpins4+smK3oF
+         SFZmDcxc2/w/y3N1xYxVegkxHeSq1ZYEtGk75cap3MamCnrhYMawKCxHTNulHFKjfxfk
+         +tfF1aUGFmC1OG+EAsNulGF3Xo/n7r/jsWUp3DCdLP8LHfZfruyiZZ54/T6yRf+wdB3A
+         1FvI0tUfXAxjNb3MTyOhfhe09ygOEDK2uxGqcAhIHcj7EP771rr08bSPhvyv8E5yH0aC
+         O2J+AcruPCugrhoevCMBpiiwQlrao1hH++RpqOb/Pv4ffC4DNQKk4EFR0tD5R2oxMMvg
+         3qAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VoSY9o0RP9wz1n1HlqTdIGycNdQ3hE09iYAJAJNhPFo=;
-        b=g2o3GHtcoxr6I0wnORvRuIyyp6SL3meDYQLvBGEywtCS9tl3ce41RpMXfq90vWRmbr
-         kGQwkLQGku0MI/tQKRtDlnKhNt13XPsV8cy6aJ6oeHR4kmI7AbJobFOk1IP+GkMD3n6A
-         cO+L3x7Klvzn7ZVoLFVa8tSUR5IWzMC3w6Eg5Wh1rN3MiUFvR5zBAXAJkCHZwWNtZMct
-         IFVX1KmBubZrRn4Nh1BDhMB7tK/81oam9n9Vl4bNvK+Yflz+C5W3alnwa2bQKY5MCeZF
-         phMKjRSWFBaDOcXMcVn+b4hywYfwdd+z3dR69J/8wRfoacZBYdVtXClekWrDInXgd1mh
-         LylQ==
-X-Gm-Message-State: AOAM531RolBpRAoynu7O+Tf9CgvwpAhXAm6aVmr/ePEHdXkckj2zIfN6
-        CqNL3GFrru+vl3ZMcdQn6SWqQA==
-X-Google-Smtp-Source: ABdhPJwyVIyKI7ahlCr2xE9CjEH3oiM3zspFL3y25paZ20lnVu1lQeX2s576mVzYp98W3z0Gb3TFxg==
-X-Received: by 2002:a17:902:d352:: with SMTP id l18mr21833035plk.56.1594496998213;
-        Sat, 11 Jul 2020 12:49:58 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b4sm9665353pfo.137.2020.07.11.12.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jul 2020 12:49:57 -0700 (PDT)
-Date:   Sat, 11 Jul 2020 12:47:46 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>, skrzynka@konradybcio.pl,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org, DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/1] clk: qcom: smd: Add support for MSM8992/4 rpm clocks
-Message-ID: <20200711194746.GA388985@builder.lan>
-References: <20200623230018.303776-1-konradybcio@gmail.com>
- <CAMS8qEVHxnAwC9fK69Pb4MEMWVEa9N7ZdkQCkXwvqC-JfQEfRA@mail.gmail.com>
- <159303797640.62212.15039388585433005717@swboyd.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hG5d4MXKH7j0YNeql3XedgUwA1S+hEFx8UFAusowRpQ=;
+        b=L/H3myCisUceEUpMJAkuBGZE5+HEeNRgAcxyzolNjqtUyrtpdP4rbaDXYSjA3+8w+1
+         XLnCB5sXGBNqcThGrBSQIfxV6mLxCjm0u25lLCWCjY5i6kD+YXI/Bb1ZU234QrZME5cl
+         TOc2edS9IZ2Xe2Pne5mSg/yjzv2CFA6DbXtupX/Vo1TAEyHLzWiNFD+yhPZIWqaVE7Ij
+         9YQ7/nV5cSEqv15Fx7iO4Qn/nwVGB+9+7jzgHUOZwaXj9rf8pzwVHolcPlZ5UYc2nWs2
+         S4Ypuzjg7x5sp5UXl2z+os0HwdPFMVBIDM19x4WKix+o/yZnCCs8KLaD3XDjr2XO3PVQ
+         mQPA==
+X-Gm-Message-State: AOAM532FdD+bfRUKI6leQPD7NDk9HtGlGbLd8TcOs10fE9Ck2D1l33TC
+        V+EQHuzNdp0/GmdGIQS6I9VRWphNVB044Pkit/Xv18o6
+X-Google-Smtp-Source: ABdhPJykUdIN42EDfkU5cG71+oDSmBrVADO8NS9vM4JO9vrSCCvxVJAsXra7VIel2SQ5Kgi8SMViUfehC/nyjHr2+30=
+X-Received: by 2002:a2e:8597:: with SMTP id b23mr27378268lji.338.1594501895501;
+ Sat, 11 Jul 2020 14:11:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <159303797640.62212.15039388585433005717@swboyd.mtv.corp.google.com>
+References: <1594107588-17055-1-git-send-email-kathirav@codeaurora.org>
+In-Reply-To: <1594107588-17055-1-git-send-email-kathirav@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 11 Jul 2020 23:11:24 +0200
+Message-ID: <CACRpkdbZWrpqtQKZeX96-MtvwR4ak9E9hF43fURpZ50MVtWwig@mail.gmail.com>
+Subject: Re: [PATCH V2] pinctrl: qcom: ipq8074: route gpio interrupts to APPS
+To:     Kathiravan T <kathirav@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        srichara@codeaurora.org,
+        Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 24 Jun 15:32 PDT 2020, Stephen Boyd wrote:
+On Tue, Jul 7, 2020 at 9:40 AM Kathiravan T <kathirav@codeaurora.org> wrote:
 
-> Quoting Konrad Dybcio (2020-06-24 08:09:18)
-> > I should also note that for quite some time a hack [1]
-> > has been needed on some platforms for the RPMCC to register.
-> > 
-> > This includes 8992/94, 8956/76 and possibly many more.
-> > 
-> > With that commit, RPMCC registers fine.
-> > 
-> 
-> What happens if that patch isn't applied? Does the system crash? Because
-> I'd rather not merge a patch in clk tree that causes the system to fail
-> to boot.
+> set target proc as APPS to route the gpio interrupts to APPS
+>
+> Co-developed-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+> Signed-off-by: Rajkumar Ayyasamy <arajkuma@codeaurora.org>
+> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
 
-The state machine code in the SMD implementation finds the RPM channel,
-but it's in a state that indicates that the remote side is still
-closing/cleaning up from when the bootloader had it open.
+Patch applied.
 
-The result is that we never probe the RPM driver.
-
-I merged a patch that would cause the logic here to be a little bit more
-aggressive/optimistic, but that had to be reverted because it prevented
-the modem from coming up cleanly after a crash. And I unfortunately
-still don't have any hardware that manifest this problem that I can
-debug this on myself.
-
-
-But I think it's fine to merge the rpmcc patch (which I see you did).
-
-Thanks,
-Bjorn
+Yours,
+Linus Walleij
