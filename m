@@ -2,164 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 346B121C81E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2020 10:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DA8221C83E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2020 11:27:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728137AbgGLInA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Jul 2020 04:43:00 -0400
-Received: from esa2.hgst.iphmx.com ([68.232.143.124]:4578 "EHLO
-        esa2.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725974AbgGLIm7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Jul 2020 04:42:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1594543383; x=1626079383;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=uLsodbJ+XHaYgLitSGxh2UGzhbGzGL0tJzIdWlYPLrc=;
-  b=U/tFy6Qp/vFbY8JfBL5ypI2j+8DiHt2lk6Yc4+MJmjBxEimgRaoAO2Ze
-   gcamPBQePGBwSpC0gGTWbPC4lBhBMhiOGAe7l0NkRUbh8LhIJO5Gqa/AG
-   Die7m2YcvY6cR5Sflidn30SpcOZbRy7/cxGI4TSn7UCYXOzVk4SxEVmSC
-   yb8FuuLOz4ebZf/EOOiLPd0V7Jo12j/Zu1i0XUrMf7ny2C3XI5UX2HFjg
-   7zvD3d/if+tcCRgbkDS2M8dHXMR1oYAPPgTBSXFomWf62RXeUJEAZipqw
-   nf1i3PMipSMCB3RBqAf0bNWMv2NdOdPKRbrZOwv3xTkz21NffT7he0kUT
-   Q==;
-IronPort-SDR: qgeMVIWSpRv3q/NLb6pt9V0l+Fd4bAUyjO/oK+666yhWGF0kzEeHDLrz+wC4crO/2sqXlfORhG
- 9EcFh8T1KGGdg/Ey+kI+I6N/xHoQsZAFRu9QLYPyFFNcY5HBS1xgx9JPAEI0LynVWtIKtQ+gqe
- ST++eHB4IS1PziMtzq3WgT2X2YCgrrpnLYXUHlpwOnQmRMgVhZdnEIYgGOb9F1dw53Rv3dBnlY
- Jun26IG3sLbd8U3N2M7GAKBXVfN+2lpa46YGqtoCkaM+5rr9+0kdgcOwuzHkWH+8/InIXNihAJ
- Q+k=
-X-IronPort-AV: E=Sophos;i="5.75,342,1589212800"; 
-   d="scan'208";a="245261775"
-Received: from mail-bn7nam10lp2104.outbound.protection.outlook.com (HELO NAM10-BN7-obe.outbound.protection.outlook.com) ([104.47.70.104])
-  by ob1.hgst.iphmx.com with ESMTP; 12 Jul 2020 16:43:00 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aLJIf945+eWeaclJrCRLfaOoHMVFYikVRQySNsBKTdTYFJO/ZhzscxEV8pRxZXARXEpIu1Ah5aVPbFXbteLMYT3ZDXOMzeHfho13iljWn9uBVghtxslJYzsz/iXl7tE+09MqFBtTtq07zowKbddXQnyPcwOC4YGBw48bowQaNu73rAet+2Jy5zHCawffKqhGzx6rULPHUASUCp41KzgKvr7n1mEVsR1v+90U6lemDz5ZotDvepiKBY+3e8u/H+SEnhv+jbM4S5T1rD8p+2HlhXM64Ogg6tzeMSV4agLhYXkhF+6kBkI4/t4bowBoN916trSyLbOV4Bt3I16Mi/OHwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9Lm9f1RWuYF+3uPBp1vohelqN2ZeyPDMSoOEVxLn6Z4=;
- b=TEI49+pRd2WGDMbiiaeeUwY65wc/IfJT24knnodsoqlljperpUAQTTHW90amWGkBqtDt4YS6kaR5NXlT3zgrGSaielgC8UMmK0j2RysJcZXbMNeQoB9lBkxwXVcRVz3Bjyk0xVhio97EHdhryxVRTQOOKmPYjfOy5EorulIwOesAZ51NV8iwGo0H/SF3D0JICQM5H/7KDX94fqfSb4XR36ZjyeDLRS1M71YljQPizIZ+SKdj5e0iG74UHFHZ4nT+2/TwcWbVs2raJq4Avz2C8+zzBbC53Arj1thzbVA54ilgALxFEMw23TcypD0KTk4a3n6sdQ9m+H91kTOVKqIlwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9Lm9f1RWuYF+3uPBp1vohelqN2ZeyPDMSoOEVxLn6Z4=;
- b=L+s59pajbUHiIncr3fW4oHeyDKS0dpbnPaab5rNG/t+eyFdbyvq1Oh3mSuRg00AaTStBFQfOy+Ppc1QmhpE0JJQAWBIdyciAlssixdlBMZ985r//xSJJNHoW2e0pOlCsrQ/LWCzCk9nckxft50Tpevtn9TOKvKwSl1PpZ7LeWm4=
-Received: from SN6PR04MB4640.namprd04.prod.outlook.com (2603:10b6:805:a4::19)
- by SN6PR04MB4896.namprd04.prod.outlook.com (2603:10b6:805:99::28) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.22; Sun, 12 Jul
- 2020 08:42:55 +0000
-Received: from SN6PR04MB4640.namprd04.prod.outlook.com
- ([fe80::1c80:dad0:4a83:2ef2]) by SN6PR04MB4640.namprd04.prod.outlook.com
- ([fe80::1c80:dad0:4a83:2ef2%4]) with mapi id 15.20.3174.025; Sun, 12 Jul 2020
- 08:42:55 +0000
-From:   Avri Altman <Avri.Altman@wdc.com>
-To:     Eric Biggers <ebiggers@kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
+        id S1728404AbgGLJ1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Jul 2020 05:27:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44096 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728112AbgGLJ1Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 12 Jul 2020 05:27:24 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7996820720;
+        Sun, 12 Jul 2020 09:27:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594546043;
+        bh=NQq5tQ5Tv0Dy7nOdr7LyJUeJ2lgk7kTvmCLrlv5YKvU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=FnfqlTIPhPUHeKn4C1xmFFqoiFgmT/grB5qd0iMAkgEhLzQI9urPVYpWXMq9YJ+hY
+         IsCLJfe/GTbPVCbQFl/zawg1qBZtCR8MabVM/z+jEyQ/Q2gmD1TruIbd9u+9Wf+G/X
+         VR30NAj/p7Jcqqkh9ovjdwfX4x6Vfk/gTJarQn0M=
+Received: from host109-149-250-171.range109-149.btcentralplus.com ([109.149.250.171] helo=wait-a-minute.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <maz@kernel.org>)
+        id 1juYGX-00B6VP-Mg; Sun, 12 Jul 2020 10:27:21 +0100
+Date:   Sun, 12 Jul 2020 10:27:20 +0100
+Message-ID: <87r1thxevb.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Subject: RE: [PATCH v6 2/5] scsi: ufs-qcom: name the dev_ref_clk_ctrl
- registers
-Thread-Topic: [PATCH v6 2/5] scsi: ufs-qcom: name the dev_ref_clk_ctrl
- registers
-Thread-Index: AQHWVorJmO0LKMZIxEy6qo2UY5jvX6kDo5zQ
-Date:   Sun, 12 Jul 2020 08:42:55 +0000
-Message-ID: <SN6PR04MB46408276B769C494EDB742DDFC630@SN6PR04MB4640.namprd04.prod.outlook.com>
-References: <20200710072013.177481-1-ebiggers@kernel.org>
- <20200710072013.177481-3-ebiggers@kernel.org>
-In-Reply-To: <20200710072013.177481-3-ebiggers@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=none action=none header.from=wdc.com;
-x-originating-ip: [212.25.79.133]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 4252b40a-585d-419a-95f1-08d8263f9285
-x-ms-traffictypediagnostic: SN6PR04MB4896:
-x-microsoft-antispam-prvs: <SN6PR04MB48967384787842C49430FA86FC630@SN6PR04MB4896.namprd04.prod.outlook.com>
-wdcipoutbound: EOP-TRUE
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9ApQBZ1R5FsH6zweCWvbLCXwCpOrKIi3n/8b0UrlrxyMQRHmMPdhwsXK4iPEaiiP0YE7kvfKU4X/4xBKIQZRSGsfkxAXEwNFqhivFRqH0QMbq765MRYIqt2kCUxUui61iQCuSLij4OCRma4L7dhOgSmgxyZE/Pgos//MhFkndrOtxI0WecbFE+eZzUTNdCYhB9EbJ5sD7lPT2HbP80s81XCmBd7NNt03n5ciK1IGFNJHfufERwDes5KbzukBiDNK39wN8Ij2bB6KpjcRle4QowsY1qm++H3chJfG/Tg7P4m646w0JhADaBlm/k/3bMlbWzO41z42ImdIwJLJNYLu8w==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR04MB4640.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(396003)(346002)(366004)(376002)(136003)(39850400004)(66946007)(2906002)(33656002)(316002)(54906003)(110136005)(9686003)(4326008)(55016002)(64756008)(83380400001)(76116006)(71200400001)(52536014)(5660300002)(66556008)(66446008)(8676002)(66476007)(8936002)(86362001)(7696005)(478600001)(6506007)(186003)(26005)(7416002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: Yww5+aXSp3b2eqcfmZQxutGjIV9mKC3oOyE6HNHRGpR28lJtT5XE5WvaYdopycWBUr7ZZsG7O8Lcav2JY45UNO9vhSoJWEgZnurY76XCyuRlUscEqDkADN4YCHjJYjtuP83V2R7Vu0IFouMUZ8zkDi1w5Ov5HWGmLZzKLFz5X6eNaO6NuoRaFzMjOIhVxic9GfbZHvsqalqIwXpQEHoHGE8vR0ZAN4iNRoumZvMCIvy3IxJr0sz1oFVSzxvCOTlpRgIxHuffztdO46ZKQS0Bf5bj1bhabH1EQHscoTk3qDS38HFApHNdeTATyZ1B19KtciMaRbLRqu9CGu1DIXNx2YI67uuN6EbiNo2vZpJ/mamC/SFdOu8O7a5QU2RM1uutArEx/gxRHqJhe+4uGTStxmHg55pWyR6sI26pE25hiZNx7MM7KyNkqznp6GE2IJn6Ts/c5/DF6JvZdz8yTCyDgCtxi82JDKy5A9mP8q97DQ0=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR04MB4640.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4252b40a-585d-419a-95f1-08d8263f9285
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jul 2020 08:42:55.5099
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Xw6TwrH+N+tcQk53CzCAEoW9PFlYtSpxXnmcleunOk+AomW76M530pbBYPe/ioA/JcoBbzDfWkkWGoIWG6+eng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB4896
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] irqchip: Allow QCOM_PDC to be loadable as a permanent module
+In-Reply-To: <159442366514.1987609.434612639050774557@swboyd.mtv.corp.google.com>
+References: <20200625001039.56174-1-john.stultz@linaro.org>
+        <20200625001039.56174-4-john.stultz@linaro.org>
+        <159315737502.62212.16093934831673347066@swboyd.mtv.corp.google.com>
+        <CALAqxLVNGar8g+FvHaVHN_e-MOZZ+=ZPmDt_GKKSC8AS-wLFGg@mail.gmail.com>
+        <87wo3setn8.wl-maz@kernel.org>
+        <159436097057.1987609.13993891118929459851@swboyd.mtv.corp.google.com>
+        <CALAqxLW14f4Gn6Q3b89X10y7=Zct2NJSgjagUqxez_bObcp42w@mail.gmail.com>
+        <159442366514.1987609.434612639050774557@swboyd.mtv.corp.google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 EasyPG/1.0.0 Emacs/26.3
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 109.149.250.171
+X-SA-Exim-Rcpt-To: swboyd@chromium.org, john.stultz@linaro.org, linux-kernel@vger.kernel.org, agross@kernel.org, bjorn.andersson@linaro.org, joro@8bytes.org, tglx@linutronix.de, jason@lakedaemon.net, linus.walleij@linaro.org, mkshah@codeaurora.org, ilina@codeaurora.org, saravanak@google.com, tkjos@google.com, gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 11 Jul 2020 00:27:45 +0100,
+Stephen Boyd <swboyd@chromium.org> wrote:
+> 
+> Quoting John Stultz (2020-07-10 15:44:18)
+> > On Thu, Jul 9, 2020 at 11:02 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > >
+> > > Does it work? I haven't looked in detail but I worry that the child
+> > > irqdomain (i.e. pinctrl-msm) would need to delay probing until this
+> > > parent irqdomain is registered. Or has the hierarchical irqdomain code
+> > > been updated to handle the parent child relationship and wait for things
+> > > to probe or be loaded?
+> > 
+> > So I can't say I know the underlying hardware particularly well, but
+> > I've been using this successfully on the Dragonboard 845c with both
+> > static builds as well as module enabled builds.
+> > And the same patch has been in the android-mainline and android-5.4
+> > kernels for a while without objections from QCOM.
+> > 
+> > As to the probe ordering question, Saravana can maybe speak in more
+> > detail if it's involved in this case but the fw_devlink code has
+> > addressed many of these sorts of ordering issues.
+> > However, I'm not sure if I'm lucking into the right probe order, as we
+> > have been able to boot android-mainline w/ both fw_devlink=on and
+> > fw_devlink=off (though in the =off case, we need
+> > deferred_probe_timeout=30 to give us a bit more time for modules to
+> > load after init starts).
+> > 
+> 
+> Ok I looked at the code (sorry for not checking earlier) and I see this in
+> msm_gpio_init()
+> 
+>         np = of_parse_phandle(pctrl->dev->of_node, "wakeup-parent", 0);
+>         if (np) {
+>                 chip->irq.parent_domain = irq_find_matching_host(np,
+>                                                  DOMAIN_BUS_WAKEUP);
+>                 of_node_put(np);
+>                 if (!chip->irq.parent_domain)
+>                         return -EPROBE_DEFER;
+> 
+> so it looks like we'll probe defer the pinctrl driver until the pdc module
+> loads. Meaning it should work to have pinctrl builtin and pdc as a module.
 
+What I hope is that eventually fw_devlink will become the norm (on by
+default), and that probe deferral will become a thing of the past.
 
->=20
->=20
-> From: Eric Biggers <ebiggers@google.com>
->=20
-> In preparation for adding another optional register range to the
-> ufs-qcom driver, name the existing optional register range
-> "dev_ref_clk_ctrl_mem".  This allows the driver to refer to the optional
-> register ranges by name rather than index.
->=20
-> No device-tree files actually have to be updated due to this change,
-> since none of them actually declares these registers.
->=20
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
+	M.
 
-
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 2e6ddb5cdfc2..bd0b4ed7b37a 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1275,7 +1275,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->                 host->dev_ref_clk_en_mask =3D BIT(26);
->         } else {
->                 /* "dev_ref_clk_ctrl_mem" is optional resource */
-> -               res =3D platform_get_resource(pdev, IORESOURCE_MEM, 1);
-> +               res =3D platform_get_resource_byname(pdev, IORESOURCE_MEM=
-,
-> +                                                  "dev_ref_clk_ctrl_mem"=
-);
->                 if (res) {
->                         host->dev_ref_clk_ctrl_mmio =3D
->                                         devm_ioremap_resource(dev, res);
-> --
-> 2.27.0
-
+-- 
+Without deviation from the norm, progress is not possible.
