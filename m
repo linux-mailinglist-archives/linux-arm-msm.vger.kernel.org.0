@@ -2,158 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F098E21D8E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 16:46:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 348E121D92B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 16:51:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729695AbgGMOqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 10:46:44 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41204 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729523AbgGMOqo (ORCPT
+        id S1730350AbgGMOvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 10:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730082AbgGMOtk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 10:46:44 -0400
-Received: by mail-io1-f66.google.com with SMTP id p205so5178660iod.8;
-        Mon, 13 Jul 2020 07:46:43 -0700 (PDT)
+        Mon, 13 Jul 2020 10:49:40 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EE9C08C5DB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 07:49:39 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id 22so13596495wmg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 07:49:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uHw7vfvkoUl/p+J0u5Wb1MljRc1mmHUiGpf+lUlkzX0=;
+        b=LtwsOLQBSd935qDg45xtuJw1DsUvUlXVZjJbx/aESPvqCbQKILkSfnn5RNWUVbgV2x
+         VI914y8yiPOmbKi8YiBaEBwt/4cgx33qyJtNA0FA+AWJuy06NSblJBdOG25jj8XCMgFl
+         F/wju0wkxqQEpBHCKhEItmEYgl5Tw0Jp235Cu/tKBRc7JFGLMxWWyVWecZqmvJLOE+06
+         V/93fvuIbubbN+OFWr/CSjS1Zb+o2UDipa7mbGPRIiAqvZj6rkTDeApLzOii7vFPbJx2
+         +SzuCHJiY0n2N2GRz2TmSE2HbUb+I1PORUjdjg5PFrg2MelwSgdJbFkMZfMQcaAT1JGL
+         m2iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nbDwnmZqExm0GJ0AQBPbfTfEhmeWr4XCe+A+8/PM6M0=;
-        b=T5+4jJYQlZ5hUHd84SckU3rKPK7CClh70W5uYAWcrpD9ssDeB3QErZxptmwPRGy1HQ
-         4WvN3oBwXakKPlwT2ygLIM0OGQeXSgttBR6eJZzB2JGAfW2K7eoOsk4ROpEHerEUWJXq
-         DJD6nU4dsC14/HW6+stbG7dN4axGQsmzWn2fkIUiFe2/rzmDUmUyBL8I/kHspXQvjDYg
-         7FOIYd5J0g9f7i1ueqaHmm3wlscR2Qc4uV3qPmvgmOcb0+c4xqBmiTvGIsimkLFA6r8J
-         fFSjQv53fYvFtbUhtZV1cJ3KKWwN5+RRsgTbd1cDTg5a1jTvnEaUqOCywaQWaG4i0YRS
-         yi7A==
-X-Gm-Message-State: AOAM533Y3+xWv+OEHt1KTm8MPBbjuW8Ab1LgnQuYE6VWPpSsbGku1g0b
-        2lXrckrw4Z6c2YfBtnRmug==
-X-Google-Smtp-Source: ABdhPJyC5hljtwK8AI4NvIkZ9UF+F6cv86WbaPgrtAlXxynhWmF1sbz5QKxouIpA7c6uyqRQqrL5Nw==
-X-Received: by 2002:a05:6638:2615:: with SMTP id m21mr394291jat.134.1594651603099;
-        Mon, 13 Jul 2020 07:46:43 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id s11sm8669417ili.79.2020.07.13.07.46.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=uHw7vfvkoUl/p+J0u5Wb1MljRc1mmHUiGpf+lUlkzX0=;
+        b=fqPmz7Si5JHoV8Cms7cxc/inXBhHvRij49Rl24WckhXWVUj/yzGf5B+i+RBkuWjAxI
+         5+Z7nyG26VSBd7oQn1GwoPN4PhOdg01nbv1xZarD6B1VUqqIWTqPWoJ8sXTkhec1R5ve
+         D3NXr/rqk2rk5WgVT2KvsqxXxM0xdhzbSEqI0iLUv1NMTu/q+zKngI6r6xapuqJNEmIV
+         NGuan4LSl8mcDD3s2iE2JUuB4fuIEpcKdLdLkgAEkjCZV6cCkeeQhI0x8CMx2++Dxx81
+         Ns1495u6teBtdy9jfdO0sK/J+/XLNhMl4v69+4X+3oXE2t3Bj9AY1/k1TKUNOez3jZMF
+         BL4Q==
+X-Gm-Message-State: AOAM533glTh87GtB0AnmUMaY4xt6Di7RGYi70gojI6teExJ2FGgjCaHP
+        xxEbEv6/q02HN5OxVucj2yZcrw==
+X-Google-Smtp-Source: ABdhPJzdyzPd8UNr1xBZ1aB/AYvkeJC2J4Kk5V8tjjunLbWbzabpwC0c0v3arMWicoKNSwUlIpJUmw==
+X-Received: by 2002:a7b:cf2b:: with SMTP id m11mr316828wmg.110.1594651778433;
+        Mon, 13 Jul 2020 07:49:38 -0700 (PDT)
+Received: from localhost.localdomain ([2.31.163.6])
+        by smtp.gmail.com with ESMTPSA id o29sm26207756wra.5.2020.07.13.07.49.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 07:46:42 -0700 (PDT)
-Received: (nullmailer pid 157351 invoked by uid 1000);
-        Mon, 13 Jul 2020 14:46:40 -0000
-Date:   Mon, 13 Jul 2020 08:46:40 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krishna Manikandan <mkrishn@codeaurora.org>
-Cc:     kalyan_t@codeaurora.org, seanpaul@chromium.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        robdclark@gmail.com, hoegsberg@chromium.org,
-        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
-        nganji@codeaurora.org, devicetree@vger.kernel.org
-Subject: Re: [v5] dt-bindings: msm: disp: add yaml schemas for DPU and DSI
- bindings
-Message-ID: <20200713144640.GA155367@bogus>
-References: <1594389469-2573-1-git-send-email-mkrishn@codeaurora.org>
+        Mon, 13 Jul 2020 07:49:37 -0700 (PDT)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     linus.walleij@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 05/25] pinctrl: qcom: pinctrl-msm: Complete 'struct msm_pinctrl' documentation
+Date:   Mon, 13 Jul 2020 15:49:10 +0100
+Message-Id: <20200713144930.1034632-6-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200713144930.1034632-1-lee.jones@linaro.org>
+References: <20200713144930.1034632-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1594389469-2573-1-git-send-email-mkrishn@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 10 Jul 2020 19:27:49 +0530, Krishna Manikandan wrote:
-> MSM Mobile Display Subsytem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema
-> for the device tree bindings for the same.
-> 
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-> 
-> Changes in v2:
-> 	- Changed dpu to DPU (Sam Ravnborg)
-> 	- Fixed indentation issues (Sam Ravnborg)
-> 	- Added empty line between different properties (Sam Ravnborg)
-> 	- Replaced reference txt files with  their corresponding
-> 	  yaml files (Sam Ravnborg)
-> 	- Modified the file to use "|" only when it is
-> 	  necessary (Sam Ravnborg)
-> 
-> Changes in v3:
-> 	- Corrected the license used (Rob Herring)
-> 	- Added maxItems for properties (Rob Herring)
-> 	- Dropped generic descriptions (Rob Herring)
-> 	- Added ranges property (Rob Herring)
-> 	- Corrected the indendation (Rob Herring)
-> 	- Added additionalProperties (Rob Herring)
-> 	- Split dsi file into two, one for dsi controller
-> 	  and another one for dsi phy per target (Rob Herring)
-> 	- Corrected description for pinctrl-names (Rob Herring)
-> 	- Corrected the examples used in yaml file (Rob Herring)
-> 	- Delete dsi.txt and dpu.txt (Rob Herring)
-> 
-> Changes in v4:
-> 	- Move schema up by one level (Rob Herring)
-> 	- Add patternProperties for mdp node (Rob Herring)
-> 	- Corrected description of some properties (Rob Herring)
-> 
-> Changes in v5:
-> 	- Correct the indentation (Rob Herring)
-> 	- Remove unnecessary description from properties (Rob Herring)
-> 	- Correct the number of interconnect entries (Rob Herring)
-> 	- Add interconnect names for sc7180 (Rob Herring)
-> 	- Add description for ports (Rob Herring)
-> 	- Remove common properties (Rob Herring)
-> 	- Add unevalutatedProperties (Rob Herring)
-> 	- Reference existing dsi controller yaml in the common
-> 	  dsi controller file (Rob Herring)
-> 	- Correct the description of clock names to include only the
-> 	  clocks that are required (Rob Herring)
-> 	- Remove properties which are already covered under the common
-> 	  binding (Rob Herring)
-> 	- Add dsi phy supply nodes which are required for sc7180 and
-> 	  sdm845 targets (Rob Herring)
-> 	- Add type ref for syscon-sfpb (Rob Herring)
-> ---
->  .../bindings/display/dsi-controller.yaml           |   4 +-
->  .../bindings/display/msm/dpu-sc7180.yaml           | 230 +++++++++++++++++++
->  .../bindings/display/msm/dpu-sdm845.yaml           | 210 ++++++++++++++++++
->  .../devicetree/bindings/display/msm/dpu.txt        | 141 ------------
->  .../display/msm/dsi-common-controller.yaml         | 178 +++++++++++++++
->  .../display/msm/dsi-controller-sc7180.yaml         | 115 ++++++++++
->  .../display/msm/dsi-controller-sdm845.yaml         | 115 ++++++++++
->  .../bindings/display/msm/dsi-phy-sc7180.yaml       |  79 +++++++
->  .../bindings/display/msm/dsi-phy-sdm845.yaml       |  81 +++++++
->  .../devicetree/bindings/display/msm/dsi-phy.yaml   |  79 +++++++
->  .../devicetree/bindings/display/msm/dsi.txt        | 246 ---------------------
->  11 files changed, 1089 insertions(+), 389 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-common-controller.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy.yaml
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/dsi.txt
-> 
+Add missing descriptions for attributes and fix 1 formatting issue.
 
+Fixes the following W=1 kernel build warning(s):
 
-My bot found errors running 'make dt_binding_check' on your patch:
+ drivers/pinctrl/qcom/pinctrl-msm.c:75: warning: Function parameter or member 'desc' not described in 'msm_pinctrl'
+ drivers/pinctrl/qcom/pinctrl-msm.c:75: warning: Function parameter or member 'irq_chip' not described in 'msm_pinctrl'
+ drivers/pinctrl/qcom/pinctrl-msm.c:75: warning: Function parameter or member 'intr_target_use_scm' not described in 'msm_pinctrl'
+ drivers/pinctrl/qcom/pinctrl-msm.c:75: warning: Function parameter or member 'soc' not described in 'msm_pinctrl'
+ drivers/pinctrl/qcom/pinctrl-msm.c:75: warning: Function parameter or member 'phys_base' not described in 'msm_pinctrl'
 
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.example.dt.yaml: example-0: dsi@ae94000:reg:0: [0, 183058432, 0, 1024] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dpu-sdm845.example.dt.yaml: example-0: mdss@ae00000:reg:0: [0, 182452224, 0, 4096] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.example.dt.yaml: example-0: dsi-phy@ae94400:reg:0: [0, 183059456, 0, 512] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.example.dt.yaml: example-0: dsi-phy@ae94400:reg:1: [0, 183059968, 0, 640] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.example.dt.yaml: example-0: dsi-phy@ae94400:reg:2: [0, 183060992, 0, 480] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dpu-sc7180.example.dt.yaml: example-0: mdss@ae00000:reg:0: [0, 182452224, 0, 4096] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.example.dt.yaml: example-0: dsi-phy@ae94400:reg:0: [0, 183059456, 0, 512] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.example.dt.yaml: example-0: dsi-phy@ae94400:reg:1: [0, 183059968, 0, 640] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.example.dt.yaml: example-0: dsi-phy@ae94400:reg:2: [0, 183060992, 0, 480] is too long
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.example.dt.yaml: example-0: dsi@ae94000:reg:0: [0, 183058432, 0, 1024] is too long
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/pinctrl/qcom/pinctrl-msm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-
-See https://patchwork.ozlabs.org/patch/1326868
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 83b7d64bc4c14..56b36d4b54668 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -40,16 +40,20 @@
+  * @dev:            device handle.
+  * @pctrl:          pinctrl handle.
+  * @chip:           gpiochip handle.
++ * @desc:           pin controller descriptor
+  * @restart_nb:     restart notifier block.
++ * @irq_chip:       irq chip information
+  * @irq:            parent irq for the TLMM irq_chip.
++ * @intr_target_use_scm: route irq to application cpu using scm calls
+  * @lock:           Spinlock to protect register resources as well
+  *                  as msm_pinctrl data structures.
+  * @enabled_irqs:   Bitmap of currently enabled irqs.
+  * @dual_edge_irqs: Bitmap of irqs that need sw emulated dual edge
+  *                  detection.
+  * @skip_wake_irqs: Skip IRQs that are handled by wakeup interrupt controller
+- * @soc;            Reference to soc_data of platform specific data.
++ * @soc:            Reference to soc_data of platform specific data.
+  * @regs:           Base addresses for the TLMM tiles.
++ * @phys_base:      Physical base address
+  */
+ struct msm_pinctrl {
+ 	struct device *dev;
+-- 
+2.25.1
 
