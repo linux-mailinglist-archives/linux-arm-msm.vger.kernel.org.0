@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F4C621E2E7
+	by mail.lfdr.de (Postfix) with ESMTP id AD84E21E2E8
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbgGMWSH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 18:18:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45602 "EHLO
+        id S1726624AbgGMWSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 18:18:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726505AbgGMWRe (ORCPT
+        with ESMTP id S1726542AbgGMWR5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 18:17:34 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59DFC08C5DD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:33 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id h18so4744306uao.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:33 -0700 (PDT)
+        Mon, 13 Jul 2020 18:17:57 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E334C061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:57 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id b24so4767671uak.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KyzzzEfQ3Uc/t+bUav/3x8lC62pgjGuDPMIXbn4bZbw=;
-        b=InUYU/sUXni6t/s3Y0tEzsg6QRkbF8CdHi29QeizGklCp2wPj8fVd34LQ23a0P4iuU
-         nDGgnyMb2+gOlkblxRAG3WGfZEczi+XzLqzr3/WSm+8/OTockDZ0K70oggBRR7nwiPQZ
-         WlrLXTDfpeFBc2CMm04EkptdN+M89zgyRIiPQ=
+        bh=Q6bh/1yGmZao7f6eku70ZfEjUaW4mF5NYpD2HrmZqeI=;
+        b=j/XT5yyFl2LbkH2lZtHlwHq+F8pmbt1Tm85qFPI0z7iEFb3EPc0mzXcrqsqbTS90ZE
+         m+To0qUhXZYncSMgOThqPs0W9mh1DSWxfcv8lMcNrpkhXIgav4O5Rdvp3cc2hXPZIt4/
+         scL1jsPMSGprQyr2BJIXvr5HxYY7wWu9lH3s8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KyzzzEfQ3Uc/t+bUav/3x8lC62pgjGuDPMIXbn4bZbw=;
-        b=U6IxYQ09NHL/27DQxexXrN2jCJPmSfuDfWByTgCGZ60LnWHp7YR8ZHCkPz+9TYPe+0
-         Xp13n77aUVq5JvsNCpcPZcp7QLnigBdRAYZUxDc72+0ftAz/rlvBR8YI6VW84A3RyFps
-         GDotQLKi240bfd6TxmPwykoCY60sy8Bzi2PuMQ2nLg6e3xAQab5q0YLQU2PC5gfEiURz
-         MknRvyOr405FHV7n6OFSzjF1jemUzjO4aMN7cJm/4+sLfpL79skABownxSja9HYZQW9+
-         MgUSjfJOzHKwE+1OOr00lbed/DZzoQEQIl6du1iOO6ebqJq/f7rMbVXJzG304akhqmra
-         tTeA==
-X-Gm-Message-State: AOAM531+g65NZJKo1Nd00qgg+rmcl0CPjWBnaD7sgWFH0TouDFZY/Q0r
-        6aIqW1VpKIH0szDKmhUBNh8Soq/VDaI=
-X-Google-Smtp-Source: ABdhPJwwPIvhpflrKB4RrY/TdTBFsILY2pPaKhNFMrpuSLIg1yq99fa2gVeE8JKtatE4FCVBIxgbZg==
-X-Received: by 2002:ab0:189:: with SMTP id 9mr1368844ual.75.1594678652887;
-        Mon, 13 Jul 2020 15:17:32 -0700 (PDT)
+        bh=Q6bh/1yGmZao7f6eku70ZfEjUaW4mF5NYpD2HrmZqeI=;
+        b=pzJiwEnJ5PZ6ibbP78VKDwGIhhqWiMM3d9jUw43Xu0QxWhjdKYHiDFKE5Gh15R6Qnb
+         mYKrhjQvXK5sX6IxnDelDJi4E/jk/QpBAARUXCJgOS5vqZeDzt0CkpDt9JaWfypN/jAH
+         2kXs8NCaHQaiwEzYFE1SEmHlM0c5igdSZnb2KIRQfrXYpibnfqZkw57MmZBcwGHywbfJ
+         UZoRCO4nG/W4y31zv7z7sB4LP/NaHD4mB90YnPkCjIHkDv7uCb5H7V9/Bj6KnhzdvWTB
+         KGSOX5Ip/7xxYUio4wmFxKMJGtccSOTKcd/bvXAxyvECHgHzYW/GshsvhvWORnbefGgp
+         BUkQ==
+X-Gm-Message-State: AOAM533R7K/SWJkwu7jCGvtzLpkBVWdK9SjxWdyHmoBi0AJ4LQhAej+E
+        QZ8w6XfrvFH/0D3+W5nDi7hnyjVY0gY=
+X-Google-Smtp-Source: ABdhPJxF0PRdZ06bUucuHQ6ldU0qBQYSuEkaQVSOrb/Jt4MCONXm//fH0wdPGTHVXfprgjmBHKwziw==
+X-Received: by 2002:ab0:232:: with SMTP id 47mr1411368uas.48.1594678676294;
+        Mon, 13 Jul 2020 15:17:56 -0700 (PDT)
 Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
-        by smtp.gmail.com with ESMTPSA id t192sm827993vke.7.2020.07.13.15.17.31
+        by smtp.gmail.com with ESMTPSA id x79sm1732529vsx.17.2020.07.13.15.17.54
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2020 15:17:31 -0700 (PDT)
-Received: by mail-vs1-f49.google.com with SMTP id d11so4984440vsq.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:31 -0700 (PDT)
-X-Received: by 2002:a67:ec0f:: with SMTP id d15mr1113618vso.121.1594678651291;
- Mon, 13 Jul 2020 15:17:31 -0700 (PDT)
+        Mon, 13 Jul 2020 15:17:55 -0700 (PDT)
+Received: by mail-vs1-f49.google.com with SMTP id d198so7500796vsc.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:54 -0700 (PDT)
+X-Received: by 2002:a05:6102:30b5:: with SMTP id y21mr1130601vsd.42.1594678673804;
+ Mon, 13 Jul 2020 15:17:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <1592818308-23001-1-git-send-email-mkshah@codeaurora.org> <1592818308-23001-4-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1592818308-23001-4-git-send-email-mkshah@codeaurora.org>
+References: <1592818308-23001-1-git-send-email-mkshah@codeaurora.org> <1592818308-23001-3-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1592818308-23001-3-git-send-email-mkshah@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 13 Jul 2020 15:17:20 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xfi+5ms_pRyGjOG2EhkkGf9jCzXvEt=cHkBQMn1wkU7g@mail.gmail.com>
-Message-ID: <CAD=FV=Xfi+5ms_pRyGjOG2EhkkGf9jCzXvEt=cHkBQMn1wkU7g@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] pinctrl: qcom: Use return value from irq_set_wake call
+Date:   Mon, 13 Jul 2020 15:17:42 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WcKB0AbcYNymAbfvDac-8c3uGgOn3B1Q-U4d3ZrvGuag@mail.gmail.com>
+Message-ID: <CAD=FV=WcKB0AbcYNymAbfvDac-8c3uGgOn3B1Q-U4d3ZrvGuag@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] pinctrl: qcom: Add msmgpio irqchip flags
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Marc Zyngier <maz@kernel.org>,
@@ -84,15 +84,37 @@ Hi,
 
 On Mon, Jun 22, 2020 at 2:32 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> msmgpio irqchip is not using return value of irq_set_wake call.
-> Start using it.
+> Add irqchip specific flags for msmgpio irqchip to mask non wakeirqs
+> during suspend and mask before setting irq type.
+>
+> Masking before changing type should make sure any spurious interrupt
+> is not detected during this operation.
 >
 > Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 > ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 2419023..b909ffe 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -1143,6 +1143,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>         pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
+>         pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
+>         pctrl->irq_chip.irq_set_vcpu_affinity = msm_gpio_irq_set_vcpu_affinity;
+> +       pctrl->irq_chip.flags = IRQCHIP_MASK_ON_SUSPEND
 
-Seems right to me.
+I haven't tested it, but with my suggestion in patch #4 to use
+irq_suspend and irq_resume, I presume adding IRQCHIP_MASK_ON_SUSPEND
+is no longer needed?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+> +                               | IRQCHIP_SET_TYPE_MASKED;
+
+IIUC adding "IRQCHIP_SET_TYPE_MASKED" is unrelated to the rest of this
+series, right?
+
+-Doug
