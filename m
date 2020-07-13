@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E774221E33F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 803D421E348
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:55:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbgGMWzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 18:55:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
+        id S1726775AbgGMWzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 18:55:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726761AbgGMWzN (ORCPT
+        with ESMTP id S1726347AbgGMWzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 18:55:13 -0400
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43402C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:55:13 -0700 (PDT)
-Received: by mail-qv1-xf43.google.com with SMTP id t7so6613546qvl.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:55:13 -0700 (PDT)
+        Mon, 13 Jul 2020 18:55:15 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57EBBC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:55:15 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id l6so13931739qkc.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:55:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UB04SDsGtdgD9O0BAxZlC5pe+7E+tV+tVdZ5syl+8GE=;
-        b=phQ3z4XM879Mg4TOckIPk5Dk89byIXjH5l1Ueod4hxvsspSvQrbYmrKa7jp6giCzjC
-         aG0WR8fPrx31wi2pKkzaMt+biVC5PTTZ/BNVEZS86DXTtH1kfAIhUOr/DWnYf1BCxIm+
-         XpOeTsFUeut8tBwi4ZyJLjOZi67wtb5RC8Kx41AENk5ZtijKl1JZQOCiOV7bdURhCSTw
-         V8NVyPwGqRSChiWgc7qbgDEgMWZTq0oRPnViI9jeuNaLhxTOR0kpbFalWfjZfsLgvDb8
-         mC2I2McVH3RcGEM6p+MvTn8iy4xl61VJhjF+5+h7wKlRystzel3ka5+gm+2exuDs93z1
-         EJAg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=New9UmLqwAEZ7YVR5w884jDB8P12ia0wbeaOMNqWR50=;
+        b=NpuYUeVRDRTXdO3EHACL8xTWzqkqyTLGgKUmKInSBZrQyCqqJxUjcm46yIpObgFD8w
+         1olATxpFlcAKhNuAPT1AHSDrCKmwE+Su5hN0RxTEZi4t4B071EJ8SmzUh0MWWMs5Qeah
+         LWTPs9g/luhs3MFYiGywu8ulMJ3YwLmvRjaNOg7LZcaKWlGWI0vc8V/zNlEN5azBTuKf
+         uOUzltcAp8/mjJJRH+GZJwVbWQX/aiezLPb2crOxf3XUJHkeEKiOfuQbF80SRs2xZAgV
+         Kw98JuN6XjH8izK2N/qpTN8/y7PsaDEyfmZnx2y9g2dsPZ6WT+DLZo8LDwaAtIbOvDVq
+         mg3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UB04SDsGtdgD9O0BAxZlC5pe+7E+tV+tVdZ5syl+8GE=;
-        b=KlXzyRI+R1nXU2Y3cnZQl0Keq4ihjnNB2rTOI2Nm3rgk6ExRBp4g/vdMavyh5+Q5Y9
-         gSP2GoLh+LNiLh0taY/t4S41ytSzPRYdwT/gzJONC6/e2WexeLiKAaC8gJGLXpvuQ0hL
-         qGWQincfbrYv+sXIiM+iLD64+blPLvfkipSo9ysmZNqJLrNMqUN6uEuzhCgqibe3n68d
-         NOz2fCuSr7dr5AXmVJ3BzE+ic3/lltOwmxLzKJvefKsi79adaGypvbVCaG3rnYMoqKVR
-         Q/iHs/xRrKsd+3zIB22ZLLshNXAWBdW5PtMgbVW5T5h0Gv+hLAr9By1+qlTV/UjyWH++
-         +PnA==
-X-Gm-Message-State: AOAM5317FB35rRCMlrm7v8wXbv6QjfLoh+qcPDtXjEVEgH8hFHn2B/Yd
-        ttd08THn/53hm70Zh/FdZdiEvteOnjKdkQ==
-X-Google-Smtp-Source: ABdhPJzT4kWTe7OAToMzZZAU4W5K1Fgae2SY+FVbLq8HcjZ7nDEsaM7430chMTRWXiz9iMYU6zS6fg==
-X-Received: by 2002:ad4:48cf:: with SMTP id v15mr1725778qvx.101.1594680912255;
-        Mon, 13 Jul 2020 15:55:12 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=New9UmLqwAEZ7YVR5w884jDB8P12ia0wbeaOMNqWR50=;
+        b=k4hNPAZPkO064gAjjdTocI6QDDOSx4uu4N5oIRcsJmMS8C+72C0fv7RpZtCKMfdxVC
+         cAr4y/EFHuqQCwnQxCr9det+Ouyc2LMXZjae/62BuqMozLdXVIhkMxCPOz0cjRtegUpi
+         rpIEhyAGFSnvXmFVQMjNnUfPP48NNs2bvuYi4cdtEWrUo4Mn95TmhTa8lbQQ4Cs5v8ST
+         7oD/wD6R1VnEnUoRlvTKs3fufAuLHP+A4mqZAt2sSNfgIi7sZyl6JGbTQo92WeYoR7+y
+         CcX+/sYw28j4e0Q3uNhoyc6pvcDFrMuFNrnQExu8ZhZS06k/H6ZZpbA5caNdmCkSEZQy
+         ITAA==
+X-Gm-Message-State: AOAM532LAq/PAE4vCrUfYPI1a4UTjHwTUVTTLlokXC6GHibTI191P7/W
+        4L7Zml6O/y62DiCprZkBAdjESQ==
+X-Google-Smtp-Source: ABdhPJwPhMQAQGKtHB2AxxPSDzaZIttG7vUs6x4x2pNtdoh23c7sQy9Cmx61GQ6sVuYVowXuaGif5A==
+X-Received: by 2002:a05:620a:1649:: with SMTP id c9mr1886192qko.330.1594680914570;
+        Mon, 13 Jul 2020 15:55:14 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id f54sm22405752qte.76.2020.07.13.15.55.11
+        by smtp.gmail.com with ESMTPSA id f54sm22405752qte.76.2020.07.13.15.55.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 15:55:11 -0700 (PDT)
+        Mon, 13 Jul 2020 15:55:14 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Fabio Estevam <festevam@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list),
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH v4 0/3] drm/msm: handle for EPROBE_DEFER for of_icc_get
-Date:   Mon, 13 Jul 2020 18:53:39 -0400
-Message-Id: <20200713225345.20556-1-jonathan@marek.ca>
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v4 1/3] drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init,cleanup}
+Date:   Mon, 13 Jul 2020 18:53:40 -0400
+Message-Id: <20200713225345.20556-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20200713225345.20556-1-jonathan@marek.ca>
+References: <20200713225345.20556-1-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -72,28 +73,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Check for errors instead of silently not using icc if the msm driver
-probes before the interconnect driver.
+adreno_gpu_init calls pm_runtime_enable, so adreno_gpu_cleanup needs to
+call pm_runtime_disable.
 
-Allow ENODATA for ocmem path, as it is optional and this error
-is returned when "gfx-mem" path is provided but not "ocmem".
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Because msm_gpu_cleanup assumes msm_gpu_init has been called, the icc path
-init needs to be after msm_gpu_init for the error path to work.
-
-v2: changed to not only check for EPROBE_DEFER
-v3: move icc path init after msm_gpu_init to avoid deleting a WARN_ON
-v4: added two patches to fix issues with probe deferring later in v3
-
-Jonathan Marek (3):
-  drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init,cleanup}
-  drm/msm: reset devfreq freq_table/max_state before devfreq_add_device
-  drm/msm: handle for EPROBE_DEFER for of_icc_get
-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 68 +++++++++++++++----------
- drivers/gpu/drm/msm/msm_gpu.c           |  4 ++
- 2 files changed, 45 insertions(+), 27 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 89673c7ed473..ad64d4b7e8d7 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1021,11 +1021,14 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+ {
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
++	struct msm_drm_private *priv = gpu->dev->dev_private;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
+ 		release_firmware(adreno_gpu->fw[i]);
+ 
++	pm_runtime_disable(&priv->gpu_pdev->dev);
++
+ 	icc_put(gpu->icc_path);
+ 	icc_put(gpu->ocmem_icc_path);
+ 
 -- 
 2.26.1
 
