@@ -2,153 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E661221DA04
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 17:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D27621DA05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 17:27:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729806AbgGMPYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 11:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38140 "EHLO
+        id S1729659AbgGMP1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 11:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729594AbgGMPYa (ORCPT
+        with ESMTP id S1729492AbgGMP1m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 11:24:30 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F2AC061794
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 08:24:30 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id 22so13718167wmg.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 08:24:30 -0700 (PDT)
+        Mon, 13 Jul 2020 11:27:42 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1747AC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 08:27:42 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id cv18so103178pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 08:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=afnqfT3oD0CR8TigtxsCnMccPxC/B5Fda6MKL3/JHq0=;
-        b=CRfh3o5Tbai1CjSe1WBYNY8NfM7P5/Tm6yd3mSK9V/fiET78/uNOwMuLV2/ip9+hGr
-         6SuyVldlrtqXNeXNMrUsoucitsXFwhPAXHi5DghGvR8Q1PYUppNwHWmn2qKMPEjhmI+p
-         6ekh0NQ6328T0VC7fRHm0x5yaY223Ch6vodN7OF1qmlgizTcZsfyyM4499+WcIfavh+9
-         SSrrUG7TQkTl0S/chZmJZVzml48srfHXzGp9Dtp+LqqFJzfaPs39bAR3n9Au6rDbKAoM
-         1qlbMvEUXa7amvUWiT4+r4HzeZz7YTg+fg7J3GDyKAMgYvvUXgXu9STNB/Bo/stXAjei
-         HCiQ==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YTEDj86jVOBOKy55+k8XdsSThYyvDWhrbgJpr5syovM=;
+        b=L9v5FK6aRvDNqE4B0WqbtZjiMd9iGJ+ycXEHwQ/uzoPFLCVuN+TmJohRtPArrWOdrz
+         THQITg4gaR13UL5D0JKs+8dwwL+zPMFmfAouKeTJRA8yevMip2antDue4BeK2VPh8MoF
+         gei8ezfQyYgQKOtLmHvmRIWE2TUU1ePV0B9QM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=afnqfT3oD0CR8TigtxsCnMccPxC/B5Fda6MKL3/JHq0=;
-        b=Xfvltdd5Bzym3G4xLKzVWVmdZyIzo/Swi68KYSeuea/yJrZliwtTC5/6zbRlBKgq3e
-         d67GCFUvGPi6neVk0C/YRTKISDAGBd1nQlLyEO6tKfHsFmO1Gbibbi/h54MXNWjgZRXz
-         MBDePuQAG/dZDaLbZSfxhWoFGTGRgrs6BX3Kpv9DuRh0pTSc5NxAC863QCmM2Db+YfNn
-         /c2Lb8gHWlWH4YEDfDQYtpCIdjX55897CtqUrSsmYk+R5ceXS/Kp5XjhQMHt7PbDHEa/
-         U22AMIs2ILaXX3wJqp2t7K4BnLlRYnqMhdtOevlLSBMguSmFVLaICuPjEnBu9O3cggJL
-         WpqA==
-X-Gm-Message-State: AOAM531lRW8jk5HY1sPzrtpxefZgAzTH+yLVM6oLL9919GywMW6kPgcI
-        qLJAjsAvaqvr/p+CVBzAnOxx8w==
-X-Google-Smtp-Source: ABdhPJyVtae7/ERp+5ogODsI4jB0xc8+BSDko076ZXU+PjxArZEZAUeVpI8Y+xfzl/3v5ovR6SOGXQ==
-X-Received: by 2002:a1c:2:: with SMTP id 2mr430140wma.79.1594653868801;
-        Mon, 13 Jul 2020 08:24:28 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id x5sm23688700wmg.2.2020.07.13.08.24.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2020 08:24:27 -0700 (PDT)
-Subject: Re: [RFC PATCH] interconnect: qcom: add functions to query addr/cmds
- for a path
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        kbuild test robot <lkp@intel.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        "open list:INTERCONNECT API" <linux-pm@vger.kernel.org>
-References: <20200701042528.12321-1-jonathan@marek.ca>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <3063d037-a781-6327-ef88-37b626c552e1@linaro.org>
-Date:   Mon, 13 Jul 2020 18:24:26 +0300
+        bh=YTEDj86jVOBOKy55+k8XdsSThYyvDWhrbgJpr5syovM=;
+        b=fYj9ehqSwmhtjJj5OoZoXr2FAAf8qQ7Los1XYra3NG9qs3qvIuuNIbPMVTIeQo3SWF
+         Jf/IBptLgjZx1XUpkSk+e+CU3RdovwzIoYLzMA2T/nAOnNBHJk3Nj5jkCIs47g0R59Ne
+         tWIEKnsWsG96XRu0Kjq1vZz0uEYU1Ta7WA0w3tYh/xU8kUOBkOROXSwm2RWjzLfN+3j1
+         s5oH9GbMUzUjCqfSJClTAU7+a0ZNNZXaOWhfQ/anoQAlvZg6IReWw5MB1fl2v1UTXHbR
+         SbdMAlRBqfJz5OakPkadGr9kvhD+EasbYpW61mAgD4/tN93mOyRZulyIIR4oHBP7jNFy
+         nt7w==
+X-Gm-Message-State: AOAM533zgdleMyh9IlxJfXSh5kFbpPqEIBR8KlFSAMTtYkU9meDYGRnG
+        wV0WvvoEI/DRhs5tZTfYj6ILvw==
+X-Google-Smtp-Source: ABdhPJzO4L0IXVmhW5EiVzQxJX1VczzInaieVj9uxJDtJxJm5Lf2o8tHdKS4BBnfwrEFbaR4WiYYZw==
+X-Received: by 2002:a17:902:6bca:: with SMTP id m10mr177239plt.210.1594654061334;
+        Mon, 13 Jul 2020 08:27:41 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id z2sm14730645pff.36.2020.07.13.08.27.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2020 08:27:40 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     linus.walleij@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, cychiang@chromium.org,
+        rnayak@codeaurora.org, ilina@codeaurora.org, swboyd@chromium.org,
+        Marc Zyngier <maz@kernel.org>, agross@kernel.org,
+        mkshah@codeaurora.org, bjorn.andersson@linaro.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] pinctrl: qcom: Handle broken/missing PDC dual edge IRQs on sc7180
+Date:   Mon, 13 Jul 2020 08:26:33 -0700
+Message-Id: <20200713082628.v2.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
+X-Mailer: git-send-email 2.27.0.383.g050319c2ae-goog
 MIME-Version: 1.0
-In-Reply-To: <20200701042528.12321-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/1/20 07:25, Jonathan Marek wrote:
-> The a6xx GMU can vote for ddr and cnoc bandwidth, but it needs to be able
-> to query the interconnect driver for bcm addresses and commands.
+Depending on how you look at it, you can either say that:
+a) There is a PDC hardware issue (with the specific IP rev that exists
+   on sc7180) that causes the PDC not to work properly when configured
+   to handle dual edges.
+b) The dual edge feature of the PDC hardware was only added in later
+   HW revisions and thus isn't in all hardware.
 
-It's not very clear to me how the GMU firmware would be dealing with this? Does
-anyone have an idea whether the GMU makes any bandwidth decisions? Or is it just
-a static configuration and it just enables/disables a TCS?
+Regardless of how you look at it, let's work around the lack of dual
+edge support by only ever letting our parent see requests for single
+edge interrupts on affected hardware.
 
-I think that we can query the address from the cmd-db, but we have to know the
-bcm names and the path. All the BCM/TCS information looks to be very low-level
-and implementation specific, so exposing it through an API is not very good,
-but hard-coding all this information is not good either.
+NOTE: it's possible that a driver requesting a dual edge interrupt
+might get several edges coalesced into a single IRQ.  For instance if
+a line starts low and then goes high and low again, the driver that
+requested the IRQ is not guaranteed to be called twice.  However, it
+is guaranteed that once the driver's interrupt handler starts running
+its first instruction that any new edges coming in will cause the
+interrupt to fire again.  This is relatively commonplace for dual-edge
+gpio interrupts (many gpio controllers require software to emulate
+dual edge with single edge) so client drivers should be setup to
+handle it.
 
-Thanks,
-Georgi
+Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+As far as I can tell everything here should work and the limited
+testing I'm able to give it shows that, in fact, I can detect both
+edges.
 
-> 
-> I'm not sure what is the best way to go about implementing this, this is
-> what I came up with.
-> 
-> I included a quick example of how this can be used by the a6xx driver to
-> fill out the GMU bw_table (two ddr bandwidth levels in this example, note
-> this would be using the frequency table in dts and not hardcoded values).
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 20 ++++-------
->  drivers/interconnect/qcom/icc-rpmh.c  | 50 +++++++++++++++++++++++++++
->  include/soc/qcom/icc.h                | 11 ++++++
->  3 files changed, 68 insertions(+), 13 deletions(-)
+I specifically left off Reviewed-by and Tested-by tags from v2 becuase
+I felt that the implementation had changed just enough to invalidate
+previous reviews / testing.  Hopefully it's not too much of a hassle
+for folks to re-review and re-test.
+
+Changes in v2:
+- Use handle_fasteoi_ack_irq() and switch edges in the Ack now.
+- If we change types, switch back to the normal handle_fasteoi_irq().
+- No extra locking.
+- Properly print an error if we hit 100 loops w/ no stability.
+- Beefed up the commit message.
+
+ drivers/pinctrl/qcom/Kconfig          |  2 +
+ drivers/pinctrl/qcom/pinctrl-msm.c    | 74 ++++++++++++++++++++++++++-
+ drivers/pinctrl/qcom/pinctrl-msm.h    |  4 ++
+ drivers/pinctrl/qcom/pinctrl-sc7180.c |  1 +
+ 4 files changed, 79 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+index ff1ee159dca2..f8ff30cdafa6 100644
+--- a/drivers/pinctrl/qcom/Kconfig
++++ b/drivers/pinctrl/qcom/Kconfig
+@@ -7,6 +7,8 @@ config PINCTRL_MSM
+ 	select PINCONF
+ 	select GENERIC_PINCONF
+ 	select GPIOLIB_IRQCHIP
++	select IRQ_DOMAIN_HIERARCHY
++	select IRQ_FASTEOI_HIERARCHY_HANDLERS
+ 
+ config PINCTRL_APQ8064
+ 	tristate "Qualcomm APQ8064 pin controller driver"
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 83b7d64bc4c1..eae8f421ff63 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -832,6 +832,52 @@ static void msm_gpio_irq_unmask(struct irq_data *d)
+ 	msm_gpio_irq_clear_unmask(d, false);
+ }
+ 
++/**
++ * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
++ * @d: The irq dta.
++ *
++ * This is much like msm_gpio_update_dual_edge_pos() but for IRQs that are
++ * normally handled by the parent irqchip.  The logic here is slightly
++ * different due to what's easy to do with our parent, but in principle it's
++ * the same.
++ */
++static void msm_gpio_update_dual_edge_parent(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
++	int loop_limit = 100;
++	unsigned int val;
++	unsigned int type;
++
++	/* Read the value and make a guess about what edge we need to catch */
++	val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
++	type = val ? IRQ_TYPE_EDGE_FALLING : IRQ_TYPE_EDGE_RISING;
++
++	do {
++		/* Set the parent to catch the next edge */
++		irq_chip_set_type_parent(d, type);
++
++		/*
++		 * Possibly the line changed between when we last read "val"
++		 * (and decided what edge we needed) and when set the edge.
++		 * If the value didn't change (or changed and then changed
++		 * back) then we're done.
++		 */
++		val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
++		if (type == IRQ_TYPE_EDGE_RISING) {
++			if (!val)
++				return;
++			type = IRQ_TYPE_EDGE_FALLING;
++		} else if (type == IRQ_TYPE_EDGE_FALLING) {
++			if (val)
++				return;
++			type = IRQ_TYPE_EDGE_RISING;
++		}
++	} while (loop_limit-- > 0);
++	dev_err(pctrl->dev, "dual-edge irq failed to stabilize\n");
++}
++
+ static void msm_gpio_irq_ack(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -840,8 +886,11 @@ static void msm_gpio_irq_ack(struct irq_data *d)
+ 	unsigned long flags;
+ 	u32 val;
+ 
+-	if (test_bit(d->hwirq, pctrl->skip_wake_irqs))
++	if (test_bit(d->hwirq, pctrl->skip_wake_irqs)) {
++		if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
++			msm_gpio_update_dual_edge_parent(d);
+ 		return;
++	}
+ 
+ 	g = &pctrl->soc->groups[d->hwirq];
+ 
+@@ -860,6 +909,17 @@ static void msm_gpio_irq_ack(struct irq_data *d)
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+ }
+ 
++static bool msm_gpio_needs_dual_edge_parent_workaround(struct irq_data *d,
++						       unsigned int type)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++
++	return type == IRQ_TYPE_EDGE_BOTH &&
++	       pctrl->soc->wakeirq_dual_edge_errata && d->parent_data &&
++	       test_bit(d->hwirq, pctrl->skip_wake_irqs);
++}
++
+ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -868,11 +928,21 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	unsigned long flags;
+ 	u32 val;
+ 
++	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
++		set_bit(d->hwirq, pctrl->dual_edge_irqs);
++		irq_set_handler_locked(d, handle_fasteoi_ack_irq);
++		msm_gpio_update_dual_edge_parent(d);
++		return 0;
++	}
++
+ 	if (d->parent_data)
+ 		irq_chip_set_type_parent(d, type);
+ 
+-	if (test_bit(d->hwirq, pctrl->skip_wake_irqs))
++	if (test_bit(d->hwirq, pctrl->skip_wake_irqs)) {
++		clear_bit(d->hwirq, pctrl->dual_edge_irqs);
++		irq_set_handler_locked(d, handle_fasteoi_irq);
+ 		return 0;
++	}
+ 
+ 	g = &pctrl->soc->groups[d->hwirq];
+ 
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index 9452da18a78b..7486fe08eb9b 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -113,6 +113,9 @@ struct msm_gpio_wakeirq_map {
+  * @pull_no_keeper: The SoC does not support keeper bias.
+  * @wakeirq_map:    The map of wakeup capable GPIOs and the pin at PDC/MPM
+  * @nwakeirq_map:   The number of entries in @wakeirq_map
++ * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
++ *                            to be aware that their parent can't handle dual
++ *                            edge interrupts.
+  */
+ struct msm_pinctrl_soc_data {
+ 	const struct pinctrl_pin_desc *pins;
+@@ -128,6 +131,7 @@ struct msm_pinctrl_soc_data {
+ 	const int *reserved_gpios;
+ 	const struct msm_gpio_wakeirq_map *wakeirq_map;
+ 	unsigned int nwakeirq_map;
++	bool wakeirq_dual_edge_errata;
+ };
+ 
+ extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+index 1b6465a882f2..1d9acad3c1ce 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
+@@ -1147,6 +1147,7 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
+ 	.ntiles = ARRAY_SIZE(sc7180_tiles),
+ 	.wakeirq_map = sc7180_pdc_map,
+ 	.nwakeirq_map = ARRAY_SIZE(sc7180_pdc_map),
++	.wakeirq_dual_edge_errata = true,
+ };
+ 
+ static int sc7180_pinctrl_probe(struct platform_device *pdev)
+-- 
+2.27.0.383.g050319c2ae-goog
+
