@@ -2,160 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94AAB21E15B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 22:25:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4AE921E196
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 22:41:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726460AbgGMUZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 16:25:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34864 "EHLO mail.kernel.org"
+        id S1726769AbgGMUll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 16:41:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43594 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726321AbgGMUZp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 16:25:45 -0400
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726338AbgGMUll (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jul 2020 16:41:41 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 45F562080D;
-        Mon, 13 Jul 2020 20:25:44 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 47D602075B;
+        Mon, 13 Jul 2020 20:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594671944;
-        bh=+jPAZ3C7SWxUuRUQs+Sr6Y2DGrQqPWecmS58fVnwjRg=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=DOQurS/Ibt581N9zjmP/Pqa8hl78moJnuITh6tQCapRRRq3lmxAkJao/TRTea4zip
-         M3IgIl+ogsfoJJPTcHZUxX93MDkAakZHpcmyPOpXRWk2Tc9UVg/06l2MQwzMxTTpA7
-         cZj7SPprMA2NR6Y6IEGnVzak4K3X+xXevHfSU7AU=
-Received: by mail-oi1-f181.google.com with SMTP id y22so12072744oie.8;
-        Mon, 13 Jul 2020 13:25:44 -0700 (PDT)
-X-Gm-Message-State: AOAM532IX77W1ELrAjS8I4hr8C/bUxpYaQYDrw8iTxrNdEPWBHPufDUr
-        +O8ppvJLKOw56nelDW3bb5VJIzoEmkOT3pJ8oA==
-X-Google-Smtp-Source: ABdhPJz4yVpioDr20qd9s5LSTk+AV4nU2x5TPIq7IEfqTgA5EioBNPLPC36euXlnKruM3zNGoxsQBu0ZdZFRaXmekfM=
-X-Received: by 2002:aca:4844:: with SMTP id v65mr1078680oia.152.1594671943516;
- Mon, 13 Jul 2020 13:25:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200710230224.2265647-1-dianders@chromium.org>
- <CAL_JsqKC5WtHb-coMCxMTDJ7CJcjVXcAxDT4J9N-Xyr=0uuURA@mail.gmail.com> <CAD=FV=XWKoTd_t2uRGpw3oa0Nij2EPeAJpOHhUipXFW07JN2qw@mail.gmail.com>
-In-Reply-To: <CAD=FV=XWKoTd_t2uRGpw3oa0Nij2EPeAJpOHhUipXFW07JN2qw@mail.gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Mon, 13 Jul 2020 14:25:31 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLJM5nwNSdugMBLDVtjP97dikCm_AiHjnDs1jqBOFoaaQ@mail.gmail.com>
-Message-ID: <CAL_JsqLJM5nwNSdugMBLDVtjP97dikCm_AiHjnDs1jqBOFoaaQ@mail.gmail.com>
-Subject: Re: [PATCH 0/9] drm/msm: Avoid possible infinite probe deferral and
- speed booting
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        s=default; t=1594672899;
+        bh=EfjZyIyOJJ9ZpcpbZsAt/5tbMgMvg5Sxk8oJKq+81B8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Nt1F9FwNWlh3ItAJBSfO+GOMZUKSHNW6RmnKqNaWBGoPR/a0t0k1D7ETnpHmU6aVp
+         GdPahgwV9KKwXVsvx1AsgSZnFQ76WaIazikpVkhcTJeRGUwgrcqd7bE6nlXHUIk2iD
+         Ifd9xuqq/wJE+8QCnQ5iSLLw2CSUcgUtJeQoj7J8=
+Date:   Mon, 13 Jul 2020 21:41:34 +0100
+From:   Will Deacon <will@kernel.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20200713204133.GA3731@willie-the-truck>
+References: <20200625001039.56174-1-john.stultz@linaro.org>
+ <20200625001039.56174-6-john.stultz@linaro.org>
+ <20200702141825.GA16941@willie-the-truck>
+ <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com>
+ <20200710075411.GA30011@willie-the-truck>
+ <CALAqxLWadLrxckRHRAR0Q417RnFKquQJbRfO_DLEVH56cykRow@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALAqxLWadLrxckRHRAR0Q417RnFKquQJbRfO_DLEVH56cykRow@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 13, 2020 at 9:08 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Mon, Jul 13, 2020 at 7:11 AM Rob Herring <robh+dt@kernel.org> wrote:
-> >
-> > On Fri, Jul 10, 2020 at 5:02 PM Douglas Anderson <dianders@chromium.org> wrote:
+On Fri, Jul 10, 2020 at 03:21:53PM -0700, John Stultz wrote:
+> On Fri, Jul 10, 2020 at 12:54 AM Will Deacon <will@kernel.org> wrote:
+> > On Thu, Jul 09, 2020 at 08:28:45PM -0700, John Stultz wrote:
+> > > On Thu, Jul 2, 2020 at 7:18 AM Will Deacon <will@kernel.org> wrote:
+> > > > On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
+> > > > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> > > > > index b510f67dfa49..714893535dd2 100644
+> > > > > --- a/drivers/iommu/Kconfig
+> > > > > +++ b/drivers/iommu/Kconfig
+> > > > > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
+> > > > >  config ARM_SMMU
+> > > > >       tristate "ARM Ltd. System MMU (SMMU) Support"
+> > > > >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
+> > > > > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+> > > > >       select IOMMU_API
+> > > > >       select IOMMU_IO_PGTABLE_LPAE
+> > > > >       select ARM_DMA_USE_IOMMU if ARM
+> > > >
+> > > > This looks like a giant hack. Is there another way to handle this?
 > > >
-> > > I found that if I ever had a little mistake in my kernel config,
-> > > or device tree, or graphics driver that my system would sit in a loop
-> > > at bootup trying again and again and again.  An example log was:
-> >
-> > Why do we care about optimizing the error case?
->
-> It actually results in a _fully_ infinite loop.  That is: if anything
-> small causes a component of DRM to fail to probe then the whole system
-> doesn't boot because it just loops trying to probe over and over
-> again.  The messages I put in the commit message are printed over and
-> over and over again.
-
-Sounds like a bug as that's not what should happen.
-
-If you defer during boot (initcalls), then you'll be on the deferred
-list until late_initcall and everything is retried. After
-late_initcall, only devices getting added should trigger probing. But
-maybe the adding and then removing a device is causing a re-trigger.
-
-> > >   msm ae00000.mdss: bound ae01000.mdp (ops 0xffffffe596e951f8)
-> > >   msm_dsi ae94000.dsi: ae94000.dsi supply gdsc not found, using dummy regulator
-> > >   msm_dsi_manager_register: failed to register mipi dsi host for DSI 0
-> > >   [drm:ti_sn_bridge_probe] *ERROR* could not find any panel node
-> > >   ...
+> > > Sorry for the slow response here.
 > > >
-> > > I finally tracked it down where this was happening:
-> > >   - msm_pdev_probe() is called.
-> > >   - msm_pdev_probe() registers drivers.  Registering drivers kicks
-> > >     off processing of probe deferrals.
-> > >   - component_master_add_with_match() could return -EPROBE_DEFER.
-> > >     making msm_pdev_probe() return -EPROBE_DEFER.
-> > >   - When msm_pdev_probe() returned the processing of probe deferrals
-> > >     happens.
-> > >   - Loop back to the start.
+> > > So, I agree the syntax looks strange (requiring a comment obviously
+> > > isn't a good sign), but it's a fairly common way to ensure drivers
+> > > don't get built in if they optionally depend on another driver that
+> > > can be built as a module.
+> > >   See "RFKILL || !RFKILL", "EXTCON || !EXTCON", or "USB_GADGET ||
+> > > !USB_GADGET" in various Kconfig files.
 > > >
-> > > It looks like we can fix this by marking "mdss" as a "simple-bus".
-> > > I have no idea if people consider this the right thing to do or a
-> > > hack.  Hopefully it's the right thing to do.  :-)
+> > > I'm open to using a different method, and in a different thread you
+> > > suggested using something like symbol_get(). I need to look into it
+> > > more, but that approach looks even more messy and prone to runtime
+> > > failures. Blocking the unwanted case at build time seems a bit cleaner
+> > > to me, even if the syntax is odd.
 > >
-> > It's a simple test. Do the child devices have any dependency on the
-> > parent to probe and/or function? If so, not a simple-bus.
->
-> Great!  You can see in the earlier patch in the series that the very
-> first thing that happens when the parent device probes is that it
-> calls devm_of_platform_populate().  That means no dependencies, right?
-
-It should. But then I reviewed the MDSS binding today and it looks
-like the MDSS is the interrupt parent for at least some child devices?
-
->  So that means it's fine/correct to add "simple-bus" here?
->
->
-> > > Once I do this I notice that my boot gets marginally faster (you
-> > > don't need to probe the sub devices over and over) and also if I
+> > Maybe just split it out then, so that the ARM_SMMU entry doesn't have this,
+> > as that driver _really_ doesn't care about SoC details like this. In other
+> > words, add a new entry along the lines of:
 > >
-> > Can you quantify that?
->
-> I'd say < 100 us.  I can try to quantify more if needed, but it wasn't
-> the point of this patch.
->
->
-> > Have you run with devlinks enabled. You need a command line option to
-> > enable. That too should reduce deferred probes.
->
-> Ah, good idea!  I will try it.  However, even with devlinks, if there
-> is any chance of deferred probes then we need a fix like this.  The
-> point of the patch isn't about speeding things up but about avoiding
-> an infinite loop at bootup due to a small bug.
-
-I think a deferred probe would only happen if there's a dependency we
-don't track (but we're tracking about everything that's common). But
-if there's some error, I'm not sure what would happen. Seems like a
-good test case. :)
-
-> > > have a problem it doesn't loop forever (on my system it still
-> > > gets upset about some stuck clocks in that case, but at least I
-> > > can boot up).
+> >         config ARM_SMMU_QCOM_IMPL
+> >         default y
+> >         #if QCOM_SCM=m this can't be =y
+> >         depends on ARM_SMMU & (QCOM_SCM || !QCOM_SCM)
 > >
-> > Deferred probe only runs when a device is added, so it's not like it
-> > is continually running.
->
-> If you don't mind looking at the code patch, see:
->
-> https://lore.kernel.org/r/20200710160131.4.I358ea82de218ea5f4406572ade23f5e121297555@changeid/
->
-> Specifically you can see that each time we try to probe we were
-> calling of_platform_populate().  That appeared to be enough to trigger
-> things.
+> > and then have arm-smmu.h provide a static inline qcom_smmu_impl_init()
+> > which returns -ENODEV if CONFIG_ARM_SMMU_QCOM_IMPL=n and hack the Makefile
+> > so that we don't bother to compile arm-smmu-qcom.o in that case.
+> >
+> > Would that work?
+> 
+> I think this proposal still has problems with the directionality of the call.
+> 
+> The arm-smmu-impl.o calls to arm-smmu-qcom.o which calls qcom_scm.o
+> So if qcom_scm.o is part of a module, the calling code in
+> arm-smmu-qcom.o also needs to be a module, which means CONFIG_ARM_SMMU
+> needs to be a module.
+> 
+> I know you said the arm-smmu driver doesn't care about SoC details,
+> but the trouble is that currently the arm-smmu driver does directly
+> call the qcom-scm code. So it is a real dependency. However, if
+> QCOM_SCM is not configured, it calls stubs and that's ok.  In that
+> way, the "depends on QCOM_SCM || !QCOM_SCM" line actually makes sense.
+> It looks terrible because we're used to boolean logic, but it's
+> ternary.
 
-Like I said, sounds like a bug. Even if 'simple-bus' is the
-appropriate thing to do here, it should be fixed or at least
-understood.
+Yes, it looks ugly, but the part I really have issues with is that building
+QCOM_SCM=m and ARM_SMMU=y is perfectly fine if you don't run on an SoC
+with the qcom implementation. I don't see why we need to enforce things
+here beyond making sure that all selectable permutations _build_ and
+fail gracefully at runtime on the qcom SoC if SCM isn't available.
 
-Rob
+Will
