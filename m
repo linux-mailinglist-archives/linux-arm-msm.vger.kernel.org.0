@@ -2,139 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56C8721D77F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 15:48:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5476321D7ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 16:11:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729896AbgGMNsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 09:48:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51526 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729027AbgGMNsb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 09:48:31 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313D2C061794
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 06:48:31 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id d27so9925399qtg.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 06:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=whfCCmO7TNNcabn6+SFR27U2aTuxTD9IQzPOWcIz0mw=;
-        b=AsDVnUJkW8wZ4111n1Q2nBdNdYPimCzz0UVZq8a8y3pPyw4jKLDeAIPjYRjwIHz8a4
-         KymFI69PumnZQljIoO+ffRr5sAfyxh9Tx3H1ihNSu6xSBNqO32qk+tcxIRdtO31UIC4H
-         LfQPmrPeG2vYkt7eSxE72k5v70O4W2b8JbCF6T6KzqZREOUTQk3C6bc/sJ4+OyzvDOWC
-         9UszW5zQUhKDyNdZy5X9IeMqKunocanY56DVBsN64wX96hrvHQFXjEXE9h39GyZUsmfU
-         UUIJmZHpfHr85GsHMS24mZR7WE8AusHSUW94rzZc5Cp0HhgwM31f5Sr6pAtjCOMFo0Hy
-         iNgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=whfCCmO7TNNcabn6+SFR27U2aTuxTD9IQzPOWcIz0mw=;
-        b=e8IgN42aPezOJO28mD79Zj/8AucmvRJlf1W+2YZAJreBu0MKWfryY89f8NZ3DEV66n
-         JCV1OMJNm099fLOVvg+8OC4ajLTelkzeqoh++BDf+hLwIRuOeQXwKja6K4T6zRePKIaw
-         /UFt5B0vb87zfQWniUS12Ng0Hoeoigkbi1bctinxXwLVqCVVS3oMgtHMqq+oWd/sgJyw
-         xThGklIb8LNexcegqK1f9TVpE+zBRxRBzrZEei9Q0CmmK5fXMtLydh8vDW0J+uqI0v2q
-         L6LRCvm8TNs8ZTWvkBJ+Jxz7X5YCovb0Se4GuPDNbSrW17yg12XGd4daUDc+zV8g94C1
-         RtFw==
-X-Gm-Message-State: AOAM532+JrCWqdkZzozrxC51ADAyMiPH6D+L7dX3vfLKFwEm2dUSquRr
-        EW8+f2ATicNRGcHdfUDwfbhmKg==
-X-Google-Smtp-Source: ABdhPJxx00W1Vp+MsZHSypI4tIxcsugNKbIon/mXh6bzEpDLyfmXuCLJZ4RJS3bp+btXAF773E+ZRw==
-X-Received: by 2002:ac8:3ff9:: with SMTP id v54mr84259416qtk.352.1594648110322;
-        Mon, 13 Jul 2020 06:48:30 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id r7sm18415476qtm.66.2020.07.13.06.48.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2020 06:48:29 -0700 (PDT)
-Subject: Re: [PATCH 4/6] interconnect: qcom: Add SM8250 interconnect provider
- driver
-To:     Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20200701134259.8055-1-jonathan@marek.ca>
- <20200701134259.8055-5-jonathan@marek.ca>
- <5a0eca0e-d496-d8af-ca41-0f07e9a3e01d@linaro.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <5074d900-da92-0b8a-a7c6-1ebfe4ae2d56@marek.ca>
-Date:   Mon, 13 Jul 2020 09:47:13 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1729659AbgGMOLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 10:11:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38368 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729523AbgGMOLU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jul 2020 10:11:20 -0400
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7EE892075B;
+        Mon, 13 Jul 2020 14:11:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594649479;
+        bh=T7QvK7R+StJM4r1IQ7c0n9HcB+fbfozHwcxG3TVZxo4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=X7FqkZipmIBmyCZGB2I50FJei86C7jKNyhfscfKTgxvANpKpPjPQ+2Oe2TEv+EiB7
+         affUXOkPREJoFFD6k8g7b7Z4mpB0bFJ/1T92vUM55PbW8XX5Tt0XNsw4Sk0jdKO3ZR
+         L3jlsUUKQorGXQalVIGSFuIaVfRfeIfGk032djzI=
+Received: by mail-oo1-f51.google.com with SMTP id k47so2369577ool.2;
+        Mon, 13 Jul 2020 07:11:19 -0700 (PDT)
+X-Gm-Message-State: AOAM5304+p8J0UxcTfZ0bL079z9SDU+73ToBZ8zFU8Y3CgrkHwRuHO3a
+        XacMWU4tJJWEDD/WwF2drE0asEE5cPzL+lx08g==
+X-Google-Smtp-Source: ABdhPJzP1wWznjdcOYYxW7COHis2JavRSCgLMLU2wKLa+wmcB7a1M0yROJgH50RXyQmrjZLEyjG4GfeETI7dveqtQXI=
+X-Received: by 2002:a4a:7459:: with SMTP id t25mr64494ooe.25.1594649478792;
+ Mon, 13 Jul 2020 07:11:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <5a0eca0e-d496-d8af-ca41-0f07e9a3e01d@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200710230224.2265647-1-dianders@chromium.org>
+In-Reply-To: <20200710230224.2265647-1-dianders@chromium.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 13 Jul 2020 08:11:07 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKC5WtHb-coMCxMTDJ7CJcjVXcAxDT4J9N-Xyr=0uuURA@mail.gmail.com>
+Message-ID: <CAL_JsqKC5WtHb-coMCxMTDJ7CJcjVXcAxDT4J9N-Xyr=0uuURA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] drm/msm: Avoid possible infinite probe deferral and
+ speed booting
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/13/20 9:30 AM, Georgi Djakov wrote:
-> Hi Jonathan,
-> 
-> Thanks for posting these patches!
-> 
-> On 7/1/20 16:42, Jonathan Marek wrote:
->> Add driver for the Qualcomm interconnect buses found in SM8250 based
->> platforms. The topology consists of several NoCs that are controlled by
->> a remote processor that collects the aggregated bandwidth for each
->> master-slave pairs.
->>
->> Based on SC7180 driver and generated from downstream dts.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
-> [..]
->> +
->> +static const struct of_device_id qnoc_of_match[] = {
->> +	{ .compatible = "qcom,sm8250-aggre1-noc",
->> +	  .data = &sm8250_aggre1_noc},
->> +	{ .compatible = "qcom,sm8250-aggre2-noc",
->> +	  .data = &sm8250_aggre2_noc},
->> +	{ .compatible = "qcom,sm8250-compute-noc",
->> +	  .data = &sm8250_compute_noc},
->> +	{ .compatible = "qcom,sm8250-config-noc",
->> +	  .data = &sm8250_config_noc},
->> +	{ .compatible = "qcom,sm8250-dc-noc",
->> +	  .data = &sm8250_dc_noc},
->> +	{ .compatible = "qcom,sm8250-gem-noc",
->> +	  .data = &sm8250_gem_noc},
->> +	{ .compatible = "qcom,sm8250-ipa-virt",
->> +	  .data = &sm8250_ipa_virt},
->> +	{ .compatible = "qcom,sm8250-mc-virt",
->> +	  .data = &sm8250_mc_virt},
->> +	{ .compatible = "qcom,sm8250-mmss-noc",
->> +	  .data = &sm8250_mmss_noc},
->> +	{ .compatible = "qcom,sm8250-npu-noc",
->> +	  .data = &sm8250_npu_noc},
->> +	{ .compatible = "qcom,sm8250-system-noc",
->> +	  .data = &sm8250_system_noc},
->> +	{ .compatible = "qcom,sm8250-gem-noc-display",
->> +	  .data = &sm8250_gem_noc_display},
->> +	{ .compatible = "qcom,sm8250-mc-virt-display",
->> +	  .data = &sm8250_mc_virt_display},
->> +	{ .compatible = "qcom,sm8250-mmss-noc-display",
->> +	  .data = &sm8250_mmss_noc_display},
->> +	{ }
-> 
-> My main concern here are the display RSC nodes. We should not add the nodes
-> for voting on the display RSC, but use the "qcom,bcm-voters" property in DT
-> to list both "hlos" and "disp" as bcm voters for gem-noc, mc-virt and
-> mmss-noc.
-> 
+On Fri, Jul 10, 2020 at 5:02 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> I found that if I ever had a little mistake in my kernel config,
+> or device tree, or graphics driver that my system would sit in a loop
+> at bootup trying again and again and again.  An example log was:
 
-Would it be OK to just drop the display RSC parts from this series then? 
-Not sure if anything needs it to work, but I'm not using it currently.
+Why do we care about optimizing the error case?
 
-Though if you can provide details for a solution, I could implement it 
-(qcom_icc_provider needs to have a list of voters, but I'm not sure how 
-to deal with everything else).
+>   msm ae00000.mdss: bound ae01000.mdp (ops 0xffffffe596e951f8)
+>   msm_dsi ae94000.dsi: ae94000.dsi supply gdsc not found, using dummy regulator
+>   msm_dsi_manager_register: failed to register mipi dsi host for DSI 0
+>   [drm:ti_sn_bridge_probe] *ERROR* could not find any panel node
+>   ...
+>
+> I finally tracked it down where this was happening:
+>   - msm_pdev_probe() is called.
+>   - msm_pdev_probe() registers drivers.  Registering drivers kicks
+>     off processing of probe deferrals.
+>   - component_master_add_with_match() could return -EPROBE_DEFER.
+>     making msm_pdev_probe() return -EPROBE_DEFER.
+>   - When msm_pdev_probe() returned the processing of probe deferrals
+>     happens.
+>   - Loop back to the start.
+>
+> It looks like we can fix this by marking "mdss" as a "simple-bus".
+> I have no idea if people consider this the right thing to do or a
+> hack.  Hopefully it's the right thing to do.  :-)
 
-> Thanks,
-> Georgi
-> 
+It's a simple test. Do the child devices have any dependency on the
+parent to probe and/or function? If so, not a simple-bus.
+
+> Once I do this I notice that my boot gets marginally faster (you
+> don't need to probe the sub devices over and over) and also if I
+
+Can you quantify that?
+
+Have you run with devlinks enabled. You need a command line option to
+enable. That too should reduce deferred probes.
+
+> have a problem it doesn't loop forever (on my system it still
+> gets upset about some stuck clocks in that case, but at least I
+> can boot up).
+
+Deferred probe only runs when a device is added, so it's not like it
+is continually running.
+
+Rob
