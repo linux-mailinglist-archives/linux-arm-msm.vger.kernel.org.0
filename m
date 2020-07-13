@@ -2,100 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C91621CED9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 07:33:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3B0121CF0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 07:56:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725818AbgGMFdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 01:33:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59390 "EHLO mail.kernel.org"
+        id S1728857AbgGMF4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 01:56:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39086 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725804AbgGMFdB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 01:33:01 -0400
+        id S1727107AbgGMF4D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jul 2020 01:56:03 -0400
 Received: from localhost (unknown [122.182.251.219])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CC5402068F;
-        Mon, 13 Jul 2020 05:32:59 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 217812073A;
+        Mon, 13 Jul 2020 05:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594618380;
-        bh=xHhlhOG2O5smTAneN0ZnuiRbm7rrhPP60vF/0+KOSM0=;
+        s=default; t=1594619762;
+        bh=gXFwq43ohUgKZA8gAkhAymCG+JyohqjJf0fM3HTHIZs=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SDy5y0Xs12hnjkGWFqhjDKbEIXVc0CnyWy7cI5B9idC9gkLt1ktAu0W7oQJ7e4lwY
-         MC/rNJ+kVDnhp2yca4crjhjsgxbqRDpeZdamgs2IX9jbiAU9BChpzBrEp69QcInYHg
-         tyaay/MDgtmEWuDRUSVStCAy25Etw+IG0ywLx6lA=
-Date:   Mon, 13 Jul 2020 11:02:55 +0530
+        b=paFGk7uJF66m93nyveVPcYNj/dGkVDvY1u8K9A/2rvKSlO0MBabNq/m+/4CmMR6Ff
+         L3J6QduoGk6i58NoIF1rhO3v2QX4kAL49CKLIzXdfBbn9rvtWgf4FJh/EgiUXlZ+sg
+         Df7mie1gP/c+V3+RqnTFL0MqOir01L2jDMVQjrns=
+Date:   Mon, 13 Jul 2020 11:25:58 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@codeaurora.org>,
-        Jonathan McDowell <noodles@earth.li>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [RESEND PATCH v7 1/2] phy: qualcomm: add qcom ipq806x dwc usb
- phy driver
-Message-ID: <20200713053255.GY34333@vkoul-mobl>
-References: <20200615205333.20747-1-ansuelsmth@gmail.com>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, kishon@ti.com, mturquette@baylibre.com,
+        sboyd@kernel.org, svarbanov@mm-sol.com, lorenzo.pieralisi@arm.com,
+        p.zabel@pengutronix.de, mgautam@codeaurora.org,
+        smuthayy@codeaurora.org, varada@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, stable@vger.kernel.org,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+Subject: Re: [PATCH 5/9] phy: qcom-qmp: use correct values for ipq8074 gen2
+ pcie phy init
+Message-ID: <20200713055558.GB34333@vkoul-mobl>
+References: <1593940680-2363-1-git-send-email-sivaprak@codeaurora.org>
+ <1593940680-2363-6-git-send-email-sivaprak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200615205333.20747-1-ansuelsmth@gmail.com>
+In-Reply-To: <1593940680-2363-6-git-send-email-sivaprak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-06-20, 22:53, Ansuel Smith wrote:
+On 05-07-20, 14:47, Sivaprakash Murugesan wrote:
+> There were some problem in ipq8074 gen2 pcie phy init sequence, fix
 
-> @@ -0,0 +1,593 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright (c) 2014-2015, Code Aurora Forum. All rights reserved.
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License version 2 and
-> + * only version 2 as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
+Can you please describe these problems, it would help review to
+understand the issues and also for future reference to you
 
-You have SPDX tag, so we dont need the license text, please remove this.
-Also we are in 2020 now so Copyright looks incorrect
+> these to make gen2 pcie port on ipq8074 to work.
+> 
+> Fixes: eef243d04b2b6 ("phy: qcom-qmp: Add support for IPQ8074")
+> 
+> Cc: stable@vger.kernel.org
+> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 16 +++++++++-------
+>  drivers/phy/qualcomm/phy-qcom-qmp.h |  2 ++
+>  2 files changed, 11 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index e91040af3394..ba277136f52b 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -504,8 +504,8 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_serdes_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TRIM, 0xf),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_EN, 0x1),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x0),
+> -	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER1, 0x1f),
+> -	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER2, 0x3f),
+> +	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER1, 0xff),
+> +	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER2, 0x1f),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x6),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_IVCO, 0xf),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x0),
+> @@ -531,7 +531,6 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_serdes_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN1_MODE0, 0x0),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE0, 0x80),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CTRL_BY_PSM, 0x1),
+> -	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_CTRL, 0xa),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_EN_CENTER, 0x1),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER1, 0x31),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER2, 0x1),
+> @@ -540,7 +539,6 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_serdes_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE1, 0x2f),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE2, 0x19),
+>  	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_EP_DIV, 0x19),
+> -	QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x7),
+>  };
+>  
+>  static const struct qmp_phy_init_tbl ipq8074_pcie_tx_tbl[] = {
+> @@ -548,6 +546,8 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_tx_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_TX_LANE_MODE, 0x6),
+>  	QMP_PHY_INIT_CFG(QSERDES_TX_RES_CODE_LANE_OFFSET, 0x2),
+>  	QMP_PHY_INIT_CFG(QSERDES_TX_RCV_DETECT_LVL_2, 0x12),
+> +	QMP_PHY_INIT_CFG(QSERDES_TX_EMP_POST1_LVL, 0x36),
+> +	QMP_PHY_INIT_CFG(QSERDES_TX_SLEW_CNTL, 0x0a),
+>  };
+>  
+>  static const struct qmp_phy_init_tbl ipq8074_pcie_rx_tbl[] = {
+> @@ -558,7 +558,6 @@ static const struct qmp_phy_init_tbl ipq8074_pcie_rx_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL4, 0xdb),
+>  	QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_SO_SATURATION_AND_ENABLE, 0x4b),
+>  	QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_SO_GAIN, 0x4),
+> -	QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_SO_GAIN_HALF, 0x4),
+>  };
+>  
+>  static const struct qmp_phy_init_tbl ipq8074_pcie_pcs_tbl[] = {
+> @@ -1673,6 +1672,9 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
+>  	.pwrdn_ctrl		= SW_PWRDN,
+>  };
+>  
+> +static const char * const ipq8074_pciephy_clk_l[] = {
+> +	"aux", "cfg_ahb",
+> +};
+>  /* list of resets */
+>  static const char * const ipq8074_pciephy_reset_l[] = {
+>  	"phy", "common",
+> @@ -1690,8 +1692,8 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(ipq8074_pcie_rx_tbl),
+>  	.pcs_tbl		= ipq8074_pcie_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_pcie_pcs_tbl),
+> -	.clk_list		= NULL,
+> -	.num_clks		= 0,
+> +	.clk_list		= ipq8074_pciephy_clk_l,
+> +	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
 
-> +static int qcom_ipq806x_usb_ss_phy_init(struct phy *phy)
-> +{
-> +	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
-> +	int ret;
-> +	u32 data = 0;
+I see patch is modifying some register values and then adding clks, in
+the absence of proper patch description it is extremely hard to
+understand what is going on..
 
-Superfluous init
+>  	.reset_list		= ipq8074_pciephy_reset_l,
+>  	.num_resets		= ARRAY_SIZE(ipq8074_pciephy_reset_l),
+>  	.vreg_list		= NULL,
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
+> index 6d017a0c0c8d..832b3d098403 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+> @@ -77,6 +77,8 @@
+>  #define QSERDES_COM_CORECLK_DIV_MODE1			0x1bc
+>  
+>  /* Only for QMP V2 PHY - TX registers */
+> +#define QSERDES_TX_EMP_POST1_LVL			0x018
+> +#define QSERDES_TX_SLEW_CNTL				0x040
+>  #define QSERDES_TX_RES_CODE_LANE_OFFSET			0x054
+>  #define QSERDES_TX_DEBUG_BUS_SEL			0x064
+>  #define QSERDES_TX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN	0x068
+> -- 
+> 2.7.4
 
-> +static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
-> +{
-> +	struct usb_phy	*phy_dwc3;
-> +	struct phy_provider		*phy_provider;
-> +	struct phy			*generic_phy;
-> +	const struct of_device_id *match;
-> +	const struct phy_drvdata *data;
-> +	struct resource			*res;
-> +	resource_size_t			size;
-
-Pls pick one, tabs or single spaces, not both. and reverse christmas
-looks better :)
-
-> +	struct device_node *np;
-> +
-> +	phy_dwc3 = devm_kzalloc(&pdev->dev, sizeof(*phy_dwc3), GFP_KERNEL);
-> +	if (!phy_dwc3)
-> +		return -ENOMEM;
-> +
-> +	match = of_match_node(qcom_ipq806x_usb_phy_table, pdev->dev.of_node);
-> +	data = match->data;
-
-How about using of_device_get_match_data() instead?
 -- 
 ~Vinod
