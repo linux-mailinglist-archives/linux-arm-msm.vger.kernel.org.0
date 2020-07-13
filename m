@@ -2,134 +2,368 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1E221E2FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:23:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5C421E336
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:53:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726542AbgGMWX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 18:23:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46580 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726358AbgGMWX5 (ORCPT
+        id S1726358AbgGMWxd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 18:53:33 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:34757 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726347AbgGMWxc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 18:23:57 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C43CAC061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:23:57 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id d27so11354556qtg.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:23:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QHfgfv2mP6dp6kaJTVFYuFviBEEN6wpOON6T0JxtLVk=;
-        b=cSeqsacEiX0VNBd7mC9bj3A8JzJZlyD3j4cmXLuYevvPoeKEk8W+U5HnPEomxpm5bo
-         LRaqdmOo5RVCRntAP5RSqQ9O5u+EP+mswHCf4O+Kth2ygENQ1VWCkbAMFQ+01IILIQun
-         O0GExOUmlRIqEf/OfFr3Ctc6cYjV3RMpNtbgU=
+        Mon, 13 Jul 2020 18:53:32 -0400
+Received: by mail-io1-f68.google.com with SMTP id q74so15355764iod.1;
+        Mon, 13 Jul 2020 15:53:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QHfgfv2mP6dp6kaJTVFYuFviBEEN6wpOON6T0JxtLVk=;
-        b=bFrs2MDvXjhumULHar83v27GF7zGGNOugpHTLFTDdq29b7OyQpaTjUR9z9PxOMrXAq
-         9pN00WMRHex4YIykI+iL3UWxXCFM1jOmLrn7UYVXXuLjUNwFW0lFeyr1yZzkp5Zjfd/o
-         KMUkh8qfAKWC/zkjAgepI+GC+M6yyKmTq3DjKE88fCQLdM+PrLWiSDycQTeQzC8eexVi
-         ci35IWIi0MDA/j8Gu/hJl4cJpTP9aeSKsAiLcJW/Bs+DTy0B7WIuDBbaQMVZqCcFgTL6
-         lV72XAfBPQNhPPHHzqhU1yUTZjlzObSDIBruRzVo26Pk6BifKElKwTXeXZjpWWv+KTZe
-         dYiQ==
-X-Gm-Message-State: AOAM5334Fj2MQglgoNJ/z1PR/ouXh9lywZsyIY/ckNt3vNaAa39UyLcB
-        BPKnNv4Z1QFca9wwEC3XjcaqhK4MwQk=
-X-Google-Smtp-Source: ABdhPJxeZhETt3HJbnn0jER0fgqEdaYTm2ZNfcwAeec4F4K7HNCb4A4SU4xrruGg/ha2z5zh/HY4zg==
-X-Received: by 2002:ac8:6789:: with SMTP id b9mr1653275qtp.384.1594679036689;
-        Mon, 13 Jul 2020 15:23:56 -0700 (PDT)
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com. [209.85.219.50])
-        by smtp.gmail.com with ESMTPSA id s71sm20649641qke.0.2020.07.13.15.23.56
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2020 15:23:56 -0700 (PDT)
-Received: by mail-qv1-f50.google.com with SMTP id ed14so6601593qvb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:23:56 -0700 (PDT)
-X-Received: by 2002:a67:e046:: with SMTP id n6mr1294693vsl.6.1594678686784;
- Mon, 13 Jul 2020 15:18:06 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=i7bl8lVozvsdgE9YS/29f2AjrQyXq5IegzpDYAlFKDk=;
+        b=lMACpud/B/zpOXyooCHGMRNwYQ7mPbz1ZZPxpC2WtVAfevER5cmDu56t00rNLoBQu8
+         XtZS1PZQmoeE9UuGR8DHwlRwqV9lZRvQl1gNBLe1uL3sxBSpnd/hGDXSaI4bIMOe7BSl
+         F+a5VtmTe9xUrl/Mwjtx7jEjLzUMTyasaeNN5LSDcX96d7tZNkOkhOQK31GgioIe+YXV
+         Qzo7MXQki0RtKFcVpbkrgO9EBJkaSdEgFD/PEXhyIS3wolXlr2fXcqXa08/JTtIaba6h
+         UkNRQBT1KsQAmDC8gFRstYUnYeIbp7+9KwiZCDNp0t6XHE/eEzA3r2lyLUgbTzz2Du5k
+         Fjew==
+X-Gm-Message-State: AOAM532QJ5a+T6FmpJzdKRdtcuvSzC6B41IhychG3ioTjKvRfiZppcAC
+        0T/ncWlWDEqtj1zaRgUasQ==
+X-Google-Smtp-Source: ABdhPJzBmSzmcOPXxwclfcbkJAWg4Hx9r7duDiLMl+AGttmUoSZszkVUBupxhl6WuMml7z/UOFnRDg==
+X-Received: by 2002:a6b:640e:: with SMTP id t14mr2061843iog.39.1594680811094;
+        Mon, 13 Jul 2020 15:53:31 -0700 (PDT)
+Received: from xps15 ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id b13sm8316626iof.21.2020.07.13.15.53.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2020 15:53:30 -0700 (PDT)
+Received: (nullmailer pid 872292 invoked by uid 1000);
+        Mon, 13 Jul 2020 22:53:28 -0000
+Date:   Mon, 13 Jul 2020 16:53:28 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Rohit kumar <rohitkr@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Ajit Pandey <ajitp@codeaurora.org>
+Subject: Re: [PATCH v3 8/8] dt-bindings: sound: lpass-cpu: Move to yaml format
+Message-ID: <20200713225328.GA778183@bogus>
+References: <1594184896-10629-1-git-send-email-rohitkr@codeaurora.org>
+ <1594184896-10629-9-git-send-email-rohitkr@codeaurora.org>
 MIME-Version: 1.0
-References: <1592818308-23001-1-git-send-email-mkshah@codeaurora.org> <1592818308-23001-2-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1592818308-23001-2-git-send-email-mkshah@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 13 Jul 2020 15:17:55 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WcbEH2O+7xqCyDfrPR0+g+MpWWsgORNPepC=VrhOanFQ@mail.gmail.com>
-Message-ID: <CAD=FV=WcbEH2O+7xqCyDfrPR0+g+MpWWsgORNPepC=VrhOanFQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] pinctrl: qcom: Remove irq_disable callback from
- msmgpio irqchip
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        LinusW <linus.walleij@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1594184896-10629-9-git-send-email-rohitkr@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Jun 22, 2020 at 2:32 AM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> The gpio can be marked for wakeup and drivers can invoke disable_irq()
-> during suspend, in such cases unlazy approach will also disable at HW
-> and such gpios will not wakeup device from suspend to RAM.
->
-> Remove irq_disable callback to allow gpio interrupts to lazy disabled.
-> The gpio interrupts will get disabled during irq_mask callback.
->
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+On Wed, Jul 08, 2020 at 10:38:16AM +0530, Rohit kumar wrote:
+> From: Ajit Pandey <ajitp@codeaurora.org>
+> 
+> Update lpass-cpu binding with yaml formats.
+> 
+> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+> Signed-off-by: Rohit kumar <rohitkr@codeaurora.org>
 > ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 13 -------------
->  1 file changed, 13 deletions(-)
+>  .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  80 -----------
+>  .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 154 +++++++++++++++++++++
+>  2 files changed, 154 insertions(+), 80 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+>  create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+> deleted file mode 100644
+> index 04e34cc..00000000
+> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+> +++ /dev/null
+> @@ -1,80 +0,0 @@
+> -* Qualcomm Technologies LPASS CPU DAI
+> -
+> -This node models the Qualcomm Technologies Low-Power Audio SubSystem (LPASS).
+> -
+> -Required properties:
+> -
+> -- compatible		: "qcom,lpass-cpu" or "qcom,apq8016-lpass-cpu" or
+> -			  "qcom,lpass-cpu-sc7180"
+> -- clocks		: Must contain an entry for each entry in clock-names.
+> -- clock-names		: A list which must include the following entries:
+> -				* "ahbix-clk"
+> -				* "mi2s-osr-clk"
+> -				* "mi2s-bit-clk"
+> -			: required clocks for "qcom,lpass-cpu-apq8016"
+> -				* "ahbix-clk"
+> -				* "mi2s-bit-clk0"
+> -				* "mi2s-bit-clk1"
+> -				* "mi2s-bit-clk2"
+> -				* "mi2s-bit-clk3"
+> -				* "pcnoc-mport-clk"
+> -				* "pcnoc-sway-clk"
+> -
+> -- interrupts		: Must contain an entry for each entry in
+> -			  interrupt-names.
+> -- interrupt-names	: A list which must include the following entries:
+> -				* "lpass-irq-lpaif"
+> -- pinctrl-N		: One property must exist for each entry in
+> -			  pinctrl-names.  See ../pinctrl/pinctrl-bindings.txt
+> -			  for details of the property values.
+> -- pinctrl-names		: Must contain a "default" entry.
+> -- reg			: Must contain an address for each entry in reg-names.
+> -- reg-names		: A list which must include the following entries:
+> -				* "lpass-lpaif"
+> -- #address-cells	: Must be 1
+> -- #size-cells		: Must be 0
+> -
+> -
+> -
+> -Optional properties:
+> -
+> -- qcom,adsp		: Phandle for the audio DSP node
+> -
+> -By default, the driver uses up to 4 MI2S SD lines, for a total of 8 channels.
+> -The SD lines to use can be configured by adding subnodes for each of the DAIs.
+> -
+> -Required properties for each DAI (represented by a subnode):
+> -- reg			: Must be one of the DAI IDs
+> -			  (usually part of dt-bindings header)
+> -- qcom,playback-sd-lines: List of serial data lines to use for playback
+> -			  Each SD line should be represented by a number from 0-3.
+> -- qcom,capture-sd-lines	: List of serial data lines to use for capture
+> -			  Each SD line should be represented by a number from 0-3.
+> -
+> -Note that adding a subnode changes the default to "no lines configured",
+> -so both playback and capture lines should be configured when a subnode is added.
+> -
+> -Example:
+> -
+> -lpass@28100000 {
+> -	compatible = "qcom,lpass-cpu";
+> -	clocks = <&lcc AHBIX_CLK>, <&lcc MI2S_OSR_CLK>, <&lcc MI2S_BIT_CLK>;
+> -	clock-names = "ahbix-clk", "mi2s-osr-clk", "mi2s-bit-clk";
+> -	interrupts = <0 85 1>;
+> -	interrupt-names = "lpass-irq-lpaif";
+> -	pinctrl-names = "default", "idle";
+> -	pinctrl-0 = <&mi2s_default>;
+> -	pinctrl-1 = <&mi2s_idle>;
+> -	reg = <0x28100000 0x10000>;
+> -	reg-names = "lpass-lpaif";
+> -	qcom,adsp = <&adsp>;
+> -
+> -	#address-cells = <1>;
+> -	#size-cells = <0>;
+> -
+> -	/* Optional to set different MI2S SD lines */
+> -	dai@3 {
+> -		reg = <MI2S_QUATERNARY>;
+> -		qcom,playback-sd-lines = <0 1>;
+> -	};
+> -};
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> new file mode 100644
+> index 00000000..9c350bc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> @@ -0,0 +1,154 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/sound/qcom,lpass-cpu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm LPASS CPU dai driver bindings
+> +
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> +  - Rohit kumar <rohitkr@codeaurora.org>
+> +
+> +description:
+> +  Qualcomm SOC Low-Power Audio SubSystem (LPASS) that consist of MI2S interface
+> +  for audio data transfer on external codecs. LPASS cpu driver is a module to
+> +  configure Low-Power Audio Interface(LPAIF) core registers across different
+> +  IP versions.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,lpass-cpu
+> +      - qcom,apq8016-lpass-cpu
+> +      - qcom,lpass-cpu-sc7180
+> +
+> +  reg:
+> +    items:
+> +      - description: LPAIF core registers
 
-While the code of this patch looks fairly correct to me (there's no
-need to implement the irq_disable callback and we can just rely on the
-masking), I'm slightly anxious about the description.  It almost feels
-like you're somehow relying on the laziness to "fix" your issue here.
-...but the laziness is supposed to just be an optimization.
-Specifically if an interrupt happens to fire at any point in time
-after a driver has called disable_irq() then it acts just like a
-non-lazy disable.
+Just: 'maxItems: 1' for a single entry.
 
-Said another way, I think this is a valid thing for a driver to do and
-it should get woken up if the irq fires in suspend:
+> +
+> +  reg-names:
+> +    items:
+> +      - const: lpass-lpaif
 
-disable_irq();
-msleep(1000);
-enable_irq_wake()
+Not all that useful with only 1.
 
-Specifically if an IRQ comes in during that sleep then it will be just
-like you had a non-lazy IRQ.
+> +
+> +  clocks:
+> +    items:
+> +      - description: AHBIX core clock
+> +      - description: oscillator clock for MI2S external interfaces
+> +      - description: Bit clock for single MI2S dai
+> +      - description: Bit clock for MI2S_PRIMARY dai interface
+> +      - description: Bit clock for MI2S_SECONDARY dai interface
+> +      - description: Bit clock for MI2S_TERTIARY dai interface
+> +      - description: Bit clock for MI2S_QUATERNARY dai interface
+> +      - description: NOC MPORT clock of LPASS core
+> +      - description: NOC SWAY clock of LPASS core
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ahbix-clk
+> +      - const: mi2s-osr-clk
+> +      - const: mi2s-bit-clk
+> +      - const: mi2s-bit-clk0
+> +      - const: mi2s-bit-clk1
+> +      - const: mi2s-bit-clk2
+> +      - const: mi2s-bit-clk3
+> +      - const: pcnoc-mport-clk
+> +      - const: pcnoc-sway-clk
+> +
+> +  interrupts:
+> +    items:
+> +      - description: LPAIF DMA buffer interrupt
 
+maxItems: 1
 
-So while I'm for this patch, I'd suggest a simpler description
-(assuming my understanding is correct):
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: lpass-irq-lpaif
+> +
+> +  qcom,adsp:
+> +    maxItems: 1
+> +    description: Phandle for the audio DSP node
 
-There is no reason to implement irq_disable() and irq_mask().  Let's just
-use irq_mask() and let the rest of the core handle it.
+Needs a type $ref. And if just a phandle, 'maxItems: 1' is not 
+appropriate.
 
+> +
+> +  iommus:
+> +    maxItems: 1
+> +    description: Phandle to apps_smmu node with sid mask
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +    description: Phandle for power domain node
 
-Also: it feels really weird to me that you're getting rid of the
-irq_disable() but keeping irq_enable().  That seems like asking for
-trouble, though I'd have to do more research to see if I could figure
-out exactly what might go wrong.  Could you remove your irq_enable()
-too?
+Drop. That's every 'power-domains' property.
 
+> +
+> +  '#sound-dai-cells':
+> +    const: 1
+> +
+> +  child-node:
 
--Doug
+I'm sure I said this on some review recently, but you are defining a 
+child node named 'child-node'. You need this under patternProperties 
+with the actual child node name.
+
+> +    description: Required properties for each DAI
+> +    type: object
+> +    properties:
+> +      reg:
+> +        description: Must be one of the DAI ID
+> +                     (Usually part of dtbindings header)
+
+Ideally, you'd define the range of values here.
+
+> +      qcom,playback-sd-lines:
+> +        description: List of serial data lines to use for playback
+> +                     Each SD line should be represented by a number from 0-3.
+
+Needs a type $ref and 0-3 should be expressed as a schema.
+
+'make dt_binding_check' should complain about this. You did run that, 
+right?
+
+> +      qcom,capture-sd-lines :
+> +        description: List of serial data lines to use for capture
+> +                     Each SD line should be represented by a number from 0-3.
+
+ditto
+
+> +    required:
+> +      -reg
+
+space     ^
+
+> +    # Note that adding a subnode changes the default to "no lines configured",
+> +    # so both playback and capture lines should be configured when a subnode
+> +    # is added.
+> +
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - sound-dai-cells
+
+Not a valid property.
+
+> +
+> +optional:
+> +  - qcom,adsp
+> +
+> +if:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        const: qcom,lpass-cpu-sc7180
+> +
+> +then:
+> +  required:
+> +    - iommus
+> +    - power-domains
+> +
+> +examples:
+> +  lpass@28100000 {
+
+This is not valid. 'examples' should be a list.
+
+> +	compatible = "qcom,lpass-cpu";
+> +	clocks = <&lcc AHBIX_CLK>,
+> +		 <&lcc MI2S_OSR_CLK>,
+> +		 <&lcc MI2S_BIT_CLK>;
+
+The example will not build because the includes are missing.
+
+> +
+> +	clock-names = "ahbix-clk",
+> +		      "mi2s-osr-clk",
+> +		      "mi2s-bit-clk";
+> +
+> +	interrupts = <0 85 1>;
+> +        interrupt-names = "lpass-irq-lpaif";
+> +
+> +	iommus = <&apps_smmu 0x1020 0>;
+> +	power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +
+> +	reg = <0x28100000 0x10000>;
+> +	reg-names = "lpass-lpaif";
+> +	#sound-dai-cells = <1>;
+> +	qcom,adsp = <&adsp>;
+> +
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	/* Optional to set different MI2S SD lines */
+> +	mi2s-quaternary@3 {
+> +		reg = <MI2S_QUATERNARY>;
+> +		qcom,playback-sd-lines = <0 1>;
+> +  };
+> -- 
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+> 
