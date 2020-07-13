@@ -2,116 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04ACF21D33C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 11:55:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C17DA21D3A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 12:18:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729318AbgGMJzU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 05:55:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727834AbgGMJzT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 05:55:19 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AFA5C061794
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 02:55:19 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id d18so12787826edv.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 02:55:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EX/IMErDoxcFcjxLjU7HkV8aJIJA8/hNtsxtvwLEDVQ=;
-        b=2BqzUBw7/Z8AjkdfPds8NRm7bDSUM3XsIrf08G4cqiKfWpoCwH1NTL+R5QErw9RMJD
-         ruOOmIvhK2azCGi9uTui4vnRgEUtp0bpkPnHMDU11Vkn3wOmHcqW2EV9SaqkOxHV5Fca
-         NUWASbM2f6hrjIsVsCk2LOEX1AFlHFS0IQAtONNEn4HJRA0HgBsb+AyCyOH7FVVpoy29
-         /h+oPi34xmqCcwXn6mGQunDQDpNDNsV+FVWlBZ8WBwCJ5Bfk0ZwD7tLlXopNogGdJscE
-         x5hhD9Q7+FTkS8/x09olpK0PddGcpPQU8Pxzn8gjOKjZB2ssoHAQq8jHqyOjTj2+8lFz
-         eGmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EX/IMErDoxcFcjxLjU7HkV8aJIJA8/hNtsxtvwLEDVQ=;
-        b=VNMoqR7ss8aFh7PNG7hvsP4qcfga1VYSPg5THP+8ehgQqETcK5E8tu4pTL78w3G3ff
-         1wbOEXIY6J8j2Uayf+qspz+5mE3xpo+bd99gJ7ERVppqUZgvZVkLLfv7QvDyerO6KiXw
-         slm2VMOk1PBWFU7ccb1fuaAStHn9LIxVy/JTTPm0EBtDV3Jd3FPbZtxZtBeoAXA2H435
-         S4xEMDX/qfIp1JMV2uQ8KYKabPgSjb4zY2FvWcjLqgPccVTiDGdyu4VY069ysCPFMGyk
-         lN+/kRWA9MWUrYryOpwGwGMVgroMpPOpNfSVUmMnaGYYv2V9GezGPmYRcAwv69RbYEub
-         Hikw==
-X-Gm-Message-State: AOAM530L71HPVNSLmEo4ULOW20FH/9g0HUgJb+qelScuOzsMpvvyYOt7
-        byXmzzQ0ykh7dOF9p3YTLB6Dxg==
-X-Google-Smtp-Source: ABdhPJxc6tyvTQYd53XE6resgy8+ALS+JG8waXk5fYpksiyCZf1PTru3ENaDbBHsQP/quKbsa2MCMQ==
-X-Received: by 2002:a05:6402:1494:: with SMTP id e20mr77492854edv.2.1594634117908;
-        Mon, 13 Jul 2020 02:55:17 -0700 (PDT)
-Received: from localhost.localdomain (dh207-98-45.xnet.hr. [88.207.98.45])
-        by smtp.googlemail.com with ESMTPSA id w24sm10957046edt.28.2020.07.13.02.55.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 02:55:17 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>
-Subject: [PATCH] arm64: dts: ipq6018: Add NAND nodes
-Date:   Mon, 13 Jul 2020 11:55:08 +0200
-Message-Id: <20200713095508.512919-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.2
+        id S1729578AbgGMKSq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 06:18:46 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:54960 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729475AbgGMKSp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jul 2020 06:18:45 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594635525; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=HbTO1RWO0AYCBF7885LW5yU3nqXfLVBq9W9UdB+eByI=;
+ b=OUxrRF97v3wlATZd8hU+YT07c9DpgsZSbRCx8c46tYKwpfLsEq7qsrli02u895HzrNy6NCLW
+ CYdmOTi5cHTqPdn8AReeaQXmxLZawHz/zwM7U9UwnhrkjhWyILjiZM0F6Fn66RpnPFrGFfp8
+ 8BKBS/2rPsBop4XvH+ucLMHfFlQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5f0c3503c7a053446aa7478c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Jul 2020 10:18:43
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 82D0AC433CA; Mon, 13 Jul 2020 10:18:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kalyan_t)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D426DC433C8;
+        Mon, 13 Jul 2020 10:18:41 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 13 Jul 2020 15:48:41 +0530
+From:   kalyan_t@codeaurora.org
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [Freedreno] [v1] drm/msm/dpu: enumerate second cursor pipe for
+ external interface
+In-Reply-To: <CAF6AEGtPDh7q6Hjophdyz+Pvi93-bK5WULGeSw9P4BWRw5SWxQ@mail.gmail.com>
+References: <1593089153-17811-1-git-send-email-kalyan_t@codeaurora.org>
+ <CAF6AEGtPDh7q6Hjophdyz+Pvi93-bK5WULGeSw9P4BWRw5SWxQ@mail.gmail.com>
+Message-ID: <c10c0f70988d42037ccaccc6b5474942@codeaurora.org>
+X-Sender: kalyan_t@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ6018 uses the same NAND and controller as IPQ8074 which
-is supported by the Qualcomm NANDC driver.
-So lets add the NAND node as well as node for the BAM DMA
-controller that is supported by the BAM DMA driver.
-
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 1aa8d8579463..bd4a1317c4c6 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -274,6 +274,33 @@ i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
- 			status = "disabled";
- 		};
- 
-+		qpic_bam: dma@7984000{
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x7984000 0x1a000>;
-+			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_QPIC_AHB_CLK>;
-+			clock-names = "bam_clk";
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			status = "disabled";
-+		};
-+
-+		nand: qpic-nand@79b0000 {
-+			compatible = "qcom,ipq8074-nand";
-+			reg = <0x79b0000 0x10000>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			clocks = <&gcc GCC_QPIC_CLK>,
-+					 <&gcc GCC_QPIC_AHB_CLK>;
-+			clock-names = "core", "aon";
-+
-+			dmas = <&qpic_bam 0>,
-+			       <&qpic_bam 1>,
-+			       <&qpic_bam 2>;
-+			dma-names = "tx", "rx", "cmd";
-+			status = "disabled";
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			interrupt-controller;
--- 
-2.26.2
-
+On 2020-07-10 22:19, Rob Clark wrote:
+> On Thu, Jun 25, 2020 at 5:46 AM Kalyan Thota <kalyan_t@codeaurora.org> 
+> wrote:
+>> 
+>> Setup an RGB HW pipe as cursor which can be used on
+>> secondary interface.
+>> 
+>> For SC7180 2 HW pipes are enumerated as cursors
+>> 1 - primary interface
+>> 2 - secondary interface
+>> 
+>> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 12 ++++++------
+>>  1 file changed, 6 insertions(+), 6 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> index 8f2357d..23061fd 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> @@ -117,10 +117,10 @@
+>>                 .reg_off = 0x2AC, .bit_off = 0},
+>>         .clk_ctrls[DPU_CLK_CTRL_DMA0] = {
+>>                 .reg_off = 0x2AC, .bit_off = 8},
+>> -       .clk_ctrls[DPU_CLK_CTRL_DMA1] = {
+>> -               .reg_off = 0x2B4, .bit_off = 8},
+>>         .clk_ctrls[DPU_CLK_CTRL_CURSOR0] = {
+>> -               .reg_off = 0x2BC, .bit_off = 8},
+>> +               .reg_off = 0x2B4, .bit_off = 8},
+>> +       .clk_ctrls[DPU_CLK_CTRL_CURSOR1] = {
+>> +               .reg_off = 0x2C4, .bit_off = 8},
+> 
+> It looks like you shifted the register offset here from 0x2bc to
+> 0x2c4, was that intentional?
+> 
+> BR,
+> -R
+Yes Rob, the offset was wrong which i corrected in this patch.
+> 
+>>         },
+>>  };
+>> 
+>> @@ -272,10 +272,10 @@
+>>                 sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, 
+>> DPU_CLK_CTRL_VIG0),
+>>         SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+>>                 sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, 
+>> DPU_CLK_CTRL_DMA0),
+>> -       SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
+>> -               sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, 
+>> DPU_CLK_CTRL_DMA1),
+>> +       SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  
+>> DMA_CURSOR_SDM845_MASK,
+>> +               sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, 
+>> DPU_CLK_CTRL_CURSOR0),
+>>         SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  
+>> DMA_CURSOR_SDM845_MASK,
+>> -               sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, 
+>> DPU_CLK_CTRL_CURSOR0),
+>> +               sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, 
+>> DPU_CLK_CTRL_CURSOR1),
+>>  };
+>> 
+>>  /*************************************************************
+>> --
+>> 1.9.1
+>> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
