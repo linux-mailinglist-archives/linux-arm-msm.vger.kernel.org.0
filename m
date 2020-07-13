@@ -2,235 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDEF921D4AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 13:19:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6956621D61E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 14:42:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729027AbgGMLTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 07:19:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54962 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727890AbgGMLT3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 07:19:29 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66969C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 04:19:29 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 22so12933049wmg.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 04:19:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lGfMlzw7lL+DLnAZAtVs4q1y+3Quxodyv6jz/gCh0U8=;
-        b=gMJzYmkZL6sWzY0Gun2l8Qm0qVvA7eviIR7WnbXqCQ+6oFJ2xMUy6/dVfjkmPhcZ94
-         zMoSdhycU75jusbCXkICBbO3YB19YOkXgbh0LiTHZddXq1SViHdIlpH+Q36mObsqBUXI
-         smr0FxW0Nun1Z3vY2XSiHUMitCgANXAP/chPw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lGfMlzw7lL+DLnAZAtVs4q1y+3Quxodyv6jz/gCh0U8=;
-        b=gU+AbMhj8JH0aG35yRkEThfzGoXdAUiNTCKwQP9XY6qIj/8AtNMGdE7c6+7JPviYHH
-         gRlvnn2NpyMONavgYWgYASBvrN08ZO5XEeMWiz6Cr/CGlRQrZ9+/qe+AuQCNTC5ze1qk
-         VQNYROnMo+wntHrA3DqiByo6VyNOG0uXuhLoF7pNVAq8/qbu3ueJGtIdMcj2Zm6jEfPj
-         4+efHh+I1mtI4aNbOA/fEwS33ix3uJE3pDXOh5z898Jb4J565oyxYqwE+amL2+hJMOsH
-         LPtD4eK/Rl1+jhA0DfXPazPHY+9vWToYvKRAfpENszSj6E2N4ggnYWm0IH7u2iKRPLFV
-         NZNw==
-X-Gm-Message-State: AOAM531NQnDBSnkbxF0Itn13cOspfYr372EC+BDE0rFkTnPmu7PsYxfe
-        p+RagB2EeSpR08krQusBii+Lwku2WO2/HfoHoHfEmw==
-X-Google-Smtp-Source: ABdhPJzrX87zkT/SKlYtk8C7LSiJOGa5yv2YmKQbrYmqirHsr/HJXtIMC/Q0Zw/7wo4aPJSF/6dPfMkv4O1ekLuVkgc=
-X-Received: by 2002:a1c:4d04:: with SMTP id o4mr17837113wmh.132.1594639167627;
- Mon, 13 Jul 2020 04:19:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200708141610.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
-In-Reply-To: <20200708141610.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
-From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Mon, 13 Jul 2020 19:19:01 +0800
-Message-ID: <CAFv8NwJPSs+z1qbBR0+73xS9nqSZ5ENmqhug45+CLPfQVHVU_w@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: Handle broken PDC dual edge case on sc7180
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     linus.walleij@linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, ilina@codeaurora.org,
-        agross@kernel.org, rnayak@codeaurora.org, mkshah@codeaurora.org,
-        bjorn.andersson@linaro.org, Marc Zyngier <maz@kernel.org>,
-        linux-gpio@vger.kernel.org,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1729646AbgGMMmE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 08:42:04 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:59385 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729695AbgGMMmC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jul 2020 08:42:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594644121; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=n+H8qsu8A2eN0qoFysCP3JyT/AZw34OjCJZOpkdVaGM=; b=PqPBJu/P/Maj9wVxtWV0Lg5F+v0caQaBZO9MIasKv/XSHU6ddX3PVMdhbnbpvv9FY2Q/ZQyY
+ 93SJ47SiJdOKH+7YqBOD5aF5zoa2t49tRrhgW2/EllhqcYaAViGZBaa0vfx2u5pdiirc7MYU
+ 5eLz47MIHDH+LVKBXn1fkyG88z8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
+ 5f0c5696ee6926bb4fff0fa1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Jul 2020 12:41:58
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F3E27C433AD; Mon, 13 Jul 2020 12:41:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BEC02C433C8;
+        Mon, 13 Jul 2020 12:41:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BEC02C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
+        smasetty@codeaurora.org, devicetree@vger.kernel.org,
+        mka@chromium.org, saravanak@google.com, sibis@codeaurora.org,
+        viresh.kumar@linaro.org, jonathan@marek.ca, robdclark@gmail.com
+Subject: [PATCH v5 0/6] Add support for GPU DDR BW scaling
+Date:   Mon, 13 Jul 2020 18:11:40 +0530
+Message-Id: <1594644106-22449-1-git-send-email-akhilpo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 9, 2020 at 5:16 AM Douglas Anderson <dianders@chromium.org> wrote:
->
-> As per Qualcomm, there is a PDC hardware issue (with the specific IP
-> rev that exists on sc7180) that causes the PDC not to work properly
-> when configured to handle dual edges.
->
-> Let's work around this by emulating only ever letting our parent see
-> requests for single edge interrupts on affected hardware.
->
-> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+This series adds support for GPU DDR bandwidth scaling and is based on the
+bindings from Georgi [1]. This is mostly a rebase of Sharat's patches [2] on the
+tip of msm-next branch.
 
-Tested-by: Cheng-Yi Chiang <cychiang@chromium.org>
+Changes from v4:
+- Squashed a patch to another one to fix Jonathan's comment
+- Add back the pm_runtime_get_if_in_use() check
 
->
-> ---
-> As far as I can tell everything here should work and the limited
-> testing I'm able to give it shows that, in fact, I can detect both
-> edges.
->
-> Please give this an extra thorough review since it's trying to find
-> the exact right place to insert this code and I'm not massively
-> familiar with all the frameworks.
->
-> If someone has hardware where it's easy to stress test this that'd be
-> wonderful too.  The board I happen to have in front of me doesn't have
-> any easy-to-toggle GPIOs where I can just poke a button or a switch to
-> generate edges.  My testing was done by hacking the "write protect"
-> GPIO on my board into gpio-keys as a dual-edge interrupt and then
-> sending commands to our security chip to toggle it--not exactly great
-> for testing to make sure there are no race conditions if the interrupt
-> bounces a lot.
->
->  drivers/pinctrl/qcom/pinctrl-msm.c    | 80 +++++++++++++++++++++++++++
->  drivers/pinctrl/qcom/pinctrl-msm.h    |  4 ++
->  drivers/pinctrl/qcom/pinctrl-sc7180.c |  1 +
->  3 files changed, 85 insertions(+)
->
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 83b7d64bc4c1..45ca09ebb7b3 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -860,6 +860,79 @@ static void msm_gpio_irq_ack(struct irq_data *d)
->         raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->  }
->
-> +/**
-> + * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
-> + * @d: The irq dta.
-> + *
-> + * This is much like msm_gpio_update_dual_edge_pos() but for IRQs that are
-> + * normally handled by the parent irqchip.  The logic here is slightly
-> + * different due to what's easy to do with our parent, but in principle it's
-> + * the same.
-> + */
-> +static void msm_gpio_update_dual_edge_parent(struct irq_data *d)
-> +{
-> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-> +       struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-> +       const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
-> +       unsigned long flags;
-> +       int loop_limit = 100;
-> +       unsigned int val;
-> +       unsigned int type;
-> +
-> +       /* Read the value and make a guess about what edge we need to catch */
-> +       val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
-> +       type = val ? IRQ_TYPE_EDGE_FALLING : IRQ_TYPE_EDGE_RISING;
-> +
-> +       raw_spin_lock_irqsave(&pctrl->lock, flags);
-> +       do {
-> +               /* Set the parent to catch the next edge */
-> +               irq_chip_set_type_parent(d, type);
-> +
-> +               /*
-> +                * Possibly the line changed between when we last read "val"
-> +                * (and decided what edge we needed) and when set the edge.
-> +                * If the value didn't change (or changed and then changed
-> +                * back) then we're done.
-> +                */
-> +               val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
-> +               if (type == IRQ_TYPE_EDGE_RISING) {
-> +                       if (!val)
-> +                               break;
-> +                       type = IRQ_TYPE_EDGE_FALLING;
-> +               } else if (type == IRQ_TYPE_EDGE_FALLING) {
-> +                       if (val)
-> +                               break;
-> +                       type = IRQ_TYPE_EDGE_RISING;
-> +               }
-> +       } while (loop_limit-- > 0);
-> +       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
-> +
-> +       if (!loop_limit)
-> +               dev_err(pctrl->dev, "dual-edge irq failed to stabilize\n");
-> +}
-> +
-> +void msm_gpio_handle_dual_edge_parent_irq(struct irq_desc *desc)
-> +{
-> +       struct irq_data *d = &desc->irq_data;
-> +
-> +       /* Make sure we're primed for the next edge */
-> +       msm_gpio_update_dual_edge_parent(d);
-> +
-> +       /* Pass on to the normal interrupt handler */
-> +       handle_fasteoi_irq(desc);
-> +}
-> +
-> +static bool msm_gpio_needs_dual_edge_parent_workaround(struct irq_data *d,
-> +                                                      unsigned int type)
-> +{
-> +       struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-> +       struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-> +
-> +       return type == IRQ_TYPE_EDGE_BOTH &&
-> +              pctrl->soc->wakeirq_dual_edge_errata && d->parent_data &&
-> +              test_bit(d->hwirq, pctrl->skip_wake_irqs);
-> +}
-> +
->  static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->  {
->         struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-> @@ -868,6 +941,13 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->         unsigned long flags;
->         u32 val;
->
-> +       if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
-> +               irq_set_handler_locked(d, msm_gpio_handle_dual_edge_parent_irq);
-> +               msm_gpio_update_dual_edge_parent(d);
-> +
-> +               return 0;
-> +       }
-> +
->         if (d->parent_data)
->                 irq_chip_set_type_parent(d, type);
->
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-> index 9452da18a78b..7486fe08eb9b 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-> @@ -113,6 +113,9 @@ struct msm_gpio_wakeirq_map {
->   * @pull_no_keeper: The SoC does not support keeper bias.
->   * @wakeirq_map:    The map of wakeup capable GPIOs and the pin at PDC/MPM
->   * @nwakeirq_map:   The number of entries in @wakeirq_map
-> + * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
-> + *                            to be aware that their parent can't handle dual
-> + *                            edge interrupts.
->   */
->  struct msm_pinctrl_soc_data {
->         const struct pinctrl_pin_desc *pins;
-> @@ -128,6 +131,7 @@ struct msm_pinctrl_soc_data {
->         const int *reserved_gpios;
->         const struct msm_gpio_wakeirq_map *wakeirq_map;
->         unsigned int nwakeirq_map;
-> +       bool wakeirq_dual_edge_errata;
->  };
->
->  extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-> index 1b6465a882f2..1d9acad3c1ce 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-> @@ -1147,6 +1147,7 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
->         .ntiles = ARRAY_SIZE(sc7180_tiles),
->         .wakeirq_map = sc7180_pdc_map,
->         .nwakeirq_map = ARRAY_SIZE(sc7180_pdc_map),
-> +       .wakeirq_dual_edge_errata = true,
->  };
->
->  static int sc7180_pinctrl_probe(struct platform_device *pdev)
-> --
-> 2.27.0.383.g050319c2ae-goog
->
+Changes from v3:
+- Rebased on top of Jonathan's patch which adds support for changing gpu freq
+through hfi on newer targets
+- As suggested by Rob, left the icc_path intact for pre-a6xx GPUs
+
+[1] https://kernel.googlesource.com/pub/scm/linux/kernel/git/vireshk/pm/+log/opp/linux-next/
+[2] https://patchwork.freedesktop.org/series/75291/
+
+Sharat Masetty (6):
+  dt-bindings: drm/msm/gpu: Document gpu opp table
+  drm: msm: a6xx: send opp instead of a frequency
+  drm: msm: a6xx: use dev_pm_opp_set_bw to scale DDR
+  arm64: dts: qcom: SDM845: Enable GPU DDR bw scaling
+  arm64: dts: qcom: sc7180: Add interconnects property for GPU
+  arm64: dts: qcom: sc7180: Add opp-peak-kBps to GPU opp
+
+ .../devicetree/bindings/display/msm/gpu.txt        |  28 ++++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |   9 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   9 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              | 108 ++++++++++++---------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   2 +-
+ drivers/gpu/drm/msm/msm_gpu.c                      |   3 +-
+ drivers/gpu/drm/msm/msm_gpu.h                      |   3 +-
+ 7 files changed, 112 insertions(+), 50 deletions(-)
+
+-- 
+2.7.4
+
