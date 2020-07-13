@@ -2,98 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D59921E3D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 01:46:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FC0C21E3DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 01:46:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgGMXqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 19:46:09 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:45453 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726765AbgGMXqH (ORCPT
+        id S1726855AbgGMXqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 19:46:21 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:26407 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726765AbgGMXqU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 19:46:07 -0400
-Received: by mail-io1-f67.google.com with SMTP id e64so15422853iof.12;
-        Mon, 13 Jul 2020 16:46:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=T6nZ0cOZJ7RCB/ypig9TkUxlGlTFi3/Lq9vMup5t3BA=;
-        b=pFhD2aYYIkU4iaBaOATeWmjCgdY7eknkoonQy/MXwe38VIic2iqELxqHj1BxeIFDy/
-         NTNMz1X/D4bLmxfMNuEY0tpvluUSDP8DdPSQyljAdeiaZDSglSDNKW9FkxImMvJoAOus
-         c+fiVw118ZihcURX3es/IFJWbE9ygT5NCdTCsZuf1PkDUkP6F1dgGXQzkAiH9qX8On+3
-         1/N0yKTC4j4RGNPeWN7dIJi1wT+VxP9tDgYz2EvcN0QOIPfi2pDOV4+r9WZq/pTplWpk
-         WCpS9xzxCMfeKCX2WOLszd4+pqscjZHwZ6ysEwHgqFQ1OkXNLbvP/nMRlwbLMhWd5Aen
-         xZ7g==
-X-Gm-Message-State: AOAM531uupBHjxL8FRv0yKDL3Zc6hhjf47ALIMqE6T2EaTVqcHTtjb2h
-        jAE90BGFLD96kGKXWJb7pQ==
-X-Google-Smtp-Source: ABdhPJxh2RFsFJKfNQScdvILUrL+KW2m+tSrDtRyy1/vJm0JpYuo8Qyed6+ngOPyOJBA3WccAVXQzA==
-X-Received: by 2002:a02:c903:: with SMTP id t3mr2902964jao.30.1594683966700;
-        Mon, 13 Jul 2020 16:46:06 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id p9sm9379929ilc.78.2020.07.13.16.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 16:46:06 -0700 (PDT)
-Received: (nullmailer pid 943326 invoked by uid 1000);
-        Mon, 13 Jul 2020 23:46:04 -0000
-Date:   Mon, 13 Jul 2020 17:46:04 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Sebastian Reichel <sre@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Heidelberg <david@ixit.cz>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jonghwa Lee <jonghwa3.lee@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Vinay Simha BN <simhavcs@gmail.com>
-Subject: Re: [PATCH v2 2/9] dt-bindings: battery: Add temperature properties
-Message-ID: <20200713234604.GA935472@bogus>
-References: <20200607144113.10202-1-digetx@gmail.com>
- <20200607144113.10202-3-digetx@gmail.com>
+        Mon, 13 Jul 2020 19:46:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594683980; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=i+RnCuHAQbN5qioI8ma+NQ9jS5eXOMxlIpBpYjoUcQ8=; b=olHvFFmEyKKZ6k3j2SHPbJNXTaIhFL9Fx26O1UW3SnALU1K0kHyfIWPFDDnwzOedjxABQltU
+ KV3y/hL1PKpx7ZBRNIwQ2JCPXxrpAilvc2q9ZPaqImtl70epen0XHH17UodTqg6HTUGqbOo+
+ uEkTh2wnL4UfFukERMNOI8jFb70=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5f0cf24c65270fa59594e8d7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Jul 2020 23:46:20
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6080EC43387; Mon, 13 Jul 2020 23:46:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BBDFFC433CA;
+        Mon, 13 Jul 2020 23:46:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BBDFFC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 13 Jul 2020 17:46:14 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH v4 2/3] drm/msm: reset devfreq
+ freq_table/max_state before devfreq_add_device
+Message-ID: <20200713234614.GB24345@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Sean Paul <sean@poorly.run>
+References: <20200713225345.20556-1-jonathan@marek.ca>
+ <20200713225345.20556-3-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200607144113.10202-3-digetx@gmail.com>
+In-Reply-To: <20200713225345.20556-3-jonathan@marek.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jun 07, 2020 at 05:41:06PM +0300, Dmitry Osipenko wrote:
-> Document generic battery temperature properties.
-> 
-> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+On Mon, Jul 13, 2020 at 06:53:41PM -0400, Jonathan Marek wrote:
+> These never get set back to 0 when probing fails, so an attempt to probe
+> again results in broken behavior. Fix the problem by setting thse to zero
+> before they are used.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  .../devicetree/bindings/power/supply/battery.txt       | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  drivers/gpu/drm/msm/msm_gpu.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index a22d30622306..aa9775ab52f0 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -93,7 +93,11 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
+>  	/*
+>  	 * Don't set the freq_table or max_state and let devfreq build the table
+>  	 * from OPP
+> +	 * After a deferred probe, these may have be left to non-zero values,
+> +	 * so set them back to zero before creating the devfreq device
+>  	 */
+> +	msm_devfreq_profile.freq_table = NULL;
+> +	msm_devfreq_profile.max_state = 0;
+>  
+>  	gpu->devfreq.devfreq = devm_devfreq_add_device(&gpu->pdev->dev,
+>  			&msm_devfreq_profile, DEVFREQ_GOV_SIMPLE_ONDEMAND,
+> -- 
+> 2.26.1
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
-This is close to being converted to schema:
-
-https://lore.kernel.org/linux-pm/20200707212914.31540-1-r-rivera-matos@ti.com/
- 
-> diff --git a/Documentation/devicetree/bindings/power/supply/battery.txt b/Documentation/devicetree/bindings/power/supply/battery.txt
-> index 5e29595edd74..e0c35eff9d3f 100644
-> --- a/Documentation/devicetree/bindings/power/supply/battery.txt
-> +++ b/Documentation/devicetree/bindings/power/supply/battery.txt
-> @@ -45,6 +45,16 @@ Optional Properties:
->     and corresponding battery internal resistance percent, which is used to look
->     up the resistance percent according to current temperature to get a accurate
->     batterty internal resistance in different temperatures.
-> + - temperature-ambient-min-alert-celsius: Alert when ambient temperature of a
-> +   battery is lower than threshold value.
-> + - temperature-ambient-max-alert-celsius: Alert when ambient temperature of a
-> +   battery is higher than threshold value.
-> + - temperature-min-alert-celsius: Alert when battery temperature is lower
-> +   than threshold value.
-> + - temperature-max-alert-celsius: Alert when battery temperature is higher
-> +   than threshold value.
-> + - temperature-min-celsius: minimum temperature at which battery can operate
-> + - temperature-max-celsius: maximum temperature at which battery can operate
-
-Perhaps 'temperature' is redundant since we have units.
-
-Perhaps do <min max> properties given specifying only min or max is 
-probably not valid?
-
-Rob
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
