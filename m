@@ -2,420 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C6C621D85B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 16:25:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F098E21D8E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 16:46:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729899AbgGMOZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 10:25:33 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:42641 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729861AbgGMOZd (ORCPT
+        id S1729695AbgGMOqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 10:46:44 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:41204 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729523AbgGMOqo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 10:25:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594650331; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=AQuZlc3Pf01pJh7p2nQbdckojHbN+4Aci0RCHz5v5Bo=; b=HUyZCZatiCzS0MZVnVEu0F41M7Na0QNxP4+fSq4IOdsP8X3nTxD3QTz0woriSSXWhsfMRvpg
- Lt+jEVo8jBHmZ9kjQ7Nz9RG0hbzjrkdjZsP+sPw3Noi92dXYdxhKdf7AlAT4HlMXZ2FXsP5W
- oTxIofVZ/KQDoPxFSuiFwPQL79k=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f0c6ec8ee86618575ed5d33 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Jul 2020 14:25:12
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 01171C43391; Mon, 13 Jul 2020 14:25:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.75.62])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 753B2C433C8;
-        Mon, 13 Jul 2020 14:25:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 753B2C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH] pinctrl: qcom: Handle broken PDC dual edge case on sc7180
-To:     Doug Anderson <dianders@chromium.org>,
-        Marc Zyngier <maz@kernel.org>
-Cc:     LinusW <linus.walleij@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20200708141610.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
- <87lfjreo7m.wl-maz@kernel.org>
- <CAD=FV=VzhdL67ocBPmAngxbZJsq-dSjhV2QjA8=7Ry+9oYxXHw@mail.gmail.com>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <83922c83-a8ae-1b2a-29c8-cb5ccb1d72d8@codeaurora.org>
-Date:   Mon, 13 Jul 2020 19:55:03 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Mon, 13 Jul 2020 10:46:44 -0400
+Received: by mail-io1-f66.google.com with SMTP id p205so5178660iod.8;
+        Mon, 13 Jul 2020 07:46:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nbDwnmZqExm0GJ0AQBPbfTfEhmeWr4XCe+A+8/PM6M0=;
+        b=T5+4jJYQlZ5hUHd84SckU3rKPK7CClh70W5uYAWcrpD9ssDeB3QErZxptmwPRGy1HQ
+         4WvN3oBwXakKPlwT2ygLIM0OGQeXSgttBR6eJZzB2JGAfW2K7eoOsk4ROpEHerEUWJXq
+         DJD6nU4dsC14/HW6+stbG7dN4axGQsmzWn2fkIUiFe2/rzmDUmUyBL8I/kHspXQvjDYg
+         7FOIYd5J0g9f7i1ueqaHmm3wlscR2Qc4uV3qPmvgmOcb0+c4xqBmiTvGIsimkLFA6r8J
+         fFSjQv53fYvFtbUhtZV1cJ3KKWwN5+RRsgTbd1cDTg5a1jTvnEaUqOCywaQWaG4i0YRS
+         yi7A==
+X-Gm-Message-State: AOAM533Y3+xWv+OEHt1KTm8MPBbjuW8Ab1LgnQuYE6VWPpSsbGku1g0b
+        2lXrckrw4Z6c2YfBtnRmug==
+X-Google-Smtp-Source: ABdhPJyC5hljtwK8AI4NvIkZ9UF+F6cv86WbaPgrtAlXxynhWmF1sbz5QKxouIpA7c6uyqRQqrL5Nw==
+X-Received: by 2002:a05:6638:2615:: with SMTP id m21mr394291jat.134.1594651603099;
+        Mon, 13 Jul 2020 07:46:43 -0700 (PDT)
+Received: from xps15 ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id s11sm8669417ili.79.2020.07.13.07.46.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2020 07:46:42 -0700 (PDT)
+Received: (nullmailer pid 157351 invoked by uid 1000);
+        Mon, 13 Jul 2020 14:46:40 -0000
+Date:   Mon, 13 Jul 2020 08:46:40 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     kalyan_t@codeaurora.org, seanpaul@chromium.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        robdclark@gmail.com, hoegsberg@chromium.org,
+        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+        nganji@codeaurora.org, devicetree@vger.kernel.org
+Subject: Re: [v5] dt-bindings: msm: disp: add yaml schemas for DPU and DSI
+ bindings
+Message-ID: <20200713144640.GA155367@bogus>
+References: <1594389469-2573-1-git-send-email-mkrishn@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=VzhdL67ocBPmAngxbZJsq-dSjhV2QjA8=7Ry+9oYxXHw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1594389469-2573-1-git-send-email-mkrishn@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, 10 Jul 2020 19:27:49 +0530, Krishna Manikandan wrote:
+> MSM Mobile Display Subsytem (MDSS) encapsulates sub-blocks
+> like DPU display controller, DSI etc. Add YAML schema
+> for the device tree bindings for the same.
+> 
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+> 
+> Changes in v2:
+> 	- Changed dpu to DPU (Sam Ravnborg)
+> 	- Fixed indentation issues (Sam Ravnborg)
+> 	- Added empty line between different properties (Sam Ravnborg)
+> 	- Replaced reference txt files with  their corresponding
+> 	  yaml files (Sam Ravnborg)
+> 	- Modified the file to use "|" only when it is
+> 	  necessary (Sam Ravnborg)
+> 
+> Changes in v3:
+> 	- Corrected the license used (Rob Herring)
+> 	- Added maxItems for properties (Rob Herring)
+> 	- Dropped generic descriptions (Rob Herring)
+> 	- Added ranges property (Rob Herring)
+> 	- Corrected the indendation (Rob Herring)
+> 	- Added additionalProperties (Rob Herring)
+> 	- Split dsi file into two, one for dsi controller
+> 	  and another one for dsi phy per target (Rob Herring)
+> 	- Corrected description for pinctrl-names (Rob Herring)
+> 	- Corrected the examples used in yaml file (Rob Herring)
+> 	- Delete dsi.txt and dpu.txt (Rob Herring)
+> 
+> Changes in v4:
+> 	- Move schema up by one level (Rob Herring)
+> 	- Add patternProperties for mdp node (Rob Herring)
+> 	- Corrected description of some properties (Rob Herring)
+> 
+> Changes in v5:
+> 	- Correct the indentation (Rob Herring)
+> 	- Remove unnecessary description from properties (Rob Herring)
+> 	- Correct the number of interconnect entries (Rob Herring)
+> 	- Add interconnect names for sc7180 (Rob Herring)
+> 	- Add description for ports (Rob Herring)
+> 	- Remove common properties (Rob Herring)
+> 	- Add unevalutatedProperties (Rob Herring)
+> 	- Reference existing dsi controller yaml in the common
+> 	  dsi controller file (Rob Herring)
+> 	- Correct the description of clock names to include only the
+> 	  clocks that are required (Rob Herring)
+> 	- Remove properties which are already covered under the common
+> 	  binding (Rob Herring)
+> 	- Add dsi phy supply nodes which are required for sc7180 and
+> 	  sdm845 targets (Rob Herring)
+> 	- Add type ref for syscon-sfpb (Rob Herring)
+> ---
+>  .../bindings/display/dsi-controller.yaml           |   4 +-
+>  .../bindings/display/msm/dpu-sc7180.yaml           | 230 +++++++++++++++++++
+>  .../bindings/display/msm/dpu-sdm845.yaml           | 210 ++++++++++++++++++
+>  .../devicetree/bindings/display/msm/dpu.txt        | 141 ------------
+>  .../display/msm/dsi-common-controller.yaml         | 178 +++++++++++++++
+>  .../display/msm/dsi-controller-sc7180.yaml         | 115 ++++++++++
+>  .../display/msm/dsi-controller-sdm845.yaml         | 115 ++++++++++
+>  .../bindings/display/msm/dsi-phy-sc7180.yaml       |  79 +++++++
+>  .../bindings/display/msm/dsi-phy-sdm845.yaml       |  81 +++++++
+>  .../devicetree/bindings/display/msm/dsi-phy.yaml   |  79 +++++++
+>  .../devicetree/bindings/display/msm/dsi.txt        | 246 ---------------------
+>  11 files changed, 1089 insertions(+), 389 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/dpu.txt
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-common-controller.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dsi-phy.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/dsi.txt
+> 
 
-On 7/10/2020 9:40 PM, Doug Anderson wrote:
-> Hi,
->
-> On Fri, Jul 10, 2020 at 2:03 AM Marc Zyngier <maz@kernel.org> wrote:
->> Hi Doug,
->>
->> On Wed, 08 Jul 2020 22:16:25 +0100,
->> Douglas Anderson <dianders@chromium.org> wrote:
->>> As per Qualcomm, there is a PDC hardware issue (with the specific IP
->>> rev that exists on sc7180) that causes the PDC not to work properly
->>> when configured to handle dual edges.
->>>
->>> Let's work around this by emulating only ever letting our parent see
->>> requests for single edge interrupts on affected hardware.
->>>
->>> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
->>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->>> ---
->>> As far as I can tell everything here should work and the limited
->>> testing I'm able to give it shows that, in fact, I can detect both
->>> edges.
->>>
->>> Please give this an extra thorough review since it's trying to find
->>> the exact right place to insert this code and I'm not massively
->>> familiar with all the frameworks.
->>>
->>> If someone has hardware where it's easy to stress test this that'd be
->>> wonderful too.  The board I happen to have in front of me doesn't have
->>> any easy-to-toggle GPIOs where I can just poke a button or a switch to
->>> generate edges.  My testing was done by hacking the "write protect"
->>> GPIO on my board into gpio-keys as a dual-edge interrupt and then
->>> sending commands to our security chip to toggle it--not exactly great
->>> for testing to make sure there are no race conditions if the interrupt
->>> bounces a lot.
->> This looks positively awful (the erratum, not the patch). Is there an
->> actual description of the problem, outlining the circumstances that
->> triggers this issue? The PDC really never fails to disappoint...
-> Hopefully someone from Qualcomm can chime in here.  My entire
-> knowledge of the errata comes from:
->
-> https://lore.kernel.org/r/c747043d-c69e-4153-f2ca-16f1fc3063c2@codeaurora.org
->
-> ...and I tried to copy the exact phrasing that Rajendra gave.
-PDC irqchip not detecting dual edge interrupts is not really a bug. PDC 
-closely works in hierarchy with
-GIC and GIC also doesn't support dual edge IRQs.  Dual edge feature is 
-added in later HW revisions to support
-similar usecases.
 
-Regardless of dual edge feature,  as i mentioned in below link
-if the drivers requests the intended edge of the interrupt then it works 
-as expected.
-(Drivers never need/use both the edges at a same time).
-but if we are not intending to change/update each driver which use dual 
-edge, this patch takes care of
-same by requesting only one edge at a time, albeit its done from irqchip 
-driver as opposed to client driver.
+My bot found errors running 'make dt_binding_check' on your patch:
 
-https://lore.kernel.org/linux-arm-msm/56fb02df-372d-935a-cc39-c13289d65c0d@codeaurora.org/
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.example.dt.yaml: example-0: dsi@ae94000:reg:0: [0, 183058432, 0, 1024] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dpu-sdm845.example.dt.yaml: example-0: mdss@ae00000:reg:0: [0, 182452224, 0, 4096] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.example.dt.yaml: example-0: dsi-phy@ae94400:reg:0: [0, 183059456, 0, 512] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.example.dt.yaml: example-0: dsi-phy@ae94400:reg:1: [0, 183059968, 0, 640] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.example.dt.yaml: example-0: dsi-phy@ae94400:reg:2: [0, 183060992, 0, 480] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dpu-sc7180.example.dt.yaml: example-0: mdss@ae00000:reg:0: [0, 182452224, 0, 4096] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.example.dt.yaml: example-0: dsi-phy@ae94400:reg:0: [0, 183059456, 0, 512] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.example.dt.yaml: example-0: dsi-phy@ae94400:reg:1: [0, 183059968, 0, 640] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.example.dt.yaml: example-0: dsi-phy@ae94400:reg:2: [0, 183060992, 0, 480] is too long
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.example.dt.yaml: example-0: dsi@ae94000:reg:0: [0, 183058432, 0, 1024] is too long
 
-Thanks,
-Maulik
->
->>>   drivers/pinctrl/qcom/pinctrl-msm.c    | 80 +++++++++++++++++++++++++++
->>>   drivers/pinctrl/qcom/pinctrl-msm.h    |  4 ++
->>>   drivers/pinctrl/qcom/pinctrl-sc7180.c |  1 +
->>>   3 files changed, 85 insertions(+)
->>>
->>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
->>> index 83b7d64bc4c1..45ca09ebb7b3 100644
->>> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
->>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
->>> @@ -860,6 +860,79 @@ static void msm_gpio_irq_ack(struct irq_data *d)
->>>        raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->>>   }
->>>
->>> +/**
->>> + * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
->>> + * @d: The irq dta.
->>> + *
->>> + * This is much like msm_gpio_update_dual_edge_pos() but for IRQs that are
->>> + * normally handled by the parent irqchip.  The logic here is slightly
->>> + * different due to what's easy to do with our parent, but in principle it's
->>> + * the same.
->>> + */
->>> +static void msm_gpio_update_dual_edge_parent(struct irq_data *d)
->>> +{
->>> +     struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>> +     struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
->>> +     const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
->>> +     unsigned long flags;
->>> +     int loop_limit = 100;
->> I guess this is a "finger up in the air" type of limit?
-> Yes, the same "finger up in the air" as
-> msm_gpio_update_dual_edge_pos() in the same file.  My function comment
-> refers to the other function to try to tie them together at least a
-> little.
->
->
->>> +     unsigned int val;
->>> +     unsigned int type;
->>> +
->>> +     /* Read the value and make a guess about what edge we need to catch */
->>> +     val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
->> What does this value represent? The input line value?
-> Yes.  Coped from msm_gpio_update_dual_edge_pos().
->
->
->>> +     type = val ? IRQ_TYPE_EDGE_FALLING : IRQ_TYPE_EDGE_RISING;
->>> +
->>> +     raw_spin_lock_irqsave(&pctrl->lock, flags);
->> What is this lock protecting you against? In both cases, you are
->> already under the irq_desc lock, with interrupts disabled.
-> We are?  I put a breakpoint when the IRQ hits and did a bt.  I see
-> this (I happen to be on 5.4 at the moment, so hopefully the same as
-> mainline):
->
->   kgdb_breakpoint+0x3c/0x74
->   msm_gpio_update_dual_edge_parent+0x58/0x17c
->   msm_gpio_handle_dual_edge_parent_irq+0x1c/0x30
->   __handle_domain_irq+0x84/0xc4
->   gic_handle_irq+0x170/0x220
->   el1_irq+0xd0/0x180
->
-> I think the stack is missing a few things due to aggressive inlining
-> from my compiler, so the true backtrace would be:
->
-> msm_gpio_handle_dual_edge_parent_irq()
-> generic_handle_irq_desc()
-> generic_handle_irq()
-> __handle_domain_irq()
-> handle_domain_irq()
-> gic_handle_irq()
->
-> The first place that got the "desc" was generic_handle_irq() and it
-> got it via irq_to_desc().  That doesn't seem to do any locking.  Then
-> generic_handle_irq_desc() just calls a function pointer so no locking
-> there either.
->
-> ...ah, but maybe what you're saying is that
-> msm_gpio_handle_dual_edge_parent_irq() should be holding "desc->lock"
-> around the call to msm_gpio_update_dual_edge_parent()?  I can do that.
->
->
->>> +     do {
->>> +             /* Set the parent to catch the next edge */
->>> +             irq_chip_set_type_parent(d, type);
->>> +
->>> +             /*
->>> +              * Possibly the line changed between when we last read "val"
->>> +              * (and decided what edge we needed) and when set the edge.
->>> +              * If the value didn't change (or changed and then changed
->>> +              * back) then we're done.
->>> +              */
->> If the line changed, shouldn't you actually inject a new interrupt
->> altogether? By changing the polarity more than once, you are
->> effectively loosing edges that should have triggered an interrupt.
-> Are you sure this is needed?  My understanding of edge triggered
-> interrupts is that until the interrupt handler is called that all
-> edges can be coalesced into a single interrupt.  It's only after the
-> interrupt handler is called that it's important to capture new edges.
-> So if you have this:
->
-> a) Be busy processing another unrelated interrupt
-> b) 5 edges happen on the line
-> c) Other interrupt finishes
-> d) Edge interrupt is acked and handler is called
->
-> You'll only get one call to the interrupt handler even though there
-> were 5 edges, right?  It's only important that you queue another
-> interrupt if that interrupt happens after the true interrupt handler
-> (the one acting on the edge) has started.
->
-> ...actually, in theory you'll get _either_ one or two calls to the
-> interrupt handler depending on timing, since the above could also
-> happen as:
->
-> a) Be busy processing another unrelated interrupt
-> b) 4 edges happen on the line
-> c) Other interrupt finishes
-> d) Edge interrupt is acked and ...
-> e) 1 more edge happens on the line
-> f) ...handler is called
-> g) Edge interrupt is acked and handler is called
->
->
-> As long as msm_gpio_update_dual_edge_parent() is called _before_ the
-> true interrupt handler is called then what I have should be fine,
-> right?
->
->
->>> +             val = msm_readl_io(pctrl, g) & BIT(g->in_bit);
->>> +             if (type == IRQ_TYPE_EDGE_RISING) {
->>> +                     if (!val)
->>> +                             break;
->>> +                     type = IRQ_TYPE_EDGE_FALLING;
->>> +             } else if (type == IRQ_TYPE_EDGE_FALLING) {
->>> +                     if (val)
->>> +                             break;
->>> +                     type = IRQ_TYPE_EDGE_RISING;
->>> +             }
->>> +     } while (loop_limit-- > 0);
->>> +     raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->>> +
->>> +     if (!loop_limit)
->>> +             dev_err(pctrl->dev, "dual-edge irq failed to stabilize\n");
->>> +}
->>> +
->>> +void msm_gpio_handle_dual_edge_parent_irq(struct irq_desc *desc)
->>> +{
->>> +     struct irq_data *d = &desc->irq_data;
->>> +
->>> +     /* Make sure we're primed for the next edge */
->>> +     msm_gpio_update_dual_edge_parent(d);
->> I would have expected this to happen on EOI or ACK, rather than before
->> the flow is actually handled, once you have told the interrupt
->> controller that you were dealing with this interrupt.
-> Having it on Ack would be ideal, but it appears that the Ack function
-> isn't called in this case.  That's only called if our handler is
-> handle_edge_irq() or handle_level_irq().  See more below.
->
-> ...I'm pretty sure I don't want it on EOI.  Specifically, if I did it
-> on EOI then I think I _would_ need to re-queue another interrupt if an
-> edge came in msm_gpio_update_dual_edge_parent().  Doing all the edge
-> adjustment before calling the true interrupt handler avoids all that.
->
->
->>> +
->>> +     /* Pass on to the normal interrupt handler */
->>> +     handle_fasteoi_irq(desc);
->> Is that the right flow? It seems that the current code is using
->> handle_edge_irq. I guess it has been broken so far, and that this
->> patch actually fixes it by forcing a fasteoi flow...
-> The code today only uses handle_level_irq() / handle_edge_irq() if
-> "skip_wake_irqs" wasn't set for this IRQ.  In the case that
-> "skip_wake_irqs" wasn't set then it leaves the handler alone.  I
-> definitely had a hard time following all the flow and interactions
-> between the pinctrl, PDC, and the GICv3 but I definitely did confirm
-> that handle_fasteoi_irq() was the handler that was running when
-> "skip_wake_irqs" was set before I stuck mine in the middle.
->
-> I believe how things work today with the "skip_wake_irqs" case is
-> that, for the most part, the pinctrl driver stays out of the way for
-> setting up and handling IRQs and just passes some calls onto its
-> parent (the PDC).  The PDC driver is actually quite minimal.  There's
-> no "Ack" in there and no calls to set an IRQ handler--it seems to just
-> rely on the GICv3 doing all that.  It looks there is an implicit Ack
-> as part of gic_handle_irq() since reading the IAR counts as an Ack.
->
->
-> So to try to sum up my understanding:
->
-> 1. In the case of "skip_wake_irqs" today there is no acking / handling
-> code that is part of pinctrl-msm or the PDC.  They just configure
-> things to direct to the GICv3.
->
-> 2. For my workaround I just need to make sure to intercept myself and
-> prime the next edge _before_ the end-user interrupt handler gets
-> called.  If edges are coalesced before the end-user interrupt handler
-> is called then that's OK.
->
->
-> I'll await your reply before sending out the next version.  Thanks
-> much for all your time looking at this!
->
->
->>> +}
->>> +
->>> +static bool msm_gpio_needs_dual_edge_parent_workaround(struct irq_data *d,
->>> +                                                    unsigned int type)
->>> +{
->>> +     struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>> +     struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
->>> +
->>> +     return type == IRQ_TYPE_EDGE_BOTH &&
->>> +            pctrl->soc->wakeirq_dual_edge_errata && d->parent_data &&
->>> +            test_bit(d->hwirq, pctrl->skip_wake_irqs);
->>> +}
->>> +
->>>   static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->>>   {
->>>        struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>> @@ -868,6 +941,13 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
->>>        unsigned long flags;
->>>        u32 val;
->>>
->>> +     if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
->>> +             irq_set_handler_locked(d, msm_gpio_handle_dual_edge_parent_irq);
->>> +             msm_gpio_update_dual_edge_parent(d);
->>> +
->>> +             return 0;
->>> +     }
->>> +
->>>        if (d->parent_data)
->>>                irq_chip_set_type_parent(d, type);
->>>
->>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
->>> index 9452da18a78b..7486fe08eb9b 100644
->>> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
->>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
->>> @@ -113,6 +113,9 @@ struct msm_gpio_wakeirq_map {
->>>    * @pull_no_keeper: The SoC does not support keeper bias.
->>>    * @wakeirq_map:    The map of wakeup capable GPIOs and the pin at PDC/MPM
->>>    * @nwakeirq_map:   The number of entries in @wakeirq_map
->>> + * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
->>> + *                            to be aware that their parent can't handle dual
->>> + *                            edge interrupts.
->>>    */
->>>   struct msm_pinctrl_soc_data {
->>>        const struct pinctrl_pin_desc *pins;
->>> @@ -128,6 +131,7 @@ struct msm_pinctrl_soc_data {
->>>        const int *reserved_gpios;
->>>        const struct msm_gpio_wakeirq_map *wakeirq_map;
->>>        unsigned int nwakeirq_map;
->>> +     bool wakeirq_dual_edge_errata;
->>>   };
->>>
->>>   extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
->>> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
->>> index 1b6465a882f2..1d9acad3c1ce 100644
->>> --- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
->>> +++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
->>> @@ -1147,6 +1147,7 @@ static const struct msm_pinctrl_soc_data sc7180_pinctrl = {
->>>        .ntiles = ARRAY_SIZE(sc7180_tiles),
->>>        .wakeirq_map = sc7180_pdc_map,
->>>        .nwakeirq_map = ARRAY_SIZE(sc7180_pdc_map),
->>> +     .wakeirq_dual_edge_errata = true,
->>>   };
->>>
->>>   static int sc7180_pinctrl_probe(struct platform_device *pdev)
->>> --
->>> 2.27.0.383.g050319c2ae-goog
->>>
->>>
->> Thanks,
->>
->>          M.
->>
->> --
->> Without deviation from the norm, progress is not possible.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+See https://patchwork.ozlabs.org/patch/1326868
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
 
