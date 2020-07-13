@@ -2,109 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 503A821CE88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 07:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C91621CED9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2020 07:33:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725804AbgGMFDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 01:03:32 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:31904 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725826AbgGMFDc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 01:03:32 -0400
-X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Jul 2020 01:03:31 EDT
-IronPort-SDR: JfArKeZ9A2bw0skOq60v6blC1tY8ZhO8aNa9Tk7WprCo5/lMywAE2kYHzZbSzTE1Sz6/A2BXMl
- esKJwZGWOJqHFBb4xKwtFzQ91hfNYz7zOe3yggWZsBsPeibt+60AXi2iCwfmsx42sN7LtLRVKM
- NJLwq0VDYugC0BRBR6jexc8bGyHOC+9JfUQANW4Ix0j3RUJtF3cfV40P16jK7nN83w1wmbtwyI
- K5x7XpplJdGr+dyn0C8VbEOF6AyormNSgxLfB9MYhGmv00l3+G7q8nqyuVKUsPpzuj9IqAVCJZ
- GsQ=
-X-IronPort-AV: E=Sophos;i="5.75,346,1589266800"; 
-   d="scan'208";a="47215537"
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by labrats.qualcomm.com with ESMTP; 12 Jul 2020 21:57:27 -0700
-Received: from pacamara-linux.qualcomm.com ([192.168.140.135])
-  by ironmsg03-sd.qualcomm.com with ESMTP; 12 Jul 2020 21:57:26 -0700
-Received: by pacamara-linux.qualcomm.com (Postfix, from userid 359480)
-        id 8250322DAF; Sun, 12 Jul 2020 21:57:26 -0700 (PDT)
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1725818AbgGMFdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 01:33:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59390 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725804AbgGMFdB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Jul 2020 01:33:01 -0400
+Received: from localhost (unknown [122.182.251.219])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CC5402068F;
+        Mon, 13 Jul 2020 05:32:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594618380;
+        bh=xHhlhOG2O5smTAneN0ZnuiRbm7rrhPP60vF/0+KOSM0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SDy5y0Xs12hnjkGWFqhjDKbEIXVc0CnyWy7cI5B9idC9gkLt1ktAu0W7oQJ7e4lwY
+         MC/rNJ+kVDnhp2yca4crjhjsgxbqRDpeZdamgs2IX9jbiAU9BChpzBrEp69QcInYHg
+         tyaay/MDgtmEWuDRUSVStCAy25Etw+IG0ywLx6lA=
+Date:   Mon, 13 Jul 2020 11:02:55 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@codeaurora.org>,
+        Jonathan McDowell <noodles@earth.li>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v1 3/4] ufs: ufs-qcom: Fix a few BUGs in func ufs_qcom_dump_dbg_regs()
-Date:   Sun, 12 Jul 2020 21:57:11 -0700
-Message-Id: <1594616232-25080-4-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1594616232-25080-1-git-send-email-cang@codeaurora.org>
-References: <1594616232-25080-1-git-send-email-cang@codeaurora.org>
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [RESEND PATCH v7 1/2] phy: qualcomm: add qcom ipq806x dwc usb
+ phy driver
+Message-ID: <20200713053255.GY34333@vkoul-mobl>
+References: <20200615205333.20747-1-ansuelsmth@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200615205333.20747-1-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dumping testbus registers needs to sleep a bit intermittently as there are
-too many of them. Skip them for those contexts where sleep is not allowed.
+On 15-06-20, 22:53, Ansuel Smith wrote:
 
-Meanwhile, if ufs_qcom_dump_dbg_regs() calls ufs_qcom_testbus_config() from
-ufshcd_suspend/resume and/or clk gate/ungate context, pm_runtime_get_sync()
-and ufshcd_hold() will cause racing problems. Fix it by removing the
-unnecessary calls of pm_runtime_get_sync() and ufshcd_hold().
+> @@ -0,0 +1,593 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/* Copyright (c) 2014-2015, Code Aurora Forum. All rights reserved.
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License version 2 and
+> + * only version 2 as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+You have SPDX tag, so we dont need the license text, please remove this.
+Also we are in 2020 now so Copyright looks incorrect
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 2e6ddb5..3743c17 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1604,9 +1604,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	 */
- 	}
- 	mask <<= offset;
--
--	pm_runtime_get_sync(host->hba->dev);
--	ufshcd_hold(host->hba, false);
- 	ufshcd_rmwl(host->hba, TEST_BUS_SEL,
- 		    (u32)host->testbus.select_major << 19,
- 		    REG_UFS_CFG1);
-@@ -1619,8 +1616,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	 * committed before returning.
- 	 */
- 	mb();
--	ufshcd_release(host->hba);
--	pm_runtime_put_sync(host->hba->dev);
- 
- 	return 0;
- }
-@@ -1658,11 +1653,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- 
- 	/* sleep a bit intermittently as we are dumping too much data */
- 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
--	udelay(1000);
--	ufs_qcom_testbus_read(hba);
--	udelay(1000);
--	ufs_qcom_print_unipro_testbus(hba);
--	udelay(1000);
-+	if (in_task()) {
-+		udelay(1000);
-+		ufs_qcom_testbus_read(hba);
-+		udelay(1000);
-+		ufs_qcom_print_unipro_testbus(hba);
-+		udelay(1000);
-+	}
- }
- 
- /**
+> +static int qcom_ipq806x_usb_ss_phy_init(struct phy *phy)
+> +{
+> +	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
+> +	int ret;
+> +	u32 data = 0;
+
+Superfluous init
+
+> +static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
+> +{
+> +	struct usb_phy	*phy_dwc3;
+> +	struct phy_provider		*phy_provider;
+> +	struct phy			*generic_phy;
+> +	const struct of_device_id *match;
+> +	const struct phy_drvdata *data;
+> +	struct resource			*res;
+> +	resource_size_t			size;
+
+Pls pick one, tabs or single spaces, not both. and reverse christmas
+looks better :)
+
+> +	struct device_node *np;
+> +
+> +	phy_dwc3 = devm_kzalloc(&pdev->dev, sizeof(*phy_dwc3), GFP_KERNEL);
+> +	if (!phy_dwc3)
+> +		return -ENOMEM;
+> +
+> +	match = of_match_node(qcom_ipq806x_usb_phy_table, pdev->dev.of_node);
+> +	data = match->data;
+
+How about using of_device_get_match_data() instead?
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+~Vinod
