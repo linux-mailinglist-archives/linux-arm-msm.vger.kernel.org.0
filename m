@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A89421E2F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:23:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F4C621E2E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 00:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgGMWWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Jul 2020 18:22:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45580 "EHLO
+        id S1726545AbgGMWSH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Jul 2020 18:18:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgGMWR0 (ORCPT
+        with ESMTP id S1726505AbgGMWRe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Jul 2020 18:17:26 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91EE0C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:26 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id u6so4749151uau.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:26 -0700 (PDT)
+        Mon, 13 Jul 2020 18:17:34 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59DFC08C5DD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:33 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id h18so4744306uao.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+LFCA43BGkxjqrYbBGY+idjvRsLf5O6PPbK27q7D0Bw=;
-        b=j5dRr0SnqpA2dV+P7/JOdcquxtibjP73/WoGMAUQ6ir6wX9NsomAfNw8Cp/IweTjcr
-         k7ddPDpour2+rZA3/zGoLTfyDEB+kLj1pLDMU2vXS08vsdr8rr8wKFKvlwgf42ki3KaP
-         Bj0xMElNbV/1LB37z0Bm+sogFPP5R7uwghD0U=
+        bh=KyzzzEfQ3Uc/t+bUav/3x8lC62pgjGuDPMIXbn4bZbw=;
+        b=InUYU/sUXni6t/s3Y0tEzsg6QRkbF8CdHi29QeizGklCp2wPj8fVd34LQ23a0P4iuU
+         nDGgnyMb2+gOlkblxRAG3WGfZEczi+XzLqzr3/WSm+8/OTockDZ0K70oggBRR7nwiPQZ
+         WlrLXTDfpeFBc2CMm04EkptdN+M89zgyRIiPQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+LFCA43BGkxjqrYbBGY+idjvRsLf5O6PPbK27q7D0Bw=;
-        b=gi7KNQxBIDMeXfxU9Nyxb9fRA3l1b3FlEQIt8pIvoldWLSdAIp4c1JKKoYgtDHHrRG
-         vn3NkvJCe4rXQMyKVKbI3jThczxtLL/LDbTiQWDwN8rzCMrtV0B6zvSVknXSjdMEIeFB
-         kyF7pV41uSaE6QihiFZimr18RApH8ThiYCqegGmpGsxGxcw02s1KmVIoTxNUsdxdcUsu
-         +lzlwQHO2d8X9SDhsYSrgVXOewxkg4SizSjA1w+HPX5hDI2fb3M/IkMSc3f4QatRsZz9
-         rCvah5ESZ/QQJawrXUOxrAwX37X/ztIq36KVCM9Zgu/rtbPCAH0au6DtvhX6mG1oevDs
-         FvBA==
-X-Gm-Message-State: AOAM533u9BL3ySQWqDw5ITK1lyrZmntfqMtAlCxvbrPeP1D6IKQ8m47N
-        JgZQqcHFqkQjbKxYn2F7DU2NRg1cg54=
-X-Google-Smtp-Source: ABdhPJzm4w6Fkmn98eO0pj8accfowLHdbhy3a4dYzzifPwUwpa8uRUeR7gpEJVJT2y+j78QhKpBDQA==
-X-Received: by 2002:ab0:2e98:: with SMTP id f24mr1328378uaa.1.1594678645467;
-        Mon, 13 Jul 2020 15:17:25 -0700 (PDT)
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com. [209.85.222.45])
-        by smtp.gmail.com with ESMTPSA id t23sm1950030vsa.20.2020.07.13.15.17.23
+        bh=KyzzzEfQ3Uc/t+bUav/3x8lC62pgjGuDPMIXbn4bZbw=;
+        b=U6IxYQ09NHL/27DQxexXrN2jCJPmSfuDfWByTgCGZ60LnWHp7YR8ZHCkPz+9TYPe+0
+         Xp13n77aUVq5JvsNCpcPZcp7QLnigBdRAYZUxDc72+0ftAz/rlvBR8YI6VW84A3RyFps
+         GDotQLKi240bfd6TxmPwykoCY60sy8Bzi2PuMQ2nLg6e3xAQab5q0YLQU2PC5gfEiURz
+         MknRvyOr405FHV7n6OFSzjF1jemUzjO4aMN7cJm/4+sLfpL79skABownxSja9HYZQW9+
+         MgUSjfJOzHKwE+1OOr00lbed/DZzoQEQIl6du1iOO6ebqJq/f7rMbVXJzG304akhqmra
+         tTeA==
+X-Gm-Message-State: AOAM531+g65NZJKo1Nd00qgg+rmcl0CPjWBnaD7sgWFH0TouDFZY/Q0r
+        6aIqW1VpKIH0szDKmhUBNh8Soq/VDaI=
+X-Google-Smtp-Source: ABdhPJwwPIvhpflrKB4RrY/TdTBFsILY2pPaKhNFMrpuSLIg1yq99fa2gVeE8JKtatE4FCVBIxgbZg==
+X-Received: by 2002:ab0:189:: with SMTP id 9mr1368844ual.75.1594678652887;
+        Mon, 13 Jul 2020 15:17:32 -0700 (PDT)
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
+        by smtp.gmail.com with ESMTPSA id t192sm827993vke.7.2020.07.13.15.17.31
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2020 15:17:24 -0700 (PDT)
-Received: by mail-ua1-f45.google.com with SMTP id h18so4744097uao.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:23 -0700 (PDT)
-X-Received: by 2002:ab0:150c:: with SMTP id o12mr1419016uae.90.1594678643349;
- Mon, 13 Jul 2020 15:17:23 -0700 (PDT)
+        Mon, 13 Jul 2020 15:17:31 -0700 (PDT)
+Received: by mail-vs1-f49.google.com with SMTP id d11so4984440vsq.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2020 15:17:31 -0700 (PDT)
+X-Received: by 2002:a67:ec0f:: with SMTP id d15mr1113618vso.121.1594678651291;
+ Mon, 13 Jul 2020 15:17:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <1592818308-23001-1-git-send-email-mkshah@codeaurora.org> <1592818308-23001-6-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1592818308-23001-6-git-send-email-mkshah@codeaurora.org>
+References: <1592818308-23001-1-git-send-email-mkshah@codeaurora.org> <1592818308-23001-4-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1592818308-23001-4-git-send-email-mkshah@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 13 Jul 2020 15:17:11 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X=0yqDMeWSUAM4D6o_6JsOU4hm8Q2XFbOSEVQcRzRN6A@mail.gmail.com>
-Message-ID: <CAD=FV=X=0yqDMeWSUAM4D6o_6JsOU4hm8Q2XFbOSEVQcRzRN6A@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] irqchip: qcom-pdc: Reset all pdc interrupts during init
+Date:   Mon, 13 Jul 2020 15:17:20 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xfi+5ms_pRyGjOG2EhkkGf9jCzXvEt=cHkBQMn1wkU7g@mail.gmail.com>
+Message-ID: <CAD=FV=Xfi+5ms_pRyGjOG2EhkkGf9jCzXvEt=cHkBQMn1wkU7g@mail.gmail.com>
+Subject: Re: [PATCH v3 3/5] pinctrl: qcom: Use return value from irq_set_wake call
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Marc Zyngier <maz@kernel.org>,
@@ -82,89 +82,17 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Jun 22, 2020 at 2:33 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+On Mon, Jun 22, 2020 at 2:32 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> Clear previous kernel's configuration during init by resetting
-> all interrupts in enable bank to zero.
+> msmgpio irqchip is not using return value of irq_set_wake call.
+> Start using it.
 >
+> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 > ---
->  drivers/irqchip/qcom-pdc.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-> index 8beb6f7..11a9d3a 100644
-> --- a/drivers/irqchip/qcom-pdc.c
-> +++ b/drivers/irqchip/qcom-pdc.c
-> @@ -19,6 +19,7 @@
->  #include <linux/slab.h>
->  #include <linux/types.h>
->
-> +#define PDC_MAX_IRQS_PER_REG   32
->  #define PDC_MAX_IRQS           168
->  #define PDC_MAX_GPIO_IRQS      256
->
-> @@ -339,6 +340,7 @@ static const struct irq_domain_ops qcom_pdc_gpio_ops = {
->  static int pdc_setup_pin_mapping(struct device_node *np)
->  {
->         int ret, n;
-> +       u32 reg, max_regs, max_pins = 0;
->
->         n = of_property_count_elems_of_size(np, "qcom,pdc-ranges", sizeof(u32));
->         if (n <= 0 || n % 3)
-> @@ -367,8 +369,19 @@ static int pdc_setup_pin_mapping(struct device_node *np)
->                                                  &pdc_region[n].cnt);
->                 if (ret)
->                         return ret;
-> +               max_pins += pdc_region[n].cnt;
->         }
->
-> +       if (max_pins > PDC_MAX_IRQS)
-> +               return -EINVAL;
-> +
-> +       max_regs = max_pins / PDC_MAX_IRQS_PER_REG;
-> +       if (max_pins % PDC_MAX_IRQS_PER_REG)
-> +               max_regs++;
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
 
-nit: max_regs = DIV_ROUND_UP(max_pins, PDC_MAX_IRQS_PER_REG)
+Seems right to me.
 
-
-> +       for (reg = 0; reg < max_regs; reg++)
-> +               pdc_reg_write(IRQ_ENABLE_BANK, reg, 0);
-
-This doesn't feel correct to me, but maybe I'm misunderstanding the
-hardware (I don't think I have access to a reference manual).  Looking
-at the example in the bindings, I see:
-
-qcom,pdc-ranges = <0 512 94>, <94 641 15>, <115 662 7>;
-
-In that example we have mappings for PDC ports:
-0 - 93 (count = 94)
-94 - 108 (count = 15)
-115 - 121 (count = 7)
-
-Notice the slight discontinuity there.  I presume that discontinuity
-is normal / allowed?  If so, if there is enough of it then I think
-your math could be wrong, though with the example you get lucky and it
-works out OK.  It's easy to see the problem with a slightly different
-example:  Imagine that you had this:
-
-0 - 33 (count = 34)
-94 - 108 (count = 15)
-115 - 121 (count = 7)
-
-...now max_pins = 56 and max_regs = 2.  So you'll init reg 0 and 1.
-...but (IIUC) you actually should be initting 0, 1, 2, and 3.
-
-I have no idea what might be in those discontinuous ranges and if it's
-always OK to clear, but (assuming it is) one fix is to put your
-clearing loop _inside_ the other "for" loop in this function, AKA:
-
-for (reg = pdc_region[n].pin_base / PDC_MAX_IRQS_PER_REG;
-     reg < DIV_ROUND_UP(pdc_region[n].pin_base + pdc_region[n].cnt),
-                        PDC_MAX_IRQS_PER_REG)
-     reg++)
-
-...or another option is to keep track of the max "pin_base + cnt" and
-loop from 0 to there?  I just don't know your hardware well enough to
-tell which would be right.
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
