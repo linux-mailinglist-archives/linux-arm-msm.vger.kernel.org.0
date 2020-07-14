@@ -2,263 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74F6A21E9E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 09:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7EFB21EAB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 09:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725939AbgGNHV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 03:21:56 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:19006 "EHLO m43-7.mailgun.net"
+        id S1725905AbgGNH4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jul 2020 03:56:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48808 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726062AbgGNHVz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 03:21:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594711315; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=g+7CvZDLH4+dV0RR1o5l6XfYy1r2BwGxUi5cULYTmy8=;
- b=EmzCYvk1Sc13VZMsYCrgIR1NAXAqBKgAetVGDVm5ahTty2rR8wvvvuUuHduH0gjbO52k8oAH
- 4wAczMaMyR8Q5RimY8+jTVjFztvUYnebnltvXt6sX06PrdjZtxeXy52wA+2Ktgehk3OBrgRU
- 5Fq8Rdf9148x4ZOW49J08e7fxvM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
- 5f0d5d0fee866185759a863f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Jul 2020 07:21:51
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A1AAEC43391; Tue, 14 Jul 2020 07:21:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1725833AbgGNH4K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Jul 2020 03:56:10 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B209C433CA;
-        Tue, 14 Jul 2020 07:21:49 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B46E72145D;
+        Tue, 14 Jul 2020 07:56:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594713369;
+        bh=qeHxoelopC8fC8i1MYKZLmE+ijVyBr7FSm/jfPrNJf8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fkeT9Yj3tp1TDlDqeq3AhcpLjrOBqs5FOt7gsO1aA2J+sG41iTneHzbLldMqyksjg
+         KtKaUN+u+m6bmGA/fqs07uM46fY8E4Y1giEhRtzqRd0CljhONMXkPmnA/s7Xmvboeh
+         N+obl3zoeIZ1hKl8vv3F9U81LTbfJmMMMUJArlM0=
+Date:   Tue, 14 Jul 2020 08:56:03 +0100
+From:   Will Deacon <will@kernel.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20200714075603.GE4277@willie-the-truck>
+References: <20200625001039.56174-1-john.stultz@linaro.org>
+ <20200625001039.56174-6-john.stultz@linaro.org>
+ <20200702141825.GA16941@willie-the-truck>
+ <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com>
+ <20200710075411.GA30011@willie-the-truck>
+ <CALAqxLWadLrxckRHRAR0Q417RnFKquQJbRfO_DLEVH56cykRow@mail.gmail.com>
+ <20200713204133.GA3731@willie-the-truck>
+ <CALAqxLXDVRzWDfuAS78EFwyYs3yr3QrPF3Tze0KAW1fo9c7M2A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Tue, 14 Jul 2020 12:51:49 +0530
-From:   dikshita@codeaurora.org
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     Nicolas Dufresne <nicolas@ndufresne.ca>, mchehab@kernel.org,
-        ezequiel@collabora.com, boris.brezillon@collabora.com,
-        ribalda@kernel.org, paul.kocialkowski@bootlin.com,
-        posciak@chromium.org, linux-media@vger.kernel.org,
-        stanimir.varbanov@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org,
-        majja@codeaurora.org, linux-media-owner@vger.kernel.org
-Subject: Re: [RFC PATCH 0/1] Add LTR controls
-In-Reply-To: <40040141fc3027c3eb1fdebc1a0e8ade@codeaurora.org>
-References: <1591871121-25420-1-git-send-email-dikshita@codeaurora.org>
- <f07c4aab69d2b333c0e36c50c526c0a85322e708.camel@ndufresne.ca>
- <1a9904b6-60a5-0faa-8a5e-c9dc00802184@xs4all.nl>
- <40040141fc3027c3eb1fdebc1a0e8ade@codeaurora.org>
-Message-ID: <a52d74a1284531e7d919eb9d675697f3@codeaurora.org>
-X-Sender: dikshita@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALAqxLXDVRzWDfuAS78EFwyYs3yr3QrPF3Tze0KAW1fo9c7M2A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, Jul 13, 2020 at 01:48:29PM -0700, John Stultz wrote:
+> On Mon, Jul 13, 2020 at 1:41 PM Will Deacon <will@kernel.org> wrote:
+> > On Fri, Jul 10, 2020 at 03:21:53PM -0700, John Stultz wrote:
+> > > On Fri, Jul 10, 2020 at 12:54 AM Will Deacon <will@kernel.org> wrote:
+> > > > On Thu, Jul 09, 2020 at 08:28:45PM -0700, John Stultz wrote:
+> > > > > On Thu, Jul 2, 2020 at 7:18 AM Will Deacon <will@kernel.org> wrote:
+> > > > > > On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
+> > > > > > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> > > > > > > index b510f67dfa49..714893535dd2 100644
+> > > > > > > --- a/drivers/iommu/Kconfig
+> > > > > > > +++ b/drivers/iommu/Kconfig
+> > > > > > > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
+> > > > > > >  config ARM_SMMU
+> > > > > > >       tristate "ARM Ltd. System MMU (SMMU) Support"
+> > > > > > >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
+> > > > > > > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+> > > > > > >       select IOMMU_API
+> > > > > > >       select IOMMU_IO_PGTABLE_LPAE
+> > > > > > >       select ARM_DMA_USE_IOMMU if ARM
+> > > > > >
+> > > > > > This looks like a giant hack. Is there another way to handle this?
+> > > > >
+> > > > > Sorry for the slow response here.
+> > > > >
+> > > > > So, I agree the syntax looks strange (requiring a comment obviously
+> > > > > isn't a good sign), but it's a fairly common way to ensure drivers
+> > > > > don't get built in if they optionally depend on another driver that
+> > > > > can be built as a module.
+> > > > >   See "RFKILL || !RFKILL", "EXTCON || !EXTCON", or "USB_GADGET ||
+> > > > > !USB_GADGET" in various Kconfig files.
+> > > > >
+> > > > > I'm open to using a different method, and in a different thread you
+> > > > > suggested using something like symbol_get(). I need to look into it
+> > > > > more, but that approach looks even more messy and prone to runtime
+> > > > > failures. Blocking the unwanted case at build time seems a bit cleaner
+> > > > > to me, even if the syntax is odd.
+> > > >
+> > > > Maybe just split it out then, so that the ARM_SMMU entry doesn't have this,
+> > > > as that driver _really_ doesn't care about SoC details like this. In other
+> > > > words, add a new entry along the lines of:
+> > > >
+> > > >         config ARM_SMMU_QCOM_IMPL
+> > > >         default y
+> > > >         #if QCOM_SCM=m this can't be =y
+> > > >         depends on ARM_SMMU & (QCOM_SCM || !QCOM_SCM)
+> > > >
+> > > > and then have arm-smmu.h provide a static inline qcom_smmu_impl_init()
+> > > > which returns -ENODEV if CONFIG_ARM_SMMU_QCOM_IMPL=n and hack the Makefile
+> > > > so that we don't bother to compile arm-smmu-qcom.o in that case.
+> > > >
+> > > > Would that work?
+> > >
+> > > I think this proposal still has problems with the directionality of the call.
+> > >
+> > > The arm-smmu-impl.o calls to arm-smmu-qcom.o which calls qcom_scm.o
+> > > So if qcom_scm.o is part of a module, the calling code in
+> > > arm-smmu-qcom.o also needs to be a module, which means CONFIG_ARM_SMMU
+> > > needs to be a module.
+> > >
+> > > I know you said the arm-smmu driver doesn't care about SoC details,
+> > > but the trouble is that currently the arm-smmu driver does directly
+> > > call the qcom-scm code. So it is a real dependency. However, if
+> > > QCOM_SCM is not configured, it calls stubs and that's ok.  In that
+> > > way, the "depends on QCOM_SCM || !QCOM_SCM" line actually makes sense.
+> > > It looks terrible because we're used to boolean logic, but it's
+> > > ternary.
+> >
+> > Yes, it looks ugly, but the part I really have issues with is that building
+> > QCOM_SCM=m and ARM_SMMU=y is perfectly fine if you don't run on an SoC
+> > with the qcom implementation. I don't see why we need to enforce things
+> > here beyond making sure that all selectable permutations _build_ and
+> > fail gracefully at runtime on the qcom SoC if SCM isn't available.
+> 
+> Ok. Thanks, that context/rationale makes sense to me now!  I'll dig in
+> and see if I can figure out the runtime get_symbol handling you
+> suggested for the scm callout.
 
-A gentle reminder for the review.
+Cheers, but in the interest of not being a massive pain in the bum, please
+yell if it ends up being tonnes of work and I'll close my eyes while
+applying your original patch.
 
-Thanks,
-Dikshita
-
-On 2020-06-17 00:11, dikshita@codeaurora.org wrote:
-> Hi Hans, Nicolas,
-> 
-> Thanks for your comments.
-> 
-> On 2020-06-12 14:41, Hans Verkuil wrote:
->> Hi Dikshita, Nicolas,
->> 
->> On 11/06/2020 16:22, Nicolas Dufresne wrote:
->>> Le jeudi 11 juin 2020 à 15:55 +0530, Dikshita Agarwal a écrit :
->>>> LTR (Long Term Reference) frames are the frames that are encoded 
->>>> sometime in the past
->>>> and stored in the DPB buffer list to be used as reference to encode 
->>>> future frames.
->>>> One usage of LTR encoding is to reduce error propagation for video 
->>>> transmission
->>>> in packet lossy networks.  For example, encoder may want to specify 
->>>> some key frames as
->>>> LTR pictures and use them as reference frames for encoding. With 
->>>> extra protection
->>>> selectively on these LTR frames or synchronization with the receiver 
->>>> of reception of
->>>> the LTR frames during transmission, decoder can receive reference 
->>>> frames more reliably
->>>> than other non-reference frames. As a result, transmission error can 
->>>> be effectively
->>>> restricted within certain frames rather than propagated to future 
->>>> frames.
->>>> 
->>>> We are introducing below V4l2 Controls for this feature
->>>> 1. V4L2_CID_MPEG_VIDEO_LTRCOUNT
->>>>     a. This is used to query or configure the number of LTR frames.
->>>>        This is a static control and is controlled by the client.
->>>>     b. The LTR index varies from 0 to the max LTR-1.
->>>>     c. If LTR Count is more than max supported LTR count (max LTR) 
->>>> by driver, it will be rejected.
->>>>     d. Auto Marking : If LTR count is non zero,
->>>>         1) first LTR count frames would be mark as LTR automatically 
->>>> after
->>>>       	   every IDR frame (inclusive).
->>>>         2) For multilayer encoding: first LTR count base layer 
->>>> reference frames starting after
->>>>            every IDR frame (inclusive) in encoding order would be 
->>>> marked as LTR frames by the encoder.
->>>>         3) Auto marking of LTR due to IDR should consider following 
->>>> conditions:
->>>>             1. The frame is not already set to be marked as LTR.
->>>>             2. The frame is part of the base layer in the 
->>>> hierarchical layer case.
->>>>             3. The number of frames currently marked as LTR is less 
->>>> than the maximum LTR frame index plus 1.
->>>>     e. Encoder needs to handle explicit Mark/Use command when 
->>>> encoder is still doing "auto" marking
->> 
->> I don't follow this, quite possibly due to lack of experience with 
->> encoders.
->> 
->> I kind of would expect to see two modes: either automatic where 
->> encoders can
->> mark up to LTR_COUNT frames as long term reference, and userspace just 
->> sets
->> LTR_COUNT and doesn't have to do anything else.
->> 
->> Or it is manual mode where userspace explicitly marks long term 
->> reference
->> frames.
->> 
->> From the proposal above it looks like you can mix auto and manual 
->> modes.
->> 
->> BTW, how do you 'unmark' long term reference frames?
->> 
->> This feature is for stateful encoders, right?
->> 
->>> 
->>> Perhaps we are missing a LONG_TERM_REFERENCE_MODE ? I bet some 
->>> encoder
->>> can select by themself long term references and even some encoders 
->>> may
->>> not let the user decide.
->>> 
->>> (not huge han of LTR acronyme, but that could be fine too, assuming 
->>> you
->>> add more _).
->>> 
-> 
-> Userspace sets LTR count which signifies the number of LTR frames
-> encoder needs to generate or keep.
-> The encoder has to build-up its internal buffer reference list (aka
-> DBP list or recon buffer list).
-> In order to achieve that encoder will fill It's LTR (long term
-> references) list and STR (short term references) list
-> by auto marking n frames as LTR frames(n is equal to LTR count) based
-> on auto-marking dictated by the encoder spec.
-> The client then can replace those automatically marked frames with new
-> frames using V4L2_CID_MPEG_VIDEO_MARKLTRFRAME and can ask
-> encoder to refer the newly marked frame for encoding the next frame
-> using V4L2_CID_MPEG_VIDEO_USELTRFRAME.
-> 
->>>> 
->>>> 2. V4L2_CID_MPEG_VIDEO_MARKLTRFRAME :
->>>>     a. This signals to mark the current frame as LTR frame. It is a 
->>>> dynamic control and also provide the LTR index to be used.
->>>>     b. the LTR index provided by this control should never exceed 
->>>> the max LTR-1. Else it will be rejected.
->>> 
->>> The "current" frame seems a bit loose. Perhaps you wanted to use 
->>> buffer
->>> flags ? A bit like what we have to signal TOP/BOTTOM fields in
->>> alternate interlacing.
->> 
->> I was thinking the same thing. Using a control for this doesn't seem 
->> right.
->> 
-> 
-> the client sets this to replace automatically marked frames by the
-> encoder with a particular frame.
-> this provides an index that ranges from 0 to LTR count-1 and then the
-> particular frame will be marked with that index.
-> this can be achieved through request by associating this control with
-> a specific buffer to make it synchronized.
-> 
->>> 
->>>> 
->>>> 3. V4L2_CID_MPEG_VIDEO_USELTRFRAME :
->>>>     a. This specifies the LTR frame(s) to be used for encoding the 
->>>> current frame. This is a dynamic control.
->>>>     b. LTR Use Bitmap : this consists of bits [0, 15]. A total of N 
->>>> LSB bits of this field are valid,
->>>>        where N is the maximum number of LTRs supported. All the 
->>>> other bits are invalid and should be rejected.
->>>>        The LSB corresponds to the LTR index 0. Bit N-1 from the LSB 
->>>> corresponds to the LTR index max LTR-1.
->> 
->> How would userspace know this? Esp. with auto marking since userspace 
->> would have
->> to predict how auto marking works (if I understand this correctly).
->> 
-> 
-> Client sets LTR count which tells about the number of LTR frames
-> automatically marked by the encoder.
-> so client can use LTR index (0 to LTR count -1) to ask encoder to
-> refer any particular
-> frame (marked automatically by driver or marked by client with
-> V4L2_CID_MPEG_VIDEO_MARKLTRFRAME) as a reference to encode the next
-> frame.
-> 
->> For which HW encoder is this meant?
->> 
-> This is primarily meant for H264 and HEVC.
-> 
-> Thanks,
-> Dikshita
-> 
->>> 
->>> Note, I haven't captured very well the userspace control flow, 
->>> perhaps
->>> this could be enhanced through writing some documentation.
->>> 
->>> As per all other generic encoder controls, we need to make sure it 
->>> will
->>> be usable and flexible enough for multiple HW blocks, as it can be
->>> tedious to extend later otherwise. It is important that along with 
->>> this
->>> RFC you provide some comparisons with with other HW / SW APIs in 
->>> order
->>> to help justify the design decisions. I also think there should be
->>> link made V4L2_CID_MPEG_VIDEO_GOP_* , number of B-Frames etc.
->> 
->> I agree with Nicolas.
->> 
->> Regards,
->> 
->> 	Hans
->> 
->>> 
->>> regards,
->>> Nicolas
->>> 
->>>> 
->>>> Dikshita Agarwal (1):
->>>>   media: v4l2-ctrls:  add control for ltr
->>>> 
->>>>  drivers/media/v4l2-core/v4l2-ctrls.c | 6 ++++++
->>>>  include/uapi/linux/v4l2-controls.h   | 4 ++++
->>>>  2 files changed, 10 insertions(+)
->>>> 
->>> 
+Will
