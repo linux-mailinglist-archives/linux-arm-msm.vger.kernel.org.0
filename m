@@ -2,666 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D38A521EF28
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 13:21:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79E5321F277
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 15:26:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbgGNLU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 07:20:56 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:26974 "EHLO
+        id S1727085AbgGNN0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jul 2020 09:26:41 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:62255 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727935AbgGNLUv (ORCPT
+        by vger.kernel.org with ESMTP id S1727075AbgGNN0l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 07:20:51 -0400
+        Tue, 14 Jul 2020 09:26:41 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594725649; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=41cHG+oA2zzProgvWjOnJ0zE0yg7Rim7XBurV4i3PcA=;
- b=HewuxdnY7pn8tiAk/YVjZDZFTp2YbvoU8c52BjIyPtHOixsQ0/aVgFHJM8zyVVMvxK7fi3N6
- LFRxUCxcTDZvCQ391HsM1HH8n4EYZjT3KRtECxdyPtTymUzSeZIQC/ycSUQAsdXQYiYYCGDy
- LkAZAeBqGyIrGwnsBREXMRGfg3g=
+ s=smtp; t=1594733201; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=ZuuVvtXOSn5P69Z0eecIOVwDd77Y6Cz0UPcGzE05C34=; b=wAWPBHy58UHjlKm8OK+842vPb8FmBPevEvCYb6WsCA8TWXpg5ZIENHx7EvlKjCM4X72eP5Ps
+ 9eEu8haHVXAnfeotwRyj9o4Nz0fYz3m8fJAT7RQNu5saIfamHXlvk8G+ZKNUcDFSwbIfiFl+
+ fTJ08nPtXoyuSj3AHgrsxUPuMo4=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5f0d94f6b35196d59d3027d6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Jul 2020 11:20:22
+ smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
+ 5f0db2551e603dbb44145966 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Jul 2020 13:25:41
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2CAC1C43391; Tue, 14 Jul 2020 11:20:22 +0000 (UTC)
+        id 6ABBDC43391; Tue, 14 Jul 2020 13:25:40 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kalyan_t)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 458AFC43395;
-        Tue, 14 Jul 2020 11:20:20 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 14 Jul 2020 16:50:20 +0530
-From:   kalyan_t@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [v1] drm/msm/dpu: add support for clk and bw scaling
- for display
-In-Reply-To: <CAF6AEGvibErbc-VJWvp9kRz_PwLaBLcfw4xjABwZwh6vg9BbKQ@mail.gmail.com>
-References: <1592489321-29213-1-git-send-email-kalyan_t@codeaurora.org>
- <CAF6AEGuD8+goHa8geZgR89aD2Pb84LT_24bzAbTdL-G-=LWU5A@mail.gmail.com>
- <fac48fcbe15254637196938a7eda04ad@codeaurora.org>
- <CAF6AEGvibErbc-VJWvp9kRz_PwLaBLcfw4xjABwZwh6vg9BbKQ@mail.gmail.com>
-Message-ID: <9a64de9362cf4156786cf23d39dd6547@codeaurora.org>
-X-Sender: kalyan_t@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DDDF8C433CA;
+        Tue, 14 Jul 2020 13:25:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DDDF8C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
+        devicetree@vger.kernel.org, mka@chromium.org, jonathan@marek.ca,
+        robdclark@gmail.com, rnayak@codeaurora.org
+Subject: [PATCH] drm: msm: a6xx: fix gpu failure after system resume
+Date:   Tue, 14 Jul 2020 18:55:30 +0530
+Message-Id: <1594733130-398-1-git-send-email-akhilpo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-13 22:50, Rob Clark wrote:
-> On Mon, Jul 13, 2020 at 8:59 AM <kalyan_t@codeaurora.org> wrote:
->> 
->> On 2020-07-10 22:38, Rob Clark wrote:
->> > On Thu, Jun 18, 2020 at 7:09 AM Kalyan Thota <kalyan_t@codeaurora.org>
->> > wrote:
->> >>
->> >> This change adds support to scale src clk and bandwidth as
->> >> per composition requirements.
->> >>
->> >> Interconnect registration for bw has been moved to mdp
->> >> device node from mdss to facilitate the scaling.
->> >>
->> >> Changes in v1:
->> >>  - Address armv7 compilation issues with the patch (Rob)
->> >>
->> >> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
->> >> ---
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  | 109
->> >> +++++++++++++++++++++----
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |   5 +-
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   4 +
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  37 ++++++++-
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   4 +
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c       |   9 +-
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  84
->> >> +++++++++++++++++++
->> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |   4 +
->> >>  8 files changed, 233 insertions(+), 23 deletions(-)
->> >>
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> >> index 7c230f7..e52bc44 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> >> @@ -29,6 +29,74 @@ enum dpu_perf_mode {
->> >>         DPU_PERF_MODE_MAX
->> >>  };
->> >>
->> >> +/**
->> >> + * @_dpu_core_perf_calc_bw() - to calculate BW per crtc
->> >> + * @kms -  pointer to the dpu_kms
->> >> + * @crtc - pointer to a crtc
->> >> + * Return: returns aggregated BW for all planes in crtc.
->> >> + */
->> >> +static u64 _dpu_core_perf_calc_bw(struct dpu_kms *kms,
->> >> +               struct drm_crtc *crtc)
->> >> +{
->> >> +       struct drm_plane *plane;
->> >> +       struct dpu_plane_state *pstate;
->> >> +       u64 crtc_plane_bw = 0;
->> >> +       u32 bw_factor;
->> >> +
->> >> +       drm_atomic_crtc_for_each_plane(plane, crtc) {
->> >> +               pstate = to_dpu_plane_state(plane->state);
->> >> +               if (!pstate)
->> >> +                       continue;
->> >> +
->> >> +               crtc_plane_bw += pstate->plane_fetch_bw;
->> >> +       }
->> >> +
->> >> +       bw_factor = kms->catalog->perf.bw_inefficiency_factor;
->> >> +       if (bw_factor) {
->> >> +               crtc_plane_bw *= bw_factor;
->> >> +               do_div(crtc_plane_bw, 100);
->> >> +       }
->> >> +
->> >> +       return crtc_plane_bw;
->> >> +}
->> >> +
->> >> +/**
->> >> + * _dpu_core_perf_calc_clk() - to calculate clock per crtc
->> >> + * @kms -  pointer to the dpu_kms
->> >> + * @crtc - pointer to a crtc
->> >> + * @state - pointer to a crtc state
->> >> + * Return: returns max clk for all planes in crtc.
->> >> + */
->> >> +static u64 _dpu_core_perf_calc_clk(struct dpu_kms *kms,
->> >> +               struct drm_crtc *crtc, struct drm_crtc_state *state)
->> >> +{
->> >> +       struct drm_plane *plane;
->> >> +       struct dpu_plane_state *pstate;
->> >> +       struct drm_display_mode *mode;
->> >> +       u64 crtc_clk;
->> >> +       u32 clk_factor;
->> >> +
->> >> +       mode = &state->adjusted_mode;
->> >> +
->> >> +       crtc_clk = mode->vtotal * mode->hdisplay *
->> >> drm_mode_vrefresh(mode);
->> >> +
->> >> +       drm_atomic_crtc_for_each_plane(plane, crtc) {
->> >> +               pstate = to_dpu_plane_state(plane->state);
->> >> +               if (!pstate)
->> >> +                       continue;
->> >> +
->> >> +               crtc_clk = max(pstate->plane_clk, crtc_clk);
->> >> +       }
->> >> +
->> >> +       clk_factor = kms->catalog->perf.clk_inefficiency_factor;
->> >> +       if (clk_factor) {
->> >> +               crtc_clk *= clk_factor;
->> >> +               do_div(crtc_clk, 100);
->> >> +       }
->> >> +
->> >> +       return crtc_clk;
->> >> +}
->> >> +
->> >>  static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
->> >>  {
->> >>         struct msm_drm_private *priv;
->> >> @@ -51,12 +119,7 @@ static void _dpu_core_perf_calc_crtc(struct
->> >> dpu_kms *kms,
->> >>         dpu_cstate = to_dpu_crtc_state(state);
->> >>         memset(perf, 0, sizeof(struct dpu_core_perf_params));
->> >>
->> >> -       if (!dpu_cstate->bw_control) {
->> >> -               perf->bw_ctl = kms->catalog->perf.max_bw_high *
->> >> -                                       1000ULL;
->> >> -               perf->max_per_pipe_ib = perf->bw_ctl;
->> >> -               perf->core_clk_rate = kms->perf.max_core_clk_rate;
->> >> -       } else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM)
->> >> {
->> >> +       if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
->> >>                 perf->bw_ctl = 0;
->> >>                 perf->max_per_pipe_ib = 0;
->> >>                 perf->core_clk_rate = 0;
->> >> @@ -64,6 +127,10 @@ static void _dpu_core_perf_calc_crtc(struct
->> >> dpu_kms *kms,
->> >>                 perf->bw_ctl = kms->perf.fix_core_ab_vote;
->> >>                 perf->max_per_pipe_ib = kms->perf.fix_core_ib_vote;
->> >>                 perf->core_clk_rate = kms->perf.fix_core_clk_rate;
->> >> +       } else {
->> >> +               perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
->> >> +               perf->max_per_pipe_ib =
->> >> kms->catalog->perf.min_dram_ib;
->> >> +               perf->core_clk_rate = _dpu_core_perf_calc_clk(kms,
->> >> crtc, state);
->> >>         }
->> >>
->> >>         DPU_DEBUG(
->> >> @@ -115,11 +182,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc
->> >> *crtc,
->> >>                         DPU_DEBUG("crtc:%d bw:%llu ctrl:%d\n",
->> >>                                 tmp_crtc->base.id,
->> >> tmp_cstate->new_perf.bw_ctl,
->> >>                                 tmp_cstate->bw_control);
->> >> -                       /*
->> >> -                        * For bw check only use the bw if the
->> >> -                        * atomic property has been already set
->> >> -                        */
->> >> -                       if (tmp_cstate->bw_control)
->> >> +
->> >>                                 bw_sum_of_intfs +=
->> >> tmp_cstate->new_perf.bw_ctl;
->> >>                 }
->> >>
->> >> @@ -131,9 +194,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc
->> >> *crtc,
->> >>
->> >>                 DPU_DEBUG("final threshold bw limit = %d\n",
->> >> threshold);
->> >>
->> >> -               if (!dpu_cstate->bw_control) {
->> >> -                       DPU_DEBUG("bypass bandwidth check\n");
->> >> -               } else if (!threshold) {
->> >> +               if (!threshold) {
->> >>                         DPU_ERROR("no bandwidth limits specified\n");
->> >>                         return -E2BIG;
->> >>                 } else if (bw > threshold) {
->> >> @@ -154,7 +215,11 @@ static int _dpu_core_perf_crtc_update_bus(struct
->> >> dpu_kms *kms,
->> >>                                         =
->> >> dpu_crtc_get_client_type(crtc);
->> >>         struct drm_crtc *tmp_crtc;
->> >>         struct dpu_crtc_state *dpu_cstate;
->> >> -       int ret = 0;
->> >> +       int i, ret = 0;
->> >> +       u64 avg_bw;
->> >> +
->> >> +       if (!kms->num_paths)
->> >> +               return -EINVAL;
->> >>
->> >>         drm_for_each_crtc(tmp_crtc, crtc->dev) {
->> >>                 if (tmp_crtc->enabled &&
->> >> @@ -165,10 +230,20 @@ static int _dpu_core_perf_crtc_update_bus(struct
->> >> dpu_kms *kms,
->> >>                         perf.max_per_pipe_ib =
->> >> max(perf.max_per_pipe_ib,
->> >>
->> >> dpu_cstate->new_perf.max_per_pipe_ib);
->> >>
->> >> -                       DPU_DEBUG("crtc=%d bw=%llu\n",
->> >> tmp_crtc->base.id,
->> >> -                                       dpu_cstate->new_perf.bw_ctl);
->> >> +                       perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
->> >> +
->> >> +                       DPU_DEBUG("crtc=%d bw=%llu paths:%d\n",
->> >> +                                 tmp_crtc->base.id,
->> >> +                                 dpu_cstate->new_perf.bw_ctl,
->> >> kms->num_paths);
->> >>                 }
->> >>         }
->> >> +
->> >> +       avg_bw = perf.bw_ctl;
->> >> +       do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
->> >> +
->> >> +       for (i = 0; i < kms->num_paths; i++)
->> >> +               icc_set_bw(kms->path[i], avg_bw,
->> >> perf.max_per_pipe_ib);
->> >> +
->> >>         return ret;
->> >>  }
->> >>
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> >> index 29d4fde..8f2357d 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> >> @@ -541,7 +541,8 @@
->> >>         .max_bw_high = 6800000,
->> >>         .min_core_ib = 2400000,
->> >>         .min_llcc_ib = 800000,
->> >> -       .min_dram_ib = 800000,
->> >> +       .min_dram_ib = 1600000,
->> >> +       .min_prefill_lines = 24,
->> >>         .danger_lut_tbl = {0xff, 0xffff, 0x0},
->> >>         .qos_lut_tbl = {
->> >>                 {.nentry = ARRAY_SIZE(sc7180_qos_linear),
->> >> @@ -558,6 +559,8 @@
->> >>                 {.rd_enable = 1, .wr_enable = 1},
->> >>                 {.rd_enable = 1, .wr_enable = 0}
->> >>         },
->> >> +       .clk_inefficiency_factor = 105,
->> >> +       .bw_inefficiency_factor = 120,
->> >>  };
->> >>
->> >>  /*************************************************************
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> >> index f7de438..f2a5fe2 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> >> @@ -651,6 +651,8 @@ struct dpu_perf_cdp_cfg {
->> >>   * @downscaling_prefill_lines  downscaling latency in lines
->> >>   * @amortizable_theshold minimum y position for traffic shaping
->> >> prefill
->> >>   * @min_prefill_lines  minimum pipeline latency in lines
->> >> + * @clk_inefficiency_factor DPU src clock inefficiency factor
->> >> + * @bw_inefficiency_factor DPU axi bus bw inefficiency factor
->> >>   * @safe_lut_tbl: LUT tables for safe signals
->> >>   * @danger_lut_tbl: LUT tables for danger signals
->> >>   * @qos_lut_tbl: LUT tables for QoS signals
->> >> @@ -675,6 +677,8 @@ struct dpu_perf_cfg {
->> >>         u32 downscaling_prefill_lines;
->> >>         u32 amortizable_threshold;
->> >>         u32 min_prefill_lines;
->> >> +       u32 clk_inefficiency_factor;
->> >> +       u32 bw_inefficiency_factor;
->> >>         u32 safe_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
->> >>         u32 danger_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
->> >>         struct dpu_qos_lut_tbl qos_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> >> index b8615d4..a5da7aa 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> >> @@ -303,6 +303,28 @@ static int dpu_kms_global_obj_init(struct dpu_kms
->> >> *dpu_kms)
->> >>         return 0;
->> >>  }
->> >>
->> >> +static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
->> >> +{
->> >> +       struct icc_path *path0;
->> >> +       struct icc_path *path1;
->> >> +       struct drm_device *dev = dpu_kms->dev;
->> >> +
->> >> +       path0 = of_icc_get(dev->dev, "mdp0-mem");
->> >> +       path1 = of_icc_get(dev->dev, "mdp1-mem");
->> >> +
->> >> +       if (IS_ERR_OR_NULL(path0))
->> >> +               return PTR_ERR_OR_ZERO(path0);
->> >> +
->> >> +       dpu_kms->path[0] = path0;
->> >> +       dpu_kms->num_paths = 1;
->> >> +
->> >> +       if (!IS_ERR_OR_NULL(path1)) {
->> >> +               dpu_kms->path[1] = path1;
->> >> +               dpu_kms->num_paths++;
->> >> +       }
->> >> +       return 0;
->> >> +}
->> >
->> >
->> > so wait, why do we need a 2nd nearly identical copy of
->> > dpu_mdss_parse_data_bus_icc_path() for sc7180?  And tracking of the
->> > path in dpu_mdss for some gens and dpu_kms in other gens?
->> >
->> > (I have a suspicion that the answer is dpu has too much indirection
->> > and abstraction.)
->> >
->> > BR,
->> > -R
->> Hi Rob,
->> 
->> If you could remember, we have discussed this earlier. We don't want 
->> to
->> change the way interconnects are defined in the DT.
->> but since the change is about scaling the BW as per composition cycle,
->> icc paths are needed to be available for MDP node in the kms structure
-> 
-> Right, we don't want to change the bindings.. but I think we could
-> just move the icc paths to dpu_kms in both cases, and not have this
-> duplication?
-> 
->> In summary behavior will be as follows
->> 
->> 1) if icc paths are enumerated at dpu_mdss then BW vote will be once
->> during power up.  ( for cheza )
->> 
->> 2) if icc paths are enumerated at dpu_kms then BW vote will scale on
->> every commit. ( for Trogdor )
-> 
-> If we move it all to dpu_kms, we could decide on dynamic vs static
-> vote based on whether the necessary parameters (inefficiency_factors,
-> etc) are set in the hwcatalog.
-> 
-> That said, I would kinda like to enable bw scaling on 845 as well at
-> some point.  I assume the logic should all be the same, other than the
-> hwcatalog values.  If they are called roughly the same thing in the
-> android kernel, I could probably figure out the values and test this
-> on my sdm850 laptop.
-> 
-> BR,
-> -R
+On targets where GMU is available, GMU takes over the ownership of GX GDSC
+during its initialization. So, take a refcount on the GX PD on behalf of
+GMU before we initialize it. This makes sure that nobody can collapse the
+GX GDSC once GMU owns the GX GDSC. This patch fixes some weird failures
+during GPU wake up during system resume.
 
-Sure Rob, i'll remove the duplication, can i follow it up in a separate 
-patch instead of updating this one?
-i don't have Cheza setup to validate it and it will be difficult to get 
-one due to WFH scenario
-is it possible to help validate the patch on Cheza?
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
->> 
->> >
->> >> +
->> >>  static int dpu_kms_enable_vblank(struct msm_kms *kms, struct drm_crtc
->> >> *crtc)
->> >>  {
->> >>         return dpu_crtc_vblank(crtc, true);
->> >> @@ -972,6 +994,9 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->> >>
->> >>         dpu_vbif_init_memtypes(dpu_kms);
->> >>
->> >> +       if (of_device_is_compatible(dev->dev->of_node,
->> >> "qcom,sc7180-mdss"))
->> >> +               dpu_kms_parse_data_bus_icc_path(dpu_kms);
->> >> +
->> >>         pm_runtime_put_sync(&dpu_kms->pdev->dev);
->> >>
->> >>         return 0;
->> >> @@ -1077,7 +1102,7 @@ static int dpu_dev_remove(struct platform_device
->> >> *pdev)
->> >>
->> >>  static int __maybe_unused dpu_runtime_suspend(struct device *dev)
->> >>  {
->> >> -       int rc = -1;
->> >> +       int i, rc = -1;
->> >>         struct platform_device *pdev = to_platform_device(dev);
->> >>         struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
->> >>         struct dss_module_power *mp = &dpu_kms->mp;
->> >> @@ -1086,6 +1111,9 @@ static int __maybe_unused
->> >> dpu_runtime_suspend(struct device *dev)
->> >>         if (rc)
->> >>                 DPU_ERROR("clock disable failed rc:%d\n", rc);
->> >>
->> >> +       for (i = 0; i < dpu_kms->num_paths; i++)
->> >> +               icc_set_bw(dpu_kms->path[i], 0, 0);
->> >> +
->> >>         return rc;
->> >>  }
->> >>
->> >> @@ -1097,8 +1125,15 @@ static int __maybe_unused
->> >> dpu_runtime_resume(struct device *dev)
->> >>         struct drm_encoder *encoder;
->> >>         struct drm_device *ddev;
->> >>         struct dss_module_power *mp = &dpu_kms->mp;
->> >> +       int i;
->> >>
->> >>         ddev = dpu_kms->dev;
->> >> +
->> >> +       /* Min vote of BW is required before turning on AXI clk */
->> >> +       for (i = 0; i < dpu_kms->num_paths; i++)
->> >> +               icc_set_bw(dpu_kms->path[i], 0,
->> >> +                       dpu_kms->catalog->perf.min_dram_ib);
->> >> +
->> >>         rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
->> >>         if (rc) {
->> >>                 DPU_ERROR("clock enable failed rc:%d\n", rc);
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> >> index 4e32d04..94410ca 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> >> @@ -8,6 +8,8 @@
->> >>  #ifndef __DPU_KMS_H__
->> >>  #define __DPU_KMS_H__
->> >>
->> >> +#include <linux/interconnect.h>
->> >> +
->> >>  #include <drm/drm_drv.h>
->> >>
->> >>  #include "msm_drv.h"
->> >> @@ -137,6 +139,8 @@ struct dpu_kms {
->> >>          * when disabled.
->> >>          */
->> >>         atomic_t bandwidth_ref;
->> >> +       struct icc_path *path[2];
->> >> +       u32 num_paths;
->> >>  };
->> >>
->> >>  struct vsync_info {
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> >> index 80d3cfc..df0a983 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> >> @@ -8,7 +8,6 @@
->> >>  #include <linux/irqdesc.h>
->> >>  #include <linux/irqchip/chained_irq.h>
->> >>  #include "dpu_kms.h"
->> >> -#include <linux/interconnect.h>
->> >>
->> >>  #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
->> >>
->> >> @@ -315,9 +314,11 @@ int dpu_mdss_init(struct drm_device *dev)
->> >>         }
->> >>         dpu_mdss->mmio_len = resource_size(res);
->> >>
->> >> -       ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
->> >> -       if (ret)
->> >> -               return ret;
->> >> +       if (!of_device_is_compatible(dev->dev->of_node,
->> >> "qcom,sc7180-mdss")) {
->> >> +               ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
->> >> +               if (ret)
->> >> +                       return ret;
->> >> +       }
->> >>
->> >>         mp = &dpu_mdss->mp;
->> >>         ret = msm_dss_parse_clock(pdev, mp);
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> >> index 3b9c33e..6379fe1 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> >> @@ -132,6 +132,86 @@ static struct dpu_kms *_dpu_plane_get_kms(struct
->> >> drm_plane *plane)
->> >>  }
->> >>
->> >>  /**
->> >> + * _dpu_plane_calc_bw - calculate bandwidth required for a plane
->> >> + * @Plane: Pointer to drm plane.
->> >> + * Result: Updates calculated bandwidth in the plane state.
->> >> + * BW Equation: src_w * src_h * bpp * fps * (v_total / v_dest)
->> >> + * Prefill BW Equation: line src bytes * line_time
->> >> + */
->> >> +static void _dpu_plane_calc_bw(struct drm_plane *plane,
->> >> +       struct drm_framebuffer *fb)
->> >> +{
->> >> +       struct dpu_plane *pdpu = to_dpu_plane(plane);
->> >> +       struct dpu_plane_state *pstate;
->> >> +       struct drm_display_mode *mode;
->> >> +       const struct dpu_format *fmt = NULL;
->> >> +       struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
->> >> +       int src_width, src_height, dst_height, fps;
->> >> +       u64 plane_prefill_bw;
->> >> +       u64 plane_bw;
->> >> +       u32 hw_latency_lines;
->> >> +       u64 scale_factor;
->> >> +       int vbp, vpw;
->> >> +
->> >> +       pstate = to_dpu_plane_state(plane->state);
->> >> +       mode = &plane->state->crtc->mode;
->> >> +
->> >> +       fmt = dpu_get_dpu_format_ext(fb->format->format,
->> >> fb->modifier);
->> >> +
->> >> +       src_width = drm_rect_width(&pdpu->pipe_cfg.src_rect);
->> >> +       src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
->> >> +       dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
->> >> +       fps = drm_mode_vrefresh(mode);
->> >> +       vbp = mode->vtotal - mode->vsync_end;
->> >> +       vpw = mode->vsync_end - mode->vsync_start;
->> >> +       hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
->> >> +       scale_factor = src_height > dst_height ?
->> >> +               mult_frac(src_height, 1, dst_height) : 1;
->> >> +
->> >> +       plane_bw =
->> >> +               src_width * mode->vtotal * fps * fmt->bpp *
->> >> +               scale_factor;
->> >> +
->> >> +       plane_prefill_bw =
->> >> +               src_width * hw_latency_lines * fps * fmt->bpp *
->> >> +               scale_factor * mode->vtotal;
->> >> +
->> >> +       do_div(plane_prefill_bw, (vbp+vpw));
->> >> +
->> >> +       pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
->> >> +}
->> >> +
->> >> +/**
->> >> + * _dpu_plane_calc_clk - calculate clock required for a plane
->> >> + * @Plane: Pointer to drm plane.
->> >> + * Result: Updates calculated clock in the plane state.
->> >> + * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
->> >> + */
->> >> +static void _dpu_plane_calc_clk(struct drm_plane *plane)
->> >> +{
->> >> +       struct dpu_plane *pdpu = to_dpu_plane(plane);
->> >> +       struct dpu_plane_state *pstate;
->> >> +       struct drm_display_mode *mode;
->> >> +       int dst_width, src_height, dst_height, fps;
->> >> +
->> >> +       pstate = to_dpu_plane_state(plane->state);
->> >> +       mode = &plane->state->crtc->mode;
->> >> +
->> >> +       src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
->> >> +       dst_width = drm_rect_width(&pdpu->pipe_cfg.dst_rect);
->> >> +       dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
->> >> +       fps = drm_mode_vrefresh(mode);
->> >> +
->> >> +       pstate->plane_clk =
->> >> +               dst_width * mode->vtotal * fps;
->> >> +
->> >> +       if (src_height > dst_height) {
->> >> +               pstate->plane_clk *= src_height;
->> >> +               do_div(pstate->plane_clk, dst_height);
->> >> +       }
->> >> +}
->> >> +
->> >> +/**
->> >>   * _dpu_plane_calc_fill_level - calculate fill level of the given
->> >> source format
->> >>   * @plane:             Pointer to drm plane
->> >>   * @fmt:               Pointer to source buffer format
->> >> @@ -1102,6 +1182,10 @@ static void dpu_plane_sspp_atomic_update(struct
->> >> drm_plane *plane)
->> >>         }
->> >>
->> >>         _dpu_plane_set_qos_remap(plane);
->> >> +
->> >> +       _dpu_plane_calc_bw(plane, fb);
->> >> +
->> >> +       _dpu_plane_calc_clk(plane);
->> >>  }
->> >>
->> >>  static void _dpu_plane_atomic_disable(struct drm_plane *plane)
->> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> >> index 4569497..ca83b87 100644
->> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> >> @@ -25,6 +25,8 @@
->> >>   * @scaler3_cfg: configuration data for scaler3
->> >>   * @pixel_ext: configuration data for pixel extensions
->> >>   * @cdp_cfg:   CDP configuration
->> >> + * @plane_fetch_bw: calculated BW per plane
->> >> + * @plane_clk: calculated clk per plane
->> >>   */
->> >>  struct dpu_plane_state {
->> >>         struct drm_plane_state base;
->> >> @@ -39,6 +41,8 @@ struct dpu_plane_state {
->> >>         struct dpu_hw_pixel_ext pixel_ext;
->> >>
->> >>         struct dpu_hw_pipe_cdp_cfg cdp_cfg;
->> >> +       u64 plane_fetch_bw;
->> >> +       u64 plane_clk;
->> >>  };
->> >>
->> >>  /**
->> >> --
->> >> 1.9.1
->> >>
->> > _______________________________________________
->> > Freedreno mailing list
->> > Freedreno@lists.freedesktop.org
->> > https://lists.freedesktop.org/mailman/listinfo/freedreno
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index a6f43ff..5b2df7d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -873,10 +873,19 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	/* Turn on the resources */
+ 	pm_runtime_get_sync(gmu->dev);
+ 
++	/*
++	 * "enable" the GX power domain which won't actually do anything but it
++	 * will make sure that the refcounting is correct in case we need to
++	 * bring down the GX after a GMU failure
++	 */
++	if (!IS_ERR_OR_NULL(gmu->gxpd))
++		pm_runtime_get_sync(gmu->gxpd);
++
+ 	/* Use a known rate to bring up the GMU */
+ 	clk_set_rate(gmu->core_clk, 200000000);
+ 	ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
+ 	if (ret) {
++		pm_runtime_put(gmu->gxpd);
+ 		pm_runtime_put(gmu->dev);
+ 		return ret;
+ 	}
+@@ -919,19 +928,12 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	/* Set the GPU to the current freq */
+ 	a6xx_gmu_set_initial_freq(gpu, gmu);
+ 
+-	/*
+-	 * "enable" the GX power domain which won't actually do anything but it
+-	 * will make sure that the refcounting is correct in case we need to
+-	 * bring down the GX after a GMU failure
+-	 */
+-	if (!IS_ERR_OR_NULL(gmu->gxpd))
+-		pm_runtime_get(gmu->gxpd);
+-
+ out:
+ 	/* On failure, shut down the GMU to leave it in a good state */
+ 	if (ret) {
+ 		disable_irq(gmu->gmu_irq);
+ 		a6xx_rpmh_stop(gmu);
++		pm_runtime_put(gmu->gxpd);
+ 		pm_runtime_put(gmu->dev);
+ 	}
+ 
+-- 
+2.7.4
+
