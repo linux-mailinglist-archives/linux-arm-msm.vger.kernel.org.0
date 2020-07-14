@@ -2,225 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE10521FDFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 22:02:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3155E220078
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 00:13:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726634AbgGNUCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 16:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50272 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729426AbgGNUCe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 16:02:34 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3FC8C08C5C1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jul 2020 13:02:34 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id n5so687958pgf.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jul 2020 13:02:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Rj7n2FEi3btNvRiXOO95ZgZW2mJPBVEmXrIlW5n92HE=;
-        b=EJQo63FgUyR1rd5T3rjkMbtG3Y3uJp/ZJF1UiISxu+YQSssbpPE+uB6yPx+AV8ZgT0
-         aUiNAocQQw4V2Kg3Q7RYjIqxJF9zxusE9OTzJ9kkaxZeScYnY4kP5os+IMQcunyG8arU
-         i8M5BMmcdes2oYK8RpGAzLHAoDEqfpf11/brt0Ftgii5nRAQdRnJdomX7Lzhc2ydwOQn
-         yQRQHWf64Te5x1y2UPwEzEtX/8g48OC02IgG23NWiAVqceB0wLpC4YF11VA5zGBqF65G
-         7BHKiq5A2qbqE02EibFGQQu9V6Js0Iog8tjUrlvfL6qvH1pVGc2IHm2Ys4ZlcWlGMpVy
-         6LKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Rj7n2FEi3btNvRiXOO95ZgZW2mJPBVEmXrIlW5n92HE=;
-        b=IoL32MN0O0t4Hh6j0TnD28c1uL38Tz/ggNgU36XRQbmTrg6HTuWuwCqq78FwtVlALu
-         R2X2M7gGIt6UUnQQbr7EfEG3bwjMODrFnPldhIJsA/i9365je0kitJYHQzVuufGpv7PP
-         w3ICz+q6aHybgdpK8WWRf8RbtnFv7t7GDkQLDGnHRQsPeA7tOEkh3iTqS1u2PbQTjyTJ
-         lFy0gjWjTO9g4+849T2asmgBLrLsFrpIlxZcRZ4CbfkPRsUa0FgAXwkfqFh4OU1LivjP
-         XWD8CM1X3eCBLfgSlGL/DPorfPQTl9Mzy3SCMd7i6cewcZVfdPj1rUW+P99jMxP/fo6D
-         13dg==
-X-Gm-Message-State: AOAM532lIYd1wZ/00k3Yh0DkeHvHWCoLXzgqlCz39SxuengdUDfBd9BR
-        yrauta30feLPUX6/uH0cihaIQA==
-X-Google-Smtp-Source: ABdhPJwJy7HkTTdvIuylyd0YSn5b3RgvXjveXkOJmC0QWWm2KuLx8toxk9W4hVduZo2tCSHPhkrfEw==
-X-Received: by 2002:a62:52cd:: with SMTP id g196mr5690485pfb.178.1594756953980;
-        Tue, 14 Jul 2020 13:02:33 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id i66sm39133pfc.12.2020.07.14.13.02.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jul 2020 13:02:33 -0700 (PDT)
-Date:   Tue, 14 Jul 2020 13:00:27 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        SCSI <linux-scsi@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Satya Tangirala <satyat@google.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Subject: Re: [PATCH v6 3/5] arm64: dts: sdm845: add Inline Crypto Engine
- registers and clock
-Message-ID: <20200714200027.GH388985@builder.lan>
-References: <20200710072013.177481-4-ebiggers@kernel.org>
- <yq1ft9uqj6u.fsf@ca-mkp.ca.oracle.com>
- <20200714161516.GA1064009@gmail.com>
- <CAL_Jsq+t1h4w8C361vguw1co_vnbMKs3q4qWR4=jwAKr1Vm80g@mail.gmail.com>
- <20200714164353.GB1064009@gmail.com>
- <CAL_JsqK-wUuo6azYseC35R=Q509=h9-v4gFvcvy8wXrDgSw5ZQ@mail.gmail.com>
- <20200714171203.GC1064009@gmail.com>
- <20200714173111.GG388985@builder.lan>
- <20200714174345.GE1218486@builder.lan>
- <20200714175718.GD1064009@gmail.com>
+        id S1726446AbgGNWNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jul 2020 18:13:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51704 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726361AbgGNWNP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Jul 2020 18:13:15 -0400
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3DDAA20658;
+        Tue, 14 Jul 2020 22:13:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594764794;
+        bh=p8xfw2q/yMrH6U15B1idZInMuEtxyddvH406FsTsfxQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=2MLTFbXt3lEqDEHZWcpTPElKFx2Mlpghv3AL6pGhKHdgtX4mZSwhub989kb/xglYq
+         XdY4ivbtJ9Ha6PoGmeb4P0ynrMTl+Bg0GtPgQps2K6CvEvZRHhUZYCCjChTf1YeSxh
+         Sq9eTZDFW3irH7nWbO73vba+/B8p402NiNoCxREU=
+Received: by mail-ot1-f45.google.com with SMTP id 95so14221493otw.10;
+        Tue, 14 Jul 2020 15:13:14 -0700 (PDT)
+X-Gm-Message-State: AOAM532a6PWQyGSa/WJcftBH+I+mGp6h4UVvJojIWt1HgEIV2mnRQ9tZ
+        moQzI1oBj+5xilgkp9MtKJAv1VAPBGauvm26WQ==
+X-Google-Smtp-Source: ABdhPJyLD2OHAbfUvFU/OhpgQL9qmOMS53+t6bNPLQXFwTVUYSvJnvKU/NsVsjit+NH5JJh+nFWuvW57mAWywVgrxuM=
+X-Received: by 2002:a9d:2646:: with SMTP id a64mr5739450otb.107.1594764793562;
+ Tue, 14 Jul 2020 15:13:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200714175718.GD1064009@gmail.com>
+References: <20200710230224.2265647-1-dianders@chromium.org>
+ <CAL_JsqKC5WtHb-coMCxMTDJ7CJcjVXcAxDT4J9N-Xyr=0uuURA@mail.gmail.com>
+ <CAD=FV=XWKoTd_t2uRGpw3oa0Nij2EPeAJpOHhUipXFW07JN2qw@mail.gmail.com>
+ <CAL_JsqLJM5nwNSdugMBLDVtjP97dikCm_AiHjnDs1jqBOFoaaQ@mail.gmail.com>
+ <CAD=FV=UP0AHWr22U69TKcwwAefPCYMsfzymobczqmrdB6BOOhA@mail.gmail.com> <CAOCk7NoX-XAXy2WaYGjGOtEmypis-DO-W1cfU0wnucHH0oZrqg@mail.gmail.com>
+In-Reply-To: <CAOCk7NoX-XAXy2WaYGjGOtEmypis-DO-W1cfU0wnucHH0oZrqg@mail.gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 14 Jul 2020 16:13:02 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+Nys+ry-3D07e-68e=9Pb34C9Js6piAnzwd1gXf_DmTw@mail.gmail.com>
+Message-ID: <CAL_Jsq+Nys+ry-3D07e-68e=9Pb34C9Js6piAnzwd1gXf_DmTw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 0/9] drm/msm: Avoid possible infinite probe
+ deferral and speed booting
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 14 Jul 10:57 PDT 2020, Eric Biggers wrote:
-
-> On Tue, Jul 14, 2020 at 10:43:45AM -0700, Bjorn Andersson wrote:
-> > On Tue 14 Jul 10:31 PDT 2020, Bjorn Andersson wrote:
-> > 
-> > > On Tue 14 Jul 10:12 PDT 2020, Eric Biggers wrote:
-> > > 
-> > > > On Tue, Jul 14, 2020 at 10:59:44AM -0600, Rob Herring wrote:
-> > > > > On Tue, Jul 14, 2020 at 10:43 AM Eric Biggers <ebiggers@kernel.org> wrote:
+On Tue, Jul 14, 2020 at 10:33 AM Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>
+> On Mon, Jul 13, 2020 at 5:50 PM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > Hi,
+> >
+> > On Mon, Jul 13, 2020 at 1:25 PM Rob Herring <robh+dt@kernel.org> wrote:
+> > >
+> > > On Mon, Jul 13, 2020 at 9:08 AM Doug Anderson <dianders@chromium.org> wrote:
+> > > >
+> > > > Hi,
+> > > >
+> > > > On Mon, Jul 13, 2020 at 7:11 AM Rob Herring <robh+dt@kernel.org> wrote:
+> > > > >
+> > > > > On Fri, Jul 10, 2020 at 5:02 PM Douglas Anderson <dianders@chromium.org> wrote:
 > > > > > >
-> > > > > > On Tue, Jul 14, 2020 at 10:35:12AM -0600, Rob Herring wrote:
-> > > > > > > On Tue, Jul 14, 2020 at 10:15 AM Eric Biggers <ebiggers@kernel.org> wrote:
-> > > > > > > >
-> > > > > > > > On Tue, Jul 14, 2020 at 10:16:04AM -0400, Martin K. Petersen wrote:
-> > > > > > > > >
-> > > > > > > > > Eric,
-> > > > > > > > >
-> > > > > > > > > > Add the vendor-specific registers and clock for Qualcomm ICE (Inline
-> > > > > > > > > > Crypto Engine) to the device tree node for the UFS host controller on
-> > > > > > > > > > sdm845, so that the ufs-qcom driver will be able to use inline crypto.
-> > > > > > > > >
-> > > > > > > > > I would like to see an Acked-by for this patch before I merge it.
-> > > > > > > > >
-> > > > > > > >
-> > > > > > > > Andy, Bjorn, or Rob: can you give Acked-by?
-> > > > > > >
-> > > > > > > DTS changes should go in via the QCom tree.
-> > > > > > >
-> > > > > >
-> > > > > > So, the DTS patch can't be applied without the driver patches since then the
-> > > > > > driver would misinterpret the ICE registers as the dev_ref_clk_ctrl registers.
-> > > > > 
-> > > > > That sounds broken, but there's no context here for me to comment
-> > > > > further. DTS changes should work with old/stable kernels. I'd suggest
-> > > > > you get a review from Bjorn on the driver first.
-> > > > > 
-> > > > 
-> > > > The "breaking" change is that the dev_ref_clk_ctrl registers are now identified
-> > > > by name instead of assumed to be index 1.
-> > > > 
-> > > > A reviewer had complained about the device-mapper bindings of this driver before
-> > > > (https://lkml.kernel.org/r/158334171487.7173.5606223900174949177@swboyd.mtv.corp.google.com).
-> > > > Changing to identifying the registers by name seemed like an improvement.
-> > > > 
-> > > > If needed I can add a hole at index 1 to make the DTS changes work with
-> > > > old/stable kernels too, but I didn't know that is a requirement.  (Normally for
-> > > > Linux kernel development, kernel-internal refactoring is always allowed
-> > > > upstream.)  If I do this, would this hack have to be carried forever, or would
-> > > > we be able to fix it up eventually?  Is there any deprecation period for DTS, or
-> > > > do the latest DTS have to work with a 20 year old kernel?
-> > > > 
-> > > 
-> > > The problem here is that DT binding refactoring is not kernel-internal.
-> > > It's two different projects living in the same git.
-> > > 
-> > > There's a wish from various people that we make sure that new DTS
-> > > continues to work with existing kernels. This is a nice in theory
-> > > there's a lot of examples where we simply couldn't anticipate how future
-> > > bindings would look. A particular example is that this prohibits most
-> > > advancement in power management.
-> > > 
-> > > 
-> > > But afaict what you describe above would make a new kernel failing to
-> > > operate with the old DTS and that we have agreed to avoid.
-> > > So I think the appropriate way to deal with this is to request the reg
-> > > byname to detect the new binding and if that fails then assume that
-> > > index 1 is dev_ref_clk_ctrl.
-> > > 
-> > 
-> > I took another look at the git history and I can't find a single dts -
-> > either upstream or in any downstream tree - that specifies that second
-> > reg.
-> > 
-> > So per my argument below, if you could include a patch that just removes
-> > the "dev_ref_clk_ctrl_mem" reference from the binding and driver I would
-> > be happy to r-b that and ack this patch.
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > 
-> > > There are cases where we just decide not to be backwards compatible, but
-> > > it's pretty rare. As for deprecation, I think 1-2 LTS releases is
-> > > sufficient, at that time scale it doesn't make sense to sit with an old
-> > > DTB anyways (given the current pace of advancements in the kernel).
-> > > 
-> 
-> Great, I'll remove the driver support for "dev_ref_clk_ctrl" then.  However,
-> that doesn't solve the problem of the new DTS breaking old drivers, since old
-> drivers assume that reg[1] is dev_ref_clk_ctrl.
-> 
-> This patch makes the DTS look like:
-> 
-> 	reg = <0 0x01d84000 0 0x2500>,
-> 	      <0 0x01d90000 0 0x8000>;
-> 	reg-names = "std", "ice";
-> 
-> The "ice" registers are new and are accessed by name instead of by index.
-> 
-> But these also happen to be in reg[1].  Old drivers will see that reg[1] is
-> present and assume it is dev_ref_clk_ctrl.
-> 
-> To work around this, I could leave a blank reg[1] entry:
-> 
-> 	reg = <0 0x01d84000 0 0x2500>,
-> 	      <0 0 0 0>,
-> 	      <0 0x01d90000 0 0x8000>;
-> 	reg-names = "std", "dev_ref_clk_ctrl", "ice";
-> 
-> Do I need to do that?
-> 
+> > > > > > I found that if I ever had a little mistake in my kernel config,
+> > > > > > or device tree, or graphics driver that my system would sit in a loop
+> > > > > > at bootup trying again and again and again.  An example log was:
+> > > > >
+> > > > > Why do we care about optimizing the error case?
+> > > >
+> > > > It actually results in a _fully_ infinite loop.  That is: if anything
+> > > > small causes a component of DRM to fail to probe then the whole system
+> > > > doesn't boot because it just loops trying to probe over and over
+> > > > again.  The messages I put in the commit message are printed over and
+> > > > over and over again.
+> > >
+> > > Sounds like a bug as that's not what should happen.
+> > >
+> > > If you defer during boot (initcalls), then you'll be on the deferred
+> > > list until late_initcall and everything is retried. After
+> > > late_initcall, only devices getting added should trigger probing. But
+> > > maybe the adding and then removing a device is causing a re-trigger.
+> >
+> > Right, I'm nearly certain that the adding and then removing is causing
+> > a re-trigger.  I believe the loop would happen for any case where we
+> > have a probe function that:
+> >
+> > 1. Adds devices.
+> > 2. After adding devices it decides that it needs to defer.
+> > 3. Removes the devices it added.
+> > 4. Return -EPROBE_DEFER from its probe function.
+> >
+> > Specifically from what I know about how -EPROBE_DEFER works I'm not
+> > sure how it wouldn't cause an infinite loop in that case.
+> >
+> > Perhaps the missing part of my explanation, though, is why it never
+> > gets out of this infinite loop.  In my case I purposely made the
+> > bridge chip "ti-sn65dsi86.c" return an error (-EINVAL) in its probe
+> > every time.  Obviously I wasn't going to get a display up like this,
+> > but I just wanted to not loop forever at bootup.  I tracked down
+> > exactly why we get an - EPROBE_DEFER over and over in this case.
+> >
+> > You can see it in msm_dsi_host_register().  If some components haven't
+> > shown up when that function runs it will _always_ return
+> > -EPROBE_DEFER.
+> >
+> > In my case, since I caused the bridge to fail to probe, those
+> > components will _never_ show up.  That means that
+> > msm_dsi_host_register() will _always_ return -EPROBE_DEFER.
+> >
+> > I haven't dug through all the DRM code enough, but it doesn't
+> > necessarily seem like the wrong behavior.  If the bridge driver or a
+> > panel was a module then (presumably) they could show up later and so
+> > it should be OK for it to defer, right?
+> >
+> > So with all that, it doesn't really feel like this is a bug so much as
+> > it's an unsupported use case.  The current deferral logic simply can't
+> > handle the case we're throwing at it.  You cannot return -EPROBE_DEFER
+> > if your probe function adds devices each time through the probe
+> > function.
+> >
+> > Assuming all the above makes sense, that means we're stuck with:
+> >
+> > a) This patch series, which makes us not add devices.
+> >
+> > b) Some other patch series which rearchitects the MSM graphics stack
+> > to not return -EPROBE_DEFER in this case.
+>
+> This isn't a MSM specific issue.  This is an issue with how the DSI
+> interface works, and how software is structured in Linux.  I would
+> expect that pretty much any DSI host in the kernel would have some
+> version of this issue.
+>
+> The problem is that DSI is not "hot pluggable", so to give the DRM
+> stack the info it needs, we need both the DSI controller (aka the MSM
+> graphics stack in your case), and the thing it connects to (in your
+> case, the TI bridge, normally the actual panel) because the DRM stack
+> expects that if init completes, it has certain information
+> (resolution, etc), and some of that information is in the DSI
+> controller, and some of it is on the DSI device.
 
-No, let's not complicate it without good reason. SDM845 has hw_ver.major
-== 3, so we're not taking the else-path in ufs_qcom_init(). So I should
-be able to just merge this patch for 5.9 through the qcom tree after
-all (your code handles that it's not there and the existing code doesn't
-care).
+Ah yes, DRM's lack of hot-plug and discrete component support... Is
+that not improved with some of the bridge rework?
 
+Anyways, given there is a child dependency on the parent, I don't
+think we should work-around DRM deficiencies in DT.
 
-The two platforms that I can find that has UFS controller of
-hw_ver.major == 1 is APQ8084 and MSM8994, so I simply didn't look at an
-old enough downstream tree (msm-3.10) to find anyone specifying reg[1].
-The reg specified is however coming from the TLMM (pinctrl-msm) hardware
-block, so it should not be directly remapped in the UFS driver...
+BTW, There's also a deferred probe timeout you can use which stops
+deferring probe some number of seconds after late_initcall.
 
-But regardless, that has not been seen in an upstream dts and per your
-patch 2 we would add that reg by name when that happens.
-There's recent activity on upstreaming more of the MSM8994 support, so
-perhaps then it's best to leave this snippet in the driver for now.
-
-
-Summary: Martin merges (merged?) patch 1, 2, 4 and 5 in the scsi tree,
-I'll merge this patch as is in the qcom tree and we'll just leave the
-dev_ref_clk handling as is for now then.
-
-Regards,
-Bjorn
+Rob
