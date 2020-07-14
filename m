@@ -2,284 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADB6821F763
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 18:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B96621F76E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 18:36:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728318AbgGNQdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 12:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45072 "EHLO
+        id S1728590AbgGNQf2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jul 2020 12:35:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728087AbgGNQdJ (ORCPT
+        with ESMTP id S1726600AbgGNQf2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 12:33:09 -0400
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE7D7C061755;
-        Tue, 14 Jul 2020 09:33:09 -0700 (PDT)
-Received: by mail-il1-x141.google.com with SMTP id a11so14756601ilk.0;
-        Tue, 14 Jul 2020 09:33:09 -0700 (PDT)
+        Tue, 14 Jul 2020 12:35:28 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5117EC061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jul 2020 09:35:28 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id ch3so1850653pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Jul 2020 09:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2v74DtJfidVxmpf1PQZAEw4tnokF3wni9AEugEzeRKc=;
-        b=cNdSutJBzO6Kg8H5UK7GGzsZNIn63ZqSknBHVkJciFbNow2tN+84fFUTAH5ZWU+mrg
-         fk3cgF0krZkHrFmPCQMinrGzt1pfEpS5m4C5kw2z04157wfxymSGiKcJhwfwnzdTSiGx
-         S55Cn5uS4Q1K5fT0oTPssneFnFfj+6jsPKOx8+j/ga41IfEpW7AzrHIfiyIWgQlL8KLQ
-         tMgmStbxR0XKAwBUJ05ei5zSoiBoWh0NdZCv8N+0TaDo5TGihA5UlCIgq0OLHTzHrVxs
-         WURrOvOt1gEMBryG3njE3YlybrCfm2iV//DMa0I4XtbbQmf9mETetU/zw9HdhIVnx+wN
-         OJZA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QT9HiLZlfLtj7d6b920+DKn037dSUdlopmzK56b/6q0=;
+        b=IHirfcaJbhHyjx7vB9QvBqwOwTVcSdFMLZQl4j2hyW8YDmQaR4w9RlMvVF/+ktyHcZ
+         ZXa0jlYWpeJ/c83he59zpW1zRjEemSQEgmLdo6cXHNDV8kLlESMwjZrMOZ8c9/s9sR/Z
+         I/HYazN5iAgueFSwoJ62M03ijEhGTgM9bZDiN/msfYpV2SIcDISiXbnfMCMy8qn31jDz
+         0yOCdG7TfGom86kbqbtw4lXTE+CZRRvtdnJmYRGAY4zdjsCPC1bjyVAN2waTu6+99+xg
+         12QOOcg7HzsRLBQDmIrjcUeCYCytypMyyilqGYeGHboad6n2ZCYAP8/Vdy2E7xbXpQBg
+         m97w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2v74DtJfidVxmpf1PQZAEw4tnokF3wni9AEugEzeRKc=;
-        b=fBEXmVGdGBFD06HFVZj1FX43yuIitWmUpMrkM5CjrW3Jr9e/3Tz9cVOEQAHYb/vjdj
-         qpTSBxsANryJM29T9LcMhBsilr4QqoS+LEU5pbONimVYmxsuoI99kN76UXj8DPaWKYEd
-         vg+KVE/1qgmLAXklr5W1SB5tUxhe4rp6/Yhk/jsXfMZvp+f8C9Bl2uc8mscpcgAMhwt7
-         /MfXYKPOFQ1tp3NBqkvoDdAnF5x4TxdDKDZE+9ezBFiQtduzUP/JSC5C13ityuoJCATq
-         3WhhLQzg5SK3u+UbaGry/p7UXcwU6jjMmtybqadfHKbbrRWlnx/zLK+of2nrlz9C1yHR
-         RlZQ==
-X-Gm-Message-State: AOAM533Y/IA6KEdKfjHUCpQF9sOzqq1TyZw7ZAmYS/Us0HCoxnrlXqET
-        HomO1RGeJ4GP98lIhYM7yzpdhsFbEFdaXUJBfps=
-X-Google-Smtp-Source: ABdhPJwIuFjoprAEwGXRfj5lcBjDIs4LLbNalWFrIBkfLOGyR6XHqrRCeUWiFE0ODwubXbHbkOA0ENGHJUyJiNFgxrU=
-X-Received: by 2002:a92:849c:: with SMTP id y28mr4965659ilk.33.1594744388613;
- Tue, 14 Jul 2020 09:33:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QT9HiLZlfLtj7d6b920+DKn037dSUdlopmzK56b/6q0=;
+        b=pXF8EbGOMzv+sDTybb+RUBlASQjBihlkQOBi72oziNJM8ZlmarVaF2w2Rnak6sLT8C
+         sBs409RBJp9y5RcmTx6utvf3URaRIiiX0EsypsZPLaN+EBKr77fxBsAdmi05xVbPHWci
+         XlfZHs2XpE11kCU0FtZ6Ly/I0t9r42hxioWtd2EuIZf5Np5FnL6OKefruoYLEVRUo2x8
+         TAZ3ikVmeUrRMeFD7GLyYv2ZBUUuaahq6teHDrFUlpxyAUol9GmMAPfwXJH5MpqTxyfm
+         I7ea+qk/68meIDOyud3VOnc2SOiK6VgaAhqFYwq9Yt/jrNy+rGiMuL72tcvhxk7PxIjE
+         TLRg==
+X-Gm-Message-State: AOAM530c+8LDEIaQsJykFWnJKIgh8OZwE6fe0nKGPgkukhUY61qyCZWZ
+        yK/z/m9CL8RgS0zzho6lCUNtiA==
+X-Google-Smtp-Source: ABdhPJxdoVBg8By1fNhgQ98NTF8VWMQfs6MbKMLnnkm/WDhjn0JlZYGXMD/9r1FFbxM2nyzdxZVqPA==
+X-Received: by 2002:a17:90a:17e4:: with SMTP id q91mr5414151pja.61.1594744527521;
+        Tue, 14 Jul 2020 09:35:27 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id e16sm17946323pff.180.2020.07.14.09.35.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2020 09:35:26 -0700 (PDT)
+Date:   Tue, 14 Jul 2020 09:33:20 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH v2 3/4] hwspinlock: qcom: Allow mmio usage in addition to
+ syscon
+Message-ID: <20200714163320.GB2161373@builder.lan>
+References: <20200622075956.171058-1-bjorn.andersson@linaro.org>
+ <20200622075956.171058-4-bjorn.andersson@linaro.org>
+ <20200714160445.GA3848@gerhold.net>
 MIME-Version: 1.0
-References: <20200710230224.2265647-1-dianders@chromium.org>
- <CAL_JsqKC5WtHb-coMCxMTDJ7CJcjVXcAxDT4J9N-Xyr=0uuURA@mail.gmail.com>
- <CAD=FV=XWKoTd_t2uRGpw3oa0Nij2EPeAJpOHhUipXFW07JN2qw@mail.gmail.com>
- <CAL_JsqLJM5nwNSdugMBLDVtjP97dikCm_AiHjnDs1jqBOFoaaQ@mail.gmail.com> <CAD=FV=UP0AHWr22U69TKcwwAefPCYMsfzymobczqmrdB6BOOhA@mail.gmail.com>
-In-Reply-To: <CAD=FV=UP0AHWr22U69TKcwwAefPCYMsfzymobczqmrdB6BOOhA@mail.gmail.com>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 14 Jul 2020 10:32:57 -0600
-Message-ID: <CAOCk7NoX-XAXy2WaYGjGOtEmypis-DO-W1cfU0wnucHH0oZrqg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 0/9] drm/msm: Avoid possible infinite probe
- deferral and speed booting
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200714160445.GA3848@gerhold.net>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 13, 2020 at 5:50 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Mon, Jul 13, 2020 at 1:25 PM Rob Herring <robh+dt@kernel.org> wrote:
-> >
-> > On Mon, Jul 13, 2020 at 9:08 AM Doug Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Mon, Jul 13, 2020 at 7:11 AM Rob Herring <robh+dt@kernel.org> wrote:
-> > > >
-> > > > On Fri, Jul 10, 2020 at 5:02 PM Douglas Anderson <dianders@chromium.org> wrote:
-> > > > >
-> > > > > I found that if I ever had a little mistake in my kernel config,
-> > > > > or device tree, or graphics driver that my system would sit in a loop
-> > > > > at bootup trying again and again and again.  An example log was:
-> > > >
-> > > > Why do we care about optimizing the error case?
-> > >
-> > > It actually results in a _fully_ infinite loop.  That is: if anything
-> > > small causes a component of DRM to fail to probe then the whole system
-> > > doesn't boot because it just loops trying to probe over and over
-> > > again.  The messages I put in the commit message are printed over and
-> > > over and over again.
-> >
-> > Sounds like a bug as that's not what should happen.
-> >
-> > If you defer during boot (initcalls), then you'll be on the deferred
-> > list until late_initcall and everything is retried. After
-> > late_initcall, only devices getting added should trigger probing. But
-> > maybe the adding and then removing a device is causing a re-trigger.
->
-> Right, I'm nearly certain that the adding and then removing is causing
-> a re-trigger.  I believe the loop would happen for any case where we
-> have a probe function that:
->
-> 1. Adds devices.
-> 2. After adding devices it decides that it needs to defer.
-> 3. Removes the devices it added.
-> 4. Return -EPROBE_DEFER from its probe function.
->
-> Specifically from what I know about how -EPROBE_DEFER works I'm not
-> sure how it wouldn't cause an infinite loop in that case.
->
-> Perhaps the missing part of my explanation, though, is why it never
-> gets out of this infinite loop.  In my case I purposely made the
-> bridge chip "ti-sn65dsi86.c" return an error (-EINVAL) in its probe
-> every time.  Obviously I wasn't going to get a display up like this,
-> but I just wanted to not loop forever at bootup.  I tracked down
-> exactly why we get an - EPROBE_DEFER over and over in this case.
->
-> You can see it in msm_dsi_host_register().  If some components haven't
-> shown up when that function runs it will _always_ return
-> -EPROBE_DEFER.
->
-> In my case, since I caused the bridge to fail to probe, those
-> components will _never_ show up.  That means that
-> msm_dsi_host_register() will _always_ return -EPROBE_DEFER.
->
-> I haven't dug through all the DRM code enough, but it doesn't
-> necessarily seem like the wrong behavior.  If the bridge driver or a
-> panel was a module then (presumably) they could show up later and so
-> it should be OK for it to defer, right?
->
-> So with all that, it doesn't really feel like this is a bug so much as
-> it's an unsupported use case.  The current deferral logic simply can't
-> handle the case we're throwing at it.  You cannot return -EPROBE_DEFER
-> if your probe function adds devices each time through the probe
-> function.
->
-> Assuming all the above makes sense, that means we're stuck with:
->
-> a) This patch series, which makes us not add devices.
->
-> b) Some other patch series which rearchitects the MSM graphics stack
-> to not return -EPROBE_DEFER in this case.
+On Tue 14 Jul 09:04 PDT 2020, Stephan Gerhold wrote:
 
-This isn't a MSM specific issue.  This is an issue with how the DSI
-interface works, and how software is structured in Linux.  I would
-expect that pretty much any DSI host in the kernel would have some
-version of this issue.
+> Hi Bjorn,
+> 
+> On Mon, Jun 22, 2020 at 12:59:55AM -0700, Bjorn Andersson wrote:
+> > In modern Qualcomm platforms the mutex region of the TCSR is forked off
+> > into its own block, all with a offset of 0 and stride of 4096, and in
+> > some of these platforms no other registers in this region is accessed
+> > from Linux.
+> > 
+> > So add support for directly memory mapping this register space, to avoid
+> > the need to represent this block using a syscon.
+> > 
+> > Reviewed-by: Baolin Wang <baolin.wang7@gmail.com>
+> > Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > Changes since v1:
+> > - Use devm_platform_ioremap_resource()
+> > 
+> >  drivers/hwspinlock/qcom_hwspinlock.c | 70 +++++++++++++++++++++-------
+> >  1 file changed, 54 insertions(+), 16 deletions(-)
+> > 
+> > diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+> > index f0da544b14d2..364710966665 100644
+> > --- a/drivers/hwspinlock/qcom_hwspinlock.c
+> > +++ b/drivers/hwspinlock/qcom_hwspinlock.c
+> > @@ -70,41 +70,79 @@ static const struct of_device_id qcom_hwspinlock_of_match[] = {
+> >  };
+> >  MODULE_DEVICE_TABLE(of, qcom_hwspinlock_of_match);
+> >  
+> > -static int qcom_hwspinlock_probe(struct platform_device *pdev)
+> > +static struct regmap *qcom_hwspinlock_probe_syscon(struct platform_device *pdev,
+> > +						   u32 *base, u32 *stride)
+> >  {
+> > -	struct hwspinlock_device *bank;
+> >  	struct device_node *syscon;
+> > -	struct reg_field field;
+> >  	struct regmap *regmap;
+> > -	size_t array_size;
+> > -	u32 stride;
+> > -	u32 base;
+> >  	int ret;
+> > -	int i;
+> >  
+> >  	syscon = of_parse_phandle(pdev->dev.of_node, "syscon", 0);
+> > -	if (!syscon) {
+> > -		dev_err(&pdev->dev, "no syscon property\n");
+> > -		return -ENODEV;
+> > -	}
+> > +	if (!syscon)
+> > +		return ERR_PTR(-ENODEV);
+> >  
+> >  	regmap = syscon_node_to_regmap(syscon);
+> >  	of_node_put(syscon);
+> >  	if (IS_ERR(regmap))
+> > -		return PTR_ERR(regmap);
+> > +		return regmap;
+> >  
+> > -	ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 1, &base);
+> > +	ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 1, base);
+> >  	if (ret < 0) {
+> >  		dev_err(&pdev->dev, "no offset in syscon\n");
+> > -		return -EINVAL;
+> > +		return ERR_PTR(-EINVAL);
+> >  	}
+> >  
+> > -	ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 2, &stride);
+> > +	ret = of_property_read_u32_index(pdev->dev.of_node, "syscon", 2, stride);
+> >  	if (ret < 0) {
+> >  		dev_err(&pdev->dev, "no stride syscon\n");
+> > -		return -EINVAL;
+> > +		return ERR_PTR(-EINVAL);
+> >  	}
+> >  
+> > +	return regmap;
+> > +}
+> > +
+> > +static const struct regmap_config tcsr_mutex_config = {
+> > +	.reg_bits		= 32,
+> > +	.reg_stride		= 4,
+> > +	.val_bits		= 32,
+> > +	.max_register		= 0x40000,
+> 
+> Where does the 0x40000 come from?
+> 
 
-The problem is that DSI is not "hot pluggable", so to give the DRM
-stack the info it needs, we need both the DSI controller (aka the MSM
-graphics stack in your case), and the thing it connects to (in your
-case, the TI bridge, normally the actual panel) because the DRM stack
-expects that if init completes, it has certain information
-(resolution, etc), and some of that information is in the DSI
-controller, and some of it is on the DSI device.
+I presumably copied it off the dts I was looking (sm8250) as I wrote
+this, but...
 
->
-> c) Smarten up the deferral system to somehow detect this loop.  I'm
-> really not sure how to do this.  You'd have to somehow know that you
-> keep adding the same devices over and over again and they didn't get
-> us out of the deferral loop last time and so you should eventually
-> give up.
->
->
-> > > > >   msm ae00000.mdss: bound ae01000.mdp (ops 0xffffffe596e951f8)
-> > > > >   msm_dsi ae94000.dsi: ae94000.dsi supply gdsc not found, using dummy regulator
-> > > > >   msm_dsi_manager_register: failed to register mipi dsi host for DSI 0
-> > > > >   [drm:ti_sn_bridge_probe] *ERROR* could not find any panel node
-> > > > >   ...
-> > > > >
-> > > > > I finally tracked it down where this was happening:
-> > > > >   - msm_pdev_probe() is called.
-> > > > >   - msm_pdev_probe() registers drivers.  Registering drivers kicks
-> > > > >     off processing of probe deferrals.
-> > > > >   - component_master_add_with_match() could return -EPROBE_DEFER.
-> > > > >     making msm_pdev_probe() return -EPROBE_DEFER.
-> > > > >   - When msm_pdev_probe() returned the processing of probe deferrals
-> > > > >     happens.
-> > > > >   - Loop back to the start.
-> > > > >
-> > > > > It looks like we can fix this by marking "mdss" as a "simple-bus".
-> > > > > I have no idea if people consider this the right thing to do or a
-> > > > > hack.  Hopefully it's the right thing to do.  :-)
-> > > >
-> > > > It's a simple test. Do the child devices have any dependency on the
-> > > > parent to probe and/or function? If so, not a simple-bus.
-> > >
-> > > Great!  You can see in the earlier patch in the series that the very
-> > > first thing that happens when the parent device probes is that it
-> > > calls devm_of_platform_populate().  That means no dependencies, right?
-> >
-> > It should. But then I reviewed the MDSS binding today and it looks
-> > like the MDSS is the interrupt parent for at least some child devices?
->
-> Hrm.  How does that work?  Let's see...
->
-> ...ah, I believe it works because we don't try to grab interrupts in
-> the probe path of our sub-components.  That means we probe them just
-> fine without the parent.  I guess it has to be like this because
-> otherwise we end up with circular dependencies.
->
-> So there is a dependency of the child on the parent and of the parent
-> on the child (the parent won't really probe until the children do).
-> No idea if this means that the whole thing was architected in a
-> non-optimal way or if it's just really hard to fit the DRM Component
-> model into the Linux Driver model (or both).  Where does that leave us
-> about whether "simple-bus" is OK, though?
->
->
->
-> > >  So that means it's fine/correct to add "simple-bus" here?
-> > >
-> > >
-> > > > > Once I do this I notice that my boot gets marginally faster (you
-> > > > > don't need to probe the sub devices over and over) and also if I
-> > > >
-> > > > Can you quantify that?
-> > >
-> > > I'd say < 100 us.  I can try to quantify more if needed, but it wasn't
-> > > the point of this patch.
-> > >
-> > >
-> > > > Have you run with devlinks enabled. You need a command line option to
-> > > > enable. That too should reduce deferred probes.
-> > >
-> > > Ah, good idea!  I will try it.  However, even with devlinks, if there
-> > > is any chance of deferred probes then we need a fix like this.  The
-> > > point of the patch isn't about speeding things up but about avoiding
-> > > an infinite loop at bootup due to a small bug.
-> >
-> > I think a deferred probe would only happen if there's a dependency we
-> > don't track (but we're tracking about everything that's common). But
-> > if there's some error, I'm not sure what would happen. Seems like a
-> > good test case. :)
->
-> Maybe now that I've pointed at msm_dsi_host_register() it will help
-> clarify.  I don't know a ton about the MSM DRM world (mostly I just
-> jumped in here because I was sick of getting stuck in this infinite
-> loop), but I'm not sure how we can get around the problems.
->
-> I guess in my specific case we could maybe determine that the bridge
-> chip returned -EINVAL and thus would never probe, but what about if I
-> put the bridge chip driver in a loadable kernel module?
->
-> My device links knowledge is super weak (and I'm currently mostly
-> focused on the slightly older 5.4 kernel if that matters) but are you
-> saying that the system should just know which device would eventually
-> provide the bridge/panel and would know not to probe the main DRM
-> driver until after it probes?
->
->
-> > > > > have a problem it doesn't loop forever (on my system it still
-> > > > > gets upset about some stuck clocks in that case, but at least I
-> > > > > can boot up).
-> > > >
-> > > > Deferred probe only runs when a device is added, so it's not like it
-> > > > is continually running.
-> > >
-> > > If you don't mind looking at the code patch, see:
-> > >
-> > > https://lore.kernel.org/r/20200710160131.4.I358ea82de218ea5f4406572ade23f5e121297555@changeid/
-> > >
-> > > Specifically you can see that each time we try to probe we were
-> > > calling of_platform_populate().  That appeared to be enough to trigger
-> > > things.
-> >
-> > Like I said, sounds like a bug. Even if 'simple-bus' is the
-> > appropriate thing to do here, it should be fixed or at least
-> > understood.
-> >
-> > Rob
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+> It seems like this driver has QCOM_MUTEX_NUM_LOCKS = 32 hardcoded.
+> With a stride of 4096 = 0x1000 you get 0x1000 * 32 = 0x20000.
+> 
+> This is also the reg size used in msm8996.dtsi and msm8916.dtsi for
+> example, while sdm845.dtsi and sm8250.dtsi specify 0x40000.
+> Are you not exposing all available locks on the newer SoCs?
+> 
+> I'm not sure how important max_register is... But I guess it should be
+> either correct for all SoCs or not specified at all (since it's
+> optional)?
+> 
+
+...you're right. I think it should be omitted.
+
+> (That is assuming the hwlock can be also used directly via MMIO on
+>  MSM8996 and MSM8916. It looks to me like it has its own register
+>  space there as well...)
+> 
+
+If used on e.g. MSM8996 we still need to make sure the syscon is there,
+so that the modem subsystem halt registers is available to the mpss
+remoteproc. But specifying compatible as "qcom,tcsr-mutex", "syscon";
+would use the new scheme and still would allow that access.
+
+
+I merged patch 1-3 yesterday, so it would have to be an incremental
+patch. I've put it on my todo list, but if you write up a patch I'd be
+happy to merge it :)
+
+Thanks,
+Bjorn
