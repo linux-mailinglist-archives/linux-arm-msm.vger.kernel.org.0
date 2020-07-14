@@ -2,95 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4674E21F3B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 16:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACD5D21F407
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 16:26:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726187AbgGNOQg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 10:16:36 -0400
-Received: from aserp2120.oracle.com ([141.146.126.78]:57210 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725803AbgGNOQg (ORCPT
+        id S1725890AbgGNO06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jul 2020 10:26:58 -0400
+Received: from mail-m17613.qiye.163.com ([59.111.176.13]:57560 "EHLO
+        mail-m17613.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725803AbgGNO06 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 10:16:36 -0400
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 06EECukm087139;
-        Tue, 14 Jul 2020 14:16:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : message-id : references : date : in-reply-to : mime-version :
- content-type; s=corp-2020-01-29;
- bh=eeVlu7C/UvyRHqntk10Su87FuUiKG50iJXKH5wMa/uk=;
- b=r8PUJbVZh5MtQEmm8j/sLJsf4vGLzmN99WTl8Q/scf/o41ugGSXYpXbq1JA/bsSvbBIx
- rTzm3S0vM6D3+T+MrPeq2+ilIW5Uo/0wHZ8usThi54KYKDLA0k8qWfyK31mFtUMXt3+x
- fuU79ojyGGhzUesTMxnvI5aasNERwkoCBc2VsI3k3zqyx69F84MWlXjxYO3yG8/2frzI
- QDhAA/CpIn1MrzCMpMEUJTigZXndZBx5uJ5VDxtZrBgLYE8OXW4hqM+xxy6xRshhU1Z3
- p6O0EZiDe+uW+/IjwHhXzHthStL6ctQuRpAzBTEImj66usH+rPLpKUY+AnSohNPUG0fQ +g== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by aserp2120.oracle.com with ESMTP id 3275cm5km7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 14 Jul 2020 14:16:22 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 06EE7ZmI011983;
-        Tue, 14 Jul 2020 14:16:22 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserp3020.oracle.com with ESMTP id 327qb46y4x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 14 Jul 2020 14:16:21 +0000
-Received: from abhmp0018.oracle.com (abhmp0018.oracle.com [141.146.116.24])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 06EEG8KV017692;
-        Tue, 14 Jul 2020 14:16:08 GMT
-Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Tue, 14 Jul 2020 07:16:08 -0700
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Subject: Re: [PATCH v6 3/5] arm64: dts: sdm845: add Inline Crypto Engine
- registers and clock
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-Message-ID: <yq1ft9uqj6u.fsf@ca-mkp.ca.oracle.com>
-References: <20200710072013.177481-1-ebiggers@kernel.org>
-        <20200710072013.177481-4-ebiggers@kernel.org>
-Date:   Tue, 14 Jul 2020 10:16:04 -0400
-In-Reply-To: <20200710072013.177481-4-ebiggers@kernel.org> (Eric Biggers's
-        message of "Fri, 10 Jul 2020 00:20:10 -0700")
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9681 signatures=668680
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 malwarescore=0
- mlxscore=0 spamscore=0 phishscore=0 suspectscore=1 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007140109
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9681 signatures=668680
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 priorityscore=1501
- bulkscore=0 adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
- impostorscore=0 malwarescore=0 mlxlogscore=999 clxscore=1011 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2007140109
+        Tue, 14 Jul 2020 10:26:58 -0400
+X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2020 10:26:56 EDT
+Received: from njvxl5505.vivo.xyz (unknown [157.0.31.124])
+        by mail-m17613.qiye.163.com (Hmail) with ESMTPA id E8D0948166E;
+        Tue, 14 Jul 2020 22:20:43 +0800 (CST)
+From:   Bernard Zhao <bernard@vivo.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Bernard Zhao <bernard@vivo.com>,
+        Hongbo Yao <yaohongbo@huawei.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Cc:     opensource.kernel@vivo.com
+Subject: [PATCH] drm/msm: use kthread_create_worker instead of kthread_run
+Date:   Tue, 14 Jul 2020 22:20:29 +0800
+Message-Id: <20200714142034.23843-1-bernard@vivo.com>
+X-Mailer: git-send-email 2.17.1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
+        oVCBIfWUFZTENKQk0aTh9MThgaVkpOQk9MSE1PT09JSUJVEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
+        FZT0tIVUpKS0hKTFVKS0tZBg++
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Kxw6DQw*HjgsNjYuPjE3OCgr
+        HQoaCx5VSlVKTkJPTEhNT09PTU5IVTMWGhIXVRkeCRUaCR87DRINFFUYFBZFWVdZEgtZQVlKTkxV
+        S1VISlVKSU9ZV1kIAVlBT0xNQzcG
+X-HM-Tid: 0a734db3030f93bakuwse8d0948166e
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Use kthread_create_worker to simplify the code and optimise
+the manager struct: msm_drm_thread. With this change, we
+could remove struct element (struct task_struct *thread &
+struct kthread_worker worker), instead, use one point (struct
+kthread_worker *worker).
 
-Eric,
+Signed-off-by: Bernard Zhao <bernard@vivo.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c |  2 +-
+ drivers/gpu/drm/msm/msm_drv.c            | 18 ++++++------------
+ drivers/gpu/drm/msm/msm_drv.h            |  3 +--
+ 3 files changed, 8 insertions(+), 15 deletions(-)
 
-> Add the vendor-specific registers and clock for Qualcomm ICE (Inline
-> Crypto Engine) to the device tree node for the UFS host controller on
-> sdm845, so that the ufs-qcom driver will be able to use inline crypto.
-
-I would like to see an Acked-by for this patch before I merge it.
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index e15b42a780e0..c959c959021d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -396,7 +396,7 @@ static void dpu_crtc_frame_event_cb(void *data, u32 event)
+ 	fevent->event = event;
+ 	fevent->crtc = crtc;
+ 	fevent->ts = ktime_get();
+-	kthread_queue_work(&priv->event_thread[crtc_id].worker, &fevent->work);
++	kthread_queue_work(priv->event_thread[crtc_id].worker, &fevent->work);
+ }
+ 
+ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index f6ce40bf3699..82e79b82a594 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -238,10 +238,8 @@ static int msm_drm_uninit(struct device *dev)
+ 
+ 	/* clean up event worker threads */
+ 	for (i = 0; i < priv->num_crtcs; i++) {
+-		if (priv->event_thread[i].thread) {
+-			kthread_destroy_worker(&priv->event_thread[i].worker);
+-			priv->event_thread[i].thread = NULL;
+-		}
++		if (priv->event_thread[i].worker)
++			kthread_destroy_worker(priv->event_thread[i].worker);
+ 	}
+ 
+ 	msm_gem_shrinker_cleanup(ddev);
+@@ -504,19 +502,15 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+ 	for (i = 0; i < priv->num_crtcs; i++) {
+ 		/* initialize event thread */
+ 		priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
+-		kthread_init_worker(&priv->event_thread[i].worker);
+ 		priv->event_thread[i].dev = ddev;
+-		priv->event_thread[i].thread =
+-			kthread_run(kthread_worker_fn,
+-				&priv->event_thread[i].worker,
+-				"crtc_event:%d", priv->event_thread[i].crtc_id);
+-		if (IS_ERR(priv->event_thread[i].thread)) {
++		priv->event_thread[i].worker = kthread_create_worker(0,
++			"crtc_event:%d", priv->event_thread[i].crtc_id);
++		if (IS_ERR(priv->event_thread[i].worker)) {
+ 			DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
+-			priv->event_thread[i].thread = NULL;
+ 			goto err_msm_uninit;
+ 		}
+ 
+-		ret = sched_setscheduler(priv->event_thread[i].thread,
++		ret = sched_setscheduler(priv->event_thread[i].worker->task,
+ 					 SCHED_FIFO, &param);
+ 		if (ret)
+ 			dev_warn(dev, "event_thread set priority failed:%d\n",
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index e2d6a6056418..daf2f4e5548c 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -129,9 +129,8 @@ struct msm_display_info {
+ /* Commit/Event thread specific structure */
+ struct msm_drm_thread {
+ 	struct drm_device *dev;
+-	struct task_struct *thread;
+ 	unsigned int crtc_id;
+-	struct kthread_worker worker;
++	struct kthread_worker *worker;
+ };
+ 
+ struct msm_drm_private {
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+2.17.1
+
