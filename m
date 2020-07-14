@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FAD421EB85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 10:38:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78CBB21EDB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2020 12:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725905AbgGNIiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 04:38:13 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:3203 "EHLO
+        id S1725952AbgGNKQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Jul 2020 06:16:02 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:45008 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725793AbgGNIiN (ORCPT
+        with ESMTP id S1725906AbgGNKQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 04:38:13 -0400
+        Tue, 14 Jul 2020 06:16:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
-  s=qcdkim; t=1594715891; x=1626251891;
+  s=qcdkim; t=1594721762; x=1626257762;
   h=from:to:cc:subject:date:message-id;
-  bh=nud3N8g8Z+XUy6Ezoia3mS9wEnvaITQ2oTiSdXjGUNM=;
-  b=hAr3jrpK1HViABN7wx2xTWGbxJSLPl5JQX4eKl6qmDg+xZRTD0jlB0dH
-   Ft8XQawgWc6HECJKOs6HU1ZXw2YClS5H7IWinecXOpnkQCrBtuHP/cEeV
-   Wf7+Cg0u6ONDOhM74LOYDu3RDBkOb03oJHoW475yWSsyvwxsya2dGeFSf
-   Y=;
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 14 Jul 2020 01:38:11 -0700
+  bh=mJQgl+Wih/Npohxk2QCbcNtLC2MU8snCzsF5it6GMmE=;
+  b=bQleqQ6i6GEZalmkPAEAnfEKNPyxRZ7II8ItCgfAKsWYSF0NcXvuvIBU
+   nLsIGS7MP4+cRQ2XsDDC0L1jS6S4MMgEBKmWxazNzDq2pqZi+lFhAu6bq
+   z5+PktutNzk7PHOul9CCsPLlWGsa3hDaUIpU/JCVC7cU+lGAs1JccxSgL
+   c=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 14 Jul 2020 03:16:01 -0700
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 14 Jul 2020 01:38:09 -0700
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Jul 2020 03:15:59 -0700
 Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Jul 2020 14:07:53 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Jul 2020 15:45:43 +0530
 Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 0AD9C4125; Tue, 14 Jul 2020 14:07:51 +0530 (IST)
+        id 40C3E411B; Tue, 14 Jul 2020 15:45:42 +0530 (IST)
 From:   Dikshita Agarwal <dikshita@qti.qualcomm.com>
 To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org, majja@codeaurora.org, jdas@codeaurora.org,
         Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v2] venus: move platform specific data to platform file
-Date:   Tue, 14 Jul 2020 14:07:40 +0530
-Message-Id: <1594715860-27056-1-git-send-email-dikshita@qti.qualcomm.com>
+Subject: [PATCH v3] venus: move platform specific data to platform file
+Date:   Tue, 14 Jul 2020 15:45:40 +0530
+Message-Id: <1594721740-17617-1-git-send-email-dikshita@qti.qualcomm.com>
 X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -50,16 +50,16 @@ Move all data specific to platform into a separate file.
 Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 ---
  drivers/media/platform/qcom/venus/Makefile       |  3 +-
- drivers/media/platform/qcom/venus/core.c         | 20 ++------
+ drivers/media/platform/qcom/venus/core.c         | 20 ++-----
  drivers/media/platform/qcom/venus/core.h         | 12 +----
  drivers/media/platform/qcom/venus/helpers.c      | 31 +----------
  drivers/media/platform/qcom/venus/helpers.h      |  1 -
- drivers/media/platform/qcom/venus/hfi_platform.c | 65 ++++++++++++++++++++++++
+ drivers/media/platform/qcom/venus/hfi_platform.c | 66 ++++++++++++++++++++++++
  drivers/media/platform/qcom/venus/hfi_platform.h | 28 ++++++++++
  drivers/media/platform/qcom/venus/pm_helpers.c   |  1 +
  drivers/media/platform/qcom/venus/vdec.c         |  3 +-
  drivers/media/platform/qcom/venus/venc.c         |  3 +-
- 10 files changed, 106 insertions(+), 61 deletions(-)
+ 10 files changed, 107 insertions(+), 61 deletions(-)
  create mode 100644 drivers/media/platform/qcom/venus/hfi_platform.c
  create mode 100644 drivers/media/platform/qcom/venus/hfi_platform.h
 
@@ -78,7 +78,7 @@ index dfc6368..c8f0e39 100644
  venus-dec-objs += vdec.o vdec_ctrls.o
  venus-enc-objs += venc.o venc_ctrls.o
 diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index bbb394c..8f857a3 100644
+index bbb394c..2245a0e 100644
 --- a/drivers/media/platform/qcom/venus/core.c
 +++ b/drivers/media/platform/qcom/venus/core.c
 @@ -20,6 +20,7 @@
@@ -93,7 +93,7 @@ index bbb394c..8f857a3 100644
  			return ret;
  	}
  
-+	core->hfi_plat= hfi_platform_get(core->res->hfi_version);
++	core->hfi_plat = hfi_platform_get(core->res->hfi_version);
 +
  	ret = dma_set_mask_and_coherent(dev, core->res->dma_mask);
  	if (ret)
@@ -250,10 +250,10 @@ index 8fbbda1..9c83c91 100644
  			      unsigned int output2_bufs);
 diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
 new file mode 100644
-index 0000000..d84cd7e
+index 0000000..5ffadfe
 --- /dev/null
 +++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,66 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
@@ -262,7 +262,7 @@ index 0000000..d84cd7e
 +#include "core.h"
 +
 +static struct hfi_platform_codec_freq_data hfi_plat_codec_freq_data_v4[] =  {
-+    { V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
++	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 10 },
 +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 10 },
 +	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 10 },
 +	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 10 },
@@ -274,7 +274,8 @@ index 0000000..d84cd7e
 +
 +static const struct hfi_platform hfi_plat_v4 = {
 +	.hfi_plat_codec_freq_data = hfi_plat_codec_freq_data_v4,
-+	.hfi_plat_codec_freq_data_size = ARRAY_SIZE(hfi_plat_codec_freq_data_v4),
++	.hfi_plat_codec_freq_data_size =
++		ARRAY_SIZE(hfi_plat_codec_freq_data_v4),
 +};
 +
 +const struct hfi_platform *hfi_platform_get
