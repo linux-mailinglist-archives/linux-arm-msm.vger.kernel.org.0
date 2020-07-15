@@ -2,136 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1644D2214CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:02:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C64112214D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:07:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726715AbgGOTCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 15:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37186 "EHLO
+        id S1726465AbgGOTHB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 15:07:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbgGOTCO (ORCPT
+        with ESMTP id S1726356AbgGOTGz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 15:02:14 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 094B4C061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 12:02:14 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id n4so973248uae.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 12:02:13 -0700 (PDT)
+        Wed, 15 Jul 2020 15:06:55 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D6BC061755;
+        Wed, 15 Jul 2020 12:06:55 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id cv18so2224250pjb.1;
+        Wed, 15 Jul 2020 12:06:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PmtQ0FrsBiOsqRJiGiTNFNGrmIx+8RMusU8KDu9T4aY=;
-        b=ASTb52Iah2njRL2ETx3AA40ICz/qZGc0YsZ4RTzCHytuyNKqdrkSTbsaUPy6zkttzt
-         S0MEohrvEOeRRGxXFQp93vIfJK+w3YIv6+8lc3P+gfKEBlEbAj93X2DRVgyxa9eN6HIB
-         Wn7Yifou3j68JRXTW7Fq30Bc0R2f+cTkHEa1U=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TdOyt4R9Z57zhmCtsEfttpqmFzjBydXI6S7D/BNVn9o=;
+        b=e73JoRrRYxGu62bl5KoSMZHLBcuQMjV+5+TqneAGMDvDQTH7fvHFQjdep471elc40r
+         KvBNYigMGwr18RELuTuShGU/xAut09ARiqnzPDWaj2vMtsdLifL2ZCnYKuSkXPIqEV92
+         Ms9uzBeRmeocYNunLPBTKFEDN2ce/cgUrH/z4H2luYDl556tpE4fcTL7QhQj2m+wUm+D
+         PXWsycKlNvFdNmaoz0pCSiYyl0vvg/4WIQQL1XI2726MpDBgeAIFGKe3ouhJsMX7FPzy
+         mwB7N0slfwSDWtt3tLY/bb5UX7n2yZwiAi7gM6FGg6YfMcOCi1cgWf3Az916kmnx/0mN
+         Jrfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PmtQ0FrsBiOsqRJiGiTNFNGrmIx+8RMusU8KDu9T4aY=;
-        b=QcbqZBxFNjv6xIAT2ACzy/IFjk5Sv6tS2BwBCkyzNsuiv2+0dGxlBageyKikyfcucD
-         UG1OE6XAjeMMSCm+mu52Ulzk8tb9Aav01YhW/SGAFDmEo1/6Lu9FwBN77YJ/Ueo0I/gN
-         qdT6LybXrfAJ4LWMRayLjQjpxrEpwqL7ERzJItu2PoHyp6snjKgat1HioelTE9gCv9tv
-         lKLZ0HLIbsQx/yXFAslbNK6Yiy4kiXe30Xk6aPqvmSSU/or6zL1XWb6BIAvBNp+RjtQX
-         bKGn6v+NrSh3aQ5nShg5+YMcSz56N7sLQQ5NGfp0l+CsUcrjzGJHZBBiU41nvbfiCuJq
-         nnWA==
-X-Gm-Message-State: AOAM533Pdw0h8DJPTZuftybnpjQQBILztzYvX4wJf2IdkgGco0xUbrIE
-        jdPA0k06+CoLUObCbQDT8hyZ+j8wJ6s=
-X-Google-Smtp-Source: ABdhPJxytTCcEqcHmDHwAP+EsDqVqb5AhXtJl7SPE257iHtbumzjo6VrWWu8972TGaiQZwgHhpNwjw==
-X-Received: by 2002:ab0:6489:: with SMTP id p9mr832132uam.46.1594839732770;
-        Wed, 15 Jul 2020 12:02:12 -0700 (PDT)
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com. [209.85.221.169])
-        by smtp.gmail.com with ESMTPSA id 188sm427192vkt.28.2020.07.15.12.02.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2020 12:02:12 -0700 (PDT)
-Received: by mail-vk1-f169.google.com with SMTP id h1so728744vkn.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 12:02:11 -0700 (PDT)
-X-Received: by 2002:a1f:3d4a:: with SMTP id k71mr443715vka.65.1594839731375;
- Wed, 15 Jul 2020 12:02:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <1594615586-17055-1-git-send-email-pillair@codeaurora.org>
-In-Reply-To: <1594615586-17055-1-git-send-email-pillair@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 15 Jul 2020 12:01:59 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XtBhM_CSQM63LCiVDR0oPAAyEr5bG_FRt1tdwpw5OPKQ@mail.gmail.com>
-Message-ID: <CAD=FV=XtBhM_CSQM63LCiVDR0oPAAyEr5bG_FRt1tdwpw5OPKQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Add missing properties for
- Wifi node
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Evan Green <evgreen@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TdOyt4R9Z57zhmCtsEfttpqmFzjBydXI6S7D/BNVn9o=;
+        b=n1ecSWdHUL717mh614IBnWRWCJ6lxpC1Uh5+4Zh2C+1t3QRSPqox0r82ZPFX4gK/pr
+         M7IP+a8VfQOelsDzFDhrrS6pJXdZl28GJmfLxt7apAny7VB5QEW+cXPhkkSZTW1aphk5
+         MIxo1J8reVI5ydD8iAPQyf95+O3od7ehZwCdJy6SwTuqGWmu3P+hffMrOHDmIthBvjc1
+         6wrRfGLZif3Sllcuiex0dKywhezjrT0H+8lDSRBZ7LG9YlgRRvO4htPjHkQB7C6eAU4b
+         noDkeSS46eJcFE1H0Y8B1sdnXVlg7mxvCcjb1Vy6j0FX9zyUEVb07LY5uKSG/Ft0G0V9
+         IboA==
+X-Gm-Message-State: AOAM531ejwBA/19IEhtlkuIovWFiydMguhL862UtN0vJK4+Sktioj26H
+        I3i+CAJ8+u/bEtIZUiTQZKk=
+X-Google-Smtp-Source: ABdhPJxkJHXkw9qYWYAXzFYPSzZ3C8v4575JyuEP2Ms4l7Azc1ObNhfpBI+OUK/nzsaigQEU2g8Cyg==
+X-Received: by 2002:a17:90a:12c7:: with SMTP id b7mr1129885pjg.137.1594840014855;
+        Wed, 15 Jul 2020 12:06:54 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id z25sm2757161pfg.140.2020.07.15.12.06.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2020 12:06:53 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/adreno: fix gpu probe if no interconnect-names
+Date:   Wed, 15 Jul 2020 12:07:30 -0700
+Message-Id: <20200715190732.3116556-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Rob Clark <robdclark@chromium.org>
 
-On Sun, Jul 12, 2020 at 9:46 PM Rakesh Pillai <pillair@codeaurora.org> wrote:
->
-> The wlan firmware memory is statically mapped in
-> the Trusted Firmware, hence the wlan driver does
-> not need to map/unmap this region dynamically.
->
-> Hence add the property to indicate the wlan driver
-> to not map/unamp the firmware memory region
-> dynamically.
->
-> Also add the chain1 voltage supply for wlan.
->
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
-> Changes from v1:
-> - Add the wifi mac alias
->
-> This patch is created on top of the change by
-> Douglas Anderson.
-> https://lkml.org/lkml/2020/6/25/817
->
-> Also the dt-bindings for the chain1 voltage supply
-> is added by the below patch series:
-> https://patchwork.kernel.org/project/linux-wireless/list/?series=309137
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 472f7f4..c042d61 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -19,6 +19,7 @@
->
->         aliases {
->                 bluetooth0 = &bluetooth;
-> +               wifi0 = &wifi;
->                 hsuart0 = &uart3;
->                 serial0 = &uart8;
+If there is no interconnect-names, but there is an interconnects
+property, then of_icc_get(dev, "gfx-mem"); would return an error
+rather than NULL.
 
-Could you alphabetize?
+Also, if there is no interconnect-names property, there will never
+be a ocmem path.  But of_icc_get(dev, "ocmem") would return -EINVAL
+instead of -ENODATA.  Just don't bother trying in this case.
 
->         };
-> @@ -391,10 +392,12 @@
->
->  &wifi {
->         status = "okay";
-> +       qcom,msa-fixed-perm;
->         vdd-0.8-cx-mx-supply = <&vreg_l9a_0p6>;
->         vdd-1.8-xo-supply = <&vreg_l1c_1p8>;
->         vdd-1.3-rfa-supply = <&vreg_l2c_1p3>;
->         vdd-3.3-ch0-supply = <&vreg_l10c_3p3>;
-> +       vdd-3.3-ch1-supply = <&vreg_l11c_3p3>;
->         wifi-firmware {
->                 iommus = <&apps_smmu 0xc2 0x1>;
->         };
+v2: explicity check for interconnect-names property
 
-Other than the alphabetical order:
+Fixes: 8e29fb37b301 ("drm/msm: handle for EPROBE_DEFER for of_icc_get")
+Fixes: 00bb9243d346 ("drm/msm/gpu: add support for ocmem interconnect path")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 0527e85184e1..e23641a5ec84 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1003,22 +1003,23 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Check for an interconnect path for the bus */
+-	gpu->icc_path = of_icc_get(dev, "gfx-mem");
+-	if (!gpu->icc_path) {
+-		/*
+-		 * Keep compatbility with device trees that don't have an
+-		 * interconnect-names property.
+-		 */
++	/*
++	 * The legacy case, before "interconnect-names", only has a
++	 * single interconnect path which is equivalent to "gfx-mem"
++	 */
++	if (!of_find_property(dev->of_node, "interconnect-names", NULL)) {
+ 		gpu->icc_path = of_icc_get(dev, NULL);
++	} else {
++		gpu->icc_path = of_icc_get(dev, "gfx-mem");
++		gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
+ 	}
++
+ 	if (IS_ERR(gpu->icc_path)) {
+ 		ret = PTR_ERR(gpu->icc_path);
+ 		gpu->icc_path = NULL;
+ 		return ret;
+ 	}
+ 
+-	gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
+ 	if (IS_ERR(gpu->ocmem_icc_path)) {
+ 		ret = PTR_ERR(gpu->ocmem_icc_path);
+ 		gpu->ocmem_icc_path = NULL;
+@@ -1026,6 +1027,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 		if (ret != -ENODATA)
+ 			return ret;
+ 	}
++
+ 	return 0;
+ }
+ 
+-- 
+2.26.2
+
