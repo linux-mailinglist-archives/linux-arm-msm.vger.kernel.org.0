@@ -2,140 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C64112214D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:07:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A21822214EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:14:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726465AbgGOTHB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 15:07:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37908 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726356AbgGOTGz (ORCPT
+        id S1726768AbgGOTOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 15:14:42 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:34637 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726491AbgGOTOk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 15:06:55 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D6BC061755;
-        Wed, 15 Jul 2020 12:06:55 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id cv18so2224250pjb.1;
-        Wed, 15 Jul 2020 12:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TdOyt4R9Z57zhmCtsEfttpqmFzjBydXI6S7D/BNVn9o=;
-        b=e73JoRrRYxGu62bl5KoSMZHLBcuQMjV+5+TqneAGMDvDQTH7fvHFQjdep471elc40r
-         KvBNYigMGwr18RELuTuShGU/xAut09ARiqnzPDWaj2vMtsdLifL2ZCnYKuSkXPIqEV92
-         Ms9uzBeRmeocYNunLPBTKFEDN2ce/cgUrH/z4H2luYDl556tpE4fcTL7QhQj2m+wUm+D
-         PXWsycKlNvFdNmaoz0pCSiYyl0vvg/4WIQQL1XI2726MpDBgeAIFGKe3ouhJsMX7FPzy
-         mwB7N0slfwSDWtt3tLY/bb5UX7n2yZwiAi7gM6FGg6YfMcOCi1cgWf3Az916kmnx/0mN
-         Jrfw==
+        Wed, 15 Jul 2020 15:14:40 -0400
+Received: by mail-io1-f67.google.com with SMTP id q74so3481687iod.1;
+        Wed, 15 Jul 2020 12:14:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TdOyt4R9Z57zhmCtsEfttpqmFzjBydXI6S7D/BNVn9o=;
-        b=n1ecSWdHUL717mh614IBnWRWCJ6lxpC1Uh5+4Zh2C+1t3QRSPqox0r82ZPFX4gK/pr
-         M7IP+a8VfQOelsDzFDhrrS6pJXdZl28GJmfLxt7apAny7VB5QEW+cXPhkkSZTW1aphk5
-         MIxo1J8reVI5ydD8iAPQyf95+O3od7ehZwCdJy6SwTuqGWmu3P+hffMrOHDmIthBvjc1
-         6wrRfGLZif3Sllcuiex0dKywhezjrT0H+8lDSRBZ7LG9YlgRRvO4htPjHkQB7C6eAU4b
-         noDkeSS46eJcFE1H0Y8B1sdnXVlg7mxvCcjb1Vy6j0FX9zyUEVb07LY5uKSG/Ft0G0V9
-         IboA==
-X-Gm-Message-State: AOAM531ejwBA/19IEhtlkuIovWFiydMguhL862UtN0vJK4+Sktioj26H
-        I3i+CAJ8+u/bEtIZUiTQZKk=
-X-Google-Smtp-Source: ABdhPJxkJHXkw9qYWYAXzFYPSzZ3C8v4575JyuEP2Ms4l7Azc1ObNhfpBI+OUK/nzsaigQEU2g8Cyg==
-X-Received: by 2002:a17:90a:12c7:: with SMTP id b7mr1129885pjg.137.1594840014855;
-        Wed, 15 Jul 2020 12:06:54 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id z25sm2757161pfg.140.2020.07.15.12.06.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uAYhyJcJRVka9ydt6uo/YHKiTlbjPRvSn1YwW+mkzCw=;
+        b=OlBgYq8k0O+iHOS7TQDylL0OsEDDRYkUWcXljhHrPtyCkT7RsLrXKHwoxDLm2RM2M9
+         N/eNHv98NctvsVcIsNHYK5v0lD2AnGqwDzr9f+XBz10C0mvf4Ed9CaMsB00qpMb/Y9S7
+         DOFFy1aPMTwRHBEuLMDvoBzXN+J7ltLpmnuLjh7Tq1jfKiI25VPshV5/Cz5CgikXs7YQ
+         X0OLKUlWxVq1iK0SCRgRA6q+Kj4FjdXn5Ob5tTneXUykgw2o3Nxv9egtJ6MNa60WxD0/
+         udKvd6TE+inPddSo7dX23jSpCMtD/vBfs3VvnmA8aa/1nku+c8sDP2IBCFMtAoFhitjz
+         P8xg==
+X-Gm-Message-State: AOAM532dTMGvaL2zXyDfv25luTlXk+ygw46uw1m33+uY61zo2AVB7x90
+        XG3YDFfozO+kWMrwlJxFMg==
+X-Google-Smtp-Source: ABdhPJxgvH2KybKM2cWCk8cIHsLk9UbkbEjCygxMcdbxSXzyladjhwGB4UwgszPdx59ugl221+sjgA==
+X-Received: by 2002:a6b:6b18:: with SMTP id g24mr814518ioc.8.1594840479773;
+        Wed, 15 Jul 2020 12:14:39 -0700 (PDT)
+Received: from xps15 ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id u3sm1530228iol.41.2020.07.15.12.14.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 12:06:53 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/adreno: fix gpu probe if no interconnect-names
-Date:   Wed, 15 Jul 2020 12:07:30 -0700
-Message-Id: <20200715190732.3116556-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Wed, 15 Jul 2020 12:14:38 -0700 (PDT)
+Received: (nullmailer pid 661854 invoked by uid 1000);
+        Wed, 15 Jul 2020 19:14:37 -0000
+Date:   Wed, 15 Jul 2020 13:14:37 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kathiravan T <kathirav@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        sivaprak@codeaurora.org
+Subject: Re: [PATCH 1/6] dt-bindings: soc: qcom: add YAML schema for SMD-RPM
+ driver
+Message-ID: <20200715191437.GA656528@bogus>
+References: <1592550307-11040-1-git-send-email-kathirav@codeaurora.org>
+ <1592550307-11040-2-git-send-email-kathirav@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1592550307-11040-2-git-send-email-kathirav@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Fri, Jun 19, 2020 at 12:35:02PM +0530, Kathiravan T wrote:
+> Add YAML schema for the devitree properties used in the SMD-RPM driver.
 
-If there is no interconnect-names, but there is an interconnects
-property, then of_icc_get(dev, "gfx-mem"); would return an error
-rather than NULL.
+This is converting, not adding...
 
-Also, if there is no interconnect-names property, there will never
-be a ocmem path.  But of_icc_get(dev, "ocmem") would return -EINVAL
-instead of -ENODATA.  Just don't bother trying in this case.
+> 
+> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.txt  | 62 ---------------
+>  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 91 ++++++++++++++++++++++
+>  2 files changed, 91 insertions(+), 62 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
 
-v2: explicity check for interconnect-names property
 
-Fixes: 8e29fb37b301 ("drm/msm: handle for EPROBE_DEFER for of_icc_get")
-Fixes: 00bb9243d346 ("drm/msm/gpu: add support for ocmem interconnect path")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+> new file mode 100644
+> index 00000000..5b33def
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+> @@ -0,0 +1,91 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Resource Power Manager (RPM) over SMD
+> +
+> +description: |
+> +  This driver is used to interface with the Resource Power Manager (RPM) found
+> +  in various Qualcomm platforms. The RPM allows each component in the system
+> +  to vote for state of the system resources, such as clocks, regulators and bus
+> +  frequencies.
+> +
+> +  The SMD information for the RPM edge should be filled out.  See qcom,smd.txt
+> +  for the required edge properties.  All SMD related properties will reside
+> +  within the RPM node itself.
+> +
+> +  The RPM exposes resources to its subnodes.  The rpm_requests node must be
+> +  present and this subnode may contain children that designate regulator
+> +  resources.
+> +
+> +  Refer to Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
+> +  for information on the regulator subnodes that can exist under the
+> +  rpm_requests.
+> +
+> +maintainers:
+> +  - Kathiravan T <kathirav@codeaurora.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,rpm-apq8084
+> +      - qcom,rpm-msm8916
+> +      - qcom,rpm-msm8974
+> +      - qcom,rpm-msm8976
+> +      - qcom,rpm-msm8996
+> +      - qcom,rpm-msm8998
+> +      - qcom,rpm-sdm660
+> +      - qcom,rpm-qcs404
+> +
+> +  qcom,smd-channels:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
+> +    description: Channel name used for the RPM communication
+> +    items:
+> +      - const: rpm_requests
+> +
+> +if:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        enum:
+> +          - qcom,rpm-apq8084
+> +          - qcom,rpm-msm8916
+> +          - qcom,rpm-msm8974
+> +then:
+> +  required:
+> +    - qcom,smd-channels
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    soc {
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +        apcs: syscon@f9011000 {
+> +              compatible = "syscon";
+> +              reg = <0xf9011000 0x1000>;
+> +        };
+> +    };
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 0527e85184e1..e23641a5ec84 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -1003,22 +1003,23 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	if (ret)
- 		return ret;
- 
--	/* Check for an interconnect path for the bus */
--	gpu->icc_path = of_icc_get(dev, "gfx-mem");
--	if (!gpu->icc_path) {
--		/*
--		 * Keep compatbility with device trees that don't have an
--		 * interconnect-names property.
--		 */
-+	/*
-+	 * The legacy case, before "interconnect-names", only has a
-+	 * single interconnect path which is equivalent to "gfx-mem"
-+	 */
-+	if (!of_find_property(dev->of_node, "interconnect-names", NULL)) {
- 		gpu->icc_path = of_icc_get(dev, NULL);
-+	} else {
-+		gpu->icc_path = of_icc_get(dev, "gfx-mem");
-+		gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
- 	}
-+
- 	if (IS_ERR(gpu->icc_path)) {
- 		ret = PTR_ERR(gpu->icc_path);
- 		gpu->icc_path = NULL;
- 		return ret;
- 	}
- 
--	gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
- 	if (IS_ERR(gpu->ocmem_icc_path)) {
- 		ret = PTR_ERR(gpu->ocmem_icc_path);
- 		gpu->ocmem_icc_path = NULL;
-@@ -1026,6 +1027,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		if (ret != -ENODATA)
- 			return ret;
- 	}
-+
- 	return 0;
- }
- 
--- 
-2.26.2
+Drop this node. The use of 'syscon' alone is not valid and will now 
+generate warnings with what I have queued for 5.9.
 
+> +    smd {
+> +        compatible = "qcom,smd";
+> +
+> +        rpm {
+> +            interrupts = <0 168 1>;
+> +            qcom,ipc = <&apcs 8 0>;
+> +            qcom,smd-edge = <15>;
+> +
+> +                rpm_requests {
+> +                        compatible = "qcom,rpm-msm8974";
+> +                        qcom,smd-channels = "rpm_requests";
+> +
+> +                        /* Regulator nodes to follow */
+> +                };
+> +            };
+> +     };
+> +...
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+> 
