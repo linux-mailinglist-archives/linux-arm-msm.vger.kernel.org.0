@@ -2,211 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFB8A2202AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 05:01:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFF9B220520
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 08:37:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728358AbgGODAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Jul 2020 23:00:08 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41296 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728067AbgGODAH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Jul 2020 23:00:07 -0400
-Received: from sol.localdomain (c-107-3-166-239.hsd1.ca.comcast.net [107.3.166.239])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1728810AbgGOGhF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 02:37:05 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:21905 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725924AbgGOGhE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jul 2020 02:37:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594795023; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=6RyZp2uDxt+bunGyRPNwhNMqP6XcfqU0GLUbRZiL/+M=; b=GGFXv4dWG+SP05hUPDBVoNmJu78YXDCVnVsmhFLlRoySPgzJc+xgi9B3FuRTn2FQwwKyBsiI
+ WCJLYM/8NIGsHEse15WN4O56fJTbQgFdxRZI6y8u8/GRtaSg63Ta003LUFebIcV+3FnQfW5R
+ RIrgMkPHhE//ZL6zWDYr6F1KeX4=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
+ 5f0ea40f8423214e138cb252 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Jul 2020 06:37:03
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 17917C433A1; Wed, 15 Jul 2020 06:37:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DD6C12072D;
-        Wed, 15 Jul 2020 03:00:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594782006;
-        bh=Q1/AL7i6//X7DGOC0aUjYBysA97LK5ggVXlEVqZIrqA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YsML1mu5LjQTRvIw4/R/aTa+SOkxQO9fEFM/5g6IiF2wIUoNfBdh9CJhLsyJy3BWz
-         aR0c6lMCyB09wEp3cSn+s3p7RlRgGoNepCQdhHPuG203z93lNg5VRl3GxRRalbzQYr
-         D79oyMrmDrYG7/wBRVKMMsPWxEmbKXydEoAYTF+E=
-Date:   Tue, 14 Jul 2020 20:00:04 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        SCSI <linux-scsi@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Satya Tangirala <satyat@google.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Subject: Re: [PATCH v6 3/5] arm64: dts: sdm845: add Inline Crypto Engine
- registers and clock
-Message-ID: <20200715030004.GB38091@sol.localdomain>
-References: <yq1ft9uqj6u.fsf@ca-mkp.ca.oracle.com>
- <20200714161516.GA1064009@gmail.com>
- <CAL_Jsq+t1h4w8C361vguw1co_vnbMKs3q4qWR4=jwAKr1Vm80g@mail.gmail.com>
- <20200714164353.GB1064009@gmail.com>
- <CAL_JsqK-wUuo6azYseC35R=Q509=h9-v4gFvcvy8wXrDgSw5ZQ@mail.gmail.com>
- <20200714171203.GC1064009@gmail.com>
- <20200714173111.GG388985@builder.lan>
- <20200714174345.GE1218486@builder.lan>
- <20200714175718.GD1064009@gmail.com>
- <20200714200027.GH388985@builder.lan>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200714200027.GH388985@builder.lan>
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B35A8C433C8;
+        Wed, 15 Jul 2020 06:36:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B35A8C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v4 0/4] clk: qcom: Support for Low Power Audio Clocks on SC7180
+Date:   Wed, 15 Jul 2020 12:06:46 +0530
+Message-Id: <1594795010-9074-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 14, 2020 at 01:00:27PM -0700, Bjorn Andersson wrote:
-> On Tue 14 Jul 10:57 PDT 2020, Eric Biggers wrote:
-> 
-> > On Tue, Jul 14, 2020 at 10:43:45AM -0700, Bjorn Andersson wrote:
-> > > On Tue 14 Jul 10:31 PDT 2020, Bjorn Andersson wrote:
-> > > 
-> > > > On Tue 14 Jul 10:12 PDT 2020, Eric Biggers wrote:
-> > > > 
-> > > > > On Tue, Jul 14, 2020 at 10:59:44AM -0600, Rob Herring wrote:
-> > > > > > On Tue, Jul 14, 2020 at 10:43 AM Eric Biggers <ebiggers@kernel.org> wrote:
-> > > > > > >
-> > > > > > > On Tue, Jul 14, 2020 at 10:35:12AM -0600, Rob Herring wrote:
-> > > > > > > > On Tue, Jul 14, 2020 at 10:15 AM Eric Biggers <ebiggers@kernel.org> wrote:
-> > > > > > > > >
-> > > > > > > > > On Tue, Jul 14, 2020 at 10:16:04AM -0400, Martin K. Petersen wrote:
-> > > > > > > > > >
-> > > > > > > > > > Eric,
-> > > > > > > > > >
-> > > > > > > > > > > Add the vendor-specific registers and clock for Qualcomm ICE (Inline
-> > > > > > > > > > > Crypto Engine) to the device tree node for the UFS host controller on
-> > > > > > > > > > > sdm845, so that the ufs-qcom driver will be able to use inline crypto.
-> > > > > > > > > >
-> > > > > > > > > > I would like to see an Acked-by for this patch before I merge it.
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > Andy, Bjorn, or Rob: can you give Acked-by?
-> > > > > > > >
-> > > > > > > > DTS changes should go in via the QCom tree.
-> > > > > > > >
-> > > > > > >
-> > > > > > > So, the DTS patch can't be applied without the driver patches since then the
-> > > > > > > driver would misinterpret the ICE registers as the dev_ref_clk_ctrl registers.
-> > > > > > 
-> > > > > > That sounds broken, but there's no context here for me to comment
-> > > > > > further. DTS changes should work with old/stable kernels. I'd suggest
-> > > > > > you get a review from Bjorn on the driver first.
-> > > > > > 
-> > > > > 
-> > > > > The "breaking" change is that the dev_ref_clk_ctrl registers are now identified
-> > > > > by name instead of assumed to be index 1.
-> > > > > 
-> > > > > A reviewer had complained about the device-mapper bindings of this driver before
-> > > > > (https://lkml.kernel.org/r/158334171487.7173.5606223900174949177@swboyd.mtv.corp.google.com).
-> > > > > Changing to identifying the registers by name seemed like an improvement.
-> > > > > 
-> > > > > If needed I can add a hole at index 1 to make the DTS changes work with
-> > > > > old/stable kernels too, but I didn't know that is a requirement.  (Normally for
-> > > > > Linux kernel development, kernel-internal refactoring is always allowed
-> > > > > upstream.)  If I do this, would this hack have to be carried forever, or would
-> > > > > we be able to fix it up eventually?  Is there any deprecation period for DTS, or
-> > > > > do the latest DTS have to work with a 20 year old kernel?
-> > > > > 
-> > > > 
-> > > > The problem here is that DT binding refactoring is not kernel-internal.
-> > > > It's two different projects living in the same git.
-> > > > 
-> > > > There's a wish from various people that we make sure that new DTS
-> > > > continues to work with existing kernels. This is a nice in theory
-> > > > there's a lot of examples where we simply couldn't anticipate how future
-> > > > bindings would look. A particular example is that this prohibits most
-> > > > advancement in power management.
-> > > > 
-> > > > 
-> > > > But afaict what you describe above would make a new kernel failing to
-> > > > operate with the old DTS and that we have agreed to avoid.
-> > > > So I think the appropriate way to deal with this is to request the reg
-> > > > byname to detect the new binding and if that fails then assume that
-> > > > index 1 is dev_ref_clk_ctrl.
-> > > > 
-> > > 
-> > > I took another look at the git history and I can't find a single dts -
-> > > either upstream or in any downstream tree - that specifies that second
-> > > reg.
-> > > 
-> > > So per my argument below, if you could include a patch that just removes
-> > > the "dev_ref_clk_ctrl_mem" reference from the binding and driver I would
-> > > be happy to r-b that and ack this patch.
-> > > 
-> > > Regards,
-> > > Bjorn
-> > > 
-> > > > 
-> > > > There are cases where we just decide not to be backwards compatible, but
-> > > > it's pretty rare. As for deprecation, I think 1-2 LTS releases is
-> > > > sufficient, at that time scale it doesn't make sense to sit with an old
-> > > > DTB anyways (given the current pace of advancements in the kernel).
-> > > > 
-> > 
-> > Great, I'll remove the driver support for "dev_ref_clk_ctrl" then.  However,
-> > that doesn't solve the problem of the new DTS breaking old drivers, since old
-> > drivers assume that reg[1] is dev_ref_clk_ctrl.
-> > 
-> > This patch makes the DTS look like:
-> > 
-> > 	reg = <0 0x01d84000 0 0x2500>,
-> > 	      <0 0x01d90000 0 0x8000>;
-> > 	reg-names = "std", "ice";
-> > 
-> > The "ice" registers are new and are accessed by name instead of by index.
-> > 
-> > But these also happen to be in reg[1].  Old drivers will see that reg[1] is
-> > present and assume it is dev_ref_clk_ctrl.
-> > 
-> > To work around this, I could leave a blank reg[1] entry:
-> > 
-> > 	reg = <0 0x01d84000 0 0x2500>,
-> > 	      <0 0 0 0>,
-> > 	      <0 0x01d90000 0 0x8000>;
-> > 	reg-names = "std", "dev_ref_clk_ctrl", "ice";
-> > 
-> > Do I need to do that?
-> > 
-> 
-> No, let's not complicate it without good reason. SDM845 has hw_ver.major
-> == 3, so we're not taking the else-path in ufs_qcom_init(). So I should
-> be able to just merge this patch for 5.9 through the qcom tree after
-> all (your code handles that it's not there and the existing code doesn't
-> care).
-> 
-> 
-> The two platforms that I can find that has UFS controller of
-> hw_ver.major == 1 is APQ8084 and MSM8994, so I simply didn't look at an
-> old enough downstream tree (msm-3.10) to find anyone specifying reg[1].
-> The reg specified is however coming from the TLMM (pinctrl-msm) hardware
-> block, so it should not be directly remapped in the UFS driver...
-> 
-> But regardless, that has not been seen in an upstream dts and per your
-> patch 2 we would add that reg by name when that happens.
-> There's recent activity on upstreaming more of the MSM8994 support, so
-> perhaps then it's best to leave this snippet in the driver for now.
-> 
-> 
-> Summary: Martin merges (merged?) patch 1, 2, 4 and 5 in the scsi tree,
-> I'll merge this patch as is in the qcom tree and we'll just leave the
-> dev_ref_clk handling as is for now then.
-> 
+[v4]
+ * Fix minor comments in the documentation binding.
 
-Okay, great.  So an old DTS with the new driver isn't a problem because no DTS
-has ever declared dev_ref_clk_ctrl.  And a new DTS with an old driver is a less
-important case, and also not really a problem here since breakage would only
-occur if we added the ICE registers to an older SoC that has hw_ver.major == 1.
+[v3]
+ * Update the clock-name to iface instead of gcc_lpass_sway.
+ * Update the documentation with the reg descriptions and use maxItems.
 
-Maybe you'd like to provide your Acked-by on patches 2 and 5?
+[v2]
+ * Update retention macro name.
+ * Update the register description in the documentation.
 
-My instinct is always to remove code that has never been used.  But sure, if you
-think the dev_ref_clk_ctrl code might be used soon, we can keep it for now.
+[v1]
+ * Add support for Retention of GDSCR.
+ * Add YAML schema for LPASS clocks and clock IDs for LPASS.
+ * Add clock driver for LPASS core clocks and GCC LPASS clock.
 
-- Eric
+Taniya Das (4):
+  clk: qcom: gdsc: Add support to enable retention of GSDCR
+  dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7180
+  clk: qcom: gcc: Add support for GCC LPASS clock for SC7180
+  clk: qcom: lpass: Add support for LPASS clock controller for SC7180
+
+ .../bindings/clock/qcom,sc7180-lpasscorecc.yaml    | 103 +++++
+ drivers/clk/qcom/Kconfig                           |   9 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/gcc-sc7180.c                      |  14 +
+ drivers/clk/qcom/gdsc.c                            |  12 +
+ drivers/clk/qcom/gdsc.h                            |   1 +
+ drivers/clk/qcom/lpasscorecc-sc7180.c              | 478 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7180.h        |   1 +
+ .../dt-bindings/clock/qcom,lpasscorecc-sc7180.h    |  29 ++
+ 9 files changed, 648 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml
+ create mode 100644 drivers/clk/qcom/lpasscorecc-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h
+
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
+
