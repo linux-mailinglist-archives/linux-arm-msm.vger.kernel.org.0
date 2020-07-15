@@ -2,177 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A21822214EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:14:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09DB022150A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726768AbgGOTOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 15:14:42 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:34637 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726491AbgGOTOk (ORCPT
+        id S1726472AbgGOTXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 15:23:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40448 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726929AbgGOTXo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 15:14:40 -0400
-Received: by mail-io1-f67.google.com with SMTP id q74so3481687iod.1;
-        Wed, 15 Jul 2020 12:14:40 -0700 (PDT)
+        Wed, 15 Jul 2020 15:23:44 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD005C08C5CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 12:23:43 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id ch3so3551483pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 12:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OJ/YWMib2y0Oi9xcE3B9cmLij4uK6K7vyJCnBwYrt/0=;
+        b=kiYOUCLw+1YMW5C/hDrCQnyOlnRtGrFPezJA04+b0b4IIM5w8VNidZnsPMPHfZ31KS
+         LxhyDUqGX0RwzJAlBRqOfe2ODGCTv2LKEk/50WpTfn28Dp+ZBxdVxNZXkt6vym0qxK/Q
+         rx82Fv0Ijv3kJKlDTbYSXiKFjVaIlmJguN6+3aaiaOjcY7ZTRMaa5SON4MfuTw8M/HSU
+         v8ruKKdEd2o//mAyXMOkE3cXxzduzOyubtoH4T/VezrAKzRSY9zqMZ+YPOlllJ7ocF+k
+         UdiLFpdNVsXZC/MUNV+4eR0KRB3FESXVCeMno3tw/kkcCifALuCf49tFeBBbwBN9AyNI
+         Cing==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=uAYhyJcJRVka9ydt6uo/YHKiTlbjPRvSn1YwW+mkzCw=;
-        b=OlBgYq8k0O+iHOS7TQDylL0OsEDDRYkUWcXljhHrPtyCkT7RsLrXKHwoxDLm2RM2M9
-         N/eNHv98NctvsVcIsNHYK5v0lD2AnGqwDzr9f+XBz10C0mvf4Ed9CaMsB00qpMb/Y9S7
-         DOFFy1aPMTwRHBEuLMDvoBzXN+J7ltLpmnuLjh7Tq1jfKiI25VPshV5/Cz5CgikXs7YQ
-         X0OLKUlWxVq1iK0SCRgRA6q+Kj4FjdXn5Ob5tTneXUykgw2o3Nxv9egtJ6MNa60WxD0/
-         udKvd6TE+inPddSo7dX23jSpCMtD/vBfs3VvnmA8aa/1nku+c8sDP2IBCFMtAoFhitjz
-         P8xg==
-X-Gm-Message-State: AOAM532dTMGvaL2zXyDfv25luTlXk+ygw46uw1m33+uY61zo2AVB7x90
-        XG3YDFfozO+kWMrwlJxFMg==
-X-Google-Smtp-Source: ABdhPJxgvH2KybKM2cWCk8cIHsLk9UbkbEjCygxMcdbxSXzyladjhwGB4UwgszPdx59ugl221+sjgA==
-X-Received: by 2002:a6b:6b18:: with SMTP id g24mr814518ioc.8.1594840479773;
-        Wed, 15 Jul 2020 12:14:39 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id u3sm1530228iol.41.2020.07.15.12.14.38
+        bh=OJ/YWMib2y0Oi9xcE3B9cmLij4uK6K7vyJCnBwYrt/0=;
+        b=jqRsmS1El4PS1Z1K516C3cgEALTRxPZq91mICeUgpFySGz6ZPYJXKH8PNkzZl8NfNC
+         v94o0dQCfCb1D+C9QvJW1b55fLhFsoKyhqh5RbTXJUr0dw3yckEJm0EZAkX5KgfCB4zI
+         EBjKbn3xW/NclQ1OkOzD7h8LLale9NLtT6skscHwE7QBH2ipQNjAtx2fnhx+Fsbr3RDQ
+         ek1JzpgwoTG/PGE/tHxx4mknI8gbW9UMxQogv98LCNOt7SThfgLMlnNDmv9zm7OY951k
+         7KTMoQ62MUQ4VCOwpvVj4T+NGDH3fZx3jyQzH4lnOPccQQhsfhhFamVs/+l8SUyRJqXg
+         jQIg==
+X-Gm-Message-State: AOAM531bCFQDehetn+qa5AtAlZkB4zXktALgAfRq4t1oRYMvLkqAGPho
+        p3Y3uscG22FAokeksuF/Qz4IcA==
+X-Google-Smtp-Source: ABdhPJxxiugzYbbF1aUsgwFCaTWYsI5jJtHeJsIIOQXJcVFYwSl1wCBetM40QxEzTt5KKymF9BCfSw==
+X-Received: by 2002:a17:90a:ed87:: with SMTP id k7mr1208692pjy.31.1594841023280;
+        Wed, 15 Jul 2020 12:23:43 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id g6sm2829878pfr.129.2020.07.15.12.23.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 12:14:38 -0700 (PDT)
-Received: (nullmailer pid 661854 invoked by uid 1000);
-        Wed, 15 Jul 2020 19:14:37 -0000
-Date:   Wed, 15 Jul 2020 13:14:37 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Kathiravan T <kathirav@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        sivaprak@codeaurora.org
-Subject: Re: [PATCH 1/6] dt-bindings: soc: qcom: add YAML schema for SMD-RPM
- driver
-Message-ID: <20200715191437.GA656528@bogus>
-References: <1592550307-11040-1-git-send-email-kathirav@codeaurora.org>
- <1592550307-11040-2-git-send-email-kathirav@codeaurora.org>
+        Wed, 15 Jul 2020 12:23:42 -0700 (PDT)
+Date:   Wed, 15 Jul 2020 12:21:38 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     ohad@wizery.com, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] remoteproc: qcom_sysmon: Solve function header
+ bitrot issues
+Message-ID: <20200715192138.GA2922385@builder.lan>
+References: <20200715123551.4011154-1-lee.jones@linaro.org>
+ <20200715123551.4011154-2-lee.jones@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1592550307-11040-2-git-send-email-kathirav@codeaurora.org>
+In-Reply-To: <20200715123551.4011154-2-lee.jones@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 19, 2020 at 12:35:02PM +0530, Kathiravan T wrote:
-> Add YAML schema for the devitree properties used in the SMD-RPM driver.
+On Wed 15 Jul 05:35 PDT 2020, Lee Jones wrote:
 
-This is converting, not adding...
-
+> Looks as though 'name' has now been moved into 'struct sysmod_event'
+> which is passed in instead.  However, the parameter descriptions were
+> not updated at the same time.  Let's do that now.
 > 
-> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+> Fixes the following W=1 kernel build warning(s):
+> 
+>  drivers/remoteproc/qcom_sysmon.c:78: warning: Function parameter or member 'event' not described in 'sysmon_send_event'
+>  drivers/remoteproc/qcom_sysmon.c:78: warning: Excess function parameter 'name' description in 'sysmon_send_event'
+>  drivers/remoteproc/qcom_sysmon.c:350: warning: Function parameter or member 'event' not described in 'ssctl_send_event'
+>  drivers/remoteproc/qcom_sysmon.c:350: warning: Excess function parameter 'name' description in 'ssctl_send_event'
+> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+
+Thanks Lee, both patches applied.
+
+Regards,
+Bjorn
+
 > ---
->  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.txt  | 62 ---------------
->  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 91 ++++++++++++++++++++++
->  2 files changed, 91 insertions(+), 62 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-
-
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-> new file mode 100644
-> index 00000000..5b33def
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-> @@ -0,0 +1,91 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm Resource Power Manager (RPM) over SMD
-> +
-> +description: |
-> +  This driver is used to interface with the Resource Power Manager (RPM) found
-> +  in various Qualcomm platforms. The RPM allows each component in the system
-> +  to vote for state of the system resources, such as clocks, regulators and bus
-> +  frequencies.
-> +
-> +  The SMD information for the RPM edge should be filled out.  See qcom,smd.txt
-> +  for the required edge properties.  All SMD related properties will reside
-> +  within the RPM node itself.
-> +
-> +  The RPM exposes resources to its subnodes.  The rpm_requests node must be
-> +  present and this subnode may contain children that designate regulator
-> +  resources.
-> +
-> +  Refer to Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.txt
-> +  for information on the regulator subnodes that can exist under the
-> +  rpm_requests.
-> +
-> +maintainers:
-> +  - Kathiravan T <kathirav@codeaurora.org>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,rpm-apq8084
-> +      - qcom,rpm-msm8916
-> +      - qcom,rpm-msm8974
-> +      - qcom,rpm-msm8976
-> +      - qcom,rpm-msm8996
-> +      - qcom,rpm-msm8998
-> +      - qcom,rpm-sdm660
-> +      - qcom,rpm-qcs404
-> +
-> +  qcom,smd-channels:
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-> +    description: Channel name used for the RPM communication
-> +    items:
-> +      - const: rpm_requests
-> +
-> +if:
-> +  properties:
-> +    compatible:
-> +      contains:
-> +        enum:
-> +          - qcom,rpm-apq8084
-> +          - qcom,rpm-msm8916
-> +          - qcom,rpm-msm8974
-> +then:
-> +  required:
-> +    - qcom,smd-channels
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    soc {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        apcs: syscon@f9011000 {
-> +              compatible = "syscon";
-> +              reg = <0xf9011000 0x1000>;
-> +        };
-> +    };
-
-Drop this node. The use of 'syscon' alone is not valid and will now 
-generate warnings with what I have queued for 5.9.
-
-> +    smd {
-> +        compatible = "qcom,smd";
-> +
-> +        rpm {
-> +            interrupts = <0 168 1>;
-> +            qcom,ipc = <&apcs 8 0>;
-> +            qcom,smd-edge = <15>;
-> +
-> +                rpm_requests {
-> +                        compatible = "qcom,rpm-msm8974";
-> +                        qcom,smd-channels = "rpm_requests";
-> +
-> +                        /* Regulator nodes to follow */
-> +                };
-> +            };
-> +     };
-> +...
+>  drivers/remoteproc/qcom_sysmon.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+> index 8d8996d714f07..9eb2f6bccea63 100644
+> --- a/drivers/remoteproc/qcom_sysmon.c
+> +++ b/drivers/remoteproc/qcom_sysmon.c
+> @@ -71,7 +71,7 @@ static LIST_HEAD(sysmon_list);
+>  /**
+>   * sysmon_send_event() - send notification of other remote's SSR event
+>   * @sysmon:	sysmon context
+> - * @name:	other remote's name
+> + * @event:	sysmon event context
+>   */
+>  static void sysmon_send_event(struct qcom_sysmon *sysmon,
+>  			      const struct sysmon_event *event)
+> @@ -343,7 +343,7 @@ static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
+>  /**
+>   * ssctl_send_event() - send notification of other remote's SSR event
+>   * @sysmon:	sysmon context
+> - * @name:	other remote's name
+> + * @event:	sysmon event context
+>   */
+>  static void ssctl_send_event(struct qcom_sysmon *sysmon,
+>  			     const struct sysmon_event *event)
 > -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+> 2.25.1
 > 
