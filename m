@@ -2,72 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E82752217B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 00:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E8242217F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 00:46:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727873AbgGOWTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 18:19:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
+        id S1726765AbgGOWpe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 18:45:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726356AbgGOWTY (ORCPT
+        with ESMTP id S1726660AbgGOWpd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 18:19:24 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E103C061755;
-        Wed, 15 Jul 2020 15:19:24 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id z5so3796253pgb.6;
-        Wed, 15 Jul 2020 15:19:24 -0700 (PDT)
+        Wed, 15 Jul 2020 18:45:33 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48720C061755;
+        Wed, 15 Jul 2020 15:45:33 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id f18so4740047wrs.0;
+        Wed, 15 Jul 2020 15:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qxMjYphEfEAV7tSz+LCOdD9vQZvr3WacRlabwazm568=;
-        b=tUbTUWR3dxj56+YyBKIZgJW/7OA2iUxxr4thXULbGaCVs/FCj2qxgmftDdCgQcDfAj
-         P5pg8iyiIjQnURraFdk4xxB9TYVuanQxxhvUUAqFJKFeXquE3grQoz4CcppAAy4p5B5E
-         R+/cmzvRIj8wFAXTYPyl3DfbeeARc8bZzK9LkaPYajrSDztZTrdukZcz/XpD4YeBH+Se
-         vYEXBRqGTZ/F2Fuv9aMgg/pO+40ZN4ejTFs7IzCFduxAh5ykbHu13lc1dBt0YzCg57dZ
-         p4UV4ANTI/ixautCIS60xQkouahgl9VBwr1QkJCepyM0WYVBoR1dvQklHkzhUAmNDkU/
-         NR5Q==
+        bh=la4qm6vspXOJfm9KXsdHliICfFa0lZg8lLjiPV4UsfU=;
+        b=OCHL4KJEJK9ziZzNh1qGADUHvDHQbBolLbT1SaZsUTAFKSLTzQMOPoaSrwV0wQDgzY
+         h7Vt+5UTHqfm9faomfb6XfLSxjXkr1IFLN862ngzq3/0/jXFqT5ndSaNwvaPFNipgOOs
+         axYreCkhm1/1Rc25buR2LmUOa4cdOJrUxcHccryKq4MtYVR74xNHQhNXAVAwzJvYNhlZ
+         R6WY7jNSH55bLUdRS9atC8D5/x6TJGwf5+6keE7MZjacghrCuNUkrsz8BOO4QH4c/PYC
+         Gl5+BoC9N5IhIl+uWAxrNd09Ev74MWYNJNQE/3z+j4fMI5Gbt4POvMIpaj6UpHPsfxeu
+         qNow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qxMjYphEfEAV7tSz+LCOdD9vQZvr3WacRlabwazm568=;
-        b=YZb+rvD5V7SzJf1LZFWdbZWEJi6JLMQxK5t5ezXfE7Vglly6G41pEGj1weFeYApLnx
-         p4pSW8Iup+jQLQt7q18CmLulia45ST6KncXzzMgLkA5gKQmPGzqojj+9QYsxjLBfDauT
-         ebbE74tmGSBeE5r/FVQ4b7/F1Utq/xZ2HJkemKYL23dx8ZITHzJb5TcDmYP6yd1yCEBg
-         33rRvqU9g4hbR8vilw9srnPboue+BkR3rZLU6c4WmPxC1V2IU3Q2UUtDDadhRQ9+fqtv
-         +535tVmr2tNNwzDQHg+zjKbCnd18bcTiRnXBcWqow/kzNnVTHxPVuiS7bq3biUvSNOLc
-         xivw==
-X-Gm-Message-State: AOAM533gUwNBSVM95bG9jyXYgDcicZr5wj/6b1ww2oiL4Aaej5iYG1El
-        6copP2FrtbWxbtaBOB8vArQ=
-X-Google-Smtp-Source: ABdhPJztQ4b1Z0Z4rUFJQFEEF4msB+mPG53K5SjClbyNecECZ4BF9AnbVoPPw+8lwtj9Zq1DN6QehQ==
-X-Received: by 2002:a63:135b:: with SMTP id 27mr1656329pgt.37.1594851563677;
-        Wed, 15 Jul 2020 15:19:23 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id p9sm1445997pgc.77.2020.07.15.15.19.22
+        bh=la4qm6vspXOJfm9KXsdHliICfFa0lZg8lLjiPV4UsfU=;
+        b=kuv7uffZqQiWgAd1GK9CoNTUSsIR3aRa0C7KcVFIslqBEUoCgmU0uYALhABRvyCUtX
+         qyQLVtEQj83QkycY5Hc4V60n2NYnyPBGNcZBDlyzwxVf6x5Dshq4E2k36JUDRw49Hvj9
+         sOwHLQ8p3xgLzHFwi62qy8cNQevtPv3NcZOuMKrNT79ByMN9zc1gLYqmT0Om+QZbm8Kt
+         rt8YsF5qbmuTar5X0YU1ca8AjczDOt/XIlv+20A9yYT2vYs69I1moWUKTB/2XiIELCzl
+         Gwmtar4c++ErGNCEDwmFuO0aRWPKt3j2GGKuPq2SaxM1pTV8q0qQdhKXcT+fuhTlxwCe
+         gDEQ==
+X-Gm-Message-State: AOAM533Ph2wxcPOHIzPcWX2FvErxy9rmXVaBJ7XhV29GQfWo/fs70XEG
+        am9oKtunXzJ5Gb84eUQaTqA=
+X-Google-Smtp-Source: ABdhPJxWAWBMJDcpCZDM3vJwoFjC/Aa00uTi9xyZVOCAE++3I4d/cu3sCiWcekzqs4P5EZFsIgVsHg==
+X-Received: by 2002:adf:fd46:: with SMTP id h6mr1951616wrs.105.1594853131852;
+        Wed, 15 Jul 2020 15:45:31 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host-87-7-31-173.retail.telecomitalia.it. [87.7.31.173])
+        by smtp.googlemail.com with ESMTPSA id b186sm5759898wme.1.2020.07.15.15.45.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 15:19:22 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Steev Klimaszewski <steev@gentoo.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Zheng Bin <zhengbin13@huawei.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/dpu: fix/enable 6bpc dither with split-lm
-Date:   Wed, 15 Jul 2020 15:19:51 -0700
-Message-Id: <20200715221955.3209856-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Wed, 15 Jul 2020 15:45:30 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v3 0/7] Add support for ipq8064 tsens
+Date:   Thu, 16 Jul 2020 00:44:55 +0200
+Message-Id: <20200715224503.30462-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -75,90 +71,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Ipq8064 SoCs tsens driver is based on 8960 tsens driver. This patchset 
+expand the 8960 unused driver with interrupt support and set_trip point.
+Ipq8064 needs to be registered as a gcc child as the tsens regs on
+this platform are shared with the controller.
 
-If split-lm is used (for ex, on sdm845), we can have multiple ping-
-pongs, but only a single phys encoder.  We need to configure dithering
-on each of them.
+v3:
+* Change driver to register as child instead of use phandle
+v2:
+* Fix dt-bindings problems
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 22 ++++++++++---------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  3 +--
- 2 files changed, 13 insertions(+), 12 deletions(-)
+Ansuel Smith (7):
+  ipq806x: gcc: add support for child probe
+  drivers: thermal: tsens: try load regmap from parent for 8960
+  drivers: thermal: tsens: add ipq8064 support
+  dt-bindings: thermal: tsens: document ipq8064 bindings
+  drivers: thermal: tsens: add interrupt support for 9860 driver
+  drivers: thermal: tsens: add support for custom set_trip function
+  drivers: thermal: tsens: add set_trip support for 8960
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 46df0ff75b85..9b98b63c77fb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -212,14 +212,14 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
- 	15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
- };
- 
--static void _dpu_encoder_setup_dither(struct dpu_encoder_phys *phys)
-+static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
- {
- 	struct dpu_hw_dither_cfg dither_cfg = { 0 };
- 
--	if (!phys->hw_pp || !phys->hw_pp->ops.setup_dither)
-+	if (!hw_pp->ops.setup_dither)
- 		return;
- 
--	switch (phys->connector->display_info.bpc) {
-+	switch (bpc) {
- 	case 6:
- 		dither_cfg.c0_bitdepth = 6;
- 		dither_cfg.c1_bitdepth = 6;
-@@ -228,14 +228,14 @@ static void _dpu_encoder_setup_dither(struct dpu_encoder_phys *phys)
- 		dither_cfg.temporal_en = 0;
- 		break;
- 	default:
--		phys->hw_pp->ops.setup_dither(phys->hw_pp, NULL);
-+		hw_pp->ops.setup_dither(hw_pp, NULL);
- 		return;
- 	}
- 
- 	memcpy(&dither_cfg.matrix, dither_matrix,
- 			sizeof(u32) * DITHER_MATRIX_SZ);
- 
--	phys->hw_pp->ops.setup_dither(phys->hw_pp, &dither_cfg);
-+	hw_pp->ops.setup_dither(hw_pp, &dither_cfg);
- }
- 
- void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
-@@ -1132,11 +1132,13 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
- 
- 	_dpu_encoder_update_vsync_source(dpu_enc, &dpu_enc->disp_info);
- 
--	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
--		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
--			struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
--
--			_dpu_encoder_setup_dither(phys);
-+	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI &&
-+			!WARN_ON(dpu_enc->num_phys_encs == 0)) {
-+		unsigned bpc = dpu_enc->phys_encs[0]->connector->display_info.bpc;
-+		for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-+			if (!dpu_enc->hw_pp[i])
-+				continue;
-+			_dpu_encoder_setup_dither(dpu_enc->hw_pp[i], bpc);
- 		}
- 	}
- }
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-index 7411ab6bf6af..bea4ab5c58c5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-@@ -231,8 +231,7 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
- 	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
- 	c->ops.get_line_count = dpu_hw_pp_get_line_count;
- 
--	if (test_bit(DPU_PINGPONG_DITHER, &features) &&
--		IS_SC7180_TARGET(c->hw.hwversion))
-+	if (test_bit(DPU_PINGPONG_DITHER, &features))
- 		c->ops.setup_dither = dpu_hw_pp_setup_dither;
- };
- 
+ .../bindings/thermal/qcom-tsens.yaml          |  50 ++-
+ drivers/clk/qcom/gcc-ipq806x.c                |   2 +-
+ drivers/thermal/qcom/tsens-8960.c             | 286 +++++++++++++++++-
+ drivers/thermal/qcom/tsens.c                  |   7 +
+ drivers/thermal/qcom/tsens.h                  |   3 +
+ 5 files changed, 325 insertions(+), 23 deletions(-)
+
 -- 
-2.26.2
+2.27.0
 
