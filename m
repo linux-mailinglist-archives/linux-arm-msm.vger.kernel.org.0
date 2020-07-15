@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CEC1221644
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 22:32:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9ECF2216B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 23:02:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726945AbgGOUcI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 16:32:08 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:33233 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbgGOUcH (ORCPT
+        id S1726858AbgGOVCA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 17:02:00 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:34336 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726356AbgGOVB7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 16:32:07 -0400
-Received: by mail-io1-f68.google.com with SMTP id d18so3709557ion.0;
-        Wed, 15 Jul 2020 13:32:07 -0700 (PDT)
+        Wed, 15 Jul 2020 17:01:59 -0400
+Received: by mail-io1-f66.google.com with SMTP id q74so3806402iod.1;
+        Wed, 15 Jul 2020 14:01:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=xgpaPe39mEo1k9W7lGAlknVj+R0r4vQdiUF0SkOMUw8=;
-        b=bqOYjFOM0b+cvBl+/JZNVYQR0qOD5OcVVL/B+gidid2UXi7I8utqqRE6kMK8PZizEP
-         Tpo9YzG6zWSUVthYipMAyefWDXPqiuBiZSj9/mkyUaeKlnnO1D+XPi11YNj6QBLYnwU/
-         YkgdTRkIDyxlmKxzzOxyCDdqNdlAkaj3C6QtdTwOyxprhKY1f8uPz7CzG7UjGIw7mT/H
-         HFjHHSNxCGF4MRFI3x/+bV1bi54NTFvDVDNI9ybkE1AbHTsK21pBll2nlMpIsjU6glXz
-         NN1tdOsZUrUoeee2m7NYDbYjqE3orlNPgVy6w7N+WBWsgzNuGLVzx+ABZbdWolLJHf7c
-         Pp9w==
-X-Gm-Message-State: AOAM531oLRKNXQMUzVdPqVBGkOM9jPZgF+aAyWSjoidOUf1mcM+1/R43
-        TNbzst7fOUX2E0B6PYdxR1U2pRUlqw==
-X-Google-Smtp-Source: ABdhPJznWQ9ULp+AZKrH/U6yUY+gFlaVC14n5TBcxj+4CLE+vxs6itLKSVREKbLdn7XNPC7/zvYV/g==
-X-Received: by 2002:a05:6602:148f:: with SMTP id a15mr1165503iow.26.1594845126473;
-        Wed, 15 Jul 2020 13:32:06 -0700 (PDT)
+        bh=Tl/LoJSdH3t7ttKEqz/6MPL6wWrpBrkpzf3QORxog0s=;
+        b=OKic5iL5bq5UZt42Lb7vLDmao+XtSDxEIeCIbV108HWU/C/r7BU5f8tX45R2QEwJNJ
+         9kTAejUyeGbmBlbj5AC9/qXv/1DWkO3i5zyLPAMvZegtUePrDj9ml0JVJzafvHOxueBV
+         X0grmasTZtVUqS8kY+7/J5+Q7UlRVM/bJcuJPlzsrDNIGsGp1Sos7xkSdt5Qs8B9FFkO
+         MAoex6r3P34YHDEhxQ3z4Ne0pgAWKkahUDPRb7S4IVFibHUK45BX8TAcdS2YpE21bcUy
+         7wv9hV5AxDSSqLmhiqB9Xx8GWcvct6FtTsGvBUnfqDwwxR+y3FdQoBGjVZZrwZXQdbYj
+         s1uQ==
+X-Gm-Message-State: AOAM532duHzzRTYjyJv2thofLarectoBhCmF+XBVQPE+sQZoS7tKHy7s
+        3YVF4Yery/8rER9RoXV5CA==
+X-Google-Smtp-Source: ABdhPJykT+41Z6DfMtlkhmJ5RvUlPYF7shfy1TJ/uBCpIrEFYK0Zw0lJg5MCgYGSrBkx0cXVV56/fg==
+X-Received: by 2002:a6b:440d:: with SMTP id r13mr1200583ioa.114.1594846916417;
+        Wed, 15 Jul 2020 14:01:56 -0700 (PDT)
 Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id v13sm1641502iox.12.2020.07.15.13.32.05
+        by smtp.gmail.com with ESMTPSA id h11sm1602621ilh.69.2020.07.15.14.01.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 13:32:05 -0700 (PDT)
-Received: (nullmailer pid 769501 invoked by uid 1000);
-        Wed, 15 Jul 2020 20:32:04 -0000
-Date:   Wed, 15 Jul 2020 14:32:04 -0600
+        Wed, 15 Jul 2020 14:01:55 -0700 (PDT)
+Received: (nullmailer pid 809889 invoked by uid 1000);
+        Wed, 15 Jul 2020 21:01:54 -0000
+Date:   Wed, 15 Jul 2020 15:01:54 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, daniel.lezcano@linaro.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] MAINTAINERS: update Amit Kucheria's email to a single
- email address
-Message-ID: <20200715203204.GA769304@bogus>
-References: <8cbb7004a6a9b846a8d827f514f33f1a265dd5d4.1593498024.git.amit.kucheria@linaro.org>
+To:     Brian Norris <computersforpeace@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.or>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH 2/2] dt-bindings: pinctrl: qcom: add drive-open-drain to
+ ipq4019
+Message-ID: <20200715210154.GA809835@bogus>
+References: <20200703080646.23233-1-computersforpeace@gmail.com>
+ <20200703080646.23233-2-computersforpeace@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8cbb7004a6a9b846a8d827f514f33f1a265dd5d4.1593498024.git.amit.kucheria@linaro.org>
+In-Reply-To: <20200703080646.23233-2-computersforpeace@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 Jun 2020 11:52:32 +0530, Amit Kucheria wrote:
-> Emails currently go to different mailboxes. Switch to the kernel.org
-> address so I can forward them to a single mailbox.
+On Fri, 03 Jul 2020 01:06:46 -0700, Brian Norris wrote:
+> We've added drive-open-drain support, so note it in the DT binding.
 > 
-> Signed-off-by: Amit Kucheria <amit.kucheria@linaro.org>
+> Signed-off-by: Brian Norris <computersforpeace@gmail.com>
 > ---
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 2 +-
->  MAINTAINERS                                               | 4 ++--
->  2 files changed, 3 insertions(+), 3 deletions(-)
+>  .../devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.txt       | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
 
-Applied, thanks!
+Acked-by: Rob Herring <robh@kernel.org>
