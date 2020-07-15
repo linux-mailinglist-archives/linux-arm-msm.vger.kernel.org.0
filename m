@@ -2,578 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F79F221599
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 21:55:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1392215B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2020 22:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726803AbgGOTzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 15:55:33 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:37047 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbgGOTzd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 15:55:33 -0400
-Received: by mail-io1-f66.google.com with SMTP id v6so3582345iob.4;
-        Wed, 15 Jul 2020 12:55:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wwLSc8ACOFK5x6W6Wvc0FQ/VTmCQze+BtXUUtGB4oGs=;
-        b=Nu7O4X1RDHmNsyZ406/6JhkNjwV9+v31JLfRLDpZAhFFhc2pc6uflmIpYa9wqrJZlo
-         JhcmWXfCDmvzFTQW2459T0B19dsCqENVhO2548AZozqVvm/mir0dTsRrYMCRNKV6MSZE
-         kmqLB8vlyyuiPD62aJXvmf3tnpBiMeI+j2xB0TsOqBMNJ+XL+52jViUJbN7BG9oqqRXn
-         FohWKtaaDttbLWKBbZdxRZ9MuDCZAdgW5cku3x6fzmlA61E/wGy7SnuY1brZOYcETWNb
-         J3JNkNfgJsQ9Ruf+4wYzgV/6Ik6PVP/Y9K+fpiO45pwmVVOFEchEfYc5RuIPxaZ4aIs4
-         2n6A==
-X-Gm-Message-State: AOAM533DrcHnwgzsJkFKYz9Aklhin7oy/B5VhYmEAOqrJDegLsBjghH0
-        XZIrrog4v9tOcAI00RwlpQ==
-X-Google-Smtp-Source: ABdhPJzbwNj6HZcfmjrTSF00MePBWZMUTjuo0Qfo+4m272Hj76BlzCDEDKDNRCkcQY54y9jeKs+5XA==
-X-Received: by 2002:a02:b0d5:: with SMTP id w21mr1176522jah.27.1594842931059;
-        Wed, 15 Jul 2020 12:55:31 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id t7sm1579252iol.2.2020.07.15.12.55.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 12:55:30 -0700 (PDT)
-Received: (nullmailer pid 720192 invoked by uid 1000);
-        Wed, 15 Jul 2020 19:55:29 -0000
-Date:   Wed, 15 Jul 2020 13:55:29 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: pci: convert QCOM pci bindings to YAML
-Message-ID: <20200715195529.GA710312@bogus>
-References: <1592982124-27160-1-git-send-email-sivaprak@codeaurora.org>
+        id S1726758AbgGOUFe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 16:05:34 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:44167 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726670AbgGOUFe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Jul 2020 16:05:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594843532; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=fvwWPJ4nfvf5fMLrZzvo42MkdKAWewsiREaDmkMYpTg=; b=aII95sr/Bi/sP+uGXmvhR+EpWRV7kkzoK5F0rsuQBQv1vbUdRYfXSR+zNU7G/1Vsej9X9wV4
+ 8pZogqW018VugyfqxWuHPKtUmW2NjFRplau+Uu13Kxm2rROJhMoFaKPIzrIY0VySFXxFMih2
+ 4XAs8OCMw+mO3kqRyNJYd8BayGo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f0f618b65270fa5953173df (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Jul 2020 20:05:31
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A7842C433A1; Wed, 15 Jul 2020 20:05:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B37ADC433C9;
+        Wed, 15 Jul 2020 20:05:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B37ADC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 15 Jul 2020 14:05:24 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/adreno: fix gpu probe if no interconnect-names
+Message-ID: <20200715200523.GA26861@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200715190732.3116556-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1592982124-27160-1-git-send-email-sivaprak@codeaurora.org>
+In-Reply-To: <20200715190732.3116556-1-robdclark@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 24, 2020 at 12:32:04PM +0530, Sivaprakash Murugesan wrote:
-> Convert QCOM pci bindings to YAML schema
+On Wed, Jul 15, 2020 at 12:07:30PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> If there is no interconnect-names, but there is an interconnects
+> property, then of_icc_get(dev, "gfx-mem"); would return an error
+> rather than NULL.
+> 
+> Also, if there is no interconnect-names property, there will never
+> be a ocmem path.  But of_icc_get(dev, "ocmem") would return -EINVAL
+> instead of -ENODATA.  Just don't bother trying in this case.
+> 
+> v2: explicity check for interconnect-names property
+> 
+> Fixes: 8e29fb37b301 ("drm/msm: handle for EPROBE_DEFER for of_icc_get")
+> Fixes: 00bb9243d346 ("drm/msm/gpu: add support for ocmem interconnect path")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  .../devicetree/bindings/pci/qcom,pcie.txt          | 330 ---------------
->  .../devicetree/bindings/pci/qcom,pcie.yaml         | 470 +++++++++++++++++++++
->  2 files changed, 470 insertions(+), 330 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-
-
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> new file mode 100644
-> index 000000000000..b119ce4711b4
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -0,0 +1,470 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/pci/qcom,pcie.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm PCI express root complex
-> +
-> +maintainers:
-> +  - Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> +
-> +description:
-> +  QCOM PCIe controller uses Designware IP with Qualcomm specific hardware
-> +  wrappers.
-> +
-
-Need to reference pci-bus.yaml.
-
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pcie-apq8064
-> +      - qcom,pcie-apq8084
-> +      - qcom,pcie-ipq4019
-> +      - qcom,pcie-ipq8064
-> +      - qcom,pcie-ipq8074
-> +      - qcom,pcie-msm8996
-> +      - qcom,pcie-qcs404
-> +      - qcom,pcie-sdm845
-> +
-> +  reg:
-> +    description: Register ranges as listed in the reg-names property
-> +    maxItems: 4
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dbi
-> +      - const: elbi
-> +      - const: parf
-> +      - const: config
-> +
-
-> +  "#size-cells":
-> +    const: 2
-> +
-> +  device_type:
-> +    items:
-> +      - const: pci
-> +
-> +  "#address-cells":
-> +    const: 3
-
-Drop these, pci-bus.yaml covers them.
-
-> +
-> +  ranges:
-> +    maxItems: 2
-> +
-> +  interrupts:
-> +    items:
-> +      - description: MSI interrupts
-> +
-> +  interrupt-names:
-> +    const: msi
-> +
-> +  "#interrupt-cells":
-> +    const: 1
-> +
-> +  interrupt-map-mask:
-> +    items:
-> +      - description: standard PCI properties to define mapping of PCIe
-> +                     interface to interrupt numbers.
-> +
-> +  interrupt-map:
-> +    maxItems: 4
-> +
-> +  clocks:
-> +    minItems: 1
-> +    maxItems: 7
-> +
-> +  clock-names:
-> +    minItems: 1
-> +    maxItems: 7
-> +
-> +  resets:
-> +    minItems: 1
-> +    maxItems: 12
-> +
-> +  reset-names:
-> +    minItems: 1
-> +    maxItems: 12
-> +
-> +  power-domains:
-> +    items:
-> +      - description: phandle to the power domain responsible for collapsing
-> +                     and restoring power to peripherals
-
-Just 'maxItems: 1'. No need for generic descriptions.
-
-> +
-> +  vdda-supply:
-> +    items:
-> +      - description: phandle to power supply
-
-*-supply is not an array.
-
-> +
-> +  vdda_phy-supply:
-> +    items:
-> +      - description: phandle to the power supply to PHY
-> +
-> +  vdda_refclk-supply:
-> +    items:
-> +      - description: phandle to power supply for ref clock generator
-> +
-> +  vddpe-3v3-supply:
-> +    items:
-> +      - description: PCIe endpoint power supply
-> +
-> +  phys:
-> +    items:
-> +      - description: phandle to the PHY block
-
-maxItems: 1
-
-> +
-> +  phy-names:
-> +    const: pciephy
-> +
-> +  perst-gpios:
-> +    description: Endpoint reset signal line
-
-Add 'maxItems: 1' as *-gpios is an array.
-
-> +
-> +  bus-range:
-> +    description: Range of bus numbers associated with this controller
-
-Can drop.
-
-> +
-> +  num-lanes:
-> +    const: 1
-> +
-> +  linux,pci-domain:
-> +    description: pci host bridge domain number
-
-Can drop.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - device_type
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - ranges
-> +  - interrupts
-> +  - interrupt-names
-> +  - "#interrupt-cells"
-> +  - interrupt-map-mask
-> +  - interrupt-map
-> +  - clocks
-> +  - clock-names
-> +  - resets
-> +  - reset-names
-> +  - phys
-> +  - phy-names
-
-Can drop everything pci-bus.yaml says is required.
-
-> +
-> +additionalProperties: false
-
-Will need to be 'unevaluatedProperties: false' with pci-bus.yaml 
-referenced.
-
-> +
-> +allOf:
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-apq8064
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: clock for pcie hw block
-> +           - description: clock for pcie phy block
-> +       clock-names:
-> +         items:
-> +           - const: core
-> +           - const: phy
-> +       resets:
-> +         items:
-> +           - description: AXI reset
-> +           - description: AHB reset
-> +           - description: POR reset
-> +           - description: PCI reset
-> +           - description: PHY reset
-> +       reset-names:
-> +         items:
-> +           - const: axi
-> +           - const: ahb
-> +           - const: por
-> +           - const: pci
-> +           - const: phy
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-apq8084
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: AUX clock
-> +           - description: Master AXI clock
-> +           - description: Slave AXI clock
-> +       clock-names:
-> +         items:
-> +           - const: aux
-> +           - const: bus_master
-> +           - const: bus_slave
-> +       resets:
-> +         items:
-> +           - description: core reset
-> +       reset-names:
-> +         items:
-> +           - const: core
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-ipq4019
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: AUX clock
-> +           - description: Master AXI clock
-> +           - description: Slave AXI clock
-> +       clock-names:
-> +         items:
-> +           - const: aux
-> +           - const: master_bus
-> +           - const: master_slave
-> +       resets:
-> +         items:
-> +           - description: AXI master reset
-> +           - description: AXI slave reset
-> +           - description: PCIE pipe reset
-> +           - description: AXI vmid reset
-> +           - description: AXI XPU reset
-> +           - description: parf reset
-> +           - description: PHY reset
-> +           - description: AXI master sticky reset
-> +           - description: PCIE pipe sticky reset
-> +           - description: pwr reset
-> +           - description: AHB reset
-> +           - description: PHY AHB reset
-> +       reset-names:
-> +         items:
-> +           - const: axi_m
-> +           - const: axi_s
-> +           - const: pipe
-> +           - const: axi_m_vmid
-> +           - const: axi_s_xpu
-> +           - const: parf
-> +           - const: phy
-> +           - const: axi_m_sticky
-> +           - const: pipe_sticky
-> +           - const: pwr
-> +           - const: ahb
-> +           - const: phy_ahb
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-ipq8064
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: core clock
-> +           - description: interface clock
-> +           - description: phy clock
-> +           - description: Auxilary clock
-> +           - description: reference clock
-> +       clock-names:
-> +         items:
-> +           - const: core
-> +           - const: iface
-> +           - const: phy
-> +           - const: aux
-> +           - const: ref
-> +       resets:
-> +         items:
-> +           - description: AXI reset
-> +           - description: AHB reset
-> +           - description: POR reset
-> +           - description: PCI reset
-> +           - description: PHY reset
-> +           - description: External reset
-> +       reset-names:
-> +         items:
-> +           - const: axi
-> +           - const: ahb
-> +           - const: por
-> +           - const: pci
-> +           - const: phy
-> +           - const: ext
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-ipq8074
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: sys noc interface clock
-> +           - description: AXI master clock
-> +           - description: AXI slave clock
-> +           - description: AHB clock
-> +           - description: Auxilary clock
-> +       clock-names:
-> +         items:
-> +           - const: iface
-> +           - const: axi_m
-> +           - const: axi_s
-> +           - const: ahb
-> +           - const: aux
-> +       resets:
-> +         items:
-> +           - description: PIPE reset
-> +           - description: PCIe sleep reset
-> +           - description: PCIe sticky reset
-> +           - description: AXI master reset
-> +           - description: AXI slave reset
-> +           - description: AHB reset
-> +           - description: AXI master sticky reset
-> +       reset-names:
-> +         items:
-> +           - const: pipe
-> +           - const: sleep
-> +           - const: sticky
-> +           - const: axi_m
-> +           - const: axi_s
-> +           - const: ahb
-> +           - const: axi_m_sticky
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-msm8996
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: PCIe pipe clock
-> +           - description: Auxilary clock
-> +           - description: AHB config clock
-> +           - description: AXI master clock
-> +           - description: AXI slave clock
-> +       clock-names:
-> +         items:
-> +           - const: pipe
-> +           - const: aux
-> +           - const: cfg
-> +           - const: bus_master
-> +           - const: bus_slave
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-qcs404
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: interface clock
-> +           - description: Auxilary clock
-> +           - description: AXI master clock
-> +           - description: AXI slave clock
-> +       clock-names:
-> +         items:
-> +           - const: iface
-> +           - const: aux
-> +           - const: master_bus
-> +           - const: slave_bus
-> +       resets:
-> +         items:
-> +           - description: AXI master reset
-> +           - description: AXI slave reset
-> +           - description: AXI master sticky reset
-> +           - description: PCIe pipe sticky reset
-> +           - description: power reset
-> +           - description: AHB reset
-> +       reset-names:
-> +         items:
-> +           - const: axi_m
-> +           - const: axi_s
-> +           - const: axi_m_sticky
-> +           - const: pipe_sticky
-> +           - const: pwr
-> +           - const: ahb
-> + - if:
-> +     properties:
-> +       compatible:
-> +         contains:
-> +           enum:
-> +             - qcom,pcie-sdm845
-> +   then:
-> +     properties:
-> +       clocks:
-> +         items:
-> +           - description: PCIE pipe clock
-> +           - description: Auxilary clock
-> +           - description: AHB config clock
-> +           - description: AXI Master clock
-> +           - description: AXI Slave clock
-> +           - description: AXI Slave Q2A clock
-> +           - description: NOC TBU clock
-> +       clock-names:
-> +         items:
-> +           - const: pipe
-> +           - const: aux
-> +           - const: cfg
-> +           - const: bus_master
-> +           - const: bus_slave
-> +           - const: slave_q2a
-> +           - const: tbu
-> +       resets:
-> +         items:
-> +           - description: PCI reset
-> +       reset-names:
-> +         items:
-> +           - const: pci
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-qcs404.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    pcie: pci@10000000 {
-> +        compatible = "qcom,pcie-qcs404";
-> +        reg =  <0x10000000 0xf1d>,
-> +               <0x10000f20 0xa8>,
-> +               <0x07780000 0x2000>,
-> +               <0x10001000 0x2000>;
-> +        reg-names = "dbi", "elbi", "parf", "config";
-> +        device_type = "pci";
-> +        linux,pci-domain = <0>;
-> +        bus-range = <0x00 0xff>;
-> +        num-lanes = <1>;
-> +        #address-cells = <3>;
-> +        #size-cells = <2>;
-> +
-> +        ranges = <0x01000000 0 0          0x10003000 0 0x00010000>, /* I/O */
-> +                 <0x02000000 0 0x10013000 0x10013000 0 0x007ed000>; /* memory */
-> +
-> +        interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-names = "msi";
-> +        #interrupt-cells = <1>;
-> +        interrupt-map-mask = <0 0 0 0x7>;
-> +        interrupt-map = <0 0 0 1 &intc GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-> +                        <0 0 0 2 &intc GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-> +                        <0 0 0 3 &intc GIC_SPI 267 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-> +                        <0 0 0 4 &intc GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-> +        clocks = <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +                 <&gcc GCC_PCIE_0_AUX_CLK>,
-> +                 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> +                 <&gcc GCC_PCIE_0_SLV_AXI_CLK>;
-> +        clock-names = "iface", "aux", "master_bus", "slave_bus";
-> +
-> +        resets = <&gcc 18>,
-> +                 <&gcc 17>,
-> +                 <&gcc 15>,
-> +                 <&gcc 19>,
-> +                 <&gcc GCC_PCIE_0_BCR>,
-> +                 <&gcc 16>;
-> +        reset-names = "axi_m",
-> +                      "axi_s",
-> +                      "axi_m_sticky",
-> +                      "pipe_sticky",
-> +                      "pwr",
-> +                      "ahb";
-> +
-> +        phys = <&pcie_phy>;
-> +        phy-names = "pciephy";
-> +
-> +    };
-> -- 
-> 2.7.4
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 0527e85184e1..e23641a5ec84 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -1003,22 +1003,23 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  	if (ret)
+>  		return ret;
+>  
+> -	/* Check for an interconnect path for the bus */
+> -	gpu->icc_path = of_icc_get(dev, "gfx-mem");
+> -	if (!gpu->icc_path) {
+> -		/*
+> -		 * Keep compatbility with device trees that don't have an
+> -		 * interconnect-names property.
+> -		 */
+> +	/*
+> +	 * The legacy case, before "interconnect-names", only has a
+> +	 * single interconnect path which is equivalent to "gfx-mem"
+> +	 */
+> +	if (!of_find_property(dev->of_node, "interconnect-names", NULL)) {
+>  		gpu->icc_path = of_icc_get(dev, NULL);
+> +	} else {
+> +		gpu->icc_path = of_icc_get(dev, "gfx-mem");
+> +		gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
+>  	}
+> +
+>  	if (IS_ERR(gpu->icc_path)) {
+>  		ret = PTR_ERR(gpu->icc_path);
+>  		gpu->icc_path = NULL;
+>  		return ret;
+>  	}
+>  
+> -	gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
+>  	if (IS_ERR(gpu->ocmem_icc_path)) {
+>  		ret = PTR_ERR(gpu->ocmem_icc_path);
+>  		gpu->ocmem_icc_path = NULL;
+> @@ -1026,6 +1027,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  		if (ret != -ENODATA)
+>  			return ret;
+>  	}
+> +
+
+Nit for an extra blank line but otherwise looks fine.  I like this workaround.
+
+With that, Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.26.2
+> 
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
