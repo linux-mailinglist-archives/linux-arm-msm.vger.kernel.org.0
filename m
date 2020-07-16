@@ -2,94 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 886BF221C26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 07:48:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3D76221C4B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 08:05:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726351AbgGPFsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 01:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbgGPFsT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 01:48:19 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E9BC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 22:48:18 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id md7so4128276pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 22:48:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GcjGMlvxaLvf+5Qx9y70nhyWvIrGkWz3MBzmHdjFud4=;
-        b=Y73DZiGCNXSiY//N6sNgC0Yv9LqzR32T9dyDXTCVjQrypbaV0JpeZJAsu4K2MS/iA4
-         tVRE4rgZq3p+sKM19YapD+CGtv0fD/DxwQe94rgpGqHG+ZOtE8DRH5ue2hgEx6RvjZq9
-         Eac2HuNPK/go9BP0k3m2crj1jUADiUZKf/SrnENfyrHMFLBJBCSXGFkozGOxZjl/iyBA
-         KelrTBPlLFxTWKNTtRsPXEuVBTbuwIonBER9lQVad7DoZ543VttTXpnNVAoHJc2U1FST
-         z7PECvJpjoiHRVAtBuQpssgp38dzC1XrsrK3aGkFeMcUZZACKXMfk7y5gu5PtjBKUF1h
-         Op3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GcjGMlvxaLvf+5Qx9y70nhyWvIrGkWz3MBzmHdjFud4=;
-        b=PPpozzoCkaLsrQWqr+7U9ZeRt3Swbz8QE/yMH5ywKBN2KcfWdW8dl3sUAihQaRVmCf
-         FEBD2B9cVkAjWLmOITWt1pY3UthrCTaS0zJHKRuKRO8svQ2fZobOD5laN82me3toe3va
-         FMzN6L+D90s065qfQbMBL3ZDnRfyx8YfveG88QdIVMgGHklPJsADECuFsYeA+cQ8AzmT
-         akumPomr7F2LjQIQsOF6/iC9LVXpGB3ZGgaIYrLEk2wuZw5/0SPJA/rpTu2ifiBJEx3e
-         ccyD+bdDOnCe7eBBSBMVOt55zd4DZ9P3Q5bwrs9r7flSoyIUjGIO9L0bsOD69A68kazs
-         hUpA==
-X-Gm-Message-State: AOAM532FHqrt+3DfnbegAcHcq426Cc9LOKEW3k2llC9t7lTqOUYEFd+e
-        TrOqO+ZP0yuhPpbcu4kyB0J3ew==
-X-Google-Smtp-Source: ABdhPJxgSNsrdonyiZ4TpMu5c5IjfTLUQbvfXYif2dVLhugs3juB7O3pgeWaVE3XdMP26ZR+yCp79Q==
-X-Received: by 2002:a17:90b:8d7:: with SMTP id ds23mr3267380pjb.148.1594878498322;
-        Wed, 15 Jul 2020 22:48:18 -0700 (PDT)
-Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id o4sm3707657pjo.16.2020.07.15.22.48.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 22:48:17 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Nathan Chancellor <natechancellor@gmail.com>
-Subject: [PATCH] remoteproc: qcom: pil-info: Fix shift overflow
-Date:   Wed, 15 Jul 2020 22:48:17 -0700
-Message-Id: <20200716054817.157608-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.26.2
+        id S1725946AbgGPGFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 02:05:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42598 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725913AbgGPGFJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 02:05:09 -0400
+Received: from localhost (unknown [122.171.202.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F167120578;
+        Thu, 16 Jul 2020 06:05:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594879508;
+        bh=8P2zKP9fwTAESRcSXu8PidqEv90XXPnh3+R3n6iZJwE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ETyy3TeDfhRQFQtPrFIhGv+A00ZcHddCwE8EzxqgKfBY1/SZpl9tr+ar58K0oEOnv
+         3xoRC4GVghh+vSBw5MHJ+OWjd35oMAKyfy1xL1RO/NBMPQYIGEaPCNngU1AiFHzwdh
+         7TnS/i7HrrT0UZ4441RG7cHELhWtBspgtYApeMbg=
+Date:   Thu, 16 Jul 2020 11:35:04 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@codeaurora.org>,
+        Jonathan McDowell <noodles@earth.li>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v8 1/2] phy: qualcomm: add qcom ipq806x dwc usb phy driver
+Message-ID: <20200716060504.GF55478@vkoul-mobl>
+References: <20200713132309.14353-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200713132309.14353-1-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On platforms with 32-bit phys_addr_t the shift to get the upper word of
-the base address of the memory region is invalid. Cast the base to 64
-bit to resolv this.
+On 13-07-20, 15:23, Ansuel Smith wrote:
 
-Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
-Reported-by: Lee Jones <lee.jones@linaro.org>
-Reported-by: Nathan Chancellor <natechancellor@gmail.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/remoteproc/qcom_pil_info.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +static inline void usb_phy_write_readback(struct usb_phy *phy_dwc3,
+> +					  u32 offset,
+> +					  const u32 mask, u32 val)
+> +{
+> +	u32 write_val, tmp = readl(phy_dwc3->base + offset);
+> +
+> +	tmp &= ~mask;		/* retain other bits */
+> +	write_val = tmp | val;
+> +
+> +	writel(write_val, phy_dwc3->base + offset);
+> +
+> +	/* Read back to see if val was written */
+> +	tmp = readl(phy_dwc3->base + offset);
+> +	tmp &= mask;		/* clear other bits */
+> +
+> +	if (tmp != val)
+> +		dev_err(phy_dwc3->dev, "write: %x to QSCRATCH: %x FAILED\n",
+> +			val, offset);
 
-diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-index 0536e3904669..5521c4437ffa 100644
---- a/drivers/remoteproc/qcom_pil_info.c
-+++ b/drivers/remoteproc/qcom_pil_info.c
-@@ -108,7 +108,7 @@ int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
- found_existing:
- 	/* Use two writel() as base is only aligned to 4 bytes on odd entries */
- 	writel(base, entry + PIL_RELOC_NAME_LEN);
--	writel(base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
-+	writel((u64)base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
- 	writel(size, entry + PIL_RELOC_NAME_LEN + sizeof(__le64));
- 	mutex_unlock(&pil_reloc_lock);
- 
+lets use single line for these, it looks much better that way. Btw we
+can extend to 100 chars now :)
+
+> +static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
+> +{
+> +	struct resource *res;
+> +	resource_size_t size;
+> +	struct device_node *np;
+> +	struct phy *generic_phy;
+> +	struct usb_phy *phy_dwc3;
+> +	const struct phy_drvdata *data;
+> +	const struct of_device_id *match;
+> +	struct phy_provider *phy_provider;
+> +
+> +	phy_dwc3 = devm_kzalloc(&pdev->dev, sizeof(*phy_dwc3), GFP_KERNEL);
+> +	if (!phy_dwc3)
+> +		return -ENOMEM;
+> +
+> +	match = of_match_node(qcom_ipq806x_usb_phy_table, pdev->dev.of_node);
+> +	data = match->data;
+> +
+> +	phy_dwc3->dev = &pdev->dev;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	if (!res)
+> +		return -EINVAL;
+> +	size = resource_size(res);
+> +	phy_dwc3->base = devm_ioremap(phy_dwc3->dev, res->start, size);
+> +
+> +	if (IS_ERR(phy_dwc3->base)) {
+> +		dev_err(phy_dwc3->dev, "failed to map reg\n");
+> +		return PTR_ERR(phy_dwc3->base);
+> +	}
+> +
+> +	phy_dwc3->ref_clk = devm_clk_get(phy_dwc3->dev, "ref");
+> +	if (IS_ERR(phy_dwc3->ref_clk)) {
+> +		dev_dbg(phy_dwc3->dev, "cannot get reference clock\n");
+> +		return PTR_ERR(phy_dwc3->ref_clk);
+> +	}
+> +
+> +	clk_set_rate(phy_dwc3->ref_clk, data->clk_rate);
+> +
+> +	phy_dwc3->xo_clk = devm_clk_get(phy_dwc3->dev, "xo");
+> +	if (IS_ERR(phy_dwc3->xo_clk)) {
+> +		dev_dbg(phy_dwc3->dev, "cannot get TCXO clock\n");
+> +		phy_dwc3->xo_clk = NULL;
+> +	}
+> +
+> +	/* Parse device node to probe HSIO settings */
+> +	np = of_node_get(pdev->dev.of_node);
+> +	if (!of_compat_cmp(match->compatible, "qcom,ipq806x-usb-phy-ss",
+> +			   strlen(match->compatible))) {
+
+aha, why are we doing this? If you want to do this for only phy-ss then
+you can read these optionally and set them if found..
+
+
+> +		if (of_property_read_u32(np, "qcom,rx-eq", &phy_dwc3->rx_eq) ||
+> +		    of_property_read_u32(np, "qcom,tx-deamp_3_5db",
+> +					 &phy_dwc3->tx_deamp_3_5db) ||
+> +		    of_property_read_u32(np, "qcom,mpll", &phy_dwc3->mpll)) {
+> +			dev_err(phy_dwc3->dev, "cannot get HSIO settings from device node, using default values\n");
+> +
+> +			/* Default HSIO settings */
+> +			phy_dwc3->rx_eq = SSPHY_RX_EQ_VALUE;
+> +			phy_dwc3->tx_deamp_3_5db = SSPHY_TX_DEEMPH_3_5DB;
+> +			phy_dwc3->mpll = SSPHY_MPLL_VALUE;
+> +		}
+> +	}
+> +
+> +	generic_phy = devm_phy_create(phy_dwc3->dev, pdev->dev.of_node,
+> +				      &data->ops);
+> +
+> +	if (IS_ERR(generic_phy))
+> +		return PTR_ERR(generic_phy);
+> +
+> +	phy_set_drvdata(generic_phy, phy_dwc3);
+> +	platform_set_drvdata(pdev, phy_dwc3);
+> +
+> +	phy_provider = devm_of_phy_provider_register(phy_dwc3->dev,
+> +						     of_phy_simple_xlate);
+> +
+> +	if (IS_ERR(phy_provider))
+> +		return PTR_ERR(phy_provider);
+> +
+> +	return 0;
+> +}
+
 -- 
-2.26.2
-
+~Vinod
