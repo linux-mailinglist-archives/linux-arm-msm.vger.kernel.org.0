@@ -2,127 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A87DB2226DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 17:24:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 573E122283C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 18:25:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728768AbgGPPWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 11:22:45 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:64691 "EHLO m43-7.mailgun.net"
+        id S1729249AbgGPQZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 12:25:28 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:48826 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728150AbgGPPWo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 11:22:44 -0400
+        id S1729253AbgGPQZ2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 12:25:28 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594912963; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=Fsjdjjd/Og6F+tby19z8oTo04GrQvO0K2CiurdVNlIQ=; b=wGdwxGGP7s1zLoTU+GH6hvBAKIy/g3IMNs3GF7A7H0mA+F2BX3/7OHDg/ZC09mpYwiPuB8df
- rb/IjiNxu79wf1/2MgyWgm/h6GBCTC3v1tawy0gJdDUfh82xr4jMFzS5+zZg0/+5kfGb7zO4
- 2+m84YmiehqBSQASd2mUhQHhGu4=
+ s=smtp; t=1594916728; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=OmL2KI53czE52TZ8+f9g2m5kzP3WpYA0NVG5N/4LwQ4=; b=uFT37cXl0E6eeZMZa9OVtA0NoVymfAwf5ACJvZ+1AegYb8PQJa7GscHl6JeoKn+1L2pNLKie
+ 6EcycbQ5CVmwVY4FBkPC6fQoYiCol3Li7XqkTOUZ8w2J93MbozeHo3Ra5KngZ5CIQ8Mouqa0
+ XsL3PaudTh8cJsUKUCyujzyMFfw=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
- 5f106f4fee86618575d5d275 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Jul 2020 15:16:31
+ smtp-out-n18.prod.us-west-2.postgun.com with SMTP id
+ 5f107f70c9bd2efa2effe877 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Jul 2020 16:25:20
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 97C25C433AF; Thu, 16 Jul 2020 15:16:30 +0000 (UTC)
+        id 3C60DC43395; Thu, 16 Jul 2020 16:25:20 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0060BC433C9;
-        Thu, 16 Jul 2020 15:16:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0060BC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 16 Jul 2020 09:16:25 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
-        John Stultz <john.stultz@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [Freedreno] [PATCH v9 4/7] iommu/arm-smmu: Add a pointer to the
- attached device to smmu_domain
-Message-ID: <20200716151625.GA14526@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Will Deacon <will@kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>, linux-kernel@vger.kernel.org,
-        iommu@lists.linux-foundation.org,
-        John Stultz <john.stultz@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20200626200042.13713-1-jcrouse@codeaurora.org>
- <20200626200042.13713-5-jcrouse@codeaurora.org>
- <20200713150901.GA3072@willie-the-truck>
- <20200713171917.GA3815@jcrouse1-lnx.qualcomm.com>
- <20200716085053.GB6771@willie-the-truck>
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D70DEC433C6;
+        Thu, 16 Jul 2020 16:25:19 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200716085053.GB6771@willie-the-truck>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 16 Jul 2020 21:55:19 +0530
+From:   bgodavar@codeaurora.org
+To:     linux-firmware@kernel.org, jwboyer@kernel.org
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, gubbaven@codeaurora.org,
+        abhishekpandit@chromium.org
+Subject: QCA: Add correct bin file for WCN3991
+Message-ID: <6abd991d5d7d5175f5b7c6b168af770b@codeaurora.org>
+X-Sender: bgodavar@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 16, 2020 at 09:50:53AM +0100, Will Deacon wrote:
-> On Mon, Jul 13, 2020 at 11:19:17AM -0600, Jordan Crouse wrote:
-> > On Mon, Jul 13, 2020 at 04:09:02PM +0100, Will Deacon wrote:
-> > > On Fri, Jun 26, 2020 at 02:00:38PM -0600, Jordan Crouse wrote:
-> > > > diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
-> > > > index 5f2de20e883b..d33cfe26b2f5 100644
-> > > > --- a/drivers/iommu/arm-smmu.h
-> > > > +++ b/drivers/iommu/arm-smmu.h
-> > > > @@ -345,6 +345,7 @@ struct arm_smmu_domain {
-> > > >  	struct mutex			init_mutex; /* Protects smmu pointer */
-> > > >  	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
-> > > >  	struct iommu_domain		domain;
-> > > > +	struct device			*dev;	/* Device attached to this domain */
-> > > 
-> > > This really doesn't feel right to me -- you can generally have multiple
-> > > devices attached to a domain and they can come and go without the domain
-> > > being destroyed. Perhaps you could instead identify the GPU during
-> > > cfg_probe() and squirrel that information away somewhere?
-> > 
-> > I need some help here. The SMMU device (qcom,adreno-smmu) will have at least two
-> > stream ids from two different platform devices (GPU and GMU) and I need to
-> > configure split-pagetable and stall/terminate differently on the two domains.
-> 
-> Hmm. How does the GPU driver know which context bank is assigned to the GPU
-> and which one is assigned to the GMU? I assume it needs this information so
-> that it can play its nasty tricks with the TTBR registers?
-> 
-> I ask because if we need to guarantee stability of the context-bank
-> assignment, then you could match on that in the ->init_context() callback,
-> but now I worry that it currently works by luck :/
- 
-Its more like "educated" luck. If we assign the domains in the right order we
-know that the GPU will be on context bank 0 but you are entirely right that if
-everything doesn't go exactly the way we need things go badly.
+The following changes since commit 
+3d3a06f720856cb897a8541951edd0b8f6f54a98:
 
-Some targets do have the ability to reprogram which context bank is used but
-that would require a domain attribute from the SMMU driver to communicate that
-information back to the GPU driver.
+   linux-firmware: Update firmware file for Intel Bluetooth AX201 
+(2020-07-13 07:51:54 -0400)
 
-> Do we need to add an extra callback to allocate the context bank?
+are available in the git repository at:
 
-That seems like a reasonable option. That seems like it would work with legacy
-targets and rely less on luck.
+   https://github.com/bgodavar/qca_bt_fw/tree/qca_0714
 
-Jordan
+for you to fetch changes up to 3882702815e4b88bfd2f20b7eb66a3e85cbbb9b9:
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+   QCA: Add correct bin file for WCN3991 (2020-07-14 11:00:13 +0530)
+
+----------------------------------------------------------------
+Balakrishna Godavarthi (1):
+       QCA: Add correct bin file for WCN3991
+
+  qca/crnv32.bin | Bin 5299 -> 5299 bytes
+  1 file changed, 0 insertions(+), 0 deletions(-)
