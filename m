@@ -2,95 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE72B221979
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 03:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 760A82219DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 04:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728067AbgGPB3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Jul 2020 21:29:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40214 "EHLO
+        id S1727813AbgGPC2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Jul 2020 22:28:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728033AbgGPB3h (ORCPT
+        with ESMTP id S1726479AbgGPC2Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Jul 2020 21:29:37 -0400
-Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594D6C061755;
-        Wed, 15 Jul 2020 18:29:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:Date:Message-ID:Cc:To:Subject:From:Sender:Reply-To:Content-ID:
-        Content-Description:In-Reply-To:References;
-        bh=6EPZ1WKSkMCE5Q21bi/BB6wT5Llo8+Db+tPJuBpS7wA=; b=GfE0Pc4uGw8Ajgi2153O6NsrkZ
-        vOORzMTt9FewIM3S2JucR+aJcVwapoADmEwNO6WO5qXO9AG+QKJoRtjJVjX/d6b3WAz+x67GTUPMu
-        d8CLnO1BK3jpaMvMpbk7pOl0X8OnL9gdty391HH4EOGUyN8Wi9NcazDK0qRYwZMuOr4BB9G5gdJP2
-        XdlBlmCMaFjDmowNgB7SEiHbEWsNjf1wCPZUUbt710LjAXM+qFmUQXqA/7P/1AS+9HG3aWLU9DK6F
-        ysM1K+5OkzJTpWwx9qQkgukKU1aPf9ijjlocULVjRLqsgYyB392Oum0Vj1g3v6Tk/101stUHXa605
-        9eacfdyw==;
-Received: from [2601:1c0:6280:3f0::19c2]
-        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jvsiN-0000Rm-3l; Thu, 16 Jul 2020 01:29:35 +0000
-From:   Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH] mhi: fix doubled words and struct image_info kernel-doc
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Message-ID: <cab64692-31f6-5a2b-a540-aa434d35f9a9@infradead.org>
-Date:   Wed, 15 Jul 2020 18:29:32 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        Wed, 15 Jul 2020 22:28:24 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB39C061755;
+        Wed, 15 Jul 2020 19:28:23 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z2so5266515wrp.2;
+        Wed, 15 Jul 2020 19:28:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gsRpl4HFoDzQHdJmbJ2aLmqfJZ85+Q+C8XgOBbFtdNk=;
+        b=iJqvRTCjPwF29LVysp5cR+WTjEK0keVLezq5UpBh8TBKpPZMK/F1qaiNn1b5v5B8D/
+         FwctVpY5g6H34diBhlhZNS/o24RejCvBwMPgfodxR9W7lY1L1ma7q9zqrPlsldw+BTW7
+         Gx/b+M7X8ZWs2xUpCoWMwWF94G84TibCIrYoiVvZ2xvCgr/qre442EmfS4tTlmggpjqU
+         fFtFOjQuTtdRrxJ8UgiV9lQGFkf59TbBtj0Ub8HLW+7UYT+vkmOSLKVtdBfxZ9LTLW3Q
+         6qZf2jga/SNKtQ4BSDn07BsiXrSc/MslbL/NgvxM/WzNW1dZCrfFE8aH2/qNTNN8Qd4Q
+         4MmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gsRpl4HFoDzQHdJmbJ2aLmqfJZ85+Q+C8XgOBbFtdNk=;
+        b=FseyxY/qq96AnUI1ztkjKrsb8l6jUoB+DyeEr7wMLE8l8nVX6pv/vrw5mhs7xvc1Sg
+         B4dF6DArC9XJe/vUY9CmOqJq2fDFfOxxniS3B5GjsdvUOBwRr8XyUUHVWVx2CgRYLDN/
+         AwSxw24HMEWu1uAdbp0/ATSZA63y5rFaZBMJaIWfcFGgVyU6u+X10eO7AWes9CfJR59O
+         tRbEyNEwlt7FJu93dfILXZTcvZoBflqp1do45aPvRjHIFUA4pcIeAqQlq2jNmTVM0/e4
+         rXVncZlCp/SvKuyezUbepDZq/uce2XWqz18I5SlXsGuygwLuKG4e3L/QIbP50nBCYA7Z
+         oO4Q==
+X-Gm-Message-State: AOAM533Dbg7ENMtUGUh+SeJvtcVH3xrX3aqjpvdkR3TqrtxO4f5OCwdi
+        c4jj9KqF1RwFNbfp9nrx8mE=
+X-Google-Smtp-Source: ABdhPJwrSM7RmbkryD0nvdl24d++HH4tjwvWPp/fUZyADj3sIpMbiC0aSTMbqhMcCPbZCNQrTAFH4g==
+X-Received: by 2002:a5d:51ce:: with SMTP id n14mr2579614wrv.155.1594866502289;
+        Wed, 15 Jul 2020 19:28:22 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host-87-7-31-173.retail.telecomitalia.it. [87.7.31.173])
+        by smtp.googlemail.com with ESMTPSA id u1sm7477611wrb.78.2020.07.15.19.28.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2020 19:28:21 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v4 0/7] Add support for ipq8064 tsens
+Date:   Thu, 16 Jul 2020 04:28:09 +0200
+Message-Id: <20200716022817.30439-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Randy Dunlap <rdunlap@infradead.org>
+Ipq8064 SoCs tsens driver is based on 8960 tsens driver. This patchset 
+expand the 8960 unused driver with interrupt support and set_trip point.
+Ipq8064 needs to be registered as a gcc child as the tsens regs on
+this platform are shared with the controller.
 
-Drop doubled word "table" in kernel-doc.
-Fix syntax for the kernel-doc notation for struct image_info.
-Note that the bhi_vec field is private and not part of the kernel-doc.
+v4:
+* Fix compilation error and warning reported by the bot
+v3:
+* Change driver to register as child instead of use phandle
+v2:
+* Fix dt-bindings problems
 
-Drop doubled word "device" in a comment.
+Ansuel Smith (7):
+  ipq806x: gcc: add support for child probe
+  drivers: thermal: tsens: try load regmap from parent for 8960
+  drivers: thermal: tsens: add ipq8064 support
+  dt-bindings: thermal: tsens: document ipq8064 bindings
+  drivers: thermal: tsens: add interrupt support for 9860 driver
+  drivers: thermal: tsens: add support for custom set_trip function
+  drivers: thermal: tsens: add set_trip support for 8960
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Hemant Kumar <hemantk@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org
----
- include/linux/mhi.h |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ .../bindings/thermal/qcom-tsens.yaml          |  50 ++-
+ drivers/clk/qcom/gcc-ipq806x.c                |   2 +-
+ drivers/thermal/qcom/tsens-8960.c             | 287 +++++++++++++++++-
+ drivers/thermal/qcom/tsens.c                  |   7 +
+ drivers/thermal/qcom/tsens.h                  |   5 +
+ 5 files changed, 328 insertions(+), 23 deletions(-)
 
---- linux-next-20200714.orig/include/linux/mhi.h
-+++ linux-next-20200714/include/linux/mhi.h
-@@ -85,13 +85,15 @@ enum mhi_ch_type {
- };
- 
- /**
-- * struct image_info - Firmware and RDDM table table
-- * @mhi_buf - Buffer for firmware and RDDM table
-- * @entries - # of entries in table
-+ * struct image_info - Firmware and RDDM table
-+ * @mhi_buf: Buffer for firmware and RDDM table
-+ * @entries: # of entries in table
-  */
- struct image_info {
- 	struct mhi_buf *mhi_buf;
-+	/* private: from internal.h */
- 	struct bhi_vec_entry *bhi_vec;
-+	/* public: */
- 	u32 entries;
- };
- 
-@@ -593,7 +595,7 @@ int mhi_async_power_up(struct mhi_contro
- 
- /**
-  * mhi_sync_power_up - Start MHI power up sequence and wait till the device
-- *                     device enters valid EE state
-+ *                     enters valid EE state
-  * @mhi_cntrl: MHI controller
-  */
- int mhi_sync_power_up(struct mhi_controller *mhi_cntrl);
+-- 
+2.27.0
 
