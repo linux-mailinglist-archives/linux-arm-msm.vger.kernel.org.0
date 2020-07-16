@@ -2,117 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DC1B2229C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 19:24:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A53E222A16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 19:40:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728896AbgGPRYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 13:24:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46634 "EHLO
+        id S1728560AbgGPRkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 13:40:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725867AbgGPRYm (ORCPT
+        with ESMTP id S1728385AbgGPRkh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 13:24:42 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D45EBC061755;
-        Thu, 16 Jul 2020 10:24:41 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id b25so8829090ljp.6;
-        Thu, 16 Jul 2020 10:24:41 -0700 (PDT)
+        Thu, 16 Jul 2020 13:40:37 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEC32C061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 10:40:36 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id t11so3095626qvk.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 10:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=TfS7LyRCXVJhAiKAI60mtJsvFYqMMExakCfeA+dafDM=;
-        b=eM8ekbItJW22+el3tFcXdtmsEzXxaWo+v6DoYGR+lHLcxpMrIw6BSmqbLFZuvBQCnP
-         ihgIeMTx/RwwePD4TZPTuLJNnVniE6M2JA6JRs/Z5LSiyLgsXgK5r1fMatkB7XlxtiMo
-         3z+nQWADtsOAq0xfUHYY01jMmos2tG4alSasWCmc8GgvtDVvANIO2YSojigeralZrqtb
-         Q1mocK8zXSulFDuw07bNDAHVtmzcBS5Uh0UNN85JGqqIIpNgNmOE6hQKo7DyvZJgM/kt
-         ENCUDy7STEgc/m8gghs+h2tiDOA4dRIQ1TjyZ9oAJwNTMp5kLMlreM8ptAYX4PROIWy6
-         paLg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+YZ4K32ILO0YG7+Onb9+bb1wbPOZ0IsAwcOMvX1Wf1U=;
+        b=DgIAFh9xOdcGljTcbCAE1IcHuv2aaa2mBbzzoSyx+PkPEnrbCyvTBNyFXPYLKiG9Pm
+         8pVv0O31SbSSnI5+44WNuLdO577HNgfluZBBRqvKCeX59P3Z6sO4UXk0PT8vXh6Lx/2V
+         3FtSeQB0FwxrAc1mp5ySe0Pf0i5r+sXaq8c6M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TfS7LyRCXVJhAiKAI60mtJsvFYqMMExakCfeA+dafDM=;
-        b=Nnt0e1QcJRzeevhyt86k1JJsXSxALfypUn4SlbzJoxskir6YBfL9iaA4CIZDRdY//e
-         xdfC32mEZfWfoR2sMMGsa1oe6N7eeH4uRphY12uGmrZ5ImRWQHhX9Hm1zopOUV9/Yc94
-         gjrXzQ+AhbnUSzLQkeZMMYhf0Ga1yZHU7PrPG1Y2YcYcYvwLE7KJOZFp2CmBLeytHx23
-         yoBFD8BcqNdgkYbfU8Q48d8SL31dgu/xXiYnQa1iJSiwQieVdVE8VCmCSxZ8u/6lhX2p
-         WvhZKFId8UPkTK7AB3C0Kuav6ijfXXno0EONikaqbDg3Q/6B9ULRGa8dJF0tbFRxYzZF
-         ruXA==
-X-Gm-Message-State: AOAM531fAGpqMKiXUrdslEWz0Ck+pT3DWHOOz5s7k1xzNyvBrzOS87V7
-        rQbSJF1jyEmVXTHTIYPuadE=
-X-Google-Smtp-Source: ABdhPJyBMa6/+CjZyZQ5I2muOOpdMwm+gbfhNF3ZsDHyDvdDeGLecmbLcuuKS3MxkhnDxlIVqNNcxw==
-X-Received: by 2002:a2e:8157:: with SMTP id t23mr2533932ljg.417.1594920280350;
-        Thu, 16 Jul 2020 10:24:40 -0700 (PDT)
-Received: from [192.168.2.145] (ppp91-76-4-184.pppoe.mtu-net.ru. [91.76.4.184])
-        by smtp.googlemail.com with ESMTPSA id u26sm1556349lfq.72.2020.07.16.10.24.39
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+YZ4K32ILO0YG7+Onb9+bb1wbPOZ0IsAwcOMvX1Wf1U=;
+        b=E7/dzS4L/oHrF5s9Vwf0W9hDAfrHFOTrEvNkIkkhWNWc+vN5DJdO/PdVb8gIAMjNBA
+         LX1HUgINY8QCqRSpQYFLDGiJs/Rh5EvL7iZKPBYBZOzkRnoiVh57F6RqUUJNN0PkmeLs
+         +UAEzklP0oey+VQZfkJQuR4nYYNaO69Pnpzy0mwONCh5IWXobjs2iR0EDBrsWl8XuBIF
+         HQEXBWPHCzEokdUrrd5Zt1WVHNbIbLqYzcDC5wbZ/FZpRHF64alE/Zbz9BzTv7tFsKac
+         mUJ+dRjv2wpvmtY/wV2yQnLpvsPAGpsTnDvU+xxjTwdRjbka2e9JySvqMxeP/MkTn619
+         4Rfg==
+X-Gm-Message-State: AOAM530ohcmw0+alSq3i0hUI4ZAddxcBPRp3SY3FqrEW69xCWqUSZ8pW
+        vN08MEBTniraGjSzhLDWqwXLgWVipHc=
+X-Google-Smtp-Source: ABdhPJzta07zVvtGO6ohdOWjoLZRXFE5jF5kpRQ5Tnj2iinJygvSEs+Umc14dreP/0w5L2m+VcF1jw==
+X-Received: by 2002:a0c:99c5:: with SMTP id y5mr5504261qve.66.1594921235821;
+        Thu, 16 Jul 2020 10:40:35 -0700 (PDT)
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
+        by smtp.gmail.com with ESMTPSA id p36sm8695265qte.90.2020.07.16.10.40.35
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2020 10:24:39 -0700 (PDT)
-Subject: Re: [PATCH v2 2/9] dt-bindings: battery: Add temperature properties
-To:     Rob Herring <robh@kernel.org>
-Cc:     Sebastian Reichel <sre@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Heidelberg <david@ixit.cz>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jonghwa Lee <jonghwa3.lee@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Vinay Simha BN <simhavcs@gmail.com>
-References: <20200607144113.10202-1-digetx@gmail.com>
- <20200607144113.10202-3-digetx@gmail.com> <20200713234604.GA935472@bogus>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <1b84d818-11d3-05b9-fc45-29a0cb490edd@gmail.com>
-Date:   Thu, 16 Jul 2020 20:24:38 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Thu, 16 Jul 2020 10:40:35 -0700 (PDT)
+Received: by mail-yb1-f181.google.com with SMTP id y17so3208959ybm.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 10:40:35 -0700 (PDT)
+X-Received: by 2002:ab0:150c:: with SMTP id o12mr4397825uae.90.1594920887766;
+ Thu, 16 Jul 2020 10:34:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200713234604.GA935472@bogus>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1594796149-14778-1-git-send-email-tdas@codeaurora.org>
+In-Reply-To: <1594796149-14778-1-git-send-email-tdas@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 16 Jul 2020 10:34:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XwYQxkKQruVPnO9Nbsv_3uyD75-dcyOeB62zLVjJE5+Q@mail.gmail.com>
+Message-ID: <CAD=FV=XwYQxkKQruVPnO9Nbsv_3uyD75-dcyOeB62zLVjJE5+Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add LPASS clock controller nodes
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-14.07.2020 02:46, Rob Herring пишет:
-> On Sun, Jun 07, 2020 at 05:41:06PM +0300, Dmitry Osipenko wrote:
->> Document generic battery temperature properties.
->>
->> Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
->> ---
->>  .../devicetree/bindings/power/supply/battery.txt       | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
-> 
-> This is close to being converted to schema:
-> 
-> https://lore.kernel.org/linux-pm/20200707212914.31540-1-r-rivera-matos@ti.com/
+Hi,
 
-Thanks! I'll keep an eye on this patch.
+On Tue, Jul 14, 2020 at 11:56 PM Taniya Das <tdas@codeaurora.org> wrote:
+>
+> Update the clock controller nodes for Low power audio subsystem
+> functionality.
+>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
 
->> diff --git a/Documentation/devicetree/bindings/power/supply/battery.txt b/Documentation/devicetree/bindings/power/supply/battery.txt
->> index 5e29595edd74..e0c35eff9d3f 100644
->> --- a/Documentation/devicetree/bindings/power/supply/battery.txt
->> +++ b/Documentation/devicetree/bindings/power/supply/battery.txt
->> @@ -45,6 +45,16 @@ Optional Properties:
->>     and corresponding battery internal resistance percent, which is used to look
->>     up the resistance percent according to current temperature to get a accurate
->>     batterty internal resistance in different temperatures.
->> + - temperature-ambient-min-alert-celsius: Alert when ambient temperature of a
->> +   battery is lower than threshold value.
->> + - temperature-ambient-max-alert-celsius: Alert when ambient temperature of a
->> +   battery is higher than threshold value.
->> + - temperature-min-alert-celsius: Alert when battery temperature is lower
->> +   than threshold value.
->> + - temperature-max-alert-celsius: Alert when battery temperature is higher
->> +   than threshold value.
->> + - temperature-min-celsius: minimum temperature at which battery can operate
->> + - temperature-max-celsius: maximum temperature at which battery can operate
-> 
-> Perhaps 'temperature' is redundant since we have units.
-> 
-> Perhaps do <min max> properties given specifying only min or max is 
-> probably not valid?
+Somewhere here you should be pointing to the unlanded bindings patch, AKA:
 
-Thank you for the suggestions, I'll consider them for the v3!
+https://lore.kernel.org/r/1594795010-9074-3-git-send-email-tdas@codeaurora.org
+
+As per usual the fact that are using a new bindings #include file
+means Qualcomm maintainers and clock maintainers will need to
+coordinate landing and this needs to be pointed out.
+
+
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 2be81a2..8c30a17 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -8,6 +8,7 @@
+>  #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+>  #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+>  #include <dt-bindings/clock/qcom,gpucc-sc7180.h>
+> +#include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,videocc-sc7180.h>
+>  #include <dt-bindings/interconnect/qcom,osm-l3.h>
+> @@ -2136,6 +2137,27 @@
+>                         };
+>                 };
+>
+> +               lpasscc: clock-controller@62d00000 {
+> +                       compatible = "qcom,sc7180-lpasscorecc";
+> +                       reg = <0 0x62d00000 0 0x50000>,
+> +                           <0 0x62780000 0 0x30000>;
+> +                       reg-names = "lpass_core_cc", "lpass_audio_cc";
+> +                       clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>;
+> +                       clock-names = "iface";
+> +                       power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +                       #clock-cells = <1>;
+> +                       #power-domain-cells = <1>;
+> +               };
+> +
+> +               lpass_hm: clock-controller@63000000 {
+> +                       compatible = "qcom,sc7180-lpasshm";
+> +                       reg = <0 0x63000000 0 0x28>;
+> +                       clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>;
+> +                       clock-names = "iface";
+> +                       #clock-cells = <1>;
+> +                       #power-domain-cells = <1>;
+> +               };
+
+Question: would it ever make sense for a board not to need this clock
+controller?  I ask because the sdm845 "lpass" clock controller is
+"disabled" by default but yours here isn't.  I know sc7180 and sdm845
+work pretty differently and perhaps the sdm845's default of "disabled"
+was just overkill, but I thought I'd ask.
+
+
+> +
+>                 etm@7040000 {
+>                         compatible = "arm,coresight-etm4x", "arm,primecell";
+>                         reg = <0 0x07040000 0 0x1000>;
+
+Your sort order is off.  You should be sorting by unit address.  Note
+that the "ETM" has an extra 0 before its 7, so you're comparing 63 to
+07 and you should be after.
+
+Other than those small things above this patch looks like it matches
+the example in the bindings, so as long as Rob / the clock guys are
+fine with the bindings then this seems good to go.
+
+-Doug
