@@ -2,124 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE856221C23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 07:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 886BF221C26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 07:48:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgGPFqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 01:46:32 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:20809 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726656AbgGPFqc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 01:46:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594878391; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=6/gh6ivbd09D7l8l4mc9ZClJc+uYvsmImgyKmqe70mY=; b=cezj6E3XjwPs3WF4S1oo7xm6CQMX3GLUj0pylnspE/H9yX7yUNyWOHzGEmTOGnWMw9WaKOI7
- dNFdTjgej6/l5rfoCv8PPztNB16xOFariRccWA0vb3G+StFe0/HXbfM/S1gFaU7hNsR24D70
- T5Ff231c8w/MajVWlMfL/nE8SsE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n20.prod.us-east-1.postgun.com with SMTP id
- 5f0fe98ec7a053446a793473 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Jul 2020 05:45:50
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8BEAAC433C6; Thu, 16 Jul 2020 05:45:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36AD9C4339C;
-        Thu, 16 Jul 2020 05:45:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 36AD9C4339C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     stanimir.varbanov@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH v2 4/4] arm64: dts: sc7180: Add OPP tables and power-domains for venus
-Date:   Thu, 16 Jul 2020 11:12:19 +0530
-Message-Id: <1594878139-3402-5-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1594878139-3402-1-git-send-email-rnayak@codeaurora.org>
-References: <1594878139-3402-1-git-send-email-rnayak@codeaurora.org>
+        id S1726351AbgGPFsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 01:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbgGPFsT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 01:48:19 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E9BC061755
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 22:48:18 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id md7so4128276pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 22:48:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GcjGMlvxaLvf+5Qx9y70nhyWvIrGkWz3MBzmHdjFud4=;
+        b=Y73DZiGCNXSiY//N6sNgC0Yv9LqzR32T9dyDXTCVjQrypbaV0JpeZJAsu4K2MS/iA4
+         tVRE4rgZq3p+sKM19YapD+CGtv0fD/DxwQe94rgpGqHG+ZOtE8DRH5ue2hgEx6RvjZq9
+         Eac2HuNPK/go9BP0k3m2crj1jUADiUZKf/SrnENfyrHMFLBJBCSXGFkozGOxZjl/iyBA
+         KelrTBPlLFxTWKNTtRsPXEuVBTbuwIonBER9lQVad7DoZ543VttTXpnNVAoHJc2U1FST
+         z7PECvJpjoiHRVAtBuQpssgp38dzC1XrsrK3aGkFeMcUZZACKXMfk7y5gu5PtjBKUF1h
+         Op3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GcjGMlvxaLvf+5Qx9y70nhyWvIrGkWz3MBzmHdjFud4=;
+        b=PPpozzoCkaLsrQWqr+7U9ZeRt3Swbz8QE/yMH5ywKBN2KcfWdW8dl3sUAihQaRVmCf
+         FEBD2B9cVkAjWLmOITWt1pY3UthrCTaS0zJHKRuKRO8svQ2fZobOD5laN82me3toe3va
+         FMzN6L+D90s065qfQbMBL3ZDnRfyx8YfveG88QdIVMgGHklPJsADECuFsYeA+cQ8AzmT
+         akumPomr7F2LjQIQsOF6/iC9LVXpGB3ZGgaIYrLEk2wuZw5/0SPJA/rpTu2ifiBJEx3e
+         ccyD+bdDOnCe7eBBSBMVOt55zd4DZ9P3Q5bwrs9r7flSoyIUjGIO9L0bsOD69A68kazs
+         hUpA==
+X-Gm-Message-State: AOAM532FHqrt+3DfnbegAcHcq426Cc9LOKEW3k2llC9t7lTqOUYEFd+e
+        TrOqO+ZP0yuhPpbcu4kyB0J3ew==
+X-Google-Smtp-Source: ABdhPJxgSNsrdonyiZ4TpMu5c5IjfTLUQbvfXYif2dVLhugs3juB7O3pgeWaVE3XdMP26ZR+yCp79Q==
+X-Received: by 2002:a17:90b:8d7:: with SMTP id ds23mr3267380pjb.148.1594878498322;
+        Wed, 15 Jul 2020 22:48:18 -0700 (PDT)
+Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id o4sm3707657pjo.16.2020.07.15.22.48.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2020 22:48:17 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
+        Nathan Chancellor <natechancellor@gmail.com>
+Subject: [PATCH] remoteproc: qcom: pil-info: Fix shift overflow
+Date:   Wed, 15 Jul 2020 22:48:17 -0700
+Message-Id: <20200716054817.157608-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the OPP tables in order to be able to vote on the performance state
-of a power-domain
+On platforms with 32-bit phys_addr_t the shift to get the upper word of
+the base address of the memory region is invalid. Cast the base to 64
+bit to resolv this.
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
+Reported-by: Lee Jones <lee.jones@linaro.org>
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 35 +++++++++++++++++++++++++++++++++--
- 1 file changed, 33 insertions(+), 2 deletions(-)
+ drivers/remoteproc/qcom_pil_info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 126e2fc..c560ad2 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2664,8 +2664,10 @@
- 			reg = <0 0x0aa00000 0 0xff000>;
- 			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
- 			power-domains = <&videocc VENUS_GDSC>,
--					<&videocc VCODEC0_GDSC>;
--			power-domain-names = "venus", "vcodec0";
-+					<&videocc VCODEC0_GDSC>,
-+					<&rpmhpd SC7180_CX>;
-+			power-domain-names = "venus", "vcodec0", "opp-pd";
-+			operating-points-v2 = <&venus_opp_table>;
- 			clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
- 				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
- 				 <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
-@@ -2686,6 +2688,35 @@
- 			video-encoder {
- 				compatible = "venus-encoder";
- 			};
-+
-+			venus_opp_table: venus-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-150000000 {
-+					opp-hz = /bits/ 64 <150000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-270000000 {
-+					opp-hz = /bits/ 64 <270000000>;
-+					required-opps = <&rpmhpd_opp_svs>;
-+				};
-+
-+				opp-340000000 {
-+					opp-hz = /bits/ 64 <340000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+
-+				opp-434000000 {
-+					opp-hz = /bits/ 64 <434000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+
-+				opp-500000000 {
-+					opp-hz = /bits/ 64 <500000000>;
-+					required-opps = <&rpmhpd_opp_turbo>;
-+				};
-+			};
- 		};
+diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
+index 0536e3904669..5521c4437ffa 100644
+--- a/drivers/remoteproc/qcom_pil_info.c
++++ b/drivers/remoteproc/qcom_pil_info.c
+@@ -108,7 +108,7 @@ int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
+ found_existing:
+ 	/* Use two writel() as base is only aligned to 4 bytes on odd entries */
+ 	writel(base, entry + PIL_RELOC_NAME_LEN);
+-	writel(base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
++	writel((u64)base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
+ 	writel(size, entry + PIL_RELOC_NAME_LEN + sizeof(__le64));
+ 	mutex_unlock(&pil_reloc_lock);
  
- 		videocc: clock-controller@ab00000 {
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.2
 
