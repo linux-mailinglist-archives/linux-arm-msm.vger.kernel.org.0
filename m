@@ -2,84 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADF39221ED8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 10:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F2AD7221EEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 10:51:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbgGPIrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 04:47:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725950AbgGPIrm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 04:47:42 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48129C061755
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 01:47:42 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id f5so6197801ljj.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 01:47:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=92XopjWnoleG4glqsG4BU2p6Ba/zWqLgWpalogX+TCM=;
-        b=vGgDGorzuOsneFcC3GpsD5YykNaUbLa2RmqVO839gEwfNOPrEWsw+JY2IAm6dSaLr7
-         k3vylz47FrnNst/TJjyPiMQb1a9+kOmPpO14osAdLWkhcir/GAA4jdHXBlODomeo9DG7
-         N7uN7ZsIsNVu3WtprIIdogMfWtMT6kR121fIeI8aY61Mgy3HW9FDwg48e/LmA+JEbSQW
-         ZDujGl2IaFZl2dkLaTotWiouiUsrQTPvDH9zriM2NtdlBkuazB/5SXFRcQJ/catxZEfi
-         j0VcnZBGwQXaRQFJA86ZN6hcssSICMTrrFR8sV9GOH+Z2yotj3brmFvCn+0YDgXp3XZU
-         2BMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=92XopjWnoleG4glqsG4BU2p6Ba/zWqLgWpalogX+TCM=;
-        b=PspmTnd1J+R2rI3GJYUtQA+Rk4Lgwyn/kQnRZDNWI43+7gr4GwYgiVR7Ryp2Wq02DB
-         nCEdzvR5ty0POIbaG7OkyHPS0uSBX4r2e5pg2hsrSzNod8SDnSDpxgglIgyXQw1qvjKg
-         vSkyqU8PqsNM3cWH1UiSl0E2HUABTZEJ7cVRB7Cq7QZ1Bay44jCFLcOavlWuGQ03/4D/
-         oBM7i0mh4HQJlmq+rWpnhMEpLPnIvtPrEnhqTKlM+UuMMuxMm1zslY8wl1DfL65Befdy
-         J+5iz8sfeqBF7OgL7wFygKI8OYLvTdUzjCPRP3ObFAGAm2A5RR6cHi0vfvgErZNEDYxu
-         LXOg==
-X-Gm-Message-State: AOAM533jsDgfJn0ZP+dAJ9q8IHF9idx8QQk+NlxtCpCxFp/mHYX/ijFh
-        N96tMZLwUAo7MP1eSwzLtdbpJDelDkEANfPHCaY3Tw==
-X-Google-Smtp-Source: ABdhPJy82hgoliVm6eopFXRyK6GD8v0CzkbH74FPpFZaLSVg+5+aHAZq1hO5uiZU7LO2CprZctMqX0Xm68KIEVQ/u6I=
-X-Received: by 2002:a2e:9a4d:: with SMTP id k13mr1558882ljj.283.1594889260812;
- Thu, 16 Jul 2020 01:47:40 -0700 (PDT)
+        id S1726929AbgGPIu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 04:50:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37638 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725867AbgGPIu6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 04:50:58 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C7ABE2067D;
+        Thu, 16 Jul 2020 08:50:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1594889458;
+        bh=U7X430J5V6ePsxTX3punZtP6BZO/DUniM8aSGD0rCbE=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=lZz7/S2vinkg3caYNt3YEW0+aHk66D0ubE/cVS+1d1BJj1TOMJLdy0VXqxtqvmFif
+         cDATDWQ5495bMsQhe9jCZDMOaj8c/C54/Gzxzj3D8BOc5ai8vt33x1Nk/IMcu71aBm
+         4fkAgq1cHMXKB9HNNTG5q2laTa6Mvod6Foqi0R5M=
+Date:   Thu, 16 Jul 2020 09:50:53 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+        John Stultz <john.stultz@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [Freedreno] [PATCH v9 4/7] iommu/arm-smmu: Add a pointer to the
+ attached device to smmu_domain
+Message-ID: <20200716085053.GB6771@willie-the-truck>
+References: <20200626200042.13713-1-jcrouse@codeaurora.org>
+ <20200626200042.13713-5-jcrouse@codeaurora.org>
+ <20200713150901.GA3072@willie-the-truck>
+ <20200713171917.GA3815@jcrouse1-lnx.qualcomm.com>
 MIME-Version: 1.0
-References: <20200703080646.23233-1-computersforpeace@gmail.com>
-In-Reply-To: <20200703080646.23233-1-computersforpeace@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 16 Jul 2020 10:47:30 +0200
-Message-ID: <CACRpkdar+aBBFn6SKJ1a90D-NT3F6qGvouzjt-jxaiR0VSuUOg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] pinctrl: qcom: ipq4019: add open drain support
-To:     Brian Norris <computersforpeace@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.or>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Jaiganesh Narayanan <njaigane@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200713171917.GA3815@jcrouse1-lnx.qualcomm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 3, 2020 at 10:06 AM Brian Norris
-<computersforpeace@gmail.com> wrote:
+On Mon, Jul 13, 2020 at 11:19:17AM -0600, Jordan Crouse wrote:
+> On Mon, Jul 13, 2020 at 04:09:02PM +0100, Will Deacon wrote:
+> > On Fri, Jun 26, 2020 at 02:00:38PM -0600, Jordan Crouse wrote:
+> > > diff --git a/drivers/iommu/arm-smmu.h b/drivers/iommu/arm-smmu.h
+> > > index 5f2de20e883b..d33cfe26b2f5 100644
+> > > --- a/drivers/iommu/arm-smmu.h
+> > > +++ b/drivers/iommu/arm-smmu.h
+> > > @@ -345,6 +345,7 @@ struct arm_smmu_domain {
+> > >  	struct mutex			init_mutex; /* Protects smmu pointer */
+> > >  	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
+> > >  	struct iommu_domain		domain;
+> > > +	struct device			*dev;	/* Device attached to this domain */
+> > 
+> > This really doesn't feel right to me -- you can generally have multiple
+> > devices attached to a domain and they can come and go without the domain
+> > being destroyed. Perhaps you could instead identify the GPU during
+> > cfg_probe() and squirrel that information away somewhere?
+> 
+> I need some help here. The SMMU device (qcom,adreno-smmu) will have at least two
+> stream ids from two different platform devices (GPU and GMU) and I need to
+> configure split-pagetable and stall/terminate differently on the two domains.
 
-> From: Jaiganesh Narayanan <njaigane@codeaurora.org>
->
-> Signed-off-by: Jaiganesh Narayanan <njaigane@codeaurora.org>
-> [ Brian: adapted from from the Chromium OS kernel used on IPQ4019-based
->   WiFi APs. ]
-> Signed-off-by: Brian Norris <computersforpeace@gmail.com>
+Hmm. How does the GPU driver know which context bank is assigned to the GPU
+and which one is assigned to the GMU? I assume it needs this information so
+that it can play its nasty tricks with the TTBR registers?
 
-Patch applied because this looks innocent and Rob
-ACKed the binding.
+I ask because if we need to guarantee stability of the context-bank
+assignment, then you could match on that in the ->init_context() callback,
+but now I worry that it currently works by luck :/
 
-If Bjorn opposes, I will simply pull the patch out again.
+Do we need to add an extra callback to allocate the context bank?
 
-Yours,
-Linus Walleij
+Will
