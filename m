@@ -2,159 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3D76221C4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 08:05:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD6C8221C5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 08:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgGPGFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 02:05:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42598 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725913AbgGPGFJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 02:05:09 -0400
-Received: from localhost (unknown [122.171.202.192])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F167120578;
-        Thu, 16 Jul 2020 06:05:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594879508;
-        bh=8P2zKP9fwTAESRcSXu8PidqEv90XXPnh3+R3n6iZJwE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ETyy3TeDfhRQFQtPrFIhGv+A00ZcHddCwE8EzxqgKfBY1/SZpl9tr+ar58K0oEOnv
-         3xoRC4GVghh+vSBw5MHJ+OWjd35oMAKyfy1xL1RO/NBMPQYIGEaPCNngU1AiFHzwdh
-         7TnS/i7HrrT0UZ4441RG7cHELhWtBspgtYApeMbg=
-Date:   Thu, 16 Jul 2020 11:35:04 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@codeaurora.org>,
-        Jonathan McDowell <noodles@earth.li>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 1/2] phy: qualcomm: add qcom ipq806x dwc usb phy driver
-Message-ID: <20200716060504.GF55478@vkoul-mobl>
-References: <20200713132309.14353-1-ansuelsmth@gmail.com>
+        id S1726547AbgGPGIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 02:08:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54892 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726141AbgGPGIk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 02:08:40 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A8EC08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 23:08:40 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id k27so4322483pgm.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2020 23:08:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=D4RopI2SK+VrJEt5Anwxfc4A31dj9pQyiM4Ej3RP8gk=;
+        b=Z4LPEAHLdCtydXYwHy5cU2hsfvFcR5JZLRy085J5GiJJX1s8CFicrMFC3sfVPq82iA
+         S2gTAcNRx0z7pigJVhpFAZY/SMoNlmmokLMMb+NQpHw0E/iM55ch/lGZvz1Bkjn2nTIq
+         OsHUkpcep1ZQ8SLY+kskWFbRRi3v7mY8mY+NopAHN6/N1OJFJDi7MLRtV2vfsOINfkFi
+         lsn1yQaTDs1D8GtgLFesxH5GmUoAWVXjmEv/WJUcX/MaUzmFog3cHE7j8z+Foz5bNOx7
+         LPYArLeNaOsMs5xOf1+QgAhIHLLl0vRfNp1uZAVZnwYvE0vqDnwlyRihhP4O6CiPuFRu
+         wwGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=D4RopI2SK+VrJEt5Anwxfc4A31dj9pQyiM4Ej3RP8gk=;
+        b=FeVhn7siNWqfdaygpPm6i8UZ0AiNgcdh8vNHEtUGjvVZqrVJDeb5J6qxW1IF+CGsvG
+         j4G+4RXQhsa89JGu3xiwXYSkWgI6g53NI9fVwN2hRfs1Oml65sG3X46qbXjDqGxUSr6x
+         GdGiPI20ZnHawCX0EKSCOH0MFQx7io3MMVoY2BpEdGBEKr//jWumpuOz3+pfJHofq8Iw
+         753Qw3mPXSYd9wDdJI66YmweoGZIsSX6XL3qRIF6Glr8p+aYH39RaAe0kZ7gEwEpqQyy
+         ju5AAA3eTElTzRACmRIJPxzIH0Qs9ML5vQr/wfkLbNhOEPk542t+ST6D3OTf3iSIWv/n
+         Snxw==
+X-Gm-Message-State: AOAM530+Fe3dwmxDm0IGUe5qJwigYrDAn6rsHk5n2+evp5TquXB7JZNi
+        HQg0a0hPLrY8btTbvdtJ2aZJR35w4Q==
+X-Google-Smtp-Source: ABdhPJzWa1JbitsW/hnOb4MBqiXITtCsWCUmRQVBbs5jud0hn6mZskzEN3d0CKaYGXLBuLVYHqcNpA==
+X-Received: by 2002:aa7:860f:: with SMTP id p15mr2360915pfn.59.1594879719659;
+        Wed, 15 Jul 2020 23:08:39 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6d89:fed1:8431:5b69:9df5:ad9f])
+        by smtp.gmail.com with ESMTPSA id j8sm3854003pfd.145.2020.07.15.23.08.35
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Jul 2020 23:08:38 -0700 (PDT)
+Date:   Thu, 16 Jul 2020 11:38:33 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bbhatt@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v4 3/9] bus: mhi: core: Use helper API to trigger a
+ non-blocking host resume
+Message-ID: <20200716060833.GE3271@Mani-XPS-13-9360>
+References: <1593448782-8385-1-git-send-email-bbhatt@codeaurora.org>
+ <1593448782-8385-4-git-send-email-bbhatt@codeaurora.org>
+ <20200704144714.GC3066@Mani-XPS-13-9360>
+ <ed30fd4330863c9743a019b6bd89aabd@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200713132309.14353-1-ansuelsmth@gmail.com>
+In-Reply-To: <ed30fd4330863c9743a019b6bd89aabd@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13-07-20, 15:23, Ansuel Smith wrote:
+On Wed, Jul 08, 2020 at 01:53:49PM -0700, bbhatt@codeaurora.org wrote:
+> On 2020-07-04 07:47, Manivannan Sadhasivam wrote:
+> > On Mon, Jun 29, 2020 at 09:39:36AM -0700, Bhaumik Bhatt wrote:
+> > > Autonomous low power mode support requires the MHI host to resume from
+> > > multiple places and post a wakeup source to exit system suspend. This
+> > > needs to be done in a non-blocking manner. Introduce a helper API to
+> > > trigger the host resume for data transfers and other non-blocking use
+> > > cases while supporting implementation of autonomous low power modes.
+> > > 
+> > 
+> > Why can't you use pm_wakeup_event() as done in __mhi_device_get_sync()?
+> > 
+> > Thanks,
+> > Mani
+> > 
+> 
+> I forgot to address the __mhi_device_get_sync() function. Thanks for
+> pointing out.
+> 
+> Is it preferable to always post wakeup source with hard boolean set?
 
-> +static inline void usb_phy_write_readback(struct usb_phy *phy_dwc3,
-> +					  u32 offset,
-> +					  const u32 mask, u32 val)
-> +{
-> +	u32 write_val, tmp = readl(phy_dwc3->base + offset);
-> +
-> +	tmp &= ~mask;		/* retain other bits */
-> +	write_val = tmp | val;
-> +
-> +	writel(write_val, phy_dwc3->base + offset);
-> +
-> +	/* Read back to see if val was written */
-> +	tmp = readl(phy_dwc3->base + offset);
-> +	tmp &= mask;		/* clear other bits */
-> +
-> +	if (tmp != val)
-> +		dev_err(phy_dwc3->dev, "write: %x to QSCRATCH: %x FAILED\n",
-> +			val, offset);
+A quick grep shows that this routine is not used extensively as compared to
+the other one and hence the question.
 
-lets use single line for these, it looks much better that way. Btw we
-can extend to 100 chars now :)
+For a bus driver like this I think we can just live without the hard wakeup.
+I don't see a specific usecase where we would need a hard wakeup from suspend.
 
-> +static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
-> +{
-> +	struct resource *res;
-> +	resource_size_t size;
-> +	struct device_node *np;
-> +	struct phy *generic_phy;
-> +	struct usb_phy *phy_dwc3;
-> +	const struct phy_drvdata *data;
-> +	const struct of_device_id *match;
-> +	struct phy_provider *phy_provider;
-> +
-> +	phy_dwc3 = devm_kzalloc(&pdev->dev, sizeof(*phy_dwc3), GFP_KERNEL);
-> +	if (!phy_dwc3)
-> +		return -ENOMEM;
-> +
-> +	match = of_match_node(qcom_ipq806x_usb_phy_table, pdev->dev.of_node);
-> +	data = match->data;
-> +
-> +	phy_dwc3->dev = &pdev->dev;
-> +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	if (!res)
-> +		return -EINVAL;
-> +	size = resource_size(res);
-> +	phy_dwc3->base = devm_ioremap(phy_dwc3->dev, res->start, size);
-> +
-> +	if (IS_ERR(phy_dwc3->base)) {
-> +		dev_err(phy_dwc3->dev, "failed to map reg\n");
-> +		return PTR_ERR(phy_dwc3->base);
-> +	}
-> +
-> +	phy_dwc3->ref_clk = devm_clk_get(phy_dwc3->dev, "ref");
-> +	if (IS_ERR(phy_dwc3->ref_clk)) {
-> +		dev_dbg(phy_dwc3->dev, "cannot get reference clock\n");
-> +		return PTR_ERR(phy_dwc3->ref_clk);
-> +	}
-> +
-> +	clk_set_rate(phy_dwc3->ref_clk, data->clk_rate);
-> +
-> +	phy_dwc3->xo_clk = devm_clk_get(phy_dwc3->dev, "xo");
-> +	if (IS_ERR(phy_dwc3->xo_clk)) {
-> +		dev_dbg(phy_dwc3->dev, "cannot get TCXO clock\n");
-> +		phy_dwc3->xo_clk = NULL;
-> +	}
-> +
-> +	/* Parse device node to probe HSIO settings */
-> +	np = of_node_get(pdev->dev.of_node);
-> +	if (!of_compat_cmp(match->compatible, "qcom,ipq806x-usb-phy-ss",
-> +			   strlen(match->compatible))) {
+Thanks,
+Mani
 
-aha, why are we doing this? If you want to do this for only phy-ss then
-you can read these optionally and set them if found..
+> We do want to wakeup from Suspend-to-Idle if system suspend happens to go
+> that route.
+> 
+> As of now, we just by default do regular wakeup event and not hard.
+> I figured at some point we might need to distinguish between hard vs
+> regular, hence the option but
+> it can be eliminated in favor of one or another.
+> 
 
 
-> +		if (of_property_read_u32(np, "qcom,rx-eq", &phy_dwc3->rx_eq) ||
-> +		    of_property_read_u32(np, "qcom,tx-deamp_3_5db",
-> +					 &phy_dwc3->tx_deamp_3_5db) ||
-> +		    of_property_read_u32(np, "qcom,mpll", &phy_dwc3->mpll)) {
-> +			dev_err(phy_dwc3->dev, "cannot get HSIO settings from device node, using default values\n");
-> +
-> +			/* Default HSIO settings */
-> +			phy_dwc3->rx_eq = SSPHY_RX_EQ_VALUE;
-> +			phy_dwc3->tx_deamp_3_5db = SSPHY_TX_DEEMPH_3_5DB;
-> +			phy_dwc3->mpll = SSPHY_MPLL_VALUE;
-> +		}
-> +	}
-> +
-> +	generic_phy = devm_phy_create(phy_dwc3->dev, pdev->dev.of_node,
-> +				      &data->ops);
-> +
-> +	if (IS_ERR(generic_phy))
-> +		return PTR_ERR(generic_phy);
-> +
-> +	phy_set_drvdata(generic_phy, phy_dwc3);
-> +	platform_set_drvdata(pdev, phy_dwc3);
-> +
-> +	phy_provider = devm_of_phy_provider_register(phy_dwc3->dev,
-> +						     of_phy_simple_xlate);
-> +
-> +	if (IS_ERR(phy_provider))
-> +		return PTR_ERR(phy_provider);
-> +
-> +	return 0;
-> +}
 
--- 
-~Vinod
+> Thanks,
+> Bhaumik
+> 
+> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > > ---
+> > >  drivers/bus/mhi/core/internal.h |  8 ++++++++
+> > >  drivers/bus/mhi/core/main.c     | 21 +++++++--------------
+> > >  drivers/bus/mhi/core/pm.c       |  6 ++----
+> > >  3 files changed, 17 insertions(+), 18 deletions(-)
+> > > 
+> > > diff --git a/drivers/bus/mhi/core/internal.h
+> > > b/drivers/bus/mhi/core/internal.h
+> > > index bcfa7b6..cb32eaf 100644
+> > > --- a/drivers/bus/mhi/core/internal.h
+> > > +++ b/drivers/bus/mhi/core/internal.h
+> > > @@ -599,6 +599,14 @@ int mhi_queue_state_transition(struct
+> > > mhi_controller *mhi_cntrl,
+> > >  int mhi_send_cmd(struct mhi_controller *mhi_cntrl, struct mhi_chan
+> > > *mhi_chan,
+> > >  		 enum mhi_cmd_type cmd);
+> > > 
+> > > +static inline void mhi_trigger_resume(struct mhi_controller
+> > > *mhi_cntrl,
+> > > +				      bool hard_wakeup)
+> > > +{
+> > > +	pm_wakeup_dev_event(&mhi_cntrl->mhi_dev->dev, 0, hard_wakeup);
+> > > +	mhi_cntrl->runtime_get(mhi_cntrl);
+> > > +	mhi_cntrl->runtime_put(mhi_cntrl);
+> > > +}
+> > > +
+> > >  /* Register access methods */
+> > >  void mhi_db_brstmode(struct mhi_controller *mhi_cntrl, struct
+> > > db_cfg *db_cfg,
+> > >  		     void __iomem *db_addr, dma_addr_t db_val);
+> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> > > index 1f622ce..8d6ec34 100644
+> > > --- a/drivers/bus/mhi/core/main.c
+> > > +++ b/drivers/bus/mhi/core/main.c
+> > > @@ -909,8 +909,7 @@ void mhi_ctrl_ev_task(unsigned long data)
+> > >  		 * process it since we are probably in a suspended state,
+> > >  		 * so trigger a resume.
+> > >  		 */
+> > > -		mhi_cntrl->runtime_get(mhi_cntrl);
+> > > -		mhi_cntrl->runtime_put(mhi_cntrl);
+> > > +		mhi_trigger_resume(mhi_cntrl, false);
+> > > 
+> > >  		return;
+> > >  	}
+> > > @@ -971,10 +970,8 @@ int mhi_queue_skb(struct mhi_device *mhi_dev,
+> > > enum dma_data_direction dir,
+> > >  	}
+> > > 
+> > >  	/* we're in M3 or transitioning to M3 */
+> > > -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
+> > > -		mhi_cntrl->runtime_get(mhi_cntrl);
+> > > -		mhi_cntrl->runtime_put(mhi_cntrl);
+> > > -	}
+> > > +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> > > +		mhi_trigger_resume(mhi_cntrl, false);
+> > > 
+> > >  	/* Toggle wake to exit out of M2 */
+> > >  	mhi_cntrl->wake_toggle(mhi_cntrl);
+> > > @@ -1032,10 +1029,8 @@ int mhi_queue_dma(struct mhi_device *mhi_dev,
+> > > enum dma_data_direction dir,
+> > >  	}
+> > > 
+> > >  	/* we're in M3 or transitioning to M3 */
+> > > -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
+> > > -		mhi_cntrl->runtime_get(mhi_cntrl);
+> > > -		mhi_cntrl->runtime_put(mhi_cntrl);
+> > > -	}
+> > > +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> > > +		mhi_trigger_resume(mhi_cntrl, false);
+> > > 
+> > >  	/* Toggle wake to exit out of M2 */
+> > >  	mhi_cntrl->wake_toggle(mhi_cntrl);
+> > > @@ -1147,10 +1142,8 @@ int mhi_queue_buf(struct mhi_device *mhi_dev,
+> > > enum dma_data_direction dir,
+> > >  	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+> > > 
+> > >  	/* we're in M3 or transitioning to M3 */
+> > > -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
+> > > -		mhi_cntrl->runtime_get(mhi_cntrl);
+> > > -		mhi_cntrl->runtime_put(mhi_cntrl);
+> > > -	}
+> > > +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> > > +		mhi_trigger_resume(mhi_cntrl, false);
+> > > 
+> > >  	/* Toggle wake to exit out of M2 */
+> > >  	mhi_cntrl->wake_toggle(mhi_cntrl);
+> > > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > > index 661d704..5e3994e 100644
+> > > --- a/drivers/bus/mhi/core/pm.c
+> > > +++ b/drivers/bus/mhi/core/pm.c
+> > > @@ -1139,10 +1139,8 @@ void mhi_device_put(struct mhi_device *mhi_dev)
+> > > 
+> > >  	mhi_dev->dev_wake--;
+> > >  	read_lock_bh(&mhi_cntrl->pm_lock);
+> > > -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state)) {
+> > > -		mhi_cntrl->runtime_get(mhi_cntrl);
+> > > -		mhi_cntrl->runtime_put(mhi_cntrl);
+> > > -	}
+> > > +	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+> > > +		mhi_trigger_resume(mhi_cntrl, false);
+> > > 
+> > >  	mhi_cntrl->wake_put(mhi_cntrl, false);
+> > >  	read_unlock_bh(&mhi_cntrl->pm_lock);
+> > > --
+> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+> > > Forum,
+> > > a Linux Foundation Collaborative Project
+> > > 
