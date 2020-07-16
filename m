@@ -2,87 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D782222278
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 14:39:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 867E32222E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 14:52:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728590AbgGPMg4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 08:36:56 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:15688 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728560AbgGPMgx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 08:36:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594903012; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=u17b8DEovrWwZ9PsLOgxr3HjMF7uwjP808czwB4pL3Y=; b=b1gVFJncG/v+g0h6y20RfSvcMM/4UfAftLqwIbmsFkATNt1p0ZtrqAKXHAzNRkg7Il7LRsyG
- 1hv82sUOelBPuchtY8xJQUPJrFfwgOH5KylxJgsLZwD8q/twcBKS/Ss/99nlFeW4GMa0AkQ7
- DvahgVXPtav01261hguli42bP7s=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f1049e403c8596cdb13111a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Jul 2020 12:36:52
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4F197C433A1; Thu, 16 Jul 2020 12:36:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93BC2C43391;
-        Thu, 16 Jul 2020 12:36:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 93BC2C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, ohad@wizery.com,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 3/3] remoteproc: qcom_q6v5_mss: Update MBA log info
-Date:   Thu, 16 Jul 2020 18:06:30 +0530
-Message-Id: <20200716123630.21892-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200716123630.21892-1-sibis@codeaurora.org>
-References: <20200716123630.21892-1-sibis@codeaurora.org>
+        id S1728497AbgGPMwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 08:52:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60716 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728087AbgGPMwI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 08:52:08 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11F5C08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 05:52:07 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id d17so7040596ljl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 05:52:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HCnwyZoMzuPKsERhk3jj3Z4cbSkn3iN0nOs3nxQkMq0=;
+        b=sOjZAMG0GZhuc7hKNYzLVK9cSOp5waHIXzYWhb43Fz8ZgX9z9+bNavNcAEpG70dgBk
+         ymAxg8CBGeGJogHJ8EZfOJxQxQrcVu4fbyFxrtPhw/lrQtdZwuFiFnU3Ns9+2O77tI7T
+         t+cLNEO2tso3H8qv2p3wup/rHCTC9UnJFDeLIR9S3z+CUU/XMjzPHMO8ZlQKuTNz6l/0
+         eNvh5dAs47H6r7AMj0WyGKIZ3da6n+akTPo1vtDqAr7R9LVFcAQzgEkzK7V29ThxVSfl
+         tlafLPmggszgOc2KgLZv3yeFkDfhxzR7uBKLqBJdhVoSPaG7IxVDNowwB3Q79TU4M5aw
+         Us8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HCnwyZoMzuPKsERhk3jj3Z4cbSkn3iN0nOs3nxQkMq0=;
+        b=mu4/3cXF2qlhhuM520R127y/SEcF7xVkzOLEJYrPyWdNFvxmJP0DcnGZbHWiRYZBU8
+         lkeRlcWJe6+Wv1PiYciRiRiRpTZsZM5zecnyYoW805Re2tZ+K9e1BdP44RRYygkXaMhJ
+         Zk3zL22HMgI/RUhxmIrlTTudawH9zCv22SOnNLK4W5tBarThC/xdgdX6EogMjlWT2Bjm
+         gvEPRo0CHTwfsZONXjH6E3+jWun+IneottkATENGswHFz0MFhh9vJTh/KcF5XZsabFTJ
+         52RxpL+f86uUSTHYxJ5I4XD5w0lIaK8FzyS1RkRWnJSVvYtxWBNrUNBLi+KtkVzGTqTt
+         gm5A==
+X-Gm-Message-State: AOAM53385/pCBwWkexlEbOySHDh0GiyEnCuqBGrinb2kax9gTcb1ar54
+        TdTiCjJreB6yVAnLrWW4L77nGTBAkKPRSsjCweV0XA==
+X-Google-Smtp-Source: ABdhPJw/BhPEYT/8575MJQZaoQ8ocAWYoTgsBn5QFuT7ytXA0Q8/v+AT4JkXs2IK1Vyo3oIafinMzE0ToIsQaj9hRe4=
+X-Received: by 2002:a2e:810a:: with SMTP id d10mr1900535ljg.144.1594903926142;
+ Thu, 16 Jul 2020 05:52:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200710231824.60699-1-john.stultz@linaro.org>
+In-Reply-To: <20200710231824.60699-1-john.stultz@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 16 Jul 2020 14:51:55 +0200
+Message-ID: <CACRpkdaSiUwa0i5nQy8EZOg7smN3g2a+1AV2x+1PShNc071UFg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Allow for qcom-pdc to be loadable as a module
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update MBA text logs location/size in IMEM to aid tools extract
-them after ramdump collection.
+On Sat, Jul 11, 2020 at 1:18 AM John Stultz <john.stultz@linaro.org> wrote:
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/remoteproc/qcom_q6v5_mss.c | 3 +++
- 1 file changed, 3 insertions(+)
+> This patch series provides exports and config tweaks to allow
+> the qcom-pdc driver to be able to be configured as a permement
+> modules (particularlly useful for the Android Generic Kernel
+> Image efforts).
+>
+> This was part of a larger patch series, to enable qcom_scm
+> driver to be a module as well, but I've split it out as there
+> are some outstanding objections I still need to address with
+> the follow-on patches, and wanted to see if progress could be
+> made on this subset of the series in the meantime.
+>
+> New in v3:
+> *  Drop conditional usage of IRQCHIP_DECLARE as suggested by
+>    Stephen Boyd and Marc Zyngier
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 4ddf084b2c6fc..539594ab955f1 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -932,6 +932,9 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- 	if (ret)
- 		goto reclaim_mba;
- 
-+	if (qproc->has_mba_logs)
-+		qcom_pil_info_store("mba", qproc->mba_phys, MBA_LOG_SIZE);
-+
- 	ret = q6v5_rmb_mba_wait(qproc, 0, 5000);
- 	if (ret == -ETIMEDOUT) {
- 		dev_err(qproc->dev, "MBA boot timed out\n");
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+This patch set looks entirely reasonable to me.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
+Yours,
+Linus Walleij
