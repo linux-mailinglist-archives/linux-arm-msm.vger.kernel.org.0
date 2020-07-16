@@ -2,97 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 867E32222E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 14:52:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83EDB2223BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 15:20:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728497AbgGPMwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 08:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60716 "EHLO
+        id S1726537AbgGPNTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 09:19:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728087AbgGPMwI (ORCPT
+        with ESMTP id S1728096AbgGPNS7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 08:52:08 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11F5C08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 05:52:07 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id d17so7040596ljl.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 05:52:07 -0700 (PDT)
+        Thu, 16 Jul 2020 09:18:59 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9483C08C5CE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 06:18:58 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id d17so7144200ljl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 06:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=HCnwyZoMzuPKsERhk3jj3Z4cbSkn3iN0nOs3nxQkMq0=;
-        b=sOjZAMG0GZhuc7hKNYzLVK9cSOp5waHIXzYWhb43Fz8ZgX9z9+bNavNcAEpG70dgBk
-         ymAxg8CBGeGJogHJ8EZfOJxQxQrcVu4fbyFxrtPhw/lrQtdZwuFiFnU3Ns9+2O77tI7T
-         t+cLNEO2tso3H8qv2p3wup/rHCTC9UnJFDeLIR9S3z+CUU/XMjzPHMO8ZlQKuTNz6l/0
-         eNvh5dAs47H6r7AMj0WyGKIZ3da6n+akTPo1vtDqAr7R9LVFcAQzgEkzK7V29ThxVSfl
-         tlafLPmggszgOc2KgLZv3yeFkDfhxzR7uBKLqBJdhVoSPaG7IxVDNowwB3Q79TU4M5aw
-         Us8w==
+        bh=V5Ca35ebl+wW+EHbz97RD52Fd1hjs4/Wel1X7KjjjwU=;
+        b=TM0YEFUdP7iBDYKwh4ec1iIrtslkCq4rp5m2aXZxanQ+giClbZOLrssAlnOWDqmgRD
+         NVe1+V28mxw70te0fvKlWItF1bihnaN4BQLocyLLj740og2JrlJWFyM3vVOx+F1D8XfE
+         NbO6kctlpEueZ2UdBTuKiQGMNYL/aH+CVET4yVibTBDMnSCfmZoS0lbnVxHbSEr9SLOM
+         SsPaWdCiFhGoT5F43qj1X0MDzPBshnHn4lwqGhiFlGqu7cR3VPvDeQY5x9WD6PGApyeQ
+         fs9pRPVcC71jxL4OVlBTrkxMImCb6WN3fpg0pUQfEgZutRqmInLMev0jucnLYgaSneTP
+         yE7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=HCnwyZoMzuPKsERhk3jj3Z4cbSkn3iN0nOs3nxQkMq0=;
-        b=mu4/3cXF2qlhhuM520R127y/SEcF7xVkzOLEJYrPyWdNFvxmJP0DcnGZbHWiRYZBU8
-         lkeRlcWJe6+Wv1PiYciRiRiRpTZsZM5zecnyYoW805Re2tZ+K9e1BdP44RRYygkXaMhJ
-         Zk3zL22HMgI/RUhxmIrlTTudawH9zCv22SOnNLK4W5tBarThC/xdgdX6EogMjlWT2Bjm
-         gvEPRo0CHTwfsZONXjH6E3+jWun+IneottkATENGswHFz0MFhh9vJTh/KcF5XZsabFTJ
-         52RxpL+f86uUSTHYxJ5I4XD5w0lIaK8FzyS1RkRWnJSVvYtxWBNrUNBLi+KtkVzGTqTt
-         gm5A==
-X-Gm-Message-State: AOAM53385/pCBwWkexlEbOySHDh0GiyEnCuqBGrinb2kax9gTcb1ar54
-        TdTiCjJreB6yVAnLrWW4L77nGTBAkKPRSsjCweV0XA==
-X-Google-Smtp-Source: ABdhPJw/BhPEYT/8575MJQZaoQ8ocAWYoTgsBn5QFuT7ytXA0Q8/v+AT4JkXs2IK1Vyo3oIafinMzE0ToIsQaj9hRe4=
-X-Received: by 2002:a2e:810a:: with SMTP id d10mr1900535ljg.144.1594903926142;
- Thu, 16 Jul 2020 05:52:06 -0700 (PDT)
+        bh=V5Ca35ebl+wW+EHbz97RD52Fd1hjs4/Wel1X7KjjjwU=;
+        b=KGSLGvdANvaOqQX06CoqU0PEghvsOzfc70pj8Qh3nRdRTpX1nMI1yW3r0O9IXwiQ9U
+         G0YkF8P40rJ2RedMdSDIfSW1raPXC1qMl0I4QcL/4Sb0FdK2pMqTWpoj4zF09UtctcSl
+         h3PeTd9T8jYeYsHIlzkYDKjAvzdQevpnoUX+Fzt01mYat2UGXGPQDuYilVypDro0Xvnf
+         2Zc5RmpjZrYyOD9Hwu90uwaNbLwRa5DgncHU9z/leat2eybeY0S12vwt/LrX6/BxEQcD
+         aXNJAJq88JP3f2DEqxpIsdvBDncsH7xw20iAfjcfKy8M7/hI2bP9zkRJ1c1BIkOqWMlr
+         S0ng==
+X-Gm-Message-State: AOAM531kXfqaAsKdpoBuaEXp1FMg90KFjs0KLAMouZv+SnxL3IYzpi6N
+        n/AMOLSPEScWCkuJUO9eLGyWF1pkIFcJP77iIai7AQ==
+X-Google-Smtp-Source: ABdhPJy86RFx5YN1TLuTTiPAQzbWyCQEl/ZTbibswwlk/TQOzRl8YXQ8Qu2VA9B3JmqypWkyIaj27nmrqbmtdbYLPbI=
+X-Received: by 2002:a2e:9a4d:: with SMTP id k13mr2115378ljj.283.1594905537158;
+ Thu, 16 Jul 2020 06:18:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200710231824.60699-1-john.stultz@linaro.org>
-In-Reply-To: <20200710231824.60699-1-john.stultz@linaro.org>
+References: <1592818308-23001-1-git-send-email-mkshah@codeaurora.org> <1592818308-23001-4-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1592818308-23001-4-git-send-email-mkshah@codeaurora.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 16 Jul 2020 14:51:55 +0200
-Message-ID: <CACRpkdaSiUwa0i5nQy8EZOg7smN3g2a+1AV2x+1PShNc071UFg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Allow for qcom-pdc to be loadable as a module
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
+Date:   Thu, 16 Jul 2020 15:18:46 +0200
+Message-ID: <CACRpkdb-3Tf4s5=Gxjhy62GX=HUYkLOcPKZ6JWaLTQipz-0r6A@mail.gmail.com>
+Subject: Re: [PATCH v3 3/5] pinctrl: qcom: Use return value from irq_set_wake call
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
         Thomas Gleixner <tglx@linutronix.de>,
         Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
         Lina Iyer <ilina@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+        =?UTF-8?Q?open_list=3AGPIO_SUBSYSTEM_=3Clinux=2Dgpio=40vger=2Ekernel=2Eorg=3E=2C_Andy_?=
+         =?UTF-8?Q?Gross_=3Cagross=40kernel=2Eorg=3E=2C_Thomas_Gleixner_=3Ctglx=40linutronix=2E?=
+         =?UTF-8?Q?de=3E=2C_Jason_Cooper_=3Cjason=40lakedaemon=2Enet=3E=2C_Doug_Anderson_=3Cdia?=
+         =?UTF-8?Q?nders=40chromium=2Eorg=3E=2C_Rajendra_Nayak_=3Crnayak=40codeaurora=2Eorg=3E=2C?=
+         =?UTF-8?Q?_Lina_Iyer_=3Cilina=40codeaurora=2Eorg=3E=2C?= 
+        <lsrao@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 11, 2020 at 1:18 AM John Stultz <john.stultz@linaro.org> wrote:
+On Mon, Jun 22, 2020 at 11:32 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 
-> This patch series provides exports and config tweaks to allow
-> the qcom-pdc driver to be able to be configured as a permement
-> modules (particularlly useful for the Android Generic Kernel
-> Image efforts).
+> msmgpio irqchip is not using return value of irq_set_wake call.
+> Start using it.
 >
-> This was part of a larger patch series, to enable qcom_scm
-> driver to be a module as well, but I've split it out as there
-> are some outstanding objections I still need to address with
-> the follow-on patches, and wanted to see if progress could be
-> made on this subset of the series in the meantime.
->
-> New in v3:
-> *  Drop conditional usage of IRQCHIP_DECLARE as suggested by
->    Stephen Boyd and Marc Zyngier
+> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
-This patch set looks entirely reasonable to me.
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Is this something that's causing regressions so I should apply it for
+fixes, or is it fine to keep this with the rest of the series for v5.9?
 
 Yours,
 Linus Walleij
