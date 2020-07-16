@@ -2,91 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F4F8222D8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 23:16:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE859222DE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 23:29:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbgGPVQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 17:16:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54966 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726104AbgGPVQt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 17:16:49 -0400
-Received: from embeddedor (unknown [201.162.240.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 48DF720760;
-        Thu, 16 Jul 2020 21:16:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1594934209;
-        bh=8VD2+aiY77GJqGWBooe1O36nHfabIoRq7MZJbjlehuY=;
-        h=Date:From:To:Cc:Subject:From;
-        b=D3fi9UQFPjePmFvXTssBTYmVIslmFyAvPO9ZmGrfJNPnBoT8S3Dh/37zZyk3o93/n
-         5htJuIY8AFIfy27Fjc/yxl026+hl+KO6u8lVw8wb5nJRGH+ALCi6Z+NC7Bp9OknnCq
-         CixBS0SX9fCY/CBu+EmbyhWFbCkBcW71qbiLzD9M=
-Date:   Thu, 16 Jul 2020 16:22:13 -0500
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S1726550AbgGPV3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 17:29:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56180 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726069AbgGPV3H (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 17:29:07 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D29C08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 14:29:07 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id q4so10085316lji.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 14:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=snejp.pl; s=gmail;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BMW25MccEXBEQKiOayk0XDiCmm5Kg67PbQTIPz8CeXU=;
+        b=Q8OcFTKPw8k3z2elh+O/yAez7MPSAXdHzUNs/Ks0fOM5yKcM8I5iUWNAkZLRO8jVYV
+         Bi1IGEqK4hM3tKFXoVzNwDiXw03mVBOwFZM2ZpD5QMNN8oi/tuqzs/YmofsxLwHFSanG
+         rFA5u6QvyEgmg05+RjOlgBWx164bWRFwGHueXaqHiIF8IiHGDhPO43BOuPYo2ekOAeaq
+         /LFBPfI0ksHYRgg/bnshjk9SVN6q5y0JnVoHg60EqQdfLl6gRSehZshGGbiyLKJw2l8v
+         fBy4ebyhe6m0NS1dY1pvmnrCSLCuqHrql7lR/IcHDRjiuLewIkuNRo4sQhYFvB/xfMWW
+         L78A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BMW25MccEXBEQKiOayk0XDiCmm5Kg67PbQTIPz8CeXU=;
+        b=NttrlRO+49IWXi2CIiZckWfRGcs9BxPNT9RV02hmCQY1/jNewovQUuO0a1T60YgX1e
+         6iAFBp1i9nx66K4knyGDivbCcDn8ImLUzSRjZryL1noBXmwawkRBNG9wsDoLVyJEGxB4
+         3WInd+FLR7/pgT8dmddmMlfFlVsD7dWKJ1uM47yvFf6gnbaisFhmKg+VBvuStms1efFq
+         gFVcF94lKCM7EYhE8PyWHzCGCMsy98QSzAP/XIdmREKy4JXzdd2EMBiFGU+rBos7Op1+
+         B1FKA50CbCxPQ3y1BtW2v8cpEwJdYsrmpMigmsAAsjCbqaMevZbNaw8fHYCTpFJOFmse
+         c91Q==
+X-Gm-Message-State: AOAM530iCXwYBoW+ws55nM3gVVxFBEG7/kwUeOZlXU6gliG988yA6swu
+        6bDNkh/K7Tg7YoH3b7ssUd6eWg==
+X-Google-Smtp-Source: ABdhPJzVYp/5WHye4DJHuSaRnmWrbiRRSCijThWnACJvir4tMmyzsXCyvlLmpk/vX1xE+o8oq9JMeg==
+X-Received: by 2002:a2e:8296:: with SMTP id y22mr3056440ljg.238.1594934945707;
+        Thu, 16 Jul 2020 14:29:05 -0700 (PDT)
+Received: from PackardBell ([82.160.139.10])
+        by smtp.gmail.com with ESMTPSA id k12sm1287608lfe.68.2020.07.16.14.29.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2020 14:29:04 -0700 (PDT)
+Received: from localhost (PackardBell [local])
+        by PackardBell (OpenSMTPD) with ESMTPA id 44c50bbc;
+        Thu, 16 Jul 2020 21:29:03 +0000 (UTC)
+Date:   Thu, 16 Jul 2020 23:29:03 +0200
+From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Subject: [PATCH][next] pinctrl: qcom: spmi-gpio: Use fallthrough
- pseudo-keyword
-Message-ID: <20200716212213.GA17623@embeddedor>
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add msm8226 pinctrl
+ bindings
+Message-ID: <20200716212903.GA23234@PackardBell>
+References: <20200627192833.217531-1-bartosz.dudziak@snejp.pl>
+ <20200627192833.217531-2-bartosz.dudziak@snejp.pl>
+ <20200715202413.GA755488@bogus>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200715202413.GA755488@bogus>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace the existing /* fall through */ comments and its variants with
-the new pseudo-keyword macro fallthrough[1].
+On Wed, Jul 15, 2020 at 02:24:13PM -0600, Rob Herring wrote:
+> On Sat, Jun 27, 2020 at 09:28:30PM +0200, Bartosz Dudziak wrote:
+> > Add device tree binding Documentation details for Qualcomm msm8226
+> > pinctrl driver.
+> > 
+> > - Bindings documentation was based on qcom,sm8250-pinctrl.yaml by
+> >   Bjorn Andersson <bjorn.andersson@linaro.org> and then modified for
+> >   msm8226 content
+> > 
+> > Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+> > ---
+> >  .../pinctrl/qcom,msm8226-pinctrl.yaml         | 123 ++++++++++++++++++
+> >  1 file changed, 123 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml
+> > new file mode 100644
+> > index 0000000000..8d8dc15718
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml
+> > @@ -0,0 +1,123 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/pinctrl/qcom,msm8226-pinctrl.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Technologies, Inc. MSM8226 TLMM block
+> > +
+> > +maintainers:
+> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> > +
+> > +description: |
+> > +  This binding describes the Top Level Mode Multiplexer block found in the
+> > +  MSM8226 platform.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,msm8226-pinctrl
+> > +
+> > +  reg:
+> > +    description: Specifies the base address and size of the TLMM register space
+> > +    maxItems: 1
+> > +
+> > +  interrupts:
+> > +    description: Specifies the TLMM summary IRQ
+> > +    maxItems: 1
+> > +
+> > +  interrupt-controller: true
+> > +
+> > +  '#interrupt-cells':
+> > +    description: Specifies the PIN numbers and Flags, as defined in
+> > +      include/dt-bindings/interrupt-controller/irq.h
+> > +    const: 2
+> > +
+> > +  gpio-controller: true
+> > +
+> > +  '#gpio-cells':
+> > +    description: Specifying the pin number and flags, as defined in
+> > +      include/dt-bindings/gpio/gpio.h
+> > +    const: 2
+> > +
+> > +  gpio-ranges:
+> > +    maxItems: 1
+> > +
+> > +  gpio-reserved-ranges:
+> > +    maxItems: 1
+> > +
+> > +#PIN CONFIGURATION NODES
+> > +patternProperties:
+> > +  '^.*$':
+> > +    if:
+> > +      type: object
+> 
+> For new bindings, do '-pins$' for the node name pattern so we don't have 
+> to do this hack.
+> 
 
-[1] https://www.kernel.org/doc/html/latest/process/deprecated.html?highlight=fallthrough#implicit-switch-case-fall-through
-
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
----
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 4 ++--
- drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-index 66cbcfe7950e..17441388ce8f 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -794,13 +794,13 @@ static int pmic_gpio_populate(struct pmic_gpio_state *state,
- 	switch (subtype) {
- 	case PMIC_GPIO_SUBTYPE_GPIO_4CH:
- 		pad->have_buffer = true;
--		/* Fall through */
-+		fallthrough;
- 	case PMIC_GPIO_SUBTYPE_GPIOC_4CH:
- 		pad->num_sources = 4;
- 		break;
- 	case PMIC_GPIO_SUBTYPE_GPIO_8CH:
- 		pad->have_buffer = true;
--		/* Fall through */
-+		fallthrough;
- 	case PMIC_GPIO_SUBTYPE_GPIOC_8CH:
- 		pad->num_sources = 8;
- 		break;
-diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c b/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-index 338a15d08629..b5949f766a7a 100644
---- a/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ssbi-gpio.c
-@@ -346,7 +346,7 @@ static int pm8xxx_pin_config_set(struct pinctrl_dev *pctldev,
- 				return -EINVAL;
- 			}
- 			pin->pull_up_strength = arg;
--			/* FALLTHROUGH */
-+			fallthrough;
- 		case PIN_CONFIG_BIAS_PULL_UP:
- 			pin->bias = pin->pull_up_strength;
- 			banks |= BIT(2);
--- 
-2.27.0
-
+I have changed the name pattern and sent a v2 patch.
