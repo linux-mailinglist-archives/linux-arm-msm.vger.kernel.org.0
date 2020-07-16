@@ -2,525 +2,717 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C85A222195
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 13:36:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E62BA222202
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 13:57:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728207AbgGPLgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 07:36:12 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:22744 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728126AbgGPLgJ (ORCPT
+        id S1728541AbgGPL51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 07:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52104 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728284AbgGPLz6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 07:36:09 -0400
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 16 Jul 2020 04:36:08 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 16 Jul 2020 04:36:06 -0700
-Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Jul 2020 17:05:43 +0530
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id E75BB4B0D; Thu, 16 Jul 2020 17:05:42 +0530 (IST)
-From:   Kalyan Thota <kalyan_t@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        jsanka@codeaurora.org, travitej@codeaurora.org,
-        nganji@codeaurora.org
-Subject: [PATCH 3/3] drm/msm/dpu: add support for clk and bw scaling for display
-Date:   Thu, 16 Jul 2020 17:05:34 +0530
-Message-Id: <1594899334-19772-3-git-send-email-kalyan_t@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1594899334-19772-1-git-send-email-kalyan_t@codeaurora.org>
-References: <1594899334-19772-1-git-send-email-kalyan_t@codeaurora.org>
+        Thu, 16 Jul 2020 07:55:58 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 874DAC061755;
+        Thu, 16 Jul 2020 04:55:57 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id w3so11322660wmi.4;
+        Thu, 16 Jul 2020 04:55:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=78Y6TdM0PRruNQCvuqrmY2m+2qiFcG1gpfLq2GGN/Aw=;
+        b=rKrRFzvDEg32wrVn1K5TMx27ITXZxj+h2LmZiQMikggp7qMycKPCXJE9g2M+pK0lNS
+         4jF1VOaYkN2Ni8TKgQ0V40XMrOsCUVZzhDbZiwOb4d85zXFyUGBjuuBqJ5Cl3vJXvIkF
+         5dxA3FMBgyfKienebD/be5t6YSLBljFk15gRTaxT2gzPI2uFN8AyKckLl59uVU+BRgRf
+         lCY14YLjc0MLquHNXJoK4nf0+YevrCGQYdpwRG7avLQiTtnkbdsio/QyXQEBqveGUQty
+         u/aOxsdn+tD21ytw66dTcSP5PW1KoaiYs/9p1IOa3XpAM16NSWizQL/ySUTJyeMwYIQL
+         gv7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=78Y6TdM0PRruNQCvuqrmY2m+2qiFcG1gpfLq2GGN/Aw=;
+        b=jnC8aBP6HG3e65VmO6J8cjsstdZyZKi49xNgKGL0ozA5dPbeHlMS5O/EEe1Y8D4HAN
+         cRxX9wn3+EOvg02x6uWgm+k1nwyd8dUno3VQY8ndoNpZdeMYkYBrgMaVhxh1bN99T4E+
+         TTZg1+jKhm/EbcYF+5HBOY/bC3KBgIznqjmpvYi1Na2BYYZupfQRU5VpxHuPggpQdK0K
+         zRzf7eBbSQUABUUf3HalZzoGVgMPXjPc8AGrEYQ8VG7fOFbJ7KSoJDN1mQQCU7/fPQnS
+         ta73rJ8IFFjw6MXQ+2YisfKOrR9i5whmIDgFg0VdoHqL00W9ETBUU0cssPP4i10tlySa
+         zRwA==
+X-Gm-Message-State: AOAM530RTdJr0bkC1VCC4Obs2f2yd1mQhByX+YrjHhdW82TfNMOrT2vw
+        EV82a83abKJUmOTtZo8pEWE=
+X-Google-Smtp-Source: ABdhPJx6TpJc5YdfzfnK8PJsm8JZeVlCs3dtuddP2uMEN12zCkHcIugUKpNl/bZd0d+9yRYErpP1uA==
+X-Received: by 2002:a1c:5646:: with SMTP id k67mr4180092wmb.61.1594900555913;
+        Thu, 16 Jul 2020 04:55:55 -0700 (PDT)
+Received: from Ansuel-XPS.localdomain (host-87-7-31-173.retail.telecomitalia.it. [87.7.31.173])
+        by smtp.googlemail.com with ESMTPSA id a4sm9553060wrg.80.2020.07.16.04.55.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2020 04:55:54 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@codeaurora.org>,
+        Jonathan McDowell <noodles@earth.li>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v9 1/2] phy: qualcomm: add qcom ipq806x dwc usb phy driver
+Date:   Thu, 16 Jul 2020 13:55:45 +0200
+Message-Id: <20200716115547.11903-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change adds support to scale src clk and bandwidth as
-per composition requirements.
+This has lost in the original push for the dwc3 qcom driver.
+This is needed for ipq806x SoC as without this the usb ports
+doesn't work at all.
 
-Interconnect registration for bw has been moved to mdp
-device node from mdss to facilitate the scaling.
-
-Changes in v1:
- - Address armv7 compilation issues with the patch (Rob)
-
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+Signed-off-by: Andy Gross <agross@codeaurora.org>
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+Tested-by: Jonathan McDowell <noodles@earth.li>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c  | 109 +++++++++++++++++++++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |   5 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   4 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |  37 ++++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |   4 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c       |   9 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  84 +++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |   4 +
- 8 files changed, 233 insertions(+), 23 deletions(-)
+v9:
+* Use device_property_read_u32 and skip compatible check
+v8:
+* Drop useless init
+* Drop invalid copyright
+v7:
+* Add TestedBy tag
+v6:
+* Use GENMASK instead of hex value
+v4:
+* Add qcom to specific bindings
+v3:
+* Use reg instead of regmap phandle
+v2:
+* Renamed config from PHY_QCOM_DWC3 to PHY_QCOM_IPQ806X_USB
+* Rename inline function to generic name to reduce length
+* Fix check reported by checkpatch --strict
+* Rename compatible to qcom,ipq806x-usb-phy-(hs/ss)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 7c230f7..e52bc44 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -29,6 +29,74 @@ enum dpu_perf_mode {
- 	DPU_PERF_MODE_MAX
- };
- 
+ drivers/phy/qualcomm/Kconfig                |  11 +
+ drivers/phy/qualcomm/Makefile               |   1 +
+ drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c | 575 ++++++++++++++++++++
+ 3 files changed, 587 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+
+diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+index e46824da29f6..c14dabd7f992 100644
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -91,3 +91,14 @@ config PHY_QCOM_USB_HSIC
+ 	select GENERIC_PHY
+ 	help
+ 	  Support for the USB HSIC ULPI compliant PHY on QCOM chipsets.
++
++config PHY_QCOM_IPQ806X_USB
++	tristate "Qualcomm IPQ806x DWC3 USB PHY driver"
++	depends on HAS_IOMEM
++	depends on OF && (ARCH_QCOM || COMPILE_TEST)
++	select GENERIC_PHY
++	help
++	  This option enables support for the Synopsis PHYs present inside the
++	  Qualcomm USB3.0 DWC3 controller on ipq806x SoC. This driver supports
++	  both HS and SS PHY controllers.
++
+diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+index 283251d6a5d9..8629299c1495 100644
+--- a/drivers/phy/qualcomm/Makefile
++++ b/drivers/phy/qualcomm/Makefile
+@@ -10,3 +10,4 @@ obj-$(CONFIG_PHY_QCOM_UFS_14NM)		+= phy-qcom-ufs-qmp-14nm.o
+ obj-$(CONFIG_PHY_QCOM_UFS_20NM)		+= phy-qcom-ufs-qmp-20nm.o
+ obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
+ obj-$(CONFIG_PHY_QCOM_USB_HSIC) 	+= phy-qcom-usb-hsic.o
++obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)		+= phy-qcom-ipq806x-usb.o
+diff --git a/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+new file mode 100644
+index 000000000000..c5906ba06fab
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+@@ -0,0 +1,575 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include <linux/clk.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/phy/phy.h>
++#include <linux/platform_device.h>
++#include <linux/delay.h>
++#include <linux/regmap.h>
++#include <linux/mfd/syscon.h>
++
++/* USB QSCRATCH Hardware registers */
++#define QSCRATCH_GENERAL_CFG		(0x08)
++#define HSUSB_PHY_CTRL_REG		(0x10)
++
++/* PHY_CTRL_REG */
++#define HSUSB_CTRL_DMSEHV_CLAMP		BIT(24)
++#define HSUSB_CTRL_USB2_SUSPEND		BIT(23)
++#define HSUSB_CTRL_UTMI_CLK_EN		BIT(21)
++#define HSUSB_CTRL_UTMI_OTG_VBUS_VALID	BIT(20)
++#define HSUSB_CTRL_USE_CLKCORE		BIT(18)
++#define HSUSB_CTRL_DPSEHV_CLAMP		BIT(17)
++#define HSUSB_CTRL_COMMONONN		BIT(11)
++#define HSUSB_CTRL_ID_HV_CLAMP		BIT(9)
++#define HSUSB_CTRL_OTGSESSVLD_CLAMP	BIT(8)
++#define HSUSB_CTRL_CLAMP_EN		BIT(7)
++#define HSUSB_CTRL_RETENABLEN		BIT(1)
++#define HSUSB_CTRL_POR			BIT(0)
++
++/* QSCRATCH_GENERAL_CFG */
++#define HSUSB_GCFG_XHCI_REV		BIT(2)
++
++/* USB QSCRATCH Hardware registers */
++#define SSUSB_PHY_CTRL_REG		(0x00)
++#define SSUSB_PHY_PARAM_CTRL_1		(0x04)
++#define SSUSB_PHY_PARAM_CTRL_2		(0x08)
++#define CR_PROTOCOL_DATA_IN_REG		(0x0c)
++#define CR_PROTOCOL_DATA_OUT_REG	(0x10)
++#define CR_PROTOCOL_CAP_ADDR_REG	(0x14)
++#define CR_PROTOCOL_CAP_DATA_REG	(0x18)
++#define CR_PROTOCOL_READ_REG		(0x1c)
++#define CR_PROTOCOL_WRITE_REG		(0x20)
++
++/* PHY_CTRL_REG */
++#define SSUSB_CTRL_REF_USE_PAD		BIT(28)
++#define SSUSB_CTRL_TEST_POWERDOWN	BIT(27)
++#define SSUSB_CTRL_LANE0_PWR_PRESENT	BIT(24)
++#define SSUSB_CTRL_SS_PHY_EN		BIT(8)
++#define SSUSB_CTRL_SS_PHY_RESET		BIT(7)
++
++/* SSPHY control registers - Does this need 0x30? */
++#define SSPHY_CTRL_RX_OVRD_IN_HI(lane)	(0x1006 + 0x100 * (lane))
++#define SSPHY_CTRL_TX_OVRD_DRV_LO(lane)	(0x1002 + 0x100 * (lane))
++
++/* SSPHY SoC version specific values */
++#define SSPHY_RX_EQ_VALUE		4 /* Override value for rx_eq */
++/* Override value for transmit preemphasis */
++#define SSPHY_TX_DEEMPH_3_5DB		23
++/* Override value for mpll */
++#define SSPHY_MPLL_VALUE		0
++
++/* QSCRATCH PHY_PARAM_CTRL1 fields */
++#define PHY_PARAM_CTRL1_TX_FULL_SWING_MASK	GENMASK(26, 19)
++#define PHY_PARAM_CTRL1_TX_DEEMPH_6DB_MASK	GENMASK(19, 13)
++#define PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB_MASK	GENMASK(13, 7)
++#define PHY_PARAM_CTRL1_LOS_BIAS_MASK		GENMASK(7, 2)
++
++#define PHY_PARAM_CTRL1_MASK				\
++		(PHY_PARAM_CTRL1_TX_FULL_SWING_MASK |	\
++		 PHY_PARAM_CTRL1_TX_DEEMPH_6DB_MASK |	\
++		 PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB_MASK |	\
++		 PHY_PARAM_CTRL1_LOS_BIAS_MASK)
++
++#define PHY_PARAM_CTRL1_TX_FULL_SWING(x)	\
++		(((x) << 20) & PHY_PARAM_CTRL1_TX_FULL_SWING_MASK)
++#define PHY_PARAM_CTRL1_TX_DEEMPH_6DB(x)	\
++		(((x) << 14) & PHY_PARAM_CTRL1_TX_DEEMPH_6DB_MASK)
++#define PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB(x)	\
++		(((x) <<  8) & PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB_MASK)
++#define PHY_PARAM_CTRL1_LOS_BIAS(x)	\
++		(((x) <<  3) & PHY_PARAM_CTRL1_LOS_BIAS_MASK)
++
++/* RX OVRD IN HI bits */
++#define RX_OVRD_IN_HI_RX_RESET_OVRD		BIT(13)
++#define RX_OVRD_IN_HI_RX_RX_RESET		BIT(12)
++#define RX_OVRD_IN_HI_RX_EQ_OVRD		BIT(11)
++#define RX_OVRD_IN_HI_RX_EQ_MASK		GENMASK(10, 7)
++#define RX_OVRD_IN_HI_RX_EQ(x)			((x) << 8)
++#define RX_OVRD_IN_HI_RX_EQ_EN_OVRD		BIT(7)
++#define RX_OVRD_IN_HI_RX_EQ_EN			BIT(6)
++#define RX_OVRD_IN_HI_RX_LOS_FILTER_OVRD	BIT(5)
++#define RX_OVRD_IN_HI_RX_LOS_FILTER_MASK	GENMASK(4, 2)
++#define RX_OVRD_IN_HI_RX_RATE_OVRD		BIT(2)
++#define RX_OVRD_IN_HI_RX_RATE_MASK		GENMASK(2, 0)
++
++/* TX OVRD DRV LO register bits */
++#define TX_OVRD_DRV_LO_AMPLITUDE_MASK		GENMASK(6, 0)
++#define TX_OVRD_DRV_LO_PREEMPH_MASK		GENMASK(13, 6)
++#define TX_OVRD_DRV_LO_PREEMPH(x)		((x) << 7)
++#define TX_OVRD_DRV_LO_EN			BIT(14)
++
++/* MPLL bits */
++#define SSPHY_MPLL_MASK				GENMASK(8, 5)
++#define SSPHY_MPLL(x)				((x) << 5)
++
++/* SS CAP register bits */
++#define SS_CR_CAP_ADDR_REG			BIT(0)
++#define SS_CR_CAP_DATA_REG			BIT(0)
++#define SS_CR_READ_REG				BIT(0)
++#define SS_CR_WRITE_REG				BIT(0)
++
++struct usb_phy {
++	void __iomem		*base;
++	struct device		*dev;
++	struct clk		*xo_clk;
++	struct clk		*ref_clk;
++	u32			rx_eq;
++	u32			tx_deamp_3_5db;
++	u32			mpll;
++};
++
++struct phy_drvdata {
++	struct phy_ops	ops;
++	u32		clk_rate;
++};
++
 +/**
-+ * @_dpu_core_perf_calc_bw() - to calculate BW per crtc
-+ * @kms -  pointer to the dpu_kms
-+ * @crtc - pointer to a crtc
-+ * Return: returns aggregated BW for all planes in crtc.
++ * Write register and read back masked value to confirm it is written
++ *
++ * @base - QCOM DWC3 PHY base virtual address.
++ * @offset - register offset.
++ * @mask - register bitmask specifying what should be updated
++ * @val - value to write.
 + */
-+static u64 _dpu_core_perf_calc_bw(struct dpu_kms *kms,
-+		struct drm_crtc *crtc)
++static inline void usb_phy_write_readback(struct usb_phy *phy_dwc3,
++					  u32 offset,
++					  const u32 mask, u32 val)
 +{
-+	struct drm_plane *plane;
-+	struct dpu_plane_state *pstate;
-+	u64 crtc_plane_bw = 0;
-+	u32 bw_factor;
++	u32 write_val, tmp = readl(phy_dwc3->base + offset);
 +
-+	drm_atomic_crtc_for_each_plane(plane, crtc) {
-+		pstate = to_dpu_plane_state(plane->state);
-+		if (!pstate)
-+			continue;
++	tmp &= ~mask;		/* retain other bits */
++	write_val = tmp | val;
 +
-+		crtc_plane_bw += pstate->plane_fetch_bw;
-+	}
++	writel(write_val, phy_dwc3->base + offset);
 +
-+	bw_factor = kms->catalog->perf.bw_inefficiency_factor;
-+	if (bw_factor) {
-+		crtc_plane_bw *= bw_factor;
-+		do_div(crtc_plane_bw, 100);
-+	}
++	/* Read back to see if val was written */
++	tmp = readl(phy_dwc3->base + offset);
++	tmp &= mask;		/* clear other bits */
 +
-+	return crtc_plane_bw;
++	if (tmp != val)
++		dev_err(phy_dwc3->dev, "write: %x to QSCRATCH: %x FAILED\n", val, offset);
 +}
 +
-+/**
-+ * _dpu_core_perf_calc_clk() - to calculate clock per crtc
-+ * @kms -  pointer to the dpu_kms
-+ * @crtc - pointer to a crtc
-+ * @state - pointer to a crtc state
-+ * Return: returns max clk for all planes in crtc.
-+ */
-+static u64 _dpu_core_perf_calc_clk(struct dpu_kms *kms,
-+		struct drm_crtc *crtc, struct drm_crtc_state *state)
++static int wait_for_latch(void __iomem *addr)
 +{
-+	struct drm_plane *plane;
-+	struct dpu_plane_state *pstate;
-+	struct drm_display_mode *mode;
-+	u64 crtc_clk;
-+	u32 clk_factor;
++	u32 retry = 10;
 +
-+	mode = &state->adjusted_mode;
++	while (true) {
++		if (!readl(addr))
++			break;
 +
-+	crtc_clk = mode->vtotal * mode->hdisplay * drm_mode_vrefresh(mode);
++		if (--retry == 0)
++			return -ETIMEDOUT;
 +
-+	drm_atomic_crtc_for_each_plane(plane, crtc) {
-+		pstate = to_dpu_plane_state(plane->state);
-+		if (!pstate)
-+			continue;
-+
-+		crtc_clk = max(pstate->plane_clk, crtc_clk);
++		usleep_range(10, 20);
 +	}
 +
-+	clk_factor = kms->catalog->perf.clk_inefficiency_factor;
-+	if (clk_factor) {
-+		crtc_clk *= clk_factor;
-+		do_div(crtc_clk, 100);
-+	}
-+
-+	return crtc_clk;
-+}
-+
- static struct dpu_kms *_dpu_crtc_get_kms(struct drm_crtc *crtc)
- {
- 	struct msm_drm_private *priv;
-@@ -51,12 +119,7 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
- 	dpu_cstate = to_dpu_crtc_state(state);
- 	memset(perf, 0, sizeof(struct dpu_core_perf_params));
- 
--	if (!dpu_cstate->bw_control) {
--		perf->bw_ctl = kms->catalog->perf.max_bw_high *
--					1000ULL;
--		perf->max_per_pipe_ib = perf->bw_ctl;
--		perf->core_clk_rate = kms->perf.max_core_clk_rate;
--	} else if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
-+	if (kms->perf.perf_tune.mode == DPU_PERF_MODE_MINIMUM) {
- 		perf->bw_ctl = 0;
- 		perf->max_per_pipe_ib = 0;
- 		perf->core_clk_rate = 0;
-@@ -64,6 +127,10 @@ static void _dpu_core_perf_calc_crtc(struct dpu_kms *kms,
- 		perf->bw_ctl = kms->perf.fix_core_ab_vote;
- 		perf->max_per_pipe_ib = kms->perf.fix_core_ib_vote;
- 		perf->core_clk_rate = kms->perf.fix_core_clk_rate;
-+	} else {
-+		perf->bw_ctl = _dpu_core_perf_calc_bw(kms, crtc);
-+		perf->max_per_pipe_ib = kms->catalog->perf.min_dram_ib;
-+		perf->core_clk_rate = _dpu_core_perf_calc_clk(kms, crtc, state);
- 	}
- 
- 	DPU_DEBUG(
-@@ -115,11 +182,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 			DPU_DEBUG("crtc:%d bw:%llu ctrl:%d\n",
- 				tmp_crtc->base.id, tmp_cstate->new_perf.bw_ctl,
- 				tmp_cstate->bw_control);
--			/*
--			 * For bw check only use the bw if the
--			 * atomic property has been already set
--			 */
--			if (tmp_cstate->bw_control)
-+
- 				bw_sum_of_intfs += tmp_cstate->new_perf.bw_ctl;
- 		}
- 
-@@ -131,9 +194,7 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
- 
- 		DPU_DEBUG("final threshold bw limit = %d\n", threshold);
- 
--		if (!dpu_cstate->bw_control) {
--			DPU_DEBUG("bypass bandwidth check\n");
--		} else if (!threshold) {
-+		if (!threshold) {
- 			DPU_ERROR("no bandwidth limits specified\n");
- 			return -E2BIG;
- 		} else if (bw > threshold) {
-@@ -154,7 +215,11 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
- 					= dpu_crtc_get_client_type(crtc);
- 	struct drm_crtc *tmp_crtc;
- 	struct dpu_crtc_state *dpu_cstate;
--	int ret = 0;
-+	int i, ret = 0;
-+	u64 avg_bw;
-+
-+	if (!kms->num_paths)
-+		return -EINVAL;
- 
- 	drm_for_each_crtc(tmp_crtc, crtc->dev) {
- 		if (tmp_crtc->enabled &&
-@@ -165,10 +230,20 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
- 			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
- 					dpu_cstate->new_perf.max_per_pipe_ib);
- 
--			DPU_DEBUG("crtc=%d bw=%llu\n", tmp_crtc->base.id,
--					dpu_cstate->new_perf.bw_ctl);
-+			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
-+
-+			DPU_DEBUG("crtc=%d bw=%llu paths:%d\n",
-+				  tmp_crtc->base.id,
-+				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
- 		}
- 	}
-+
-+	avg_bw = perf.bw_ctl;
-+	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
-+
-+	for (i = 0; i < kms->num_paths; i++)
-+		icc_set_bw(kms->path[i], avg_bw, perf.max_per_pipe_ib);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 29d4fde..8f2357d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -541,7 +541,8 @@
- 	.max_bw_high = 6800000,
- 	.min_core_ib = 2400000,
- 	.min_llcc_ib = 800000,
--	.min_dram_ib = 800000,
-+	.min_dram_ib = 1600000,
-+	.min_prefill_lines = 24,
- 	.danger_lut_tbl = {0xff, 0xffff, 0x0},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-@@ -558,6 +559,8 @@
- 		{.rd_enable = 1, .wr_enable = 1},
- 		{.rd_enable = 1, .wr_enable = 0}
- 	},
-+	.clk_inefficiency_factor = 105,
-+	.bw_inefficiency_factor = 120,
- };
- 
- /*************************************************************
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index f7de438..f2a5fe2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -651,6 +651,8 @@ struct dpu_perf_cdp_cfg {
-  * @downscaling_prefill_lines  downscaling latency in lines
-  * @amortizable_theshold minimum y position for traffic shaping prefill
-  * @min_prefill_lines  minimum pipeline latency in lines
-+ * @clk_inefficiency_factor DPU src clock inefficiency factor
-+ * @bw_inefficiency_factor DPU axi bus bw inefficiency factor
-  * @safe_lut_tbl: LUT tables for safe signals
-  * @danger_lut_tbl: LUT tables for danger signals
-  * @qos_lut_tbl: LUT tables for QoS signals
-@@ -675,6 +677,8 @@ struct dpu_perf_cfg {
- 	u32 downscaling_prefill_lines;
- 	u32 amortizable_threshold;
- 	u32 min_prefill_lines;
-+	u32 clk_inefficiency_factor;
-+	u32 bw_inefficiency_factor;
- 	u32 safe_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
- 	u32 danger_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
- 	struct dpu_qos_lut_tbl qos_lut_tbl[DPU_QOS_LUT_USAGE_MAX];
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index b8615d4..a5da7aa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -303,6 +303,28 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
- 	return 0;
- }
- 
-+static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
-+{
-+	struct icc_path *path0;
-+	struct icc_path *path1;
-+	struct drm_device *dev = dpu_kms->dev;
-+
-+	path0 = of_icc_get(dev->dev, "mdp0-mem");
-+	path1 = of_icc_get(dev->dev, "mdp1-mem");
-+
-+	if (IS_ERR_OR_NULL(path0))
-+		return PTR_ERR_OR_ZERO(path0);
-+
-+	dpu_kms->path[0] = path0;
-+	dpu_kms->num_paths = 1;
-+
-+	if (!IS_ERR_OR_NULL(path1)) {
-+		dpu_kms->path[1] = path1;
-+		dpu_kms->num_paths++;
-+	}
 +	return 0;
 +}
 +
- static int dpu_kms_enable_vblank(struct msm_kms *kms, struct drm_crtc *crtc)
- {
- 	return dpu_crtc_vblank(crtc, true);
-@@ -972,6 +994,9 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 
- 	dpu_vbif_init_memtypes(dpu_kms);
- 
-+	if (of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss"))
-+		dpu_kms_parse_data_bus_icc_path(dpu_kms);
-+
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- 
- 	return 0;
-@@ -1077,7 +1102,7 @@ static int dpu_dev_remove(struct platform_device *pdev)
- 
- static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- {
--	int rc = -1;
-+	int i, rc = -1;
- 	struct platform_device *pdev = to_platform_device(dev);
- 	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
- 	struct dss_module_power *mp = &dpu_kms->mp;
-@@ -1086,6 +1111,9 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- 	if (rc)
- 		DPU_ERROR("clock disable failed rc:%d\n", rc);
- 
-+	for (i = 0; i < dpu_kms->num_paths; i++)
-+		icc_set_bw(dpu_kms->path[i], 0, 0);
-+
- 	return rc;
- }
- 
-@@ -1097,8 +1125,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
- 	struct drm_encoder *encoder;
- 	struct drm_device *ddev;
- 	struct dss_module_power *mp = &dpu_kms->mp;
-+	int i;
- 
- 	ddev = dpu_kms->dev;
-+
-+	/* Min vote of BW is required before turning on AXI clk */
-+	for (i = 0; i < dpu_kms->num_paths; i++)
-+		icc_set_bw(dpu_kms->path[i], 0,
-+			dpu_kms->catalog->perf.min_dram_ib);
-+
- 	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
- 	if (rc) {
- 		DPU_ERROR("clock enable failed rc:%d\n", rc);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 4e32d04..94410ca 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -8,6 +8,8 @@
- #ifndef __DPU_KMS_H__
- #define __DPU_KMS_H__
- 
-+#include <linux/interconnect.h>
-+
- #include <drm/drm_drv.h>
- 
- #include "msm_drv.h"
-@@ -137,6 +139,8 @@ struct dpu_kms {
- 	 * when disabled.
- 	 */
- 	atomic_t bandwidth_ref;
-+	struct icc_path *path[2];
-+	u32 num_paths;
- };
- 
- struct vsync_info {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-index 80d3cfc..df0a983 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-@@ -8,7 +8,6 @@
- #include <linux/irqdesc.h>
- #include <linux/irqchip/chained_irq.h>
- #include "dpu_kms.h"
--#include <linux/interconnect.h>
- 
- #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
- 
-@@ -315,9 +314,11 @@ int dpu_mdss_init(struct drm_device *dev)
- 	}
- 	dpu_mdss->mmio_len = resource_size(res);
- 
--	ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
--	if (ret)
--		return ret;
-+	if (!of_device_is_compatible(dev->dev->of_node, "qcom,sc7180-mdss")) {
-+		ret = dpu_mdss_parse_data_bus_icc_path(dev, dpu_mdss);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	mp = &dpu_mdss->mp;
- 	ret = msm_dss_parse_clock(pdev, mp);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 3b9c33e..6379fe1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -132,6 +132,86 @@ static struct dpu_kms *_dpu_plane_get_kms(struct drm_plane *plane)
- }
- 
- /**
-+ * _dpu_plane_calc_bw - calculate bandwidth required for a plane
-+ * @Plane: Pointer to drm plane.
-+ * Result: Updates calculated bandwidth in the plane state.
-+ * BW Equation: src_w * src_h * bpp * fps * (v_total / v_dest)
-+ * Prefill BW Equation: line src bytes * line_time
++/**
++ * Write SSPHY register
++ *
++ * @base - QCOM DWC3 PHY base virtual address.
++ * @addr - SSPHY address to write.
++ * @val - value to write.
 + */
-+static void _dpu_plane_calc_bw(struct drm_plane *plane,
-+	struct drm_framebuffer *fb)
++static int usb_ss_write_phycreg(struct usb_phy *phy_dwc3,
++				u32 addr, u32 val)
 +{
-+	struct dpu_plane *pdpu = to_dpu_plane(plane);
-+	struct dpu_plane_state *pstate;
-+	struct drm_display_mode *mode;
-+	const struct dpu_format *fmt = NULL;
-+	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
-+	int src_width, src_height, dst_height, fps;
-+	u64 plane_prefill_bw;
-+	u64 plane_bw;
-+	u32 hw_latency_lines;
-+	u64 scale_factor;
-+	int vbp, vpw;
++	int ret;
 +
-+	pstate = to_dpu_plane_state(plane->state);
-+	mode = &plane->state->crtc->mode;
++	writel(addr, phy_dwc3->base + CR_PROTOCOL_DATA_IN_REG);
++	writel(SS_CR_CAP_ADDR_REG,
++	       phy_dwc3->base + CR_PROTOCOL_CAP_ADDR_REG);
 +
-+	fmt = dpu_get_dpu_format_ext(fb->format->format, fb->modifier);
++	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_CAP_ADDR_REG);
++	if (ret)
++		goto err_wait;
 +
-+	src_width = drm_rect_width(&pdpu->pipe_cfg.src_rect);
-+	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
-+	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
-+	fps = drm_mode_vrefresh(mode);
-+	vbp = mode->vtotal - mode->vsync_end;
-+	vpw = mode->vsync_end - mode->vsync_start;
-+	hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
-+	scale_factor = src_height > dst_height ?
-+		mult_frac(src_height, 1, dst_height) : 1;
++	writel(val, phy_dwc3->base + CR_PROTOCOL_DATA_IN_REG);
++	writel(SS_CR_CAP_DATA_REG,
++	       phy_dwc3->base + CR_PROTOCOL_CAP_DATA_REG);
 +
-+	plane_bw =
-+		src_width * mode->vtotal * fps * fmt->bpp *
-+		scale_factor;
++	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_CAP_DATA_REG);
++	if (ret)
++		goto err_wait;
 +
-+	plane_prefill_bw =
-+		src_width * hw_latency_lines * fps * fmt->bpp *
-+		scale_factor * mode->vtotal;
++	writel(SS_CR_WRITE_REG, phy_dwc3->base + CR_PROTOCOL_WRITE_REG);
 +
-+	do_div(plane_prefill_bw, (vbp+vpw));
++	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_WRITE_REG);
 +
-+	pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
++err_wait:
++	if (ret)
++		dev_err(phy_dwc3->dev, "timeout waiting for latch\n");
++	return ret;
 +}
 +
 +/**
-+ * _dpu_plane_calc_clk - calculate clock required for a plane
-+ * @Plane: Pointer to drm plane.
-+ * Result: Updates calculated clock in the plane state.
-+ * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
++ * Read SSPHY register.
++ *
++ * @base - QCOM DWC3 PHY base virtual address.
++ * @addr - SSPHY address to read.
 + */
-+static void _dpu_plane_calc_clk(struct drm_plane *plane)
++static int usb_ss_read_phycreg(struct usb_phy *phy_dwc3,
++			       u32 addr, u32 *val)
 +{
-+	struct dpu_plane *pdpu = to_dpu_plane(plane);
-+	struct dpu_plane_state *pstate;
-+	struct drm_display_mode *mode;
-+	int dst_width, src_height, dst_height, fps;
++	int ret;
 +
-+	pstate = to_dpu_plane_state(plane->state);
-+	mode = &plane->state->crtc->mode;
++	writel(addr, phy_dwc3->base + CR_PROTOCOL_DATA_IN_REG);
++	writel(SS_CR_CAP_ADDR_REG,
++	       phy_dwc3->base + CR_PROTOCOL_CAP_ADDR_REG);
 +
-+	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
-+	dst_width = drm_rect_width(&pdpu->pipe_cfg.dst_rect);
-+	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
-+	fps = drm_mode_vrefresh(mode);
++	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_CAP_ADDR_REG);
++	if (ret)
++		goto err_wait;
 +
-+	pstate->plane_clk =
-+		dst_width * mode->vtotal * fps;
++	/*
++	 * Due to hardware bug, first read of SSPHY register might be
++	 * incorrect. Hence as workaround, SW should perform SSPHY register
++	 * read twice, but use only second read and ignore first read.
++	 */
++	writel(SS_CR_READ_REG, phy_dwc3->base + CR_PROTOCOL_READ_REG);
 +
-+	if (src_height > dst_height) {
-+		pstate->plane_clk *= src_height;
-+		do_div(pstate->plane_clk, dst_height);
-+	}
++	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_READ_REG);
++	if (ret)
++		goto err_wait;
++
++	/* throwaway read */
++	readl(phy_dwc3->base + CR_PROTOCOL_DATA_OUT_REG);
++
++	writel(SS_CR_READ_REG, phy_dwc3->base + CR_PROTOCOL_READ_REG);
++
++	ret = wait_for_latch(phy_dwc3->base + CR_PROTOCOL_READ_REG);
++	if (ret)
++		goto err_wait;
++
++	*val = readl(phy_dwc3->base + CR_PROTOCOL_DATA_OUT_REG);
++
++err_wait:
++	return ret;
 +}
 +
-+/**
-  * _dpu_plane_calc_fill_level - calculate fill level of the given source format
-  * @plane:		Pointer to drm plane
-  * @fmt:		Pointer to source buffer format
-@@ -1102,6 +1182,10 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	}
- 
- 	_dpu_plane_set_qos_remap(plane);
++static int qcom_ipq806x_usb_hs_phy_init(struct phy *phy)
++{
++	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
++	int ret;
++	u32 val;
 +
-+	_dpu_plane_calc_bw(plane, fb);
++	ret = clk_prepare_enable(phy_dwc3->xo_clk);
++	if (ret)
++		return ret;
 +
-+	_dpu_plane_calc_clk(plane);
- }
- 
- static void _dpu_plane_atomic_disable(struct drm_plane *plane)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-index 4569497..ca83b87 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-@@ -25,6 +25,8 @@
-  * @scaler3_cfg: configuration data for scaler3
-  * @pixel_ext: configuration data for pixel extensions
-  * @cdp_cfg:	CDP configuration
-+ * @plane_fetch_bw: calculated BW per plane
-+ * @plane_clk: calculated clk per plane
-  */
- struct dpu_plane_state {
- 	struct drm_plane_state base;
-@@ -39,6 +41,8 @@ struct dpu_plane_state {
- 	struct dpu_hw_pixel_ext pixel_ext;
- 
- 	struct dpu_hw_pipe_cdp_cfg cdp_cfg;
-+	u64 plane_fetch_bw;
-+	u64 plane_clk;
- };
- 
- /**
++	ret = clk_prepare_enable(phy_dwc3->ref_clk);
++	if (ret) {
++		clk_disable_unprepare(phy_dwc3->xo_clk);
++		return ret;
++	}
++
++	/*
++	 * HSPHY Initialization: Enable UTMI clock, select 19.2MHz fsel
++	 * enable clamping, and disable RETENTION (power-on default is ENABLED)
++	 */
++	val = HSUSB_CTRL_DPSEHV_CLAMP | HSUSB_CTRL_DMSEHV_CLAMP |
++		HSUSB_CTRL_RETENABLEN  | HSUSB_CTRL_COMMONONN |
++		HSUSB_CTRL_OTGSESSVLD_CLAMP | HSUSB_CTRL_ID_HV_CLAMP |
++		HSUSB_CTRL_DPSEHV_CLAMP | HSUSB_CTRL_UTMI_OTG_VBUS_VALID |
++		HSUSB_CTRL_UTMI_CLK_EN | HSUSB_CTRL_CLAMP_EN | 0x70;
++
++	/* use core clock if external reference is not present */
++	if (!phy_dwc3->xo_clk)
++		val |= HSUSB_CTRL_USE_CLKCORE;
++
++	writel(val, phy_dwc3->base + HSUSB_PHY_CTRL_REG);
++	usleep_range(2000, 2200);
++
++	/* Disable (bypass) VBUS and ID filters */
++	writel(HSUSB_GCFG_XHCI_REV, phy_dwc3->base + QSCRATCH_GENERAL_CFG);
++
++	return 0;
++}
++
++static int qcom_ipq806x_usb_hs_phy_exit(struct phy *phy)
++{
++	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
++
++	clk_disable_unprepare(phy_dwc3->ref_clk);
++	clk_disable_unprepare(phy_dwc3->xo_clk);
++
++	return 0;
++}
++
++static int qcom_ipq806x_usb_ss_phy_init(struct phy *phy)
++{
++	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
++	int ret;
++	u32 data;
++
++	ret = clk_prepare_enable(phy_dwc3->xo_clk);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(phy_dwc3->ref_clk);
++	if (ret) {
++		clk_disable_unprepare(phy_dwc3->xo_clk);
++		return ret;
++	}
++
++	/* reset phy */
++	data = readl(phy_dwc3->base + SSUSB_PHY_CTRL_REG);
++	writel(data | SSUSB_CTRL_SS_PHY_RESET,
++	       phy_dwc3->base + SSUSB_PHY_CTRL_REG);
++	usleep_range(2000, 2200);
++	writel(data, phy_dwc3->base + SSUSB_PHY_CTRL_REG);
++
++	/* clear REF_PAD if we don't have XO clk */
++	if (!phy_dwc3->xo_clk)
++		data &= ~SSUSB_CTRL_REF_USE_PAD;
++	else
++		data |= SSUSB_CTRL_REF_USE_PAD;
++
++	writel(data, phy_dwc3->base + SSUSB_PHY_CTRL_REG);
++
++	/* wait for ref clk to become stable, this can take up to 30ms */
++	msleep(30);
++
++	data |= SSUSB_CTRL_SS_PHY_EN | SSUSB_CTRL_LANE0_PWR_PRESENT;
++	writel(data, phy_dwc3->base + SSUSB_PHY_CTRL_REG);
++
++	/*
++	 * WORKAROUND: There is SSPHY suspend bug due to which USB enumerates
++	 * in HS mode instead of SS mode. Workaround it by asserting
++	 * LANE0.TX_ALT_BLOCK.EN_ALT_BUS to enable TX to use alt bus mode
++	 */
++	ret = usb_ss_read_phycreg(phy_dwc3, 0x102D, &data);
++	if (ret)
++		goto err_phy_trans;
++
++	data |= (1 << 7);
++	ret = usb_ss_write_phycreg(phy_dwc3, 0x102D, data);
++	if (ret)
++		goto err_phy_trans;
++
++	ret = usb_ss_read_phycreg(phy_dwc3, 0x1010, &data);
++	if (ret)
++		goto err_phy_trans;
++
++	data &= ~0xff0;
++	data |= 0x20;
++	ret = usb_ss_write_phycreg(phy_dwc3, 0x1010, data);
++	if (ret)
++		goto err_phy_trans;
++
++	/*
++	 * Fix RX Equalization setting as follows
++	 * LANE0.RX_OVRD_IN_HI. RX_EQ_EN set to 0
++	 * LANE0.RX_OVRD_IN_HI.RX_EQ_EN_OVRD set to 1
++	 * LANE0.RX_OVRD_IN_HI.RX_EQ set based on SoC version
++	 * LANE0.RX_OVRD_IN_HI.RX_EQ_OVRD set to 1
++	 */
++	ret = usb_ss_read_phycreg(phy_dwc3,
++				  SSPHY_CTRL_RX_OVRD_IN_HI(0), &data);
++	if (ret)
++		goto err_phy_trans;
++
++	data &= ~RX_OVRD_IN_HI_RX_EQ_EN;
++	data |= RX_OVRD_IN_HI_RX_EQ_EN_OVRD;
++	data &= ~RX_OVRD_IN_HI_RX_EQ_MASK;
++	data |= RX_OVRD_IN_HI_RX_EQ(phy_dwc3->rx_eq);
++	data |= RX_OVRD_IN_HI_RX_EQ_OVRD;
++	ret = usb_ss_write_phycreg(phy_dwc3,
++				   SSPHY_CTRL_RX_OVRD_IN_HI(0), data);
++	if (ret)
++		goto err_phy_trans;
++
++	/*
++	 * Set EQ and TX launch amplitudes as follows
++	 * LANE0.TX_OVRD_DRV_LO.PREEMPH set based on SoC version
++	 * LANE0.TX_OVRD_DRV_LO.AMPLITUDE set to 110
++	 * LANE0.TX_OVRD_DRV_LO.EN set to 1.
++	 */
++	ret = usb_ss_read_phycreg(phy_dwc3,
++				  SSPHY_CTRL_TX_OVRD_DRV_LO(0), &data);
++	if (ret)
++		goto err_phy_trans;
++
++	data &= ~TX_OVRD_DRV_LO_PREEMPH_MASK;
++	data |= TX_OVRD_DRV_LO_PREEMPH(phy_dwc3->tx_deamp_3_5db);
++	data &= ~TX_OVRD_DRV_LO_AMPLITUDE_MASK;
++	data |= 0x6E;
++	data |= TX_OVRD_DRV_LO_EN;
++	ret = usb_ss_write_phycreg(phy_dwc3,
++				   SSPHY_CTRL_TX_OVRD_DRV_LO(0), data);
++	if (ret)
++		goto err_phy_trans;
++
++	data = 0;
++	data &= ~SSPHY_MPLL_MASK;
++	data |= SSPHY_MPLL(phy_dwc3->mpll);
++	usb_ss_write_phycreg(phy_dwc3, 0x30, data);
++
++	/*
++	 * Set the QSCRATCH PHY_PARAM_CTRL1 parameters as follows
++	 * TX_FULL_SWING [26:20] amplitude to 110
++	 * TX_DEEMPH_6DB [19:14] to 32
++	 * TX_DEEMPH_3_5DB [13:8] set based on SoC version
++	 * LOS_BIAS [7:3] to 9
++	 */
++	data = readl(phy_dwc3->base + SSUSB_PHY_PARAM_CTRL_1);
++
++	data &= ~PHY_PARAM_CTRL1_MASK;
++
++	data |= PHY_PARAM_CTRL1_TX_FULL_SWING(0x6e) |
++		PHY_PARAM_CTRL1_TX_DEEMPH_6DB(0x20) |
++		PHY_PARAM_CTRL1_TX_DEEMPH_3_5DB(phy_dwc3->tx_deamp_3_5db) |
++		PHY_PARAM_CTRL1_LOS_BIAS(0x9);
++
++	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_PARAM_CTRL_1,
++			       PHY_PARAM_CTRL1_MASK, data);
++
++err_phy_trans:
++	return ret;
++}
++
++static int qcom_ipq806x_usb_ss_phy_exit(struct phy *phy)
++{
++	struct usb_phy *phy_dwc3 = phy_get_drvdata(phy);
++
++	/* Sequence to put SSPHY in low power state:
++	 * 1. Clear REF_PHY_EN in PHY_CTRL_REG
++	 * 2. Clear REF_USE_PAD in PHY_CTRL_REG
++	 * 3. Set TEST_POWERED_DOWN in PHY_CTRL_REG to enable PHY retention
++	 */
++	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_CTRL_REG,
++			       SSUSB_CTRL_SS_PHY_EN, 0x0);
++	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_CTRL_REG,
++			       SSUSB_CTRL_REF_USE_PAD, 0x0);
++	usb_phy_write_readback(phy_dwc3, SSUSB_PHY_CTRL_REG,
++			       SSUSB_CTRL_TEST_POWERDOWN, 0x0);
++
++	clk_disable_unprepare(phy_dwc3->ref_clk);
++	clk_disable_unprepare(phy_dwc3->xo_clk);
++
++	return 0;
++}
++
++static const struct phy_drvdata qcom_ipq806x_usb_hs_drvdata = {
++	.ops = {
++		.init		= qcom_ipq806x_usb_hs_phy_init,
++		.exit		= qcom_ipq806x_usb_hs_phy_exit,
++		.owner		= THIS_MODULE,
++	},
++	.clk_rate = 60000000,
++};
++
++static const struct phy_drvdata qcom_ipq806x_usb_ss_drvdata = {
++	.ops = {
++		.init		= qcom_ipq806x_usb_ss_phy_init,
++		.exit		= qcom_ipq806x_usb_ss_phy_exit,
++		.owner		= THIS_MODULE,
++	},
++	.clk_rate = 125000000,
++};
++
++static const struct of_device_id qcom_ipq806x_usb_phy_table[] = {
++	{ .compatible = "qcom,ipq806x-usb-phy-hs",
++	  .data = &qcom_ipq806x_usb_hs_drvdata },
++	{ .compatible = "qcom,ipq806x-usb-phy-ss",
++	  .data = &qcom_ipq806x_usb_ss_drvdata },
++	{ /* Sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, qcom_ipq806x_usb_phy_table);
++
++static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
++{
++	struct resource *res;
++	resource_size_t size;
++	struct phy *generic_phy;
++	struct usb_phy *phy_dwc3;
++	const struct phy_drvdata *data;
++	const struct of_device_id *match;
++	struct phy_provider *phy_provider;
++
++	phy_dwc3 = devm_kzalloc(&pdev->dev, sizeof(*phy_dwc3), GFP_KERNEL);
++	if (!phy_dwc3)
++		return -ENOMEM;
++
++	match = of_match_node(qcom_ipq806x_usb_phy_table, pdev->dev.of_node);
++	data = match->data;
++
++	phy_dwc3->dev = &pdev->dev;
++
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!res)
++		return -EINVAL;
++	size = resource_size(res);
++	phy_dwc3->base = devm_ioremap(phy_dwc3->dev, res->start, size);
++
++	if (IS_ERR(phy_dwc3->base)) {
++		dev_err(phy_dwc3->dev, "failed to map reg\n");
++		return PTR_ERR(phy_dwc3->base);
++	}
++
++	phy_dwc3->ref_clk = devm_clk_get(phy_dwc3->dev, "ref");
++	if (IS_ERR(phy_dwc3->ref_clk)) {
++		dev_dbg(phy_dwc3->dev, "cannot get reference clock\n");
++		return PTR_ERR(phy_dwc3->ref_clk);
++	}
++
++	clk_set_rate(phy_dwc3->ref_clk, data->clk_rate);
++
++	phy_dwc3->xo_clk = devm_clk_get(phy_dwc3->dev, "xo");
++	if (IS_ERR(phy_dwc3->xo_clk)) {
++		dev_dbg(phy_dwc3->dev, "cannot get TCXO clock\n");
++		phy_dwc3->xo_clk = NULL;
++	}
++
++	/* Parse device node to probe HSIO settings */
++	if (device_property_read_u32(&pdev->dev, "qcom,rx-eq",
++				     &phy_dwc3->rx_eq))
++		phy_dwc3->rx_eq = SSPHY_RX_EQ_VALUE;
++
++	if (device_property_read_u32(&pdev->dev, "qcom,tx-deamp_3_5db",
++				     &phy_dwc3->tx_deamp_3_5db))
++		phy_dwc3->rx_eq = SSPHY_TX_DEEMPH_3_5DB;
++
++	if (device_property_read_u32(&pdev->dev, "qcom,mpll", &phy_dwc3->mpll))
++		phy_dwc3->mpll = SSPHY_MPLL_VALUE;
++
++	generic_phy = devm_phy_create(phy_dwc3->dev, pdev->dev.of_node,
++				      &data->ops);
++
++	if (IS_ERR(generic_phy))
++		return PTR_ERR(generic_phy);
++
++	phy_set_drvdata(generic_phy, phy_dwc3);
++	platform_set_drvdata(pdev, phy_dwc3);
++
++	phy_provider = devm_of_phy_provider_register(phy_dwc3->dev,
++						     of_phy_simple_xlate);
++
++	if (IS_ERR(phy_provider))
++		return PTR_ERR(phy_provider);
++
++	return 0;
++}
++
++static struct platform_driver qcom_ipq806x_usb_phy_driver = {
++	.probe		= qcom_ipq806x_usb_phy_probe,
++	.driver		= {
++		.name	= "qcom-ipq806x-usb-phy",
++		.owner	= THIS_MODULE,
++		.of_match_table = qcom_ipq806x_usb_phy_table,
++	},
++};
++
++module_platform_driver(qcom_ipq806x_usb_phy_driver);
++
++MODULE_ALIAS("platform:phy-qcom-ipq806x-usb");
++MODULE_LICENSE("GPL v2");
++MODULE_AUTHOR("Andy Gross <agross@codeaurora.org>");
++MODULE_AUTHOR("Ivan T. Ivanov <iivanov@mm-sol.com>");
++MODULE_DESCRIPTION("DesignWare USB3 QCOM PHY driver");
 -- 
-1.9.1
+2.27.0
 
