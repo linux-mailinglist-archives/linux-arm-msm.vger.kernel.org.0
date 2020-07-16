@@ -2,74 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF4F6222BCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 21:22:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA34E222C6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 21:59:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729399AbgGPTWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 15:22:31 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:33511 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728257AbgGPTWb (ORCPT
+        id S1729344AbgGPT7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 15:59:16 -0400
+Received: from mail-il1-f194.google.com ([209.85.166.194]:41912 "EHLO
+        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728907AbgGPT7Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 15:22:31 -0400
-Received: by mail-io1-f68.google.com with SMTP id d18so7256959ion.0;
-        Thu, 16 Jul 2020 12:22:30 -0700 (PDT)
+        Thu, 16 Jul 2020 15:59:16 -0400
+Received: by mail-il1-f194.google.com with SMTP id q3so6150669ilt.8;
+        Thu, 16 Jul 2020 12:59:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=cqz5mY+nuj0F7UbkiJ7lZ+wxAgeIQfIj+O61Hsq2EXI=;
-        b=eISVR0nesAiOjPSRGmvmsPYs9PIEYO7/bP6UuaOcUzvNJj1Sul9ibXibFRG1NcYOsK
-         HMsnwCfHiFas/pTZaSk5jr0zD3OXTwzdQ+J5zKAAj6PKFfDLRae1LlPM25Sfm3t+OL+h
-         v4RFPm2PrcISeMDso0z/PtLt2Ni+FjgBjGbIXbhMmVraHH2awQ8BEh77ncqVp3RRwDON
-         KvWWH+SdINkZT03kHfmRchmHSoIPvG3r1Q32EGgs6M7ky8mKvW5DxAOw+xV2HNvuzis7
-         vQRlTKBXabYBGuPSzdFdAaGp1XffuyOUNyILpOAcB1Hp7XhWTZpvcwp5kU4A+Z0DUQon
-         URbQ==
-X-Gm-Message-State: AOAM530ntTbgZYsjf6Ox1gBsQJxLAr6MvxIdQji0mznNOUM5dX0FBqAI
-        krTRo6GiBixaj5igTa0n5w==
-X-Google-Smtp-Source: ABdhPJzdzz9GqOzCp0S73abYRGHy0O/xklH2y/q2Q4ZJIKOklp2/IUF/5/MnEh4+RKnRy3rptViJxQ==
-X-Received: by 2002:a02:c604:: with SMTP id i4mr6684334jan.19.1594927350008;
-        Thu, 16 Jul 2020 12:22:30 -0700 (PDT)
+        bh=FL21avLY/Lnq90kgzzubqkTLnnlFhaGfUjSOp7X5A5k=;
+        b=AUmSjAz/saiZ21z4+vGf6TSgHXio+6z4DwnBRQiVOEwmEFkxQqtSBOXtZSB2z0Ja/t
+         kPCKTLnEzttyLYKsUQz8B0KqUpGJYfi9bob6bxScuj5WHaf/72xu2TFLh+3JWJKRGJRL
+         aakVZ2JhNsXCTopXWjtJrdOm47MplB8P03Wxjz4gNm0rlJzhMjLrFhtMksxZPQCvTUfG
+         ChaS43K8Sx8ckup2hYNslQYYYQSuhx81NXmgOaeQC3INyBdW9mBQtEB2QGV6wxkm+Lvd
+         7VD27qeFeAM/GJzR304giuusj473WpC+IWL02lQuBB3ipQlD59p/DGU8zQ8JbREQvnEu
+         VtPA==
+X-Gm-Message-State: AOAM532LrEjoe+IFMYsNIU6gpFnOrccK4VtNcJBCoEPcO8H9xyqykAP+
+        USdAKcdQGEtXe0NN01nq5A==
+X-Google-Smtp-Source: ABdhPJyk4T63EL//8HysjeLcqxJ6LMeSttLh3+63l5cd1Uk6GocVrUuD6UDDX+TUPYDRhXPwIQVuvA==
+X-Received: by 2002:a92:5f12:: with SMTP id t18mr6317395ilb.267.1594929554891;
+        Thu, 16 Jul 2020 12:59:14 -0700 (PDT)
 Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id l18sm3129341ill.56.2020.07.16.12.22.29
+        by smtp.gmail.com with ESMTPSA id a24sm3268789ioe.46.2020.07.16.12.59.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 12:22:29 -0700 (PDT)
-Received: (nullmailer pid 2697481 invoked by uid 1000);
-        Thu, 16 Jul 2020 19:22:28 -0000
-Date:   Thu, 16 Jul 2020 13:22:28 -0600
+        Thu, 16 Jul 2020 12:59:14 -0700 (PDT)
+Received: (nullmailer pid 2747004 invoked by uid 1000);
+        Thu, 16 Jul 2020 19:59:13 -0000
+Date:   Thu, 16 Jul 2020 13:59:13 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org,
-        Odelu Kukatla <okukatla@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 3/7] dt-bindings: interconnect: Add Qualcomm SM8250 DT
- bindings
-Message-ID: <20200716192228.GA2697434@bogus>
-References: <20200713154121.22094-1-jonathan@marek.ca>
- <20200713154121.22094-4-jonathan@marek.ca>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: media: venus: Add an optional power
+ domain for perf voting
+Message-ID: <20200716195913.GA2744252@bogus>
+References: <1594878139-3402-1-git-send-email-rnayak@codeaurora.org>
+ <1594878139-3402-2-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200713154121.22094-4-jonathan@marek.ca>
+In-Reply-To: <1594878139-3402-2-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 13 Jul 2020 11:41:12 -0400, Jonathan Marek wrote:
-> The Qualcomm SM8250 platform has several bus fabrics that could be
-> controlled and tuned dynamically according to the bandwidth demand.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  .../bindings/interconnect/qcom,rpmh.yaml      |  11 ++
->  .../dt-bindings/interconnect/qcom,sm8250.h    | 173 ++++++++++++++++++
->  2 files changed, 184 insertions(+)
->  create mode 100644 include/dt-bindings/interconnect/qcom,sm8250.h
-> 
+On Thu, Jul 16, 2020 at 11:12:16AM +0530, Rajendra Nayak wrote:
+> Add an optional power domain which when specified can be used for
+> setting the performance state of Venus.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+The h/w suddenly grew a new power island/domain? Seems like an abuse of 
+power-domains...
+
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+> This is a resend of https://lore.kernel.org/patchwork/patch/1241077/
+> 
+>  Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
+>  Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
+>  2 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> index 55f2d67..1e8675b 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> @@ -25,12 +25,16 @@ properties:
+>      maxItems: 1
+>  
+>    power-domains:
+> -    maxItems: 2
+> +    minItems: 2
+> +    maxItems: 3
+>  
+>    power-domain-names:
+> +    minItems: 2
+> +    maxItems: 3
+>      items:
+>        - const: venus
+>        - const: vcodec0
+> +      - const: opp-pd
+>  
+>    clocks:
+>      maxItems: 5
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+> index 157dff8..437286d 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+> @@ -25,13 +25,17 @@ properties:
+>      maxItems: 1
+>  
+>    power-domains:
+> -    maxItems: 3
+> +    minItems: 3
+> +    maxItems: 4
+>  
+>    power-domain-names:
+> +    minItems: 3
+> +    maxItems: 4
+>      items:
+>        - const: venus
+>        - const: vcodec0
+>        - const: vcodec1
+> +      - const: opp-pd
+>  
+>    clocks:
+>      maxItems: 7
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
