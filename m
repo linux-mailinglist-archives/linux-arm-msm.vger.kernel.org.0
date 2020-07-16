@@ -2,118 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CEEED222EBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 01:10:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FAEA222F2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 01:39:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727965AbgGPXKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 19:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43412 "EHLO
+        id S1726629AbgGPXjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 19:39:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727940AbgGPXJU (ORCPT
+        with ESMTP id S1726593AbgGPXjQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 19:09:20 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74E7DC08C5E1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 15:38:08 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id q15so3879538vso.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 15:38:08 -0700 (PDT)
+        Thu, 16 Jul 2020 19:39:16 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14F0FC08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 16:39:16 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id 72so4609831ple.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 16:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=APhlPP59dTHfjeAK3JyZRtdowaZApacEHqoZMv3vuLo=;
-        b=lATawDG4pouGQZJSAvvkfunyTMl2IZ73PwYyG84GujpcBQnK6fr5WmNKFfOvC2b00Y
-         y0FdmXe4rqtNjweViO0egIcCxyXAX5I3pO8ZsDeUzdVtx3QXDWPix9RMjhNYMwSON64A
-         pG4aPJQ70gr5paOUAsbuqgtz69ax08jsU86UQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9oHa47gfKI9QmR65SUF1rvQNADNvlDAdjFiIPSLoVXs=;
+        b=dTIcNZ+11g5DyzH6w35LYiPWb05ksCqZzXOZ8J1YtKVqZFcgpHULXXEdduvwz4z0SB
+         8hGqAqEKwXOY/i2HmMEEh5fwS6cVcpniahu0M9QvebNvhCqtOJZnYBWWWel5OqRB3/je
+         vETEw/bMfmxaZ0BBXVQUZ6g8kdk2wpNEDU2VguAWoEXl9yrxeKgttVVUM/WY+LXSPQFd
+         mWB7M0SuPkuwipFMzrD88MBcFbMgkC2YBf24wVaB4AX1gG8SJPeMZjhvkC0PGXwTBNHI
+         aJ2PX6sUNJh1wWPAnmZh2ouO/BcuTwnDL0DHAf8R7T/0QCwCb94VAs7dWvogDDKvwl7f
+         mmSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=APhlPP59dTHfjeAK3JyZRtdowaZApacEHqoZMv3vuLo=;
-        b=GuiAHH8E2zUdeD9I+zqIQdoiIA2rEW7DFNw2p7lS/Ay36Rs90RXKr/XpPyObkik/PW
-         gOGEiylUEeBcnaCMzy5qcbc6cSRzT/abDpN1z7lsHtjTmpWN68YhoeVw/KbeXHOHpBCW
-         VeS7glNdeSjVvo/H9OIbybpkw6FZpOT0Y6glhzrrvrB2NDk0eYtOKTUQ/PPGiIWZ4rQJ
-         mgagS+UVIM/BKng16j0fvPWaSm6oKO2+XCAzgcBjBPdI4vpsgw7P5fofrlm4GXuI4Fnt
-         OdIn9wMhNi66DPIsMr7Z/UeamfUO8ui85eFuvrGgLAJcUDcb5bYbTaBp7pZz60M4VPoJ
-         +yyw==
-X-Gm-Message-State: AOAM531AJ1Ql9bRv0V4fFdcwj2ilozpjGlVGrOcMlTjsyAKA0qKdC/QW
-        J0S5dm/nQon20SyBOtUi8neEPCaCzKA=
-X-Google-Smtp-Source: ABdhPJySqcO4OBeJprUbW0kpTEJlYOZRwJHy3vF4jM+BdJaWOVwS8TFsC4cc6iANYWyqRE74dnr0HQ==
-X-Received: by 2002:a67:c58c:: with SMTP id h12mr5182400vsk.141.1594939087214;
-        Thu, 16 Jul 2020 15:38:07 -0700 (PDT)
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com. [209.85.222.42])
-        by smtp.gmail.com with ESMTPSA id s137sm940546vks.23.2020.07.16.15.38.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2020 15:38:06 -0700 (PDT)
-Received: by mail-ua1-f42.google.com with SMTP id n4so2288250uae.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 15:38:05 -0700 (PDT)
-X-Received: by 2002:a9f:3dc6:: with SMTP id e6mr5569576uaj.104.1594939085525;
- Thu, 16 Jul 2020 15:38:05 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9oHa47gfKI9QmR65SUF1rvQNADNvlDAdjFiIPSLoVXs=;
+        b=Hp5UOjs5H7C/tUUBMQ/a2N5Jyuo5BbsHzt4cbVTZrhOufUEIULqKiTh+zP5NdFpqoR
+         nUQinqJfpOj2UjBM3GUD1Wxv33WtP2Ism5fXlO1F5e3AM1nMNFl4UbWKBkUlNfJhnA1l
+         s9GwmqnfGpzVnXfTld1CC/dftGRPaLP5+LAjUdkjZD6n9xZTcD6SjBwrDeVNlZGCgUIh
+         oMeO6QFigHWmUlEnXU+rJO0TXyoaUesi+Wb+J4dX88ir4BGiP7+ysONg5vSCZwQeE0Ly
+         BulNGgZYRk7mbUaHk+cX2Kx5rZ/EwEGT+kbegnPdQqbp8PZ9IoI5jo+TIcvvvlBBzHMo
+         vuHw==
+X-Gm-Message-State: AOAM530KtgpZx3msjTT/TH29ngZcqnXPr4CjBiT0Z4WYaggNh0KPwCse
+        O8wPu+pGYZ9tE0lKnBiP6Q9YvA==
+X-Google-Smtp-Source: ABdhPJx5eJ7MS/+h2zn9G2VhzGMPJCRL02QcLw0I/lSZZjkg4FKCzHEV01zXlnzNYk/7DL6hkv6Rqw==
+X-Received: by 2002:a17:902:59c1:: with SMTP id d1mr5667786plj.78.1594942755392;
+        Thu, 16 Jul 2020 16:39:15 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id t73sm5897854pfc.78.2020.07.16.16.39.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2020 16:39:14 -0700 (PDT)
+Date:   Thu, 16 Jul 2020 16:39:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, robdclark@chromium.org,
+        steev@kali.org, linux-arm-msm@vger.kernel.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm: panel: simple: Delay HPD checking on
+ boe_nv133fhm_n61 for 15 ms
+Message-ID: <20200716233912.GA61202@yoga>
+References: <20200716132120.1.I01e738cd469b61fc9b28b3ef1c6541a4f48b11bf@changeid>
 MIME-Version: 1.0
-References: <20200716191746.23196-1-sibis@codeaurora.org>
-In-Reply-To: <20200716191746.23196-1-sibis@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 16 Jul 2020 15:37:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XgTvC2Xjw-pVcmS0vooYeGt_BthsWmhBZ4_8u-oJwkbg@mail.gmail.com>
-Message-ID: <CAD=FV=XgTvC2Xjw-pVcmS0vooYeGt_BthsWmhBZ4_8u-oJwkbg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Move the fixed-perm property to
- SoC dtsi
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Rakesh Pillai <pillair@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200716132120.1.I01e738cd469b61fc9b28b3ef1c6541a4f48b11bf@changeid>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu 16 Jul 13:21 PDT 2020, Douglas Anderson wrote:
 
-On Thu, Jul 16, 2020 at 12:18 PM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> All the platforms using SC7180 SoC are expected to have the wlan firmware
-> memory statically mapped by the Trusted Firmware. Hence move back the
-> qcom,msa-fixed-perm property to the SoC dtsi.
->
-> Fixes: 7d484566087c0 ("arm64: dts: qcom: sc7180: Add missing properties for Wifi node")
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> On boe_nv133fhm_n62 (and presumably on boe_nv133fhm_n61) a scope shows
+> a small spike on the HPD line right when you power the panel on.  The
+> picture looks something like this:
+> 
+>          +--------------------------------------
+>          |
+>          |
+>          |
+> Power ---+
+>                                            +---
+>                                            |
+>               ++                           |
+>          +----+|                           |
+> HPD -----+     +---------------------------+
+> 
+> So right when power is applied there's a little bump in HPD and then
+> there's small spike right before it goes low.  The total time of the
+> little bump plus the spike was measured on one panel as being 8 ms
+> long.  The total time for the HPD to go high on the same panel was
+> 51.2 ms, though the datasheet only promises it is < 200 ms.
+> 
+> When asked about this glitch, BOE indicated that it was expected and
+> persisted until the TCON has been initialized.
+> 
+> If this was a real hotpluggable DP panel then this wouldn't matter a
+> whole lot.  We'd debounce the HPD signal for a really long time and so
+> the little blip wouldn't hurt.  However, this is not a hotpluggable DP
+> panel and the the debouncing logic isn't needed and just shows down
+> the time needed to get the display working.  This is why the code in
+> panel_simple_prepare() doesn't do debouncing and just waits for HPD to
+> go high once.  Unfortunately if we get unlucky and happen to poll the
+> HPD line right at the spike we can try talking to the panel before
+> it's ready.
+> 
+> Let's handle this situation by putting in a 15 ms prepare delay and
+> decreasing the "hpd absent delay" by 15 ms.  That means:
+> * If you don't have HPD hooked up at all you've still got the
+>   hardcoded 200 ms delay.
+> * If you've got HPD hooked up you will always wait at least 15 ms
+>   before checking HPD.  The only case where this could be bad is if
+>   the panel is sharing a voltage rail with something else in the
+>   system and was already turned on long before the panel came up.  In
+>   such a case we'll be delaying 15 ms for no reason, but it's not a
+>   huge delay and I don't see any other good solution to handle that
+>   case.
+> 
+> Even though the delay was measured as 8 ms, 15 ms was chosen to give a
+> bit of margin.
+> 
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 1 -
->  arch/arm64/boot/dts/qcom/sc7180.dtsi    | 1 +
->  2 files changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 860fc4658b8b1..26cc4913d3ddc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -392,7 +392,6 @@ video-firmware {
->
->  &wifi {
->         status = "okay";
-> -       qcom,msa-fixed-perm;
->         vdd-0.8-cx-mx-supply = <&vreg_l9a_0p6>;
->         vdd-1.8-xo-supply = <&vreg_l1c_1p8>;
->         vdd-1.3-rfa-supply = <&vreg_l2c_1p3>;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 126e2fce26c1a..a91d3f074625e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3233,6 +3233,7 @@ wifi: wifi@18800000 {
->                                 <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH /* CE10 */>,
->                                 <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH /* CE11 */>;
->                         memory-region = <&wlan_mem>;
-> +                       qcom,msa-fixed-perm;
-
-Seems good to me.  If someone ever comes up with a firmware where it's
-sane to not have this property, we can either delete the property from
-those boards or migrate the property to the the existing board dts
-files.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> I don't actually have a device in front of me that is exhibiting these
+> problems.  I believe that it is only some devices and some of the
+> time.  Still, this patch seems safe and seems likely to fix the issue
+> given the scope shots.
+> 
+>  drivers/gpu/drm/panel/panel-simple.c | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+> index 88493538a147..046a06b55800 100644
+> --- a/drivers/gpu/drm/panel/panel-simple.c
+> +++ b/drivers/gpu/drm/panel/panel-simple.c
+> @@ -1260,7 +1260,21 @@ static const struct panel_desc boe_nv133fhm_n61 = {
+>  		.height = 165,
+>  	},
+>  	.delay = {
+> -		.hpd_absent_delay = 200,
+> +		/*
+> +		 * When power is first given to the panel there's a short
+> +		 * spike on the HPD line.  It was explained that this spike
+> +		 * was until the TCON data download was complete.  On
+> +		 * one system this was measured at 8 ms.  We'll put 15 ms
+> +		 * in the prepare delay just to be safe and take it away
+> +		 * from the hpd_absent_delay (which would otherwise be 200 ms)
+> +		 * to handle this.  That means:
+> +		 * - If HPD isn't hooked up you still have 200 ms delay.
+> +		 * - If HPD is hooked up we won't try to look at it for the
+> +		 *   first 15 ms.
+> +		 */
+> +		.prepare = 15,
+> +		.hpd_absent_delay = 185,
+> +
+>  		.unprepare = 500,
+>  	},
+>  	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+> -- 
+> 2.28.0.rc0.105.gf9edc3c819-goog
+> 
