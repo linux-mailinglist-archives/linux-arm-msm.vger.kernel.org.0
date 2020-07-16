@@ -2,214 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C402221F0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 10:55:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CFB62220ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 12:50:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728285AbgGPIy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 04:54:26 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190]:7863 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725975AbgGPIy0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 04:54:26 -0400
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id 08EBF5F1AF760803B550;
-        Thu, 16 Jul 2020 16:54:24 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 16 Jul 2020 16:54:18 +0800
-From:   Qinglang Miao <miaoqinglang@huawei.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH -next] drm/msm/dpu: Convert to DEFINE_SHOW_ATTRIBUTE
-Date:   Thu, 16 Jul 2020 16:58:13 +0800
-Message-ID: <20200716085813.11332-1-miaoqinglang@huawei.com>
-X-Mailer: git-send-email 2.20.1
+        id S1726898AbgGPKuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 06:50:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41818 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726907AbgGPKuO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 06:50:14 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 973CDC061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 03:50:13 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id f12so6064353eja.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 03:50:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7Px6j0xeOYkPjHURcyI2MVrHh5xdpIzdarGduqmRZnc=;
+        b=T35eyFNB1arzCVcg48FlkWIK/EYz/6agiVn+A1QezpzpbtETnIogDHR7nwleQfaTj8
+         CTyVXJ7KNPc1R3pnb7//3tRYkfmi9JlFgYT48havDrV86+KC01p63DH85zGDloyTfHdh
+         NhfAfpi/MB5m/BUOIua9EXatR6/8Clj2mcvUHHME5EyxiCRGGNTTfsfbXydlKrs79/6A
+         d3ObVjjIeEOR1F2yhKyrIYgU6z3nwtoDSQ34ruxAkIVCU26FM6E8uIRq+O2c0u21Q8So
+         TrCY4jLB2jU21/IyQmVUg5DLHwD7VOOEWoRvzFV22hqyQ+tXqYZhO837AO+/JyI2k8q0
+         gXLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7Px6j0xeOYkPjHURcyI2MVrHh5xdpIzdarGduqmRZnc=;
+        b=BgGI0XiYM7FtqUmL9NGTQiUDUQSwzXZcoGM5z0awiIhpQKYfehUpAJ3US9IjA/oWOz
+         CNsK/7ink5SpBVcXO5F84/vLO1/aVcDYxwmMaQHF1EhS431bWThSLClwuqvvnazsKvrL
+         pl7leyC9A84aObNdHzGTqd5SOCS7hrbw6452YmS0LEborXvQF5yWEZ5Tdd5pnJFqpaVC
+         p8oSm69rfHy9eTQhuzTcfkMmhogyJMxJ2eXYGc/1swgVQTyO5isVBVZallU1Sg/MKT/J
+         CM9sEGBx7bMbtkWKmXpb1ibub0fyKvpJx8sEqn3IocywCAHglCka6R/y19iOmu9kmTSI
+         XESA==
+X-Gm-Message-State: AOAM531CMj+fyyQkW/UlndY4np9ZEV7iGxlMl64DfgevfbujI6TdzR4/
+        kkkxYjFPUoTa6u4gavX/LUGH0w==
+X-Google-Smtp-Source: ABdhPJyFgdX7spYQNHdnpyJWAr7qao+RiC56kNwWy1iEA9wQYNAgnfTAAkQNW9uF3c8/uSw6RGPUlg==
+X-Received: by 2002:a17:906:a459:: with SMTP id cb25mr3115995ejb.234.1594896612299;
+        Thu, 16 Jul 2020 03:50:12 -0700 (PDT)
+Received: from [192.168.1.2] (212-5-158-188.ip.btc-net.bg. [212.5.158.188])
+        by smtp.googlemail.com with ESMTPSA id cb7sm4768901ejb.12.2020.07.16.03.50.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Jul 2020 03:50:11 -0700 (PDT)
+Subject: Re: [PATCH 1/4] media: v4l2-ctrl: Add frame-skip std encoder control
+To:     Nicolas Dufresne <nicolas@ndufresne.ca>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Maheshwar Ajja <majja@codeaurora.org>
+References: <20200705121128.5250-1-stanimir.varbanov@linaro.org>
+ <20200705121128.5250-2-stanimir.varbanov@linaro.org>
+ <e9ce36f9de4ef216028832dd78fd7ebc88d6ecb1.camel@ndufresne.ca>
+ <513fd919-56a2-08b4-c8a7-5d37d7743129@linaro.org>
+ <a4f07133bfb4821fa19a3b70fd156bd6107c653f.camel@ndufresne.ca>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <fc34934d-78ec-8ee3-6eaf-10f129ab80cb@linaro.org>
+Date:   Thu, 16 Jul 2020 13:50:09 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.113.25]
-X-CFilter-Loop: Reflected
+In-Reply-To: <a4f07133bfb4821fa19a3b70fd156bd6107c653f.camel@ndufresne.ca>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use DEFINE_SHOW_ATTRIBUTE macro to simplify the code.
 
-Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 14 +---------
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c     | 29 ++------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c  | 15 ++--------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c      | 17 ++----------
- 4 files changed, 8 insertions(+), 67 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-index 99be6d8d4..764332e83 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-@@ -288,18 +288,6 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
- }
- 
- #ifdef CONFIG_DEBUG_FS
--#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)				\
--static int __prefix ## _open(struct inode *inode, struct file *file)	\
--{									\
--	return single_open(file, __prefix ## _show, inode->i_private);	\
--}									\
--static const struct file_operations __prefix ## _fops = {		\
--	.owner = THIS_MODULE,						\
--	.open = __prefix ## _open,					\
--	.release = single_release,					\
--	.read_iter = seq_read_iter,						\
--	.llseek = seq_lseek,						\
--}
- 
- static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- {
-@@ -328,7 +316,7 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- 	return 0;
- }
- 
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_core_irq);
-+DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_core_irq);
- 
- void dpu_debugfs_core_irq_init(struct dpu_kms *dpu_kms,
- 		struct dentry *parent)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 2fa8d0797..b2b0ce546 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1242,23 +1242,7 @@ static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
- 	return 0;
- }
- 
--static int _dpu_debugfs_status_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, _dpu_debugfs_status_show, inode->i_private);
--}
--
--#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)                          \
--static int __prefix ## _open(struct inode *inode, struct file *file)	\
--{									\
--	return single_open(file, __prefix ## _show, inode->i_private);	\
--}									\
--static const struct file_operations __prefix ## _fops = {		\
--	.owner = THIS_MODULE,						\
--	.open = __prefix ## _open,					\
--	.release = single_release,					\
--	.read_iter = seq_read_iter,						\
--	.llseek = seq_lseek,						\
--}
-+DEFINE_SHOW_ATTRIBUTE(_dpu_debugfs_status);
- 
- static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
- {
-@@ -1275,25 +1259,18 @@ static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
- 
- 	return 0;
- }
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_crtc_debugfs_state);
-+DEFINE_SHOW_ATTRIBUTE(dpu_crtc_debugfs_state);
- 
- static int _dpu_crtc_init_debugfs(struct drm_crtc *crtc)
- {
- 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
- 
--	static const struct file_operations debugfs_status_fops = {
--		.open =		_dpu_debugfs_status_open,
--		.read_iter =		seq_read_iter,
--		.llseek =	seq_lseek,
--		.release =	single_release,
--	};
--
- 	dpu_crtc->debugfs_root = debugfs_create_dir(dpu_crtc->name,
- 			crtc->dev->primary->debugfs_root);
- 
- 	debugfs_create_file("status", 0400,
- 			dpu_crtc->debugfs_root,
--			dpu_crtc, &debugfs_status_fops);
-+			dpu_crtc, &_dpu_debugfs_status_fops);
- 	debugfs_create_file("state", 0600,
- 			dpu_crtc->debugfs_root,
- 			&dpu_crtc->base,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 7d603784a..6bcd15bf4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1845,24 +1845,13 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
- 	return 0;
- }
- 
--static int _dpu_encoder_debugfs_status_open(struct inode *inode,
--		struct file *file)
--{
--	return single_open(file, _dpu_encoder_status_show, inode->i_private);
--}
-+DEFINE_SHOW_ATTRIBUTE(_dpu_encoder_status);
- 
- static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	int i;
- 
--	static const struct file_operations debugfs_status_fops = {
--		.open =		_dpu_encoder_debugfs_status_open,
--		.read_iter =		seq_read_iter,
--		.llseek =	seq_lseek,
--		.release =	single_release,
--	};
--
- 	char name[DPU_NAME_SIZE];
- 
- 	if (!drm_enc->dev) {
-@@ -1878,7 +1867,7 @@ static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
- 
- 	/* don't error check these */
- 	debugfs_create_file("status", 0600,
--		dpu_enc->debugfs_root, dpu_enc, &debugfs_status_fops);
-+		dpu_enc->debugfs_root, dpu_enc, &_dpu_encoder_status_fops);
- 
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++)
- 		if (dpu_enc->phys_encs[i]->ops.late_register)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index b8122173c..ea63534fc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -98,30 +98,17 @@ static int _dpu_danger_signal_status(struct seq_file *s,
- 	return 0;
- }
- 
--#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)				\
--static int __prefix ## _open(struct inode *inode, struct file *file)	\
--{									\
--	return single_open(file, __prefix ## _show, inode->i_private);	\
--}									\
--static const struct file_operations __prefix ## _fops = {		\
--	.owner = THIS_MODULE,						\
--	.open = __prefix ## _open,					\
--	.release = single_release,					\
--	.read_iter = seq_read_iter,						\
--	.llseek = seq_lseek,						\
--}
--
- static int dpu_debugfs_danger_stats_show(struct seq_file *s, void *v)
- {
- 	return _dpu_danger_signal_status(s, true);
- }
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_danger_stats);
-+DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_danger_stats);
- 
- static int dpu_debugfs_safe_stats_show(struct seq_file *s, void *v)
- {
- 	return _dpu_danger_signal_status(s, false);
- }
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_safe_stats);
-+DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_safe_stats);
- 
- static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
- 		struct dentry *parent)
+On 7/15/20 9:12 PM, Nicolas Dufresne wrote:
+> Le mercredi 15 juillet 2020 à 18:42 +0300, Stanimir Varbanov a écrit :
+>> Hi Nicolas,
+>>
+>> On 7/7/20 11:53 PM, Nicolas Dufresne wrote:
+>>> Le dimanche 05 juillet 2020 à 15:11 +0300, Stanimir Varbanov a écrit :
+>>>> Adds encoders standard v4l2 control for frame-skip. The control
+>>>> is a copy of a custom encoder control so that other v4l2 encoder
+>>>> drivers can use it.
+>>>>
+>>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>>>> ---
+>>>>  .../media/v4l/ext-ctrls-codec.rst             | 32 +++++++++++++++++++
+>>>>  drivers/media/v4l2-core/v4l2-ctrls.c          | 10 ++++++
+>>>>  include/uapi/linux/v4l2-controls.h            |  6 ++++
+>>>>  3 files changed, 48 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>>> index d0d506a444b1..a8b4c0b40747 100644
+>>>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>>>> @@ -592,6 +592,38 @@ enum v4l2_mpeg_video_bitrate_mode -
+>>>>      the average video bitrate. It is ignored if the video bitrate mode
+>>>>      is set to constant bitrate.
+>>>>  
+>>>> +``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE (enum)``
+>>>> +
+>>>> +enum v4l2_mpeg_video_frame_skip_mode -
+>>>> +    Indicates in what conditions the encoder should skip frames. If
+>>>> +    encoding a frame would cause the encoded stream to be larger then a
+>>>> +    chosen data limit then the frame will be skipped. Possible values
+>>>> +    are:
+>>>
+>>> I have nothing against this API, in fact it's really nice to generalize
+>>> as this is very common. Though, I think we are missing two things. This
+>>> documentation refer to the "chosen data limit". Is there controls to
+>>> configure these *chosen* limit ? The other issue is the vagueness of
+>>> the documented mode, see lower...
+>>>
+>>>> +
+>>>> +
+>>>> +.. tabularcolumns:: |p{9.2cm}|p{8.3cm}|
+>>>> +
+>>>> +.. raw:: latex
+>>>> +
+>>>> +    \small
+>>>> +
+>>>> +.. flat-table::
+>>>> +    :header-rows:  0
+>>>> +    :stub-columns: 0
+>>>> +
+>>>> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_DISABLED``
+>>>> +      - Frame skip mode is disabled.
+>>>> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_LEVEL_LIMIT``
+>>>> +      - Frame skip mode enabled and buffer limit is set by the chosen
+>>>> +	level and is defined by the standard.
+>>>
+>>> At least for H.264, a level is compose of 3 limits. One is the maximum
+>>> number of macroblocks, this is is evidently not use for frame skipping
+>>> and already constrained in V4L2 (assuming the driver does not ignore
+>>> the level control of course). The two other limits are decoded
+>>> macroblocks/s and encoded kbits/s. Both are measure over time, which
+>>> means the M2M encoder needs to be timing aware. I think the time source
+>>> should be documented. Perhaps it is mandatory to set a frame interval
+>>> for this to work ? Or we need some timestamp to allow variable frame
+>>> interval ? (I don't think the second is really an option without
+>>> extending the API again, and confusingly, since I think we have used
+>>> the timestamp for other purpose already)
+>>
+>> Do you want to say that the encoder input timestamp, bitrate control
+>> (V4L2_CID_MPEG_VIDEO_BITRATE) and S_PARM is not enough to describe
+>> FRAME_SKIP_MODE_LEVEL_LIMIT mode?
+> 
+> I don't think we have spec to give the input timestamp a meaning that
+> driver can interpret. In fact I think we gave it a meaning that the
+> driver must not interpret it (aka driver opaque). So remain S_PARM to
+
+At least for Venus the timestamps are passed to the firmware and used by
+encoder rate-controller.
+
+> give a clue, but some stream don't have a framerate (like RTP streams,
+> unless written in bitstream).
+I think v4l2 clients should be able to guess what would be the frame
+rate in such cases, no?
+
 -- 
-2.17.1
-
+regards,
+Stan
