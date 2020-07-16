@@ -2,68 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F5912221D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 13:56:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC42A222229
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 14:05:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728528AbgGPL4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 07:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728532AbgGPL4A (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 07:56:00 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627F8C08C5C0;
-        Thu, 16 Jul 2020 04:56:00 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f18so6809871wrs.0;
-        Thu, 16 Jul 2020 04:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vs4AfRAnPExeeuyiR5DGWNr9f7rEdWEHMwAyJzCVFy0=;
-        b=IOBC9VwP63/cdjmvOOd6YnjYshzw/J8qeWYn+1Cd3xkkl5wp9JFqZC24SxSMmtJ5zk
-         iqfJnYDuEELw6Sk83huKQGRI1zSfr8z7u1VISsht6yEyM9IdR2gHiuP1zsRQuBksSO2b
-         V4yBZnUAxHIBmlmu/ks14VpvhUcBPkcnAQAFKCR+MKyBk2o/12fRJOR1FIzPgl2SF1VM
-         E2i/5wLW0gy1GCTS/omC1Y4BheQb8Zbg8raQHBvUmtY4IoqI0DunFV6sxqXz2doVK3Vx
-         gRFc0v8+YlCoHElHqbeCJI5HM+xXKoRnc7pkarQ8hVWOf/Ctgm8F+bQ5p1/tIudIfHBC
-         Mc8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vs4AfRAnPExeeuyiR5DGWNr9f7rEdWEHMwAyJzCVFy0=;
-        b=IWoP9lJKXZZxl148t+JxH566HvowueakNeu9qMT22VuPj54i+nj6N9MYJEpemvGTuJ
-         OOAMDNmav5DQq6ApQ+atDwZxebjNgWb/nmgJIdiVB+ZvyBczgTcxu3mEc5YpckBhCmkj
-         1jppqV6ltdTq2t0cqobt3N3k6BMl0yHuTSydX/DjSBuafedNEDbZPAJEFpAFoaYL2GME
-         64eSMOpPgk4NT9rYmXB4c/Baa/UH1cKf00DARoIMorI4KVaNietfP5oZzG7Gzx2simql
-         JG33mIZYdhck1i7vgtuCkxjE1GY5xcqz6cACkiBAoEOAgtdipRf6ddKoOn0pipEhRRfy
-         AOLw==
-X-Gm-Message-State: AOAM530BCqJTjTc19/U6Ad/K/uDKPOIM6QBq9NaDFgROLMlzJulagAJG
-        iUInkwQMRcVAqWhN18zHr98=
-X-Google-Smtp-Source: ABdhPJz64upI91irFUhybMw7rYZAcHiJhyz+RaRl6rUrzjGpwBroG+4PHoyuz0P9cAmdzZAeBefYQg==
-X-Received: by 2002:a5d:60c5:: with SMTP id x5mr4856628wrt.67.1594900558855;
-        Thu, 16 Jul 2020 04:55:58 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host-87-7-31-173.retail.telecomitalia.it. [87.7.31.173])
-        by smtp.googlemail.com with ESMTPSA id a4sm9553060wrg.80.2020.07.16.04.55.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 04:55:58 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>, Rob Herring <robh@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v9 2/2] devicetree: bindings: phy: Document ipq806x dwc3 qcom phy
-Date:   Thu, 16 Jul 2020 13:55:46 +0200
-Message-Id: <20200716115547.11903-2-ansuelsmth@gmail.com>
+        id S1728175AbgGPMFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 08:05:52 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:11854 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728123AbgGPMFw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Jul 2020 08:05:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1594901151; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=mZToouJIgleobHZ2m2rREERXRWsV20MId2MvaPSl/d8=; b=gh+EoqjhKLID/dHH/uHlC3mJJ0paVksNeNNLS987/oHe3OFz/9z2pz95ZCzHghdNFAAx3Nuk
+ WmkW2ip3WLuVx1QhEeGl2PK01Fd9+R2BU+/eLyOL0YLuUiZxLqz+TdmfJtzGquXoo0goangu
+ Db+LDbObsqZUlo3WJPRGHnoQbLg=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n17.prod.us-east-1.postgun.com with SMTP id
+ 5f10429865270fa595814deb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Jul 2020 12:05:44
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3C372C433CA; Thu, 16 Jul 2020 12:05:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3AA3EC433C6;
+        Thu, 16 Jul 2020 12:05:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3AA3EC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        evgreen@chromium.org, ohad@wizery.com,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH] remoteproc: qcom_q6v5_mss: Monitor MSS_STATUS for boot completion
+Date:   Thu, 16 Jul 2020 17:35:14 +0530
+Message-Id: <20200716120514.21588-1-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200716115547.11903-1-ansuelsmth@gmail.com>
-References: <20200716115547.11903-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -71,169 +58,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document dwc3 qcom phy hs and ss phy bindings needed to correctly
-inizialize and use usb on ipq806x SoC.
+On secure devices there exists a race condition which could lock the MSS
+CONFIG AHB bus thus preventing access to BOOT_STATUS register during SSR.
+Switch to polling the MSS_STATUS register with an additional 10 us delay
+to reliably track boot completion.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 ---
-v7:
-* Drop useless AllOf 
-v6:
-* Add maximum value
-v5:
-* Fix dt_binding_check error
-v4:
-* Add qcom to specific bindings
-v3:
-* Use explicit reg instead of regmap
+ drivers/remoteproc/qcom_q6v5_mss.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
- .../bindings/phy/qcom,ipq806x-usb-phy-hs.yaml | 55 ++++++++++++++
- .../bindings/phy/qcom,ipq806x-usb-phy-ss.yaml | 73 +++++++++++++++++++
- 2 files changed, 128 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-
-diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
-new file mode 100644
-index 000000000000..23887ebe08fd
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-hs.yaml
-@@ -0,0 +1,55 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-hs.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index a9ba5f38a58ed..13c6d5a72a831 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -113,8 +113,6 @@
+ #define QDSP6SS_SLEEP                   0x3C
+ #define QDSP6SS_BOOT_CORE_START         0x400
+ #define QDSP6SS_BOOT_CMD                0x404
+-#define QDSP6SS_BOOT_STATUS		0x408
+-#define BOOT_STATUS_TIMEOUT_US		200
+ #define BOOT_FSM_TIMEOUT                10000
+ 
+ struct reg_info {
+@@ -580,13 +578,15 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+ 		/* De-assert the Q6 stop core signal */
+ 		writel(1, qproc->reg_base + QDSP6SS_BOOT_CORE_START);
+ 
++		/* Wait for 10 us for any staggering logic to settle */
++		usleep_range(10, 20);
 +
-+title: Qualcomm ipq806x usb DWC3 HS PHY CONTROLLER
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-+  controllers used in ipq806x. Each DWC3 PHY controller should have its
-+  own node.
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq806x-usb-phy-hs
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 2
-+    items:
-+      - const: ref
-+      - const: xo
-+
-+required:
-+  - compatible
-+  - "#phy-cells"
-+  - reg
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    hs_phy_0: phy@110f8800 {
-+      compatible = "qcom,ipq806x-usb-phy-hs";
-+      reg = <0x110f8800 0x30>;
-+      clocks = <&gcc USB30_0_UTMI_CLK>;
-+      clock-names = "ref";
-+      #phy-cells = <0>;
-+    };
-diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-new file mode 100644
-index 000000000000..fa30c24b4405
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/qcom,ipq806x-usb-phy-ss.yaml
-@@ -0,0 +1,73 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,ipq806x-usb-phy-ss.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm ipq806x usb DWC3 SS PHY CONTROLLER
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description:
-+  DWC3 PHY nodes are defined to describe on-chip Synopsis Physical layer
-+  controllers used in ipq806x. Each DWC3 PHY controller should have its
-+  own node.
-+
-+properties:
-+  compatible:
-+    const: qcom,ipq806x-usb-phy-ss
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 2
-+    items:
-+      - const: ref
-+      - const: xo
-+
-+  qcom,rx-eq:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: Override value for rx_eq.
-+    default: 4
-+    maximum: 7
-+
-+  qcom,tx-deamp-3_5db:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: Override value for transmit preemphasis.
-+    default: 23
-+    maximum: 63
-+
-+  qcom,mpll:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: Override value for mpll.
-+    default: 0
-+    maximum: 7
-+
-+required:
-+  - compatible
-+  - "#phy-cells"
-+  - reg
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    ss_phy_0: phy@110f8830 {
-+      compatible = "qcom,ipq806x-usb-phy-ss";
-+      reg = <0x110f8830 0x30>;
-+      clocks = <&gcc USB30_0_MASTER_CLK>;
-+      clock-names = "ref";
-+      #phy-cells = <0>;
-+    };
+ 		/* Trigger the boot FSM to start the Q6 out-of-reset sequence */
+ 		writel(1, qproc->reg_base + QDSP6SS_BOOT_CMD);
+ 
+-		/* Poll the QDSP6SS_BOOT_STATUS for FSM completion */
+-		ret = readl_poll_timeout(qproc->reg_base + QDSP6SS_BOOT_STATUS,
+-					 val, (val & BIT(0)) != 0, 1,
+-					 BOOT_STATUS_TIMEOUT_US);
++		/* Poll the MSS_STATUS for FSM completion */
++		ret = readl_poll_timeout(qproc->rmb_base + RMB_MBA_MSS_STATUS,
++					 val, (val & BIT(0)) != 0, 10, BOOT_FSM_TIMEOUT);
+ 		if (ret) {
+ 			dev_err(qproc->dev, "Boot FSM failed to complete.\n");
+ 			/* Reset the modem so that boot FSM is in reset state */
 -- 
-2.27.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
