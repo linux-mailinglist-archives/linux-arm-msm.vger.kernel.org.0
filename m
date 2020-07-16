@@ -2,76 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A53E222A16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 19:40:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A31222A9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Jul 2020 20:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728560AbgGPRkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 13:40:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49104 "EHLO
+        id S1729306AbgGPSFu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 14:05:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728385AbgGPRkh (ORCPT
+        with ESMTP id S1728837AbgGPSFu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 13:40:37 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEC32C061755
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 10:40:36 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id t11so3095626qvk.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 10:40:36 -0700 (PDT)
+        Thu, 16 Jul 2020 14:05:50 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E354AC061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 11:05:49 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id s192so1528032vkh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 11:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+YZ4K32ILO0YG7+Onb9+bb1wbPOZ0IsAwcOMvX1Wf1U=;
-        b=DgIAFh9xOdcGljTcbCAE1IcHuv2aaa2mBbzzoSyx+PkPEnrbCyvTBNyFXPYLKiG9Pm
-         8pVv0O31SbSSnI5+44WNuLdO577HNgfluZBBRqvKCeX59P3Z6sO4UXk0PT8vXh6Lx/2V
-         3FtSeQB0FwxrAc1mp5ySe0Pf0i5r+sXaq8c6M=
+        bh=6LJXcaiErt+0IC9WAhFqF+PgHD+Xfmr3j77sKRGuw00=;
+        b=fHBUTi0o7R2ZDnjv7Bf840urtxXMHNAU19jmAKkxEYrc6Pk78KckWPlezDehMCs/1Q
+         hxxgx33laG/g8T4dGc3fZblx3pRHNmBqLsxNbFwE/ZExYBRbTifNAI03v5WghgHjWt30
+         Hxtcg186Z3dmy5Srwbn3Z6rUdC3iK3KE0li2s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+YZ4K32ILO0YG7+Onb9+bb1wbPOZ0IsAwcOMvX1Wf1U=;
-        b=E7/dzS4L/oHrF5s9Vwf0W9hDAfrHFOTrEvNkIkkhWNWc+vN5DJdO/PdVb8gIAMjNBA
-         LX1HUgINY8QCqRSpQYFLDGiJs/Rh5EvL7iZKPBYBZOzkRnoiVh57F6RqUUJNN0PkmeLs
-         +UAEzklP0oey+VQZfkJQuR4nYYNaO69Pnpzy0mwONCh5IWXobjs2iR0EDBrsWl8XuBIF
-         HQEXBWPHCzEokdUrrd5Zt1WVHNbIbLqYzcDC5wbZ/FZpRHF64alE/Zbz9BzTv7tFsKac
-         mUJ+dRjv2wpvmtY/wV2yQnLpvsPAGpsTnDvU+xxjTwdRjbka2e9JySvqMxeP/MkTn619
-         4Rfg==
-X-Gm-Message-State: AOAM530ohcmw0+alSq3i0hUI4ZAddxcBPRp3SY3FqrEW69xCWqUSZ8pW
-        vN08MEBTniraGjSzhLDWqwXLgWVipHc=
-X-Google-Smtp-Source: ABdhPJzta07zVvtGO6ohdOWjoLZRXFE5jF5kpRQ5Tnj2iinJygvSEs+Umc14dreP/0w5L2m+VcF1jw==
-X-Received: by 2002:a0c:99c5:: with SMTP id y5mr5504261qve.66.1594921235821;
-        Thu, 16 Jul 2020 10:40:35 -0700 (PDT)
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
-        by smtp.gmail.com with ESMTPSA id p36sm8695265qte.90.2020.07.16.10.40.35
+        bh=6LJXcaiErt+0IC9WAhFqF+PgHD+Xfmr3j77sKRGuw00=;
+        b=ruzQScJ6oekilVtiNrhqk1ZeNUiFsdh1P5pxD6CnMLhol5murKsbdiXlUmCAcuEJjv
+         kHmm1Z/Sp485e25ZcoRRHUWT5a9l1yws+BacOGbZMASbAJXa3oYll/5vovsMirBzhcVB
+         Dx5/RcU7/y9wy7kARCaE3DH354R+X2ihswJ1ZAAP2b89yUvzjYw+SMkrej0qYKWE7fIi
+         +WuijkpZrpeZJ6Q/45ddFDn3Ohwf1tMRiwJ7ZjxD+2BJtHfk5SSiXP7wDpX2vCEqhEL7
+         QgZf2irIHQOWXK8BevwLCMyf84Zo1dQIuUFo9PGX28cUb1vtyNrk0pW3XY4eXc96H36N
+         Nx5g==
+X-Gm-Message-State: AOAM532wZ9TjVjJLUlS/C3ghyWV189IIrdcw3pb5ziH2JL9eGQlMUOo1
+        n0fGQRt11BPnLj5ahBKUHv7KdSk+WRM=
+X-Google-Smtp-Source: ABdhPJw3d+2uLF7+5pagUqBA6PhxJ0CoN/whrT5/XC1c6hgqt5o9QzN7DaauzUWnIftWJjJR1Y0ERQ==
+X-Received: by 2002:a1f:d642:: with SMTP id n63mr4315614vkg.77.1594922748524;
+        Thu, 16 Jul 2020 11:05:48 -0700 (PDT)
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com. [209.85.222.46])
+        by smtp.gmail.com with ESMTPSA id x5sm640328vsb.26.2020.07.16.11.05.46
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2020 10:40:35 -0700 (PDT)
-Received: by mail-yb1-f181.google.com with SMTP id y17so3208959ybm.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 10:40:35 -0700 (PDT)
-X-Received: by 2002:ab0:150c:: with SMTP id o12mr4397825uae.90.1594920887766;
- Thu, 16 Jul 2020 10:34:47 -0700 (PDT)
+        Thu, 16 Jul 2020 11:05:47 -0700 (PDT)
+Received: by mail-ua1-f46.google.com with SMTP id g4so2047952uaq.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 11:05:46 -0700 (PDT)
+X-Received: by 2002:ab0:486d:: with SMTP id c42mr4460815uad.64.1594922746099;
+ Thu, 16 Jul 2020 11:05:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <1594796149-14778-1-git-send-email-tdas@codeaurora.org>
-In-Reply-To: <1594796149-14778-1-git-send-email-tdas@codeaurora.org>
+References: <20200716061445.628709-1-cychiang@chromium.org>
+In-Reply-To: <20200716061445.628709-1-cychiang@chromium.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 16 Jul 2020 10:34:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XwYQxkKQruVPnO9Nbsv_3uyD75-dcyOeB62zLVjJE5+Q@mail.gmail.com>
-Message-ID: <CAD=FV=XwYQxkKQruVPnO9Nbsv_3uyD75-dcyOeB62zLVjJE5+Q@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add LPASS clock controller nodes
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
+Date:   Thu, 16 Jul 2020 11:05:34 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U6oStCh3kyoM-jLEsRrYgnKvUNiQFOqxXm409gDUhcGA@mail.gmail.com>
+Message-ID: <CAD=FV=U6oStCh3kyoM-jLEsRrYgnKvUNiQFOqxXm409gDUhcGA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add lpass cpu node for I2S driver
+To:     Cheng-Yi Chiang <cychiang@chromium.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jimmy Cheng-Yi Chiang <cychiang@google.com>
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Ajit Pandey <ajitp@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -80,81 +77,217 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Jul 14, 2020 at 11:56 PM Taniya Das <tdas@codeaurora.org> wrote:
+On Wed, Jul 15, 2020 at 11:14 PM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
 >
-> Update the clock controller nodes for Low power audio subsystem
-> functionality.
+> From: Ajit Pandey <ajitp@codeaurora.org>
 >
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> Add the I2S controller node to sc7180 dtsi.
+> Add pinmux for pirmary and secondary I2S.
+
+s/pirmary/primary
+
+>
+> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
 > ---
+> This patch depends on these patch series so it is not ready to be merged now.
+> - clk: qcom: Support for Low Power Audio Clocks on SC7180 https://patchwork.kernel.org/cover/11664273/
+> - arm64: dts: qcom: sc7180: Add LPASS clock controller nodes https://patchwork.kernel.org/patch/11664303/
+> - ASoC: qcom: Add support for SC7180 lpass variant https://patchwork.kernel.org/cover/11650649/
 
-Somewhere here you should be pointing to the unlanded bindings patch, AKA:
-
-https://lore.kernel.org/r/1594795010-9074-3-git-send-email-tdas@codeaurora.org
-
-As per usual the fact that are using a new bindings #include file
-means Qualcomm maintainers and clock maintainers will need to
-coordinate landing and this needs to be pointed out.
+Thanks for pointing out the dependencies!
 
 
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 132 +++++++++++++++++++++++++++
+>  1 file changed, 132 insertions(+)
+
+My review is a bit rote since I don't actually know anything about
+audio.  This is mostly just a dt-hygiene review.
+
+
 > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 2be81a2..8c30a17 100644
+> index 6eb14b6a47f5..2fe3bd89f950 100644
 > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -8,6 +8,7 @@
->  #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
->  #include <dt-bindings/clock/qcom,gcc-sc7180.h>
->  #include <dt-bindings/clock/qcom,gpucc-sc7180.h>
-> +#include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/clock/qcom,videocc-sc7180.h>
->  #include <dt-bindings/interconnect/qcom,osm-l3.h>
-> @@ -2136,6 +2137,27 @@
+> @@ -511,6 +511,34 @@ qusb2p_hstx_trim: hstx-trim-primary@25b {
 >                         };
 >                 };
 >
-> +               lpasscc: clock-controller@62d00000 {
-> +                       compatible = "qcom,sc7180-lpasscorecc";
-> +                       reg = <0 0x62d00000 0 0x50000>,
-> +                           <0 0x62780000 0 0x30000>;
-> +                       reg-names = "lpass_core_cc", "lpass_audio_cc";
-> +                       clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>;
-> +                       clock-names = "iface";
+> +               lpass_cpu: lpass {
+
+Missing unit address and also sorted incorrectly.  Nodes should be
+sorted by unit address.
+
+
+> +                       compatible = "qcom,lpass-cpu-sc7180";
+
+Is there a pin config that generally makes sense for all boards?  If
+so, you can add it here so it doesn't need to be added to all
+sub-boards.
+
+
+> +                       reg = <0 0x62F00000 0 0x29000>;
+
+nit: lower case hex for reg address, so 62f not 62F.
+
+
+> +                       reg-names = "lpass-lpaif";
+> +
+> +                       iommus = <&apps_smmu 0x1020 0>;
+> +
 > +                       power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
-> +                       #clock-cells = <1>;
-> +                       #power-domain-cells = <1>;
-> +               };
 > +
-> +               lpass_hm: clock-controller@63000000 {
-> +                       compatible = "qcom,sc7180-lpasshm";
-> +                       reg = <0 0x63000000 0 0x28>;
-> +                       clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>;
-> +                       clock-names = "iface";
-> +                       #clock-cells = <1>;
-> +                       #power-domain-cells = <1>;
+> +                       status = "disabled";
+> +
+> +                       clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
+> +
+> +                       clock-names = "noc", "audio-core", "mclk0", "sysnoc_mport",
+> +                                     "pri_ibit", "sec_ibit";
+> +
+> +                       #sound-dai-cells = <1>;
+> +
+> +                       interrupts = <0 160 IRQ_TYPE_LEVEL_HIGH>;
+
+First entry of interrupts should be GIC_SPI, which is what 0 is referring to.
+
+
+> +                       interrupt-names = "lpass-irq-lpaif";
 > +               };
 
-Question: would it ever make sense for a board not to need this clock
-controller?  I ask because the sdm845 "lpass" clock controller is
-"disabled" by default but yours here isn't.  I know sc7180 and sdm845
-work pretty differently and perhaps the sdm845's default of "disabled"
-was just overkill, but I thought I'd ask.
+Bindings claim you're supposed to have:
+
+#address-cells = <1>;
+#size-cells = <0>;
+
+Do you not need them for some reason?
 
 
+>                 sdhc_1: sdhci@7c4000 {
+>                         compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+>                         reg = <0 0x7c4000 0 0x1000>,
+> @@ -1357,6 +1385,110 @@ pinmux {
+>                                 };
+>                         };
+>
+> +                       sec_mi2s_active: sec-mi2s-active {
+> +                               pinmux {
+> +                                       pins = "gpio49";
+> +                                       function = "mi2s_1";
+> +                               };
 > +
->                 etm@7040000 {
->                         compatible = "arm,coresight-etm4x", "arm,primecell";
->                         reg = <0 0x07040000 0 0x1000>;
+> +                               pinconf {
+> +                                       pins = "gpio49";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+> +                       sec_mi2s_ws_active: sec-mi2s-ws-active {
+> +                               pinmux {
+> +                                       pins = "gpio50";
+> +                                       function = "mi2s_1";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio50";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+> +                       sec_mi2s_dout_active: sec-mi2s-dout-active {
+> +                               pinmux {
+> +                                       pins = "gpio51";
+> +                                       function = "mi2s_1";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio51";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+> +                       pri_mi2s_active: pri-mi2s-active {
+> +                               pinmux {
+> +                                       pins = "gpio53";
+> +                                       function = "mi2s_0";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio53";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+> +                       pri_mi2s_ws_active: pri-mi2s-ws-active {
+> +                               pinmux {
+> +                                       pins = "gpio54";
+> +                                       function = "mi2s_0";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio54";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+> +                       pri_mi2s_dout_active: pri-mi2s-dout-active {
+> +                               pinmux {
+> +                                       pins = "gpio55";
+> +                                       function = "mi2s_0";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio55";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+> +                       pri_mi2s_din_active: pri-mi2s-din-active {
+> +                               pinmux {
+> +                                       pins = "gpio56";
+> +                                       function = "mi2s_0";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio56";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
 
-Your sort order is off.  You should be sorting by unit address.  Note
-that the "ETM" has an extra 0 before its 7, so you're comparing 63 to
-07 and you should be after.
+Can you group together any of the configs?  See, for instance,
+"qup_spi0_default" where we configure 4 pins together.  Then you don't
+need so many separate nodes to add.
 
-Other than those small things above this patch looks like it matches
-the example in the bindings, so as long as Rob / the clock guys are
-fine with the bindings then this seems good to go.
+Also: pinconf is nearly always done in board files unless you truly
+have a reason to believe that it would be the same for every board.
+
+
+> +                       pri_mi2s_mclk_active: pri-mi2s-mclk-active {
+> +                               pinmux {
+> +                                       pins = "gpio57";
+> +                                       function = "lpass_ext";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio57";
+> +                                       drive-strength = <8>;
+> +                                       bias-pull-up;
+> +                               };
+> +                       };
+> +
+>                         sdc1_on: sdc1-on {
+>                                 pinconf-clk {
+>                                         pins = "sdc1_clk";
 
 -Doug
