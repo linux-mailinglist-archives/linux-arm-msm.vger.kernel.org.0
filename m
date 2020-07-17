@@ -2,120 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE84223E25
+	by mail.lfdr.de (Postfix) with ESMTP id 5F9C4223E24
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 16:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726829AbgGQOhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jul 2020 10:37:03 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:11394 "EHLO m43-7.mailgun.net"
+        id S1726845AbgGQOhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jul 2020 10:37:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:22000 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726198AbgGQOhC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jul 2020 10:37:02 -0400
+        id S1726205AbgGQOhB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Jul 2020 10:37:01 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594996621; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=TyKyzR05tZRTaaXsH6YWC6xsJl+USZ1JBrWVHA4S8uY=; b=WyxScw+rVxFLhLZ/MVYcfxuh+SctO4bWFcgTzEcGPIrYEnQlYwY2buHtXqBR/KaRZYd5F3j9
- fbaYOdpTr05y0rPh+cJi6OaeX9GV0tgdAGIVclDoG/a4vjOLSr3mNEX3KLjfwxMRe6VfCYQx
- NYXH1NqbAScRHVqkzdNQ6Czt0YY=
+ s=smtp; t=1594996620; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=NnSb7TJWGqQpSkl7k2UjULzlt0I9AkBaZ3dCnmY8dCM=; b=gp9F7c4VTWpUaf1g1jmGtx0IqWKN2ePUvozbTYljunhg8sQhEekpnwszqO8ogTkJhECvWDe6
+ McDptHfhgJWtd/bYqU1S/oWNi753eVkGmRMROosFOJgp1vHlD4vDbr7K7hE/DP9n9lHTiNqA
+ l0apPDyVPWA47xrLTb54yrvHtg0=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
- 5f11b777512812c070429a53 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Jul 2020 14:36:39
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f11b76bc9bd2efa2e1a5983 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Jul 2020 14:36:27
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 42F4EC43391; Fri, 17 Jul 2020 14:36:39 +0000 (UTC)
+        id A6EC1C433CA; Fri, 17 Jul 2020 14:36:26 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.9] (unknown [59.99.219.196])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57AD6C433C6;
-        Fri, 17 Jul 2020 14:36:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 57AD6C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DD85EC433C6;
+        Fri, 17 Jul 2020 14:36:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DD85EC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [PATCH] drm: msm: a6xx: fix gpu failure after system resume
+To:     Rob Clark <robdclark@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Jonathan <jonathan@marek.ca>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+References: <1594733130-398-1-git-send-email-akhilpo@codeaurora.org>
+ <20200714171036.GS3191083@google.com>
+ <CAF6AEGsvbnWiFXQUFR+k-CLJ2CsCEoiVVE8pGVq0X0=VHE3hHA@mail.gmail.com>
 From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-Subject: [PATCH v2] drm: msm: a6xx: fix gpu failure after system resume
-Date:   Fri, 17 Jul 2020 20:04:18 +0530
-Message-Id: <1594996458-15529-1-git-send-email-akhilpo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Message-ID: <a466103a-7f70-468c-c8d3-16b59ae8b3d5@codeaurora.org>
+Date:   Fri, 17 Jul 2020 20:06:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <CAF6AEGsvbnWiFXQUFR+k-CLJ2CsCEoiVVE8pGVq0X0=VHE3hHA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On targets where GMU is available, GMU takes over the ownership of GX GDSC
-during its initialization. So, move the refcount-get on GX PD before we
-initialize the GMU. This ensures that nobody can collapse the GX GDSC
-once GMU owns the GX GDSC. This patch fixes some GMU OOB errors seen
-during GPU wake up during a system resume.
+On 7/15/2020 12:12 AM, Rob Clark wrote:
+> On Tue, Jul 14, 2020 at 10:10 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+>>
+>> On Tue, Jul 14, 2020 at 06:55:30PM +0530, Akhil P Oommen wrote:
+>>> On targets where GMU is available, GMU takes over the ownership of GX GDSC
+>>> during its initialization. So, take a refcount on the GX PD on behalf of
+>>> GMU before we initialize it. This makes sure that nobody can collapse the
+>>> GX GDSC once GMU owns the GX GDSC. This patch fixes some weird failures
+>>> during GPU wake up during system resume.
+>>>
+>>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>>
+>> I went through a few dozen suspend/resume cycles on SC7180 and didn't run
+>> into the kernel panic that typically occurs after a few iterations without
+>> this patch.
+>>
+>> Reported-by: Matthias Kaehlcke <mka@chromium.org>
+>> Tested-by: Matthias Kaehlcke <mka@chromium.org>
+>>
+>> On which tree is this patch based on? I had to apply it manually because
+>> 'git am' is unhappy when I try to apply it:
+>>
+>>    error: sha1 information is lacking or useless (drivers/gpu/drm/msm/adreno/a6xx_gmu.c).
+>>    error: could not build fake ancestor
+>>
+>> Both upstream and drm-msm are in my remotes and synced, so I suspect it's
+>> some private tree. Please make sure to base patches on the corresponding
+>> maintainer tree or upstream, whichs makes life easier for maintainers,
+>> testers and reviewers.
+> 
+> I've run into the same issue frequently :-(
+> 
+> BR,
+> -R
+> 
+Sorry, I was using msm-next brand as the base, but had the opp-next 
+branch merged too inadvertently.
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-Reported-by: Matthias Kaehlcke <mka@chromium.org>
-Tested-by: Matthias Kaehlcke <mka@chromium.org>
----
-Changes from v1:
-- Reworded the commit text
-- Added Reported-by & Tested-by tags
-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 21e77d6..1d33020 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -854,10 +854,19 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 	/* Turn on the resources */
- 	pm_runtime_get_sync(gmu->dev);
- 
-+	/*
-+	 * "enable" the GX power domain which won't actually do anything but it
-+	 * will make sure that the refcounting is correct in case we need to
-+	 * bring down the GX after a GMU failure
-+	 */
-+	if (!IS_ERR_OR_NULL(gmu->gxpd))
-+		pm_runtime_get_sync(gmu->gxpd);
-+
- 	/* Use a known rate to bring up the GMU */
- 	clk_set_rate(gmu->core_clk, 200000000);
- 	ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
- 	if (ret) {
-+		pm_runtime_put(gmu->gxpd);
- 		pm_runtime_put(gmu->dev);
- 		return ret;
- 	}
-@@ -903,19 +912,12 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 	else
- 		a6xx_hfi_set_freq(gmu, gmu->current_perf_index);
- 
--	/*
--	 * "enable" the GX power domain which won't actually do anything but it
--	 * will make sure that the refcounting is correct in case we need to
--	 * bring down the GX after a GMU failure
--	 */
--	if (!IS_ERR_OR_NULL(gmu->gxpd))
--		pm_runtime_get(gmu->gxpd);
--
- out:
- 	/* On failure, shut down the GMU to leave it in a good state */
- 	if (ret) {
- 		disable_irq(gmu->gmu_irq);
- 		a6xx_rpmh_stop(gmu);
-+		pm_runtime_put(gmu->gxpd);
- 		pm_runtime_put(gmu->dev);
- 	}
- 
--- 
-2.7.4
-
+-Akhil
