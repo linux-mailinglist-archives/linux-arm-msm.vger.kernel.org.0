@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91A39223CB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 15:33:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD828223CB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 15:33:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbgGQNac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jul 2020 09:30:32 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:25836 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726221AbgGQNac (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jul 2020 09:30:32 -0400
+        id S1726761AbgGQNal (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jul 2020 09:30:41 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:24604 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726344AbgGQNal (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Jul 2020 09:30:41 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1594992631; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1594992640; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=EWYW/NS+fcpY2xbip8v2hloAa0bhAsxsf6dtJYGR1Bs=; b=elYuNJ6juyYdpf9u3UNBSVoJ/gP4hEw8TiE+u86P+vBHsX5iAherwMCNUBLBFXnzUtwalURT
- AVDnCSTyqtvW1lDP2q+bRRX0slsPDHfkIZlWx+YuRZ6EiRU6Ef+Ls4ZlN+SpEbTGd8YiYuqf
- H2F4X3yQUmamyeMHB5sk6icA+Ts=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ bh=bPEgtL/MSbVgLWyY5yA0N+moWARpJvT0UPnIgruiK+4=; b=XRf0Hp00enw9niXku20ehU1HtmcMrPTBA+RSLgLQWLycwBulO0HcRFwzt6ooybqDhKd2Oloe
+ SXc+zPK3ucqn1tcb+htZceThU2n+OQlqrItitFmTPrgyo66ucM7BUh69OYJujIS41OzeiZfL
+ yHy4KXLHuaS35nW6QjIn+S+tyPA=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f11a7d98e36ecda301630a4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Jul 2020 13:30:01
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5f11a7ddc9bd2efa2ef1fb2e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Jul 2020 13:30:05
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 17F8BC433B6; Fri, 17 Jul 2020 13:30:00 +0000 (UTC)
+        id 3C315C433B1; Fri, 17 Jul 2020 13:30:05 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +37,9 @@ Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E3FDAC433AD;
-        Fri, 17 Jul 2020 13:29:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E3FDAC433AD
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 720CFC433A0;
+        Fri, 17 Jul 2020 13:29:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 720CFC433A0
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akhilpo@codeaurora.org
 From:   Akhil P Oommen <akhilpo@codeaurora.org>
@@ -49,9 +50,9 @@ Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
         mka@chromium.org, saravanak@google.com, sibis@codeaurora.org,
         viresh.kumar@linaro.org, jonathan@marek.ca, robdclark@gmail.com,
         bjorn.andersson@linaro.org
-Subject: [PATCH v6 2/6] drm: msm: a6xx: send opp instead of a frequency
-Date:   Fri, 17 Jul 2020 18:59:35 +0530
-Message-Id: <1594992579-20662-3-git-send-email-akhilpo@codeaurora.org>
+Subject: [PATCH v6 3/6] drm: msm: a6xx: use dev_pm_opp_set_bw to scale DDR
+Date:   Fri, 17 Jul 2020 18:59:36 +0530
+Message-Id: <1594992579-20662-4-git-send-email-akhilpo@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1594992579-20662-1-git-send-email-akhilpo@codeaurora.org>
 References: <1594992579-20662-1-git-send-email-akhilpo@codeaurora.org>
@@ -62,119 +63,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sharat Masetty <smasetty@codeaurora.org>
 
-This patch changes the plumbing to send the devfreq recommended opp rather
-than the frequency. Also consolidate and rearrange the code in a6xx to set
-the GPU frequency and the icc vote in preparation for the upcoming
-changes for GPU->DDR scaling votes.
+This patches replaces the previously used static DDR vote and uses
+dev_pm_opp_set_bw() to scale GPU->DDR bandwidth along with scaling
+GPU frequency. Also since the icc path voting is handled completely
+in the opp driver, remove the icc_path handle and its usage in the
+drm driver.
 
 Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
 Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 89 +++++++++++++++++++----------------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  2 +-
- drivers/gpu/drm/msm/msm_gpu.c         |  3 +-
- drivers/gpu/drm/msm/msm_gpu.h         |  3 +-
- 4 files changed, 52 insertions(+), 45 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 21e77d6..856db46 100644
+index 856db46..a6f43ff 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -103,17 +103,45 @@ bool a6xx_gmu_gx_is_on(struct a6xx_gmu *gmu)
- 		A6XX_GMU_SPTPRAC_PWR_CLK_STATUS_GX_HM_CLK_OFF));
- }
+@@ -133,7 +133,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
  
--static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
-+void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
- {
--	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
--	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
--	struct msm_gpu *gpu = &adreno_gpu->base;
--	int ret;
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-+	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-+	u32 perf_index;
-+	unsigned long gpu_freq;
-+	int ret = 0;
-+
-+	gpu_freq = dev_pm_opp_get_freq(opp);
-+
-+	if (gpu_freq == gmu->freq)
-+		return;
-+
-+	for (perf_index = 0; perf_index < gmu->nr_gpu_freqs - 1; perf_index++)
-+		if (gpu_freq == gmu->gpu_freqs[perf_index])
-+			break;
-+
-+	gmu->current_perf_index = perf_index;
-+	gmu->freq = gmu->gpu_freqs[perf_index];
-+
-+	/*
-+	 * This can get called from devfreq while the hardware is idle. Don't
-+	 * bring up the power if it isn't already active
-+	 */
-+	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
-+		return;
-+
-+	if (!gmu->legacy) {
-+		a6xx_hfi_set_freq(gmu, perf_index);
-+		icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
-+		pm_runtime_put(gmu->dev);
-+		return;
-+	}
+ 	if (!gmu->legacy) {
+ 		a6xx_hfi_set_freq(gmu, perf_index);
+-		icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
++		dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
+ 		pm_runtime_put(gmu->dev);
+ 		return;
+ 	}
+@@ -157,11 +157,7 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+ 	if (ret)
+ 		dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
  
- 	gmu_write(gmu, REG_A6XX_GMU_DCVS_ACK_OPTION, 0);
- 
- 	gmu_write(gmu, REG_A6XX_GMU_DCVS_PERF_SETTING,
--		((3 & 0xf) << 28) | index);
-+			((3 & 0xf) << 28) | perf_index);
- 
- 	/*
- 	 * Send an invalid index as a vote for the bus bandwidth and let the
-@@ -134,37 +162,6 @@ static void __a6xx_gmu_set_freq(struct a6xx_gmu *gmu, int index)
- 	 * for now leave it at max so that the performance is nominal.
- 	 */
- 	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
--}
--
--void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq)
--{
--	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
--	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
--	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
--	u32 perf_index = 0;
--
--	if (freq == gmu->freq)
--		return;
--
--	for (perf_index = 0; perf_index < gmu->nr_gpu_freqs - 1; perf_index++)
--		if (freq == gmu->gpu_freqs[perf_index])
--			break;
--
--	gmu->current_perf_index = perf_index;
--	gmu->freq = gmu->gpu_freqs[perf_index];
--
 -	/*
--	 * This can get called from devfreq while the hardware is idle. Don't
--	 * bring up the power if it isn't already active
+-	 * Eventually we will want to scale the path vote with the frequency but
+-	 * for now leave it at max so that the performance is nominal.
 -	 */
--	if (pm_runtime_get_if_in_use(gmu->dev) == 0)
--		return;
--
--	if (gmu->legacy)
--		__a6xx_gmu_set_freq(gmu, perf_index);
--	else
--		a6xx_hfi_set_freq(gmu, perf_index);
--
+-	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(7216));
++	dev_pm_opp_set_bw(&gpu->pdev->dev, opp);
  	pm_runtime_put(gmu->dev);
  }
  
-@@ -839,6 +836,19 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 	a6xx_gmu_rpmh_off(gmu);
+@@ -849,6 +845,19 @@ static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
+ 	dev_pm_opp_put(gpu_opp);
  }
  
-+static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
++static void a6xx_gmu_set_initial_bw(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
 +{
 +	struct dev_pm_opp *gpu_opp;
 +	unsigned long gpu_freq = gmu->gpu_freqs[gmu->current_perf_index];
@@ -183,80 +114,31 @@ index 21e77d6..856db46 100644
 +	if (IS_ERR_OR_NULL(gpu_opp))
 +		return;
 +
-+	a6xx_gmu_set_freq(gpu, gpu_opp);
++	dev_pm_opp_set_bw(&gpu->pdev->dev, gpu_opp);
 +	dev_pm_opp_put(gpu_opp);
 +}
 +
  int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
  {
  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-@@ -898,10 +908,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
- 	enable_irq(gmu->hfi_irq);
+@@ -873,7 +882,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	}
  
- 	/* Set the GPU to the current freq */
--	if (gmu->legacy)
--		__a6xx_gmu_set_freq(gmu, gmu->current_perf_index);
--	else
--		a6xx_hfi_set_freq(gmu, gmu->current_perf_index);
-+	a6xx_gmu_set_initial_freq(gpu, gmu);
+ 	/* Set the bus quota to a reasonable value for boot */
+-	icc_set_bw(gpu->icc_path, 0, MBps_to_icc(3072));
++	a6xx_gmu_set_initial_bw(gpu, gmu);
+ 
+ 	/* Enable the GMU interrupt */
+ 	gmu_write(gmu, REG_A6XX_GMU_AO_HOST_INTERRUPT_CLR, ~0);
+@@ -1049,7 +1058,7 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+ 		a6xx_gmu_shutdown(gmu);
+ 
+ 	/* Remove the bus vote */
+-	icc_set_bw(gpu->icc_path, 0, 0);
++	dev_pm_opp_set_bw(&gpu->pdev->dev, NULL);
  
  	/*
- 	 * "enable" the GX power domain which won't actually do anything but it
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 7239b8b..03ba60d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -63,7 +63,7 @@ void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state);
- int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
- void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu);
- 
--void a6xx_gmu_set_freq(struct msm_gpu *gpu, unsigned long freq);
-+void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp);
- unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu);
- 
- void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index a22d306..82eb727 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -13,7 +13,6 @@
- 
- #include <generated/utsrelease.h>
- #include <linux/string_helpers.h>
--#include <linux/pm_opp.h>
- #include <linux/devfreq.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
-@@ -34,7 +33,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 		return PTR_ERR(opp);
- 
- 	if (gpu->funcs->gpu_set_freq)
--		gpu->funcs->gpu_set_freq(gpu, (u64)*freq);
-+		gpu->funcs->gpu_set_freq(gpu, opp);
- 	else
- 		clk_set_rate(gpu->core_clk, *freq);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 429cb40..0db117a 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -9,6 +9,7 @@
- 
- #include <linux/clk.h>
- #include <linux/interconnect.h>
-+#include <linux/pm_opp.h>
- #include <linux/regulator/consumer.h>
- 
- #include "msm_drv.h"
-@@ -61,7 +62,7 @@ struct msm_gpu_funcs {
- 	struct msm_gpu_state *(*gpu_state_get)(struct msm_gpu *gpu);
- 	int (*gpu_state_put)(struct msm_gpu_state *state);
- 	unsigned long (*gpu_get_freq)(struct msm_gpu *gpu);
--	void (*gpu_set_freq)(struct msm_gpu *gpu, unsigned long freq);
-+	void (*gpu_set_freq)(struct msm_gpu *gpu, struct dev_pm_opp *opp);
- 	struct msm_gem_address_space *(*create_address_space)
- 		(struct msm_gpu *gpu, struct platform_device *pdev);
- };
+ 	 * Make sure the GX domain is off before turning off the GMU (CX)
 -- 
 2.7.4
 
