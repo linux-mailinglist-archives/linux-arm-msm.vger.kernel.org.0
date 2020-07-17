@@ -2,99 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90F6C22310F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 04:13:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5709223288
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 06:43:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726514AbgGQCNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 22:13:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43658 "EHLO
+        id S1725300AbgGQEnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jul 2020 00:43:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726453AbgGQCNQ (ORCPT
+        with ESMTP id S1725811AbgGQEnh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 22:13:16 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF10C061755;
-        Thu, 16 Jul 2020 19:13:16 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id 6so6601462qtt.0;
-        Thu, 16 Jul 2020 19:13:16 -0700 (PDT)
+        Fri, 17 Jul 2020 00:43:37 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E596AC08C5C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 21:43:36 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id t6so6093906pgq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 21:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=f2JKPdgb/9hZRJjwTB6zOtsvoRSAMGYehX8TUhEKf08=;
-        b=DoGS1++QTCQxT8UzGH2XWCc0c5KPNKxPiUHbvd4xQA0+pBj6FyIc3Gv0VkpDQn477R
-         yVwyybTW4U/i5Gre/Fy0uTTrbcAnGp5iOKXEfu0i0KgRB/lZQiDmc58pru1Y0ZCugL3i
-         YKidi5oZRMCcdCroJo33WZ1+tbZopc+q+imm2IO9puatiFud3MO9P03Pm+zksnM0QJ1a
-         MSu857GYiFqB1da1JPensMjH5VmFeeDAUZa8FfajJpPLAp+U8QSmf6s7ApL5utPJR1Yl
-         PAEUYi10LIUGhOV3vjnGMSz1lZPGwHHjWAJb2aj2mxNnWPJZRhVCbLGAM2Fo4rdbB8et
-         zJ8Q==
+        bh=ZS96AHkKsIz+9ewp6Tb9M00I6PYyw+DXgHrEqe3EDMs=;
+        b=hDvG+flSpEjtZ0hG1cnQW3jGKAhn8mwFZiG0ojsB0dQEdpJqbXl4iOSLPiHSNdNkC+
+         GCOsUMWjS4r8SVqtpZdiFxutX/KyypO49Sl0mqtDXHFHdVt+Jq/e86vnqk/iQKUPuzlW
+         q0lC6waAFjEUpQ9xHUe+qCQOW4gZ1frwLgn3VB9vQ5/JC3bmRj9RsfYbdbhz4/cVvuBC
+         nrdLaBls9h+RM4ZWqgmvUw77DZx35UtdnmLVhpj21dOblO7LwVDnPZS4u0DzPexg4J9x
+         KMprlL7LNMBUmWctKrJJlIpAtZor1VL/yV3MEV48nErMbjSamigOUZuftNPQKMRPzllR
+         9yeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=f2JKPdgb/9hZRJjwTB6zOtsvoRSAMGYehX8TUhEKf08=;
-        b=GjWFbsaFIGd6d5mAdqlzq0n8kJzYt71TlHKCyBIL3Kf6TJvLiLp0PN4VQ6xJv7K1q3
-         kG23YmaInaTKfU2GV4iIWY3uE7LAZOfu85VxRINI15XCJ03Vfhfy7gnok/Y/zAPG6nz8
-         fMleQALs27BaYU5584Rc1eqiR61BjCDGtjXxuPGRY+7FtZX9mEJ8H1zmBn9lOllG4pf5
-         gTsfiKkIqNxFTjYlFnDcZ6IM9eeL261Kx3ZZyEcX4T+GDZ7bOSPztKMuIVhFsk+sOqGd
-         hlq7LxqeMz4nLZP804LgU9k/3kkdhGWlYgDDrfHsjI7ihwc1QLCjnQCy8iHPfyvSEsd8
-         dxqw==
-X-Gm-Message-State: AOAM532bseZ8nhzgFTGofAxeBB1Onk/glxgjTuwWk5+Nszad44SA8LM0
-        gn+Cuqfbw3ce+5qXMibEA/g=
-X-Google-Smtp-Source: ABdhPJyQuxSbeRQ5xrb2oQYCV1GZiwZh9H04oau9nwukn5mMhjc8zvSQUrjlAJiDQsjFbJl1+850Uw==
-X-Received: by 2002:ac8:37ac:: with SMTP id d41mr1048402qtc.294.1594951995441;
-        Thu, 16 Jul 2020 19:13:15 -0700 (PDT)
-Received: from ubuntu-n2-xlarge-x86 ([2604:1380:45d1:2600::1])
-        by smtp.gmail.com with ESMTPSA id 19sm8940859qke.44.2020.07.16.19.13.14
+        bh=ZS96AHkKsIz+9ewp6Tb9M00I6PYyw+DXgHrEqe3EDMs=;
+        b=Yrwa2wCKmWxYV4Q11vKCkeCHu6SGBWhDtSMD2zniGY/FFW9fUKjCVmqj52BOwDDebA
+         fIh9BIzKruwP+e8kDhirxueEd5Rf7ngP0NvEFafzpxEO8fvwZpz7Q/dXvtIKni500Azy
+         ycH9YmHAKdgGnkgzkMoSBD7uTLsK6rEMSwvQ6OJNN9Bc8keTVqa55kGxeO7y8RmLFZ88
+         hmpIFIbbzHgP9LqvFVmgHD8j2UNhYEEjTcdUp7iFIfFDU3fMqHRyMhEKfOtIqC68pvv1
+         MOtU/s6URjdK5ziCEA8bdTEhxnLwHCmc1NVzFfMHQQBYwbcxemtlTe3gbmmZdOTrPqNg
+         VloQ==
+X-Gm-Message-State: AOAM533fEf+flojhw4xRv7F8Nw62ARaSobR9HwD8pBR3tJUyPhFBn/c5
+        tLXXDqRQ4IEDqN5N/4w58pProA==
+X-Google-Smtp-Source: ABdhPJw3GVGfOpBPzeAuOqVTdeOgtS4JxzEmnM5OOQRp8CUOC23j8zfe/tH9Tj5+kFYuIQ3SzpYdQQ==
+X-Received: by 2002:a62:e217:: with SMTP id a23mr6467599pfi.257.1594961016203;
+        Thu, 16 Jul 2020 21:43:36 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id j16sm6384044pgb.33.2020.07.16.21.43.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 19:13:15 -0700 (PDT)
-Date:   Thu, 16 Jul 2020 19:13:13 -0700
-From:   Nathan Chancellor <natechancellor@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Ohad Ben-Cohen <ohad@wizery.com>, linux-arm-msm@vger.kernel.org,
+        Thu, 16 Jul 2020 21:43:35 -0700 (PDT)
+Date:   Thu, 16 Jul 2020 21:41:33 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>
-Subject: Re: [PATCH] remoteproc: qcom: pil-info: Fix shift overflow
-Message-ID: <20200717021313.GA4098480@ubuntu-n2-xlarge-x86>
-References: <20200716054817.157608-1-bjorn.andersson@linaro.org>
+        evgreen@chromium.org, ohad@wizery.com
+Subject: Re: [PATCH 1/3] remoteproc: qcom_q6v5_mss: Add modem debug policy
+ support
+Message-ID: <20200717044133.GB2922385@builder.lan>
+References: <20200716123630.21892-1-sibis@codeaurora.org>
+ <20200716123630.21892-2-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200716054817.157608-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20200716123630.21892-2-sibis@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 15, 2020 at 10:48:17PM -0700, Bjorn Andersson wrote:
-> On platforms with 32-bit phys_addr_t the shift to get the upper word of
-> the base address of the memory region is invalid. Cast the base to 64
-> bit to resolv this.
+On Thu 16 Jul 05:36 PDT 2020, Sibi Sankar wrote:
+
+> Add modem debug policy support which will enable coredumps and live
+> debug support when the msadp firmware is present on secure devices.
 > 
-> Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
-> Reported-by: Lee Jones <lee.jones@linaro.org>
-> Reported-by: Nathan Chancellor <natechancellor@gmail.com>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Tested-by: Nathan Chancellor <natechancellor@gmail.com> # build
-
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
->  drivers/remoteproc/qcom_pil_info.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/remoteproc/qcom_q6v5_mss.c | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-> index 0536e3904669..5521c4437ffa 100644
-> --- a/drivers/remoteproc/qcom_pil_info.c
-> +++ b/drivers/remoteproc/qcom_pil_info.c
-> @@ -108,7 +108,7 @@ int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
->  found_existing:
->  	/* Use two writel() as base is only aligned to 4 bytes on odd entries */
->  	writel(base, entry + PIL_RELOC_NAME_LEN);
-> -	writel(base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
-> +	writel((u64)base >> 32, entry + PIL_RELOC_NAME_LEN + 4);
->  	writel(size, entry + PIL_RELOC_NAME_LEN + sizeof(__le64));
->  	mutex_unlock(&pil_reloc_lock);
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 13c6d5a72a831..95e21ed607cb9 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -187,6 +187,7 @@ struct q6v5 {
+>  	phys_addr_t mba_phys;
+>  	void *mba_region;
+>  	size_t mba_size;
+> +	size_t dp_size;
 >  
+>  	phys_addr_t mpss_phys;
+>  	phys_addr_t mpss_reloc;
+> @@ -406,6 +407,13 @@ static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
+>  static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
+>  {
+>  	struct q6v5 *qproc = rproc->priv;
+> +	const struct firmware *dp_fw;
+> +
+> +	if (!request_firmware(&dp_fw, "msadp", qproc->dev) && fw->size <= SZ_1M) {
+
+Can we change this to a request_firmware_direct() to avoid the fact that
+as written here devices lacking this file will pause here for 60 seconds
+waiting for userspace to assist in loading it (which at least none of my
+systems do).
+
+I also think that while it's nice to check that fw->size <= SZ_1M, to
+avoid overwriting the tail of it, you should check that SZ_1M +
+dp_fw->size < mba_size. To ensure that the memcpy doesn't go out of
+bounds.
+
+> +		memcpy(qproc->mba_region + SZ_1M, dp_fw->data, dp_fw->size);
+> +		qproc->dp_size = dp_fw->size;
+> +		release_firmware(dp_fw);
+> +	}
+>  
+>  	memcpy(qproc->mba_region, fw->data, fw->size);
+>  
+> @@ -896,6 +904,10 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+>  	}
+>  
+>  	writel(qproc->mba_phys, qproc->rmb_base + RMB_MBA_IMAGE_REG);
+> +	if (qproc->dp_size) {
+> +		writel(qproc->mba_phys + SZ_1M, qproc->rmb_base + RMB_PMI_CODE_START_REG);
+> +		writel(qproc->dp_size, qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
+> +	}
+>  
+>  	ret = q6v5proc_reset(qproc);
+>  	if (ret)
+> @@ -1258,7 +1270,8 @@ static int q6v5_start(struct rproc *rproc)
+>  	if (ret)
+>  		return ret;
+>  
+> -	dev_info(qproc->dev, "MBA booted, loading mpss\n");
+> +	dev_info(qproc->dev, "MBA booted, debug policy %s, loading mpss\n",
+> +		 qproc->dp_size ? "enabled" : "disabled");
+
+"MBA booted with%s debug policy, loading mpss\n", qproc->dp_size ? "" : "out"
+
+Please.
+
+Regards,
+Bjorn
+
+>  
+>  	ret = q6v5_mpss_load(qproc);
+>  	if (ret)
 > -- 
-> 2.26.2
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
