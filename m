@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1995222FC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 02:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F8DD222FC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Jul 2020 02:16:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgGQAQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Jul 2020 20:16:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53886 "EHLO
+        id S1726296AbgGQAQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Jul 2020 20:16:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbgGQAQW (ORCPT
+        with ESMTP id S1726238AbgGQAQX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Jul 2020 20:16:22 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 521E8C08C5C0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 17:16:22 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id j19so5754153pgm.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 17:16:22 -0700 (PDT)
+        Thu, 16 Jul 2020 20:16:23 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF01DC061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 17:16:23 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id k27so5783076pgm.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Jul 2020 17:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Sl4GNsmArDLipzZLi4IQVk0TOodt16D37OUgWF5KbPo=;
-        b=BowF3PwOju4VnW5jUNBztNr1QHxUEqy6HgjuXfuKh5dztvWW9CDzCYmzt53X4es9xV
-         RlSOQ69RWaykSCNTQqfIuQTyahoqTJ1Qq+wjNd4t3mq49H33azZSu94Wo3tTp/EzNMSV
-         Y7UAuPuqAEvl7l9bkXQPh6qsQiSrCiD4TjJykBMTSgncyJJM0WV9KQ+tzStfHur3Qed+
-         yW2tN0Ig6kRObfnuHsbUU6oHen8rYu7+FKCPneQuomx9XugKY1Jzu2LOxVUi+TupWX+z
-         MIKZFc9U6nQIH+p0hDJ+v8GeWcFYgfr4eM2FCi1Loloh4liZ0bxGo7kKE1bkyL7CHWQ+
-         kJcQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Gz5Zo50XaaYCZ/NxMlikYXYKHZLd81NtOvGkTA8cH8o=;
+        b=hR7K/50YBRAiYbzC5YEsIbA8rrB/9x+7sISP+RCiE+PEZ4V1DcU4bLgQSvldNsZ0c8
+         DlWjm7LoKVY9Rz8e9IgppsSankyzITQqSY5b/cGexfVASMUQP3opQJ1PjW8bqK6geipV
+         zSVYGSqXW0FVUmM3/qy2HG22nBoC6cvLoqstJ0bhcsawn5tbuBgigq9soHAc1TbbbrXI
+         ygJEnHbepx4gjwD2rGloW4NabRJXyVxcmxqAPB5n1cfQloJRJi4jmiqmPJbLGPeOQVO1
+         zKZqZBmmmRchgEeyycJ7FTZbWWgOm7MNjc4uGjYm6V4G7tYor5UqiYvFokYU6C0EjdDM
+         C8TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Sl4GNsmArDLipzZLi4IQVk0TOodt16D37OUgWF5KbPo=;
-        b=eZRxNYNMHDAPcAC8RzuY2ZXfAH34XrufjeDqNsPcnrkk5Z+pO6TOAJrJPJgYJz/ENA
-         CwjhcA+IDlejabuRDMMlJPHMSS+dqrPWMozeqbELY1D39qMTtTCmxrjXyZSHPGUoDVp0
-         JOARt/grfysBowwC+s2Xb8v6U1CaRME59ND5TLsFyuxvO+ysq9ek0FqfBBBrE8MPsc1Y
-         Zt+f9OeDVJJbmmKp5lvUlOfMFb5DRZ7HBIMSXmiClow7qbwm71qZNiG+lbWGKzGeaB4H
-         f2mzh6mQycDi3LC3/XezH1/44+f2DjDML+egN+tug1HNCk5SG+p9+Q0zIc9ticJmILkc
-         TsSA==
-X-Gm-Message-State: AOAM530p3fBvXFhW60h5sBbsBw4p7f8QqVuQhdTam3JGaTyyi56EjP/1
-        7ob3D9nf6QeuLfYuK41MPa1KgA==
-X-Google-Smtp-Source: ABdhPJyyEAViHTA6jZ1fWkKlx3Fq/q+F6yP4gOxKkTTTvDCGA+QkPdiuE8amuhBa7Q2HIfcbSX2LeA==
-X-Received: by 2002:a65:6089:: with SMTP id t9mr6633639pgu.236.1594944981548;
-        Thu, 16 Jul 2020 17:16:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Gz5Zo50XaaYCZ/NxMlikYXYKHZLd81NtOvGkTA8cH8o=;
+        b=C0/UixmwbGwAXjWrBytmpAcFTDo6K3aOfxo+qNQ54S4CXPZowvS4/zRuaXC6MNIehz
+         aMBgwJGHfuAjlprnTWqaBEWJxEh2lTFNzVmMwQzij3gdIR7T8dUnCHwQID0U8kJVBoFP
+         EjDXZjFFwFWS4E2NhhRN8Ws6iCRESqcjjKQL5pDB389ciMfSP+Q62ayHkFoqn/Xhfc5M
+         UbIIAtsKmrvvtZqedVe95W1k2jT5VdZVm8U6D1PdRwdHAXbZ7PkXXWNBh5D8ZCIYuvVL
+         IBT58/5HtgPztWc6Sbf+wZmGtq2rYUtPiX38F2l0kiYSzYrBG/x6yPC/oApqzulwayNj
+         QbZQ==
+X-Gm-Message-State: AOAM533QjrWRE9mvTOHWS7g5sIlbU5l9T4zn0XwLqnmvBIjH4UZ+L18D
+        cHTgdCHNeOOKtyvW21GPt98p2A==
+X-Google-Smtp-Source: ABdhPJy2pM1sb1dp82VBoREb9XieM3FFWojiWZR5vj1MXdZyzILDiZXH1IyjW0siveAEKiPXPp07Lw==
+X-Received: by 2002:a63:e00c:: with SMTP id e12mr6451848pgh.413.1594944983134;
+        Thu, 16 Jul 2020 17:16:23 -0700 (PDT)
 Received: from localhost.localdomain (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id r7sm6211950pgu.51.2020.07.16.17.16.19
+        by smtp.gmail.com with ESMTPSA id r7sm6211950pgu.51.2020.07.16.17.16.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 17:16:20 -0700 (PDT)
+        Thu, 16 Jul 2020 17:16:22 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
@@ -56,11 +56,15 @@ To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
 Cc:     linux-arm-kernel@lists.infradead.org,
         iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 0/5] iommu/arm-smmu: Support maintaining bootloader mappings
-Date:   Thu, 16 Jul 2020 17:16:14 -0700
-Message-Id: <20200717001619.325317-1-bjorn.andersson@linaro.org>
+        linux-arm-msm@vger.kernel.org,
+        John Stultz <john.stultz@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH v2 1/5] iommu/arm-smmu: Make all valid stream mappings BYPASS
+Date:   Thu, 16 Jul 2020 17:16:15 -0700
+Message-Id: <20200717001619.325317-2-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200717001619.325317-1-bjorn.andersson@linaro.org>
+References: <20200717001619.325317-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -68,41 +72,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Based on previous attempts and discussions this is the latest attempt at
-inheriting stream mappings set up by the bootloader, for e.g. boot splash or
-efifb.
+Turn all stream mappings marked as valid into BYPASS. This allows the
+platform specific implementation to configure stream mappings to match
+the boot loader's configuration for e.g. display to continue to function
+through the reset of the SMMU.
 
-The first patch is an implementation of Robin's suggestion that we should just
-mark the relevant stream mappings as BYPASS. Relying on something else to set
-up the stream mappings wanted - e.g. by reading it back in platform specific
-implementation code.
+Tested-by: John Stultz <john.stultz@linaro.org>
+Tested-by: Vinod Koul <vkoul@kernel.org>
+Suggested-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
-The series then tackles the problem seen in most versions of Qualcomm firmware,
-that the hypervisor intercepts BYPASS writes and turn them into FAULTs. It does
-this by allocating context banks for identity domains as well, with translation
-disabled.
+Changes since v1:
+- Mark arm_smmu_setup_identity() static
+- Picked up tested-by tags
 
-Lastly it amends the stream mapping initialization code to allocate a specific
-identity domain that is used for any mappings inherited from the bootloader, if
-above Qualcomm quirk is required.
+ drivers/iommu/arm-smmu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-
-The series has been tested and shown to allow booting SDM845, SDM850, SM8150,
-SM8250 with boot splash screen setup by the bootloader. Specifically it also
-allows the Lenovo Yoga C630 to boot with SMMU and efifb enabled.
-
-Bjorn Andersson (5):
-  iommu/arm-smmu: Make all valid stream mappings BYPASS
-  iommu/arm-smmu: Emulate bypass by using context banks
-  iommu/arm-smmu: Move SMR and S2CR definitions to header file
-  iommu/arm-smmu-qcom: Consistently initialize stream mappings
-  iommu/arm-smmu: Setup identity domain for boot mappings
-
- drivers/iommu/arm-smmu-qcom.c |  48 +++++++++++++
- drivers/iommu/arm-smmu.c      | 123 +++++++++++++++++++++++++++++-----
- drivers/iommu/arm-smmu.h      |  21 ++++++
- 3 files changed, 174 insertions(+), 18 deletions(-)
-
+diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+index 243bc4cb2705..fb85e716ae9a 100644
+--- a/drivers/iommu/arm-smmu.c
++++ b/drivers/iommu/arm-smmu.c
+@@ -1924,6 +1924,22 @@ static int arm_smmu_device_cfg_probe(struct arm_smmu_device *smmu)
+ 	return 0;
+ }
+ 
++static int arm_smmu_setup_identity(struct arm_smmu_device *smmu)
++{
++	int i;
++
++	for (i = 0; i < smmu->num_mapping_groups; i++) {
++		if (smmu->smrs[i].valid) {
++			smmu->s2crs[i].type = S2CR_TYPE_BYPASS;
++			smmu->s2crs[i].privcfg = S2CR_PRIVCFG_DEFAULT;
++			smmu->s2crs[i].cbndx = 0xff;
++			smmu->s2crs[i].count++;
++		}
++	}
++
++	return 0;
++}
++
+ struct arm_smmu_match_data {
+ 	enum arm_smmu_arch_version version;
+ 	enum arm_smmu_implementation model;
+@@ -2181,6 +2197,10 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
+ 
++	err = arm_smmu_setup_identity(smmu);
++	if (err)
++		return err;
++
+ 	if (smmu->version == ARM_SMMU_V2) {
+ 		if (smmu->num_context_banks > smmu->num_context_irqs) {
+ 			dev_err(dev,
 -- 
 2.26.2
 
