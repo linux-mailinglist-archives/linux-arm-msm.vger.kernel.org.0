@@ -2,114 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A2FE224927
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 08:00:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6623F224938
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 08:33:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbgGRGAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jul 2020 02:00:15 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:43540 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726466AbgGRGAP (ORCPT
+        id S1726672AbgGRGdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jul 2020 02:33:55 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:29992 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726226AbgGRGdy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jul 2020 02:00:15 -0400
-Received: from ravnborg.org (unknown [188.228.123.71])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id E1896804EB;
-        Sat, 18 Jul 2020 08:00:08 +0200 (CEST)
-Date:   Sat, 18 Jul 2020 08:00:07 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Jingoo Han <jingoohan1@gmail.com>
-Cc:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-pwm@vger.kernel.org" <linux-pwm@vger.kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        "patches@opensource.cirrus.com" <patches@opensource.cirrus.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>
-Subject: Re: [PATCH v4 05/20] backlight: improve backlight_device
- documentation
-Message-ID: <20200718060007.GA2419852@ravnborg.org>
-References: <20200703184546.144664-1-sam@ravnborg.org>
- <20200703184546.144664-6-sam@ravnborg.org>
- <SL2P216MB0105B428FFAB66BDA245B814AA7D0@SL2P216MB0105.KORP216.PROD.OUTLOOK.COM>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <SL2P216MB0105B428FFAB66BDA245B814AA7D0@SL2P216MB0105.KORP216.PROD.OUTLOOK.COM>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
-        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
-        a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8
-        a=VwQbUJbxAAAA:8 a=qfaL6h6_04lZHQssqbcA:9 a=CjuIK1q_8ugA:10
-        a=E9Po1WZjFZOl8hwRPBS3:22 a=cvBusfyB2V15izCimMoJ:22
-        a=AjGcO6oz07-iQ99wixmX:22
+        Sat, 18 Jul 2020 02:33:54 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 17 Jul 2020 23:33:54 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Jul 2020 23:33:52 -0700
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 18 Jul 2020 12:03:30 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id B895E3FD5; Sat, 18 Jul 2020 12:03:28 +0530 (IST)
+From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, mka@chromium.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        Pradeep P V K <ppvk@codeaurora.org>,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Subject: [PATCH V1] arm64: dts: qcom: Add bandwidth votes for eMMC and SDcard
+Date:   Sat, 18 Jul 2020 12:03:26 +0530
+Message-Id: <1595054006-6803-1-git-send-email-sbhanu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jingoo
-On Sat, Jul 18, 2020 at 05:18:39AM +0000, Jingoo Han wrote:
-> On 7/3/20, 2:46 PM, Sam Ravnborg wrote:
-> >
-> > Improve the documentation for backlight_device and
-> > adapt it to kernel-doc style.
-> >
-> > The updated documentation is more strict on how locking is used.
-> > With the update neither update_lock nor ops_lock may be used
-> > outside the backlight core.
-> > This restriction was introduced to keep the locking simple
-> > by keeping it in the core.
-> > It was verified that this documents the current state by renaming
-> > update_lock => bl_update_lock and ops_lock => bl_ops_lock.
-> > The rename did not reveal any uses outside the backlight core.
-> > The rename is NOT part of this patch.
-> >
-> > v3:
-> >   - Update changelog to explain locking details (Daniel)
-> >
-> > v2:
-> >   - Add short intro to all fields (Daniel)
-> >   - Updated description of update_lock (Daniel)
-> >
-> > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
->  > Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
-> > Cc: Lee Jones <lee.jones@linaro.org>
-> > Cc: Daniel Thompson <daniel.thompson@linaro.org>
-> > Cc: Jingoo Han <jingoohan1@gmail.com>
-> 
-> It looks good!
-> Reviewed-by: Jingoo Han <jingoohan1@gmail.com>
+From: Pradeep P V K <ppvk@codeaurora.org>
 
-Thanks!
+Add the bandwidth domain supporting performance state and
+the corresponding OPP tables for the sdhc device on sc7180.
 
-> 
-> For the rebase, if you don't know which branch of maintainer's git can be used,
-> linux-next tree [1] is useful. The linux-next git collects all next branches from 
-> other maintainers' git every day.
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/
+Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+---
+This change is depends on the patch series
+https://lkml.org/lkml/2020/6/30/1280
+Also depends on documentation commit 557ed5f (Present on linux-next)
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-I had used drm-misc-next because the original focus was to clean up
-drivers in gpu/drm/ - and then I just continued to use this wrong tree.
-linux-next is indeed a good place to catch the latest and greatest - but
-as I now have the URL for the backlight tree (thanks to Lee) I will use it here.
-Will try to find time this weekend so we can land these.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 68f9894..d78a066 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -684,6 +684,9 @@
+ 			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
+ 					<&gcc GCC_SDCC1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			interconnects = <&aggre1_noc MASTER_EMMC &mc_virt SLAVE_EBI1>,
++				<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_EMMC_CFG>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
+ 			power-domains = <&rpmhpd SC7180_CX>;
+ 			operating-points-v2 = <&sdhc1_opp_table>;
+ 
+@@ -704,11 +707,15 @@
+ 				opp-100000000 {
+ 					opp-hz = /bits/ 64 <100000000>;
+ 					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <100000 100000>;
++					opp-avg-kBps = <100000 50000>;
+ 				};
+ 
+ 				opp-384000000 {
+ 					opp-hz = /bits/ 64 <384000000>;
+ 					required-opps = <&rpmhpd_opp_svs_l1>;
++					opp-peak-kBps = <600000 900000>;
++					opp-avg-kBps = <261438 300000>;
+ 				};
+ 			};
+ 		};
+@@ -2476,6 +2483,10 @@
+ 			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
+ 					<&gcc GCC_SDCC2_AHB_CLK>;
+ 			clock-names = "core", "iface";
++
++			interconnects = <&aggre1_noc MASTER_SDCC_2 &mc_virt SLAVE_EBI1>,
++				<&gem_noc MASTER_APPSS_PROC &config_noc	SLAVE_SDCC_2>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
+ 			power-domains = <&rpmhpd SC7180_CX>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
+ 
+@@ -2489,11 +2500,15 @@
+ 				opp-100000000 {
+ 					opp-hz = /bits/ 64 <100000000>;
+ 					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <160000 100000>;
++					opp-avg-kBps = <80000 50000>;
+ 				};
+ 
+ 				opp-202000000 {
+ 					opp-hz = /bits/ 64 <202000000>;
+ 					required-opps = <&rpmhpd_opp_svs_l1>;
++					opp-peak-kBps = <200000	120000>;
++					opp-avg-kBps = <100000 60000>;
+ 				};
+ 			};
+ 		};
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-	Sam
