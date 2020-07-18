@@ -2,109 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C551D224870
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 06:13:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E566C2248F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 07:18:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726207AbgGRENZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Jul 2020 00:13:25 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:7159 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbgGRENZ (ORCPT
+        id S1726087AbgGRFSu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jul 2020 01:18:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39652 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbgGRFSt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Jul 2020 00:13:25 -0400
-IronPort-SDR: 3TMtwQNI8kIqhnn3lH1OMAQxaQdkpbKzuL/l4nLbO6YzFG+4HNoSr5LTsrcw7BHnIBNbWn8QT7
- bAj4C6ZOzwLiW0xM+dGgdZasxqUj6Y/sWjBk5ZLDRkAt43iAwXqhNLwWDH0IZKoboT8y5h/pg2
- wgdn3j3ARwUplQTggDvHn7IGSLpM0M5Dx6pTZzAl98SwczqM8xSt/q3S5tS9PimkB4maRWWSz2
- 07vqf3zEGm5xjOf523nFrxwVbbKZ4xf0OiKpkTbd06000H0yzGMlIXIi7lu6R+4R7mVk3GfF7i
- ZHs=
-X-IronPort-AV: E=Sophos;i="5.75,365,1589266800"; 
-   d="scan'208";a="47222745"
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by labrats.qualcomm.com with ESMTP; 17 Jul 2020 21:13:25 -0700
-Received: from pacamara-linux.qualcomm.com ([192.168.140.135])
-  by ironmsg01-sd.qualcomm.com with ESMTP; 17 Jul 2020 21:13:23 -0700
-Received: by pacamara-linux.qualcomm.com (Postfix, from userid 359480)
-        id 2A3B522D61; Fri, 17 Jul 2020 21:13:23 -0700 (PDT)
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        sh425.lee@samsung.com, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
-        cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 18 Jul 2020 01:18:49 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84576C0619D2;
+        Fri, 17 Jul 2020 22:18:49 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id 72so6290869ple.0;
+        Fri, 17 Jul 2020 22:18:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:thread-topic:thread-index:date:message-id
+         :references:in-reply-to:accept-language:content-language
+         :content-transfer-encoding:mime-version;
+        bh=mlfozsoeSwNR4jerQErJFdBhmV0KjCymWwxCPubYIaA=;
+        b=bJyEKfCPgI1GtaOteGEWzVV0x2CRPEvQOeStpeHpBoUvnK5R1hBYenSXTnShj2gVan
+         OAXaYHXKzDkwWwjJOkHUgLZdLYhgODNAzKKdMyIGUVeIclj/VI8CJrz6eaaCu3Zg/DUo
+         0e/3AjCnrMhq3VO9xYbstzE7ObX8S6F4gNdl3QDOSh2Z9yhNqKsFhsj1Lawte6q1wWKQ
+         aqaQcRcLaJYqekfnfpOObfFk+8HM+8YO0Si2qq5f1MFV9K1JG+aGHVOlHvVswUr8ZZkF
+         PJ9j4RxFQMWmeYdJLsZ4xL/+//mski0uxYNP+E9v9KbOn17EVmHrUBlEXqx1rd4PHUAA
+         SdhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:thread-topic:thread-index
+         :date:message-id:references:in-reply-to:accept-language
+         :content-language:content-transfer-encoding:mime-version;
+        bh=mlfozsoeSwNR4jerQErJFdBhmV0KjCymWwxCPubYIaA=;
+        b=L7qxRXpLlrg0E8ePPgaKiQFT3OAOpKCXRkqoXO7N6JODm0iJw6aD0FFSHM5Wi2IGgM
+         Y1Uce3bFt0ufB1GpgZdBEPTePzPs23Qyy6UKmCxD+lM9KNS2laKpXjnr5fN1ZQZMvYTP
+         wJZVm3DTKOkWm3zTPhsm2f2dkuUGQBNayTXwMoXbvkQT4/5DgEtv7gCLADEb78lloZe6
+         QbxiIRwE2Toxsi7NM8kxxNCti08thTV2SuS7jb5ZC0UPG4bHsVVNWC2DIe286/PtGTL0
+         fcyBOPiIL45YniQ7uHLsr7osu88yab7+F1hbGILskF9+pjiGGCvuxhp9xth9oyN7UYBo
+         yoZw==
+X-Gm-Message-State: AOAM5303Bh4ygjqwpKX97V3xFmH0Dnti5xk/Y1x7aeKiYHlTqdpkcNQm
+        tg4DthjTEvagP6f7Z5MWnc8=
+X-Google-Smtp-Source: ABdhPJx+qV5tP7OduXb9qq/p372Wy7fK9H763iy8HSM4aIsKs/6vD63FNgE7DS+Nru7djfo1eoK6XA==
+X-Received: by 2002:a17:902:d704:: with SMTP id w4mr10626957ply.278.1595049527861;
+        Fri, 17 Jul 2020 22:18:47 -0700 (PDT)
+Received: from SL2P216MB0105.KORP216.PROD.OUTLOOK.COM ([2603:1046:100:22::5])
+        by smtp.gmail.com with ESMTPSA id 137sm9381988pgg.72.2020.07.17.22.18.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 Jul 2020 22:18:46 -0700 (PDT)
+From:   Jingoo Han <jingoohan1@gmail.com>
+To:     Sam Ravnborg <sam@ravnborg.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 3/4] ufs: ufs-qcom: Fix a few BUGs in func ufs_qcom_dump_dbg_regs()
-Date:   Fri, 17 Jul 2020 21:13:03 -0700
-Message-Id: <1595045585-16402-4-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1595045585-16402-1-git-send-email-cang@codeaurora.org>
-References: <1595045585-16402-1-git-send-email-cang@codeaurora.org>
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-pwm@vger.kernel.org" <linux-pwm@vger.kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        "patches@opensource.cirrus.com" <patches@opensource.cirrus.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>,
+        Han Jingoo <jingoohan1@gmail.com>
+Subject: Re: [PATCH v4 05/20] backlight: improve backlight_device
+ documentation
+Thread-Topic: [PATCH v4 05/20] backlight: improve backlight_device
+ documentation
+Thread-Index: AQHWUWo8LdMENsI4A0SJ70NDIxdujKkM4vEa
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date:   Sat, 18 Jul 2020 05:18:39 +0000
+Message-ID: <SL2P216MB0105B428FFAB66BDA245B814AA7D0@SL2P216MB0105.KORP216.PROD.OUTLOOK.COM>
+References: <20200703184546.144664-1-sam@ravnborg.org>
+ <20200703184546.144664-6-sam@ravnborg.org>
+In-Reply-To: <20200703184546.144664-6-sam@ravnborg.org>
+Accept-Language: ko-KR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator: 
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dumping testbus registers needs to sleep a bit intermittently as there are
-too many of them. Skip them for those contexts where sleep is not allowed.
+On 7/3/20, 2:46 PM, Sam Ravnborg wrote:
+>
+> Improve the documentation for backlight_device and
+> adapt it to kernel-doc style.
+>
+> The updated documentation is more strict on how locking is used.
+> With the update neither update_lock nor ops_lock may be used
+> outside the backlight core.
+> This restriction was introduced to keep the locking simple
+> by keeping it in the core.
+> It was verified that this documents the current state by renaming
+> update_lock =3D> bl_update_lock and ops_lock =3D> bl_ops_lock.
+> The rename did not reveal any uses outside the backlight core.
+> The rename is NOT part of this patch.
+>
+> v3:
+>   - Update changelog to explain locking details (Daniel)
+>
+> v2:
+>   - Add short intro to all fields (Daniel)
+>   - Updated description of update_lock (Daniel)
+>
+> Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+ > Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Cc: Daniel Thompson <daniel.thompson@linaro.org>
+> Cc: Jingoo Han <jingoohan1@gmail.com>
 
-Meanwhile, if ufs_qcom_dump_dbg_regs() calls ufs_qcom_testbus_config() from
-ufshcd_suspend/resume and/or clk gate/ungate context, pm_runtime_get_sync()
-and ufshcd_hold() will cause racing problems. Fix it by removing the
-unnecessary calls of pm_runtime_get_sync() and ufshcd_hold().
+It looks good!
+Reviewed-by: Jingoo Han <jingoohan1@gmail.com>
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+For the rebase, if you don't know which branch of maintainer's git can be u=
+sed,
+linux-next tree [1] is useful. The linux-next git collects all next branche=
+s from=20
+other maintainers' git every day.
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 2e6ddb5..3743c17 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1604,9 +1604,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	 */
- 	}
- 	mask <<= offset;
--
--	pm_runtime_get_sync(host->hba->dev);
--	ufshcd_hold(host->hba, false);
- 	ufshcd_rmwl(host->hba, TEST_BUS_SEL,
- 		    (u32)host->testbus.select_major << 19,
- 		    REG_UFS_CFG1);
-@@ -1619,8 +1616,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	 * committed before returning.
- 	 */
- 	mb();
--	ufshcd_release(host->hba);
--	pm_runtime_put_sync(host->hba->dev);
- 
- 	return 0;
- }
-@@ -1658,11 +1653,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- 
- 	/* sleep a bit intermittently as we are dumping too much data */
- 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
--	udelay(1000);
--	ufs_qcom_testbus_read(hba);
--	udelay(1000);
--	ufs_qcom_print_unipro_testbus(hba);
--	udelay(1000);
-+	if (in_task()) {
-+		udelay(1000);
-+		ufs_qcom_testbus_read(hba);
-+		udelay(1000);
-+		ufs_qcom_print_unipro_testbus(hba);
-+		udelay(1000);
-+	}
- }
- 
- /**
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/
 
+Thank you.
+
+Best regards,
+Jingoo Han
+
+> ---
+>  include/linux/backlight.h | 72 ++++++++++++++++++++++++++-------------
+>  1 file changed, 49 insertions(+), 23 deletions(-)
+.....
