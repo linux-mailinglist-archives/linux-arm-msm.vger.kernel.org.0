@@ -2,95 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE788224759
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 02:07:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4711522477E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 02:41:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728817AbgGRAGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jul 2020 20:06:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48586 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728805AbgGRAGu (ORCPT
+        id S1728634AbgGRAlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jul 2020 20:41:05 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:40609 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728087AbgGRAlE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jul 2020 20:06:50 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A8EC0619D3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jul 2020 17:06:50 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id a8so7999403pff.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jul 2020 17:06:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=cSGrpEWuKSVf97iW7EL4KZRFYPfb7+inZKxBuLQuvAE=;
-        b=oFBiOJFotgQsYiohUpKbkZXbMk0anIOETUAPGMRKbKBtkpfPEd8xLg6XTAXbyZcfoi
-         BwNvvIaw6/t2CBTYGbvsBkLGxWK6++vWST3Aj1KHKgiLKceg0RQ/9jN9Ao2iWcVkzj7h
-         2Q0AYvvuyzQfl95ZIplngHYn1lLuX9YOT4GvpS3gMS4mvYXyjnqEy+kxckIutRo4ELHv
-         PD8Cy2kj4InW3oDPlbSPrZZ65B1YVO/rND51vigqVYZQjN2CHT4NeULpOgwFAekw8cce
-         JpLLDWTXvh8nLo3nGfEzbkbAHILC+wrXQ/qljDHEhrL2d39+3a69ylcOh6DBU7A+ud7z
-         0n3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=cSGrpEWuKSVf97iW7EL4KZRFYPfb7+inZKxBuLQuvAE=;
-        b=dqGedn0FHOPS+0VCMSNNFAjYPSkhpgXrLEZPII8De45mOe32obNa6P7Ql08o7vCsjn
-         vPiUrrfjTOyTq7aSIdXvxjKbYu8XGsOFHWCJ/AFM/UUbcmc2il5OFqmyLyQWWeK+YzPe
-         k+Ao8AgbEFK0P3hrFmrHlNHZbgfitHf8ASJLPOKe23av3jm674GekqhRHNPn/cWybhYL
-         C87hRiys+YLgjqrzDm/htCPgnAmZRf+qfNDjVgOkpssZVgGHbX/3lI83sri6F/gLH7Kc
-         5jl9eC4cmHPM95YYM1pHDc+B1z0tCB/xHWOabA2Kc7gys38J32pyqyVo2elZTMnG1U/g
-         e25g==
-X-Gm-Message-State: AOAM533XdJX0Q1e7ZNp5clDzf5ILVbE6rNBHr8Qh0E4juBGoBTcXMZO3
-        /v4tF6qSaU9j2uuWBXmHG9nHHCJHGvuvT5I=
-X-Google-Smtp-Source: ABdhPJzKJZr8KDd4Yo0Wm5lo4eKhPkLN/TRhN4fCypWCbhR0OyB2ssX8VqDuXN35b/Dzh+f6roB+vXsTyHzgnyQ=
-X-Received: by 2002:a63:7d16:: with SMTP id y22mr10135672pgc.136.1595030810200;
- Fri, 17 Jul 2020 17:06:50 -0700 (PDT)
-Date:   Fri, 17 Jul 2020 17:06:37 -0700
-In-Reply-To: <20200718000637.3632841-1-saravanak@google.com>
-Message-Id: <20200718000637.3632841-5-saravanak@google.com>
-Mime-Version: 1.0
-References: <20200718000637.3632841-1-saravanak@google.com>
-X-Mailer: git-send-email 2.28.0.rc0.105.gf9edc3c819-goog
-Subject: [PATCH v3 4/4] irqchip/mtk-cirq: Convert to a platform driver
-From:   Saravana Kannan <saravanak@google.com>
-To:     Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Saravana Kannan <saravanak@google.com>, kernel-team@android.com,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        John Stultz <john.stultz@linaro.org>,
-        Hanks Chen <hanks.chen@mediatek.com>,
-        CC Hwang <cc.hwang@mediatek.com>,
-        Loda Chou <loda.chou@mediatek.com>
-Content-Type: text/plain; charset="UTF-8"
+        Fri, 17 Jul 2020 20:41:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595032864; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=iNKJj+TLzkBnI4NSsc5gA6qzfp4yaENwEEBOKVBFHZM=; b=YVGERfFCTvjK5Kh6ZfPvrAEEOAORfxq7l4yOJIE7v+k8Si6r5U7/A01WW8peViKkVtLlHDUV
+ K+l23ypb4YSQ6MuKajuVyktYT0haYnrxHIeLEc78pwoL+XIz14F1QFv39qHnDqo35TSvO8Rm
+ MUhSesU26sUPDqysXYHf+LXxh2Y=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f12451fe3bee125108f0b53 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 18 Jul 2020 00:41:03
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C3AFEC433CB; Sat, 18 Jul 2020 00:41:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.117] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdtipton)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BF392C433C9;
+        Sat, 18 Jul 2020 00:41:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BF392C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
+Subject: Re: [PATCH v2 2/6] dt-bindings: interconnect: Add property to set BCM
+ TCS wait behavior
+To:     Rob Herring <robh@kernel.org>
+Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200710015652.19206-1-mdtipton@codeaurora.org>
+ <20200710015652.19206-3-mdtipton@codeaurora.org>
+ <20200710163119.GA2753833@bogus>
+From:   Mike Tipton <mdtipton@codeaurora.org>
+Message-ID: <43a0638a-ea3d-eb96-16d0-524148f86bc3@codeaurora.org>
+Date:   Fri, 17 Jul 2020 17:41:01 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20200710163119.GA2753833@bogus>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This driver can work as a platform driver. So covert it to a platform
-driver.
+On 7/10/2020 9:31 AM, Rob Herring wrote:
+> On Thu, Jul 09, 2020 at 06:56:48PM -0700, Mike Tipton wrote:
+>> Add "qcom,tcs-wait" property to set which TCS should wait for completion
+>> when triggering.
+>>
+>> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+>> ---
+>>   .../bindings/interconnect/qcom,bcm-voter.yaml       | 13 +++++++++++++
+>>   1 file changed, 13 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+>> index 5971fc1df08d..f0c3d6b01831 100644
+>> --- a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
+>> @@ -21,6 +21,16 @@ properties:
+>>       enum:
+>>         - qcom,bcm-voter
+>>   
+>> +  qcom,tcs-wait:
+>> +    description: |
+>> +      Optional mask of which TCSs (Triggered Command Sets) wait for completion
+>> +      upon triggering. In most cases, it's necessary to wait in both the AMC
+>> +      and WAKE sets to ensure resources are available before use. If a specific
+>> +      RSC and its use cases can ensure sufficient delay by other means, then
+>> +      this can be overridden to reduce latencies.
+> 
+> I have no idea what any of this means to provide any meaningful comment.
+> 
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    default: QCOM_ICC_TAG_ACTIVE_ONLY
+> 
+> Can't use defines here.
 
-Signed-off-by: Saravana Kannan <saravanak@google.com>
----
- drivers/irqchip/irq-mtk-cirq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+What's the recommended alternative? The meaning isn't obvious as a raw 
+number (3). We expect the defines to be used in the dt files themselves 
+(see example below). Is this just a restriction for the `default` 
+documentation specifically? I could just mention the default behavior in 
+the description I suppose, but that seems to defeat the purpose of 
+having a separate `default` key.
 
-diff --git a/drivers/irqchip/irq-mtk-cirq.c b/drivers/irqchip/irq-mtk-cirq.c
-index 69ba8ce3c178..62a61275aaa3 100644
---- a/drivers/irqchip/irq-mtk-cirq.c
-+++ b/drivers/irqchip/irq-mtk-cirq.c
-@@ -295,4 +295,6 @@ static int __init mtk_cirq_of_init(struct device_node *node,
- 	return ret;
- }
- 
--IRQCHIP_DECLARE(mtk_cirq, "mediatek,mtk-cirq", mtk_cirq_of_init);
-+IRQCHIP_PLATFORM_DRIVER_BEGIN(mtk_cirq)
-+IRQCHIP_MATCH("mediatek,mtk-cirq", mtk_cirq_of_init)
-+IRQCHIP_PLATFORM_DRIVER_END(mtk_cirq)
--- 
-2.28.0.rc0.105.gf9edc3c819-goog
-
+> 
+>> +
+>>   required:
+>>     - compatible
+>>   
+>> @@ -39,7 +49,10 @@ examples:
+>>     # as defined in Documentation/devicetree/bindings/soc/qcom/rpmh-rsc.txt
+>>     - |
+>>   
+>> +    #include <dt-bindings/interconnect/qcom,icc.h>
+>> +
+>>       disp_bcm_voter: bcm_voter {
+>>           compatible = "qcom,bcm-voter";
+>> +        qcom,tcs-wait = <QCOM_ICC_TAG_AMC>;
+>>       };
+>>   ...
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
