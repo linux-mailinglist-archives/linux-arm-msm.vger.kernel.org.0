@@ -2,128 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4711522477E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 02:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C551D224870
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 06:13:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728634AbgGRAlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jul 2020 20:41:05 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:40609 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728087AbgGRAlE (ORCPT
+        id S1726207AbgGRENZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Jul 2020 00:13:25 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:7159 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbgGRENZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jul 2020 20:41:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595032864; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=iNKJj+TLzkBnI4NSsc5gA6qzfp4yaENwEEBOKVBFHZM=; b=YVGERfFCTvjK5Kh6ZfPvrAEEOAORfxq7l4yOJIE7v+k8Si6r5U7/A01WW8peViKkVtLlHDUV
- K+l23ypb4YSQ6MuKajuVyktYT0haYnrxHIeLEc78pwoL+XIz14F1QFv39qHnDqo35TSvO8Rm
- MUhSesU26sUPDqysXYHf+LXxh2Y=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f12451fe3bee125108f0b53 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 18 Jul 2020 00:41:03
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C3AFEC433CB; Sat, 18 Jul 2020 00:41:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.117] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BF392C433C9;
-        Sat, 18 Jul 2020 00:41:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BF392C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
-Subject: Re: [PATCH v2 2/6] dt-bindings: interconnect: Add property to set BCM
- TCS wait behavior
-To:     Rob Herring <robh@kernel.org>
-Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200710015652.19206-1-mdtipton@codeaurora.org>
- <20200710015652.19206-3-mdtipton@codeaurora.org>
- <20200710163119.GA2753833@bogus>
-From:   Mike Tipton <mdtipton@codeaurora.org>
-Message-ID: <43a0638a-ea3d-eb96-16d0-524148f86bc3@codeaurora.org>
-Date:   Fri, 17 Jul 2020 17:41:01 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20200710163119.GA2753833@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Sat, 18 Jul 2020 00:13:25 -0400
+IronPort-SDR: 3TMtwQNI8kIqhnn3lH1OMAQxaQdkpbKzuL/l4nLbO6YzFG+4HNoSr5LTsrcw7BHnIBNbWn8QT7
+ bAj4C6ZOzwLiW0xM+dGgdZasxqUj6Y/sWjBk5ZLDRkAt43iAwXqhNLwWDH0IZKoboT8y5h/pg2
+ wgdn3j3ARwUplQTggDvHn7IGSLpM0M5Dx6pTZzAl98SwczqM8xSt/q3S5tS9PimkB4maRWWSz2
+ 07vqf3zEGm5xjOf523nFrxwVbbKZ4xf0OiKpkTbd06000H0yzGMlIXIi7lu6R+4R7mVk3GfF7i
+ ZHs=
+X-IronPort-AV: E=Sophos;i="5.75,365,1589266800"; 
+   d="scan'208";a="47222745"
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by labrats.qualcomm.com with ESMTP; 17 Jul 2020 21:13:25 -0700
+Received: from pacamara-linux.qualcomm.com ([192.168.140.135])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 17 Jul 2020 21:13:23 -0700
+Received: by pacamara-linux.qualcomm.com (Postfix, from userid 359480)
+        id 2A3B522D61; Fri, 17 Jul 2020 21:13:23 -0700 (PDT)
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        sh425.lee@samsung.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v3 3/4] ufs: ufs-qcom: Fix a few BUGs in func ufs_qcom_dump_dbg_regs()
+Date:   Fri, 17 Jul 2020 21:13:03 -0700
+Message-Id: <1595045585-16402-4-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1595045585-16402-1-git-send-email-cang@codeaurora.org>
+References: <1595045585-16402-1-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/10/2020 9:31 AM, Rob Herring wrote:
-> On Thu, Jul 09, 2020 at 06:56:48PM -0700, Mike Tipton wrote:
->> Add "qcom,tcs-wait" property to set which TCS should wait for completion
->> when triggering.
->>
->> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
->> ---
->>   .../bindings/interconnect/qcom,bcm-voter.yaml       | 13 +++++++++++++
->>   1 file changed, 13 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> index 5971fc1df08d..f0c3d6b01831 100644
->> --- a/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,bcm-voter.yaml
->> @@ -21,6 +21,16 @@ properties:
->>       enum:
->>         - qcom,bcm-voter
->>   
->> +  qcom,tcs-wait:
->> +    description: |
->> +      Optional mask of which TCSs (Triggered Command Sets) wait for completion
->> +      upon triggering. In most cases, it's necessary to wait in both the AMC
->> +      and WAKE sets to ensure resources are available before use. If a specific
->> +      RSC and its use cases can ensure sufficient delay by other means, then
->> +      this can be overridden to reduce latencies.
-> 
-> I have no idea what any of this means to provide any meaningful comment.
-> 
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    default: QCOM_ICC_TAG_ACTIVE_ONLY
-> 
-> Can't use defines here.
+Dumping testbus registers needs to sleep a bit intermittently as there are
+too many of them. Skip them for those contexts where sleep is not allowed.
 
-What's the recommended alternative? The meaning isn't obvious as a raw 
-number (3). We expect the defines to be used in the dt files themselves 
-(see example below). Is this just a restriction for the `default` 
-documentation specifically? I could just mention the default behavior in 
-the description I suppose, but that seems to defeat the purpose of 
-having a separate `default` key.
+Meanwhile, if ufs_qcom_dump_dbg_regs() calls ufs_qcom_testbus_config() from
+ufshcd_suspend/resume and/or clk gate/ungate context, pm_runtime_get_sync()
+and ufshcd_hold() will cause racing problems. Fix it by removing the
+unnecessary calls of pm_runtime_get_sync() and ufshcd_hold().
 
-> 
->> +
->>   required:
->>     - compatible
->>   
->> @@ -39,7 +49,10 @@ examples:
->>     # as defined in Documentation/devicetree/bindings/soc/qcom/rpmh-rsc.txt
->>     - |
->>   
->> +    #include <dt-bindings/interconnect/qcom,icc.h>
->> +
->>       disp_bcm_voter: bcm_voter {
->>           compatible = "qcom,bcm-voter";
->> +        qcom,tcs-wait = <QCOM_ICC_TAG_AMC>;
->>       };
->>   ...
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
+Signed-off-by: Can Guo <cang@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-qcom.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 2e6ddb5..3743c17 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1604,9 +1604,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
+ 	 */
+ 	}
+ 	mask <<= offset;
+-
+-	pm_runtime_get_sync(host->hba->dev);
+-	ufshcd_hold(host->hba, false);
+ 	ufshcd_rmwl(host->hba, TEST_BUS_SEL,
+ 		    (u32)host->testbus.select_major << 19,
+ 		    REG_UFS_CFG1);
+@@ -1619,8 +1616,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
+ 	 * committed before returning.
+ 	 */
+ 	mb();
+-	ufshcd_release(host->hba);
+-	pm_runtime_put_sync(host->hba->dev);
+ 
+ 	return 0;
+ }
+@@ -1658,11 +1653,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
+ 
+ 	/* sleep a bit intermittently as we are dumping too much data */
+ 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
+-	udelay(1000);
+-	ufs_qcom_testbus_read(hba);
+-	udelay(1000);
+-	ufs_qcom_print_unipro_testbus(hba);
+-	udelay(1000);
++	if (in_task()) {
++		udelay(1000);
++		ufs_qcom_testbus_read(hba);
++		udelay(1000);
++		ufs_qcom_print_unipro_testbus(hba);
++		udelay(1000);
++	}
+ }
+ 
+ /**
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
