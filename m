@@ -2,56 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1148224755
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 02:07:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50D9F224758
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Jul 2020 02:07:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728729AbgGRAGq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Jul 2020 20:06:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48564 "EHLO
+        id S1728787AbgGRAGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Jul 2020 20:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728691AbgGRAGp (ORCPT
+        with ESMTP id S1728768AbgGRAGs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Jul 2020 20:06:45 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A80C0619D3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jul 2020 17:06:45 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id e80so7995172pfh.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jul 2020 17:06:45 -0700 (PDT)
+        Fri, 17 Jul 2020 20:06:48 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 739D6C0619D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jul 2020 17:06:48 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id d202so13332125ybh.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Jul 2020 17:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=DKGRFKWlyGqgvFuZLsoVKcLXRUmmTtOYHyvcndsSP+U=;
-        b=eaB2T02EB8g0y1xZXeHPi2mGLg8poIqpVgJ7BZUCLc/EEq3S9kRsfSNNVOCKuDD0Tp
-         x74rVZSROfJKsOJm9ugF+T1Hp/iX0XD+d22Er6E2Ibg96Ah5e8rAy3JrWpf9H2Z7OG+d
-         YfBGYGnHBr3s3ccaS/U13rr/1gTn2YsvYde1+xHImpDp53KqpLwJSlZ2wApaMUKIJsf3
-         crIVaak6JWU7DHb9Yi5DC8e+5EFRBpqVcvzTXx4P24HIAMBgrJPX7czTcaMGSWVzUDhV
-         MEo1D+Pw+zcwU39+Qrp+uVsSPuLqyQXoE6/DNJ8WbV/EYVgi81q5pq3cK0C/DF/L+LlF
-         vZRw==
+        bh=9lliIP397BkHUMIYOIiz1lmKlM09rTtKqti3dJZq5NI=;
+        b=Pc3OXUSRMtC51Xe5/XMfqVgGHTzqEztWThvDswR20yBvK4q20Xw3ZNE+8dkR19OmDD
+         gDksFj5HOd268anWSSimT3Gn9d+v7SfcYJjjCEJY6k3KED8/Qg0cUFL25Q3MLk3u6WzP
+         6SQOsdECq3m8nfn4B/G+qcw93FKsucGX6KBj42CnWiZKaOz2sMFI1iIBqIg8B/YnRj6U
+         VozP0QbaLKiXIdIxryY+7xaJJEGEd8+z9ZmQZXSjBMWae0vTANsynMnqxGRMmmAY2Nz7
+         y01D9HdzUEov/4to4JpMNjFHQb5ZWpIPNEGfCjmvUCtCL/gSUXe19cgBOBtkE/HRrupU
+         dKKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=DKGRFKWlyGqgvFuZLsoVKcLXRUmmTtOYHyvcndsSP+U=;
-        b=rrEgCeqmWDCuPppBUNrt/cMOq/YTzY+Uv/ifvJbQyJclzmg/SgB760Ov5d8OAG3Far
-         fwo4gOO8umVLOrlBBguid15VPbHYF45MYBziD6ep7cYvDvrRpg8TD3nDFikI8sCV32GM
-         2tb4qZ5YQAij0aKiKgMikiEnq92v5uy5/TwuJ6V8enkH0FVh458i+tJ0aOmc0cxGcFhU
-         QSQM76+ITzS/32lGyeIFlfm/2r7tgdB3tumKP0Wl5WMiU9l2IaFZiaaPYYh7vNVH49Q0
-         G0Vqmo5tRW2xeT6ovnI5YlTbghkaU8o9D9aaAIlRVlQGOJEGPTGC/WM824EEp2BCnYLY
-         B7zQ==
-X-Gm-Message-State: AOAM533PUaoHQqF5soGIEpcxwju1KCHOCCf7F3WWvA5Vn5jIQVLvwr47
-        RxyTB7y+6ZpcOIOSnaxWGtaXt580IXUAL00=
-X-Google-Smtp-Source: ABdhPJw0Oq4D37hE7WRVSZZsPHqDRMN/reFgLscACQLoMocTAkUGaDa91/twwV300uYzLONkac+Q5pfdV9Natf0=
-X-Received: by 2002:a17:90a:32cb:: with SMTP id l69mr11006149pjb.205.1595030805133;
- Fri, 17 Jul 2020 17:06:45 -0700 (PDT)
-Date:   Fri, 17 Jul 2020 17:06:35 -0700
+        bh=9lliIP397BkHUMIYOIiz1lmKlM09rTtKqti3dJZq5NI=;
+        b=K2j4z4Y2GK71U+iFPtgVjoV8IFZDzw8bTVbMzBrgB7bTGoECxSZsn6JL7ZAodSHYvk
+         uDcWLAgg8G7HZyuUAynyXTPROgNhcqPq8dNFbPB7t8slTedi3+EDEPtATdc3x4CBc5Kv
+         Tq59QPZVnrbBahYTKNUFFC6hphqIMS6EtLwrwKZG8ZnJSCxir1uDiegOsHYaQFyVoB7r
+         xs7f7GNqJOG4UIyI0qmpSAjT9CZTq6TDL/MAJjl9Dt3M/+6v0LxbWmbEKBVUEX4ZM+I7
+         X7HtuzGCN6C+Sni8tSdjz85rqVUaGA2ivbsGpely5XsTxaOxImwLTDmQW4HYfrtXVqKo
+         XViA==
+X-Gm-Message-State: AOAM533A2Ev7Vn4GRqysH0GCbWOS7iCPvrEcy4F4qiW5G4sJ/WWrPp2h
+        8x4waWWt6J11OZHqKfmIK3UPHucHFV9CL1U=
+X-Google-Smtp-Source: ABdhPJzaoGGT2QOhK85hcWY30M8zasDny3EJDQN0UI4RBnyRl5EEGtO+6Y9IPCYksqge9OpTXg7V9ykOWjui2KA=
+X-Received: by 2002:a25:abc5:: with SMTP id v63mr17904281ybi.148.1595030807668;
+ Fri, 17 Jul 2020 17:06:47 -0700 (PDT)
+Date:   Fri, 17 Jul 2020 17:06:36 -0700
 In-Reply-To: <20200718000637.3632841-1-saravanak@google.com>
-Message-Id: <20200718000637.3632841-3-saravanak@google.com>
+Message-Id: <20200718000637.3632841-4-saravanak@google.com>
 Mime-Version: 1.0
 References: <20200718000637.3632841-1-saravanak@google.com>
 X-Mailer: git-send-email 2.28.0.rc0.105.gf9edc3c819-goog
-Subject: [PATCH v3 2/4] irqchip/qcom-pdc: Switch to using IRQCHIP_PLATFORM_DRIVER
- helper macros
+Subject: [PATCH v3 3/4] irqchip/mtk-sysirq: Convert to a platform driver
 From:   Saravana Kannan <saravanak@google.com>
 To:     Thomas Gleixner <tglx@linutronix.de>,
         Jason Cooper <jason@lakedaemon.net>,
@@ -72,52 +71,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch the driver to use the helper macros. In addition to reducing the
-number of lines, this also adds module unload protection (if the driver
-is compiled as a module) by switching from module_platform_driver to
-builtin_platform_driver.
+This driver can work as a platform driver. So covert it to a platform
+driver.
 
 Signed-off-by: Saravana Kannan <saravanak@google.com>
 ---
- drivers/irqchip/qcom-pdc.c | 26 +++-----------------------
- 1 file changed, 3 insertions(+), 23 deletions(-)
+ drivers/irqchip/irq-mtk-sysirq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 5b624e3295e4..c1c5dfad57cc 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -432,28 +432,8 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+diff --git a/drivers/irqchip/irq-mtk-sysirq.c b/drivers/irqchip/irq-mtk-sysirq.c
+index 6ff98b87e5c0..7299c5ab4d10 100644
+--- a/drivers/irqchip/irq-mtk-sysirq.c
++++ b/drivers/irqchip/irq-mtk-sysirq.c
+@@ -231,4 +231,6 @@ static int __init mtk_sysirq_of_init(struct device_node *node,
+ 	kfree(chip_data);
  	return ret;
  }
- 
--static int qcom_pdc_probe(struct platform_device *pdev)
--{
--	struct device_node *np = pdev->dev.of_node;
--	struct device_node *parent = of_irq_find_parent(np);
--
--	return qcom_pdc_init(np, parent);
--}
--
--static const struct of_device_id qcom_pdc_match_table[] = {
--	{ .compatible = "qcom,pdc" },
--	{}
--};
--MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
--
--static struct platform_driver qcom_pdc_driver = {
--	.probe = qcom_pdc_probe,
--	.driver = {
--		.name = "qcom-pdc",
--		.of_match_table = qcom_pdc_match_table,
--		.suppress_bind_attrs = true,
--	},
--};
--module_platform_driver(qcom_pdc_driver);
-+IRQCHIP_PLATFORM_DRIVER_BEGIN(qcom_pdc)
-+IRQCHIP_MATCH("qcom,pdc", qcom_pdc_init)
-+IRQCHIP_PLATFORM_DRIVER_END(qcom_pdc)
- MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
- MODULE_LICENSE("GPL v2");
+-IRQCHIP_DECLARE(mtk_sysirq, "mediatek,mt6577-sysirq", mtk_sysirq_of_init);
++IRQCHIP_PLATFORM_DRIVER_BEGIN(mtk_sysirq)
++IRQCHIP_MATCH("mediatek,mt6577-sysirq", mtk_sysirq_of_init)
++IRQCHIP_PLATFORM_DRIVER_END(mtk_sysirq)
 -- 
 2.28.0.rc0.105.gf9edc3c819-goog
 
