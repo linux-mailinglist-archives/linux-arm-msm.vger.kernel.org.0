@@ -2,55 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A2A2273FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 02:42:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2803B227520
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 04:00:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726618AbgGUAmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 20:42:11 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47978 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726021AbgGUAmL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 20:42:11 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D492B208E4;
-        Tue, 21 Jul 2020 00:42:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595292130;
-        bh=0Vzzc2WL8yErIT2TSICeVJFxNGXmGc+yQnHWxMLFDEo=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=OYe9rhroqRtt9lPtGJc86RXtJqbqu87hNLFWTPYdbRqk9f5ag1E4LPKgHg7O3V/W5
-         6IxQ+R5Hc+M7Ntfhzqe6CQnfWBr6oRAmAY1pz3oZ4ry5F9QJwI+WJ9bO9FmkNN5LMw
-         IdKdhpBx0dqekhTCmQTpvfxKS3MKadYw0E9riILI=
-Content-Type: text/plain; charset="utf-8"
+        id S1726177AbgGUCA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 22:00:28 -0400
+Received: from [211.196.21.11] ([211.196.21.11]:53116 "EHLO
+        iscure03.localdomain" rhost-flags-FAIL-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728153AbgGUCA0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 22:00:26 -0400
+Received: from Shop01 (unknown [127.0.0.1])
+        by iscure03.localdomain (Postfix) with SMTP id 061772AE13B;
+        Mon, 20 Jul 2020 12:16:00 +0900 (KST)
+Received: from [229.141.241.102] by Shop01 id ud7dU1XDA1r0; Sun, 19 Jul 2020 12:13:41 -0400
+Message-ID: <p$j$$juj73lb2-kt@3ud.erf.a.16r>
+From:   "MOORE GATES LTD" <TEXT@TEXT.COM>
+Reply-To: "MOORE GATES LTD" <TEXT@TEXT.COM>
+To:     ling_1111@hotmail.com
+Subject: FROM MR. MOORE
+Date:   Sun, 19 Jul 20 12:13:41 GMT
+X-Mailer: eGroups Message Poster
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1595253740-29466-1-git-send-email-loic.poulain@linaro.org>
-References: <1595253740-29466-1-git-send-email-loic.poulain@linaro.org>
-Subject: Re: [PATCH v6 0/5] msm8996 CPU scaling support
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        amit.kucheria@linaro.org, bjorn.andersson@linaro.org,
-        robh@kernel.org, Loic Poulain <loic.poulain@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 20 Jul 2020 17:42:10 -0700
-Message-ID: <159529213012.3847286.8807565794510072249@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: multipart/alternative;
+        boundary="D9F2D5A2__"
+X-Priority: 1
+X-MSMail-Priority: High
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Loic Poulain (2020-07-20 07:02:15)
->=20
-> v6:
->     - Add Acked-by Will tag to l2 kryo accessors patch
 
-I got this one.
+--D9F2D5A2__
+Content-Type: text/plain;
+Content-Transfer-Encoding: quoted-printable
 
->     - Fix msm8996,apcc dt binding file (errors reported by dt_binding_che=
-ck)
+Dear Beloved,
+Peace of the Lord be with you and family, I am Fitzpatrick Moore a
+United Kingdom Citizen, I have ($ 25M) Twenty five Million united
+states dollars with a finance House in United State. I will want you
+to help me collect this deposit and dispatch it to charity
+organizations. You will take out 30% of these funds for your
+assistance to help ME disburse this fund to charities. I will like you
+to acknowledge the receipt of this e-mail as soon as possible and
+treats with absolute confidentiality and sincerity. Please reply to my
+Email: (moorefitzpatrick@gmail.com)
+Yours Sincerely,
+Fitzpatrick Moore
 
-I've already applied v5. Please send incremental patches to fix the
-dt_binding_check problem.
+--D9F2D5A2__--
+
