@@ -2,164 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ADA12250B3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jul 2020 10:08:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A51842251FF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jul 2020 15:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726485AbgGSIId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Jul 2020 04:08:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbgGSIId (ORCPT
+        id S1725988AbgGSNj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Jul 2020 09:39:57 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:42358 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbgGSNj5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Jul 2020 04:08:33 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BE2AC0619D2;
-        Sun, 19 Jul 2020 01:08:32 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id t9so8182696lfl.5;
-        Sun, 19 Jul 2020 01:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9uNwKzv8b/C+0SI0qOFOrsb7npxZ7PTzq2BdWF06ubw=;
-        b=GY8/416esOptHiTcw/hru9S/6/vqdc0yetjpC6SPZf7xPtxO7FP6ADL0+LdKqYdNX5
-         MZJHj3PUr6ys19l9+TGsMvagycygO8p25T8ixdmvOgRNAHQ2VomonsNYPX06+tBCnFjo
-         GJaZn4IM50ItSes0ZOX4hOMHOYGW278fxUtfyTOklTkUErjNwtDEmLqUxnOzHfEYDMH+
-         W54+6nwZl0n5aGK8NW2W3tslN6ZiJw+15pQuv3wC6/kdV00bfIp0TUCXCVnxKoIzWbUe
-         cdMEKz1sGLGNsnO9EukHPzelYqK57AqIDGf9mqxP2VXeBL4HEtJ9xjpOYYEBADn7VUKo
-         e6Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=9uNwKzv8b/C+0SI0qOFOrsb7npxZ7PTzq2BdWF06ubw=;
-        b=nq5CP2hH+ktwmOYFF0V4dSa0eH5BqpMQqgBkZyrm+ugY7aytLsOJlxrjH7YbGs6A67
-         dTYmbgSgFVdpju6yLm08Oil1FcrKiRrrUHJzrhzqZMP8PpySKmcMuhk99GmXPzNmU4df
-         7klVBMrAqyUDDhDT4bmhvjtntzUH7CjFCDD7jrUG2BRboXIzTyMH5mGZh0qofLzuarR/
-         F6t1Fc8RLbctrglnLzMzc8kvEEjgL/6RbrYrbSgQbHNeYSDd1DciHXroZ9wITqvWi16I
-         fUCzUTp9hUVNzrvOB2wjR9JaT+qIJ4fbzkGR0J2WGYyJOzcrWAj/pVaj02CxHEaC6g6w
-         kjQA==
-X-Gm-Message-State: AOAM530l31eb6G+3shmUryldEFs9LTaJnS0ojhqqSdlcKjMhmztVK6RE
-        s+FOtGLYr85GJ6+AMZ5YlDo=
-X-Google-Smtp-Source: ABdhPJwIH7f1kYdsfJVH3BGHUjihRFZqPKBCA9Z4ih5Z5OGknuirQDjZF0kxMmmxuEi/yIgniGV3rA==
-X-Received: by 2002:ac2:4ec9:: with SMTP id p9mr779615lfr.142.1595146111102;
-        Sun, 19 Jul 2020 01:08:31 -0700 (PDT)
-Received: from saturn.lan ([2a00:fd00:805f:db00:d5fe:fe9c:fc06:b74c])
-        by smtp.gmail.com with ESMTPSA id 72sm732407lfh.97.2020.07.19.01.08.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2020 01:08:30 -0700 (PDT)
+        Sun, 19 Jul 2020 09:39:57 -0400
+Received: from ravnborg.org (unknown [188.228.123.71])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id DFA79804DA;
+        Sun, 19 Jul 2020 15:39:53 +0200 (CEST)
+Date:   Sun, 19 Jul 2020 15:39:52 +0200
 From:   Sam Ravnborg <sam@ravnborg.org>
-To:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>,
-        Sam Ravnborg <sam@ravnborg.org>
-Subject: [PATCH v5 19/19] backlight: make of_find_backlight static
-Date:   Sun, 19 Jul 2020 10:07:43 +0200
-Message-Id: <20200719080743.8560-20-sam@ravnborg.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200719080743.8560-1-sam@ravnborg.org>
-References: <20200719080743.8560-1-sam@ravnborg.org>
+To:     Steve Cohen <cohens@codeaurora.org>
+Cc:     adelva@google.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, pdhaval@codeaurora.org,
+        seanpaul@chromium.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm: hold gem reference until object is no longer
+ accessed
+Message-ID: <20200719133952.GA40646@ravnborg.org>
+References: <1594420826-4897-1-git-send-email-cohens@codeaurora.org>
+ <20200716202952.GF2254583@ravnborg.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200716202952.GF2254583@ravnborg.org>
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
+        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
+        a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8 a=7gkXJVJtAAAA:8 a=e5mUnYsNAAAA:8
+        a=T2CN4U7q9iM9Igr8EeIA:9 a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22
+        a=E9Po1WZjFZOl8hwRPBS3:22 a=Vxmtnl_E_bksehYqCbjh:22
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are no external users of of_find_backlight,
-as they have all changed to use the managed version.
-Make of_find_backlight static to prevent new external users.
+Hi Steve.
 
-v3:
-  - Move doc for devm_of_find_backlight out of this patch
+On Thu, Jul 16, 2020 at 10:29:52PM +0200, Sam Ravnborg wrote:
+> Hi Steve and others.
+> 
+> On Fri, Jul 10, 2020 at 06:40:26PM -0400, Steve Cohen wrote:
+> > BUG: KASAN: use-after-free in drm_gem_open_ioctl
+> > 
+> > There is potential for use-after-free here if the GEM object
+> > handle is closed between the idr lookup and retrieving the size
+> > from the object since a local reference is not being held at that
+> > point. Hold the local reference while the object can still be
+> > accessed to resolve this.
+> > 
+> > Signed-off-by: Steve Cohen <cohens@codeaurora.org>
+> > ---
+> >  drivers/gpu/drm/drm_gem.c | 7 ++++---
+> >  1 file changed, 4 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> > index 7bf628e..4b2891c 100644
+> > --- a/drivers/gpu/drm/drm_gem.c
+> > +++ b/drivers/gpu/drm/drm_gem.c
+> > @@ -898,14 +898,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
+> >  
+> >  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
+> >  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
+> > -	drm_gem_object_put_unlocked(obj);
+> >  	if (ret)
+> > -		return ret;
+> > +		goto out;
+> >  
+> >  	args->handle = handle;
+> >  	args->size = obj->size;
+> >  
+> > -	return 0;
+> > +out:
+> > +	drm_gem_object_put_unlocked(obj);
+> > +	return ret;
+> 
+> Lookign at drm_gem_flink_ioctl() that is implmented just above this
+> functions there are two things that I noted.
+> 
+> 1) In drm_gem_flink_ioctl() the label is named "err:" - and my OCD likes
+> that similar labels have the same name.
+> 
+> 2) The function takes the object_name_lock but fails to release it in
+> the error situation.
+Daniel pointed out on irc that drm_gem_handle_create_tail releases the
+lock. If I had read the comment I would have noticed too - sigh.
 
-v2:
-  - Editorial corrections (Daniel)
-  - Returns => RETURNS (Daniel)
+With the label name fixed to "err:" like used in the function above:
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
 
-Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Lee Jones <lee.jones@linaro.org>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
----
- drivers/video/backlight/backlight.c | 18 +-----------------
- include/linux/backlight.h           |  6 ------
- 2 files changed, 1 insertion(+), 23 deletions(-)
+Please re-submit.
 
-diff --git a/drivers/video/backlight/backlight.c b/drivers/video/backlight/backlight.c
-index d8387c8e7112..ff8406a15545 100644
---- a/drivers/video/backlight/backlight.c
-+++ b/drivers/video/backlight/backlight.c
-@@ -673,22 +673,7 @@ struct backlight_device *of_find_backlight_by_node(struct device_node *node)
- EXPORT_SYMBOL(of_find_backlight_by_node);
- #endif
- 
--/**
-- * of_find_backlight - Get backlight device
-- * @dev: Device
-- *
-- * This function looks for a property named 'backlight' on the DT node
-- * connected to @dev and looks up the backlight device.
-- *
-- * Call backlight_put() to drop the reference on the backlight device.
-- *
-- * Returns:
-- * A pointer to the backlight device if found.
-- * Error pointer -EPROBE_DEFER if the DT property is set, but no backlight
-- * device is found.
-- * NULL if there's no backlight property.
-- */
--struct backlight_device *of_find_backlight(struct device *dev)
-+static struct backlight_device *of_find_backlight(struct device *dev)
- {
- 	struct backlight_device *bd = NULL;
- 	struct device_node *np;
-@@ -714,7 +699,6 @@ struct backlight_device *of_find_backlight(struct device *dev)
- 
- 	return bd;
- }
--EXPORT_SYMBOL(of_find_backlight);
- 
- static void devm_backlight_release(void *data)
- {
-diff --git a/include/linux/backlight.h b/include/linux/backlight.h
-index f3b484c99789..8b43fd90d84a 100644
---- a/include/linux/backlight.h
-+++ b/include/linux/backlight.h
-@@ -477,14 +477,8 @@ of_find_backlight_by_node(struct device_node *node)
- #endif
- 
- #if IS_ENABLED(CONFIG_BACKLIGHT_CLASS_DEVICE)
--struct backlight_device *of_find_backlight(struct device *dev);
- struct backlight_device *devm_of_find_backlight(struct device *dev);
- #else
--static inline struct backlight_device *of_find_backlight(struct device *dev)
--{
--	return NULL;
--}
--
- static inline struct backlight_device *
- devm_of_find_backlight(struct device *dev)
- {
--- 
-2.25.1
+	Sam
 
+> 
+> Danile Vetter updated the locking in
+> 20228c447846da9399ead53fdbbc8ab69b47788a ("drm/gem: completely close gem_open vs. gem_close races")
+> 
+> but I failed to follow it all.
+> 
+> 	Sam
+> 
+> >  }
+> >  
+> >  /**
+> > -- 
+> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
+> > 
+> > _______________________________________________
+> > dri-devel mailing list
+> > dri-devel@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
