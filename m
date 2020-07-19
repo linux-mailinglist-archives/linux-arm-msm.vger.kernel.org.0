@@ -2,125 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A51842251FF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jul 2020 15:39:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 370EE2252AE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jul 2020 18:03:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725988AbgGSNj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Jul 2020 09:39:57 -0400
-Received: from asavdk4.altibox.net ([109.247.116.15]:42358 "EHLO
-        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbgGSNj5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Jul 2020 09:39:57 -0400
-Received: from ravnborg.org (unknown [188.228.123.71])
+        id S1726109AbgGSQDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Jul 2020 12:03:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36710 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726038AbgGSQDh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 19 Jul 2020 12:03:37 -0400
+Received: from localhost (unknown [122.171.202.192])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by asavdk4.altibox.net (Postfix) with ESMTPS id DFA79804DA;
-        Sun, 19 Jul 2020 15:39:53 +0200 (CEST)
-Date:   Sun, 19 Jul 2020 15:39:52 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Steve Cohen <cohens@codeaurora.org>
-Cc:     adelva@google.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, pdhaval@codeaurora.org,
-        seanpaul@chromium.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm: hold gem reference until object is no longer
- accessed
-Message-ID: <20200719133952.GA40646@ravnborg.org>
-References: <1594420826-4897-1-git-send-email-cohens@codeaurora.org>
- <20200716202952.GF2254583@ravnborg.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 49FFF207EA;
+        Sun, 19 Jul 2020 16:03:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595174617;
+        bh=/pbAZENBPjrMYXorA52W5HNHDodFxjYnJsIpzouhsGY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=1GP6P1/lo8ECz85mykPgihU5psB+Nx4RgKc1A48vqIllfPQ+RjjRLI2pGnplDzuuA
+         FOfsJRDQ6x8Rui1L9osCVzIUHkYkGes37dZADDIys5iTqZEB/4ddZy7mPi5Qg+MARK
+         aoK8eMdc1LUCb+sOLlWmy6LXv5MKl/ooRzJ7gUbU=
+Date:   Sun, 19 Jul 2020 21:33:32 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: [PATCH v5 0/4] Add LT9611 DSI to HDMI bridge
+Message-ID: <20200719160332.GA12965@vkoul-mobl>
+References: <20200708103559.132300-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200716202952.GF2254583@ravnborg.org>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
-        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
-        a=kj9zAlcOel0A:10 a=LpQP-O61AAAA:8 a=7gkXJVJtAAAA:8 a=e5mUnYsNAAAA:8
-        a=T2CN4U7q9iM9Igr8EeIA:9 a=CjuIK1q_8ugA:10 a=pioyyrs4ZptJ924tMmac:22
-        a=E9Po1WZjFZOl8hwRPBS3:22 a=Vxmtnl_E_bksehYqCbjh:22
+In-Reply-To: <20200708103559.132300-1-vkoul@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steve.
+Hello,
 
-On Thu, Jul 16, 2020 at 10:29:52PM +0200, Sam Ravnborg wrote:
-> Hi Steve and others.
+On 08-07-20, 16:05, Vinod Koul wrote:
+> Hi,
 > 
-> On Fri, Jul 10, 2020 at 06:40:26PM -0400, Steve Cohen wrote:
-> > BUG: KASAN: use-after-free in drm_gem_open_ioctl
-> > 
-> > There is potential for use-after-free here if the GEM object
-> > handle is closed between the idr lookup and retrieving the size
-> > from the object since a local reference is not being held at that
-> > point. Hold the local reference while the object can still be
-> > accessed to resolve this.
-> > 
-> > Signed-off-by: Steve Cohen <cohens@codeaurora.org>
-> > ---
-> >  drivers/gpu/drm/drm_gem.c | 7 ++++---
-> >  1 file changed, 4 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> > index 7bf628e..4b2891c 100644
-> > --- a/drivers/gpu/drm/drm_gem.c
-> > +++ b/drivers/gpu/drm/drm_gem.c
-> > @@ -898,14 +898,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
-> >  
-> >  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
-> >  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
-> > -	drm_gem_object_put_unlocked(obj);
-> >  	if (ret)
-> > -		return ret;
-> > +		goto out;
-> >  
-> >  	args->handle = handle;
-> >  	args->size = obj->size;
-> >  
-> > -	return 0;
-> > +out:
-> > +	drm_gem_object_put_unlocked(obj);
-> > +	return ret;
+> This series adds driver and bindings for Lontium LT9611 bridge chip which
+> takes MIPI DSI as input and HDMI as output.
 > 
-> Lookign at drm_gem_flink_ioctl() that is implmented just above this
-> functions there are two things that I noted.
-> 
-> 1) In drm_gem_flink_ioctl() the label is named "err:" - and my OCD likes
-> that similar labels have the same name.
-> 
-> 2) The function takes the object_name_lock but fails to release it in
-> the error situation.
-Daniel pointed out on irc that drm_gem_handle_create_tail releases the
-lock. If I had read the comment I would have noticed too - sigh.
+> This chip can be found in 96boards RB3 platform [1] commonly called DB845c.
 
-With the label name fixed to "err:" like used in the function above:
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-
-Please re-submit.
-
-	Sam
+Any feedback on this series?
 
 > 
-> Danile Vetter updated the locking in
-> 20228c447846da9399ead53fdbbc8ab69b47788a ("drm/gem: completely close gem_open vs. gem_close races")
+> [1]: https://www.96boards.org/product/rb3-platform/
 > 
-> but I failed to follow it all.
+> Changes in v5:
+>  - make symbol static, reported by kbuild-bot
 > 
-> 	Sam
+> Changes in v4:
+>  - Add msm/dsi patch to create connector and support DRM_BRIDGE_ATTACH_NO_CONNECTOR
+>  - Fix comments provided by Sam
 > 
-> >  }
-> >  
-> >  /**
-> > -- 
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
-> > 
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> Changes in v3:
+>  - fix kbuild reported error
+>  - rebase on v5.8-rc1
+> 
+> Changes in v2:
+>  - Add acks by Rob
+>  - Fix comments reported by Emil and rename the file to lontium-lt9611.c
+>  - Fix comments reported by Laurent on binding and driver
+>  - Add HDMI audio support
+> 
+> Vinod Koul (4):
+>   dt-bindings: vendor-prefixes: Add Lontium vendor prefix
+>   dt-bindings: display: bridge: Add documentation for LT9611
+>   drm/bridge: Introduce LT9611 DSI to HDMI bridge
+>   drm/msm/dsi: attach external bridge with
+>     DRM_BRIDGE_ATTACH_NO_CONNECTOR
+> 
+>  .../display/bridge/lontium,lt9611.yaml        |  176 +++
+>  .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
+>  drivers/gpu/drm/bridge/Kconfig                |   13 +
+>  drivers/gpu/drm/bridge/Makefile               |    1 +
+>  drivers/gpu/drm/bridge/lontium-lt9611.c       | 1142 +++++++++++++++++
+>  drivers/gpu/drm/msm/dsi/dsi.c                 |    7 +-
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c         |   27 +-
+>  7 files changed, 1348 insertions(+), 20 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+>  create mode 100644 drivers/gpu/drm/bridge/lontium-lt9611.c
+> 
+> -- 
+> 2.26.2
+
+-- 
+~Vinod
