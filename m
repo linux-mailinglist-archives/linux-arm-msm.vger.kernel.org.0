@@ -2,148 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8530B225307
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jul 2020 19:18:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6B302253CF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Jul 2020 21:55:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726024AbgGSRSN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Jul 2020 13:18:13 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:38242 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbgGSRSN (ORCPT
+        id S1726123AbgGSTz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Jul 2020 15:55:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726009AbgGSTzz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Jul 2020 13:18:13 -0400
-Received: from ravnborg.org (unknown [188.228.123.71])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id CE31220026;
-        Sun, 19 Jul 2020 19:18:07 +0200 (CEST)
-Date:   Sun, 19 Jul 2020 19:18:06 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        John Stultz <john.stultz@linaro.org>
-Subject: Re: [PATCH v5 3/4] drm/bridge: Introduce LT9611 DSI to HDMI bridge
-Message-ID: <20200719171806.GA55541@ravnborg.org>
-References: <20200708103559.132300-1-vkoul@kernel.org>
- <20200708103559.132300-4-vkoul@kernel.org>
+        Sun, 19 Jul 2020 15:55:55 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3461AC0619D2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jul 2020 12:55:55 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id 12so12762691oir.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jul 2020 12:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=mRtQwdBy4cMJ2VUTfd5VyA2rBeltOGvlkiQuwEZP/i0=;
+        b=PhcDkenTejEXeGJcJ3EQZjX+eEwXRF9XstpBQVjzS7UUEYNKMmLlrNKaIspOlx7Zap
+         Rz+/m+U/nF7UDTCOYhgyHx4VWF01jSPYYOSDOjWLwZZMCsIHRjNfLD6+9oSJ6l6PrVr9
+         ZEKskoCZDSWAaJxXwdyDNG7V7TsiPdJA95T+3fKsSUHzkvSi/vfkhl9M5v8VmXMsmLRh
+         XutfxqtwmBu1NRfPkBwHoTShtmY7kotXkg9ErOerm2o0HGP85uWR1SwDpB5V7C2Ikxqr
+         SSapvobuuewi9v1BGd9oNqQOtZQrPrxU5xjs7im7rVpW5JFcDDw6JglzhMNhZCwKzSWf
+         en+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=mRtQwdBy4cMJ2VUTfd5VyA2rBeltOGvlkiQuwEZP/i0=;
+        b=ZQfQOz+XIvL+sWgjMqbldlfTdGD3LDkjSi2V3xL1zNZVTXGv7D+W6I4H/yh3YHSKp6
+         Jj1Uho4ydrx1XcK8tx3aHqvXwtb4Uo+bcWI7IhBaPwMHqAON6etAGTUT685gA7/iy2+3
+         zPUcRHPQARF2c5hzJ9YgS4jKyuaBxIXAGPdy4RYlMo/YxzXM2a7q5kh1l4fzxODVpBrq
+         nIFKhP1c757mqsM7K2xxpQgSq3/0oreC9EoOqFIKCl+r3BU6LNoXYmO+bHBcYJR/T0/7
+         +r1D36HeE9x6T0kRUdESrg0AVbCnjVyJ9ZaiWDAbIAaag9ERZl863IQdtO33aC2Moe/7
+         rsTw==
+X-Gm-Message-State: AOAM531Lh7KThNZ/s+Nm49Qdfkn/1sLJmBWFEPDiVrHUQ8B0e2v4mYqh
+        PZcVzoIH5Z/zC5iagz5QqLDzsg==
+X-Google-Smtp-Source: ABdhPJw49cUNxgoWmff++mA23jaYik5OoL2M48trhIC+wILhz86X9K4y444350XVMjDkuuELIlfF6g==
+X-Received: by 2002:aca:54d1:: with SMTP id i200mr15643632oib.11.1595188554414;
+        Sun, 19 Jul 2020 12:55:54 -0700 (PDT)
+Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
+        by smtp.gmail.com with ESMTPSA id 97sm3091692oti.15.2020.07.19.12.55.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Jul 2020 12:55:53 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm/dpu: fix/enable 6bpc dither with split-lm
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Steev Klimaszewski <steev@gentoo.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Zheng Bin <zhengbin13@huawei.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200715221955.3209856-1-robdclark@gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <997f19de-9ea0-969c-ba91-603a2b214299@kali.org>
+Date:   Sun, 19 Jul 2020 14:55:52 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200708103559.132300-4-vkoul@kernel.org>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=f+hm+t6M c=1 sm=1 tr=0
-        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
-        a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8
-        a=fbRPyE8KL9-ZYcdT3u0A:9 a=CjuIK1q_8ugA:10 a=E9Po1WZjFZOl8hwRPBS3:22
-        a=cvBusfyB2V15izCimMoJ:22 a=AjGcO6oz07-iQ99wixmX:22
+In-Reply-To: <20200715221955.3209856-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod.
+Hi,
 
-Three trivial points below.
-The rest looks good.
-
-With these fixed you can add:
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-
-	Sam
-
-On Wed, Jul 08, 2020 at 04:05:58PM +0530, Vinod Koul wrote:
-> Lontium Lt9611 is a DSI to HDMI bridge which supports two DSI ports and
-> I2S port as an input and HDMI port as output
-> 
-> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Tested-by: John Stultz <john.stultz@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+On 7/15/20 5:19 PM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+>
+> If split-lm is used (for ex, on sdm845), we can have multiple ping-
+> pongs, but only a single phys encoder.  We need to configure dithering
+> on each of them.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/bridge/Kconfig          |   13 +
->  drivers/gpu/drm/bridge/Makefile         |    1 +
->  drivers/gpu/drm/bridge/lontium-lt9611.c | 1142 +++++++++++++++++++++++
->  3 files changed, 1156 insertions(+)
->  create mode 100644 drivers/gpu/drm/bridge/lontium-lt9611.c
-> 
-> +
-> +#include <drm/drm_probe_helper.h>
-> +#include <drm/drm_atomic_helper.h>
-> +#include <drm/drm_bridge.h>
-> +#include <drm/drm_mipi_dsi.h>
-> +#include <drm/drm_print.h>
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 22 ++++++++++---------
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  3 +--
+>  2 files changed, 13 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 46df0ff75b85..9b98b63c77fb 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -212,14 +212,14 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
+>  	15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
+>  };
+>  
+> -static void _dpu_encoder_setup_dither(struct dpu_encoder_phys *phys)
+> +static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
+>  {
+>  	struct dpu_hw_dither_cfg dither_cfg = { 0 };
+>  
+> -	if (!phys->hw_pp || !phys->hw_pp->ops.setup_dither)
+> +	if (!hw_pp->ops.setup_dither)
+>  		return;
+>  
+> -	switch (phys->connector->display_info.bpc) {
+> +	switch (bpc) {
+>  	case 6:
+>  		dither_cfg.c0_bitdepth = 6;
+>  		dither_cfg.c1_bitdepth = 6;
+> @@ -228,14 +228,14 @@ static void _dpu_encoder_setup_dither(struct dpu_encoder_phys *phys)
+>  		dither_cfg.temporal_en = 0;
+>  		break;
+>  	default:
+> -		phys->hw_pp->ops.setup_dither(phys->hw_pp, NULL);
+> +		hw_pp->ops.setup_dither(hw_pp, NULL);
+>  		return;
+>  	}
+>  
+>  	memcpy(&dither_cfg.matrix, dither_matrix,
+>  			sizeof(u32) * DITHER_MATRIX_SZ);
+>  
+> -	phys->hw_pp->ops.setup_dither(phys->hw_pp, &dither_cfg);
+> +	hw_pp->ops.setup_dither(hw_pp, &dither_cfg);
+>  }
+>  
+>  void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
+> @@ -1132,11 +1132,13 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
+>  
+>  	_dpu_encoder_update_vsync_source(dpu_enc, &dpu_enc->disp_info);
+>  
+> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+> -		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> -			struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+> -
+> -			_dpu_encoder_setup_dither(phys);
+> +	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI &&
+> +			!WARN_ON(dpu_enc->num_phys_encs == 0)) {
+> +		unsigned bpc = dpu_enc->phys_encs[0]->connector->display_info.bpc;
+> +		for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
+> +			if (!dpu_enc->hw_pp[i])
+> +				continue;
+> +			_dpu_encoder_setup_dither(dpu_enc->hw_pp[i], bpc);
+>  		}
+>  	}
+>  }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> index 7411ab6bf6af..bea4ab5c58c5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> @@ -231,8 +231,7 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+>  	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+>  	c->ops.get_line_count = dpu_hw_pp_get_line_count;
+>  
+> -	if (test_bit(DPU_PINGPONG_DITHER, &features) &&
+> -		IS_SC7180_TARGET(c->hw.hwversion))
+> +	if (test_bit(DPU_PINGPONG_DITHER, &features))
+>  		c->ops.setup_dither = dpu_hw_pp_setup_dither;
+>  };
 
-In alphabetical order. drm_probe_helper needs to be moved.
+Sorry for taking so long to get around to testing this.  I was able to
+today, and it does reduce the banding to be less noticeable.
 
-> +
-> +#define EDID_SEG_SIZE	256
-> +#define EDID_LEN	32
-> +#define EDID_LOOP	8
-> +#define KEY_DDC_ACCS_DONE 0x02
-> +#define DDC_NO_ACK	0x50
-> +
+Tested-by: Steev Klimaszewski <steev@kali.org>
 
+Thanks!
 
-> +static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
-> +{
-> +	const struct reg_sequence reg_cfg[] = {
-> +		{ 0x830b, 0x01 },
-> +		{ 0x830c, 0x10 },
-> +		{ 0x8348, 0x00 },
-> +		{ 0x8349, 0x81 },
-> +
-> +		/* stage 1 */
-> +		{ 0x8321, 0x4a },
-> +		{ 0x8324, 0x71 },
-> +		{ 0x8325, 0x30 },
-> +		{ 0x832a, 0x01 },
-> +
-> +		/* stage 2 */
-> +		{ 0x834a, 0x40 },
-> +		{ 0x831d, 0x10 },
-> +
-> +		/* MK limit */
-> +		{ 0x832d, 0x38 },
-> +		{ 0x8331, 0x08 },
-> +	};
-> +	const struct reg_sequence reg_cfg2[] = {
-> +			{ 0x830b, 0x03 },
-> +			{ 0x830c, 0xd0 },
-> +			{ 0x8348, 0x03 },
-> +			{ 0x8349, 0xe0 },
-> +			{ 0x8324, 0x72 },
-> +			{ 0x8325, 0x00 },
-> +			{ 0x832a, 0x01 },
-> +			{ 0x834a, 0x10 },
-> +			{ 0x831d, 0x10 },
-> +			{ 0x8326, 0x37 },
-Block above is indented one tab too much.
-
-> +static int lt9611_bridge_attach(struct drm_bridge *bridge,
-> +				enum drm_bridge_attach_flags flags)
-> +{
-> +	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
-> +	int ret;
-> +
-> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
-> +		dev_err(lt9611->dev, "Fix bridge driver to make connector optional!");
-> +		return -EINVAL;
-> +	}
-This should say that the display driver should be fixed.
-If a display driver expects this bridge to create the connector
-it would not work.
-
+-- steev
 
