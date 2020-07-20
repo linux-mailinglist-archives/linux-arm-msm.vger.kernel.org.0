@@ -2,200 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 532D3226BC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 18:44:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 971CF226B54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 18:42:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729910AbgGTQo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 12:44:27 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:31925 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729936AbgGTPln (ORCPT
+        id S1730284AbgGTPnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 11:43:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39570 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729188AbgGTPni (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 11:41:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595259703; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Khv5W6hRlGoBvmDyC/nMnnkhxq/ZdLAoSFvvweioOuc=; b=mC4vbLqsR8L+of8rUfVpXfZkChddNaWNV/Hsrx92DZz7pqu1SptrVEw6cfYivVwj5JzyVHXP
- vdd0s5/qM1SYbyfLUpvxcrJTdZA5qExIIhFOYdH1vWmsElhn1Feb0HTPdVIKLtQxLI7W749k
- te0rpI7XwFUuGxGtwpYE6OqOCFc=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5f15bb363dbcb593a9a7404a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Jul 2020 15:41:42
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 50B0FC43454; Mon, 20 Jul 2020 15:41:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1F50C4344C;
-        Mon, 20 Jul 2020 15:41:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1F50C4344C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Mon, 20 Jul 2020 11:43:38 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90191C061794;
+        Mon, 20 Jul 2020 08:43:37 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id f139so25644644wmf.5;
+        Mon, 20 Jul 2020 08:43:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=autVWWtMkcWJD2mnHeXx5OQfP35st6FKtCjEISqTu28=;
+        b=JjmqZtktLvk5Qc3N7R2sS1d6oGjjgW6kfwGPqn1Syigos8hcDhGKPO5zhOGp+p3mdM
+         7oFKNkkQZHy4DktD0yhGa/K5vU5uaVMuJjOzPVn+5YIFKs57KtNwbZbuRvelWsEaccIw
+         zvfTew212u4gLW5o5Px6DA8QVeHMU1ytQhfyDQrdJkrZXhBXGRmM8Lrx+Vnn29D5nKJA
+         NVj5ydC0Wf/yr/gH3kB+6lCRjT5wi6q/7Wfow+gFR8X8oIg1LvNCY9qKphQA1W8OPhZ7
+         qbmvTMCpGd6c734qKKg3v1DXdQBwVnv0ndrx1jbr275X5hPbR8dk3/R7fplUPwwA13g9
+         iwpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=autVWWtMkcWJD2mnHeXx5OQfP35st6FKtCjEISqTu28=;
+        b=JZYPmGnfhJTBst3WuOULUS4sxXOO0nLCmEfHsdxrsg8JLyC3pdeGJJPgFCL7gPn8MR
+         ntXvSB2AFOV59MDOTw7AJQp8Zzdcmie5OS6FyWEaAyzAXtLTPs+GSHU3WCw036YKaTZp
+         WIKlkOKWhxwOggzPJdrjwVPFaKWlXXCpmyz2qEdSC1NXdWtxNfXGJoSOfE9AnFPRVvb8
+         OYSwvEZiNhddF8C6wBntEv0lfZEDkk+uG3R31Qp0Out3pHYUi/FeoeubH6z9gOkMUvPN
+         TYVg9V70QoyxkbMjeLAPMa00MI39scJ2dhXm0TzcNLpOjTSSMe5hh/0myQhvNzLNTGJ0
+         RWWA==
+X-Gm-Message-State: AOAM5322DzB+zY9d5mZpblMNXubBuYTB7JtdGsOU4bcdwacSWeBkoR3i
+        htTjxX2zhwOiJ60NWk93TnqafshCBag=
+X-Google-Smtp-Source: ABdhPJzHR5BO0TIk52hY7BBc/k3XRAgpQOahFxFCGnpt58cP2vReN2cLRt0KiZXlFZBCmuhiMR+Qaw==
+X-Received: by 2002:a7b:c857:: with SMTP id c23mr23660652wml.155.1595259815959;
+        Mon, 20 Jul 2020 08:43:35 -0700 (PDT)
+Received: from ziggy.stardust (81.172.57.81.dyn.user.ono.com. [81.172.57.81])
+        by smtp.gmail.com with ESMTPSA id e5sm16981210wrc.37.2020.07.20.08.43.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Jul 2020 08:43:35 -0700 (PDT)
+Subject: Re: [PATCH v7 2/4] mmc: mediatek: refine msdc timeout api
+To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>, mirq-linux@rere.qmqm.pl,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Will Deacon <will@kernel.org>, freedreno@lists.freedesktop.org,
-        iommu@lists.linux-foundation.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v10 12/13] drm/msm/a6xx: Add support for per-instance pagetables
-Date:   Mon, 20 Jul 2020 09:40:46 -0600
-Message-Id: <20200720154047.3611092-13-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200720154047.3611092-1-jcrouse@codeaurora.org>
-References: <20200720154047.3611092-1-jcrouse@codeaurora.org>
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>
+Cc:     kernel-team@android.com, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        devicetree@vger.kernel.org, wsd_upstream@mediatek.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <1595205759-5825-1-git-send-email-chun-hung.wu@mediatek.com>
+ <1595205759-5825-3-git-send-email-chun-hung.wu@mediatek.com>
+From:   Matthias Brugger <matthias.bgg@gmail.com>
+Message-ID: <eb1d5973-55f2-3fb4-bf9c-03b98bd6955b@gmail.com>
+Date:   Mon, 20 Jul 2020 17:43:33 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1595205759-5825-3-git-send-email-chun-hung.wu@mediatek.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for using per-instance pagetables if all the dependencies are
-available.
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 53 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
- drivers/gpu/drm/msm/msm_ringbuffer.h  |  1 +
- 3 files changed, 55 insertions(+)
+On 20/07/2020 02:42, Chun-Hung Wu wrote:
+> Extract msdc timeout api common part to have
+> better code architecture and avoid redundant code.
+> 
+> Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 5eabb0109577..57c6cdec7e9a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -81,6 +81,41 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
- 	OUT_RING(ring, upper_32_bits(iova));
- }
- 
-+static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
-+		struct msm_ringbuffer *ring, struct msm_file_private *ctx)
-+{
-+	phys_addr_t ttbr;
-+	u32 asid;
-+	u64 memptr = rbmemptr(ring, ttbr0);
-+
-+	if (ctx == a6xx_gpu->cur_ctx)
-+		return;
-+
-+	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
-+		return;
-+
-+	/* Execute the table update */
-+	OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
-+	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_0_TTBR0_LO(lower_32_bits(ttbr)));
-+	OUT_RING(ring,
-+		CP_SMMU_TABLE_UPDATE_1_TTBR0_HI(upper_32_bits(ttbr)) |
-+		CP_SMMU_TABLE_UPDATE_1_ASID(asid));
-+	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_2_CONTEXTIDR(0));
-+	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_3_CONTEXTBANK(0));
-+
-+	/*
-+	 * Write the new TTBR0 to the memstore. This is good for debugging.
-+	 */
-+	OUT_PKT7(ring, CP_MEM_WRITE, 4);
-+	OUT_RING(ring, CP_MEM_WRITE_0_ADDR_LO(lower_32_bits(memptr)));
-+	OUT_RING(ring, CP_MEM_WRITE_1_ADDR_HI(upper_32_bits(memptr)));
-+	OUT_RING(ring, lower_32_bits(ttbr));
-+	OUT_RING(ring, (asid << 16) | upper_32_bits(ttbr));
-+
-+
-+	a6xx_gpu->cur_ctx = ctx;
-+}
-+
- static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- {
- 	unsigned int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
-@@ -90,6 +125,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	struct msm_ringbuffer *ring = submit->ring;
- 	unsigned int i;
- 
-+	a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
-+
- 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP_0_LO,
- 		rbmemptr_stats(ring, index, cpcycles_start));
- 
-@@ -696,6 +733,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
- 	/* Always come up on rb 0 */
- 	a6xx_gpu->cur_ring = gpu->rb[0];
- 
-+	a6xx_gpu->cur_ctx = NULL;
-+
- 	/* Enable the SQE_to start the CP engine */
- 	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 1);
- 
-@@ -1008,6 +1047,19 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
- 	return (unsigned long)busy_time;
- }
- 
-+static struct msm_gem_address_space *
-+a6xx_create_private_address_space(struct msm_gpu *gpu)
-+{
-+	struct msm_mmu *mmu;
-+
-+	mmu = msm_iommu_pagetable_create(gpu->aspace->mmu);
-+	if (IS_ERR(mmu))
-+		return msm_gem_address_space_get(gpu->aspace);
-+
-+	return msm_gem_address_space_create(mmu,
-+		"gpu", 0x100000000ULL, 0x1ffffffffULL);
-+}
-+
- static const struct adreno_gpu_funcs funcs = {
- 	.base = {
- 		.get_param = adreno_get_param,
-@@ -1031,6 +1083,7 @@ static const struct adreno_gpu_funcs funcs = {
- 		.gpu_state_put = a6xx_gpu_state_put,
- #endif
- 		.create_address_space = adreno_iommu_create_address_space,
-+		.create_private_address_space = a6xx_create_private_address_space,
- 	},
- 	.get_timestamp = a6xx_get_timestamp,
- };
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 03ba60d5b07f..da22d7549d9b 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -19,6 +19,7 @@ struct a6xx_gpu {
- 	uint64_t sqe_iova;
- 
- 	struct msm_ringbuffer *cur_ring;
-+	struct msm_file_private *cur_ctx;
- 
- 	struct a6xx_gmu gmu;
- };
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index 7764373d0ed2..0987d6bf848c 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -31,6 +31,7 @@ struct msm_rbmemptrs {
- 	volatile uint32_t fence;
- 
- 	volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
-+	volatile u64 ttbr0;
- };
- 
- struct msm_ringbuffer {
--- 
-2.25.1
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
 
+> ---
+>   drivers/mmc/host/mtk-sd.c | 32 ++++++++++++++++++++++----------
+>   1 file changed, 22 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+> index ed37a3c..347ed72 100644
+> --- a/drivers/mmc/host/mtk-sd.c
+> +++ b/drivers/mmc/host/mtk-sd.c
+> @@ -723,21 +723,21 @@ static void msdc_unprepare_data(struct msdc_host *host, struct mmc_request *mrq)
+>   	}
+>   }
+>   
+> -/* clock control primitives */
+> -static void msdc_set_timeout(struct msdc_host *host, u32 ns, u32 clks)
+> +static u64 msdc_timeout_cal(struct msdc_host *host, u64 ns, u64 clks)
+>   {
+> -	u32 timeout, clk_ns;
+> +	u64 timeout, clk_ns;
+>   	u32 mode = 0;
+>   
+> -	host->timeout_ns = ns;
+> -	host->timeout_clks = clks;
+>   	if (host->mmc->actual_clock == 0) {
+>   		timeout = 0;
+>   	} else {
+> -		clk_ns  = 1000000000UL / host->mmc->actual_clock;
+> -		timeout = (ns + clk_ns - 1) / clk_ns + clks;
+> +		clk_ns  = 1000000000ULL;
+> +		do_div(clk_ns, host->mmc->actual_clock);
+> +		timeout = ns + clk_ns - 1;
+> +		do_div(timeout, clk_ns);
+> +		timeout += clks;
+>   		/* in 1048576 sclk cycle unit */
+> -		timeout = (timeout + (0x1 << 20) - 1) >> 20;
+> +		timeout = DIV_ROUND_UP(timeout, (0x1 << 20));
+>   		if (host->dev_comp->clk_div_bits == 8)
+>   			sdr_get_field(host->base + MSDC_CFG,
+>   				      MSDC_CFG_CKMOD, &mode);
+> @@ -747,9 +747,21 @@ static void msdc_set_timeout(struct msdc_host *host, u32 ns, u32 clks)
+>   		/*DDR mode will double the clk cycles for data timeout */
+>   		timeout = mode >= 2 ? timeout * 2 : timeout;
+>   		timeout = timeout > 1 ? timeout - 1 : 0;
+> -		timeout = timeout > 255 ? 255 : timeout;
+>   	}
+> -	sdr_set_field(host->base + SDC_CFG, SDC_CFG_DTOC, timeout);
+> +	return timeout;
+> +}
+> +
+> +/* clock control primitives */
+> +static void msdc_set_timeout(struct msdc_host *host, u64 ns, u64 clks)
+> +{
+> +	u64 timeout;
+> +
+> +	host->timeout_ns = ns;
+> +	host->timeout_clks = clks;
+> +
+> +	timeout = msdc_timeout_cal(host, ns, clks);
+> +	sdr_set_field(host->base + SDC_CFG, SDC_CFG_DTOC,
+> +		      (u32)(timeout > 255 ? 255 : timeout));
+>   }
+>   
+>   static void msdc_gate_clock(struct msdc_host *host)
+> 
