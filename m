@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AD6F227099
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 23:39:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1876922714E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 23:42:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727957AbgGTViE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 17:38:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56354 "EHLO mail.kernel.org"
+        id S1728282AbgGTVmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 17:42:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57626 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727949AbgGTViD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 17:38:03 -0400
+        id S1728086AbgGTVis (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 17:38:48 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B2CF122CAF;
-        Mon, 20 Jul 2020 21:38:01 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DFBD222C9D;
+        Mon, 20 Jul 2020 21:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595281082;
-        bh=n4T85vKu6U7O9nXJo9g5DTcybApjszNsDHc7XO0HUnI=;
+        s=default; t=1595281127;
+        bh=rrYPwgY0lFW5PL5+vQ9DBmbkKCuq18MghKUF6N2ntoQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CSulGq+hfAeV3SVnTwM3+uMKjaXcVAJ3i63Jq9NEeYAArdl2kwv/H0apU24EyUccq
-         u4wgTGPVRV5qvYuAsduxQq9NOWNOEssdgm1jy9iwoaknxNvwn+aoyLFDsrH36xenVY
-         9bHhpyH8pywRQJRwdYlvJJgeyAFfvhqsBNn1qH3w=
+        b=kNkrR26i5x2tWjXPi514SQ270yLhTADc7N1rVCnZ7JIXD0nVNyPvoX1QrMoF5+wlV
+         zXW2ccfrQfc85RJwRNvBB0cGvaHToQz0plaGI4h0UADbb+X2g+06yHtHTCiqKn05si
+         wbnpVY7Lx9Us5vfDish6KfVN9y/57ElqRXM1bCsA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Qi Liu <liuqi115@huawei.com>, John Garry <john.garry@huawei.com>,
         Will Deacon <will@kernel.org>, Sasha Levin <sashal@kernel.org>,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 37/40] drivers/perf: Prevent forced unbinding of PMU drivers
-Date:   Mon, 20 Jul 2020 17:37:12 -0400
-Message-Id: <20200720213715.406997-37-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 32/34] drivers/perf: Prevent forced unbinding of PMU drivers
+Date:   Mon, 20 Jul 2020 17:38:05 -0400
+Message-Id: <20200720213807.407380-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200720213715.406997-1-sashal@kernel.org>
-References: <20200720213715.406997-1-sashal@kernel.org>
+In-Reply-To: <20200720213807.407380-1-sashal@kernel.org>
+References: <20200720213807.407380-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -77,10 +77,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  13 files changed, 13 insertions(+)
 
 diff --git a/drivers/perf/arm-cci.c b/drivers/perf/arm-cci.c
-index 1b8e337a29cac..87c4be9dd4125 100644
+index 8f8606b9bc9ee..aca4570f78a86 100644
 --- a/drivers/perf/arm-cci.c
 +++ b/drivers/perf/arm-cci.c
-@@ -1718,6 +1718,7 @@ static struct platform_driver cci_pmu_driver = {
+@@ -1720,6 +1720,7 @@ static struct platform_driver cci_pmu_driver = {
  	.driver = {
  		   .name = DRIVER_NAME,
  		   .of_match_table = arm_cci_pmu_matches,
@@ -89,7 +89,7 @@ index 1b8e337a29cac..87c4be9dd4125 100644
  	.probe = cci_pmu_probe,
  	.remove = cci_pmu_remove,
 diff --git a/drivers/perf/arm-ccn.c b/drivers/perf/arm-ccn.c
-index d50edef91f59b..7b7d23f257139 100644
+index 6fc0273b6129d..336948b41bd16 100644
 --- a/drivers/perf/arm-ccn.c
 +++ b/drivers/perf/arm-ccn.c
 @@ -1545,6 +1545,7 @@ static struct platform_driver arm_ccn_driver = {
@@ -113,10 +113,10 @@ index 70968c8c09d7f..4594e2ed13d59 100644
  	.probe = dsu_pmu_device_probe,
  	.remove = dsu_pmu_device_remove,
 diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
-index 90caba56dfbc1..4cdb35d166acc 100644
+index f8fc1b612119c..9cdd89b29334e 100644
 --- a/drivers/perf/arm_smmuv3_pmu.c
 +++ b/drivers/perf/arm_smmuv3_pmu.c
-@@ -860,6 +860,7 @@ static void smmu_pmu_shutdown(struct platform_device *pdev)
+@@ -861,6 +861,7 @@ static void smmu_pmu_shutdown(struct platform_device *pdev)
  static struct platform_driver smmu_pmu_driver = {
  	.driver = {
  		.name = "arm-smmu-v3-pmcg",
@@ -125,7 +125,7 @@ index 90caba56dfbc1..4cdb35d166acc 100644
  	.probe = smmu_pmu_probe,
  	.remove = smmu_pmu_remove,
 diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index b72c048525990..c5418fd3122c2 100644
+index 4e4984a55cd1b..079701e8de186 100644
 --- a/drivers/perf/arm_spe_pmu.c
 +++ b/drivers/perf/arm_spe_pmu.c
 @@ -1228,6 +1228,7 @@ static struct platform_driver arm_spe_pmu_driver = {
@@ -137,10 +137,10 @@ index b72c048525990..c5418fd3122c2 100644
  	.probe	= arm_spe_pmu_device_probe,
  	.remove	= arm_spe_pmu_device_remove,
 diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
-index 2aed2d96f8ae7..397540a4b799c 100644
+index b241db6929c08..09f44c6e2eaf6 100644
 --- a/drivers/perf/fsl_imx8_ddr_perf.c
 +++ b/drivers/perf/fsl_imx8_ddr_perf.c
-@@ -707,6 +707,7 @@ static struct platform_driver imx_ddr_pmu_driver = {
+@@ -646,6 +646,7 @@ static struct platform_driver imx_ddr_pmu_driver = {
  	.driver         = {
  		.name   = "imx-ddr-pmu",
  		.of_match_table = imx_ddr_pmu_dt_ids,
@@ -149,10 +149,10 @@ index 2aed2d96f8ae7..397540a4b799c 100644
  	.probe          = ddr_perf_probe,
  	.remove         = ddr_perf_remove,
 diff --git a/drivers/perf/hisilicon/hisi_uncore_ddrc_pmu.c b/drivers/perf/hisilicon/hisi_uncore_ddrc_pmu.c
-index c65da06abb041..3418527366408 100644
+index 64712cf2f99ad..b79c96b14328b 100644
 --- a/drivers/perf/hisilicon/hisi_uncore_ddrc_pmu.c
 +++ b/drivers/perf/hisilicon/hisi_uncore_ddrc_pmu.c
-@@ -417,6 +417,7 @@ static struct platform_driver hisi_ddrc_pmu_driver = {
+@@ -420,6 +420,7 @@ static struct platform_driver hisi_ddrc_pmu_driver = {
  	.driver = {
  		.name = "hisi_ddrc_pmu",
  		.acpi_match_table = ACPI_PTR(hisi_ddrc_pmu_acpi_match),
@@ -161,10 +161,10 @@ index c65da06abb041..3418527366408 100644
  	.probe = hisi_ddrc_pmu_probe,
  	.remove = hisi_ddrc_pmu_remove,
 diff --git a/drivers/perf/hisilicon/hisi_uncore_hha_pmu.c b/drivers/perf/hisilicon/hisi_uncore_hha_pmu.c
-index ee6e6a1c390a0..375c4737a088a 100644
+index a4004dad6bf1c..78865b4ac4a6f 100644
 --- a/drivers/perf/hisilicon/hisi_uncore_hha_pmu.c
 +++ b/drivers/perf/hisilicon/hisi_uncore_hha_pmu.c
-@@ -429,6 +429,7 @@ static struct platform_driver hisi_hha_pmu_driver = {
+@@ -431,6 +431,7 @@ static struct platform_driver hisi_hha_pmu_driver = {
  	.driver = {
  		.name = "hisi_hha_pmu",
  		.acpi_match_table = ACPI_PTR(hisi_hha_pmu_acpi_match),
@@ -173,10 +173,10 @@ index ee6e6a1c390a0..375c4737a088a 100644
  	.probe = hisi_hha_pmu_probe,
  	.remove = hisi_hha_pmu_remove,
 diff --git a/drivers/perf/hisilicon/hisi_uncore_l3c_pmu.c b/drivers/perf/hisilicon/hisi_uncore_l3c_pmu.c
-index c8b98d3a8432a..44e8a660c5f52 100644
+index 2f3f291b0c2ed..9dd50c3bc74ec 100644
 --- a/drivers/perf/hisilicon/hisi_uncore_l3c_pmu.c
 +++ b/drivers/perf/hisilicon/hisi_uncore_l3c_pmu.c
-@@ -419,6 +419,7 @@ static struct platform_driver hisi_l3c_pmu_driver = {
+@@ -421,6 +421,7 @@ static struct platform_driver hisi_l3c_pmu_driver = {
  	.driver = {
  		.name = "hisi_l3c_pmu",
  		.acpi_match_table = ACPI_PTR(hisi_l3c_pmu_acpi_match),
@@ -209,10 +209,10 @@ index 656e830798d9e..9ddb577c542b5 100644
  	.probe = qcom_l3_cache_pmu_probe,
  };
 diff --git a/drivers/perf/thunderx2_pmu.c b/drivers/perf/thunderx2_pmu.c
-index 51b31d6ff2c4c..aac9823b0c6bb 100644
+index 43d76c85da56b..9e1c3c7eeba9b 100644
 --- a/drivers/perf/thunderx2_pmu.c
 +++ b/drivers/perf/thunderx2_pmu.c
-@@ -1017,6 +1017,7 @@ static struct platform_driver tx2_uncore_driver = {
+@@ -816,6 +816,7 @@ static struct platform_driver tx2_uncore_driver = {
  	.driver = {
  		.name		= "tx2-uncore-pmu",
  		.acpi_match_table = ACPI_PTR(tx2_uncore_acpi_match),
@@ -221,10 +221,10 @@ index 51b31d6ff2c4c..aac9823b0c6bb 100644
  	.probe = tx2_uncore_probe,
  	.remove = tx2_uncore_remove,
 diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
-index 46ee6807d533a..edac28cd25ddc 100644
+index 7e328d6385c37..328aea9f6be32 100644
 --- a/drivers/perf/xgene_pmu.c
 +++ b/drivers/perf/xgene_pmu.c
-@@ -1975,6 +1975,7 @@ static struct platform_driver xgene_pmu_driver = {
+@@ -1981,6 +1981,7 @@ static struct platform_driver xgene_pmu_driver = {
  		.name		= "xgene-pmu",
  		.of_match_table = xgene_pmu_of_match,
  		.acpi_match_table = ACPI_PTR(xgene_pmu_acpi_match),
