@@ -2,94 +2,280 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA555225505
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 02:42:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EE4C2255F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 04:47:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726815AbgGTAmy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Jul 2020 20:42:54 -0400
-Received: from mailgw02.mediatek.com ([1.203.163.81]:25789 "EHLO
-        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726589AbgGTAmx (ORCPT
+        id S1726510AbgGTCrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Jul 2020 22:47:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726499AbgGTCrI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Jul 2020 20:42:53 -0400
-X-UUID: 71740d0373c747b1b0a120afd07c9dfc-20200720
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=FypeGE6UvtMXhHWwD1QN+vD00gBfco5M6BU2XwHV0ug=;
-        b=K3gENK/THXUo1RT8srlV/0fDtoKEBTclffO1iFUqfPFxvLOT34mtZqDFvk3Kw2RzDIQVxMM6zLXLRO0gFyBCO/W/293ktmjNVDjPFHuLZlOmxr0RVc6XeXkSSmn1CUb+NUfNWVDpASe5vv9TLSYv92CnfHCd/wDufSLyB2emO3E=;
-X-UUID: 71740d0373c747b1b0a120afd07c9dfc-20200720
-Received: from mtkcas36.mediatek.inc [(172.27.4.253)] by mailgw02.mediatek.com
-        (envelope-from <chun-hung.wu@mediatek.com>)
-        (mailgw01.mediatek.com ESMTP with TLS)
-        with ESMTP id 479400831; Mon, 20 Jul 2020 08:42:46 +0800
-Received: from mtkcas08.mediatek.inc (172.21.101.126) by
- MTKMBS31DR.mediatek.inc (172.27.6.102) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Mon, 20 Jul 2020 08:42:44 +0800
-Received: from mtkswgap22.mediatek.inc (172.21.77.33) by mtkcas08.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Mon, 20 Jul 2020 08:42:44 +0800
-From:   Chun-Hung Wu <chun-hung.wu@mediatek.com>
-To:     <mirq-linux@rere.qmqm.pl>, Jonathan Hunter <jonathanh@nvidia.com>,
-        Al Cooper <alcooperx@gmail.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        <bcm-kernel-feedback-list@broadcom.com>,
+        Sun, 19 Jul 2020 22:47:08 -0400
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C33F2C0619D2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jul 2020 19:47:06 -0700 (PDT)
+Received: by mail-io1-xd42.google.com with SMTP id i4so15988845iov.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Jul 2020 19:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=td6BerRuIm6Osr5k4KANv/zOEQY+Vf9NqOqMaPkayYo=;
+        b=EYSOJPShDEjAvUeQAIslmRzXW8sF/c7GhHhfjJo/2SwWsOP3nKF/IzQ0cjkPVvxfU3
+         Cnqd1vXWqG0+iPuQUIEY53o1zuqeakzsDG8rlCeUd1kMT42Ebqz++T/stGUjv7DaHYsO
+         ik5VgLtXjCn4S4KUR/GfP+hCqNQneWiX8a5fgNAQa60MDwF/l3o/q0YtpyDE4xUa8r1X
+         pQa//lGRWICp0GkSPJfIauUvAXXAApnahmzpdiVVI1uNIR0Tli+Ufk4O4jEm3JFWDbPd
+         5B9UmVMCBs6sQB4pOrB7kGY7zXWtYmcfCqi5qIuO2bNdg59PPJ0E70k6aak38NDlyfLy
+         kTvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=td6BerRuIm6Osr5k4KANv/zOEQY+Vf9NqOqMaPkayYo=;
+        b=pGdzmI6vt21xD++O7XgEqCV/7cHmE5z9jRUvlNkOR7oWveAD3eCp8j00qVEFgWpU+D
+         d0Wxw+mod38dT9Pp1XJtJVeNOfCIbBHlTAvAmKFzuL1BLtUkPIbHSi8FIU3vGZYTf5hG
+         eKI2n462Nkof7Fbe8rYuq3QjijBMqcGB7cc78xxOE9M9Q842eTL1/D2aai4CuoNKL64U
+         3jYEDEoW3b5hDUr+5VB6zv5CYd2D12C4DodVXyBKerZmHy36Cd15Sp4BBacnna6x0smZ
+         1rPrCCmDSRThXw+Ucwih2saCy2NXPN5ksO1Lopj5kl3nhlcKUai1YHcYC+EG3XKAG2Rg
+         d+Bg==
+X-Gm-Message-State: AOAM533fgFhDup7+JhcOqwkXzfGzJqKrh4BxWn4mi93DGD2NjhKltGdz
+        p7ij2GKLahQsMdFu2ZoIfB6f+uali0YHXCjRC3zRPg==
+X-Google-Smtp-Source: ABdhPJzTyYx8+W9PEUhbmpm/S1Z6Algx0mLobofGyjcCATOwB1r364ddF/4JxLNvDkrpQWdc3h5V4ESoBYtuYAH3KgA=
+X-Received: by 2002:a6b:d301:: with SMTP id s1mr20615004iob.146.1595213225672;
+ Sun, 19 Jul 2020 19:47:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200717120207.3471030-1-cychiang@chromium.org> <20200717120207.3471030-2-cychiang@chromium.org>
+In-Reply-To: <20200717120207.3471030-2-cychiang@chromium.org>
+From:   Tzung-Bi Shih <tzungbi@google.com>
+Date:   Mon, 20 Jul 2020 10:46:54 +0800
+Message-ID: <CA+Px+wV211AhRVTecU7OS6uP2AQw7v7Gu5x41L4dgW3xR8mA-A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: qcom: sc7180: Add machine driver for sound card registration
+To:     Cheng-Yi Chiang <cychiang@chromium.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Pan Bian <bianpan2016@163.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Allison Randal <allison@lohutok.net>,
-        Mathieu Malaterre <malat@debian.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Kuohong Wang <kuohong.wang@mediatek.com>
-CC:     <kernel-team@android.com>, <linux-kernel@vger.kernel.org>,
-        <linux-mmc@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <wsd_upstream@mediatek.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-        Chun-Hung Wu <chun-hung.wu@mediatek.com>
-Subject: [PATCH v7 4/4] dt-bindings: mmc: mediatek: Add document for mt6779
-Date:   Mon, 20 Jul 2020 08:42:39 +0800
-Message-ID: <1595205759-5825-5-git-send-email-chun-hung.wu@mediatek.com>
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1595205759-5825-1-git-send-email-chun-hung.wu@mediatek.com>
-References: <1595205759-5825-1-git-send-email-chun-hung.wu@mediatek.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-SNTS-SMTP: 2ECAA272D376629C3C5192F90C5E5541A611FE2C2A5196C433CF9380734F83EF2000:8
-X-MTK:  N
-Content-Transfer-Encoding: base64
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Douglas Anderson <dianders@chromium.org>, dgreid@chromium.org,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ALSA development <alsa-devel@alsa-project.org>,
+        Ajit Pandey <ajitp@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QWRkIGNvbXBhdGlibGUgbm9kZSBmb3IgbXQ2Nzc5IG1tYy4NCg0KU2lnbmVkLW9mZi1ieTogQ2h1
-bi1IdW5nIFd1IDxjaHVuLWh1bmcud3VAbWVkaWF0ZWsuY29tPg0KLS0tDQogRG9jdW1lbnRhdGlv
-bi9kZXZpY2V0cmVlL2JpbmRpbmdzL21tYy9tdGstc2QudHh0IHwgMSArDQogMSBmaWxlIGNoYW5n
-ZWQsIDEgaW5zZXJ0aW9uKCspDQoNCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRy
-ZWUvYmluZGluZ3MvbW1jL210ay1zZC50eHQgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmlu
-ZGluZ3MvbW1jL210ay1zZC50eHQNCmluZGV4IDhhNTMyZjQuLjBjOWNmNmEgMTAwNjQ0DQotLS0g
-YS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvbW1jL210ay1zZC50eHQNCisrKyBi
-L0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9tbWMvbXRrLXNkLnR4dA0KQEAgLTEy
-LDYgKzEyLDcgQEAgUmVxdWlyZWQgcHJvcGVydGllczoNCiAJIm1lZGlhdGVrLG10ODE3My1tbWMi
-OiBmb3IgbW1jIGhvc3QgaXAgY29tcGF0aWJsZSB3aXRoIG10ODE3Mw0KIAkibWVkaWF0ZWssbXQ4
-MTgzLW1tYyI6IGZvciBtbWMgaG9zdCBpcCBjb21wYXRpYmxlIHdpdGggbXQ4MTgzDQogCSJtZWRp
-YXRlayxtdDg1MTYtbW1jIjogZm9yIG1tYyBob3N0IGlwIGNvbXBhdGlibGUgd2l0aCBtdDg1MTYN
-CisJIm1lZGlhdGVrLG10Njc3OS1tbWMiOiBmb3IgbW1jIGhvc3QgaXAgY29tcGF0aWJsZSB3aXRo
-IG10Njc3OQ0KIAkibWVkaWF0ZWssbXQyNzAxLW1tYyI6IGZvciBtbWMgaG9zdCBpcCBjb21wYXRp
-YmxlIHdpdGggbXQyNzAxDQogCSJtZWRpYXRlayxtdDI3MTItbW1jIjogZm9yIG1tYyBob3N0IGlw
-IGNvbXBhdGlibGUgd2l0aCBtdDI3MTINCiAJIm1lZGlhdGVrLG10NzYyMi1tbWMiOiBmb3IgTVQ3
-NjIyIFNvQw0KLS0gDQoxLjkuMQ0K
+On Fri, Jul 17, 2020 at 8:02 PM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
+> diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
+> new file mode 100644
+> index 000000000000..cbe6b487d432
+> --- /dev/null
+> +++ b/sound/soc/qcom/sc7180.c
+> @@ -0,0 +1,410 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + *
+> + * sc7180.c -- ALSA SoC Machine driver for SC7180
+> + */
+Use "//" for all lines (see https://lkml.org/lkml/2020/5/14/332).
 
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_device.h>
+> +#include <sound/core.h>
+> +#include <sound/pcm.h>
+> +#include <sound/pcm_params.h>
+> +#include <sound/jack.h>
+> +#include <sound/soc.h>
+> +#include <uapi/linux/input-event-codes.h>
+> +#include <dt-bindings/sound/sc7180-lpass.h>
+> +#include "../codecs/rt5682.h"
+> +#include "common.h"
+> +#include "lpass.h"
+Insert a blank line in between <...> and "..." and sort the list
+alphabetically to make it less likely to conflict.
+
+> +static int sc7180_snd_hw_params(struct snd_pcm_substream *substream,
+> +                               struct snd_pcm_hw_params *params)
+> +{
+Dummy function?  Or is it still work in progress?
+
+> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> +       int ret = 0;
+> +
+> +       switch (cpu_dai->id) {
+> +       case MI2S_PRIMARY:
+> +               break;
+> +       case MI2S_SECONDARY:
+> +               break;
+> +       default:
+> +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+-EINVAL.
+
+> +static int sc7180_dai_init(struct snd_soc_pcm_runtime *rtd)
+> +{
+> +       struct snd_soc_component *component;
+> +       struct snd_soc_card *card = rtd->card;
+> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+> +       struct sc7180_snd_data *pdata = snd_soc_card_get_drvdata(card);
+> +       struct snd_jack *jack;
+> +       int rval;
+> +
+> +       if (!pdata->jack_setup) {
+> +               rval = snd_soc_card_jack_new(
+> +                               card, "Headset Jack",
+> +                               SND_JACK_HEADSET |
+> +                               SND_JACK_HEADPHONE |
+> +                               SND_JACK_BTN_0 | SND_JACK_BTN_1 |
+> +                               SND_JACK_BTN_2 | SND_JACK_BTN_3,
+> +                               &pdata->jack, NULL, 0);
+> +
+> +               if (rval < 0) {
+> +                       dev_err(card->dev, "Unable to add Headphone Jack\n");
+> +                       return rval;
+> +               }
+> +
+> +               jack = pdata->jack.jack;
+> +
+> +               snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+> +               snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
+> +               snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+> +               snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
+> +               pdata->jack_setup = true;
+This block is something I don't expect to be in "dai_init" (i.e. there
+is only 1 headset jack, why do we need to run the code for n times).
+
+> +       switch (cpu_dai->id) {
+> +       case MI2S_PRIMARY:
+> +               jack  = pdata->jack.jack;
+> +               component = codec_dai->component;
+> +
+> +               jack->private_data = component;
+> +               jack->private_free = sc7180_jack_free;
+> +               rval = snd_soc_component_set_jack(component,
+> +                                                 &pdata->jack, NULL);
+> +               if (rval != 0 && rval != -EOPNOTSUPP) {
+> +                       dev_warn(card->dev, "Failed to set jack: %d\n", rval);
+> +                       return rval;
+> +               }
+> +               break;
+> +       case MI2S_SECONDARY:
+> +               break;
+> +       default:
+> +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+-EINVAL.
+
+> +static int sc7180_snd_startup(struct snd_pcm_substream *substream)
+> +{
+> +       unsigned int codec_dai_fmt = SND_SOC_DAIFMT_CBS_CFS;
+> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> +       struct snd_soc_card *card = rtd->card;
+> +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
+> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+> +       int ret;
+> +
+> +       switch (cpu_dai->id) {
+> +       case MI2S_PRIMARY:
+> +               codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+If the format is fixed, could it put somewhere statically?
+
+> +               if (++data->pri_mi2s_clk_count == 1) {
+Don't it need to be atomic?
+
+> +                       snd_soc_dai_set_sysclk(cpu_dai,
+> +                                              LPASS_MCLK0,
+> +                                              DEFAULT_MCLK_RATE,
+> +                                              SNDRV_PCM_STREAM_PLAYBACK);
+> +               }
+> +               snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +
+> +               /* Configure PLL1 for codec */
+> +               ret = snd_soc_dai_set_pll(codec_dai, 0, RT5682_PLL1_S_MCLK,
+> +                                         DEFAULT_MCLK_RATE, RT5682_PLL1_FREQ);
+> +               if (ret < 0) {
+> +                       dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
+> +                       return ret;
+> +               }
+> +
+> +               /* Configure sysclk for codec */
+> +               ret = snd_soc_dai_set_sysclk(codec_dai, RT5682_SCLK_S_PLL1,
+> +                                            RT5682_PLL1_FREQ,
+> +                                            SND_SOC_CLOCK_IN);
+> +               if (ret < 0)
+> +                       dev_err(rtd->dev, "snd_soc_dai_set_sysclk err = %d\n",
+> +                               ret);
+> +
+> +               break;
+> +       case MI2S_SECONDARY:
+> +               break;
+> +       default:
+> +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+-EINVAL.
+
+> +static void  sc7180_snd_shutdown(struct snd_pcm_substream *substream)
+> +{
+> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> +       struct snd_soc_card *card = rtd->card;
+> +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
+> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> +
+> +       switch (cpu_dai->id) {
+> +       case MI2S_PRIMARY:
+> +               if (--data->pri_mi2s_clk_count == 0) {
+Atomic?
+
+> +                       snd_soc_dai_set_sysclk(cpu_dai,
+> +                                              LPASS_MCLK0,
+> +                                              0,
+> +                                              SNDRV_PCM_STREAM_PLAYBACK);
+> +               }
+> +               break;
+> +       case MI2S_SECONDARY:
+> +               break;
+> +       default:
+> +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+-EINVAL.
+
+> +static int sc7180_snd_platform_probe(struct platform_device *pdev)
+> +{
+> +       struct snd_soc_card *card;
+> +       struct sc7180_snd_data *data;
+> +       struct device *dev = &pdev->dev;
+> +       int ret;
+> +
+> +       card = kzalloc(sizeof(*card), GFP_KERNEL);
+> +       if (!card)
+> +               return -ENOMEM;
+Looks like you don't need to allocate the card in runtime.  Also you
+need to use the devm version if needed.
+
+> +       /* Allocate the private data */
+> +       data = kzalloc(sizeof(*data), GFP_KERNEL);
+Use devm.
+
+> +       card->dapm_widgets = sc7180_snd_widgets;
+> +       card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets);
+Can the struct snd_soc_card allocate statically?
+
+> +       sc7180_add_ops(card);
+> +       ret = snd_soc_register_card(card);
+devm.
+
+
+I didn't dive into the logic too much.  Would need another round
+review if any newer version.
