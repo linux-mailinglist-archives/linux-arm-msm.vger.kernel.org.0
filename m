@@ -2,449 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE65D226BE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 18:45:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 543F7226CD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 19:08:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389099AbgGTQpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 12:45:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389093AbgGTQpC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 12:45:02 -0400
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE991C0619D5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 09:45:02 -0700 (PDT)
-Received: by mail-il1-x143.google.com with SMTP id k6so13867402ili.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 09:45:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jwdj2EehoGKLOCdFM32yoNEJaXYh0bWoiMLFkP2JzcA=;
-        b=ZoEGgduJRBAfOuyfj1knXuC2o7Oz/j+1r23fOY3zikZ4XF9qTzB/N9AdRA8VMQUbBZ
-         72RsRDpgVDJ1xYSc3j8gaG289fEtHX6x6/14C3A8W3CMqf10AVCzcfyGYNHIGoS1/9zF
-         HMChGaEMi7KD6hyPqhwTK+L9sv3Lsm0g5holSh+PZMHYB855PJKxPmAuqQUEIcApg0BV
-         7POZm9c5rowbrqOTjRjHRFplwWj2lfJhuZDj1nCKqsuJ4uhN7aTAAngLcF+S3m4r7p04
-         QgfckoI2uoqLgRWG7+j3eYn5CMt+GEbNCUHr4GbpU4+E/pRvwMAsInZc6UWu9EEUMwFu
-         72WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jwdj2EehoGKLOCdFM32yoNEJaXYh0bWoiMLFkP2JzcA=;
-        b=EtxOLPVLeBGDX3fOb4aMm/egan6o0pBDqXJV8HfEzpEV6eQHaEcEsoZMIXqLwD+awa
-         o+IYh/wukqsQtotX3qsHGYl/mh/RfSKGbYXg9RWYL85suKJuESmdqOiqgZkoBmC9hqCq
-         iz+mWoPhRo4PgwKoWv5GWdgPp5abOfiycEJAxnhJl/ZhHHUA8Jy6/5Ly3FMVW2MeWX/d
-         qoo10Dy6aibCBygSiF+Hi01wWsPJRQWDSCpA4WE9uzP1cKCrC/6PLadhxNR18g1qjR7z
-         ie6YvuBFhBsFgepyIPjRLTxbvyo+QwQj1mOS2t/DZpRWRqeR9GaMoUqxq9Nd/sPCbBdo
-         J/gw==
-X-Gm-Message-State: AOAM530eO19WZ8Tx5Rq2BmGB8JpIi73ITlJ9SkWIMQVavqYSiwRqWLOy
-        6KPbtmGng2ObA9NdLx31BsN1dbr51mdLdXl/GXs77u+q
-X-Google-Smtp-Source: ABdhPJyy6IKnvZCwpAnMRjOFC9b0GA/WWScza0WYfYrHjgFvk/TyS2rFY51+NZoJjD9Ph76RAtc9fJcTxsSSVx21W2M=
-X-Received: by 2002:a92:8e01:: with SMTP id c1mr24037547ild.140.1595263501800;
- Mon, 20 Jul 2020 09:45:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <1594148870-27276-1-git-send-email-sidgup@codeaurora.org>
- <1594148870-27276-2-git-send-email-sidgup@codeaurora.org> <20200715201839.GA3204081@xps15>
- <20200717054615.GI2922385@builder.lan>
-In-Reply-To: <20200717054615.GI2922385@builder.lan>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Mon, 20 Jul 2020 10:44:50 -0600
-Message-ID: <CANLsYkxgPgJ47mC2t1kQsV+S_O1uAwneGL5qYWLV9tVe7i3oUQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] remoteproc: Add remoteproc character device interface
+        id S1729390AbgGTRHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 13:07:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45508 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728827AbgGTRHQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 13:07:16 -0400
+Received: from gmail.com (unknown [104.132.1.76])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 305C2207DF;
+        Mon, 20 Jul 2020 17:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595264835;
+        bh=B5ArgmwyVC+EJANIQwZaJ8ZAOjT0Xwve9/XQnU5HYQc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QpQNGYKsi4lyU8zzMxaKgrZhfKSd0hpN1Ip06Kl2//oQaw4BJDTRfv4q5e/pZyHdA
+         KJA+MEqlFwKiQZxFFKjjDeXmwdbe8c27wakrmL057BOIR6fT53hKvMtN1DpgIzFJkV
+         n+7D1sqmUjuU0Ya+zJR+0Tjl+K20ZD0Ertw6FAPg=
+Date:   Mon, 20 Jul 2020 10:07:13 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>, Jon Corbet <corbet@lwn.net>,
-        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        SCSI <linux-scsi@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        tsoni <tsoni@codeaurora.org>, psodagud <psodagud@codeaurora.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Satya Tangirala <satyat@google.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Subject: Re: [PATCH v6 3/5] arm64: dts: sdm845: add Inline Crypto Engine
+ registers and clock
+Message-ID: <20200720170713.GD1292162@gmail.com>
+References: <20200714161516.GA1064009@gmail.com>
+ <CAL_Jsq+t1h4w8C361vguw1co_vnbMKs3q4qWR4=jwAKr1Vm80g@mail.gmail.com>
+ <20200714164353.GB1064009@gmail.com>
+ <CAL_JsqK-wUuo6azYseC35R=Q509=h9-v4gFvcvy8wXrDgSw5ZQ@mail.gmail.com>
+ <20200714171203.GC1064009@gmail.com>
+ <20200714173111.GG388985@builder.lan>
+ <20200714174345.GE1218486@builder.lan>
+ <20200714175718.GD1064009@gmail.com>
+ <20200714200027.GH388985@builder.lan>
+ <20200715030004.GB38091@sol.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200715030004.GB38091@sol.localdomain>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Jul 2020 at 23:48, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 15 Jul 13:18 PDT 2020, Mathieu Poirier wrote:
->
-> > On Tue, Jul 07, 2020 at 12:07:49PM -0700, Siddharth Gupta wrote:
-> > > Add the character device interface into remoteproc framework.
-> > > This interface can be used in order to boot/shutdown remote
-> > > subsystems and provides a basic ioctl based interface to implement
-> > > supplementary functionality. An ioctl call is implemented to enable
-> > > the shutdown on release feature which will allow remote processors to
-> > > be shutdown when the controlling userpsace application crashes or hangs.
-> > >
-> > > Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-> > > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
-> > > ---
-> > >  Documentation/userspace-api/ioctl/ioctl-number.rst |   1 +
-> > >  drivers/remoteproc/Kconfig                         |   9 ++
-> > >  drivers/remoteproc/Makefile                        |   1 +
-> > >  drivers/remoteproc/remoteproc_cdev.c               | 146 +++++++++++++++++++++
-> > >  drivers/remoteproc/remoteproc_internal.h           |  28 ++++
-> > >  include/linux/remoteproc.h                         |   5 +
-> > >  include/uapi/linux/remoteproc_cdev.h               |  37 ++++++
-> > >  7 files changed, 227 insertions(+)
-> > >  create mode 100644 drivers/remoteproc/remoteproc_cdev.c
-> > >  create mode 100644 include/uapi/linux/remoteproc_cdev.h
-> > >
-> > > diff --git a/Documentation/userspace-api/ioctl/ioctl-number.rst b/Documentation/userspace-api/ioctl/ioctl-number.rst
-> > > index 59472cd..2a19883 100644
-> > > --- a/Documentation/userspace-api/ioctl/ioctl-number.rst
-> > > +++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
-> > > @@ -339,6 +339,7 @@ Code  Seq#    Include File                                           Comments
-> > >  0xB4  00-0F  linux/gpio.h                                            <mailto:linux-gpio@vger.kernel.org>
-> > >  0xB5  00-0F  uapi/linux/rpmsg.h                                      <mailto:linux-remoteproc@vger.kernel.org>
-> > >  0xB6  all    linux/fpga-dfl.h
-> > > +0xB7  all    uapi/linux/remoteproc_cdev.h                            <mailto:linux-remoteproc@vger.kernel.org>
-> > >  0xC0  00-0F  linux/usb/iowarrior.h
-> > >  0xCA  00-0F  uapi/misc/cxl.h
-> > >  0xCA  10-2F  uapi/misc/ocxl.h
-> > > diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-> > > index c4d1731..652060f 100644
-> > > --- a/drivers/remoteproc/Kconfig
-> > > +++ b/drivers/remoteproc/Kconfig
-> > > @@ -14,6 +14,15 @@ config REMOTEPROC
-> > >
-> > >  if REMOTEPROC
-> > >
-> > > +config REMOTEPROC_CDEV
-> > > +   bool "Remoteproc character device interface"
-> > > +   help
-> > > +     Say y here to have a character device interface for the remoteproc
-> > > +     framework. Userspace can boot/shutdown remote processors through
-> > > +     this interface.
-> > > +
-> > > +     It's safe to say N if you don't want to use this interface.
-> > > +
-> > >  config IMX_REMOTEPROC
-> > >     tristate "IMX6/7 remoteproc support"
-> > >     depends on ARCH_MXC
-> > > diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
-> > > index e8b886e..311ae3f 100644
-> > > --- a/drivers/remoteproc/Makefile
-> > > +++ b/drivers/remoteproc/Makefile
-> > > @@ -9,6 +9,7 @@ remoteproc-y                                += remoteproc_debugfs.o
-> > >  remoteproc-y                               += remoteproc_sysfs.o
-> > >  remoteproc-y                               += remoteproc_virtio.o
-> > >  remoteproc-y                               += remoteproc_elf_loader.o
-> > > +obj-$(CONFIG_REMOTEPROC_CDEV)              += remoteproc_cdev.o
-> > >  obj-$(CONFIG_IMX_REMOTEPROC)               += imx_rproc.o
-> > >  obj-$(CONFIG_INGENIC_VPU_RPROC)            += ingenic_rproc.o
-> > >  obj-$(CONFIG_MTK_SCP)                      += mtk_scp.o mtk_scp_ipi.o
-> > > diff --git a/drivers/remoteproc/remoteproc_cdev.c b/drivers/remoteproc/remoteproc_cdev.c
-> > > new file mode 100644
-> > > index 0000000..8a0eb47
-> > > --- /dev/null
-> > > +++ b/drivers/remoteproc/remoteproc_cdev.c
-> > > @@ -0,0 +1,146 @@
-> > > +// SPDX-License-Identifier: GPL-2.0-only
-> > > +/*
-> > > + * Character device interface driver for Remoteproc framework.
-> > > + *
-> > > + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> > > + */
-> > > +
-> > > +#include <linux/cdev.h>
-> > > +#include <linux/fs.h>
-> > > +#include <linux/module.h>
-> > > +#include <linux/mutex.h>
-> > > +#include <linux/compat.h>
-> > > +#include <linux/remoteproc.h>
-> > > +#include <linux/uaccess.h>
-> > > +#include <uapi/linux/remoteproc_cdev.h>
-> >
-> > Alphabetical order please.
-> >
-> > > +
-> > > +#include "remoteproc_internal.h"
-> > > +
-> > > +#define NUM_RPROC_DEVICES  64
-> > > +static dev_t rproc_major;
-> > > +
-> > > +static ssize_t rproc_cdev_write(struct file *filp, const char __user *buf, size_t len, loff_t *pos)
-> > > +{
-> > > +   struct rproc *rproc = container_of(filp->f_inode->i_cdev, struct rproc, char_dev);
-> > > +   int ret = 0;
-> > > +   char cmd[10];
-> > > +
-> > > +   if (!len || len > sizeof(cmd))
-> > > +           return -EINVAL;
-> > > +
-> > > +   ret = copy_from_user(cmd, buf, sizeof(cmd));
-> > > +   if (ret)
-> > > +           return -EFAULT;
-> > > +
-> > > +   if (sysfs_streq(cmd, "start")) {
-> > > +           if (rproc->state == RPROC_RUNNING)
-> > > +                   return -EBUSY;
-> > > +
-> > > +           ret = rproc_boot(rproc);
-> > > +           if (ret)
-> > > +                   dev_err(&rproc->dev, "Boot failed:%d\n", ret);
-> > > +   } else if (sysfs_streq(cmd, "stop")) {
-> > > +           if (rproc->state != RPROC_RUNNING)
-> > > +                   return -EINVAL;
-> > > +
-> > > +           rproc_shutdown(rproc);
-> > > +   } else {
-> > > +           dev_err(&rproc->dev, "Unrecognized option\n");
-> > > +           ret = -EINVAL;
-> > > +   }
-> > > +
-> > > +   return ret ? ret : len;
-> > > +}
-> > > +
-> > > +static long rproc_device_ioctl(struct file *filp, unsigned int ioctl, unsigned long arg)
-> > > +{
-> > > +   struct rproc *rproc = container_of(filp->f_inode->i_cdev, struct rproc, char_dev);
-> > > +   void __user *argp = compat_ptr(arg);
-> > > +   int ret;
-> > > +   int32_t param;
-> > > +
-> > > +   switch (ioctl) {
-> > > +   case RPROC_SET_SHUTDOWN_ON_RELEASE:
-> > > +           ret = copy_from_user(&param, argp, sizeof(int32_t));
-> > > +           if (ret) {
-> > > +                   dev_err(&rproc->dev, "Data copy from userspace failed\n");
-> > > +                   return -EFAULT;
-> > > +           }
-> > > +           mutex_lock(&rproc->lock);
-> > > +           rproc->cdev_put_on_release = param ? true : false;
-> > > +           mutex_unlock(&rproc->lock);
-> > > +           break;
-> > > +   case RPROC_GET_SHUTDOWN_ON_RELEASE:
-> > > +           mutex_lock(&rproc->lock);
-> > > +           ret = copy_to_user(argp, &rproc->cdev_put_on_release, sizeof(bool));
-> > > +           mutex_unlock(&rproc->lock);
-> > > +           if (ret) {
-> > > +                   dev_err(&rproc->dev, "Data copy to userspace failed\n");
-> > > +                   return -EFAULT;
-> > > +           }
-> > > +           break;
-> > > +   default:
-> > > +           dev_err(&rproc->dev, "Unsupported ioctl\n");
-> > > +           return -EINVAL;
-> > > +   }
-> > > +
-> > > +   return 0;
-> > > +}
-> > > +
-> > > +static int rproc_cdev_release(struct inode *inode, struct file *filp)
-> > > +{
-> > > +   struct rproc *rproc = container_of(inode->i_cdev, struct rproc, char_dev);
-> > > +   bool release;
-> > > +
-> > > +   mutex_lock(&rproc->lock);
-> > > +   release = rproc->cdev_put_on_release;
-> > > +   mutex_unlock(&rproc->lock);
-> > > +
-> > > +   if (release && rproc->state == RPROC_RUNNING)
-> >
-> > I think the state of the processor should also be acquired when the lock is
-> > held.  There is still a chance ->state can change between the time the lock is
-> > released and rproc_shutdown() is called but that's a known problem for which
-> > patches have been sent out.
-> >
->
-> There where patches for a similar bug in the debugfs interface, but I'm
-> not able to find anything for rproc_shutdown().
+On Tue, Jul 14, 2020 at 08:00:04PM -0700, Eric Biggers wrote:
+> On Tue, Jul 14, 2020 at 01:00:27PM -0700, Bjorn Andersson wrote:
+> > On Tue 14 Jul 10:57 PDT 2020, Eric Biggers wrote:
+> > 
+> > > On Tue, Jul 14, 2020 at 10:43:45AM -0700, Bjorn Andersson wrote:
+> > > > On Tue 14 Jul 10:31 PDT 2020, Bjorn Andersson wrote:
+> > > > 
+> > > > > On Tue 14 Jul 10:12 PDT 2020, Eric Biggers wrote:
+> > > > > 
+> > > > > > On Tue, Jul 14, 2020 at 10:59:44AM -0600, Rob Herring wrote:
+> > > > > > > On Tue, Jul 14, 2020 at 10:43 AM Eric Biggers <ebiggers@kernel.org> wrote:
+> > > > > > > >
+> > > > > > > > On Tue, Jul 14, 2020 at 10:35:12AM -0600, Rob Herring wrote:
+> > > > > > > > > On Tue, Jul 14, 2020 at 10:15 AM Eric Biggers <ebiggers@kernel.org> wrote:
+> > > > > > > > > >
+> > > > > > > > > > On Tue, Jul 14, 2020 at 10:16:04AM -0400, Martin K. Petersen wrote:
+> > > > > > > > > > >
+> > > > > > > > > > > Eric,
+> > > > > > > > > > >
+> > > > > > > > > > > > Add the vendor-specific registers and clock for Qualcomm ICE (Inline
+> > > > > > > > > > > > Crypto Engine) to the device tree node for the UFS host controller on
+> > > > > > > > > > > > sdm845, so that the ufs-qcom driver will be able to use inline crypto.
+> > > > > > > > > > >
+> > > > > > > > > > > I would like to see an Acked-by for this patch before I merge it.
+> > > > > > > > > > >
+> > > > > > > > > >
+> > > > > > > > > > Andy, Bjorn, or Rob: can you give Acked-by?
+> > > > > > > > >
+> > > > > > > > > DTS changes should go in via the QCom tree.
+> > > > > > > > >
+> > > > > > > >
+> > > > > > > > So, the DTS patch can't be applied without the driver patches since then the
+> > > > > > > > driver would misinterpret the ICE registers as the dev_ref_clk_ctrl registers.
+> > > > > > > 
+> > > > > > > That sounds broken, but there's no context here for me to comment
+> > > > > > > further. DTS changes should work with old/stable kernels. I'd suggest
+> > > > > > > you get a review from Bjorn on the driver first.
+> > > > > > > 
+> > > > > > 
+> > > > > > The "breaking" change is that the dev_ref_clk_ctrl registers are now identified
+> > > > > > by name instead of assumed to be index 1.
+> > > > > > 
+> > > > > > A reviewer had complained about the device-mapper bindings of this driver before
+> > > > > > (https://lkml.kernel.org/r/158334171487.7173.5606223900174949177@swboyd.mtv.corp.google.com).
+> > > > > > Changing to identifying the registers by name seemed like an improvement.
+> > > > > > 
+> > > > > > If needed I can add a hole at index 1 to make the DTS changes work with
+> > > > > > old/stable kernels too, but I didn't know that is a requirement.  (Normally for
+> > > > > > Linux kernel development, kernel-internal refactoring is always allowed
+> > > > > > upstream.)  If I do this, would this hack have to be carried forever, or would
+> > > > > > we be able to fix it up eventually?  Is there any deprecation period for DTS, or
+> > > > > > do the latest DTS have to work with a 20 year old kernel?
+> > > > > > 
+> > > > > 
+> > > > > The problem here is that DT binding refactoring is not kernel-internal.
+> > > > > It's two different projects living in the same git.
+> > > > > 
+> > > > > There's a wish from various people that we make sure that new DTS
+> > > > > continues to work with existing kernels. This is a nice in theory
+> > > > > there's a lot of examples where we simply couldn't anticipate how future
+> > > > > bindings would look. A particular example is that this prohibits most
+> > > > > advancement in power management.
+> > > > > 
+> > > > > 
+> > > > > But afaict what you describe above would make a new kernel failing to
+> > > > > operate with the old DTS and that we have agreed to avoid.
+> > > > > So I think the appropriate way to deal with this is to request the reg
+> > > > > byname to detect the new binding and if that fails then assume that
+> > > > > index 1 is dev_ref_clk_ctrl.
+> > > > > 
+> > > > 
+> > > > I took another look at the git history and I can't find a single dts -
+> > > > either upstream or in any downstream tree - that specifies that second
+> > > > reg.
+> > > > 
+> > > > So per my argument below, if you could include a patch that just removes
+> > > > the "dev_ref_clk_ctrl_mem" reference from the binding and driver I would
+> > > > be happy to r-b that and ack this patch.
+> > > > 
+> > > > Regards,
+> > > > Bjorn
+> > > > 
+> > > > > 
+> > > > > There are cases where we just decide not to be backwards compatible, but
+> > > > > it's pretty rare. As for deprecation, I think 1-2 LTS releases is
+> > > > > sufficient, at that time scale it doesn't make sense to sit with an old
+> > > > > DTB anyways (given the current pace of advancements in the kernel).
+> > > > > 
+> > > 
+> > > Great, I'll remove the driver support for "dev_ref_clk_ctrl" then.  However,
+> > > that doesn't solve the problem of the new DTS breaking old drivers, since old
+> > > drivers assume that reg[1] is dev_ref_clk_ctrl.
+> > > 
+> > > This patch makes the DTS look like:
+> > > 
+> > > 	reg = <0 0x01d84000 0 0x2500>,
+> > > 	      <0 0x01d90000 0 0x8000>;
+> > > 	reg-names = "std", "ice";
+> > > 
+> > > The "ice" registers are new and are accessed by name instead of by index.
+> > > 
+> > > But these also happen to be in reg[1].  Old drivers will see that reg[1] is
+> > > present and assume it is dev_ref_clk_ctrl.
+> > > 
+> > > To work around this, I could leave a blank reg[1] entry:
+> > > 
+> > > 	reg = <0 0x01d84000 0 0x2500>,
+> > > 	      <0 0 0 0>,
+> > > 	      <0 0x01d90000 0 0x8000>;
+> > > 	reg-names = "std", "dev_ref_clk_ctrl", "ice";
+> > > 
+> > > Do I need to do that?
+> > > 
+> > 
+> > No, let's not complicate it without good reason. SDM845 has hw_ver.major
+> > == 3, so we're not taking the else-path in ufs_qcom_init(). So I should
+> > be able to just merge this patch for 5.9 through the qcom tree after
+> > all (your code handles that it's not there and the existing code doesn't
+> > care).
+> > 
+> > 
+> > The two platforms that I can find that has UFS controller of
+> > hw_ver.major == 1 is APQ8084 and MSM8994, so I simply didn't look at an
+> > old enough downstream tree (msm-3.10) to find anyone specifying reg[1].
+> > The reg specified is however coming from the TLMM (pinctrl-msm) hardware
+> > block, so it should not be directly remapped in the UFS driver...
+> > 
+> > But regardless, that has not been seen in an upstream dts and per your
+> > patch 2 we would add that reg by name when that happens.
+> > There's recent activity on upstreaming more of the MSM8994 support, so
+> > perhaps then it's best to leave this snippet in the driver for now.
+> > 
+> > 
+> > Summary: Martin merges (merged?) patch 1, 2, 4 and 5 in the scsi tree,
+> > I'll merge this patch as is in the qcom tree and we'll just leave the
+> > dev_ref_clk handling as is for now then.
+> > 
+> 
+> Okay, great.  So an old DTS with the new driver isn't a problem because no DTS
+> has ever declared dev_ref_clk_ctrl.  And a new DTS with an old driver is a less
+> important case, and also not really a problem here since breakage would only
+> occur if we added the ICE registers to an older SoC that has hw_ver.major == 1.
+> 
+> Maybe you'd like to provide your Acked-by on patches 2 and 5?
+> 
+> My instinct is always to remove code that has never been used.  But sure, if you
+> think the dev_ref_clk_ctrl code might be used soon, we can keep it for now.
+> 
 
-You are correct - I was under the impression Alex's patch was for
-rproc_shutdown() as well.
-
->
->
-> As I suggested in the previous version of this series I think it's ok
-> that we move forward with replicating the same faulty logic that we have
-> in the sysfs interface and then fix rproc_shutdown() so that it
-> internally checks the current state and return appropriately.
-
-I also think this is the right way to proceed.
-
->
-> Regards,
-> Bjorn
->
-> > > +           rproc_shutdown(rproc);
-> > > +
-> > > +   return 0;
-> > > +}
-> > > +
-> > > +static const struct file_operations rproc_fops = {
-> > > +   .write = rproc_cdev_write,
-> > > +   .compat_ioctl = rproc_device_ioctl,
-> > > +   .release = rproc_cdev_release,
-> > > +};
-> > > +
-> > > +int rproc_char_device_add(struct rproc *rproc)
-> > > +{
-> > > +   int ret;
-> > > +   dev_t cdevt;
-> > > +
-> > > +   cdev_init(&rproc->char_dev, &rproc_fops);
-> > > +   rproc->char_dev.owner = THIS_MODULE;
-> > > +
-> > > +   cdevt = MKDEV(rproc_major, rproc->index);
-> > > +   ret = cdev_add(&rproc->char_dev, cdevt, 1);
-> > > +   if (ret < 0)
-> > > +           goto out;
-> > > +
-> > > +   rproc->dev.devt = cdevt;
-> > > +out:
-> > > +   return ret;
-> > > +}
-> > > +
-> > > +void rproc_char_device_remove(struct rproc *rproc)
-> > > +{
-> > > +   __unregister_chrdev(rproc_major, rproc->index, 1, "remoteproc");
-> > > +}
-> > > +
-> > > +void __init rproc_init_cdev(void)
-> > > +{
-> > > +   int ret;
-> > > +
-> > > +   ret = alloc_chrdev_region(&rproc_major, 0, NUM_RPROC_DEVICES, "remoteproc");
-> > > +   if (ret < 0)
-> > > +           pr_err("Failed to alloc rproc_cdev region, err %d\n", ret);
-> > > +}
-> > > +
-> > > +void __exit rproc_exit_cdev(void)
-> > > +{
-> > > +   unregister_chrdev_region(MKDEV(rproc_major, 0), NUM_RPROC_DEVICES);
-> >
-> > Please go back to the comment I made on this during my last review and respin.
-> >
-> > > +}
-> > > diff --git a/drivers/remoteproc/remoteproc_internal.h b/drivers/remoteproc/remoteproc_internal.h
-> > > index 4ba7cb5..f091ddc 100644
-> > > --- a/drivers/remoteproc/remoteproc_internal.h
-> > > +++ b/drivers/remoteproc/remoteproc_internal.h
-> > > @@ -47,6 +47,34 @@ extern struct class rproc_class;
-> > >  int rproc_init_sysfs(void);
-> > >  void rproc_exit_sysfs(void);
-> > >
-> > > +#ifdef CONFIG_REMOTEPROC_CDEV
-> > > +void rproc_init_cdev(void);
-> > > +void rproc_exit_cdev(void);
-> > > +int rproc_char_device_add(struct rproc *rproc);
-> > > +void rproc_char_device_remove(struct rproc *rproc);
-> > > +#else
-> > > +static inline void rproc_init_cdev(void)
-> > > +{
-> > > +}
-> > > +
-> > > +static inline void rproc_exit_cdev(void)
-> > > +{
-> > > +}
-> > > +
-> > > +/*
-> > > + * The character device interface is an optional feature, if it is not enabled
-> > > + * the function should not return an error.
-> > > + */
-> > > +static inline int rproc_char_device_add(struct rproc *rproc)
-> > > +{
-> > > +   return 0;
-> > > +}
-> > > +
-> > > +static inline void  rproc_char_device_remove(struct rproc *rproc)
-> > > +{
-> > > +}
-> > > +#endif
-> > > +
-> > >  void rproc_free_vring(struct rproc_vring *rvring);
-> > >  int rproc_alloc_vring(struct rproc_vdev *rvdev, int i);
-> > >
-> > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-> > > index e7b7bab..669cbfb 100644
-> > > --- a/include/linux/remoteproc.h
-> > > +++ b/include/linux/remoteproc.h
-> > > @@ -40,6 +40,7 @@
-> > >  #include <linux/virtio.h>
-> > >  #include <linux/completion.h>
-> > >  #include <linux/idr.h>
-> > > +#include <linux/cdev.h>
-> >
-> > Move this above completion.h
-> >
-> > With all of the above modifications:
-> >
-> > Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> >
-> > >  #include <linux/of.h>
-> > >
-> > >  /**
-> > > @@ -488,6 +489,8 @@ struct rproc_dump_segment {
-> > >   * @auto_boot: flag to indicate if remote processor should be auto-started
-> > >   * @dump_segments: list of segments in the firmware
-> > >   * @nb_vdev: number of vdev currently handled by rproc
-> > > + * @char_dev: character device of the rproc
-> > > + * @cdev_put_on_release: flag to indicate if remoteproc should be shutdown on @char_dev release
-> > >   */
-> > >  struct rproc {
-> > >     struct list_head node;
-> > > @@ -523,6 +526,8 @@ struct rproc {
-> > >     int nb_vdev;
-> > >     u8 elf_class;
-> > >     u16 elf_machine;
-> > > +   struct cdev char_dev;
-> > > +   bool cdev_put_on_release;
-> > >  };
-> > >
-> > >  /**
-> > > diff --git a/include/uapi/linux/remoteproc_cdev.h b/include/uapi/linux/remoteproc_cdev.h
-> > > new file mode 100644
-> > > index 0000000..c43768e
-> > > --- /dev/null
-> > > +++ b/include/uapi/linux/remoteproc_cdev.h
-> > > @@ -0,0 +1,37 @@
-> > > +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
-> > > +/*
-> > > + * IOCTLs for Remoteproc's character device interface.
-> > > + *
-> > > + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> > > + */
-> > > +
-> > > +#ifndef _UAPI_REMOTEPROC_CDEV_H_
-> > > +#define _UAPI_REMOTEPROC_CDEV_H_
-> > > +
-> > > +#include <linux/ioctl.h>
-> > > +#include <linux/types.h>
-> > > +
-> > > +#define RPROC_MAGIC        0xB7
-> > > +
-> > > +/*
-> > > + * The RPROC_SET_SHUTDOWN_ON_RELEASE ioctl allows to enable/disable the shutdown of a remote
-> > > + * processor automatically when the controlling userpsace closes the char device interface.
-> > > + *
-> > > + * input parameter: integer
-> > > + *   0             : disable automatic shutdown
-> > > + *   other : enable automatic shutdown
-> > > + */
-> > > +#define RPROC_SET_SHUTDOWN_ON_RELEASE _IOW(RPROC_MAGIC, 1, __s32)
-> > > +
-> > > +/*
-> > > + * The RPROC_GET_SHUTDOWN_ON_RELEASE ioctl gets information about whether the automatic shutdown of
-> > > + * a remote processor is enabled or disabled when the controlling userspace closes the char device
-> > > + * interface.
-> > > + *
-> > > + * output parameter: integer
-> > > + *   0             : automatic shutdown disable
-> > > + *   other : automatic shutdown enable
-> > > + */
-> > > +#define RPROC_GET_SHUTDOWN_ON_RELEASE _IOR(RPROC_MAGIC, 2, __s32)
-> > > +
-> > > +#endif
-> > > --
-> > > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > > a Linux Foundation Collaborative Project
-> > >
+Ping?
