@@ -2,72 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D0D9226EDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 21:18:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40D57226EEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 21:20:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729430AbgGTTSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 15:18:08 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:45842 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729093AbgGTTSH (ORCPT
+        id S1730564AbgGTTTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 15:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729027AbgGTTTh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 15:18:07 -0400
-Received: by mail-io1-f65.google.com with SMTP id e64so18796720iof.12;
-        Mon, 20 Jul 2020 12:18:07 -0700 (PDT)
+        Mon, 20 Jul 2020 15:19:37 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B23EFC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 12:19:36 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id x9so21455942ljc.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 12:19:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c27QdDaalrBPTYx6Hz4qEdOcDXJQt2hGAF2f+ujhjF4=;
+        b=KuwTS0CtDg/KT6Vr6p1o4UTZ7HWalRZpW11IdhJWv6Yc5j/TD5gQ7zm5Jjh6B8XI5h
+         yfJNFC7eK2lRmItt7PjIn51fAIMXuBYxgWFd3bm23wg5S6Tq4aHjL48ntwLG1xpskAHd
+         IC9EtdXCtrNqzLjo5l8RV9NjG1QYz/6dbUsCE6VVhWXw48lAjBR5EyNpzl8NDfqOktSX
+         EPmX6U04po198OszhbuhONTWOov4Xd3WFtEE0kzJi4eP9qCQ8vQq88ZBwSDh8+1T4FRD
+         hbv4wlJXAUpI8yWYfRaNYst5gn2EOYKYC/8BLagM5mfRI31ySXxAV9tBd5D4Cr90agjs
+         Lvrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uv9DwJeqFVU3ixKGtQQTS9+FOIa16rZ9Ojp6k1PsA9k=;
-        b=Uv9wkHXLT9izjlBoI1LYkZRU7zGNpt/BeIJLXTS41+I3pRckyhv5sBHFh/KkMjm9oR
-         Ppkkv3Kw8qMHsIShCUTDG9Ar8od7WovwZXwB0BMtNh78Pnt/c4e6aRrXF4HvBrgIvyFj
-         tb3VwMfrIZ6/XUNLBJJdRZyAFnL8uA0OaD0pD+BhayWNhOlye2Wkd299kVeaoBpYv/a3
-         yyeYjXU7JhJdFlBe1zvU8zEFgf+UNkyt9tWQ78CXqMGZ2LdFiYZQU6rJihQo546aUrUg
-         mLIv3/4ysYVPFwj/4P84szuhqvhhikX85glhyqDYG1FNkMYXxun8boGv8CbdCNZTfBJG
-         /Zzw==
-X-Gm-Message-State: AOAM533b38ao5Z0IrMEtAgps1MzpKKMpsOsqFtxkX9gGP04/6Ken433S
-        QKumx/6iFQ66u8FQPxF8JR80TRYiJw==
-X-Google-Smtp-Source: ABdhPJzZ1vqvkCvQlbnANMQkRpMdXUHvSUgwd4hRCkvF0VWDDV/3eh547Y6ph5RTvSFlzRUciVYNdA==
-X-Received: by 2002:a6b:5813:: with SMTP id m19mr24164940iob.29.1595272686659;
-        Mon, 20 Jul 2020 12:18:06 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id x5sm201740iol.36.2020.07.20.12.18.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2020 12:18:05 -0700 (PDT)
-Received: (nullmailer pid 2847072 invoked by uid 1000);
-        Mon, 20 Jul 2020 19:18:04 -0000
-Date:   Mon, 20 Jul 2020 13:18:04 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Kathiravan T <kathirav@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        lgirdwood@gmail.com, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org, sricharan@codeaurora.org,
-        sivaprak@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org
-Subject: Re: [PATCH V3 3/4] dt-bindings: soc: qcom: convert the SMD-RPM
- document to YAML schema
-Message-ID: <20200720191804.GA2846983@bogus>
-References: <1595225543-12127-1-git-send-email-kathirav@codeaurora.org>
- <1595225543-12127-4-git-send-email-kathirav@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c27QdDaalrBPTYx6Hz4qEdOcDXJQt2hGAF2f+ujhjF4=;
+        b=Wc2h4gqIFxbQM6BJuoLivxXZV6EUw6mT0kgVwFMpsM7XecLX2G2Ro9yhW/HPdF97MA
+         tfrslB9Cabg8tUW/Naog2myvlwp+gG6ohn7KUFM8GRKtWFVeYC6uIEYikp1e6BA8CMtB
+         9Pskr6r0PeA47ZEbf/45EnbQMnbmFPfbzKvn4b/pri3jkD7m2F+HyeHpQ1Ww7nDne7um
+         YRfjmyPCK3quthUvqvbMgjh0baYmhVj/23SeLv0JGK0utPTmcj3AqLUqut7s4IFasUvd
+         5G52pRxWnotw0EBeUdyny/Ysk1q77x5FJ9m5QrxSpY2nLdIdiMm5ihmYZqiOcCMyNB6r
+         rQow==
+X-Gm-Message-State: AOAM533zWydgaBE43EGkMVJ19iT61H6loEh1IzCaNy3kGy6DcPqG1Lnv
+        CbGWtJ6CkSGiErxm05vz/MmTUmkXWPIeMdeO1rFUQA==
+X-Google-Smtp-Source: ABdhPJytd1L3t3odiIQNSjrPSpGOSnIfawPzcqrPm7XkSZxsxS8d6ysT2xoLHLvMBq1OahMA3S7JIs4XecxrzglTgn8=
+X-Received: by 2002:a2e:7401:: with SMTP id p1mr11812893ljc.366.1595272774987;
+ Mon, 20 Jul 2020 12:19:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1595225543-12127-4-git-send-email-kathirav@codeaurora.org>
+References: <CA+G9fYuzqA0N6O-52uH9aHjsfF6HfhuxMby1Y6Yz7jGMAHW0zw@mail.gmail.com>
+ <CAK8P3a1SHQKNNCVj9Gp25BLuXUC2nf7FuVrqfpPYQkvMbhjzFg@mail.gmail.com>
+ <ad7ba016-c3eb-a833-e4d3-4cdcb53ca786@arm.com> <CAF6AEGsBRxFC918nNzJZnxMpFnNC6qcNGvMjjM8U3AAn6CusNA@mail.gmail.com>
+In-Reply-To: <CAF6AEGsBRxFC918nNzJZnxMpFnNC6qcNGvMjjM8U3AAn6CusNA@mail.gmail.com>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Tue, 21 Jul 2020 00:49:23 +0530
+Message-ID: <CA+G9fYv9K3FqR6D9=2jvQ3s_eSTL=K-x4QW4-P7=AgfjjHCBwA@mail.gmail.com>
+Subject: Re: [Freedreno] arm64: Internal error: Oops: qcom_iommu_tlb_inv_context
+ free_io_pgtable_ops on db410c
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>, Arnd Bergmann <arnd@arndb.de>,
+        Sean Paul <sean@poorly.run>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Joerg Roedel <jroedel@suse.de>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Andy Gross <agross@kernel.org>, lkft-triage@lists.linaro.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Eric Anholt <eric@anholt.net>,
+        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        "Guohanjun (Hanjun Guo)" <guohanjun@huawei.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        "moderated list:ARM/Mediatek SoC..." 
+        <linux-mediatek@lists.infradead.org>, Will Deacon <will@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Jul 2020 11:42:22 +0530, Kathiravan T wrote:
-> Convert the qcom,smd-rpm.txt document to YAML schema
-> 
-> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
-> ---
->  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.txt  | 65 ----------------
->  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 87 ++++++++++++++++++++++
->  2 files changed, 87 insertions(+), 65 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-> 
+On Mon, 20 Jul 2020 at 21:27, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Mon, Jul 20, 2020 at 4:28 AM Robin Murphy <robin.murphy@arm.com> wrote:
+> >
+> > On 2020-07-20 08:17, Arnd Bergmann wrote:
+> > > On Mon, Jul 20, 2020 at 8:36 AM Naresh Kamboju
+> > > <naresh.kamboju@linaro.org> wrote:
+<>
+> > >> [    5.444121] Unable to handle kernel NULL pointer dereference at
+> > >> virtual address 0000000000000018
+> > >> [    5.456615]   ESR = 0x96000004
+> > >> [    5.464471]   SET = 0, FnV = 0
+> > >> [    5.464487]   EA = 0, S1PTW = 0
+> > >> [    5.466521] Data abort info:
+> > >> [    5.469971]   ISV = 0, ISS = 0x00000004
+> > >> [    5.472768]   CM = 0, WnR = 0
+> > >> [    5.476172] user pgtable: 4k pages, 48-bit VAs, pgdp=00000000bacba000
+> > >> [    5.479349] [0000000000000018] pgd=0000000000000000, p4d=0000000000000000
+> > >> [    5.485820] Internal error: Oops: 96000004 [#1] PREEMPT SMP
+> > >> [    5.492448] Modules linked in: crct10dif_ce adv7511(+)
+> > >> qcom_spmi_temp_alarm cec msm(+) mdt_loader qcom_camss videobuf2_dma_sg
+> > >> drm_kms_helper v4l2_fwnode videobuf2_memops videobuf2_v4l2 qcom_rng
+> > >> videobuf2_common i2c_qcom_cci display_connector socinfo drm qrtr ns
+> > >> rmtfs_mem fuse
+> > >> [    5.500256] CPU: 0 PID: 286 Comm: systemd-udevd Not tainted 5.8.0-rc5 #1
+> > >> [    5.522484] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
+> > >> [    5.529170] pstate: 20000005 (nzCv daif -PAN -UAO BTYPE=--)
+> > >> [    5.535856] pc : qcom_iommu_tlb_inv_context+0x18/0xa8
+> > >> [    5.541148] lr : free_io_pgtable_ops+0x28/0x58
+<>
+> > >> [    5.628297] Call trace:
+> > >> [    5.633592]  qcom_iommu_tlb_inv_context+0x18/0xa8
+> > >
+> > > This means that dev_iommu_fwspec_get() has returned NULL
+> > > in qcom_iommu_tlb_inv_context(), either because dev->iommu
+> > > is NULL, or because dev->iommu->fwspec is NULL.
+> > >
+> > > qcom_iommu_tlb_inv_context() does not check for a NULL
+> > > pointer before using the returned object.
+> > >
+> > > The bug is either in the lack of error handling, or the fact
+> > > that it's possible to get into this function for a device
+> > > that has not been fully set up.
+> >
+> > Not quite - the device *was* properly set up, but has already been
+> > properly torn down again in the removal path by iommu_release_device().
+> > The problem is that qcom-iommu kept the device pointer as its TLB cookie
+> > for the domain, but the domain has a longer lifespan than the validity
+> > of that device - that's a fundamental design flaw in the driver.
+>
+> fwiw, I just sent "iommu/qcom: Use domain rather than dev as tlb
+> cookie".. untested but looks like a straightforward enough change to
+> switch over to using the domain rather than dev as cookie
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+The proposed patch tested and confirmed the reported problem fixed.
+
+ref:
+https://lore.kernel.org/linux-iommu/CA+G9fYtj1RBYcPhXZRm-qm5ygtdLj1jD8vFZSqQvwi_DNJLBwQ@mail.gmail.com/T/#m36a1fca18098f6c34275d928f9ba9c40c6d7fd63
+https://lkft.validation.linaro.org/scheduler/job/1593950#L3392
+
+
+>
+> BR,
+> -R
+
+
+- Naresh
