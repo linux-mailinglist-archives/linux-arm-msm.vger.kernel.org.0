@@ -2,30 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFE63225824
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 09:08:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 207E3225820
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 09:07:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725815AbgGTHHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 03:07:49 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:29497 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725845AbgGTHHs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 03:07:48 -0400
+        id S1726619AbgGTHHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 03:07:46 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:55013 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726564AbgGTHHq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 03:07:46 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595228868; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=r2oI1pl/idUO1QLdPIYXEQVPdb7/t8I9LlHR4yGeeMc=; b=ZlJQCOuQ6L0B3BX/ZpOejKXN2ybSvd5KtU+l6Y+nEcMR19+24+FuzmFuMWkvm9pRmIXu61Ia
- q2jzyOs1tL/kP/EDb1eNrHkWUG9xRfGqKqsZfyBwzjLeKfPCgwPDj6hjjJOrDuia0z2knvqj
- ge1+ZU1SnMChCGjjFxVsPhwU+4c=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1595228865; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=yXX+zDjtzoUhuag45GK9cAM42D+4eQLi+FQrdJPM7bk=; b=Xzutq3nJbm4I+NTZFh+7vYB5bSecoG27xHJJJF1SB6tzG5YNJcMYdO0MYVEv0x8ExT8bHfRL
+ sy/i5iXZ+drA0JogpZiVUDUaKmIxWXztFai1wj4dfST6R4ECQc8Em0ZVMs7QbDHVVUVYr+n/
+ kdKa/wIIZ9AGjVfRkz21Wv8jEFY=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
- 5f1542be1012768490538f58 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Jul 2020 07:07:42
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f1542c1b35196d59d2c1ee7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Jul 2020 07:07:45
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AB283C433CB; Mon, 20 Jul 2020 07:07:41 +0000 (UTC)
+        id EC1A0C433C9; Mon, 20 Jul 2020 07:07:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,9 +37,9 @@ Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A05A2C433C6;
-        Mon, 20 Jul 2020 07:07:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A05A2C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E182BC433CA;
+        Mon, 20 Jul 2020 07:07:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E182BC433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
@@ -46,43 +48,75 @@ To:     stanimir.varbanov@linaro.org, robh+dt@kernel.org,
 Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         mka@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH v3 0/4] DVFS support for Venus
-Date:   Mon, 20 Jul 2020 12:37:18 +0530
-Message-Id: <1595228842-9826-1-git-send-email-rnayak@codeaurora.org>
+Subject: [PATCH v3 1/4] dt-bindings: media: venus: Add an optional power domain for perf voting
+Date:   Mon, 20 Jul 2020 12:37:19 +0530
+Message-Id: <1595228842-9826-2-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1595228842-9826-1-git-send-email-rnayak@codeaurora.org>
+References: <1595228842-9826-1-git-send-email-rnayak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v3: Renamed the optional power domain as cx
+Venus needs to vote for the performance state of a power domain (cx)
+to be able to support DVFS. This 'cx' power domain is controlled by
+rpmh and is a common power domain (scalable) not specific to
+venus alone. This is optional in the sense that, leaving this power
+domain out does not really impact the functionality but just makes
+the platform a little less power efficient.
 
-v2: Fixed up the labels of OPP nodes in patch 4
-    Included the bindings update patch as part of this series,
-    a resend of https://lore.kernel.org/patchwork/patch/1241077/
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 6 +++++-
+ Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-These patches add DVFS support for Venus
-
-Patch 1 will need to be picked by Rob.
-Patch 2 will need to be picked by Stan,
-Patch 3 and 4 should land via the qcom tree.
-
-Rajendra Nayak (4):
-  dt-bindings: media: venus: Add an optional power domain for perf
-    voting
-  media: venus: core: Add support for opp tables/perf voting
-  arm64: dts: sdm845: Add OPP tables and power-domains for venus
-  arm64: dts: sc7180: Add OPP tables and power-domains for venus
-
- .../bindings/media/qcom,sc7180-venus.yaml          |  6 ++-
- .../bindings/media/qcom,sdm845-venus-v2.yaml       |  6 ++-
- arch/arm64/boot/dts/qcom/sc7180.dtsi               | 35 +++++++++++++-
- arch/arm64/boot/dts/qcom/sdm845.dtsi               | 40 +++++++++++++++-
- drivers/media/platform/qcom/venus/core.c           | 43 ++++++++++++++---
- drivers/media/platform/qcom/venus/core.h           |  5 ++
- drivers/media/platform/qcom/venus/pm_helpers.c     | 54 ++++++++++++++++++++--
- 7 files changed, 173 insertions(+), 16 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+index 55f2d67..04e303b 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+@@ -25,12 +25,16 @@ properties:
+     maxItems: 1
+ 
+   power-domains:
+-    maxItems: 2
++    minItems: 2
++    maxItems: 3
+ 
+   power-domain-names:
++    minItems: 2
++    maxItems: 3
+     items:
+       - const: venus
+       - const: vcodec0
++      - const: cx
+ 
+   clocks:
+     maxItems: 5
+diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+index 157dff8..90013d4 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+@@ -25,13 +25,17 @@ properties:
+     maxItems: 1
+ 
+   power-domains:
+-    maxItems: 3
++    minItems: 3
++    maxItems: 4
+ 
+   power-domain-names:
++    minItems: 3
++    maxItems: 4
+     items:
+       - const: venus
+       - const: vcodec0
+       - const: vcodec1
++      - const: cx
+ 
+   clocks:
+     maxItems: 7
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
