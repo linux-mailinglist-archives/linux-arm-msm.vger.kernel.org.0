@@ -2,148 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84ED7225BBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:36:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 872E5225BC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727930AbgGTJgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 05:36:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39100 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727769AbgGTJgG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 05:36:06 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D329C0619D2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 02:36:06 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id 88so6845248wrh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 02:36:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=zd3hMZ6jTMVpvEqLVZwEN55R94PoroeJHFEcHCEFqVQ=;
-        b=kTBBVlsC9e43rf09etp8fCt18Y3wM0WlVE5CwPvXkNHO2U4nUHW4UZ67UA9ckbRY33
-         TnSE0eP0Zthv72OZWg8OZ5FI9VF80Ctv4yb0QT/+s2vJUCPYEPYl8IgxUFIxtO61pXzS
-         mM/+YActrKyhNVy/5SEC4JLG3KUkTOopSiOYVda/q16drbWQJ3KM99jOyXVoS5d+XlNg
-         hV1rSkIf943RqBKh7q0QojJdfGt2vk3CWXUKByU7OGBfSxaXLQKDaViD2TNyr4ZJO2js
-         iBdb0w1YxreRKEsvi4vuL5tvG+Vk2psa8N/bZHmrhy+CBbcXdc59kNMRQz6rdGOPT8qr
-         TYxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=zd3hMZ6jTMVpvEqLVZwEN55R94PoroeJHFEcHCEFqVQ=;
-        b=N1w7hpe6IRULKmoqygLLl6PARUaN4a025qKt40r1/SmYMS6P8HbBGGRV0qN5osDlGt
-         v0Z0pleH1yPVwyJiCOpKEDEY4MrbXIOdnc+zeZiE5zXe3hmKMort0tabAaa3UJoSFVuh
-         gurL0eNPmjurbVQLHkdRElEStN44TONmAlXWfQ74kHKPJ3/ZUwv0oAXzrxnhe9s7DePd
-         ZZtsO/K/9ZVPqGU9XkhEW1MOZq3PibP0+auQJxgSEkWltyg2eiu7XQ2mVCH2myGOm3Yx
-         LJFU3OCGaPhQ85JzF3CU5PUywiOF1NtZXMAtr7D1GLroPDYx6FMbwnhz0iVmMtIB5MRH
-         2RQg==
-X-Gm-Message-State: AOAM530Z+3yh8tL0sZQOpcO6GMgohz8M6IqGbs/32PfM4pTYpz7oZsBW
-        V6aVXxH2UF2+uyUXdv/pV4N0PA==
-X-Google-Smtp-Source: ABdhPJynB4npHFycjyW7pEMsYdT+xIjEXcJnZnCF1NpojzzkoEJrVaNiN9teoC2u+pkXJtweZXlzbQ==
-X-Received: by 2002:adf:dd83:: with SMTP id x3mr23265244wrl.292.1595237764811;
-        Mon, 20 Jul 2020 02:36:04 -0700 (PDT)
-Received: from dell ([2.27.167.94])
-        by smtp.gmail.com with ESMTPSA id k14sm30904848wrn.76.2020.07.20.02.36.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2020 02:36:04 -0700 (PDT)
-Date:   Mon, 20 Jul 2020 10:36:01 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>
-Subject: Re: [PATCH v5 0/19] backlight: backlight updates
-Message-ID: <20200720093601.GA3368211@dell>
-References: <20200719080743.8560-1-sam@ravnborg.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200719080743.8560-1-sam@ravnborg.org>
+        id S1728249AbgGTJgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 05:36:24 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39340 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726492AbgGTJgY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 05:36:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595237783; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=cACEREbxrJ/DDWSn6xtrrfWGjDlLHFv8rEqkvGRBTw4=; b=ewFWwtCod0NQ+mbTf/JoMct1edPWlpUZwxQrP/eO7iqCkjp15o+VaKMux+Xr6adpEkhysevE
+ VkyW1Y0yYluqWWXXGyn0wl3cT3Gb5tTEBNoreqVZpvSiUwSc+ryABDcd6idkB2LxPAi3l+1f
+ emQJIjKeQwSJIs57DbemQpTYfIA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f1565970cb8533c3b7a52c7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Jul 2020 09:36:23
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A4E93C433A0; Mon, 20 Jul 2020 09:36:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from akashast-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C78CCC433C6;
+        Mon, 20 Jul 2020 09:36:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C78CCC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+From:   Akash Asthana <akashast@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        saipraka@codeaurora.org, msavaliy@codeaurora.org,
+        linux-arm-msm@vger.kernel.org,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH V2] soc: qcom: geni: Fix NULL pointer dereference
+Date:   Mon, 20 Jul 2020 15:06:02 +0530
+Message-Id: <1595237762-6776-1-git-send-email-akashast@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 19 Jul 2020, Sam Ravnborg wrote:
+pdev struct doesn't exists for the devices whose status are disabled
+from DT node, in such cases NULL is returned from 'of_find_device_by_node'
+Later when we try to get drvdata from pdev struct NULL pointer dereference
+is triggered.
 
-> Hi all.
-> 
-> Follow-up on v4 - with only a few changes listed below and
-> in the individual patches.
-> Thanks for all the reviews and the feedback on the patches!
-> 
-> I am planning a follow-up on this patchset to update the
-> backlight drivers all over to use backlight_get_brightness()
-> and backlight_is_blank() as appropriate.
+Add a NULL check for return values to fix the issue.
 
-[...]
+We were hitting this issue when one of QUP is disabled.
 
-> Sam Ravnborg (19):
->       backlight: refactor fb_notifier_callback()
->       backlight: add backlight_is_blank()
->       backlight: improve backlight_ops documentation
->       backlight: improve backlight_properties documentation
->       backlight: improve backlight_device documentation
->       backlight: document inline functions in backlight.h
->       backlight: document enums in backlight.h
->       backlight: remove the unused backlight_bl driver
->       backlight: drop extern from prototypes
->       backlight: add overview and update existing doc
->       backlight: wire up kernel-doc documentation
->       backlight: introduce backlight_get_brightness()
->       backlight: as3711_bl: simplify update_status
->       backlight: cr_bllcd: introduce gpio-backlight semantics
->       backlight: gpio_backlight: simplify update_status()
->       backlight: jornada720_bl: introduce backlight_is_blank()
->       backlight: use backlight_get_brightness()
->       backlight: drop backlight_put()
->       backlight: make of_find_backlight static
+Fixes: 048eb908a1f2 ("soc: qcom-geni-se: Add interconnect support to fix earlycon crash")
+Reported-by: Sai Prakash Ranjan <saipraka@codeaurora.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+---
+Changes in V2:
+ - Change variable name 'wrapper_pdev' to 'pdev.
 
-All applied, but to be honest, that was quite painful.
+ drivers/soc/qcom/qcom-geni-se.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-A few notes for subsequent patches.
-
- - Enable spell-checkers in your editors
-   - I fixed the issues up for you here - there were quite a few!
- - Run ./checkpatch.pl before submitting - here's what I find useful
-   * .git/hooks/post-commit: https://pastebin.ubuntu.com/p/WpPFd6M2rB/
- - Please keep the in-patch changelog below the '---' line, so that it
-   does not end up in the final commit log
- - Cc: lines *above* the *-bys please
- - Cc: lines dropped for any *-bys provided
- - Lines wrapped ~72 chars (not 50)
- - One whole empty line spacing between paragraphs
- - Ensure you use the formatting expected of the subsystem - in the
-   case of Backlight it's:
-
-     <subsystem>: <file>: Subject beginning with an upper-case char
-
-   A `git log --oneline -- subsystem` would give you a good idea of
-   what's expected.
-
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 355d503..996f20c 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -820,6 +820,7 @@ void geni_remove_earlycon_icc_vote(void)
+ 	struct geni_wrapper *wrapper;
+ 	struct device_node *parent;
+ 	struct device_node *child;
++	struct platform_device *pdev;
+ 
+ 	if (!earlycon_wrapper)
+ 		return;
+@@ -829,7 +830,12 @@ void geni_remove_earlycon_icc_vote(void)
+ 	for_each_child_of_node(parent, child) {
+ 		if (!of_device_is_compatible(child, "qcom,geni-se-qup"))
+ 			continue;
+-		wrapper = platform_get_drvdata(of_find_device_by_node(child));
++
++		pdev = of_find_device_by_node(child);
++		if (!pdev)
++			continue;
++
++		wrapper = platform_get_drvdata(pdev);
+ 		icc_put(wrapper->to_core.path);
+ 		wrapper->to_core.path = NULL;
+ 
 -- 
-lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+
