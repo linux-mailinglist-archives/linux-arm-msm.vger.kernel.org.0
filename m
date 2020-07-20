@@ -2,96 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A68F0225B00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:14:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7016A225BB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:34:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728091AbgGTJOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 05:14:38 -0400
-Received: from asavdk3.altibox.net ([109.247.116.14]:55006 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728017AbgGTJOh (ORCPT
+        id S1728125AbgGTJd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 05:33:58 -0400
+Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:58191 "EHLO
+        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727940AbgGTJd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 05:14:37 -0400
-Received: from ravnborg.org (unknown [188.228.123.71])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id 5E31220027;
-        Mon, 20 Jul 2020 11:14:29 +0200 (CEST)
-Date:   Mon, 20 Jul 2020 11:14:27 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Hennerich <michael.hennerich@analog.com>,
-        patches@opensource.cirrus.com,
-        Support Opensource <support.opensource@diasemi.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>,
-        Tomi Valkeinen <tomi.valkeinen@ti.com>
-Subject: Re: [PATCH v5 14/19] backlight: cr_bllcd: introduce gpio-backlight
- semantics
-Message-ID: <20200720091427.GA140081@ravnborg.org>
-References: <20200719080743.8560-1-sam@ravnborg.org>
- <20200719080743.8560-15-sam@ravnborg.org>
- <20200720084822.wt5guzetkrgbgdcc@holly.lan>
+        Mon, 20 Jul 2020 05:33:58 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id xSBEjXfufNPeYxSBFjmpBm; Mon, 20 Jul 2020 11:33:55 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1595237635; bh=Oc0K8sxEqzjVn3DRenx9PPLPz8qOmAYt7tiqTMtQV/8=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=ZOrgMAHK6VX7sSLWKh2lJ6Kpr6+aGjXNBtiBxze4tRsjcBhWimaw+Tl4tu3Pk8mCT
+         XXHNzLoeoFdZr0Ik3KWfSSMcNYkzHLTnw6dK5ISvvbXIdQijNTweujUTHhLv9Twy+u
+         5CKQAxiom4mt4Qv9ZDUQEVSySOGUeIfCAJauNn5ojzCrMUevQ0mXpeke+EVSCy1R8F
+         L424HpuRDsVe2c6K++fi+ZGZYMOuP5Yeoiwq1U2d2hXgT2BqT0cRz+i/K4kJrV+YRF
+         P4xFMEz2yhau0kiC8aY3ZfZHUaGFDQz2VU45Q1prGtn/JBucSII1xcBa4RWwMpZWs1
+         d3sot+j6T49PA==
+Subject: Re: [PATCH 4/4] media: docs: Depricate mfc frame skip control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Maheshwar Ajja <majja@codeaurora.org>
+References: <20200705121128.5250-1-stanimir.varbanov@linaro.org>
+ <20200705121128.5250-5-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <58ba8d2e-58a4-86bd-3eb1-668f9d743e6c@xs4all.nl>
+Date:   Mon, 20 Jul 2020 11:33:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200720084822.wt5guzetkrgbgdcc@holly.lan>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=f+hm+t6M c=1 sm=1 tr=0
-        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
-        a=kj9zAlcOel0A:10 a=7gkXJVJtAAAA:8 a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8
-        a=OARlJtXb7fUog6UZhKUA:9 a=CjuIK1q_8ugA:10 a=E9Po1WZjFZOl8hwRPBS3:22
-        a=cvBusfyB2V15izCimMoJ:22
+In-Reply-To: <20200705121128.5250-5-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfLMczbqR7cwh/AUTIzSsEONhK6t0ca5X3CCS9RZt3DLrosrG+W2asUcuud2padTPmwP13Xbvdc06srwZ3WaqfK5sQHolUhq330f8vF4ulbkZzod3dcy0
+ Ic3UQ8jcJHP6aRl2+P991m9vYKdZuz4lm5FYaI2oW4l+2j4YRorw2lTvkUs+QM7DvMb9BewXHAL9UUSvKpuZMNIcv+um36sdHWJiYxv0Yjc2TsLoXXVMy5lp
+ H1zFW/IxTK//auY3zEJvUEYwNEPA1YE0tVcdqpLZHQbnpW017F+OMsrgutQtDAMg3bQlyKcc3acAYX2VBrrv/b3evDCSNRcgZN8JJohMdQKxc+jCjd0V+qhq
+ bA2sGaJ7xfJ68npWwXD0E8Ei7nf4mA0003WLfD3XW+w4Up7dKh3ds+Z5JGxctTI9jXkJ9673VRMqnDAnJ//X+/6qgqDhf6n8Q52DTJqFHe8gWFeRoU0dxJe/
+ 4sBeVp5Y2MwuXPRqlVBkAYO5yjo1vqypaRzONeSNl5NwQzDwdLo89jX1wl2P+ByNyOm8VAjsPTv8OuB0AKJqboklN1XVoLPAP5ZROpeebs3dDDOqgrE8Y537
+ vgaNSKjb4SZp1z2z/hdzGNj5
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 09:48:22AM +0100, Daniel Thompson wrote:
-> On Sun, Jul 19, 2020 at 10:07:38AM +0200, Sam Ravnborg wrote:
-> > cr_bllcd can turn backlight ON or OFF.
-> > Fix semantitics so they equals what we know from gpio-backlight.
-> > brightness == 0   => backlight off
-> > brightness == 1   => backlight on
-> > 
-> > Use the backlight_get_brightness() helper to simplify the code.
-> > 
-> > v2:
-> >   - reworked to introduce gpio-backlight semantics (Daniel)
-> 
-> Wasn't this added for v5? However, I spotted this change amoung the
-> other patches so no worries...
+On 05/07/2020 14:11, Stanimir Varbanov wrote:
+> Depricate mfc private frame skip mode control for new
 
-I do not increment version for individual patches unless there are
-changes. So this is the second version of this patch, but included in the
-v5 submission.
-But I can see how this can confuse the receiver.
-I will consider to adapt to the practice to indicate version of submission
-and not the individual patches.
+Depricate -> Deprecate (same in the patch below).
 
+> clients and use the standard one instead.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index a8b4c0b40747..c0760bfc54d4 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -2805,6 +2805,11 @@ MFC 5.1 Control IDs
+>  ``V4L2_CID_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE``
+>      (enum)
+>  
+> +    .. note::
+> +
+> +       This control is depricated. Use the standard one
 
-> 
-> 
-> > Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-> > Cc: Lee Jones <lee.jones@linaro.org>
-> > Cc: Daniel Thompson <daniel.thompson@linaro.org>
-> > Cc: Jingoo Han <jingoohan1@gmail.com>
-> 
-> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Very much appreciated - thanks!
+s/one//
 
-	Sam
+> +       ``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE`` instead.
+
+s/instead/control instead/
+
+> +
+>  enum v4l2_mpeg_mfc51_video_frame_skip_mode -
+>      Indicates in what conditions the encoder should skip frames. If
+>      encoding a frame would cause the encoded stream to be larger then a
+> 
+
