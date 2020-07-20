@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 229422263FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 17:41:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FF5C22640C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 17:41:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729190AbgGTPlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 11:41:24 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:64768 "EHLO m43-7.mailgun.net"
+        id S1729969AbgGTPlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 11:41:51 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:32246 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729865AbgGTPlX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 11:41:23 -0400
+        id S1729947AbgGTPlu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 11:41:50 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595259681; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=mgZPX/ORqnPLBZAJTpnFrkYtIjx2TWoOg4J5PqIxq8Y=; b=e6KF+FCQBAKATHu28eMnoQ/unvxm2xvKn9WbHICCqwvJfE463X1JVbVq+xrjzQvNwY2RhHJM
- 1ZK+VTYc2aoSpC29hUEqCtq382blwXbpvFvZOyNkhwdGKgJChpDcHd6MOoaPEo4oH361Saup
- 5iVJya4h7uk9A7+Z/kmX5FHffvc=
+ s=smtp; t=1595259709; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=o2g7PXMI8u4H93q/bl3BrvAbj5hvWgfM5Ng3tJsgXQQ=; b=KPDL+GmkSSB+KNPZIio+gxoi336Uo9Dgkz4o4DXQCfXB1v8iDkftWUgDVcqo7J1x/BW0O/gF
+ aU02u6zfWys9evfhy6vYRQF7uDoKJjuVg/2DlvDgtCuGGGxD7DnX7Bq49Bub177IRHS5FcLS
+ CWOWIyhoPWwfKx0javYRs7I8nf4=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5f15bb1603c8596cdb481f1a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Jul 2020 15:41:10
+ smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
+ 5f15bb2e3dbcb593a9a73042 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Jul 2020 15:41:34
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 18A44C433CB; Mon, 20 Jul 2020 15:41:06 +0000 (UTC)
+        id DD3EAC4345E; Mon, 20 Jul 2020 15:41:30 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +36,9 @@ Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.2
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C7775C433C6;
-        Mon, 20 Jul 2020 15:40:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C7775C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D2705C4344A;
+        Mon, 20 Jul 2020 15:41:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D2705C4344A
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
 From:   Jordan Crouse <jcrouse@codeaurora.org>
@@ -48,28 +48,16 @@ Cc:     Robin Murphy <robin.murphy@arm.com>,
         Will Deacon <will@kernel.org>, freedreno@lists.freedesktop.org,
         iommu@lists.linux-foundation.org,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        Brian Masney <masneyb@onstation.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Eric Anholt <eric@anholt.net>, Joerg Roedel <joro@8bytes.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v10 00/13] iommu/arm-smmu: Add Adreno SMMU specific implementation
-Date:   Mon, 20 Jul 2020 09:40:34 -0600
-Message-Id: <20200720154047.3611092-1-jcrouse@codeaurora.org>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v10 10/13] drm/msm: Add support to create a local pagetable
+Date:   Mon, 20 Jul 2020 09:40:44 -0600
+Message-Id: <20200720154047.3611092-11-jcrouse@codeaurora.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200720154047.3611092-1-jcrouse@codeaurora.org>
+References: <20200720154047.3611092-1-jcrouse@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -77,86 +65,298 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(reworded the summary to reflect ongoing changes in the code)
+Add support to create a io-pgtable for use by targets that support
+per-instance pagetables. In order to support per-instance pagetables the
+GPU SMMU device needs to have the qcom,adreno-smmu compatible string and
+split pagetables enabled.
 
-This series adds an Adreno SMMU implementation to arm-smmu to allow GPU hardware
-pagetable switching.
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
 
-The Adreno GPU has built in capabilities to switch the TTBR0 pagetable during
-runtime to allow each individual instance or application to have its own
-pagetable.  In order to take advantage of the HW capabilities there are certain
-requirements needed of the SMMU hardware.
+ drivers/gpu/drm/msm/msm_gpummu.c |   2 +-
+ drivers/gpu/drm/msm/msm_iommu.c  | 191 ++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/msm_mmu.h    |  16 ++-
+ 3 files changed, 206 insertions(+), 3 deletions(-)
 
-This series adds support for an Adreno specific arm-smmu implementation. The new
-implementation 1) ensures that the GPU domain is always assigned context bank 0,
-2) enables split pagetable support (TTBR1) so that the instance specific
-pagetable can be swapped while the global memory remains in place and 3) shares
-the current pagetable configuration with the GPU driver to allow it to create
-its own io-pgtable instances.
-
-The series then adds the drm/msm code to enable these features. For targets that
-support it allocate new pagetables using the io-pgtable configuration shared by
-the arm-smmu driver and swap them in during runtime.
-
-This version of the series merges the previous patchset(s) [1] and [2]
-with the following improvements:
-
-  - arm-smmu: add implementation hook to allocate context banks
-  - arm-smmu: Match the GPU domain by stream ID instead of compatible string
-  - arm-smmu: Make DOMAIN_ATTR_PGTABLE_CFG bi-directional. The leaf driver
-    queries the configuration to create a pagetable and then sends the newly
-    created configuration back to the smmu-driver to enable TTBR0
-  - drm/msm: Add context reference counting for submissions
-  - drm/msm: Use dummy functions to skip TLB operations on per-instance
-    pagetables
-
-[1] https://lists.linuxfoundation.org/pipermail/iommu/2020-June/045653.html
-[2] https://lists.linuxfoundation.org/pipermail/iommu/2020-June/045659.html
-
-
-Jordan Crouse (13):
-  iommu/arm-smmu: Pass io-pgtable config to implementation specific
-    function
-  iommu/arm-smmu: Add support for split pagetables
-  iommu/arm-smmu: Add implementation hooks to configure contexts
-  iommu/arm-smmu-qcom: Add implementation for the adreno GPU SMMU
-  iommu: Add a domain attribute to get/set a pagetable configuration
-  iommu/arm-smmu-qcom: Get and set the pagetable config for split
-    pagetables
-  dt-bindings: arm-smmu: Add compatible string for Adreno GPU SMMU
-  drm/msm: Add a context pointer to the submitqueue
-  drm/msm: Set the global virtual address range from the IOMMU domain
-  drm/msm: Add support to create a local pagetable
-  drm/msm: Add support for private address space instances
-  drm/msm/a6xx: Add support for per-instance pagetables
-  arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
-
- .../devicetree/bindings/iommu/arm,smmu.yaml   |   4 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  12 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |  58 ++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h         |   1 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  18 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   3 +-
- drivers/gpu/drm/msm/msm_drv.c                 |  16 +-
- drivers/gpu/drm/msm/msm_drv.h                 |  13 ++
- drivers/gpu/drm/msm/msm_gem.h                 |   1 +
- drivers/gpu/drm/msm/msm_gem_submit.c          |   8 +-
- drivers/gpu/drm/msm/msm_gem_vma.c             |   9 +
- drivers/gpu/drm/msm/msm_gpu.c                 |  26 ++-
- drivers/gpu/drm/msm/msm_gpu.h                 |  12 +-
- drivers/gpu/drm/msm/msm_gpummu.c              |   2 +-
- drivers/gpu/drm/msm/msm_iommu.c               | 198 +++++++++++++++++-
- drivers/gpu/drm/msm/msm_mmu.h                 |  16 +-
- drivers/gpu/drm/msm/msm_ringbuffer.h          |   1 +
- drivers/gpu/drm/msm/msm_submitqueue.c         |   8 +-
- drivers/iommu/arm-smmu-impl.c                 |   6 +-
- drivers/iommu/arm-smmu-qcom.c                 | 130 +++++++++++-
- drivers/iommu/arm-smmu.c                      | 108 +++++-----
- drivers/iommu/arm-smmu.h                      |  65 +++++-
- include/linux/iommu.h                         |   1 +
- 24 files changed, 619 insertions(+), 99 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
+index 310a31b05faa..aab121f4beb7 100644
+--- a/drivers/gpu/drm/msm/msm_gpummu.c
++++ b/drivers/gpu/drm/msm/msm_gpummu.c
+@@ -102,7 +102,7 @@ struct msm_mmu *msm_gpummu_new(struct device *dev, struct msm_gpu *gpu)
+ 	}
+ 
+ 	gpummu->gpu = gpu;
+-	msm_mmu_init(&gpummu->base, dev, &funcs);
++	msm_mmu_init(&gpummu->base, dev, &funcs, MSM_MMU_GPUMMU);
+ 
+ 	return &gpummu->base;
+ }
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index 1b6635504069..8cf8c7f7a665 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -4,15 +4,202 @@
+  * Author: Rob Clark <robdclark@gmail.com>
+  */
+ 
++#include <linux/io-pgtable.h>
+ #include "msm_drv.h"
+ #include "msm_mmu.h"
+ 
+ struct msm_iommu {
+ 	struct msm_mmu base;
+ 	struct iommu_domain *domain;
++	atomic_t pagetables;
+ };
++
+ #define to_msm_iommu(x) container_of(x, struct msm_iommu, base)
+ 
++struct msm_iommu_pagetable {
++	struct msm_mmu base;
++	struct msm_mmu *parent;
++	struct io_pgtable_ops *pgtbl_ops;
++	phys_addr_t ttbr;
++	u32 asid;
++};
++static struct msm_iommu_pagetable *to_pagetable(struct msm_mmu *mmu)
++{
++	return container_of(mmu, struct msm_iommu_pagetable, base);
++}
++
++static int msm_iommu_pagetable_unmap(struct msm_mmu *mmu, u64 iova,
++		size_t size)
++{
++	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
++	struct io_pgtable_ops *ops = pagetable->pgtbl_ops;
++	size_t unmapped = 0;
++
++	/* Unmap the block one page at a time */
++	while (size) {
++		unmapped += ops->unmap(ops, iova, 4096, NULL);
++		iova += 4096;
++		size -= 4096;
++	}
++
++	iommu_flush_tlb_all(to_msm_iommu(pagetable->parent)->domain);
++
++	return (unmapped == size) ? 0 : -EINVAL;
++}
++
++static int msm_iommu_pagetable_map(struct msm_mmu *mmu, u64 iova,
++		struct sg_table *sgt, size_t len, int prot)
++{
++	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
++	struct io_pgtable_ops *ops = pagetable->pgtbl_ops;
++	struct scatterlist *sg;
++	size_t mapped = 0;
++	u64 addr = iova;
++	unsigned int i;
++
++	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
++		size_t size = sg->length;
++		phys_addr_t phys = sg_phys(sg);
++
++		/* Map the block one page at a time */
++		while (size) {
++			if (ops->map(ops, addr, phys, 4096, prot)) {
++				msm_iommu_pagetable_unmap(mmu, iova, mapped);
++				return -EINVAL;
++			}
++
++			phys += 4096;
++			addr += 4096;
++			size -= 4096;
++			mapped += 4096;
++		}
++	}
++
++	return 0;
++}
++
++static void msm_iommu_pagetable_destroy(struct msm_mmu *mmu)
++{
++	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
++	struct msm_iommu *iommu = to_msm_iommu(pagetable->parent);
++
++	/*
++	 * If this is the last attached pagetable for the parent,
++	 * disable TTBR0 in the arm-smmu driver
++	 */
++	if (atomic_dec_return(&iommu->pagetables) == 0)
++		iommu_domain_set_attr(iommu->domain,
++			DOMAIN_ATTR_PGTABLE_CFG, NULL);
++
++	free_io_pgtable_ops(pagetable->pgtbl_ops);
++	kfree(pagetable);
++}
++
++int msm_iommu_pagetable_params(struct msm_mmu *mmu,
++		phys_addr_t *ttbr, int *asid)
++{
++	struct msm_iommu_pagetable *pagetable;
++
++	if (mmu->type != MSM_MMU_IOMMU_PAGETABLE)
++		return -EINVAL;
++
++	pagetable = to_pagetable(mmu);
++
++	if (ttbr)
++		*ttbr = pagetable->ttbr;
++
++	if (asid)
++		*asid = pagetable->asid;
++
++	return 0;
++}
++
++static const struct msm_mmu_funcs pagetable_funcs = {
++		.map = msm_iommu_pagetable_map,
++		.unmap = msm_iommu_pagetable_unmap,
++		.destroy = msm_iommu_pagetable_destroy,
++};
++
++static void msm_iommu_tlb_flush_all(void *cookie)
++{
++}
++
++static void msm_iommu_tlb_flush_walk(unsigned long iova, size_t size,
++		size_t granule, void *cookie)
++{
++}
++
++static void msm_iommu_tlb_add_page(struct iommu_iotlb_gather *gather,
++		unsigned long iova, size_t granule, void *cookie)
++{
++}
++
++static const struct iommu_flush_ops null_tlb_ops = {
++	.tlb_flush_all = msm_iommu_tlb_flush_all,
++	.tlb_flush_walk = msm_iommu_tlb_flush_walk,
++	.tlb_flush_leaf = msm_iommu_tlb_flush_walk,
++	.tlb_add_page = msm_iommu_tlb_add_page,
++};
++
++struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
++{
++	struct msm_iommu *iommu = to_msm_iommu(parent);
++	static int next_asid = 16;
++	struct msm_iommu_pagetable *pagetable;
++	struct io_pgtable_cfg cfg;
++	int ret;
++
++	/* Get the pagetable configuration from the domain */
++	ret = iommu_domain_get_attr(iommu->domain,
++		DOMAIN_ATTR_PGTABLE_CFG, &cfg);
++	if (ret)
++		return ERR_PTR(ret);
++
++	pagetable = kzalloc(sizeof(*pagetable), GFP_KERNEL);
++	if (!pagetable)
++		return ERR_PTR(-ENOMEM);
++
++	msm_mmu_init(&pagetable->base, parent->dev, &pagetable_funcs,
++		MSM_MMU_IOMMU_PAGETABLE);
++
++	/* The incoming cfg will have the TTBR1 quirk enabled */
++	cfg.quirks &= ~IO_PGTABLE_QUIRK_ARM_TTBR1;
++	cfg.tlb = &null_tlb_ops;
++
++	pagetable->pgtbl_ops = alloc_io_pgtable_ops(ARM_64_LPAE_S1,
++		&cfg, iommu->domain);
++
++	if (!pagetable->pgtbl_ops) {
++		kfree(pagetable);
++		return ERR_PTR(-ENOMEM);
++	}
++
++	/*
++	 * If this is the first pagetable that we've allocated, send it back to
++	 * the arm-smmu driver as a trigger to set up TTBR0
++	 */
++	if (atomic_inc_return(&iommu->pagetables) == 1) {
++		ret = iommu_domain_set_attr(iommu->domain,
++			DOMAIN_ATTR_PGTABLE_CFG, &cfg);
++		if (ret) {
++			free_io_pgtable_ops(pagetable->pgtbl_ops);
++			kfree(pagetable);
++			return ERR_PTR(ret);
++		}
++	}
++
++	/* Needed later for TLB flush */
++	pagetable->parent = parent;
++	pagetable->ttbr = cfg.arm_lpae_s1_cfg.ttbr;
++
++	pagetable->asid = next_asid;
++	next_asid = (next_asid + 1)  % 255;
++	if (next_asid < 16)
++		next_asid = 16;
++
++	return &pagetable->base;
++}
++
+ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
+ 		unsigned long iova, int flags, void *arg)
+ {
+@@ -85,9 +272,11 @@ struct msm_mmu *msm_iommu_new(struct device *dev, struct iommu_domain *domain)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	iommu->domain = domain;
+-	msm_mmu_init(&iommu->base, dev, &funcs);
++	msm_mmu_init(&iommu->base, dev, &funcs, MSM_MMU_IOMMU);
+ 	iommu_set_fault_handler(domain, msm_fault_handler, iommu);
+ 
++	atomic_set(&iommu->pagetables, 0);
++
+ 	ret = iommu_attach_device(iommu->domain, dev);
+ 	if (ret) {
+ 		kfree(iommu);
+diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
+index 3a534ee59bf6..61ade89d9e48 100644
+--- a/drivers/gpu/drm/msm/msm_mmu.h
++++ b/drivers/gpu/drm/msm/msm_mmu.h
+@@ -17,18 +17,26 @@ struct msm_mmu_funcs {
+ 	void (*destroy)(struct msm_mmu *mmu);
+ };
+ 
++enum msm_mmu_type {
++	MSM_MMU_GPUMMU,
++	MSM_MMU_IOMMU,
++	MSM_MMU_IOMMU_PAGETABLE,
++};
++
+ struct msm_mmu {
+ 	const struct msm_mmu_funcs *funcs;
+ 	struct device *dev;
+ 	int (*handler)(void *arg, unsigned long iova, int flags);
+ 	void *arg;
++	enum msm_mmu_type type;
+ };
+ 
+ static inline void msm_mmu_init(struct msm_mmu *mmu, struct device *dev,
+-		const struct msm_mmu_funcs *funcs)
++		const struct msm_mmu_funcs *funcs, enum msm_mmu_type type)
+ {
+ 	mmu->dev = dev;
+ 	mmu->funcs = funcs;
++	mmu->type = type;
+ }
+ 
+ struct msm_mmu *msm_iommu_new(struct device *dev, struct iommu_domain *domain);
+@@ -41,7 +49,13 @@ static inline void msm_mmu_set_fault_handler(struct msm_mmu *mmu, void *arg,
+ 	mmu->handler = handler;
+ }
+ 
++struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent);
++
+ void msm_gpummu_params(struct msm_mmu *mmu, dma_addr_t *pt_base,
+ 		dma_addr_t *tran_error);
+ 
++
++int msm_iommu_pagetable_params(struct msm_mmu *mmu, phys_addr_t *ttbr,
++		int *asid);
++
+ #endif /* __MSM_MMU_H__ */
 -- 
 2.25.1
 
