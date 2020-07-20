@@ -2,87 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25882225C51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 12:01:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89C24225D04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 13:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728077AbgGTKB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 06:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728007AbgGTKBz (ORCPT
+        id S1728404AbgGTLBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 07:01:20 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:53528 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728232AbgGTLBU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 06:01:55 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA5AC061794
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 03:01:55 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id 1so8815278pfn.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 03:01:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IBVdyP/pegZa7dgnXrwm5PyIQ+8xTCyFcnvPtdN5UVI=;
-        b=uEn13EOKkQKFmK34APcGHbkL6i0Bc78BZn67EQvfn41Fc9a/MMheX8xL7adrdOlRhe
-         hA2C2jqTAw/OZQy5HoNYNIepnDobJJplfM9mycMWrip+JIS2XLNFGzIzAkuRh7ZUhaG8
-         y3q1VEXw7Cn2jnWMWlkYLFIpb7vCyn0pJ33WI7EQYk3hsxdmVtgX94P5euF9A6tqDoUy
-         fwdDQqX4/TzfjC/i4+SRlySFWwVcW1jE+qt8KCTytCVjIiEMnvJzZtfSBYFKDvA8QMk1
-         h9tKOxaoLTZRumfefxVu+hY8zE/HdKWaHTcyuBxVMhuwcc6fx/+CCeheDEyf3gKcMOxQ
-         qvEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IBVdyP/pegZa7dgnXrwm5PyIQ+8xTCyFcnvPtdN5UVI=;
-        b=o6BN5nS3jQyI3eZp381N8xLdBj2O/csti4Ah6RnSWrZCjGehMY3ufrh4N4ZXtjFByY
-         OESPa6an8bQDQtdVX1LDJIPohKcrn1VFlDdECLY/4l9smCVlRrpgfPDGuwkPP08LVWaL
-         MTsE73FyplLz0hqIS+rSOuvALWoWACTg1mRO/Ju5pPT5yWB1pRtjm0th1LPq1xAZWyED
-         zctr/Odz972Xdlydolj+nlNcVrcy+SBApl6XFQLf+/TuGlfz87VmNJxJcdF7l51i7cvR
-         V6ES7fxi38+Pkx0e63S6br26LAijataEhT6Cp+zxnIlTT4q7DI1zWhFH/v/EpoVHnD3/
-         gohw==
-X-Gm-Message-State: AOAM531eVurwhSnNv5qJ5Ee+I5OF9xuSwBmhZGoLoxFlj0PeBn4DRxDP
-        6gFwoCwnOYmmW8QNMbclFGkpLQ==
-X-Google-Smtp-Source: ABdhPJzhEikt8tP6/CpS6b+B437wPhrsq9S5Jz+w2SuVdMMdAy5NITpEubsktWnoJlAezd0lmVwv8A==
-X-Received: by 2002:a62:cd89:: with SMTP id o131mr18638388pfg.195.1595239314908;
-        Mon, 20 Jul 2020 03:01:54 -0700 (PDT)
-Received: from localhost ([223.179.133.67])
-        by smtp.gmail.com with ESMTPSA id g8sm14821824pgr.70.2020.07.20.03.01.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Jul 2020 03:01:53 -0700 (PDT)
-Date:   Mon, 20 Jul 2020 15:31:31 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
-        saravanak@google.com, Sibi Sankar <sibis@codeaurora.org>,
-        Jonathan <jonathan@marek.ca>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v5 0/6] Add support for GPU DDR BW scaling
-Message-ID: <20200720100131.6ux4zumbwqpa42ye@vireshk-mac-ubuntu>
-References: <1594644106-22449-1-git-send-email-akhilpo@codeaurora.org>
- <CAF6AEGtAEwZbWxLb4MxaWNswvtrFbLK+N0Fez2XYr7odKZffWA@mail.gmail.com>
+        Mon, 20 Jul 2020 07:01:20 -0400
+Received: from ravnborg.org (unknown [188.228.123.71])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 7C830804BA;
+        Mon, 20 Jul 2020 13:01:13 +0200 (CEST)
+Date:   Mon, 20 Jul 2020 13:01:12 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>
+Subject: Re: [PATCH v5 0/19] backlight: backlight updates
+Message-ID: <20200720110112.GA147689@ravnborg.org>
+References: <20200719080743.8560-1-sam@ravnborg.org>
+ <20200720093601.GA3368211@dell>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAF6AEGtAEwZbWxLb4MxaWNswvtrFbLK+N0Fez2XYr7odKZffWA@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <20200720093601.GA3368211@dell>
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
+        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
+        a=kj9zAlcOel0A:10 a=fxJcL_dCAAAA:8 a=xWK_zBApGLd1q-zgG6wA:9
+        a=CjuIK1q_8ugA:10
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-07-20, 08:36, Rob Clark wrote:
-> I can take the first two into msm-next, the 3rd will need to wait
-> until dev_pm_opp_set_bw() lands
+Hi Lee.
 
-You can base that on a8351c12c6c7 in linux-next, I will make sure not to rebase
-it anymore.
+On Mon, Jul 20, 2020 at 10:36:01AM +0100, Lee Jones wrote:
+> On Sun, 19 Jul 2020, Sam Ravnborg wrote:
+> 
+> > Hi all.
+> > 
+> > Follow-up on v4 - with only a few changes listed below and
+> > in the individual patches.
+> > Thanks for all the reviews and the feedback on the patches!
+> > 
+> > I am planning a follow-up on this patchset to update the
+> > backlight drivers all over to use backlight_get_brightness()
+> > and backlight_is_blank() as appropriate.
+> 
+> [...]
+> 
+> > Sam Ravnborg (19):
+> >       backlight: refactor fb_notifier_callback()
+> >       backlight: add backlight_is_blank()
+> >       backlight: improve backlight_ops documentation
+> >       backlight: improve backlight_properties documentation
+> >       backlight: improve backlight_device documentation
+> >       backlight: document inline functions in backlight.h
+> >       backlight: document enums in backlight.h
+> >       backlight: remove the unused backlight_bl driver
+> >       backlight: drop extern from prototypes
+> >       backlight: add overview and update existing doc
+> >       backlight: wire up kernel-doc documentation
+> >       backlight: introduce backlight_get_brightness()
+> >       backlight: as3711_bl: simplify update_status
+> >       backlight: cr_bllcd: introduce gpio-backlight semantics
+> >       backlight: gpio_backlight: simplify update_status()
+> >       backlight: jornada720_bl: introduce backlight_is_blank()
+> >       backlight: use backlight_get_brightness()
+> >       backlight: drop backlight_put()
+> >       backlight: make of_find_backlight static
+> 
+> All applied, but to be honest, that was quite painful.
+That was not the intention :-(
 
--- 
-viresh
+> 
+> A few notes for subsequent patches.
+> 
+>  - Enable spell-checkers in your editors
+>    - I fixed the issues up for you here - there were quite a few!
+>  - Run ./checkpatch.pl before submitting - here's what I find useful
+>    * .git/hooks/post-commit: https://pastebin.ubuntu.com/p/WpPFd6M2rB/
+>  - Please keep the in-patch changelog below the '---' line, so that it
+>    does not end up in the final commit log
+>  - Cc: lines *above* the *-bys please
+>  - Cc: lines dropped for any *-bys provided
+>  - Lines wrapped ~72 chars (not 50)
+>  - One whole empty line spacing between paragraphs
+>  - Ensure you use the formatting expected of the subsystem - in the
+>    case of Backlight it's:
+> 
+>      <subsystem>: <file>: Subject beginning with an upper-case char
+> 
+>    A `git log --oneline -- subsystem` would give you a good idea of
+>    what's expected.
+
+Thanks for the input - I will use these points as guideline for the next
+batch of backlight patches.
+
+	Sam
