@@ -2,94 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7016A225BB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:34:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84ED7225BBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:36:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728125AbgGTJd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 05:33:58 -0400
-Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:58191 "EHLO
-        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727940AbgGTJd6 (ORCPT
+        id S1727930AbgGTJgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 05:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39100 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727769AbgGTJgG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 05:33:58 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud8.xs4all.net with ESMTPA
-        id xSBEjXfufNPeYxSBFjmpBm; Mon, 20 Jul 2020 11:33:55 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1595237635; bh=Oc0K8sxEqzjVn3DRenx9PPLPz8qOmAYt7tiqTMtQV/8=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=ZOrgMAHK6VX7sSLWKh2lJ6Kpr6+aGjXNBtiBxze4tRsjcBhWimaw+Tl4tu3Pk8mCT
-         XXHNzLoeoFdZr0Ik3KWfSSMcNYkzHLTnw6dK5ISvvbXIdQijNTweujUTHhLv9Twy+u
-         5CKQAxiom4mt4Qv9ZDUQEVSySOGUeIfCAJauNn5ojzCrMUevQ0mXpeke+EVSCy1R8F
-         L424HpuRDsVe2c6K++fi+ZGZYMOuP5Yeoiwq1U2d2hXgT2BqT0cRz+i/K4kJrV+YRF
-         P4xFMEz2yhau0kiC8aY3ZfZHUaGFDQz2VU45Q1prGtn/JBucSII1xcBa4RWwMpZWs1
-         d3sot+j6T49PA==
-Subject: Re: [PATCH 4/4] media: docs: Depricate mfc frame skip control
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Jeongtae Park <jtp.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Maheshwar Ajja <majja@codeaurora.org>
-References: <20200705121128.5250-1-stanimir.varbanov@linaro.org>
- <20200705121128.5250-5-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <58ba8d2e-58a4-86bd-3eb1-668f9d743e6c@xs4all.nl>
-Date:   Mon, 20 Jul 2020 11:33:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Mon, 20 Jul 2020 05:36:06 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D329C0619D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 02:36:06 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id 88so6845248wrh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 02:36:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zd3hMZ6jTMVpvEqLVZwEN55R94PoroeJHFEcHCEFqVQ=;
+        b=kTBBVlsC9e43rf09etp8fCt18Y3wM0WlVE5CwPvXkNHO2U4nUHW4UZ67UA9ckbRY33
+         TnSE0eP0Zthv72OZWg8OZ5FI9VF80Ctv4yb0QT/+s2vJUCPYEPYl8IgxUFIxtO61pXzS
+         mM/+YActrKyhNVy/5SEC4JLG3KUkTOopSiOYVda/q16drbWQJ3KM99jOyXVoS5d+XlNg
+         hV1rSkIf943RqBKh7q0QojJdfGt2vk3CWXUKByU7OGBfSxaXLQKDaViD2TNyr4ZJO2js
+         iBdb0w1YxreRKEsvi4vuL5tvG+Vk2psa8N/bZHmrhy+CBbcXdc59kNMRQz6rdGOPT8qr
+         TYxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=zd3hMZ6jTMVpvEqLVZwEN55R94PoroeJHFEcHCEFqVQ=;
+        b=N1w7hpe6IRULKmoqygLLl6PARUaN4a025qKt40r1/SmYMS6P8HbBGGRV0qN5osDlGt
+         v0Z0pleH1yPVwyJiCOpKEDEY4MrbXIOdnc+zeZiE5zXe3hmKMort0tabAaa3UJoSFVuh
+         gurL0eNPmjurbVQLHkdRElEStN44TONmAlXWfQ74kHKPJ3/ZUwv0oAXzrxnhe9s7DePd
+         ZZtsO/K/9ZVPqGU9XkhEW1MOZq3PibP0+auQJxgSEkWltyg2eiu7XQ2mVCH2myGOm3Yx
+         LJFU3OCGaPhQ85JzF3CU5PUywiOF1NtZXMAtr7D1GLroPDYx6FMbwnhz0iVmMtIB5MRH
+         2RQg==
+X-Gm-Message-State: AOAM530Z+3yh8tL0sZQOpcO6GMgohz8M6IqGbs/32PfM4pTYpz7oZsBW
+        V6aVXxH2UF2+uyUXdv/pV4N0PA==
+X-Google-Smtp-Source: ABdhPJynB4npHFycjyW7pEMsYdT+xIjEXcJnZnCF1NpojzzkoEJrVaNiN9teoC2u+pkXJtweZXlzbQ==
+X-Received: by 2002:adf:dd83:: with SMTP id x3mr23265244wrl.292.1595237764811;
+        Mon, 20 Jul 2020 02:36:04 -0700 (PDT)
+Received: from dell ([2.27.167.94])
+        by smtp.gmail.com with ESMTPSA id k14sm30904848wrn.76.2020.07.20.02.36.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2020 02:36:04 -0700 (PDT)
+Date:   Mon, 20 Jul 2020 10:36:01 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     dri-devel@lists.freedesktop.org, Jingoo Han <jingoohan1@gmail.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Hennerich <michael.hennerich@analog.com>,
+        patches@opensource.cirrus.com,
+        Support Opensource <support.opensource@diasemi.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>,
+        Tomi Valkeinen <tomi.valkeinen@ti.com>
+Subject: Re: [PATCH v5 0/19] backlight: backlight updates
+Message-ID: <20200720093601.GA3368211@dell>
+References: <20200719080743.8560-1-sam@ravnborg.org>
 MIME-Version: 1.0
-In-Reply-To: <20200705121128.5250-5-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLMczbqR7cwh/AUTIzSsEONhK6t0ca5X3CCS9RZt3DLrosrG+W2asUcuud2padTPmwP13Xbvdc06srwZ3WaqfK5sQHolUhq330f8vF4ulbkZzod3dcy0
- Ic3UQ8jcJHP6aRl2+P991m9vYKdZuz4lm5FYaI2oW4l+2j4YRorw2lTvkUs+QM7DvMb9BewXHAL9UUSvKpuZMNIcv+um36sdHWJiYxv0Yjc2TsLoXXVMy5lp
- H1zFW/IxTK//auY3zEJvUEYwNEPA1YE0tVcdqpLZHQbnpW017F+OMsrgutQtDAMg3bQlyKcc3acAYX2VBrrv/b3evDCSNRcgZN8JJohMdQKxc+jCjd0V+qhq
- bA2sGaJ7xfJ68npWwXD0E8Ei7nf4mA0003WLfD3XW+w4Up7dKh3ds+Z5JGxctTI9jXkJ9673VRMqnDAnJ//X+/6qgqDhf6n8Q52DTJqFHe8gWFeRoU0dxJe/
- 4sBeVp5Y2MwuXPRqlVBkAYO5yjo1vqypaRzONeSNl5NwQzDwdLo89jX1wl2P+ByNyOm8VAjsPTv8OuB0AKJqboklN1XVoLPAP5ZROpeebs3dDDOqgrE8Y537
- vgaNSKjb4SZp1z2z/hdzGNj5
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200719080743.8560-1-sam@ravnborg.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2020 14:11, Stanimir Varbanov wrote:
-> Depricate mfc private frame skip mode control for new
+On Sun, 19 Jul 2020, Sam Ravnborg wrote:
 
-Depricate -> Deprecate (same in the patch below).
-
-> clients and use the standard one instead.
+> Hi all.
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 5 +++++
->  1 file changed, 5 insertions(+)
+> Follow-up on v4 - with only a few changes listed below and
+> in the individual patches.
+> Thanks for all the reviews and the feedback on the patches!
 > 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index a8b4c0b40747..c0760bfc54d4 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -2805,6 +2805,11 @@ MFC 5.1 Control IDs
->  ``V4L2_CID_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE``
->      (enum)
->  
-> +    .. note::
-> +
-> +       This control is depricated. Use the standard one
+> I am planning a follow-up on this patchset to update the
+> backlight drivers all over to use backlight_get_brightness()
+> and backlight_is_blank() as appropriate.
 
-s/one//
+[...]
 
-> +       ``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE`` instead.
+> Sam Ravnborg (19):
+>       backlight: refactor fb_notifier_callback()
+>       backlight: add backlight_is_blank()
+>       backlight: improve backlight_ops documentation
+>       backlight: improve backlight_properties documentation
+>       backlight: improve backlight_device documentation
+>       backlight: document inline functions in backlight.h
+>       backlight: document enums in backlight.h
+>       backlight: remove the unused backlight_bl driver
+>       backlight: drop extern from prototypes
+>       backlight: add overview and update existing doc
+>       backlight: wire up kernel-doc documentation
+>       backlight: introduce backlight_get_brightness()
+>       backlight: as3711_bl: simplify update_status
+>       backlight: cr_bllcd: introduce gpio-backlight semantics
+>       backlight: gpio_backlight: simplify update_status()
+>       backlight: jornada720_bl: introduce backlight_is_blank()
+>       backlight: use backlight_get_brightness()
+>       backlight: drop backlight_put()
+>       backlight: make of_find_backlight static
 
-s/instead/control instead/
+All applied, but to be honest, that was quite painful.
 
-> +
->  enum v4l2_mpeg_mfc51_video_frame_skip_mode -
->      Indicates in what conditions the encoder should skip frames. If
->      encoding a frame would cause the encoded stream to be larger then a
-> 
+A few notes for subsequent patches.
 
+ - Enable spell-checkers in your editors
+   - I fixed the issues up for you here - there were quite a few!
+ - Run ./checkpatch.pl before submitting - here's what I find useful
+   * .git/hooks/post-commit: https://pastebin.ubuntu.com/p/WpPFd6M2rB/
+ - Please keep the in-patch changelog below the '---' line, so that it
+   does not end up in the final commit log
+ - Cc: lines *above* the *-bys please
+ - Cc: lines dropped for any *-bys provided
+ - Lines wrapped ~72 chars (not 50)
+ - One whole empty line spacing between paragraphs
+ - Ensure you use the formatting expected of the subsystem - in the
+   case of Backlight it's:
+
+     <subsystem>: <file>: Subject beginning with an upper-case char
+
+   A `git log --oneline -- subsystem` would give you a good idea of
+   what's expected.
+
+-- 
+lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
