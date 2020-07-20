@@ -2,188 +2,396 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DDF6225BC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:36:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E74DE225BE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 11:41:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727769AbgGTJgU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 05:36:20 -0400
-Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:37969 "EHLO
-        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726492AbgGTJgT (ORCPT
+        id S1728135AbgGTJlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 05:41:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726520AbgGTJli (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 05:36:19 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud8.xs4all.net with ESMTPA
-        id xSDYjXh42NPeYxSDZjmqA4; Mon, 20 Jul 2020 11:36:17 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1595237777; bh=YN4Jx7s1JTKAIF5w5HgjC1zjxXWKkiu623Uz7MATK/c=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=KhQE/aYG5SPhxiF3I3Dy89TkDHat1pZQfcYkfPuI/mXR6jMSyIj1nO6dNE8AyUb0U
-         VprlvkHp2BHwFDmTIQnq22oAaFF0QtLlO5IJvFRhdyODBrwWN51H3rbiPluDKdGSTh
-         hq7q9mDuhJUTw1qahd+g7Pia57y6PFrNE6yyMXA/RqtvrzYOPjfUptB+H1khgGUd2N
-         mwOv3NGC+sz8WV+k+7/zvP4QsUfihgz7PVMuEhk6jaG5OWKPLaoy+0h/YGQhHjWNQY
-         Mtb8l4hfxnhmouvlziJrheBFxXOra+qF/lhBpv9ZQ4+VuSIGEYQCBYag5MGPde6fWm
-         V2CvckIJ3iPOA==
-Subject: Re: [PATCH 1/4] media: v4l2-ctrl: Add frame-skip std encoder control
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Jeongtae Park <jtp.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Maheshwar Ajja <majja@codeaurora.org>
-References: <20200705121128.5250-1-stanimir.varbanov@linaro.org>
- <20200705121128.5250-2-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <d67fa7eb-afe9-49ad-b56c-d89a8f6bc3b6@xs4all.nl>
-Date:   Mon, 20 Jul 2020 11:36:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Mon, 20 Jul 2020 05:41:38 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A5C6C061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 02:41:38 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id u25so9350754lfm.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 02:41:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=at+QEntTN8tIzBsJW6lDsR27yAHJtcty+c8qrx/R4Ec=;
+        b=yZt7NZfetII/mxT+7TK3OgU30EJGteMwJHU8TEr9hQy/B8taZTyptBpjIUE29Dwjtu
+         V2nZ+qsloQDRy6BSfYNkDW7TNF55tqDC//nicNZROt4+ogwjjamD9Uc/7a+eQhhimI0h
+         E9iMS9n+WAY7TY0f0taWELZze1iiDcUegB+wT6TbhssRQ9rilcOSvMm4ilMAr1VaYMPP
+         P53A+biG+sAdbeQ1az72qmmEgJHcMDXFfbsTv79r8b47HFTqL76ZAQtNsXrjxtJPdSYX
+         xrTmWsO8R4Sh7zai2SWITpWwYD5qOkC8CfKBUujzytawoeVXmjkOnog2mkTSITPPzPqg
+         nkMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=at+QEntTN8tIzBsJW6lDsR27yAHJtcty+c8qrx/R4Ec=;
+        b=W2EOC43AEYDtdcKCbLTyKeoCfyNkkgiaqcc8Te0uXB2nfDo5xMBFLxAVKeB/YXzvkZ
+         SfOYYPZYmgR6upvX2RQUBdOFo979uE4bU7IfeOk9CCdTb+J78fTwkAhyvjNAe8tT9y8D
+         2NE/XDLAa7KmumwJcBoR7NgeRv27zx2nuY/UMnOuxxSWP3U8CGxa1gYWqY7Y5CZkISKX
+         3aYr97FP17upYi5R1llpZ5AXTyCSoq8HdvgihQvgEdOzLyzuWnJH4cFezq6X1THbdBQn
+         YwHA/TfuQPbmZT5DaM1xYIKYJlBxxGG2ezF/TU0XrDR/cdUfPNVm3dwKc8Fcmj0XmBkR
+         OaTA==
+X-Gm-Message-State: AOAM531HAZtYZu0UMy7rnssY5sjnTnGXEQISZpc7ZPw11yV1goSCyW5Z
+        lcJZLTboXqPSaUE4tmMn/o2/t/LfTfCfuR97YaO3TA==
+X-Google-Smtp-Source: ABdhPJzpwzoyx99AFq9yKhy/I3mul7Crm62F4HOxAzv1QMBg+AtQ2dQsQ6fikEaQMa4XU5TZRFqwx+RHOI9MkXQxM3I=
+X-Received: by 2002:a19:8505:: with SMTP id h5mr4801980lfd.7.1595238095662;
+ Mon, 20 Jul 2020 02:41:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200705121128.5250-2-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfBGumGYy69YHRtsd+wfFjNj/4eFpbEasfyuIvjue5qCcaxNyoAZ1Y23VOnavzKtyqEB+hG2YgahW83oF34gpQnGY+Uhzg47VOdEvb41neAvCUXLHWSD8
- 1sWDuwn077LAJ4wYmJlJPmxCAAcwlj26subeEjCwM77PwxvzdwsfCV7TTYZbETnMYZs0fVoZ8X1vahbDaVaxXjzZ3ysdqaCeFp2XUT4oxwx0HXvDp0T0Bk+E
- 8WDuDYfq1XAT1JUzYdsELiUI/kWwqK9FETW194dW4tylIm0GEHCeleQ3aLxlWmjpuzoom5dbvex42P5fTtg6xZbk50YV2UTN4HWZ8hamtghgsIJAPeMS6S8v
- YhU3T86P+vLkceMi6I/GwEmCIuFcBd8sO/nUQb/5oIHWslAG7/BUU+ModIX7Dnqly7IxqN+xVF6c43tLPsNW/2dBjDGiOIFxPBMUsJzwBKhUs6dhC8+fpM+8
- /z8a8aTs3guwjU8ObtKH6KGOgURHlq7ZHuhhpC+VKznij9Kx7sJvYrUog2lNtce2SANwaXnzMPSxDl2e7b9bXUM5XxB3U9l0eA2vx1FssTi1oS5Cti8vlqq0
- 7co/qyUmtPC+uWpXGPvct6Gg
+References: <20200716022817.30439-1-ansuelsmth@gmail.com> <20200716022817.30439-6-ansuelsmth@gmail.com>
+In-Reply-To: <20200716022817.30439-6-ansuelsmth@gmail.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Mon, 20 Jul 2020 15:11:24 +0530
+Message-ID: <CAP245DUGM7BgNvBEXvgA6xFiNr0a4BFhSorYwkyRDN5r99y=8w@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] drivers: thermal: tsens: add interrupt support for
+ 9860 driver
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/07/2020 14:11, Stanimir Varbanov wrote:
-> Adds encoders standard v4l2 control for frame-skip. The control
-> is a copy of a custom encoder control so that other v4l2 encoder
-> drivers can use it.
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Hi Ansuel,
 
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Thanks for this patch.
 
-But see note at the end.
+On Thu, Jul 16, 2020 at 7:58 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
+>
+> Add interrupt support for 9860 tsens driver used to set thermal trip
+> point for the system.
 
+typo: 8960
+
+You've used the names 8960 and ipq8064 interchangeably throughout the
+series. AFAICT, msm8960, ipq8064 and apq8064 use the same IP version
+of tsens. Please use 8960 in all patches, descriptions and dt-binding.
+to reflect the filename for the driver.
+Then add ipq8064 and apq8064 in a comment in the driver like here to
+show that the driver also supports these other SoCs:
+https://elixir.bootlin.com/linux/v5.8-rc4/source/drivers/thermal/qcom/tsens-v0_1.c#L328
+
+You can also add a new compatible string for ipq8064 as a separate
+patch at the end of the series.
+
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->  .../media/v4l/ext-ctrls-codec.rst             | 32 +++++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ctrls.c          | 10 ++++++
->  include/uapi/linux/v4l2-controls.h            |  6 ++++
->  3 files changed, 48 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index d0d506a444b1..a8b4c0b40747 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -592,6 +592,38 @@ enum v4l2_mpeg_video_bitrate_mode -
->      the average video bitrate. It is ignored if the video bitrate mode
->      is set to constant bitrate.
->  
-> +``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE (enum)``
+>  drivers/thermal/qcom/tsens-8960.c | 197 +++++++++++++++++++++++++++---
+>  drivers/thermal/qcom/tsens.h      |   3 +
+>  2 files changed, 186 insertions(+), 14 deletions(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
+> index 45788eb3c666..20d0bfb10f1f 100644
+> --- a/drivers/thermal/qcom/tsens-8960.c
+> +++ b/drivers/thermal/qcom/tsens-8960.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/bitops.h>
+>  #include <linux/regmap.h>
+>  #include <linux/mfd/syscon.h>
+> +#include <linux/interrupt.h>
+>  #include <linux/thermal.h>
+>  #include "tsens.h"
+>
+> @@ -27,7 +28,6 @@
+>  /* CNTL_ADDR bitmasks */
+>  #define EN                     BIT(0)
+>  #define SW_RST                 BIT(1)
+> -#define SENSOR0_EN             BIT(3)
+>  #define SLP_CLK_ENA            BIT(26)
+>  #define SLP_CLK_ENA_8660       BIT(24)
+>  #define MEASURE_PERIOD         1
+> @@ -41,14 +41,26 @@
+>
+>  #define THRESHOLD_ADDR         0x3624
+>  /* THRESHOLD_ADDR bitmasks */
+> +#define THRESHOLD_MAX_CODE             0x20000
+> +#define THRESHOLD_MIN_CODE             0
+>  #define THRESHOLD_MAX_LIMIT_SHIFT      24
+>  #define THRESHOLD_MIN_LIMIT_SHIFT      16
+>  #define THRESHOLD_UPPER_LIMIT_SHIFT    8
+>  #define THRESHOLD_LOWER_LIMIT_SHIFT    0
+> +#define THRESHOLD_MAX_LIMIT_MASK       (THRESHOLD_MAX_CODE << \
+> +                                               THRESHOLD_MAX_LIMIT_SHIFT)
+> +#define THRESHOLD_MIN_LIMIT_MASK       (THRESHOLD_MAX_CODE << \
+> +                                               THRESHOLD_MIN_LIMIT_SHIFT)
+> +#define THRESHOLD_UPPER_LIMIT_MASK     (THRESHOLD_MAX_CODE << \
+> +                                               THRESHOLD_UPPER_LIMIT_SHIFT)
+> +#define THRESHOLD_LOWER_LIMIT_MASK     (THRESHOLD_MAX_CODE << \
+> +                                               THRESHOLD_LOWER_LIMIT_SHIFT)
+>
+>  /* Initial temperature threshold values */
+> -#define LOWER_LIMIT_TH         0x50
+> -#define UPPER_LIMIT_TH         0xdf
+> +#define LOWER_LIMIT_TH_8960    0x50
+> +#define UPPER_LIMIT_TH_8960    0xdf
+> +#define LOWER_LIMIT_TH_8064    0x9d /* 95C */
+> +#define UPPER_LIMIT_TH_8064    0xa6 /* 105C */
+>  #define MIN_LIMIT_TH           0x0
+>  #define MAX_LIMIT_TH           0xff
+>
+> @@ -57,6 +69,170 @@
+>  #define TRDY_MASK              BIT(7)
+>  #define TIMEOUT_US             100
+>
+> +#define TSENS_EN               BIT(0)
+> +#define TSENS_SW_RST           BIT(1)
+> +#define TSENS_ADC_CLK_SEL      BIT(2)
+> +#define SENSOR0_EN             BIT(3)
+> +#define SENSOR1_EN             BIT(4)
+> +#define SENSOR2_EN             BIT(5)
+> +#define SENSOR3_EN             BIT(6)
+> +#define SENSOR4_EN             BIT(7)
+> +#define SENSORS_EN             (SENSOR0_EN | SENSOR1_EN | \
+> +                               SENSOR2_EN | SENSOR3_EN | SENSOR4_EN)
+> +#define TSENS_8064_SENSOR5_EN                          BIT(8)
+> +#define TSENS_8064_SENSOR6_EN                          BIT(9)
+> +#define TSENS_8064_SENSOR7_EN                          BIT(10)
+> +#define TSENS_8064_SENSOR8_EN                          BIT(11)
+> +#define TSENS_8064_SENSOR9_EN                          BIT(12)
+> +#define TSENS_8064_SENSOR10_EN                         BIT(13)
+> +#define TSENS_8064_SENSORS_EN                          (SENSORS_EN | \
+> +                                               TSENS_8064_SENSOR5_EN | \
+> +                                               TSENS_8064_SENSOR6_EN | \
+> +                                               TSENS_8064_SENSOR7_EN | \
+> +                                               TSENS_8064_SENSOR8_EN | \
+> +                                               TSENS_8064_SENSOR9_EN | \
+> +                                               TSENS_8064_SENSOR10_EN)
 > +
-> +enum v4l2_mpeg_video_frame_skip_mode -
-> +    Indicates in what conditions the encoder should skip frames. If
-> +    encoding a frame would cause the encoded stream to be larger then a
-> +    chosen data limit then the frame will be skipped. Possible values
-> +    are:
+> +u32 tsens_8960_slope[] = {
+> +                       1176, 1176, 1154, 1176,
+> +                       1111, 1132, 1132, 1199,
+> +                       1132, 1199, 1132
+> +                       };
 > +
+> +/* Temperature on y axis and ADC-code on x-axis */
+> +static inline int code_to_mdegC(u32 adc_code, const struct tsens_sensor *s)
+> +{
+> +       int slope, offset;
 > +
-> +.. tabularcolumns:: |p{9.2cm}|p{8.3cm}|
+> +       slope = thermal_zone_get_slope(s->tzd);
+> +       offset = CAL_MDEGC - slope * s->offset;
 > +
-> +.. raw:: latex
+> +       return adc_code * slope + offset;
+> +}
 > +
-> +    \small
+> +static void notify_uspace_tsens_fn(struct work_struct *work)
+> +{
+> +       struct tsens_sensor *s = container_of(work, struct tsens_sensor,
+> +                                                               notify_work);
 > +
-> +.. flat-table::
-> +    :header-rows:  0
-> +    :stub-columns: 0
+> +       sysfs_notify(&s->tzd->device.kobj, NULL, "type");
+> +}
 > +
-> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_DISABLED``
-> +      - Frame skip mode is disabled.
-> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_LEVEL_LIMIT``
-> +      - Frame skip mode enabled and buffer limit is set by the chosen
-> +	level and is defined by the standard.
-> +    * - ``V4L2_MPEG_FRAME_SKIP_MODE_BUF_LIMIT``
-> +      - Frame skip mode enabled and buffer limit is set by the VBV
-> +	(MPEG1/2/4) or CPB (H264) buffer size control.
+> +static void tsens_scheduler_fn(struct work_struct *work)
+> +{
+> +       struct tsens_priv *priv =
+> +               container_of(work, struct tsens_priv, tsens_work);
+> +       unsigned int threshold, threshold_low, code, reg, sensor;
+> +       unsigned long mask;
+> +       bool upper_th_x, lower_th_x;
+> +       int ret;
 > +
-> +.. raw:: latex
+> +       ret = regmap_read(priv->tm_map, STATUS_CNTL_ADDR_8064, &reg);
+> +       if (ret)
+> +               return;
+> +       reg = reg | LOWER_STATUS_CLR | UPPER_STATUS_CLR;
+> +       ret = regmap_write(priv->tm_map, STATUS_CNTL_ADDR_8064, reg);
+> +       if (ret)
+> +               return;
 > +
-> +    \normalsize
+> +       mask = ~(LOWER_STATUS_CLR | UPPER_STATUS_CLR);
+> +       ret = regmap_read(priv->tm_map, THRESHOLD_ADDR, &threshold);
+> +       if (ret)
+> +               return;
+> +       threshold_low = (threshold & THRESHOLD_LOWER_LIMIT_MASK) >>
+> +                       THRESHOLD_LOWER_LIMIT_SHIFT;
+> +       threshold = (threshold & THRESHOLD_UPPER_LIMIT_MASK) >>
+> +                   THRESHOLD_UPPER_LIMIT_SHIFT;
 > +
->  ``V4L2_CID_MPEG_VIDEO_TEMPORAL_DECIMATION (integer)``
->      For every captured frame, skip this many subsequent frames (default
->      0).
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index 3f3fbcd60cc6..d088acfa6dd8 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -590,6 +590,12 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		"External",
->  		NULL,
->  	};
-> +	static const char * const mpeg_video_frame_skip[] = {
-> +		"Disabled",
-> +		"Level Limit",
-> +		"VBV/CPB Limit",
-> +		NULL,
-> +	};
->  
->  	switch (id) {
->  	case V4L2_CID_MPEG_AUDIO_SAMPLING_FREQ:
-> @@ -651,6 +657,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		return flash_strobe_source;
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
->  		return header_mode;
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
-> +		return mpeg_video_frame_skip;
->  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
->  		return multi_slice;
->  	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
-> @@ -844,6 +852,7 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:			return "H264 MB Level Rate Control";
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
->  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
->  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
-> @@ -1265,6 +1274,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  	case V4L2_CID_FLASH_LED_MODE:
->  	case V4L2_CID_FLASH_STROBE_SOURCE:
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
->  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
->  	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
->  	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index 62271418c1be..4e1526175a4c 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -742,6 +742,12 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
->  #define V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
->  #define V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
->  #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
-> +#define V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE		(V4L2_CID_MPEG_BASE + 645)
+> +       ret = regmap_read(priv->tm_map, STATUS_CNTL_ADDR_8064, &reg);
+> +       if (ret)
+> +               return;
+> +
+> +       ret = regmap_read(priv->tm_map, CNTL_ADDR, &sensor);
+> +       if (ret)
+> +               return;
+> +       sensor &= (uint32_t)TSENS_8064_SENSORS_EN;
+> +       sensor >>= SENSOR0_SHIFT;
+> +
+> +       /* Constraint: There is only 1 interrupt control register for all
+> +        * 11 temperature sensor. So monitoring more than 1 sensor based
+> +        * on interrupts will yield inconsistent result. To overcome this
+> +        * issue we will monitor only sensor 0 which is the master sensor.
+> +        */
+> +
+> +       /* Skip if the sensor is disabled */
+> +       if (sensor & 1) {
+> +               ret = regmap_read(priv->tm_map, priv->sensor[0].status, &code);
+> +               if (ret)
+> +                       return;
+> +               upper_th_x = code >= threshold;
+> +               lower_th_x = code <= threshold_low;
+> +               if (upper_th_x)
+> +                       mask |= UPPER_STATUS_CLR;
+> +               if (lower_th_x)
+> +                       mask |= LOWER_STATUS_CLR;
+> +               if (upper_th_x || lower_th_x) {
+> +                       /* Notify user space */
+> +                       schedule_work(&priv->sensor[0].notify_work);
+> +                       pr_debug("Trigger (%d degrees) for sensor %d\n",
+> +                                code_to_mdegC(code, &priv->sensor[0]), 0);
+> +               }
+> +       }
+> +       regmap_write(priv->tm_map, STATUS_CNTL_ADDR_8064, reg & mask);
+> +}
+> +
+> +static irqreturn_t tsens_isr(int irq, void *data)
+> +{
+> +       struct tsens_priv *priv = data;
+> +
+> +       schedule_work(&priv->tsens_work);
+> +       return IRQ_HANDLED;
 
-I think this now clashes with "media: v4l2-ctrls: Add encoder constant quality control".
 
-I recommend making a new series that combines both series. That avoid this problem.
+Have you considered trying to reuse the regmap and interrupt handling
+infrastructure in tsens.c that I used to convert over everything after
+IP version 0.1?
 
-Regards,
+I started converting over 8960 but never managed to finish testing
+this[1]. I'd be happy for you to take this over and get it working so
+the 8960 doesn't end up being a completely separate driver from the
+other platforms.
 
-	Hans
+[1] https://git.linaro.org/people/amit.kucheria/kernel.git/log/?h=wrk3/tsens-8960-breakage
 
-> +enum v4l2_mpeg_video_frame_skip_mode {
-> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED	= 0,
-> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
-> +	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
-> +};
->  
->  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
->  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
-> 
+> +}
+> +
+> +static void hw_init(struct tsens_priv *priv)
+> +{
+> +       int ret;
+> +       unsigned int reg_cntl = 0, reg_cfg = 0, reg_thr = 0;
+> +       unsigned int reg_status_cntl = 0;
+> +
+> +       regmap_read(priv->tm_map, CNTL_ADDR, &reg_cntl);
+> +       regmap_write(priv->tm_map, CNTL_ADDR, reg_cntl | TSENS_SW_RST);
+> +
+> +       reg_cntl |= SLP_CLK_ENA | (MEASURE_PERIOD << 18) |
+> +                   (((1 << priv->num_sensors) - 1) << SENSOR0_SHIFT);
+> +       regmap_write(priv->tm_map, CNTL_ADDR, reg_cntl);
+> +       regmap_read(priv->tm_map, STATUS_CNTL_ADDR_8064, &reg_status_cntl);
+> +       reg_status_cntl |= LOWER_STATUS_CLR | UPPER_STATUS_CLR |
+> +                          MIN_STATUS_MASK | MAX_STATUS_MASK;
+> +       regmap_write(priv->tm_map, STATUS_CNTL_ADDR_8064, reg_status_cntl);
+> +       reg_cntl |= TSENS_EN;
+> +       regmap_write(priv->tm_map, CNTL_ADDR, reg_cntl);
+> +
+> +       regmap_read(priv->tm_map, CONFIG_ADDR, &reg_cfg);
+> +       if (priv->num_sensors > 1)
+> +               reg_cfg = (reg_cfg & ~CONFIG_MASK) | CONFIG;
+> +       else
+> +               reg_cfg = (reg_cfg & ~CONFIG_MASK) |
+> +                         (CONFIG << CONFIG_SHIFT_8660);
+> +       regmap_write(priv->tm_map, CONFIG_ADDR, reg_cfg);
+> +
+> +       reg_thr |= (LOWER_LIMIT_TH_8064 << THRESHOLD_LOWER_LIMIT_SHIFT) |
+> +                  (UPPER_LIMIT_TH_8064 << THRESHOLD_UPPER_LIMIT_SHIFT) |
+> +                  (MIN_LIMIT_TH << THRESHOLD_MIN_LIMIT_SHIFT) |
+> +                  (MAX_LIMIT_TH << THRESHOLD_MAX_LIMIT_SHIFT);
+> +
+> +       regmap_write(priv->tm_map, THRESHOLD_ADDR, reg_thr);
+> +
+> +       ret = devm_request_irq(priv->dev, priv->tsens_irq, tsens_isr,
+> +                              IRQF_TRIGGER_RISING, "tsens_interrupt", priv);
+> +       if (ret < 0) {
+> +               dev_err(priv->dev, "request_irq FAIL: %d", ret);
+> +               return;
+> +       }
+> +
+> +       INIT_WORK(&priv->tsens_work, tsens_scheduler_fn);
+> +}
+> +
+>  static int suspend_8960(struct tsens_priv *priv)
+>  {
+>         int ret;
+> @@ -191,6 +367,8 @@ static int init_8960(struct tsens_priv *priv)
+>                 if (i >= 5)
+>                         priv->sensor[i].status = S0_STATUS_ADDR + 40;
+>                 priv->sensor[i].status += i * 4;
+> +               priv->sensor[i].slope = tsens_8960_slope[i];
+> +               INIT_WORK(&priv->sensor[i].notify_work, notify_uspace_tsens_fn);
+>         }
+>
+>         reg_cntl = SW_RST;
+> @@ -241,18 +419,9 @@ static int calibrate_8960(struct tsens_priv *priv)
+>
+>         kfree(data);
+>
+> -       return 0;
+> -}
+> -
+> -/* Temperature on y axis and ADC-code on x-axis */
+> -static inline int code_to_mdegC(u32 adc_code, const struct tsens_sensor *s)
+> -{
+> -       int slope, offset;
+> +       hw_init(priv);
+>
+> -       slope = thermal_zone_get_slope(s->tzd);
+> -       offset = CAL_MDEGC - slope * s->offset;
+> -
+> -       return adc_code * slope + offset;
 
+This code move hunk belongs in a separate patch.
+
+> +       return 0;
+>  }
+>
+>  static int get_temp_8960(const struct tsens_sensor *s, int *temp)
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 59d01162c66a..e66048fabcc7 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -48,6 +48,7 @@ enum tsens_irq_type {
+>  struct tsens_sensor {
+>         struct tsens_priv               *priv;
+>         struct thermal_zone_device      *tzd;
+> +       struct work_struct              notify_work;
+>         int                             offset;
+>         unsigned int                    hw_id;
+>         int                             slope;
+> @@ -559,6 +560,7 @@ struct tsens_priv {
+>         struct regmap                   *tm_map;
+>         struct regmap                   *srot_map;
+>         u32                             tm_offset;
+> +       u32                             tsens_irq;
+>
+>         /* lock for upper/lower threshold interrupts */
+>         spinlock_t                      ul_lock;
+> @@ -568,6 +570,7 @@ struct tsens_priv {
+>         struct tsens_features           *feat;
+>         const struct reg_field          *fields;
+>         const struct tsens_ops          *ops;
+> +       struct work_struct              tsens_work;
+>
+>         struct dentry                   *debug_root;
+>         struct dentry                   *debug;
+> --
+> 2.27.0
+>
