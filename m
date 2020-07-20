@@ -2,269 +2,449 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39E0B2269F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 18:31:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE65D226BE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 18:45:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731921AbgGTP5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 11:57:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41720 "EHLO
+        id S2389099AbgGTQpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 12:45:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730103AbgGTP5d (ORCPT
+        with ESMTP id S2389093AbgGTQpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 11:57:33 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 386B9C061794;
-        Mon, 20 Jul 2020 08:57:31 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id e22so13163161edq.8;
-        Mon, 20 Jul 2020 08:57:31 -0700 (PDT)
+        Mon, 20 Jul 2020 12:45:02 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE991C0619D5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 09:45:02 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id k6so13867402ili.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 09:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=6PvW3XVDy+rQEFwwQM6+F7fPiu+tQX07MeqjT24Y590=;
-        b=qkNwFlO65sfUiFoIZ4iNnTliLA2k8RXzhtP23bl24kiTfg5EVrh1FeUAO4WT6x9nx0
-         oQ7KjMNp61d20Xkv1PoYmrOTK4ukXCKirkEA6SnAVYof7VaQg8syuX4Du9jcm+/jreAm
-         /ororTSMOuUTc69NFNR+pj0exx9lUMly1MhqQ43HRdT/tj3+JgVJewd4Ohjab9wPxRI9
-         F7xKC1bVu8intaaKnV80KBVaAbAn8D3NkpN/H8o2shkmPuIQkNotD/GCh2J0bjHReFBk
-         6Wo8k4bJ6JB6zeamO7J+pbF8fwHhWe1gUUv5EUxSuZaUppolDpCvr47WLcr6NgsdaUtC
-         W/3w==
+        bh=jwdj2EehoGKLOCdFM32yoNEJaXYh0bWoiMLFkP2JzcA=;
+        b=ZoEGgduJRBAfOuyfj1knXuC2o7Oz/j+1r23fOY3zikZ4XF9qTzB/N9AdRA8VMQUbBZ
+         72RsRDpgVDJ1xYSc3j8gaG289fEtHX6x6/14C3A8W3CMqf10AVCzcfyGYNHIGoS1/9zF
+         HMChGaEMi7KD6hyPqhwTK+L9sv3Lsm0g5holSh+PZMHYB855PJKxPmAuqQUEIcApg0BV
+         7POZm9c5rowbrqOTjRjHRFplwWj2lfJhuZDj1nCKqsuJ4uhN7aTAAngLcF+S3m4r7p04
+         QgfckoI2uoqLgRWG7+j3eYn5CMt+GEbNCUHr4GbpU4+E/pRvwMAsInZc6UWu9EEUMwFu
+         72WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=6PvW3XVDy+rQEFwwQM6+F7fPiu+tQX07MeqjT24Y590=;
-        b=iHacFVBp9gGW/asXjyswRptc3OgVwEbNpqtBCmXxKKoBu0HHpfOeRA8EAaRjGUs2WY
-         J97MJu6IZLpY20QR1ZarVaFIcNpakwzkjH16DvP/VSCeA4YRAm6B3Wv3mnZiUbxn1/h9
-         4FZgDTkW8krQ+WAdefgb28sYzJAHx9Wi/Y3vLCI+rcTUrG9Qc/BooLcok8kYKd7h2d9Z
-         QdtSqA1yyJRqhIl7q1qqpucchw8hNLNg0+nmIwK6bTS0OsdJ2VsT7MnUqtYGP6u7/Lkl
-         BilGwDh8Do4BI8mIQ88v9TpSz62C5s1srt/1Mmg6/d9A1/WHbOpyjqRUr9YqhpivAwWS
-         Fafg==
-X-Gm-Message-State: AOAM5336aHDzo+DS+3fnnouYOozZZFnHXJTiO6gfunI6KDbBHhdSFkV4
-        IiDvyB403qVLncSh0xL9sfcTCB3dZLQfhjGvZ7e8fDIJWUQ=
-X-Google-Smtp-Source: ABdhPJyonBBTiMXUfR54zQA6LqT9AbdCsa3eg+/Tv/99i/hIC7tvYNSqrVF0C2Hhv4FEcx4cMke8IorXjqpIvtNpZgg=
-X-Received: by 2002:a50:f392:: with SMTP id g18mr21561831edm.151.1595260649670;
- Mon, 20 Jul 2020 08:57:29 -0700 (PDT)
+        bh=jwdj2EehoGKLOCdFM32yoNEJaXYh0bWoiMLFkP2JzcA=;
+        b=EtxOLPVLeBGDX3fOb4aMm/egan6o0pBDqXJV8HfEzpEV6eQHaEcEsoZMIXqLwD+awa
+         o+IYh/wukqsQtotX3qsHGYl/mh/RfSKGbYXg9RWYL85suKJuESmdqOiqgZkoBmC9hqCq
+         iz+mWoPhRo4PgwKoWv5GWdgPp5abOfiycEJAxnhJl/ZhHHUA8Jy6/5Ly3FMVW2MeWX/d
+         qoo10Dy6aibCBygSiF+Hi01wWsPJRQWDSCpA4WE9uzP1cKCrC/6PLadhxNR18g1qjR7z
+         ie6YvuBFhBsFgepyIPjRLTxbvyo+QwQj1mOS2t/DZpRWRqeR9GaMoUqxq9Nd/sPCbBdo
+         J/gw==
+X-Gm-Message-State: AOAM530eO19WZ8Tx5Rq2BmGB8JpIi73ITlJ9SkWIMQVavqYSiwRqWLOy
+        6KPbtmGng2ObA9NdLx31BsN1dbr51mdLdXl/GXs77u+q
+X-Google-Smtp-Source: ABdhPJyy6IKnvZCwpAnMRjOFC9b0GA/WWScza0WYfYrHjgFvk/TyS2rFY51+NZoJjD9Ph76RAtc9fJcTxsSSVx21W2M=
+X-Received: by 2002:a92:8e01:: with SMTP id c1mr24037547ild.140.1595263501800;
+ Mon, 20 Jul 2020 09:45:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <CA+G9fYuzqA0N6O-52uH9aHjsfF6HfhuxMby1Y6Yz7jGMAHW0zw@mail.gmail.com>
- <CAK8P3a1SHQKNNCVj9Gp25BLuXUC2nf7FuVrqfpPYQkvMbhjzFg@mail.gmail.com> <ad7ba016-c3eb-a833-e4d3-4cdcb53ca786@arm.com>
-In-Reply-To: <ad7ba016-c3eb-a833-e4d3-4cdcb53ca786@arm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 20 Jul 2020 08:58:04 -0700
-Message-ID: <CAF6AEGsBRxFC918nNzJZnxMpFnNC6qcNGvMjjM8U3AAn6CusNA@mail.gmail.com>
-Subject: Re: [Freedreno] arm64: Internal error: Oops: qcom_iommu_tlb_inv_context
- free_io_pgtable_ops on db410c
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        Joerg Roedel <jroedel@suse.de>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
+References: <1594148870-27276-1-git-send-email-sidgup@codeaurora.org>
+ <1594148870-27276-2-git-send-email-sidgup@codeaurora.org> <20200715201839.GA3204081@xps15>
+ <20200717054615.GI2922385@builder.lan>
+In-Reply-To: <20200717054615.GI2922385@builder.lan>
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+Date:   Mon, 20 Jul 2020 10:44:50 -0600
+Message-ID: <CANLsYkxgPgJ47mC2t1kQsV+S_O1uAwneGL5qYWLV9tVe7i3oUQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] remoteproc: Add remoteproc character device interface
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>, Jon Corbet <corbet@lwn.net>,
+        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Andy Gross <agross@kernel.org>, lkft-triage@lists.linaro.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Eric Anholt <eric@anholt.net>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        "Guohanjun (Hanjun Guo)" <guohanjun@huawei.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        "moderated list:ARM/Mediatek SoC..." 
-        <linux-mediatek@lists.infradead.org>, Will Deacon <will@kernel.org>
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        tsoni <tsoni@codeaurora.org>, psodagud <psodagud@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 4:28 AM Robin Murphy <robin.murphy@arm.com> wrote:
+On Thu, 16 Jul 2020 at 23:48, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> On 2020-07-20 08:17, Arnd Bergmann wrote:
-> > On Mon, Jul 20, 2020 at 8:36 AM Naresh Kamboju
-> > <naresh.kamboju@linaro.org> wrote:
-> >>
-> >> This kernel oops while boot linux mainline kernel on arm64  db410c device.
-> >>
-> >> metadata:
-> >>    git branch: master
-> >>    git repo: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-> >>    git commit: f8456690ba8eb18ea4714e68554e242a04f65cff
-> >>    git describe: v5.8-rc5-48-gf8456690ba8e
-> >>    make_kernelversion: 5.8.0-rc5
-> >>    kernel-config:
-> >> https://builds.tuxbuild.com/2aLnwV7BLStU0t1R1QPwHQ/kernel.config
-> >
-> > Thanks for the report. Adding freedreno folks to Cc, as this may have something
-> > to do with that driver.
-> >
-> >>
-> >> [    5.444121] Unable to handle kernel NULL pointer dereference at
-> >> virtual address 0000000000000018
-> >> [    5.456615]   ESR = 0x96000004
-> >> [    5.464471]   SET = 0, FnV = 0
-> >> [    5.464487]   EA = 0, S1PTW = 0
-> >> [    5.466521] Data abort info:
-> >> [    5.469971]   ISV = 0, ISS = 0x00000004
-> >> [    5.472768]   CM = 0, WnR = 0
-> >> [    5.476172] user pgtable: 4k pages, 48-bit VAs, pgdp=00000000bacba000
-> >> [    5.479349] [0000000000000018] pgd=0000000000000000, p4d=0000000000000000
-> >> [    5.485820] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-> >> [    5.492448] Modules linked in: crct10dif_ce adv7511(+)
-> >> qcom_spmi_temp_alarm cec msm(+) mdt_loader qcom_camss videobuf2_dma_sg
-> >> drm_kms_helper v4l2_fwnode videobuf2_memops videobuf2_v4l2 qcom_rng
-> >> videobuf2_common i2c_qcom_cci display_connector socinfo drm qrtr ns
-> >> rmtfs_mem fuse
-> >> [    5.500256] CPU: 0 PID: 286 Comm: systemd-udevd Not tainted 5.8.0-rc5 #1
-> >> [    5.522484] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-> >> [    5.529170] pstate: 20000005 (nzCv daif -PAN -UAO BTYPE=--)
-> >> [    5.535856] pc : qcom_iommu_tlb_inv_context+0x18/0xa8
-> >> [    5.541148] lr : free_io_pgtable_ops+0x28/0x58
-> >> [    5.546350] sp : ffff80001219b5f0
-> >> [    5.550689] x29: ffff80001219b5f0 x28: 0000000000000013
-> >> [    5.554078] x27: 0000000000000100 x26: ffff000036add3b8
-> >> [    5.559459] x25: ffff80000915e910 x24: ffff00003a5458c0
-> >> [    5.564753] x23: 0000000000000003 x22: ffff000036a37058
-> >> [    5.570049] x21: ffff000036a3a100 x20: ffff000036a3a480
-> >> [    5.575344] x19: ffff000036a37158 x18: 0000000000000000
-> >> [    5.580639] x17: 0000000000000000 x16: 0000000000000000
-> >> [    5.585935] x15: 0000000000000004 x14: 0000000000000368
-> >> [    5.591229] x13: 0000000000000000 x12: ffff000039c61798
-> >> [    5.596525] x11: ffff000039c616d0 x10: 0000000040000000
-> >> [    5.601820] x9 : 0000000000000000 x8 : ffff000039c616f8
-> >> [    5.607114] x7 : 0000000000000000 x6 : ffff000009f699a0
-> >> [    5.612410] x5 : ffff80001219b520 x4 : ffff000036a3a000
-> >> [    5.617705] x3 : ffff000009f69904 x2 : 0000000000000000
-> >> [    5.623001] x1 : ffff8000107e27e8 x0 : ffff00003a545810
-> >> [    5.628297] Call trace:
-> >> [    5.633592]  qcom_iommu_tlb_inv_context+0x18/0xa8
-> >
-> > This means that dev_iommu_fwspec_get() has returned NULL
-> > in qcom_iommu_tlb_inv_context(), either because dev->iommu
-> > is NULL, or because dev->iommu->fwspec is NULL.
-> >
-> > qcom_iommu_tlb_inv_context() does not check for a NULL
-> > pointer before using the returned object.
-> >
-> > The bug is either in the lack of error handling, or the fact
-> > that it's possible to get into this function for a device
-> > that has not been fully set up.
+> On Wed 15 Jul 13:18 PDT 2020, Mathieu Poirier wrote:
 >
-> Not quite - the device *was* properly set up, but has already been
-> properly torn down again in the removal path by iommu_release_device().
-> The problem is that qcom-iommu kept the device pointer as its TLB cookie
-> for the domain, but the domain has a longer lifespan than the validity
-> of that device - that's a fundamental design flaw in the driver.
+> > On Tue, Jul 07, 2020 at 12:07:49PM -0700, Siddharth Gupta wrote:
+> > > Add the character device interface into remoteproc framework.
+> > > This interface can be used in order to boot/shutdown remote
+> > > subsystems and provides a basic ioctl based interface to implement
+> > > supplementary functionality. An ioctl call is implemented to enable
+> > > the shutdown on release feature which will allow remote processors to
+> > > be shutdown when the controlling userpsace application crashes or hangs.
+> > >
+> > > Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+> > > Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+> > > ---
+> > >  Documentation/userspace-api/ioctl/ioctl-number.rst |   1 +
+> > >  drivers/remoteproc/Kconfig                         |   9 ++
+> > >  drivers/remoteproc/Makefile                        |   1 +
+> > >  drivers/remoteproc/remoteproc_cdev.c               | 146 +++++++++++++++++++++
+> > >  drivers/remoteproc/remoteproc_internal.h           |  28 ++++
+> > >  include/linux/remoteproc.h                         |   5 +
+> > >  include/uapi/linux/remoteproc_cdev.h               |  37 ++++++
+> > >  7 files changed, 227 insertions(+)
+> > >  create mode 100644 drivers/remoteproc/remoteproc_cdev.c
+> > >  create mode 100644 include/uapi/linux/remoteproc_cdev.h
+> > >
+> > > diff --git a/Documentation/userspace-api/ioctl/ioctl-number.rst b/Documentation/userspace-api/ioctl/ioctl-number.rst
+> > > index 59472cd..2a19883 100644
+> > > --- a/Documentation/userspace-api/ioctl/ioctl-number.rst
+> > > +++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
+> > > @@ -339,6 +339,7 @@ Code  Seq#    Include File                                           Comments
+> > >  0xB4  00-0F  linux/gpio.h                                            <mailto:linux-gpio@vger.kernel.org>
+> > >  0xB5  00-0F  uapi/linux/rpmsg.h                                      <mailto:linux-remoteproc@vger.kernel.org>
+> > >  0xB6  all    linux/fpga-dfl.h
+> > > +0xB7  all    uapi/linux/remoteproc_cdev.h                            <mailto:linux-remoteproc@vger.kernel.org>
+> > >  0xC0  00-0F  linux/usb/iowarrior.h
+> > >  0xCA  00-0F  uapi/misc/cxl.h
+> > >  0xCA  10-2F  uapi/misc/ocxl.h
+> > > diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
+> > > index c4d1731..652060f 100644
+> > > --- a/drivers/remoteproc/Kconfig
+> > > +++ b/drivers/remoteproc/Kconfig
+> > > @@ -14,6 +14,15 @@ config REMOTEPROC
+> > >
+> > >  if REMOTEPROC
+> > >
+> > > +config REMOTEPROC_CDEV
+> > > +   bool "Remoteproc character device interface"
+> > > +   help
+> > > +     Say y here to have a character device interface for the remoteproc
+> > > +     framework. Userspace can boot/shutdown remote processors through
+> > > +     this interface.
+> > > +
+> > > +     It's safe to say N if you don't want to use this interface.
+> > > +
+> > >  config IMX_REMOTEPROC
+> > >     tristate "IMX6/7 remoteproc support"
+> > >     depends on ARCH_MXC
+> > > diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
+> > > index e8b886e..311ae3f 100644
+> > > --- a/drivers/remoteproc/Makefile
+> > > +++ b/drivers/remoteproc/Makefile
+> > > @@ -9,6 +9,7 @@ remoteproc-y                                += remoteproc_debugfs.o
+> > >  remoteproc-y                               += remoteproc_sysfs.o
+> > >  remoteproc-y                               += remoteproc_virtio.o
+> > >  remoteproc-y                               += remoteproc_elf_loader.o
+> > > +obj-$(CONFIG_REMOTEPROC_CDEV)              += remoteproc_cdev.o
+> > >  obj-$(CONFIG_IMX_REMOTEPROC)               += imx_rproc.o
+> > >  obj-$(CONFIG_INGENIC_VPU_RPROC)            += ingenic_rproc.o
+> > >  obj-$(CONFIG_MTK_SCP)                      += mtk_scp.o mtk_scp_ipi.o
+> > > diff --git a/drivers/remoteproc/remoteproc_cdev.c b/drivers/remoteproc/remoteproc_cdev.c
+> > > new file mode 100644
+> > > index 0000000..8a0eb47
+> > > --- /dev/null
+> > > +++ b/drivers/remoteproc/remoteproc_cdev.c
+> > > @@ -0,0 +1,146 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/*
+> > > + * Character device interface driver for Remoteproc framework.
+> > > + *
+> > > + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> > > + */
+> > > +
+> > > +#include <linux/cdev.h>
+> > > +#include <linux/fs.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/mutex.h>
+> > > +#include <linux/compat.h>
+> > > +#include <linux/remoteproc.h>
+> > > +#include <linux/uaccess.h>
+> > > +#include <uapi/linux/remoteproc_cdev.h>
+> >
+> > Alphabetical order please.
+> >
+> > > +
+> > > +#include "remoteproc_internal.h"
+> > > +
+> > > +#define NUM_RPROC_DEVICES  64
+> > > +static dev_t rproc_major;
+> > > +
+> > > +static ssize_t rproc_cdev_write(struct file *filp, const char __user *buf, size_t len, loff_t *pos)
+> > > +{
+> > > +   struct rproc *rproc = container_of(filp->f_inode->i_cdev, struct rproc, char_dev);
+> > > +   int ret = 0;
+> > > +   char cmd[10];
+> > > +
+> > > +   if (!len || len > sizeof(cmd))
+> > > +           return -EINVAL;
+> > > +
+> > > +   ret = copy_from_user(cmd, buf, sizeof(cmd));
+> > > +   if (ret)
+> > > +           return -EFAULT;
+> > > +
+> > > +   if (sysfs_streq(cmd, "start")) {
+> > > +           if (rproc->state == RPROC_RUNNING)
+> > > +                   return -EBUSY;
+> > > +
+> > > +           ret = rproc_boot(rproc);
+> > > +           if (ret)
+> > > +                   dev_err(&rproc->dev, "Boot failed:%d\n", ret);
+> > > +   } else if (sysfs_streq(cmd, "stop")) {
+> > > +           if (rproc->state != RPROC_RUNNING)
+> > > +                   return -EINVAL;
+> > > +
+> > > +           rproc_shutdown(rproc);
+> > > +   } else {
+> > > +           dev_err(&rproc->dev, "Unrecognized option\n");
+> > > +           ret = -EINVAL;
+> > > +   }
+> > > +
+> > > +   return ret ? ret : len;
+> > > +}
+> > > +
+> > > +static long rproc_device_ioctl(struct file *filp, unsigned int ioctl, unsigned long arg)
+> > > +{
+> > > +   struct rproc *rproc = container_of(filp->f_inode->i_cdev, struct rproc, char_dev);
+> > > +   void __user *argp = compat_ptr(arg);
+> > > +   int ret;
+> > > +   int32_t param;
+> > > +
+> > > +   switch (ioctl) {
+> > > +   case RPROC_SET_SHUTDOWN_ON_RELEASE:
+> > > +           ret = copy_from_user(&param, argp, sizeof(int32_t));
+> > > +           if (ret) {
+> > > +                   dev_err(&rproc->dev, "Data copy from userspace failed\n");
+> > > +                   return -EFAULT;
+> > > +           }
+> > > +           mutex_lock(&rproc->lock);
+> > > +           rproc->cdev_put_on_release = param ? true : false;
+> > > +           mutex_unlock(&rproc->lock);
+> > > +           break;
+> > > +   case RPROC_GET_SHUTDOWN_ON_RELEASE:
+> > > +           mutex_lock(&rproc->lock);
+> > > +           ret = copy_to_user(argp, &rproc->cdev_put_on_release, sizeof(bool));
+> > > +           mutex_unlock(&rproc->lock);
+> > > +           if (ret) {
+> > > +                   dev_err(&rproc->dev, "Data copy to userspace failed\n");
+> > > +                   return -EFAULT;
+> > > +           }
+> > > +           break;
+> > > +   default:
+> > > +           dev_err(&rproc->dev, "Unsupported ioctl\n");
+> > > +           return -EINVAL;
+> > > +   }
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int rproc_cdev_release(struct inode *inode, struct file *filp)
+> > > +{
+> > > +   struct rproc *rproc = container_of(inode->i_cdev, struct rproc, char_dev);
+> > > +   bool release;
+> > > +
+> > > +   mutex_lock(&rproc->lock);
+> > > +   release = rproc->cdev_put_on_release;
+> > > +   mutex_unlock(&rproc->lock);
+> > > +
+> > > +   if (release && rproc->state == RPROC_RUNNING)
+> >
+> > I think the state of the processor should also be acquired when the lock is
+> > held.  There is still a chance ->state can change between the time the lock is
+> > released and rproc_shutdown() is called but that's a known problem for which
+> > patches have been sent out.
+> >
+>
+> There where patches for a similar bug in the debugfs interface, but I'm
+> not able to find anything for rproc_shutdown().
 
-fwiw, I just sent "iommu/qcom: Use domain rather than dev as tlb
-cookie".. untested but looks like a straightforward enough change to
-switch over to using the domain rather than dev as cookie
-
-BR,
--R
+You are correct - I was under the impression Alex's patch was for
+rproc_shutdown() as well.
 
 >
-> Robin.
 >
-> >> [    5.635764]  free_io_pgtable_ops+0x28/0x58
-> >> [    5.640624]  qcom_iommu_domain_free+0x38/0x60
-> >> [    5.644617]  iommu_group_release+0x4c/0x70
-> >> [    5.649045]  kobject_put+0x6c/0x120
-> >> [    5.653035]  kobject_del+0x64/0x90
-> >> [    5.656421]  kobject_put+0xfc/0x120
-> >> [    5.659893]  iommu_group_remove_device+0xdc/0xf0
-> >> [    5.663281]  iommu_release_device+0x44/0x70
-> >> [    5.668142]  iommu_bus_notifier+0xbc/0xd0
-> >> [    5.672048]  notifier_call_chain+0x54/0x98
-> >> [    5.676214]  blocking_notifier_call_chain+0x48/0x70
-> >> [    5.680209]  device_del+0x26c/0x3a0
-> >> [    5.684981]  platform_device_del.part.0+0x1c/0x88
-> >> [    5.688453]  platform_device_unregister+0x24/0x40
-> >> [    5.693316]  of_platform_device_destroy+0xe4/0xf8
-> >> [    5.698002]  device_for_each_child+0x5c/0xa8
-> >> [    5.702689]  of_platform_depopulate+0x3c/0x80
-> >> [    5.707144]  msm_pdev_probe+0x1c4/0x308 [msm]
+> As I suggested in the previous version of this series I think it's ok
+> that we move forward with replicating the same faulty logic that we have
+> in the sysfs interface and then fix rproc_shutdown() so that it
+> internally checks the current state and return appropriately.
+
+I also think this is the right way to proceed.
+
+>
+> Regards,
+> Bjorn
+>
+> > > +           rproc_shutdown(rproc);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static const struct file_operations rproc_fops = {
+> > > +   .write = rproc_cdev_write,
+> > > +   .compat_ioctl = rproc_device_ioctl,
+> > > +   .release = rproc_cdev_release,
+> > > +};
+> > > +
+> > > +int rproc_char_device_add(struct rproc *rproc)
+> > > +{
+> > > +   int ret;
+> > > +   dev_t cdevt;
+> > > +
+> > > +   cdev_init(&rproc->char_dev, &rproc_fops);
+> > > +   rproc->char_dev.owner = THIS_MODULE;
+> > > +
+> > > +   cdevt = MKDEV(rproc_major, rproc->index);
+> > > +   ret = cdev_add(&rproc->char_dev, cdevt, 1);
+> > > +   if (ret < 0)
+> > > +           goto out;
+> > > +
+> > > +   rproc->dev.devt = cdevt;
+> > > +out:
+> > > +   return ret;
+> > > +}
+> > > +
+> > > +void rproc_char_device_remove(struct rproc *rproc)
+> > > +{
+> > > +   __unregister_chrdev(rproc_major, rproc->index, 1, "remoteproc");
+> > > +}
+> > > +
+> > > +void __init rproc_init_cdev(void)
+> > > +{
+> > > +   int ret;
+> > > +
+> > > +   ret = alloc_chrdev_region(&rproc_major, 0, NUM_RPROC_DEVICES, "remoteproc");
+> > > +   if (ret < 0)
+> > > +           pr_err("Failed to alloc rproc_cdev region, err %d\n", ret);
+> > > +}
+> > > +
+> > > +void __exit rproc_exit_cdev(void)
+> > > +{
+> > > +   unregister_chrdev_region(MKDEV(rproc_major, 0), NUM_RPROC_DEVICES);
 > >
-> > It was triggered by a failure in msm_pdev_probe(), which was
-> > calls of_platform_depopulate() in its error handling code.
-> > This is a combination of two problems:
+> > Please go back to the comment I made on this during my last review and respin.
 > >
-> > a) Whatever caused msm_pdev_probe() to fail means that
-> > the gpu won't be usable, though it should not have caused the
-> > kernel to crash.
+> > > +}
+> > > diff --git a/drivers/remoteproc/remoteproc_internal.h b/drivers/remoteproc/remoteproc_internal.h
+> > > index 4ba7cb5..f091ddc 100644
+> > > --- a/drivers/remoteproc/remoteproc_internal.h
+> > > +++ b/drivers/remoteproc/remoteproc_internal.h
+> > > @@ -47,6 +47,34 @@ extern struct class rproc_class;
+> > >  int rproc_init_sysfs(void);
+> > >  void rproc_exit_sysfs(void);
+> > >
+> > > +#ifdef CONFIG_REMOTEPROC_CDEV
+> > > +void rproc_init_cdev(void);
+> > > +void rproc_exit_cdev(void);
+> > > +int rproc_char_device_add(struct rproc *rproc);
+> > > +void rproc_char_device_remove(struct rproc *rproc);
+> > > +#else
+> > > +static inline void rproc_init_cdev(void)
+> > > +{
+> > > +}
+> > > +
+> > > +static inline void rproc_exit_cdev(void)
+> > > +{
+> > > +}
+> > > +
+> > > +/*
+> > > + * The character device interface is an optional feature, if it is not enabled
+> > > + * the function should not return an error.
+> > > + */
+> > > +static inline int rproc_char_device_add(struct rproc *rproc)
+> > > +{
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static inline void  rproc_char_device_remove(struct rproc *rproc)
+> > > +{
+> > > +}
+> > > +#endif
+> > > +
+> > >  void rproc_free_vring(struct rproc_vring *rvring);
+> > >  int rproc_alloc_vring(struct rproc_vdev *rvdev, int i);
+> > >
+> > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+> > > index e7b7bab..669cbfb 100644
+> > > --- a/include/linux/remoteproc.h
+> > > +++ b/include/linux/remoteproc.h
+> > > @@ -40,6 +40,7 @@
+> > >  #include <linux/virtio.h>
+> > >  #include <linux/completion.h>
+> > >  #include <linux/idr.h>
+> > > +#include <linux/cdev.h>
 > >
-> > b) the error handling itself causing additional problems due
-> > to failed unwinding.
+> > Move this above completion.h
 > >
-> >> [    5.711286]  platform_drv_probe+0x54/0xa8
-> >> [    5.715624]  really_probe+0xd8/0x320
-> >> [    5.719617]  driver_probe_device+0x58/0xb8
-> >> [    5.723263]  device_driver_attach+0x74/0x80
-> >> [    5.727168]  __driver_attach+0x58/0xe0
-> >> [    5.731248]  bus_for_each_dev+0x70/0xc0
-> >> [    5.735067]  driver_attach+0x24/0x30
-> >> [    5.738801]  bus_add_driver+0x14c/0x1f0
-> >> [    5.742619]  driver_register+0x64/0x120
-> >> [    5.746178]  __platform_driver_register+0x48/0x58
-> >> [    5.750099]  msm_drm_register+0x58/0x70 [msm]
-> >> [    5.754861]  do_one_initcall+0x54/0x1a0
-> >> [    5.759200]  do_init_module+0x54/0x200
-> >> [    5.762846]  load_module+0x1d1c/0x2300
-> >> [    5.766664]  __do_sys_finit_module+0xd8/0xf0
-> >> [    5.770398]  __arm64_sys_finit_module+0x20/0x30
-> >> [    5.774826]  el0_svc_common.constprop.0+0x6c/0x168
-> >> [    5.779078]  do_el0_svc+0x24/0x90
-> >> [    5.783939]  el0_sync_handler+0x90/0x198
-> >> [    5.787323]  el0_sync+0x158/0x180
-> >> [    5.791323] Code: 910003fd f9417404 b4000484 f9401482 (b9401846)
-> >> [    5.794532] ---[ end trace 3d6a53241629e560 ]---
-> >>
-> >> full crash log details.
-> >> https://qa-reports.linaro.org/lkft/linux-mainline-oe/build/v5.8-rc5-48-gf8456690ba8e/testrun/2945157/suite/linux-log-parser/test/check-kernel-oops-1573988/log
+> > With all of the above modifications:
 > >
-> > There are a couple of messages directly preceding the bug output that are
-> > probably relevant here:
+> > Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 > >
-> > [    5.259499] debugfs: Directory '1b0ac00.camss-vdda' with parent
-> > 'smd:rpm:rpm-requests:pm8916-regulators-l2' already present!
-> >           Starting Resize root filesystem to fit available disk space...
-> >           Starting Start the WCN core...
-> > [[0;32m  OK  [0m] Started Network Service.
-> > [[0;32m  OK  [0m] Started QRTR service.
-> > [    5.352993] adreno 1c00000.gpu: Adding to iommu group 1
-> > [    5.357489] msm_mdp 1a01000.mdp: Adding to iommu group 2
-> > [    5.357757] msm_mdp 1a01000.mdp: No interconnect support may cause
-> > display underflows!
-> > [    5.366215] adv7511 3-0039: supply dvdd not found, using dummy regulator
-> > [    5.378036] msm 1a00000.mdss: supply vdd not found, using dummy regulator
-> > [    5.378715] msm_mdp 1a01000.mdp: [drm:mdp5_bind [msm]] MDP5 version v1.6
-> > [    5.380549] adv7511 3-0039: supply pvdd not found, using dummy regulator
-> > [    5.384606] msm 1a00000.mdss: bound 1a01000.mdp (ops mdp5_ops [msm])
-> > [    5.394368] adv7511 3-0039: supply a2vdd not found, using dummy regulator
-> > [    5.397633] msm_dsi 1a98000.dsi: supply gdsc not found, using dummy regulator
-> > [    5.411897] msm_dsi 1a98000.dsi: supply gdsc not found, using dummy regulator
-> > [    5.420207] msm_dsi_manager_register: failed to register mipi dsi
-> > host for DSI 0
-> > [    5.425717] platform 1a01000.mdp: Removing from iommu group 2
-> > [[0;1;31mFAILED[0m] Failed to start Entropy Daemon based on the HAVEGE
-> > algorithm.[    5.444121] Unable to handle kernel NULL pointer
-> > dereference at virtual address 0000000000000018
-> >
-> > See 'systemctl status haveged.service' for detai[    5.456615]   ESR =
-> > 0x96000004
-> > ls.
-> > [    5.464471]   SET = 0, FnV = 0
-> > [    5.464487]   EA = 0, S1PTW = 0
-> >
-> >          Arnd
-> > _______________________________________________
-> > iommu mailing list
-> > iommu@lists.linux-foundation.org
-> > https://lists.linuxfoundation.org/mailman/listinfo/iommu
-> >
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+> > >  #include <linux/of.h>
+> > >
+> > >  /**
+> > > @@ -488,6 +489,8 @@ struct rproc_dump_segment {
+> > >   * @auto_boot: flag to indicate if remote processor should be auto-started
+> > >   * @dump_segments: list of segments in the firmware
+> > >   * @nb_vdev: number of vdev currently handled by rproc
+> > > + * @char_dev: character device of the rproc
+> > > + * @cdev_put_on_release: flag to indicate if remoteproc should be shutdown on @char_dev release
+> > >   */
+> > >  struct rproc {
+> > >     struct list_head node;
+> > > @@ -523,6 +526,8 @@ struct rproc {
+> > >     int nb_vdev;
+> > >     u8 elf_class;
+> > >     u16 elf_machine;
+> > > +   struct cdev char_dev;
+> > > +   bool cdev_put_on_release;
+> > >  };
+> > >
+> > >  /**
+> > > diff --git a/include/uapi/linux/remoteproc_cdev.h b/include/uapi/linux/remoteproc_cdev.h
+> > > new file mode 100644
+> > > index 0000000..c43768e
+> > > --- /dev/null
+> > > +++ b/include/uapi/linux/remoteproc_cdev.h
+> > > @@ -0,0 +1,37 @@
+> > > +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+> > > +/*
+> > > + * IOCTLs for Remoteproc's character device interface.
+> > > + *
+> > > + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> > > + */
+> > > +
+> > > +#ifndef _UAPI_REMOTEPROC_CDEV_H_
+> > > +#define _UAPI_REMOTEPROC_CDEV_H_
+> > > +
+> > > +#include <linux/ioctl.h>
+> > > +#include <linux/types.h>
+> > > +
+> > > +#define RPROC_MAGIC        0xB7
+> > > +
+> > > +/*
+> > > + * The RPROC_SET_SHUTDOWN_ON_RELEASE ioctl allows to enable/disable the shutdown of a remote
+> > > + * processor automatically when the controlling userpsace closes the char device interface.
+> > > + *
+> > > + * input parameter: integer
+> > > + *   0             : disable automatic shutdown
+> > > + *   other : enable automatic shutdown
+> > > + */
+> > > +#define RPROC_SET_SHUTDOWN_ON_RELEASE _IOW(RPROC_MAGIC, 1, __s32)
+> > > +
+> > > +/*
+> > > + * The RPROC_GET_SHUTDOWN_ON_RELEASE ioctl gets information about whether the automatic shutdown of
+> > > + * a remote processor is enabled or disabled when the controlling userspace closes the char device
+> > > + * interface.
+> > > + *
+> > > + * output parameter: integer
+> > > + *   0             : automatic shutdown disable
+> > > + *   other : automatic shutdown enable
+> > > + */
+> > > +#define RPROC_GET_SHUTDOWN_ON_RELEASE _IOR(RPROC_MAGIC, 2, __s32)
+> > > +
+> > > +#endif
+> > > --
+> > > Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > > a Linux Foundation Collaborative Project
+> > >
