@@ -2,140 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EAE47225A80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 10:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A854225A9F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Jul 2020 10:58:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727862AbgGTIy2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Jul 2020 04:54:28 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.81]:14236 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727809AbgGTIy1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Jul 2020 04:54:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1595235264;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=BWaZlE2pjEFqHV7iLTrTamEDxBJXrAlZ8aD6tVzv85s=;
-        b=LjX5C8I4edpdhraXy48ki15MkJn+T9gShNRITVKx/KGRNtYumLPCldMieS0KEKkkz+
-        LooFn0AaExRvgUhLCfjB9vPb1VJks1UJim7bY8LvWbzAw3xdlvpBNrfIVfvH4bikhhrv
-        npSyXEqJ+cqDZAaH0P/hvFN9hSSGiyozfRYLaEurbSD2ooGdhYfLDXNrbbQaVR/MrlcJ
-        PWXzUSY5umL+ZjLsw1mcEXoKfCXwoTc5IkVEvmJ4E72XPT3kwOw9x9TB0csF0BgYYzbq
-        aPKd/eqHB5BBrosiQAf77jkMU4en7CjQD1yQb7Rhm0bJTQxUKheX6YnJjG2/750+g3js
-        zFFQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB4G6NeHYC"
-X-RZG-CLASS-ID: mo00
-Received: from localhost.localdomain
-        by smtp.strato.de (RZmta 46.10.5 DYNA|AUTH)
-        with ESMTPSA id Y0939ew6K8sMdgP
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 20 Jul 2020 10:54:22 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH 10/10] arm64: dts: qcom: msm8916: Move common USB properties to msm8916.dtsi
-Date:   Mon, 20 Jul 2020 10:54:06 +0200
-Message-Id: <20200720085406.6716-11-stephan@gerhold.net>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200720085406.6716-1-stephan@gerhold.net>
-References: <20200720085406.6716-1-stephan@gerhold.net>
+        id S1728145AbgGTI6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Jul 2020 04:58:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47868 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727849AbgGTI6s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Jul 2020 04:58:48 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 628882080D;
+        Mon, 20 Jul 2020 08:58:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595235527;
+        bh=5dRm17x/4YmOg9N68msaTYgFDv010nts5Csj4JsnuNo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=xgL1HXG5V4cFym6tqGx4SK3Zg1MNmAKtWRpSGhMqIhBBohFlDkQoTq230Hvd6SuYw
+         w5wKTAdMcYJFzMnBoDGNZQdpgG3RMqInDwJCnWZWRhOSHxtTbnxoZOfI6U+8vb+A16
+         dZrt94iCFWjJhK+PR14gN9iFFGOQoq/bJjf98yfs=
+Date:   Mon, 20 Jul 2020 09:58:42 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org,
+        John Stultz <john.stultz@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, jcrouse@codeaurora.org
+Subject: Re: [PATCH v2 2/5] iommu/arm-smmu: Emulate bypass by using context
+ banks
+Message-ID: <20200720085841.GA11189@willie-the-truck>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200717001619.325317-3-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Right now we define "hnp-disable", "srp-disable", "adp-disable"
-separately for every MSM8916 board that has USB working.
+On Thu, Jul 16, 2020 at 05:16:16PM -0700, Bjorn Andersson wrote:
+> Some firmware found on various Qualcomm platforms traps writes to S2CR
+> of type BYPASS and writes FAULT into the register. This prevents us from
+> marking the streams for the display controller as BYPASS to allow
+> continued scanout of the screen through the initialization of the ARM
+> SMMU.
+> 
+> This adds a Qualcomm specific cfg_probe function, which probes the
+> behavior of the S2CR registers and if found faulty enables the related
+> quirk. Based on this quirk context banks are allocated for IDENTITY
+> domains as well, but with ARM_SMMU_SCTLR_M omitted.
+> 
+> The result is valid stream mappings, without translation.
+> 
+> Tested-by: John Stultz <john.stultz@linaro.org>
+> Tested-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Picked up tested-by
+> 
+>  drivers/iommu/arm-smmu-qcom.c | 21 +++++++++++++++++++++
+>  drivers/iommu/arm-smmu.c      | 14 ++++++++++++--
+>  drivers/iommu/arm-smmu.h      |  3 +++
+>  3 files changed, 36 insertions(+), 2 deletions(-)
 
-They are needed for USB to work properly if CONFIG_USB_OTG_FSM
-is enabled. This is because the chipidea OTG FSM code waits for
-interrupts regarding the VBUS state (AVVIS). Those never happen
-on MSM8916 because VBUS is always connected to the PMIC instead
-of the USB controller.
+[...]
 
-There was a patch [1] to work around this but ultimately it was
-decided that it's easier to disable the OTG FSM altogether using
-these properties. This works fine for most use cases, because the
-OTG FSM isn't needed for simple dual role host/gadget operation.
+> diff --git a/drivers/iommu/arm-smmu.c b/drivers/iommu/arm-smmu.c
+> index fb85e716ae9a..5d5fe6741ed4 100644
+> --- a/drivers/iommu/arm-smmu.c
+> +++ b/drivers/iommu/arm-smmu.c
+> @@ -654,7 +654,9 @@ static void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
+>  
+>  	/* SCTLR */
+>  	reg = ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE | ARM_SMMU_SCTLR_AFE |
+> -	      ARM_SMMU_SCTLR_TRE | ARM_SMMU_SCTLR_M;
+> +	      ARM_SMMU_SCTLR_TRE;
+> +	if (cfg->m)
+> +		reg |= ARM_SMMU_SCTLR_M;
+>  	if (stage1)
+>  		reg |= ARM_SMMU_SCTLR_S1_ASIDPNE;
+>  	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
+> @@ -678,7 +680,11 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>  	if (smmu_domain->smmu)
+>  		goto out_unlock;
+>  
+> -	if (domain->type == IOMMU_DOMAIN_IDENTITY) {
+> +	/*
+> +	 * Nothing to do for IDENTITY domains,unless disabled context banks are
+> +	 * used to emulate bypass mappings on Qualcomm platforms.
+> +	 */
+> +	if (domain->type == IOMMU_DOMAIN_IDENTITY && !smmu->qcom_bypass_quirk) {
 
-Given that these properties are needed for every MSM8916 device,
-move them to msm8916.dtsi so we can avoid some more duplication.
+Given that the other thread [1] with Jordan (why haven't you cc'd him?! --
+adding him now) has identified the need for a callback to allocate the
+context bank, why don't we use the same sort of idea here? If the impl
+provides a CB allocator function, call it irrespective of the domain type.
+If it allocates a domain even for an identity domain, then we can install
+if with SCTLR.M clear.
 
-[1]: https://lore.kernel.org/lkml/20160707222114.1673-10-stephen.boyd@linaro.org/
+Will
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi                  | 3 ---
- arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 4 ----
- arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 4 ----
- arch/arm64/boot/dts/qcom/msm8916.dtsi                      | 3 +++
- 4 files changed, 3 insertions(+), 11 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index 1ecc49e36319..e4b655eb153b 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -379,9 +379,6 @@ codec {
- &usb {
- 	status = "okay";
- 	extcon = <&usb_id>, <&usb_id>;
--	adp-disable;
--	hnp-disable;
--	srp-disable;
- 
- 	pinctrl-names = "default", "device";
- 	pinctrl-0 = <&usb_sw_sel_pm &usb_hub_reset_pm>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index dec5e3ba7df4..b9d3c5d98dd0 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -87,10 +87,6 @@ &usb {
- 	status = "okay";
- 	dr_mode = "peripheral";
- 	extcon = <&usb_vbus>;
--
--	hnp-disable;
--	srp-disable;
--	adp-disable;
- };
- 
- &usb_hs_phy {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index eb667f4b0e05..2ba649bffd4e 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -153,10 +153,6 @@ &sdhc_2 {
- &usb {
- 	status = "okay";
- 	extcon = <&muic>, <&muic>;
--
--	hnp-disable;
--	srp-disable;
--	adp-disable;
- };
- 
- &usb_hs_phy {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 273faffab369..d6a5b60846d9 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -802,6 +802,9 @@ usb: usb@78d9000 {
- 			reset-names = "core";
- 			phy_type = "ulpi";
- 			dr_mode = "otg";
-+			hnp-disable;
-+			srp-disable;
-+			adp-disable;
- 			ahb-burst-config = <0>;
- 			phy-names = "usb-phy";
- 			phys = <&usb_hs_phy>;
--- 
-2.27.0
-
+[1] https://lore.kernel.org/r/20200716151625.GA14526@jcrouse1-lnx.qualcomm.com
