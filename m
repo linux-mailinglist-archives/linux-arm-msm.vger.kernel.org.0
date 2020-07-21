@@ -2,304 +2,311 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 834DD227EEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 13:30:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 525FA227F07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 13:36:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729856AbgGULaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 07:30:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
+        id S1728269AbgGULgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 07:36:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729849AbgGULaY (ORCPT
+        with ESMTP id S1726266AbgGULgj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 07:30:24 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E4AAC0619D8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 04:30:23 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id z15so20817823wrl.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 04:30:23 -0700 (PDT)
+        Tue, 21 Jul 2020 07:36:39 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A26BC061794
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 04:36:39 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id o2so2536372wmh.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 04:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lDCzyRG0rg1IT+D0XJL6mCguANQqA8rXobavVZvW96Y=;
-        b=ZnnrxRa4si/xuCUdSQINme4yglZDejh1OO0DnrcmRn5h18itVyWY4KRvRkI/WNZ/Ll
-         E/VPLadw2MbujNKNCVgXWitzmPWRAKdk5XTCel3V5qpcX6FGrqmGTmm4p15DMboso/NS
-         FV4C1to8Pfy/qNsRbWTocSYQZzf6KtgCql62o=
+        bh=Yj1qnl1WLfnKvv1xFJMIVkm5J+E8pmta5ysPZcg545M=;
+        b=Ra1p4VangqmV7CM2mbg0ENHiGKAvqOGmm3QzHbwuXOK6VwYR47xfLyfWeo4Z9vQOKG
+         xNLUEYZ4KalALdotcQoLjc0oegPpaaIMiry4Npz1FVNm4E1sHQQ7RwqhFy+x89bkbaVN
+         1cIXj7j9IG5jR3Ki9Dshx719g4/0p3B0VXkOQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lDCzyRG0rg1IT+D0XJL6mCguANQqA8rXobavVZvW96Y=;
-        b=eStwlwoXPYYkUi/+qgl1RtqjFL4QfYpMXn7BZ+uAs6SlQnIjOM/qRLqY0U+GHRqUkj
-         XDNhhublOH71HcOFe1JWt8JnnBZgF5qBdvk0oJPFIqqR1BaP4Y2kM++nPJU4mB3b07UK
-         nLrhPHzyPxjHa9Mj0kxky9Wqushxq4ywLP5rOTSSxTNT6D8ptfrMqeOgQqZqngl/KueV
-         ZI+Vcqy/RdB+lFW6I9KHMoW1w8yF/7MUZ/tgazex3D6939KqGJXCJLu4z08lEQG7o7zt
-         /tby3Yp65fYtAntfRDV2xLyJ2T5RDVSt1trpFPv/PAOJAjlrjLIYy88nZLhFd97yo0sN
-         00Bw==
-X-Gm-Message-State: AOAM533HotQGUkBuUd5/PliRnGBzSH3bYl60XBJrkJDRvY5OBXln2hiv
-        GGSSVpDqbUFt8+W6/V1kKk7nMlCSDFRi4+KHXKL9hg==
-X-Google-Smtp-Source: ABdhPJwbrVnmzJ0PnXN6sJ8jR7GyGTkbutQcRFVK+AheZaDBzYwZNbSJrjKJ1Gle1sfdgNlgwcpeGqJ0VnvJV9KH3Mw=
-X-Received: by 2002:a05:6000:1209:: with SMTP id e9mr12809989wrx.404.1595331021943;
- Tue, 21 Jul 2020 04:30:21 -0700 (PDT)
+        bh=Yj1qnl1WLfnKvv1xFJMIVkm5J+E8pmta5ysPZcg545M=;
+        b=LxWtI9MLhS5IvxnbjSkVl4VbTpTxmQ1/9u44z9Kjv13ir8vnWz+65DFWVtFp4zrmXy
+         tFxukXR8XV31IHeCs81DWC+sqFPYso61Kzuylh24VT44MiazTlurI6zbWlvPq24Gp73S
+         WcQJR6GCeUFv0nBqGbCwUfJjKB6g2emH00lQ+sTiJiFK0MWavdRBc8nkK8cvDK0mzdGb
+         2fLhR+JFS60iRFAfzntGHXXxJj1a8FdVifgtq0WGM/CBHb0RkhpHfMPu4G6Dz/js2Zdg
+         bGN1aUmQ7S9P5Pc+eflTSCOQY/ujPxrVaeK01TknnrELyzLL+rePITXqPBW6yEXrVYIt
+         XeHw==
+X-Gm-Message-State: AOAM5334dw+xqhzoqJHt/sdgeyP8FTz2AFLHr7bqINcurrFm5oALZHlU
+        fBX77YbWlrnHOGL9TgndKagCKDRrrBK8QMsdPrxwEg==
+X-Google-Smtp-Source: ABdhPJwh6lTkGfTci7wgoDwi1kHu85IEqFzskg/QiL2w0OvgAKxpMaamWsYAIfpujP6j1Keo8EsqOTDtjZZF3ildGPU=
+X-Received: by 2002:a1c:6246:: with SMTP id w67mr3574806wmb.42.1595331397735;
+ Tue, 21 Jul 2020 04:36:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200717120207.3471030-1-cychiang@chromium.org> <CAD=FV=XFayyvT-b9C3f4pXNkboH7kb7ikyi9qJxmNvowOfkjqQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=XFayyvT-b9C3f4pXNkboH7kb7ikyi9qJxmNvowOfkjqQ@mail.gmail.com>
+References: <20200717120207.3471030-1-cychiang@chromium.org>
+ <20200717120207.3471030-2-cychiang@chromium.org> <CA+Px+wV211AhRVTecU7OS6uP2AQw7v7Gu5x41L4dgW3xR8mA-A@mail.gmail.com>
+In-Reply-To: <CA+Px+wV211AhRVTecU7OS6uP2AQw7v7Gu5x41L4dgW3xR8mA-A@mail.gmail.com>
 From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Tue, 21 Jul 2020 19:29:55 +0800
-Message-ID: <CAFv8NwLpVCy4CY8_h0qd7aAEPmaKa3gQYmA3sT1b9fs6fxwtLA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Taniya Das <tdas@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Takashi Iwai <tiwai@suse.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Date:   Tue, 21 Jul 2020 19:36:10 +0800
+Message-ID: <CAFv8Nw+n9nQio7-3GS0sYrj58D9+Rpq39u4RTDJ0rVgvKtdj1A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: qcom: sc7180: Add machine driver for sound card registration
+To:     Tzung-Bi Shih <tzungbi@google.com>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Mark Brown <broonie@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
         Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Douglas Anderson <dianders@chromium.org>,
         Dylan Reid <dgreid@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ALSA development <alsa-devel@alsa-project.org>,
+        Ajit Pandey <ajitp@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 17, 2020 at 11:03 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-
+Hi Tzung-Bi,
 Thanks for the review!
-
-> On Fri, Jul 17, 2020 at 5:02 AM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
-> >
-> > Add devicetree bindings documentation file for sc7180 sound card.
-> >
-> > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
-> > ---
-> >  .../bindings/sound/qcom,sc7180.yaml           | 123 ++++++++++++++++++
-> >  1 file changed, 123 insertions(+)
+On Mon, Jul 20, 2020 at 10:47 AM Tzung-Bi Shih <tzungbi@google.com> wrote:
 >
-> A bit of a mechanical review since my audio knowledge is not strong.
->
->
-> >  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> On Fri, Jul 17, 2020 at 8:02 PM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
+> > diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
 > > new file mode 100644
-> > index 000000000000..d60d2880d991
+> > index 000000000000..cbe6b487d432
 > > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> > @@ -0,0 +1,123 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
-> > +
-> > +maintainers:
-> > +  - Rohit kumar <rohitkr@codeaurora.org>
-> > +  - Cheng-Yi Chiang <cychiang@chromium.org>
-> > +
-> > +description: |
-> > +  This binding describes the SC7180 sound card, which uses LPASS for audio.
+> > +++ b/sound/soc/qcom/sc7180.c
+> > @@ -0,0 +1,410 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> > + *
+> > + * sc7180.c -- ALSA SoC Machine driver for SC7180
+> > + */
+> Use "//" for all lines (see https://lkml.org/lkml/2020/5/14/332).
 >
-> nit: you don't need the pipe at the end of the "description" line.
-> That means that newlines are important and you don't need it.
->
->
-Thanks for the explanation. Fixed in v2.
-> > +definitions:
->
-> I haven't yet seen much yaml using definitions like this.  It feels
-> like overkill for some of these properties, especially ones that are
-> only ever used once in the "properties:" section and are/or are really
-> simple.
->
->
-ACK. In v2 I only kept dai definition and removed others.
 
-> > +  link-name:
-> > +    description: Indicates dai-link name and PCM stream name.
-> > +    $ref: /schemas/types.yaml#/definitions/string
-> > +    maxItems: 1
-> > +
-> > +  dai:
-> > +    type: object
-> > +    properties:
-> > +      sound-dai:
-> > +        maxItems: 1
-> > +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> > +        description: phandle array of the codec or CPU DAI
-> > +
-> > +    required:
-> > +      - sound-dai
-> > +
-> > +  unidirectional:
-> > +    description: Specify direction of unidirectional dai link.
-> > +                 0 for playback only. 1 for capture only.
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
->
-> So if the property isn't there then it's _not_ unidirectional and if
-> it is there then this specifies the direction, right?  I almost wonder
-> if this should just be two boolean properties, like:
->
-> playback-only;
-> capture-only;
->
-> ...but I guess I'd leave it to Rob and/or Mark to say what they liked
-> better.  In any case if you keep it how you have it then you should
-> use yaml to force it to be either 0 or 1 if present.
->
->
-ACK
-Use playback-only and capture-only in v2 instead.
+Thanks for the pointer. Fixed in v2.
 
-> > +
-> > +properties:
-> > +  compatible:
-> > +    contains:
-> > +      enum:
-> > +        - qcom,sc7180-sndcard
->
-> Just:
->
-> properties:
->   compatible:
->     const: qcom,sc7180-sndcard
->
->
+> > +#include <linux/module.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/of_device.h>
+> > +#include <sound/core.h>
+> > +#include <sound/pcm.h>
+> > +#include <sound/pcm_params.h>
+> > +#include <sound/jack.h>
+> > +#include <sound/soc.h>
+> > +#include <uapi/linux/input-event-codes.h>
+> > +#include <dt-bindings/sound/sc7180-lpass.h>
+> > +#include "../codecs/rt5682.h"
+> > +#include "common.h"
+> > +#include "lpass.h"
+> Insert a blank line in between <...> and "..." and sort the list
+> alphabetically to make it less likely to conflict.
 
 Fixed in v2.
 
 >
-> > +  audio-routing:
-> > +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> > +    description: |-
-> > +      A list of the connections between audio components. Each entry is a
-> > +      pair of strings, the first being the connection's sink, the second
-> > +      being the connection's source.
+> > +static int sc7180_snd_hw_params(struct snd_pcm_substream *substream,
+> > +                               struct snd_pcm_hw_params *params)
+> > +{
+> Dummy function?  Or is it still work in progress?
 >
-> You don't need the "|-" after the "description:".  That says newlines
-> are important but strip the newline from the end.
+Removed in v2.
+
+> > +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> > +       int ret = 0;
+> > +
+> > +       switch (cpu_dai->id) {
+> > +       case MI2S_PRIMARY:
+> > +               break;
+> > +       case MI2S_SECONDARY:
+> > +               break;
+> > +       default:
+> > +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+> -EINVAL.
+>
+Removed in v2.
+> > +static int sc7180_dai_init(struct snd_soc_pcm_runtime *rtd)
+> > +{
+> > +       struct snd_soc_component *component;
+> > +       struct snd_soc_card *card = rtd->card;
+> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> > +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+> > +       struct sc7180_snd_data *pdata = snd_soc_card_get_drvdata(card);
+> > +       struct snd_jack *jack;
+> > +       int rval;
+> > +
+> > +       if (!pdata->jack_setup) {
+> > +               rval = snd_soc_card_jack_new(
+> > +                               card, "Headset Jack",
+> > +                               SND_JACK_HEADSET |
+> > +                               SND_JACK_HEADPHONE |
+> > +                               SND_JACK_BTN_0 | SND_JACK_BTN_1 |
+> > +                               SND_JACK_BTN_2 | SND_JACK_BTN_3,
+> > +                               &pdata->jack, NULL, 0);
+> > +
+> > +               if (rval < 0) {
+> > +                       dev_err(card->dev, "Unable to add Headphone Jack\n");
+> > +                       return rval;
+> > +               }
+> > +
+> > +               jack = pdata->jack.jack;
+> > +
+> > +               snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+> > +               snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
+> > +               snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+> > +               snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
+> > +               pdata->jack_setup = true;
+> This block is something I don't expect to be in "dai_init" (i.e. there
+> is only 1 headset jack, why do we need to run the code for n times).
+>
+Thanks for the suggestion. In v2 I am using aux device so this
+function is cleaned up to be specific to aux device for jack
+detection.
+
+> > +       switch (cpu_dai->id) {
+> > +       case MI2S_PRIMARY:
+> > +               jack  = pdata->jack.jack;
+> > +               component = codec_dai->component;
+> > +
+> > +               jack->private_data = component;
+> > +               jack->private_free = sc7180_jack_free;
+> > +               rval = snd_soc_component_set_jack(component,
+> > +                                                 &pdata->jack, NULL);
+> > +               if (rval != 0 && rval != -EOPNOTSUPP) {
+> > +                       dev_warn(card->dev, "Failed to set jack: %d\n", rval);
+> > +                       return rval;
+> > +               }
+> > +               break;
+> > +       case MI2S_SECONDARY:
+> > +               break;
+> > +       default:
+> > +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+> -EINVAL.
+>
+Removed in v2.
+> > +static int sc7180_snd_startup(struct snd_pcm_substream *substream)
+> > +{
+> > +       unsigned int codec_dai_fmt = SND_SOC_DAIFMT_CBS_CFS;
+> > +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> > +       struct snd_soc_card *card = rtd->card;
+> > +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
+> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> > +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+> > +       int ret;
+> > +
+> > +       switch (cpu_dai->id) {
+> > +       case MI2S_PRIMARY:
+> > +               codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> If the format is fixed, could it put somewhere statically?
 >
 Fixed in v2.
+> > +               if (++data->pri_mi2s_clk_count == 1) {
+> Don't it need to be atomic?
 >
-> > +  model:
-> > +    $ref: /schemas/types.yaml#/definitions/string
-> > +    description: User specified audio sound card name
-> > +
-> > +patternProperties:
-> > +  "^dai-link-[0-9]+$":
-> > +    description: |
-> > +      Each subnode represents a dai link. Subnodes of each dai links would be
-> > +      cpu/codec dais.
->
-> From looking at "simple-card.yaml", I'm gonna guess that instead of
-> encoding the link number in the name of the node that you should
-> actually use a unit address and a reg in the subnodes.
+soc_pcm_open and soc_pcm_close are protected by card->pcm_mutex so
+they will happen in sequence.
 
-Thanks for the explanation. Fixed in v2.
-I think this naming is better, although there is no usage in the
-machine driver for the reg.
+> > +                       snd_soc_dai_set_sysclk(cpu_dai,
+> > +                                              LPASS_MCLK0,
+> > +                                              DEFAULT_MCLK_RATE,
+> > +                                              SNDRV_PCM_STREAM_PLAYBACK);
+> > +               }
+> > +               snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> > +
+> > +               /* Configure PLL1 for codec */
+> > +               ret = snd_soc_dai_set_pll(codec_dai, 0, RT5682_PLL1_S_MCLK,
+> > +                                         DEFAULT_MCLK_RATE, RT5682_PLL1_FREQ);
+> > +               if (ret < 0) {
+> > +                       dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
+> > +                       return ret;
+> > +               }
+> > +
+> > +               /* Configure sysclk for codec */
+> > +               ret = snd_soc_dai_set_sysclk(codec_dai, RT5682_SCLK_S_PLL1,
+> > +                                            RT5682_PLL1_FREQ,
+> > +                                            SND_SOC_CLOCK_IN);
+> > +               if (ret < 0)
+> > +                       dev_err(rtd->dev, "snd_soc_dai_set_sysclk err = %d\n",
+> > +                               ret);
+> > +
+> > +               break;
+> > +       case MI2S_SECONDARY:
+> > +               break;
+> > +       default:
+> > +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+> -EINVAL.
+Fixed in v2
+>
+> > +static void  sc7180_snd_shutdown(struct snd_pcm_substream *substream)
+> > +{
+> > +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> > +       struct snd_soc_card *card = rtd->card;
+> > +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
+> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> > +
+> > +       switch (cpu_dai->id) {
+> > +       case MI2S_PRIMARY:
+> > +               if (--data->pri_mi2s_clk_count == 0) {
+> Atomic?
+ditto
+>
+> > +                       snd_soc_dai_set_sysclk(cpu_dai,
+> > +                                              LPASS_MCLK0,
+> > +                                              0,
+> > +                                              SNDRV_PCM_STREAM_PLAYBACK);
+> > +               }
+> > +               break;
+> > +       case MI2S_SECONDARY:
+> > +               break;
+> > +       default:
+> > +               pr_err("%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
+> -EINVAL.
+>
+not needed since this returns void
+> > +static int sc7180_snd_platform_probe(struct platform_device *pdev)
+> > +{
+> > +       struct snd_soc_card *card;
+> > +       struct sc7180_snd_data *data;
+> > +       struct device *dev = &pdev->dev;
+> > +       int ret;
+> > +
+> > +       card = kzalloc(sizeof(*card), GFP_KERNEL);
+> > +       if (!card)
+> > +               return -ENOMEM;
+> Looks like you don't need to allocate the card in runtime.  Also you
+> need to use the devm version if needed.
+>
+Thanks for the great suggestion. In v2 I am using a static sound card.
+Also, use devm wherever possible to greatly simplify the code.
 
->
-> ...also, again your description doesn't need the "|" at the end.
-> Maybe <https://yaml-multiline.info/> will be useful to you?
->
->
-
-Thanks for the explanation and the pointer!
-
-> > +    type: object
-> > +
-> > +    properties:
-> > +      link-name:
-> > +        $ref: "#/definitions/link-name"
-> > +
-> > +      unidirectional:
-> > +        $ref: "#/definitions/unidirectional"
-> > +
-> > +      cpu:
-> > +        $ref: "#/definitions/dai"
-> > +
-> > +      codec:
-> > +        $ref: "#/definitions/dai"
-> > +
-> > +    required:
-> > +      - link-name
-> > +      - cpu
-> > +      - codec
-> > +
-> > +    additionalProperties: false
-> > +
-> > +examples:
-> > +
-> > +  - |
-> > +    snd {
->
-> Can you use the full node name "sound" here?
->
+> > +       /* Allocate the private data */
+> > +       data = kzalloc(sizeof(*data), GFP_KERNEL);
+> Use devm.
 >
 Fixed in v2.
-> > +        compatible = "qcom,sc7180-sndcard";
-> > +        model = "sc7180-snd-card";
-> > +
-> > +        pinctrl-names = "default";
-> > +        pinctrl-0 = <&sec_mi2s_active &sec_mi2s_dout_active
-> > +                     &sec_mi2s_ws_active &pri_mi2s_active
-> > +                     &pri_mi2s_dout_active &pri_mi2s_ws_active
-> > +                     &pri_mi2s_din_active &pri_mi2s_mclk_active>;
->
-> I think pinctrl is usually not in the dt examples.
+> > +       card->dapm_widgets = sc7180_snd_widgets;
+> > +       card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets);
+> Can the struct snd_soc_card allocate statically?
 >
 Fixed in v2.
-
-> ...also, shouldn't the mi2s pinctrl be in the i2s nodes, not in the
-> overall sound node?
-
-Yes. Thanks for pointing this out. Fixed in dts file in chromium.
-
+> > +       sc7180_add_ops(card);
+> > +       ret = snd_soc_register_card(card);
+> devm.
 >
 >
-> > +        audio-routing =
-> > +                    "Headphone Jack", "HPOL",
-> > +                    "Headphone Jack", "HPOR";
-> > +
-> > +        dai-link-0 {
-> > +            link-name = "MultiMedia0";
-> > +            cpu {
-> > +                sound-dai = <&lpass_cpu 0>;
-> > +            };
-> > +
-> > +            codec {
-> > +                sound-dai = <&alc5682 0>;
-> > +            };
-> > +        };
-> > +
-> > +        dai-link-1 {
-> > +            link-name = "MultiMedia1";
-> > +            unidirectional = <0>;
-> > +            cpu {
-> > +                sound-dai = <&lpass_cpu 1>;
-> > +            };
-> > +
-> > +            codec {
-> > +                sound-dai = <&max98357a>;
-> > +            };
-> > +        };
-> > +    };
-> > --
-> > 2.28.0.rc0.105.gf9edc3c819-goog
-> >
+> I didn't dive into the logic too much.  Would need another round
+> review if any newer version.
+
+Thanks again.
