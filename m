@@ -2,129 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A81AA22823E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 16:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB2E22282FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 17:01:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729437AbgGUOcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 10:32:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54734 "EHLO
+        id S1729396AbgGUPBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 11:01:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726654AbgGUOcB (ORCPT
+        with ESMTP id S1728934AbgGUPBQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 10:32:01 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88640C061794
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 07:32:01 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id b25so24302982ljp.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 07:32:01 -0700 (PDT)
+        Tue, 21 Jul 2020 11:01:16 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99347C0619DB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 08:01:16 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id d7so1605970plq.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 08:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ccCSIZDNTg+p8llAxmwk1xbTQUtctPkb4u7L4YN3FhU=;
-        b=YGwCpSa9uQHZlKOTp3ggSWPmLN4wu9gdo/R7JrLQSOS/mmgN3z/6CzAhrrvqIuWLKB
-         wKaEHpo6LNzr8ww1zPupQtgrDxErj9iN3hqFocryOaHY4O7nRyWYT6AsXZv5VirphXdy
-         KgTIOiHBJT6QIFoYxbqMMnesDW4+T/wquWY68zp6UQwi3eCehrGE+rZmG6jWbkLDWG8/
-         GmAsfDDjRQOsCQgbfPDDCYkVkGF7BaGAQbjAXpWjEPgz/C2xAk7Y9C3EwYR3B8GCsFY5
-         a2ytAf4onEOomoa62ltrjKvTgdC+AjhDEldbX8PM6wS+/koRCB7UvsusERgQCBrZBS++
-         smSA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/Qaew4QJeDWIbHxaIC4ZFCXZp/j8T/O+RXZWS5JxQBs=;
+        b=awVghec/Xv7N4jnb0ivK1KZBxyps6BqZ757DEs33+E4ee8cKx13kg6wuykfA/LBLOh
+         +wnX2xVcp86JvLi/MEQRqWyzz0wn9ClTZeCHUTJNs1/b0bdfTehPPVJt/O264qOZDS3D
+         hz9IUsTCEqBvXqBbfI8YKWLp0SUXcUo3XWr6X5qLNMkbxgjYhuV1QH37sbOx35KTaj39
+         5kppJOiP/Fk68ncCq8UBQ8JC7rYl0dcKizF4Hi5/jUQMjwXzl8USWgFuUZFcMJpTlRBc
+         /ebIrTKk0AzuQawdFqKAy1o7CSTTWC81qLrFfKabdYX0k0EEKCw8Y86Bo1UqL1nm3HJC
+         3gnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ccCSIZDNTg+p8llAxmwk1xbTQUtctPkb4u7L4YN3FhU=;
-        b=eN1I6Ox5KBteBJfpHSg5yba3Jblc1satbMMri2j9b2f5fuRA0YAVqn7f/WYJ9E3nQ5
-         4Sk8cpLFEs9Tci3YXjFVgS87now24xcs7jLNH9HW6IocExFCwtL/K63xxYzdTSZuMEcQ
-         Q0v14XaE2mrvb7D1hiHV+cmaChObsDf1W/hQegcgKM44Ga4KRNP++Bt/MBlZU3+67Oi0
-         g14Q4dectqr70uReD/E7vOYF5IvhDV4oZTrBxsB9ki55tx0jb7POj4vMFchgF0ByLEOR
-         udoIUUO2+dZV+SAnaQBKXOO7cty4E29dg8s6pxMOcpdS2fOK3CzCPjpI666XFjNdcyKE
-         k+8Q==
-X-Gm-Message-State: AOAM531GwfK96U2uQuBn8jGZJKy9Wg9fmLwTQS6GT54xZsk0vUHJGll7
-        z0kJ2gzIS9UzgtKGJgYQCxKv7cThTEmAVA==
-X-Google-Smtp-Source: ABdhPJzCfrnizMtMlg10UOHgQpLbdnlHhI/Gla/f8xk+Qm4TB60yz7n7cAdIV7DxBsDp6NOvE28mKQ==
-X-Received: by 2002:a2e:9006:: with SMTP id h6mr12308130ljg.148.1595341919986;
-        Tue, 21 Jul 2020 07:31:59 -0700 (PDT)
-Received: from [192.168.1.211] ([94.25.229.9])
-        by smtp.gmail.com with ESMTPSA id d6sm4537941lja.77.2020.07.21.07.31.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jul 2020 07:31:59 -0700 (PDT)
-Subject: Re: [PATCH v0] clk: qcom: gcc: Update disp gpll0 branch for 7180/845
-To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@google.com
-References: <1594796050-14511-1-git-send-email-tdas@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <69dccde9-f577-6266-07cb-820930bace68@linaro.org>
-Date:   Tue, 21 Jul 2020 17:31:56 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/Qaew4QJeDWIbHxaIC4ZFCXZp/j8T/O+RXZWS5JxQBs=;
+        b=TtOdYrP761u6gUfr/3MDGucqeXdaQ2x4fnj0YraCqsgMBlKEXvLRDMbbWRduAYVGrt
+         4yixVdGAKikJzhq1T9Mt29CoZI0RYz8d5QScRoZPPdA0LHt+xvMnqz/jBnRo9k+Tlrng
+         2mhTV1V7QLMl31JuB0Q115e6PnkNt7zLryAYQ3lL/fwyxsfXHVhbfaU08J/oYpxQkQXq
+         f6byfd/naZs6e87ndTfnhjAb032pGLY2FlxB0PAMyYoX2OAdsGco35CvJVoHN0oMC9qw
+         rwpsGs5Kc5T2jLMekAeiZj4UvFPIO+i/IpnwGPK5kpADCNsb4xGNHByXt6Y0vifhRwxp
+         IPjA==
+X-Gm-Message-State: AOAM531e+2sDq+oA+9f5h+EqQfVjedMBrwrT6Vjrn5/m7l5wLHu+r+3m
+        XtGLDV2aTeUtz9AvgFPBa6VQrA==
+X-Google-Smtp-Source: ABdhPJxwSj6Y65B/irw2WmgGdBIQHcnhxUdwU6YYxAgzTFSpfyquDbZvh9MJVEFM8KJsV3GdwyXbtA==
+X-Received: by 2002:a17:90a:2465:: with SMTP id h92mr4951912pje.26.1595343676029;
+        Tue, 21 Jul 2020 08:01:16 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id m19sm18547881pgd.13.2020.07.21.08.01.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2020 08:01:15 -0700 (PDT)
+Date:   Tue, 21 Jul 2020 09:01:13 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Support ETMv4 power management
+Message-ID: <20200721150113.GB1216561@xps15>
+References: <20200721071343.2898-1-saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1594796050-14511-1-git-send-email-tdas@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200721071343.2898-1-saiprakash.ranjan@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/07/2020 09:54, Taniya Das wrote:
-> The display gpll0 branch clock needs to be always left enabled, thus
-> move the clock ops to _aon branch ops.
-
-Does this also apply to sm8250/sm8150?
-
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+On Tue, Jul 21, 2020 at 12:43:43PM +0530, Sai Prakash Ranjan wrote:
+> Add "arm,coresight-loses-context-with-cpu" property to coresight
+> ETM nodes to avoid failure of trace session because of losing
+> context on entering deep idle states.
+> 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->   drivers/clk/qcom/gcc-sc7180.c | 2 +-
->   drivers/clk/qcom/gcc-sdm845.c | 4 ++--
->   2 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index ca4383e..538677b 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -1061,7 +1061,7 @@ static struct clk_branch gcc_disp_gpll0_clk_src = {
->   				.hw = &gpll0.clkr.hw,
->   			},
->   			.num_parents = 1,
-> -			.ops = &clk_branch2_ops,
-> +			.ops = &clk_branch2_aon_ops,
->   		},
->   	},
->   };
-> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-> index f6ce888..90f7feb 100644
-> --- a/drivers/clk/qcom/gcc-sdm845.c
-> +++ b/drivers/clk/qcom/gcc-sdm845.c
-> @@ -1,6 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0
->   /*
-> - * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2018, 2020, The Linux Foundation. All rights reserved.
->    */
-> 
->   #include <linux/kernel.h>
-> @@ -1344,7 +1344,7 @@ static struct clk_branch gcc_disp_gpll0_clk_src = {
->   				"gpll0",
->   			},
->   			.num_parents = 1,
-> -			.ops = &clk_branch2_ops,
-> +			.ops = &clk_branch2_aon_ops,
->   		},
->   	},
->   };
-> --
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-> of the Code Aurora Forum, hosted by the  Linux Foundation.
-> 
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 
--- 
-With best wishes
-Dmitry
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index e506793407d8..0b5f063dcaea 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -3016,6 +3016,7 @@ etm@7040000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3035,6 +3036,7 @@ etm@7140000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3054,6 +3056,7 @@ etm@7240000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3073,6 +3076,7 @@ etm@7340000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3092,6 +3096,7 @@ etm@7440000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3111,6 +3116,7 @@ etm@7540000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3130,6 +3136,7 @@ etm@7640000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> @@ -3149,6 +3156,7 @@ etm@7740000 {
+>  
+>  			clocks = <&aoss_qmp>;
+>  			clock-names = "apb_pclk";
+> +			arm,coresight-loses-context-with-cpu;
+>  
+>  			out-ports {
+>  				port {
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
