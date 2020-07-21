@@ -2,111 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA09C227D96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 12:49:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 206C0227D91
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 12:48:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729282AbgGUKtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 06:49:06 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:44359 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726919AbgGUKtG (ORCPT
+        id S1728028AbgGUKsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 06:48:47 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:23256 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726919AbgGUKsr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 06:49:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595328545; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=hWSCkjwa6XTH8wbP9rLLbwZRQrSZSARhWd3jpGdV9Qs=; b=W6ArY2zY9uBILB+tpU3OXMgh4efGvksJKrcU47Dctn9epu3ErP9795X/ETcXTS3FvVTRK0qk
- kxBnvhJ0/T/3r2zgNHwNBjZtX0gy3dAMm88QvAynAF5nkVa6bIVxSBiHbODFbATWkMA15APl
- 9CeEY3OpuKdjX549Vfnoat1trmM=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
- 5f16c805427cd557667500dd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Jul 2020 10:48:37
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 42CD6C433A0; Tue, 21 Jul 2020 10:48:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.98] (unknown [157.48.50.75])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20993C433CA;
-        Tue, 21 Jul 2020 10:48:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 20993C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH] i2c: i2c-qcom-geni: Fix DMA transfer race
-To:     Douglas Anderson <dianders@chromium.org>,
-        Wolfram Sang <wsa@the-dreams.de>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, swboyd@chromium.org,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
-        Wolfram Sang <wsa@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200720172448.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <fc39751a-c730-0181-6904-cca34ff0f62c@codeaurora.org>
-Date:   Tue, 21 Jul 2020 16:18:23 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20200720172448.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Tue, 21 Jul 2020 06:48:47 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 21 Jul 2020 03:48:47 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Jul 2020 03:48:45 -0700
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 21 Jul 2020 16:18:42 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id CEC6F3FFA; Tue, 21 Jul 2020 16:18:41 +0530 (IST)
+From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, mka@chromium.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        rnayak@codeaurora.org,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Subject: [PATCH V1] arm64: dts: qcom: sc7180: Include xo clock to sdhc clocks list
+Date:   Tue, 21 Jul 2020 16:18:39 +0530
+Message-Id: <1595328519-30115-1-git-send-email-sbhanu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
 
-On 7/21/2020 5:54 AM, Douglas Anderson wrote:
-> When I have KASAN enabled on my kernel and I start stressing the
-> touchscreen my system tends to hang.  The touchscreen is one of the
-> only things that does a lot of big i2c transfers and ends up hitting
-> the DMA paths in the geni i2c driver.  It appears that KASAN adds
-> enough delay in my system to tickle a race condition in the DMA setup
-> code.
->
-> When the system hangs, I found that it was running the geni_i2c_irq()
-> over and over again.  It had these:
->
-> m_stat   = 0x04000080
-> rx_st    = 0x30000011
-> dm_tx_st = 0x00000000
-> dm_rx_st = 0x00000000
-> dma      = 0x00000001
->
-> Notably we're in DMA mode but are getting M_RX_IRQ_EN and
-> M_RX_FIFO_WATERMARK_EN over and over again.
->
-> Putting some traces in geni_i2c_rx_one_msg() showed that when we
-> failed we were getting to the start of geni_i2c_rx_one_msg() but were
-> never executing geni_se_rx_dma_prep().
->
-> I believe that the problem here is that we are writing the transfer
-> length and setting up the geni command before we run
-> geni_se_rx_dma_prep().  If a transfer makes it far enough before we do
-> that then we get into the state I have observed.  Let's change the
-> order, which seems to work fine.
->
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+Include xo clock to sdhc clocks list which will be used
+in calculating MCLK_FREQ field of DLL_CONFIG2 register.
 
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index d78a066..7ccb780 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -682,8 +682,9 @@
+ 			interrupt-names = "hc_irq", "pwr_irq";
+ 
+ 			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
+-					<&gcc GCC_SDCC1_AHB_CLK>;
+-			clock-names = "core", "iface";
++					<&gcc GCC_SDCC1_AHB_CLK>,
++					<&xo_board>;
++			clock-names = "core", "iface", "xo";
+ 			interconnects = <&aggre1_noc MASTER_EMMC &mc_virt SLAVE_EBI1>,
+ 				<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_EMMC_CFG>;
+ 			interconnect-names = "sdhc-ddr","cpu-sdhc";
+@@ -2481,8 +2482,9 @@
+ 			interrupt-names = "hc_irq", "pwr_irq";
+ 
+ 			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
+-					<&gcc GCC_SDCC2_AHB_CLK>;
+-			clock-names = "core", "iface";
++					<&gcc GCC_SDCC2_AHB_CLK>,
++					<&xo_board>;
++			clock-names = "core", "iface", "xo";
+ 
+ 			interconnects = <&aggre1_noc MASTER_SDCC_2 &mc_virt SLAVE_EBI1>,
+ 				<&gem_noc MASTER_APPSS_PROC &config_noc	SLAVE_SDCC_2>;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
