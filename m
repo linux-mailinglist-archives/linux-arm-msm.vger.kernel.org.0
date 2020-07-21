@@ -2,108 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3F96228222
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 16:29:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A81AA22823E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 16:32:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728934AbgGUO14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 10:27:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54064 "EHLO
+        id S1729437AbgGUOcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 10:32:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728362AbgGUO1z (ORCPT
+        with ESMTP id S1726654AbgGUOcB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 10:27:55 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80F2DC061794;
-        Tue, 21 Jul 2020 07:27:55 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id n26so21889746ejx.0;
-        Tue, 21 Jul 2020 07:27:55 -0700 (PDT)
+        Tue, 21 Jul 2020 10:32:01 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88640C061794
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 07:32:01 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id b25so24302982ljp.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 07:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FoM2lLvk+HU1JsguyDzCkDhJcQpe74th81bnFKHZ61k=;
-        b=Tb36TVsvZyPVCNfk8o0RlrlP+mnR/eMaGMgp6Ca1CqlBYlXZG8opeFsuRSmWNEGnGT
-         3a0tm2PbY756z7t31/5nk17pGk2BzWpoQBFQIyUej3lj4szEfe+nJh91oxub3Fy77Ztt
-         tf4BTSjY2cEUt7m4bl9/ZYp4SZnw4Fi3KOq/M6F92/ntlTkSAaLFhE1WGSUUQImHNrKr
-         tcRL5XsJwxlx/iEv9vt86Kc3XkyDdsQYaX8qd020OiJ4QhECITtA7w3G5t4t+V4XhVDz
-         ZBaw6bBvig4y+KfHz01SUMWZbGu+5lTOxxFaAfSXLQu4XEfbEWDywzSrEfb7texqDZ4G
-         aW2Q==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ccCSIZDNTg+p8llAxmwk1xbTQUtctPkb4u7L4YN3FhU=;
+        b=YGwCpSa9uQHZlKOTp3ggSWPmLN4wu9gdo/R7JrLQSOS/mmgN3z/6CzAhrrvqIuWLKB
+         wKaEHpo6LNzr8ww1zPupQtgrDxErj9iN3hqFocryOaHY4O7nRyWYT6AsXZv5VirphXdy
+         KgTIOiHBJT6QIFoYxbqMMnesDW4+T/wquWY68zp6UQwi3eCehrGE+rZmG6jWbkLDWG8/
+         GmAsfDDjRQOsCQgbfPDDCYkVkGF7BaGAQbjAXpWjEPgz/C2xAk7Y9C3EwYR3B8GCsFY5
+         a2ytAf4onEOomoa62ltrjKvTgdC+AjhDEldbX8PM6wS+/koRCB7UvsusERgQCBrZBS++
+         smSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FoM2lLvk+HU1JsguyDzCkDhJcQpe74th81bnFKHZ61k=;
-        b=MVy5/l/hzL0yRaRqtSPIc3Sd+GBWA8BkC0pHx9HOyErlf2SfLyFspiOnTuwwBdDHr4
-         RKuhuZOiez0jt6KxsziQbjZSJIJo/JpHBblKFLG/V3Eg1KR00iT0hPA8FYMvQqTo2D2g
-         a9ZpM2qqNTKsNL7M0sgxR9MIZvx7aICNDiNVUj6QffLza6L2H+1ZdcMzhgE8xmZHLB4W
-         HjApVHwXPgBw36nnuuLEoUHVlkDgR23FWOIhviRPPrFM2hTQLZ0Vs6o0CAQShZH4p2kC
-         32tev6v0zH07J4mSQCB4wKCIEcp1jr6YskT20IdcBiV8D3AWiXWNLOkBfqbistGiKiAg
-         KoDw==
-X-Gm-Message-State: AOAM5318k2N24ij6fFY+OqCe2veG5vsIKpt9tHC+/45a9ZzP/zxF6nTc
-        05rXr12x6PuDt/pAsUH4u68MXR7T/ex+pEf4c28=
-X-Google-Smtp-Source: ABdhPJzSo6Fh1hKllPx1Sf8jn5wjHy9PnUTmzYxaeqSTRJRgYWldpUIItzBxdpOIlcnV/OUxWXwrM0RFinDCHwJeuFY=
-X-Received: by 2002:a17:906:ca4c:: with SMTP id jx12mr24039568ejb.231.1595341674113;
- Tue, 21 Jul 2020 07:27:54 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ccCSIZDNTg+p8llAxmwk1xbTQUtctPkb4u7L4YN3FhU=;
+        b=eN1I6Ox5KBteBJfpHSg5yba3Jblc1satbMMri2j9b2f5fuRA0YAVqn7f/WYJ9E3nQ5
+         4Sk8cpLFEs9Tci3YXjFVgS87now24xcs7jLNH9HW6IocExFCwtL/K63xxYzdTSZuMEcQ
+         Q0v14XaE2mrvb7D1hiHV+cmaChObsDf1W/hQegcgKM44Ga4KRNP++Bt/MBlZU3+67Oi0
+         g14Q4dectqr70uReD/E7vOYF5IvhDV4oZTrBxsB9ki55tx0jb7POj4vMFchgF0ByLEOR
+         udoIUUO2+dZV+SAnaQBKXOO7cty4E29dg8s6pxMOcpdS2fOK3CzCPjpI666XFjNdcyKE
+         k+8Q==
+X-Gm-Message-State: AOAM531GwfK96U2uQuBn8jGZJKy9Wg9fmLwTQS6GT54xZsk0vUHJGll7
+        z0kJ2gzIS9UzgtKGJgYQCxKv7cThTEmAVA==
+X-Google-Smtp-Source: ABdhPJzCfrnizMtMlg10UOHgQpLbdnlHhI/Gla/f8xk+Qm4TB60yz7n7cAdIV7DxBsDp6NOvE28mKQ==
+X-Received: by 2002:a2e:9006:: with SMTP id h6mr12308130ljg.148.1595341919986;
+        Tue, 21 Jul 2020 07:31:59 -0700 (PDT)
+Received: from [192.168.1.211] ([94.25.229.9])
+        by smtp.gmail.com with ESMTPSA id d6sm4537941lja.77.2020.07.21.07.31.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2020 07:31:59 -0700 (PDT)
+Subject: Re: [PATCH v0] clk: qcom: gcc: Update disp gpll0 branch for 7180/845
+To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        evgreen@google.com
+References: <1594796050-14511-1-git-send-email-tdas@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <69dccde9-f577-6266-07cb-820930bace68@linaro.org>
+Date:   Tue, 21 Jul 2020 17:31:56 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <1594644106-22449-1-git-send-email-akhilpo@codeaurora.org>
- <CAF6AEGtAEwZbWxLb4MxaWNswvtrFbLK+N0Fez2XYr7odKZffWA@mail.gmail.com>
- <20200720100131.6ux4zumbwqpa42ye@vireshk-mac-ubuntu> <CAF6AEGurrsd3nrbB=ktZjWfKTNbKwPHYwTFiZdD-NOW1T7gePQ@mail.gmail.com>
- <20200721032442.hv7l4q6633vnmnfe@vireshk-mac-ubuntu>
-In-Reply-To: <20200721032442.hv7l4q6633vnmnfe@vireshk-mac-ubuntu>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 21 Jul 2020 07:28:30 -0700
-Message-ID: <CAF6AEGuhQcRskGhrFvmCf5T3EcZ9S+3LRdZBiaDYqF34yZjd+A@mail.gmail.com>
-Subject: Re: [PATCH v5 0/6] Add support for GPU DDR BW scaling
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
-        saravanak@google.com, Sibi Sankar <sibis@codeaurora.org>,
-        Jonathan <jonathan@marek.ca>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dave Airlie <airlied@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1594796050-14511-1-git-send-email-tdas@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 8:24 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 20-07-20, 08:03, Rob Clark wrote:
-> > On Mon, Jul 20, 2020 at 3:01 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> > >
-> > > On 15-07-20, 08:36, Rob Clark wrote:
-> > > > I can take the first two into msm-next, the 3rd will need to wait
-> > > > until dev_pm_opp_set_bw() lands
-> > >
-> > > You can base that on a8351c12c6c7 in linux-next, I will make sure not to rebase
-> > > it anymore.
->
-> This was 5.8-rc1 + 2 patches for OPP. That's all.
->
-> > >
-> >
-> > I can't really base on something newer than drm-next
->
-> But you need the OPP dependency, isn't it ?
+On 15/07/2020 09:54, Taniya Das wrote:
+> The display gpll0 branch clock needs to be always left enabled, thus
+> move the clock ops to _aon branch ops.
 
-With your ack, I can add the patch the dev_pm_opp_set_bw patch to my
-tree and merge it via msm-next -> drm-next -> linus
+Does this also apply to sm8250/sm8150?
 
-Otherwise I can send a second later pull req that adds the final patch
-after has rebased to 5.9-rc1 (by which point the opp next tree will
-have presumably been merged
-
-BR,
--R
-
->
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>   drivers/clk/qcom/gcc-sc7180.c | 2 +-
+>   drivers/clk/qcom/gcc-sdm845.c | 4 ++--
+>   2 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+> index ca4383e..538677b 100644
+> --- a/drivers/clk/qcom/gcc-sc7180.c
+> +++ b/drivers/clk/qcom/gcc-sc7180.c
+> @@ -1061,7 +1061,7 @@ static struct clk_branch gcc_disp_gpll0_clk_src = {
+>   				.hw = &gpll0.clkr.hw,
+>   			},
+>   			.num_parents = 1,
+> -			.ops = &clk_branch2_ops,
+> +			.ops = &clk_branch2_aon_ops,
+>   		},
+>   	},
+>   };
+> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+> index f6ce888..90f7feb 100644
+> --- a/drivers/clk/qcom/gcc-sdm845.c
+> +++ b/drivers/clk/qcom/gcc-sdm845.c
+> @@ -1,6 +1,6 @@
+>   // SPDX-License-Identifier: GPL-2.0
+>   /*
+> - * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2018, 2020, The Linux Foundation. All rights reserved.
+>    */
+> 
+>   #include <linux/kernel.h>
+> @@ -1344,7 +1344,7 @@ static struct clk_branch gcc_disp_gpll0_clk_src = {
+>   				"gpll0",
+>   			},
+>   			.num_parents = 1,
+> -			.ops = &clk_branch2_ops,
+> +			.ops = &clk_branch2_aon_ops,
+>   		},
+>   	},
+>   };
 > --
-> viresh
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+> 
+
+
+-- 
+With best wishes
+Dmitry
