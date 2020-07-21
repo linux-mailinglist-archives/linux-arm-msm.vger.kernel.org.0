@@ -2,149 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6FA5227861
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 07:59:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC79022787B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 08:02:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726053AbgGUF7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 01:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60162 "EHLO
+        id S1728447AbgGUGCH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 02:02:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725774AbgGUF7Q (ORCPT
+        with ESMTP id S1728460AbgGUGCG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 01:59:16 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BCEC0619D7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 22:59:16 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id m16so9781490pls.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 22:59:16 -0700 (PDT)
+        Tue, 21 Jul 2020 02:02:06 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73348C0619DA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 23:02:06 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id s9so2276531lfs.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Jul 2020 23:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=KMmzvRDJd+7JQh3nAfR3C392m0BpTUJ+3ePAUF20ipM=;
-        b=Rxv84i0QAHjDtaiOwh/2J3sKXar2+ERm+ATC8Q8Xfyc6nMJXbwVIhxRyXUP7SVjfjn
-         eQwUEXhTG6oJTATxSLbFZDVKCQZ8LHhZvaqcBbUlVl2wUb8bRcMtUal/mqZnQfb0LhnE
-         RFJNs7S2GBbfDx2RAk/LtKpF31pDh4oP37amc=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=my59yREAno2VQTQHnPXurOEKaB8ry8pumgPVSYznLUI=;
+        b=n4Wkp7kFOj4iLJpP6r5SwB/qPrN12j5OeQuZbk0acAZfjK2hSrnY5oVJscJUPJZjD3
+         3Tvi5Ib/nIudBxUDjzrTXkkSIr59b33qw6AqttrRaU1314ITKvd/1FtQuM/5vKaW0A+a
+         PydSNvajtDmUqYoIqdhaT7f4RF6xalnRHweH8EiAQO0pKeOZ07SNaZwFOtlBa9fP73VM
+         I4SbOpTQZF2mL623gjrHR8g1xHJHhidB/LdHYH0AexCQbQwR/+So1zmjx6IzHTdt6o48
+         YzKD7k26mYLcUxYGMVuyYavPyJpwUSkvTdvD/fxuRGJ0N+AhylZL7eBHTZv7ZGwXd8Pw
+         sgnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=KMmzvRDJd+7JQh3nAfR3C392m0BpTUJ+3ePAUF20ipM=;
-        b=c2kFyjBeZASXw1WTlQCIIIij0vr5ktv2wg6wFyaRltwkBJspduU1Ul5oeMfxJhKBtt
-         VwtZX15929Y9K+TiOtCYGhJQtCQiDQWdFN080GUvSLi/wxep9iTWMr+tWo21Y0Dyko5L
-         HECIyfWPCEaD9do4FZ6ZvWohOTyMHfvxx4NN7/V7MMbaDdHQloepfWUnzAFSUwWKuIvL
-         vYP+GtH+jQsi5RXJ0ax3I9d8WINS/FHTZRbHDT/saFN+DZuKWjNQr5RvoC2eVGTITC5e
-         gZe4kTfo7Jf4RljOXYpLND4Zm5B7/a4aDdHTDc+aj2bXFcXvl3v9rZ+TxXh5hf5OVDF7
-         1iNA==
-X-Gm-Message-State: AOAM532wYv3OcMCO+bH2w0j2GTlt/WFvm29AqRoB9IYW/TK7viPn0BCb
-        YJKb8d84KfzQ8USHZBWSIRe85g==
-X-Google-Smtp-Source: ABdhPJyPsf7kVDCbzPver/0zOXuRkOwd1jKCYu5DVQc3foP0eJly1X6oGmB7HiIREep2HWy6KWn53A==
-X-Received: by 2002:a17:90b:46d0:: with SMTP id jx16mr2894431pjb.222.1595311156227;
-        Mon, 20 Jul 2020 22:59:16 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id nh14sm1594205pjb.4.2020.07.20.22.59.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2020 22:59:15 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=my59yREAno2VQTQHnPXurOEKaB8ry8pumgPVSYznLUI=;
+        b=N+3MKIaSw4qqTdv6fcr+i6al8Bg1qnk1vc3N92Pn8/ykdK4UhLQi7oAvMNuR+heiwc
+         g/FSY7YQFf5MGxNj1I6IHkq8gJVBxhywjvn7v4ht4GI7HeQ+Upt5YMtvPWpUh7UFlUxg
+         dBf7PW0zcyZIwwoekNr7ZoPgc77N6eR7Q5JdLHPBFWGvTg4pq7R82uqdrGXj9nBY7vi0
+         LWQezontw+LS+hRpGBAU+IpwRNof85mhRDSmpvI5HfN0ynbEDiORrTQU3wzaqtaZ8Qs6
+         hzURdm/TI0ZXhIKYCf9ojh6wv5dCeFL7T/kbKfX/cep8j5pEekL6+umHvD7JaiiqLzYR
+         kBfw==
+X-Gm-Message-State: AOAM531fAdBog5Vax9gsiaWKb5bhOp7ihq1KtLsF/kJuB5YABv890VZ5
+        FEUG4Je5kxCooiT3bkNBEbFknTTtKqnZ/M8+WW269A==
+X-Google-Smtp-Source: ABdhPJwvgCTehztyDX3Ii5ZlkS2X5xVAaX40gTTrRR53FMNAybYJMQOf2Mixr3o03K0dYP0cmjuKZJsCxtWu/EWeh40=
+X-Received: by 2002:ac2:5325:: with SMTP id f5mr12579460lfh.6.1595311324713;
+ Mon, 20 Jul 2020 23:02:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200720172448.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
-References: <20200720172448.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
-Subject: Re: [PATCH] i2c: i2c-qcom-geni: Fix DMA transfer race
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
+References: <20200716022817.30439-1-ansuelsmth@gmail.com> <20200716022817.30439-2-ansuelsmth@gmail.com>
+ <CAP245DUqvTYENmaxG3rjUn1XrzrmvdFmKG_vaef2BxKL6jY+Rg@mail.gmail.com>
+ <159528817752.3847286.2725374997908705208@swboyd.mtv.corp.google.com> <CAP245DXqiEZLoVa-jfLx0tYRwrtK0sp+ZX6P_yTf4C9vetg3RA@mail.gmail.com>
+In-Reply-To: <CAP245DXqiEZLoVa-jfLx0tYRwrtK0sp+ZX6P_yTf4C9vetg3RA@mail.gmail.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Tue, 21 Jul 2020 11:31:53 +0530
+Message-ID: <CAP245DUZTT4dFAzpN3Uv1-y2DKHriXZ9jH3t7V1qxf7sNH8yYw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/7] ipq806x: gcc: add support for child probe
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
-        Wolfram Sang <wsa@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Wolfram Sang <wsa@the-dreams.de>
-Date:   Mon, 20 Jul 2020 22:59:14 -0700
-Message-ID: <159531115483.3847286.18280088484118119899@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-07-20 17:24:53)
-> When I have KASAN enabled on my kernel and I start stressing the
-> touchscreen my system tends to hang.  The touchscreen is one of the
-> only things that does a lot of big i2c transfers and ends up hitting
-> the DMA paths in the geni i2c driver.  It appears that KASAN adds
-> enough delay in my system to tickle a race condition in the DMA setup
-> code.
->=20
-> When the system hangs, I found that it was running the geni_i2c_irq()
-> over and over again.  It had these:
->=20
-> m_stat   =3D 0x04000080
-> rx_st    =3D 0x30000011
-> dm_tx_st =3D 0x00000000
-> dm_rx_st =3D 0x00000000
-> dma      =3D 0x00000001
->=20
-> Notably we're in DMA mode but are getting M_RX_IRQ_EN and
-> M_RX_FIFO_WATERMARK_EN over and over again.
->=20
-> Putting some traces in geni_i2c_rx_one_msg() showed that when we
-> failed we were getting to the start of geni_i2c_rx_one_msg() but were
-> never executing geni_se_rx_dma_prep().
->=20
-> I believe that the problem here is that we are writing the transfer
-> length and setting up the geni command before we run
-> geni_se_rx_dma_prep().  If a transfer makes it far enough before we do
-> that then we get into the state I have observed.  Let's change the
-> order, which seems to work fine.
+On Tue, Jul 21, 2020 at 11:27 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+>
+>
+>
+> On Tue, 21 Jul, 2020, 05:06 Stephen Boyd, <sboyd@kernel.org> wrote:
+>>
+>> Quoting Amit Kucheria (2020-07-20 02:41:44)
+>> > On Thu, Jul 16, 2020 at 7:58 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
+>> > >
+>> > > Add support for child probing needed for tsens driver that share the
+>> > > seme regs of gcc for this platform.
+>> >
+>> > Typo: same
+>> >
+>>
+>> Otherwise reviewed-by? Because I can throw this into the clk tree with
+>> the typo fixed.
+>
+>
+> Yes, the rest of the series need work imo, but this patch looks ok to populate the child nodes in OF.
+>
+> Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
 
-Does the length matter or the I2C_READ m_cmd matter? Or somehow both?
-Otherwise it sounds correct to me that we're configuring it to start the
-read before mapping the buffer.
+Replied earlier from a phone, which resulted in HTML email. Resending.
 
->=20
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm=
- GENI I2C controller")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->=20
->  drivers/i2c/busses/i2c-qcom-geni.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
-qcom-geni.c
-> index 18d1e4fd4cf3..21e27f10510a 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -366,15 +366,15 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev =
-*gi2c, struct i2c_msg *msg,
->         else
->                 geni_se_select_mode(se, GENI_SE_FIFO);
-> =20
-> -       writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
-> -       geni_se_setup_m_cmd(se, I2C_READ, m_param);
-> -
->         if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
->                 geni_se_select_mode(se, GENI_SE_FIFO);
->                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
->                 dma_buf =3D NULL;
->         }
-> =20
+The rest of the series need work imo, but this patch looks ok to
+populate the child nodes in OF.
 
-I worry that we also need a dmb() here to make sure the dma buffer is
-properly mapped before this write to the device is attempted. But it may
-only matter to be before the I2C_READ.
-
-> +       writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
-> +       geni_se_setup_m_cmd(se, I2C_READ, m_param);
-> +
->         time_left =3D wait_for_completion_timeout(&gi2c->done, XFER_TIMEO=
-UT);
->         if (!time_left)
->                 geni_i2c_abort_xfer(gi2c);
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
