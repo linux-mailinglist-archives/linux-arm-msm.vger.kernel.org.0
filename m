@@ -2,98 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FDF12279E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 09:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AACDF2279C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 09:48:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728208AbgGUHwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 03:52:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728532AbgGUHwJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 03:52:09 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DAAC0619D7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 00:52:09 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id q6so2018201ljp.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 00:52:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+Wsh5lsQJS5Oj2N0tWY17u1sLYFEy9iokkNEGsNaFVc=;
-        b=OaaqOgLWbDq6dMMW9Qd714qnIPqwNeJycdVqOHjHvtSPWLsGIigkGw3oYMdwp9gy4J
-         88BotViSV5y55ZHLLXr8sWbl+PPKCk9tXV+bTSFWoP3wNxz7xA30hFbaLABgg0NpGMod
-         uDE0TkuRkq58eaFQFqS+oH2AtsKYdu8HhKnLuZbl20b4DKXdf7SXkHyZiw4H5Rj19ktz
-         u9JPRKOqXwdSgzsBEgXe474H+oLNjrbIfD0CTbStqhC18SSsUtnX1Kih5O9eSmUm9G3q
-         LeZQzR6KTwjZYtd+Mz5s6/lnFAn7MHBqU8dsogvhX9kxc+XXAVSRxGaCMyP7kH6prdMJ
-         7uhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=+Wsh5lsQJS5Oj2N0tWY17u1sLYFEy9iokkNEGsNaFVc=;
-        b=QEhTGTPcgEwlobT5ocRnqW7kiQUfdgVRryZJB2qeyZI9pVqLKWXCX6wIuzPe1+yacG
-         1YvJhNwRvBPxCwof8SBC26fl9As3cnkz3LQnZIfB+aKpxW2ZLrTrkYKLd1XNDs5vGZfr
-         c+S+oGw85rPfJsswZqkYemEoiiKT9rMbIzXMY4Em45s/VAcYIo3W8G2dDdbcg5NxSufP
-         iGkXZnrk/lZhs/Trc5L5rrdPp6YyTttDjiES7bAo11aAeK0nO62SOl9+gGwYbjoEG3Vu
-         GI3nLXXFcSvQhAEuEOrS0C7Fw5d0RXNjYIquxMqAPjPVftkkyn+p1hL4Y0HmIZ6XJBvU
-         U+eQ==
-X-Gm-Message-State: AOAM531as2tomZZ2kyyi7dxNixGeful8G+iThFpfntS3FewE/GC9y4fS
-        9KGecdnAtnEycnrDJft79QBjeJm8LQM=
-X-Google-Smtp-Source: ABdhPJyZFPSvzK9fQpzmF3fsaGlhPY4lxN74NDqrPwju5khjBtSE4wGLSPuWeHdry7K/2o8YPgJUUg==
-X-Received: by 2002:a05:651c:1105:: with SMTP id d5mr12887062ljo.62.1595317927776;
-        Tue, 21 Jul 2020 00:52:07 -0700 (PDT)
-Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id d2sm4045334ljg.6.2020.07.21.00.52.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2020 00:52:07 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Jeongtae Park <jtp.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Maheshwar Ajja <majja@codeaurora.org>,
-        Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 6/6] media: docs: Deprecate mfc frame skip control
-Date:   Tue, 21 Jul 2020 10:45:38 +0300
-Message-Id: <20200721074538.505-7-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200721074538.505-1-stanimir.varbanov@linaro.org>
-References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
+        id S1726749AbgGUHsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 03:48:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54614 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726389AbgGUHsE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 03:48:04 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B4DD420792;
+        Tue, 21 Jul 2020 07:48:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595317683;
+        bh=BQZ5hmFIpZckWyenvtmkpbQjIg05LGMKNSIMSzTcK/A=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=ehUhwlCwbnHNUi1W6XHRH3vBCM2gpc5QnE57816xOwX2itcx+armXE57XNgrOBLau
+         EHPxOfO/YQPTe6p8ldWbhMgOiM2aFisEQ0oO5kBNRIfpTD1nuvvxbxD7D+GCdjv/ZW
+         PVVy7gY2jBo0VwWfsLKgZvXH/XCCDDZFmzb2FBAI=
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1594795010-9074-5-git-send-email-tdas@codeaurora.org>
+References: <1594795010-9074-1-git-send-email-tdas@codeaurora.org> <1594795010-9074-5-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v4 4/4] clk: qcom: lpass: Add support for LPASS clock controller for SC7180
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Tue, 21 Jul 2020 00:48:03 -0700
+Message-ID: <159531768310.3847286.13203525525881212775@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Deprecate mfc private frame skip mode control for new
-clients and use the standard one instead.
+Quoting Taniya Das (2020-07-14 23:36:50)
+> diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpa=
+sscorecc-sc7180.c
+> new file mode 100644
+> index 0000000..fd8537c
+> --- /dev/null
+> +++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
+> @@ -0,0 +1,478 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/err.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/pm_clock.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/of.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "common.h"
+> +#include "gdsc.h"
+> +
+> +enum {
+> +       P_BI_TCXO,
+> +       P_LPASS_LPAAUDIO_DIG_PLL_OUT_ODD,
+> +       P_SLEEP_CLK,
+> +};
+> +
+> +static struct pll_vco fabia_vco[] =3D {
+> +       { 249600000, 2000000000, 0 },
+> +};
+> +
+> +static const struct alpha_pll_config lpass_lpaaudio_dig_pll_config =3D {
+> +       .l =3D 0x20,
+> +       .alpha =3D 0x0,
+> +       .config_ctl_val =3D 0x20485699,
+> +       .config_ctl_hi_val =3D 0x00002067,
+> +       .test_ctl_val =3D 0x40000000,
+> +       .test_ctl_hi_val =3D 0x00000000,
+> +       .user_ctl_val =3D 0x00005105,
+> +       .user_ctl_hi_val =3D 0x00004805,
+> +};
+> +
+> +static const u8 clk_alpha_pll_regs_offset[][PLL_OFF_MAX_REGS] =3D {
+> +       [CLK_ALPHA_PLL_TYPE_FABIA] =3D  {
+> +               [PLL_OFF_L_VAL] =3D 0x04,
+> +               [PLL_OFF_CAL_L_VAL] =3D 0x8,
+> +               [PLL_OFF_USER_CTL] =3D 0x0c,
+> +               [PLL_OFF_USER_CTL_U] =3D 0x10,
+> +               [PLL_OFF_USER_CTL_U1] =3D 0x14,
+> +               [PLL_OFF_CONFIG_CTL] =3D 0x18,
+> +               [PLL_OFF_CONFIG_CTL_U] =3D 0x1C,
+> +               [PLL_OFF_CONFIG_CTL_U1] =3D 0x20,
+> +               [PLL_OFF_TEST_CTL] =3D 0x24,
+> +               [PLL_OFF_TEST_CTL_U] =3D 0x28,
+> +               [PLL_OFF_STATUS] =3D 0x30,
+> +               [PLL_OFF_OPMODE] =3D 0x38,
+> +               [PLL_OFF_FRAC] =3D 0x40,
+> +       },
+> +};
+> +
+> +static struct clk_alpha_pll lpass_lpaaudio_dig_pll =3D {
+> +       .offset =3D 0x1000,
+> +       .vco_table =3D fabia_vco,
+> +       .num_vco =3D ARRAY_SIZE(fabia_vco),
+> +       .regs =3D clk_alpha_pll_regs_offset[CLK_ALPHA_PLL_TYPE_FABIA],
+> +       .clkr =3D {
+> +               .hw.init =3D &(struct clk_init_data){
+> +                       .name =3D "lpass_lpaaudio_dig_pll",
+> +                       .parent_data =3D &(const struct clk_parent_data){
+> +                               .fw_name =3D "bi_tcxo",
+> +                               .name =3D "bi_tcxo",
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 5 +++++
- 1 file changed, 5 insertions(+)
+We don't need .name if we have .fw_name and this is a new binding/device.
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index 985e4c2d29bf..31d77d1cdcc9 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -2821,6 +2821,11 @@ MFC 5.1 Control IDs
- ``V4L2_CID_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE``
-     (enum)
- 
-+    .. note::
-+
-+       This control is deprecated. Use the standard
-+       ``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE`` control instead.
-+
- enum v4l2_mpeg_mfc51_video_frame_skip_mode -
-     Indicates in what conditions the encoder should skip frames. If
-     encoding a frame would cause the encoded stream to be larger then a
--- 
-2.17.1
-
+> +                       },
+> +                       .num_parents =3D 1,
+> +                       .ops =3D &clk_alpha_pll_fabia_ops,
+> +               },
+> +       },
+> +};
+> +
