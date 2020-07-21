@@ -2,143 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1304E227DEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 12:58:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76555227EED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 13:30:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726089AbgGUK6e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 06:58:34 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:23893 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726698AbgGUK6d (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 06:58:33 -0400
+        id S1728108AbgGULaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 07:30:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:27595 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729826AbgGULaV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 07:30:21 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595329112; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=VU4DqtwT3aYjFZK+vCZ6Mf063e7LJok4TZ4IWKWCI9E=; b=Y9NiJcXBdgYemD0qvpoPMjzEQIy7GjbMyEFpvLn8bWyqmbKKVwkYMvjQau5Je2Xgexgb159N
- 30o7L5My5J/VZsDuBsix+jam/UIBts9btbWWbg+QQVf7BBsonou+zV6uvzwlmCU8Ulf7YAmN
- IzUC9TO6nXdSU3AnKJkm1cMYR2o=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ s=smtp; t=1595331021; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=rKKlxqT2ko2tBZKpFrGAz2gxJrje2QjuLJxXdPndRiY=; b=i/qTbQpTwIpkvoHgwOsFLQ8hdouCN9srjmuuXypd9AaGhziU1Rmy8HJPL60n3KXIGceUAjGc
+ StLhXpcKOdSiHv4TTTaz1Qfe3SE8+gH/1I0eGBt6B3ZIhGMiymXFBk4U1o25eLKwIRicfTEe
+ hMkEFqhPqb/bUwmhMfgGkpWngys=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
- 5f16ca501e603dbb4472bad0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Jul 2020 10:58:24
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f16d1b17c8ca473a8872a35 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Jul 2020 11:29:53
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1E22AC43395; Tue, 21 Jul 2020 10:58:24 +0000 (UTC)
+        id E2713C433CB; Tue, 21 Jul 2020 11:29:52 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.43.8] (unknown [106.213.150.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: msavaliy)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7271BC433C6;
-        Tue, 21 Jul 2020 10:58:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7271BC433C6
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33061C433C6;
+        Tue, 21 Jul 2020 11:29:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33061C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=msavaliy@codeaurora.org
-Subject: Re: [PATCH] i2c: i2c-qcom-geni: Fix DMA transfer race
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Wolfram Sang <wsa@the-dreams.de>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wolfram Sang <wsa@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200720172448.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
- <159531115483.3847286.18280088484118119899@swboyd.mtv.corp.google.com>
- <159531527579.3847286.1254956818647049462@swboyd.mtv.corp.google.com>
-From:   "Mukesh, Savaliya" <msavaliy@codeaurora.org>
-Message-ID: <6d90f383-54d7-cee1-d064-dca51ce39e14@codeaurora.org>
-Date:   Tue, 21 Jul 2020 16:28:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        evgreen@chromium.org, ohad@wizery.com,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v2 0/2] Add modem debug features
+Date:   Tue, 21 Jul 2020 16:59:33 +0530
+Message-Id: <20200721112935.25716-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <159531527579.3847286.1254956818647049462@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The series adds support for the following modem debug features:
+ * Modem debug policy which enables coredumps/live debug on secure devices
+ * MBA text logs extraction on SC7180 SoCs
 
-On 7/21/2020 12:37 PM, Stephen Boyd wrote:
-> Quoting Stephen Boyd (2020-07-20 22:59:14)
->> I worry that we also need a dmb() here to make sure the dma buffer is
->> properly mapped before this write to the device is attempted. But it may
->> only matter to be before the I2C_READ.
->>
-> I'm suggesting this patch instead where we make geni_se_setup_m_cmd()
-> use a writel() so that it has the proper barrier semantics to wait for
-> the other memory writes that happened in program order before this point
-> to complete before the device is kicked to do a read or a write.
+V2:
+ * Use request_firmware_direct [Bjorn]
+ * Use Bjorn's template to show if debug policy is present
+ * Add size check to prevent memcpy out of bounds [Bjorn]
+ * Don't dump logs in mba_reclaim path [Bjorn]
+ * Move has_mba_logs check to q6v5_dump_mba_logs [Bjorn]
+ * SDM845 mss was incorrectly marked to support mba logs
+ * Drop patch 3 where mba text logs are added to imem for now
 
-Not sure if the issue was because of the barrier, but fundamentally for 
-read operation, before FIFO data gets written by the DMA to memory,
+Sibi Sankar (2):
+  remoteproc: qcom_q6v5_mss: Add modem debug policy support
+  remoteproc: qcom_q6v5_mss: Add MBA log extraction support
 
-buffer should be present. Hence the previous change from Doug seem to be 
-fine as well.
+ drivers/remoteproc/qcom_q6v5_mss.c | 54 ++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-> ----8<----
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 18d1e4fd4cf3..7f130829bf01 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -367,7 +367,6 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   		geni_se_select_mode(se, GENI_SE_FIFO);
->   
->   	writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
-> -	geni_se_setup_m_cmd(se, I2C_READ, m_param);
->   
->   	if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
->   		geni_se_select_mode(se, GENI_SE_FIFO);
-> @@ -375,6 +374,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   		dma_buf = NULL;
->   	}
->   
-> +	geni_se_setup_m_cmd(se, I2C_READ, m_param);
-> +
->   	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
->   	if (!time_left)
->   		geni_i2c_abort_xfer(gi2c);
-> @@ -408,7 +409,6 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   		geni_se_select_mode(se, GENI_SE_FIFO);
->   
->   	writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
-> -	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
->   
->   	if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
->   		geni_se_select_mode(se, GENI_SE_FIFO);
-> @@ -416,6 +416,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   		dma_buf = NULL;
->   	}
->   
-> +	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
-> +
->   	if (!dma_buf) /* Get FIFO IRQ */
->   		writel_relaxed(1, se->base + SE_GENI_TX_WATERMARK_REG);
->   
-> diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-> index dd464943f717..1dc134e9eb36 100644
-> --- a/include/linux/qcom-geni-se.h
-> +++ b/include/linux/qcom-geni-se.h
-> @@ -262,7 +262,7 @@ static inline void geni_se_setup_m_cmd(struct geni_se *se, u32 cmd, u32 params)
->   	u32 m_cmd;
->   
->   	m_cmd = (cmd << M_OPCODE_SHFT) | (params & M_PARAMS_MSK);
-> -	writel_relaxed(m_cmd, se->base + SE_GENI_M_CMD0);
-> +	writel(m_cmd, se->base + SE_GENI_M_CMD0);
->   }
->   
->   /**
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
