@@ -2,101 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 838002279B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 09:45:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 773762279C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 09:48:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728108AbgGUHpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 03:45:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52288 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728144AbgGUHpf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 03:45:35 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AAEFE20792;
-        Tue, 21 Jul 2020 07:45:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595317534;
-        bh=97y2zuXcVstRXdOrZNWE3KBD6w2VxtGXrPDl5D3CkIM=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=WyksoiMLJAFq6dfdIMzZdi/o+mKSI6/xAJigf8NLmNQFNa40UCngkV7mj5gZP8OlV
-         5EhefaL/wrY6DxxzUBcQoifbQ40+G2RTcGzjdcdRlGYssjdiXpUpLq5aG3X6Qdu1Gc
-         B5ktvVZkl+7EMYj/PpL9bRyU8DzvvjOeRZFYy/go=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1594796050-14511-1-git-send-email-tdas@codeaurora.org>
-References: <1594796050-14511-1-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v0] clk: qcom: gcc: Update disp gpll0 branch for 7180/845
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@google.com, Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 21 Jul 2020 00:45:33 -0700
-Message-ID: <159531753391.3847286.4226820520237148758@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        id S1728255AbgGUHsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 03:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48560 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727067AbgGUHsI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 03:48:08 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD59C0619D7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 00:48:06 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id x9so23004472ljc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 00:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=9fj+mlGbPwbJel6oxJ0D6OKXqr3G/qYico6GQrfC1qA=;
+        b=cZ9RE5fPSflQWEsddknmkKOYwdvv9eV+TRDLjiyN0BX0Hr600TOyTuLrq9FQn1KT5S
+         OOQR2+fbkdsI3nnYTEjTau9KeNre62JPteKeBxzMmUM4xaakYJM5Esfy1wlVIhZhKNpJ
+         k3cFbxc8olENVw5Pk1gTLP33hTMTHynfKaL7KyTj1sF/Dgxfmxn8LX14N3S0A13n35am
+         +l2sgUK+cbzhZSyqpFe7RSUh+ODJCxNxE86Y8qwsVSC3B5PmGE9qmsdPJrrVs83b0s/D
+         zXlUtLcw/Cfli+yx49HUr71aZm43kaWJL6wekqUFiBD5piMa7YKGUPSZT41S15cy3Pgk
+         /dZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=9fj+mlGbPwbJel6oxJ0D6OKXqr3G/qYico6GQrfC1qA=;
+        b=KUbrALM8QUOzQ6rTTrHKJbwp70D/Mkoh+7H6EkB8JPkc3g1JFE80M5KSAHAOWdoNP5
+         FBIawUr4BuKQDxaLWQ/gN4kajjxCS85fJKb0bwwRpEb+YPvtqAwLvdzyEtD5KUVbp9ub
+         T3qgAwcWGolAV7Bdts0oEKRXO8j8K/xjxkl114BK8E2Ta+5n/PdErUrXquuEcjmYLehI
+         aOX+zjiPgV/J5hM7hxvFER181E9q/pmMBJ0eLBPK0KZYm4G/A4Xf3bCM9rdbaVKaAKFa
+         8oeI+XdOmh6qt1tI5muiBq5QWUtC59Lf9Bc3fLkQy+ZLSNoOT3cvjTqMKA+gtHBYjNkF
+         AZsA==
+X-Gm-Message-State: AOAM531tL1pdtxNQUKrWzdYpVpeFZr3/Ejg49oTiOr5bf36nWVANh01r
+        KAfvXlZPpOEPmDpi06qD7zhglQ==
+X-Google-Smtp-Source: ABdhPJymcoDeM/UpJDvJp0uFJhhf4P4WUSwQOIlEDLwYBl27ww4QUTQeqpTuZ8eoq9uH2nmBgETLLg==
+X-Received: by 2002:a05:651c:319:: with SMTP id a25mr12603508ljp.272.1595317684778;
+        Tue, 21 Jul 2020 00:48:04 -0700 (PDT)
+Received: from localhost.localdomain ([195.24.90.54])
+        by smtp.gmail.com with ESMTPSA id d2sm4045334ljg.6.2020.07.21.00.47.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2020 00:48:04 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Maheshwar Ajja <majja@codeaurora.org>,
+        Nicolas Dufresne <nicolas@ndufresne.ca>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 1/6] media: v4l2-ctrls: Add encoder constant quality control
+Date:   Tue, 21 Jul 2020 10:45:33 +0300
+Message-Id: <20200721074538.505-2-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200721074538.505-1-stanimir.varbanov@linaro.org>
+References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2020-07-14 23:54:10)
-> The display gpll0 branch clock needs to be always left enabled, thus
-> move the clock ops to _aon branch ops.
->=20
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+From: Maheshwar Ajja <majja@codeaurora.org>
 
-I wanted to apply this but it needs more commit text. Here's the commit
-text I wrote.
+When V4L2_CID_MPEG_VIDEO_BITRATE_MODE value is
+V4L2_MPEG_VIDEO_BITRATE_MODE_CQ, encoder will produce
+constant quality output indicated by
+V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY control value.
+Encoder will choose appropriate quantization parameter
+and bitrate to produce requested frame quality level.
 
-clk: qcom: gcc: Make disp gpll0 branch aon for sc7180/sdm845
+Signed-off-by: Maheshwar Ajja <majja@codeaurora.org>
+Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 10 ++++++++++
+ drivers/media/v4l2-core/v4l2-ctrls.c                   |  2 ++
+ include/uapi/linux/v4l2-controls.h                     |  2 ++
+ 3 files changed, 14 insertions(+)
 
-The display gpll0 branch clock inside GCC needs to always be enabled.
-Otherwise the AHB clk (disp_cc_mdss_ahb_clk_src) for the display clk
-controller (dispcc) will stop clocking while sourcing from gpll0 when
-this branch inside GCC is turned off during unused clk disabling. We can
-never turn this branch off because the AHB clk for the display subsystem
-is needed to read/write any registers inside the display subsystem
-including clk related ones. This makes this branch a really easy way to
-turn off AHB access to the display subsystem and cause all sorts of
-mayhem. Let's just make the clk ops keep the clk enabled forever and
-ignore any attempts to disable this clk so that dispcc access keep
-working.
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+index d0d506a444b1..b9d3f7ae6486 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+@@ -581,6 +581,8 @@ enum v4l2_mpeg_video_bitrate_mode -
+       - Variable bitrate
+     * - ``V4L2_MPEG_VIDEO_BITRATE_MODE_CBR``
+       - Constant bitrate
++    * - ``V4L2_MPEG_VIDEO_BITRATE_MODE_CQ``
++      - Constant quality
+ 
+ 
+ 
+@@ -592,6 +594,14 @@ enum v4l2_mpeg_video_bitrate_mode -
+     the average video bitrate. It is ignored if the video bitrate mode
+     is set to constant bitrate.
+ 
++``V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY (integer)``
++    Constant quality level control. This control is applicable when
++    ``V4L2_CID_MPEG_VIDEO_BITRATE_MODE`` value is
++    ``V4L2_MPEG_VIDEO_BITRATE_MODE_CQ``. Valid range is 1 to 100
++    where 1 indicates lowest quality and 100 indicates highest quality.
++    Encoder will decide the appropriate quantization parameter and
++    bitrate to produce requested frame quality.
++
+ ``V4L2_CID_MPEG_VIDEO_TEMPORAL_DECIMATION (integer)``
+     For every captured frame, skip this many subsequent frames (default
+     0).
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index 3f3fbcd60cc6..bc00d02e411f 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+@@ -200,6 +200,7 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
+ 	static const char * const mpeg_video_bitrate_mode[] = {
+ 		"Variable Bitrate",
+ 		"Constant Bitrate",
++		"Constant Quality",
+ 		NULL
+ 	};
+ 	static const char * const mpeg_stream_type[] = {
+@@ -832,6 +833,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	case V4L2_CID_MPEG_VIDEO_GOP_CLOSURE:	return "Video GOP Closure";
+ 	case V4L2_CID_MPEG_VIDEO_PULLDOWN:	return "Video Pulldown";
+ 	case V4L2_CID_MPEG_VIDEO_BITRATE_MODE:	return "Video Bitrate Mode";
++	case V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY:	return "Constant Quality";
+ 	case V4L2_CID_MPEG_VIDEO_BITRATE:	return "Video Bitrate";
+ 	case V4L2_CID_MPEG_VIDEO_BITRATE_PEAK:	return "Video Peak Bitrate";
+ 	case V4L2_CID_MPEG_VIDEO_TEMPORAL_DECIMATION: return "Video Temporal Decimation";
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index 62271418c1be..0f7e4388dcce 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -375,6 +375,7 @@ enum v4l2_mpeg_video_aspect {
+ enum v4l2_mpeg_video_bitrate_mode {
+ 	V4L2_MPEG_VIDEO_BITRATE_MODE_VBR = 0,
+ 	V4L2_MPEG_VIDEO_BITRATE_MODE_CBR = 1,
++	V4L2_MPEG_VIDEO_BITRATE_MODE_CQ  = 2,
+ };
+ #define V4L2_CID_MPEG_VIDEO_BITRATE		(V4L2_CID_MPEG_BASE+207)
+ #define V4L2_CID_MPEG_VIDEO_BITRATE_PEAK	(V4L2_CID_MPEG_BASE+208)
+@@ -742,6 +743,7 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
+ #define V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
+ #define V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
+ #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
++#define V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY		(V4L2_CID_MPEG_BASE + 645)
+ 
+ /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
+ #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
+-- 
+2.17.1
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
-Reported-by: Evan Green <evgreen@chromium.org>
-Link: https://lore.kernel.org/r/1594796050-14511-1-git-send-email-tdas@code=
-aurora.org
-Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver f=
-or SC7180")
-Fixes: 06391eddb60a ("clk: qcom: Add Global Clock controller (GCC) driver f=
-or SDM845")
-
-> ---
->  drivers/clk/qcom/gcc-sc7180.c | 2 +-
->  drivers/clk/qcom/gcc-sdm845.c | 4 ++--
->  2 files changed, 3 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index ca4383e..538677b 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -1061,7 +1061,7 @@ static struct clk_branch gcc_disp_gpll0_clk_src =3D=
- {
->                                 .hw =3D &gpll0.clkr.hw,
->                         },
->                         .num_parents =3D 1,
-> -                       .ops =3D &clk_branch2_ops,
-> +                       .ops =3D &clk_branch2_aon_ops,
-
-I'm worried that dispcc may probe before GCC and then this branch is
-disabled out of boot. Then we'll try to read dispcc registers to
-determine clk rates and blow up. I hope that doesn't happen and fixing
-it would need this patch plus the usage of PM clks in the dispcc driver.
-I suppose if we run into that problem we can use PM clks to make this
-branch turn on before accessing any dispcc clks.
