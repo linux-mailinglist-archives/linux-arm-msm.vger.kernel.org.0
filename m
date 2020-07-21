@@ -2,62 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B8F32279ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 09:54:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D84A02279F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 09:55:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726803AbgGUHyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 03:54:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33094 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726614AbgGUHyq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 03:54:46 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A423920B1F;
-        Tue, 21 Jul 2020 07:54:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595318085;
-        bh=+n3MEvA174swEY1nr5PHytf8BCPKUK+lXJPb46p0iIQ=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=rU1cU5K2H+PA1j0ib/6KOUvlhw9cIOc5rUJubv0IYDLIoQerrhuuzUQ+2kaADnitP
-         r4HyqxmnAZsbpuJPtp7d1YjaNbkDAr/iciRv4LhdAF2KAnohOsBx3/hhiYUORVoqFl
-         hFrJGOT8d0/JQkfh6GIdZNUwKmNrLn0BiR9i3sD0=
-Content-Type: text/plain; charset="utf-8"
+        id S1728036AbgGUHzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 03:55:33 -0400
+Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:56419 "EHLO
+        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728550AbgGUHz2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 03:55:28 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id xn7VjfUH2NPeYxn7WjsO2w; Tue, 21 Jul 2020 09:55:26 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1595318126; bh=/v79hKJJGRj6BzbMDkBIw597JdY422SD+5dhz06Pjoo=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=E0Dp32ecGVC2zSDgeY6KLpgLujdeQRvj674g6uBfnL4OSWfzivez4CJk6zrdlOdof
+         /gDjzQ0c0jvRIXF5iHqpSiVVh1WtrDvVGvarhwVYnUsjwgidXmRmpBkoX1lFFaYzYG
+         /iBYRR4GFL8m9pUqejzhqjr5A49D5mZwlaSUANRSQ5ozjCaQE3lwJmbZO/iN93RMRR
+         lctsgeD9eg3FcZAymJ/AAEAmSemG+QSG2cPHojZY564qTiRj/kyBTnhv0Qj86zrEw4
+         kJFMurxsJp9HE8vFFU75WKs9dOzfgpTjRRdYRzRvG5zH16pktZb32gm3YOgsPk1m4A
+         wMHey373YkJAQ==
+Subject: Re: [PATCH v2 6/6] media: docs: Deprecate mfc frame skip control
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Maheshwar Ajja <majja@codeaurora.org>,
+        Nicolas Dufresne <nicolas@ndufresne.ca>
+References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
+ <20200721074538.505-7-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+Message-ID: <0195497b-a64b-e501-45af-b3847fe3108d@xs4all.nl>
+Date:   Tue, 21 Jul 2020 09:55:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200709135251.643-1-jonathan@marek.ca>
-References: <20200709135251.643-1-jonathan@marek.ca>
-Subject: Re: [PATCH v3 00/14] Enable GPU for SM8150 and SM8250
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Deepak Katragadda <dkatraga@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Tue, 21 Jul 2020 00:54:45 -0700
-Message-ID: <159531808502.3847286.3510600528777978505@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <20200721074538.505-7-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfPmZ2fNz+MsuKWtZE7Hw0mxslV4JLJgnH+exA32HpgMPVpj+zK3AX9ZL4xCN+7LiHEY1utWNYeb6beC54iEcmiMCjXyqlJvBk4D/sXUJG1RZau6BPS4I
+ 8hJneXG+lCnneUiwc2yotKW68Hv6SWkoPRBFnCEsTbQDyFKaGhhPozx4HGU27pz5XHW0eeKV82HR+ssTWZ3kHuBdjL3lSxCRCnQJQvtfnQN7vMjE6MeGzy8i
+ lfubeitgnty8veyAJE0VqZVyLAR1ExPUyUr1Epa125ZW+zOjutSPXCLLiGLCoXlFMZee29tHBWZThaCLSsKHf8WNLHvnz/Ui1EU7G+drEmjU77rJzxPrTs1y
+ o5mRAYhtMr0/3BRxfTR7GM02HlK4qAcUOqjJokIyy5JWLrV5IH0eE+kyQEHa9z4VAEdMY+orhKLNX467PIg/N9OErF8Rp02r9LLb1kdkuU0BzhrZtXVmozPp
+ 9eZGGtvOETiW1TUB40ciDitM5Uxh2uVSOQlJCa+sjEaZfLwcEkoRNRFUeZW3mh1E8iDGzNif2Niq9Jk6JeMXBpk1GuTYj22Zmvc1e8vBk//ehgfUk3U8myZz
+ tsGC0zbYGEtbKx/ujl6pUsbohhBr38VEAOPUqo1EL4mid4zcxtanpvyDXcAzxBYbnS1nZDx0J1pgUcVHg0xgVIuxRPlJnb88WekUgmpKGhCF7vZ8f5SkjYnh
+ 1G2DoM9LqX4=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2020-07-09 06:52:31)
-> This series adds the missing clock drivers and dts nodes to enable
-> the GPU on both SM8150 and SM8250.
->=20
-> Note an extra drm/msm patch [1] is required for SM8250.
->=20
-> As noted by Dmitry, GMU init fails with newer firmware, needs this patch =
-[2].
->=20
-> [1] https://patchwork.freedesktop.org/series/78968/
-> [2] https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/comm=
-it/?h=3Dtracking-qcomlt-sm8250&id=3D01331f2ccbe7e6c4719dbe038a5fb496db32646d
+On 21/07/2020 09:45, Stanimir Varbanov wrote:
+> Deprecate mfc private frame skip mode control for new
+> clients and use the standard one instead.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-Vinod, can you test this patch series? And Taniya, can you review it?
+Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+
+> ---
+>  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index 985e4c2d29bf..31d77d1cdcc9 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -2821,6 +2821,11 @@ MFC 5.1 Control IDs
+>  ``V4L2_CID_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE``
+>      (enum)
+>  
+> +    .. note::
+> +
+> +       This control is deprecated. Use the standard
+> +       ``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE`` control instead.
+> +
+>  enum v4l2_mpeg_mfc51_video_frame_skip_mode -
+>      Indicates in what conditions the encoder should skip frames. If
+>      encoding a frame would cause the encoded stream to be larger then a
+> 
+
