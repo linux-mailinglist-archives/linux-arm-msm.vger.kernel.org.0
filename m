@@ -2,110 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2577D228A25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 22:49:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAAB2228A3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 22:58:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726658AbgGUUtM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 16:49:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57176 "EHLO
+        id S1730470AbgGUU6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 16:58:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbgGUUtL (ORCPT
+        with ESMTP id S1726658AbgGUU6b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 16:49:11 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63E7C061794
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 13:49:10 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id z5so22728pgb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 13:49:10 -0700 (PDT)
+        Tue, 21 Jul 2020 16:58:31 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFC93C061794
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 13:58:30 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id 1so25716pfn.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 13:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=T1FdvEWm0bfVCGRMrjZ0Oz5z4raBlVnmb8HIxtTcpT0=;
-        b=dC3/vy4vItm5I3D3y+CF7YUq0K0hA8q0s3108YmDJjZ1VieV8wa/KLT5/roFmkoyrv
-         2955RT/XiYkYBC/LUamk8XwuLg3sBVi0vQWN04GzRaGRfjoyZif24PbQcV3gl7KvTXdS
-         2F7q8EML8AKSA6IIsZWL2v4UQj2r2l03RRLnA=
+        bh=X52qI9IuX8ehsLxlnySnmok7XL1KtNCuLE+99FuZBeI=;
+        b=mHdARhUTuiPaFxjw12aZ6Wa9+kLghKQ0fq8ZJpwVAledPTAoh2U3VGDsfsyr4CtWiS
+         NXuH7AFqDcCmAepHllRQ4Wq6geSc5R3h6YB/TWlMfokX4+eEHRFZKFDVxGqrMiu2MRku
+         91nIm/w9OxN3qHJykIwzJ//I2SrZPpLlqSXMiGkKwGrq7deQxUUahBBRIdBCDYalvXeO
+         RXkwNN69nSl3vRbDjY12ItnzNxSn54y5LrsKUYN1XwkelXZrn2ofOPGVf1/ffcUuaa7h
+         a83DRCCTf2xgI5VIfkzGeDM08SV43UCY0a72ArB/oCDawwpiJKf3+5B7lUPaBFF2NcE8
+         0C2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=T1FdvEWm0bfVCGRMrjZ0Oz5z4raBlVnmb8HIxtTcpT0=;
-        b=HRK2qSUqbN1wbLEH+ZS3oMGApOXlWFXDlfffCyDaZC6i0O4p5yZ3Y+taGdBCjgmljt
-         6OCSSa+AykmUeuT5zrFJnKNL0l3+5cZ0qZAW78B0rEJHMvYnZVhSI5hm9Y0oxHgj66lv
-         mLAZzz8XAdFILTSavZ0vYcw4D3Nh6D2aPHkSievMfASgebfaZgqLjUoDF9vBfY0PNI6t
-         M73s36iaxpYIv2Fo8Y0uir150tljbfnK0ez4RKcDoW3/W1ApL/KWfO8chY4G9fwac3qn
-         450tlif20RVd9dC2ptwnrrXOYFeCZaweb60JEVs0UMojijYzvd8ExIuV5DHgOnYer+bI
-         nXHA==
-X-Gm-Message-State: AOAM530S3LgHxJLSryYn1EDSwhepP076WuzCAD+OqL8u/+1pPCV404nJ
-        +sQTVm7ZCNnJGun8NM+mi7DM9w==
-X-Google-Smtp-Source: ABdhPJzi3t7SQrabajvrJliI/CN809h5fAgeXVfMvd2DnZ8oKsJmFIHYafJxOmoEPmu73OuMpakRvg==
-X-Received: by 2002:a63:6dc7:: with SMTP id i190mr23933441pgc.304.1595364550483;
-        Tue, 21 Jul 2020 13:49:10 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id b4sm4081125pjn.38.2020.07.21.13.49.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jul 2020 13:49:09 -0700 (PDT)
-Date:   Tue, 21 Jul 2020 13:49:08 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     kernel test robot <lkp@intel.com>
-Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>, kbuild-all@lists.01.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] usb: dwc3: core: Host wake up support from system
- suspend
-Message-ID: <20200721204908.GV3191083@google.com>
-References: <1594235417-23066-2-git-send-email-sanm@codeaurora.org>
- <202007132352.yb6jBpFv%lkp@intel.com>
+        bh=X52qI9IuX8ehsLxlnySnmok7XL1KtNCuLE+99FuZBeI=;
+        b=pIedISwzkJFuxciYgByoNVeO/0Hwf7M7t5B+YsovGO7FmZuMiBWjm8tzMMlYShlCJB
+         8iZp3kRTjJCvRohfDB23O1+EE5px+FQ9sXEXpof0pNQdHFjB83vaarvyJ3/jimJfHtfV
+         vLo1uK1B1MVRhPb2WAmuEmAg3ffeQcbtPH8sokSHOfnYigxS69PqNeocOZ0xP8c52qBp
+         Pjq89jhy+3Ubv+sVMlnwdcTc6sWDmkacxesYBYb54c2V5+inEZtHCYU5XJQSX6EBqUlV
+         aCVLMh9jwwmwT1Y/w5vKnvGwuQmDN4mAu60VcZaNnT+wM7yNHnqSSHWQgcZYdkYPXnN8
+         w/sA==
+X-Gm-Message-State: AOAM533xXlmoA73J5Y2wchKfCb/wQfNSiaNdI8PJOFzkyqX/8TPrHJuW
+        /TS7nDioRk/VuAXgELB1LFuYiQ==
+X-Google-Smtp-Source: ABdhPJzipImp2FJDXR65FI4cQBfU1/ZWv6fskJvunQo3KeiwYFfoMSTrdro0BQYaNbHlwWG5ksZP1g==
+X-Received: by 2002:a63:c049:: with SMTP id z9mr19741380pgi.353.1595365110347;
+        Tue, 21 Jul 2020 13:58:30 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id z25sm21277934pfg.140.2020.07.21.13.58.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2020 13:58:29 -0700 (PDT)
+Date:   Tue, 21 Jul 2020 13:56:35 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>, agross@kernel.org,
+        ohad@wizery.com, corbet@lwn.net, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] remoteproc: Add remoteproc character device
+ interface
+Message-ID: <20200721205635.GM2922385@builder.lan>
+References: <1594148870-27276-1-git-send-email-sidgup@codeaurora.org>
+ <1594148870-27276-2-git-send-email-sidgup@codeaurora.org>
+ <20200715201839.GA3204081@xps15>
+ <20200715215149.GA3267350@xps15>
+ <81d7514c-727e-b4dc-e4ac-74a25966ccaf@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202007132352.yb6jBpFv%lkp@intel.com>
+In-Reply-To: <81d7514c-727e-b4dc-e4ac-74a25966ccaf@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 13, 2020 at 11:34:11PM +0800, kernel test robot wrote:
-> Hi Sandeep,
-> 
-> Thank you for the patch! Yet something to improve:
-> 
-> [auto build test ERROR on balbi-usb/testing/next]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use  as documented in
-> https://git-scm.com/docs/git-format-patch]
-> 
-> url:    https://github.com/0day-ci/linux/commits/Sandeep-Maheswaram/usb-dwc3-Host-wake-up-support-from-system-suspend/20200709-031939
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/balbi/usb.git testing/next
-> config: i386-randconfig-a012-20200713 (attached as .config)
-> compiler: gcc-9 (Debian 9.3.0-14) 9.3.0
-> reproduce (this is a W=1 build):
->         # save the attached .config to linux build tree
->         make W=1 ARCH=i386 
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All errors (new ones prefixed by >>):
-> 
->    ld: drivers/usb/dwc3/core.o: in function `dwc3_suspend_common':
-> >> core.c:(.text+0x3f0f): undefined reference to `usb_hcd_is_primary_hcd'
-> >> ld: core.c:(.text+0x40c7): undefined reference to `usb_wakeup_enabled_descendants'
+On Tue 21 Jul 12:16 PDT 2020, Siddharth Gupta wrote:
+> On 7/15/2020 2:51 PM, Mathieu Poirier wrote:
+> > On Wed, Jul 15, 2020 at 02:18:39PM -0600, Mathieu Poirier wrote:
+> > > On Tue, Jul 07, 2020 at 12:07:49PM -0700, Siddharth Gupta wrote:
+[..]
+> > > > diff --git a/drivers/remoteproc/remoteproc_cdev.c b/drivers/remoteproc/remoteproc_cdev.c
+[..]
+> > > > +int rproc_char_device_add(struct rproc *rproc)
+> > > > +{
+> > > > +	int ret;
+> > > > +	dev_t cdevt;
+> > > > +
+> > > > +	cdev_init(&rproc->char_dev, &rproc_fops);
+> > > > +	rproc->char_dev.owner = THIS_MODULE;
+> > > > +
+> > > > +	cdevt = MKDEV(rproc_major, rproc->index);
+> > > > +	ret = cdev_add(&rproc->char_dev, cdevt, 1);
+> > Trying this patchset on my side gave me the following splat[1].  After finding
+> > the root case I can't understand how you haven't see it on your side when you
+> > tested the feature.
+> > 
+> > [1]. https://pastebin.com/aYTUUCdQ
 
-The problem here seems to be that:
+Mathieu, I've looked at this back and forth. Afaict this implies that
+rproc_major is still 0. Could it be that either alloc_chrdev_region()
+failed or somehow has yet to be called when you hit this point?
 
-CONFIG_USB_DWC3=y
+> Hey Mathieu,
+> 
+> We aren't able to reproduce the error that you are seeing, the splat is
+> coming
+> from the check for whiteout device[1] - which shouldn't happen because of
+> the
+> find_dynamic_major call[2], right?
+> 
+> We are successfully seeing all our character device files and able to
+> successfully boot remoteprocs. From what I read and understood about
+> whiteout
+> devices they will be hidden in the fs.
+> 
+> Could you provide more details about your configuration and testing?
+> 
+> [1]: https://github.com/torvalds/linux/blob/master/fs/char_dev.c#L486
+> <https://github.com/torvalds/linux/blob/master/fs/char_dev.c#L123>
+> [2]: https://github.com/torvalds/linux/blob/master/fs/char_dev.c#L123
+> 
+> <https://github.com/torvalds/linux/blob/master/fs/char_dev.c#L486>
+> > > > +	if (ret < 0)
+> > > > +		goto out;
+> > > > +
+> > > > +	rproc->dev.devt = cdevt;
+> > > > +out:
+> > > > +	return ret;
+> > > > +}
+> > > > +
+> > > > +void rproc_char_device_remove(struct rproc *rproc)
+> > > > +{
+> > > > +	__unregister_chrdev(rproc_major, rproc->index, 1, "remoteproc");
+> > > > +}
+> > > > +
+> > > > +void __init rproc_init_cdev(void)
+> > > > +{
+> > > > +	int ret;
+> > > > +
+> > > > +	ret = alloc_chrdev_region(&rproc_major, 0, NUM_RPROC_DEVICES, "remoteproc");
+> > > > +	if (ret < 0)
+> > > > +		pr_err("Failed to alloc rproc_cdev region, err %d\n", ret);
+> > > > +}
+> > > > +
+> > > > +void __exit rproc_exit_cdev(void)
+> > > > +{
+> > > > +	unregister_chrdev_region(MKDEV(rproc_major, 0), NUM_RPROC_DEVICES);
+> > > Please go back to the comment I made on this during my last review and respin.
+> > After digging in the code while debugging the above problem, I don't see how
+> > unregistering the chrdev region the way it is done here would have worked.
+> Since this is compiled statically and not built as a module, we will never
+> exercise the code path, so I will remove it in the next patchset.
+> 
 
-and
+You're right Siddharth, since we changed CONFIG_REMOTEPROC to bool it's no longer
+possible to hit remoteproc_exit(), so you can omit this function
+entirely. (And we should clean up the rest of that as well)
 
-CONFIG_USB=m
+[..]
+> > > > diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+[..]
+> > > > @@ -488,6 +489,8 @@ struct rproc_dump_segment {
+> > > >    * @auto_boot: flag to indicate if remote processor should be auto-started
+> > > >    * @dump_segments: list of segments in the firmware
+> > > >    * @nb_vdev: number of vdev currently handled by rproc
+> > > > + * @char_dev: character device of the rproc
+> > > > + * @cdev_put_on_release: flag to indicate if remoteproc should be shutdown on @char_dev release
+> > > >    */
+> > > >   struct rproc {
+> > > >   	struct list_head node;
+> > > > @@ -523,6 +526,8 @@ struct rproc {
+> > > >   	int nb_vdev;
+> > > >   	u8 elf_class;
+> > > >   	u16 elf_machine;
+> > > > +	struct cdev char_dev;
 
-Add a Kconfig condition that disallows usb_dwc3 to be builtin when the
-USB core is built as a module?
+As stated privately, I assumed based on this name that this is a struct
+device related to that character device. So please rename this cdev to
+save me from doing this mistake again.
+
+Thanks,
+Bjorn
