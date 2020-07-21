@@ -2,138 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16181227AF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 10:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8320F227B61
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 11:07:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727073AbgGUInh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 04:43:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57182 "EHLO
+        id S1728517AbgGUJHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 05:07:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728850AbgGUIng (ORCPT
+        with ESMTP id S1726990AbgGUJHp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 04:43:36 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C9DC061794
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 01:43:36 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id b9so9966484plx.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 01:43:36 -0700 (PDT)
+        Tue, 21 Jul 2020 05:07:45 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6407C0619D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 02:07:44 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id s10so20357685wrw.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 02:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=LDyYq7mGwU/io/5kwm3whsJhqDFrwNw4M+0gHu2yWNM=;
-        b=X9SVl1noxhxAJSxVLxnUk8o/KVL6aNK/lBRqGdm26YT8FAGcP40UJUB4BB2eG9FC9R
-         7cY73a/L9bOTX3FMGx+9yNjqfED2E3hwadYVHTGyX9aEqhrcpcKsT8Q7Gykux3FwOouw
-         2QGN+kC97nd84cz5yCXtzKOKY+5Dy6TvR83fk=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=/OxVowHa1fzTS8gxpWxPISoWUyhArDmXgs2hoChHUPc=;
+        b=rA/559WyzqjkNR0hbv9ikfJ1cN7FUfBS0VOcj1VuFigCuNRmYYnaZ8HL5f2FY6y2OV
+         CNxdI61eEXdQ15w/ee103fQDg1Q/NQvsoozh5MZnCIjtftL4U4JTshJnjE8CE3kmLE82
+         29rQIEHxkgGrrxj0kOidCm1FY5O/2z5dX28DYn2aL7ygStdgIuZgeFKGWwpK3HZwfzwa
+         iiRHEo5furMeU9/ZnIUUKQ1F+opEl43up4wCVu5cSUeuvUWTJxhFBbB8xGk2oFt7zPLU
+         CQWPhkG3F+JH9gw+dR+87Dboa5DIxFOz+cVvaB8GJYzdwaDsG9fx4mZazA6oN7lVjrdn
+         QU6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=LDyYq7mGwU/io/5kwm3whsJhqDFrwNw4M+0gHu2yWNM=;
-        b=Wu4gWFZC/paxOMahOuVV+Ue3g708phng4qVjStFLvzAWFlzDUX/gvNSxtrYc5Mh3vM
-         P3uPeFDRqYj2ZFODJzNCqO/Xgg+3o/MI60q4EwVeyIeEzumjoLO9kjGCM6UiQ3A3CsOn
-         GWZ7RrElhZ0wefVq4WreDlURTVwyEG8GRmowJMVL9NmOOYxnv+iEZgmRRQQsQoPV39GX
-         NYgbG3F7HDhXemvR23njQY5vUS7ETVdSDMFpVS+cxGnnKAturGfZ4/NExO7zPvQnmkdb
-         xXvfHaecMt9DXLJdJyZP/hPoxSwOIWGStI7YmWdJILe9CzLzsLxUc8tSgv9DRWKXBJ2y
-         fvJw==
-X-Gm-Message-State: AOAM533+qIhmJnLx/9oMQADymSJnu2bAkbGfbpC5lNDm5QQHFn48OEFT
-        K94Fj/1+/kkdhLUrMoSk9p6akQ==
-X-Google-Smtp-Source: ABdhPJy4aKFmpB5Dgc+0DC8B10/KpMNM/Ag1dR6K/OxvywuhrosN4V4qOP35QJiccdOAUxzwf8dn0g==
-X-Received: by 2002:a17:90a:6888:: with SMTP id a8mr3579090pjd.59.1595321015512;
-        Tue, 21 Jul 2020 01:43:35 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id r191sm19920333pfr.181.2020.07.21.01.43.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2020 01:43:34 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200630030552.cfp5oh33qde6nlnf@vireshk-i7>
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org> <1592222564-13556-2-git-send-email-rnayak@codeaurora.org> <159347264530.1987609.11350620235820019545@swboyd.mtv.corp.google.com> <a3d53f82-b29d-97ef-3ba1-ca9bd650d354@codeaurora.org> <20200630030552.cfp5oh33qde6nlnf@vireshk-i7>
-Subject: Re: [PATCH v6 1/6] tty: serial: qcom_geni_serial: Use OPP API to set clk/perf state
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        robdclark@chromium.org, robdclark@gmail.com,
-        stanimir.varbanov@linaro.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-serial@vger.kernel.org
-To:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Date:   Tue, 21 Jul 2020 01:43:33 -0700
-Message-ID: <159532101373.3847286.9695594340556014384@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/OxVowHa1fzTS8gxpWxPISoWUyhArDmXgs2hoChHUPc=;
+        b=GogdRPdI9zTdiZzo3JMathXgl3olzty/MiFSg7UXYHfd6ZX78QAiWeFyiitzdlwWcj
+         Tbhoxf4MCS8kID+J4bQLOwxGb1T1LS2e8iT5NNsjv/ooD0JSaNxwdx+8/E9npS1d1S1f
+         4873u4GYW1b5iUG88XqDSqdq0lBJe/J0U2eFMj+TU6M3CIiILs0bwlTyxkCP35F5UZdE
+         t+7Iye08JQ6uvVxZ0LI7qbV1NEPO8E708YCOKF6GdRvyz/gyBdrd0wqM6McSFenWG8Wm
+         BHEieK4oObOprKnA60lGOjUUPVp0CoXIgXSHdtsaBXA+CYhIBdp4m+UnZegps4Zm0CI5
+         bOfw==
+X-Gm-Message-State: AOAM531I7s/daiu0zJu5x2nTKnmIAOnFJOW3YA6ol7q6VlULLN6a+cD+
+        ZDep6S1pZeOgUNb0+2kmMxatsQ==
+X-Google-Smtp-Source: ABdhPJzvKTkGOU3P6banh76jfIC31xAnMFma1OCt8xasxSNWGqr4pPlHEn1SLwIj5zO/QkMX7HRX8A==
+X-Received: by 2002:adf:fcc5:: with SMTP id f5mr28572300wrs.60.1595322463467;
+        Tue, 21 Jul 2020 02:07:43 -0700 (PDT)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id m9sm2495594wml.45.2020.07.21.02.07.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Jul 2020 02:07:43 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     sboyd@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] dt-bindings: clock: Fix qcom,msm8996-apcc yaml syntax
+Date:   Tue, 21 Jul 2020 11:13:11 +0200
+Message-Id: <1595322791-18571-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Viresh Kumar (2020-06-29 20:05:52)
-> On 30-06-20, 08:31, Rajendra Nayak wrote:
-> >=20
-> >=20
-> > On 6/30/2020 4:47 AM, Stephen Boyd wrote:
-> > > Quoting Rajendra Nayak (2020-06-15 05:02:39)
-> > > > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/se=
-rial/qcom_geni_serial.c
-> > > > index 457c0bf..a90f8ec 100644
-> > > > --- a/drivers/tty/serial/qcom_geni_serial.c
-> > > > +++ b/drivers/tty/serial/qcom_geni_serial.c
-> > > > @@ -9,6 +9,7 @@
-> > > >   #include <linux/module.h>
-> > > >   #include <linux/of.h>
-> > > >   #include <linux/of_device.h>
-> > > > +#include <linux/pm_opp.h>
-> > > >   #include <linux/platform_device.h>
-> > > >   #include <linux/pm_runtime.h>
-> > > >   #include <linux/pm_wakeirq.h>
-> > > > @@ -962,7 +963,7 @@ static void qcom_geni_serial_set_termios(struct=
- uart_port *uport,
-> > > >                  goto out_restart_rx;
-> > > >          uport->uartclk =3D clk_rate;
-> > > > -       clk_set_rate(port->se.clk, clk_rate);
-> > > > +       dev_pm_opp_set_rate(uport->dev, clk_rate);
-> > >=20
-> > > If there isn't an OPP table for the device because it is optional then
-> > > how can we unconditionally call dev_pm_opp_set_rate()?
->=20
-> Looks like some *Maintainers* aren't paying enough attention lately ;)
->=20
-> Just kidding.
->=20
+Fix errors reported by dt_binding_check.
+- Fix literal block scalar for dts example
+- Fix schema identifier URI
 
-It seems that dev_pm_opp_set_rate() calls _find_opp_table() and finds
-something that isn't an error pointer but then dev_pm_opp_of_add_table()
-returns an error value because there isn't an operating-points property
-in DT. We're getting saved because this driver also happens to call
-dev_pm_opp_set_clkname() which allocates the OPP table a second time
-(because the first time it got freed when dev_pm_opp_of_add_table()
-return -ENODEV because the property was missing).
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Why do we need 'has_opp_table' logic? It seems that we have to keep
-track of the fact that dev_pm_opp_of_add_table() failed so that we don't
-put the table again, but then dev_pm_opp_set_clkname() can be called
-to allocate the table regardless.
+diff --git a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
+index d673ede..a20cb10 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ %YAML 1.2
+ ---
+-$id: http://devicetree.org/schemas/clock/qcom,kryocc.yaml#
++$id: http://devicetree.org/schemas/clock/qcom,msm8996-apcc.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Qualcomm clock controller for MSM8996 CPUs
+@@ -46,11 +46,9 @@ required:
+ additionalProperties: false
+ 
+ examples:
+-  # Example for msm8996
+   - |
+     kryocc: clock-controller@6400000 {
+         compatible = "qcom,msm8996-apcc";
+         reg = <0x6400000 0x90000>;
+         #clock-cells = <1>;
+-  };
+-...
++    };
+-- 
+2.7.4
 
-This maintainer is paying very close attention to super confusing code like
-this:
-
-	if (drv->has_opp_table)
-		dev_pm_opp_of_remove_table(dev);
-	dev_pm_opp_put_clkname(drv->opp_table);
-
-which reads as "if I have an opp table remove it and oh by the way
-remove the clk name for this opp table pointer I also happen to always
-have".
-
-Maybe I would be happier if dev_pm_opp_of_table() went away and we just
-had dev_pm_opp_add_table(const struct opp_config *config) that did all
-the things for us like set a clk name, set the supported hw, set the
-prop name, etc. based on the single config struct pointer and also
-parsed out the OPP table from DT or just ignored that if there isn't any
-operating-points property. Then the caller wouldn't need to keep track
-of 'if has_opp_table' because it doesn't seem to actually care and the
-core is happy to allocate a table for the device anyway so long as it
-sets a clk name.
