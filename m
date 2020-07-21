@@ -2,137 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 424CD22834C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 17:13:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B921A2283A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 17:23:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729857AbgGUPNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 11:13:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49926 "EHLO mail.kernel.org"
+        id S1726919AbgGUPXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 11:23:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54548 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729831AbgGUPNk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 11:13:40 -0400
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+        id S1726436AbgGUPXn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 11:23:43 -0400
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 813372073A;
-        Tue, 21 Jul 2020 15:13:39 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 844812065F;
+        Tue, 21 Jul 2020 15:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595344419;
-        bh=cJveZYxoa7dAdPqQanvrZZl4c8wbkUcvWDgkCaEe+Os=;
+        s=default; t=1595345022;
+        bh=FO6xqacNOKYpEmvm+sm7qk+kEUBgPHrjTIPWwcFL9NM=;
         h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=M34Xz+Pc5nQE/Ho21lGgohVu/PtpmhfIr6dhTZlnCUrQoHmKtmo1NkhpCjDpGTh0x
-         2065SHB4LCKQdIDH8xIeOacFUdrI/qxpE8EdHWbydd9PFpDvMl+oACZkyT0cpWVOXK
-         /lJOtx6+K9HNOzF9XLvLJ6cTh5/LUH7/vlhh/6SE=
-Received: by mail-oi1-f171.google.com with SMTP id e4so17514498oib.1;
-        Tue, 21 Jul 2020 08:13:39 -0700 (PDT)
-X-Gm-Message-State: AOAM531dzzPPnkvAKg3IIPvMfNJrQj/zp9gbek7NBqcfVSViGixK4EZG
-        VNILZp7cd3KJGd59ue65mkc9d+Tumew7tYAhAA==
-X-Google-Smtp-Source: ABdhPJx5usOUbuBPfOhR/huG6DuDsg8mCHNfxMXgiZDEHvwhavGmrHIBAxM6qwppEevA9KhIyFvg6dUqdvZHyzegRBI=
-X-Received: by 2002:aca:bb82:: with SMTP id l124mr3483290oif.106.1595344418842;
- Tue, 21 Jul 2020 08:13:38 -0700 (PDT)
+        b=MbopVjoL/v/notr4ZK/NB+kHwqwllagler9ckhLrTNYvOPXcEkahlPgY+vOu9Tld7
+         eQ9mZj0O5hIqMNGRmZm0U9Jvo/lEKgmz1Zczy2Qirms9hA9QbfcPh6fI3gKSsKVSzS
+         mrJL1bn9evy5ulavRX2/caph0M9818XT026qlLL0=
+Received: by mail-qt1-f181.google.com with SMTP id 6so16432018qtt.0;
+        Tue, 21 Jul 2020 08:23:42 -0700 (PDT)
+X-Gm-Message-State: AOAM533cZY/YJVc2qWWx07JZqyNPvwHmNxcFMB9DMq5m4EX4X0FNRoux
+        EzNF2shACqWZ9CjznGNh6rbyF+2uDdw8P4PbdA==
+X-Google-Smtp-Source: ABdhPJxzaAWzNIQdWcSecb8r0S8Fl5pQCnPXJNpWwE0nOwy3sJm21Y6kzWkDDSH83sK//096sWIcvuFUkNszYkug5U4=
+X-Received: by 2002:aed:2fa1:: with SMTP id m30mr30175558qtd.306.1595345021748;
+ Tue, 21 Jul 2020 08:23:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200622075956.171058-1-bjorn.andersson@linaro.org> <20200622075956.171058-2-bjorn.andersson@linaro.org>
-In-Reply-To: <20200622075956.171058-2-bjorn.andersson@linaro.org>
+References: <1595326714-20485-1-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1595326714-20485-1-git-send-email-loic.poulain@linaro.org>
 From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 21 Jul 2020 09:13:22 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKW+R=rygii7N69o28h5780qx645RhPXGQZ4jw3kHadhw@mail.gmail.com>
-Message-ID: <CAL_JsqKW+R=rygii7N69o28h5780qx645RhPXGQZ4jw3kHadhw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: hwlock: qcom: Migrate binding to YAML
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
+Date:   Tue, 21 Jul 2020 09:23:30 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKkGjrbzTtTDZjAOJjEh-zVTXWB6-9XJgOPajQ+eFHBSw@mail.gmail.com>
+Message-ID: <CAL_JsqKkGjrbzTtTDZjAOJjEh-zVTXWB6-9XJgOPajQ+eFHBSw@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: clock: Fix qcom,msm8996-apcc yaml syntax
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
+        devicetree@vger.kernel.org, linux-clk <linux-clk@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 22, 2020 at 1:59 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Tue, Jul 21, 2020 at 4:13 AM Loic Poulain <loic.poulain@linaro.org> wrote:
 >
-> Migrate the Qualcomm TCSR mutex binding to YAML to allow validation.
+> Fix errors reported by dt_binding_check.
+> - Fix literal block scalar for dts example
+> - Fix schema identifier URI
 >
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
->
-> Changes since v1:
-> - Actually remove the old binding doc
->
->  .../bindings/hwlock/qcom-hwspinlock.txt       | 39 --------------
->  .../bindings/hwlock/qcom-hwspinlock.yaml      | 51 +++++++++++++++++++
->  2 files changed, 51 insertions(+), 39 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.txt
->  create mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+>  Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 
-[...]
-
-> diff --git a/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> new file mode 100644
-> index 000000000000..71e63b52edd5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> @@ -0,0 +1,51 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Hardware Mutex Block
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  The hardware block provides mutexes utilized between different processors on
-> +  the SoC as part of the communication protocol used by these processors.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sfpb-mutex
-> +      - qcom,tcsr-mutex
-> +
-> +  '#hwlock-cells':
-> +    const: 1
-> +
-> +  syscon:
-> +    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    description:
-> +      Should be a triple of phandle referencing the TCSR mutex syscon, offset
-> +      of first mutex within the syscon and stride between each mutex.
-> +
-> +required:
-> +  - compatible
-> +  - '#hwlock-cells'
-> +  - syscon
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        tcsr_mutex_block: syscon@fd484000 {
-> +                compatible = "syscon";
-
-'syscon' alone now generates warnings. Can you drop this node or add a
-specific compatible.
-
-> +                reg = <0xfd484000 0x2000>;
-> +        };
-> +
-> +        hwlock {
-> +                compatible = "qcom,tcsr-mutex";
-> +                syscon = <&tcsr_mutex_block 0 0x80>;
-> +
-> +                #hwlock-cells = <1>;
-> +        };
-> +...
-> --
-> 2.26.2
->
+Reviewed-by: Rob Herring <robh@kernel.org>
