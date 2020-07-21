@@ -2,234 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24BEE227EE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 13:30:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 834DD227EEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 13:30:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729811AbgGULaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 07:30:01 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:46084 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729476AbgGULaB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 07:30:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595331000; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=wosPSlwsBh5PjjklANk60w8OaWbCI+oq9TQCJekWQYw=; b=pHC+pWoqi7FpMZTItCoAFM6Olrcio1ZelZr7ahakuaCJn6XIMPjcsic9+VrrkZq18Wp9ehRV
- +xicgcxFrMf+f84C1Wa24PqfPOWJwd5w2GWLcFQXHzTInrmv6X79z21yj/3mbGv4135ecFqP
- AJhiAsW/L5/mZYW/neIck6xr9hE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f16d1b703c8596cdb6d2cc0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Jul 2020 11:29:59
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1E9CCC433CA; Tue, 21 Jul 2020 11:29:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F3F88C433CA;
-        Tue, 21 Jul 2020 11:29:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F3F88C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, ohad@wizery.com,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v2 2/2] remoteproc: qcom_q6v5_mss: Add MBA log extraction support
-Date:   Tue, 21 Jul 2020 16:59:35 +0530
-Message-Id: <20200721112935.25716-3-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200721112935.25716-1-sibis@codeaurora.org>
-References: <20200721112935.25716-1-sibis@codeaurora.org>
+        id S1729856AbgGULaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 07:30:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729849AbgGULaY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 07:30:24 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E4AAC0619D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 04:30:23 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id z15so20817823wrl.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 04:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lDCzyRG0rg1IT+D0XJL6mCguANQqA8rXobavVZvW96Y=;
+        b=ZnnrxRa4si/xuCUdSQINme4yglZDejh1OO0DnrcmRn5h18itVyWY4KRvRkI/WNZ/Ll
+         E/VPLadw2MbujNKNCVgXWitzmPWRAKdk5XTCel3V5qpcX6FGrqmGTmm4p15DMboso/NS
+         FV4C1to8Pfy/qNsRbWTocSYQZzf6KtgCql62o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lDCzyRG0rg1IT+D0XJL6mCguANQqA8rXobavVZvW96Y=;
+        b=eStwlwoXPYYkUi/+qgl1RtqjFL4QfYpMXn7BZ+uAs6SlQnIjOM/qRLqY0U+GHRqUkj
+         XDNhhublOH71HcOFe1JWt8JnnBZgF5qBdvk0oJPFIqqR1BaP4Y2kM++nPJU4mB3b07UK
+         nLrhPHzyPxjHa9Mj0kxky9Wqushxq4ywLP5rOTSSxTNT6D8ptfrMqeOgQqZqngl/KueV
+         ZI+Vcqy/RdB+lFW6I9KHMoW1w8yF/7MUZ/tgazex3D6939KqGJXCJLu4z08lEQG7o7zt
+         /tby3Yp65fYtAntfRDV2xLyJ2T5RDVSt1trpFPv/PAOJAjlrjLIYy88nZLhFd97yo0sN
+         00Bw==
+X-Gm-Message-State: AOAM533HotQGUkBuUd5/PliRnGBzSH3bYl60XBJrkJDRvY5OBXln2hiv
+        GGSSVpDqbUFt8+W6/V1kKk7nMlCSDFRi4+KHXKL9hg==
+X-Google-Smtp-Source: ABdhPJwbrVnmzJ0PnXN6sJ8jR7GyGTkbutQcRFVK+AheZaDBzYwZNbSJrjKJ1Gle1sfdgNlgwcpeGqJ0VnvJV9KH3Mw=
+X-Received: by 2002:a05:6000:1209:: with SMTP id e9mr12809989wrx.404.1595331021943;
+ Tue, 21 Jul 2020 04:30:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200717120207.3471030-1-cychiang@chromium.org> <CAD=FV=XFayyvT-b9C3f4pXNkboH7kb7ikyi9qJxmNvowOfkjqQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=XFayyvT-b9C3f4pXNkboH7kb7ikyi9qJxmNvowOfkjqQ@mail.gmail.com>
+From:   Cheng-yi Chiang <cychiang@chromium.org>
+Date:   Tue, 21 Jul 2020 19:29:55 +0800
+Message-ID: <CAFv8NwLpVCy4CY8_h0qd7aAEPmaKa3gQYmA3sT1b9fs6fxwtLA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Takashi Iwai <tiwai@suse.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SC7180 the MBA firmware stores the bootup text logs in a 4K segment
-at the beginning of the MBA region. Add support to extract the logs
-which will be useful to debug mba boot/authentication issues.
+On Fri, Jul 17, 2020 at 11:03 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
+Thanks for the review!
 
-V2:
- * Don't dump logs in mba_reclaim path [Bjorn]
- * Move has_mba_logs check to q6v5_dump_mba_logs [Bjorn]
- * SDM845 mss was incorrectly marked to support mba logs
+> On Fri, Jul 17, 2020 at 5:02 AM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
+> >
+> > Add devicetree bindings documentation file for sc7180 sound card.
+> >
+> > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> > ---
+> >  .../bindings/sound/qcom,sc7180.yaml           | 123 ++++++++++++++++++
+> >  1 file changed, 123 insertions(+)
+>
+> A bit of a mechanical review since my audio knowledge is not strong.
+>
+>
+> >  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> > new file mode 100644
+> > index 000000000000..d60d2880d991
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> > @@ -0,0 +1,123 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
+> > +
+> > +maintainers:
+> > +  - Rohit kumar <rohitkr@codeaurora.org>
+> > +  - Cheng-Yi Chiang <cychiang@chromium.org>
+> > +
+> > +description: |
+> > +  This binding describes the SC7180 sound card, which uses LPASS for audio.
+>
+> nit: you don't need the pipe at the end of the "description" line.
+> That means that newlines are important and you don't need it.
+>
+>
+Thanks for the explanation. Fixed in v2.
+> > +definitions:
+>
+> I haven't yet seen much yaml using definitions like this.  It feels
+> like overkill for some of these properties, especially ones that are
+> only ever used once in the "properties:" section and are/or are really
+> simple.
+>
+>
+ACK. In v2 I only kept dai definition and removed others.
 
- drivers/remoteproc/qcom_q6v5_mss.c | 38 +++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+> > +  link-name:
+> > +    description: Indicates dai-link name and PCM stream name.
+> > +    $ref: /schemas/types.yaml#/definitions/string
+> > +    maxItems: 1
+> > +
+> > +  dai:
+> > +    type: object
+> > +    properties:
+> > +      sound-dai:
+> > +        maxItems: 1
+> > +        $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +        description: phandle array of the codec or CPU DAI
+> > +
+> > +    required:
+> > +      - sound-dai
+> > +
+> > +  unidirectional:
+> > +    description: Specify direction of unidirectional dai link.
+> > +                 0 for playback only. 1 for capture only.
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+>
+> So if the property isn't there then it's _not_ unidirectional and if
+> it is there then this specifies the direction, right?  I almost wonder
+> if this should just be two boolean properties, like:
+>
+> playback-only;
+> capture-only;
+>
+> ...but I guess I'd leave it to Rob and/or Mark to say what they liked
+> better.  In any case if you keep it how you have it then you should
+> use yaml to force it to be either 0 or 1 if present.
+>
+>
+ACK
+Use playback-only and capture-only in v2 instead.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 49cd16e050533..945ca2652e7d6 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -9,6 +9,7 @@
- 
- #include <linux/clk.h>
- #include <linux/delay.h>
-+#include <linux/devcoredump.h>
- #include <linux/dma-mapping.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
-@@ -37,6 +38,8 @@
- 
- #define MPSS_CRASH_REASON_SMEM		421
- 
-+#define MBA_LOG_SIZE			SZ_4K
-+
- /* RMB Status Register Values */
- #define RMB_PBL_SUCCESS			0x1
- 
-@@ -141,6 +144,7 @@ struct rproc_hexagon_res {
- 	int version;
- 	bool need_mem_protection;
- 	bool has_alt_reset;
-+	bool has_mba_logs;
- 	bool has_spare_reg;
- };
- 
-@@ -202,6 +206,7 @@ struct q6v5 {
- 	struct qcom_sysmon *sysmon;
- 	bool need_mem_protection;
- 	bool has_alt_reset;
-+	bool has_mba_logs;
- 	bool has_spare_reg;
- 	int mpss_perm;
- 	int mba_perm;
-@@ -521,6 +526,26 @@ static int q6v5_rmb_mba_wait(struct q6v5 *qproc, u32 status, int ms)
- 	return val;
- }
- 
-+static void q6v5_dump_mba_logs(struct q6v5 *qproc)
-+{
-+	struct rproc *rproc = qproc->rproc;
-+	void *data;
-+
-+	if (!qproc->has_mba_logs)
-+		return;
-+
-+	if (q6v5_xfer_mem_ownership(qproc, &qproc->mba_perm, true, false, qproc->mba_phys,
-+				    qproc->mba_size))
-+		return;
-+
-+	data = vmalloc(MBA_LOG_SIZE);
-+	if (!data)
-+		return;
-+
-+	memcpy(data, qproc->mba_region, MBA_LOG_SIZE);
-+	dev_coredumpv(&rproc->dev, data, MBA_LOG_SIZE, GFP_KERNEL);
-+}
-+
- static int q6v5proc_reset(struct q6v5 *qproc)
- {
- 	u32 val;
-@@ -839,6 +864,7 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- {
- 	int ret;
- 	int xfermemop_ret;
-+	bool mba_load_err = false;
- 
- 	qcom_q6v5_prepare(&qproc->q6v5);
- 
-@@ -932,7 +958,7 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_nc);
--
-+	mba_load_err = true;
- reclaim_mba:
- 	xfermemop_ret = q6v5_xfer_mem_ownership(qproc, &qproc->mba_perm, true,
- 						false, qproc->mba_phys,
-@@ -940,6 +966,8 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- 	if (xfermemop_ret) {
- 		dev_err(qproc->dev,
- 			"Failed to reclaim mba buffer, system may become unstable\n");
-+	} else if (mba_load_err) {
-+		q6v5_dump_mba_logs(qproc);
- 	}
- 
- disable_active_clks:
-@@ -1298,6 +1326,7 @@ static int q6v5_start(struct rproc *rproc)
- 
- reclaim_mpss:
- 	q6v5_mba_reclaim(qproc);
-+	q6v5_dump_mba_logs(qproc);
- 
- 	return ret;
- }
-@@ -1717,6 +1746,7 @@ static int q6v5_probe(struct platform_device *pdev)
- 
- 	qproc->version = desc->version;
- 	qproc->need_mem_protection = desc->need_mem_protection;
-+	qproc->has_mba_logs = desc->has_mba_logs;
- 
- 	ret = qcom_q6v5_init(&qproc->q6v5, pdev, rproc, MPSS_CRASH_REASON_SMEM,
- 			     qcom_msa_handover);
-@@ -1808,6 +1838,7 @@ static const struct rproc_hexagon_res sc7180_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = false,
-+	.has_mba_logs = true,
- 	.has_spare_reg = true,
- 	.version = MSS_SC7180,
- };
-@@ -1843,6 +1874,7 @@ static const struct rproc_hexagon_res sdm845_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = true,
-+	.has_mba_logs = false,
- 	.has_spare_reg = false,
- 	.version = MSS_SDM845,
- };
-@@ -1870,6 +1902,7 @@ static const struct rproc_hexagon_res msm8998_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = false,
-+	.has_mba_logs = false,
- 	.has_spare_reg = false,
- 	.version = MSS_MSM8998,
- };
-@@ -1900,6 +1933,7 @@ static const struct rproc_hexagon_res msm8996_mss = {
- 	},
- 	.need_mem_protection = true,
- 	.has_alt_reset = false,
-+	.has_mba_logs = false,
- 	.has_spare_reg = false,
- 	.version = MSS_MSM8996,
- };
-@@ -1933,6 +1967,7 @@ static const struct rproc_hexagon_res msm8916_mss = {
- 	},
- 	.need_mem_protection = false,
- 	.has_alt_reset = false,
-+	.has_mba_logs = false,
- 	.has_spare_reg = false,
- 	.version = MSS_MSM8916,
- };
-@@ -1974,6 +2009,7 @@ static const struct rproc_hexagon_res msm8974_mss = {
- 	},
- 	.need_mem_protection = false,
- 	.has_alt_reset = false,
-+	.has_mba_logs = false,
- 	.has_spare_reg = false,
- 	.version = MSS_MSM8974,
- };
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> > +
+> > +properties:
+> > +  compatible:
+> > +    contains:
+> > +      enum:
+> > +        - qcom,sc7180-sndcard
+>
+> Just:
+>
+> properties:
+>   compatible:
+>     const: qcom,sc7180-sndcard
+>
+>
 
+Fixed in v2.
+
+>
+> > +  audio-routing:
+> > +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> > +    description: |-
+> > +      A list of the connections between audio components. Each entry is a
+> > +      pair of strings, the first being the connection's sink, the second
+> > +      being the connection's source.
+>
+> You don't need the "|-" after the "description:".  That says newlines
+> are important but strip the newline from the end.
+>
+Fixed in v2.
+>
+> > +  model:
+> > +    $ref: /schemas/types.yaml#/definitions/string
+> > +    description: User specified audio sound card name
+> > +
+> > +patternProperties:
+> > +  "^dai-link-[0-9]+$":
+> > +    description: |
+> > +      Each subnode represents a dai link. Subnodes of each dai links would be
+> > +      cpu/codec dais.
+>
+> From looking at "simple-card.yaml", I'm gonna guess that instead of
+> encoding the link number in the name of the node that you should
+> actually use a unit address and a reg in the subnodes.
+
+Thanks for the explanation. Fixed in v2.
+I think this naming is better, although there is no usage in the
+machine driver for the reg.
+
+>
+> ...also, again your description doesn't need the "|" at the end.
+> Maybe <https://yaml-multiline.info/> will be useful to you?
+>
+>
+
+Thanks for the explanation and the pointer!
+
+> > +    type: object
+> > +
+> > +    properties:
+> > +      link-name:
+> > +        $ref: "#/definitions/link-name"
+> > +
+> > +      unidirectional:
+> > +        $ref: "#/definitions/unidirectional"
+> > +
+> > +      cpu:
+> > +        $ref: "#/definitions/dai"
+> > +
+> > +      codec:
+> > +        $ref: "#/definitions/dai"
+> > +
+> > +    required:
+> > +      - link-name
+> > +      - cpu
+> > +      - codec
+> > +
+> > +    additionalProperties: false
+> > +
+> > +examples:
+> > +
+> > +  - |
+> > +    snd {
+>
+> Can you use the full node name "sound" here?
+>
+>
+Fixed in v2.
+> > +        compatible = "qcom,sc7180-sndcard";
+> > +        model = "sc7180-snd-card";
+> > +
+> > +        pinctrl-names = "default";
+> > +        pinctrl-0 = <&sec_mi2s_active &sec_mi2s_dout_active
+> > +                     &sec_mi2s_ws_active &pri_mi2s_active
+> > +                     &pri_mi2s_dout_active &pri_mi2s_ws_active
+> > +                     &pri_mi2s_din_active &pri_mi2s_mclk_active>;
+>
+> I think pinctrl is usually not in the dt examples.
+>
+Fixed in v2.
+
+> ...also, shouldn't the mi2s pinctrl be in the i2s nodes, not in the
+> overall sound node?
+
+Yes. Thanks for pointing this out. Fixed in dts file in chromium.
+
+>
+>
+> > +        audio-routing =
+> > +                    "Headphone Jack", "HPOL",
+> > +                    "Headphone Jack", "HPOR";
+> > +
+> > +        dai-link-0 {
+> > +            link-name = "MultiMedia0";
+> > +            cpu {
+> > +                sound-dai = <&lpass_cpu 0>;
+> > +            };
+> > +
+> > +            codec {
+> > +                sound-dai = <&alc5682 0>;
+> > +            };
+> > +        };
+> > +
+> > +        dai-link-1 {
+> > +            link-name = "MultiMedia1";
+> > +            unidirectional = <0>;
+> > +            cpu {
+> > +                sound-dai = <&lpass_cpu 1>;
+> > +            };
+> > +
+> > +            codec {
+> > +                sound-dai = <&max98357a>;
+> > +            };
+> > +        };
+> > +    };
+> > --
+> > 2.28.0.rc0.105.gf9edc3c819-goog
+> >
