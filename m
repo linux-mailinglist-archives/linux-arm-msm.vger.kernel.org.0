@@ -2,110 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1213222881E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 20:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91AAB2288A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Jul 2020 20:57:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728700AbgGUSUo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 14:20:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50536 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726029AbgGUSUn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 14:20:43 -0400
-Received: from sol.localdomain (c-107-3-166-239.hsd1.ca.comcast.net [107.3.166.239])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 70947206C1;
-        Tue, 21 Jul 2020 18:20:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595355642;
-        bh=wGA+7C6ar5QUHd0QZw7ELHe+8sc5aAWQcey1cDxWIcg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=2JMjTEVL1FsxQ+U8oSPaTFB2N9f0F3iGSp73gJpKCsxPw3zDwy/z4gZU4HcBl4gin
-         pe4zubXjweUc2+z07dm/x17ExE5N6zai3rTVNKT35UPMbsQp/QHu2YBVy+CpuHTpvu
-         80mfiPgkyzPKLEDDO5qSLCTL07P5Oc0Tu4L3NOfQ=
-Date:   Tue, 21 Jul 2020 11:20:41 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        SCSI <linux-scsi@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Satya Tangirala <satyat@google.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Subject: Re: [PATCH v6 3/5] arm64: dts: sdm845: add Inline Crypto Engine
- registers and clock
-Message-ID: <20200721182041.GA39383@sol.localdomain>
-References: <CAL_Jsq+t1h4w8C361vguw1co_vnbMKs3q4qWR4=jwAKr1Vm80g@mail.gmail.com>
- <20200714164353.GB1064009@gmail.com>
- <CAL_JsqK-wUuo6azYseC35R=Q509=h9-v4gFvcvy8wXrDgSw5ZQ@mail.gmail.com>
- <20200714171203.GC1064009@gmail.com>
- <20200714173111.GG388985@builder.lan>
- <20200714174345.GE1218486@builder.lan>
- <20200714175718.GD1064009@gmail.com>
- <20200714200027.GH388985@builder.lan>
- <20200715030004.GB38091@sol.localdomain>
- <20200720170713.GD1292162@gmail.com>
+        id S1730407AbgGUS4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 14:56:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39528 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730385AbgGUSzy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 14:55:54 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC01C0619DC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 11:55:54 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id b92so2112499pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 11:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=lpeIcRunQtO1GGzh3TnMCT3eJ1HuVXVaMnC4hvPTV4c=;
+        b=ZraJZ4OwJkwVmBY42CcXjaMSGWMq/bEwpXlTSwQGzBF9ZA0nVcvlHRAaAUTae7CEcJ
+         HRvrYykoG7LZQk21X2pu+3X9ko3Q2QQcYkEqwDeMFUMHzm0x8087W8Tob7xr2aF0EG7F
+         SnjxzWSKMqw16bMmbqJXylH4/GIyEVkaBWcUo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=lpeIcRunQtO1GGzh3TnMCT3eJ1HuVXVaMnC4hvPTV4c=;
+        b=oBXNP57K4N+LRnjBvPfqRhiYJ6LMDx0rGj6kkG/FLcRGIvhlFklxp3oDH4JEci4obT
+         QT3ab3AbY3myYsjuao8WlQEuFh3T9OC6ITsAHp0NJQhTH5nZkpB8XcDmFGL7kYo/zpKT
+         rYV1eq4WB6R7akMNMRffKTARmOwTbwCTMbss9Za6MbXJIxIx3NTRYzXpQRDZiDXm1QyP
+         kjYamXC665mafcgWed/9F6JKmomyKNJ71X7gz2PZEVuSPSQ94KnJZ2FuLItfRBd97Kc4
+         iFWl51r+gANlg4qXJRQnMW+V7xWeG8O0jhJiML/Qz4CHSost+n52Mvi1vtLcmyhpU8SY
+         6z4A==
+X-Gm-Message-State: AOAM533nOG11xweguBasQUMoyMUhNT2Hkje4E/LZ/pghdwKv9IFKIpRk
+        hM0xrx2TTeB0TcDc7grRpzfYyA==
+X-Google-Smtp-Source: ABdhPJx2s7en67gEWbb+sWP2Jr0NJevBxR5Urhrc0eYJJ/jKRPIBgjMxDqiQ1yQJRt75lnNByN9MpA==
+X-Received: by 2002:a17:90a:a887:: with SMTP id h7mr6323580pjq.0.1595357754027;
+        Tue, 21 Jul 2020 11:55:54 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id e191sm20976433pfh.42.2020.07.21.11.55.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jul 2020 11:55:53 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200720170713.GD1292162@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAD=FV=X=NDym3V31dQ8c341UwQm9pDybUCR8jFF1JR99XeVKVw@mail.gmail.com>
+References: <20200720172448.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid> <159531115483.3847286.18280088484118119899@swboyd.mtv.corp.google.com> <159531527579.3847286.1254956818647049462@swboyd.mtv.corp.google.com> <CAD=FV=X=NDym3V31dQ8c341UwQm9pDybUCR8jFF1JR99XeVKVw@mail.gmail.com>
+Subject: Re: [PATCH] i2c: i2c-qcom-geni: Fix DMA transfer race
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Wolfram Sang <wsa@the-dreams.de>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-i2c@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Date:   Tue, 21 Jul 2020 11:55:52 -0700
+Message-ID: <159535775253.3847286.5195740102798837524@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 10:07:13AM -0700, Eric Biggers wrote:
-> > > No, let's not complicate it without good reason. SDM845 has hw_ver.major
-> > > == 3, so we're not taking the else-path in ufs_qcom_init(). So I should
-> > > be able to just merge this patch for 5.9 through the qcom tree after
-> > > all (your code handles that it's not there and the existing code doesn't
-> > > care).
-> > > 
-> > > 
-> > > The two platforms that I can find that has UFS controller of
-> > > hw_ver.major == 1 is APQ8084 and MSM8994, so I simply didn't look at an
-> > > old enough downstream tree (msm-3.10) to find anyone specifying reg[1].
-> > > The reg specified is however coming from the TLMM (pinctrl-msm) hardware
-> > > block, so it should not be directly remapped in the UFS driver...
-> > > 
-> > > But regardless, that has not been seen in an upstream dts and per your
-> > > patch 2 we would add that reg by name when that happens.
-> > > There's recent activity on upstreaming more of the MSM8994 support, so
-> > > perhaps then it's best to leave this snippet in the driver for now.
-> > > 
-> > > 
-> > > Summary: Martin merges (merged?) patch 1, 2, 4 and 5 in the scsi tree,
-> > > I'll merge this patch as is in the qcom tree and we'll just leave the
-> > > dev_ref_clk handling as is for now then.
-> > > 
-> > 
-> > Okay, great.  So an old DTS with the new driver isn't a problem because no DTS
-> > has ever declared dev_ref_clk_ctrl.  And a new DTS with an old driver is a less
-> > important case, and also not really a problem here since breakage would only
-> > occur if we added the ICE registers to an older SoC that has hw_ver.major == 1.
-> > 
-> > Maybe you'd like to provide your Acked-by on patches 2 and 5?
-> > 
-> > My instinct is always to remove code that has never been used.  But sure, if you
-> > think the dev_ref_clk_ctrl code might be used soon, we can keep it for now.
-> > 
+Quoting Doug Anderson (2020-07-21 09:18:35)
+> On Tue, Jul 21, 2020 at 12:08 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Stephen Boyd (2020-07-20 22:59:14)
+> > >
+> > > I worry that we also need a dmb() here to make sure the dma buffer is
+> > > properly mapped before this write to the device is attempted. But it =
+may
+> > > only matter to be before the I2C_READ.
+> > >
+> >
+> > I'm suggesting this patch instead where we make geni_se_setup_m_cmd()
+> > use a writel() so that it has the proper barrier semantics to wait for
+> > the other memory writes that happened in program order before this point
+> > to complete before the device is kicked to do a read or a write.
+>=20
+> Are you saying that dma_map_single() isn't guaranteed to have a
+> barrier or something?  I tried to do some searching and found a thread
+> [1] where someone tried to add a barrierless variant of them.  To me
+> that means that the current APIs have barriers.
+>=20
+> ...or is there something else you're worried about?
 
-Martin,
+I'm not really thinking about dma_map_single() having a barrier or not.
+The patch you mention is from 2010. Many things have changed in the last
+decade. Does it have barrier semantics? The presence of a patch on the
+mailing list doesn't mean much.
 
-As per the above discussion, Bjorn has included this device tree patch
-in his pull request for 5.9:
-https://lore.kernel.org/linux-arm-msm/20200721044934.3430084-1-bjorn.andersson@linaro.org/
+Specifically I'm looking at "KERNEL I/O BARRIER EFFECTS" of
+Documentation/memory-barriers.txt and noticing that this driver is using
+relaxed IO accessors meaning that the reads and writes aren't ordered
+with respect to other memory accesses. They're only ordered to
+themselves within the same device. I'm concerned that the CPU will issue
+the IO access to start the write DMA operation before the buffer is
+copied over due to out of order execution.
 
-Could you apply patches 1-2 and 4-5 to the scsi tree now?
+I'm not an expert in this area, but this is why we ask driver authors to
+use the non-relaxed accessors because they have the appropriate
+semantics built in to make them easy to reason about. They do what they
+say when they say to do it.
 
-Thanks!
+>=20
+>=20
+> > ----8<----
+> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2=
+c-qcom-geni.c
+> > index 18d1e4fd4cf3..7f130829bf01 100644
+> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> > @@ -367,7 +367,6 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev =
+*gi2c, struct i2c_msg *msg,
+> >                 geni_se_select_mode(se, GENI_SE_FIFO);
+> >
+> >         writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
+> > -       geni_se_setup_m_cmd(se, I2C_READ, m_param);
+> >
+> >         if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
+> >                 geni_se_select_mode(se, GENI_SE_FIFO);
+> > @@ -375,6 +374,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev =
+*gi2c, struct i2c_msg *msg,
+> >                 dma_buf =3D NULL;
+> >         }
+> >
+> > +       geni_se_setup_m_cmd(se, I2C_READ, m_param);
+>=20
+> I guess it's true that we only need the setup_m_cmd moved.
 
-- Eric
+Alright cool. That makes more sense.
+
+>=20
+>=20
+> > +
+> >         time_left =3D wait_for_completion_timeout(&gi2c->done, XFER_TIM=
+EOUT);
+> >         if (!time_left)
+> >                 geni_i2c_abort_xfer(gi2c);
+> > @@ -408,7 +409,6 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev =
+*gi2c, struct i2c_msg *msg,
+> >                 geni_se_select_mode(se, GENI_SE_FIFO);
+> >
+> >         writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
+> > -       geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
+> >
+> >         if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
+> >                 geni_se_select_mode(se, GENI_SE_FIFO);
+> > @@ -416,6 +416,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev =
+*gi2c, struct i2c_msg *msg,
+> >                 dma_buf =3D NULL;
+> >         }
+> >
+> > +       geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
+> > +
+>=20
+> True, it's probably safer to do the TX too even if I'm not seeing
+> problems there.  Of course, I don't think I'm doing any large writes
+> so probably never triggering this path anyway.
+
+Right, this is just by inspection of the code to see that it's the same
+scenario, kicking off the DMA operation at the device before mapping the
+buffer.
+
+>=20
+>=20
+> >         if (!dma_buf) /* Get FIFO IRQ */
+> >                 writel_relaxed(1, se->base + SE_GENI_TX_WATERMARK_REG);
+> >
