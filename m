@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1512294D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 11:25:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F7F22294FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 11:33:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731424AbgGVJZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 05:25:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32772 "EHLO
+        id S1730345AbgGVJcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 05:32:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731419AbgGVJZZ (ORCPT
+        with ESMTP id S1726147AbgGVJcw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 05:25:25 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62309C0619DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 02:25:25 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id 88so1194019wrh.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 02:25:25 -0700 (PDT)
+        Wed, 22 Jul 2020 05:32:52 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C3FC0619DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 02:32:52 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id 17so1333395wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 02:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=S6Nwi+XiUVd0OOIyZo0IP6xJ55suQgOnuZqnCWRgVZw=;
-        b=g1ZsFxEhiRXbNG+ztNk0WYGgRisSQvFLGa/yPUpQjUqSBDBtusq0mYFHBpClTnZlfz
-         56HUtteXZqUm44MRLvY1L9j2rJ6v6PhQxzGnPS7TrogZ8ctKQ0DqEynZRzaZRUANmizK
-         Ou2NqUoa7f7xz03hrMTUnLNpOuAuUUyEsS4MhQ4X0jviUtTffEi60gMVhYrzY8w3tqNV
-         OFeT2GOSmEL/FljwbYGBsndvTZi0Zec9Tf9HUzj9SqZY3nudj2vUHe8Uy/S724+gp5U5
-         8wXaGZFKnGxOw1Np9U+SUy5OMBrXlJaKsqQCsDkyX1k/Ub/YSrAUI0lwFha/l+QCS/AW
-         kyRA==
+        bh=vwHeqn+GJzfqT5CHnpILDuTc+uk5/83NXLaFNZ81FAQ=;
+        b=SJDv4Myfu5X3zHK+ZO/6qmjypR9DI38Rgn1FDEfoZriY45kXLlNSIHTHaayb97o7Tj
+         AVB1Ooh66VJYwzvW+NqHyeRSkplkbsr3J7TJyNwCLkJ2Ath/oqP3/vatAKAZ3r0dZzI7
+         9T5d3kG7aV5MEzkr0zK29kX8VDMu+qcj+PKmgoJ7rbnZZTAliolbgxP1NQmcJIAB0qzV
+         qXvozH6KKekeMfKI+j3eZePPuh71BarOqpbBD0+GmaOzF6uWcDOjBLXfrFaLkY/iwSdw
+         SMHaB5HK3+4iBzNk1Wza8n8SXCVf1zJa9fncDbxYka43v0tPapuGYuc396NgYt6lSDTw
+         45yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=S6Nwi+XiUVd0OOIyZo0IP6xJ55suQgOnuZqnCWRgVZw=;
-        b=NWoBmB3C9Xm+YrLEyXQLMIPBUVlXev0fqJ4kV7lkJc6u8p/9oDJkqlcikIKJ+t1FsD
-         cuIZRsKn0nPg6oOyMQa3E3PkVngLdIVI17JMRMde15elIaHg7zBGXYog2LEJBgR7hgqQ
-         Q8tfptEB0tqe9zxLOSL0N7/6ciE06x4iK5v4h67CNSqCG8OZlYq6U6xsa68HzdQxf8lx
-         1IU3aC0C0AxdZpiKvFixWSjsMwLG8z8yMkk5dGVUoWxX9Q5/WbbEb3e4LZiPnwYCD300
-         dO2vulR2h1w/3ok0pQSWVNFJGwYWLIu2jhaD0i0Qm4upPm42PPmCumn9CtoT/amGPd5R
-         junA==
-X-Gm-Message-State: AOAM531LqEhGqYhdAheP3CQpgYrl7K9SnbYdbVM6kOfGAK/zpJvcV4QK
-        k9biezovcROIl6piJ62hf3bKbsx6N1o=
-X-Google-Smtp-Source: ABdhPJxa2U+7moUvkrSiQntHeegnCBrblh3LM+LX5eVN9hCBMBrL1WonkQ67UXjlNdOw+x5Ykmp2fA==
-X-Received: by 2002:adf:b1cf:: with SMTP id r15mr32484484wra.118.1595409923974;
-        Wed, 22 Jul 2020 02:25:23 -0700 (PDT)
+        bh=vwHeqn+GJzfqT5CHnpILDuTc+uk5/83NXLaFNZ81FAQ=;
+        b=oqJDK/NJhqf6Ap9hiboaYaQ2NUIONUcnVQmzVpJ5cfjuP4Iq/P5l0jErKhsGnVS9+H
+         WHl6sK/1qITCWqR3lYJCJ2TQdnJ54SmOFeQdyxnSAUXsDugRP3g3r3/kteQUPS06Adom
+         CK9r55InvyQeV69PDPGPvcMaumQpL1iqdKqktuOg5KJgrzdxWu1QGjhdGRcVJz6+akAt
+         7D5edLzOZi/HODJGty9OtqOwDJ9gcTCoLffyISvVA2pmFIVCBbdlh5YhcpZPnoU56I1e
+         IkMKndijCAHPVfpCNxuRGMnW8M/Y42qXxDjcBGEjiFoOVXAr3fg368eG2qqBY2ci3jQg
+         sLyQ==
+X-Gm-Message-State: AOAM533WX3925Lw0yJjTeJLu6VjL3FMeQfopRXInwfjVI68vZnu/vsjz
+        Q1BpJPTdY72JU1osIHNIdKEAbMozTE8=
+X-Google-Smtp-Source: ABdhPJy+YLy8wuuNSuXK5kp8TEQtybRcvNVmXB/t2lxxEDfw5VOpIW+z+1gT7UDISw2IRJ9pa9exiA==
+X-Received: by 2002:a1c:7d85:: with SMTP id y127mr8112024wmc.181.1595410371197;
+        Wed, 22 Jul 2020 02:32:51 -0700 (PDT)
 Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id x204sm3761989wmg.2.2020.07.22.02.25.22
+        by smtp.googlemail.com with ESMTPSA id w16sm44813847wrg.95.2020.07.22.02.32.50
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jul 2020 02:25:23 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine
- bindings
-To:     Cheng-Yi Chiang <cychiang@chromium.org>,
+        Wed, 22 Jul 2020 02:32:50 -0700 (PDT)
+Subject: Re: [PATCH v2 1/1] nvmem: qcom-spmi-sdam: Enable multiple devices
+To:     Guru Das Srinagesh <gurus@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        Shyam Kumar Thella <sthella@codeaurora.org>,
         linux-kernel@vger.kernel.org
-Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
-        dgreid@chromium.org, tzungbi@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org, pierre-louis.bossart@linux.intel.com
-References: <20200721104422.369368-1-cychiang@chromium.org>
- <20200721104422.369368-2-cychiang@chromium.org>
+References: <1595360761-640-1-git-send-email-gurus@codeaurora.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <c270a068-c96b-63ae-a5ca-ec2081924dac@linaro.org>
-Date:   Wed, 22 Jul 2020 10:25:22 +0100
+Message-ID: <a81a3563-1a87-d302-054e-bc20db8de1e7@linaro.org>
+Date:   Wed, 22 Jul 2020 10:32:49 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20200721104422.369368-2-cychiang@chromium.org>
+In-Reply-To: <1595360761-640-1-git-send-email-gurus@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -86,168 +75,43 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 21/07/2020 11:44, Cheng-Yi Chiang wrote:
-> Add devicetree bindings documentation file for sc7180 sound card.
+On 21/07/2020 20:46, Guru Das Srinagesh wrote:
+> Using pdev->id as the nvmem's config ID (which, by default, is
+> NVMEM_DEVID_NONE) prevents multiple instances of this driver from
+> probing because of the following error:
 > 
-> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+>    sysfs: cannot create duplicate filename '/bus/nvmem/devices/spmi_sdam'
+> 
+> Use NVMEM_DEVID_AUTO as the NVMEM config ID to fix the issue.
+> 
+> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
 > ---
->   .../bindings/sound/qcom,sc7180.yaml           | 130 ++++++++++++++++++
->   1 file changed, 130 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> new file mode 100644
-> index 000000000000..82f9483276eb
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> @@ -0,0 +1,130 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
-> +
-> +maintainers:
-> +  - Rohit kumar <rohitkr@codeaurora.org>
-> +  - Cheng-Yi Chiang <cychiang@chromium.org>
-> +
-> +description:
-> +  This binding describes the SC7180 sound card which uses LPASS for audio.
-> +
-> +definitions:
-> +
-> +  dai:
-> +    type: object
-> +    properties:
-> +      sound-dai:
-> +        maxItems: 1
-> +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        description: phandle array of the codec or CPU DAI
-> +
-> +    required:
-> +      - sound-dai
-> +
-> +properties:
-> +  compatible:
-> +    contains:
-> +      const: qcom,sc7180-sndcard
-> +
-> +  audio-routing:
-> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +    description:
-> +      A list of the connections between audio components. Each entry is a
-> +      pair of strings, the first being the connection's sink, the second
-> +      being the connection's source.
-> +
-> +  model:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: User specified audio sound card name
-> +
-> +  aux-dev:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: phandle of the codec for headset detection
+>   drivers/nvmem/qcom-spmi-sdam.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-Why do we need this? You should be able to set the jack for codec 
-snd_soc_component_set_jack()?
-
-
-> +
-> +patternProperties:
-> +  "^dai-link(@[0-9]+)?$":
-> +    description:
-> +      Each subnode represents a dai link. Subnodes of each dai links would be
-> +      cpu/codec dais.
-> +
-> +    type: object
-> +
-> +    properties:
-> +      link-name:
-> +        description: Indicates dai-link name and PCM stream name.
-> +        $ref: /schemas/types.yaml#/definitions/string
-> +        maxItems: 1
-> +
-> +      reg:
-> +        description: dai link address.
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        maxItems: 1
-
-Why do we need this?? I have not seen the parsing code using this.
-
-
-> +
-> +      playback-only:
-> +        description: Specify that the dai link is only for playback.
-> +        $ref: /schemas/types.yaml#/definitions/flag
-> +
-> +      capture-only:
-> +        description: Specify that the dai link is only for capture.
-> +        $ref: /schemas/types.yaml#/definitions/flag
-> +
-
-Are these because the cpu/codec dais are single directional?
-
-If so you can extend snd_soc_dai_link_set_capabilities() and use this 
-function.
-
+Applied thanks,
 
 --srini
-
-> +      cpu:
-> +        $ref: "#/definitions/dai"
-> +
-> +      codec:
-> +        $ref: "#/definitions/dai"
-> +
-> +    required:
-> +      - link-name
-> +      - reg
-> +      - cpu
-> +      - codec
-> +
-> +    additionalProperties: false
-> +
-> +examples:
-> +
-> +  - |
-> +    sound {
-> +        compatible = "qcom,sc7180-sndcard";
-> +        model = "sc7180-snd-card";
-> +
-> +        audio-routing =
-> +                    "Headphone Jack", "HPOL",
-> +                    "Headphone Jack", "HPOR";
-> +
-> +        aux-dev = <&alc5682>;
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        dai-link@0 {
-> +            reg = <0>;
-> +            link-name = "MultiMedia0";
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 0>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&alc5682 0>;
-> +            };
-> +        };
-> +
-> +        dai-link@1 {
-> +            reg = <1>;
-> +            link-name = "MultiMedia1";
-> +            playback-only;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 1>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&max98357a>;
-> +            };
-> +        };
-> +    };
+> 
+> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
+> index 8682cda..a72704c 100644
+> --- a/drivers/nvmem/qcom-spmi-sdam.c
+> +++ b/drivers/nvmem/qcom-spmi-sdam.c
+> @@ -1,6 +1,6 @@
+>   // SPDX-License-Identifier: GPL-2.0-only
+>   /*
+> - * Copyright (c) 2017 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2017, 2020 The Linux Foundation. All rights reserved.
+>    */
+>   
+>   #include <linux/device.h>
+> @@ -141,7 +141,7 @@ static int sdam_probe(struct platform_device *pdev)
+>   
+>   	sdam->sdam_config.dev = &pdev->dev;
+>   	sdam->sdam_config.name = "spmi_sdam";
+> -	sdam->sdam_config.id = pdev->id;
+> +	sdam->sdam_config.id = NVMEM_DEVID_AUTO;
+>   	sdam->sdam_config.owner = THIS_MODULE,
+>   	sdam->sdam_config.stride = 1;
+>   	sdam->sdam_config.word_size = 1;
 > 
