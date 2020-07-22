@@ -2,81 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B79228FA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 07:25:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF7D6228FB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 07:30:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbgGVFZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 01:25:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57504 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726161AbgGVFZo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 01:25:44 -0400
-Received: from sol.localdomain (c-107-3-166-239.hsd1.ca.comcast.net [107.3.166.239])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 525A420792;
-        Wed, 22 Jul 2020 05:25:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595395543;
-        bh=+8+3ynaf3hYB3oQcCs6OC0hpH4ApFIYLOFpwrQLUXEk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Sxk6whZ3gSGtpY8p/PyLIn8aDijtyPbE5UUZ84zymmMdAzvmD2fbbGOxC7SJ9DhY4
-         Qq2xgzYkHqt7qvrTGSxQ68vqYHLimHutrZey20kIobjxXRsMUkN9qBAamc8OLf8ux+
-         PMe9yykQ2EyZO5/703MmMlcmUNwivMCxCETVQtJY=
-Date:   Tue, 21 Jul 2020 22:25:41 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Steev Klimaszewski <steev@kali.org>,
+        id S1726147AbgGVFa2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 01:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726253AbgGVFa2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Jul 2020 01:30:28 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4F13C0619DB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:30:27 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id w126so408417pfw.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:30:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dl6zwzhq+FsMerc9qwgjpE1ja24WRPYdLlSyn3M9Lhc=;
+        b=wFYPLNpIceaExhbJzjXzj6tDwJR+E2dHZTr/ewhWaneEnAkKVT4tW3ngs4Ana5WOY4
+         JfAbIvMdjf1VIJe9UXtwIm9fjoqxZ4usIYpwHCVaZavJIFFd+fnrU6vME5UiA3OflLMv
+         PjFwR9gTJfbDkCNCnxFjdkM5ybfl439hSbbNWHF+AANDuDpkYtixQfBLNPZswGRM2DZc
+         A+KAoq8xOpfUBwZcC55ebWCtTICdrxK1ie00kDe8G4+14vi1XxzOFtfhfeTXnUap7efU
+         QN1XAOgUSvgdOOotJ2DjwrU3ZOPO07v9BSL1HUBLvu0PwWszIbIqxbQX6Ez2fani/u8w
+         0nmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dl6zwzhq+FsMerc9qwgjpE1ja24WRPYdLlSyn3M9Lhc=;
+        b=NO8gFXW6eN1SVUkeLpAVrO/fM4+IF78VDIGaf5aqQJZjKU94FlCg3PIlh0eh3BY2Qt
+         7zusJ1b32vFi6St4GqzVCD2ZkInfIZ8zRBUfMpcL84OFCAIEzXUm5XaTiV+ueOSzs+1p
+         ve4qjqRE1B2GH8sStVAQchewpYOFpM4waeGLvNxOVS6Ytof4pO+JxpLMpHrTxZOf+klB
+         jjmE532Yw29spPsgdRCWj/thmlWwfRu7W9Vxgtee7nd8bFdljfieSdrkEQEm2qbWcSUd
+         ZZXjq7TNfMFqkjABrdnKDiLkgR/xv/OTErcnacsK5z279Jh5v+logVSG7sP4unZiwoN2
+         UKwQ==
+X-Gm-Message-State: AOAM532Wz827WfCPJ6thbDj8mvFk49rEth1HliiwR7NKGiNXOn141nt5
+        tOBQVj7e7/lxtG3Lq60LWLqLKA==
+X-Google-Smtp-Source: ABdhPJwOr+y0DG+QB+DOdgrlRofbLELHLiFlXrD3oG8oQpR/O3B/puROrAIHaF3LxSmr19O0mGHgVA==
+X-Received: by 2002:a62:8fc6:: with SMTP id n189mr25703478pfd.10.1595395827137;
+        Tue, 21 Jul 2020 22:30:27 -0700 (PDT)
+Received: from localhost ([182.77.116.224])
+        by smtp.gmail.com with ESMTPSA id ml8sm4857037pjb.47.2020.07.21.22.30.25
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Jul 2020 22:30:26 -0700 (PDT)
+Date:   Wed, 22 Jul 2020 11:00:23 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
+        saravanak@google.com, Sibi Sankar <sibis@codeaurora.org>,
+        Jonathan <jonathan@marek.ca>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Satya Tangirala <satyat@google.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        linux-fscrypt@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Can Guo <cang@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>
-Subject: Re: [PATCH v6 0/5] Inline crypto support on DragonBoard 845c
-Message-ID: <20200722052541.GB39383@sol.localdomain>
-References: <20200710072013.177481-1-ebiggers@kernel.org>
- <159539205429.31352.16564389172198122676.b4-ty@oracle.com>
+        Dave Airlie <airlied@gmail.com>
+Subject: Re: [PATCH v5 0/6] Add support for GPU DDR BW scaling
+Message-ID: <20200722053023.vwaoj5oqh4cazzzz@vireshk-mac-ubuntu>
+References: <1594644106-22449-1-git-send-email-akhilpo@codeaurora.org>
+ <CAF6AEGtAEwZbWxLb4MxaWNswvtrFbLK+N0Fez2XYr7odKZffWA@mail.gmail.com>
+ <20200720100131.6ux4zumbwqpa42ye@vireshk-mac-ubuntu>
+ <CAF6AEGurrsd3nrbB=ktZjWfKTNbKwPHYwTFiZdD-NOW1T7gePQ@mail.gmail.com>
+ <20200721032442.hv7l4q6633vnmnfe@vireshk-mac-ubuntu>
+ <CAF6AEGuhQcRskGhrFvmCf5T3EcZ9S+3LRdZBiaDYqF34yZjd+A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <159539205429.31352.16564389172198122676.b4-ty@oracle.com>
+In-Reply-To: <CAF6AEGuhQcRskGhrFvmCf5T3EcZ9S+3LRdZBiaDYqF34yZjd+A@mail.gmail.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Martin,
+On 21-07-20, 07:28, Rob Clark wrote:
+> With your ack, I can add the patch the dev_pm_opp_set_bw patch to my
+> tree and merge it via msm-next -> drm-next -> linus
 
-On Wed, Jul 22, 2020 at 12:28:29AM -0400, Martin K. Petersen wrote:
-> On Fri, 10 Jul 2020 00:20:07 -0700, Eric Biggers wrote:
-> 
-> > This patchset implements UFS inline encryption support on the
-> > DragonBoard 845c, using the Qualcomm Inline Crypto Engine (ICE)
-> > that's present on the Snapdragon 845 SoC.
-> > 
-> > This is based on top of scsi/5.9/scsi-queue, which contains the
-> > ufshcd-crypto patches by Satya Tangirala.
-> > 
-> > [...]
-> 
-> Applied to 5.9/scsi-queue, thanks!
-> 
-> [1/5] scsi: firmware: qcom_scm: Add support for programming inline crypto keys
->       https://git.kernel.org/mkp/scsi/c/e10d24786adb
-> [2/5] scsi: ufs-qcom: Name the dev_ref_clk_ctrl registers
->       https://git.kernel.org/mkp/scsi/c/12700db4f9f7
-> [4/5] scsi: ufs: Add program_key() variant op
->       https://git.kernel.org/mkp/scsi/c/a5fedfacb402
-> [5/5] scsi: ufs-qcom: Add Inline Crypto Engine support
->       https://git.kernel.org/mkp/scsi/c/de9063fbd769
+I wanted to send it via my tree, but its okay. Pick this patch from
+linux-next and add my Ack, I will drop it after that.
 
-Seems that something went wrong when you applied patch 5.  It's supposed to add
-the file ufs-qcom-ice.c, but the committed version doesn't have that file.
+a8351c12c6c7 OPP: Add and export helper to set bandwidth
 
-- Eric
+> Otherwise I can send a second later pull req that adds the final patch
+> after has rebased to 5.9-rc1 (by which point the opp next tree will
+> have presumably been merged
+
+The PM stuff gets pushed fairly early and so I was asking you to
+rebase just on my tree, so you could have sent the pull request right
+after the PM tree landed there instead of waiting for rc1.
+
+But its fine now.
+
+-- 
+viresh
