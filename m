@@ -2,116 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7F22294FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 11:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DFD0229626
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 12:32:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730345AbgGVJcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 05:32:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33916 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726147AbgGVJcw (ORCPT
+        id S1731203AbgGVKcj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 06:32:39 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:41296 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731953AbgGVKch (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 05:32:52 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C3FC0619DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 02:32:52 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id 17so1333395wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 02:32:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=vwHeqn+GJzfqT5CHnpILDuTc+uk5/83NXLaFNZ81FAQ=;
-        b=SJDv4Myfu5X3zHK+ZO/6qmjypR9DI38Rgn1FDEfoZriY45kXLlNSIHTHaayb97o7Tj
-         AVB1Ooh66VJYwzvW+NqHyeRSkplkbsr3J7TJyNwCLkJ2Ath/oqP3/vatAKAZ3r0dZzI7
-         9T5d3kG7aV5MEzkr0zK29kX8VDMu+qcj+PKmgoJ7rbnZZTAliolbgxP1NQmcJIAB0qzV
-         qXvozH6KKekeMfKI+j3eZePPuh71BarOqpbBD0+GmaOzF6uWcDOjBLXfrFaLkY/iwSdw
-         SMHaB5HK3+4iBzNk1Wza8n8SXCVf1zJa9fncDbxYka43v0tPapuGYuc396NgYt6lSDTw
-         45yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=vwHeqn+GJzfqT5CHnpILDuTc+uk5/83NXLaFNZ81FAQ=;
-        b=oqJDK/NJhqf6Ap9hiboaYaQ2NUIONUcnVQmzVpJ5cfjuP4Iq/P5l0jErKhsGnVS9+H
-         WHl6sK/1qITCWqR3lYJCJ2TQdnJ54SmOFeQdyxnSAUXsDugRP3g3r3/kteQUPS06Adom
-         CK9r55InvyQeV69PDPGPvcMaumQpL1iqdKqktuOg5KJgrzdxWu1QGjhdGRcVJz6+akAt
-         7D5edLzOZi/HODJGty9OtqOwDJ9gcTCoLffyISvVA2pmFIVCBbdlh5YhcpZPnoU56I1e
-         IkMKndijCAHPVfpCNxuRGMnW8M/Y42qXxDjcBGEjiFoOVXAr3fg368eG2qqBY2ci3jQg
-         sLyQ==
-X-Gm-Message-State: AOAM533WX3925Lw0yJjTeJLu6VjL3FMeQfopRXInwfjVI68vZnu/vsjz
-        Q1BpJPTdY72JU1osIHNIdKEAbMozTE8=
-X-Google-Smtp-Source: ABdhPJy+YLy8wuuNSuXK5kp8TEQtybRcvNVmXB/t2lxxEDfw5VOpIW+z+1gT7UDISw2IRJ9pa9exiA==
-X-Received: by 2002:a1c:7d85:: with SMTP id y127mr8112024wmc.181.1595410371197;
-        Wed, 22 Jul 2020 02:32:51 -0700 (PDT)
-Received: from [192.168.86.34] (cpc89974-aztw32-2-0-cust43.18-1.cable.virginm.net. [86.30.250.44])
-        by smtp.googlemail.com with ESMTPSA id w16sm44813847wrg.95.2020.07.22.02.32.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jul 2020 02:32:50 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] nvmem: qcom-spmi-sdam: Enable multiple devices
-To:     Guru Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Shyam Kumar Thella <sthella@codeaurora.org>,
+        Wed, 22 Jul 2020 06:32:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595413957; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=wDVfiFLz8Bt9wOyiO9QdnWfu6iohpkpROaAy4Q28ldA=; b=I1EdfTpMNDyeUB1CLKICITFBeACtDPmlukjllQTsUXpyYihc9d5G7JqlswM+ybTvDBrEbgzF
+ 41eRhVMLoOVe6sU+tchNNiSUr/E5+IqF5xTHsdFo453SZDo+12yTsoAgj8LT+jclPDf3ZGEv
+ nG09NrPy3l6rDkbShlYTUeU/xEw=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f1815aeed710aec62f6d5a9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 22 Jul 2020 10:32:14
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F0C7C433A1; Wed, 22 Jul 2020 10:32:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from rohkumar-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3B121C433CA;
+        Wed, 22 Jul 2020 10:32:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3B121C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+From:   Rohit kumar <rohitkr@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <1595360761-640-1-git-send-email-gurus@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <a81a3563-1a87-d302-054e-bc20db8de1e7@linaro.org>
-Date:   Wed, 22 Jul 2020 10:32:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <1595360761-640-1-git-send-email-gurus@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Cc:     Rohit kumar <rohitkr@codeaurora.org>
+Subject: [PATCH v4 00/12] ASoC: qcom: Add support for SC7180 lpass variant
+Date:   Wed, 22 Jul 2020 16:01:43 +0530
+Message-Id: <1595413915-17867-1-git-send-email-rohitkr@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch chain add audio support for SC7180 soc by doing the required
+modification in existing common lpass-cpu/lpass-platform driver.
+This also fixes some concurrency issue.
 
+Changes since v3:
+	- Fixed yaml documentation comments and make dt_binding_check issues.
+	- Moved general fixes out of sc7180 specific patches as suggested by Srinivas.
+	- Update clock-names to make it same as existing platforms.
 
-On 21/07/2020 20:46, Guru Das Srinagesh wrote:
-> Using pdev->id as the nvmem's config ID (which, by default, is
-> NVMEM_DEVID_NONE) prevents multiple instances of this driver from
-> probing because of the following error:
-> 
->    sysfs: cannot create duplicate filename '/bus/nvmem/devices/spmi_sdam'
-> 
-> Use NVMEM_DEVID_AUTO as the NVMEM config ID to fix the issue.
-> 
-> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> ---
->   drivers/nvmem/qcom-spmi-sdam.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+Ajit Pandey (4):
+  ASoC: qcom: Add common array to initialize soc based core clocks
+  ASoC: qcom: lpass-platform: Replace card->dev with component->dev
+  include: dt-bindings: sound: Add sc7180-lpass bindings header
+  ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
 
-Applied thanks,
+Rohit kumar (8):
+  ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+  ASoC: qcom: lpass-platform: fix memory leak
+  ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
+  ASoC: qcom: lpass-cpu: fix concurrency issue
+  dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
+  ASoC: qcom: lpass-cpu: Use platform_get_resource
+  ASoC: qcom: lpass-platform: Use platform_get_irq
+  dt-bindings: sound: lpass-cpu: Move to yaml format
 
---srini
-> 
-> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-> index 8682cda..a72704c 100644
-> --- a/drivers/nvmem/qcom-spmi-sdam.c
-> +++ b/drivers/nvmem/qcom-spmi-sdam.c
-> @@ -1,6 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
-> - * Copyright (c) 2017 The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2017, 2020 The Linux Foundation. All rights reserved.
->    */
->   
->   #include <linux/device.h>
-> @@ -141,7 +141,7 @@ static int sdam_probe(struct platform_device *pdev)
->   
->   	sdam->sdam_config.dev = &pdev->dev;
->   	sdam->sdam_config.name = "spmi_sdam";
-> -	sdam->sdam_config.id = pdev->id;
-> +	sdam->sdam_config.id = NVMEM_DEVID_AUTO;
->   	sdam->sdam_config.owner = THIS_MODULE,
->   	sdam->sdam_config.stride = 1;
->   	sdam->sdam_config.word_size = 1;
-> 
+ .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  79 --------
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 185 ++++++++++++++++++
+ include/dt-bindings/sound/sc7180-lpass.h           |  10 +
+ sound/soc/qcom/Kconfig                             |   5 +
+ sound/soc/qcom/Makefile                            |   2 +
+ sound/soc/qcom/lpass-apq8016.c                     |  86 ++++++--
+ sound/soc/qcom/lpass-cpu.c                         | 204 ++++++++++---------
+ sound/soc/qcom/lpass-ipq806x.c                     |  67 +++++++
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 157 ++++++++-------
+ sound/soc/qcom/lpass-platform.c                    | 155 +++++++++++----
+ sound/soc/qcom/lpass-sc7180.c                      | 216 +++++++++++++++++++++
+ sound/soc/qcom/lpass.h                             |  63 +++++-
+ 12 files changed, 930 insertions(+), 299 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+ create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
+ create mode 100644 sound/soc/qcom/lpass-sc7180.c
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
