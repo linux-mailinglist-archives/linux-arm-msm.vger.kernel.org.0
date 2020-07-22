@@ -2,155 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39BB8229A6A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 16:42:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B236229AB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 16:54:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732761AbgGVOm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 10:42:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50252 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730973AbgGVOm1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 10:42:27 -0400
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 98ABD20787;
-        Wed, 22 Jul 2020 14:42:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595428946;
-        bh=wk9uc9EFeU1U4bZjuLI5oT7Ft4gFDxjC68gV7uHyIQU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=R1rLrUiJOsu7Jts6Z0NU9U/t9UkTln7Iy+U9KrDK4pWNWUGAJ3q+e/6imP0mGETbl
-         KFjcPQUz+kR+c2XAyWPDQZrrACYdPKJSvD481tqUPAxzo8O59XknINk5F662atu6LQ
-         fnV85N6Mm7FSf8goxWEiQoE62PMEWGgIyV5Bky2U=
-Received: by mail-oo1-f41.google.com with SMTP id t6so461467ooh.4;
-        Wed, 22 Jul 2020 07:42:26 -0700 (PDT)
-X-Gm-Message-State: AOAM532K0Qx8WkH6nCpjDJvsoK4lUjZ5KzLGdhkgtiPX7NefUMPfauT0
-        /u/ht0drKVN6n2Ow0ipQftk93ZwuwX+EcVXkyA==
-X-Google-Smtp-Source: ABdhPJyQP1ZRMVJKJdH4QnM2k+ib1BqJI5c0CwiJkic3VdGrn99f7M/qMgn52dXNwA8FzcQBsfsiYcZtAdhuSLxTl7A=
-X-Received: by 2002:a4a:9c0f:: with SMTP id y15mr254900ooj.81.1595428945904;
- Wed, 22 Jul 2020 07:42:25 -0700 (PDT)
+        id S1732773AbgGVOyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 10:54:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55646 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732657AbgGVOyF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Jul 2020 10:54:05 -0400
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F333AC0619DC;
+        Wed, 22 Jul 2020 07:54:04 -0700 (PDT)
+Received: by mail-io1-xd42.google.com with SMTP id q74so2869294iod.1;
+        Wed, 22 Jul 2020 07:54:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OADXM0KWhLmqJmz0AqH4iopPYtJqKSmc3a8uf13KWHw=;
+        b=dkHfU4piZQZLLU82ppQk6hVZ1uOkXtvbi59PgVcl8jb6Ejh+q9DW36WOjv28VKkqY9
+         pD6KJOdK9g5wr8Bf8nxLY5Mv8LL5satch+ApNwHniPPNkwfeG3WTJ9Cg1s2lACEqzEYK
+         4YMv2auliqhoEadsIVDN36WHfUvPaVt1VIN1RK9cHiXEV3xbkckBqLV1AipyasoMJ47M
+         m8DAovJAtklZO+LJrBfwL8/ANB/XQk6RTKqhxcHnhQHFPFWH+ktkkb0QIPsxPDrVNNxr
+         xeexIWsb18SKDnS1HT1OPjjkOPoLXPLxdpblesyzzU+SUu2SaBsO3D0mZv4M9WZEFtkk
+         S7fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OADXM0KWhLmqJmz0AqH4iopPYtJqKSmc3a8uf13KWHw=;
+        b=BaZ0s1DeJrAa4dbYOZ2VnkRaFuBGz+7zeuYFe89uBtncVaRNbI/gQ7cR0g7DclGk7P
+         iODEmItPqOXs9rkdT6frRF3uKAbKrndbHUG7JZe1oltXA5ySDZt/JhXB9QAuiMGpnnpq
+         X+Nt11VRG/ilu80sL4kjglQSW9gfqlnxyxbd0NDCqrsDLsrC3mPDzi8U0VFK04BCslPZ
+         NwyMHP/WGtqaybkQaTqpnCkQejLtT855dHdJHVDoLL6mpRXkdpmAT+p2r3+kJjOrEogI
+         KS8T1hYFzhwEjHZ4O13XSLIgsv8swzEkBzXwAJ9hLjHG3tdxodJGOj3tJDF7Qpfc+US+
+         QW4g==
+X-Gm-Message-State: AOAM533OaEsz5Eg9qL1er1rCt3jKgB6IK3a+1Xx4vjdlGgj8GXqWLOgH
+        wXBYL/sjKmcSj4NqT+mqFsirhfx81OnTjdHj9Ux882A7pv0=
+X-Google-Smtp-Source: ABdhPJzQJaAbYewU9MA/Ib3Rq2MJiG21mch8BEVHivLJt9xht7ckNEsFHmwyL3Ftc7Y59rl2ChMAE0kzTIm12ZPM8xc=
+X-Received: by 2002:a6b:c9c4:: with SMTP id z187mr141353iof.27.1595429644293;
+ Wed, 22 Jul 2020 07:54:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200622075956.171058-1-bjorn.andersson@linaro.org>
- <20200622075956.171058-2-bjorn.andersson@linaro.org> <CAL_JsqKW+R=rygii7N69o28h5780qx645RhPXGQZ4jw3kHadhw@mail.gmail.com>
- <20200722044615.GR388985@builder.lan>
-In-Reply-To: <20200722044615.GR388985@builder.lan>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 22 Jul 2020 08:42:08 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLa9GBtbgN6aL7AQ=A6V-YRtPgYqh6XgM2kpx532+r4Gg@mail.gmail.com>
-Message-ID: <CAL_JsqLa9GBtbgN6aL7AQ=A6V-YRtPgYqh6XgM2kpx532+r4Gg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: hwlock: qcom: Migrate binding to YAML
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
+References: <20200720155217.274994-1-robdclark@gmail.com> <CA+G9fYtj1RBYcPhXZRm-qm5ygtdLj1jD8vFZSqQvwi_DNJLBwQ@mail.gmail.com>
+ <20200722131009.GD27672@8bytes.org>
+In-Reply-To: <20200722131009.GD27672@8bytes.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 22 Jul 2020 07:54:40 -0700
+Message-ID: <CAF6AEGteY6Mwy+jQaj6Vo0e4bMW6P1q19PMmdOqQrxr-RQxkQg@mail.gmail.com>
+Subject: Re: [PATCH] iommu/qcom: Use domain rather than dev as tlb cookie
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     Naresh Kamboju <naresh.kamboju@linaro.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
+        Robin Murphy <robin.murphy@arm.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, lkft-triage@lists.linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 21, 2020 at 10:48 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Wed, Jul 22, 2020 at 6:10 AM Joerg Roedel <joro@8bytes.org> wrote:
 >
-> On Tue 21 Jul 08:13 PDT 2020, Rob Herring wrote:
+> On Tue, Jul 21, 2020 at 12:45:17AM +0530, Naresh Kamboju wrote:
+> > On Mon, 20 Jul 2020 at 21:21, Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > The device may be torn down, but the domain should still be valid.  Lets
+> > > use that as the tlb flush ops cookie.
+> > >
+> > > Fixes a problem reported in [1]
+> >
+> > This proposed fix patch applied on top of linux mainline master
+> > and boot test PASS on db410c.
+> >
+> > The reported problem got fixed.
 >
-> > On Mon, Jun 22, 2020 at 1:59 AM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > Migrate the Qualcomm TCSR mutex binding to YAML to allow validation.
-> > >
-> > > Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >
-> > > Changes since v1:
-> > > - Actually remove the old binding doc
-> > >
-> > >  .../bindings/hwlock/qcom-hwspinlock.txt       | 39 --------------
-> > >  .../bindings/hwlock/qcom-hwspinlock.yaml      | 51 +++++++++++++++++++
-> > >  2 files changed, 51 insertions(+), 39 deletions(-)
-> > >  delete mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.txt
-> > >  create mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> >
-> > [...]
-> >
-> > > diff --git a/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> > > new file mode 100644
-> > > index 000000000000..71e63b52edd5
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> > > @@ -0,0 +1,51 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm Hardware Mutex Block
-> > > +
-> > > +maintainers:
-> > > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > +
-> > > +description:
-> > > +  The hardware block provides mutexes utilized between different processors on
-> > > +  the SoC as part of the communication protocol used by these processors.
-> > > +
-> > > +properties:
-> > > +  compatible:
-> > > +    enum:
-> > > +      - qcom,sfpb-mutex
-> > > +      - qcom,tcsr-mutex
-> > > +
-> > > +  '#hwlock-cells':
-> > > +    const: 1
-> > > +
-> > > +  syscon:
-> > > +    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> > > +    description:
-> > > +      Should be a triple of phandle referencing the TCSR mutex syscon, offset
-> > > +      of first mutex within the syscon and stride between each mutex.
-> > > +
-> > > +required:
-> > > +  - compatible
-> > > +  - '#hwlock-cells'
-> > > +  - syscon
-> > > +
-> > > +additionalProperties: false
-> > > +
-> > > +examples:
-> > > +  - |
-> > > +        tcsr_mutex_block: syscon@fd484000 {
-> > > +                compatible = "syscon";
-> >
-> > 'syscon' alone now generates warnings. Can you drop this node or add a
-> > specific compatible.
-> >
+> Is this needed for v5.8/stable? A fixes tag would be great too.
+
+looks like, yes:
+
+Fixes: 09b5dfff9ad6 ("iommu/qcom: Use accessor functions for iommu
+private data")
+
+BR,
+-R
+
 >
-> In the binding examples or in the dts files as well?
-
-Both, but only the examples need to be warning free at this point. So
-just dropping the node in the example is enough and you can solve this
-for dts files later if you wish.
-
-> The hardware block here is named "TCSR_MUTEX", so the natural compatible
-> to add here would be "qcom,tcsr-mutex", but that already has a meaning -
-> and the syscon node here doesn't carry all required properties...
-
-So you have 2 nodes pointing to the same h/w? Also a no-no...
-
-> Should we perhaps just remove the split model (syscon and
-> qcom,tcsr-mutex as different nodes) from the example and dts files?
-> (While maintaining backwards compatibility in the binding and driver)
+> Regards,
 >
-> For the platforms where we have other drivers that needs to poke in this
-> syscon it seems to work fine to say:
->         compatible = "qcom,tcsr-mutex", "syscon";
-
-Yes. 'syscon' just means automagically create a regmap.
-
-Rob
+>         Joerg
