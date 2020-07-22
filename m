@@ -2,80 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72B56228D4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 02:57:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8A64228DD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 04:06:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731610AbgGVA5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Jul 2020 20:57:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59814 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731474AbgGVA5d (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Jul 2020 20:57:33 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A85FC208E4;
-        Wed, 22 Jul 2020 00:57:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595379453;
-        bh=YFc1Ge3NE0T3bXCC5Gf3GooNVqwqCIBxiYL/YiH8W8o=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=BtVqH/lPGZbQNQGutQe2W2b5gVSMnKSuKUu9razqy0V/4QB6v0uzos6diTaXDgi5Y
-         ojvuOZHz6MlAuRhVLl2NN5Czj87Es2jqzCWEImv5i0aRinMrbQcR7ZypStWJNtVL76
-         HT51hxX9SEkI6yDGv0E9euRMGQ7tmvgzumvwblow=
-Date:   Wed, 22 Jul 2020 01:57:20 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     robh+dt@kernel.org, Kathiravan T <kathirav@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com
-Cc:     sricharan@codeaurora.org, sivaprak@codeaurora.org
-In-Reply-To: <1595225543-12127-1-git-send-email-kathirav@codeaurora.org>
-References: <1595225543-12127-1-git-send-email-kathirav@codeaurora.org>
-Subject: Re: [PATCH V3 0/4] Add frequency / voltage scaling support for IPQ6018 SoC
-Message-Id: <159537943520.49645.2118659765116943270.b4-ty@kernel.org>
+        id S1731630AbgGVCGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Jul 2020 22:06:49 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35]:35958 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1731614AbgGVCGt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Jul 2020 22:06:49 -0400
+Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 5356BB9FFDCA6C681067;
+        Wed, 22 Jul 2020 10:06:46 +0800 (CST)
+Received: from localhost (10.174.179.108) by DGGEMS412-HUB.china.huawei.com
+ (10.3.19.212) with Microsoft SMTP Server id 14.3.487.0; Wed, 22 Jul 2020
+ 10:06:39 +0800
+From:   YueHaibing <yuehaibing@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <akashast@codeaurora.org>, <mka@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH -next] soc: qcom: geni: Fix unused lable warning
+Date:   Wed, 22 Jul 2020 10:06:19 +0800
+Message-ID: <20200722020619.25988-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.174.179.108]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Jul 2020 11:42:19 +0530, Kathiravan T wrote:
-> IPQ6018 SoC uses the PMIC MP5496. SMPA2 and LDOA2 regulator of MP5496
-> controls the APSS and SDCC voltage scaling respectively. Add support
-> for the same.
-> 
-> changes since V2:
-> 	- Rebased on top of linux-next 20200717 tag
-> 	- Addressed Rob's comment to drop the 'syscon' node in qcom,smd-rpm.yaml
-> 	- Picked up the Reviewed-by tag for qcom,smd-rpm-regulator.yaml
-> 	- Regulator patches part of V2 was picked up by Mark and it's available in linux-next tree
-> 
-> [...]
+If CONFIG_SERIAL_EARLYCON is not set, gcc warns this:
 
-Applied to
+drivers/soc/qcom/qcom-geni-se.c: In function ‘geni_se_probe’:
+drivers/soc/qcom/qcom-geni-se.c:914:1: warning: label ‘exit’ defined but not used [-Wunused-label]
+ exit:
+ ^~~~
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+Fixes: 048eb908a1f2 ("soc: qcom-geni-se: Add interconnect support to fix earlycon crash")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ drivers/soc/qcom/qcom-geni-se.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks!
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 3413129d73ef..d0e4f520cff8 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -910,8 +910,8 @@ static int geni_se_probe(struct platform_device *pdev)
+ 	if (of_get_compatible_child(pdev->dev.of_node, "qcom,geni-debug-uart"))
+ 		earlycon_wrapper = wrapper;
+ 	of_node_put(pdev->dev.of_node);
+-#endif
+ exit:
++#endif
+ 	dev_set_drvdata(dev, wrapper);
+ 	dev_dbg(dev, "GENI SE Driver probed\n");
+ 	return devm_of_platform_populate(dev);
+-- 
+2.17.1
 
-[1/1] regulator: convert QCOM SMD-RPM regulator document to YAML schema
-      commit: 175a1d84154d4077da437b873319bd094b266ab8
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
