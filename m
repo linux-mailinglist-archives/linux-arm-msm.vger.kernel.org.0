@@ -2,121 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EFE72296D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 13:02:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4804E229783
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 13:35:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729037AbgGVLBo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 07:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
+        id S1726462AbgGVLfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 07:35:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729849AbgGVLBn (ORCPT
+        with ESMTP id S1726028AbgGVLfr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 07:01:43 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91186C0619E0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 04:01:43 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id f7so1486929wrw.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 04:01:43 -0700 (PDT)
+        Wed, 22 Jul 2020 07:35:47 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B560C0619DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 04:35:47 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id s9so2082371ljm.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 04:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=niAmRUGsg4kxR596xiqQAVaMYD9d+SGcGWnDYDntXxM=;
-        b=r94Bx+p3fcIDdAUsi8ATLuebYYefpEfjtAfalUhzc8pUWLe7DYZlGToUERmUT6175v
-         ridcQ7TDaWP5Jou4y5JCHVow5LoJaJmJTCGsqXpB1OrI5UBftKfAYaVYfwzURR66u/H9
-         iHci+7rpt+mdko5bdHcESZMNj4ARx6gtgIhfZZ/o0auMSlQPxuV4B2FlB+9MMh7yl9Iv
-         nBI5Anaw9Q7+OmR8XNlS06NTmtjbZTzwh5i4lOJra4g19ge0YzKw0ZZOzzm/YUG6QVwU
-         8Am9GunVPEw14N3o7HFV6CuCO0QWUc6s/ie+Uy5RY9m5EjGvqPB07L4KQv75NEShn5qI
-         N7IA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=TGNDP7TokQIPIiDyQQilw1gTxHg2ntwORp5IuJSSxuk=;
+        b=aZL9LR7W/tIRttDyuKuxTLD2H6940gR+znMFp2lInXL0+1POU9uVrCT4hYQxPdhmrn
+         S2+g7c/STj8trDv1J2dQh3yyuNbmZ/FBmfEofuV2tYt9DbWbverlMsjtAkntWgcoBobl
+         GmDgFcdpbAIHAOBcT+RBAoeWRhrGDrKkVU9oGAjoW+TesAdIwns/dtIXqAMavqIOPb8q
+         xHk0KNI0Tyh4U6NHUfxwyi5CC896PdNiIKLXyXjv83xR+Xzdz2Uq+gXtg41h/iWsNeyf
+         sH5vhVzLjP4d3Igau5+FBEbxHeer8J86otHzCm6cfki7BTD3cKxo7/mNY4xV309jy07l
+         VllQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=niAmRUGsg4kxR596xiqQAVaMYD9d+SGcGWnDYDntXxM=;
-        b=V5uAJiC1vzpi++gg+6qqtVtZu3CyzNabpga3Dj3blRf1vOF341EZrlJdHWU9F6uEkf
-         Z1k+MrnjLzORT65wBmT7HLGAr3Cr1g5/Yc0rfg3RtHcZfFLRUBbZbuuIJN6AyTct4xBe
-         57M0QYivjSgBjG5Gz6SU1q3vW6S6A1/YV6aQi7rDMRZykYX6w8FWJQ1f3/zsGiAcLNmc
-         VWsivsbaJW91JYHnhseRvHU9niD+agLaZM4419qPqj6IPc1x7KIrXWqIMQag/8Bcpwjn
-         p+iCJlAR9TPZPiWr3/Yo6TdLEuMOrCTM+83W2hN+YE+IUKKySdl1DEd3pIoyjihBbuQo
-         PFAg==
-X-Gm-Message-State: AOAM5313SEk0XToLKE/Avjpy6rvG2XXdnkxjTHvqAJ8IfLH/vu5UgRe+
-        QlR3DPfFoLnKiij8FA0QCS9SBg==
-X-Google-Smtp-Source: ABdhPJxDV2Vmpdiz+h/u+9NMFx3xGKLE7lckZbCG8ZfyTR6oMuWNipVN11Zb3mzDpjoxhrGwzS6DbQ==
-X-Received: by 2002:a5d:4a0d:: with SMTP id m13mr13001479wrq.12.1595415702339;
-        Wed, 22 Jul 2020 04:01:42 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id y6sm41256164wrr.74.2020.07.22.04.01.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jul 2020 04:01:41 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org
-Cc:     saravanak@google.com, mdtipton@codeaurora.org,
-        okukatla@codeaurora.org, bjorn.andersson@linaro.org,
-        vincent.guittot@linaro.org, georgi.djakov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] interconnect: qcom: Use icc_sync_state in sdm845 and osm-3l drivers
-Date:   Wed, 22 Jul 2020 14:01:39 +0300
-Message-Id: <20200722110139.24778-3-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200722110139.24778-1-georgi.djakov@linaro.org>
-References: <20200722110139.24778-1-georgi.djakov@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TGNDP7TokQIPIiDyQQilw1gTxHg2ntwORp5IuJSSxuk=;
+        b=LT4md9DeuCp2jD+cqNpWD2Y7faBUshftHXKFYGFsDdwX+t1nUoD26gkQ2aID2DSOf7
+         fKiYC+dYxA1r9z9gxUUYTav0puDqFl4c/X7jG44919Wj/7+iSi5qWVVsOp5V/OaDqNiD
+         5aEy3Lth3V9sdeFWs0BLeAl+LhDh+JaP9Z3+xHtUY1eGZJhPHzMZCj2ZVqDV2y8ngx/r
+         ZIcXsBvmv7vd/Dw2x/keynrXn27Lcpzpkf/OBqoNCc8/yeEuP8sVsZU2ML/wWZg5gsgV
+         EnV54N9Q2vfFTSKVcJcQ7oHn8fKHG+OH2bbT/sD9OsxhJZJXJ8/5h4i0Go0h+MJYjOtg
+         oeQg==
+X-Gm-Message-State: AOAM532M8EIfJQFaZhZ1+bTML6XGrhE0KgMBzbNjNEZgx2Wzori34wF2
+        lfyYRe80OWudLjwA47vRFKgGUg==
+X-Google-Smtp-Source: ABdhPJx10tJmh0m7u1T2ZgbF1/QplULMvy/0nd1WW5FAXaMP8a/XeDzSYyeVLyeB1Xeshxh8kVGUpQ==
+X-Received: by 2002:a2e:978c:: with SMTP id y12mr14882344lji.270.1595417745685;
+        Wed, 22 Jul 2020 04:35:45 -0700 (PDT)
+Received: from [192.168.1.12] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id p1sm6537308lji.93.2020.07.22.04.35.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Jul 2020 04:35:44 -0700 (PDT)
+Subject: Re: [PATCH v2 5/6] media: s5p-mfc: Use standard frame skip mode
+ control
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Maheshwar Ajja <majja@codeaurora.org>,
+        Nicolas Dufresne <nicolas@ndufresne.ca>
+References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
+ <20200721074538.505-6-stanimir.varbanov@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <d219e893-8a9e-e977-a901-d17b71121555@linaro.org>
+Date:   Wed, 22 Jul 2020 14:35:37 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200721074538.505-6-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lowering the bandwidth on the bus might have negative consequences if
-it's done before all consumers had a chance to cast their vote. Let's
-return the maximum amount of bandwidth as initial value. This bandwidth
-level would be maintained until all consumers have probed.
+Hi,
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- drivers/interconnect/qcom/osm-l3.c | 3 +++
- drivers/interconnect/qcom/sdm845.c | 3 +++
- 2 files changed, 6 insertions(+)
+Could someone mfc driver maintainers ack or review this patch?
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index 96fb9ff5ff2e..54aff6273af1 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -236,6 +236,8 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 
- 		node->name = qnodes[i]->name;
- 		node->data = qnodes[i];
-+		node->init_avg = INT_MAX;
-+		node->init_peak = INT_MAX;
- 		icc_node_add(node, provider);
- 
- 		for (j = 0; j < qnodes[i]->num_links; j++)
-@@ -268,6 +270,7 @@ static struct platform_driver osm_l3_driver = {
- 	.driver = {
- 		.name = "osm-l3",
- 		.of_match_table = osm_l3_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(osm_l3_driver);
-diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-index f6c7b969520d..c04775820f15 100644
---- a/drivers/interconnect/qcom/sdm845.c
-+++ b/drivers/interconnect/qcom/sdm845.c
-@@ -503,6 +503,8 @@ static int qnoc_probe(struct platform_device *pdev)
- 
- 		node->name = qnodes[i]->name;
- 		node->data = qnodes[i];
-+		node->init_avg = INT_MAX;
-+		node->init_peak = INT_MAX;
- 		icc_node_add(node, provider);
- 
- 		for (j = 0; j < qnodes[i]->num_links; j++)
-@@ -559,6 +561,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sdm845",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
+On 7/21/20 10:45 AM, Stanimir Varbanov wrote:
+> Use the standard menu control for frame skip mode in the MFC
+> driver. The legacy private menu control is kept for backward
+> compatibility.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  drivers/media/platform/s5p-mfc/s5p_mfc_enc.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+> index 912fe0c5ab18..3092eb6777a5 100644
+> --- a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+> +++ b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+> @@ -261,6 +261,11 @@ static struct mfc_control controls[] = {
+>  		.menu_skip_mask = 0,
+>  		.default_value = V4L2_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE_DISABLED,
+>  	},
+> +	{
+> +		.id = V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE,
+> +		.maximum = V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT,
+> +		.default_value = V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED,
+> +	},
+>  	{
+>  		.id = V4L2_CID_MPEG_MFC51_VIDEO_RC_FIXED_TARGET_BIT,
+>  		.type = V4L2_CTRL_TYPE_BOOLEAN,
+> @@ -1849,6 +1854,7 @@ static int s5p_mfc_enc_s_ctrl(struct v4l2_ctrl *ctrl)
+>  		p->seq_hdr_mode = ctrl->val;
+>  		break;
+>  	case V4L2_CID_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE:
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
+>  		p->frame_skip_mode = ctrl->val;
+>  		break;
+>  	case V4L2_CID_MPEG_MFC51_VIDEO_RC_FIXED_TARGET_BIT:
+> 
+
+-- 
+regards,
+Stan
