@@ -2,58 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9B7A22A08D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 22:11:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE47F22A1AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 00:00:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732348AbgGVULU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 16:11:20 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:60101 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732735AbgGVULO (ORCPT
+        id S1730286AbgGVWAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 18:00:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37414 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726452AbgGVWA3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 16:11:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595448673; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=REoXVWQbHijBuNKTFEkR7jVwMDFykpE2PFboAKq4xoI=; b=paJ+8JMLtppbiWg6yuvjaYftW3+izvjPwVK3mcqmZerrAc0w5MMXGziLceCt8RIsnIo9inrm
- tLwk3JGEX2OJrWbmfWgenM0xSflug25EuRfL57K0NddNyQ25d2EJX9pqMq0mwtNR0M1xK9e0
- hfe6HhBeDDkix7QTeScFN9NeEQ0=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5f189d6165270fa5953aeb2a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 22 Jul 2020 20:11:13
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E3B65C433A0; Wed, 22 Jul 2020 20:11:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A1D69C43391;
-        Wed, 22 Jul 2020 20:11:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A1D69C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, ohad@wizery.com,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v3 3/3] remoteproc: qcom_q6v5_mss: Add modem debug policy support
-Date:   Thu, 23 Jul 2020 01:40:47 +0530
-Message-Id: <20200722201047.12975-4-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200722201047.12975-1-sibis@codeaurora.org>
-References: <20200722201047.12975-1-sibis@codeaurora.org>
+        Wed, 22 Jul 2020 18:00:29 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93EBC0619DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 15:00:29 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id 8so2201699pjj.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 15:00:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N8+S2bs/z4ong2YrfE5GwRztsvmrOV1x6iJptONruQ0=;
+        b=J8nGwE8Z6AcRTaG73HoFvoUiIYSNEt7re2zANYCmw5IQOU7tN6t8rgdNm/mCE7mulD
+         2DqGU0X4O5Fxqm6nc1MusIKF/IPRHB1DME6QXlO0DxV6HdW+kjuX7WZ8rTD28AR1YBDb
+         XwFB/CcyJ65OruUfOL8Dv8PHJcs54lVFMKPH4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N8+S2bs/z4ong2YrfE5GwRztsvmrOV1x6iJptONruQ0=;
+        b=psrSkyr5c5E1NHrTLCxJIKybVRc84PBp4cUiUrOq31C2faVqonkYGBWEDT1mx/FmEu
+         +Qi0EoTKqlAs6HDpzUPN0sD58qzGIxe/R9WYeKHWnh2ptS+WTV9emiLSTwfckuOsnlAj
+         MlIfWqKz3mYs/16dgKaEUw6KiJgbK+zBqphniouaBovrZuSEFuM0fZ1SsbITYFhSlckb
+         SLF4DEtBrM9o106hd8t0oMNJAYKkS2nSl9LmmT251/42tXkWUbzE2pBj4cw5nyx3a+gt
+         EMQmFUgG65o3QBdpja69E+5S+uyYNR5XArwk2KZAX6htYgyGISwkGpuHGrgCiM9lufR6
+         Scdw==
+X-Gm-Message-State: AOAM533qT6G+ESsKvpmLsiAgvE2pWgoLjjU9rYJGWxhchrK+Y6rV4Hmd
+        WM49ujaWQYStI9GlgdxqHMfEFw==
+X-Google-Smtp-Source: ABdhPJy2c6o/MRrkKFm8aPWmkth//QhJMrLmzY21twfgd+iLnkoZPn9A4WSB+3YAdPMnaGK6BeC/mQ==
+X-Received: by 2002:a17:90b:f16:: with SMTP id br22mr1417424pjb.170.1595455228985;
+        Wed, 22 Jul 2020 15:00:28 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id kx3sm641235pjb.32.2020.07.22.15.00.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2020 15:00:28 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Wolfram Sang <wsa@the-dreams.de>
+Cc:     swboyd@chromium.org, msavaliy@codeaurora.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
+        Sagar Dharia <sdharia@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] i2c: i2c-qcom-geni: Fix DMA transfer race
+Date:   Wed, 22 Jul 2020 15:00:21 -0700
+Message-Id: <20200722145948.v2.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
+X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -61,96 +71,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add modem debug policy support which will enable coredumps and live
-debug support when the msadp firmware is present on secure devices.
+When I have KASAN enabled on my kernel and I start stressing the
+touchscreen my system tends to hang.  The touchscreen is one of the
+only things that does a lot of big i2c transfers and ends up hitting
+the DMA paths in the geni i2c driver.  It appears that KASAN adds
+enough delay in my system to tickle a race condition in the DMA setup
+code.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+When the system hangs, I found that it was running the geni_i2c_irq()
+over and over again.  It had these:
+
+m_stat   = 0x04000080
+rx_st    = 0x30000011
+dm_tx_st = 0x00000000
+dm_rx_st = 0x00000000
+dma      = 0x00000001
+
+Notably we're in DMA mode but are getting M_RX_IRQ_EN and
+M_RX_FIFO_WATERMARK_EN over and over again.
+
+Putting some traces in geni_i2c_rx_one_msg() showed that when we
+failed we were getting to the start of geni_i2c_rx_one_msg() but were
+never executing geni_se_rx_dma_prep().
+
+I believe that the problem here is that we are starting the geni
+command before we run geni_se_rx_dma_prep().  If a transfer makes it
+far enough before we do that then we get into the state I have
+observed.  Let's change the order, which seems to work fine.
+
+Although problems were seen on the RX path, code inspection suggests
+that the TX should be changed too.  Change it as well.
+
+Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 ---
+Even though this patch is slightly different than v1 I have kept tags.
+Hopefully this is OK.
 
-v3:
- * Fix dp_fw leak and create a separate func for dp load [Bjorn]
- * Reset dp_size on mba_reclaim
+Changes in v2:
+- Fix both TX and RX.
+- Only move the setting up of the command, not the set of the length.
 
-v2:
- * Use request_firmware_direct [Bjorn]
- * Use Bjorn's template to show if debug policy is present
- * Add size check to prevent memcpy out of bounds [Bjorn]
+ drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
- drivers/remoteproc/qcom_q6v5_mss.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index f4aa61ba220dc..da99c8504a346 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -191,6 +191,7 @@ struct q6v5 {
- 	phys_addr_t mba_phys;
- 	void *mba_region;
- 	size_t mba_size;
-+	size_t dp_size;
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 18d1e4fd4cf3..7f130829bf01 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -367,7 +367,6 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
  
- 	phys_addr_t mpss_phys;
- 	phys_addr_t mpss_reloc;
-@@ -408,6 +409,21 @@ static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
- 				   current_perm, next, perms);
- }
+ 	writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
+-	geni_se_setup_m_cmd(se, I2C_READ, m_param);
  
-+static void q6v5_debug_policy_load(struct q6v5 *qproc)
-+{
-+	const struct firmware *dp_fw;
-+
-+	if (request_firmware_direct(&dp_fw, "msadp", qproc->dev))
-+		return;
-+
-+	if (SZ_1M + dp_fw->size <= qproc->mba_size) {
-+		memcpy(qproc->mba_region + SZ_1M, dp_fw->data, dp_fw->size);
-+		qproc->dp_size = dp_fw->size;
-+	}
-+
-+	release_firmware(dp_fw);
-+}
-+
- static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
- {
- 	struct q6v5 *qproc = rproc->priv;
-@@ -419,6 +435,7 @@ static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
+ 	if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
+@@ -375,6 +374,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 		dma_buf = NULL;
  	}
  
- 	memcpy(qproc->mba_region, fw->data, fw->size);
-+	q6v5_debug_policy_load(qproc);
++	geni_se_setup_m_cmd(se, I2C_READ, m_param);
++
+ 	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+ 	if (!time_left)
+ 		geni_i2c_abort_xfer(gi2c);
+@@ -408,7 +409,6 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
  
- 	return 0;
- }
-@@ -928,6 +945,10 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+ 	writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
+-	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
+ 
+ 	if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
+@@ -416,6 +416,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 		dma_buf = NULL;
  	}
  
- 	writel(qproc->mba_phys, qproc->rmb_base + RMB_MBA_IMAGE_REG);
-+	if (qproc->dp_size) {
-+		writel(qproc->mba_phys + SZ_1M, qproc->rmb_base + RMB_PMI_CODE_START_REG);
-+		writel(qproc->dp_size, qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
-+	}
++	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
++
+ 	if (!dma_buf) /* Get FIFO IRQ */
+ 		writel_relaxed(1, se->base + SE_GENI_TX_WATERMARK_REG);
  
- 	ret = q6v5proc_reset(qproc);
- 	if (ret)
-@@ -996,6 +1017,7 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
- 	u32 val;
- 
- 	qproc->dump_mba_loaded = false;
-+	qproc->dp_size = 0;
- 
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
- 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
-@@ -1290,7 +1312,8 @@ static int q6v5_start(struct rproc *rproc)
- 	if (ret)
- 		return ret;
- 
--	dev_info(qproc->dev, "MBA booted, loading mpss\n");
-+	dev_info(qproc->dev, "MBA booted with%s debug policy, loading mpss\n",
-+		 qproc->dp_size ? "" : "out");
- 
- 	ret = q6v5_mpss_load(qproc);
- 	if (ret)
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.28.0.rc0.142.g3c755180ce-goog
 
