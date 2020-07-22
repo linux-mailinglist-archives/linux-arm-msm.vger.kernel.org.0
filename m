@@ -2,249 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A12B228F95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 07:13:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 751D3228F9E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 07:24:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727048AbgGVFNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 01:13:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50396 "EHLO
+        id S1726696AbgGVFYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 01:24:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726696AbgGVFNi (ORCPT
+        with ESMTP id S1726147AbgGVFYs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 01:13:38 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F014C0619DC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:13:38 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id w17so364759ply.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:13:38 -0700 (PDT)
+        Wed, 22 Jul 2020 01:24:48 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD75DC061794
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:24:48 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id m16so384740pls.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:24:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kyW40mM/OT9V1AufihXDPSdCBk+PNGOJQ8TUvnygyu0=;
-        b=UHPnx0lu8znCbPQmSzkqUCxC/yd3EXWaoOYQolSdvOgXpNBJA9xe23Smg2DUnBdVgT
-         VTKDVJwC45NDMs5VvD36kvh4r1wYzREgmSRJXVsaqOsSRX9j9GBbtF3/Z9PJq/i0gGR0
-         MASYeR/IWw06VwykSfxzn0XrcfFZHb5GvkGWQ+vIW7gdU87SG0o27DIL6A0ehAkIHdwA
-         lePlJhGA7mIpQ5BKcBG8AZuYWM3H+gPypPKc3aTH1wR/S7WYHbR6SrOqrOJDsbhzEvOp
-         lW684CrCVB6y89gZpMOZ+eSK34erJdROkOEwXqMZm/QIGGCF1RfW8Ovp+R2Hg/Neekv7
-         UfWg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=sKsu2k4zgHSwkJM1tGdl1w2cpO2vsxMcLmVlUEcUe4I=;
+        b=tPcUArAXeKgDPP+5uhYAO+IddNgf5clIh1GvfT9og2rVyw/GDB3vMFPJLJT5Q80lK7
+         M16unqNehP0zaoRQWzToJQd6ZSZQT4ojfUQxhSXRUsHWWJUGDOammwIs9huiuZxi+QgC
+         RqbR3edVqGyYFjt1qRUk5KOLP6oCzp4Hg9lm4vF9vhk5WhCCbX34GM0kiucsa6RaR1sB
+         LqHKrmbTDBkhjC+Gt+dyJz7+C0BOn/9dkl3zIibme2ggwqFSRCU1KmiqY7jjlN+vJG+v
+         0OQjg/2MN/F+H6TCzgo18p4/0jV0EXYV2IeDm0dhOKhbJzsZQk58g5Av6pakErnj5qfg
+         nI1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kyW40mM/OT9V1AufihXDPSdCBk+PNGOJQ8TUvnygyu0=;
-        b=FM/XFVsJhi8FK2DIozO1wG6zaamF5ni3M661TF4LmEQkoAz98n5y2K+Q7Kv1d4ZaRH
-         YDQQdQ3+JfdxLwfkB2z57iNNTjmAqxPaRkd++aduSVUrbaZQmM5ngz3PM32FopWxsdeq
-         iL6PeM+dbuToOoNd3CPfBOYMZ3Eu8YD2dT+1qhLgjQ8TazZJRtFoXH7lungXzWEzyUoW
-         hG0eB+D2+RmgB3fEV1SDxtU/g69viJST2PSYvHN7lfKnvQKT1yZ4RvKPy/jVmU03C+bF
-         KL9j3C47h71zD5gSZKmg+3OA1Jz+DtUFRIppQ2ZHSFW2BvgzGc8OOLV9AilLIhLl1bSa
-         6I7A==
-X-Gm-Message-State: AOAM531xL5jBi6ryrJ+Wl9iSIS7woO4vA/k8Se1+vaRNmgO27qxoUZ2L
-        x8kmXrIXwfEIGlnqyS2HXubEcQ==
-X-Google-Smtp-Source: ABdhPJwbs0iPpsLwvI243YAKaid8UfyWbgCAV+j9ANH3B1qSZEmXjfSTQtiRG29H/I3S9JzLBUNOkA==
-X-Received: by 2002:a17:90a:89:: with SMTP id a9mr8566587pja.171.1595394817896;
-        Tue, 21 Jul 2020 22:13:37 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id n2sm19627579pgv.37.2020.07.21.22.13.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2020 22:13:37 -0700 (PDT)
-Date:   Tue, 21 Jul 2020 22:11:43 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        SCSI <linux-scsi@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-fscrypt@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
-        Can Guo <cang@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Satya Tangirala <satyat@google.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Subject: Re: [PATCH v6 3/5] arm64: dts: sdm845: add Inline Crypto Engine
- registers and clock
-Message-ID: <20200722051143.GU388985@builder.lan>
-References: <CAL_Jsq+t1h4w8C361vguw1co_vnbMKs3q4qWR4=jwAKr1Vm80g@mail.gmail.com>
- <20200714164353.GB1064009@gmail.com>
- <CAL_JsqK-wUuo6azYseC35R=Q509=h9-v4gFvcvy8wXrDgSw5ZQ@mail.gmail.com>
- <20200714171203.GC1064009@gmail.com>
- <20200714173111.GG388985@builder.lan>
- <20200714174345.GE1218486@builder.lan>
- <20200714175718.GD1064009@gmail.com>
- <20200714200027.GH388985@builder.lan>
- <20200715030004.GB38091@sol.localdomain>
- <20200720170713.GD1292162@gmail.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sKsu2k4zgHSwkJM1tGdl1w2cpO2vsxMcLmVlUEcUe4I=;
+        b=ZsCKIUKpz5ccLuKetVydYgrk99Mh874GocBGev0Q8Zaog6CWR7VPUI42o4gb01Gp9V
+         +RUPepX2MGWgCs+GstxFwZualeT/EcwywOE9FB/3TMB88ocKD2+gJD7opr4iILLJElVS
+         j6OWyKhS+LsJHNYymwKhQY+UsELbbLOWden/MHYI/xhjrcmuhPsKmXpns0cx3chFGQ1G
+         /vZcBnLzdNcf3Qzw5JMSaZt+XHQMvsInlaXqwVZq0zbJG3CM6elPK8ZonZ9Ld0I2/wFY
+         aoeojvbwZgDTLt61cdjP+dUbusF9pOLQ6HOzOv6Chq0mVvETmAZ8kqMgBXFHiztrQdBn
+         +TqA==
+X-Gm-Message-State: AOAM530h0DYEBHVOmjV48fBvvowSxEcCnQMBPJ5Y0SI+J4rr8Kj/y9o9
+        pPHB2BL947oa4r4ScIfU4GtVrg==
+X-Google-Smtp-Source: ABdhPJy4KtwrRmb0WHGLTdusgx9+v5/UvU1PCVaIysq25oC726zsaTjQhBx2RAqTt8iVfLZkBgfnIg==
+X-Received: by 2002:a17:90a:f68c:: with SMTP id cl12mr7306414pjb.116.1595395488285;
+        Tue, 21 Jul 2020 22:24:48 -0700 (PDT)
+Received: from localhost ([182.77.116.224])
+        by smtp.gmail.com with ESMTPSA id 21sm22102854pfu.124.2020.07.21.22.24.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Jul 2020 22:24:46 -0700 (PDT)
+Date:   Wed, 22 Jul 2020 10:54:44 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@chromium.org,
+        robdclark@gmail.com, stanimir.varbanov@linaro.org,
+        mka@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-serial@vger.kernel.org
+Subject: Re: [PATCH v6 1/6] tty: serial: qcom_geni_serial: Use OPP API to set
+ clk/perf state
+Message-ID: <20200722052444.updchi2yfjgbf3hb@vireshk-mac-ubuntu>
+References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
+ <1592222564-13556-2-git-send-email-rnayak@codeaurora.org>
+ <159347264530.1987609.11350620235820019545@swboyd.mtv.corp.google.com>
+ <a3d53f82-b29d-97ef-3ba1-ca9bd650d354@codeaurora.org>
+ <20200630030552.cfp5oh33qde6nlnf@vireshk-i7>
+ <159532101373.3847286.9695594340556014384@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200720170713.GD1292162@gmail.com>
+In-Reply-To: <159532101373.3847286.9695594340556014384@swboyd.mtv.corp.google.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 20 Jul 10:07 PDT 2020, Eric Biggers wrote:
-
-> On Tue, Jul 14, 2020 at 08:00:04PM -0700, Eric Biggers wrote:
-> > On Tue, Jul 14, 2020 at 01:00:27PM -0700, Bjorn Andersson wrote:
-> > > On Tue 14 Jul 10:57 PDT 2020, Eric Biggers wrote:
-> > > 
-> > > > On Tue, Jul 14, 2020 at 10:43:45AM -0700, Bjorn Andersson wrote:
-> > > > > On Tue 14 Jul 10:31 PDT 2020, Bjorn Andersson wrote:
-> > > > > 
-> > > > > > On Tue 14 Jul 10:12 PDT 2020, Eric Biggers wrote:
-> > > > > > 
-> > > > > > > On Tue, Jul 14, 2020 at 10:59:44AM -0600, Rob Herring wrote:
-> > > > > > > > On Tue, Jul 14, 2020 at 10:43 AM Eric Biggers <ebiggers@kernel.org> wrote:
-> > > > > > > > >
-> > > > > > > > > On Tue, Jul 14, 2020 at 10:35:12AM -0600, Rob Herring wrote:
-> > > > > > > > > > On Tue, Jul 14, 2020 at 10:15 AM Eric Biggers <ebiggers@kernel.org> wrote:
-> > > > > > > > > > >
-> > > > > > > > > > > On Tue, Jul 14, 2020 at 10:16:04AM -0400, Martin K. Petersen wrote:
-> > > > > > > > > > > >
-> > > > > > > > > > > > Eric,
-> > > > > > > > > > > >
-> > > > > > > > > > > > > Add the vendor-specific registers and clock for Qualcomm ICE (Inline
-> > > > > > > > > > > > > Crypto Engine) to the device tree node for the UFS host controller on
-> > > > > > > > > > > > > sdm845, so that the ufs-qcom driver will be able to use inline crypto.
-> > > > > > > > > > > >
-> > > > > > > > > > > > I would like to see an Acked-by for this patch before I merge it.
-> > > > > > > > > > > >
-> > > > > > > > > > >
-> > > > > > > > > > > Andy, Bjorn, or Rob: can you give Acked-by?
-> > > > > > > > > >
-> > > > > > > > > > DTS changes should go in via the QCom tree.
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > So, the DTS patch can't be applied without the driver patches since then the
-> > > > > > > > > driver would misinterpret the ICE registers as the dev_ref_clk_ctrl registers.
-> > > > > > > > 
-> > > > > > > > That sounds broken, but there's no context here for me to comment
-> > > > > > > > further. DTS changes should work with old/stable kernels. I'd suggest
-> > > > > > > > you get a review from Bjorn on the driver first.
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > The "breaking" change is that the dev_ref_clk_ctrl registers are now identified
-> > > > > > > by name instead of assumed to be index 1.
-> > > > > > > 
-> > > > > > > A reviewer had complained about the device-mapper bindings of this driver before
-> > > > > > > (https://lkml.kernel.org/r/158334171487.7173.5606223900174949177@swboyd.mtv.corp.google.com).
-> > > > > > > Changing to identifying the registers by name seemed like an improvement.
-> > > > > > > 
-> > > > > > > If needed I can add a hole at index 1 to make the DTS changes work with
-> > > > > > > old/stable kernels too, but I didn't know that is a requirement.  (Normally for
-> > > > > > > Linux kernel development, kernel-internal refactoring is always allowed
-> > > > > > > upstream.)  If I do this, would this hack have to be carried forever, or would
-> > > > > > > we be able to fix it up eventually?  Is there any deprecation period for DTS, or
-> > > > > > > do the latest DTS have to work with a 20 year old kernel?
-> > > > > > > 
-> > > > > > 
-> > > > > > The problem here is that DT binding refactoring is not kernel-internal.
-> > > > > > It's two different projects living in the same git.
-> > > > > > 
-> > > > > > There's a wish from various people that we make sure that new DTS
-> > > > > > continues to work with existing kernels. This is a nice in theory
-> > > > > > there's a lot of examples where we simply couldn't anticipate how future
-> > > > > > bindings would look. A particular example is that this prohibits most
-> > > > > > advancement in power management.
-> > > > > > 
-> > > > > > 
-> > > > > > But afaict what you describe above would make a new kernel failing to
-> > > > > > operate with the old DTS and that we have agreed to avoid.
-> > > > > > So I think the appropriate way to deal with this is to request the reg
-> > > > > > byname to detect the new binding and if that fails then assume that
-> > > > > > index 1 is dev_ref_clk_ctrl.
-> > > > > > 
-> > > > > 
-> > > > > I took another look at the git history and I can't find a single dts -
-> > > > > either upstream or in any downstream tree - that specifies that second
-> > > > > reg.
-> > > > > 
-> > > > > So per my argument below, if you could include a patch that just removes
-> > > > > the "dev_ref_clk_ctrl_mem" reference from the binding and driver I would
-> > > > > be happy to r-b that and ack this patch.
-> > > > > 
-> > > > > Regards,
-> > > > > Bjorn
-> > > > > 
-> > > > > > 
-> > > > > > There are cases where we just decide not to be backwards compatible, but
-> > > > > > it's pretty rare. As for deprecation, I think 1-2 LTS releases is
-> > > > > > sufficient, at that time scale it doesn't make sense to sit with an old
-> > > > > > DTB anyways (given the current pace of advancements in the kernel).
-> > > > > > 
-> > > > 
-> > > > Great, I'll remove the driver support for "dev_ref_clk_ctrl" then.  However,
-> > > > that doesn't solve the problem of the new DTS breaking old drivers, since old
-> > > > drivers assume that reg[1] is dev_ref_clk_ctrl.
-> > > > 
-> > > > This patch makes the DTS look like:
-> > > > 
-> > > > 	reg = <0 0x01d84000 0 0x2500>,
-> > > > 	      <0 0x01d90000 0 0x8000>;
-> > > > 	reg-names = "std", "ice";
-> > > > 
-> > > > The "ice" registers are new and are accessed by name instead of by index.
-> > > > 
-> > > > But these also happen to be in reg[1].  Old drivers will see that reg[1] is
-> > > > present and assume it is dev_ref_clk_ctrl.
-> > > > 
-> > > > To work around this, I could leave a blank reg[1] entry:
-> > > > 
-> > > > 	reg = <0 0x01d84000 0 0x2500>,
-> > > > 	      <0 0 0 0>,
-> > > > 	      <0 0x01d90000 0 0x8000>;
-> > > > 	reg-names = "std", "dev_ref_clk_ctrl", "ice";
-> > > > 
-> > > > Do I need to do that?
-> > > > 
-> > > 
-> > > No, let's not complicate it without good reason. SDM845 has hw_ver.major
-> > > == 3, so we're not taking the else-path in ufs_qcom_init(). So I should
-> > > be able to just merge this patch for 5.9 through the qcom tree after
-> > > all (your code handles that it's not there and the existing code doesn't
-> > > care).
-> > > 
-> > > 
-> > > The two platforms that I can find that has UFS controller of
-> > > hw_ver.major == 1 is APQ8084 and MSM8994, so I simply didn't look at an
-> > > old enough downstream tree (msm-3.10) to find anyone specifying reg[1].
-> > > The reg specified is however coming from the TLMM (pinctrl-msm) hardware
-> > > block, so it should not be directly remapped in the UFS driver...
-> > > 
-> > > But regardless, that has not been seen in an upstream dts and per your
-> > > patch 2 we would add that reg by name when that happens.
-> > > There's recent activity on upstreaming more of the MSM8994 support, so
-> > > perhaps then it's best to leave this snippet in the driver for now.
-> > > 
-> > > 
-> > > Summary: Martin merges (merged?) patch 1, 2, 4 and 5 in the scsi tree,
-> > > I'll merge this patch as is in the qcom tree and we'll just leave the
-> > > dev_ref_clk handling as is for now then.
-> > > 
-> > 
-> > Okay, great.  So an old DTS with the new driver isn't a problem because no DTS
-> > has ever declared dev_ref_clk_ctrl.  And a new DTS with an old driver is a less
-> > important case, and also not really a problem here since breakage would only
-> > occur if we added the ICE registers to an older SoC that has hw_ver.major == 1.
-> > 
-> > Maybe you'd like to provide your Acked-by on patches 2 and 5?
-> > 
-> > My instinct is always to remove code that has never been used.  But sure, if you
-> > think the dev_ref_clk_ctrl code might be used soon, we can keep it for now.
-> > 
+On 21-07-20, 01:43, Stephen Boyd wrote:
+> It seems that dev_pm_opp_set_rate() calls _find_opp_table() and finds
+> something that isn't an error pointer but then dev_pm_opp_of_add_table()
+> returns an error value because there isn't an operating-points property
+> in DT. We're getting saved because this driver also happens to call
+> dev_pm_opp_set_clkname() which allocates the OPP table a second time
+> (because the first time it got freed when dev_pm_opp_of_add_table()
+> return -ENODEV because the property was missing).
 > 
-> Ping?
+> Why do we need 'has_opp_table' logic? It seems that we have to keep
+> track of the fact that dev_pm_opp_of_add_table() failed so that we don't
+> put the table again, but then dev_pm_opp_set_clkname() can be called
+> to allocate the table regardless.
+> 
+> This maintainer is paying very close attention
 
-Sorry, I thought Martin already did pick up the SCSI patches. I've acked
-the two patches now.
+:)
 
-Let's see what happens on MSM8994 to see if we should alter or remove
-the external ref_clk handling.
+> to super confusing code like
+> this:
+> 
+> 	if (drv->has_opp_table)
+> 		dev_pm_opp_of_remove_table(dev);
+> 	dev_pm_opp_put_clkname(drv->opp_table);
+> 
+> which reads as "if I have an opp table remove it and oh by the way
+> remove the clk name for this opp table pointer I also happen to always
+> have".
+> 
+> Maybe I would be happier if dev_pm_opp_of_table() went away and we just
+> had dev_pm_opp_add_table(const struct opp_config *config) that did all
+> the things for us like set a clk name, set the supported hw, set the
+> prop name, etc. based on the single config struct pointer and also
+> parsed out the OPP table from DT or just ignored that if there isn't any
+> operating-points property. Then the caller wouldn't need to keep track
+> of 'if has_opp_table' because it doesn't seem to actually care and the
+> core is happy to allocate a table for the device anyway so long as it
+> sets a clk name.
 
-Regards,
-Bjorn
+The config style wouldn't work as well as we don't really want to
+allocate an OPP table if the property isn't found in DT.
+
+All the mess is coming from the fact that I wanted to make it easy for
+the generic drivers to have code which can do opp-set-rate or
+clk-set-rate depending on how the platform is configured. While the
+intention was fine, the end result is still not great as you figured
+out.
+
+Because we need to keep a flag to make the right decision anyway, I
+wonder if doing this is the best solution we have at hand.
+
+if (opp-table-present)
+        opp_set_rate();
+else
+        clk_set_rate();
+
+Or maybe stop printing errors from dev_pm_opp_of_remove_table() if the
+OPP table isn't found. And so we can get rid of the flag.
+
+-- 
+viresh
