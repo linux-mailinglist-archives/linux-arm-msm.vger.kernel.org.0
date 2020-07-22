@@ -2,67 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE47F22A1AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 00:00:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFF6F22A1B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 00:01:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730286AbgGVWAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 18:00:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37414 "EHLO
+        id S1733022AbgGVWBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 18:01:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbgGVWA3 (ORCPT
+        with ESMTP id S1729843AbgGVWBY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 18:00:29 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93EBC0619DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 15:00:29 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id 8so2201699pjj.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 15:00:29 -0700 (PDT)
+        Wed, 22 Jul 2020 18:01:24 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81654C0619DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 15:01:24 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id gc15so3433747pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Jul 2020 15:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=N8+S2bs/z4ong2YrfE5GwRztsvmrOV1x6iJptONruQ0=;
-        b=J8nGwE8Z6AcRTaG73HoFvoUiIYSNEt7re2zANYCmw5IQOU7tN6t8rgdNm/mCE7mulD
-         2DqGU0X4O5Fxqm6nc1MusIKF/IPRHB1DME6QXlO0DxV6HdW+kjuX7WZ8rTD28AR1YBDb
-         XwFB/CcyJ65OruUfOL8Dv8PHJcs54lVFMKPH4=
+        bh=kf4G9OecuatMPdQAajjbtHZg6Z4TN34pDB2QVj3Jfws=;
+        b=GPVhp3NGJ19wf1ctURm4g+w3dBSbio1bGMroejrll7ayIS2Q6mitp1XXu92TJA2Jgj
+         IN1hNbxl8IeAKe2gdCvYw4pNo6F0E/bMfhMfz7kJzxFdImVkqUM4CCuKZ32g7HBylXO5
+         NgOlYSDD0SRuMJy60oyVH0BTPnJ0vphFIOFoM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=N8+S2bs/z4ong2YrfE5GwRztsvmrOV1x6iJptONruQ0=;
-        b=psrSkyr5c5E1NHrTLCxJIKybVRc84PBp4cUiUrOq31C2faVqonkYGBWEDT1mx/FmEu
-         +Qi0EoTKqlAs6HDpzUPN0sD58qzGIxe/R9WYeKHWnh2ptS+WTV9emiLSTwfckuOsnlAj
-         MlIfWqKz3mYs/16dgKaEUw6KiJgbK+zBqphniouaBovrZuSEFuM0fZ1SsbITYFhSlckb
-         SLF4DEtBrM9o106hd8t0oMNJAYKkS2nSl9LmmT251/42tXkWUbzE2pBj4cw5nyx3a+gt
-         EMQmFUgG65o3QBdpja69E+5S+uyYNR5XArwk2KZAX6htYgyGISwkGpuHGrgCiM9lufR6
-         Scdw==
-X-Gm-Message-State: AOAM533qT6G+ESsKvpmLsiAgvE2pWgoLjjU9rYJGWxhchrK+Y6rV4Hmd
-        WM49ujaWQYStI9GlgdxqHMfEFw==
-X-Google-Smtp-Source: ABdhPJy2c6o/MRrkKFm8aPWmkth//QhJMrLmzY21twfgd+iLnkoZPn9A4WSB+3YAdPMnaGK6BeC/mQ==
-X-Received: by 2002:a17:90b:f16:: with SMTP id br22mr1417424pjb.170.1595455228985;
-        Wed, 22 Jul 2020 15:00:28 -0700 (PDT)
+        bh=kf4G9OecuatMPdQAajjbtHZg6Z4TN34pDB2QVj3Jfws=;
+        b=QZw8hag9XRTo8vJjPm0156WxUFd4g3WF2o7KhyAJeMOcadzGh2iHDpH3m8vPjFGHB6
+         N44QxlkiZdNr754iitw5Rrvz7D/w+EJkoTDMW5cWWTuUKImaYMsDQvD7+GDgNXJ4e9NW
+         iD+uXzJRcYbRy8oeQ9JfAlOEE311mcEmw4OC4IohCJvIHam8ytHMFki1uuPIOXxj9dOB
+         a58scY0SBsX8J7xECNHrUMqfHQkMDQYTGYWGqXUUJb6pE5RUkDiDfzBipA7BIoKb5y9L
+         NBvrsk0TNBhVHU/OkeLD9KRrBHEd/faIs+yJLZh/sJlgVxKBjtHZio4LGHKqhijqJw5k
+         rLJw==
+X-Gm-Message-State: AOAM530Be4FDRDxRQPkw7x1t17t2Ihk0lcUUZtPtso2qkSa52tZyDXSl
+        Rss9zZBNY8rO5eDDuXb83/FUAQ==
+X-Google-Smtp-Source: ABdhPJycqu6mq0CFbV5ri7ojMQiC9BlaOqdNq6tqaC5IOPjIpz1Or40LqD5+CBCdwb8DcHUtsvqq/Q==
+X-Received: by 2002:a17:902:bd47:: with SMTP id b7mr1342798plx.144.1595455283992;
+        Wed, 22 Jul 2020 15:01:23 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id kx3sm641235pjb.32.2020.07.22.15.00.27
+        by smtp.gmail.com with ESMTPSA id g7sm562035pfh.210.2020.07.22.15.01.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jul 2020 15:00:28 -0700 (PDT)
+        Wed, 22 Jul 2020 15:01:23 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     swboyd@chromium.org, msavaliy@codeaurora.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
         Rajendra Nayak <rnayak@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Wolfram Sang <wsa@the-dreams.de>, msavaliy@codeaurora.org,
         Douglas Anderson <dianders@chromium.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
-        Sagar Dharia <sdharia@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2] i2c: i2c-qcom-geni: Fix DMA transfer race
-Date:   Wed, 22 Jul 2020 15:00:21 -0700
-Message-Id: <20200722145948.v2.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
+Subject: [PATCH] soc: qcom-geni-se: Don't use relaxed writes when writing commands
+Date:   Wed, 22 Jul 2020 15:01:20 -0700
+Message-Id: <20200722150113.1.Ia50ab5cb8a6d3a73d302e6bdc25542d48ffd27f4@changeid>
 X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -71,90 +68,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When I have KASAN enabled on my kernel and I start stressing the
-touchscreen my system tends to hang.  The touchscreen is one of the
-only things that does a lot of big i2c transfers and ends up hitting
-the DMA paths in the geni i2c driver.  It appears that KASAN adds
-enough delay in my system to tickle a race condition in the DMA setup
-code.
+Writing the command is the final step in kicking off a transfer.
+Let's use writel() to ensure that any other memory accesses are done
+before the command kicks off.  It's expected that this is mostly
+relevant if we're in DMA mode but since it doesn't appear to regress
+performance in a measurable way [1] even in PIO mode and it's easier
+to reason about then let's just always use it.
 
-When the system hangs, I found that it was running the geni_i2c_irq()
-over and over again.  It had these:
+NOTE: this patch came about due to code inspection.  No actual
+problems were observed that this patch fixes.
 
-m_stat   = 0x04000080
-rx_st    = 0x30000011
-dm_tx_st = 0x00000000
-dm_rx_st = 0x00000000
-dma      = 0x00000001
+[1] Tested by timing "flashrom -p ec" on a Chromebook which stresses
+GENI SPI a lot.
 
-Notably we're in DMA mode but are getting M_RX_IRQ_EN and
-M_RX_FIFO_WATERMARK_EN over and over again.
-
-Putting some traces in geni_i2c_rx_one_msg() showed that when we
-failed we were getting to the start of geni_i2c_rx_one_msg() but were
-never executing geni_se_rx_dma_prep().
-
-I believe that the problem here is that we are starting the geni
-command before we run geni_se_rx_dma_prep().  If a transfer makes it
-far enough before we do that then we get into the state I have
-observed.  Let's change the order, which seems to work fine.
-
-Although problems were seen on the RX path, code inspection suggests
-that the TX should be changed too.  Change it as well.
-
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 ---
-Even though this patch is slightly different than v1 I have kept tags.
-Hopefully this is OK.
 
-Changes in v2:
-- Fix both TX and RX.
-- Only move the setting up of the command, not the set of the length.
+ include/linux/qcom-geni-se.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 18d1e4fd4cf3..7f130829bf01 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -367,7 +367,6 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 		geni_se_select_mode(se, GENI_SE_FIFO);
+diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+index dd464943f717..f50c73be1428 100644
+--- a/include/linux/qcom-geni-se.h
++++ b/include/linux/qcom-geni-se.h
+@@ -262,7 +262,7 @@ static inline void geni_se_setup_m_cmd(struct geni_se *se, u32 cmd, u32 params)
+ 	u32 m_cmd;
  
- 	writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
--	geni_se_setup_m_cmd(se, I2C_READ, m_param);
+ 	m_cmd = (cmd << M_OPCODE_SHFT) | (params & M_PARAMS_MSK);
+-	writel_relaxed(m_cmd, se->base + SE_GENI_M_CMD0);
++	writel(m_cmd, se->base + SE_GENI_M_CMD0);
+ }
  
- 	if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
- 		geni_se_select_mode(se, GENI_SE_FIFO);
-@@ -375,6 +374,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 		dma_buf = NULL;
- 	}
+ /**
+@@ -282,7 +282,7 @@ static inline void geni_se_setup_s_cmd(struct geni_se *se, u32 cmd, u32 params)
+ 	s_cmd &= ~(S_OPCODE_MSK | S_PARAMS_MSK);
+ 	s_cmd |= (cmd << S_OPCODE_SHFT);
+ 	s_cmd |= (params & S_PARAMS_MSK);
+-	writel_relaxed(s_cmd, se->base + SE_GENI_S_CMD0);
++	writel(s_cmd, se->base + SE_GENI_S_CMD0);
+ }
  
-+	geni_se_setup_m_cmd(se, I2C_READ, m_param);
-+
- 	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
- 	if (!time_left)
- 		geni_i2c_abort_xfer(gi2c);
-@@ -408,7 +409,6 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 		geni_se_select_mode(se, GENI_SE_FIFO);
- 
- 	writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
--	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
- 
- 	if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
- 		geni_se_select_mode(se, GENI_SE_FIFO);
-@@ -416,6 +416,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 		dma_buf = NULL;
- 	}
- 
-+	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
-+
- 	if (!dma_buf) /* Get FIFO IRQ */
- 		writel_relaxed(1, se->base + SE_GENI_TX_WATERMARK_REG);
- 
+ /**
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
