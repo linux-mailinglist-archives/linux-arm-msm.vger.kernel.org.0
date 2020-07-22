@@ -2,135 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BCB3229A3A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 16:37:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39BB8229A6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 16:42:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732555AbgGVOhb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 10:37:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728837AbgGVOhb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 10:37:31 -0400
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533E3C0619DC;
-        Wed, 22 Jul 2020 07:37:31 -0700 (PDT)
-Received: by mail-il1-x141.google.com with SMTP id e18so1472600ilr.7;
-        Wed, 22 Jul 2020 07:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uum90XmfNycK6jDJoE+OLFnrkzTNxS7+iW+O9eCiWeM=;
-        b=lEdN6208f44Sn6ODIAJK83c4RYAShaqQuCEZ4xGt6JSzk6lgHXBHLoYTeHSHu5T3mu
-         iDE2UKBY6Md1ouGeE6xaBR8N4KmfptqJyLR2vFxJKw50KKKfVaW3hCr88TclQ+u4OnX1
-         xlndCgxHBrAXcKc562ZmvCtgfx2EPhdcIRtAl6Ktxoc1baOlmVBB+wWPbH8FfO3+UIcQ
-         LQWse1rBe0wLvcn7Ug6YjXGpY7jkMyzccvf4oJc1NdBjKVOQqhVUd4NIqcZJHrHqiN7Z
-         HWg2zYoJIPdx3qP8F2nmWT/0z5Oy/vkcm++uw01yXot3zRdg7tlC3NjiAnvqVS2HoSgj
-         IXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uum90XmfNycK6jDJoE+OLFnrkzTNxS7+iW+O9eCiWeM=;
-        b=WFvRrhyl3thWBNU5wBnn7I79TdVN4ayRbwx+Pk8dS/DPk3QcfJtGnYdOhnepwjgcIU
-         JEz3Ou3VtojzBrLxLKG2BQM4vD5NW/WB2/j+TnRVlp9BNgfSd+gOmEl7HGyKunc/tWKi
-         AuXhp2jigz0UziFx1eJGHYWDoiDb9DX2y7zzwnAcC7h8kAOZHtIO4GXDw1J9kE9tYOW1
-         MYzemkeFeKL2o2B/LmfleSHCm54sw686b3hgt83SadSMRX07STRKG+4haKNiKbAelMJ9
-         3LEI/sNBJNBmPVv1E7vDg9nHhEM2V3qIiOmeZ4GLZSHM1dFYuRym38mOIEHmHl1ZOMRL
-         bRRQ==
-X-Gm-Message-State: AOAM533xgeyfIu6oaug4vLl/XqpBnF85DEX0Rgi/ED1RhiqoQqrFGyHa
-        AuoRzqDUuKNnlP+PW9jJsaMvAZ63vZTK4p9a62g=
-X-Google-Smtp-Source: ABdhPJwpE8HkCfsDSkfAjPnUVeuc7tn6xF0l2+UATzJPcOG6uy+pfG1LTgzeK0upHl081OQGfXfTFHXcgwkpU2B4WIc=
-X-Received: by 2002:a05:6e02:80b:: with SMTP id u11mr226641ilm.178.1595428650674;
- Wed, 22 Jul 2020 07:37:30 -0700 (PDT)
+        id S1732761AbgGVOm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 10:42:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50252 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730973AbgGVOm1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Jul 2020 10:42:27 -0400
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 98ABD20787;
+        Wed, 22 Jul 2020 14:42:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595428946;
+        bh=wk9uc9EFeU1U4bZjuLI5oT7Ft4gFDxjC68gV7uHyIQU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=R1rLrUiJOsu7Jts6Z0NU9U/t9UkTln7Iy+U9KrDK4pWNWUGAJ3q+e/6imP0mGETbl
+         KFjcPQUz+kR+c2XAyWPDQZrrACYdPKJSvD481tqUPAxzo8O59XknINk5F662atu6LQ
+         fnV85N6Mm7FSf8goxWEiQoE62PMEWGgIyV5Bky2U=
+Received: by mail-oo1-f41.google.com with SMTP id t6so461467ooh.4;
+        Wed, 22 Jul 2020 07:42:26 -0700 (PDT)
+X-Gm-Message-State: AOAM532K0Qx8WkH6nCpjDJvsoK4lUjZ5KzLGdhkgtiPX7NefUMPfauT0
+        /u/ht0drKVN6n2Ow0ipQftk93ZwuwX+EcVXkyA==
+X-Google-Smtp-Source: ABdhPJyQP1ZRMVJKJdH4QnM2k+ib1BqJI5c0CwiJkic3VdGrn99f7M/qMgn52dXNwA8FzcQBsfsiYcZtAdhuSLxTl7A=
+X-Received: by 2002:a4a:9c0f:: with SMTP id y15mr254900ooj.81.1595428945904;
+ Wed, 22 Jul 2020 07:42:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <1595226956-7779-1-git-send-email-cang@codeaurora.org> <1595226956-7779-4-git-send-email-cang@codeaurora.org>
-In-Reply-To: <1595226956-7779-4-git-send-email-cang@codeaurora.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Wed, 22 Jul 2020 08:37:19 -0600
-Message-ID: <CAOCk7NpLLV8yoWsrFKJ+OirGcQjeP4NmFYnMfXj-9=sMt7E94Q@mail.gmail.com>
-Subject: Re: [PATCH v4 3/8] ufs: ufs-qcom: Fix a few BUGs in func ufs_qcom_dump_dbg_regs()
-To:     Can Guo <cang@codeaurora.org>
-Cc:     Asutosh Das <asutoshd@codeaurora.org>, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        sh425.lee@samsung.com, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com,
-        Mark Salyzyn <salyzyn@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
+References: <20200622075956.171058-1-bjorn.andersson@linaro.org>
+ <20200622075956.171058-2-bjorn.andersson@linaro.org> <CAL_JsqKW+R=rygii7N69o28h5780qx645RhPXGQZ4jw3kHadhw@mail.gmail.com>
+ <20200722044615.GR388985@builder.lan>
+In-Reply-To: <20200722044615.GR388985@builder.lan>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 22 Jul 2020 08:42:08 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLa9GBtbgN6aL7AQ=A6V-YRtPgYqh6XgM2kpx532+r4Gg@mail.gmail.com>
+Message-ID: <CAL_JsqLa9GBtbgN6aL7AQ=A6V-YRtPgYqh6XgM2kpx532+r4Gg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: hwlock: qcom: Migrate binding to YAML
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
+        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 12:39 AM Can Guo <cang@codeaurora.org> wrote:
+On Tue, Jul 21, 2020 at 10:48 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> Dumping testbus registers needs to sleep a bit intermittently as there are
-> too many of them. Skip them for those contexts where sleep is not allowed.
+> On Tue 21 Jul 08:13 PDT 2020, Rob Herring wrote:
 >
-> Meanwhile, if ufs_qcom_dump_dbg_regs() calls ufs_qcom_testbus_config() from
-> ufshcd_suspend/resume and/or clk gate/ungate context, pm_runtime_get_sync()
-> and ufshcd_hold() will cause racing problems. Fix it by removing the
-> unnecessary calls of pm_runtime_get_sync() and ufshcd_hold().
+> > On Mon, Jun 22, 2020 at 1:59 AM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > Migrate the Qualcomm TCSR mutex binding to YAML to allow validation.
+> > >
+> > > Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > >
+> > > Changes since v1:
+> > > - Actually remove the old binding doc
+> > >
+> > >  .../bindings/hwlock/qcom-hwspinlock.txt       | 39 --------------
+> > >  .../bindings/hwlock/qcom-hwspinlock.yaml      | 51 +++++++++++++++++++
+> > >  2 files changed, 51 insertions(+), 39 deletions(-)
+> > >  delete mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.txt
+> > >  create mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+> >
+> > [...]
+> >
+> > > diff --git a/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+> > > new file mode 100644
+> > > index 000000000000..71e63b52edd5
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+> > > @@ -0,0 +1,51 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Qualcomm Hardware Mutex Block
+> > > +
+> > > +maintainers:
+> > > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > +
+> > > +description:
+> > > +  The hardware block provides mutexes utilized between different processors on
+> > > +  the SoC as part of the communication protocol used by these processors.
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    enum:
+> > > +      - qcom,sfpb-mutex
+> > > +      - qcom,tcsr-mutex
+> > > +
+> > > +  '#hwlock-cells':
+> > > +    const: 1
+> > > +
+> > > +  syscon:
+> > > +    $ref: "/schemas/types.yaml#/definitions/phandle-array"
+> > > +    description:
+> > > +      Should be a triple of phandle referencing the TCSR mutex syscon, offset
+> > > +      of first mutex within the syscon and stride between each mutex.
+> > > +
+> > > +required:
+> > > +  - compatible
+> > > +  - '#hwlock-cells'
+> > > +  - syscon
+> > > +
+> > > +additionalProperties: false
+> > > +
+> > > +examples:
+> > > +  - |
+> > > +        tcsr_mutex_block: syscon@fd484000 {
+> > > +                compatible = "syscon";
+> >
+> > 'syscon' alone now generates warnings. Can you drop this node or add a
+> > specific compatible.
+> >
+>
+> In the binding examples or in the dts files as well?
 
-It sounds like this is two different changes which are clubbed
-together into the same patch and really should be two different
-patches.
+Both, but only the examples need to be warning free at this point. So
+just dropping the node in the example is enough and you can solve this
+for dts files later if you wish.
 
->
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> ---
->  drivers/scsi/ufs/ufs-qcom.c | 17 +++++++----------
->  1 file changed, 7 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index 2e6ddb5..3743c17 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -1604,9 +1604,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
->          */
->         }
->         mask <<= offset;
-> -
-> -       pm_runtime_get_sync(host->hba->dev);
-> -       ufshcd_hold(host->hba, false);
->         ufshcd_rmwl(host->hba, TEST_BUS_SEL,
->                     (u32)host->testbus.select_major << 19,
->                     REG_UFS_CFG1);
-> @@ -1619,8 +1616,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
->          * committed before returning.
->          */
->         mb();
-> -       ufshcd_release(host->hba);
-> -       pm_runtime_put_sync(host->hba->dev);
->
->         return 0;
->  }
-> @@ -1658,11 +1653,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
->
->         /* sleep a bit intermittently as we are dumping too much data */
->         ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
-> -       udelay(1000);
-> -       ufs_qcom_testbus_read(hba);
-> -       udelay(1000);
-> -       ufs_qcom_print_unipro_testbus(hba);
-> -       udelay(1000);
-> +       if (in_task()) {
-> +               udelay(1000);
-> +               ufs_qcom_testbus_read(hba);
-> +               udelay(1000);
-> +               ufs_qcom_print_unipro_testbus(hba);
-> +               udelay(1000);
-> +       }
+> The hardware block here is named "TCSR_MUTEX", so the natural compatible
+> to add here would be "qcom,tcsr-mutex", but that already has a meaning -
+> and the syscon node here doesn't carry all required properties...
 
-Did you run into a specific issue with this?  udelay is not a "sleep"
-in the sense that it causes scheduling to occur, which is the problem
-with atomic contexts.
+So you have 2 nodes pointing to the same h/w? Also a no-no...
+
+> Should we perhaps just remove the split model (syscon and
+> qcom,tcsr-mutex as different nodes) from the example and dts files?
+> (While maintaining backwards compatibility in the binding and driver)
+>
+> For the platforms where we have other drivers that needs to poke in this
+> syscon it seems to work fine to say:
+>         compatible = "qcom,tcsr-mutex", "syscon";
+
+Yes. 'syscon' just means automagically create a regmap.
+
+Rob
