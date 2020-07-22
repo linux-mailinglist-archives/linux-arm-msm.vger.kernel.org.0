@@ -2,178 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91BE3228F61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 06:48:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 309F7228F8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Jul 2020 07:09:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbgGVEsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Jul 2020 00:48:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46478 "EHLO
+        id S1727036AbgGVFJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Jul 2020 01:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726649AbgGVEsK (ORCPT
+        with ESMTP id S1726147AbgGVFJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Jul 2020 00:48:10 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 023F7C0619DC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 21:48:09 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id t6so556493pgq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 21:48:09 -0700 (PDT)
+        Wed, 22 Jul 2020 01:09:12 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69842C0619DB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:09:12 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id gc15so2353695pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Jul 2020 22:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=58zKMZOPt1u3jpGyc+egvpdxr0peyatL+Nyz70ratxs=;
-        b=nG39IMDjujMeRh/4sbcvRxIPQSNRe2DOZ6Nx2FVG6gFBmEZfpbR8IHnABB/ZFmmuYq
-         L9xik+zNqwLx6t9ltZtPjSlPzGwW8BnJ3U4QayiLDdViWAIAJtsky0WxIHPn26ocOqWy
-         goPjV8dCAOoFOA+8R4dlu0BP0LN9LKT5QfYZbL1Csgi59vmx1OEuQghm6E6wBeBB15Vz
-         UlJEiHxgOpMI29wi8Rh60WgwyBr33qFbpArVhR2gW4+hsSu0SntQMTQn8yTNYF78DY8o
-         AlyXxwIlq39XaWwhHYmo8npE5Bw4Lb0yEBUd0I9rhSUOKy+6rR2KbHStwZl1SRblTPt6
-         qjww==
+        bh=9aCd9NtKF/vghwfZSkT5vRhcwR7QYUOcY/eyczQvy2g=;
+        b=xqa2/MrEV6nc1rOrErxYL+BVLXUbCYRoG/UlThvcgNe/TdO0NyaApryfTnaVst2oLL
+         a7CFTr2BYQZO5jERv9jONQNnBTjrENjCDGsnplOn1V0ZAexSY/z6SX2vT26IN/pnxUAG
+         mcpGIrJgXwkJ1zUkWaKJbKmczSupmGNeLDfTSiKfj+ybeoUbveBPofJznFuSqxSv4kDL
+         0T9cY143+T4NLWYtpUOevYf6BOSW1uJ9dcY20hnQbClEgbEA+CTbFkttT7GSJnI4tJUr
+         8yS6+lLSt0hKH111khkA5J4Kh6KFzD9tNwPOQUa3m4DOLVgdnit9T+zYbfPu+O6xj8hn
+         SnvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=58zKMZOPt1u3jpGyc+egvpdxr0peyatL+Nyz70ratxs=;
-        b=KbDniQ2ejhPQi3n4azdWGDQoYl9jiSPFjfFRPP2jt1G2y+u4KrF4+bkMYHVC6BYMw4
-         fYO8l7qB4YspkXOQ9PoJsZvkuj2EDVa9TTkeOgWHiXe80xRkFM4Dy7gMSy0n5kC7EGwZ
-         CISr4qPem4R6dQWDZxUD4P7lie/lMilvFNCjwVAfgmYRQfjoNaxJNhAJO9SNjLnAJmvX
-         OmNtP+191zUBTyDTlcZTpqGxGnAivyKFoOedkoczTOSZ7FPqF+ivv8dsiznOT+QDW36I
-         9/WSx+8lMtQEMx2hjEcIBLICY4WDOykXTI2UHtC3UJjV7w6+PO48OwfG9OvLWhbGuyjo
-         j4gw==
-X-Gm-Message-State: AOAM530AeHVElaB0A/ei26NTMDnCjJ/2LPr6tBWDWLyPo4aeXICEjQSt
-        0gv13l+xnL5nWI7VZqEWRvKahw==
-X-Google-Smtp-Source: ABdhPJy06BZ1ClnCiS4rdd+DGQj+8rN/XzWayLoX5YI/eqUtY8HLfx6BNn8AsV/rf4BLpaE0sM22Nw==
-X-Received: by 2002:a63:f806:: with SMTP id n6mr24931192pgh.346.1595393289326;
-        Tue, 21 Jul 2020 21:48:09 -0700 (PDT)
+        bh=9aCd9NtKF/vghwfZSkT5vRhcwR7QYUOcY/eyczQvy2g=;
+        b=Y+SFfnxfJNjHB77/naKB6IJXHCEW+2TsvJm4hIdxRfZhfpLAlJXQD+R5PgUJn4dPaj
+         XVzqw2hQp5Kw6hHKT990d27smegYY898W+Tf0CQcY7R70H6D3ZADDRk8r82jVmuxJP1p
+         Z9+eZkpj3vqrbvjlOm9gitFEf6YrZa0gI/hKuCrUP1tUBXN5YKeKN2Dga55Qky0EaVCL
+         Tq50tMaWQYRhakx81DX56zNElSsV5D9WEYFqGy5KKTUP47AziTItjOhLuLjL0hYDTJEn
+         HUvGv6li8+x4lBqWj7MjwtbhbLJgp7vLKbZlfF1rY50OlZxOnE+YrO5tdpkWfRg8RXnr
+         2roQ==
+X-Gm-Message-State: AOAM531nIzfzTlsg8CbFUMl3t4ZdxfJD3e/mnyiMZmMGzmP71cbfY+Vf
+        FeoJxFGo1YAajOET2sAdAZZWGQ==
+X-Google-Smtp-Source: ABdhPJzYbkFViPW7GdZ63z+fmzPml6qzx2lRBJa+fk5nmDmYVbL1SQppXLUpDaMeTaelWEg0d8ZEug==
+X-Received: by 2002:a17:902:b78a:: with SMTP id e10mr25415501pls.34.1595394551656;
+        Tue, 21 Jul 2020 22:09:11 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id w1sm22555353pfq.53.2020.07.21.21.48.08
+        by smtp.gmail.com with ESMTPSA id q29sm22454694pfl.77.2020.07.21.22.09.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jul 2020 21:48:08 -0700 (PDT)
-Date:   Tue, 21 Jul 2020 21:46:15 -0700
+        Tue, 21 Jul 2020 22:09:10 -0700 (PDT)
+Date:   Tue, 21 Jul 2020 22:07:17 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH v2 1/4] dt-bindings: hwlock: qcom: Migrate binding to YAML
-Message-ID: <20200722044615.GR388985@builder.lan>
-References: <20200622075956.171058-1-bjorn.andersson@linaro.org>
- <20200622075956.171058-2-bjorn.andersson@linaro.org>
- <CAL_JsqKW+R=rygii7N69o28h5780qx645RhPXGQZ4jw3kHadhw@mail.gmail.com>
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Barani Muthukumaran <bmuthuku@qti.qualcomm.com>,
+        Can Guo <cang@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Satya Tangirala <satyat@google.com>,
+        Steev Klimaszewski <steev@kali.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Subject: Re: [PATCH v6 2/5] scsi: ufs-qcom: name the dev_ref_clk_ctrl
+ registers
+Message-ID: <20200722050717.GS388985@builder.lan>
+References: <20200710072013.177481-1-ebiggers@kernel.org>
+ <20200710072013.177481-3-ebiggers@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAL_JsqKW+R=rygii7N69o28h5780qx645RhPXGQZ4jw3kHadhw@mail.gmail.com>
+In-Reply-To: <20200710072013.177481-3-ebiggers@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 21 Jul 08:13 PDT 2020, Rob Herring wrote:
+On Fri 10 Jul 00:20 PDT 2020, Eric Biggers wrote:
 
-> On Mon, Jun 22, 2020 at 1:59 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > Migrate the Qualcomm TCSR mutex binding to YAML to allow validation.
-> >
-> > Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >
-> > Changes since v1:
-> > - Actually remove the old binding doc
-> >
-> >  .../bindings/hwlock/qcom-hwspinlock.txt       | 39 --------------
-> >  .../bindings/hwlock/qcom-hwspinlock.yaml      | 51 +++++++++++++++++++
-> >  2 files changed, 51 insertions(+), 39 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.txt
-> >  create mode 100644 Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
+> From: Eric Biggers <ebiggers@google.com>
 > 
-> [...]
+> In preparation for adding another optional register range to the
+> ufs-qcom driver, name the existing optional register range
+> "dev_ref_clk_ctrl_mem".  This allows the driver to refer to the optional
+> register ranges by name rather than index.
 > 
-> > diff --git a/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> > new file mode 100644
-> > index 000000000000..71e63b52edd5
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/hwlock/qcom-hwspinlock.yaml
-> > @@ -0,0 +1,51 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/hwlock/qcom-hwspinlock.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Hardware Mutex Block
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> > +
-> > +description:
-> > +  The hardware block provides mutexes utilized between different processors on
-> > +  the SoC as part of the communication protocol used by these processors.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,sfpb-mutex
-> > +      - qcom,tcsr-mutex
-> > +
-> > +  '#hwlock-cells':
-> > +    const: 1
-> > +
-> > +  syscon:
-> > +    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> > +    description:
-> > +      Should be a triple of phandle referencing the TCSR mutex syscon, offset
-> > +      of first mutex within the syscon and stride between each mutex.
-> > +
-> > +required:
-> > +  - compatible
-> > +  - '#hwlock-cells'
-> > +  - syscon
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +        tcsr_mutex_block: syscon@fd484000 {
-> > +                compatible = "syscon";
-> 
-> 'syscon' alone now generates warnings. Can you drop this node or add a
-> specific compatible.
+> No device-tree files actually have to be updated due to this change,
+> since none of them actually declares these registers.
 > 
 
-In the binding examples or in the dts files as well?
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-The hardware block here is named "TCSR_MUTEX", so the natural compatible
-to add here would be "qcom,tcsr-mutex", but that already has a meaning -
-and the syscon node here doesn't carry all required properties...
-
-
-Should we perhaps just remove the split model (syscon and
-qcom,tcsr-mutex as different nodes) from the example and dts files?
-(While maintaining backwards compatibility in the binding and driver)
-
-For the platforms where we have other drivers that needs to poke in this
-syscon it seems to work fine to say:
-	compatible = "qcom,tcsr-mutex", "syscon";
-
-Regards,
-Bjorn
-
-> > +                reg = <0xfd484000 0x2000>;
-> > +        };
-> > +
-> > +        hwlock {
-> > +                compatible = "qcom,tcsr-mutex";
-> > +                syscon = <&tcsr_mutex_block 0 0x80>;
-> > +
-> > +                #hwlock-cells = <1>;
-> > +        };
-> > +...
-> > --
-> > 2.26.2
-> >
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 2e6ddb5cdfc2..bd0b4ed7b37a 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -1275,7 +1275,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  		host->dev_ref_clk_en_mask = BIT(26);
+>  	} else {
+>  		/* "dev_ref_clk_ctrl_mem" is optional resource */
+> -		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+> +						   "dev_ref_clk_ctrl_mem");
+>  		if (res) {
+>  			host->dev_ref_clk_ctrl_mmio =
+>  					devm_ioremap_resource(dev, res);
+> -- 
+> 2.27.0
+> 
