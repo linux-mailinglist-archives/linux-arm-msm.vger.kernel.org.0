@@ -2,91 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FDBF22AA55
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 10:06:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EE5222AA67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 10:13:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbgGWIGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jul 2020 04:06:39 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42290 "EHLO mail.kernel.org"
+        id S1726109AbgGWIN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jul 2020 04:13:57 -0400
+Received: from smtp1.axis.com ([195.60.68.17]:31749 "EHLO smtp1.axis.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726178AbgGWIGj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jul 2020 04:06:39 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id AE4BD20888;
-        Thu, 23 Jul 2020 08:06:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595491598;
-        bh=4JGlD1TbFFWSg+P/0Pdxr7uW71kuoH7GfKoYbWbz4BU=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=lX458IbiTO0ynEufOwB3W12aiXAlmMXEuxF79prWdjzw+veZgSATz/xrQfhAarY8L
-         p+kCqR4aIFWPNSyfGJfEUJAGYXa7AM26Mb7gaOsOXyW6P2Zk8XbAv0NaGBHdPdZ++M
-         Fc8boQfFt44GfftAgM8IC6OYdWUQkwY0+oOpDGns=
-Content-Type: text/plain; charset="utf-8"
+        id S1725858AbgGWIN4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jul 2020 04:13:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=axis.com; l=1138; q=dns/txt; s=axis-central1;
+  t=1595492036; x=1627028036;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=50pjpICS47njee1/tY5fnV1hkALwFSNd0R5epRzTCR0=;
+  b=SDPzTQOxHV/YddBtBm6wpKdgujWIucifoDoc1PhffUc9MtBYErezabX4
+   dYyfS6U2F/9H9zl2+9dhDsfflCQ0825waGQeOFacQyuJEasv2PfcqonJ4
+   jYLxaS0uF1u/QsKYKXb9NZdMkNTOsaWdhrM8TddUCrcKFF1+ls1o8VH0z
+   kSbMp5hRCYyf7NEvknG3Yz5p0rl5tAMKt/6f+cOniMFM66pPeZelcOdCN
+   B0t0vTIgf6yKGnyogXMvYyP7EtbKAvG1NHkxVvX1WomMHWkHh0oun0+/5
+   lzDNHDJ6JrX6eTB1ARGabNSpA62eVFBNbTOtkI/4CBKiTlkLUJO1cIRju
+   w==;
+IronPort-SDR: sm/amTH7eKrS2VnpopBdgkqbHYKu9lvNtBLFc2Y83eWfxs8xxQ36GVgkWrP4gxZHUxjoYSUpf5
+ 1uyEIKzGqeX/zb0RquOlczAGI4/tSO/XWjC7PKIbsfc09dFKCWTGu2IrsuCfisqFbXN7qk3RLW
+ KhuEgvsiA4bUFPyjH9f/OfB1Q2vdqJ2ROuJ23rHNrI0gY4yzwOSez3b5uGkUc4Um+1eoZrSFwC
+ qYw7KeaI7tx00clQQ0nox6aK4nlE0vVOEpl3eBwHeX0s8xq+0/H+U8YviachNjcSVk4huaLgaX
+ ayc=
+X-IronPort-AV: E=Sophos;i="5.75,386,1589234400"; 
+   d="scan'208";a="11135659"
+Date:   Thu, 23 Jul 2020 10:13:54 +0200
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+CC:     <balbi@kernel.org>, <gregkh@linuxfoundation.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <bjorn.andersson@linaro.org>,
+        <jackp@codeaurora.org>, <robh@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <mike.looijmans@topic.nl>
+Subject: Re: [PATCH 6/7] usb: dwc3: Add support for a role-switch notifier
+Message-ID: <20200723081352.hrg6rdpz5zxpp2so@axis.com>
+References: <20200311191501.8165-1-bryan.odonoghue@linaro.org>
+ <20200311191501.8165-7-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAK8P3a1ReCDR8REM7AWMisiEJ_D45pC8dXaoYFFVG3aZj91e7Q@mail.gmail.com>
-References: <CA+G9fYvGXOcsF=70FVwOxqVYOeGTUuzhUzh5od1cKV1hshsW_g@mail.gmail.com> <CAK8P3a1ReCDR8REM7AWMisiEJ_D45pC8dXaoYFFVG3aZj91e7Q@mail.gmail.com>
-Subject: Re: stable-rc 4.14: arm64: Internal error: Oops: clk_reparent __clk_set_parent_before on db410c
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux- stable <stable@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sasha Levin <sashal@kernel.org>, lkft-triage@lists.linaro.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        samuel@sholland.org
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Thu, 23 Jul 2020 01:06:37 -0700
-Message-ID: <159549159798.3847286.18202724980881020289@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20200311191501.8165-7-bryan.odonoghue@linaro.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Arnd Bergmann (2020-07-21 02:51:32)
->                         __clk_set_parent_before(orphan, parent);
->=20
-> None of the above have changed in stable kernels.
->=20
-> > [    5.633668]  pll_28nm_register+0xa4/0x340 [msm]
-> > [    5.637492]  msm_dsi_pll_28nm_init+0xc8/0x1d8 [msm]
-> > [    5.642007]  msm_dsi_pll_init+0x34/0xe0 [msm]
-> > [    5.646870]  dsi_phy_driver_probe+0x1cc/0x310 [msm]
->=20
-> The only changes to the dsi driver in v4.14-stable were:
->=20
-> 89e30bb46074 drm/msm/dsi: save pll state before dsi host is powered off
-> 892afde0f4a1 drm: msm: Fix return type of dsi_mgr_connector_mode_valid fo=
-r kCFI
-> 35ff594b0da2 drm/msm/dsi: Implement reset correctly
-> 5151a0c8d730 drm/msm/dsi: use correct enum in dsi_get_cmd_fmt
-> e6bc3a4b0c23 clk: divider: fix incorrect usage of container_of
->=20
-> None of these look suspicious to me.
->=20
+On Wed, Mar 11, 2020 at 07:15:00PM +0000, Bryan O'Donoghue wrote:
+> diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
+> index 2705871ec95e..789e93dd93b4 100644
+> --- a/drivers/usb/dwc3/drd.c
+> +++ b/drivers/usb/dwc3/drd.c
+> @@ -497,6 +497,8 @@ static int dwc3_usb_role_switch_set(struct usb_role_switch *sw, enum usb_role ro
+>  	}
+>  
+>  	dwc3_set_mode(dwc, mode);
+> +	raw_notifier_call_chain(&dwc->role_sw_nl, mode, NULL);
+> +
+>  	return 0;
+>  }
 
-It sounds like maybe you need this patch?
+dwc3_set_mode() is called from a bunch of other places too, is it
+sufficient to call the notifier only from here?  Also, dwc3_set_mode()
+performs the mode set asynchronously so the mode switch can race with
+this notifier call, is that OK?
 
-bdcf1dc25324 ("clk: Evict unregistered clks from parent caches")
+Mike Looijmans proposed the control of a vbus regulator from
+__dwc3_set_mode(), and that would take care of both the points above.
+Perhaps this notifier call can be moved to the same place or perhaps
+Mike's patch could even work for you?  The only problem is that your
+switching code in dwc3-qcom.c would have to be modelled as a reulator:
 
-or=20
-
-4368a1539c6b ("drm/msm: Depopulate platform on probe failure")
-
-I vaguelly recall that the display driver wasn't removing clks becaues
-it wasn't removing devices when probe defer happened and then we had
-dangling clks in the parent cache confusing things.
+ https://lore.kernel.org/linux-usb/20200619142512.19824-1-mike.looijmans@topic.nl/
