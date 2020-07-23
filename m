@@ -2,112 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E80022B702
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 21:56:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3D1F22B9AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 00:37:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726022AbgGWT4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jul 2020 15:56:40 -0400
-Received: from sauhun.de ([88.99.104.3]:47484 "EHLO pokefinder.org"
+        id S1727978AbgGWWhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jul 2020 18:37:00 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:17682 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725894AbgGWT4k (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jul 2020 15:56:40 -0400
-Received: from localhost (p5486cde4.dip0.t-ipconnect.de [84.134.205.228])
-        by pokefinder.org (Postfix) with ESMTPSA id E31D52C0654;
-        Thu, 23 Jul 2020 21:56:37 +0200 (CEST)
-Date:   Thu, 23 Jul 2020 21:56:34 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     swboyd@chromium.org, msavaliy@codeaurora.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
-        Sagar Dharia <sdharia@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] i2c: i2c-qcom-geni: Fix DMA transfer race
-Message-ID: <20200723195634.GA908@ninjato>
-References: <20200722145948.v2.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
-Content-Disposition: inline
-In-Reply-To: <20200722145948.v2.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1727852AbgGWWg7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jul 2020 18:36:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595543818; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xyD2po3aW6b4iV5ufwP88QMaq32rl8Z2yuDv789H0QU=; b=KzlXCmkOWjiXOxBD4PzNlJjryOjRy10Et93gpYGy/cucli/mAKKr7BrTKYxfO/OVS8c1FK+J
+ k1jmD489o5HFzwk+c1uYSVvd+eTSFRHl4Y7X6S+GNFecZEw7Ofb3FfECNtQYNl/WdO8yMOfw
+ ttgh6jd3oZOKMIrCH+zIzRkDY6g=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f1a11048423214e13237b22 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 23 Jul 2020 22:36:52
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 85483C433CB; Thu, 23 Jul 2020 22:36:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2CBCC433C6;
+        Thu, 23 Jul 2020 22:36:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E2CBCC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v5 00/10] Introduce features and debugfs/sysfs entries for MHI
+Date:   Thu, 23 Jul 2020 15:36:32 -0700
+Message-Id: <1595543802-17859-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Save hardware information from BHI.
+Allow reading and modifying some MHI variables for debug, test, and
+informational purposes using debugfs.
+Read values for device specific hardware information to be used by OEMs in
+factory testing such as serial number and PK hash using sysfs.
 
---SUOF0GtieIMvvwua
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This set of patches was tested on arm64 and x86.
 
-On Wed, Jul 22, 2020 at 03:00:21PM -0700, Douglas Anderson wrote:
-> When I have KASAN enabled on my kernel and I start stressing the
-> touchscreen my system tends to hang.  The touchscreen is one of the
-> only things that does a lot of big i2c transfers and ends up hitting
-> the DMA paths in the geni i2c driver.  It appears that KASAN adds
-> enough delay in my system to tickle a race condition in the DMA setup
-> code.
->=20
-> When the system hangs, I found that it was running the geni_i2c_irq()
-> over and over again.  It had these:
->=20
-> m_stat   =3D 0x04000080
-> rx_st    =3D 0x30000011
-> dm_tx_st =3D 0x00000000
-> dm_rx_st =3D 0x00000000
-> dma      =3D 0x00000001
->=20
-> Notably we're in DMA mode but are getting M_RX_IRQ_EN and
-> M_RX_FIFO_WATERMARK_EN over and over again.
->=20
-> Putting some traces in geni_i2c_rx_one_msg() showed that when we
-> failed we were getting to the start of geni_i2c_rx_one_msg() but were
-> never executing geni_se_rx_dma_prep().
->=20
-> I believe that the problem here is that we are starting the geni
-> command before we run geni_se_rx_dma_prep().  If a transfer makes it
-> far enough before we do that then we get into the state I have
-> observed.  Let's change the order, which seems to work fine.
->=20
-> Although problems were seen on the RX path, code inspection suggests
-> that the TX should be changed too.  Change it as well.
->=20
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm=
- GENI I2C controller")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+v5:
+-Removed the debug entry to trigger reset and will be addressed in a seperate
+patch
+-Added patch bus: mhi: core: Use counters to track MHI device state transitions
+-Updated helper API to trigger a non-blocking host resume
+-Minor nitpicks also fixed
 
-Applied to for-current, thanks!
+v4:
+-Removed bus: mhi: core: Introduce independent voting mechanism patch
+-Removed bus vote function from debugfs due to independent voting removal
+-Added helper resume APIs to aid consolidation of spread out code
+-Added a clean-up patch and a missing host resume in voting API
 
+v3:
+-Add patch to check for pending packets in suspend as a dependency for the
+independent voting mechanism introduction
+-Include register dump entry for debugfs to dump MHI, BHI, and BHIe registers
+-Update commit message for the debugfs patch
+-Updated Documentation/ABI with the required info for sysfs
+-Updated debugfs patch to include a new KConfig entry and dependencies
+-Updated reviewed-by for some patches
 
---SUOF0GtieIMvvwua
-Content-Type: application/pgp-signature; name="signature.asc"
+v2:
+-Added a new debugfs.c file for specific debugfs entries and code
+-Updated commit text and addressed some comments for voting change
+-Made sure sysfs is only used for serial number and OEM PK hash usage
 
------BEGIN PGP SIGNATURE-----
+Bhaumik Bhatt (10):
+  bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task()
+    declaration
+  bus: mhi: core: Abort suspends due to outgoing pending packets
+  bus: mhi: core: Use helper API to trigger a non-blocking host resume
+  bus: mhi: core: Trigger host resume if suspended during
+    mhi_device_get()
+  bus: mhi: core: Use generic name field for an MHI device
+  bus: mhi: core: Introduce helper function to check device state
+  bus: mhi: core: Introduce debugfs entries for MHI
+  bus: mhi: core: Use counters to track MHI device state transitions
+  bus: mhi: core: Read and save device hardware information from BHI
+  bus: mhi: core: Introduce sysfs entries for MHI
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl8Z624ACgkQFA3kzBSg
-KbYZog/+MH7CA5qU2jQ/+0weiqVJl7p12RN7zBbUpOE/pKjaRgenj6KQEDkUqwGM
-Dv7cGBq91V2SYEkhbvWXisWZiqhF66F4tmy8JaTCU+oozVw6suyqosPMjs9g5RFv
-PLoKK4rgcfLByYbXSXdX0tbPe+e2P69s+fvttOvPQsOCZ8Yq8RAZubN9HiPIHpXP
-93tFSF/O0BFb5awmHKgBeFcMhawUhjiUojC/mDhrww3vRXmSMvHtBKiD38HHTut6
-0js9RnUFs/GDpdFo2LPl73Wrb8oPopMBYv9dODXLy2aRDzxHXPiEEXCeRv9Ekxr1
-2smfexvpPdn6//eNcQXTJc9Dk13xuASWBdb9sS1czNlONSMPqzdhVqW/5km1kzPT
-NLsYLyiX5IeiWCuyZw4+MtB6iB3bEMMmmbPqYeNwW8S5kIIv3xOagn5/AjzNrH29
-c/u+6QBfvahomXLOWq1D9U7KnvRsLLQxmx00K7tmDd6HUCnk9LygqogXESXXxpRs
-OxNt+b+yJM8hIKtXx2o4fFIst50IuCboZaat3fxl4c9PcSjOR/jzRNSwuVGcf2zB
-Me8uXilaBUqrbcI1KWVT1CaRihWEDykOdkXCJ24asGEW04HvnYkxEzqRxtMl9iMM
-cdeJcy+Axgx2kpPWEE3FVFyvRkfjvYSILinMKwiMqHri98IqBHQ=
-=l0IS
------END PGP SIGNATURE-----
+ Documentation/ABI/stable/sysfs-bus-mhi |  25 ++
+ MAINTAINERS                            |   1 +
+ drivers/bus/mhi/Kconfig                |   8 +
+ drivers/bus/mhi/core/Makefile          |   5 +-
+ drivers/bus/mhi/core/boot.c            |  17 +-
+ drivers/bus/mhi/core/debugfs.c         | 409 +++++++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/init.c            |  65 +++++-
+ drivers/bus/mhi/core/internal.h        |  37 ++-
+ drivers/bus/mhi/core/main.c            |  27 +--
+ drivers/bus/mhi/core/pm.c              |  26 ++-
+ include/linux/mhi.h                    |  18 +-
+ 11 files changed, 599 insertions(+), 39 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+ create mode 100644 drivers/bus/mhi/core/debugfs.c
 
---SUOF0GtieIMvvwua--
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
