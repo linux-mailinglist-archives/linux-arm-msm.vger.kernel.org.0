@@ -2,83 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EE5222AA67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 10:13:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52C5E22AB2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Jul 2020 10:57:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726109AbgGWIN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Jul 2020 04:13:57 -0400
-Received: from smtp1.axis.com ([195.60.68.17]:31749 "EHLO smtp1.axis.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725858AbgGWIN4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Jul 2020 04:13:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=axis.com; l=1138; q=dns/txt; s=axis-central1;
-  t=1595492036; x=1627028036;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=50pjpICS47njee1/tY5fnV1hkALwFSNd0R5epRzTCR0=;
-  b=SDPzTQOxHV/YddBtBm6wpKdgujWIucifoDoc1PhffUc9MtBYErezabX4
-   dYyfS6U2F/9H9zl2+9dhDsfflCQ0825waGQeOFacQyuJEasv2PfcqonJ4
-   jYLxaS0uF1u/QsKYKXb9NZdMkNTOsaWdhrM8TddUCrcKFF1+ls1o8VH0z
-   kSbMp5hRCYyf7NEvknG3Yz5p0rl5tAMKt/6f+cOniMFM66pPeZelcOdCN
-   B0t0vTIgf6yKGnyogXMvYyP7EtbKAvG1NHkxVvX1WomMHWkHh0oun0+/5
-   lzDNHDJ6JrX6eTB1ARGabNSpA62eVFBNbTOtkI/4CBKiTlkLUJO1cIRju
-   w==;
-IronPort-SDR: sm/amTH7eKrS2VnpopBdgkqbHYKu9lvNtBLFc2Y83eWfxs8xxQ36GVgkWrP4gxZHUxjoYSUpf5
- 1uyEIKzGqeX/zb0RquOlczAGI4/tSO/XWjC7PKIbsfc09dFKCWTGu2IrsuCfisqFbXN7qk3RLW
- KhuEgvsiA4bUFPyjH9f/OfB1Q2vdqJ2ROuJ23rHNrI0gY4yzwOSez3b5uGkUc4Um+1eoZrSFwC
- qYw7KeaI7tx00clQQ0nox6aK4nlE0vVOEpl3eBwHeX0s8xq+0/H+U8YviachNjcSVk4huaLgaX
- ayc=
-X-IronPort-AV: E=Sophos;i="5.75,386,1589234400"; 
-   d="scan'208";a="11135659"
-Date:   Thu, 23 Jul 2020 10:13:54 +0200
-From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-CC:     <balbi@kernel.org>, <gregkh@linuxfoundation.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <bjorn.andersson@linaro.org>,
-        <jackp@codeaurora.org>, <robh@kernel.org>,
+        id S1726177AbgGWI5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Jul 2020 04:57:49 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:36566 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725911AbgGWI5t (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Jul 2020 04:57:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595494668; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=uMsXblhmzZzd8eLTAl6l9gS/3WdMrBZGhkBeFqbIlWs=; b=BRankmmJbYW+rKO+7az1eAFuWdItT/GqvaL9sfkgpMIansMasYhfRWP2XGdp5fs9w0DuQomf
+ p6COjumNdKZICCOsj98HKRvL/wkB1k6ZlKZQAlwX393HLzPvrI9EHYetdQtWAdIjFxF1NUPn
+ xIU4gDF3jIiNl742igbRhloj5TA=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f1950fb1e603dbb447eb6a2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 23 Jul 2020 08:57:31
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 91BA2C433CB; Thu, 23 Jul 2020 08:57:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.104] (unknown [123.201.159.88])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: msavaliy)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5997AC433C9;
+        Thu, 23 Jul 2020 08:57:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5997AC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=msavaliy@codeaurora.org
+Subject: Re: [PATCH] soc: qcom-geni-se: Don't use relaxed writes when writing
+ commands
+To:     Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        <mike.looijmans@topic.nl>
-Subject: Re: [PATCH 6/7] usb: dwc3: Add support for a role-switch notifier
-Message-ID: <20200723081352.hrg6rdpz5zxpp2so@axis.com>
-References: <20200311191501.8165-1-bryan.odonoghue@linaro.org>
- <20200311191501.8165-7-bryan.odonoghue@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Wolfram Sang <wsa@the-dreams.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel@vger.kernel.org
+References: <20200722150113.1.Ia50ab5cb8a6d3a73d302e6bdc25542d48ffd27f4@changeid>
+From:   "Mukesh, Savaliya" <msavaliy@codeaurora.org>
+Message-ID: <c41ccd0e-e18b-02eb-79b7-2cad604b5090@codeaurora.org>
+Date:   Thu, 23 Jul 2020 14:27:20 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20200311191501.8165-7-bryan.odonoghue@linaro.org>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <20200722150113.1.Ia50ab5cb8a6d3a73d302e6bdc25542d48ffd27f4@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 11, 2020 at 07:15:00PM +0000, Bryan O'Donoghue wrote:
-> diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
-> index 2705871ec95e..789e93dd93b4 100644
-> --- a/drivers/usb/dwc3/drd.c
-> +++ b/drivers/usb/dwc3/drd.c
-> @@ -497,6 +497,8 @@ static int dwc3_usb_role_switch_set(struct usb_role_switch *sw, enum usb_role ro
->  	}
->  
->  	dwc3_set_mode(dwc, mode);
-> +	raw_notifier_call_chain(&dwc->role_sw_nl, mode, NULL);
-> +
->  	return 0;
->  }
 
-dwc3_set_mode() is called from a bunch of other places too, is it
-sufficient to call the notifier only from here?  Also, dwc3_set_mode()
-performs the mode set asynchronously so the mode switch can race with
-this notifier call, is that OK?
-
-Mike Looijmans proposed the control of a vbus regulator from
-__dwc3_set_mode(), and that would take care of both the points above.
-Perhaps this notifier call can be moved to the same place or perhaps
-Mike's patch could even work for you?  The only problem is that your
-switching code in dwc3-qcom.c would have to be modelled as a reulator:
-
- https://lore.kernel.org/linux-usb/20200619142512.19824-1-mike.looijmans@topic.nl/
+On 7/23/2020 3:31 AM, Douglas Anderson wrote:
+> Writing the command is the final step in kicking off a transfer.
+> Let's use writel() to ensure that any other memory accesses are done
+> before the command kicks off.  It's expected that this is mostly
+> relevant if we're in DMA mode but since it doesn't appear to regress
+> performance in a measurable way [1] even in PIO mode and it's easier
+> to reason about then let's just always use it.
+>
+> NOTE: this patch came about due to code inspection.  No actual
+> problems were observed that this patch fixes.
+>
+> [1] Tested by timing "flashrom -p ec" on a Chromebook which stresses
+> GENI SPI a lot.
+>
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
+> ---
+>
+>   include/linux/qcom-geni-se.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+> index dd464943f717..f50c73be1428 100644
+> --- a/include/linux/qcom-geni-se.h
+> +++ b/include/linux/qcom-geni-se.h
+> @@ -262,7 +262,7 @@ static inline void geni_se_setup_m_cmd(struct geni_se *se, u32 cmd, u32 params)
+>   	u32 m_cmd;
+>   
+>   	m_cmd = (cmd << M_OPCODE_SHFT) | (params & M_PARAMS_MSK);
+> -	writel_relaxed(m_cmd, se->base + SE_GENI_M_CMD0);
+> +	writel(m_cmd, se->base + SE_GENI_M_CMD0);
+>   }
+>   
+>   /**
+> @@ -282,7 +282,7 @@ static inline void geni_se_setup_s_cmd(struct geni_se *se, u32 cmd, u32 params)
+>   	s_cmd &= ~(S_OPCODE_MSK | S_PARAMS_MSK);
+>   	s_cmd |= (cmd << S_OPCODE_SHFT);
+>   	s_cmd |= (params & S_PARAMS_MSK);
+> -	writel_relaxed(s_cmd, se->base + SE_GENI_S_CMD0);
+> +	writel(s_cmd, se->base + SE_GENI_S_CMD0);
+>   }
+>   
+>   /**
