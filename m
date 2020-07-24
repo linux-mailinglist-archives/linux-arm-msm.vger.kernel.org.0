@@ -2,250 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 440A922C82E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 16:38:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F7A322C85F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 16:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbgGXOiN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jul 2020 10:38:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48300 "EHLO
+        id S1726719AbgGXOuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jul 2020 10:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726591AbgGXOiM (ORCPT
+        with ESMTP id S1726366AbgGXOuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jul 2020 10:38:12 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE03C0619E4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 07:38:12 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id s16so7019625qtn.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 07:38:12 -0700 (PDT)
+        Fri, 24 Jul 2020 10:50:06 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA78C0619D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 07:50:05 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id f18so8590304wrs.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 07:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zOK7eAgZJ3t7dQkZKNcxeqBq/iG/Skq4gZfTI03mDPM=;
-        b=YOqLeyRMdwqgU18zVS/+N6TLsH9gI63rm9VIeN/epQyBzEW9i5ywuSAdqJbHLmHdad
-         /MQnCuvp7fEnW4nrMTruFWDGhfmvMODXjt4QBoYwZtty84j5U1CUjAC50/lJfnz0HFD/
-         KSWqe8l+ecOd8S7OdU7qh0hAC9DQd5zRs2zPk2CmVRNR6AYPuzs8FU8FO+kDOzqc6v6e
-         vZonBwMR0Q/H4WhyVWJS9oT6W+NzFLdtDt3AZ6rxd1ekOxw1jkp/aohptqGjc4nijzRd
-         J6aRNPM1HdeGjcBVxJQvUL6ryiucAgeDzP1Bun6BIuZd68AE3mIxTeaHdPxvLJ2DoyeT
-         Pkhg==
+        bh=sbSetUwrSbr+vfh9kXLAONxXQfhjpBwlhJKLTwQ8Bb0=;
+        b=i5z8gThrFymRsCnvkaoVzoEx5yGuK/LL8XHkzaCJLTevTT9PAw0VYe1yZQmtoMq9Lp
+         +QKaOL+DWQTrGR8fbW6D10nlFDG4gt4ZnOKT6YpTk1e05mZc12DFSWk0g4iZAZryKAar
+         uh/vgzzwtSj9wOePrfZJ3ndzXM0Jy460UCL3asQ/yrcLKH9taUFZzPC4+7oyjl+I6B5C
+         ZGwf65Z+NlPUSsMohWlyTpV+74C+pIkhpmMZrxPQTa/7g9/kUcav+/rt+fGNw3kw+v4J
+         Pmmp9VpzMw9dNBfsNQLNVNQ3oWigWY8cRNj/zgqfJpMHkzyNdsL+hiBmLXA8mG+e/lSO
+         NVxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=zOK7eAgZJ3t7dQkZKNcxeqBq/iG/Skq4gZfTI03mDPM=;
-        b=kJEf5/0yePOsGT+T9QIOLtJlSc+2TRTSjxSjvh2KO5Iz1PJm5ZllPSFhPnqO50VFSR
-         iStETl0+Klfwjca3BzSxHcQLMjrAbIOcCDSFYmfWUzOYhjikJnK/69hI0vDljEy69xQ8
-         VQr0NggUfrnABij+DflmDHYeGKafJHSmQwVtBZblAD4Bsrm0AvLMklyJTbqX+W3of+8q
-         t001ggmf15YMHO20FvTTxtbm1WCufLEicJTcf43Ps7YckiSzMFaZ6txf5Eeu3iGdy1fp
-         rdVLrMVtRZM7gewSbF0sf7lgpuTFaODCyh/aN3hwIXLidnIuJNcsOfqHwLw6ChUyYmXU
-         cgWQ==
-X-Gm-Message-State: AOAM532RfJl1cXkYBn566eugR6yClRUhu9VOqSJUrsPrd1FvkewFHfOh
-        zPmcq5n3ejwt+vt1rZX6f3Ig/p4MRqg=
-X-Google-Smtp-Source: ABdhPJxswmfpAyOetAIYg885jgQlQudsWTetNor8KGf5GHaVE6siL0yymRtSfn2lOGY9/sOQY7g7mQ==
-X-Received: by 2002:ac8:1a14:: with SMTP id v20mr9702060qtj.269.1595601491494;
-        Fri, 24 Jul 2020 07:38:11 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id d15sm132156qka.91.2020.07.24.07.38.09
+        bh=sbSetUwrSbr+vfh9kXLAONxXQfhjpBwlhJKLTwQ8Bb0=;
+        b=Pxee6qk47lA0YtrDnDsDZ4zCwXWng9E34ZQ9EdYAqzOAcUXYeODNV9PY0+Oy4nmeNf
+         jfWrO6ByuXPTefISTyFwvftQPS9NQEHP9v+6w00RzGdPebFrQXMCPzwS17fHqV911yl9
+         W//xvkwtSbLzW6cs4f+mcFySO05fpjKgsUQvGcm18YxtycTJ+g4/AFloC7hksSIPPBpU
+         Exu/O25bguTqY3jz8MFxmNIaa6xZuMz5HE/fnj5ksr1oRRZiEfFZv3QPbqZSbmZx8uwe
+         s9a45LPkbCFIHrRMzN9moyjC4WQavQ1iL0oYiYu8123frL6SuK5FkmmLLTMkvXQaTtZa
+         gU3g==
+X-Gm-Message-State: AOAM533636VASqjW527gR3YXHBtOLRufC9q4pcjE27hjtFUsd4hJwXri
+        1009IMe9hGAyifMfdEcfy9RbfA==
+X-Google-Smtp-Source: ABdhPJy/9GpdZScV6nf6EBo7LLjnLn257JkRTwVM70jb/3car4Qzp/R5mh+5lBakuVK9mESEmDwXug==
+X-Received: by 2002:adf:d1b2:: with SMTP id w18mr5663164wrc.235.1595602204528;
+        Fri, 24 Jul 2020 07:50:04 -0700 (PDT)
+Received: from [192.168.1.4] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id b18sm1595015wrs.46.2020.07.24.07.50.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jul 2020 07:38:10 -0700 (PDT)
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: sm8250: add interconnect nodes
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-kernel-owner@vger.kernel.org
-References: <20200713154121.22094-1-jonathan@marek.ca>
- <20200713154121.22094-8-jonathan@marek.ca>
- <630319740d3f06cfb0435cae025e0ca1@codeaurora.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <2b77bdaf-0c9e-c054-77d1-3bc21e857773@marek.ca>
-Date:   Fri, 24 Jul 2020 10:36:48 -0400
+        Fri, 24 Jul 2020 07:50:03 -0700 (PDT)
+Subject: Re: [PATCH v2 0/6] Add new controls for CQ and Frame-skip
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Jeongtae Park <jtp.park@samsung.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Maheshwar Ajja <majja@codeaurora.org>,
+        Nicolas Dufresne <nicolas@ndufresne.ca>
+References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <fa34e819-6084-ac73-fdc7-e2a1a3419213@linaro.org>
+Date:   Fri, 24 Jul 2020 17:49:59 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <630319740d3f06cfb0435cae025e0ca1@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20200721074538.505-1-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/24/20 10:13 AM, Sibi Sankar wrote:
-> Hey Jonathan,
+Hi Hans,
+
+Could you suggest how to proceed with this :
+
+- wait Samsung mainteners for ack.
+- make a pull request with your ack for samsung mfc driver changes.
+- make a pull request for constant quality only.
+- postpone the whole patchset for 5.10 merge window.
+
+On 7/21/20 10:45 AM, Stanimir Varbanov wrote:
+> Hello,
 > 
-> Thanks for the patch! Please use the
-> suggested register space definitions
-> instead.
+> Here is v2 with following changes:
+> 
+>  * 3/6 Added references for VBV size and h264 CPB size - requested by Nicolas
+>  * 4/6 Fixed compile warning
+> 
+> Previous version can be found at [1].
+> 
+> regards,
+> Stan
+> 
+> [1] https://lkml.org/lkml/2020/7/20/619
+> 
+> Maheshwar Ajja (1):
+>   media: v4l2-ctrls: Add encoder constant quality control
+> 
+> Stanimir Varbanov (5):
+>   venus: venc: Add support for constant quality control
+>   media: v4l2-ctrl: Add frame-skip std encoder control
+>   venus: venc: Add support for frame-skip mode v4l2 control
+>   media: s5p-mfc: Use standard frame skip mode control
+>   media: docs: Deprecate mfc frame skip control
+> 
+>  .../media/v4l/ext-ctrls-codec.rst             | 53 +++++++++++++++++++
+>  drivers/media/platform/qcom/venus/core.h      |  2 +
+>  drivers/media/platform/qcom/venus/hfi_cmds.c  | 37 ++++++++++++-
+>  .../media/platform/qcom/venus/hfi_helper.h    | 10 +++-
+>  drivers/media/platform/qcom/venus/venc.c      | 20 +++++--
+>  .../media/platform/qcom/venus/venc_ctrls.c    | 18 ++++++-
+>  drivers/media/platform/s5p-mfc/s5p_mfc_enc.c  |  6 +++
+>  drivers/media/v4l2-core/v4l2-ctrls.c          | 12 +++++
+>  include/uapi/linux/v4l2-controls.h            |  8 +++
+>  9 files changed, 160 insertions(+), 6 deletions(-)
 > 
 
-Thanks for the suggestions, I was unsure what to use for the sizes. The 
-reg field is unused by the upstream driver so it is hard to figure out.
-
-However, I'm not sure about some of your suggestions for the base 
-address. For example, for "mc_virt" you suggest 0x0163d000, and I have 
-0x09100000. In the downstream dts, "mc_virt-base" is 0x9100000 and 
-qcom,base-offset for fab_mc_virt is 0. Do you have an explanation for 
-why your suggestion is so different?
-
-> On 2020-07-13 21:11, Jonathan Marek wrote:
->> Add the interconnect dts nodes for sm8250.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
->>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 82 ++++++++++++++++++++++++++++
->>  1 file changed, 82 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> index 636e2196138c..dfc1b7fa7d85 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> @@ -11,6 +11,7 @@
->>  #include <dt-bindings/power/qcom-aoss-qmp.h>
->>  #include <dt-bindings/power/qcom-rpmpd.h>
->>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/interconnect/qcom,sm8250.h>
-> 
-> please fix ^^ sort order
-> 
->>
->>  / {
->>      interrupt-parent = <&intc>;
->> @@ -978,6 +979,55 @@ spi13: spi@a94000 {
->>              };
->>          };
->>
->> +        config_noc: interconnect@1500000 {
->> +            compatible = "qcom,sm8250-config-noc";
->> +            reg = <0 0x01500000 0 0x1000>;
-> 
-> 0x01500000 0xa580
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        ipa_virt: interconnect@1620000 {
->> +            compatible = "qcom,sm8250-ipa-virt";
->> +            reg = <0 0x01620000 0 0x1000>;
-> 
-> 0x01e00000 0x1000
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        system_noc: interconnect@1632000 {
->> +            compatible = "qcom,sm8250-system-noc";
->> +            reg = <0 0x01632000 0 0x1000>;
-> 
-> 0x01620000 0x1C200
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        aggre1_noc: interconnect@16e2000 {
->> +            compatible = "qcom,sm8250-aggre1-noc";
->> +            reg = <0 0x016e2000 0 0x1000>;
-> 
-> 0x016e0000 0x1f180
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        aggre2_noc: interconnect@1703000 {
->> +            compatible = "qcom,sm8250-aggre2-noc";
->> +            reg = <0 0x01703000 0 0x1000>;
-> 
-> 0x01700000 0x33000
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        compute_noc: interconnect@1733000 {
->> +            compatible = "qcom,sm8250-compute-noc";
->> +            reg = <0 0x01733000 0 0x1000>;
-> 
-> 0x01733000 0xd180
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        mmss_noc: interconnect@174a000 {
->> +            compatible = "qcom,sm8250-mmss-noc";
->> +            reg = <0 0x0174a000 0 0x1000>;
-> 
-> 0x01740000 0x1f080
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->>          ufs_mem_hc: ufshc@1d84000 {
->>              compatible = "qcom,sm8250-ufshc", "qcom,ufshc",
->>                       "jedec,ufs-2.0";
->> @@ -1364,6 +1414,34 @@ usb_2_ssphy: lane@88eb200 {
->>              };
->>          };
->>
->> +        dc_noc: interconnect@90c0000 {
->> +            compatible = "qcom,sm8250-dc-noc";
->> +            reg = <0 0x090c0000 0 0x1000>;
-> 
-> 0x090c0000 0x4200
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        mc_virt: interconnect@9100000 {
->> +            compatible = "qcom,sm8250-mc-virt";
->> +            reg = <0 0x09100000 0 0x1000>;
-> 
-> 0x0163d000 0x1000
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        gem_noc: interconnect@9121000 {
->> +            compatible = "qcom,sm8250-gem-noc";
->> +            reg = <0 0x09121000 0 0x1000>;
-> 
-> 0x09100000 0xb4000
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->> +        npu_noc: interconnect@9990000 {
->> +            compatible = "qcom,sm8250-npu-noc";
->> +            reg = <0 0x09990000 0 0x1000>;
-> 
-> 0x09990000 0x1600
-> 
->> +            #interconnect-cells = <1>;
->> +            qcom,bcm-voters = <&apps_bcm_voter>;
->> +        };
->> +
->>          usb_1: usb@a6f8800 {
->>              compatible = "qcom,sm8250-dwc3", "qcom,dwc3";
->>              reg = <0 0x0a6f8800 0 0x400>;
->> @@ -2359,6 +2437,10 @@ rpmhpd_opp_turbo_l1: opp10 {
->>                      };
->>                  };
->>              };
->> +
->> +            apps_bcm_voter: bcm_voter {
->> +                compatible = "qcom,bcm-voter";
->> +            };
->>          };
->>      };
-> 
+-- 
+regards,
+Stan
