@@ -2,77 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1F0E22CC81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 19:46:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76A4C22CCC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 20:10:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgGXRqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jul 2020 13:46:14 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:18446 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726381AbgGXRqO (ORCPT
+        id S1726381AbgGXSKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jul 2020 14:10:51 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:15904 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726326AbgGXSKv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jul 2020 13:46:14 -0400
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Jul 2020 10:46:13 -0700
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg04-sd.qualcomm.com with ESMTP; 24 Jul 2020 10:46:13 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 729C715AF; Fri, 24 Jul 2020 10:46:13 -0700 (PDT)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Veera Vegivada <vvegivad@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [RESEND PATCH v1 2/2] thermal: qcom-spmi-temp-alarm: Don't suppress negative temp
-Date:   Fri, 24 Jul 2020 10:46:11 -0700
-Message-Id: <6bb66f529eaab58b3a75eea3386233cbca27f818.1595612650.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <f22bb151d836f924b09cf80ffd6e58eb286be5d6.1595612650.git.gurus@codeaurora.org>
-References: <f22bb151d836f924b09cf80ffd6e58eb286be5d6.1595612650.git.gurus@codeaurora.org>
-In-Reply-To: <f22bb151d836f924b09cf80ffd6e58eb286be5d6.1595612650.git.gurus@codeaurora.org>
-References: <f22bb151d836f924b09cf80ffd6e58eb286be5d6.1595612650.git.gurus@codeaurora.org>
+        Fri, 24 Jul 2020 14:10:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595614250; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=18ADy8FXMKjPAI8BXtnc19U259xStKFHPHvurul4DLQ=;
+ b=sjroT+6Q7QT0Vb4vnZLbcAC2ZWQV4K0ZtNcuIuvojR9m9XgLZ8/nO+q09u3woiBt9AME/TYS
+ 2IiwCShRsNTAvR2GkGsggllHaAMrVYfQ+YQLDUoMfNNL0nfl2NlZZDLIICQzq0oQRwvANlV/
+ AOn0OOYw3kK9IKvxCdIVjMlGe+A=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n15.prod.us-east-1.postgun.com with SMTP id
+ 5f1b242a7186ea1ee1c9661b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Jul 2020 18:10:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B3BF2C433C6; Fri, 24 Jul 2020 18:10:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 69641C433C9;
+        Fri, 24 Jul 2020 18:10:49 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 24 Jul 2020 23:40:49 +0530
+From:   bgodavar@codeaurora.org
+To:     abhishekpandit@chromium.org
+Cc:     mka@chromium.org, Hemantg <hemantg@codeaurora.org>,
+        Linux-arm Msm <linux-arm-msm@vger.kernel.org>,
+        gubbaven@codeaurora.org
+Subject: Re: QCA: Add correct bin file for WCN3991
+In-Reply-To: <CA+5PVA7P6bK12ZEUJEQb2cFntJuNSu99rF3TDCWmeep_XbLMQw@mail.gmail.com>
+References: <6abd991d5d7d5175f5b7c6b168af770b@codeaurora.org>
+ <CA+5PVA7P6bK12ZEUJEQb2cFntJuNSu99rF3TDCWmeep_XbLMQw@mail.gmail.com>
+Message-ID: <1624c61abae51d2cce446a3669316e0b@codeaurora.org>
+X-Sender: bgodavar@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Veera Vegivada <vvegivad@codeaurora.org>
+<internal to QCOM & Google>
 
-Currently driver is suppressing the negative temperature
-readings from the vadc. Consumers of the thermal zones need
-to read the negative temperature too. Don't suppress the
-readings.
+Hi Abhishek,
 
-Signed-off-by: Veera Vegivada <vvegivad@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+can you pick this fw to chrome tip.
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 05a9601..6d8f090 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2011-2015, 2017, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2011-2015, 2017, 2020, The Linux Foundation. All rights reserved.
-  */
- 
- #include <linux/bitops.h>
-@@ -212,7 +212,7 @@ static int qpnp_tm_get_temp(void *data, int *temp)
- 		chip->temp = mili_celsius;
- 	}
- 
--	*temp = chip->temp < 0 ? 0 : chip->temp;
-+	*temp = chip->temp;
- 
- 	return 0;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+On 2020-07-21 17:01, Josh Boyer wrote:
+> On Thu, Jul 16, 2020 at 12:25 PM <bgodavar@codeaurora.org> wrote:
+>> 
+>> The following changes since commit
+>> 3d3a06f720856cb897a8541951edd0b8f6f54a98:
+>> 
+>>    linux-firmware: Update firmware file for Intel Bluetooth AX201
+>> (2020-07-13 07:51:54 -0400)
+>> 
+>> are available in the git repository at:
+>> 
+>>    https://github.com/bgodavar/qca_bt_fw/tree/qca_0714
+>> 
+>> for you to fetch changes up to 
+>> 3882702815e4b88bfd2f20b7eb66a3e85cbbb9b9:
+>> 
+>>    QCA: Add correct bin file for WCN3991 (2020-07-14 11:00:13 +0530)
+>> 
+>> ----------------------------------------------------------------
+>> Balakrishna Godavarthi (1):
+>>        QCA: Add correct bin file for WCN3991
+>> 
+>>   qca/crnv32.bin | Bin 5299 -> 5299 bytes
+>>   1 file changed, 0 insertions(+), 0 deletions(-)
+> 
+> Pulled and pushed out.
+> 
+> josh
