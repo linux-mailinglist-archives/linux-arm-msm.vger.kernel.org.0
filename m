@@ -2,165 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8092622CED4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 21:44:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E754922CEDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 21:50:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbgGXTor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jul 2020 15:44:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
+        id S1726663AbgGXTuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jul 2020 15:50:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726411AbgGXTor (ORCPT
+        with ESMTP id S1726455AbgGXTuK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jul 2020 15:44:47 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ACFEC0619D3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 12:44:47 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id f7so199900pln.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 12:44:47 -0700 (PDT)
+        Fri, 24 Jul 2020 15:50:10 -0400
+Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6BCEC0619E4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 12:50:09 -0700 (PDT)
+Received: by mail-ua1-x941.google.com with SMTP id h18so3321463uao.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 12:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=GoHCwmbzVzBre/i+XFFjGlgzIQcO8cz5Ijth2WsQR68=;
-        b=mk+WRy0SCcT29iDihjgngxYvJKgdz3HvJc5hCn4RXObEA2Ur2RclSuU91mrIDMWoOb
-         KNxBhbyahIREGac3gg9VCNy7n3BAfSkrET5h8p+K++4mAwzHUefy4cIsXJh5sYYcKqMp
-         s1TljNl+Oety9TCq0Li8E0A9hA4Mm5Ld5UvF4=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TI0f9ZG0XZavxVCgci5KzYO+fu3sbeQ813eMYl4khUs=;
+        b=Rt0AQ2x73oWij0mw9oc1EtbPqzzscl3mgAmVCzhc40j76TnbYno0SLKddCJrZeMn/h
+         Mn5rqXRcFD2iBaGVWy3gExG+DGlbd3PDqJ20BBRwWFP/we3eoua7c8D2tuDCfRjDzeHg
+         4WnP9Pb9X3Nkqi9YsXSEr+/aIgzac9zApPWvY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=GoHCwmbzVzBre/i+XFFjGlgzIQcO8cz5Ijth2WsQR68=;
-        b=Xgxq6QB7UJU72pwUD3eJMQjKCjpfKZv1c5BSfnivSL2OwzHweIgbSYUPFEduRzxBi2
-         B+Vy9lyeudzf3/WRoJSmQrPZfE+WI3zQSG/wFHaoFd3r317za7z4tR0yClmQiGYp+fBE
-         IAY7Ah8ZJPDbGEKMVa/EieOo7xQxIglwADaF6w/28+eSaeRxoGzbDy61nzA3FBUjso7T
-         3U4HVE6I3ADKsXsrtvYVY173O7kuWiZXLD3O7lZFZt3ZHu1VEauGSDjw+jfCDfhLpUcQ
-         QCgnsxKVS31Wi629mEjO/ziW9yPYeXfYFPMtsn3qECMHi1hRzjvUG3zLvkb72pl0FuFk
-         Mq1w==
-X-Gm-Message-State: AOAM531/rogPGWY4Z3AvEkXRljGVKBO9IIfCWXyti3U1W4e2zW/yeZMA
-        VoDiInSvotXvR3eyd7lh4iNwLQ==
-X-Google-Smtp-Source: ABdhPJw8+1mzNhYhvKffNffPjmnAWh4eVKuNJ2xJ17Uzw5pvN8DTpankN+GUMJ4/IQLRyfIrLhSiFw==
-X-Received: by 2002:a17:90a:c68e:: with SMTP id n14mr6678770pjt.182.1595619886613;
-        Fri, 24 Jul 2020 12:44:46 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id d18sm6390813pjv.25.2020.07.24.12.44.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2020 12:44:46 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TI0f9ZG0XZavxVCgci5KzYO+fu3sbeQ813eMYl4khUs=;
+        b=Qi+R9oJUJxXYTyaMSr5UZEc48/dsrx38eKcs0hmxtO5KsXGmyxYfj595ojfYej4SwH
+         AS59wR4AOV9aKRkKbE+zFQyeGhxemWp3wTUNCFA/fzhcmiwpPVmGjHPFUpXfOf8/N92h
+         kt8ya8F8SlVwZC5kiweuY6S6C1bsiExpXF6uFaJEU+MMhO/jooMDITQwQiCY4JsjJTJ2
+         wDLucyBrtNe2lrLwFkVnP+lwvSXkQjrWpTNBh4OFDapirsox2g2C4UDlN2/Av/fR4QGq
+         2ao4B6Hn0l1ScDJkqIAG5frNga6kG/mi2VSUXuqAHap6nPjK8VtxpVNGr+9pYWjxj+q1
+         Ni8w==
+X-Gm-Message-State: AOAM530tap3Mb1k5kirJTwTsz1wFfzCgiKy0mAtm9JP0QFAAr79RISj7
+        dVdcdP3gjXJF7+D92AvbY8wUdnMoWvI=
+X-Google-Smtp-Source: ABdhPJz7V247min1whUgzDzghlOXnuJU5es0rT6o+8YK45YXvd8N910Cc8BsrPT4I9ynGlGbVcs8KA==
+X-Received: by 2002:ab0:2a46:: with SMTP id p6mr9327885uar.88.1595620208776;
+        Fri, 24 Jul 2020 12:50:08 -0700 (PDT)
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com. [209.85.217.44])
+        by smtp.gmail.com with ESMTPSA id f7sm210954vso.5.2020.07.24.12.50.08
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Jul 2020 12:50:08 -0700 (PDT)
+Received: by mail-vs1-f44.google.com with SMTP id q15so5499468vso.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 12:50:08 -0700 (PDT)
+X-Received: by 2002:a67:69c1:: with SMTP id e184mr9797505vsc.119.1595620207670;
+ Fri, 24 Jul 2020 12:50:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=WtjyYY+bmocc17S9NbRs6inkAWjj7=c9qBsVf3LtG99Q@mail.gmail.com>
 References: <20200723010137.3127584-1-swboyd@chromium.org> <CAD=FV=WtjyYY+bmocc17S9NbRs6inkAWjj7=c9qBsVf3LtG99Q@mail.gmail.com>
+ <159561988523.3847286.14763422711224252201@swboyd.mtv.corp.google.com>
+In-Reply-To: <159561988523.3847286.14763422711224252201@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 24 Jul 2020 12:49:56 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WH1vKKe=MPVdtBJZWnSzxNLO0uyM02GFG6oCJfSEwehQ@mail.gmail.com>
+Message-ID: <CAD=FV=WH1vKKe=MPVdtBJZWnSzxNLO0uyM02GFG6oCJfSEwehQ@mail.gmail.com>
 Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free
-From:   Stephen Boyd <swboyd@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Maulik Shah <mkshah@codeaurora.org>,
         Lina Iyer <ilina@codeaurora.org>
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Fri, 24 Jul 2020 12:44:45 -0700
-Message-ID: <159561988523.3847286.14763422711224252201@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-07-24 10:42:55)
-> Hi,
->=20
-> On Wed, Jul 22, 2020 at 6:01 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-i=
-nternal.h
-> > index ef60e790a750..9a325bac58fe 100644
-> > --- a/drivers/soc/qcom/rpmh-internal.h
-> > +++ b/drivers/soc/qcom/rpmh-internal.h
-> > @@ -118,6 +119,7 @@ struct rsc_drv {
-> >         struct tcs_group tcs[TCS_TYPE_NR];
-> >         DECLARE_BITMAP(tcs_in_use, MAX_TCS_NR);
-> >         spinlock_t lock;
-> > +       wait_queue_head_t tcs_wait;
->=20
-> nit: this structure has a kernel-doc comment above it describing the
-> elements.  Could you add yours?
+Hi,
 
-Sure.
-
->=20
->=20
-> >         struct rpmh_ctrlr client;
-> >  };
+On Fri, Jul 24, 2020 at 12:44 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> > > -       if (ret)
+> > > -               goto unlock;
+> > >
+> > > -       ret = find_free_tcs(tcs);
+> > > -       if (ret < 0)
+> > > -               goto unlock;
+> > > -       tcs_id = ret;
+> > > +       wait_event_lock_irq(drv->tcs_wait,
+> > > +                           (tcs_id = claim_tcs_for_req(drv, tcs, msg)) >= 0,
 > >
-> > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> > index 076fd27f3081..6c758b052c95 100644
-> > --- a/drivers/soc/qcom/rpmh-rsc.c
-> > +++ b/drivers/soc/qcom/rpmh-rsc.c
-> > @@ -19,6 +19,7 @@
-> >  #include <linux/platform_device.h>
-> >  #include <linux/slab.h>
-> >  #include <linux/spinlock.h>
-> > +#include <linux/wait.h>
-> >
-> >  #include <soc/qcom/cmd-db.h>
-> >  #include <soc/qcom/tcs.h>
-> > @@ -444,6 +445,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
-> >                  */
-> >                 if (!drv->tcs[ACTIVE_TCS].num_tcs)
-> >                         enable_tcs_irq(drv, i, false);
-> > +               wake_up(&drv->tcs_wait);
-> >                 spin_unlock(&drv->lock);
->=20
-> nit: I think it's slightly better to do the wake_up() after the
-> spin_unlock(), no?  The first thing the other task will do is to try
-> to grab the spinlock and we might as well give it a chance of
-> succeeding without looping.  I don't see any reason why we'd need to
-> be holding the lock while calling wake_up().
+> > Even though claim_tcs_for_req() only returns 0 or -EBUSY today (IOW it
+> > never returns error codes other than -EBUSY), should we handle it?  If
+> > we don't, claim_tcs_for_req() should be very clear that it shouldn't
+> > return any errors other than -EBUSY.
+>
+> Do you mean you want to change it to be
+>
+>         (tcs_id = claim_tcs_for_req(drv, tcs, msg)) != -EBUSY
+>
+> instead of >= 0? It should return the tcs_id that was claimed, not just
+> 0 or -EBUSY.
 
-Right that's better.
+Ah, right.  Yes, you got it right.  Of course then we have to add a
+"if (tcd_id < 0) goto unlock", too.  If you think it's not worth
+adding this then we just need to make sure it's super obvious in
+claim_tcs_for_req() that it's not allowed to return other errors.
 
->=20
->=20
-> >                 if (req)
-> >                         rpmh_tx_done(req, err);
-> > @@ -562,44 +564,59 @@ static int find_free_tcs(struct tcs_group *tcs)
-> >         return -EBUSY;
-> >  }
-> >
-> > +static int claim_tcs_for_req(struct rsc_drv *drv, struct tcs_group *tc=
-s,
-> > +                            const struct tcs_request *msg)
->=20
-> nit: I know this is a short function and kernel convention doesn't
-> strictly require comments in front of all functions.  However, every
-> other function in this file has a comment and I had a really hard time
-> dealing with the rpmh-rsc code before the comments.  Could you add one
-> for your function, even if it's short?  One thing that would be nice
-> to note is that the only error it returns is -EBUSY.  See below.
-
-Sure I'll write up some kernel-doc.
-
->=20
-> > -       if (ret)
-> > -               goto unlock;
-> >
-> > -       ret =3D find_free_tcs(tcs);
-> > -       if (ret < 0)
-> > -               goto unlock;
-> > -       tcs_id =3D ret;
-> > +       wait_event_lock_irq(drv->tcs_wait,
-> > +                           (tcs_id =3D claim_tcs_for_req(drv, tcs, msg=
-)) >=3D 0,
->=20
-> Even though claim_tcs_for_req() only returns 0 or -EBUSY today (IOW it
-> never returns error codes other than -EBUSY), should we handle it?  If
-> we don't, claim_tcs_for_req() should be very clear that it shouldn't
-> return any errors other than -EBUSY.
-
-Do you mean you want to change it to be
-
-	(tcs_id =3D claim_tcs_for_req(drv, tcs, msg)) !=3D -EBUSY
-
-instead of >=3D 0? It should return the tcs_id that was claimed, not just
-0 or -EBUSY.
+-Doug
