@@ -2,90 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C87022CF5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 22:24:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5773B22CF64
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 22:27:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726083AbgGXUY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jul 2020 16:24:26 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:13491 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726493AbgGXUY0 (ORCPT
+        id S1726636AbgGXU1X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jul 2020 16:27:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46934 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726572AbgGXU1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jul 2020 16:24:26 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595622266; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=F8/f//Q8SasxWgFDNAajtQ3g4nbJXEB+ZHsieUxxAJU=; b=uy10Uv7GjoO/7yS1eWFpJLDRTdpaSOQP4JW+y1vLhoH9Lt5TJwD0ItyXgmBrz0vRzZFfDkaV
- 3SeTuGMEwPlDsxkXNyp28I7XRoYb3Z8bPosm0oINbwqp1tkzDPr8EfXmjDZTrV2LUKzVRfGd
- +4laMurnkLgEU0m+bwumeNl3sfo=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5f1b435aca57a65d47a6fbee (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Jul 2020 20:23:54
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ED705C433C6; Fri, 24 Jul 2020 20:23:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CD03EC433C9;
-        Fri, 24 Jul 2020 20:23:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CD03EC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-Date:   Fri, 24 Jul 2020 14:23:51 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 24 Jul 2020 16:27:22 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2BFC0619E4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 13:27:22 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id t15so6105866pjq.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Jul 2020 13:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=FvJp6KRxuCLfQ1LrQuFAFBgfAkQQ7QvIAiuIgT4S7HI=;
+        b=bLLtK1ZeE35eR4FeMC+fIRZcgm/BS04TxFnqA147MIiBhcPUrpTjQ8mBLU2R2PtCm9
+         CUVySufyEYz8uVUJpQ49823cuD7nd7ZhKLAi1xYUsl3Pn6QhRjbfekw074vqy7qJrFyO
+         OmkvtFikiS+cJRmGZVH7c4nQhXUT68Q9nduVM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=FvJp6KRxuCLfQ1LrQuFAFBgfAkQQ7QvIAiuIgT4S7HI=;
+        b=tw49SnFvAqTcWLAxqbnqqKvuK0VvQ10TyzTULZlKtd5yNURo6CcN80gczUvyAhG1ru
+         D5xR5u8DWG1B6pdWuYfJQxmMHwAxmPpXpHC7YB6FXdS52u6G8H2vfC083+txCbAi2KYL
+         z2DyEb6/5zHiwxvKa+mwZ4xs+MKQoJNKGGhS0UUPU0c+yMQjVvu2V06/2OfRFjyP2+Oc
+         151aXHCkYx/oSumMqyQPlFpRGuGFBik1lCtSBH0iOXIt+SOehtfywO9CCYJc18VnUuHW
+         LSG/2NVCDKdIRB9uv9k+PEStGsmRh8U5WN4cftH7C/mjNHN/X6xeEZeUaYG1OcCVfI3E
+         V21g==
+X-Gm-Message-State: AOAM530TrpiVzkqsOiRuPQEfd7Evbjpuk3XS/eKoYBYvzJzo7TcXeL5U
+        fiMYA6zTOoezqFEaqCfvohcMUw==
+X-Google-Smtp-Source: ABdhPJzNm0R7S4KH72z9GGjwL6AJWsQTruzmVb+ywN6nSy348ghglA8LdzPaCVFFbhqmejehPPY8sQ==
+X-Received: by 2002:a17:90a:d181:: with SMTP id fu1mr6839522pjb.60.1595622442012;
+        Fri, 24 Jul 2020 13:27:22 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id nh14sm6590084pjb.4.2020.07.24.13.27.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2020 13:27:21 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAD=FV=VUSwsP_xrHsufLjZqbWdn5V8rybtv2DWad2nBfU+VJ9w@mail.gmail.com>
+References: <20200723010137.3127584-1-swboyd@chromium.org> <CAD=FV=WtjyYY+bmocc17S9NbRs6inkAWjj7=c9qBsVf3LtG99Q@mail.gmail.com> <159561988523.3847286.14763422711224252201@swboyd.mtv.corp.google.com> <CAD=FV=WH1vKKe=MPVdtBJZWnSzxNLO0uyM02GFG6oCJfSEwehQ@mail.gmail.com> <159562087212.3847286.9484527206999948907@swboyd.mtv.corp.google.com> <CAD=FV=VUSwsP_xrHsufLjZqbWdn5V8rybtv2DWad2nBfU+VJ9w@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         LKML <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be
- free
-Message-ID: <20200724202351.GK9185@codeaurora.org>
-References: <20200723010137.3127584-1-swboyd@chromium.org>
- <CAD=FV=WtjyYY+bmocc17S9NbRs6inkAWjj7=c9qBsVf3LtG99Q@mail.gmail.com>
- <159561988523.3847286.14763422711224252201@swboyd.mtv.corp.google.com>
- <CAD=FV=WH1vKKe=MPVdtBJZWnSzxNLO0uyM02GFG6oCJfSEwehQ@mail.gmail.com>
- <159562087212.3847286.9484527206999948907@swboyd.mtv.corp.google.com>
- <20200724200841.GJ9185@codeaurora.org>
- <159562149056.3847286.11191144133990578500@swboyd.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <159562149056.3847286.11191144133990578500@swboyd.mtv.corp.google.com>
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Date:   Fri, 24 Jul 2020 13:27:20 -0700
+Message-ID: <159562244072.3847286.7905035931282026601@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 24 2020 at 14:11 -0600, Stephen Boyd wrote:
->Quoting Lina Iyer (2020-07-24 13:08:41)
->> On Fri, Jul 24 2020 at 14:01 -0600, Stephen Boyd wrote:
->> >Quoting Doug Anderson (2020-07-24 12:49:56)
->> >> Hi,
->> >>
->> >> On Fri, Jul 24, 2020 at 12:44 PM Stephen Boyd <swboyd@chromium.org> wrote:
->> >I think Lina was alluding to this earlier in this
->> >thread.
->> I was thinking more of threaded irq handler than a kthread to post the
->> requests. We went away from post-thread approach a few years ago.
->>
->
->Ok, got it. Why was the kthread approach abandoned?
+Quoting Doug Anderson (2020-07-24 13:11:59)
+>=20
+> I wasn't suggesting adding a timeout.  I was just saying that if
+> claim_tcs_for_req() were to ever return an error code other than
+> -EBUSY that we'd need a check for it because otherwise we'd interpret
+> the result as a tcs_id.
+>=20
 
-Simplification mostly, I think. Also, somebody requested that when the
-async call returns they would atleast be guaranteed that the request has
-been posted not necessarily processed at the remote end.
-
+Ok that sounds like you don't want a check for -EBUSY so I'll leave this
+as >=3D 0.
