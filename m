@@ -2,55 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55B7D22C168
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 10:52:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09ABB22C199
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 11:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727887AbgGXIww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jul 2020 04:52:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37754 "EHLO mail.kernel.org"
+        id S1727044AbgGXJDG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jul 2020 05:03:06 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:52318 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726554AbgGXIww (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jul 2020 04:52:52 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726845AbgGXJDF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Jul 2020 05:03:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595581384; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Xc5yYihoFQKsI3WcXXnhfGRJQ4HmrBmbd0VVip4O/eI=; b=UiBFZQWfHIuJOeE1+qzPWILNGaVHjHe3nDdsVblpYx6llOe0yF4m7X5yD7/ZlWuN6ueEgLiG
+ Zk/QJhNtvqHmK2CTP9kCaoJdb7wAAzIgBiYHGyJPwQ8ZoHnnhufefI2uddbqlAlk5JGoXOWr
+ Bkf5YmZ+FAG3OI0DgFWMzIbAp+Q=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n19.prod.us-west-2.postgun.com with SMTP id
+ 5f1aa3c65b75bcda6030642b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Jul 2020 09:03:02
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 51508C43395; Fri, 24 Jul 2020 09:03:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.3 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.12] (unknown [61.3.19.13])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id ADBC5206EB;
-        Fri, 24 Jul 2020 08:52:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595580771;
-        bh=3XAOLRXH+A5spT3PUCVqth7VHfe4CGFX/QSU9CZHx44=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=Rw7XkhQcY5FW6xbsyMZBXEUG/Ik1Wu+zCSg9CYpbtSNmDwm0krzyLmvfm5i2yl5jo
-         5YOFfvV5otirQ5ak3P6eveW2XcV8W/r9sTXHVcfdi2sLi9rVxLCVZZ5wSVb63iwkmr
-         1hJH1LLi0gKKVS/OR7VkFCnr/YzvNkMsQapjd1Q8=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B68CBC433C9;
+        Fri, 24 Jul 2020 09:02:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B68CBC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v4 4/5] arm64: dts: sdm845: Add OPP tables and
+ power-domains for venus
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+References: <1595503612-2901-1-git-send-email-rnayak@codeaurora.org>
+ <1595503612-2901-5-git-send-email-rnayak@codeaurora.org>
+ <e68ff810-362a-5b99-206b-f676b204101d@linaro.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <654e0fcb-ae4d-c151-fa8a-4d029fc823fb@codeaurora.org>
+Date:   Fri, 24 Jul 2020 14:32:55 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200709135251.643-12-jonathan@marek.ca>
-References: <20200709135251.643-1-jonathan@marek.ca> <20200709135251.643-12-jonathan@marek.ca>
-Subject: Re: [PATCH v3 11/14] clk: qcom: Add graphics clock controller driver for SM8250
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Fri, 24 Jul 2020 01:52:51 -0700
-Message-ID: <159558077103.3847286.2846749165672548492@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <e68ff810-362a-5b99-206b-f676b204101d@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2020-07-09 06:52:42)
-> Add support for the graphics clock controller found on SM8250
-> based devices.
->=20
-> This is initially copied from the downstream kernel, but has
-> been modified to more closely match the upstream sc7180 driver.
->=20
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
+Hi Maulik/Lina,
 
-Applied to clk-next
+On 7/23/2020 11:36 PM, Stanimir Varbanov wrote:
+> Hi Rajendra,
+> 
+> After applying 2,3 and 4/5 patches on linaro-integration v5.8-rc2 I see
+> below messages on db845:
+> 
+> qcom-venus aa00000.video-codec: dev_pm_opp_set_rate: failed to find
+> current OPP for freq 533000097 (-34)
+> 
+> ^^^ This one is new.
+> 
+> qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x30000
+> 
+> ^^^ and this message is annoying, can we make it pr_debug in rpmh?
+
+Would you be fine with moving this message to a pr_debug? Its currently
+a pr_info_ratelimited()
+
+thanks,
+Rajendra
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
