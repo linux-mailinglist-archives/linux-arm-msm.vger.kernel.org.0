@@ -2,109 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF7DE22CA31
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 18:07:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 956B222CA48
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Jul 2020 18:08:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgGXQH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Jul 2020 12:07:28 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:62326 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728467AbgGXQHW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Jul 2020 12:07:22 -0400
+        id S1727900AbgGXQIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Jul 2020 12:08:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:30488 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728548AbgGXQIW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Jul 2020 12:08:22 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595606842; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=BDjCdzox03R+E0WebnMzaH3e+8GkUl2oaYOMtWhsAZY=; b=bcTLN8lbOGieJte+AqySJES+DasbJFXoJMdAv0dQLEfLhcA8IW5Y5CFwdrc1zuoev/vZvCKk
- O8larDfBxZB0+mUEGQ5uxagOJtPM5MR8Dh5KAdXZCOLKKLLirlXb8S5mzYM1bBO0IFHWxBj8
- dpQsVQanAl9duOk8I6IB8oPMlYU=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ s=smtp; t=1595606901; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=OuK+fHmOdnHq6Gy5CQQ7gf9CS4eAtdGE5l/i2Hmgl8A=; b=hEh7LIevU+TC7/fc/BB0rmeRpLYZ5gaPOa1Hiw9oSpsWSyRT489AVc7ax/stxeyuvQx5c2+s
+ cex9yXoAC3gFNMwyQI7HBQrtepQLHYDa9t507Bhusd+ZdBm9TvMAaDOOPpxoCxS4IFmzQDUu
+ vgCMwyiukxDi9SYCx7PaOYq7QFM=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n15.prod.us-east-1.postgun.com with SMTP id
- 5f1b07268db7256a955ba00e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Jul 2020 16:07:02
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f1b076d35f3e3d3160dd607 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Jul 2020 16:08:13
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 03AB9C433C9; Fri, 24 Jul 2020 16:07:01 +0000 (UTC)
+        id 8DC5AC433A0; Fri, 24 Jul 2020 16:08:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.3 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.105] (unknown [183.82.136.194])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4CD91C43391;
-        Fri, 24 Jul 2020 16:06:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4CD91C43391
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A8D0C433CA;
+        Fri, 24 Jul 2020 16:08:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A8D0C433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v4 4/4] clk: qcom: lpass: Add support for LPASS clock
- controller for SC7180
+From:   Taniya Das <tdas@codeaurora.org>
 To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
 Cc:     David Brown <david.brown@linaro.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org
-References: <1594795010-9074-1-git-send-email-tdas@codeaurora.org>
- <1594795010-9074-5-git-send-email-tdas@codeaurora.org>
- <159531768310.3847286.13203525525881212775@swboyd.mtv.corp.google.com>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <893b1221-6e35-a903-77d4-a60a3ce0cbdc@codeaurora.org>
-Date:   Fri, 24 Jul 2020 21:36:53 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <159531768310.3847286.13203525525881212775@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v5 0/4] clk: qcom: Support for Low Power Audio Clocks on SC7180
+Date:   Fri, 24 Jul 2020 21:37:54 +0530
+Message-Id: <1595606878-2664-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+[v5]
+  * Replace tabs with space in the documentation binding.
+  * Remove .name from parent_data.
 
-Thanks for the review.
+[v4]
+ * Fix minor comments in the documentation binding.
 
-On 7/21/2020 1:18 PM, Stephen Boyd wrote:
-> Quoting Taniya Das (2020-07-14 23:36:50)
->> diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
+[v3]
+ * Update the clock-name to iface instead of gcc_lpass_sway.
+ * Update the documentation with the reg descriptions and use maxItems.
 
->> +static struct clk_alpha_pll lpass_lpaaudio_dig_pll = {
->> +       .offset = 0x1000,
->> +       .vco_table = fabia_vco,
->> +       .num_vco = ARRAY_SIZE(fabia_vco),
->> +       .regs = clk_alpha_pll_regs_offset[CLK_ALPHA_PLL_TYPE_FABIA],
->> +       .clkr = {
->> +               .hw.init = &(struct clk_init_data){
->> +                       .name = "lpass_lpaaudio_dig_pll",
->> +                       .parent_data = &(const struct clk_parent_data){
->> +                               .fw_name = "bi_tcxo",
->> +                               .name = "bi_tcxo",
-> 
-> We don't need .name if we have .fw_name and this is a new binding/device.
-> 
+[v2]
+ * Update retention macro name.
+ * Update the register description in the documentation.
 
-My bad, will cleanup in the next patch.
+[v1]
+ * Add support for Retention of GDSCR.
+ * Add YAML schema for LPASS clocks and clock IDs for LPASS.
+ * Add clock driver for LPASS core clocks and GCC LPASS clock.
 
->> +                       },
->> +                       .num_parents = 1,
->> +                       .ops = &clk_alpha_pll_fabia_ops,
->> +               },
->> +       },
->> +};
->> +
+Taniya Das (4):
+  clk: qcom: gdsc: Add support to enable retention of GSDCR
+  dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7180
+  clk: qcom: gcc: Add support for GCC LPASS clock for SC7180
+  clk: qcom: lpass: Add support for LPASS clock controller for SC7180
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+Taniya Das (4):
+  clk: qcom: gdsc: Add support to enable retention of GSDCR
+  dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7180
+  clk: qcom: gcc: Add support for GCC LPASS clock for SC7180
+  clk: qcom: lpass: Add support for LPASS clock controller for SC7180
+
+ .../bindings/clock/qcom,sc7180-lpasscorecc.yaml    | 102 +++++
+ drivers/clk/qcom/Kconfig                           |   9 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/gcc-sc7180.c                      |  14 +
+ drivers/clk/qcom/gdsc.c                            |  12 +
+ drivers/clk/qcom/gdsc.h                            |   1 +
+ drivers/clk/qcom/lpasscorecc-sc7180.c              | 477 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7180.h        |   1 +
+ .../dt-bindings/clock/qcom,lpasscorecc-sc7180.h    |  29 ++
+ 9 files changed, 646 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-lpasscorecc.yaml
+ create mode 100644 drivers/clk/qcom/lpasscorecc-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,lpasscorecc-sc7180.h
 
 --
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
+
