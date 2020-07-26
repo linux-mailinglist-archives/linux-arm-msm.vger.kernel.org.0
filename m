@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A1E922DE4E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jul 2020 13:14:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0630522DE52
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jul 2020 13:14:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728008AbgGZLON (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Jul 2020 07:14:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40224 "EHLO
+        id S1727983AbgGZLOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Jul 2020 07:14:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725794AbgGZLOM (ORCPT
+        with ESMTP id S1727892AbgGZLOX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Jul 2020 07:14:12 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA3EC0619D2;
-        Sun, 26 Jul 2020 04:14:11 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id q4so6842949edv.13;
-        Sun, 26 Jul 2020 04:14:11 -0700 (PDT)
+        Sun, 26 Jul 2020 07:14:23 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30EAAC0619D2;
+        Sun, 26 Jul 2020 04:14:23 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id kq25so1276561ejb.3;
+        Sun, 26 Jul 2020 04:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LUfFfp9zNtMJeMOSyzmVf43tvY2MECImRif7MwVvOZU=;
-        b=flI8fWplXeV4NqYt+NbEwfj6/P3nVa9YaeYrW7eNtfbviem/4HL5Inm0sQX/LU+wKu
-         0EYMdvebZh9dh5VD0rEyMt13w/pU1oTvM8vCitMStOgAyl6YV6vbhbIGgtwyESO8mAYl
-         BWGvAy0X92bxhfnFtBGMPzTJCVAydVjHWdk9mM7NepqofVqGRExYpoGWDz4Ijj9ukxss
-         qeycSB33yVv2WWKCbv6TCh+AjydwDITQ3HRW7zbmC2cWNF3c1ligrz0H7F6m0682o7f8
-         YRuhLNd+quOdIMZHNEF6720oEbEKchLgYltiAfv3C0O+aSQcoW6XHb/fumE7Gt8+NOfE
-         6HOw==
+        bh=37BF1UwxVP7CixpP1U6Ina051uTwRlG/juDBdj9kXV4=;
+        b=YXAZG2TJKcydz5dEyEcSkHS1L5TwH6/lU+Vvf6qFl3eFLWq0tk6ftDpI3RM0Y6WZZC
+         Ic0APMwNKBbIwG24yj7aEonzyJCMqIMYPKgE68dPyC5DKROwn/CtRTu2dW2YsPWaPmJR
+         ImUyqE+J+bXk4CMa/bAMkI3jNdbEWeg7tEqs2zzuFmmfUEZEYoeDkZfY87joNawLu0g/
+         fCIgQ8pUlg979SghIRlS1hF4c7jHZws+9rP221oy/7xDgSpBI3V+SmENpT16dbrcBXfn
+         AWgI7zF8WRS8Y1e02nxyrO0S32sHoBqsn6jZOBZ+AqpeVH9vhA0MqUvtRWyk6UlMYR2V
+         5PgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LUfFfp9zNtMJeMOSyzmVf43tvY2MECImRif7MwVvOZU=;
-        b=WSxpMCb02GUQqvtNIabbFK/Z2C6BapwL0tmaWtQ4zfmlBHEJAopm2Zm9EYIj+h3bgJ
-         hs/puu5m+AjHSe/9+wZno2+BxPGCXOd9vAnjitPxPNK27kJXF/2iy73x5KecRHyJxLAj
-         d4Ph+c7HITaCk9dGujxdYt1X8dcAwZrJrZQvZwXiftRLJ91uu9FOVuRNzWLhOE+9yjd0
-         OU7PMRozKFp+FPRDSbl9hW7d2rZpb8xTk5C27iFG9beUtIVZY1i3XygyucAFx93OlUTl
-         E6/J6HMEWcypmzeNsm+NH7NFSjX41jFdww/YFggLQDNvqb2GjJe1ZsIfSTmLAtyAybVd
-         grZw==
-X-Gm-Message-State: AOAM531/azrtaK7qE5SaLEovWhkXUoghwYh7OKhZ1Tn+AdyfafvPm15I
-        FLyztBI3g3zbyJhG66RS3Zc=
-X-Google-Smtp-Source: ABdhPJw5Eyc80VzfIucZdXtXwLwr8WKxsrf9o44YaVyHILn/zuotPfHFiHAb5I1Q8FGys+Yp0R07GQ==
-X-Received: by 2002:a50:ed89:: with SMTP id h9mr4636525edr.331.1595762050104;
-        Sun, 26 Jul 2020 04:14:10 -0700 (PDT)
+        bh=37BF1UwxVP7CixpP1U6Ina051uTwRlG/juDBdj9kXV4=;
+        b=AkbtpHTh+H8y4Ya+7aAG+gdFaCr1/dnHbvm4TOChAic0gAs6rH5gvzebBYOqDufCCc
+         hfnUILW/ZndRzLa0Kg9KaapuItB1WjTDYCj60XW4FKsAfwjJRRvPAzsxSlNFdycast2z
+         l5GYmcc+3gEASRHrUTTQN+zTid10xAJvKq6gbdIkCw/K2pGThPJ7n/52b8kDJXgkHu/k
+         Q/nE6UKkmVtMQVeME+H4nfVRDOkAzcPqpd5+VYXT0YnQ6wQCwgm17+zDx3D+x6viFISb
+         dZFug7WmyyY2KxxmDR5rH41WqzV40heIEg7J5toqhtdmsQ9U+P5gUP+nEjlb85wc7gr3
+         kFQQ==
+X-Gm-Message-State: AOAM533DTVeHMtZJuU1aOQHdPnVwNeMqbJmgTTlS/RvwBORtEKnPEBwm
+        /jBaDYjBmQaPNumtKmMq2zo=
+X-Google-Smtp-Source: ABdhPJwTeEEQ2ZXZVpgawfqhB50ZrkrMpC5+cmMg9MzlJgq+tYGn96zmWoVuMYZ86Q5HRvZmLGQ2bw==
+X-Received: by 2002:a17:906:8489:: with SMTP id m9mr14318876ejx.94.1595762061902;
+        Sun, 26 Jul 2020 04:14:21 -0700 (PDT)
 Received: from localhost.localdomain (abad207.neoplus.adsl.tpnet.pl. [83.6.167.207])
-        by smtp.googlemail.com with ESMTPSA id d23sm4696253ejj.74.2020.07.26.04.14.07
+        by smtp.googlemail.com with ESMTPSA id d23sm4696253ejj.74.2020.07.26.04.14.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2020 04:14:09 -0700 (PDT)
+        Sun, 26 Jul 2020 04:14:21 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     konradybcio@gmail.com
 Cc:     martin.botka1@gmail.com, Rob Clark <robdclark@gmail.com>,
@@ -77,9 +77,9 @@ Cc:     martin.botka1@gmail.com, Rob Clark <robdclark@gmail.com>,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH 5/9] drm/msm/mdp5: Add MDP5 configuration for SDM630
-Date:   Sun, 26 Jul 2020 13:12:02 +0200
-Message-Id: <20200726111215.22361-6-konradybcio@gmail.com>
+Subject: [PATCH 6/9] drm/msm/dsi: Add DSI configuration for SDM660
+Date:   Sun, 26 Jul 2020 13:12:03 +0200
+Message-Id: <20200726111215.22361-7-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200726111215.22361-1-konradybcio@gmail.com>
 References: <20200726111215.22361-1-konradybcio@gmail.com>
@@ -90,126 +90,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds support for the MDP5 IP on Snapdragon
-630. The configuration is different from SDM660's, as
-the latter one has two DSI outputs.
+This also applies to sdm630/636 and their SDA
+counterparts.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 93 ++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 21 +++++++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
+ 2 files changed, 22 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index 25a13a2a57a9..2e02de8a7e41 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -910,6 +910,98 @@ static const struct mdp5_cfg_hw msm8998_config = {
- 	.max_clk = 412500000,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+index 813d69deb5e8..f892f2cbe8bb 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+@@ -149,6 +149,25 @@ static const struct msm_dsi_config msm8998_dsi_cfg = {
+ 	.num_dsi = 2,
  };
  
-+static const struct mdp5_cfg_hw sdm630_config = {
-+	.name = "sdm630",
-+	.mdp = {
-+		.count = 1,
-+		.caps = MDP_CAP_CDM |
-+			MDP_CAP_SRC_SPLIT |
-+			0,
-+	},
-+	.ctl = {
-+		.count = 5,
-+		.base = { 0x01000, 0x01200, 0x01400, 0x01600, 0x01800 },
-+		.flush_hw_mask = 0xf4ffffff,
-+	},
-+	.pipe_vig = {
-+		.count = 1,
-+		.base = { 0x04000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SCALE	|
-+			MDP_PIPE_CAP_CSC	|
-+			MDP_PIPE_CAP_DECIMATION	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_rgb = {
-+		.count = 4,
-+		.base = { 0x14000, 0x16000, 0x18000, 0x1a000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SCALE	|
-+			MDP_PIPE_CAP_DECIMATION	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_dma = {
-+		.count = 2, /* driver supports max of 2 currently */
-+		.base = { 0x24000, 0x26000, 0x28000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_cursor = {
-+		.count = 1,
-+		.base = { 0x34000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			MDP_PIPE_CAP_CURSOR	|
-+			0,
-+	},
-+
-+	.lm = {
-+		.count = 2,
-+		.base = { 0x44000, 0x46000 },
-+		.instances = {
-+				{ .id = 0, .pp = 0, .dspp = 0,
-+				  .caps = MDP_LM_CAP_DISPLAY |
-+					  MDP_LM_CAP_PAIR, },
-+				{ .id = 1, .pp = 1, .dspp = -1,
-+				  .caps = MDP_LM_CAP_WB, },
-+				},
-+		.nb_stages = 8,
-+		.max_width = 2048,
-+		.max_height = 0xFFFF,
-+	},
-+	.dspp = {
-+		.count = 1,
-+		.base = { 0x54000 },
-+	},
-+	.ad = {
-+		.count = 2,
-+		.base = { 0x78000, 0x78800 },
-+	},
-+	.pp = {
-+		.count = 3,
-+		.base = { 0x70000, 0x71000, 0x72000 },
-+	},
-+	.cdm = {
-+		.count = 1,
-+		.base = { 0x79200 },
-+	},
-+	.intf = {
-+		.base = { 0x6a000, 0x6a800 },
-+		.connect = {
-+			[0] = INTF_DISABLED,
-+			[1] = INTF_DSI,
-+		},
-+	},
-+	.max_clk = 412500000,
++static const char * const dsi_sdm660_bus_clk_names[] = {
++	"iface", "bus", "core", "core_mmss",
 +};
 +
- static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
- 	{ .revision = 0, .config = { .hw = &msm8x74v1_config } },
- 	{ .revision = 2, .config = { .hw = &msm8x74v2_config } },
-@@ -924,6 +1016,7 @@ static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
- 
- static const struct mdp5_cfg_handler cfg_handlers_v3[] = {
- 	{ .revision = 0, .config = { .hw = &msm8998_config } },
-+	{ .revision = 3, .config = { .hw = &sdm630_config } },
++static const struct msm_dsi_config sdm660_dsi_cfg = {
++	.io_offset = DSI_6G_REG_SHIFT,
++	.reg_cfg = {
++		.num = 2,
++		.regs = {
++			{"vdd", 73400, 32 },	/* 0.9 V */
++			{"vdda", 12560, 4 },	/* 1.2 V */
++		},
++	},
++	.bus_clk_names = dsi_sdm660_bus_clk_names,
++	.num_bus_clks = ARRAY_SIZE(dsi_sdm660_bus_clk_names),
++	.io_start = { 0xc994000, 0xc996000 },
++	.num_dsi = 2,
++};
++
+ static const char * const dsi_sdm845_bus_clk_names[] = {
+ 	"iface", "bus",
  };
- 
- static struct mdp5_cfg_platform *mdp5_get_config(struct platform_device *dev);
+@@ -240,6 +259,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+ 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
+ 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
++	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
++		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
+ 		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+index 217e24a65178..efd469d1db45 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -18,6 +18,7 @@
+ #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
++#define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
+ #define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
+ #define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
 -- 
 2.27.0
 
