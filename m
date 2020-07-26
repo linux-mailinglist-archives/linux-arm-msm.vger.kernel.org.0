@@ -2,115 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6860D22DEDE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jul 2020 14:04:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF97022DF23
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Jul 2020 14:47:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbgGZMEd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Jul 2020 08:04:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43366 "EHLO mail.kernel.org"
+        id S1727113AbgGZMrw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Jul 2020 08:47:52 -0400
+Received: from sauhun.de ([88.99.104.3]:53314 "EHLO pokefinder.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725848AbgGZME1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Jul 2020 08:04:27 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 40BAB2065E;
-        Sun, 26 Jul 2020 12:04:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595765065;
-        bh=LJxegL2P5hNKR910G8c/QDoI1uB2BfRFQ4PeiQJwStQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Xy0KtmyrKY0jX8tITQlUegCxmDYNtTsgBZMQUvwmUrdMbIF0cVKjshR0MQeIGNHRj
-         u3dZWeWJc5V9C/OxmUSuefkUN6fX7aAq8RXQINPs/V1QurcwpCNTAP9KonYrK9ZOLC
-         qACyVZsJwgPmYtOqUITCkz9UKqybv0a91ujrcAaY=
-Date:   Sun, 26 Jul 2020 14:04:22 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Martin Botka <martin.botka1@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S1726042AbgGZMrw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 26 Jul 2020 08:47:52 -0400
+Received: from localhost (p5486c93f.dip0.t-ipconnect.de [84.134.201.63])
+        by pokefinder.org (Postfix) with ESMTPSA id 417252C0610;
+        Sun, 26 Jul 2020 14:47:49 +0200 (CEST)
+Date:   Sun, 26 Jul 2020 14:47:48 +0200
+From:   Wolfram Sang <wsa@the-dreams.de>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     swboyd@chromium.org, msavaliy@codeaurora.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        zhengbin <zhengbin13@huawei.com>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Ben Dooks <ben.dooks@codethink.co.uk>,
-        Krzysztof Wilczynski <kw@linux.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Xiaozhe Shi <xiaozhes@codeaurora.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 9/9] soc/qcom: Add REVID driver
-Message-ID: <20200726120422.GA1292190@kroah.com>
-References: <20200726111215.22361-1-konradybcio@gmail.com>
- <20200726111215.22361-10-konradybcio@gmail.com>
- <20200726112920.GA1286220@kroah.com>
- <CAMS8qEV7jhbHqpXE2UOaXBVM5WbCThaGrcD3wiH9kf6h_K-qeA@mail.gmail.com>
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
+        Sagar Dharia <sdharia@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] i2c: i2c-qcom-geni: Fix DMA transfer race
+Message-ID: <20200726124747.GA16169@ninjato>
+References: <20200722145948.v2.1.I7efdf6efaa6edadbb690196cd4fbe3392a582c89@changeid>
+ <20200723195634.GA908@ninjato>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
 Content-Disposition: inline
-In-Reply-To: <CAMS8qEV7jhbHqpXE2UOaXBVM5WbCThaGrcD3wiH9kf6h_K-qeA@mail.gmail.com>
+In-Reply-To: <20200723195634.GA908@ninjato>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 26, 2020 at 01:40:46PM +0200, Konrad Dybcio wrote:
-> >Horrible global symbol name.  Who calls this?
-> 
-> Welcome to development on qcom platforms :D
 
-Yeah, I have seen :(
+--1yeeQ81UyVL57Vl7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> >This is the last patch in
-> >the series, so if there is no user for this, please don't export it.
-> 
-> Other downstream drivers make use of it.. need to get this up first, sorry :V
+On Thu, Jul 23, 2020 at 09:56:34PM +0200, Wolfram Sang wrote:
+> On Wed, Jul 22, 2020 at 03:00:21PM -0700, Douglas Anderson wrote:
+> > When I have KASAN enabled on my kernel and I start stressing the
+> > touchscreen my system tends to hang.  The touchscreen is one of the
+> > only things that does a lot of big i2c transfers and ends up hitting
+> > the DMA paths in the geni i2c driver.  It appears that KASAN adds
+> > enough delay in my system to tickle a race condition in the DMA setup
+> > code.
+> >=20
+> > When the system hangs, I found that it was running the geni_i2c_irq()
+> > over and over again.  It had these:
+> >=20
+> > m_stat   =3D 0x04000080
+> > rx_st    =3D 0x30000011
+> > dm_tx_st =3D 0x00000000
+> > dm_rx_st =3D 0x00000000
+> > dma      =3D 0x00000001
+> >=20
+> > Notably we're in DMA mode but are getting M_RX_IRQ_EN and
+> > M_RX_FIFO_WATERMARK_EN over and over again.
+> >=20
+> > Putting some traces in geni_i2c_rx_one_msg() showed that when we
+> > failed we were getting to the start of geni_i2c_rx_one_msg() but were
+> > never executing geni_se_rx_dma_prep().
+> >=20
+> > I believe that the problem here is that we are starting the geni
+> > command before we run geni_se_rx_dma_prep().  If a transfer makes it
+> > far enough before we do that then we get into the state I have
+> > observed.  Let's change the order, which seems to work fine.
+> >=20
+> > Although problems were seen on the RX path, code inspection suggests
+> > that the TX should be changed too.  Change it as well.
+> >=20
+> > Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualco=
+mm GENI I2C controller")
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+>=20
+> Applied to for-current, thanks!
 
-Then use a proper name for it, with a correct prefix, and export it with
-EXPORT_SYMBOL_GPL() please.
+Glad we got this sorted. I just wondered that Alok wasn't part of the
+discussion. Is he still interested in maintaining the driver? Also
+because there is an unprocessed patch left for this driver:
 
-> >Why do you need a .h file in the include directory if only a single .c
-> >file needs it?  Just put that info in the .c file itself.
-> 
-> Again, other downstream drivers which some people and I intend to
-> bring to upstream standards use that to access the PMIC model/hw revision.
+http://patchwork.ozlabs.org/project/linux-i2c/patch/20191103212204.13606-1-=
+colin.king@canonical.com/
 
-But all of those defines are not needed, just the function name, right?
 
-> >But again, who uses this module?  If it's only good for a single line in
-> >the kernel log, that feels like a huge waste to me.
-> 
-> downstream-kernel-dir$ rg -l qpnp-revid.h | wc -l
-> 25
-> 
-> So yeah, quite a bunch of other qcom-specific drivers.
-> 
-> I'll try to fix these and send a v2.
+--1yeeQ81UyVL57Vl7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Hold off on this and wait until there is a real user for it, as we can
-not take api additions without a user, otherwise we will just come along
-and delete the code.
+-----BEGIN PGP SIGNATURE-----
 
-Submit it as part of a series that actually uses the function, so we can
-at least see if the function makes sense to be used in that way as well,
-right now we have no clue.
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl8de3MACgkQFA3kzBSg
+KbZfFQ/+IQE8vj6FVFw8UOFQ8gO4XGR5oyKcFYaqngN7SVrbpklAsniO6NCvVdLA
+/BrWDRdvmfsUvQdA1BdnVzpG9T6N5hf5K41ijoHhZU9u8QKwtlTJ4iJVQ7LceArW
+a/iYn1zdN2B3fkfKyUqJIPgS2qdgTcwupi5prnuYYMD0wXwldb56QGzAkfERk14S
+2PNwaSTAJS5OmVzDU4e+4p56V+BG8d4UAz9kI+zGSs9lJ9GggtxN6I8hYJ4/pxv6
+scPz8czhh2gcn94tMxumGlLVZqURrAa8RUgKnPCZgD0xiDxZfkRFJpgtQRUmw7My
+cHsAts7z/ihNiosL41tNkyP9iCbkKUswRexi96+IjchHX/g/bdkccg37ZweXTSyH
+PgRk5Oqc9uD6P471xzLSEowI11kGPhlu06u52kvg77UIGMU8vL0b8NWe2SVaKSPg
+L3WvdgVBNWvCQ5kxjc3w0rva0V73427seGAmQSzIFrYH2IOEj5hD36tEQ6beDGJ3
+q8g3H8saNMec8oVeHmzMZNsokuVbWhX0fGKkdx8d54d/Z9Q7WFQgD7TbeTaatVgp
+XXvUToWCD9XwX7mBYLYoblscVtF8sMExUbO3Y0Jo+hc5tRGw19Jjycwh8zZNID2C
+4RwagbzeBFpiP8lQSoVOC+HQAWWwWdFdlaW8eJg2U+Vw1Y6Gv44=
+=pw9M
+-----END PGP SIGNATURE-----
 
-thanks,
-
-greg k-h
+--1yeeQ81UyVL57Vl7--
