@@ -2,125 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63D6922E83F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 10:56:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2561122E8A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 11:15:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726139AbgG0I4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 04:56:16 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:64921 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726269AbgG0I4O (ORCPT
+        id S1726728AbgG0JPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 05:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbgG0JPZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 04:56:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595840173; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=xPmKjdUK0acJr1A0bQShRP8M7cHV9/zPMfSfRXx1CNA=;
- b=BCCm1BYopGP0hpTFhuYg58IWdeDwHgv3ecUKk5az25RUgyOGcEJyCUENS3K2qyFpZ8oE5Aov
- hUHBeMd9EHz4nVZ6ANLwSryS3sJp4Ef6qod/8x03omGoJfi579+S52V9lZ+UWVoBM+DSEUU3
- HJtVmrOdwGtlZSuQcK3uqxnaIjc=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
- 5f1e96a1845c4d05a35790d3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 27 Jul 2020 08:56:01
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A3CEFC43395; Mon, 27 Jul 2020 08:56:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0AEF0C433C9;
-        Mon, 27 Jul 2020 08:56:01 +0000 (UTC)
+        Mon, 27 Jul 2020 05:15:25 -0400
+Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2420EC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 02:15:25 -0700 (PDT)
+Received: by mail-ua1-x941.google.com with SMTP id b24so5190571uak.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 02:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3lXFk4OkKW0RhlCVfH/wg1VKJylO9Hv/KMUScr2Ti0E=;
+        b=egtV1aXY3u/TJmL7NXsxrT/SgrePqFIhMC2CyIDQqAU7eILw1wihstpqr5jptZXfFx
+         x3krESYFTHGM2SEz7OMPQh76J975VsWLCEvPyoqGl9OehOON0JEBjvXd46JMVCCY/zZZ
+         dJgzPagqtx3pxJY4bYxfRpXifXAwhK+76s9UrIr0Hzh3TvNxjkXDiTQ8/f6A40ACKPbQ
+         th7GtpOCrzut5eNdbpfUHRTBhcptUa/JVUoeLQDoW4kR+w73zJW3RIgifOLRAd/C+kZm
+         vfPEnmHlUiWCevWCSh5koKKxnl2mUnfg+NE21FJzmH8l28dJ0c85O7zFQo3Nyzz7wWii
+         ko6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3lXFk4OkKW0RhlCVfH/wg1VKJylO9Hv/KMUScr2Ti0E=;
+        b=FAXe2MFSartQTyfcyZHwJKr8qWJEHonmo8lYx3kfQ4y0z715e1RUkMGv/FsR1+zwtK
+         Wi/X7mx+yHIt1/yg8jIlLj/+DQl9h65VDt/OKv1xhmOZeTU87ArHpp9l73pRhfNCVHTo
+         clZ7cURdI6M9ahPZ5kNRn0EHv1ExlZpE1g7qx8v9tZVyZ68YHNqQchRVDUqM+ZLJOuF1
+         w9MEB/UmqRLND91uRJvR0RP46aP05yiCRSdGjOu/fowKwaBDxa78u7XwdovWE6ufFERp
+         MPnectTV7pP4UQfXOEU9ii6w5VOvWrf0WfOtu3XHzrTObqE2qS++KZ0zPLkZ4r2o+OI5
+         kXZw==
+X-Gm-Message-State: AOAM532jQebptoZ/v74ApM5cuajZ82yuhr1xgdAeCBN9CLaljRTaxLl6
+        pAkYlIN0gjzsrHd+hiNtUp9dkXxtpKrckc9Kjvfs603D/ho=
+X-Google-Smtp-Source: ABdhPJxNDSLsXIXsDG35VGWFqbQrbNQyXIwMD2fJdLXGnXGrMzAvcDYVd4Hz3cCpuYP6CvnckHIHZ2vyAMLI34aeqoQ=
+X-Received: by 2002:a9f:2742:: with SMTP id a60mr188119uaa.48.1595841324120;
+ Mon, 27 Jul 2020 02:15:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 27 Jul 2020 14:26:00 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org, coresight@lists.linaro.org
-Subject: Re: [PATCH] coresight: etm4x: Fix etm4_count race using atomic
- variable
-In-Reply-To: <20200727060728.15027-1-saiprakash.ranjan@codeaurora.org>
-References: <20200727060728.15027-1-saiprakash.ranjan@codeaurora.org>
-Message-ID: <0541ded117bb2a63481de8c015282b11@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200629144926.665-1-shawn.guo@linaro.org> <20200629144926.665-3-shawn.guo@linaro.org>
+ <CAHLCerMyEsvuhNPnwDow5JYVAbem0Rzs+5-uzKZNeFt+3rYHQg@mail.gmail.com>
+ <CAHLCerPEPEOkkBd8MZq8T99eS7nE2pMio6ojnMn7bc54ian-3A@mail.gmail.com> <20200727083322.GA12266@dragon>
+In-Reply-To: <20200727083322.GA12266@dragon>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Mon, 27 Jul 2020 14:45:13 +0530
+Message-ID: <CAHLCerNXtEDONQqXeeCbo3jSL8HNpP-OxW0es0ZQuWNnaAaPFQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] thermal: qcom: tsens-v0_1: Add support for MSM8939
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-27 11:37, Sai Prakash Ranjan wrote:
-> etm4_count keeps track of number of ETMv4 registered and on some
-> systems, a race is observed on etm4_count variable which can
-> lead to multiple calls to cpuhp_setup_state_nocalls_cpuslocked().
-> This function internally calls cpuhp_store_callbacks() which
-> prevents multiple registrations of callbacks for a given state
-> and due to this race, it returns -EBUSY leading to ETM probe
-> failures like below.
-> 
->  coresight-etm4x: probe of 7040000.etm failed with error -16
-> 
-> This race can easily be triggered with async probe by setting
-> probe type as PROBE_PREFER_ASYNCHRONOUS and with ETM power
-> management property "arm,coresight-loses-context-with-cpu".
-> 
-> Prevent this race by converting etm4_count variable to atomic.
-> 
-> Fixes: 9b6a3f3633a5 ("coresight: etmv4: Fix CPU power management setup
-> in probe() function")
-> Fixes: 58eb457be028 ("hwtracing/coresight-etm4x: Convert to hotplug
-> state machine")
-> Suggested-by: Mike Leach <mike.leach@linaro.org>
-> (Mike: Rootcause and context for commit message)
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/hwtracing/coresight/coresight-etm4x.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c
-> b/drivers/hwtracing/coresight/coresight-etm4x.c
-> index 6d7d2169bfb2..f256ea744c51 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
-> @@ -49,7 +49,7 @@ MODULE_PARM_DESC(pm_save_enable,
->  	"Save/restore state on power down: 1 = never, 2 = self-hosted");
-> 
->  /* The number of ETMv4 currently registered */
-> -static int etm4_count;
-> +static atomic_t etm4_count;
->  static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
->  static void etm4_set_default_config(struct etmv4_config *config);
->  static int etm4_set_event_filters(struct etmv4_drvdata *drvdata,
-> @@ -1403,7 +1403,7 @@ static int etm4_pm_setup_cpuslocked(void)
->  {
->  	int ret;
-> 
-> -	if (etm4_count++)
-> +	if (atomic_inc_return(&etm4_count))
->  		return 0;
-> 
+On Mon, Jul 27, 2020 at 2:03 PM Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> Hi Amit,
+>
+> On Mon, Jul 27, 2020 at 12:06:54PM +0530, Amit Kucheria wrote:
+> > On Mon, Jul 27, 2020 at 11:56 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> > >
+> > > On Tue, Jun 30, 2020 at 1:09 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > >
+> > > > The TSENS integrated on MSM8939 is a v0_1 device with 10 sensors.
+> > > > Different from its predecessor MSM8916, where 'calib_sel' bits sit in
+> > > > separate qfprom word, MSM8939 has 'cailb' and 'calib_sel' bits mixed and
+> > > > spread on discrete offsets.  That's why all qfprom bits are read as one
+> > > > go and later mapped to calibration data for MSM8939.
+> > > >
+> > > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > >
+> > > Acked-by: Amit Kucheria <amit.kucheria@linaro.org>
+> >
+> > Shawn,
+> >
+> > Have you not sent the change to the tsens.yaml and 8939 DT yet or did
+> > I miss them?
+>
+> You were copied on '[PATCH 1/2] dt-bindings: tsens: qcom: Document
+> MSM8939 compatible'.
 
-Sorry, I messed up here, will send a next version fixing this.
+Aah ok, it was threaded weirdly but I see it now.
 
-Thanks,
-Sai
+> For DTS change, I haven't sent them out.  In case
+> you want to have a look, here it is.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+This looks fine from a quick glance. Thanks.
+
+>         thermal-zones {
+>                 cpu0-thermal {
+>                         polling-delay-passive = <250>;
+>                         polling-delay = <1000>;
+>
+>                         thermal-sensors = <&tsens 5>;
+>
+>                         trips {
+>                                 cpu0_alert: trip0 {
+>                                         temperature = <75000>;
+>                                         hysteresis = <2000>;
+>                                         type = "passive";
+>                                 };
+>                                 cpu0_crit: trip1 {
+>                                         temperature = <110000>;
+>                                         hysteresis = <2000>;
+>                                         type = "critical";
+>                                 };
+>                         };
+>
+>                         cooling-maps {
+>                                 map0 {
+>                                         trip = <&cpu0_alert>;
+>                                         cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>                                 };
+>                         };
+>                 };
+>
+>                 cpu1-thermal {
+>                         polling-delay-passive = <250>;
+>                         polling-delay = <1000>;
+>
+>                         thermal-sensors = <&tsens 6>;
+>
+>                         trips {
+>                                 cpu1_alert: trip0 {
+>                                         temperature = <75000>;
+>                                         hysteresis = <2000>;
+>                                         type = "passive";
+>                                 };
+>                                 cpu1_crit: trip1 {
+>                                         temperature = <110000>;
+>                                         hysteresis = <2000>;
+>                                         type = "critical";
+>                                 };
+>                         };
+>
+>                         cooling-maps {
+>                                 map0 {
+>                                         trip = <&cpu1_alert>;
+>                                         cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>                                 };
+>                         };
+>                 };
+>
+>                 cpu2-thermal {
+>                         polling-delay-passive = <250>;
+>                         polling-delay = <1000>;
+>
+>                         thermal-sensors = <&tsens 7>;
+>
+>                         trips {
+>                                 cpu2_alert: trip0 {
+>                                         temperature = <75000>;
+>                                         hysteresis = <2000>;
+>                                         type = "passive";
+>                                 };
+>                                 cpu2_crit: trip1 {
+>                                         temperature = <110000>;
+>                                         hysteresis = <2000>;
+>                                         type = "critical";
+>                                 };
+>                         };
+>
+>                         cooling-maps {
+>                                 map0 {
+>                                         trip = <&cpu2_alert>;
+>                                         cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>                                 };
+>                         };
+>                 };
+>
+>                 cpu3-thermal {
+>                         polling-delay-passive = <250>;
+>                         polling-delay = <1000>;
+>
+>                         thermal-sensors = <&tsens 8>;
+>
+>                         trips {
+>                                 cpu3_alert: trip0 {
+>                                         temperature = <75000>;
+>                                         hysteresis = <2000>;
+>                                         type = "passive";
+>                                 };
+>                                 cpu3_crit: trip1 {
+>                                         temperature = <110000>;
+>                                         hysteresis = <2000>;
+>                                         type = "critical";
+>                                 };
+>                         };
+>
+>                         cooling-maps {
+>                                 map0 {
+>                                         trip = <&cpu3_alert>;
+>                                         cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>                                 };
+>                         };
+>                 };
+>
+>                 cpu4567-thermal {
+>                         polling-delay-passive = <250>;
+>                         polling-delay = <1000>;
+>
+>                         thermal-sensors = <&tsens 9>;
+>
+>                         trips {
+>                                 cpu4567_alert: trip0 {
+>                                         temperature = <75000>;
+>                                         hysteresis = <2000>;
+>                                         type = "passive";
+>                                 };
+>                                 cpu4567_crit: trip1 {
+>                                         temperature = <110000>;
+>                                         hysteresis = <2000>;
+>                                         type = "critical";
+>                                 };
+>                         };
+>
+>                         cooling-maps {
+>                                 map0 {
+>                                         trip = <&cpu4567_alert>;
+>                                         cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>                                                          <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>                                 };
+>                         };
+>                 };
+>
+>         };
+>
+>         qfprom: qfprom@5c000 {
+>                 compatible = "qcom,qfprom";
+>                 reg = <0x5c000 0x1000>;
+>                 #address-cells = <1>;
+>                 #size-cells = <1>;
+>                 tsens_caldata: caldata@a0 {
+>                         reg = <0xa0 0x5c>;
+>                 };
+>         };
+>
+>         tsens: thermal-sensor@4a9000 {
+>                 compatible = "qcom,msm8939-tsens";
+>                 reg = <0x4a9000 0x1000>, /* TM */
+>                       <0x4a8000 0x1000>; /* SROT */
+>                 nvmem-cells = <&tsens_caldata>;
+>                 nvmem-cell-names = "calib";
+>                 #qcom,sensors = <10>;
+>                 interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+>                 interrupt-names = "uplow";
+>                 #thermal-sensor-cells = <1>;
+>         };
+>
+> Shawn
