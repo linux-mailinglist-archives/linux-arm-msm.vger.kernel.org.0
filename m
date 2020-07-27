@@ -2,110 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78F2622F98D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 21:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA65922F9A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 21:58:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728340AbgG0TzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 15:55:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43558 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726196AbgG0TzN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 15:55:13 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4F8622072E;
-        Mon, 27 Jul 2020 19:55:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595879712;
-        bh=Eihzj9yY4QhXjvJiGtP5cGNyIPMsxel19lv/3GimdaU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cIeEb6PNzza0iwI8PApMML3SFVNmb2l/86jCWN8qMkxnxHpVLbGi7g8vqsCSG3l6l
-         GwATFf6nweneG2V8IPskGfFQsKFd1rCDcXOFfZhUA4THOMmJGpjDEf9b3MEHCHLue3
-         uvbmXVlHia5Frt1tZY/Dc96rxzLpiSWN5QFPMTm8=
-Date:   Mon, 27 Jul 2020 21:55:07 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Steve Cohen <cohens@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, sam@ravnborg.org, daniel@ffwll.ch,
-        seanpaul@chromium.org, pdhaval@codeaurora.org,
-        jsanka@codeaurora.org, adelva@google.com
-Subject: Re: [PATCH V2] drm: hold gem reference until object is no longer
- accessed
-Message-ID: <20200727195507.GA240123@kroah.com>
-References: <1595284250-31580-1-git-send-email-cohens@codeaurora.org>
+        id S1729130AbgG0T6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 15:58:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728348AbgG0T6t (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Jul 2020 15:58:49 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86452C061794;
+        Mon, 27 Jul 2020 12:58:49 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id qc22so3514267ejb.4;
+        Mon, 27 Jul 2020 12:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=P+ZtokmBUXMUzMCK2bGHNX1SgF1vgTjbYOyC77ce+jk=;
+        b=d/dz9cHAZyIUWkOF4iyEEB54wC9RrtmHHxRtwGzmM1BAlZZ3oFzIXxmFfA0mafFd/T
+         5HP7Z8Tx3WlvC8JjvVLdB9XCem6CpF4Yh6qILouU3qfTNoXpr0VPHusKxiofDodqqNk7
+         KcexI47FrbFGgsI7EGCT9Qrph1GgYWDCFhAdpDp6J2/EhhKUkd8KvwTpdghR4oDAXS5R
+         gy67QDNSKnXskDxTAMVX5R4zDHJ5B1mr8eQGhyafd1NRj41S/DnCvgVo6LbmCwgFwxfS
+         nfePOw8uVEiDvupvIB1V6Dm0zdOVswIdqpLglfjECJu+jypGAmMuDHzqImmmBxkZ8wVA
+         7INg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=P+ZtokmBUXMUzMCK2bGHNX1SgF1vgTjbYOyC77ce+jk=;
+        b=T0Olo/28BX/RN6XtQLgHvadHax3GG67Z3MiZNUb0oCo6VUtZjr7M+cVZ61/iukXfIn
+         Qkna38jTzEGhEyu5nmHH+ADs2XOzSlGFMuYMW+O8IIChic+R/IujZx01SXmcFLjDzXn+
+         JfWMYWnTHbzdcBOXX2Of+WvGnrJ1JHkvudLbGaajQIOT6QZnRo2YGXxTEJe4Sm8rOBXy
+         Y4tVrApWFcOgsBY3OVTG+fSDW9jlGCR523SVWt7rVANyXjkDUHC8rcW0EzReriU4nf7P
+         0HZe21VF4YZbUo9SL9VVzcCa8OsrPyyqLFipqGgepnKxyvtALzUy04BFn1QpQ+uSO9oV
+         l5Hw==
+X-Gm-Message-State: AOAM533MTvYxzgjKmx30zf9Ib7KCogM6iHV4xsfAQGmX0twOQgM0nN1U
+        7S9TrEGPj5HCDATr601h74bawxr/n99r1973A0I=
+X-Google-Smtp-Source: ABdhPJx5Tqhd6JeCOLSOIs2/bFHHFG80V48Q4I9sJHYsrBzE7kDBMjNuOPbuf5tIW9RJHzS57R9ksfFzYzReLr1GKjQ=
+X-Received: by 2002:a17:906:f905:: with SMTP id lc5mr6596445ejb.340.1595879928214;
+ Mon, 27 Jul 2020 12:58:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1595284250-31580-1-git-send-email-cohens@codeaurora.org>
+References: <20200726111215.22361-1-konradybcio@gmail.com> <20200726111215.22361-9-konradybcio@gmail.com>
+ <159587887102.1360974.16083886481437183810@swboyd.mtv.corp.google.com>
+In-Reply-To: <159587887102.1360974.16083886481437183810@swboyd.mtv.corp.google.com>
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Date:   Mon, 27 Jul 2020 21:58:12 +0200
+Message-ID: <CAMS8qEU9t=QZR34FifzGMsQkhxQCVtOfoNRX-n_0xZJz2rbcyw@mail.gmail.com>
+Subject: Re: [PATCH 8/9] clk: qcom: gcc-sdm660: Fix up gcc_mss_mnoc_bimc_axi_clk
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Martin Botka <martin.botka1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        zhengbin <zhengbin13@huawei.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
+        Krzysztof Wilczynski <kw@linux.com>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Xiaozhe Shi <xiaozhes@codeaurora.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devic <etree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 06:30:50PM -0400, Steve Cohen wrote:
-> A use-after-free in drm_gem_open_ioctl can happen if the
-> GEM object handle is closed between the idr lookup and
-> retrieving the size from said object since a local reference
-> is not being held at that point. Hold the local reference
-> while the object can still be accessed to fix this and
-> plug the potential security hole.
-> 
-> Signed-off-by: Steve Cohen <cohens@codeaurora.org>
-> ---
->  drivers/gpu/drm/drm_gem.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> index 7bf628e..ee2058a 100644
-> --- a/drivers/gpu/drm/drm_gem.c
-> +++ b/drivers/gpu/drm/drm_gem.c
-> @@ -871,9 +871,6 @@ drm_gem_flink_ioctl(struct drm_device *dev, void *data,
->   * @file_priv: drm file-private structure
->   *
->   * Open an object using the global name, returning a handle and the size.
-> - *
-> - * This handle (of course) holds a reference to the object, so the object
-> - * will not go away until the handle is deleted.
->   */
->  int
->  drm_gem_open_ioctl(struct drm_device *dev, void *data,
-> @@ -898,14 +895,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
->  
->  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
->  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
-> -	drm_gem_object_put_unlocked(obj);
->  	if (ret)
-> -		return ret;
-> +		goto err;
->  
->  	args->handle = handle;
->  	args->size = obj->size;
->  
-> -	return 0;
-> +err:
-> +	drm_gem_object_put_unlocked(obj);
-> +	return ret;
->  }
->  
->  /**
+>Fixes tag?
 
-As this seems to fix an important issue, any reason it wasn't cc: stable
-on it so that it gets backported properly?
+Can I add it here? I supose I can.
 
-How about a "Fixes:" tag so that we know what commit id it fixes so we
-know how far back to backport things?
-
-And a hint to the maintainers that "this is an issue that needs to get
-into 5.8-final, it shouldn't wait around longer please" would have also
-been nice to see :)
-
-And what chagned from v1, aren't you supposed to list that somewhere in
-the changelog or below the --- line (never remember what DRM drivers
-want here...)
-
-Care to send a v3?
-
-thanks,
-
-greg k-h
+Fixes: f2a76a2955c0 (clk: qcom: Add Global Clock controller (GCC)
+driver for SDM660)
