@@ -2,76 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EED6322FB28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 23:15:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC92D22FBB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 23:55:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726706AbgG0VPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 17:15:37 -0400
-Received: from mail-il1-f193.google.com ([209.85.166.193]:35801 "EHLO
-        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbgG0VPh (ORCPT
+        id S1726193AbgG0VzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 17:55:14 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:32539 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726140AbgG0VzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 17:15:37 -0400
-Received: by mail-il1-f193.google.com with SMTP id t18so14404522ilh.2;
-        Mon, 27 Jul 2020 14:15:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aqOi16jjOnKG2O05yH0kyUxh/Ipp8QMsuyogqi4nzKU=;
-        b=r7QgxYvkQUH8rD3ZOeWR9notOWzHYxC4WEcfPlO7pf6TpQwoGLJFGTR41g8cfy8nu7
-         HVNgAghlgAq6TPeFqGRsnx1mntnbxWycI46K7nqtaeWAdsiWOQlHwiFI/9WYFfcWhaR7
-         JzfkRtHCHgn3zMHwMkV1c0FjxzHl2spEKpPKBT7QsDyg3JeO9Q9cUGxJMwbqGKv2QLuc
-         ghu1O52JAm9lKgvx9DTrtcuhXxiGA0w7FD64B0y66ZyWa53x91nsPA79PwodRMFFN+La
-         /Yzlbf7frrhIzrfsosyymWYi6lgb3lxnwo3i73QxxbVIS7HK6+chw2eaZ9BTEZJGkyb7
-         Yd9w==
-X-Gm-Message-State: AOAM531oUWDZnMjALNYy6PbZnIpmMPuF/ybfH44ai3Noyeo+rgjZxlHn
-        kB/0ahf7kl28YtnaJofVEA==
-X-Google-Smtp-Source: ABdhPJwxeh8JV9gP51L9KoRIkhHdJ1KYNRIHBeY3AeHjorP5YMvvt1YkkNkr1pHTdQ3JisHBWNDinw==
-X-Received: by 2002:a05:6e02:dd1:: with SMTP id l17mr25068482ilj.136.1595884536970;
-        Mon, 27 Jul 2020 14:15:36 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id z68sm1472415ilf.25.2020.07.27.14.15.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2020 14:15:35 -0700 (PDT)
-Received: (nullmailer pid 886288 invoked by uid 1000);
-        Mon, 27 Jul 2020 21:15:33 -0000
-Date:   Mon, 27 Jul 2020 15:15:33 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Sivaprakash Murugesan <sivaprak@qti.qualcomm.com>
-Cc:     agross@kernel.org, bhelgaas@google.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-pci@vger.kernel.org, sivaprak@codeaurora.org,
-        robh+dt@kernel.org
-Subject: Re: [PATCH V2] dt-bindings: pci: convert QCOM pci bindings to YAML
-Message-ID: <20200727211533.GA886087@bogus>
-References: <1595776013-12877-1-git-send-email-sivaprak@qti.qualcomm.com>
+        Mon, 27 Jul 2020 17:55:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595886912; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=2u1FzLcW8eIOp2SQYzgZ+Is9ZYPxVilfNAm6pXqiy2k=;
+ b=eRTq4ZpwlqNnnA45pCX1IYhs00qA6SS8hEkKGtwafLKJL6Hhwy9vkh+Uz3+LYzGUTFHNsl6H
+ zpccJBqG9FIKH/i+m77/iOIl6+ZUQTk08DReTuWQRW3eWSETrxOGVfYhBLX3UWgdC+3edXqG
+ FRLlWFHYzfqRFulu1XOe1p/eVN4=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5f1f4d34845c4d05a3ecf341 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 27 Jul 2020 21:55:00
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9DAF8C43395; Mon, 27 Jul 2020 21:55:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cohens)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CD19EC433C9;
+        Mon, 27 Jul 2020 21:54:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1595776013-12877-1-git-send-email-sivaprak@qti.qualcomm.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 27 Jul 2020 17:54:59 -0400
+From:   cohens@codeaurora.org
+To:     daniel@ffwll.ch
+Cc:     adelva@google.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, pdhaval@codeaurora.org,
+        seanpaul@chromium.org, linux-arm-msm@vger.kernel.org,
+        jsanka@codeaurora.org, sam@ravnborg.org
+Subject: Re: [Freedreno] [PATCH V2] drm: hold gem reference until object is no
+ longer accessed
+In-Reply-To: <20200727201128.GX6419@phenom.ffwll.local>
+References: <1595284250-31580-1-git-send-email-cohens@codeaurora.org>
+ <20200727195507.GA240123@kroah.com>
+ <20200727201128.GX6419@phenom.ffwll.local>
+Message-ID: <f035111e7139bdaeb7562afd2415f366@codeaurora.org>
+X-Sender: cohens@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 26 Jul 2020 20:36:53 +0530, Sivaprakash Murugesan wrote:
-> From: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+On 2020-07-27 16:11, daniel@ffwll.ch wrote:
+> On Mon, Jul 27, 2020 at 09:55:07PM +0200, Greg KH wrote:
+>> On Mon, Jul 20, 2020 at 06:30:50PM -0400, Steve Cohen wrote:
+>> > A use-after-free in drm_gem_open_ioctl can happen if the
+>> > GEM object handle is closed between the idr lookup and
+>> > retrieving the size from said object since a local reference
+>> > is not being held at that point. Hold the local reference
+>> > while the object can still be accessed to fix this and
+>> > plug the potential security hole.
+>> >
+>> > Signed-off-by: Steve Cohen <cohens@codeaurora.org>
+>> > ---
+>> >  drivers/gpu/drm/drm_gem.c | 10 ++++------
+>> >  1 file changed, 4 insertions(+), 6 deletions(-)
+>> >
+>> > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+>> > index 7bf628e..ee2058a 100644
+>> > --- a/drivers/gpu/drm/drm_gem.c
+>> > +++ b/drivers/gpu/drm/drm_gem.c
+>> > @@ -871,9 +871,6 @@ drm_gem_flink_ioctl(struct drm_device *dev, void *data,
+>> >   * @file_priv: drm file-private structure
+>> >   *
+>> >   * Open an object using the global name, returning a handle and the size.
+>> > - *
+>> > - * This handle (of course) holds a reference to the object, so the object
+>> > - * will not go away until the handle is deleted.
+>> >   */
+>> >  int
+>> >  drm_gem_open_ioctl(struct drm_device *dev, void *data,
+>> > @@ -898,14 +895,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
+>> >
+>> >  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
+>> >  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
+>> > -	drm_gem_object_put_unlocked(obj);
+>> >  	if (ret)
+>> > -		return ret;
+>> > +		goto err;
+>> >
+>> >  	args->handle = handle;
+>> >  	args->size = obj->size;
+>> >
+>> > -	return 0;
+>> > +err:
+>> > +	drm_gem_object_put_unlocked(obj);
+>> > +	return ret;
+>> >  }
+>> >
+>> >  /**
+>> 
+>> As this seems to fix an important issue, any reason it wasn't cc: 
+>> stable
+>> on it so that it gets backported properly?
+>> 
+>> How about a "Fixes:" tag so that we know what commit id it fixes so we
+>> know how far back to backport things?
+>> 
+>> And a hint to the maintainers that "this is an issue that needs to get
+>> into 5.8-final, it shouldn't wait around longer please" would have 
+>> also
+>> been nice to see :)
+>> 
+>> And what chagned from v1, aren't you supposed to list that somewhere 
+>> in
+>> the changelog or below the --- line (never remember what DRM drivers
+>> want here...)
+>> 
+>> Care to send a v3?
 > 
-> Convert QCOM pci bindings to YAML schema
+> Don't worry, I'm pushing this to drm-misc-fixes now, should still make 
+> it
+> to 5.8. Plus cc: stable. I didn't bother with Fixes: since I think the 
+> bug
+> is rather old. Also, worst case you leak 32bit of some kernel memory 
+> that
+> got reused already (but yeah I know that's often enough to get the foot 
+> in
+> somewhere nasty and crack the door open).
 > 
-> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> ---
-> [v2]
->   - Referenced pci-bus.yaml
->   - removed duplicate properties already referenced by pci-bus.yaml
->   - Addressed comments from Rob
->  .../devicetree/bindings/pci/qcom,pcie.txt          | 330 ---------------
->  .../devicetree/bindings/pci/qcom,pcie.yaml         | 447 +++++++++++++++++++++
->  2 files changed, 447 insertions(+), 330 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> 
+> I think it fell through cracks because Sam said he'll apply, guess that
+> didn't happen.
 
-Applied, thanks!
+Sam added his Reviewed-By on V1 with a comment to rename the goto label,
+but in V2 I also updated the API documentation and the commit text for
+a more complete change and thought he would re-add the tag.
+
+> Also yes a changelog, somewhere, for next time around.
+
+Apologies, it won't happen again. Should I still submit a V3?
+It looks like you've got Greg's concerns covered.
+
+-Steve
+
+> -Daniel
+> 
+> 
+>> 
+>> thanks,
+>> 
+>> greg k-h
