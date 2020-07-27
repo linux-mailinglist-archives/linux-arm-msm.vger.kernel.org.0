@@ -2,109 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3E5D22E726
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 09:59:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 755AC22E732
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 10:01:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726122AbgG0H7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 03:59:13 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24013 "EHLO m43-7.mailgun.net"
+        id S1726862AbgG0IBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 04:01:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44886 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727078AbgG0H7N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 03:59:13 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595836752; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
- Subject: Sender; bh=+PV/mgFmHCpT1iOt87TCKArIUd/iWarn9UzS13Yi6VE=; b=xZIDvoz+ZVzlxtzfG2SEVTKwsBasUqjsx9Q1Xf/Dxnh8eN5mGcrbMx6c36eiKdkansDgl10J
- /txfK37JtWkZABe5bA6qaHk9LNaCobR9uIne7W/coiTXPufIuu9DaJ+Al/pmU0cPJ4agVOVR
- i8yemUqPBzZGpTgQP/Rucl7uOQs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5f1e8947bd0c3f02968c2949 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 27 Jul 2020 07:59:02
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 26DF1C433CA; Mon, 27 Jul 2020 07:59:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726196AbgG0IBd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Jul 2020 04:01:33 -0400
+Received: from localhost.localdomain (unknown [122.171.202.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72632C433C6;
-        Mon, 27 Jul 2020 07:58:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 72632C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH] i2c: qcom-geni: fix spelling mistake "unepxected" ->
- "unexpected"
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     Colin King <colin.king@canonical.com>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20191103212204.13606-1-colin.king@canonical.com>
- <74e71d14-9f27-6a44-f253-4756ba124695@codeaurora.org>
-Message-ID: <ee839cf4-6310-aa4e-6ed2-322f20343953@codeaurora.org>
-Date:   Mon, 27 Jul 2020 13:28:56 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        by mail.kernel.org (Postfix) with ESMTPSA id C53902073E;
+        Mon, 27 Jul 2020 08:01:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1595836892;
+        bh=DfSYw1RlBtdu7X7p9L4V8GheZM785YDDb9sEEyDvNLM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=pjkY47a5XF8ANG8gLg2d5KhhzNxi4fTr5vaB+Pbvcw0ugF31MK2ROqs039LUsYA/6
+         ApHwRds6GyVWLC7PMctUBCO9EhcXPsjWsBkBdRuTfkQfhbnveFbiRHkxoY3PwHFyoZ
+         LiWJfmgpwNvD7ivvkRvIzhJlael4ol+DPOASs/ec=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: defconfig: Enable Lontium LT9611 driver
+Date:   Mon, 27 Jul 2020 13:31:18 +0530
+Message-Id: <20200727080118.1934079-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <74e71d14-9f27-6a44-f253-4756ba124695@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Lontium LT9611 HDMI bridge can be found in Dragon Board RB3 for
+converting DSI to HDMI. Enable this driver to get display working on RB3
 
-On 7/27/2020 1:25 PM, Akash Asthana wrote:
->
-> On 11/4/2019 2:52 AM, Colin King wrote:
->> From: Colin Ian King <colin.king@canonical.com>
->>
->> There is a spelling mistake in an error message string, fix it.
->>
->> Signed-off-by: Colin Ian King <colin.king@canonical.com>
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
->> b/drivers/i2c/busses/i2c-qcom-geni.c
->> index 17abf60c94ae..387fb5a83471 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -98,7 +98,7 @@ static const struct geni_i2c_err_log gi2c_log[] = {
->>       [GP_IRQ0] = {-EIO, "Unknown I2C err GP_IRQ0"},
->>       [NACK] = {-ENXIO, "NACK: slv unresponsive, check its 
->> power/reset-ln"},
->>       [GP_IRQ2] = {-EIO, "Unknown I2C err GP IRQ2"},
->> -    [BUS_PROTO] = {-EPROTO, "Bus proto err, noisy/unepxected 
->> start/stop"},
->> +    [BUS_PROTO] = {-EPROTO, "Bus proto err, noisy/unexpected 
->> start/stop"},
->>       [ARB_LOST] = {-EAGAIN, "Bus arbitration lost, clock line 
->> undriveable"},
->>       [GP_IRQ5] = {-EIO, "Unknown I2C err GP IRQ5"},
->>       [GENI_OVERRUN] = {-EIO, "Cmd overrun, check GENI cmd-state 
->> machine"},
->
-> The patch is still applying cleanly on tip.
->
-> Reviewed-by: Akash Asthana <akashast@codeauror.org>
-Correct tag
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
-
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index ae76fae199fa..947d8e0f50b3 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -625,6 +625,7 @@ CONFIG_DRM_PANEL_SIMPLE=m
+ CONFIG_DRM_SIMPLE_BRIDGE=m
+ CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA=m
+ CONFIG_DRM_DISPLAY_CONNECTOR=m
++CONFIG_DRM_LONTIUM_LT9611=m
+ CONFIG_DRM_SII902X=m
+ CONFIG_DRM_THINE_THC63LVD1024=m
+ CONFIG_DRM_TI_SN65DSI86=m
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.26.2
 
