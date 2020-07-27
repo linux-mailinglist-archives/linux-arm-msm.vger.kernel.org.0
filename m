@@ -2,184 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2321122F38E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 17:13:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A84322F3F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 17:38:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729850AbgG0PN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 11:13:26 -0400
-Received: from m177126.mail.qiye.163.com ([123.58.177.126]:41503 "EHLO
-        m177126.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729082AbgG0PNZ (ORCPT
+        id S1728710AbgG0PiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 11:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49174 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730580AbgG0PiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 11:13:25 -0400
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Jul 2020 11:13:22 EDT
-Received: from vivo.com (wm-5 [127.0.0.1])
-        by m177126.mail.qiye.163.com (Hmail) with ESMTP id 2483C182188;
-        Mon, 27 Jul 2020 23:03:16 +0800 (CST)
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-Message-ID: <AMoAtwB9DXJsyd-1khUpzqq9.1.1595862196133.Hmail.wenhu.wang@vivo.com>
-To:     elder@kernel.org, davem@davemloft.net, kuba@kernel.org,
-        kvalo@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, ohad@wizery.com,
-        linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        alsa-devel@alsa-project.org, ath11k@lists.infradead.org,
-        netdev@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        sibis@codeaurora.org, wenhu.wang@vivo.com
-Subject: =?UTF-8?B?W1BBVENIXSBzb2M6IHFtaTogYWxsb3cgdXNlciB0byBzZXQgaGFuZGxlIHdxIHRvIGhpcHJpbw==?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
-X-Originating-IP: 58.251.74.226
+        Mon, 27 Jul 2020 11:38:14 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BD63C0619D4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 08:38:14 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id w17so8185822ply.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 08:38:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=NkVbGEZqq2gtUYFFHihdCf9UlSJbj6QF8gPVaF8Bfbo=;
+        b=SQNYbubVmJC7AL7K9qiuOd/Gn3pZrb2Pj6GSZkzj5uiofy/xe8+FFypgWHTLDIlppl
+         JCleeZ9of5qVBsZWWlVx7kXEfl+m3LqjmR2QBW7rfu9QuEuS5xziWEVE6GYrMCSrSs7O
+         kXoF4xAo3teKyO/XcsnRddniMMAbVRMgsTEv33E/v4LDLxnHshM4KCBgvpoy/iQTXhIR
+         Btb28CisbS4v3W9GLSU1hM0q+zgKqoP8W0PEu1aTj9UldG7y3uuYRHT6tHkNmGwLJ2MN
+         99ss8OhFnJUsX021lCurIDBdvJGxzfmGkcXigsmA+phWdEJgEe+K7PpzOC3sq58gPFd7
+         W0Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=NkVbGEZqq2gtUYFFHihdCf9UlSJbj6QF8gPVaF8Bfbo=;
+        b=WFI4b5euyUnmeRTeOTqXPW9PCtwGvWb0Un1HJpKiubchNLJkQiyZhxPXGyTbj6OMVR
+         bvSw5i3jYou+SlrJzIMD+yKdEnxUU47Xtx/+zQb1CZYbduzcA2tMugP5iAhkDvGlQFUo
+         IAA8rBmjiGBoapiFEz8LON3yhMI9qup3suE1BytAM9PqyNcljA6Lcko+AK1eDZdMw+re
+         gJEoA4DehzoUfHAA9bWcptekZBIw9M04YsN/4Tp/msl5DtuZuq3Okg0oOBCF5HS8v6FZ
+         uUkDq0X/JrZ6T+vNzIH0SZQgMwaMUSjKUSAiwndalNKDTiZvsvoUclPWE83/eILN03uH
+         JTNg==
+X-Gm-Message-State: AOAM532VhdSVgliV2gEudmwiiRCsP8wxlYLSWfD2rQyEU5bVvnSs+k+z
+        Wg3+xDyITPS2Xv3+kclyRU7dsQ==
+X-Google-Smtp-Source: ABdhPJzAXd8kJn2pS6mbPjKZXLIavxQW9wr44q5/JPYSYykSlpkS173kdTtzJWxxIonR/XqZ3Jaxlg==
+X-Received: by 2002:a17:90a:ea0b:: with SMTP id w11mr2833577pjy.80.1595864293473;
+        Mon, 27 Jul 2020 08:38:13 -0700 (PDT)
+Received: from localhost ([223.190.9.130])
+        by smtp.gmail.com with ESMTPSA id y19sm4363801pfn.77.2020.07.27.08.38.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Jul 2020 08:38:12 -0700 (PDT)
+Date:   Mon, 27 Jul 2020 21:08:06 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Taniya Das <tdas@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v4 4/5] arm64: dts: sdm845: Add OPP tables and
+ power-domains for venus
+Message-ID: <20200727153806.kgegadvghmkevch3@vireshk-mac-ubuntu>
+References: <1595503612-2901-1-git-send-email-rnayak@codeaurora.org>
+ <1595503612-2901-5-git-send-email-rnayak@codeaurora.org>
+ <e68ff810-362a-5b99-206b-f676b204101d@linaro.org>
+ <94581989-e069-55e5-6b70-919185eda33e@linaro.org>
+ <e0c03ce2-136c-2c5c-6f36-bb0c69a82e2d@codeaurora.org>
+ <5a8af2da-cc3f-005d-47e6-b36be1104d6a@codeaurora.org>
 MIME-Version: 1.0
-Received: from wenhu.wang@vivo.com( [58.251.74.226) ] by ajax-webmail ( [127.0.0.1] ) ; Mon, 27 Jul 2020 23:03:16 +0800 (GMT+08:00)
-From:   =?UTF-8?B?546L5paH6JmO?= <wenhu.wang@vivo.com>
-Date:   Mon, 27 Jul 2020 23:03:16 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
-        oVCBIfWUFZGkIaSkgeSEtIHk1OVkpOQk5DTUlKQk1JS0NVEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
-        FZT0tIVUpKS0hKTFVKS0tZBg++
-X-HM-Sender-Digest: e1kMHhlZQQ8JDh5XWRIfHhUPWUFZRzo2FDoPDDlCPyMxCAIfVkoQEy4L
-        AQoKQlVKVUpOQk5DTUlKQk1NQ0NVMxYaEhdVDB4VEw5VDBoVHDsNEg0UVRgUFkVZV1kSC1lBWU5D
-        VUlOSlVMT1VJSU1ZV1kIAVlBSklOTUk3Bg++
-X-HM-Tid: 0a7390cc9fd56458kurs2483c182188
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5a8af2da-cc3f-005d-47e6-b36be1104d6a@codeaurora.org>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Q3VycmVudGx5IHRoZSBxbWlfaGFuZGxlIGlzIGluaXRpYWxpemVkIHNpbmdsZSB0aHJlYWRlZCBh
-bmQgc3RyaWN0bHkKb3JkZXJlZCB3aXRoIHRoZSBhY3RpdmUgc2V0IHRvIDEuIFRoaXMgaXMgcHJl
-dHR5IHNpbXBsZSBhbmQgc2FmZSBidXQKc29tZXRpbWVzIGluZWZmZW5jeS4gU28gaXQgaXMgYmV0
-dGVyIHRvIGFsbG93IHVzZXIgdG8gZGVjaWRlIHdoZXRoZXIKYSBoaWdoIHByaW9yaXR5IHdvcmtx
-dWV1ZSBzaG91bGQgYmUgdXNlZC4KClNpZ25lZC1vZmYtYnk6IFdhbmcgV2VuaHUgPHdlbmh1Lndh
-bmdAdml2by5jb20+Ci0tLQogZHJpdmVycy9uZXQvaXBhL2lwYV9xbWkuYyAgICAgICAgICAgICB8
-IDQgKystLQogZHJpdmVycy9uZXQvd2lyZWxlc3MvYXRoL2F0aDEway9xbWkuYyB8IDIgKy0KIGRy
-aXZlcnMvbmV0L3dpcmVsZXNzL2F0aC9hdGgxMWsvcW1pLmMgfCAyICstCiBkcml2ZXJzL3JlbW90
-ZXByb2MvcWNvbV9zeXNtb24uYyAgICAgIHwgMiArLQogZHJpdmVycy9zbGltYnVzL3Fjb20tbmdk
-LWN0cmwuYyAgICAgICB8IDQgKystLQogZHJpdmVycy9zb2MvcWNvbS9wZHJfaW50ZXJmYWNlLmMg
-ICAgICB8IDQgKystLQogZHJpdmVycy9zb2MvcWNvbS9xbWlfaW50ZXJmYWNlLmMgICAgICB8IDkg
-KysrKysrKy0tCiBpbmNsdWRlL2xpbnV4L3NvYy9xY29tL3FtaS5oICAgICAgICAgIHwgMyArKy0K
-IHNhbXBsZXMvcW1pL3FtaV9zYW1wbGVfY2xpZW50LmMgICAgICAgfCA0ICsrLS0KIDkgZmlsZXMg
-Y2hhbmdlZCwgMjAgaW5zZXJ0aW9ucygrKSwgMTQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
-ZHJpdmVycy9uZXQvaXBhL2lwYV9xbWkuYyBiL2RyaXZlcnMvbmV0L2lwYS9pcGFfcW1pLmMKaW5k
-ZXggNTA5MGYwZjkyM2FkLi5kNzhiMGZlNmJkODMgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvbmV0L2lw
-YS9pcGFfcW1pLmMKKysrIGIvZHJpdmVycy9uZXQvaXBhL2lwYV9xbWkuYwpAQCAtNDg2LDcgKzQ4
-Niw3IEBAIGludCBpcGFfcW1pX3NldHVwKHN0cnVjdCBpcGEgKmlwYSkKIAkgKi8KIAlyZXQgPSBx
-bWlfaGFuZGxlX2luaXQoJmlwYV9xbWktPnNlcnZlcl9oYW5kbGUsCiAJCQkgICAgICBJUEFfUU1J
-X1NFUlZFUl9NQVhfUkNWX1NaLCAmaXBhX3NlcnZlcl9vcHMsCi0JCQkgICAgICBpcGFfc2VydmVy
-X21zZ19oYW5kbGVycyk7CisJCQkgICAgICBpcGFfc2VydmVyX21zZ19oYW5kbGVycywgMCk7CiAJ
-aWYgKHJldCkKIAkJcmV0dXJuIHJldDsKIApAQCAtNTAwLDcgKzUwMCw3IEBAIGludCBpcGFfcW1p
-X3NldHVwKHN0cnVjdCBpcGEgKmlwYSkKIAkgKi8KIAlyZXQgPSBxbWlfaGFuZGxlX2luaXQoJmlw
-YV9xbWktPmNsaWVudF9oYW5kbGUsCiAJCQkgICAgICBJUEFfUU1JX0NMSUVOVF9NQVhfUkNWX1Na
-LCAmaXBhX2NsaWVudF9vcHMsCi0JCQkgICAgICBpcGFfY2xpZW50X21zZ19oYW5kbGVycyk7CisJ
-CQkgICAgICBpcGFfY2xpZW50X21zZ19oYW5kbGVycywgMCk7CiAJaWYgKHJldCkKIAkJZ290byBl
-cnJfc2VydmVyX2hhbmRsZV9yZWxlYXNlOwogCmRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC93aXJl
-bGVzcy9hdGgvYXRoMTBrL3FtaS5jIGIvZHJpdmVycy9uZXQvd2lyZWxlc3MvYXRoL2F0aDEway9x
-bWkuYwppbmRleCA1NDY4YTQxZTkyOGUuLjAyODgxODgyYjRkOSAxMDA2NDQKLS0tIGEvZHJpdmVy
-cy9uZXQvd2lyZWxlc3MvYXRoL2F0aDEway9xbWkuYworKysgYi9kcml2ZXJzL25ldC93aXJlbGVz
-cy9hdGgvYXRoMTBrL3FtaS5jCkBAIC0xMDM0LDcgKzEwMzQsNyBAQCBpbnQgYXRoMTBrX3FtaV9p
-bml0KHN0cnVjdCBhdGgxMGsgKmFyLCB1MzIgbXNhX3NpemUpCiAKIAlyZXQgPSBxbWlfaGFuZGxl
-X2luaXQoJnFtaS0+cW1pX2hkbCwKIAkJCSAgICAgIFdMRldfQkRGX0RPV05MT0FEX1JFUV9NU0df
-VjAxX01BWF9NU0dfTEVOLAotCQkJICAgICAgJmF0aDEwa19xbWlfb3BzLCBxbWlfbXNnX2hhbmRs
-ZXIpOworCQkJICAgICAgJmF0aDEwa19xbWlfb3BzLCBxbWlfbXNnX2hhbmRsZXIsIDApOwogCWlm
-IChyZXQpCiAJCWdvdG8gZXJyOwogCmRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC93aXJlbGVzcy9h
-dGgvYXRoMTFrL3FtaS5jIGIvZHJpdmVycy9uZXQvd2lyZWxlc3MvYXRoL2F0aDExay9xbWkuYwpp
-bmRleCBjMDBhOTlhZDhkYmMuLjkxMzk0ZDU4ZDM2ZSAxMDA2NDQKLS0tIGEvZHJpdmVycy9uZXQv
-d2lyZWxlc3MvYXRoL2F0aDExay9xbWkuYworKysgYi9kcml2ZXJzL25ldC93aXJlbGVzcy9hdGgv
-YXRoMTFrL3FtaS5jCkBAIC0yMzk3LDcgKzIzOTcsNyBAQCBpbnQgYXRoMTFrX3FtaV9pbml0X3Nl
-cnZpY2Uoc3RydWN0IGF0aDExa19iYXNlICphYikKIAogCWFiLT5xbWkudGFyZ2V0X21lbV9tb2Rl
-ID0gQVRIMTFLX1FNSV9UQVJHRVRfTUVNX01PREVfREVGQVVMVDsKIAlyZXQgPSBxbWlfaGFuZGxl
-X2luaXQoJmFiLT5xbWkuaGFuZGxlLCBBVEgxMUtfUU1JX1JFU1BfTEVOX01BWCwKLQkJCSAgICAg
-ICZhdGgxMWtfcW1pX29wcywgYXRoMTFrX3FtaV9tc2dfaGFuZGxlcnMpOworCQkJICAgICAgJmF0
-aDExa19xbWlfb3BzLCBhdGgxMWtfcW1pX21zZ19oYW5kbGVycywgMCk7CiAJaWYgKHJldCA8IDAp
-IHsKIAkJYXRoMTFrX3dhcm4oYWIsICJmYWlsZWQgdG8gaW5pdGlhbGl6ZSBxbWkgaGFuZGxlXG4i
-KTsKIAkJcmV0dXJuIHJldDsKZGlmZiAtLWdpdCBhL2RyaXZlcnMvcmVtb3RlcHJvYy9xY29tX3N5
-c21vbi5jIGIvZHJpdmVycy9yZW1vdGVwcm9jL3Fjb21fc3lzbW9uLmMKaW5kZXggOGQ4OTk2ZDcx
-NGYwLi40ZWM0NzBlNDI0ZWYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvcmVtb3RlcHJvYy9xY29tX3N5
-c21vbi5jCisrKyBiL2RyaXZlcnMvcmVtb3RlcHJvYy9xY29tX3N5c21vbi5jCkBAIC02MTQsNyAr
-NjE0LDcgQEAgc3RydWN0IHFjb21fc3lzbW9uICpxY29tX2FkZF9zeXNtb25fc3ViZGV2KHN0cnVj
-dCBycHJvYyAqcnByb2MsCiAJfQogCiAJcmV0ID0gcW1pX2hhbmRsZV9pbml0KCZzeXNtb24tPnFt
-aSwgU1NDVExfTUFYX01TR19MRU4sICZzc2N0bF9vcHMsCi0JCQkgICAgICBxbWlfaW5kaWNhdGlv
-bl9oYW5kbGVyKTsKKwkJCSAgICAgIHFtaV9pbmRpY2F0aW9uX2hhbmRsZXIsIDApOwogCWlmIChy
-ZXQgPCAwKSB7CiAJCWRldl9lcnIoc3lzbW9uLT5kZXYsICJmYWlsZWQgdG8gaW5pdGlhbGl6ZSBx
-bWkgaGFuZGxlXG4iKTsKIAkJa2ZyZWUoc3lzbW9uKTsKZGlmZiAtLWdpdCBhL2RyaXZlcnMvc2xp
-bWJ1cy9xY29tLW5nZC1jdHJsLmMgYi9kcml2ZXJzL3NsaW1idXMvcWNvbS1uZ2QtY3RybC5jCmlu
-ZGV4IDc0M2VlN2I0ZTYzZi4uYmE3NjY5MWZjNWE1IDEwMDY0NAotLS0gYS9kcml2ZXJzL3NsaW1i
-dXMvcWNvbS1uZ2QtY3RybC5jCisrKyBiL2RyaXZlcnMvc2xpbWJ1cy9xY29tLW5nZC1jdHJsLmMK
-QEAgLTQ0Niw3ICs0NDYsNyBAQCBzdGF0aWMgaW50IHFjb21fc2xpbV9xbWlfaW5pdChzdHJ1Y3Qg
-cWNvbV9zbGltX25nZF9jdHJsICpjdHJsLAogCQlyZXR1cm4gLUVOT01FTTsKIAogCXJjID0gcW1p
-X2hhbmRsZV9pbml0KGhhbmRsZSwgU0xJTUJVU19RTUlfUE9XRVJfUkVRX01BWF9NU0dfTEVOLAot
-CQkJCU5VTEwsIHFjb21fc2xpbV9xbWlfbXNnX2hhbmRsZXJzKTsKKwkJCQlOVUxMLCBxY29tX3Ns
-aW1fcW1pX21zZ19oYW5kbGVycywgMCk7CiAJaWYgKHJjIDwgMCkgewogCQlkZXZfZXJyKGN0cmwt
-PmRldiwgIlFNSSBjbGllbnQgaW5pdCBmYWlsZWQ6ICVkXG4iLCByYyk7CiAJCWdvdG8gcW1pX2hh
-bmRsZV9pbml0X2ZhaWxlZDsKQEAgLTEyOTMsNyArMTI5Myw3IEBAIHN0YXRpYyBpbnQgcWNvbV9z
-bGltX25nZF9xbWlfc3ZjX2V2ZW50X2luaXQoc3RydWN0IHFjb21fc2xpbV9uZ2RfY3RybCAqY3Ry
-bCkKIAlpbnQgcmV0OwogCiAJcmV0ID0gcW1pX2hhbmRsZV9pbml0KCZxbWktPnN2Y19ldmVudF9o
-ZGwsIDAsCi0JCQkJJnFjb21fc2xpbV9uZ2RfcW1pX3N2Y19ldmVudF9vcHMsIE5VTEwpOworCQkJ
-CSZxY29tX3NsaW1fbmdkX3FtaV9zdmNfZXZlbnRfb3BzLCBOVUxMLCAwKTsKIAlpZiAocmV0IDwg
-MCkgewogCQlkZXZfZXJyKGN0cmwtPmRldiwgInFtaV9oYW5kbGVfaW5pdCBmYWlsZWQ6ICVkXG4i
-LCByZXQpOwogCQlyZXR1cm4gcmV0OwpkaWZmIC0tZ2l0IGEvZHJpdmVycy9zb2MvcWNvbS9wZHJf
-aW50ZXJmYWNlLmMgYi9kcml2ZXJzL3NvYy9xY29tL3Bkcl9pbnRlcmZhY2UuYwppbmRleCBiZGNm
-MTZmODhhOTcuLmNjMWNiOTBjMTk2OCAxMDA2NDQKLS0tIGEvZHJpdmVycy9zb2MvcWNvbS9wZHJf
-aW50ZXJmYWNlLmMKKysrIGIvZHJpdmVycy9zb2MvcWNvbS9wZHJfaW50ZXJmYWNlLmMKQEAgLTY4
-NSw3ICs2ODUsNyBAQCBzdHJ1Y3QgcGRyX2hhbmRsZSAqcGRyX2hhbmRsZV9hbGxvYyh2b2lkICgq
-c3RhdHVzKShpbnQgc3RhdGUsCiAKIAlyZXQgPSBxbWlfaGFuZGxlX2luaXQoJnBkci0+bG9jYXRv
-cl9oZGwsCiAJCQkgICAgICBTRVJWUkVHX0dFVF9ET01BSU5fTElTVF9SRVNQX01BWF9MRU4sCi0J
-CQkgICAgICAmcGRyX2xvY2F0b3Jfb3BzLCBOVUxMKTsKKwkJCSAgICAgICZwZHJfbG9jYXRvcl9v
-cHMsIE5VTEwsIDApOwogCWlmIChyZXQgPCAwKQogCQlnb3RvIGRlc3Ryb3lfaW5kYWNrOwogCkBA
-IC02OTYsNyArNjk2LDcgQEAgc3RydWN0IHBkcl9oYW5kbGUgKnBkcl9oYW5kbGVfYWxsb2Modm9p
-ZCAoKnN0YXR1cykoaW50IHN0YXRlLAogCXJldCA9IHFtaV9oYW5kbGVfaW5pdCgmcGRyLT5ub3Rp
-Zmllcl9oZGwsCiAJCQkgICAgICBTRVJWUkVHX1NUQVRFX1VQREFURURfSU5EX01BWF9MRU4sCiAJ
-CQkgICAgICAmcGRyX25vdGlmaWVyX29wcywKLQkJCSAgICAgIHFtaV9pbmRpY2F0aW9uX2hhbmRs
-ZXIpOworCQkJICAgICAgcW1pX2luZGljYXRpb25faGFuZGxlciwgMCk7CiAJaWYgKHJldCA8IDAp
-CiAJCWdvdG8gcmVsZWFzZV9xbWlfaGFuZGxlOwogCmRpZmYgLS1naXQgYS9kcml2ZXJzL3NvYy9x
-Y29tL3FtaV9pbnRlcmZhY2UuYyBiL2RyaXZlcnMvc29jL3Fjb20vcW1pX2ludGVyZmFjZS5jCmlu
-ZGV4IDFhMDNlYWEzOGM0Ni4uMDExNjBkYmZjNGQwIDEwMDY0NAotLS0gYS9kcml2ZXJzL3NvYy9x
-Y29tL3FtaV9pbnRlcmZhY2UuYworKysgYi9kcml2ZXJzL3NvYy9xY29tL3FtaV9pbnRlcmZhY2Uu
-YwpAQCAtNjA5LDYgKzYwOSw3IEBAIHN0YXRpYyBzdHJ1Y3Qgc29ja2V0ICpxbWlfc29ja19jcmVh
-dGUoc3RydWN0IHFtaV9oYW5kbGUgKnFtaSwKICAqIEByZWN2X2J1Zl9zaXplOiBtYXhpbXVtIHNp
-emUgb2YgaW5jb21pbmcgbWVzc2FnZQogICogQG9wczoJcmVmZXJlbmNlIHRvIGNhbGxiYWNrcyBm
-b3IgUVJUUiBub3RpZmljYXRpb25zCiAgKiBAaGFuZGxlcnM6CU5VTEwtdGVybWluYXRlZCBsaXN0
-IG9mIFFNSSBtZXNzYWdlIGhhbmRsZXJzCisgKiBAaGlwcmlvOgl3aGV0aGVyIGhpZ2ggcHJpb3Jp
-dHkgd29ya2VyIGlzIHVzZWQgZm9yIHdvcmtxdWV1ZQogICoKICAqIFRoaXMgaW5pdGlhbGl6ZXMg
-dGhlIFFNSSBjbGllbnQgaGFuZGxlIHRvIGFsbG93IHNlbmRpbmcgYW5kIHJlY2VpdmluZyBRTUkK
-ICAqIG1lc3NhZ2VzLiBBcyBtZXNzYWdlcyBhcmUgcmVjZWl2ZWQgdGhlIGFwcHJvcHJpYXRlIGhh
-bmRsZXIgd2lsbCBiZSBpbnZva2VkLgpAQCAtNjE3LDkgKzYxOCwxMSBAQCBzdGF0aWMgc3RydWN0
-IHNvY2tldCAqcW1pX3NvY2tfY3JlYXRlKHN0cnVjdCBxbWlfaGFuZGxlICpxbWksCiAgKi8KIGlu
-dCBxbWlfaGFuZGxlX2luaXQoc3RydWN0IHFtaV9oYW5kbGUgKnFtaSwgc2l6ZV90IHJlY3ZfYnVm
-X3NpemUsCiAJCSAgICBjb25zdCBzdHJ1Y3QgcW1pX29wcyAqb3BzLAotCQkgICAgY29uc3Qgc3Ry
-dWN0IHFtaV9tc2dfaGFuZGxlciAqaGFuZGxlcnMpCisJCSAgICBjb25zdCBzdHJ1Y3QgcW1pX21z
-Z19oYW5kbGVyICpoYW5kbGVycywKKwkJICAgIHVuc2lnbmVkIGludCBoaXByaW8pCiB7CiAJaW50
-IHJldDsKKwl1bnNpZ25lZCBpbnQgZmxhZ3MgPSBXUV9VTkJPVU5EOwogCiAJbXV0ZXhfaW5pdCgm
-cW1pLT50eG5fbG9jayk7CiAJbXV0ZXhfaW5pdCgmcW1pLT5zb2NrX2xvY2spOwpAQCAtNjQ3LDcg
-KzY1MCw5IEBAIGludCBxbWlfaGFuZGxlX2luaXQoc3RydWN0IHFtaV9oYW5kbGUgKnFtaSwgc2l6
-ZV90IHJlY3ZfYnVmX3NpemUsCiAJaWYgKCFxbWktPnJlY3ZfYnVmKQogCQlyZXR1cm4gLUVOT01F
-TTsKIAotCXFtaS0+d3EgPSBhbGxvY193b3JrcXVldWUoInFtaV9tc2dfaGFuZGxlciIsIFdRX1VO
-Qk9VTkQsIDEpOworCWlmIChoaXByaW8pCisJCWZsYWdzIHw9IFdRX0hJR0hQUkk7CisJcW1pLT53
-cSA9IGFsbG9jX3dvcmtxdWV1ZSgicW1pX21zZ19oYW5kbGVyIiwgZmxhZ3MsIDEpOwogCWlmICgh
-cW1pLT53cSkgewogCQlyZXQgPSAtRU5PTUVNOwogCQlnb3RvIGVycl9mcmVlX3JlY3ZfYnVmOwpk
-aWZmIC0tZ2l0IGEvaW5jbHVkZS9saW51eC9zb2MvcWNvbS9xbWkuaCBiL2luY2x1ZGUvbGludXgv
-c29jL3Fjb20vcW1pLmgKaW5kZXggZTcxMmY5NGI4OWZjLi4yNDA2MmZkNzE2M2QgMTAwNjQ0Ci0t
-LSBhL2luY2x1ZGUvbGludXgvc29jL3Fjb20vcW1pLmgKKysrIGIvaW5jbHVkZS9saW51eC9zb2Mv
-cWNvbS9xbWkuaApAQCAtMjQ0LDcgKzI0NCw4IEBAIGludCBxbWlfYWRkX3NlcnZlcihzdHJ1Y3Qg
-cW1pX2hhbmRsZSAqcW1pLCB1bnNpZ25lZCBpbnQgc2VydmljZSwKIAogaW50IHFtaV9oYW5kbGVf
-aW5pdChzdHJ1Y3QgcW1pX2hhbmRsZSAqcW1pLCBzaXplX3QgbWF4X21zZ19sZW4sCiAJCSAgICBj
-b25zdCBzdHJ1Y3QgcW1pX29wcyAqb3BzLAotCQkgICAgY29uc3Qgc3RydWN0IHFtaV9tc2dfaGFu
-ZGxlciAqaGFuZGxlcnMpOworCQkgICAgY29uc3Qgc3RydWN0IHFtaV9tc2dfaGFuZGxlciAqaGFu
-ZGxlcnMsCisJCSAgICB1bnNpZ25lZCBpbnQgaGlwcmlvKTsKIHZvaWQgcW1pX2hhbmRsZV9yZWxl
-YXNlKHN0cnVjdCBxbWlfaGFuZGxlICpxbWkpOwogCiBzc2l6ZV90IHFtaV9zZW5kX3JlcXVlc3Qo
-c3RydWN0IHFtaV9oYW5kbGUgKnFtaSwgc3RydWN0IHNvY2thZGRyX3FydHIgKnNxLApkaWZmIC0t
-Z2l0IGEvc2FtcGxlcy9xbWkvcW1pX3NhbXBsZV9jbGllbnQuYyBiL3NhbXBsZXMvcW1pL3FtaV9z
-YW1wbGVfY2xpZW50LmMKaW5kZXggYzllNzI3NmMzZDgzLi5hOTFkMTYzM2VhMzggMTAwNjQ0Ci0t
-LSBhL3NhbXBsZXMvcW1pL3FtaV9zYW1wbGVfY2xpZW50LmMKKysrIGIvc2FtcGxlcy9xbWkvcW1p
-X3NhbXBsZV9jbGllbnQuYwpAQCAtNDYzLDcgKzQ2Myw3IEBAIHN0YXRpYyBpbnQgcW1pX3NhbXBs
-ZV9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQogCiAJcmV0ID0gcW1pX2hhbmRs
-ZV9pbml0KCZzYW1wbGUtPnFtaSwgVEVTVF9EQVRBX1JFUV9NQVhfTVNHX0xFTl9WMDEsCiAJCQkg
-ICAgICBOVUxMLAotCQkJICAgICAgcW1pX3NhbXBsZV9oYW5kbGVycyk7CisJCQkgICAgICBxbWlf
-c2FtcGxlX2hhbmRsZXJzLCAwKTsKIAlpZiAocmV0IDwgMCkKIAkJcmV0dXJuIHJldDsKIApAQCAt
-NTkwLDcgKzU5MCw3IEBAIHN0YXRpYyBpbnQgcW1pX3NhbXBsZV9pbml0KHZvaWQpCiAJaWYgKHJl
-dCkKIAkJZ290byBlcnJfcmVtb3ZlX2RlYnVnX2RpcjsKIAotCXJldCA9IHFtaV9oYW5kbGVfaW5p
-dCgmbG9va3VwX2NsaWVudCwgMCwgJmxvb2t1cF9vcHMsIE5VTEwpOworCXJldCA9IHFtaV9oYW5k
-bGVfaW5pdCgmbG9va3VwX2NsaWVudCwgMCwgJmxvb2t1cF9vcHMsIE5VTEwsIDApOwogCWlmIChy
-ZXQgPCAwKQogCQlnb3RvIGVycl91bnJlZ2lzdGVyX2RyaXZlcjsKIAotLSAKMi4xNy4xCgoNCg0K
+On 27-07-20, 17:38, Rajendra Nayak wrote:
+> 
+> On 7/27/2020 11:23 AM, Rajendra Nayak wrote:
+> > 
+> > 
+> > On 7/24/2020 7:39 PM, Stanimir Varbanov wrote:
+> > > Hi,
+> > > 
+> > > On 7/23/20 9:06 PM, Stanimir Varbanov wrote:
+> > > > Hi Rajendra,
+> > > > 
+> > > > After applying 2,3 and 4/5 patches on linaro-integration v5.8-rc2 I see
+> > > > below messages on db845:
+> > > > 
+> > > > qcom-venus aa00000.video-codec: dev_pm_opp_set_rate: failed to find
+> > > > current OPP for freq 533000097 (-34)
+> > > > 
+> > > > ^^^ This one is new.
+> > > > 
+> > > > qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x30000
+> > > > 
+> > > > ^^^ and this message is annoying, can we make it pr_debug in rpmh?
+> > > > 
+> > > > On 7/23/20 2:26 PM, Rajendra Nayak wrote:
+> > > > > Add the OPP tables in order to be able to vote on the performance state of
+> > > > > a power-domain.
+> > > > > 
+> > > > > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> > > > > ---
+> > > > >   arch/arm64/boot/dts/qcom/sdm845.dtsi | 40 ++++++++++++++++++++++++++++++++++--
+> > > > >   1 file changed, 38 insertions(+), 2 deletions(-)
+> > > > > 
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > > index e506793..5ca2265 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > > @@ -3631,8 +3631,10 @@
+> > > > >               interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> > > > >               power-domains = <&videocc VENUS_GDSC>,
+> > > > >                       <&videocc VCODEC0_GDSC>,
+> > > > > -                    <&videocc VCODEC1_GDSC>;
+> > > > > -            power-domain-names = "venus", "vcodec0", "vcodec1";
+> > > > > +                    <&videocc VCODEC1_GDSC>,
+> > > > > +                    <&rpmhpd SDM845_CX>;
+> > > > > +            power-domain-names = "venus", "vcodec0", "vcodec1", "cx";
+> > > > > +            operating-points-v2 = <&venus_opp_table>;
+> > > > >               clocks = <&videocc VIDEO_CC_VENUS_CTL_CORE_CLK>,
+> > > > >                    <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> > > > >                    <&videocc VIDEO_CC_VENUS_CTL_AXI_CLK>,
+> > > > > @@ -3654,6 +3656,40 @@
+> > > > >               video-core1 {
+> > > > >                   compatible = "venus-encoder";
+> > > > >               };
+> > > > > +
+> > > > > +            venus_opp_table: venus-opp-table {
+> > > > > +                compatible = "operating-points-v2";
+> > > > > +
+> > > > > +                opp-100000000 {
+> > > > > +                    opp-hz = /bits/ 64 <100000000>;
+> > > > > +                    required-opps = <&rpmhpd_opp_min_svs>;
+> > > > > +                };
+> > > > > +
+> > > > > +                opp-200000000 {
+> > > > > +                    opp-hz = /bits/ 64 <200000000>;
+> > > > > +                    required-opps = <&rpmhpd_opp_low_svs>;
+> > > > > +                };
+> > > > > +
+> > > > > +                opp-320000000 {
+> > > > > +                    opp-hz = /bits/ 64 <320000000>;
+> > > > > +                    required-opps = <&rpmhpd_opp_svs>;
+> > > > > +                };
+> > > > > +
+> > > > > +                opp-380000000 {
+> > > > > +                    opp-hz = /bits/ 64 <380000000>;
+> > > > > +                    required-opps = <&rpmhpd_opp_svs_l1>;
+> > > > > +                };
+> > > > > +
+> > > > > +                opp-444000000 {
+> > > > > +                    opp-hz = /bits/ 64 <444000000>;
+> > > > > +                    required-opps = <&rpmhpd_opp_nom>;
+> > > > > +                };
+> > > > > +
+> > > > > +                opp-533000000 {
+> > > > > +                    opp-hz = /bits/ 64 <533000000>;
+
+Is this the highest OPP in table ?
+
+> > > Actually it comes from videocc, where ftbl_video_cc_venus_clk_src
+> > > defines 533000000 but the real calculated freq is 533000097.
+> > 
+> > I still don't quite understand why the videocc driver returns this
+> > frequency despite this not being in the freq table.
+> 
+> Ok, so I see the same issue on sc7180 also. clk_round_rate() does seem to
+> return whats in the freq table, but clk_set_rate() goes ahead and sets it
+> to 533000097. Subsequently when we try to set a different OPP, it fails to
+> find the 'current' OPP entry for 533000097. This sounds like an issue with the OPP
+> framework? Should we not fall back to the highest OPP as the current OPP?
+> 
+> Stephen/Viresh, any thoughts?
+
+I think we (in all frameworks generally) try to set a frequency <=
+target frequency and so there may be a problem if the frequency is
+larger than highest supported. IOW, you need to fix tables a bit.
+
+-- 
+viresh
