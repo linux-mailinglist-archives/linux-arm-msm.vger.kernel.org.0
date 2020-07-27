@@ -2,229 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9B3D22E6FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 09:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3E5D22E726
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 09:59:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbgG0Hzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 03:55:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42592 "EHLO mail.kernel.org"
+        id S1726122AbgG0H7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 03:59:13 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:24013 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726211AbgG0Hzn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 03:55:43 -0400
-Received: from localhost.localdomain (unknown [122.171.202.192])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727078AbgG0H7N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Jul 2020 03:59:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595836752; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=+PV/mgFmHCpT1iOt87TCKArIUd/iWarn9UzS13Yi6VE=; b=xZIDvoz+ZVzlxtzfG2SEVTKwsBasUqjsx9Q1Xf/Dxnh8eN5mGcrbMx6c36eiKdkansDgl10J
+ /txfK37JtWkZABe5bA6qaHk9LNaCobR9uIne7W/coiTXPufIuu9DaJ+Al/pmU0cPJ4agVOVR
+ i8yemUqPBzZGpTgQP/Rucl7uOQs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5f1e8947bd0c3f02968c2949 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 27 Jul 2020 07:59:02
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 26DF1C433CA; Mon, 27 Jul 2020 07:59:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.13] (unknown [183.83.138.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A0AA320672;
-        Mon, 27 Jul 2020 07:55:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595836542;
-        bh=klIYZ3z3AZ82e3hAd5ya/zhpvWBojtO3/DLyBwGwpHA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=fcx2rUQXA8HJhCYavhUebUtAby8I1DMdXZV1YYeNYIHbB0QCfO6xAo1G/ywddtxcg
-         Nsb55Ip7/oiqwz13Z/c0TKnTV5QC1NrfucD90T1VuptwznRdQ95njxQYlBxi7iOPRj
-         /rMVqBb5ldQ+YVYhCunj7CYj+uootpc6l3akxsEE=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sdm845-db845c: Add hdmi bridge nodes
-Date:   Mon, 27 Jul 2020 13:25:32 +0530
-Message-Id: <20200727075532.1932134-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.2
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72632C433C6;
+        Mon, 27 Jul 2020 07:58:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 72632C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH] i2c: qcom-geni: fix spelling mistake "unepxected" ->
+ "unexpected"
+From:   Akash Asthana <akashast@codeaurora.org>
+To:     Colin King <colin.king@canonical.com>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20191103212204.13606-1-colin.king@canonical.com>
+ <74e71d14-9f27-6a44-f253-4756ba124695@codeaurora.org>
+Message-ID: <ee839cf4-6310-aa4e-6ed2-322f20343953@codeaurora.org>
+Date:   Mon, 27 Jul 2020 13:28:56 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <74e71d14-9f27-6a44-f253-4756ba124695@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Enable MDSS and DSI and add the LT9611 HDMI bridge. Also add the HDMI
-audio nodes.
+On 7/27/2020 1:25 PM, Akash Asthana wrote:
+>
+> On 11/4/2019 2:52 AM, Colin King wrote:
+>> From: Colin Ian King <colin.king@canonical.com>
+>>
+>> There is a spelling mistake in an error message string, fix it.
+>>
+>> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+>> ---
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+>> b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index 17abf60c94ae..387fb5a83471 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -98,7 +98,7 @@ static const struct geni_i2c_err_log gi2c_log[] = {
+>>       [GP_IRQ0] = {-EIO, "Unknown I2C err GP_IRQ0"},
+>>       [NACK] = {-ENXIO, "NACK: slv unresponsive, check its 
+>> power/reset-ln"},
+>>       [GP_IRQ2] = {-EIO, "Unknown I2C err GP IRQ2"},
+>> -    [BUS_PROTO] = {-EPROTO, "Bus proto err, noisy/unepxected 
+>> start/stop"},
+>> +    [BUS_PROTO] = {-EPROTO, "Bus proto err, noisy/unexpected 
+>> start/stop"},
+>>       [ARB_LOST] = {-EAGAIN, "Bus arbitration lost, clock line 
+>> undriveable"},
+>>       [GP_IRQ5] = {-EIO, "Unknown I2C err GP IRQ5"},
+>>       [GENI_OVERRUN] = {-EIO, "Cmd overrun, check GENI cmd-state 
+>> machine"},
+>
+> The patch is still applying cleanly on tip.
+>
+> Reviewed-by: Akash Asthana <akashast@codeauror.org>
+Correct tag
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 118 +++++++++++++++++++++
- 1 file changed, 118 insertions(+)
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index c00797bd3b07..a2a98680ccf5 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -74,6 +74,17 @@ bt {
- 		};
- 	};
- 
-+	hdmi-out {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&lt9611_out>;
-+			};
-+		};
-+	};
-+
- 	lt9611_1v8: lt9611-vdd18-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "LT9611_1V8";
-@@ -382,6 +393,25 @@ &cdsp_pas {
- 	firmware-name = "qcom/sdm845/cdsp.mdt";
- };
- 
-+&dsi0 {
-+	status = "okay";
-+	vdda-supply = <&vreg_l26a_1p2>;
-+
-+	ports {
-+		port@1 {
-+			endpoint {
-+				remote-endpoint = <&lt9611_a>;
-+				data-lanes = <0 1 2 3>;
-+			};
-+		};
-+	};
-+};
-+
-+&dsi0_phy {
-+	status = "okay";
-+	vdds-supply = <&vreg_l1a_0p875>;
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
-@@ -395,6 +425,48 @@ zap-shader {
- 	};
- };
- 
-+&i2c10 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	lt9611_codec: hdmi-bridge@3b {
-+		compatible = "lontium,lt9611";
-+		reg = <0x3b>;
-+		#sound-dai-cells = <1>;
-+
-+		interrupts-extended = <&tlmm 84 IRQ_TYPE_EDGE_FALLING>;
-+
-+		reset-gpios = <&tlmm 128 GPIO_ACTIVE_HIGH>;
-+
-+		vdd-supply = <&lt9611_1v8>;
-+		vcc-supply = <&lt9611_3v3>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&lt9611_irq_pin>, <&dsi_sw_sel>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				lt9611_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				lt9611_a: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &i2c11 {
- 	/* On Low speed expansion */
- 	label = "LS-I2C1";
-@@ -407,6 +479,14 @@ &i2c14 {
- 	status = "okay";
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_mdp {
-+	status = "okay";
-+};
-+
- &mss_pil {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mbn";
-@@ -612,6 +692,21 @@ cpu {
- 		};
- 	};
- 
-+	hdmi-dai-link {
-+		link-name = "HDMI Playback";
-+		cpu {
-+			sound-dai = <&q6afedai QUATERNARY_MI2S_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+
-+		codec {
-+			sound-dai =  <&lt9611_codec 0>;
-+		};
-+	};
-+
- 	slim-dai-link {
- 		link-name = "SLIM Playback";
- 		cpu {
-@@ -686,6 +781,21 @@ mclk3 {
- 		};
- 	};
- 
-+	dsi_sw_sel: dsi-sw-sel {
-+		pins = "gpio120";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	lt9611_irq_pin: lt9611-irq {
-+		pins = "gpio84";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	pcie0_default_state: pcie0-default {
- 		clkreq {
- 			pins = "gpio36";
-@@ -943,6 +1053,14 @@ pinmux {
- 	};
- };
- 
-+&qup_i2c10_default {
-+	pinconf {
-+		pins = "gpio55", "gpio56";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-+
- &qup_uart6_default {
- 	pinmux {
- 		pins = "gpio45", "gpio46", "gpio47", "gpio48";
 -- 
-2.26.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
