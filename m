@@ -2,84 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B4DB22E7AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 10:26:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04A0A22E7C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 10:33:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbgG0I0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 04:26:48 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:39996 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726387AbgG0I0r (ORCPT
+        id S1726495AbgG0Idg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 04:33:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726728AbgG0Idf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 04:26:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595838407; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=kBkNocMKuKYfy5D9SSp5xG3xYJZjERRpJB7Zd5wVkQI=; b=rNbYao0Pff8zh5kg/DYUZyr44uDSsx3umX4+Bkd1c0tG98l5L3KQBe14U6/3KVNgol1R8DyX
- z5JkUnf1Y3lW7qTmNCcosk4K6a3Zajt+nnPixMzpryaBiDXwuipTDvhl9M0moHAlpmnTejnN
- CNiy6dFNSow6UWW2bgXNkY9/mSU=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n15.prod.us-east-1.postgun.com with SMTP id
- 5f1e8fa47186ea1ee140f212 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 27 Jul 2020 08:26:12
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D4684C43391; Mon, 27 Jul 2020 08:26:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from akashast-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2CC0CC433C9;
-        Mon, 27 Jul 2020 08:26:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2CC0CC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-From:   Akash Asthana <akashast@codeaurora.org>
-To:     wsa@the-dreams.de
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, msavaliy@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH] MAINTAINERS: Update GENI I2C maintainers list
-Date:   Mon, 27 Jul 2020 13:56:00 +0530
-Message-Id: <1595838360-3242-1-git-send-email-akashast@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 27 Jul 2020 04:33:35 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5FDC0619D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 01:33:35 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id w126so8510065pfw.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 01:33:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eDiosr731VuGI/Nf/vg+XeOYOe+kYaAnlS6bWQS50OU=;
+        b=Iqjrw9CytWsYEXgADjD42Omr9o1HnWS2K5XDdZdhYNx51v9NsrLdG3K5qXnOoD6Mha
+         kUJAZeuUHssetLSpDUpcKCTjvHBDT8jkEfvz9QFPlNYpWyfCP/8mmYPTv2v+ZhslPPKS
+         +/vHqAd0mSSK4vGLQBNlIIgZ2/l3PMJ5vbHtbjkiAejuPEYI7igR6oJEN9fO1XpSJnCD
+         c9gcXS2l60/2ZuUm0wB9BOFujaIBDk4Og5ESzwBiTYio78Mrl3DB0M7XNL3l8vNTJX8D
+         N3zaBvPz6NYbrqM2B3h6Rb2URWeIS6OjpfAhzy+gQD4hXYTbOXBUC1n2Na9hHgVmQuAw
+         wXqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eDiosr731VuGI/Nf/vg+XeOYOe+kYaAnlS6bWQS50OU=;
+        b=j5r0W6Ua+Crzy62Ue3xBN1Rx7McdmkLAGiCZ//+VQJ76h0C0l5jzZaZiWy0f9tF4x5
+         gGYKcy2/L6rekQ6Q2HAmiDxovmEV7RttUntGZGSpgQ2pDxIDo9RPU1oTCMuPSVha1NMJ
+         u91kN93WF2YuTrV0hFRkAknNZKEZiYHugi8rF8ejbdKvbZ7QHaaDfcXgx979H09ZNt45
+         6KJOWtW1Wpa2lVb2BsBVtvUQma+BA10L+xF91Gfy2mnvHJTd0ZLt37hh7cxjJ2Cxvwxn
+         cGkdoCEQjVT5+m5P1641L6bYvu6RJK3s1eApDySPdiZZn4/JlR4PhnMzcccYNosvF/Yh
+         qSlg==
+X-Gm-Message-State: AOAM532E7uvY3NyznSaqq/Bfe8Bg7SFAnPx58ulf07JLsfw47pJf/V9d
+        ICbIaC+oPMi94EJoTfBvFK30Xg==
+X-Google-Smtp-Source: ABdhPJwHV1rqsRsykyeSE9M6iG0vkdRZrBOtHRFJ10HCQGZq5810tq/gahshd6COU7Wev+AT4ZJpvA==
+X-Received: by 2002:a65:6846:: with SMTP id q6mr17659801pgt.397.1595838814279;
+        Mon, 27 Jul 2020 01:33:34 -0700 (PDT)
+Received: from dragon ([80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id a6sm569561pje.8.2020.07.27.01.33.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Jul 2020 01:33:33 -0700 (PDT)
+Date:   Mon, 27 Jul 2020 16:33:23 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Amit Kucheria <amit.kucheria@linaro.org>
+Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 2/2] thermal: qcom: tsens-v0_1: Add support for MSM8939
+Message-ID: <20200727083322.GA12266@dragon>
+References: <20200629144926.665-1-shawn.guo@linaro.org>
+ <20200629144926.665-3-shawn.guo@linaro.org>
+ <CAHLCerMyEsvuhNPnwDow5JYVAbem0Rzs+5-uzKZNeFt+3rYHQg@mail.gmail.com>
+ <CAHLCerPEPEOkkBd8MZq8T99eS7nE2pMio6ojnMn7bc54ian-3A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHLCerPEPEOkkBd8MZq8T99eS7nE2pMio6ojnMn7bc54ian-3A@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Alok Chauhan has moved out of GENI team, he no longer supports GENI I2C
-driver, remove him from maintainer list.
+Hi Amit,
 
-Add Akash Asthana & Mukesh Savaliya as maintainers for GENI I2C drivers.
+On Mon, Jul 27, 2020 at 12:06:54PM +0530, Amit Kucheria wrote:
+> On Mon, Jul 27, 2020 at 11:56 AM Amit Kucheria <amit.kucheria@linaro.org> wrote:
+> >
+> > On Tue, Jun 30, 2020 at 1:09 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+> > >
+> > > The TSENS integrated on MSM8939 is a v0_1 device with 10 sensors.
+> > > Different from its predecessor MSM8916, where 'calib_sel' bits sit in
+> > > separate qfprom word, MSM8939 has 'cailb' and 'calib_sel' bits mixed and
+> > > spread on discrete offsets.  That's why all qfprom bits are read as one
+> > > go and later mapped to calibration data for MSM8939.
+> > >
+> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> >
+> > Acked-by: Amit Kucheria <amit.kucheria@linaro.org>
+> 
+> Shawn,
+> 
+> Have you not sent the change to the tsens.yaml and 8939 DT yet or did
+> I miss them?
 
-Signed-off-by: Akash Asthana <akashast@codeaurora.org>
----
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+You were copied on '[PATCH 1/2] dt-bindings: tsens: qcom: Document
+MSM8939 compatible'.  For DTS change, I haven't sent them out.  In case
+you want to have a look, here it is.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 235ab38..d216344 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -13845,7 +13845,8 @@ F:	drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
- F:	Documentation/devicetree/bindings/net/qcom,ethqos.txt
- 
- QUALCOMM GENERIC INTERFACE I2C DRIVER
--M:	Alok Chauhan <alokc@codeaurora.org>
-+M:	Akash Asthana <akashast@codeaurora.org>
-+M:	Mukesh Savaliya <msavaliy@codeaurora.org>
- L:	linux-i2c@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Supported
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+	thermal-zones {
+		cpu0-thermal {
+			polling-delay-passive = <250>;
+			polling-delay = <1000>;
 
+			thermal-sensors = <&tsens 5>;
+
+			trips {
+				cpu0_alert: trip0 {
+					temperature = <75000>;
+					hysteresis = <2000>;
+					type = "passive";
+				};
+				cpu0_crit: trip1 {
+					temperature = <110000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+
+			cooling-maps {
+				map0 {
+					trip = <&cpu0_alert>;
+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+				};
+			};
+		};
+
+		cpu1-thermal {
+			polling-delay-passive = <250>;
+			polling-delay = <1000>;
+
+			thermal-sensors = <&tsens 6>;
+
+			trips {
+				cpu1_alert: trip0 {
+					temperature = <75000>;
+					hysteresis = <2000>;
+					type = "passive";
+				};
+				cpu1_crit: trip1 {
+					temperature = <110000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+
+			cooling-maps {
+				map0 {
+					trip = <&cpu1_alert>;
+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+				};
+			};
+		};
+
+		cpu2-thermal {
+			polling-delay-passive = <250>;
+			polling-delay = <1000>;
+
+			thermal-sensors = <&tsens 7>;
+
+			trips {
+				cpu2_alert: trip0 {
+					temperature = <75000>;
+					hysteresis = <2000>;
+					type = "passive";
+				};
+				cpu2_crit: trip1 {
+					temperature = <110000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+
+			cooling-maps {
+				map0 {
+					trip = <&cpu2_alert>;
+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+				};
+			};
+		};
+
+		cpu3-thermal {
+			polling-delay-passive = <250>;
+			polling-delay = <1000>;
+
+			thermal-sensors = <&tsens 8>;
+
+			trips {
+				cpu3_alert: trip0 {
+					temperature = <75000>;
+					hysteresis = <2000>;
+					type = "passive";
+				};
+				cpu3_crit: trip1 {
+					temperature = <110000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+
+			cooling-maps {
+				map0 {
+					trip = <&cpu3_alert>;
+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+				};
+			};
+		};
+
+		cpu4567-thermal {
+			polling-delay-passive = <250>;
+			polling-delay = <1000>;
+
+			thermal-sensors = <&tsens 9>;
+
+			trips {
+				cpu4567_alert: trip0 {
+					temperature = <75000>;
+					hysteresis = <2000>;
+					type = "passive";
+				};
+				cpu4567_crit: trip1 {
+					temperature = <110000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+
+			cooling-maps {
+				map0 {
+					trip = <&cpu4567_alert>;
+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+				};
+			};
+		};
+
+	};
+
+	qfprom: qfprom@5c000 {
+		compatible = "qcom,qfprom";
+		reg = <0x5c000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		tsens_caldata: caldata@a0 {
+			reg = <0xa0 0x5c>;
+		};
+	};
+
+	tsens: thermal-sensor@4a9000 {
+		compatible = "qcom,msm8939-tsens";
+		reg = <0x4a9000 0x1000>, /* TM */
+		      <0x4a8000 0x1000>; /* SROT */
+		nvmem-cells = <&tsens_caldata>;
+		nvmem-cell-names = "calib";
+		#qcom,sensors = <10>;
+		interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-names = "uplow";
+		#thermal-sensor-cells = <1>;
+	};
+
+Shawn
