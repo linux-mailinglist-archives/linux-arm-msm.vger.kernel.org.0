@@ -2,101 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A5A92305A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 10:43:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3055E2305B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 10:47:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728264AbgG1InY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 04:43:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbgG1InY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 04:43:24 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9564C0619D4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 01:43:23 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id 184so17339647wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 01:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6s5ORi0rHPtJiGgGsf/ouNzzeGn7KDq9L2gBSCc9Ezc=;
-        b=dnA2DYGICyIMtS9q/uuEQCU7oYl3dh7IssuLenQcpsOLQ4ufUqQLb+HeaRZ/6b7u95
-         cjxbV6DKy7GjHcu/leVmxG2RFPnpuXka8Z8UMQcbJ0aZcESZBIUvBYlxsZCfyOGKjVCS
-         6NJ2N7YtjOFVJ5DDC0qClASK03IHqx8fJ+iktndvYiCxETw31bpfXGuYthPUTvRyy5tC
-         j0BbjlgaZWi9iFzL76njvje8rnPRneK3S1n0P2ZpqoApvRdel/5TM86fklzNCgIZyODi
-         3iqnrw6qpeE/lZHW43EBua5wcbzK5JClgMCn9a+8O5mKDUGjvUDJWArMB++iVluLjYOZ
-         /M/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6s5ORi0rHPtJiGgGsf/ouNzzeGn7KDq9L2gBSCc9Ezc=;
-        b=FOdIYy7qg/tAS3n/HREdRvuDtGEcqjczOUva1hUfaoFihh4o3wKIFM93zxlVMrFwTA
-         hx+/gYqSUAiNpwu7eS3EGTZrgY/pVlT3iYnj0PRaVZCNpFjcTAoncOwHtB6gQT8GeJvO
-         YNUSgvqXtNZTaA74gRCT951zFZMwY71VCJXTKR3ejtv/MPIFhLqkdpRP77/gyuMVJ6Sn
-         vMZGss6/XR/ZaeJ+KUN0DpnYWWyjScep28mWhxaYGUR5ZaiMNDXDSZCciwR//phBhu/5
-         Vq22dS/8WCzwzvEiIoblG51W+bpVheizGRE2Iysd/YafD0BEA9A8w5bBmGdGmwjAv6Tf
-         8hTQ==
-X-Gm-Message-State: AOAM533y29ur6Hz3qc/9CMAe0s4ZVya4CcaQET4cevIIm6+5rhY0jro5
-        KyzWzLI9841Cjg4YS5aUXk3ZpA==
-X-Google-Smtp-Source: ABdhPJwwu+F18+gwleovwZF0jYfx83SPzzBo/k68WX1LsAIkA5fzwkyv9D+UKxc72HZS9XNXCFWMAw==
-X-Received: by 2002:a7b:c205:: with SMTP id x5mr3146752wmi.161.1595925801819;
-        Tue, 28 Jul 2020 01:43:21 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:19cd:2f7:8a44:adc5? ([2a01:e34:ed2f:f020:19cd:2f7:8a44:adc5])
-        by smtp.googlemail.com with ESMTPSA id 33sm17393234wri.16.2020.07.28.01.43.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jul 2020 01:43:21 -0700 (PDT)
-Subject: Re: [PATCH] MAINTAINERS: update entry to thermal governors file name
- prefixing
-To:     Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org,
-        Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>,
-        Pia Eichinger <pia.eichinger@st.oth-regensburg.de>,
-        Joe Perches <joe@perches.com>, kernel-janitors@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200728045850.22661-1-lukas.bulwahn@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <d50f49c2-4d88-74f7-29e9-963b806c602e@linaro.org>
-Date:   Tue, 28 Jul 2020 10:43:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1728156AbgG1IrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 04:47:19 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42965 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728176AbgG1IrT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 04:47:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595926038; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Ov/MCTEZuyfgMKbGRufVJeV9XrK0K72sSxzij8exncc=;
+ b=lOSu2yCV0bYzmsSLUkjbZzaK4dTUwcff10zndJYQ5sxNungD2y7n00X3C89XY6/pZ3uLpIoR
+ KHMp1ocipWpHlF1QaFkuJYGnS0dIpO7qhfjsI9GzAsL+iI6/e3BpEdDM6EJmHS9DOHp9Uaaa
+ sjjhwPFM3HYmqjIIWuSC+boYjzs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f1fe612ca57a65d47cbd086 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 08:47:14
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CE80BC4339C; Tue, 28 Jul 2020 08:47:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14F51C433C6;
+        Tue, 28 Jul 2020 08:47:14 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200728045850.22661-1-lukas.bulwahn@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Jul 2020 14:17:14 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2] coresight: etm4x: Fix etm4_count race by moving cpuhp
+ callbacks to init
+In-Reply-To: <159592494608.1360974.13925720722764973592@swboyd.mtv.corp.google.com>
+References: <20200728075102.30807-1-saiprakash.ranjan@codeaurora.org>
+ <159592494608.1360974.13925720722764973592@swboyd.mtv.corp.google.com>
+Message-ID: <e3bb9a0bec27d769b0ff6284e6cd8ef3@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/07/2020 06:58, Lukas Bulwahn wrote:
-> Commit 0015d9a2a727 ("thermal/governors: Prefix all source files with
-> gov_") renamed power_allocator.c to gov_power_allocator.c in
-> ./drivers/thermal amongst some other file renames, but missed to adjust
-> the MAINTAINERS entry.
+On 2020-07-28 13:59, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2020-07-28 00:51:02)
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c 
+>> b/drivers/hwtracing/coresight/coresight-etm4x.c
+>> index 6d7d2169bfb2..adb71987a1e3 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+>> @@ -48,8 +48,6 @@ module_param(pm_save_enable, int, 0444);
+>>  MODULE_PARM_DESC(pm_save_enable,
+>>         "Save/restore state on power down: 1 = never, 2 = 
+>> self-hosted");
+>> 
+>> -/* The number of ETMv4 currently registered */
+>> -static int etm4_count;
+>>  static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
+>>  static void etm4_set_default_config(struct etmv4_config *config);
+>>  static int etm4_set_event_filters(struct etmv4_drvdata *drvdata,
+>> @@ -1403,12 +1401,9 @@ static int etm4_pm_setup_cpuslocked(void)
 > 
-> Hence, ./scripts/get_maintainer.pl --self-test=patterns complains:
+> Is this only called from __init now? If so please mark it as __init
+> then.
 > 
->   warning: no file matches    F:    drivers/thermal/power_allocator.c
-> 
-> Update the file entry in MAINTAINERS to the new file name.
-> 
-> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-> ---
 
+Yes, will change it.
 
-Applied, thanks
+>>  {
+>>         int ret;
+>> 
+>> -       if (etm4_count++)
+>> -               return 0;
+>> -
+>>         ret = cpu_pm_register_notifier(&etm4_cpu_pm_nb);
+>>         if (ret)
+>> -               goto reduce_count;
+>> +               return ret;
+>> 
+>>         ret = 
+>> cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
+>>                                                    
+>> "arm/coresight4:starting",
+>> @@ -1432,17 +1427,11 @@ static int etm4_pm_setup_cpuslocked(void)
+>> 
+>>  unregister_notifier:
+>>         cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
+>> -
+>> -reduce_count:
+>> -       --etm4_count;
+>>         return ret;
+>>  }
+>> 
+>>  static void etm4_pm_clear(void)
+> 
+> This is __init too?
+> 
 
+Will change.
+
+>>  {
+>> -       if (--etm4_count != 0)
+>> -               return;
+>> -
+>>         cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
+>>         cpuhp_remove_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING);
+>>         if (hp_online) {
+>> @@ -1598,4 +1576,29 @@ static struct amba_driver etm4x_driver = {
+>>         .probe          = etm4_probe,
+>>         .id_table       = etm4_ids,
+>>  };
+>> -builtin_amba_driver(etm4x_driver);
+>> +
+>> +static int __init etm4x_init(void)
+>> +{
+>> +       int ret;
+>> +
+>> +       cpus_read_lock();
+>> +       ret = etm4_pm_setup_cpuslocked();
+>> +       cpus_read_unlock();
+>> +
+>> +       /* etm4_pm_setup_cpuslocked() does its own cleanup - exit on 
+>> error */
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       ret = amba_driver_register(&etm4x_driver);
+>> +       if (ret) {
+>> +               pr_info("Error registering etm4x driver\n");
+> 
+> Use pr_err() please.
+> 
+
+Yes indeed, will change.
+
+>> +               goto err_init;
+>> +       }
+>> +
+>> +       return ret;
+>> +
+>> +err_init:
+> 
+> Why is this a goto?
+> 
+>> +       etm4_pm_clear();
+>> +       return ret;
+> 
+> Instead of just putting this in the if (ret) arm?
+> 
+
+Will change.
+
+>> +}
+>> +module_init(etm4x_init);
+> 
+> It was device_initcall before with builtin_amba_driver(), best to not
+> change that.
+
+Sure.
+
+I will wait to see if there are any more comments on this patch and then 
+post a v3.
+Thanks for the review Stephen.
+
+Thanks,
+Sai
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
