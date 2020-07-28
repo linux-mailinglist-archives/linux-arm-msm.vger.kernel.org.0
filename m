@@ -2,199 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CADB4230989
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 14:03:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 442E9230CA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 16:49:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728604AbgG1MDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 08:03:38 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17674 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728560AbgG1MDi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 08:03:38 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595937818; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=vm/iIuV+94ECTCG0r3Bpt5nJ2J+WV4KcMzINPa/59UY=;
- b=buQMBhO9w5sVa3izzJY4mkxapO5yxNEYpbohk8/i3WqtJTAh6oenzTUIU7Nrsv07Ylav+AS9
- lKzRhSRH4ucBgpeJPw42Oy84R8/vhgu/9m2TFafKobf5iQd3EPmDm7C1cY3SbUMxTdtH4nvJ
- 7eJatTXWsZjBcPbGTJOorIN92s8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5f2013ef8db7256a950bee21 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 12:02:55
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ACE55C433C9; Tue, 28 Jul 2020 12:02:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2E6C2C433C6;
-        Tue, 28 Jul 2020 12:02:54 +0000 (UTC)
+        id S1730441AbgG1OtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 10:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727824AbgG1Os7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 10:48:59 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F51C061794
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 07:48:59 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id g22so4618667vke.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 07:48:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=240RUtdc08bBCjS0T5ABRYM5kPew5EtFraMIJ4mwkAU=;
+        b=FjxDG1XpayNcd4EmXIjEfVT6GArnbrZGwdT6C+WsUm6JuJjLk7qxvLB1XoXAIw5Eap
+         YLSQ+yBEXlmtkEviS04Z9Vwd0lQe+xMOhO/yE7b45SZ77tPDJGctmvm8yzVd+tTmPIF2
+         AXvUj9cUMgB9HJhAlDpg5AevYDXkD6kFXFdjE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=240RUtdc08bBCjS0T5ABRYM5kPew5EtFraMIJ4mwkAU=;
+        b=jCGVzk7xhHcgZAvXt8/CtQfPXC4xV8OY7H03rNRn3hGmEJ9epGLsLUxqinVvvAHslj
+         XE8xKMqMJiA7M9T4X6camTZGy0S/rki0MgDtcrwZVwtbdmoxAaouPMtBcFLlYEijzzX2
+         91bV7URKqQs4Z1bw8pSOHdVneIg63nS2E44lOTaoPsspPshuJla8coOxpu2o4PxV2q0O
+         j1qh4fGu6iCDSfeGHrX+96cuqxQRiJPIPs6Pgh7+5EBPQ59s/X+xQr+TwiWra+uis7CP
+         b20hf0yP6kSU0flMCwUvSv49OCoVo35Nzb30+dMOX+UNqUR8WmPAm2ypinLmH0i+W4i+
+         lvjg==
+X-Gm-Message-State: AOAM533UC89kSmRdXOboDg7TQ2WtfrjEwaM5aUnFm+91de68a+Uj3iun
+        aH8c5WN3FAWeAVkEyoc8b/4lTMPuA/A=
+X-Google-Smtp-Source: ABdhPJxzM5pa0+JwgewCDMZ4rgn3EwXIHENFRY/DivMfWMYGHZkGBAHXHol9z8JG15fQsu/MXyi5VA==
+X-Received: by 2002:a1f:3446:: with SMTP id b67mr20313530vka.44.1595947737808;
+        Tue, 28 Jul 2020 07:48:57 -0700 (PDT)
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com. [209.85.217.42])
+        by smtp.gmail.com with ESMTPSA id k12sm3128729vsb.10.2020.07.28.07.48.56
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jul 2020 07:48:56 -0700 (PDT)
+Received: by mail-vs1-f42.google.com with SMTP id q13so3382978vsn.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 07:48:56 -0700 (PDT)
+X-Received: by 2002:a67:69c1:: with SMTP id e184mr21296483vsc.119.1595947735977;
+ Tue, 28 Jul 2020 07:48:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Jul 2020 17:32:54 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+References: <20200724211711.810009-1-sboyd@kernel.org> <fb6fbaa9-63d9-e747-906c-335c8be934f3@linaro.org>
+In-Reply-To: <fb6fbaa9-63d9-e747-906c-335c8be934f3@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 28 Jul 2020 07:48:44 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XNw45=NGm9Qj4_Kyq9oQMF6zFaaWz33dfqqDC0A-fF+Q@mail.gmail.com>
+Message-ID: <CAD=FV=XNw45=NGm9Qj4_Kyq9oQMF6zFaaWz33dfqqDC0A-fF+Q@mail.gmail.com>
+Subject: Re: [PATCH v2] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: sm8250: add interconnect nodes
-In-Reply-To: <20200728023811.5607-8-jonathan@marek.ca>
-References: <20200728023811.5607-1-jonathan@marek.ca>
- <20200728023811.5607-8-jonathan@marek.ca>
-Message-ID: <bbe96cb3a8f1c28310963db2d1b97990@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Stephen Boyd <swboyd@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-28 08:08, Jonathan Marek wrote:
-> Add the interconnect dts nodes for sm8250.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Hi,
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+On Sun, Jul 26, 2020 at 2:44 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> Hi Stephen,
+>
+> On 7/25/20 12:17 AM, Stephen Boyd wrote:
+> > From: Stephen Boyd <swboyd@chromium.org>
+> >
+> > The busy loop in rpmh_rsc_send_data() is written with the assumption
+> > that the udelay will be preempted by the tcs_tx_done() irq handler when
+> > the TCS slots are all full. This doesn't hold true when the calling
+> > thread is an irqthread and the tcs_tx_done() irq is also an irqthread.
+> > That's because kernel irqthreads are SCHED_FIFO and thus need to
+> > voluntarily give up priority by calling into the scheduler so that other
+> > threads can run.
+> >
+> > I see RCU stalls when I boot with irqthreads on the kernel commandline
+> > because the modem remoteproc driver is trying to send an rpmh async
+> > message from an irqthread that needs to give up the CPU for the rpmh
+> > irqthread to run and clear out tcs slots.
+> >
+> >  rcu: INFO: rcu_preempt self-detected stall on CPU
+> >  rcu:     0-....: (1 GPs behind) idle=402/1/0x4000000000000002 softirq=2108/2109 fqs=4920
+> >   (t=21016 jiffies g=2933 q=590)
+> >  Task dump for CPU 0:
+> >  irq/11-smp2p    R  running task        0   148      2 0x00000028
+> >  Call trace:
+> >   dump_backtrace+0x0/0x154
+> >   show_stack+0x20/0x2c
+> >   sched_show_task+0xfc/0x108
+> >   dump_cpu_task+0x44/0x50
+> >   rcu_dump_cpu_stacks+0xa4/0xf8
+> >   rcu_sched_clock_irq+0x7dc/0xaa8
+> >   update_process_times+0x30/0x54
+> >   tick_sched_handle+0x50/0x64
+> >   tick_sched_timer+0x4c/0x8c
+> >   __hrtimer_run_queues+0x21c/0x36c
+> >   hrtimer_interrupt+0xf0/0x22c
+> >   arch_timer_handler_phys+0x40/0x50
+> >   handle_percpu_devid_irq+0x114/0x25c
+> >   __handle_domain_irq+0x84/0xc4
+> >   gic_handle_irq+0xd0/0x178
+> >   el1_irq+0xbc/0x180
+> >   save_return_addr+0x18/0x28
+> >   return_address+0x54/0x88
+> >   preempt_count_sub+0x40/0x88
+> >   _raw_spin_unlock_irqrestore+0x4c/0x6c
+> >   ___ratelimit+0xd0/0x128
+> >   rpmh_rsc_send_data+0x24c/0x378
+> >   __rpmh_write+0x1b0/0x208
+> >   rpmh_write_async+0x90/0xbc
+> >   rpmhpd_send_corner+0x60/0x8c
+> >   rpmhpd_aggregate_corner+0x8c/0x124
+> >   rpmhpd_set_performance_state+0x8c/0xbc
+> >   _genpd_set_performance_state+0xdc/0x1b8
+> >   dev_pm_genpd_set_performance_state+0xb8/0xf8
+> >   q6v5_pds_disable+0x34/0x60 [qcom_q6v5_mss]
+> >   qcom_msa_handover+0x38/0x44 [qcom_q6v5_mss]
+> >   q6v5_handover_interrupt+0x24/0x3c [qcom_q6v5]
+> >   handle_nested_irq+0xd0/0x138
+> >   qcom_smp2p_intr+0x188/0x200
+> >   irq_thread_fn+0x2c/0x70
+> >   irq_thread+0xfc/0x14c
+> >   kthread+0x11c/0x12c
+> >   ret_from_fork+0x10/0x18
+> >
+> > This busy loop naturally lends itself to using a wait queue so that each
+> > thread that tries to send a message will sleep waiting on the waitqueue
+> > and only be woken up when a free slot is available. This should make
+> > things more predictable too because the scheduler will be able to sleep
+> > tasks that are waiting on a free tcs instead of the busy loop we
+> > currently have today.
+> >
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Cc: Maulik Shah <mkshah@codeaurora.org>
+> > Cc: Lina Iyer <ilina@codeaurora.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >
+> > Changes in v2:
+> >  * Document tcs_wait
+> >  * Move wake_up() outside of the spinlock
+> >  * Document claim_tcs_for_req()
+> >
+> >  drivers/soc/qcom/rpmh-internal.h |   4 ++
+> >  drivers/soc/qcom/rpmh-rsc.c      | 115 +++++++++++++++----------------
+> >  2 files changed, 58 insertions(+), 61 deletions(-)
+>
+> This also fixes an issue related to TCS busy, seen with Venus driver
+> with these [1] patches applied.
+>
+> Tested-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>
+> --
+> regards,
+> Stan
+>
+> [1] https://lkml.org/lkml/2020/7/23/394
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 82 ++++++++++++++++++++++++++++
->  1 file changed, 82 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 636e2196138c..945bd4a9d640 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -7,6 +7,7 @@
->  #include <dt-bindings/clock/qcom,gcc-sm8250.h>
->  #include <dt-bindings/clock/qcom,gpucc-sm8250.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/interconnect/qcom,sm8250.h>
->  #include <dt-bindings/mailbox/qcom-ipcc.h>
->  #include <dt-bindings/power/qcom-aoss-qmp.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
-> @@ -978,6 +979,55 @@ spi13: spi@a94000 {
->  			};
->  		};
-> 
-> +		config_noc: interconnect@1500000 {
-> +			compatible = "qcom,sm8250-config-noc";
-> +			reg = <0 0x01500000 0 0xa580>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		system_noc: interconnect@1620000 {
-> +			compatible = "qcom,sm8250-system-noc";
-> +			reg = <0 0x01620000 0 0x1c200>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		mc_virt: interconnect@163d000 {
-> +			compatible = "qcom,sm8250-mc-virt";
-> +			reg = <0 0x0163d000 0 0x1000>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		aggre1_noc: interconnect@16e0000 {
-> +			compatible = "qcom,sm8250-aggre1-noc";
-> +			reg = <0 0x016e0000 0 0x1f180>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		aggre2_noc: interconnect@1700000 {
-> +			compatible = "qcom,sm8250-aggre2-noc";
-> +			reg = <0 0x01700000 0 0x33000>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		compute_noc: interconnect@1733000 {
-> +			compatible = "qcom,sm8250-compute-noc";
-> +			reg = <0 0x01733000 0 0xa180>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		mmss_noc: interconnect@1740000 {
-> +			compatible = "qcom,sm8250-mmss-noc";
-> +			reg = <0 0x01740000 0 0x1f080>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
->  		ufs_mem_hc: ufshc@1d84000 {
->  			compatible = "qcom,sm8250-ufshc", "qcom,ufshc",
->  				     "jedec,ufs-2.0";
-> @@ -1050,6 +1100,13 @@ ufs_mem_phy_lanes: lanes@1d87400 {
->  			};
->  		};
-> 
-> +		ipa_virt: interconnect@1e00000 {
-> +			compatible = "qcom,sm8250-ipa-virt";
-> +			reg = <0 0x01e00000 0 0x1000>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
->  		tcsr_mutex_regs: syscon@1f40000 {
->  			compatible = "syscon";
->  			reg = <0x0 0x01f40000 0x0 0x40000>;
-> @@ -1364,6 +1421,27 @@ usb_2_ssphy: lane@88eb200 {
->  			};
->  		};
-> 
-> +		dc_noc: interconnect@90c0000 {
-> +			compatible = "qcom,sm8250-dc-noc";
-> +			reg = <0 0x090c0000 0 0x4200>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		gem_noc: interconnect@9100000 {
-> +			compatible = "qcom,sm8250-gem-noc";
-> +			reg = <0 0x09100000 0 0xb4000>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		npu_noc: interconnect@9990000 {
-> +			compatible = "qcom,sm8250-npu-noc";
-> +			reg = <0 0x09990000 0 0x1600>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
->  		usb_1: usb@a6f8800 {
->  			compatible = "qcom,sm8250-dwc3", "qcom,dwc3";
->  			reg = <0 0x0a6f8800 0 0x400>;
-> @@ -2359,6 +2437,10 @@ rpmhpd_opp_turbo_l1: opp10 {
->  					};
->  				};
->  			};
-> +
-> +			apps_bcm_voter: bcm_voter {
-> +				compatible = "qcom,bcm-voter";
-> +			};
->  		};
->  	};
+It worries me that you say that this fixes any issues for you.
+Specifically I don't see how this could fix anything except:
 
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+1. Fix the problem with irqthreads, which is how Stephen originally found this.
+
+2. Fix things to be a little more efficient.
+
+3. Avoid the small handful of messages that show up during normal
+usage that look like:
+
+  TCS Busy, retrying RPMH message send: addr=...
+
+I'm guessing you're referring to #3.  Is that correct?
+
+If so, you might want to double-check to confirm that you aren't
+totally spamming the RPMh bus with your patch series.  I found that
+when I was seeing a lot of "TCS Busy, retrying RPMH message send"
+spammed to the console that it was a sign that the code was being
+really inefficient.
+
+Specifically the code to add interconnect bandwidth and OPP to the SPI
+drivers would run at "runtime_suspend" and "runtime_resume".  For our
+SPI drivers this meant that they were running after every single
+transfer, and they were quite slow.  If your code is doing similar
+then you probably have a problem.
+
+The problem was fixed by adding an autosuspend delay.
+
+References (from linuxnext):
+
+8592eb959ad4 spi: spi-qcom-qspi: Set an autosuspend delay of 250 ms
+cfdab2cd85ec spi: spi-geni-qcom: Set an autosuspend delay of 250 ms
+
+
+Also if your code is adjusting its clock rate too frequently it can
+now trigger similar problems.  References:
+
+2124331411a1 spi: spi-qcom-qspi: Avoid clock setting if not needed
+5f219524ec6e spi: spi-geni-qcom: Set the clock properly at runtime resume
+68890e20942b spi: spi-geni-qcom: Avoid clock setting if not needed
+
+
+-Doug
