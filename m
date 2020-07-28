@@ -2,108 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DF862301F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 07:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37CE8230209
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 07:48:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgG1Fks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 01:40:48 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:58227 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726319AbgG1Fkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 01:40:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595914847; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=mONsxEXPia/IwvtjrGztj4uoZZENrqPyBiOnXzhuICU=; b=bmPfjq+Titm30NtFoJ7ntUQ0PRM37wAx6x4b8zKvMkYIaLxoj8KFdAwCGEZQDUf69WMeZ5RY
- 5OplIbJ/OWswpYziyoY/ANPihX8ijpDfpwalycJiY4PtyiRjZ7goRvbHKXc/xs/qkcEB4xkp
- 9sOkfBzZSad4606GAGNTowEzwQQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
- 5f1fba5efcbecb3df126cd3f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 05:40:46
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 290D7C4339C; Tue, 28 Jul 2020 05:40:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.13] (unknown [183.83.138.47])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6AD85C433CB;
-        Tue, 28 Jul 2020 05:40:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6AD85C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH V2 3/3] tty: serial: qcom_geni_serial: Fix the UART wakeup
- issue
-To:     satya priya <skakit@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        gregkh@linuxfoundation.org
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rojay@codeaurora.org,
-        msavaliy@qti.qualcomm.com
-References: <1595563082-2353-1-git-send-email-skakit@codeaurora.org>
- <1595563082-2353-4-git-send-email-skakit@codeaurora.org>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <1449a9ea-9fbe-b2df-abda-dfc810e3cd9d@codeaurora.org>
-Date:   Tue, 28 Jul 2020 11:10:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1726994AbgG1Fsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 01:48:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726536AbgG1Fsh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 01:48:37 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A60C061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 22:48:36 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id t6so9325143plo.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 22:48:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nwCaKQb7A1eifXGGV7a5eCD4TFiRpHJ0WWrvyibHWGo=;
+        b=ThWzK6aItUQJQGmMwE/9XgdMnE3B8hgl9stdZ4ANGGr+GXR4MVlckDEryvdOb2X1g5
+         rL2UJp+8963+tjSiFZq9HYa8ojAwcGwamA3DkAiZ9W/7V+DMV4R7xwxRmKJvs4tuMYCI
+         WPYIW9LGaYCxAGDtPNK7WVsr+SW2pcW1yddoo8tzfOBh3xUA5/gJG/7GFX5vv43Wt1nD
+         BRtQPGuzmen4qMkYU1kaCKyBVW1cy+FgHMrISIsB2NpLAxRJ5iu2T1q+qKwhvD2jsFkP
+         GlE1N03xv0RYfJa3HBjoIysGmu2qHV/x8w2bKOVxTNOyCaTWTZsUsU4UOr+4BSI6Fd3Z
+         4JCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nwCaKQb7A1eifXGGV7a5eCD4TFiRpHJ0WWrvyibHWGo=;
+        b=RSCTWHXKG9RMe1FeDR+h3cHCRYP5nrmSjBBKtmCwc/mHdS9ZWvw0cxLFFVN5qdeAJP
+         CRX6LdlG/ZhQmwXFoHflfaAkUf+htqEd9qV7s14zh0eu6KkOoICEakWekRZcqsXEe0Or
+         UX2dKCgaOjqWOjESQyCNfsyiiqrXWmcT07C6ksq43eY3fARkoc2r56+5T2Q8X3FQ15Z6
+         wPjhMkJ+NM9MeLGOznZU+542fOywWPptpmoqf5FyzC4T2n4Sckp9ERb4XijloN611K9D
+         ZFN1IUUiLBGC8UpeCmjKVIW/Q7Ce5XcHZsMdTeM2c/44VvuxujlOml6on/ma9gsKR3FB
+         Hypw==
+X-Gm-Message-State: AOAM532PV8pRoBTPK0HcLvfRRSRKcetV0WVHYMEoDe2fgnW5lKGGFafq
+        F3+QWSynqkcb06rNQvoMe6mS+A==
+X-Google-Smtp-Source: ABdhPJyagl/2lErbHeLHksDS/3HV3/viNDfs3CKy+8bqQ7BW6jnH4d6jKx8IhtFZ7KIx602H7iB0jw==
+X-Received: by 2002:a17:90b:3685:: with SMTP id mj5mr2738571pjb.123.1595915315827;
+        Mon, 27 Jul 2020 22:48:35 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id p127sm16543663pfb.17.2020.07.27.22.48.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jul 2020 22:48:35 -0700 (PDT)
+Date:   Mon, 27 Jul 2020 22:45:03 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        evgreen@chromium.org, ohad@wizery.com, stable@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] remoteproc: qcom_q6v5_mss: Validate MBA firmware
+ size before load
+Message-ID: <20200728054503.GA349841@builder.lan>
+References: <20200722201047.12975-1-sibis@codeaurora.org>
+ <20200722201047.12975-2-sibis@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1595563082-2353-4-git-send-email-skakit@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200722201047.12975-2-sibis@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed 22 Jul 13:10 PDT 2020, Sibi Sankar wrote:
 
-On 7/24/2020 9:28 AM, satya priya wrote:
-> As a part of system suspend we call uart_port_suspend from the
-> Serial driver, which calls set_mctrl passing mctrl as NULL. This
-> makes RFR high(NOT_READY) during suspend.
->
-> Due to this BT SoC is not able to send wakeup bytes to UART during
-> suspend. Included if check for non-suspend case to keep RFR low
-> during suspend.
+> The following mem abort is observed when the mba firmware size exceeds
+> the allocated mba region. MBA firmware size is restricted to a maximum
+> size of 1M and remaining memory region is used by modem debug policy
+> firmware when available. Hence verify whether the MBA firmware size lies
+> within the allocated memory region and is not greater than 1M before
+> loading.
+> 
+> Err Logs:
+> Unable to handle kernel paging request at virtual address
+> Mem abort info:
+> ...
+> Call trace:
+>   __memcpy+0x110/0x180
+>   rproc_start+0x40/0x218
+>   rproc_boot+0x5b4/0x608
+>   state_store+0x54/0xf8
+>   dev_attr_store+0x44/0x60
+>   sysfs_kf_write+0x58/0x80
+>   kernfs_fop_write+0x140/0x230
+>   vfs_write+0xc4/0x208
+>   ksys_write+0x74/0xf8
+>   __arm64_sys_write+0x24/0x30
+> ...
+> 
+> Fixes: 051fb70fd4ea4 ("remoteproc: qcom: Driver for the self-authenticating Hexagon v5")
+> Cc: stable@vger.kernel.org
 
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
-
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
-> Changes in V2:
->   - This patch fixes the UART flow control issue during suspend.
->     Newly added in V2.
->
->   drivers/tty/serial/qcom_geni_serial.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 07b7b6b..7108dfc 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -242,7 +242,7 @@ static void qcom_geni_serial_set_mctrl(struct uart_port *uport,
->   	if (mctrl & TIOCM_LOOP)
->   		port->loopback = RX_TX_CTS_RTS_SORTED;
->   
-> -	if (!(mctrl & TIOCM_RTS))
-> +	if ((!(mctrl & TIOCM_RTS)) && (!(uport->suspended)))
->   		uart_manual_rfr = UART_MANUAL_RFR_EN | UART_RFR_NOT_READY;
->   	writel(uart_manual_rfr, uport->membase + SE_UART_MANUAL_RFR);
->   }
+>  drivers/remoteproc/qcom_q6v5_mss.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 718acebae777f..4e72c9e30426c 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -412,6 +412,12 @@ static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
+>  {
+>  	struct q6v5 *qproc = rproc->priv;
+>  
+> +	/* MBA is restricted to a maximum size of 1M */
+> +	if (fw->size > qproc->mba_size || fw->size > SZ_1M) {
+> +		dev_err(qproc->dev, "MBA firmware load failed\n");
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+I'll change this to "MBA firmware exceeds size limit\n". Please let me
+know if you object.
 
+Regards,
+Bjorn
+
+> +		return -EINVAL;
+> +	}
+> +
+>  	memcpy(qproc->mba_region, fw->data, fw->size);
+>  
+>  	return 0;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
