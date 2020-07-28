@@ -2,194 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01320230E81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 17:54:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 703AD231019
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 18:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731165AbgG1PyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 11:54:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55912 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731164AbgG1PyO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 11:54:14 -0400
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+        id S1731494AbgG1QwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 12:52:24 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:48769 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731268AbgG1QwY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 12:52:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595955143; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=AjBQsr/q2VwWU+HOXBWpjQEU8xvyWcP1N9vbtsdor4E=; b=XLCRkjPIcMVgXpNVDAzZseelKkC0leudywETXATRx1UuAJJGhdxM1BFn6MKDZn127rupR/TU
+ oGKe4lUqPkYh7I5MemZW0MSG4TIueW1435Pq7V6Q6lpGX+yWvM0eH0Ki0ywgvwpfA793QNkz
+ zDbnjS0d6xXocTCtKh7JbP3lqeI=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f2057be35f3e3d316d1697d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 16:52:14
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 304D2C43391; Tue, 28 Jul 2020 16:52:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 62C6D20809;
-        Tue, 28 Jul 2020 15:54:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1595951653;
-        bh=geGOpmuJBayngowsjLPNX2sbYfZomv1ccf9LWNqVwKM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=En2lNNu0u7wbRApCKOaffuq6dP9kx4/IPMKFXpxUTW+HRDP84Fv0Pu2Rw8DCVsS6/
-         O4dZZP49UyoGnI0XeoWRDYWIr8ksIoMdMMFBa0A6CiJQTUVBiy54CRPFJ1GBdRsZkz
-         +oARxSml34pPR4hJaCztC+/w4pZJ3u3ptx2tn3lk=
-Received: by mail-ot1-f43.google.com with SMTP id h1so15201141otq.12;
-        Tue, 28 Jul 2020 08:54:13 -0700 (PDT)
-X-Gm-Message-State: AOAM5306GGPyMXRYKis696z7sWDMtgO2gHkpg0hzg12IdlBAWtpQ+byI
-        zg6BwUaKyKafGRttnRJ9tDWQ8lnfOUSv9pnSiA==
-X-Google-Smtp-Source: ABdhPJx82k8TTvlFZONBnoZqE1yfGmt/Rj673jv6bffnQQRS5e4kUUr99MautRkzOYsWD25L09MzQ/hMWZDy0tuxnvw=
-X-Received: by 2002:a9d:46c:: with SMTP id 99mr25143787otc.192.1595951652672;
- Tue, 28 Jul 2020 08:54:12 -0700 (PDT)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61528C433C6;
+        Tue, 28 Jul 2020 16:52:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 61528C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
+Date:   Tue, 28 Jul 2020 10:52:12 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v4 4/5] arm64: dts: sdm845: Add OPP tables and
+ power-domains for venus
+Message-ID: <20200728165212.GA32586@codeaurora.org>
+References: <1595503612-2901-1-git-send-email-rnayak@codeaurora.org>
+ <1595503612-2901-5-git-send-email-rnayak@codeaurora.org>
+ <e68ff810-362a-5b99-206b-f676b204101d@linaro.org>
+ <654e0fcb-ae4d-c151-fa8a-4d029fc823fb@codeaurora.org>
+ <20200724162825.GH9185@codeaurora.org>
+ <159589714088.1360974.13205114501389777927@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-References: <1595776013-12877-1-git-send-email-sivaprak@qti.qualcomm.com> <CAL_Jsq+-rwG73mEkYmMQcnxHoBpbFMWHKDvzUK=6-fMAo77-9w@mail.gmail.com>
-In-Reply-To: <CAL_Jsq+-rwG73mEkYmMQcnxHoBpbFMWHKDvzUK=6-fMAo77-9w@mail.gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 28 Jul 2020 09:54:00 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJU81U5CNSia3Lrzwb2VpPy3YMK=tJfXgU49TuGn1eRyQ@mail.gmail.com>
-Message-ID: <CAL_JsqJU81U5CNSia3Lrzwb2VpPy3YMK=tJfXgU49TuGn1eRyQ@mail.gmail.com>
-Subject: Re: [PATCH V2] dt-bindings: pci: convert QCOM pci bindings to YAML
-To:     Sivaprakash Murugesan <sivaprak@qti.qualcomm.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <159589714088.1360974.13205114501389777927@swboyd.mtv.corp.google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 28, 2020 at 9:27 AM Rob Herring <robh+dt@kernel.org> wrote:
+On Mon, Jul 27 2020 at 18:45 -0600, Stephen Boyd wrote:
+>Quoting Lina Iyer (2020-07-24 09:28:25)
+>> On Fri, Jul 24 2020 at 03:03 -0600, Rajendra Nayak wrote:
+>> >Hi Maulik/Lina,
+>> >
+>> >On 7/23/2020 11:36 PM, Stanimir Varbanov wrote:
+>> >>Hi Rajendra,
+>> >>
+>> >>After applying 2,3 and 4/5 patches on linaro-integration v5.8-rc2 I see
+>> >>below messages on db845:
+>> >>
+>> >>qcom-venus aa00000.video-codec: dev_pm_opp_set_rate: failed to find
+>> >>current OPP for freq 533000097 (-34)
+>> >>
+>> >>^^^ This one is new.
+>> >>
+>> >>qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x30000
+>> >>
+>> >>^^^ and this message is annoying, can we make it pr_debug in rpmh?
+>> >
+>> How annoyingly often do you see this message?
+>> Usually, this is an indication of bad system state either on remote
+>> processors in the SoC or in Linux itself. On a smooth sailing build you
+>> should not see this 'warning'.
+>>
+>> >Would you be fine with moving this message to a pr_debug? Its currently
+>> >a pr_info_ratelimited()
+>> I would rather not, moving this out of sight will mask a lot serious
+>> issues that otherwise bring attention to the developers.
+>>
 >
-> On Sun, Jul 26, 2020 at 9:07 AM Sivaprakash Murugesan
-> <sivaprak@qti.qualcomm.com> wrote:
-> >
-> > From: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> >
-> > Convert QCOM pci bindings to YAML schema
-> >
-> > Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> > ---
-> > [v2]
-> >   - Referenced pci-bus.yaml
-> >   - removed duplicate properties already referenced by pci-bus.yaml
-> >   - Addressed comments from Rob
-> >  .../devicetree/bindings/pci/qcom,pcie.txt          | 330 ---------------
-> >  .../devicetree/bindings/pci/qcom,pcie.yaml         | 447 +++++++++++++++++++++
-> >  2 files changed, 447 insertions(+), 330 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> >  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>I removed this warning message in my patch posted to the list[1]. If
+>it's a serious problem then I suppose a timeout is more appropriate, on
+>the order of several seconds or so and then a pr_warn() and bail out of
+>the async call with an error.
 >
->
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > new file mode 100644
-> > index 000000000000..ddb84f49ac1c
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > @@ -0,0 +1,447 @@
-> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > +
-> > +%YAML 1.2
-> > +---
-> > +$id: "http://devicetree.org/schemas/pci/qcom,pcie.yaml#"
-> > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> > +
-> > +title: Qualcomm PCI express root complex
-> > +
-> > +maintainers:
-> > +  - Sivaprakash Murugesan <sivaprak@codeaurora.org>
-> > +
-> > +description:
-> > +  QCOM PCIe controller uses Designware IP with Qualcomm specific hardware
-> > +  wrappers.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,pcie-apq8064
-> > +      - qcom,pcie-apq8084
-> > +      - qcom,pcie-ipq4019
-> > +      - qcom,pcie-ipq8064
-> > +      - qcom,pcie-ipq8074
-> > +      - qcom,pcie-msm8996
-> > +      - qcom,pcie-qcs404
-> > +      - qcom,pcie-sdm845
-> > +
-> > +  reg:
-> > +    description: Register ranges as listed in the reg-names property
->
-> Can drop this.
->
-> > +    maxItems: 4
-> > +
-> > +  reg-names:
-> > +    items:
-> > +      - const: dbi
-> > +      - const: elbi
-> > +      - const: parf
-> > +      - const: config
-> > +
-> > +  ranges:
-> > +    maxItems: 2
-> > +
-> > +  interrupts:
-> > +    items:
-> > +      - description: MSI interrupts
-> > +
-> > +  interrupt-names:
-> > +    const: msi
-> > +
-> > +  "#interrupt-cells":
->
-> In pci-bus.yaml, so you can drop.
->
-> > +    const: 1
-> > +
-> > +  interrupt-map-mask:
->
-> In pci-bus.yaml, so you can drop.
+The warning used to capture issues that happen within a second and it
+helps capture system related issues. Timing out after many seconds
+overlooks the system issues that generally tend to resolve itself, but
+nevertheless need to be investigated.
 
-Actually, you'll need to do 'interrupt-map-mask: true' on these.
+--Lina
 
->
-> > +    items:
-> > +      - description: standard PCI properties to define mapping of PCIe
-> > +                     interface to interrupt numbers.
-> > +
-> > +  interrupt-map:
-> > +    maxItems: 4
-> > +
-> > +  clocks:
-> > +    minItems: 1
-> > +    maxItems: 7
-> > +
-> > +  clock-names:
-> > +    minItems: 1
-> > +    maxItems: 7
-> > +
-> > +  resets:
-> > +    minItems: 1
-> > +    maxItems: 12
-> > +
-> > +  reset-names:
-> > +    minItems: 1
-> > +    maxItems: 12
-> > +
-> > +  power-domains:
-> > +    maxItems: 1
-> > +
-> > +  vdda-supply:
-> > +    description: phandle to power supply
-> > +
-> > +  vdda_phy-supply:
-> > +    description: phandle to the power supply to PHY
-> > +
-> > +  vdda_refclk-supply:
-> > +    description: phandle to power supply for ref clock generator
-> > +
-> > +  vddpe-3v3-supply:
-> > +    description: PCIe endpoint power supply
-> > +
-> > +  phys:
-> > +    maxItems: 1
-> > +    items:
-> > +      - description: phandle to the PHY block
->
-> Can drop 'items'.
->
-> With those fixed,
->
-> Reviewed-by: Rob Herring <robh@kernel.org>
+>[1] https://lore.kernel.org/r/20200724211711.810009-1-sboyd@kernel.org
