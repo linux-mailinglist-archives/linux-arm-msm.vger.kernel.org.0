@@ -2,158 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7CD1230916
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 13:43:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0AEA230936
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 13:55:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729211AbgG1LnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 07:43:18 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:27129 "EHLO
+        id S1729139AbgG1Lzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 07:55:36 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:34234 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729105AbgG1LnR (ORCPT
+        by vger.kernel.org with ESMTP id S1728247AbgG1Lzf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 07:43:17 -0400
+        Tue, 28 Jul 2020 07:55:35 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595936596; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: To: From:
- Subject: Sender; bh=C2g3qCsM1rQjNC6Re9u3OWUPrxkKyricosFKiC3IGhw=; b=HjmRgKoVrPlW+CJAcnT3ZGXJq/h99U0JpbtyAZroojGZICK3QK2mHUEpjmpEzmzLx16UsvQM
- CGWd/yqm1Z+/1efKTfxgB6Vnqi05YVkIy6VUqb4IH9KlSMLGxTAsuhy6/vOjZEzZiGW/9QdN
- Zekn+NhrgTm49rOjwDRJ4kijrVA=
+ s=smtp; t=1595937334; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=aMLCLRF6gA546+4gAdULk8Xwn0G11bwCEDN5G+ke5tQ=;
+ b=byfXRRBAz9cIMYxFcPLD1eEiOiDvyXxDkAklXYEAeHQUXBCtIQgA7SrY9qmrwbZLgoNwpfl9
+ KElMX68/VDLq/H15+B60DHImzeNpdBryJ97Oyg69xZnhj59u4hEEGv+yOT8naUIB5h0F2AGr
+ PR0QZ9fwy+Xbmxzd2R3Ha4qVVe8=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-east-1.postgun.com with SMTP id
- 5f200f54a61bb9e3f5cf3e93 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 11:43:16
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f201222bd0c3f02966d3c9f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 11:55:14
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 175F4C433AD; Tue, 28 Jul 2020 11:43:15 +0000 (UTC)
+        id 27302C433C9; Tue, 28 Jul 2020 11:55:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.129] (unknown [183.83.142.110])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rohitkr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0A0FBC433C6;
-        Tue, 28 Jul 2020 11:43:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0A0FBC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
-Subject: Re: [PATCH v4 00/12] ASoC: qcom: Add support for SC7180 lpass variant
-From:   Rohit Kumar <rohitkr@codeaurora.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1595413915-17867-1-git-send-email-rohitkr@codeaurora.org>
- <d1e6d60b-9f00-266d-74ad-8c18bbf8d142@linaro.org>
- <cb02a3d7-a947-852d-739f-a5f4b823f06a@codeaurora.org>
-Message-ID: <b5cb020c-4fc8-376f-3308-71bf3a244d26@codeaurora.org>
-Date:   Tue, 28 Jul 2020 17:13:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E81AC433C6;
+        Tue, 28 Jul 2020 11:55:13 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <cb02a3d7-a947-852d-739f-a5f4b823f06a@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Jul 2020 17:25:13 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH v3 6/7] arm64: dts: qcom: sm8150: add interconnect nodes
+In-Reply-To: <20200728023811.5607-7-jonathan@marek.ca>
+References: <20200728023811.5607-1-jonathan@marek.ca>
+ <20200728023811.5607-7-jonathan@marek.ca>
+Message-ID: <8eaf4f2df727390963ffe13c29712c2c@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-07-28 08:08, Jonathan Marek wrote:
+> Add the interconnect dts nodes for sm8150.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 82 ++++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 33ff99132f4f..e4689c27224b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -11,6 +11,7 @@
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,gcc-sm8150.h>
+>  #include <dt-bindings/clock/qcom,gpucc-sm8150.h>
+> +#include <dt-bindings/interconnect/qcom,sm8150.h>
+>  #include <dt-bindings/thermal/thermal.h>
+> 
+>  / {
+> @@ -440,6 +441,55 @@ uart2: serial@a90000 {
+>  			};
+>  		};
+> 
+> +		config_noc: interconnect@1500000 {
+> +			compatible = "qcom,sm8150-config-noc";
+> +			reg = <0 0x01500000 0 0x7400>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		system_noc: interconnect@1620000 {
+> +			compatible = "qcom,sm8150-system-noc";
+> +			reg = <0 0x01620000 0 0x19400>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		mc_virt: interconnect@163a000 {
+> +			compatible = "qcom,sm8150-mc-virt";
+> +			reg = <0 0x0163a000 0 0x1000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre1_noc: interconnect@16e0000 {
+> +			compatible = "qcom,sm8150-aggre1-noc";
+> +			reg = <0 0x016e0000 0 0xd080>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre2_noc: interconnect@1700000 {
+> +			compatible = "qcom,sm8150-aggre2-noc";
+> +			reg = <0 0x01700000 0 0x20000>;
 
-On 7/27/2020 3:20 PM, Rohit Kumar wrote:
->
-> On 7/24/2020 4:52 PM, Srinivas Kandagatla wrote:
->>
->>
->> On 22/07/2020 11:31, Rohit kumar wrote:
->>> This patch chain add audio support for SC7180 soc by doing the required
->>> modification in existing common lpass-cpu/lpass-platform driver.
->>> This also fixes some concurrency issue.
->>>
->>> Changes since v3:
->>>     - Fixed yaml documentation comments and make dt_binding_check 
->>> issues.
->>>     - Moved general fixes out of sc7180 specific patches as 
->>> suggested by Srinivas.
->>>     - Update clock-names to make it same as existing platforms.
->>>
->>> Ajit Pandey (4):
->>>    ASoC: qcom: Add common array to initialize soc based core clocks
->>>    ASoC: qcom: lpass-platform: Replace card->dev with component->dev
->>>    include: dt-bindings: sound: Add sc7180-lpass bindings header
->>>    ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
->>>
->>> Rohit kumar (8):
->>>    ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
->>>    ASoC: qcom: lpass-platform: fix memory leak
->>>    ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
->>>    ASoC: qcom: lpass-cpu: fix concurrency issue
->>>    dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
->>>    ASoC: qcom: lpass-cpu: Use platform_get_resource
->>>    ASoC: qcom: lpass-platform: Use platform_get_irq
->>>    dt-bindings: sound: lpass-cpu: Move to yaml format
->>
->>
-> Thanks Srini for review and testing.
->
-> Mark, I am planning to repost patch07 onwards to address comments by 
-> Rob as
->
-> there are no comments till patch06 and they are just fixes.
+Though aggre2_noc might need a
+larger space in the future lets
+lands ^^ for now.
 
-Hello Mark,
+Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
 
-Are you planning to review/merge the changes till patch06. If not, I 
-will resend those
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		compute_noc: interconnect@1720000 {
+> +			compatible = "qcom,sm8150-compute-noc";
+> +			reg = <0 0x01720000 0 0x7000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		mmss_noc: interconnect@1740000 {
+> +			compatible = "qcom,sm8150-mmss-noc";
+> +			reg = <0 0x01740000 0 0x1c100>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>  		ufs_mem_hc: ufshc@1d84000 {
+>  			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
+>  				     "jedec,ufs-2.0";
+> @@ -510,6 +560,13 @@ ufs_mem_phy_lanes: lanes@1d87400 {
+>  			};
+>  		};
+> 
+> +		ipa_virt: interconnect@1e00000 {
+> +			compatible = "qcom,sm8150-ipa-virt";
+> +			reg = <0 0x01e00000 0 0x1000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>  		tcsr_mutex_regs: syscon@1f40000 {
+>  			compatible = "syscon";
+>  			reg = <0x0 0x01f40000 0x0 0x40000>;
+> @@ -860,6 +917,20 @@ usb_2_ssphy: lane@88eb200 {
+>  			};
+>  		};
+> 
+> +		dc_noc: interconnect@9160000 {
+> +			compatible = "qcom,sm8150-dc-noc";
+> +			reg = <0 0x09160000 0 0x3200>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		gem_noc: interconnect@9680000 {
+> +			compatible = "qcom,sm8150-gem-noc";
+> +			reg = <0 0x09680000 0 0x3e200>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>  		usb_1: usb@a6f8800 {
+>  			compatible = "qcom,sm8150-dwc3", "qcom,dwc3";
+>  			reg = <0 0x0a6f8800 0 0x400>;
+> @@ -950,6 +1021,13 @@ usb_2_dwc3: dwc3@a800000 {
+>  			};
+>  		};
+> 
+> +		camnoc_virt: interconnect@ac00000 {
+> +			compatible = "qcom,sm8150-camnoc-virt";
+> +			reg = <0 0x0ac00000 0 0x1000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>  		aoss_qmp: power-controller@c300000 {
+>  			compatible = "qcom,sm8150-aoss-qmp";
+>  			reg = <0x0 0x0c300000 0x0 0x100000>;
+> @@ -1280,6 +1358,10 @@ rpmhpd_opp_turbo_l1: opp11 {
+>  					};
+>  				};
+>  			};
+> +
+> +			apps_bcm_voter: bcm_voter {
+> +				compatible = "qcom,bcm-voter";
+> +			};
+>  		};
+> 
+>  		cpufreq_hw: cpufreq@18323000 {
 
-patches along with comments addressed on patch07 onwards.
-
-Thanks,
-
-Rohit
-
-
->
->> Tested this on Dragon Board 410c!
->>
->> Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>
->> --srini
->>>
->>>   .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  79 --------
->>>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 185 
->>> ++++++++++++++++++
->>>   include/dt-bindings/sound/sc7180-lpass.h           |  10 +
->>>   sound/soc/qcom/Kconfig                             |   5 +
->>>   sound/soc/qcom/Makefile                            |   2 +
->>>   sound/soc/qcom/lpass-apq8016.c                     |  86 ++++++--
->>>   sound/soc/qcom/lpass-cpu.c                         | 204 
->>> ++++++++++---------
->>>   sound/soc/qcom/lpass-ipq806x.c                     |  67 +++++++
->>>   sound/soc/qcom/lpass-lpaif-reg.h                   | 157 
->>> ++++++++-------
->>>   sound/soc/qcom/lpass-platform.c                    | 155 
->>> +++++++++++----
->>>   sound/soc/qcom/lpass-sc7180.c                      | 216 
->>> +++++++++++++++++++++
->>>   sound/soc/qcom/lpass.h                             |  63 +++++-
->>>   12 files changed, 930 insertions(+), 299 deletions(-)
->>>   delete mode 100644 
->>> Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
->>>   create mode 100644 
->>> Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
->>>   create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
->>>   create mode 100644 sound/soc/qcom/lpass-sc7180.c
->>>
 -- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the Linux Foundation.
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
