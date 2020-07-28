@@ -2,129 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02041230086
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 06:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56DE02300D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 06:40:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgG1ERh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 00:17:37 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:50920 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725851AbgG1ERg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 00:17:36 -0400
+        id S1726288AbgG1Eko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 00:40:44 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:11535 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726290AbgG1Eko (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 00:40:44 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595909856; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=hCNM+2Lv+dQQBLrGuQbA6lyFD5H/2pzjFUsxm4GPBrU=; b=EASfrngd76WsCHcGmJQWRxIs5DogMtMA07IHijgViVEBTneRREXXfCGzHA5yP8iR3V5GtGFf
- OqcZ6ODA5kCl+i1UDyljm/Y4tDJ7tsBxaEg9cRJ3TcBeTzHF1mZQuhuyXCPXkMdnkfekONAJ
- ZJhz4AUy7ruj7PaBCV5dBG7b8Tc=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1595911243; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=0jt/lIUS0O6MgqaTNYHqWmRMSlQq28krUPIbICxs6KU=;
+ b=tC8hlcDG4IggvQrenP2nM0ZtkVgxpywld6m6CjeG4p3lA67z7tSK4RDdYUTzXEx2J0931sVB
+ zY27IZSL6F1HXFFwGWo/9tu+UmSOXqPmRX6hXf0z01UAEsbh0a5cErzvEXV8ciSfD/wuf2O2
+ IttLX/YxcvZCp+4fJuRdmM+1oRE=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f1fa6df70ff737ddba4a70e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 04:17:35
+ smtp-out-n17.prod.us-west-2.postgun.com with SMTP id
+ 5f1fac2c49176bd382b7879d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 04:40:12
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3E52BC43395; Tue, 28 Jul 2020 04:17:35 +0000 (UTC)
+        id 4052CC43391; Tue, 28 Jul 2020 04:40:12 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.12] (unknown [61.3.20.126])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FA49C433C6;
-        Tue, 28 Jul 2020 04:17:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4FA49C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v4 4/5] arm64: dts: sdm845: Add OPP tables and
- power-domains for venus
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Taniya Das <tdas@codeaurora.org>
-References: <1595503612-2901-1-git-send-email-rnayak@codeaurora.org>
- <1595503612-2901-5-git-send-email-rnayak@codeaurora.org>
- <e68ff810-362a-5b99-206b-f676b204101d@linaro.org>
- <94581989-e069-55e5-6b70-919185eda33e@linaro.org>
- <e0c03ce2-136c-2c5c-6f36-bb0c69a82e2d@codeaurora.org>
- <5a8af2da-cc3f-005d-47e6-b36be1104d6a@codeaurora.org>
- <20200727153806.kgegadvghmkevch3@vireshk-mac-ubuntu>
- <159589753282.1360974.11628682178494669632@swboyd.mtv.corp.google.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <e08e9822-7c0c-29d7-67b2-245af66b623a@codeaurora.org>
-Date:   Tue, 28 Jul 2020 09:47:28 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 933BEC433C6;
+        Tue, 28 Jul 2020 04:40:11 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <159589753282.1360974.11628682178494669632@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Jul 2020 10:10:11 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        mike.leach@linaro.org, Jonathan Marek <jonathan@marek.ca>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7180: Add iommus property to ETR
+In-Reply-To: <20200727205834.GA202429@builder.lan>
+References: <cover.1591708204.git.saiprakash.ranjan@codeaurora.org>
+ <2312c9a10e7251d69e31e4f51c0f1d70e6f2f2f5.1591708204.git.saiprakash.ranjan@codeaurora.org>
+ <20200621072213.GG128451@builder.lan>
+ <f40621b2b01f836a8a97686707599dd0@codeaurora.org>
+ <e270acd3f7db076c043f1b982b1efea0@codeaurora.org>
+ <20200727205834.GA202429@builder.lan>
+Message-ID: <207e6b6a297d5ce1bdcac204e297389b@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-07-28 02:28, Bjorn Andersson wrote:
+> On Tue 23 Jun 23:56 PDT 2020, Sai Prakash Ranjan wrote:
+> 
+>> Hi Bjorn,
+>> 
+>> On 2020-06-21 13:39, Sai Prakash Ranjan wrote:
+>> > Hi Bjorn,
+>> >
+>> > On 2020-06-21 12:52, Bjorn Andersson wrote:
+>> > > On Tue 09 Jun 06:30 PDT 2020, Sai Prakash Ranjan wrote:
+>> > >
+>> > > > Define iommus property for Coresight ETR component in
+>> > > > SC7180 SoC with the SID and mask to enable SMMU
+>> > > > translation for this master.
+>> > > >
+>> > >
+>> > > We don't have &apps_smmu in linux-next, as we've yet to figure out how
+>> > > to disable the boot splash or support the stream mapping handover.
+>> > >
+>> > > So I'm not able to apply this.
+>> > >
+>> >
+>> > This is for SC7180 which has apps_smmu not SM8150.
+>> >
+>> 
+>> Please let me know if this needs further explanation.
+>> 
+> 
+> I must have commented on the wrong patch, sorry about that. The SM8150
+> patch in this series does not compile due to the lack of &apps_smmu.
+> 
+> I've picked the other 3 patches.
+> 
 
-On 7/28/2020 6:22 AM, Stephen Boyd wrote:
-> Quoting Viresh Kumar (2020-07-27 08:38:06)
->> On 27-07-20, 17:38, Rajendra Nayak wrote:
->>> On 7/27/2020 11:23 AM, Rajendra Nayak wrote:
->>>> On 7/24/2020 7:39 PM, Stanimir Varbanov wrote:
->>>>>>> +
->>>>>>> +                opp-533000000 {
->>>>>>> +                    opp-hz = /bits/ 64 <533000000>;
->>
->> Is this the highest OPP in table ?
->>
->>>>> Actually it comes from videocc, where ftbl_video_cc_venus_clk_src
->>>>> defines 533000000 but the real calculated freq is 533000097.
->>>>
->>>> I still don't quite understand why the videocc driver returns this
->>>> frequency despite this not being in the freq table.
->>>
->>> Ok, so I see the same issue on sc7180 also. clk_round_rate() does seem to
->>> return whats in the freq table, but clk_set_rate() goes ahead and sets it
-> 
-> I'm happy to see clk_round_rate() return the actual rate that would be
-> achieved and not just the rate that is in the frequency tables. Would
-> that fix the problem? 
+Thanks Bjorn, I can resend SM8150 coresight change when SMMU support 
+lands for it
+since coresight ETR won't work without it on android bootloaders.
 
-It would, but only if I also update the OPP table to have 533000097
-instead of 533000000 (which I guess is needed anyway)
-If this is the actual frequency that's achievable, then perhaps even the clock
-freq table should have this? 533000097 and not 533000000?
-That way clk_round_rate() would return the actual rate that's achieved and
-we don't need any extra math. Isn't that the reason these freq tables exist
-anyway.
+As for the other 3 patches, Patch 1 and Patch 2 will apply cleanly to 
+the right coresight
+nodes but due to the missing unique context in Patch 3, it could be 
+applied to some other node.
+We had to upload this change 3 times in chromium tree to get it applied 
+to the right replicator node :)
+and this property in Patch 3 is important to fix a hard lockup. I'm not 
+sure why this patch is missing
+the proper context :/
 
-> It may be that we need to make clk_round_rate() do
-> some more math on qcom platforms and actually figure out what the rate
-> is going to be instead of blindly trust the frequency that has been set
-> in the tables.
-> 
->>> to 533000097. Subsequently when we try to set a different OPP, it fails to
->>> find the 'current' OPP entry for 533000097. This sounds like an issue with the OPP
->>> framework? Should we not fall back to the highest OPP as the current OPP?
->>>
->>> Stephen/Viresh, any thoughts?
->>
->> I think we (in all frameworks generally) try to set a frequency <=
->> target frequency and so there may be a problem if the frequency is
->> larger than highest supported. IOW, you need to fix tables a bit.
->>
-> 
-> Rounding is annoying for sure.
-> 
+I couldn't find the changes yet in qcom/for-next or other branches to 
+see if it is
+applied to right replicator node. In case you haven't applied it yet, 
+Patch 3 change
+should be applied to "replicator@6b06000" node.
+
+Thanks,
+Sai
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
