@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ECB7230212
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 07:51:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9F1523025C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 08:08:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726299AbgG1Fvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 01:51:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40108 "EHLO
+        id S1726838AbgG1GIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 02:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbgG1Fvl (ORCPT
+        with ESMTP id S1726806AbgG1GIG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 01:51:41 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D94C0619D4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 22:51:40 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id p3so11249483pgh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 22:51:40 -0700 (PDT)
+        Tue, 28 Jul 2020 02:08:06 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3891DC061794
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 23:08:06 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id f9so4745170pju.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 23:08:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=SD7cowK7TBSEUtyyJCNTowcFkGoyJguvCPEnc3FJ+lw=;
-        b=BUQ733KDte9V4I1wuEjDmpQAL78CHplNS5xBfdjivfTxgYio/yh9ZahIVVz0tj+944
-         tro8SgS/Y07CZNrQn9ePhojanc/poWSdkQ5HSh087Vk7lPnDlnfuYF1SzZX6l4bICec2
-         9rwI9HY6KeOuJ3/9v8jl9Ui/xy3LvIen/cDgCaEaJg5dRqPxcdQQY+lsiO3zwE3JK1xA
-         ggdfjdT2Y6FED8kx1ukJDTC4DZaoFM8HbEyE8soKg6e4ehsInwcj2vZ95aT63sKUQqmZ
-         0S+ff+0vVT8zM1I3YL8ZAs03R7ionhv8URbzadKFd6Any6F5j13PG9sDcFmywiVyD9FL
-         k32Q==
+        bh=v4H93n5r5JaaHCincZZJ4YGqo0Cw0aIhg3WvTO7qLbA=;
+        b=iEACU+jgodAOUswG7u+iQZCpSK9FvuqqcVb/9Y7eifUCb28xEnCe8L20gK6WLrjGYZ
+         IBjsL/SYk9g3GMnctvQd9SDv957KlTkkNCprZaHmEDGwn2/bKs7mWw1DQFV4FQiG0slJ
+         9RrbO+OyEHu5xLrOAz1QOE2x1CWja4gr+eWtjwgct+w3YMPBtcFfT51Asq9ykEnFLivR
+         U/kXyk787cD4gHygZoUQ4Uj7IXG/dT1SVsNe3AzHhI+jQQQhjgUc0cavjswmfb3bBJYK
+         dxNNVAFs0UljW/pwq2+AJ2hA9HAaAx46YhqoXMmMvOYgmOSVMKlLLoffi3lURdovzoBD
+         Xi2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=SD7cowK7TBSEUtyyJCNTowcFkGoyJguvCPEnc3FJ+lw=;
-        b=aqZTtpMWgnU+6l/pj3YfbhOzG4OBfUCNGOoHsgvQWTEeV+M2YmMeW0V1nNKoWAfQiQ
-         tBS9/KXJ/7rJvpIKnX7fZLs9W69AVt+c9qGFpJSfnrNhNU/1EXIMJOm75Jn/2drvJVKw
-         QNfwujYUFR0DDZWD1V1TKrUNVVkmR1NcbTVDQV8L48PQWlk7VPAI32plfpLIUEMdiuo7
-         YUHV9gMCXKTghZyeIqcGH/e+jmNXOzU27IONJFIkjFhgjUFFSs8IUKNgofJ/DUScVeYX
-         iyCo+XCJsJmOTvrUT06Q/86tCk9ImbK6wE8FUdptAAt+zCzUON8OVPYJNyAMOpRnIlPC
-         49Fw==
-X-Gm-Message-State: AOAM532xg3ctQZw7ZtgLef0s00RVHqVH395FlSeoRmUWKnBpSUbeJa0o
-        NBIQIL60noOxcI2pHovvOeQ80cHh42k=
-X-Google-Smtp-Source: ABdhPJyfDoCt9GGT45S2vobwjULA9QToD4YzkQHTWN/B1LXTpUKR2LsupxTxxayaY4a+p6d4GN8K9A==
-X-Received: by 2002:a63:4b44:: with SMTP id k4mr17418132pgl.305.1595915500274;
-        Mon, 27 Jul 2020 22:51:40 -0700 (PDT)
+        bh=v4H93n5r5JaaHCincZZJ4YGqo0Cw0aIhg3WvTO7qLbA=;
+        b=NBZRXio7NeqGR27F3OAhqgY9WfTluY485ttx9DXZ1GgODX7HC99h9lTzXk3BLlE1k+
+         BFDDJWY7JoFq8ZzJ3xIdIX6RTtQj6ZDYKbrnNTBIrWp9rOXYGh+gu0FjhhlFNQgv0m7l
+         nq2NuIwGdevexfXrVEt8gQecVdvzPz3uS4N6Yj9ZUdvhxRFeMjLSmf7gn13wLFf1N9c6
+         56kQ8BDVfQh7hvhp/61R82BoEuJV/5MZYlIaHZkZO6XyAvXZ4yU0uL8DX6wEw3MS30y1
+         ThahLxbUFCZwhXK8Y4SiRREIQ4gtZv1yl6J3MPc+b6QONFh7aYqh71X18zdOuS6xmQ+d
+         I8Mw==
+X-Gm-Message-State: AOAM5330i5dkcWJ7E0nFiCAk84c2TgothNv0IypDDeGoRYfRjP7kdArP
+        Yu+YSJz2e8bxGnK4s5wyJOP4AA==
+X-Google-Smtp-Source: ABdhPJyE4pUdK3j4dSXViWaGSXStD7VAB/cLjDC6rNjrup5urqzpMaqeeFgMyWSW2sljZgqjwp310A==
+X-Received: by 2002:a17:90a:f192:: with SMTP id bv18mr2636648pjb.21.1595916485617;
+        Mon, 27 Jul 2020 23:08:05 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id 199sm17855934pgc.79.2020.07.27.22.51.39
+        by smtp.gmail.com with ESMTPSA id h23sm17187642pfo.166.2020.07.27.23.08.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2020 22:51:39 -0700 (PDT)
-Date:   Mon, 27 Jul 2020 22:48:07 -0700
+        Mon, 27 Jul 2020 23:08:04 -0700 (PDT)
+Date:   Mon, 27 Jul 2020 23:04:33 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, ohad@wizery.com
-Subject: Re: [PATCH v3 3/3] remoteproc: qcom_q6v5_mss: Add modem debug policy
- support
-Message-ID: <20200728054807.GB349841@builder.lan>
+        evgreen@chromium.org, ohad@wizery.com, stable@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] remoteproc: qcom_q6v5_mss: Validate modem blob
+ firmware size before load
+Message-ID: <20200728060433.GC349841@builder.lan>
 References: <20200722201047.12975-1-sibis@codeaurora.org>
- <20200722201047.12975-4-sibis@codeaurora.org>
+ <20200722201047.12975-3-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200722201047.12975-4-sibis@codeaurora.org>
+In-Reply-To: <20200722201047.12975-3-sibis@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -70,98 +70,58 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Wed 22 Jul 13:10 PDT 2020, Sibi Sankar wrote:
 
-> Add modem debug policy support which will enable coredumps and live
-> debug support when the msadp firmware is present on secure devices.
+> The following mem abort is observed when one of the modem blob firmware
+> size exceeds the allocated mpss region. Fix this by restricting the copy
+> size to segment size using request_firmware_into_buf before load.
 > 
+> Err Logs:
+> Unable to handle kernel paging request at virtual address
+> Mem abort info:
+> ...
+> Call trace:
+>   __memcpy+0x110/0x180
+>   rproc_start+0xd0/0x190
+>   rproc_boot+0x404/0x550
+>   state_store+0x54/0xf8
+>   dev_attr_store+0x44/0x60
+>   sysfs_kf_write+0x58/0x80
+>   kernfs_fop_write+0x140/0x230
+>   vfs_write+0xc4/0x208
+>   ksys_write+0x74/0xf8
+> ...
+> 
+> Fixes: 051fb70fd4ea4 ("remoteproc: qcom: Driver for the self-authenticating Hexagon v5")
+> Cc: stable@vger.kernel.org
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 > ---
-> 
-> v3:
->  * Fix dp_fw leak and create a separate func for dp load [Bjorn]
->  * Reset dp_size on mba_reclaim
-> 
-> v2:
->  * Use request_firmware_direct [Bjorn]
->  * Use Bjorn's template to show if debug policy is present
->  * Add size check to prevent memcpy out of bounds [Bjorn]
-> 
->  drivers/remoteproc/qcom_q6v5_mss.c | 25 ++++++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
+>  drivers/remoteproc/qcom_q6v5_mss.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 > 
 > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index f4aa61ba220dc..da99c8504a346 100644
+> index 4e72c9e30426c..f4aa61ba220dc 100644
 > --- a/drivers/remoteproc/qcom_q6v5_mss.c
 > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -191,6 +191,7 @@ struct q6v5 {
->  	phys_addr_t mba_phys;
->  	void *mba_region;
->  	size_t mba_size;
-> +	size_t dp_size;
+> @@ -1174,15 +1174,14 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  		} else if (phdr->p_filesz) {
+>  			/* Replace "xxx.xxx" with "xxx.bxx" */
+>  			sprintf(fw_name + fw_name_len - 3, "b%02d", i);
+> -			ret = request_firmware(&seg_fw, fw_name, qproc->dev);
+> +			ret = request_firmware_into_buf(&seg_fw, fw_name, qproc->dev,
+> +							ptr, phdr->p_filesz);
+>  			if (ret) {
+>  				dev_err(qproc->dev, "failed to load %s\n", fw_name);
+>  				iounmap(ptr);
+>  				goto release_firmware;
+>  			}
 >  
->  	phys_addr_t mpss_phys;
->  	phys_addr_t mpss_reloc;
-> @@ -408,6 +409,21 @@ static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
->  				   current_perm, next, perms);
->  }
+> -			memcpy(ptr, seg_fw->data, seg_fw->size);
+> -
+>  			release_firmware(seg_fw);
+>  		}
 >  
-> +static void q6v5_debug_policy_load(struct q6v5 *qproc)
-> +{
-> +	const struct firmware *dp_fw;
-> +
-> +	if (request_firmware_direct(&dp_fw, "msadp", qproc->dev))
-> +		return;
-> +
-> +	if (SZ_1M + dp_fw->size <= qproc->mba_size) {
-> +		memcpy(qproc->mba_region + SZ_1M, dp_fw->data, dp_fw->size);
-> +		qproc->dp_size = dp_fw->size;
-> +	}
-> +
-> +	release_firmware(dp_fw);
-> +}
-> +
->  static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
->  {
->  	struct q6v5 *qproc = rproc->priv;
-> @@ -419,6 +435,7 @@ static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
->  	}
->  
->  	memcpy(qproc->mba_region, fw->data, fw->size);
-> +	q6v5_debug_policy_load(qproc);
->  
->  	return 0;
->  }
-> @@ -928,6 +945,10 @@ static int q6v5_mba_load(struct q6v5 *qproc)
->  	}
->  
->  	writel(qproc->mba_phys, qproc->rmb_base + RMB_MBA_IMAGE_REG);
-> +	if (qproc->dp_size) {
-> +		writel(qproc->mba_phys + SZ_1M, qproc->rmb_base + RMB_PMI_CODE_START_REG);
-> +		writel(qproc->dp_size, qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
-> +	}
->  
->  	ret = q6v5proc_reset(qproc);
->  	if (ret)
-> @@ -996,6 +1017,7 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
->  	u32 val;
->  
->  	qproc->dump_mba_loaded = false;
-> +	qproc->dp_size = 0;
->  
->  	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
->  	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
-> @@ -1290,7 +1312,8 @@ static int q6v5_start(struct rproc *rproc)
->  	if (ret)
->  		return ret;
->  
-> -	dev_info(qproc->dev, "MBA booted, loading mpss\n");
-> +	dev_info(qproc->dev, "MBA booted with%s debug policy, loading mpss\n",
-> +		 qproc->dp_size ? "" : "out");
->  
->  	ret = q6v5_mpss_load(qproc);
->  	if (ret)
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
