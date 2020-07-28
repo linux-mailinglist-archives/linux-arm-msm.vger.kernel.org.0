@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 754A022FF3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 04:02:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5B2322FF42
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 04:03:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbgG1CCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 22:02:42 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:50051 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726863AbgG1CCh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 22:02:37 -0400
+        id S1726891AbgG1CCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 22:02:35 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26802 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726283AbgG1CCe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Jul 2020 22:02:34 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595901756; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=o71f0Tbkh59kye12un+v6NKiOPfQP8PUVUL1Dc2TK4c=; b=EVxrCGx48TDzNAUhk55Mj38JfKnYEgyf0F6Ncg9qTlzQkT9OaGxWbMwIBX4r44ascBUmXbSp
- 4B4Oz211QrCM4qKuzM58EWZ2/HXqbRfczCUJHWI/eFOVIadun+q6yEFP0en1QkGBXi/TG+bj
- FpTiEayvKA0Nw6VCmHuvcDUhSg8=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ s=smtp; t=1595901754; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=jLz/buOWrCwjxZUbOeBJOUoltnyRt5m3J027he9dm6E=; b=eR6Tcp1sQAGhEsnO9UJNLoAHRdW7uLX4f99Gaa7gCOz5xdrQ1jSEpezI/XmgzwXMYDoS3XZQ
+ yUxRaaswdcsUFstn4pIWDJrIER681OOxlfcKdGnOSXYwIn02c7ghsnMmOwh4ZATrmOubMhGH
+ nDhVgjMPprJG0sJbkWNj6w/Isfk=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5f1f87387186ea1ee1763525 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 02:02:32
+ smtp-out-n20.prod.us-east-1.postgun.com with SMTP id
+ 5f1f873aca55a5604c7acf85 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 02:02:34
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3228BC43391; Tue, 28 Jul 2020 02:02:31 +0000 (UTC)
+        id 57E5CC43449; Tue, 28 Jul 2020 02:02:33 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B9FFC433C6;
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C8848C433C9;
         Tue, 28 Jul 2020 02:02:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B9FFC433C6
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C8848C433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -46,87 +46,38 @@ To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v6 00/11] Introduce features and debugfs/sysfs entries for MHI
-Date:   Mon, 27 Jul 2020 19:02:09 -0700
-Message-Id: <1595901740-27379-1-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v6 01/11] bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task() declaration
+Date:   Mon, 27 Jul 2020 19:02:10 -0700
+Message-Id: <1595901740-27379-2-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1595901740-27379-1-git-send-email-bbhatt@codeaurora.org>
+References: <1595901740-27379-1-git-send-email-bbhatt@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Save hardware information from BHI.
-Allow reading and modifying some MHI variables for debug, test, and
-informational purposes using debugfs.
-Read values for device specific hardware information to be used by OEMs in
-factory testing such as serial number and PK hash using sysfs.
+mhi_ctrl_ev_task() in the internal header file occurred twice.
+Remove one of the occurrences for clean-up.
 
-This set of patches was tested on arm64 and x86.
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/core/internal.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-v6:
--Introduced APIs for allocating and freeing the MHI controller so as to ensure
-that it is always zero-initialized.
--Moved gerrits around for counter introduction.
--Fixed documentation for sysfs.
-
-v5:
--Removed the debug entry to trigger reset and will be addressed in a seperate
-patch
--Added patch bus: mhi: core: Use counters to track MHI device state transitions
--Updated helper API to trigger a non-blocking host resume
--Minor nitpicks also fixed
-
-v4:
--Removed bus: mhi: core: Introduce independent voting mechanism patch
--Removed bus vote function from debugfs due to independent voting removal
--Added helper resume APIs to aid consolidation of spread out code
--Added a clean-up patch and a missing host resume in voting API
-
-v3:
--Add patch to check for pending packets in suspend as a dependency for the
-independent voting mechanism introduction
--Include register dump entry for debugfs to dump MHI, BHI, and BHIe registers
--Update commit message for the debugfs patch
--Updated Documentation/ABI with the required info for sysfs
--Updated debugfs patch to include a new KConfig entry and dependencies
--Updated reviewed-by for some patches
-
-v2:
--Added a new debugfs.c file for specific debugfs entries and code
--Updated commit text and addressed some comments for voting change
--Made sure sysfs is only used for serial number and OEM PK hash usage
-
-Bhaumik Bhatt (11):
-  bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task()
-    declaration
-  bus: mhi: core: Abort suspends due to outgoing pending packets
-  bus: mhi: core: Use helper API to trigger a non-blocking host resume
-  bus: mhi: core: Trigger host resume if suspended during
-    mhi_device_get()
-  bus: mhi: core: Use generic name field for an MHI device
-  bus: mhi: core: Introduce helper function to check device state
-  bus: mhi: core: Introduce counters to track MHI device state
-    transitions
-  bus: mhi: core: Introduce debugfs entries for MHI
-  bus: mhi: core: Read and save device hardware information from BHI
-  bus: mhi: core: Introduce APIs to allocate and free the MHI controller
-  bus: mhi: core: Introduce sysfs entries for MHI
-
- Documentation/ABI/stable/sysfs-bus-mhi |  21 ++
- MAINTAINERS                            |   1 +
- drivers/bus/mhi/Kconfig                |   8 +
- drivers/bus/mhi/core/Makefile          |   5 +-
- drivers/bus/mhi/core/boot.c            |  17 +-
- drivers/bus/mhi/core/debugfs.c         | 409 +++++++++++++++++++++++++++++++++
- drivers/bus/mhi/core/init.c            |  81 ++++++-
- drivers/bus/mhi/core/internal.h        |  37 ++-
- drivers/bus/mhi/core/main.c            |  27 +--
- drivers/bus/mhi/core/pm.c              |  26 ++-
- include/linux/mhi.h                    |  30 ++-
- 11 files changed, 623 insertions(+), 39 deletions(-)
- create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
- create mode 100644 drivers/bus/mhi/core/debugfs.c
-
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index b1f640b..bcfa7b6 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -592,7 +592,6 @@ void mhi_pm_st_worker(struct work_struct *work);
+ void mhi_pm_sys_err_handler(struct mhi_controller *mhi_cntrl);
+ void mhi_fw_load_worker(struct work_struct *work);
+ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl);
+-void mhi_ctrl_ev_task(unsigned long data);
+ int mhi_pm_m0_transition(struct mhi_controller *mhi_cntrl);
+ void mhi_pm_m1_transition(struct mhi_controller *mhi_cntrl);
+ int mhi_pm_m3_transition(struct mhi_controller *mhi_cntrl);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
