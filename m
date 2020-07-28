@@ -2,86 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69BF523034C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 08:52:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06C6B2303F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 09:20:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727001AbgG1GwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 02:52:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726983AbgG1GwE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 02:52:04 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B3DC061794
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 23:52:04 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id k27so11335381pgm.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Jul 2020 23:52:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/GS/4OHUC58pzoucFVteRuIhHVuqFuzv5eBDbKwTaes=;
-        b=rt+ymG5Cbhfum5rPhzbu2bNlLrOp2IYPr1KhUaVGa/JAf4KFUIgZoNlrcr9ss8BvzG
-         QwIQxBO7tsuKVEqXL4c3rX0VtADAkGcNlf5nIDGY+cRQkp5Umvsg0jlr+YVA9ucRX6Zl
-         9rJOvRnTFaw1+62YFnp0j3qDHqPZPgSoMJ7M4KlvRpvhcyfuvo3Vq92tm5pT/qK1robW
-         pD5CudnsUUBNCVG93MqMptvbYcGnCP0okPFROypwhzqtHhn4yfVf9hm5YpELNmTwdeat
-         TvTd7hKZrmrB02cq/aCptA4N4sj/mUUFU8wzNpS3783wXNxRwLv80AIS8P4T22iDYZuk
-         fAPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/GS/4OHUC58pzoucFVteRuIhHVuqFuzv5eBDbKwTaes=;
-        b=dgUMH6d20b1jMTvDa3t2coGmHuPwzBoff6sGaukRzOOfWPPDa1QN+jhMNojv1oW0Dt
-         iUV0gm9QywPH67FWIGOm3SrIcMh+SYeFbM7UGt0S8EDzweSxbW3p3fM8BJZCSzH7j7Ik
-         ozPvsMlnTBkXXBI5mkaSIgyRyPA11QAqd1IvImJeK4P1vt6VIde/+oe5qRSbeEZsq84v
-         WwRYA91IY5BAoH4KMJ+kMSyuRc4K+Dl+odJ7PUFkfX3s1LTl7BY5yTSrMzY7by8sPS1L
-         hq3je0uhXrEXv7eYYtj+rTsILo5v9q8eGlSmfhRF07VCiZLrmflX4D7HW+JxWEYdkc3t
-         gVzA==
-X-Gm-Message-State: AOAM531qWrIxo1EhNpA+Nhq5C/AW7SCSNFAUelqG+3jNzk2AVJcuSOr1
-        owyx4IFn9K6IrU7DbuSTA+ZSUw==
-X-Google-Smtp-Source: ABdhPJxfbaZBUKL4RCI1GSa5MCOEQqQ61UEUjQME4GaIZXbAZyAHFPAaz4UlbjqcmBNjh+s0Ky1hDQ==
-X-Received: by 2002:a63:fd44:: with SMTP id m4mr22809692pgj.160.1595919123788;
-        Mon, 27 Jul 2020 23:52:03 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id t73sm16963494pfc.78.2020.07.27.23.52.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2020 23:52:03 -0700 (PDT)
-Date:   Mon, 27 Jul 2020 23:48:31 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     skrzynka@konradybcio.pl, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 00/13] msm8992 DTS updates, peripheral enablement
-Message-ID: <20200728064831.GD202429@builder.lan>
-References: <20200625182118.131476-1-konradybcio@gmail.com>
- <CAMS8qEVKssmOTZTQqgo3y6yUp7KztapQLtek+Q6FewqVaSGYyA@mail.gmail.com>
+        id S1726990AbgG1HUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 03:20:18 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38766 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727871AbgG1HUS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 03:20:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595920817; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=kRmZCJyj9I1SnPZs5XwOYPOfxafRktfoOSamzdqNY1M=;
+ b=gLPqXUMpBb9XCN/+YEg+s6c/GnkCr2Ndc2IWhM7ZUg4RhlLPkIoA136YA8lMu+IAaDecXz0s
+ F7aAfo12oIPb2DdiHeZLDgPmvwbgKl1vj0fItkgKYHvrrVUOFoCcMAIVr5FnYB7ByCJBbDSq
+ pEeCfSqmjDPcP609htZrQle+l/E=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f1fd1a77ab15087eb4700db (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 07:20:07
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B99AFC433AD; Tue, 28 Jul 2020 07:20:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6338C433C9;
+        Tue, 28 Jul 2020 07:20:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMS8qEVKssmOTZTQqgo3y6yUp7KztapQLtek+Q6FewqVaSGYyA@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Jul 2020 12:50:05 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        mike.leach@linaro.org, Jonathan Marek <jonathan@marek.ca>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7180: Add iommus property to ETR
+In-Reply-To: <20200728062850.GC202429@builder.lan>
+References: <cover.1591708204.git.saiprakash.ranjan@codeaurora.org>
+ <2312c9a10e7251d69e31e4f51c0f1d70e6f2f2f5.1591708204.git.saiprakash.ranjan@codeaurora.org>
+ <20200621072213.GG128451@builder.lan>
+ <f40621b2b01f836a8a97686707599dd0@codeaurora.org>
+ <e270acd3f7db076c043f1b982b1efea0@codeaurora.org>
+ <20200727205834.GA202429@builder.lan>
+ <207e6b6a297d5ce1bdcac204e297389b@codeaurora.org>
+ <20200728062850.GC202429@builder.lan>
+Message-ID: <afd1c140aa9893478cd78620de35f853@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 27 Jul 11:20 PDT 2020, Konrad Dybcio wrote:
-
-> Bumping this up, in case it just got overlooked.
+On 2020-07-28 11:58, Bjorn Andersson wrote:
+> On Mon 27 Jul 21:40 PDT 2020, Sai Prakash Ranjan wrote:
+> 
+>> On 2020-07-28 02:28, Bjorn Andersson wrote:
+>> > On Tue 23 Jun 23:56 PDT 2020, Sai Prakash Ranjan wrote:
+>> >
+>> > > Hi Bjorn,
+>> > >
+>> > > On 2020-06-21 13:39, Sai Prakash Ranjan wrote:
+>> > > > Hi Bjorn,
+>> > > >
+>> > > > On 2020-06-21 12:52, Bjorn Andersson wrote:
+>> > > > > On Tue 09 Jun 06:30 PDT 2020, Sai Prakash Ranjan wrote:
+>> > > > >
+>> > > > > > Define iommus property for Coresight ETR component in
+>> > > > > > SC7180 SoC with the SID and mask to enable SMMU
+>> > > > > > translation for this master.
+>> > > > > >
+>> > > > >
+>> > > > > We don't have &apps_smmu in linux-next, as we've yet to figure out how
+>> > > > > to disable the boot splash or support the stream mapping handover.
+>> > > > >
+>> > > > > So I'm not able to apply this.
+>> > > > >
+>> > > >
+>> > > > This is for SC7180 which has apps_smmu not SM8150.
+>> > > >
+>> > >
+>> > > Please let me know if this needs further explanation.
+>> > >
+>> >
+>> > I must have commented on the wrong patch, sorry about that. The SM8150
+>> > patch in this series does not compile due to the lack of &apps_smmu.
+>> >
+>> > I've picked the other 3 patches.
+>> >
+>> 
+>> Thanks Bjorn, I can resend SM8150 coresight change when SMMU support 
+>> lands
+>> for it
+>> since coresight ETR won't work without it on android bootloaders.
+>> 
+>> As for the other 3 patches, Patch 1 and Patch 2 will apply cleanly to 
+>> the
+>> right coresight
+>> nodes but due to the missing unique context in Patch 3, it could be 
+>> applied
+>> to some other node.
+>> We had to upload this change 3 times in chromium tree to get it 
+>> applied to
+>> the right replicator node :)
+>> and this property in Patch 3 is important to fix a hard lockup. I'm 
+>> not sure
+>> why this patch is missing
+>> the proper context :/
+>> 
+>> I couldn't find the changes yet in qcom/for-next or other branches to 
+>> see if
+>> it is
+>> applied to right replicator node. In case you haven't applied it yet, 
+>> Patch
+>> 3 change
+>> should be applied to "replicator@6b06000" node.
+>> 
+> 
+> Thanks for pointing that out, I've fixed up the incorrectly applied
+> change. (Still not published the branch)
+> 
+> 
+> For the future I believe you can pass -U <n> to git format-patch to get
+> <n> number of lines of context. Making that bigger than the default 3
+> should help for the coresight patches.
 > 
 
-It was just overlooked, thanks for the bump!
-
-I think it looks good, will pick up the patches, and the previous series
-that it depends on.
+Thanks Bjorn, will use this option going forward.
 
 Thanks,
-Bjorn
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
