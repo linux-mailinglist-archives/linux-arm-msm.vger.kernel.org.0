@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33CFD230962
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 14:01:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4083230972
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 14:02:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729276AbgG1MBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 08:01:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40946 "EHLO
+        id S1729444AbgG1MBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 08:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729368AbgG1MBG (ORCPT
+        with ESMTP id S1729369AbgG1MBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 08:01:06 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93ECFC0619D2;
-        Tue, 28 Jul 2020 05:01:04 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id qc22so5569161ejb.4;
-        Tue, 28 Jul 2020 05:01:04 -0700 (PDT)
+        Tue, 28 Jul 2020 08:01:07 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4E6DC0619D4;
+        Tue, 28 Jul 2020 05:01:06 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id d6so6532033ejr.5;
+        Tue, 28 Jul 2020 05:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HfR71JevxYRyz0TRhP/dP0bQAGuhE76yoGQG/3ujNjQ=;
-        b=rUS1XigATbQzlYoDZ4DMzRa2eedYzedsRIypiiqP7f/fnUKF99lpxJ8VTvukHmhG0h
-         wYhf78pgkya+la2MOhznXTgk7doC4/z2pRUQG/LmQafuk5ciSE/dBSrJWunTbi/OtZ+r
-         ko0Lv80L5A5M8D3SmuKzWAvdZMqMFSnKg3Cz76lBw0G1tibT16N0xQJqcs+JoGBNpkG7
-         fEThFrEWAuduDh5NTnc47DOXkLBYe4Zd7YLYCGpJV+vCrachsYBlvyjwQXIdomup/tE/
-         K70681gUN3nLqbit2WLHYrqTVONxjZaZ4CDSirpk+ZgTbH8b+BSwQ0uZQLtPhA4vSf8X
-         Gixg==
+        bh=I2q93FVdT16iSOi/3vPrG4ZH4MZNlbJkhzRjHUU4qvI=;
+        b=DRnrQL2jiANg1LCEiHbcsMAemscesJxlF/BScJWltuEPtWJgaKFG+PVuGW9l0rqJsy
+         E8CxWg5HAmLffJCYMTwu3R53mcEt7eAThyslDukHxhqQJaQCg9l2e77xM++LCPfI/PRa
+         a+9EifrOoaLfBUPW9n176A0RbCbC2Esmr0yQ28XLlN8lureqJostUIVXq2i8iq9r+o4A
+         s8IqRl0nIncUTgC3Wr+P96B85iqWJxtWJIE0ErLTwwCE5zTd2LLrl8f1z8PMquFy5Ger
+         2QC4oF7hDe9kUiwO/I6AGWx9xt3ugCbPI+X3zakiZobmrle8YiJiINKCaxDAbU9CrlqB
+         a6XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HfR71JevxYRyz0TRhP/dP0bQAGuhE76yoGQG/3ujNjQ=;
-        b=PH2KTLlKQEbp4pOOOKeveCnPHhRX7d9xK5TAXXUqpw0YXvt3y7OVPLjV2yqrf05KlV
-         c/8iP7UG+aWpxi3RmcD0qE/p6HXpO/1BwbDcsrPYIhNEmhgdbcRTaGzkTOsp+zV2TB8H
-         VmROBZIPwECcsJVI6om4a8wgzc1x2BfiGYMxKpor9jyt96RDSVnE5MzFeoow07/2CKR/
-         Y5GYbqcwy4/9+6bnay4uuDnFrJzc4IlTojoiBTR+hhua1f7hJ+hJ1mSIfIl7wf/tCeby
-         /0rPKnetmvJUMthPYnfQHMopUfEF6y1EC2drhJZMdg+dzV/6+jfG1IyKf4dxncU2E1F3
-         +sHg==
-X-Gm-Message-State: AOAM530pJOx56TYLkmbE5fT+9TD6ZN7lYnPRPn9TtG3DYxZ9fp8gYaID
-        H6YDvqM4RsPKWoWgvR6c6fA=
-X-Google-Smtp-Source: ABdhPJzzgN/P5HqbMMWm6YUVLp/mYOXfnGat7YNAI+P/+MYBvKeNGmLwSpq2mv5x1FTwxhRoz9MCzg==
-X-Received: by 2002:a17:906:5f8a:: with SMTP id a10mr10029577eju.379.1595937663374;
-        Tue, 28 Jul 2020 05:01:03 -0700 (PDT)
+        bh=I2q93FVdT16iSOi/3vPrG4ZH4MZNlbJkhzRjHUU4qvI=;
+        b=gAYlgul+qoGGwEP7VWwSaKFQz7Q/jfSWkJ0kmobcPHHbMefRCM8nYv/MttCo5TIvGp
+         VpklOqnnmtih6GdkZioRlLD8hNNSB9YqO/7ABX7XTlo7s/Xh65RlAFpOUhG/NJYkB7Y5
+         Q2ovNh77Z5e9V31biYwSxCVhJo4trEa+fJ9GKH6TifwYaCZeaw9SM9fl+mN13eg2k1cP
+         UhtYEdt07vATsNxIhRx+HmevUdjfl47mc/kmRD90bN9l7XujIfagGycfCG2WeXTM2VEZ
+         j98ge58002i7+mnAWVuxy2T/euVoJuB58b2iv3g2cNgGm3dZ0vnmn+HtHyLNxgAFvSyU
+         nesA==
+X-Gm-Message-State: AOAM533FuR8bJ8Hc3Wv6F3CwFT9UbqylFfDrxfxmoj2ufsqXMWvL8rik
+        qaggfHiVcWABEjh1Wov1AJ8=
+X-Google-Smtp-Source: ABdhPJwzGWglviFaa19/EAZZVusEB9PVJX6tezEMVsH20V9O0umhp+H6N0A8L8X4h48ZE69Gi09zBQ==
+X-Received: by 2002:a17:906:b2d0:: with SMTP id cf16mr15708293ejb.514.1595937665567;
+        Tue, 28 Jul 2020 05:01:05 -0700 (PDT)
 Received: from localhost.localdomain (abad207.neoplus.adsl.tpnet.pl. [83.6.167.207])
-        by smtp.googlemail.com with ESMTPSA id m20sm9066959ejk.90.2020.07.28.05.01.01
+        by smtp.googlemail.com with ESMTPSA id m20sm9066959ejk.90.2020.07.28.05.01.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 05:01:02 -0700 (PDT)
+        Tue, 28 Jul 2020 05:01:05 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     konradybcio@gmail.com
 Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
@@ -57,9 +57,9 @@ Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH 4/9] arm64: dts: qcom: msm8994: Add USB support
-Date:   Tue, 28 Jul 2020 14:00:43 +0200
-Message-Id: <20200728120049.90632-5-konradybcio@gmail.com>
+Subject: [PATCH 5/9] arm64: dts: qcom: msm8992: Add USB support
+Date:   Tue, 28 Jul 2020 14:00:44 +0200
+Message-Id: <20200728120049.90632-6-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200728120049.90632-1-konradybcio@gmail.com>
 References: <20200728120049.90632-1-konradybcio@gmail.com>
@@ -75,14 +75,14 @@ but it works.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 31 +++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8992.dtsi | 31 +++++++++++++++++++++++++++
  1 file changed, 31 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 6707f898607f..69c99a4cd817 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -282,6 +282,37 @@ frame@f9028000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+index c7dc81311f6a..c9502fcf5d70 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+@@ -242,6 +242,37 @@ frame@f9028000 {
  			};
  		};
  
@@ -117,7 +117,7 @@ index 6707f898607f..69c99a4cd817 100644
 +			};
 +		};
 +
- 		sdhc1: sdhci@f9824900 {
+ 		sdhc_1: sdhci@f9824900 {
  			compatible = "qcom,sdhci-msm-v4";
  			reg = <0xf9824900 0x1a0>, <0xf9824000 0x800>;
 -- 
