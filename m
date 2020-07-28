@@ -2,154 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06C6B2303F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 09:20:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81C122304A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 09:51:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726990AbgG1HUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 03:20:18 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:38766 "EHLO m43-7.mailgun.net"
+        id S1727798AbgG1HvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 03:51:19 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26121 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727871AbgG1HUS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 03:20:18 -0400
+        id S1727815AbgG1HvQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 03:51:16 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595920817; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=kRmZCJyj9I1SnPZs5XwOYPOfxafRktfoOSamzdqNY1M=;
- b=gLPqXUMpBb9XCN/+YEg+s6c/GnkCr2Ndc2IWhM7ZUg4RhlLPkIoA136YA8lMu+IAaDecXz0s
- F7aAfo12oIPb2DdiHeZLDgPmvwbgKl1vj0fItkgKYHvrrVUOFoCcMAIVr5FnYB7ByCJBbDSq
- pEeCfSqmjDPcP609htZrQle+l/E=
+ s=smtp; t=1595922675; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=JDnW6dI05vIWs23wbae5CWIRSyAcGFN7fPLyddDzIPY=; b=Yan7HwaTmF8pB0vlB57ojTrQq46TTE/ZiFz1duQ8+YpmKGHPUforF6B4DAmK3oxSJHb1v6mH
+ 2TLm48cv1KiZdCQfsTd1eybjqBJ9McVC6rpgZNTZQEnS83AXOXA0TL9+28QAgI0egfGwqu0C
+ KyQykOdRURzozalX33x25unbvRU=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f1fd1a77ab15087eb4700db (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 07:20:07
+ smtp-out-n11.prod.us-east-1.postgun.com with SMTP id
+ 5f1fd8f27ab15087eb525932 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 07:51:14
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B99AFC433AD; Tue, 28 Jul 2020 07:20:06 +0000 (UTC)
+        id CEFCDC4339C; Tue, 28 Jul 2020 07:51:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6338C433C9;
-        Tue, 28 Jul 2020 07:20:05 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Jul 2020 12:50:05 +0530
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5003BC433C9;
+        Tue, 28 Jul 2020 07:51:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5003BC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
         Suzuki K Poulose <suzuki.poulose@arm.com>,
-        mike.leach@linaro.org, Jonathan Marek <jonathan@marek.ca>
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7180: Add iommus property to ETR
-In-Reply-To: <20200728062850.GC202429@builder.lan>
-References: <cover.1591708204.git.saiprakash.ranjan@codeaurora.org>
- <2312c9a10e7251d69e31e4f51c0f1d70e6f2f2f5.1591708204.git.saiprakash.ranjan@codeaurora.org>
- <20200621072213.GG128451@builder.lan>
- <f40621b2b01f836a8a97686707599dd0@codeaurora.org>
- <e270acd3f7db076c043f1b982b1efea0@codeaurora.org>
- <20200727205834.GA202429@builder.lan>
- <207e6b6a297d5ce1bdcac204e297389b@codeaurora.org>
- <20200728062850.GC202429@builder.lan>
-Message-ID: <afd1c140aa9893478cd78620de35f853@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Mike Leach <mike.leach@linaro.org>
+Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2] coresight: etm4x: Fix etm4_count race by moving cpuhp callbacks to init
+Date:   Tue, 28 Jul 2020 13:21:02 +0530
+Message-Id: <20200728075102.30807-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-28 11:58, Bjorn Andersson wrote:
-> On Mon 27 Jul 21:40 PDT 2020, Sai Prakash Ranjan wrote:
-> 
->> On 2020-07-28 02:28, Bjorn Andersson wrote:
->> > On Tue 23 Jun 23:56 PDT 2020, Sai Prakash Ranjan wrote:
->> >
->> > > Hi Bjorn,
->> > >
->> > > On 2020-06-21 13:39, Sai Prakash Ranjan wrote:
->> > > > Hi Bjorn,
->> > > >
->> > > > On 2020-06-21 12:52, Bjorn Andersson wrote:
->> > > > > On Tue 09 Jun 06:30 PDT 2020, Sai Prakash Ranjan wrote:
->> > > > >
->> > > > > > Define iommus property for Coresight ETR component in
->> > > > > > SC7180 SoC with the SID and mask to enable SMMU
->> > > > > > translation for this master.
->> > > > > >
->> > > > >
->> > > > > We don't have &apps_smmu in linux-next, as we've yet to figure out how
->> > > > > to disable the boot splash or support the stream mapping handover.
->> > > > >
->> > > > > So I'm not able to apply this.
->> > > > >
->> > > >
->> > > > This is for SC7180 which has apps_smmu not SM8150.
->> > > >
->> > >
->> > > Please let me know if this needs further explanation.
->> > >
->> >
->> > I must have commented on the wrong patch, sorry about that. The SM8150
->> > patch in this series does not compile due to the lack of &apps_smmu.
->> >
->> > I've picked the other 3 patches.
->> >
->> 
->> Thanks Bjorn, I can resend SM8150 coresight change when SMMU support 
->> lands
->> for it
->> since coresight ETR won't work without it on android bootloaders.
->> 
->> As for the other 3 patches, Patch 1 and Patch 2 will apply cleanly to 
->> the
->> right coresight
->> nodes but due to the missing unique context in Patch 3, it could be 
->> applied
->> to some other node.
->> We had to upload this change 3 times in chromium tree to get it 
->> applied to
->> the right replicator node :)
->> and this property in Patch 3 is important to fix a hard lockup. I'm 
->> not sure
->> why this patch is missing
->> the proper context :/
->> 
->> I couldn't find the changes yet in qcom/for-next or other branches to 
->> see if
->> it is
->> applied to right replicator node. In case you haven't applied it yet, 
->> Patch
->> 3 change
->> should be applied to "replicator@6b06000" node.
->> 
-> 
-> Thanks for pointing that out, I've fixed up the incorrectly applied
-> change. (Still not published the branch)
-> 
-> 
-> For the future I believe you can pass -U <n> to git format-patch to get
-> <n> number of lines of context. Making that bigger than the default 3
-> should help for the coresight patches.
-> 
+etm4_count keeps track of number of ETMv4 registered and on some systems,
+a race is observed on etm4_count variable which can lead to multiple calls
+to cpuhp_setup_state_nocalls_cpuslocked(). This function internally calls
+cpuhp_store_callbacks() which prevents multiple registrations of callbacks
+for a given state and due to this race, it returns -EBUSY leading to ETM
+probe failures like below.
 
-Thanks Bjorn, will use this option going forward.
+ coresight-etm4x: probe of 7040000.etm failed with error -16
 
-Thanks,
-Sai
+This race can easily be triggered with async probe by setting probe type
+as PROBE_PREFER_ASYNCHRONOUS and with ETM power management property
+"arm,coresight-loses-context-with-cpu".
 
+Prevent this race by moving cpuhp callbacks to etm driver init since the
+cpuhp callbacks doesn't have to depend on the etm4_count and can be once
+setup during driver init. Similarly we move cpu_pm notifier registration
+to driver init and completely remove etm4_count usage.
+
+Fixes: 9b6a3f3633a5 ("coresight: etmv4: Fix CPU power management setup in probe() function")
+Fixes: 58eb457be028 ("hwtracing/coresight-etm4x: Convert to hotplug state machine")
+Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+
+Changes in v2:
+ * Rearrange cpuhp callbacks and move them to driver init (Suzuki K Poulose)
+
+---
+ drivers/hwtracing/coresight/coresight-etm4x.c | 51 ++++++++++---------
+ 1 file changed, 27 insertions(+), 24 deletions(-)
+
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c b/drivers/hwtracing/coresight/coresight-etm4x.c
+index 6d7d2169bfb2..adb71987a1e3 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+@@ -48,8 +48,6 @@ module_param(pm_save_enable, int, 0444);
+ MODULE_PARM_DESC(pm_save_enable,
+ 	"Save/restore state on power down: 1 = never, 2 = self-hosted");
+ 
+-/* The number of ETMv4 currently registered */
+-static int etm4_count;
+ static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
+ static void etm4_set_default_config(struct etmv4_config *config);
+ static int etm4_set_event_filters(struct etmv4_drvdata *drvdata,
+@@ -1403,12 +1401,9 @@ static int etm4_pm_setup_cpuslocked(void)
+ {
+ 	int ret;
+ 
+-	if (etm4_count++)
+-		return 0;
+-
+ 	ret = cpu_pm_register_notifier(&etm4_cpu_pm_nb);
+ 	if (ret)
+-		goto reduce_count;
++		return ret;
+ 
+ 	ret = cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
+ 						   "arm/coresight4:starting",
+@@ -1432,17 +1427,11 @@ static int etm4_pm_setup_cpuslocked(void)
+ 
+ unregister_notifier:
+ 	cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
+-
+-reduce_count:
+-	--etm4_count;
+ 	return ret;
+ }
+ 
+ static void etm4_pm_clear(void)
+ {
+-	if (--etm4_count != 0)
+-		return;
+-
+ 	cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
+ 	cpuhp_remove_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING);
+ 	if (hp_online) {
+@@ -1498,22 +1487,12 @@ static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
+ 	if (!desc.name)
+ 		return -ENOMEM;
+ 
+-	cpus_read_lock();
+ 	etmdrvdata[drvdata->cpu] = drvdata;
+ 
+ 	if (smp_call_function_single(drvdata->cpu,
+ 				etm4_init_arch_data,  drvdata, 1))
+ 		dev_err(dev, "ETM arch init failed\n");
+ 
+-	ret = etm4_pm_setup_cpuslocked();
+-	cpus_read_unlock();
+-
+-	/* etm4_pm_setup_cpuslocked() does its own cleanup - exit on error */
+-	if (ret) {
+-		etmdrvdata[drvdata->cpu] = NULL;
+-		return ret;
+-	}
+-
+ 	if (etm4_arch_supported(drvdata->arch) == false) {
+ 		ret = -EINVAL;
+ 		goto err_arch_supported;
+@@ -1560,7 +1539,6 @@ static int etm4_probe(struct amba_device *adev, const struct amba_id *id)
+ 
+ err_arch_supported:
+ 	etmdrvdata[drvdata->cpu] = NULL;
+-	etm4_pm_clear();
+ 	return ret;
+ }
+ 
+@@ -1598,4 +1576,29 @@ static struct amba_driver etm4x_driver = {
+ 	.probe		= etm4_probe,
+ 	.id_table	= etm4_ids,
+ };
+-builtin_amba_driver(etm4x_driver);
++
++static int __init etm4x_init(void)
++{
++	int ret;
++
++	cpus_read_lock();
++	ret = etm4_pm_setup_cpuslocked();
++	cpus_read_unlock();
++
++	/* etm4_pm_setup_cpuslocked() does its own cleanup - exit on error */
++	if (ret)
++		return ret;
++
++	ret = amba_driver_register(&etm4x_driver);
++	if (ret) {
++		pr_info("Error registering etm4x driver\n");
++		goto err_init;
++	}
++
++	return ret;
++
++err_init:
++	etm4_pm_clear();
++	return ret;
++}
++module_init(etm4x_init);
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
+
