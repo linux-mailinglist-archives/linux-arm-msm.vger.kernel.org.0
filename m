@@ -2,182 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85D602305CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 10:52:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61C06230804
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 12:45:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728195AbgG1Iwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 04:52:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40018 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728183AbgG1Iwt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 04:52:49 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE1ECC061794
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 01:52:48 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id t142so11002968wmt.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 01:52:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HGy3jmbnLWtAugJhNyMPmIfpo7WUVn9rkKkQMW0ipLs=;
-        b=M0e+APlLzUzGPEQPb5lfmfSp/o1k5PEssqciRfuFNdb3qha7nkzlBkC5i4JT2rzaO3
-         sVfant5ccFL4AzNOePYhmHnXyZ4waR4H7ygUIgWUkzaFMamybKKUIxUuo6i3HWPBvxGn
-         RoVPbV+rY96rVH4R2kzqG5FARO4ooptQ5407s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HGy3jmbnLWtAugJhNyMPmIfpo7WUVn9rkKkQMW0ipLs=;
-        b=KP+fdKz4EMhF/NUjM4ZU+OyiJMCDacuao2/JxzybPYH614gW6Z/9X2/PexT8rRFxnG
-         UyigqR3SU+VsyRG2oORuhNg5B6MjgzzNq4r/Nl8p9pp4aa9kCqeIuRPjvS5N5m+Nj4ie
-         4DkA0/4J+R3XkEaXvdNXxp5CZ17RVWHl828m88KTvTTHlfM9I8xgQruRjiL/A8y+0t8h
-         9GCXbKQoXW4aA15r0HFjiXRForV2A/TTDTiEoNUpIryaoRWCYbkqbPLRgmpZBSmD4Ul2
-         q3b1qBp4zGJoyprO6aql4S7hOtrLWuE+4jXHgKgUoJGQb3QrhptAdXdf+WjCRyk0knzb
-         3lBA==
-X-Gm-Message-State: AOAM531CPz0KgyvmFOEAp8dGXYXYGXuzGHXVAQIShZero5eizcnrtbNB
-        Am0jCvXW8R3mOTiOe/zQ2ey2kqTDh0g=
-X-Google-Smtp-Source: ABdhPJyiM85CyXyw1HU6z/kML8IsbJGp9eXAAaJbV6ajj+CHl0qhajof/NwnJjkMBiAqdI6zzfqQxw==
-X-Received: by 2002:a7b:ce0e:: with SMTP id m14mr3189753wmc.160.1595926367684;
-        Tue, 28 Jul 2020 01:52:47 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id z207sm3317950wmc.2.2020.07.28.01.52.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 01:52:46 -0700 (PDT)
-Date:   Tue, 28 Jul 2020 10:52:44 +0200
-From:   daniel@ffwll.ch
-Cc:     daniel@ffwll.ch, adelva@google.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        pdhaval@codeaurora.org, seanpaul@chromium.org,
-        linux-arm-msm@vger.kernel.org, jsanka@codeaurora.org,
-        sam@ravnborg.org
-Subject: Re: [Freedreno] [PATCH V2] drm: hold gem reference until object is
- no longer accessed
-Message-ID: <20200728085244.GY6419@phenom.ffwll.local>
-References: <1595284250-31580-1-git-send-email-cohens@codeaurora.org>
- <20200727195507.GA240123@kroah.com>
- <20200727201128.GX6419@phenom.ffwll.local>
- <f035111e7139bdaeb7562afd2415f366@codeaurora.org>
+        id S1728699AbgG1Kpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 06:45:47 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39885 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728566AbgG1Kpr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 06:45:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1595933146; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=UwYBC8FIK6Ao+d1NkDjZjS8SDHzIo5U4cf8VMIHtRHo=;
+ b=nlmrHJHYgtRiCnCteFjByTT03e1GxQO/NlD0VQqiP06+iXDZmcswBPhlwocFGBt2TlG5Y9q0
+ riyiP/EQHyUCTg26IMTDHgue8F20nhSa/9a7KYbb5Vm6awcZ+6Aibi60ZrmVCY8o8x1eZPnB
+ kpHWEbx9263LK8EiJqrZm1Q1u/I=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
+ 5f2001d8fcbecb3df18e8da4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 10:45:44
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E55F4C4339C; Tue, 28 Jul 2020 10:45:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: gokulsri)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05D62C433CA;
+        Tue, 28 Jul 2020 10:45:43 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f035111e7139bdaeb7562afd2415f366@codeaurora.org>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Jul 2020 16:15:42 +0530
+From:   gokulsri@codeaurora.org
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        agross@kernel.org, linux-soc@vger.kernel.org,
+        devicetree@vger.kernel.org, govinds@codeaurora.org,
+        sricharan@codeaurora.org
+Subject: Re: [v7 1/4] remoteproc: qcom: wcss: populate hardcoded param using
+ driver data
+In-Reply-To: <159442464252.1987609.9113647358389820731@swboyd.mtv.corp.google.com>
+References: <20190726092332.25202-1-govinds@codeaurora.org>
+ <1593766722-28838-1-git-send-email-gokulsri@codeaurora.org>
+ <1593766722-28838-2-git-send-email-gokulsri@codeaurora.org>
+ <159442464252.1987609.9113647358389820731@swboyd.mtv.corp.google.com>
+Message-ID: <2cf8aa0af13a104a8e4171ebcb0a6e62@codeaurora.org>
+X-Sender: gokulsri@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 27, 2020 at 05:54:59PM -0400, cohens@codeaurora.org wrote:
-> On 2020-07-27 16:11, daniel@ffwll.ch wrote:
-> > On Mon, Jul 27, 2020 at 09:55:07PM +0200, Greg KH wrote:
-> > > On Mon, Jul 20, 2020 at 06:30:50PM -0400, Steve Cohen wrote:
-> > > > A use-after-free in drm_gem_open_ioctl can happen if the
-> > > > GEM object handle is closed between the idr lookup and
-> > > > retrieving the size from said object since a local reference
-> > > > is not being held at that point. Hold the local reference
-> > > > while the object can still be accessed to fix this and
-> > > > plug the potential security hole.
-> > > >
-> > > > Signed-off-by: Steve Cohen <cohens@codeaurora.org>
-> > > > ---
-> > > >  drivers/gpu/drm/drm_gem.c | 10 ++++------
-> > > >  1 file changed, 4 insertions(+), 6 deletions(-)
-> > > >
-> > > > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> > > > index 7bf628e..ee2058a 100644
-> > > > --- a/drivers/gpu/drm/drm_gem.c
-> > > > +++ b/drivers/gpu/drm/drm_gem.c
-> > > > @@ -871,9 +871,6 @@ drm_gem_flink_ioctl(struct drm_device *dev, void *data,
-> > > >   * @file_priv: drm file-private structure
-> > > >   *
-> > > >   * Open an object using the global name, returning a handle and the size.
-> > > > - *
-> > > > - * This handle (of course) holds a reference to the object, so the object
-> > > > - * will not go away until the handle is deleted.
-> > > >   */
-> > > >  int
-> > > >  drm_gem_open_ioctl(struct drm_device *dev, void *data,
-> > > > @@ -898,14 +895,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
-> > > >
-> > > >  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
-> > > >  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
-> > > > -	drm_gem_object_put_unlocked(obj);
-> > > >  	if (ret)
-> > > > -		return ret;
-> > > > +		goto err;
-> > > >
-> > > >  	args->handle = handle;
-> > > >  	args->size = obj->size;
-> > > >
-> > > > -	return 0;
-> > > > +err:
-> > > > +	drm_gem_object_put_unlocked(obj);
-> > > > +	return ret;
-> > > >  }
-> > > >
-> > > >  /**
-> > > 
-> > > As this seems to fix an important issue, any reason it wasn't cc:
-> > > stable
-> > > on it so that it gets backported properly?
-> > > 
-> > > How about a "Fixes:" tag so that we know what commit id it fixes so we
-> > > know how far back to backport things?
-> > > 
-> > > And a hint to the maintainers that "this is an issue that needs to get
-> > > into 5.8-final, it shouldn't wait around longer please" would have
-> > > also
-> > > been nice to see :)
-> > > 
-> > > And what chagned from v1, aren't you supposed to list that somewhere
-> > > in
-> > > the changelog or below the --- line (never remember what DRM drivers
-> > > want here...)
-> > > 
-> > > Care to send a v3?
-> > 
-> > Don't worry, I'm pushing this to drm-misc-fixes now, should still make
-> > it
-> > to 5.8. Plus cc: stable. I didn't bother with Fixes: since I think the
-> > bug
-> > is rather old. Also, worst case you leak 32bit of some kernel memory
-> > that
-> > got reused already (but yeah I know that's often enough to get the foot
-> > in
-> > somewhere nasty and crack the door open).
-> > 
-> > I think it fell through cracks because Sam said he'll apply, guess that
-> > didn't happen.
+   Thanks for your comments Stephen.
+   Will address your comments below and re-submit.
+On 2020-07-11 05:14, Stephen Boyd wrote:
+> Quoting Gokul Sriram Palanisamy (2020-07-03 01:58:39)
+>> From: Govind Singh <govinds@codeaurora.org>
+>> 
+>> Q6 based WiFi fw loading is supported across
+>> different targets, ex: IPQ8074/QCS404. In order to
+>> support different fw names/pas id etc, populate
+>> hardcoded param using driver data.
+>> 
+>> Signed-off-by: Govind Singh <govinds@codeaurora.org>
+>> [rebased on top of 5.8-rc3]
 > 
-> Sam added his Reviewed-By on V1 with a comment to rename the goto label,
-> but in V2 I also updated the API documentation and the commit text for
-> a more complete change and thought he would re-add the tag.
+> This tag is not really useful and doesn't follow the style of having
+> your email prefix the text. I'd expect to see
 > 
-> > Also yes a changelog, somewhere, for next time around.
+> [gokulsri@codeaurora.org: made some sort of change]
 > 
-> Apologies, it won't happen again. Should I still submit a V3?
-> It looks like you've got Greg's concerns covered.
-
-Uh no, but we need another patch to re-add the kerneldoc you deleted. I
-missed that when merging your patch. Also that's kinda what patch
-changelogs are for, for blind reviewers like me :-)
--Daniel
-
+>> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+>> ---
+>>  drivers/remoteproc/qcom_q6v5_wcss.c | 31 
+>> ++++++++++++++++++++++++++-----
+>>  1 file changed, 26 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c 
+>> b/drivers/remoteproc/qcom_q6v5_wcss.c
+>> index 88c76b9..abc5f9d 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+>> @@ -70,6 +71,11 @@
+>>  #define TCSR_WCSS_CLK_MASK     0x1F
+>>  #define TCSR_WCSS_CLK_ENABLE   0x14
+>> 
+>> +struct wcss_data {
+>> +       const char *firmware_name;
+>> +       int crash_reason_smem;
 > 
-> -Steve
+> Is it signed for some reason?
+   Can be unsigned. Will update.
 > 
-> > -Daniel
-> > 
-> > 
-> > > 
-> > > thanks,
-> > > 
-> > > greg k-h
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+>> +};
+>> +
+>>  struct q6v5_wcss {
+>>         struct device *dev;
+>> 
+>> @@ -92,6 +98,8 @@ struct q6v5_wcss {
+>>         void *mem_region;
+>>         size_t mem_size;
+>> 
+>> +       int crash_reason_smem;
+>> +
+> 
+> Same question, why not unsigned?
+   Can be unsigned. Will update.
+> 
+>>         struct qcom_rproc_glink glink_subdev;
+>>         struct qcom_rproc_ssr ssr_subdev;
+>>  };
+>> @@ -430,7 +438,7 @@ static int q6v5_wcss_load(struct rproc *rproc, 
+>> const struct firmware *fw)
+>>                                      wcss->mem_size, 
+>> &wcss->mem_reloc);
+>>  }
+>> 
+>> -static const struct rproc_ops q6v5_wcss_ops = {
+>> +static const struct rproc_ops q6v5_wcss_ipq8074_ops = {
+>>         .start = q6v5_wcss_start,
+>>         .stop = q6v5_wcss_stop,
+>>         .da_to_va = q6v5_wcss_da_to_va,
+>> @@ -530,12 +538,17 @@ static int q6v5_alloc_memory_region(struct 
+>> q6v5_wcss *wcss)
+>> 
+>>  static int q6v5_wcss_probe(struct platform_device *pdev)
+>>  {
+>> +       const struct wcss_data *desc;
+>>         struct q6v5_wcss *wcss;
+>>         struct rproc *rproc;
+>>         int ret;
+>> 
+>> -       rproc = rproc_alloc(&pdev->dev, pdev->name, &q6v5_wcss_ops,
+>> -                           "IPQ8074/q6_fw.mdt", sizeof(*wcss));
+>> +       desc = of_device_get_match_data(&pdev->dev);
+> 
+> Use device_get_match_data() and drop the of_device.h include.
+   ok, will do.
+> 
+>> +       if (!desc)
+>> +               return -EINVAL;
+>> +
+>> +       rproc = rproc_alloc(&pdev->dev, pdev->name, 
+>> &q6v5_wcss_ipq8074_ops,
+>> +                           desc->firmware_name, sizeof(*wcss));
+>>         if (!rproc) {
+>>                 dev_err(&pdev->dev, "failed to allocate rproc\n");
+>>                 return -ENOMEM;
+>> @@ -587,8 +602,14 @@ static int q6v5_wcss_remove(struct 
+>> platform_device *pdev)
+>>         return 0;
+>>  }
+>> 
+>> +static const struct wcss_data wcss_ipq8074_res_init = {
+>> +       .firmware_name = "IPQ8074/q6_fw.mdt",
+>> +       .crash_reason_smem = WCSS_CRASH_REASON,
+>> +};
+>> +
+>>  static const struct of_device_id q6v5_wcss_of_match[] = {
+>> -       { .compatible = "qcom,ipq8074-wcss-pil" },
+>> +       { .compatible = "qcom,ipq8074-wcss-pil", .data = 
+>> &wcss_ipq8074_res_init },
+>> +
+> 
+> Please remove this extra newline.
+   ok. Will do.
+> 
+>>         { },
+>>  };
+>>  MODULE_DEVICE_TABLE(of, q6v5_wcss_of_match);
