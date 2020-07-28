@@ -2,193 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3055E2305B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 10:47:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85D602305CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 10:52:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728156AbgG1IrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 04:47:19 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:42965 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728176AbgG1IrT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 04:47:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595926038; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Ov/MCTEZuyfgMKbGRufVJeV9XrK0K72sSxzij8exncc=;
- b=lOSu2yCV0bYzmsSLUkjbZzaK4dTUwcff10zndJYQ5sxNungD2y7n00X3C89XY6/pZ3uLpIoR
- KHMp1ocipWpHlF1QaFkuJYGnS0dIpO7qhfjsI9GzAsL+iI6/e3BpEdDM6EJmHS9DOHp9Uaaa
- sjjhwPFM3HYmqjIIWuSC+boYjzs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f1fe612ca57a65d47cbd086 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 08:47:14
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CE80BC4339C; Tue, 28 Jul 2020 08:47:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14F51C433C6;
-        Tue, 28 Jul 2020 08:47:14 +0000 (UTC)
+        id S1728195AbgG1Iwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Jul 2020 04:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40018 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728183AbgG1Iwt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Jul 2020 04:52:49 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE1ECC061794
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 01:52:48 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id t142so11002968wmt.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Jul 2020 01:52:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HGy3jmbnLWtAugJhNyMPmIfpo7WUVn9rkKkQMW0ipLs=;
+        b=M0e+APlLzUzGPEQPb5lfmfSp/o1k5PEssqciRfuFNdb3qha7nkzlBkC5i4JT2rzaO3
+         sVfant5ccFL4AzNOePYhmHnXyZ4waR4H7ygUIgWUkzaFMamybKKUIxUuo6i3HWPBvxGn
+         RoVPbV+rY96rVH4R2kzqG5FARO4ooptQ5407s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HGy3jmbnLWtAugJhNyMPmIfpo7WUVn9rkKkQMW0ipLs=;
+        b=KP+fdKz4EMhF/NUjM4ZU+OyiJMCDacuao2/JxzybPYH614gW6Z/9X2/PexT8rRFxnG
+         UyigqR3SU+VsyRG2oORuhNg5B6MjgzzNq4r/Nl8p9pp4aa9kCqeIuRPjvS5N5m+Nj4ie
+         4DkA0/4J+R3XkEaXvdNXxp5CZ17RVWHl828m88KTvTTHlfM9I8xgQruRjiL/A8y+0t8h
+         9GCXbKQoXW4aA15r0HFjiXRForV2A/TTDTiEoNUpIryaoRWCYbkqbPLRgmpZBSmD4Ul2
+         q3b1qBp4zGJoyprO6aql4S7hOtrLWuE+4jXHgKgUoJGQb3QrhptAdXdf+WjCRyk0knzb
+         3lBA==
+X-Gm-Message-State: AOAM531CPz0KgyvmFOEAp8dGXYXYGXuzGHXVAQIShZero5eizcnrtbNB
+        Am0jCvXW8R3mOTiOe/zQ2ey2kqTDh0g=
+X-Google-Smtp-Source: ABdhPJyiM85CyXyw1HU6z/kML8IsbJGp9eXAAaJbV6ajj+CHl0qhajof/NwnJjkMBiAqdI6zzfqQxw==
+X-Received: by 2002:a7b:ce0e:: with SMTP id m14mr3189753wmc.160.1595926367684;
+        Tue, 28 Jul 2020 01:52:47 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id z207sm3317950wmc.2.2020.07.28.01.52.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jul 2020 01:52:46 -0700 (PDT)
+Date:   Tue, 28 Jul 2020 10:52:44 +0200
+From:   daniel@ffwll.ch
+Cc:     daniel@ffwll.ch, adelva@google.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        pdhaval@codeaurora.org, seanpaul@chromium.org,
+        linux-arm-msm@vger.kernel.org, jsanka@codeaurora.org,
+        sam@ravnborg.org
+Subject: Re: [Freedreno] [PATCH V2] drm: hold gem reference until object is
+ no longer accessed
+Message-ID: <20200728085244.GY6419@phenom.ffwll.local>
+References: <1595284250-31580-1-git-send-email-cohens@codeaurora.org>
+ <20200727195507.GA240123@kroah.com>
+ <20200727201128.GX6419@phenom.ffwll.local>
+ <f035111e7139bdaeb7562afd2415f366@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Jul 2020 14:17:14 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2] coresight: etm4x: Fix etm4_count race by moving cpuhp
- callbacks to init
-In-Reply-To: <159592494608.1360974.13925720722764973592@swboyd.mtv.corp.google.com>
-References: <20200728075102.30807-1-saiprakash.ranjan@codeaurora.org>
- <159592494608.1360974.13925720722764973592@swboyd.mtv.corp.google.com>
-Message-ID: <e3bb9a0bec27d769b0ff6284e6cd8ef3@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f035111e7139bdaeb7562afd2415f366@codeaurora.org>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-28 13:59, Stephen Boyd wrote:
-> Quoting Sai Prakash Ranjan (2020-07-28 00:51:02)
->> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c 
->> b/drivers/hwtracing/coresight/coresight-etm4x.c
->> index 6d7d2169bfb2..adb71987a1e3 100644
->> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
->> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
->> @@ -48,8 +48,6 @@ module_param(pm_save_enable, int, 0444);
->>  MODULE_PARM_DESC(pm_save_enable,
->>         "Save/restore state on power down: 1 = never, 2 = 
->> self-hosted");
->> 
->> -/* The number of ETMv4 currently registered */
->> -static int etm4_count;
->>  static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
->>  static void etm4_set_default_config(struct etmv4_config *config);
->>  static int etm4_set_event_filters(struct etmv4_drvdata *drvdata,
->> @@ -1403,12 +1401,9 @@ static int etm4_pm_setup_cpuslocked(void)
+On Mon, Jul 27, 2020 at 05:54:59PM -0400, cohens@codeaurora.org wrote:
+> On 2020-07-27 16:11, daniel@ffwll.ch wrote:
+> > On Mon, Jul 27, 2020 at 09:55:07PM +0200, Greg KH wrote:
+> > > On Mon, Jul 20, 2020 at 06:30:50PM -0400, Steve Cohen wrote:
+> > > > A use-after-free in drm_gem_open_ioctl can happen if the
+> > > > GEM object handle is closed between the idr lookup and
+> > > > retrieving the size from said object since a local reference
+> > > > is not being held at that point. Hold the local reference
+> > > > while the object can still be accessed to fix this and
+> > > > plug the potential security hole.
+> > > >
+> > > > Signed-off-by: Steve Cohen <cohens@codeaurora.org>
+> > > > ---
+> > > >  drivers/gpu/drm/drm_gem.c | 10 ++++------
+> > > >  1 file changed, 4 insertions(+), 6 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> > > > index 7bf628e..ee2058a 100644
+> > > > --- a/drivers/gpu/drm/drm_gem.c
+> > > > +++ b/drivers/gpu/drm/drm_gem.c
+> > > > @@ -871,9 +871,6 @@ drm_gem_flink_ioctl(struct drm_device *dev, void *data,
+> > > >   * @file_priv: drm file-private structure
+> > > >   *
+> > > >   * Open an object using the global name, returning a handle and the size.
+> > > > - *
+> > > > - * This handle (of course) holds a reference to the object, so the object
+> > > > - * will not go away until the handle is deleted.
+> > > >   */
+> > > >  int
+> > > >  drm_gem_open_ioctl(struct drm_device *dev, void *data,
+> > > > @@ -898,14 +895,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
+> > > >
+> > > >  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
+> > > >  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
+> > > > -	drm_gem_object_put_unlocked(obj);
+> > > >  	if (ret)
+> > > > -		return ret;
+> > > > +		goto err;
+> > > >
+> > > >  	args->handle = handle;
+> > > >  	args->size = obj->size;
+> > > >
+> > > > -	return 0;
+> > > > +err:
+> > > > +	drm_gem_object_put_unlocked(obj);
+> > > > +	return ret;
+> > > >  }
+> > > >
+> > > >  /**
+> > > 
+> > > As this seems to fix an important issue, any reason it wasn't cc:
+> > > stable
+> > > on it so that it gets backported properly?
+> > > 
+> > > How about a "Fixes:" tag so that we know what commit id it fixes so we
+> > > know how far back to backport things?
+> > > 
+> > > And a hint to the maintainers that "this is an issue that needs to get
+> > > into 5.8-final, it shouldn't wait around longer please" would have
+> > > also
+> > > been nice to see :)
+> > > 
+> > > And what chagned from v1, aren't you supposed to list that somewhere
+> > > in
+> > > the changelog or below the --- line (never remember what DRM drivers
+> > > want here...)
+> > > 
+> > > Care to send a v3?
+> > 
+> > Don't worry, I'm pushing this to drm-misc-fixes now, should still make
+> > it
+> > to 5.8. Plus cc: stable. I didn't bother with Fixes: since I think the
+> > bug
+> > is rather old. Also, worst case you leak 32bit of some kernel memory
+> > that
+> > got reused already (but yeah I know that's often enough to get the foot
+> > in
+> > somewhere nasty and crack the door open).
+> > 
+> > I think it fell through cracks because Sam said he'll apply, guess that
+> > didn't happen.
 > 
-> Is this only called from __init now? If so please mark it as __init
-> then.
+> Sam added his Reviewed-By on V1 with a comment to rename the goto label,
+> but in V2 I also updated the API documentation and the commit text for
+> a more complete change and thought he would re-add the tag.
 > 
-
-Yes, will change it.
-
->>  {
->>         int ret;
->> 
->> -       if (etm4_count++)
->> -               return 0;
->> -
->>         ret = cpu_pm_register_notifier(&etm4_cpu_pm_nb);
->>         if (ret)
->> -               goto reduce_count;
->> +               return ret;
->> 
->>         ret = 
->> cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
->>                                                    
->> "arm/coresight4:starting",
->> @@ -1432,17 +1427,11 @@ static int etm4_pm_setup_cpuslocked(void)
->> 
->>  unregister_notifier:
->>         cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
->> -
->> -reduce_count:
->> -       --etm4_count;
->>         return ret;
->>  }
->> 
->>  static void etm4_pm_clear(void)
+> > Also yes a changelog, somewhere, for next time around.
 > 
-> This is __init too?
+> Apologies, it won't happen again. Should I still submit a V3?
+> It looks like you've got Greg's concerns covered.
+
+Uh no, but we need another patch to re-add the kerneldoc you deleted. I
+missed that when merging your patch. Also that's kinda what patch
+changelogs are for, for blind reviewers like me :-)
+-Daniel
+
 > 
-
-Will change.
-
->>  {
->> -       if (--etm4_count != 0)
->> -               return;
->> -
->>         cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
->>         cpuhp_remove_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING);
->>         if (hp_online) {
->> @@ -1598,4 +1576,29 @@ static struct amba_driver etm4x_driver = {
->>         .probe          = etm4_probe,
->>         .id_table       = etm4_ids,
->>  };
->> -builtin_amba_driver(etm4x_driver);
->> +
->> +static int __init etm4x_init(void)
->> +{
->> +       int ret;
->> +
->> +       cpus_read_lock();
->> +       ret = etm4_pm_setup_cpuslocked();
->> +       cpus_read_unlock();
->> +
->> +       /* etm4_pm_setup_cpuslocked() does its own cleanup - exit on 
->> error */
->> +       if (ret)
->> +               return ret;
->> +
->> +       ret = amba_driver_register(&etm4x_driver);
->> +       if (ret) {
->> +               pr_info("Error registering etm4x driver\n");
+> -Steve
 > 
-> Use pr_err() please.
-> 
-
-Yes indeed, will change.
-
->> +               goto err_init;
->> +       }
->> +
->> +       return ret;
->> +
->> +err_init:
-> 
-> Why is this a goto?
-> 
->> +       etm4_pm_clear();
->> +       return ret;
-> 
-> Instead of just putting this in the if (ret) arm?
-> 
-
-Will change.
-
->> +}
->> +module_init(etm4x_init);
-> 
-> It was device_initcall before with builtin_amba_driver(), best to not
-> change that.
-
-Sure.
-
-I will wait to see if there are any more comments on this patch and then 
-post a v3.
-Thanks for the review Stephen.
-
-Thanks,
-Sai
+> > -Daniel
+> > 
+> > 
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
