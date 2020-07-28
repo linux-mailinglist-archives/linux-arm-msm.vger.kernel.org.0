@@ -2,165 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC92D22FBB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Jul 2020 23:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EF1322FE7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Jul 2020 02:29:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726193AbgG0VzO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Jul 2020 17:55:14 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:32539 "EHLO
+        id S1726841AbgG1A3s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Jul 2020 20:29:48 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:29732 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726140AbgG0VzO (ORCPT
+        by vger.kernel.org with ESMTP id S1726731AbgG1A3s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Jul 2020 17:55:14 -0400
+        Mon, 27 Jul 2020 20:29:48 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595886912; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1595896187; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=2u1FzLcW8eIOp2SQYzgZ+Is9ZYPxVilfNAm6pXqiy2k=;
- b=eRTq4ZpwlqNnnA45pCX1IYhs00qA6SS8hEkKGtwafLKJL6Hhwy9vkh+Uz3+LYzGUTFHNsl6H
- zpccJBqG9FIKH/i+m77/iOIl6+ZUQTk08DReTuWQRW3eWSETrxOGVfYhBLX3UWgdC+3edXqG
- FRLlWFHYzfqRFulu1XOe1p/eVN4=
+ MIME-Version: Sender; bh=5BhusANIiNT2zVsZ6sldDr0fcU6emH3d0wLws93YFng=;
+ b=jMOMrX56CgEgQumXRa4gLUGn04XSfkxWip5b2KeTLAkMOv6DLfgWLlOIV6MfB9FX26VrCt0X
+ NLbSKkiZgBYsGzWCd5v1q3iaZYw4tzzuIBOLyIjMmIx8EZIEQm0RfF95+rnH+FCGS9dJBUKY
+ 2MIMCLlR5b71oHClbxQEJOpJdFM=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
- 5f1f4d34845c4d05a3ecf341 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 27 Jul 2020 21:55:00
+ smtp-out-n19.prod.us-west-2.postgun.com with SMTP id
+ 5f1f7179a19b5f4b11f4583b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Jul 2020 00:29:45
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9DAF8C43395; Mon, 27 Jul 2020 21:55:00 +0000 (UTC)
+        id 7440FC433CA; Tue, 28 Jul 2020 00:29:45 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: cohens)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CD19EC433C9;
-        Mon, 27 Jul 2020 21:54:59 +0000 (UTC)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F550C433C9;
+        Tue, 28 Jul 2020 00:29:44 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 27 Jul 2020 17:54:59 -0400
-From:   cohens@codeaurora.org
-To:     daniel@ffwll.ch
-Cc:     adelva@google.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, pdhaval@codeaurora.org,
-        seanpaul@chromium.org, linux-arm-msm@vger.kernel.org,
-        jsanka@codeaurora.org, sam@ravnborg.org
-Subject: Re: [Freedreno] [PATCH V2] drm: hold gem reference until object is no
- longer accessed
-In-Reply-To: <20200727201128.GX6419@phenom.ffwll.local>
-References: <1595284250-31580-1-git-send-email-cohens@codeaurora.org>
- <20200727195507.GA240123@kroah.com>
- <20200727201128.GX6419@phenom.ffwll.local>
-Message-ID: <f035111e7139bdaeb7562afd2415f366@codeaurora.org>
-X-Sender: cohens@codeaurora.org
+Date:   Mon, 27 Jul 2020 17:29:44 -0700
+From:   bbhatt@codeaurora.org
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH v5 10/10] bus: mhi: core: Introduce sysfs entries for MHI
+In-Reply-To: <20200724054206.GC17957@Mani-XPS-13-9360>
+References: <1595543802-17859-1-git-send-email-bbhatt@codeaurora.org>
+ <1595543802-17859-11-git-send-email-bbhatt@codeaurora.org>
+ <20200724054206.GC17957@Mani-XPS-13-9360>
+Message-ID: <ebca0d6ccce616fec6fd0fc08230c19e@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-07-27 16:11, daniel@ffwll.ch wrote:
-> On Mon, Jul 27, 2020 at 09:55:07PM +0200, Greg KH wrote:
->> On Mon, Jul 20, 2020 at 06:30:50PM -0400, Steve Cohen wrote:
->> > A use-after-free in drm_gem_open_ioctl can happen if the
->> > GEM object handle is closed between the idr lookup and
->> > retrieving the size from said object since a local reference
->> > is not being held at that point. Hold the local reference
->> > while the object can still be accessed to fix this and
->> > plug the potential security hole.
->> >
->> > Signed-off-by: Steve Cohen <cohens@codeaurora.org>
->> > ---
->> >  drivers/gpu/drm/drm_gem.c | 10 ++++------
->> >  1 file changed, 4 insertions(+), 6 deletions(-)
->> >
->> > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
->> > index 7bf628e..ee2058a 100644
->> > --- a/drivers/gpu/drm/drm_gem.c
->> > +++ b/drivers/gpu/drm/drm_gem.c
->> > @@ -871,9 +871,6 @@ drm_gem_flink_ioctl(struct drm_device *dev, void *data,
->> >   * @file_priv: drm file-private structure
->> >   *
->> >   * Open an object using the global name, returning a handle and the size.
->> > - *
->> > - * This handle (of course) holds a reference to the object, so the object
->> > - * will not go away until the handle is deleted.
->> >   */
->> >  int
->> >  drm_gem_open_ioctl(struct drm_device *dev, void *data,
->> > @@ -898,14 +895,15 @@ drm_gem_open_ioctl(struct drm_device *dev, void *data,
->> >
->> >  	/* drm_gem_handle_create_tail unlocks dev->object_name_lock. */
->> >  	ret = drm_gem_handle_create_tail(file_priv, obj, &handle);
->> > -	drm_gem_object_put_unlocked(obj);
->> >  	if (ret)
->> > -		return ret;
->> > +		goto err;
->> >
->> >  	args->handle = handle;
->> >  	args->size = obj->size;
->> >
->> > -	return 0;
->> > +err:
->> > +	drm_gem_object_put_unlocked(obj);
->> > +	return ret;
->> >  }
->> >
->> >  /**
+On 2020-07-23 22:42, Manivannan Sadhasivam wrote:
+> On Thu, Jul 23, 2020 at 03:36:42PM -0700, Bhaumik Bhatt wrote:
+>> Introduce sysfs entries to enable userspace clients the ability to 
+>> read
+>> the serial number and the OEM PK Hash values obtained from BHI. OEMs
+>> need to read these device-specific hardware information values through
+>> userspace for factory testing purposes and cannot be exposed via 
+>> degbufs
+>> as it may remain disabled for performance reasons. Also, update the
+>> documentation for ABI to include these entries.
 >> 
->> As this seems to fix an important issue, any reason it wasn't cc: 
->> stable
->> on it so that it gets backported properly?
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>  Documentation/ABI/stable/sysfs-bus-mhi | 25 ++++++++++++++++
+>>  MAINTAINERS                            |  1 +
+>>  drivers/bus/mhi/core/init.c            | 53 
+>> ++++++++++++++++++++++++++++++++++
+>>  3 files changed, 79 insertions(+)
+>>  create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
 >> 
->> How about a "Fixes:" tag so that we know what commit id it fixes so we
->> know how far back to backport things?
->> 
->> And a hint to the maintainers that "this is an issue that needs to get
->> into 5.8-final, it shouldn't wait around longer please" would have 
->> also
->> been nice to see :)
->> 
->> And what chagned from v1, aren't you supposed to list that somewhere 
->> in
->> the changelog or below the --- line (never remember what DRM drivers
->> want here...)
->> 
->> Care to send a v3?
+>> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi 
+>> b/Documentation/ABI/stable/sysfs-bus-mhi
+>> new file mode 100644
+>> index 0000000..a4e4bd2
+>> --- /dev/null
+>> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
+>> @@ -0,0 +1,25 @@
+>> +What:		/sys/bus/mhi/devices/.../serialnumber
+>> +Date:		July 2020
+>> +KernelVersion:  5.8
+>> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> +Description:
+>> +		The file holds the serial number of the client device obtained
+>> +		using a BHI (Boot Host Interface) register read after at least
+>> +		one attempt to power up the device has been done. If read
+>> +		without having the device power on at least once, the file will
+>> +		read all 0's.
+>> +Users:		Any userspace application or clients interested in the device
+>> +		hardware information.
 > 
-> Don't worry, I'm pushing this to drm-misc-fixes now, should still make 
-> it
-> to 5.8. Plus cc: stable. I didn't bother with Fixes: since I think the 
-> bug
-> is rather old. Also, worst case you leak 32bit of some kernel memory 
-> that
-> got reused already (but yeah I know that's often enough to get the foot 
-> in
-> somewhere nasty and crack the door open).
+> Please align all the fields onto a single starting point. Have a look 
+> at other
+> ABI documentation like, Documentation/ABI/stable/sysfs-bus-vmbus.
 > 
-> I think it fell through cracks because Sam said he'll apply, guess that
-> didn't happen.
-
-Sam added his Reviewed-By on V1 with a comment to rename the goto label,
-but in V2 I also updated the API documentation and the commit text for
-a more complete change and thought he would re-add the tag.
-
-> Also yes a changelog, somewhere, for next time around.
-
-Apologies, it won't happen again. Should I still submit a V3?
-It looks like you've got Greg's concerns covered.
-
--Steve
-
-> -Daniel
-> 
-> 
+Alignment was updated. Seems OK to me actually, I am unsure why the 
+patch shows up as
+slightly different on email.
+>> +
+>> +What:		/sys/bus/mhi/devices/.../oem_pk_hash
+>> +Date:		July 2020
+>> +KernelVersion:  5.8
+>> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> +Description:
+>> +		The file holds the OEM PK Hash value of the endpoint device
+>> +		obtained using a BHI (Boot Host Interface) register read after
+>> +		at least one attempt to power up the device has been done. If
+>> +		read without having the device power on at least once, the file
+>> +		will read all 0's.
+>> +Users:		Any userspace application or clients interested in the device
+>> +		hardware information.
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index e64e5db..5e49316 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -11018,6 +11018,7 @@ M:	Hemant Kumar <hemantk@codeaurora.org>
+>>  L:	linux-arm-msm@vger.kernel.org
+>>  S:	Maintained
+>>  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
+>> +F:	Documentation/ABI/stable/sysfs-bus-mhi
+>>  F:	Documentation/mhi/
+>>  F:	drivers/bus/mhi/
+>>  F:	include/linux/mhi.h
+>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> index d2c0f6e..a7b0d76 100644
+>> --- a/drivers/bus/mhi/core/init.c
+>> +++ b/drivers/bus/mhi/core/init.c
+>> @@ -76,6 +76,56 @@ const char *to_mhi_pm_state_str(enum mhi_pm_state 
+>> state)
+>>  	return mhi_pm_state_str[index];
+>>  }
 >> 
->> thanks,
+>> +static ssize_t serial_number_show(struct device *dev,
+>> +				  struct device_attribute *attr,
+>> +				  char *buf)
+> 
+> We haven't followed this before but it is good to align the function 
+> parameters
+> with respect to '('.
+> 
+This one too, I have made sure it is aligned with the '('. Maybe a 
+re-upload should
+clear it up.
+>> +{
+>> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+>> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+>> +
+>> +	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
+>> +			mhi_cntrl->serial_number);
+> 
+> We need to think about what happens if the mhi_cntrl structure is not 
+> zero
+> initialized by the controller driver. All throughout the stack we 
+> assume that
+> the mhi_cntrl struct is zero initialized but things can go awry if it 
+> was not
+> the case!
+> 
+> There was one API in the downstream (mhi_alloc_controller()) for this 
+> purpose
+> but I removed it since we ended up with just a kzalloc(). Does it make 
+> sense to
+> introduce it now?
+> 
+Thanks for pointing out. I realize this could have potential 
+consequences and have added
+the patch to introduce the API as a dependency.
+> Thanks,
+> Mani
+> 
+>> +}
+>> +static DEVICE_ATTR_RO(serial_number);
+>> +
+>> +static ssize_t oem_pk_hash_show(struct device *dev,
+>> +				struct device_attribute *attr,
+>> +				char *buf)
+>> +{
+>> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+>> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+>> +	int i, cnt = 0;
+>> +
+>> +	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
+>> +		cnt += snprintf(buf + cnt, PAGE_SIZE - cnt,
+>> +				"OEMPKHASH[%d]: 0x%x\n", i,
+>> +				mhi_cntrl->oem_pk_hash[i]);
+>> +
+>> +	return cnt;
+>> +}
+>> +static DEVICE_ATTR_RO(oem_pk_hash);
+>> +
+>> +static struct attribute *mhi_sysfs_attrs[] = {
+>> +	&dev_attr_serial_number.attr,
+>> +	&dev_attr_oem_pk_hash.attr,
+>> +	NULL,
+>> +};
+>> +
+>> +static const struct attribute_group mhi_sysfs_group = {
+>> +	.attrs = mhi_sysfs_attrs,
+>> +};
+>> +
+>> +static int mhi_create_sysfs(struct mhi_controller *mhi_cntrl)
+>> +{
+>> +	return sysfs_create_group(&mhi_cntrl->mhi_dev->dev.kobj,
+>> +				  &mhi_sysfs_group);
+>> +}
+>> +
+>> +static void mhi_destroy_sysfs(struct mhi_controller *mhi_cntrl)
+>> +{
+>> +	sysfs_remove_group(&mhi_cntrl->mhi_dev->dev.kobj, &mhi_sysfs_group);
+>> +}
+>> +
+>>  /* MHI protocol requires the transfer ring to be aligned with ring 
+>> length */
+>>  static int mhi_alloc_aligned_ring(struct mhi_controller *mhi_cntrl,
+>>  				  struct mhi_ring *ring,
+>> @@ -917,6 +967,8 @@ int mhi_register_controller(struct mhi_controller 
+>> *mhi_cntrl,
+>>  	mhi_cntrl->mhi_dev = mhi_dev;
 >> 
->> greg k-h
+>>  	mhi_create_debugfs(mhi_cntrl);
+>> +	if (mhi_create_sysfs(mhi_cntrl))
+>> +		dev_err(mhi_cntrl->cntrl_dev, "Failed to create sysfs entries\n");
+>> 
+>>  	return 0;
+>> 
+>> @@ -940,6 +992,7 @@ void mhi_unregister_controller(struct 
+>> mhi_controller *mhi_cntrl)
+>>  	struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
+>>  	unsigned int i;
+>> 
+>> +	mhi_destroy_sysfs(mhi_cntrl);
+>>  	mhi_destroy_debugfs(mhi_cntrl);
+>> 
+>>  	kfree(mhi_cntrl->mhi_cmd);
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
