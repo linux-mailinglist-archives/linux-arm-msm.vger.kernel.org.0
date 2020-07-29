@@ -2,829 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDAD5231844
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 05:47:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDEBB2318DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 07:04:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbgG2Dq7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Jul 2020 23:46:59 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:47772 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726245AbgG2Dq6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Jul 2020 23:46:58 -0400
+        id S1726203AbgG2FEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 01:04:15 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:38014 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726445AbgG2FEP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Jul 2020 01:04:15 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1595994416; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=akHf68+RoRXAAca+HKgWB0Km2BtzA5s6jRIQ/+xQdLA=; b=wfloY/NO05iRH1k82AE8XbW1GxoIaroBlVKy6a1XYcCTfubJv3ucZDKQn9+Q6w5BMLspFQ3s
- IFmfeqUt2NGcDFB0EyUngmsl8HcYwTwi6ZJtxoWQxkxHRjfq8xDsyoICjAy/xsD8D+XBydKn
- d9XGDoQFmeEJSQVHMflMtka6m5o=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1595999053; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=uy1CHEEp/QDUXfLSRvgW4cSL35sMtji9dnF2rf/Lqn0=;
+ b=k6PtViZVnBmN0lNb3uW6J54+wHKLUMt91fZZKAkKvlvpVs/W+n22hTd5JrJCQ9PbrO/hUTjJ
+ BnfqJLgIv0jw08Fs0LiIxCo26cnmUTgaBV8SZ+KDzMU40VVMARMwHTC/hEWfeU/e40gHs6vV
+ ZEJyBk3FKmldpd0Ya0gANkzFq9g=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f20f126fcbecb3df1a9bd99 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 03:46:46
+ smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
+ 5f210340fcbecb3df1c197f8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 05:04:00
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9A98BC43395; Wed, 29 Jul 2020 03:46:45 +0000 (UTC)
+        id CB8D1C43395; Wed, 29 Jul 2020 05:03:59 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E3412C43391;
-        Wed, 29 Jul 2020 03:46:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E3412C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
-From:   Hemant Kumar <hemantk@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 4/4] bus: mhi: clients: Add userspace client interface driver
-Date:   Tue, 28 Jul 2020 20:46:35 -0700
-Message-Id: <1595994395-20143-5-git-send-email-hemantk@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1595994395-20143-1-git-send-email-hemantk@codeaurora.org>
-References: <1595994395-20143-1-git-send-email-hemantk@codeaurora.org>
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B2026C433C6;
+        Wed, 29 Jul 2020 05:03:58 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 29 Jul 2020 10:33:58 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mike Leach <mike.leach@linaro.org>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-msm@vger.kernel.org,
+        Coresight ML <coresight@lists.linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCHv2] coresight: etm4x: Fix etm4_count race by moving cpuhp
+ callbacks to init
+In-Reply-To: <CAJ9a7VjQCEJ80+7AZnZ-Mv5-EUzOZHnnYr2HeFpm7aktYt5fHA@mail.gmail.com>
+References: <20200728075102.30807-1-saiprakash.ranjan@codeaurora.org>
+ <CAJ9a7VjQCEJ80+7AZnZ-Mv5-EUzOZHnnYr2HeFpm7aktYt5fHA@mail.gmail.com>
+Message-ID: <08767949db1c9e142d29e8d3ab16bd1f@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This MHI client driver allows userspace clients to transfer
-raw data between MHI device and host using standard file operations.
-Device file node is created with format
+Hi Mike,
 
-/dev/mhi_<controller_name>_<mhi_device_name>
+On 2020-07-29 01:46, Mike Leach wrote:
+> Hi Sai,
+> 
+> On Tue, 28 Jul 2020 at 08:51, Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> etm4_count keeps track of number of ETMv4 registered and on some 
+>> systems,
+>> a race is observed on etm4_count variable which can lead to multiple 
+>> calls
+>> to cpuhp_setup_state_nocalls_cpuslocked(). This function internally 
+>> calls
+>> cpuhp_store_callbacks() which prevents multiple registrations of 
+>> callbacks
+>> for a given state and due to this race, it returns -EBUSY leading to 
+>> ETM
+>> probe failures like below.
+>> 
+>>  coresight-etm4x: probe of 7040000.etm failed with error -16
+>> 
+>> This race can easily be triggered with async probe by setting probe 
+>> type
+>> as PROBE_PREFER_ASYNCHRONOUS and with ETM power management property
+>> "arm,coresight-loses-context-with-cpu".
+>> 
+>> Prevent this race by moving cpuhp callbacks to etm driver init since 
+>> the
+>> cpuhp callbacks doesn't have to depend on the etm4_count and can be 
+>> once
+>> setup during driver init. Similarly we move cpu_pm notifier 
+>> registration
+>> to driver init and completely remove etm4_count usage.
+>> 
+>> Fixes: 9b6a3f3633a5 ("coresight: etmv4: Fix CPU power management setup 
+>> in probe() function")
+>> Fixes: 58eb457be028 ("hwtracing/coresight-etm4x: Convert to hotplug 
+>> state machine")
+>> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>> 
+>> Changes in v2:
+>>  * Rearrange cpuhp callbacks and move them to driver init (Suzuki K 
+>> Poulose)
+>> 
+>> ---
+>>  drivers/hwtracing/coresight/coresight-etm4x.c | 51 
+>> ++++++++++---------
+>>  1 file changed, 27 insertions(+), 24 deletions(-)
+>> 
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm4x.c 
+>> b/drivers/hwtracing/coresight/coresight-etm4x.c
+>> index 6d7d2169bfb2..adb71987a1e3 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x.c
+>> @@ -48,8 +48,6 @@ module_param(pm_save_enable, int, 0444);
+>>  MODULE_PARM_DESC(pm_save_enable,
+>>         "Save/restore state on power down: 1 = never, 2 = 
+>> self-hosted");
+>> 
+>> -/* The number of ETMv4 currently registered */
+>> -static int etm4_count;
+>>  static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
+>>  static void etm4_set_default_config(struct etmv4_config *config);
+>>  static int etm4_set_event_filters(struct etmv4_drvdata *drvdata,
+>> @@ -1403,12 +1401,9 @@ static int etm4_pm_setup_cpuslocked(void)
+>>  {
+> 
+> consider renaming this to etm4_pm_setup() and handing any cpu locking
+> inside the function.
+> In the circumstances - as part of the driver init rather than probe it
+> may be sufficient to call the cpuhp_setup functions without the
+> _cpuslocked suffix and allow the calls to lock the cpus as they are
+> made.
+> i.e. cpuhp_setup_state_nocalls_cpuslocked() => 
+> cpuhp_setup_state_nocalls()
 
-Currently it supports LOOPBACK channel.
+Sure, will make this change.
 
-Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
----
- drivers/bus/mhi/Kconfig          |   6 +
- drivers/bus/mhi/Makefile         |   1 +
- drivers/bus/mhi/clients/Kconfig  |  15 +
- drivers/bus/mhi/clients/Makefile |   3 +
- drivers/bus/mhi/clients/uci.c    | 690 +++++++++++++++++++++++++++++++++++++++
- 5 files changed, 715 insertions(+)
- create mode 100644 drivers/bus/mhi/clients/Kconfig
- create mode 100644 drivers/bus/mhi/clients/Makefile
- create mode 100644 drivers/bus/mhi/clients/uci.c
+> 
+>>         int ret;
+>> 
+>> -       if (etm4_count++)
+>> -               return 0;
+>> -
+>>         ret = cpu_pm_register_notifier(&etm4_cpu_pm_nb);
+>>         if (ret)
+>> -               goto reduce_count;
+>> +               return ret;
+>> 
+>>         ret = 
+>> cpuhp_setup_state_nocalls_cpuslocked(CPUHP_AP_ARM_CORESIGHT_STARTING,
+>>                                                    
+>> "arm/coresight4:starting",
+>> @@ -1432,17 +1427,11 @@ static int etm4_pm_setup_cpuslocked(void)
+>> 
+>>  unregister_notifier:
+>>         cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
+>> -
+>> -reduce_count:
+>> -       --etm4_count;
+>>         return ret;
+>>  }
+>> 
+>>  static void etm4_pm_clear(void)
+>>  {
+>> -       if (--etm4_count != 0)
+>> -               return;
+>> -
+>>         cpu_pm_unregister_notifier(&etm4_cpu_pm_nb);
+>>         cpuhp_remove_state_nocalls(CPUHP_AP_ARM_CORESIGHT_STARTING);
+>>         if (hp_online) {
+>> @@ -1498,22 +1487,12 @@ static int etm4_probe(struct amba_device 
+>> *adev, const struct amba_id *id)
+>>         if (!desc.name)
+>>                 return -ENOMEM;
+>> 
+>> -       cpus_read_lock();
+>>         etmdrvdata[drvdata->cpu] = drvdata;
+>> 
+>>         if (smp_call_function_single(drvdata->cpu,
+>>                                 etm4_init_arch_data,  drvdata, 1))
+>>                 dev_err(dev, "ETM arch init failed\n");
+>> 
+>> -       ret = etm4_pm_setup_cpuslocked();
+>> -       cpus_read_unlock();
+>> -
+>> -       /* etm4_pm_setup_cpuslocked() does its own cleanup - exit on 
+>> error */
+>> -       if (ret) {
+>> -               etmdrvdata[drvdata->cpu] = NULL;
+>> -               return ret;
+>> -       }
+>> -
+>>         if (etm4_arch_supported(drvdata->arch) == false) {
+>>                 ret = -EINVAL;
+>>                 goto err_arch_supported;
+>> @@ -1560,7 +1539,6 @@ static int etm4_probe(struct amba_device *adev, 
+>> const struct amba_id *id)
+>> 
+>>  err_arch_supported:
+>>         etmdrvdata[drvdata->cpu] = NULL;
+>> -       etm4_pm_clear();
+>>         return ret;
+>>  }
+>> 
+>> @@ -1598,4 +1576,29 @@ static struct amba_driver etm4x_driver = {
+>>         .probe          = etm4_probe,
+>>         .id_table       = etm4_ids,
+>>  };
+>> -builtin_amba_driver(etm4x_driver);
+>> +
+>> +static int __init etm4x_init(void)
+>> +{
+>> +       int ret;
+>> +
+>> +       cpus_read_lock();
+>> +       ret = etm4_pm_setup_cpuslocked();
+>> +       cpus_read_unlock();
+> 
+> See my comment above about rename and use of cpus_read_lock
+> 
 
-diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-index 6a217ff..927c392 100644
---- a/drivers/bus/mhi/Kconfig
-+++ b/drivers/bus/mhi/Kconfig
-@@ -20,3 +20,9 @@ config MHI_BUS_DEBUG
- 	 Enable debugfs support for use with the MHI transport. Allows
- 	 reading and/or modifying some values within the MHI controller
- 	 for debug and test purposes.
-+
-+if MHI_BUS
-+
-+source "drivers/bus/mhi/clients/Kconfig"
-+
-+endif
-diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-index 19e6443..48f6028 100644
---- a/drivers/bus/mhi/Makefile
-+++ b/drivers/bus/mhi/Makefile
-@@ -1,2 +1,3 @@
- # core layer
- obj-y += core/
-+obj-y += clients/
-diff --git a/drivers/bus/mhi/clients/Kconfig b/drivers/bus/mhi/clients/Kconfig
-new file mode 100644
-index 0000000..37aaf51
---- /dev/null
-+++ b/drivers/bus/mhi/clients/Kconfig
-@@ -0,0 +1,15 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+
-+menu "MHI clients support"
-+
-+config MHI_UCI
-+       tristate "MHI UCI"
-+       depends on MHI_BUS
-+       help
-+	 MHI based userspace client interface driver is used for transferring
-+	 raw data between host and device using standard file operations from
-+	 userspace. Open, read, write, and close operations are supported
-+	 by this driver. Please check mhi_uci_match_table for all supported
-+	 channels that are exposed to userspace.
-+
-+endmenu
-diff --git a/drivers/bus/mhi/clients/Makefile b/drivers/bus/mhi/clients/Makefile
-new file mode 100644
-index 0000000..cd34282
---- /dev/null
-+++ b/drivers/bus/mhi/clients/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+
-+obj-$(CONFIG_MHI_UCI) += uci.o
-diff --git a/drivers/bus/mhi/clients/uci.c b/drivers/bus/mhi/clients/uci.c
-new file mode 100644
-index 0000000..3ddf017
---- /dev/null
-+++ b/drivers/bus/mhi/clients/uci.c
-@@ -0,0 +1,690 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.*/
-+
-+#include <linux/kernel.h>
-+#include <linux/mhi.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/poll.h>
-+
-+#define DEVICE_NAME "mhi"
-+#define MHI_UCI_DRIVER_NAME "mhi_uci"
-+#define MAX_UCI_DEVICES (64)
-+
-+/**
-+ * struct uci_chan - MHI channel for a uci device
-+ * @wq: wait queue for reader/writer
-+ * @lock: spin lock
-+ * @pending: list of rx buffers userspace is waiting to read
-+ * @cur_buf: current buffer userspace is reading
-+ * @rx_size: size of the current rx buffer userspace is reading
-+ */
-+struct uci_chan {
-+	wait_queue_head_t wq;
-+
-+	/* protects pending and cur_buf members */
-+	spinlock_t lock;
-+
-+	struct list_head pending;
-+	struct uci_buf *cur_buf;
-+	size_t rx_size;
-+};
-+
-+/**
-+ * struct uci_buf - uci buffer
-+ * @data: data buffer
-+ * @len: length of data buffer
-+ * @node: list node of the uci buffer
-+ */
-+struct uci_buf {
-+	void *data;
-+	size_t len;
-+	struct list_head node;
-+};
-+
-+/**
-+ * struct mhi_uci_drv - MHI uci driver
-+ * @head: list head of a uci device nodes
-+ * @lock: mutex lock
-+ * @class: current buffer userspace is reading
-+ * @major: major number for uci driver
-+ * @devt: dev_t object to hold major and minor info
-+ */
-+struct mhi_uci_drv {
-+	struct list_head head;
-+
-+	/* protects mhi_uci_drv struct members */
-+	struct mutex lock;
-+
-+	struct class *class;
-+	int major;
-+	dev_t devt;
-+};
-+
-+/**
-+ * struct uci_dev - MHI uci device
-+ * @node: uci device node
-+ * @devt: dev_t object to hold major and minor info
-+ * @dev: uci device object
-+ * @mhi_dev: associated mhi device object
-+ * @chan: MHI channel name
-+ * @lock: mutex lock
-+ * @ul_chan: uplink uci channel object
-+ * @dl_chan: downlink uci channel object
-+ * @mtu: max tx buffer length
-+ * @actual_mtu: maximum size of incoming buffer
-+ * @ref_count: uci_dev reference count
-+ * @enabled: uci device node accessibility
-+ */
-+struct uci_dev {
-+	struct list_head node;
-+	dev_t devt;
-+	struct device *dev;
-+	struct mhi_device *mhi_dev;
-+	const char *chan;
-+
-+	/* protects uci_dev struct members */
-+	struct mutex lock;
-+
-+	struct uci_chan ul_chan;
-+	struct uci_chan dl_chan;
-+	size_t mtu;
-+	size_t actual_mtu;
-+	int ref_count;
-+	bool enabled;
-+};
-+
-+static DECLARE_BITMAP(uci_minors, MAX_UCI_DEVICES);
-+static struct mhi_uci_drv uci_drv;
-+
-+static int mhi_queue_inbound(struct uci_dev *uci_dev)
-+{
-+	struct mhi_device *mhi_dev = uci_dev->mhi_dev;
-+	struct device *dev = &mhi_dev->dev;
-+	size_t mtu = uci_dev->mtu;
-+	size_t actual_mtu = uci_dev->actual_mtu;
-+	int nr_trbs, i, ret = -EIO;
-+	void *buf;
-+	struct uci_buf *uci_buf;
-+
-+	nr_trbs = mhi_get_no_free_descriptors(mhi_dev, DMA_FROM_DEVICE);
-+
-+	for (i = 0; i < nr_trbs; i++) {
-+		buf = kmalloc(mtu, GFP_KERNEL);
-+		if (!buf)
-+			return -ENOMEM;
-+
-+		uci_buf = buf + actual_mtu;
-+		uci_buf->data = buf;
-+
-+		dev_dbg(dev, "Allocated buf %d of %d size %ld\n", i, nr_trbs,
-+			actual_mtu);
-+
-+		ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, buf, actual_mtu,
-+				    MHI_EOT);
-+		if (ret) {
-+			kfree(buf);
-+			dev_err(dev, "Failed to queue buffer %d\n", i);
-+			return ret;
-+		}
-+	}
-+
-+	return ret;
-+}
-+
-+static int mhi_uci_release(struct inode *inode, struct file *file)
-+{
-+	struct uci_dev *uci_dev = file->private_data;
-+
-+	mutex_lock(&uci_dev->lock);
-+	uci_dev->ref_count--;
-+	if (!uci_dev->ref_count) {
-+		struct uci_buf *itr, *tmp;
-+		struct uci_chan *uci_chan;
-+
-+		if (uci_dev->enabled)
-+			mhi_unprepare_from_transfer(uci_dev->mhi_dev);
-+
-+		/* clean inbound channel */
-+		uci_chan = &uci_dev->dl_chan;
-+
-+		spin_lock_bh(&uci_chan->lock);
-+		list_for_each_entry_safe(itr, tmp, &uci_chan->pending, node) {
-+			list_del(&itr->node);
-+			kfree(itr->data);
-+		}
-+
-+		if (uci_chan->cur_buf)
-+			kfree(uci_chan->cur_buf->data);
-+
-+		uci_chan->cur_buf = NULL;
-+		spin_unlock_bh(&uci_chan->lock);
-+
-+		if (!uci_dev->enabled) {
-+			mutex_unlock(&uci_dev->lock);
-+			mutex_destroy(&uci_dev->lock);
-+			clear_bit(MINOR(uci_dev->devt), uci_minors);
-+			kfree(uci_dev);
-+			return 0;
-+		}
-+	}
-+
-+	mutex_unlock(&uci_dev->lock);
-+
-+	return 0;
-+}
-+
-+static __poll_t mhi_uci_poll(struct file *file, poll_table *wait)
-+{
-+	struct uci_dev *uci_dev = file->private_data;
-+	struct mhi_device *mhi_dev = uci_dev->mhi_dev;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_chan *uci_chan;
-+	__poll_t mask = 0;
-+
-+	poll_wait(file, &uci_dev->dl_chan.wq, wait);
-+	poll_wait(file, &uci_dev->ul_chan.wq, wait);
-+
-+	if (!uci_dev->enabled) {
-+		mask = EPOLLERR;
-+	} else {
-+		uci_chan = &uci_dev->dl_chan;
-+		spin_lock_bh(&uci_chan->lock);
-+		if (!list_empty(&uci_chan->pending) || uci_chan->cur_buf) {
-+			dev_dbg(dev, "Client can read from node\n");
-+			mask |= EPOLLIN | EPOLLRDNORM;
-+		}
-+		spin_unlock_bh(&uci_chan->lock);
-+	}
-+
-+	if (!uci_dev->enabled) {
-+		mask |= EPOLLERR;
-+	} else if (mhi_get_no_free_descriptors(mhi_dev, DMA_TO_DEVICE) > 0) {
-+		dev_dbg(dev, "Client can write to node\n");
-+		mask |= EPOLLOUT | EPOLLWRNORM;
-+	}
-+
-+	dev_dbg(dev, "Client attempted to poll, returning mask 0x%x\n", mask);
-+
-+	return mask;
-+}
-+
-+static ssize_t mhi_uci_write(struct file *file,
-+			     const char __user *buf,
-+			     size_t count,
-+			     loff_t *offp)
-+{
-+	struct uci_dev *uci_dev = file->private_data;
-+	struct mhi_device *mhi_dev = uci_dev->mhi_dev;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_chan *uci_chan = &uci_dev->ul_chan;
-+	size_t bytes_xfered = 0;
-+	int ret, nr_avail = 0;
-+
-+	if (!buf || !count)
-+		return -EINVAL;
-+
-+	/* confirm channel is active */
-+	mutex_lock(&uci_dev->lock);
-+	if (!uci_dev->enabled) {
-+		ret = -ENODEV;
-+		goto err_mtx_unlock;
-+	}
-+
-+	dev_dbg(dev, "%s: to xfer: %lu bytes\n", __func__, count);
-+
-+	while (count) {
-+		size_t xfer_size;
-+		void *kbuf;
-+		enum mhi_flags flags;
-+
-+		mutex_unlock(&uci_dev->lock);
-+		/* wait for free descriptors */
-+		ret = wait_event_interruptible(uci_chan->wq,
-+					       (!uci_dev->enabled) ||
-+				(nr_avail = mhi_get_no_free_descriptors(mhi_dev,
-+					       DMA_TO_DEVICE)) > 0);
-+
-+		mutex_lock(&uci_dev->lock);
-+		if (ret == -ERESTARTSYS) {
-+			dev_dbg(dev, "Exit signal caught for node\n");
-+			goto err_mtx_unlock;
-+		}
-+
-+		if (!uci_dev->enabled) {
-+			ret = -ENODEV;
-+			goto err_mtx_unlock;
-+		}
-+
-+		xfer_size = min_t(size_t, count, uci_dev->mtu);
-+		kbuf = kmalloc(xfer_size, GFP_KERNEL);
-+		if (!kbuf) {
-+			ret = -ENOMEM;
-+			goto err_mtx_unlock;
-+		}
-+
-+		ret = copy_from_user(kbuf, buf, xfer_size);
-+		if (unlikely(ret)) {
-+			kfree(kbuf);
-+			goto err_mtx_unlock;
-+		}
-+
-+		/* if ring is full after this force EOT */
-+		if (nr_avail > 1 && (count - xfer_size))
-+			flags = MHI_CHAIN;
-+		else
-+			flags = MHI_EOT;
-+
-+		if (uci_dev->enabled)
-+			ret = mhi_queue_buf(mhi_dev, DMA_TO_DEVICE, kbuf,
-+					    xfer_size, flags);
-+		else
-+			ret = -ENODEV;
-+
-+		if (ret) {
-+			kfree(kbuf);
-+			goto err_mtx_unlock;
-+		}
-+
-+		bytes_xfered += xfer_size;
-+		count -= xfer_size;
-+		buf += xfer_size;
-+	}
-+
-+	mutex_unlock(&uci_dev->lock);
-+	dev_dbg(dev, "%s: bytes xferred: %lu\n", __func__, bytes_xfered);
-+
-+	return bytes_xfered;
-+
-+err_mtx_unlock:
-+	mutex_unlock(&uci_dev->lock);
-+
-+	return ret;
-+}
-+
-+static ssize_t mhi_uci_read(struct file *file,
-+			    char __user *buf,
-+			    size_t count,
-+			    loff_t *ppos)
-+{
-+	struct uci_dev *uci_dev = file->private_data;
-+	struct mhi_device *mhi_dev = uci_dev->mhi_dev;
-+	struct uci_chan *uci_chan = &uci_dev->dl_chan;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_buf *uci_buf;
-+	char *ptr;
-+	size_t to_copy;
-+	int ret = 0;
-+
-+	if (!buf)
-+		return -EINVAL;
-+
-+	mutex_lock(&uci_dev->lock);
-+	/* confirm channel is active */
-+	if (!uci_dev->enabled) {
-+		ret = -ENODEV;
-+		goto err_mtx_unlock;
-+	}
-+
-+	spin_lock_bh(&uci_chan->lock);
-+	/* No data available to read, wait */
-+	if (!uci_chan->cur_buf && list_empty(&uci_chan->pending)) {
-+		dev_dbg(dev, "No data available to read waiting\n");
-+
-+		spin_unlock_bh(&uci_chan->lock);
-+		mutex_unlock(&uci_dev->lock);
-+		ret = wait_event_interruptible(uci_chan->wq,
-+					       (!uci_dev->enabled ||
-+					      !list_empty(&uci_chan->pending)));
-+
-+		mutex_lock(&uci_dev->lock);
-+		if (ret == -ERESTARTSYS) {
-+			dev_dbg(dev, "Exit signal caught for node\n");
-+			goto err_mtx_unlock;
-+		}
-+
-+		if (!uci_dev->enabled) {
-+			ret = -ENODEV;
-+			goto err_mtx_unlock;
-+		}
-+		spin_lock_bh(&uci_chan->lock);
-+	}
-+
-+	/* new read, get the next descriptor from the list */
-+	if (!uci_chan->cur_buf) {
-+		uci_buf = list_first_entry_or_null(&uci_chan->pending,
-+						   struct uci_buf, node);
-+		if (unlikely(!uci_buf)) {
-+			ret = -EIO;
-+			goto err_spin_unlock;
-+		}
-+
-+		list_del(&uci_buf->node);
-+		uci_chan->cur_buf = uci_buf;
-+		uci_chan->rx_size = uci_buf->len;
-+		dev_dbg(dev, "Got pkt of size: %zu\n", uci_chan->rx_size);
-+	}
-+
-+	uci_buf = uci_chan->cur_buf;
-+
-+	/* Copy the buffer to user space */
-+	to_copy = min_t(size_t, count, uci_chan->rx_size);
-+	ptr = uci_buf->data + (uci_buf->len - uci_chan->rx_size);
-+	spin_unlock_bh(&uci_chan->lock);
-+
-+	ret = copy_to_user(buf, ptr, to_copy);
-+	if (ret)
-+		goto err_mtx_unlock;
-+
-+	spin_lock_bh(&uci_chan->lock);
-+
-+	dev_dbg(dev, "Copied %lu of %lu bytes\n", to_copy, uci_chan->rx_size);
-+	uci_chan->rx_size -= to_copy;
-+
-+	/* we finished with this buffer, queue it back to hardware */
-+	if (!uci_chan->rx_size) {
-+		uci_chan->cur_buf = NULL;
-+
-+		if (uci_dev->enabled)
-+			ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE,
-+					    uci_buf->data,
-+					    uci_dev->actual_mtu, MHI_EOT);
-+		else
-+			ret = -ENODEV;
-+
-+		if (ret) {
-+			dev_err(dev, "Failed to recycle element\n");
-+			kfree(uci_buf->data);
-+			goto err_spin_unlock;
-+		}
-+	}
-+	spin_unlock_bh(&uci_chan->lock);
-+	mutex_unlock(&uci_dev->lock);
-+
-+	dev_dbg(dev, "%s: Returning %lu bytes\n", __func__, to_copy);
-+
-+	return to_copy;
-+
-+err_spin_unlock:
-+	spin_unlock_bh(&uci_chan->lock);
-+err_mtx_unlock:
-+	mutex_unlock(&uci_dev->lock);
-+	return ret;
-+}
-+
-+static int mhi_uci_open(struct inode *inode, struct file *filp)
-+{
-+	struct uci_dev *uci_dev = NULL, *tmp_dev;
-+	int ret = -EIO;
-+	struct uci_buf *buf_itr, *tmp;
-+	struct uci_chan *dl_chan;
-+	struct mhi_device *mhi_dev;
-+	struct device *dev;
-+
-+	mutex_lock(&uci_drv.lock);
-+	list_for_each_entry(tmp_dev, &uci_drv.head, node) {
-+		if (tmp_dev->devt == inode->i_rdev) {
-+			uci_dev = tmp_dev;
-+			break;
-+		}
-+	}
-+	mutex_unlock(&uci_drv.lock);
-+
-+	/* could not find a minor node */
-+	if (!uci_dev) {
-+		pr_err("Error finding uci device\n");
-+		ret = -ENODEV;
-+		goto error_exit;
-+	}
-+
-+	mhi_dev = uci_dev->mhi_dev;
-+	dev = &mhi_dev->dev;
-+
-+	mutex_lock(&uci_dev->lock);
-+	if (!uci_dev->enabled) {
-+		dev_info(dev, "Node exist, but not in active state!\n");
-+		goto error_open_chan;
-+	}
-+
-+	uci_dev->ref_count++;
-+
-+	dev_dbg(dev, "Node open, ref counts %u\n", uci_dev->ref_count);
-+
-+	if (uci_dev->ref_count == 1) {
-+		dev_dbg(dev, "Starting channel\n");
-+		ret = mhi_prepare_for_transfer(uci_dev->mhi_dev);
-+		if (ret) {
-+			dev_err(dev, "Error starting transfer channels\n");
-+			uci_dev->ref_count--;
-+			goto error_open_chan;
-+		}
-+
-+		ret = mhi_queue_inbound(uci_dev);
-+		if (ret)
-+			goto error_rx_queue;
-+	}
-+
-+	filp->private_data = uci_dev;
-+	mutex_unlock(&uci_dev->lock);
-+
-+	return 0;
-+
-+error_rx_queue:
-+	uci_dev->ref_count--;
-+	dl_chan = &uci_dev->dl_chan;
-+	mhi_unprepare_from_transfer(uci_dev->mhi_dev);
-+	list_for_each_entry_safe(buf_itr, tmp, &dl_chan->pending, node) {
-+		list_del(&buf_itr->node);
-+		kfree(buf_itr->data);
-+	}
-+error_open_chan:
-+	mutex_unlock(&uci_dev->lock);
-+
-+error_exit:
-+	return ret;
-+}
-+
-+static const struct file_operations mhidev_fops = {
-+	.owner = THIS_MODULE,
-+	.open = mhi_uci_open,
-+	.release = mhi_uci_release,
-+	.read = mhi_uci_read,
-+	.write = mhi_uci_write,
-+	.poll = mhi_uci_poll,
-+};
-+
-+static void mhi_ul_xfer_cb(struct mhi_device *mhi_dev,
-+			   struct mhi_result *mhi_result)
-+{
-+	struct uci_dev *uci_dev = dev_get_drvdata(&mhi_dev->dev);
-+	struct uci_chan *uci_chan = &uci_dev->ul_chan;
-+	struct device *dev = &mhi_dev->dev;
-+
-+	dev_dbg(dev, "status: %d xfer_len: %zu\n",
-+		mhi_result->transaction_status, mhi_result->bytes_xferd);
-+
-+	kfree(mhi_result->buf_addr);
-+
-+	if (!mhi_result->transaction_status)
-+		wake_up(&uci_chan->wq);
-+}
-+
-+static void mhi_dl_xfer_cb(struct mhi_device *mhi_dev,
-+			   struct mhi_result *mhi_result)
-+{
-+	struct uci_dev *uci_dev = dev_get_drvdata(&mhi_dev->dev);
-+	struct uci_chan *uci_chan = &uci_dev->dl_chan;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_buf *buf;
-+
-+	dev_dbg(dev, "status: %d receive_len: %zu\n",
-+		mhi_result->transaction_status, mhi_result->bytes_xferd);
-+
-+	if (mhi_result->transaction_status == -ENOTCONN) {
-+		kfree(mhi_result->buf_addr);
-+		return;
-+	}
-+
-+	spin_lock_bh(&uci_chan->lock);
-+	buf = mhi_result->buf_addr + uci_dev->actual_mtu;
-+	buf->data = mhi_result->buf_addr;
-+	buf->len = mhi_result->bytes_xferd;
-+	list_add_tail(&buf->node, &uci_chan->pending);
-+	spin_unlock_bh(&uci_chan->lock);
-+
-+	wake_up(&uci_chan->wq);
-+}
-+
-+static int mhi_uci_probe(struct mhi_device *mhi_dev,
-+			 const struct mhi_device_id *id)
-+{
-+	struct uci_dev *uci_dev;
-+	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-+	struct device *dev = &mhi_dev->dev;
-+	int minor;
-+	int dir;
-+
-+	uci_dev = kzalloc(sizeof(*uci_dev), GFP_KERNEL);
-+	if (!uci_dev)
-+		return -ENOMEM;
-+
-+	mutex_init(&uci_dev->lock);
-+	uci_dev->mhi_dev = mhi_dev;
-+
-+	mutex_lock(&uci_dev->lock);
-+
-+	mutex_lock(&uci_drv.lock);
-+	minor = find_first_zero_bit(uci_minors, MAX_UCI_DEVICES);
-+	if (minor >= MAX_UCI_DEVICES) {
-+		mutex_unlock(&uci_drv.lock);
-+		mutex_unlock(&uci_dev->lock);
-+		kfree(uci_dev);
-+		return -ENOSPC;
-+	}
-+
-+	/* create device file node /dev/mhi_<cntrl_dev_name>_<mhi_dev_name> */
-+	uci_dev->devt = MKDEV(uci_drv.major, minor);
-+	uci_dev->dev = device_create(uci_drv.class, &mhi_dev->dev,
-+				     uci_dev->devt, uci_dev,
-+				     DEVICE_NAME "_%s_%s",
-+				     dev_name(mhi_cntrl->cntrl_dev),
-+				     mhi_dev->name);
-+	set_bit(minor, uci_minors);
-+
-+	for (dir = 0; dir < 2; dir++) {
-+		struct uci_chan *uci_chan = (dir) ?
-+			&uci_dev->ul_chan : &uci_dev->dl_chan;
-+		spin_lock_init(&uci_chan->lock);
-+		init_waitqueue_head(&uci_chan->wq);
-+		INIT_LIST_HEAD(&uci_chan->pending);
-+	}
-+
-+	uci_dev->mtu = min_t(size_t, id->driver_data, MHI_MAX_MTU);
-+	uci_dev->actual_mtu = uci_dev->mtu - sizeof(struct uci_buf);
-+	dev_set_drvdata(&mhi_dev->dev, uci_dev);
-+	uci_dev->enabled = true;
-+
-+	list_add(&uci_dev->node, &uci_drv.head);
-+	mutex_unlock(&uci_drv.lock);
-+
-+	mutex_unlock(&uci_dev->lock);
-+
-+	dev_info(dev, "successfully probed\n");
-+
-+	return 0;
-+};
-+
-+static void mhi_uci_remove(struct mhi_device *mhi_dev)
-+{
-+	struct uci_dev *uci_dev = dev_get_drvdata(&mhi_dev->dev);
-+	struct device *dev = &mhi_dev->dev;
-+
-+	dev_dbg(dev, "removing\n");
-+
-+	mutex_lock(&uci_drv.lock);
-+	mutex_lock(&uci_dev->lock);
-+
-+	/* disable the node */
-+	uci_dev->enabled = false;
-+
-+	wake_up(&uci_dev->dl_chan.wq);
-+	wake_up(&uci_dev->ul_chan.wq);
-+
-+	/* delete the node to prevent new opens */
-+	device_destroy(uci_drv.class, uci_dev->devt);
-+	uci_dev->dev = NULL;
-+	list_del(&uci_dev->node);
-+
-+	/* safe to free memory only if all file nodes are closed */
-+	if (!uci_dev->ref_count) {
-+		mutex_unlock(&uci_dev->lock);
-+		mutex_destroy(&uci_dev->lock);
-+		clear_bit(MINOR(uci_dev->devt), uci_minors);
-+		dev_set_drvdata(&mhi_dev->dev, NULL);
-+		kfree(uci_dev);
-+		mutex_unlock(&uci_drv.lock);
-+		return;
-+	}
-+
-+	mutex_unlock(&uci_dev->lock);
-+	mutex_unlock(&uci_drv.lock);
-+
-+	dev_dbg(dev, "removed\n");
-+}
-+
-+/* .driver_data stores max mtu */
-+static const struct mhi_device_id mhi_uci_match_table[] = {
-+	{ .chan = "LOOPBACK", .driver_data = 0x1000 },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(mhi, mhi_uci_match_table);
-+
-+static struct mhi_driver mhi_uci_driver = {
-+	.id_table = mhi_uci_match_table,
-+	.remove = mhi_uci_remove,
-+	.probe = mhi_uci_probe,
-+	.ul_xfer_cb = mhi_ul_xfer_cb,
-+	.dl_xfer_cb = mhi_dl_xfer_cb,
-+	.driver = {
-+		.name = MHI_UCI_DRIVER_NAME,
-+	},
-+};
-+
-+static int mhi_uci_init(void)
-+{
-+	int ret;
-+
-+	ret = register_chrdev(0, MHI_UCI_DRIVER_NAME, &mhidev_fops);
-+	if (ret < 0)
-+		return ret;
-+
-+	uci_drv.major = ret;
-+	uci_drv.class = class_create(THIS_MODULE, MHI_UCI_DRIVER_NAME);
-+	if (IS_ERR(uci_drv.class)) {
-+		unregister_chrdev(uci_drv.major, MHI_UCI_DRIVER_NAME);
-+		return -ENODEV;
-+	}
-+
-+	mutex_init(&uci_drv.lock);
-+	INIT_LIST_HEAD(&uci_drv.head);
-+
-+	ret = mhi_driver_register(&mhi_uci_driver);
-+	if (ret) {
-+		class_destroy(uci_drv.class);
-+		unregister_chrdev(uci_drv.major, MHI_UCI_DRIVER_NAME);
-+	}
-+
-+	return ret;
-+}
-+
-+static void __exit mhi_uci_exit(void)
-+{
-+	mhi_driver_unregister(&mhi_uci_driver);
-+	class_destroy(uci_drv.class);
-+	unregister_chrdev(uci_drv.major, MHI_UCI_DRIVER_NAME);
-+}
-+
-+module_init(mhi_uci_init);
-+module_exit(mhi_uci_exit);
-+MODULE_LICENSE("GPL v2");
-+MODULE_DESCRIPTION("MHI UCI Driver");
+Yes, thanks for the review Mike.
+
+Thanks,
+Sai
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
