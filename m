@@ -2,109 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62944231DDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 14:01:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21CDC231DFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 14:05:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbgG2MB3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 08:01:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36890 "EHLO
+        id S1726385AbgG2MFe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 08:05:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727001AbgG2MB2 (ORCPT
+        with ESMTP id S1726341AbgG2MFe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 08:01:28 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3799AC0619D4;
-        Wed, 29 Jul 2020 05:01:28 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id r4so18413911wrx.9;
-        Wed, 29 Jul 2020 05:01:28 -0700 (PDT)
+        Wed, 29 Jul 2020 08:05:34 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B33C2C061794;
+        Wed, 29 Jul 2020 05:05:33 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id o18so24045203eje.7;
+        Wed, 29 Jul 2020 05:05:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4dsJZR6exGc1T0EmcyZPyr2Gz6t1X0UGcbSNE1N0tEw=;
-        b=ADs2k5e2my6lFev6YnfqvFfjLdyhHpzb8DpB135rHP3kU6gOwZ+iluDWPd6l7tCfGi
-         oxuyaRWQiopVN47KdcnrysD6oJmlpW04SZ6Fwy8FhvVrJ9EODJ3fV3RyY8uMHp1vhnx9
-         clcQsFTkbJ61vHPD3v/b70slyYdf+iwyGJh4f2z4RAAqbq1rixlu5pobAr5ygToIdieO
-         NiyJPwW4FomSzEIu8zo+W+liGElj55sPlZ95CCBxdjxaDQvwuj/QnymydTaQkN5DPoOJ
-         wPm+OaoWoZUTjjm09ClbeaHvm+D7IVmICJkSyiNYKqcgp/95pOr2CEgIlP5PrXKwdkBM
-         Oq7Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aXIt4Mo1PgFXWOsZfX3ouR5GPUAW+dMmhSUWqpQyOGI=;
+        b=nFNVnEBGH0cRd+8OujTalxexYKT9IDGLV+35DrquF2+E8/gVwiSbKOKAR+imJ5F34c
+         oZZ3X2mkmLZ/p9IASC7p1CcRac5xbPA47OVhZK0wtF4eE5Obpfj53A/FLXa11qn9Qqxh
+         AJdwh9yTM4A8S8TW4cPsf3CyazmLrpQYwZlqSEoLRSI+I/NI44FcKhrMC8YuZodL38dY
+         7LJWMavJQr3ofklvIKOUN69UIShyfBScLTotWlPPiti2hMjGffphQECuuo+cqZn7k+XX
+         cTsoZXezbU8yQXHfx8ZI/7z85mvHFDeFtdTZ9V1pb1wveFq6QJlkR8KvibwvAH5bLPQV
+         McbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4dsJZR6exGc1T0EmcyZPyr2Gz6t1X0UGcbSNE1N0tEw=;
-        b=BoHVExQO22+9LkmYwuUdviW+YESQzSnXc6PdZSxxz6pv2FSEJqkbGDCNEmxlK5w/Q/
-         gbk+vqWOlXs5OzBqpIV+upS0YwdUdCMLx7ELdm83Hb7XE8pPFmUpekRoMzVjuvm8uGSP
-         tqxeFpdq8JlgmKAfc6CHFt8UB9ES0azBP0WKbPUA8c/vAB1V2WdrIba6WRsa/qfm1bJH
-         3LuqY5qjEy/ypKmOjqfMYQI6q9R35IgQ5/4mUBk54kGSvba+8rDRyL0ES67pk4YIlZWD
-         IoKRxSw+OlY3fZf+i4AWWRN8eoBtwIqY2pLOk3JyXHozBzhi/aPe3ctBlHX6mTfoxeJE
-         iLfA==
-X-Gm-Message-State: AOAM533vJz2aa6sByLzyVhdUnOTOr7fY13uSI0Z/8WU9ykuBZ/7ROaXx
-        XMA6/W/bV0jkTbLZoxA61sI=
-X-Google-Smtp-Source: ABdhPJxtcOeNQtXzRyQOL5po8il8vZUESKCp/zwvGTPjQqWywMRZdXBlPmeeICZ4mjN8KIKEAdILSw==
-X-Received: by 2002:adf:cf10:: with SMTP id o16mr27064006wrj.380.1596024086992;
-        Wed, 29 Jul 2020 05:01:26 -0700 (PDT)
-Received: from localhost.localdomain (abad207.neoplus.adsl.tpnet.pl. [83.6.167.207])
-        by smtp.googlemail.com with ESMTPSA id l67sm5426000wml.13.2020.07.29.05.01.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2020 05:01:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aXIt4Mo1PgFXWOsZfX3ouR5GPUAW+dMmhSUWqpQyOGI=;
+        b=MQW8DsKn72m4SxVh+tF1Smazq1G7YU8feXfUvRyY/8O0H27iXDEmxIY4KWraTTVLjI
+         O7HT4U3q/z0CsfCokgC6zrL94TlChn23FkZuQcDviP91mEo3QW83GYdK8/8whfPRMnLw
+         RG9QwrPS8B8l94f1QuqskJ70KI29wsouYNH7puUxTJTF2Z3jsTu8HeSlHDqdpslSi+XK
+         jNSR0fKOLo1psfUXy13ZEAKB2TiFoI5BRgeGHwWkMjI0f4rXfnOSIGoUYFAOOo04S6R5
+         svs3kCZGVmBr+F8ZhI4OsphBPOUbO/eJ64vjQHgdcRcdJV1Raz7aKIXj90SdOspX2lFO
+         /1XQ==
+X-Gm-Message-State: AOAM532Pv6ob8m6Hz4CwVpRPdF1Y7g2FtmV7VQTLChcmWax3wZMScJug
+        DjD3x+OdsMqb6jmCzBL4pxiShStR1QtvMZkcaQY=
+X-Google-Smtp-Source: ABdhPJxDUZiAt21H/R28NZeZw1fPj51R6TGTfqIkYxZ8uBaYjAdiI0ZkUIeUMU9zi983V9myZE0BxnakEWXi2ot5YmA=
+X-Received: by 2002:a17:906:c143:: with SMTP id dp3mr454824ejc.504.1596024331419;
+ Wed, 29 Jul 2020 05:05:31 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200729120057.35079-1-konradybcio@gmail.com> <20200729120057.35079-10-konradybcio@gmail.com>
+In-Reply-To: <20200729120057.35079-10-konradybcio@gmail.com>
 From:   Konrad Dybcio <konradybcio@gmail.com>
-To:     konradybcio@gmail.com
+Date:   Wed, 29 Jul 2020 14:04:55 +0200
+Message-ID: <CAMS8qEWr3ote5QmXxYDPvDNc_uhhNfPj4ehB4FQxs1HNsgtCYg@mail.gmail.com>
+Subject: Re: [PATCH v2 09/10] clk: qcom: gcc-msm8994: Fix up the driver and
+ modernize it
+To:     Konrad Dybcio <konradybcio@gmail.com>
 Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-clk@vger.kernel.org
-Subject: [PATCH v2 10/10] arm64: dts: qcom: msm8992/4: Add clocks property to gcc node
-Date:   Wed, 29 Jul 2020 14:00:56 +0200
-Message-Id: <20200729120057.35079-11-konradybcio@gmail.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200729120057.35079-1-konradybcio@gmail.com>
-References: <20200729120057.35079-1-konradybcio@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is required for the platforms to function after the recent
-driver cleanup and also is the current coding style.
+Wouldn't be myself if I didn't forget that
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8992.dtsi | 2 ++
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 ++
- 2 files changed, 4 insertions(+)
+Fixes: aec89f78cf01 (clk: qcom: Add support for msm8994 global clock controller)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index c9502fcf5d70..008206251f49 100644
---- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -457,6 +457,8 @@ gcc: clock-controller@fc400000 {
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
- 			reg = <0xfc400000 0x2000>;
-+			clock-names = "xo", "sleep_clk";
-+			clocks = <&xo_board>, <&sleep_clk>;
- 		};
- 
- 		rpm_msg_ram: memory@fc428000 {
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 58fc8b0321c3..f2f850ebd3c8 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -528,6 +528,8 @@ gcc: clock-controller@fc400000 {
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
- 			reg = <0xfc400000 0x2000>;
-+			clock-names = "xo", "sleep_clk";
-+			clocks = <&xo_board>, <&sleep_clk>;
- 		};
- 
- 		rpm_msg_ram: memory@fc428000 {
--- 
-2.27.0
-
+Konrad
