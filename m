@@ -2,168 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0698A232658
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 22:42:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8748C232672
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 22:50:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726918AbgG2Ulv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 16:41:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60878 "EHLO
+        id S1726824AbgG2Ut6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 16:49:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726916AbgG2Ulu (ORCPT
+        with ESMTP id S1726751AbgG2Ut6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 16:41:50 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B30C0619D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 13:41:50 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id p1so12477909pls.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 13:41:50 -0700 (PDT)
+        Wed, 29 Jul 2020 16:49:58 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45D34C0619D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 13:49:58 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id k27so15091583pgm.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 13:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YvzhXhs+JqZkgfJI4360duB0MXbYsCTMFViWzLaBlaY=;
-        b=ebUQVAeh8oE9FLMF9AsZ87X4Bi3SZ95sD+qPv7yxrGQmqc+m4ZVd8/q1WbFVTG4dSa
-         9oackYGLw45aqQ7gFTRCKhWBkluwx4XZYOm5TTgTGBg/Zb+PslBiRvk7seA/bm+2DjWu
-         M//BLJQkWMKgRBOUqc3roEaOE3dDfQQyuSMJAsMERWRsPgV0Tg0ri3BEgzZ9PI9zIw/9
-         9qdREY/BrrI9H3juf0wAXWPAo68hTJr9IPs7rdCr1lEZl1HCPlEl3KCYE+vnhdoVU+8q
-         A+k4GiJbHiwlx5wHARK8m26FHHJvh/mVeLTQh5Vo/bpg5omN1TcDTh2Wd9t3YHCvFjgg
-         TBfQ==
+        bh=ZCFo51SeNUkOi0joTAI0GNw0Kvqf2JKQKS+2k/u6bwE=;
+        b=btWkfvp0JkQdCpC7uMqhXszwJqeXh1l5pSFL8aj+MwGVvWN4n0+PxZBiq5CjPaKB1b
+         3ruNPSm8qEV8W5hLyYr0it8cgH1lIt3QvxvFMRPPSCcS1ITuBJyfTzrlGr/sNz+CgrdW
+         uqZS2dCFzNCuRJmNpqgUBe8PKtVkAWi2/QYj0XNDb9uKf0SW24RtEmORwfhlqLdhtrtu
+         YFh1YD9vKn9Ky3B+kwhtXYlekEYn+iWaOznXeQw0qq6Gb7u1JedGsOlUX8G7EdeK/YmK
+         48E4/CPcMv64caVasW3t78Lq3ZnGm2IMu84DgPgWiw2MFDQZcjxpNM0f/F3xhBBl8RsX
+         cTWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YvzhXhs+JqZkgfJI4360duB0MXbYsCTMFViWzLaBlaY=;
-        b=AB9BIasqCQ4FSnYwvYLbVnBzdNpIjRL9tW79WS7LzcsRkJfhQqLLzfAOiE/yR/y2OY
-         bRRsvA6hrRLY+gsrFSdpFItAU9FVeySKZN938w8UwNlGEqkaXAn1u0t65FiRS5xbHOFm
-         VcgXFjz9uV/7/lHVknooMoVkDCrNhonMLtCJ4MVhyI4gArneA8qKM6AwDcpz9JLDYkDV
-         9WJGgRVt3GmdO3bI+k7N1dFPggtk9aUxEs/LOkw+cIPp6a1bwNkW7tNSWzWbgp7UUYrQ
-         zMhFZafegRIRxfPgkJSpCojYcT9hSPMeF1hJllinRZHcQoonKj6aUAbCN/wsxNBOAAml
-         6ZBA==
-X-Gm-Message-State: AOAM531SDdR4h3TdOdq7XwBFEIr78WIxg8YhcVTBiMpcP/w4b4T/2vEM
-        y8KEi28QtY6ZtDp4eJ7OZeMfRA==
-X-Google-Smtp-Source: ABdhPJwsED3u/CI8qpXKMn9KJe3biAkdbIN+MAMnL/4+m7CEx4Qr6JR9g57bHrdOIP94RHn84laC3g==
-X-Received: by 2002:a17:90a:ef17:: with SMTP id k23mr260429pjz.45.1596055309594;
-        Wed, 29 Jul 2020 13:41:49 -0700 (PDT)
+        bh=ZCFo51SeNUkOi0joTAI0GNw0Kvqf2JKQKS+2k/u6bwE=;
+        b=JbEdXDSmS2TqZu6i+ZiZXlqF1beSLauSDnd88TutY84NJWT2RSsG9LAJ8iLvMjfsGh
+         NQCW5i5OwYdg20rHzWIypjNWmR0BGN/qH2r6dGQnkukZvgsk2doVVssmAioOQlivmuNG
+         RyDzonQ85f+jNHZjx8oXFQBrJQOIOgm1pSrSUsOjvWd3oSnx9fJ+gE2S1khSBMRamGY+
+         h6Hfvd986EHQHT15wbfN3sRJsSTRfQ6EuIegQ6mvzLRdHkY+nYOhbjU+PrPV4LlU8Rb2
+         A10YdqE9J7oUaigJEthy/0zDy1mTZ56Fg2DVbgwpsnxAs13nFZoiJ8UKyjtF3EgTQKVl
+         P2/w==
+X-Gm-Message-State: AOAM532cR5z/evfRz2W6exV0B9eBkZLgmJXEb7PdYpfiQoNQJRx5MCC4
+        RIwknnXzK9cfs81qAsOuPPoYpw==
+X-Google-Smtp-Source: ABdhPJx7ckWZ845NwYLBsMDvRn/h2HR2lmuehBnFT2QcLP6PH+H6EGe1o5XMMXAGcMF9VcygBTZ9DA==
+X-Received: by 2002:a65:43c1:: with SMTP id n1mr30164858pgp.67.1596055797739;
+        Wed, 29 Jul 2020 13:49:57 -0700 (PDT)
 Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id s30sm3448581pgn.34.2020.07.29.13.41.48
+        by smtp.gmail.com with ESMTPSA id a26sm3025188pgm.20.2020.07.29.13.49.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2020 13:41:48 -0700 (PDT)
-Date:   Wed, 29 Jul 2020 13:38:20 -0700
+        Wed, 29 Jul 2020 13:49:57 -0700 (PDT)
+Date:   Wed, 29 Jul 2020 13:46:28 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Maulik Shah <mkshah@codeaurora.org>
-Subject: Re: [PATCH v4 4/5] arm64: dts: sdm845: Add OPP tables and
- power-domains for venus
-Message-ID: <20200729203820.GK229995@builder.lan>
-References: <1595503612-2901-1-git-send-email-rnayak@codeaurora.org>
- <1595503612-2901-5-git-send-email-rnayak@codeaurora.org>
- <e68ff810-362a-5b99-206b-f676b204101d@linaro.org>
- <654e0fcb-ae4d-c151-fa8a-4d029fc823fb@codeaurora.org>
- <20200724162825.GH9185@codeaurora.org>
- <159589714088.1360974.13205114501389777927@swboyd.mtv.corp.google.com>
- <20200728165212.GA32586@codeaurora.org>
- <159596590401.1360974.283437162250734878@swboyd.mtv.corp.google.com>
- <20200728201133.GB32586@codeaurora.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] soc: qcom: smd-rpm: Fix kerneldoc
+Message-ID: <20200729204628.GL229995@builder.lan>
+References: <20200729074415.28393-1-krzk@kernel.org>
+ <20200729074415.28393-2-krzk@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200728201133.GB32586@codeaurora.org>
+In-Reply-To: <20200729074415.28393-2-krzk@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 28 Jul 13:11 PDT 2020, Lina Iyer wrote:
+On Wed 29 Jul 00:44 PDT 2020, Krzysztof Kozlowski wrote:
 
-> On Tue, Jul 28 2020 at 13:51 -0600, Stephen Boyd wrote:
-> > Quoting Lina Iyer (2020-07-28 09:52:12)
-> > > On Mon, Jul 27 2020 at 18:45 -0600, Stephen Boyd wrote:
-> > > >Quoting Lina Iyer (2020-07-24 09:28:25)
-> > > >> On Fri, Jul 24 2020 at 03:03 -0600, Rajendra Nayak wrote:
-> > > >> >Hi Maulik/Lina,
-> > > >> >
-> > > >> >On 7/23/2020 11:36 PM, Stanimir Varbanov wrote:
-> > > >> >>Hi Rajendra,
-> > > >> >>
-> > > >> >>After applying 2,3 and 4/5 patches on linaro-integration v5.8-rc2 I see
-> > > >> >>below messages on db845:
-> > > >> >>
-> > > >> >>qcom-venus aa00000.video-codec: dev_pm_opp_set_rate: failed to find
-> > > >> >>current OPP for freq 533000097 (-34)
-> > > >> >>
-> > > >> >>^^^ This one is new.
-> > > >> >>
-> > > >> >>qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x30000
-> > > >> >>
-> > > >> >>^^^ and this message is annoying, can we make it pr_debug in rpmh?
-> > > >> >
-> > > >> How annoyingly often do you see this message?
-> > > >> Usually, this is an indication of bad system state either on remote
-> > > >> processors in the SoC or in Linux itself. On a smooth sailing build you
-> > > >> should not see this 'warning'.
-> > > >>
-> > > >> >Would you be fine with moving this message to a pr_debug? Its currently
-> > > >> >a pr_info_ratelimited()
-> > > >> I would rather not, moving this out of sight will mask a lot serious
-> > > >> issues that otherwise bring attention to the developers.
-> > > >>
-> > > >
-> > > >I removed this warning message in my patch posted to the list[1]. If
-> > > >it's a serious problem then I suppose a timeout is more appropriate, on
-> > > >the order of several seconds or so and then a pr_warn() and bail out of
-> > > >the async call with an error.
-> > > >
-> > > The warning used to capture issues that happen within a second and it
-> > > helps capture system related issues. Timing out after many seconds
-> > > overlooks the system issues that generally tend to resolve itself, but
-> > > nevertheless need to be investigated.
-> > > 
-> > 
-> > Is it correct to read "system related issues" as performance problems
-> > where the thread is spinning forever trying to send a message and it
-> > can't? So the problem is mostly that it's an unbounded amount of time
-> > before the message is sent to rpmh and this printk helps identify those
-> > situations where that is happening?
-> > 
-> Yes, but mostly a short period of time like when other processors are in
-> the middle of a restart or resource states changes have taken unusual
-> amounts of time. The system will generally recover from this without
-> crashing in this case. User action is investigation of the situation
-> leading to these messages.
+> Fix W=1 compile warnings (invalid kerneldoc):
 > 
+>     drivers/soc/qcom/smd-rpm.c:35: warning: Function parameter or member 'dev' not described in 'qcom_smd_rpm'
+>     drivers/soc/qcom/smd-rpm.c:99: warning: Function parameter or member 'state' not described in 'qcom_rpm_smd_write'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Given that these messages shows up from time and seemingly is harmless,
-users such as myself implements the action of ignoring these printouts.
+Thanks for spotting these, applied.
 
-In the cases I do see these messages it seems, as you say, to be related
-to something happening in the firmware. So it's not something that a
-user typically could investigate/debug anyways.
+PS. This doesn't have any relationship with the Mediatek patch, the two
+goes through different maintainer trees and my manual mailbox filter
+almost discarded the series. So please send patches like this
+individually in the future.
 
-
-As such I do second Doug's request of not printing what looks like error
-messages unless there is a persistent problem - but provide some means
-for the few who would find them useful..
-
-Regards,
+Thanks,
 Bjorn
 
-> > Otherwise as you say above it's a bad system state where the rpmh
-> > processor has gotten into a bad state like a crash? Can we recover from
-> > that? Or is the only recovery a reboot of the system? Does the rpmh
-> > processor reboot the system if it crashes?
-> We cannot recover from such a state. The remote processor will reboot if
-> it detects a failure at it's end. If the system entered a bad state, it
-> is possible that RPMH requests start timing out in Linux and remote
-> processor may not detect it. Hence, the timeout in rpmh_write() API. The
-> advised course of action is a restart as there is no way to recover from
-> this state.
+> ---
+>  drivers/soc/qcom/smd-rpm.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> --Lina
-> 
+> diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+> index 877b13850730..1d4eb46b417a 100644
+> --- a/drivers/soc/qcom/smd-rpm.c
+> +++ b/drivers/soc/qcom/smd-rpm.c
+> @@ -20,6 +20,7 @@
+>   * struct qcom_smd_rpm - state of the rpm device driver
+>   * @rpm_channel:	reference to the smd channel
+>   * @icc:		interconnect proxy device
+> + * @dev:		rpm device
+>   * @ack:		completion for acks
+>   * @lock:		mutual exclusion around the send/complete pair
+>   * @ack_status:		result of the rpm request
+> @@ -86,6 +87,7 @@ struct qcom_rpm_message {
+>  /**
+>   * qcom_rpm_smd_write - write @buf to @type:@id
+>   * @rpm:	rpm handle
+> + * @state:	active/sleep state flags
+>   * @type:	resource type
+>   * @id:		resource identifier
+>   * @buf:	the data to be written
+> -- 
+> 2.17.1
 > 
