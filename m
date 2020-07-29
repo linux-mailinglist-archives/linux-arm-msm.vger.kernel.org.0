@@ -2,76 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1222231A85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 09:44:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40374231A8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 09:47:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgG2HoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 03:44:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57838 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726290AbgG2HoY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 03:44:24 -0400
-Received: from kozik-lap.mshome.net (unknown [194.230.155.213])
+        id S1726336AbgG2HrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 03:47:11 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:41287 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726290AbgG2HrK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Jul 2020 03:47:10 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596008830; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=N0ndv5KN6Xw5hthZa7yh5iBB7EO9NGXqeet5mdr0U8Q=; b=qm2cdYubhLQWSZDB7TQsREGrDlT+2cfd7UUIeCDw9GGQV706XhWJzsFysgnjsbppbJrssJmN
+ Mclh6rTi4ziZDt/Nse4+QgQU9ubPbTa0RfAWHl/ukVx/xMZ2d97vF2qsoEJYn7bUUPngKdX5
+ f7mcWx6xInKLO2ruwYVaqEslWxw=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f212979aa44a6db05e2a560 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 07:47:05
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0D356C43395; Wed, 29 Jul 2020 07:47:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.101] (unknown [49.204.127.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 241AA2084D;
-        Wed, 29 Jul 2020 07:44:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596008663;
-        bh=uisBrp03mBj+7I52p1yLCddU9KzH618rf8vZLEo8Blo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Dph5wHjHRyz2edLmnKeCf7nt2rq2NGIOMLn8qX4MjQeY6VrRzSOGRu7fDOqUXe579
-         nCSgXVpkOu/vImotkkdF+Xw7c95oEAsXN6b2o82pGQ486jz5kQKA1Vdsto0jCu89zW
-         8+YcpSc66SljkuWLQmi1sMuEFYpB6HmvLRqnFNi4=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 2/2] soc: qcom: smd-rpm: Fix kerneldoc
-Date:   Wed, 29 Jul 2020 09:44:15 +0200
-Message-Id: <20200729074415.28393-2-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200729074415.28393-1-krzk@kernel.org>
-References: <20200729074415.28393-1-krzk@kernel.org>
+        (Authenticated sender: sivaprak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B348C433C6;
+        Wed, 29 Jul 2020 07:46:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B348C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
+Subject: Re: [PATCH 6/9] phy: qcom-qmp: Add compatible for ipq8074 pcie gen3
+ qmp phy
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, kishon@ti.com, mturquette@baylibre.com,
+        sboyd@kernel.org, svarbanov@mm-sol.com, lorenzo.pieralisi@arm.com,
+        p.zabel@pengutronix.de, mgautam@codeaurora.org,
+        smuthayy@codeaurora.org, varada@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+References: <1593940680-2363-1-git-send-email-sivaprak@codeaurora.org>
+ <1593940680-2363-7-git-send-email-sivaprak@codeaurora.org>
+ <20200713060425.GC34333@vkoul-mobl>
+From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Message-ID: <226ed531-f644-f09a-35ae-25abcf502990@codeaurora.org>
+Date:   Wed, 29 Jul 2020 13:16:53 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20200713060425.GC34333@vkoul-mobl>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix W=1 compile warnings (invalid kerneldoc):
+Hi Vinod,
 
-    drivers/soc/qcom/smd-rpm.c:35: warning: Function parameter or member 'dev' not described in 'qcom_smd_rpm'
-    drivers/soc/qcom/smd-rpm.c:99: warning: Function parameter or member 'state' not described in 'qcom_rpm_smd_write'
+On 7/13/2020 11:34 AM, Vinod Koul wrote:
+> On 05-07-20, 14:47, Sivaprakash Murugesan wrote:
+>> ipq8074 has two pcie ports, one gen2 and one gen3 ports. with phy
+>> support already available for gen2 pcie ports add support for pcie gen3
+>> port phy.
+>>
+>> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+>> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+>> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h | 137 ++++++++++++++++++++++++
+>>   drivers/phy/qualcomm/phy-qcom-qmp.c       | 172 +++++++++++++++++++++++++++++-
+>>   2 files changed, 307 insertions(+), 2 deletions(-)
+>>   create mode 100644 drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h b/drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
+>> new file mode 100644
+>> index 000000000000..bb567673d9b5
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
+>> @@ -0,0 +1,137 @@
+>> +/* SPDX-License-Identifier: GPL-2.0*
+> Trailing * at the end, it would make sense to split the spdx and
+> copyright parts to two single lines
+ok
+>
+>> @@ -2550,8 +2707,16 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
+>>   
+>>   	init.ops = &clk_fixed_rate_ops;
+>>   
+>> -	/* controllers using QMP phys use 125MHz pipe clock interface */
+>> -	fixed->fixed_rate = 125000000;
+>> +	/*
+>> +	 * controllers using QMP phys use 125MHz pipe clock interface unless
+>> +	 * other frequency is specified in dts
+>> +	 */
+>> +	ret = of_property_read_u32(np, "clock-output-rate",
+>> +				   (u32 *)&fixed->fixed_rate);
+> is this cast required?
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- drivers/soc/qcom/smd-rpm.c | 2 ++
- 1 file changed, 2 insertions(+)
+without this getting the following error.
 
-diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-index 877b13850730..1d4eb46b417a 100644
---- a/drivers/soc/qcom/smd-rpm.c
-+++ b/drivers/soc/qcom/smd-rpm.c
-@@ -20,6 +20,7 @@
-  * struct qcom_smd_rpm - state of the rpm device driver
-  * @rpm_channel:	reference to the smd channel
-  * @icc:		interconnect proxy device
-+ * @dev:		rpm device
-  * @ack:		completion for acks
-  * @lock:		mutual exclusion around the send/complete pair
-  * @ack_status:		result of the rpm request
-@@ -86,6 +87,7 @@ struct qcom_rpm_message {
- /**
-  * qcom_rpm_smd_write - write @buf to @type:@id
-  * @rpm:	rpm handle
-+ * @state:	active/sleep state flags
-  * @type:	resource type
-  * @id:		resource identifier
-  * @buf:	the data to be written
--- 
-2.17.1
+./include/linux/of.h:1209:19: note: expected 'u32 * {aka unsigned int 
+*}' but argument is of type 'long unsigned int *'
 
+>
+>> +	if (ret)
+>> +		fixed->fixed_rate = 125000000;
+>> +
+>> +	dev_info(qmp->dev, "fixed freq %lu\n", fixed->fixed_rate);
+> debug?
+will remove in next patch.
