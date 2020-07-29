@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B5FB231DE9
+	by mail.lfdr.de (Postfix) with ESMTP id 1F340231DE8
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 14:01:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726757AbgG2MBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 08:01:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
+        id S1726933AbgG2MBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 08:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726888AbgG2MBP (ORCPT
+        with ESMTP id S1726916AbgG2MBR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 08:01:15 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51DBFC061794;
-        Wed, 29 Jul 2020 05:01:15 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g8so2484297wmk.3;
-        Wed, 29 Jul 2020 05:01:15 -0700 (PDT)
+        Wed, 29 Jul 2020 08:01:17 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90F10C061794;
+        Wed, 29 Jul 2020 05:01:17 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id a15so21367509wrh.10;
+        Wed, 29 Jul 2020 05:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=I2q93FVdT16iSOi/3vPrG4ZH4MZNlbJkhzRjHUU4qvI=;
-        b=b9TFoTsy5WXyrr/4GhmwT96zN48h+XJG6F8OrMNjFWNeMe/HOvVWCFkHeSkj/kIQl2
-         Pr/dWwnILpoINmDTSdN02ewi3UNuDF1s0VZqe4zNVb3WjXw4Hw+sl2ewSn26HpYmVRmB
-         M0tZJDdsud0237DTVTelevbP7UWcqpJ2vTi2GjJ+ggFQVdp3WZwuJXxPj9FS70VnLl4G
-         2ajr1a4tyIe85/K93HSyC1jhw95rL/8Y7WAbW23ZEN3+/fCBXGkUYV4SXa7GYJz35ze3
-         tafHHWNdQTHGwsR9iG8EkEbY8xXugd40+0AgcLeUIxj3FYwo5ixyRkfIn0GF4J9HSc8b
-         itvQ==
+        bh=vT8ZV4Bq4gzHVcR91/D21EVr7w9iR11fQIpmJgM0Dvc=;
+        b=ngRZKqRT4+gaUBIIzctLQiEdogB+ttmF8+jpU6BbRVUzMm6sMWLhE2MHuwOVLN23c8
+         TaxeEcSoUKW/dtxacIsCJ8IxOjqD01N7SJUzdq3Wyig8OGhAd/ZB7bb9YdxdCRYBF+ZN
+         oou0Yd5RQBX5P6L4PEDLE4zyRFl7BnIydlJw4ukU9hLz2JN/ncqUqLcbTbulba8pTx30
+         rHvkrFO13znOz5cmntHfEaTOLlhSQHcJSNZcjgLEC8NZSYxI8sdEgKDjzLXvzeZ00gSp
+         E5Uk+A+6HXB6srlhUjmSyeitoddIZ0EXP5XjiVRGprDJ/GJTfMMgN+1OwTfbrmOC8eRV
+         mUSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=I2q93FVdT16iSOi/3vPrG4ZH4MZNlbJkhzRjHUU4qvI=;
-        b=XzaSoENyLUm1hhUlTBkcN1/O/dLL+2+x3IWSM/e9ygDxwHo5XbxgW0vMKmvdSpy8Hs
-         5kAcKf040o5LP4iIpwNDEIgQpOUF1zE4fDg/b/H5RKAwCn00yjjLEhK21WIUhdv1/tI0
-         zAmKWK6QLO9fwj81Bcdiz4LWc+c5GYU4nvGTtsZVhFCWbX1wJuR4LChl4Z0TAXhPTo11
-         +Xkih+3lB1kENqORWfU46WR9bvhbGisqg+x2TsKEsxN7TexR0nZEw/cR1nkO7w7vI1aI
-         Y+1IyvZFodflWzJGIDTY6IgM+8ExFgydixP1q33DBS7UbcqG+rq1nyGVzvglfba1nL/M
-         uOSg==
-X-Gm-Message-State: AOAM530uieB5q9S2oTSNTpoQr7peZmKkI+1JmAbt821TIuW53Ew3cJsB
-        F2iy1nh1SyCHIONXOQH17xM=
-X-Google-Smtp-Source: ABdhPJyfxcR9YmQV9N7S17bl7YsXVxAlaWJ/ZgsO97ePfr+8SUvMXE69Or24N6Y3lWOHMERiaRv8hg==
-X-Received: by 2002:a05:600c:202:: with SMTP id 2mr8311399wmi.139.1596024073983;
-        Wed, 29 Jul 2020 05:01:13 -0700 (PDT)
+        bh=vT8ZV4Bq4gzHVcR91/D21EVr7w9iR11fQIpmJgM0Dvc=;
+        b=JqqKPSA6OOAIyaIDjuKMb71pY5DagyJ+efzqC6jeGlnxsDnPkc0LqdQPnoiwMSG1yd
+         KYqU0GDa9kUKfMJUF2niePnKJY/9UMRjXJHopco1UckFfrcNBJRBp0o0Upd/FiyO+1/K
+         6zG5MZ05azzNfWHYn/pf81oW+q7m2ypJyX2PuxPrMESLRYySSktTV8IKRmns1/0yvqwp
+         fQEnHn5e9jEIkmkjegPnC/fYpgVaHFvOkaE+Z56tJO684pTI0HVuUISfgzKr7EFKKUuj
+         vcMWs6wDrYcNjLrXh251qzy6Y1DjnXGo+6MI565rgk1/ila4gjcaTmlfuRT8fmUzhGxc
+         kyFQ==
+X-Gm-Message-State: AOAM532p1wixjKPgQwpwjDRjXqckjJk7yKpaH2SSvRA+ktO+OZthAQTG
+        5Ae/puI5+4d5WeXpe0ujRQg=
+X-Google-Smtp-Source: ABdhPJymKYYX8kIInl0J7sURQaH5CL4HhlAwE9Oq4KOSY5L5/epNGA3c+CKtBN2wM8PIIpkhIwfkcQ==
+X-Received: by 2002:a5d:6646:: with SMTP id f6mr29619790wrw.155.1596024076307;
+        Wed, 29 Jul 2020 05:01:16 -0700 (PDT)
 Received: from localhost.localdomain (abad207.neoplus.adsl.tpnet.pl. [83.6.167.207])
-        by smtp.googlemail.com with ESMTPSA id l67sm5426000wml.13.2020.07.29.05.01.12
+        by smtp.googlemail.com with ESMTPSA id l67sm5426000wml.13.2020.07.29.05.01.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2020 05:01:13 -0700 (PDT)
+        Wed, 29 Jul 2020 05:01:15 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     konradybcio@gmail.com
 Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
@@ -57,9 +57,9 @@ Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH v2 05/10] arm64: dts: qcom: msm8992: Add USB support
-Date:   Wed, 29 Jul 2020 14:00:51 +0200
-Message-Id: <20200729120057.35079-6-konradybcio@gmail.com>
+Subject: [PATCH v2 06/10] arm64: dts: qcom: kitakami: Add Synaptics touchscreen
+Date:   Wed, 29 Jul 2020 14:00:52 +0200
+Message-Id: <20200729120057.35079-7-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200729120057.35079-1-konradybcio@gmail.com>
 References: <20200729120057.35079-1-konradybcio@gmail.com>
@@ -70,56 +70,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a very basic dwc3 configuration (no PHYs yet),
-but it works.
+All Kitakami devices seem to use the Synaptics RMI4
+touchscreen attached to the same i2c bus. Configure and
+enable it.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8992.dtsi | 31 +++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ .../qcom/msm8994-sony-xperia-kitakami.dtsi    | 45 ++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index c7dc81311f6a..c9502fcf5d70 100644
---- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -242,6 +242,37 @@ frame@f9028000 {
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+index 4032b7478f04..696cd39852f4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+@@ -138,7 +138,34 @@ &blsp_i2c5 {
+ &blsp_i2c6 {
+ 	status = "okay";
  
-+		usb3: usb@f92f8800 {
-+			compatible = "qcom,msm8996-dwc3", "qcom,dwc3";
-+			reg = <0xf92f8800 0x400>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
+-	/* Synaptics touchscreen */
++	rmi4-i2c-dev@2c {
++		compatible = "syna,rmi4-i2c";
++		reg = <0x2c>;
++		#address-cells = <1>;
++		#size-cells = <0>;
 +
-+			clocks = <&gcc GCC_USB30_MASTER_CLK>,
-+				 <&gcc GCC_SYS_NOC_USB3_AXI_CLK>,
-+				 <&gcc GCC_USB30_SLEEP_CLK>,
-+				 <&gcc GCC_USB30_MOCK_UTMI_CLK>;
-+			clock-names = "core", "iface", "sleep", "mock_utmi", "ref", "xo";
++		interrupt-parent = <&tlmm>;
++		interrupts = <42 IRQ_TYPE_EDGE_FALLING>;
 +
-+			assigned-clocks = <&gcc GCC_USB30_MOCK_UTMI_CLK>,
-+					  <&gcc GCC_USB30_MASTER_CLK>;
-+			assigned-clock-rates = <19200000>, <120000000>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&ts_int_active &ts_reset_active>;
 +
-+			power-domains = <&gcc USB30_GDSC>;
-+			qcom,select-utmi-as-pipe-clk;
++		vdd-supply = <&pm8994_l22>;
++		vio-supply = <&pm8994_s4>;
 +
-+			dwc3@f9200000 {
-+				compatible = "snps,dwc3";
-+				reg = <0xf9200000 0xcc00>;
-+				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
-+				snps,dis_u2_susphy_quirk;
-+				snps,dis_enblslpm_quirk;
-+				maximum-speed = "high-speed";
-+				dr_mode = "peripheral";
-+			};
++		syna,reset-delay-ms = <220>;
++		syna,startup-delay-ms = <220>;
++
++		rmi4-f01@1 {
++			reg = <0x01>;
++			syna,nosleep-mode = <1>;
 +		};
 +
- 		sdhc_1: sdhci@f9824900 {
- 			compatible = "qcom,sdhci-msm-v4";
- 			reg = <0xf9824900 0x1a0>, <0xf9824000 0x800>;
++		rmi4-f11@11 {
++			reg = <0x11>;
++			syna,sensor-type = <1>;
++		};
++	};
+ };
+ 
+ &blsp1_uart2 {
+@@ -233,3 +260,19 @@ &sdhc1 {
+ 	 * vqmmc-supply = <&pm8994_s4>;
+ 	 */
+ };
++
++&tlmm {
++	ts_int_active: ts-int-active {
++		pins = "gpio42";
++		drive-strength = <2>;
++		bias-disable;
++		input-enable;
++	};
++
++	ts_reset_active: ts-reset-active {
++		pins = "gpio109";
++		drive-strength = <2>;
++		bias-disable;
++		output-low;
++	};
++};
 -- 
 2.27.0
 
