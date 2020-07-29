@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9558E231DCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 14:01:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5444C231DED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 14:01:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbgG2MBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 08:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36824 "EHLO
+        id S1726857AbgG2MBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 08:01:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726772AbgG2MBI (ORCPT
+        with ESMTP id S1726353AbgG2MBK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 08:01:08 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 017A3C0619D2;
-        Wed, 29 Jul 2020 05:01:08 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 9so2463675wmj.5;
-        Wed, 29 Jul 2020 05:01:07 -0700 (PDT)
+        Wed, 29 Jul 2020 08:01:10 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D342C061794;
+        Wed, 29 Jul 2020 05:01:10 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id r4so18412873wrx.9;
+        Wed, 29 Jul 2020 05:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TF7XW+i8cbP3gIkhlhIAvvLS4ohbcx6+poBRM18scqo=;
-        b=dNW3EfQCxfi7bVB1bqjW/PrHh2iBoDIiGQ9glC0S9lATe0WwlagXVgZpkFoPu4r5yu
-         BCXvSQSxwlLkoFnF7b1z5hiCbZuk7KIPUQ+xNkr0UysidzdxM7fHO7Jbzmz/QwXVaS8G
-         FGOKsriVvB7Iw/U/aMyC7nRwO4Bii1IB97+GLvwjyBv42tbRWFl6LcbUalTlsf664gVV
-         9k7hmTpiCUXhsWBzMIcJ8KUhzrPbn4zd01tYbW/N+yceIgLjd4UOqN688UiwXduuJu6h
-         u+vJNiSRt0bgmnAuUEENAyZyfrAYKQKLVsC7ygfHv495dTUGD7SJDoc2QaLKfUWznWyr
-         AoYg==
+        bh=IyAadO7Kj4svE/f2q3Z4e23jYOH8YNibv5HEpOFyPnU=;
+        b=CD0/QxB9mBf+NTzosNohe42lcZIfXDYQY2Rd8Px+Oer6gRe1nHnWYhJb9NEhK7YMes
+         I+ts1dXG8hBbHfd9mnO/E7XwONZAKW8IVDiz4w04gKmxWhAIGQJBqdGDDUu4i3ztH9NY
+         hjJyxdSrlIsgs28uOrkub8lkRfmh30CS1LVvWGIrCESwsyZym0p8ePMnvYUTft70fLh8
+         8iU1nQSTdzFGRZJfxJPQNftIbaVIAePMWZCZhUk4NsRwmfFABrJbNyc/xXHHEFLft5B5
+         /V6DiQj/fz7LyiAjbYxE2wo6hNYYWimJez8Lz45iWADPT9qviqJgxCZyCxPFlnZ3PlAE
+         VIKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TF7XW+i8cbP3gIkhlhIAvvLS4ohbcx6+poBRM18scqo=;
-        b=j39aYPgEe/vsgALPIv8giw+coG81UutUs4B4/nWbgqNjeubL+Lqav6itKpKWB2m09I
-         CR9EdgrH3EZ+sWsLCbRzAXGEmd07hOYUsQBH8AaSPhL+p3ukeuO1KI5N1q1fTHxMB9Fr
-         ishAOgrKumyoZivlm/ryAOklGS5Xbh1t5vBnCvoiTRsmKhzihDnXClXFbvbLpD/IF8dm
-         EkT7OVkMZae3tryhpts62dXiVT6YFodvgp5vn9YVILgklhaRcxsvt9msrM4XiXJ+fyW1
-         7HUlwuszJw4zqd5eeVZbcIWivgijGhBdINhpxXeR8kYmtfC01Wd9AvQcIK2KJZepd93v
-         9XWQ==
-X-Gm-Message-State: AOAM530VFxaDOlxGRxLgbLVwiptZuaqBztsNw6HyG9lCiyyChPCFJng+
-        MhIfvNqs27gM0PnTyRznvzY=
-X-Google-Smtp-Source: ABdhPJx+OYutPH7e9/IDvz+HCiS6cVZnFa/O5uDXkYICd4PPP3FHVaoU+E5IqQGySLM0Nkq/Uk9/Qw==
-X-Received: by 2002:a05:600c:284:: with SMTP id 4mr8601167wmk.48.1596024066770;
-        Wed, 29 Jul 2020 05:01:06 -0700 (PDT)
+        bh=IyAadO7Kj4svE/f2q3Z4e23jYOH8YNibv5HEpOFyPnU=;
+        b=tY0UVXcOOqSbHATeTcetOMUeRjY2UKrFEsa8h0mwmhkg5W5e3YhefAiGC35CZuFmGo
+         rALC7n4xxvB8G+nZJsYQ352nIQHjoBEzjU+mhDg5zo0kGnakbyXD/o3SolMiJoxYJwB+
+         6sB9AUYZnsu5tAvSSQMKQoKqzIGBiPAviA9OIs2sHZrr6BtFb1fNsmZjUY47IjszTPj/
+         BNyCr7TFmSixXaa4HOWzu0L2lue3/jVWIrilWAyC/QERt//t3iX9B3lVaHHiAi1vTZm7
+         +dBlFWbyWoK89EhVhQx/Upn+R2iX+2zsPY29F3yVdKOTmxpgEqOVsMz3E5vhJptTKR0b
+         8tag==
+X-Gm-Message-State: AOAM533iExWNhKO46f36I0dkq3ALbmZqWderUhWuamdpjlFaqncL6X8g
+        4utcVb6QMwyUh4FzXIlrUnw=
+X-Google-Smtp-Source: ABdhPJzVKTxrC7sh1y9rKVLz/vxh3ZwFojV3ITq1aNkQcsq7vM+n2G7ZMwHh29wRW0wbDw2mF6tDuQ==
+X-Received: by 2002:adf:9c8c:: with SMTP id d12mr28786755wre.369.1596024069040;
+        Wed, 29 Jul 2020 05:01:09 -0700 (PDT)
 Received: from localhost.localdomain (abad207.neoplus.adsl.tpnet.pl. [83.6.167.207])
-        by smtp.googlemail.com with ESMTPSA id l67sm5426000wml.13.2020.07.29.05.01.05
+        by smtp.googlemail.com with ESMTPSA id l67sm5426000wml.13.2020.07.29.05.01.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2020 05:01:06 -0700 (PDT)
+        Wed, 29 Jul 2020 05:01:08 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     konradybcio@gmail.com
 Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
@@ -57,9 +57,9 @@ Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [PATCH v2 02/10] arm64: dts: qcom: msm8992: Add BLSP_I2C1 support
-Date:   Wed, 29 Jul 2020 14:00:48 +0200
-Message-Id: <20200729120057.35079-3-konradybcio@gmail.com>
+Subject: [PATCH v2 03/10] arm64: dts: qcom: talkman: Add Synaptics RMI4 touchscreen
+Date:   Wed, 29 Jul 2020 14:00:49 +0200
+Message-Id: <20200729120057.35079-4-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200729120057.35079-1-konradybcio@gmail.com>
 References: <20200729120057.35079-1-konradybcio@gmail.com>
@@ -70,67 +70,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This will be required to support touchscreen on Lumia
-devices.
+This adds touchscreen capabilities to the Lumia 950.
 
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8992.dtsi | 35 +++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ .../dts/qcom/msm8992-msft-lumia-talkman.dts   | 28 +++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-index 9b42ac42b171..c7dc81311f6a 100644
---- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
-@@ -304,6 +304,27 @@ blsp1_uart2: serial@f991e000 {
- 			status = "disabled";
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-msft-lumia-talkman.dts b/arch/arm64/boot/dts/qcom/msm8992-msft-lumia-talkman.dts
+index 3cc01f02219d..c337a86a5c77 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-msft-lumia-talkman.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-msft-lumia-talkman.dts
+@@ -32,6 +32,34 @@ chosen {
+ 	};
+ };
  
-+		/*
-+		 * This I2C seems to only be present on WP platforms
-+		 * and is likely disabled in firmware
-+		 * (hangs at least one device) on android platforms.
-+		 */
-+		blsp_i2c1: i2c@f9923000 {
-+			compatible = "qcom,i2c-qup-v2.2.1";
-+			reg = <0xf9923000 0x500>;
-+			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_AHB_CLK>,
-+						<&gcc GCC_BLSP1_QUP1_I2C_APPS_CLK>;
-+			clock-names = "iface", "core";
-+			clock-frequency = <400000>;
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&i2c1_default>;
-+			pinctrl-1 = <&i2c1_sleep>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			status = "disabled";
++&blsp_i2c1 {
++	status = "okay";
++
++	rmi4-i2c-dev@4b {
++		compatible = "syna,rmi4-i2c";
++		reg = <0x4b>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <77 IRQ_TYPE_EDGE_FALLING>;
++
++		rmi4-f01@1 {
++			reg = <0x01>;
++			syna,nosleep-mode = <1>;
 +		};
 +
- 		blsp_i2c2: i2c@f9924000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			reg = <0xf9924000 0x500>;
-@@ -524,6 +545,20 @@ sdc1_rclk_off: rclk-off {
- 				bias-pull-down;
- 			};
++		rmi4-f12@12 {
++			reg = <0x12>;
++			syna,sensor-type = <1>;
++			syna,clip-x-low = <0>;
++			syna,clip-x-high = <1440>;
++			syna,clip-y-low = <0>;
++			syna,clip-y-high = <2560>;
++		};
++	};
++};
++
+ &sdhc_1 {
+ 	status = "okay";
  
-+			i2c1_default: i2c1-default {
-+				function = "blsp_i2c1";
-+				pins = "gpio2", "gpio3";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			i2c1_sleep: i2c1-sleep {
-+				function = "gpio";
-+				pins = "gpio2", "gpio3";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
- 			i2c2_default: i2c2-default {
- 				function = "blsp_i2c2";
- 				pins = "gpio6", "gpio7";
 -- 
 2.27.0
 
