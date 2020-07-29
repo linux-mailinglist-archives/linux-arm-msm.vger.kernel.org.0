@@ -2,98 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDD2B2319B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 08:45:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF417231A20
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 09:14:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgG2Gp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 02:45:26 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:20986 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726286AbgG2Gp0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 02:45:26 -0400
+        id S1727829AbgG2HOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 03:14:21 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:37234 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727867AbgG2HOU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Jul 2020 03:14:20 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596005125; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=F8Dx2k2QTTUlJ3PVcw289iUoRDVJ4gqpdkDJN4dKpe8=; b=GazcNQmDsgNlb1oGZfSA68CIFH+HO+voGzCUuXNVCO76+6g7TEfyTFPjh7n9UwaMcXtU5v0i
- WUk1KRp4vOpznp8j6mfyk33YtWzAaRmK5jh3eZMpRfkQAUCnAKzueJ37JNHd/bGSiqsMoDZB
- lo71IpGnt4GB4jM0cE3fc392dlA=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ s=smtp; t=1596006859; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=mee1C+QC0fGadDkqCYd+GCVz3YCcwnJujaxX+uKJFqM=; b=qZ2MRMUfGqaXNVy6f3/iJ6ecCExiVoVPsGyH58bHVwRw/qS7QvadxPeSJrACVgcEwq6nJa89
+ aaaEnTPHh7e/Lxw+GY8LLUApwFjD5O6/oIxQU435jyx90JS5u4XvWV+iKvOiFvvfUgdIChCp
+ 5SK+DTwp5Rt1GBY4L5asNnw12I8=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f211b0570ff737ddbb67b21 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 06:45:25
+ smtp-out-n17.prod.us-east-1.postgun.com with SMTP id
+ 5f2121acbd0c3f0296900b14 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 07:13:48
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6D9EDC4339C; Wed, 29 Jul 2020 06:45:24 +0000 (UTC)
+        id CBBABC433A0; Wed, 29 Jul 2020 07:13:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.101] (unknown [49.204.127.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sivaprak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 232CEC433C9;
-        Wed, 29 Jul 2020 06:45:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 232CEC433C9
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA065C433C6;
+        Wed, 29 Jul 2020 07:13:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AA065C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
-Subject: Re: [PATCH 5/9] phy: qcom-qmp: use correct values for ipq8074 gen2
- pcie phy init
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        robh+dt@kernel.org, kishon@ti.com, mturquette@baylibre.com,
-        sboyd@kernel.org, svarbanov@mm-sol.com, lorenzo.pieralisi@arm.com,
-        p.zabel@pengutronix.de, mgautam@codeaurora.org,
-        smuthayy@codeaurora.org, varada@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, stable@vger.kernel.org,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-References: <1593940680-2363-1-git-send-email-sivaprak@codeaurora.org>
- <1593940680-2363-6-git-send-email-sivaprak@codeaurora.org>
- <20200713055558.GB34333@vkoul-mobl>
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Message-ID: <9988249f-53aa-e615-f64b-28c0c0641ab4@codeaurora.org>
-Date:   Wed, 29 Jul 2020 12:15:13 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, heikki.krogerus@linux.intel.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v6 0/4] Introduce PMIC based USB type C detection
+Date:   Wed, 29 Jul 2020 00:13:36 -0700
+Message-Id: <20200729071340.7673-1-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <20200713055558.GB34333@vkoul-mobl>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes in v6:
+ - Removed qcom_usb_vbus-regulator.c and qcom,usb-vbus-regulator.yaml from the
+   series as they have been merged on regulator.git
+ - Added seperate references to the usb-connector.yaml in qcom,pmic-typec.yaml
+   instead of referencing the entire schema.
 
-On 7/13/2020 11:25 AM, Vinod Koul wrote:
-> On 05-07-20, 14:47, Sivaprakash Murugesan wrote:
->> There were some problem in ipq8074 gen2 pcie phy init sequence, fix
-> Can you please describe these problems, it would help review to
-> understand the issues and also for future reference to you
+Changes in v5:
+ - Fix dt_binding_check warning/error in qcom,pmic-typec.yaml
 
-Hi Vinod,
+Changes in v4:
+ - Modified qcom,pmic-typec binding to include the SS mux and the DRD remote
+   endpoint nodes underneath port@1, which is assigned to the SSUSB path
+   according to usb-connector
+ - Added usb-connector reference to the typec dt-binding
+ - Added tags to the usb type c and vbus nodes
+ - Removed "qcom" tags from type c and vbus nodes
+ - Modified Kconfig module name, and removed module alias from the typec driver
+ 
+Changes in v3:
+ - Fix driver reference to match driver name in Kconfig for
+   qcom_usb_vbus-regulator.c
+ - Utilize regulator bitmap helpers for enable, disable and is enabled calls in
+   qcom_usb_vbus-regulator.c
+ - Use of_get_regulator_init_data() to initialize regulator init data, and to
+   set constraints in qcom_usb_vbus-regulator.c
+ - Remove the need for a local device structure in the vbus regulator driver
+ 
+Changes in v2:
+ - Use devm_kzalloc() in qcom_pmic_typec_probe()
+ - Add checks to make sure return value of typec_find_port_power_role() is
+   valid
+ - Added a VBUS output regulator driver, which will be used by the PMIC USB
+   type c driver to enable/disable the source
+ - Added logic to control vbus source from the PMIC type c driver when
+   UFP/DFP is detected
+ - Added dt-binding for this new regulator driver
+ - Fixed Kconfig typec notation to match others
+ - Leave type C block disabled until enabled by a platform DTS
 
-As you mentioned we are updating few register values
+Add the required drivers for implementing type C orientation and role
+detection using the Qualcomm PMIC.  Currently, PMICs such as the PM8150B
+have an integrated type C block, which can be utilized for this.  This
+series adds the dt-binding, PMIC type C driver, and DTS nodes.
 
-and also adding clocks and resets.
+The PMIC type C driver will register itself as a type C port w/ a
+registered type C switch for orientation, and will fetch a USB role switch
+handle for the role notifications.  It will also have the ability to enable
+the VBUS output to any connected devices based on if the device is behaving
+as a UFP or DFP.
 
-the register values are given by the Hardware team and there
+Wesley Cheng (4):
+  usb: typec: Add QCOM PMIC typec detection driver
+  dt-bindings: usb: Add Qualcomm PMIC type C controller dt-binding
+  arm64: boot: dts: qcom: pm8150b: Add node for USB type C block
+  arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
 
-is some fine tuning values are provided by Hardware team for the
+ .../bindings/usb/qcom,pmic-typec.yaml         | 131 +++++++++
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |  15 +-
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts       |   4 +
+ drivers/usb/typec/Kconfig                     |  12 +
+ drivers/usb/typec/Makefile                    |   1 +
+ drivers/usb/typec/qcom-pmic-typec.c           | 275 ++++++++++++++++++
+ 6 files changed, 437 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ create mode 100644 drivers/usb/typec/qcom-pmic-typec.c
 
-issues we faced downstream.
-
-Also, few register values are typos for example QSERDES_RX_SIGDET_CNTRL
-
-is a rx register it was wrongly in serdes table.
-
-I will try to mention these details in next patch.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
