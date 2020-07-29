@@ -2,246 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ADF02322F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 18:53:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50BA523233D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 19:15:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgG2Qw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 12:52:58 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:40377 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726341AbgG2Qwz (ORCPT
+        id S1726581AbgG2RPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 13:15:51 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:33772 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726480AbgG2RPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 12:52:55 -0400
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 29 Jul 2020 09:52:54 -0700
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg01-sd.qualcomm.com with ESMTP; 29 Jul 2020 09:52:54 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 9BEDF16C0; Wed, 29 Jul 2020 09:52:54 -0700 (PDT)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [PATCH v2 2/2] thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 1 PMIC peripherals
-Date:   Wed, 29 Jul 2020 09:52:52 -0700
-Message-Id: <69c90a004b3f5b7ae282f5ec5ca2920a48f23e02.1596040416.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <944856eb819081268fab783236a916257de120e4.1596040416.git.gurus@codeaurora.org>
-References: <944856eb819081268fab783236a916257de120e4.1596040416.git.gurus@codeaurora.org>
-In-Reply-To: <944856eb819081268fab783236a916257de120e4.1596040416.git.gurus@codeaurora.org>
-References: <944856eb819081268fab783236a916257de120e4.1596040416.git.gurus@codeaurora.org>
+        Wed, 29 Jul 2020 13:15:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596042950; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=1cULKMzNtdk8DlQ9NLAgOegKaEdRUEW58bZV9Y9kTSc=; b=jBYsPjh/V49y9MHGkn7YrN+QjnZU0yaOSPLXjgLN+ys1Ow3yNNycr+uHAdYmsmk4qwb3t3gk
+ t3ZddpdBiJcA1t3qw218S8sudKOvR7KStHGYunr7eUd22oscbonjlqxKEEHVhYm9ORnIT9go
+ MxJCyZk5pUgYwSNzfNNl0Aag72g=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f21aebbca55a5604c5ca828 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 17:15:39
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4E897C433CA; Wed, 29 Jul 2020 17:15:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.0
+Received: from [192.168.1.179] (cpe-76-167-231-33.san.res.rr.com [76.167.231.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8D07DC433C9;
+        Wed, 29 Jul 2020 17:15:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8D07DC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
+Subject: Re: [PATCH 1/2] firmware: qcom_scm: Add memory protect virtual
+ address ranges
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20200709115829.8194-1-stanimir.varbanov@linaro.org>
+ <20200709115829.8194-2-stanimir.varbanov@linaro.org>
+ <33a63665-2f75-1b58-8a0c-3b0a8979fb85@linaro.org>
+From:   Elliot Berman <eberman@codeaurora.org>
+Message-ID: <46632fb9-e07e-fa40-5f13-fb45b4014e03@codeaurora.org>
+Date:   Wed, 29 Jul 2020 10:15:36 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <33a63665-2f75-1b58-8a0c-3b0a8979fb85@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
+++
 
-Add support for TEMP_ALARM GEN2 PMIC peripherals with digital
-major revision 1.  This revision utilizes a different temperature
-threshold mapping than earlier revisions.
+On 7/24/2020 8:04 AM, Stanimir Varbanov wrote:
+> Hi,
+> 
+> Gentle ping for review.
+> 
+> On 7/9/20 2:58 PM, Stanimir Varbanov wrote:
+>> This adds a new SCM memprotect command to set virtual address ranges.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/firmware/qcom_scm.c | 24 ++++++++++++++++++++++++
+>>  drivers/firmware/qcom_scm.h |  1 +
+>>  include/linux/qcom_scm.h    |  8 +++++++-
+>>  3 files changed, 32 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index 0e7233a20f34..a73870255c2e 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -864,6 +864,30 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+>>  }
+>>  EXPORT_SYMBOL(qcom_scm_assign_mem);
+>>  
+>> +int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+>> +				   u32 cp_nonpixel_start,
+>> +				   u32 cp_nonpixel_size)
+>> +{
+>> +	int ret;
+>> +	struct qcom_scm_desc desc = {
+>> +		.svc = QCOM_SCM_SVC_MP,
+>> +		.cmd = QCOM_SCM_MP_VIDEO_VAR,
+>> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_VAL, QCOM_SCM_VAL,
+>> +					 QCOM_SCM_VAL, QCOM_SCM_VAL),
+>> +		.args[0] = cp_start,
+>> +		.args[1] = cp_size,
+>> +		.args[2] = cp_nonpixel_start,
+>> +		.args[3] = cp_nonpixel_size,
+>> +		.owner = ARM_SMCCC_OWNER_SIP,
+>> +	};
+>> +	struct qcom_scm_res res;
+>> +
+>> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
+>> +
+>> +	return ret ? : res.result[0];
+>> +}
+>> +EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
+>> +
 
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
-Changes from v1:
-- Added space padding for the arrays, moved "||" to previous line
+Small nit, can you bump the function above assign_mem? It would keep order aligned with
+the macros in qcom_scm.h
 
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 91 +++++++++++++++++++----------
- 1 file changed, 61 insertions(+), 30 deletions(-)
+>>  /**
+>>   * qcom_scm_ocmem_lock_available() - is OCMEM lock/unlock interface available
+>>   */
+>> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+>> index d9ed670da222..14da834ac593 100644
+>> --- a/drivers/firmware/qcom_scm.h
+>> +++ b/drivers/firmware/qcom_scm.h
+>> @@ -97,6 +97,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>>  #define QCOM_SCM_MP_RESTORE_SEC_CFG		0x02
+>>  #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_SIZE	0x03
+>>  #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_INIT	0x04
+>> +#define QCOM_SCM_MP_VIDEO_VAR			0x08
+>>  #define QCOM_SCM_MP_ASSIGN			0x16
+>>  
+>>  #define QCOM_SCM_SVC_OCMEM		0x0f
+>> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+>> index 3d6a24697761..19b5188d17f4 100644
+>> --- a/include/linux/qcom_scm.h
+>> +++ b/include/linux/qcom_scm.h
+>> @@ -81,7 +81,9 @@ extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+>>  			       unsigned int *src,
+>>  			       const struct qcom_scm_vmperm *newvm,
+>>  			       unsigned int dest_cnt);
+>> -
+>> +extern int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+>> +					  u32 cp_nonpixel_start,
+>> +					  u32 cp_nonpixel_size);
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 6dc879f..7419e19 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -17,6 +17,7 @@
- 
- #include "../thermal_core.h"
- 
-+#define QPNP_TM_REG_DIG_MAJOR		0x01
- #define QPNP_TM_REG_TYPE		0x04
- #define QPNP_TM_REG_SUBTYPE		0x05
- #define QPNP_TM_REG_STATUS		0x08
-@@ -38,26 +39,30 @@
- 
- #define ALARM_CTRL_FORCE_ENABLE		BIT(7)
- 
--/*
-- * Trip point values based on threshold control
-- * 0 = {105 C, 125 C, 145 C}
-- * 1 = {110 C, 130 C, 150 C}
-- * 2 = {115 C, 135 C, 155 C}
-- * 3 = {120 C, 140 C, 160 C}
--*/
--#define TEMP_STAGE_STEP			20000	/* Stage step: 20.000 C */
--#define TEMP_STAGE_HYSTERESIS		2000
-+#define THRESH_COUNT			4
-+#define STAGE_COUNT			3
-+
-+/* Over-temperature trip point values in mC */
-+static const long temp_map_gen1[THRESH_COUNT][STAGE_COUNT] = {
-+	{ 105000, 125000, 145000 },
-+	{ 110000, 130000, 150000 },
-+	{ 115000, 135000, 155000 },
-+	{ 120000, 140000, 160000 },
-+};
-+
-+static const long temp_map_gen2_v1[THRESH_COUNT][STAGE_COUNT] = {
-+	{  90000, 110000, 140000 },
-+	{  95000, 115000, 145000 },
-+	{ 100000, 120000, 150000 },
-+	{ 105000, 125000, 155000 },
-+};
- 
--#define TEMP_THRESH_MIN			105000	/* Threshold Min: 105 C */
--#define TEMP_THRESH_STEP		5000	/* Threshold step: 5 C */
-+#define TEMP_THRESH_STEP		5000 /* Threshold step: 5 C */
- 
- #define THRESH_MIN			0
- #define THRESH_MAX			3
- 
--/* Stage 2 Threshold Min: 125 C */
--#define STAGE2_THRESHOLD_MIN		125000
--/* Stage 2 Threshold Max: 140 C */
--#define STAGE2_THRESHOLD_MAX		140000
-+#define TEMP_STAGE_HYSTERESIS		2000
- 
- /* Temperature in Milli Celsius reported during stage 0 if no ADC is present */
- #define DEFAULT_TEMP			37000
-@@ -77,6 +82,7 @@ struct qpnp_tm_chip {
- 	bool				initialized;
- 
- 	struct iio_channel		*adc;
-+	const long			(*temp_map)[THRESH_COUNT][STAGE_COUNT];
- };
- 
- /* This array maps from GEN2 alarm state to GEN1 alarm stage */
-@@ -101,6 +107,23 @@ static int qpnp_tm_write(struct qpnp_tm_chip *chip, u16 addr, u8 data)
- }
- 
- /**
-+ * qpnp_tm_decode_temp() - return temperature in mC corresponding to the
-+ *		specified over-temperature stage
-+ * @chip:		Pointer to the qpnp_tm chip
-+ * @stage:		Over-temperature stage
-+ *
-+ * Return: temperature in mC
-+ */
-+static long qpnp_tm_decode_temp(struct qpnp_tm_chip *chip, unsigned int stage)
-+{
-+	if (!chip->temp_map || chip->thresh >= THRESH_COUNT || stage == 0 ||
-+	    stage > STAGE_COUNT)
-+		return 0;
-+
-+	return (*chip->temp_map)[chip->thresh][stage - 1];
-+}
-+
-+/**
-  * qpnp_tm_get_temp_stage() - return over-temperature stage
-  * @chip:		Pointer to the qpnp_tm chip
-  *
-@@ -149,14 +172,12 @@ static int qpnp_tm_update_temp_no_adc(struct qpnp_tm_chip *chip)
- 
- 	if (stage_new > stage_old) {
- 		/* increasing stage, use lower bound */
--		chip->temp = (stage_new - 1) * TEMP_STAGE_STEP +
--			     chip->thresh * TEMP_THRESH_STEP +
--			     TEMP_STAGE_HYSTERESIS + TEMP_THRESH_MIN;
-+		chip->temp = qpnp_tm_decode_temp(chip, stage_new)
-+				+ TEMP_STAGE_HYSTERESIS;
- 	} else if (stage_new < stage_old) {
- 		/* decreasing stage, use upper bound */
--		chip->temp = stage_new * TEMP_STAGE_STEP +
--			     chip->thresh * TEMP_THRESH_STEP -
--			     TEMP_STAGE_HYSTERESIS + TEMP_THRESH_MIN;
-+		chip->temp = qpnp_tm_decode_temp(chip, stage_new + 1)
-+				- TEMP_STAGE_HYSTERESIS;
- 	}
- 
- 	chip->stage = stage;
-@@ -199,26 +220,28 @@ static int qpnp_tm_get_temp(void *data, int *temp)
- static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 					     int temp)
- {
--	u8 reg;
-+	long stage2_threshold_min = (*chip->temp_map)[THRESH_MIN][1];
-+	long stage2_threshold_max = (*chip->temp_map)[THRESH_MAX][1];
- 	bool disable_s2_shutdown = false;
-+	u8 reg;
- 
- 	WARN_ON(!mutex_is_locked(&chip->lock));
- 
- 	/*
- 	 * Default: S2 and S3 shutdown enabled, thresholds at
--	 * 105C/125C/145C, monitoring at 25Hz
-+	 * lowest threshold set, monitoring at 25Hz
- 	 */
- 	reg = SHUTDOWN_CTRL1_RATE_25HZ;
- 
- 	if (temp == THERMAL_TEMP_INVALID ||
--	    temp < STAGE2_THRESHOLD_MIN) {
-+	    temp < stage2_threshold_min) {
- 		chip->thresh = THRESH_MIN;
- 		goto skip;
- 	}
- 
--	if (temp <= STAGE2_THRESHOLD_MAX) {
-+	if (temp <= stage2_threshold_max) {
- 		chip->thresh = THRESH_MAX -
--			((STAGE2_THRESHOLD_MAX - temp) /
-+			((stage2_threshold_max - temp) /
- 			 TEMP_THRESH_STEP);
- 		disable_s2_shutdown = true;
- 	} else {
-@@ -326,9 +349,7 @@ static int qpnp_tm_init(struct qpnp_tm_chip *chip)
- 		? chip->stage : alarm_state_map[chip->stage];
- 
- 	if (stage)
--		chip->temp = chip->thresh * TEMP_THRESH_STEP +
--			     (stage - 1) * TEMP_STAGE_STEP +
--			     TEMP_THRESH_MIN;
-+		chip->temp = qpnp_tm_decode_temp(chip, stage);
- 
- 	crit_temp = qpnp_tm_get_critical_trip_temp(chip);
- 	ret = qpnp_tm_update_critical_trip_temp(chip, crit_temp);
-@@ -350,7 +371,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- {
- 	struct qpnp_tm_chip *chip;
- 	struct device_node *node;
--	u8 type, subtype;
-+	u8 type, subtype, dig_major;
- 	u32 res;
- 	int ret, irq;
- 
-@@ -400,6 +421,12 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = qpnp_tm_read(chip, QPNP_TM_REG_DIG_MAJOR, &dig_major);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "could not read dig_major\n");
-+		return ret;
-+	}
-+
- 	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
- 				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
- 		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
-@@ -408,6 +435,10 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 	}
- 
- 	chip->subtype = subtype;
-+	if (subtype == QPNP_TM_SUBTYPE_GEN2 && dig_major >= 1)
-+		chip->temp_map = &temp_map_gen2_v1;
-+	else
-+		chip->temp_map = &temp_map_gen1;
- 
- 	/*
- 	 * Register the sensor before initializing the hardware to be able to
+Same here.
+
+>>  extern bool qcom_scm_ocmem_lock_available(void);
+>>  extern int qcom_scm_ocmem_lock(enum qcom_scm_ocmem_client id, u32 offset,
+>>  			       u32 size, u32 mode);
+>> @@ -131,6 +133,10 @@ static inline int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
+>>  static inline int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
+>>  		unsigned int *src, const struct qcom_scm_vmperm *newvm,
+>>  		unsigned int dest_cnt) { return -ENODEV; }
+>> +extern inline int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+>> +						 u32 cp_nonpixel_start,
+>> +						 u32 cp_nonpixel_size)
+>> +		{ return -ENODEV; }
+
+Same here.
+
+>>  
+>>  static inline bool qcom_scm_ocmem_lock_available(void) { return false; }
+>>  static inline int qcom_scm_ocmem_lock(enum qcom_scm_ocmem_client id, u32 offset,
+>>
+> 
+
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
-
