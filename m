@@ -2,127 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40374231A8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 09:47:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3494231AA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Jul 2020 09:54:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgG2HrL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Jul 2020 03:47:11 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:41287 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726290AbgG2HrK (ORCPT
+        id S1726336AbgG2HyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Jul 2020 03:54:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726290AbgG2HyD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Jul 2020 03:47:10 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596008830; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=N0ndv5KN6Xw5hthZa7yh5iBB7EO9NGXqeet5mdr0U8Q=; b=qm2cdYubhLQWSZDB7TQsREGrDlT+2cfd7UUIeCDw9GGQV706XhWJzsFysgnjsbppbJrssJmN
- Mclh6rTi4ziZDt/Nse4+QgQU9ubPbTa0RfAWHl/ukVx/xMZ2d97vF2qsoEJYn7bUUPngKdX5
- f7mcWx6xInKLO2ruwYVaqEslWxw=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f212979aa44a6db05e2a560 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Jul 2020 07:47:05
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0D356C43395; Wed, 29 Jul 2020 07:47:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.101] (unknown [49.204.127.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sivaprak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5B348C433C6;
-        Wed, 29 Jul 2020 07:46:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5B348C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sivaprak@codeaurora.org
-Subject: Re: [PATCH 6/9] phy: qcom-qmp: Add compatible for ipq8074 pcie gen3
- qmp phy
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        robh+dt@kernel.org, kishon@ti.com, mturquette@baylibre.com,
-        sboyd@kernel.org, svarbanov@mm-sol.com, lorenzo.pieralisi@arm.com,
-        p.zabel@pengutronix.de, mgautam@codeaurora.org,
-        smuthayy@codeaurora.org, varada@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-References: <1593940680-2363-1-git-send-email-sivaprak@codeaurora.org>
- <1593940680-2363-7-git-send-email-sivaprak@codeaurora.org>
- <20200713060425.GC34333@vkoul-mobl>
-From:   Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Message-ID: <226ed531-f644-f09a-35ae-25abcf502990@codeaurora.org>
-Date:   Wed, 29 Jul 2020 13:16:53 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Wed, 29 Jul 2020 03:54:03 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE679C061794;
+        Wed, 29 Jul 2020 00:54:02 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id 9so1802487wmj.5;
+        Wed, 29 Jul 2020 00:54:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=/AF3ziGdsv+yHT1fe3PUelS/2zrWYP4f9GP8YSs/IPc=;
+        b=MlUH8kBaFu79dJ7zTA7AxHX5vZnH3atVoFmXTrsQVk0XGmsKLFztoB8RZ+7l9NxADa
+         heVEVjCRrLpA09FB0tMRmlYRxowPetxVox4fUGfZlhrkAWkhm5XbMuQR/wR4mC99k+g9
+         gFlPUjreBiXvEg0CpWWx3HKClpA7t1wc1xde5lfEYfBQGgoSl+5QdqvsXm6bZ/8xqP0t
+         wuw4MIhFh7v1oBZaAATh83lNhwaaRouCuYSFSUOsI89temx6LA2/4iMgieU5TMqAMf9N
+         lRmg4rK+i0Ak753bQsVyCR1z76g1RZK7xAnLuGr5TD/feaWW7SY+keMpaAmcuFQyRJQT
+         AKUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/AF3ziGdsv+yHT1fe3PUelS/2zrWYP4f9GP8YSs/IPc=;
+        b=GENtcOLyOu9m2H9M1TRovl290K/0WFtAhFuDaqyMOlja9KD7e80wVxeySiwagiktA3
+         gc20Ja7hb5pmhFPs7giPP1F1zMUyVcZwiZqISN/qInPz3rXbyLfhGDAAhr2OIfbYaD/u
+         UsKGwqL1Slj/cWA2bGgMhEyKP8moqJqgHcz1fldeTxty0oJmWAT50KYKuJcri4EORtZn
+         E5+vcQ8UHiOEZd04VvTzO0roiodrBDQGu1vvsZZflhfgfOwnRCDjpaacUJUZb/wGp/3K
+         hAmb+cNsn5aSbZh4C7vEdD/n2rJGu/uA6dWuhKzKsx2R2DPvdVlGR1X6ux/qCJshOjKG
+         BdYg==
+X-Gm-Message-State: AOAM533NyosjHjJS+HYl1ExwqpvLW07WCrQ/OewglFRGQwMC4ipVOJZA
+        YeaH6V6KKW88w43AVAqVM7JsM5p2bmY=
+X-Google-Smtp-Source: ABdhPJxamnrbfIgoOPs5700FsQ5inek8s3ZEJ1uxRNAQLfIqnK+Jz1/HzqUtD7rdjPAG/HH75zH4Gg==
+X-Received: by 2002:a1c:5f41:: with SMTP id t62mr7199927wmb.53.1596009241124;
+        Wed, 29 Jul 2020 00:54:01 -0700 (PDT)
+Received: from ziggy.stardust ([213.195.122.158])
+        by smtp.gmail.com with ESMTPSA id t13sm3207810wru.65.2020.07.29.00.54.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jul 2020 00:54:00 -0700 (PDT)
+Subject: Re: [PATCH 1/2] soc: mediatek: mtk-infracfg: Fix kerneldoc
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20200729074415.28393-1-krzk@kernel.org>
+From:   Matthias Brugger <matthias.bgg@gmail.com>
+Message-ID: <92ac7165-765e-da75-4c0b-3b232521b5e9@gmail.com>
+Date:   Wed, 29 Jul 2020 09:53:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200713060425.GC34333@vkoul-mobl>
+In-Reply-To: <20200729074415.28393-1-krzk@kernel.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
 
-On 7/13/2020 11:34 AM, Vinod Koul wrote:
-> On 05-07-20, 14:47, Sivaprakash Murugesan wrote:
->> ipq8074 has two pcie ports, one gen2 and one gen3 ports. with phy
->> support already available for gen2 pcie ports add support for pcie gen3
->> port phy.
->>
->> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
->> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h | 137 ++++++++++++++++++++++++
->>   drivers/phy/qualcomm/phy-qcom-qmp.c       | 172 +++++++++++++++++++++++++++++-
->>   2 files changed, 307 insertions(+), 2 deletions(-)
->>   create mode 100644 drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h b/drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
->> new file mode 100644
->> index 000000000000..bb567673d9b5
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-pcie3-qmp.h
->> @@ -0,0 +1,137 @@
->> +/* SPDX-License-Identifier: GPL-2.0*
-> Trailing * at the end, it would make sense to split the spdx and
-> copyright parts to two single lines
-ok
->
->> @@ -2550,8 +2707,16 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
->>   
->>   	init.ops = &clk_fixed_rate_ops;
->>   
->> -	/* controllers using QMP phys use 125MHz pipe clock interface */
->> -	fixed->fixed_rate = 125000000;
->> +	/*
->> +	 * controllers using QMP phys use 125MHz pipe clock interface unless
->> +	 * other frequency is specified in dts
->> +	 */
->> +	ret = of_property_read_u32(np, "clock-output-rate",
->> +				   (u32 *)&fixed->fixed_rate);
-> is this cast required?
 
-without this getting the following error.
+On 29/07/2020 09:44, Krzysztof Kozlowski wrote:
+> Fix W=1 compile warnings (invalid kerneldoc):
+> 
+>      drivers/soc/mediatek/mtk-infracfg.c:34: warning: Function parameter or member 'infracfg' not described in 'mtk_infracfg_set_bus_protection'
+>      drivers/soc/mediatek/mtk-infracfg.c:34: warning: Excess function parameter 'regmap' description in 'mtk_infracfg_set_bus_protection'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-./include/linux/of.h:1209:19: note: expected 'u32 * {aka unsigned int 
-*}' but argument is of type 'long unsigned int *'
+Queued for v5.9-next/soc
 
->
->> +	if (ret)
->> +		fixed->fixed_rate = 125000000;
->> +
->> +	dev_info(qmp->dev, "fixed freq %lu\n", fixed->fixed_rate);
-> debug?
-will remove in next patch.
+Thanks
+Matthias
+
+> ---
+>   drivers/soc/mediatek/mtk-infracfg.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soc/mediatek/mtk-infracfg.c b/drivers/soc/mediatek/mtk-infracfg.c
+> index 341c7ac250e3..4a123796aad3 100644
+> --- a/drivers/soc/mediatek/mtk-infracfg.c
+> +++ b/drivers/soc/mediatek/mtk-infracfg.c
+> @@ -19,7 +19,7 @@
+>   
+>   /**
+>    * mtk_infracfg_set_bus_protection - enable bus protection
+> - * @regmap: The infracfg regmap
+> + * @infracfg: The infracfg regmap
+>    * @mask: The mask containing the protection bits to be enabled.
+>    * @reg_update: The boolean flag determines to set the protection bits
+>    *              by regmap_update_bits with enable register(PROTECTEN) or
+> @@ -50,7 +50,7 @@ int mtk_infracfg_set_bus_protection(struct regmap *infracfg, u32 mask,
+>   
+>   /**
+>    * mtk_infracfg_clear_bus_protection - disable bus protection
+> - * @regmap: The infracfg regmap
+> + * @infracfg: The infracfg regmap
+>    * @mask: The mask containing the protection bits to be disabled.
+>    * @reg_update: The boolean flag determines to clear the protection bits
+>    *              by regmap_update_bits with enable register(PROTECTEN) or
+> 
