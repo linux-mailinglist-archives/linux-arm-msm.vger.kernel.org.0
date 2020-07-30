@@ -2,64 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78E00233883
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 20:38:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E488E2338AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 21:08:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727945AbgG3Sim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 14:38:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37146 "EHLO
+        id S1730429AbgG3TH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jul 2020 15:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726343AbgG3Sim (ORCPT
+        with ESMTP id S1730410AbgG3TH5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 14:38:42 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E40C061574;
-        Thu, 30 Jul 2020 11:38:41 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id l4so28899570ejd.13;
-        Thu, 30 Jul 2020 11:38:41 -0700 (PDT)
+        Thu, 30 Jul 2020 15:07:57 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D639C061575
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jul 2020 12:07:57 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id c10so2599408pjn.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jul 2020 12:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=k300jlz7TJKTIPgAN5WfLt8mQVo5Ag09AL0277oqBzA=;
-        b=aaVnyEB4pqa62TrDBNnN9yAl3DHVKTn1xeTbCpKo/nmJO+kfgdLJahUpQmRCDe7Dm6
-         QkS5kSn0cqjO/G5Ovps50NYNR6CT8U53T/VeklDDdtTQqxMyd4sYRv/54zVZZNBHBeau
-         hXkyz944BsVAg3UaWds9eL5aqZVeWOPxyvE/5RPXvGlSEtvmMWDdxrrV82rl1nRJzkv1
-         vub3/gHugoPJ58JY0OIQKiIQc/Nzv6thxMQCBQ4RA3mP8CyI7F6w/LoFOq8hEG02JXB8
-         W2y7tRCfCNAiZT79FG+XLdtztqYmsS9AT8iEZ/vrOGaT7Ue/L5PjomFVnlGc9oPVfO/r
-         l2Jg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yQqZ2MMm/8Cs5yn8qC9wISuJd6WR3cQ7bq1kU0X78gY=;
+        b=njK4CKRSnqz/4kzXOci0zfsSuCFC++5HVfGahiUteSV13O0mQJuO4aCpWv6gZZbvPh
+         /m8TZ8bDXUx4J2okW5Qy7Ct1B4UP5g7A9E0bqr9q2RraQGCBw/WCZPaqz+arHMQvWJpB
+         ZC8tFcP2gD3NkWjH9GRLocJugT/Q5jT2htO+tAq+nwrBPNtl+6amILJRHuK/7QNHs99J
+         SV3fxiK0BgmIIG2A0cotkrNX7RxZ7n/RxaNatkGjuiGPHx7yNBbe9lcz6Qe26zmMQ2at
+         l0uU8JLfKul+uv8ay8RejwYPELo/WJb1or5SErxVz9ycVOIbZzEl2SOcasTlJxb597cy
+         YKaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=k300jlz7TJKTIPgAN5WfLt8mQVo5Ag09AL0277oqBzA=;
-        b=F94w+PSGoThWR8Ma729pnKpkXKH8w1sJzjXFHJ0oh69Xr9O6kyyKQwcgPwaP3r1AOB
-         ZU5LCHUPd/z9H0aHxbtWs/KYzr3Whhg3Tc+h0Hkx83Sp2GucQPTMJQq8MEojFstybl8c
-         WsQWSxAb3KKVuzd8JS/p49UpiXQ3sa89a/Y9mOL4fdCn5Y4Y6+CKUYL3+MvtQh0BzXok
-         RNSQZCK00bS1je6gyLyHrUAA1tUwCu6rqeSLkzraMTjM4w4TukKSM+3XK7AQ1Wh73c9U
-         OeX2IovPYMFJxaLbkPX0oa6Duhen6jXJDuFt4yDsNlM//LG/FBvZij/Jyw6cIHnrJoKB
-         J3jQ==
-X-Gm-Message-State: AOAM531/ULTm0JeTYmw+/pVyMIPk3d4JzAzbKVUH8IeeDnMR/Tf9HUms
-        BjuzEw/Iil03F8O0MzJSM8SFTRF0Qv9/oLU9JpM=
-X-Google-Smtp-Source: ABdhPJy7AEQe1n+FA0S0bWIEfvPkeP85KFWnVYqUpehnBDqrXpJzxQ3ecbfhWawaCp9/siW/leV4dISdkd6DgnTqLoM=
-X-Received: by 2002:a17:906:c143:: with SMTP id dp3mr422623ejc.504.1596134320289;
- Thu, 30 Jul 2020 11:38:40 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yQqZ2MMm/8Cs5yn8qC9wISuJd6WR3cQ7bq1kU0X78gY=;
+        b=bviFVXEJ3BWVwoZOQBf6ft0Ivt5iU+UBmkK/9LtMb/4Fa6+DIQ+MfN/fQz9pFg52oK
+         cmBSMN/pPxj2optgO1+uar6O0oVb9vx00jW2UmyPpNn36a+Ltstgtyy3MDRHKGlwOrXF
+         0fXZwlKAFtuWCbUtfrZ0Pt4R34DA2ogx4JfaHqCIKmVGfSqYlno8NwL4ov+iFGg6ux3w
+         oq/HocJjE3hkpEk12ur40/k3QHgMkRo6s0S3ncrIIEMTORzVTYZ0nB+G3wvy2T/5saXp
+         jtOmPrIPN3BoqcbjfYEkoIGNXsWFZy6+IzUos9UR3KbKjFpplR4MHuPugCTGOl+1tMhL
+         /yCA==
+X-Gm-Message-State: AOAM533A8+XSAWHQo6pu2BZCGKZe5DZmJYj6ZGs5R0Dofu6KH5Fz5Ukf
+        5t14MmkQjgIi2y1fEuL6ynFmObVwCnpXDYjZKJV04Q==
+X-Google-Smtp-Source: ABdhPJxpUre/sCyL5KQFAnJGST7trqtf7jiZxfkce+e8aNDKmYfAKlPnyRtQ8OFxu8QIw05HJaoAQiMCoHz2raocdGo=
+X-Received: by 2002:a17:90a:17e9:: with SMTP id q96mr526355pja.91.1596136076328;
+ Thu, 30 Jul 2020 12:07:56 -0700 (PDT)
 MIME-Version: 1.0
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Thu, 30 Jul 2020 20:38:04 +0200
-Message-ID: <CAMS8qEXFXxt61bhHa_d+Mf9dJ0qqvkWnrq+8w13dVAuK6Q84Cg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: pm660: Fix missing pound sign in interrupt-cells
-To:     =?UTF-8?Q?=C5=81ukasz_Patron?= <priv.luk@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <20200722110139.24778-1-georgi.djakov@linaro.org>
+ <20200722110139.24778-2-georgi.djakov@linaro.org> <CAGETcx-QM8P2nVxcQJZz+m5Zwi==2qLfinb0FkDXJ7dNVP5bEA@mail.gmail.com>
+ <e4f68ae5-5cf7-bac4-e7f2-c074327ea659@codeaurora.org>
+In-Reply-To: <e4f68ae5-5cf7-bac4-e7f2-c074327ea659@codeaurora.org>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Thu, 30 Jul 2020 12:07:20 -0700
+Message-ID: <CAGETcx-i=wBB4Ooch734B0ejK6F5mGPLQ6c_K4FeFyNmMLsL=Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] interconnect: Add sync state support
+To:     Mike Tipton <mdtipton@codeaurora.org>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>, okukatla@codeaurora.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        DTML <devicetree@vger.kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tested-by: Konrad Dybcio <konradybcio@gmail.com>
+On Mon, Jul 27, 2020 at 11:18 PM Mike Tipton <mdtipton@codeaurora.org> wrote:
+>
+> On 7/22/2020 10:07 AM, Saravana Kannan wrote:
+> > On Wed, Jul 22, 2020 at 4:01 AM Georgi Djakov <georgi.djakov@linaro.org> wrote:
+> >>
+> >> The bootloaders often do some initial configuration of the interconnects
+> >> in the system and we want to keep this configuration until all consumers
+> >> have probed and expressed their bandwidth needs. This is because we don't
+> >> want to change the configuration by starting to disable unused paths until
+> >> every user had a chance to request the amount of bandwidth it needs.
+> >>
+> >> To accomplish this we will implement an interconnect specific sync_state
+> >> callback which will synchronize (aggregate and set) the current bandwidth
+> >> settings when all consumers have been probed.
+> >>
+> >> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> >> ---
+> >>   drivers/interconnect/core.c           | 61 +++++++++++++++++++++++++++
+> >>   include/linux/interconnect-provider.h |  5 +++
+> >>   2 files changed, 66 insertions(+)
+> >>
+> >> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+> >> index e5f998744501..0c4e38d9f1fa 100644
+> >> --- a/drivers/interconnect/core.c
+> >> +++ b/drivers/interconnect/core.c
+> >> @@ -26,6 +26,8 @@
+> >>
+> >>   static DEFINE_IDR(icc_idr);
+> >>   static LIST_HEAD(icc_providers);
+> >> +static int providers_count;
+> >> +static bool synced_state;
+> >>   static DEFINE_MUTEX(icc_lock);
+> >>   static struct dentry *icc_debugfs_dir;
+> >>
+> >> @@ -255,6 +257,12 @@ static int aggregate_requests(struct icc_node *node)
+> >>                          continue;
+> >>                  p->aggregate(node, r->tag, r->avg_bw, r->peak_bw,
+> >>                               &node->avg_bw, &node->peak_bw);
+> >> +
+> >> +               /* during boot use the initial bandwidth as a floor value */
+> >> +               if (!synced_state) {
+> >> +                       node->avg_bw = max(node->avg_bw, node->init_avg);
+> >> +                       node->peak_bw = max(node->peak_bw, node->init_peak);
+> >> +               }
+> >
+> > Sorry I didn't reply earlier.
+> >
+> > I liked your previous approach with the get_bw ops. The v2 approach
+> > forces every interconnect provider driver to set up these values even
+> > if they are okay with just maxing out the bandwidth. Also, if they can
+> > actually query their hardware, this adds additional steps for them.
+>
+> The problem with using something like get_bw() is that while we can
+> dynamically query the HW, we have far less granularity in HW than we
+> have nodes in the framework. We vote at BCM-level granularity, but each
+> BCM can have many nodes. For example, the sdm845 CN0 BCM has 47 nodes.
+> If we implement get_bw() generically, then it would return the BW for
+> each node, which would be the queried BCM vote scaled to account for
+> differences in BCM/node widths. While this could be useful in general as
+> an informational callback, we wouldn't want to use this as a proxy for
+> our initial BW vote requirements. For CN0, we wouldn't want or need to
+> vote 47 times for the same CN0 BCM. Each of the 47 node requests would
+> result in the same BCM request.
 
-Konrad
+Firstly most people in the list don't know what BCM means. Also, all
+of this is your provider driver specific issues. If you are exposing
+more nodes than available HW granularity, then you might want to
+question why it needs to be done (probably to make aggregation easier
+for the driver). If it's needed, then optimize your get/set() calls by
+caching the value in an internal variable so that you don't send a
+request to your BCM if you haven't changed the value since the last
+request. This is not a reason to not have get_bw() calls at the
+framework level. Other providers might support it and it'd make their
+lives easier.
+
+> All we'd really need is a single node per-BCM to serve as the proxy
+> node. We'd query the HW, scale the queried value for the chosen proxy
+> node, and set init_avg/init_peak appropriately. This would save a lot of
+> unnecessary votes. Based on the current implementation, the set() call
+> in icc_node_add() for initial BW wouldn't trigger any actual HW requests
+> since we only queue BCMs that require updating in the aggregate()
+> callback. However, the set() call in icc_sync_state() would, since we
+> re-aggregate each node that has a non-zero init_avg/init_peak.
+
+Having a fake "proxy node" seems like a bad internal design. Also,
+have you timed the cost of these calls to justify your concern? If you
+cache the values after aggregation and check before you send it down
+to a "BCM", at worst you get one additional call to rpmh per BCM due
+to this feature. I'm guessing any time delta would be lost as noise
+compared to the boot up time.
+
+> There's nothing stopping us from implementing get_bw() as if it were
+> get_initial_bw(), but that only works until the framework decides to use
+> get_bw() for more things than just the initial vote. I suppose we could
+> also just have a "get_initial_bw" callback, but it only needs to be
+> called once, so doesn't necessarily need a callback as opposed to
+> additional init_avg/init_peak members in the icc_node struct.
+
+The benefit of "ops" vs "fill up these variables" is that you can
+differentiate between "I don't care, framework can decide" vs "I need
+it to be 0". Put another way, there's no way to say "I don't care" if
+you use variables. And by default drivers that don't really care (as
+in, okay if it's set to INT_MAX) shouldn't have to do extra code/work.
+
+Long story short, there's nothing wrong with get_bw(). If your
+specific driver needs to optimize the calls to your RPMH hardware,
+that should be hidden inside your driver.
+
+-Saravana
