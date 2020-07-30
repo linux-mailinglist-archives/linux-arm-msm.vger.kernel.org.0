@@ -2,55 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2A5232BBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 08:11:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07C92232BF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 08:32:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728754AbgG3GKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 02:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34864 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728739AbgG3GKp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 02:10:45 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50DCCC061794
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 23:10:45 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id j20so14424353pfe.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 23:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uQYpM0l2BVpiJWQZFm1BaeuXeXgCvf7ouFHsM+pxK3o=;
-        b=XBqp9xb8A9zcXM17E9TiNethe3UCCEif5I2cMuTLDm+LzY/Q2h/KEWFSUUIU7+OOsp
-         fGEfbag1AKQoz9XbUpT/O8kbZdNkENjutG77LUQoYDU1WZSv71gcM3J/pBNKIVOkdclA
-         FLTQ7DrgWZXGCECvMsiy7JgW113vuB7rqh+MYWSubjaMXMJDnSj1gFZMVwHl9DVCZWnr
-         V1QOc8GZRqNu9ZCgYrn1pMnHs9SapztI74OlUkc0AskHJD/mQ9yWV9lupgZKwp63IBNg
-         afahJsaFHOxnIDSCUeF37d3jphtAWoDYcShcDIXQ22qeNvzkR4hQyZz+1pQhbjw8WLa1
-         NhIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uQYpM0l2BVpiJWQZFm1BaeuXeXgCvf7ouFHsM+pxK3o=;
-        b=qQXkHUcfZObI3Nq6XOmgHDgNCKo9wzAvrODlOjm/p/BeFjzpMqBr1NOA1a61tFnRRd
-         ElCuudxcZfIJ2cplKjl9Y4JcCAENqDGHEqQj5UM43RE+I0w7wNc9rQprP/pl21j5RCAl
-         OEHxbsJkwi86PY++Z1JoKgbaIkjsXSJh6PyGiFSsQX7UOxK0q48vuRch843YDuDHtW6n
-         agyvsnnfBli10E9dxQrqivVWJpJAAzoj6LMje9v94H1HJseE5B5013ukR3o15pUS0dTo
-         boNoRvb8m8THaJ1TdfARPTWimRzYjIuFShu9lwBeZOiBRreIxjM7Z9CfRr0jwDhdcXNb
-         7HLA==
-X-Gm-Message-State: AOAM530nG289ZAkA72P6tUNOhZNrbSjabSWBpu11o//vgAypycwzquSb
-        V28WIAJzhw1BaDVBXBHcAhd32Levdyg=
-X-Google-Smtp-Source: ABdhPJxSQvMRu1T3KgR5lHuZ010N5ABhbRziRXq9ba4d0wesRySTDuiJw9HJ7RCTVwThb1P+v7OFrQ==
-X-Received: by 2002:a62:7c09:: with SMTP id x9mr1632779pfc.229.1596089444870;
-        Wed, 29 Jul 2020 23:10:44 -0700 (PDT)
-Received: from localhost ([106.201.14.19])
-        by smtp.gmail.com with ESMTPSA id t73sm4667429pfc.78.2020.07.29.23.10.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Jul 2020 23:10:44 -0700 (PDT)
-Date:   Thu, 30 Jul 2020 11:40:41 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Amit Kucheria <amitk@kernel.org>
+        id S1728755AbgG3Gck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jul 2020 02:32:40 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39292 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728741AbgG3Gck (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jul 2020 02:32:40 -0400
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7043920809
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jul 2020 06:32:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596090759;
+        bh=gmLQHj64FkaGgheaXBUyCURKlTKz98iDmLTqsyXvdvc=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=pcyKjnxAp1lbX4V/QXWlO9nvvxyG7yNXfzIaTpM5q0sMdTBU9YoCVR+1QVfk1YpxB
+         c6nmJpqRkwZOhqrLEj1dD1UnjWbmLaD7KBJ6rMCy8Xu2gMjintotMoT+opqoB4XCz+
+         AM2TMwQTd+nncHMa6MlTVcpaA2nM73mjmT14MBAg=
+Received: by mail-ua1-f50.google.com with SMTP id y2so3439097uaf.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 23:32:39 -0700 (PDT)
+X-Gm-Message-State: AOAM530rCDsYTm5okwM5TsWJLoD/p5W+oQJhCudxa5foPsTDJ71d3QQ2
+        Qj9MXPpW/H+LmlAWQjukIGxwKDeW0gLx+Ts2UT1bRg==
+X-Google-Smtp-Source: ABdhPJyAQSKQ9sVCMoAtAugFkA9JAJrq57BPhGMjf0IJnH0c7syklskqTMGNqUyzVuXc04jhyb5yGnoo2ea3s/tHzYA=
+X-Received: by 2002:a9f:2742:: with SMTP id a60mr1017353uaa.48.1596090758571;
+ Wed, 29 Jul 2020 23:32:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <d48d824ab3abacb2356878780979d7ed42191eaf.1596080365.git.viresh.kumar@linaro.org>
+ <CAHLCerP4YPHc4sKD_RTq=Gxfj+ex4F=J2is1Y-UzGXcOuEOrOQ@mail.gmail.com> <20200730061041.gyprgwfkzfb64t3m@vireshk-mac-ubuntu>
+In-Reply-To: <20200730061041.gyprgwfkzfb64t3m@vireshk-mac-ubuntu>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Thu, 30 Jul 2020 12:02:27 +0530
+X-Gmail-Original-Message-ID: <CAHLCerMD_spZFHER-y9dOzr7qo9xKXZdqy3cFt+W9QUW4Ng3jw@mail.gmail.com>
+Message-ID: <CAHLCerMD_spZFHER-y9dOzr7qo9xKXZdqy3cFt+W9QUW4Ng3jw@mail.gmail.com>
+Subject: Re: [PATCH] cpufreq: cached_resolved_idx can not be negative
+To:     Viresh Kumar <viresh.kumar@linaro.org>
 Cc:     Rafael Wysocki <rjw@rjwysocki.net>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Linux PM list <linux-pm@vger.kernel.org>,
@@ -58,46 +47,53 @@ Cc:     Rafael Wysocki <rjw@rjwysocki.net>, Andy Gross <agross@kernel.org>,
         ionela.voinescu@arm.com,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] cpufreq: cached_resolved_idx can not be negative
-Message-ID: <20200730061041.gyprgwfkzfb64t3m@vireshk-mac-ubuntu>
-References: <d48d824ab3abacb2356878780979d7ed42191eaf.1596080365.git.viresh.kumar@linaro.org>
- <CAHLCerP4YPHc4sKD_RTq=Gxfj+ex4F=J2is1Y-UzGXcOuEOrOQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerP4YPHc4sKD_RTq=Gxfj+ex4F=J2is1Y-UzGXcOuEOrOQ@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30-07-20, 11:29, Amit Kucheria wrote:
-> On Thu, Jul 30, 2020 at 9:38 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+On Thu, Jul 30, 2020 at 11:40 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+>
+> On 30-07-20, 11:29, Amit Kucheria wrote:
+> > On Thu, Jul 30, 2020 at 9:38 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> > >
+> > > It is not possible for cached_resolved_idx to be invalid here as the
+> > > cpufreq core always sets index to a positive value.
+> > >
+> > > Change its type to unsigned int and fix qcom usage a bit.
 > >
-> > It is not possible for cached_resolved_idx to be invalid here as the
-> > cpufreq core always sets index to a positive value.
-> >
-> > Change its type to unsigned int and fix qcom usage a bit.
-> 
-> Shouldn't you fix up idx in cpufreq_driver_resolve_freq() to be
-> unsigned int too?
+> > Shouldn't you fix up idx in cpufreq_driver_resolve_freq() to be
+> > unsigned int too?
+>
+> Yes, merged this into the patch.
 
-Yes, merged this into the patch.
+Looking at this more closely, I found another call site for
+cpufreq_frequency_table_target() in cpufreq.c that needs the index to
+be unsigned int.
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 0128de3603df..053d72e52a31 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -538,7 +538,7 @@ unsigned int cpufreq_driver_resolve_freq(struct cpufreq_policy *policy,
-        policy->cached_target_freq = target_freq;
- 
-        if (cpufreq_driver->target_index) {
--               int idx;
-+               unsigned int idx;
- 
-                idx = cpufreq_frequency_table_target(policy, target_freq,
-                                                     CPUFREQ_RELATION_L);
+But then cpufreq_frequency_table_target() returns -EINVAL, so we
+should be able to handle int values.
 
--- 
-viresh
+I think you will need to fix the unconditional assignment of
+    policy->cached_resolved_idx = idx
+in cpufreq_driver_resolve_freq(). It doesn't check for -EINVAL, so the
+qcom driver is write in checking for a negative value.
+
+>
+> diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+> index 0128de3603df..053d72e52a31 100644
+> --- a/drivers/cpufreq/cpufreq.c
+> +++ b/drivers/cpufreq/cpufreq.c
+> @@ -538,7 +538,7 @@ unsigned int cpufreq_driver_resolve_freq(struct cpufreq_policy *policy,
+>         policy->cached_target_freq = target_freq;
+>
+>         if (cpufreq_driver->target_index) {
+> -               int idx;
+> +               unsigned int idx;
+>
+>                 idx = cpufreq_frequency_table_target(policy, target_freq,
+>                                                      CPUFREQ_RELATION_L);
+>
+> --
+> viresh
