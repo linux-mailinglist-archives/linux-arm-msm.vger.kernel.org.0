@@ -2,114 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FB5923339F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 15:59:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9DC323354C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 17:27:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729152AbgG3N5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 09:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50304 "EHLO
+        id S1728910AbgG3P1B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jul 2020 11:27:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726535AbgG3N5g (ORCPT
+        with ESMTP id S1726275AbgG3P1A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 09:57:36 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C34C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jul 2020 06:57:36 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id 2so21506259qkf.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jul 2020 06:57:36 -0700 (PDT)
+        Thu, 30 Jul 2020 11:27:00 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00980C061574;
+        Thu, 30 Jul 2020 08:26:59 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id jp10so1812127ejb.0;
+        Thu, 30 Jul 2020 08:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=swB4gM5/Sd34+RuLXe4ebGLoqKKPMlJrxzDtJ86OY8o=;
-        b=ElJmz2ZYVZwbLk/3G64W4s/3aJGLxePkXOtMUKp0atmEd4+v8cnbJbC3GS1fxeMKXb
-         RO0SxPF8d2cy2PqimJ+cI0MM4Umk4mHoHUyzINy/3fhrqK5ikEv/4MxDWTEBeowS6ROl
-         b6CfyD/bZkLZnpUIkqED3RJwQC5vkGSJin0RctcQFE57iW8XDlgQlVbNt1mJ9AABAlI2
-         AT0Ac4QBita8mYG51kmHbZXIe3UUOvZKvPQk4gBTcy+Jc2jmvrw06dXQPX3aMeIv8ZiH
-         b4yxobYO9/y9T1BUjqEz9HoEB9tPYD/+2CNStQpALXdf3lWzNV8X+ON5KqFx3czETx+M
-         5LMA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sRBXteCx3iMxzf+5YFGiaHOZbhEeLZMnPLZMpPhN9j0=;
+        b=mxpwHgVNXl7Gw3UA+uuDLTz10xKua5fw6rE++7C7vRni0IIjZ6gS+ZeYIhLWXHy3y/
+         vPMbGrVFEnb64IJ7Ca3gFuoT/t+e55dj9KYyxPjvaL0dq/2g+9XJh2GnXlC0ov5WrW4r
+         Rvqv8Y35vB6EitcbM5ZUZxtNCnPnSsi+YFVcw1HHySKymFPJWeEa6sPbPdpt7WQI5ntw
+         79LeYQnXgJfuNWyhCcD0m8x5aI8aNo5PdMzhFVVC72vY5I6n+escxqqLBEbmJDJjhOQO
+         3MkVcanyh+4vYCe59GpVScPWSVS9yuFf0SgzR6ow2vry8MEcMN6ZbpjL2kclDSMFNJnZ
+         Is8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=swB4gM5/Sd34+RuLXe4ebGLoqKKPMlJrxzDtJ86OY8o=;
-        b=jDK5VDxLZqSIuJYpQtTp3uQMGai+h990rN5ZtRg12iG37Ubiia1JtXC7DgjMyfzBJB
-         fnMtgB/q5aBX4HazAM9MLDOwBjBiy3C/9L2erYP5KL/xPFMCUK+UPosNiJGb8y+a9O/O
-         CmxIdtCYkDJ5KiAhL+lQu0VsOoUWqnIzL6IF5aXr796yOECECJSRGUkic1JpX9YQKTe6
-         lBb0w6lgrI5rSvfbNfosb27Q2qnsinl4ugMTcpRUzJrEnZgMR3CSuPA745v64vVLc/q7
-         2h8lJ3FG04CQU/bYbMlC0ix28Dldud4R6gLdMGnq4rLAuGef575yRMckeBSKi9W7NAD/
-         VASQ==
-X-Gm-Message-State: AOAM5339S/ux68VMaglJZUHRBNNtWIsqTCVPZHFyzzM7AtJIQC6ih169
-        A4CnavUkxPZS6tkJlDjuMqCocg==
-X-Google-Smtp-Source: ABdhPJzPkHLNJBZVdH8dOzQCTNrpkJEAuR+3sHOQnsQ2ETHZ0yd/YXNBy4jXja0jaOUk3UBJBgCKDQ==
-X-Received: by 2002:a37:6644:: with SMTP id a65mr37224452qkc.4.1596117455468;
-        Thu, 30 Jul 2020 06:57:35 -0700 (PDT)
-Received: from skullcanyon ([192.222.193.21])
-        by smtp.gmail.com with ESMTPSA id x29sm4824919qtx.74.2020.07.30.06.57.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2020 06:57:34 -0700 (PDT)
-Message-ID: <8d287abcc4e2e86b5eaeca5a97b57004be8f6669.camel@ndufresne.ca>
-Subject: Re: [PATCH v2 0/6] Add new controls for CQ and Frame-skip
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Jeongtae Park <jtp.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Maheshwar Ajja <majja@codeaurora.org>
-Date:   Thu, 30 Jul 2020 09:57:33 -0400
-In-Reply-To: <20200721074538.505-1-stanimir.varbanov@linaro.org>
-References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.3 (3.36.3-1.fc32) 
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sRBXteCx3iMxzf+5YFGiaHOZbhEeLZMnPLZMpPhN9j0=;
+        b=AYYsYbelojyUQDED24MDNwkXIN4YnMHTTvHCGvYsHMekhgzoqT0PqPi24whMce8oNq
+         vnN4OpWriADP/l6USfCQpXuXra7Nc+3GjNFPc2Ja3WM8BdzDXWWc0tpBE/MkZZ1dTBxm
+         WNoUprDq2f5tHzk4msrpeE/t9BtlqiJMP7X2FrgDMb4O1oiv3wH1iOJ5IU6hbVLFAhG/
+         hnB9zP0WyJoHNjYOjBacq1fc17QnhrARjSCt9GF5f7D1I4D9zr8ERDKjStQdzSyGQoSk
+         pv1qkG+NsSQY+j1RrNpvpZoPZuBvkY6Ec6PWnNx40z9tKMb7w3M2+1yPRuYNjLFR8R0e
+         K9EA==
+X-Gm-Message-State: AOAM530wMvYd0rKRstQutmn40ZbsjlTz5jpYZPYuE3SMihPOhSTQwDP9
+        kTgnPbD5Rgyi5VVDwW9X6Jj8v7snL002dFiYaQc=
+X-Google-Smtp-Source: ABdhPJyj/3mUFNZJ5e36idWlRRi684to1k7BBbmv7VGuv0mgty12MhPpHISg9EXy+G3LWVfB29zmAAC02OJYJvXOXxw=
+X-Received: by 2002:a17:906:328d:: with SMTP id 13mr3192634ejw.71.1596122818624;
+ Thu, 30 Jul 2020 08:26:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1594644106-22449-1-git-send-email-akhilpo@codeaurora.org>
+ <CAF6AEGtAEwZbWxLb4MxaWNswvtrFbLK+N0Fez2XYr7odKZffWA@mail.gmail.com>
+ <20200720100131.6ux4zumbwqpa42ye@vireshk-mac-ubuntu> <CAF6AEGurrsd3nrbB=ktZjWfKTNbKwPHYwTFiZdD-NOW1T7gePQ@mail.gmail.com>
+ <20200721032442.hv7l4q6633vnmnfe@vireshk-mac-ubuntu> <CAF6AEGuhQcRskGhrFvmCf5T3EcZ9S+3LRdZBiaDYqF34yZjd+A@mail.gmail.com>
+ <20200722053023.vwaoj5oqh4cazzzz@vireshk-mac-ubuntu> <20200730051045.jejrtkor3b32l2qe@vireshk-mac-ubuntu>
+In-Reply-To: <20200730051045.jejrtkor3b32l2qe@vireshk-mac-ubuntu>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 30 Jul 2020 08:27:39 -0700
+Message-ID: <CAF6AEGuzff9+Wy4EHx0aDx1gBzSEGh--yqT5rnwLHp=U6amnyA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] Add support for GPU DDR BW scaling
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Matthias Kaehlcke <mka@chromium.org>,
+        saravanak@google.com, Sibi Sankar <sibis@codeaurora.org>,
+        Jonathan <jonathan@marek.ca>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dave Airlie <airlied@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le mardi 21 juillet 2020 à 10:45 +0300, Stanimir Varbanov a écrit :
-> Hello,
-> 
-> Here is v2 with following changes:
-> 
->  * 3/6 Added references for VBV size and h264 CPB size - requested by Nicolas
+On Wed, Jul 29, 2020 at 10:10 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+>
+> On 22-07-20, 11:00, Viresh Kumar wrote:
+> > On 21-07-20, 07:28, Rob Clark wrote:
+> > > With your ack, I can add the patch the dev_pm_opp_set_bw patch to my
+> > > tree and merge it via msm-next -> drm-next -> linus
+> >
+> > I wanted to send it via my tree, but its okay. Pick this patch from
+> > linux-next and add my Ack, I will drop it after that.
+> >
+> > a8351c12c6c7 OPP: Add and export helper to set bandwidth
+>
+> Oops, sorry for the trouble but this needs to go via my tree only :(
+>
+> I maintain two different branches, one for OPP and another one for
+> cpufreq. There was no dependency within the OPP branch and so I
+> dropped it that day and asked you to take it.
+>
+> But when I tried to send a pull request today I realised that one of
+> the qcom patches in the cpufreq branch is dependent on it and I need
+> to keep this patch in my tree.
 
-Thanks for this enhancement. No more comments on the doc from me.
+Hmm, I've already sent my pull request to Dave, dropping the patch
+would require force-push and sending a new PR.  Which I can do if Dave
+prefers.  OTOH I guess it isn't the end of the world if the patch is
+merged via two different trees.
 
->  * 4/6 Fixed compile warning
-> 
-> Previous version can be found at [1].
-> 
-> regards,
-> Stan
-> 
-> [1] https://lkml.org/lkml/2020/7/20/619
-> 
-> Maheshwar Ajja (1):
->   media: v4l2-ctrls: Add encoder constant quality control
-> 
-> Stanimir Varbanov (5):
->   venus: venc: Add support for constant quality control
->   media: v4l2-ctrl: Add frame-skip std encoder control
->   venus: venc: Add support for frame-skip mode v4l2 control
->   media: s5p-mfc: Use standard frame skip mode control
->   media: docs: Deprecate mfc frame skip control
-> 
->  .../media/v4l/ext-ctrls-codec.rst             | 53 +++++++++++++++++++
->  drivers/media/platform/qcom/venus/core.h      |  2 +
->  drivers/media/platform/qcom/venus/hfi_cmds.c  | 37 ++++++++++++-
->  .../media/platform/qcom/venus/hfi_helper.h    | 10 +++-
->  drivers/media/platform/qcom/venus/venc.c      | 20 +++++--
->  .../media/platform/qcom/venus/venc_ctrls.c    | 18 ++++++-
->  drivers/media/platform/s5p-mfc/s5p_mfc_enc.c  |  6 +++
->  drivers/media/v4l2-core/v4l2-ctrls.c          | 12 +++++
->  include/uapi/linux/v4l2-controls.h            |  8 +++
->  9 files changed, 160 insertions(+), 6 deletions(-)
-> 
-
+BR,
+-R
