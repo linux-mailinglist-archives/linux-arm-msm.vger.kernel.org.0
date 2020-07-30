@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE192233238
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 14:29:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3643C233239
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 14:29:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728211AbgG3M2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 08:28:43 -0400
+        id S1727935AbgG3M2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jul 2020 08:28:41 -0400
 Received: from alexa-out.qualcomm.com ([129.46.98.28]:26713 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726774AbgG3M2m (ORCPT
+        with ESMTP id S1726774AbgG3M2l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 08:28:42 -0400
+        Thu, 30 Jul 2020 08:28:41 -0400
 Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 30 Jul 2020 05:28:42 -0700
+  by alexa-out.qualcomm.com with ESMTP; 30 Jul 2020 05:28:40 -0700
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 30 Jul 2020 05:28:40 -0700
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 30 Jul 2020 05:28:38 -0700
 Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
   by ironmsg02-blr.qualcomm.com with ESMTP; 30 Jul 2020 17:58:15 +0530
 Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 902C6218A5; Thu, 30 Jul 2020 17:58:12 +0530 (IST)
+        id B8E42218A7; Thu, 30 Jul 2020 17:58:12 +0530 (IST)
 From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
 To:     gokulsri@codeaurora.org, agross@kernel.org,
         bjorn.andersson@linaro.org, david.brown@linaro.org,
@@ -29,9 +29,9 @@ To:     gokulsri@codeaurora.org, agross@kernel.org,
         mark.rutland@arm.com, mturquette@baylibre.com,
         nprakash@codeaurora.org, ohad@wizery.com, robh+dt@kernel.org,
         sboyd@kernel.org, sricharan@codeaurora.org
-Subject: [PATCH v7 7/9] clk: qcom: Add WCSSAON reset
-Date:   Thu, 30 Jul 2020 17:56:41 +0530
-Message-Id: <1596112003-31663-8-git-send-email-gokulsri@codeaurora.org>
+Subject: [PATCH v7 8/9] arm64: dts: Add support for scm on IPQ8074 SoCs
+Date:   Thu, 30 Jul 2020 17:56:42 +0530
+Message-Id: <1596112003-31663-9-git-send-email-gokulsri@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1596112003-31663-1-git-send-email-gokulsri@codeaurora.org>
 References: <1596112003-31663-1-git-send-email-gokulsri@codeaurora.org>
@@ -40,28 +40,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add WCSSAON reset required for Q6v5 on IPQ8074 SoC.
+Enables scm support, clock is not needed for enabling scm interface.
 
 Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
 Signed-off-by: Sricharan R <sricharan@codeaurora.org>
-Signed-off-by: Nikhil Prakash V <nprakash@codeaurora.org>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq8074.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index ef2c9c4..d080e6f 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -4745,6 +4745,7 @@ static const struct qcom_reset_map gcc_ipq8074_resets[] = {
- 	[GCC_PCIE1_AXI_SLAVE_ARES] = { 0x76040, 4 },
- 	[GCC_PCIE1_AHB_ARES] = { 0x76040, 5 },
- 	[GCC_PCIE1_AXI_MASTER_STICKY_ARES] = { 0x76040, 6 },
-+	[GCC_WCSSAON_RESET] = { 0x59010, 0 },
- };
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 96a5ec8..8a64e60 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -76,6 +76,12 @@
+ 		method = "smc";
+ 	};
  
- static const struct of_device_id gcc_ipq8074_match_table[] = {
++	firmware {
++		scm {
++			compatible = "qcom,scm-ipq8074", "qcom,scm";
++		};
++	};
++
+ 	soc: soc {
+ 		#address-cells = <0x1>;
+ 		#size-cells = <0x1>;
 -- 
 2.7.4
 
