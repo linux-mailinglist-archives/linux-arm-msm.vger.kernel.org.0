@@ -2,176 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33A10232B56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 07:23:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A089232B9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 08:00:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727838AbgG3FXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 01:23:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726774AbgG3FXc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 01:23:32 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 139DCC061794
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 22:23:32 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id mt12so3282488pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 22:23:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=82iPq/dl3fSSblQ20jxlinGCAwWS3+QAubsNlPph9z8=;
-        b=tA+pH1DqL6wOpI4XXl/JSAfSWJIgxc3bKs3LWr0jgvPqjOgT4Q14JZqJ4vGUBpyRNr
-         wx5AhX1lMa1mm/5IBYFSJqKWQqsU/+efwNdQtZPduVZ9R2ympzXyco6xt/628d94iZfK
-         W+vip9+XX2A7oDmANMRODmddtj04w2co3N9kf4CKNgEtNwymd6ABaJJk4uM8Tuv0S2jV
-         aIZHFH51xLklKkR3OUJyIwB3dwdMpnBQtyNASUHXv1qJqcdPx4WBnEyOJAPRhXfC3iNQ
-         q6o8SDWo4z7eB4dNES27bOP03P240H3U+YQWGzmdLkqVOyZyP7ftuwLCltzfaQt51Hhm
-         oeWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=82iPq/dl3fSSblQ20jxlinGCAwWS3+QAubsNlPph9z8=;
-        b=cdC2jz0l5voIR1E2GK8Smw6LLrh7VPmz/J+Ai7IBprIwXigTLJtAtkL3zJICDNgJ+s
-         mPSjM5Ng8mn3sno6He1PHN3e3u1KRnrbAHF1ogsRjlIZmAc3YSSPhSJYyTxkyRoBvltn
-         euOm5Q4I/nRlVIza/gwUyutDTR0Hgw0LzeAPuTgRLfYwdGnw0dIs0c2KUoWKe4SDzCzz
-         tsAy5JnJj0De97iMdGlzuv0vI5j8nzUc73uyDpChUz7dQc/1qQMA4dJmSUlyCLMSxsNL
-         BE08wM7pNaDdAhvvtSKKchBsudvmE+zGdqHCZjICMRXLy0DHCCV83JL/N27pxH4WRQGb
-         CmFg==
-X-Gm-Message-State: AOAM532xbaVhkf9NzYHqvDkCeoKhsE7eS9KeIeVY/5pZjtwMFohm7agh
-        fnFuFRu1CF3T2ZJuwhsvppAV8g==
-X-Google-Smtp-Source: ABdhPJyx9fA3lHIrBstsbynO0iH1Xc1ewLWcFuZzN3lGkoJOu7yV4THoHdkjJ+tye4/gffBp9Nhjhg==
-X-Received: by 2002:a17:902:54e:: with SMTP id 72mr29983630plf.181.1596086610946;
-        Wed, 29 Jul 2020 22:23:30 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id g28sm4288395pfr.70.2020.07.29.22.23.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2020 22:23:30 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Ravi Kumar Bokka <rbokka@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [GIT PULL] Qualcomm ARM64 DT additional updates for 5.9
-Date:   Wed, 29 Jul 2020 22:20:03 -0700
-Message-Id: <20200730052003.649940-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.27.0
+        id S1726261AbgG3F7v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jul 2020 01:59:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60834 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725974AbgG3F7u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jul 2020 01:59:50 -0400
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B18542173E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Jul 2020 05:59:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596088789;
+        bh=BHc8sdSpTVccKCyLCgqnAxB5xRQXDAGKg4tyDUDECSM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=Ij677TMxu+aJeQS3sz3bSQlJu6dHpR1uCYS+d5ck5H2K+PAK2uQ26QwaGEORgsrRv
+         ytcryaIkP0wKcSq0gBAknAaLg7EnNghKW9E6CSaA4+NL1kE693FrKjhcceAEcOJbnh
+         KZuVBMxt2gtOiPkkXWSZwxie18gOizabhmD2kZR4=
+Received: by mail-vs1-f42.google.com with SMTP id j23so7112036vsq.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 22:59:49 -0700 (PDT)
+X-Gm-Message-State: AOAM530fGMcM0/Ncup44lLD6BOxo09qlk+fMz6Gqj2n/jxNuwDpn6q2b
+        TvzpCZDMFTnea2XIJgRToTP8UPVrV9GBsWKSYsTeWg==
+X-Google-Smtp-Source: ABdhPJxPBuuYiLcqs2lLQIQ7Uiliyjr+Ks2lXGLYVmoL+JZWEwX999c/bNDeqjRZ3CVGt4jRigJ1kfTR0eW5nTifMgc=
+X-Received: by 2002:a67:e40a:: with SMTP id d10mr650578vsf.95.1596088788824;
+ Wed, 29 Jul 2020 22:59:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <d48d824ab3abacb2356878780979d7ed42191eaf.1596080365.git.viresh.kumar@linaro.org>
+In-Reply-To: <d48d824ab3abacb2356878780979d7ed42191eaf.1596080365.git.viresh.kumar@linaro.org>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Thu, 30 Jul 2020 11:29:38 +0530
+X-Gmail-Original-Message-ID: <CAHLCerP4YPHc4sKD_RTq=Gxfj+ex4F=J2is1Y-UzGXcOuEOrOQ@mail.gmail.com>
+Message-ID: <CAHLCerP4YPHc4sKD_RTq=Gxfj+ex4F=J2is1Y-UzGXcOuEOrOQ@mail.gmail.com>
+Subject: Re: [PATCH] cpufreq: cached_resolved_idx can not be negative
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Rafael Wysocki <rjw@rjwysocki.net>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        ionela.voinescu@arm.com,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 208921bae696d92f6a10681cfef2df0bb68f091a:
+On Thu, Jul 30, 2020 at 9:38 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+>
+> It is not possible for cached_resolved_idx to be invalid here as the
+> cpufreq core always sets index to a positive value.
+>
+> Change its type to unsigned int and fix qcom usage a bit.
 
-  arm64: dts: qcom: pmi8998: Add nodes for LAB and IBB regulators (2020-07-18 22:37:33 -0700)
+Shouldn't you fix up idx in cpufreq_driver_resolve_freq() to be
+unsigned int too?
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.9-2
-
-for you to fetch changes up to 9d56a1c21f1caf52ca4f6f578e98a0503aa8001d:
-
-  arm64: dts: qcom: Add Microsoft Lumia 950 (Talkman) device tree (2020-07-27 23:46:29 -0700)
-
-----------------------------------------------------------------
-Qualcomm ARM64 DT additional updates for 5.9
-
-For SC7180 this adds the necessary properties for blowing fuses in
-qfprom, Coresight fixes, GPU interconnect votes and specifies max speed
-for USB controller.
-
-SM8150 and SM8250 gains Adreno SMMU, the graphics management unit and
-the GPU nodes, to enable headless GPU usage.
-
-SDM845 gains tracing support for deep idle, GPU bus bandwidth scaling
-and DB845c gains the LT9611 HDMI bridge wired up.
-
-MSM8994 gains SMD RPM and SCM support and a new dts for the Sony Xperia
-Z5.
-
-MSM8992 is refactored and modernized and gets support for SCM, SPMI,
-BLSP2 UART and I2C nodes, PMU, RPM clock controller, PSCI and proper CPU
-definitions. Support for the Xiaomi Libra and Microsoft Lumia 950 are
-added.
-
-----------------------------------------------------------------
-Bjorn Andersson (1):
-      arm64: dts: qcom: sdm845-db845c: Add hdmi bridge nodes
-
-Jonathan Marek (3):
-      dt-bindings: power: Add missing rpmpd rpmh regulator level
-      arm64: dts: qcom: add sm8150 GPU nodes
-      arm64: dts: qcom: add sm8250 GPU nodes
-
-Konrad Dybcio (18):
-      arm64: dts: qcom: msm8994: Add SCM node
-      arm64: dts: qcom: msm8992: Add a label to rpm-requests
-      arm64: dts: qcom: msm8994: Add support for SMD RPM
-      arm64: dts: qcom: Move msm8994-smd-rpm contents to lg-bullhead.
-      arm64: dts: qcom: Add support for Sony Xperia Z5 (SoMC Sumire-RoW)
-      arm64: dts: qcom: msm8992: Modernize the DTS style
-      arm64: dts: qcom: msm8992: Fix SDHCI1
-      arm64: dts: qcom: bullhead: Add qcom,msm-id
-      arm64: dts: qcom: bullhead: Move UART pinctrl to SoC
-      arm64: dts: qcom: msm8992: Add a proper CPU map
-      arm64: dts: qcom: msm8992: Add a SCM node
-      arm64: dts: qcom: msm8992: Add SPMI PMIC arbiter device
-      arm64: dts: qcom: msm8992: Add BLSP2_UART2 and I2C nodes
-      arm64: dts: qcom: msm8992: Add PMU node
-      arm64: dts: qcom: msm8992: Add PSCI support.
-      arm64: dts: qcom: msm8992: Add RPMCC node
-      arm64: dts: qcom: Add Xiaomi Libra (Mi 4C) device tree
-      arm64: dts: qcom: Add Microsoft Lumia 950 (Talkman) device tree
-
-Ravi Kumar Bokka (1):
-      arm64: dts: qcom: sc7180: Add properties to qfprom for fuse blowing
-
-Sai Prakash Ranjan (4):
-      arm64: dts: qcom: sdm845: Support ETMv4 power management
-      arm64: dts: qcom: sc7180: Add support to skip powering up of ETM
-      arm64: dts: qcom: sc7180: Add iommus property to ETR
-      arm64: dts: qcom: sc7180: Add support for context losing replicator
-
-Sandeep Maheswaram (1):
-      arm64: dts: qcom: sc7180: Add maximum speed property for DWC3 USB node
-
-Sharat Masetty (3):
-      arm64: dts: qcom: SDM845: Enable GPU DDR bw scaling
-      arm64: dts: qcom: sc7180: Add interconnects property for GPU
-      arm64: dts: qcom: sc7180: Add opp-peak-kBps to GPU opp
-
- arch/arm64/boot/dts/qcom/Makefile                  |   3 +
- .../boot/dts/qcom/msm8992-bullhead-rev-101.dts     | 245 ++++++++-
- .../boot/dts/qcom/msm8992-msft-lumia-talkman.dts   |  39 ++
- arch/arm64/boot/dts/qcom/msm8992-pins.dtsi         |  90 ----
- arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts  | 364 +++++++++++++
- arch/arm64/boot/dts/qcom/msm8992.dtsi              | 566 ++++++++++++++++-----
- arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi      | 268 ----------
- .../qcom/msm8994-sony-xperia-kitakami-sumire.dts   |  13 +
- .../dts/qcom/msm8994-sony-xperia-kitakami.dtsi     | 235 +++++++++
- arch/arm64/boot/dts/qcom/msm8994.dtsi              |  49 ++
- arch/arm64/boot/dts/qcom/sc7180-idp.dts            |   4 +
- arch/arm64/boot/dts/qcom/sc7180.dtsi               |  31 +-
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts         | 118 +++++
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |  18 +
- arch/arm64/boot/dts/qcom/sm8150.dtsi               | 135 +++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi               | 142 ++++++
- include/dt-bindings/power/qcom-rpmpd.h             |   1 +
- 17 files changed, 1820 insertions(+), 501 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8992-msft-lumia-talkman.dts
- delete mode 100644 arch/arm64/boot/dts/qcom/msm8992-pins.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
- delete mode 100644 arch/arm64/boot/dts/qcom/msm8994-smd-rpm.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 5 +----
+>  include/linux/cpufreq.h           | 2 +-
+>  2 files changed, 2 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 0a04b6f03b9a..8c0842bd6c5a 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -66,13 +66,10 @@ static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
+>                                                 unsigned int target_freq)
+>  {
+>         void __iomem *perf_state_reg = policy->driver_data;
+> -       int index;
+> +       unsigned int index;
+>         unsigned long freq;
+>
+>         index = policy->cached_resolved_idx;
+> -       if (index < 0)
+> -               return 0;
+> -
+>         writel_relaxed(index, perf_state_reg);
+>
+>         freq = policy->freq_table[index].frequency;
+> diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+> index e62b022cb07e..58687a5bf9c8 100644
+> --- a/include/linux/cpufreq.h
+> +++ b/include/linux/cpufreq.h
+> @@ -127,7 +127,7 @@ struct cpufreq_policy {
+>
+>          /* Cached frequency lookup from cpufreq_driver_resolve_freq. */
+>         unsigned int cached_target_freq;
+> -       int cached_resolved_idx;
+> +       unsigned int cached_resolved_idx;
+>
+>         /* Synchronization for frequency transitions */
+>         bool                    transition_ongoing; /* Tracks transition status */
+> --
+> 2.14.1
+>
