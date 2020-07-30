@@ -2,172 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53FAC232B42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 07:19:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B51DB232B55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Jul 2020 07:22:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728603AbgG3FTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 01:19:01 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40258 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728590AbgG3FTB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 01:19:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596086340; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Bs6Yz+e5gi3IatH5EaN6ufvWGEJcGzB2abXMp8UjszI=; b=GvrbqY15sFqQp9trlLKazvVVhS0beGeboUsFsZkhaSH1W3hszjlcqEoICTYE94OoNNY3v6Ax
- IM9q5omabrxGtVGUMVQAvUtgLF94JUoIhXW90+0W7dUdAwLse1R/1ZBNaMtm8rwCAnRHvOmM
- rXL8Hnb15p5Zc3FnjUx1bHVaCvQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n17.prod.us-east-1.postgun.com with SMTP id
- 5f2258441db0b33fd8076207 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 30 Jul 2020 05:19:00
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 554BBC433AD; Thu, 30 Jul 2020 05:18:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 64295C433C6;
-        Thu, 30 Jul 2020 05:18:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 64295C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=deesin@codeaurora.org
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
-Cc:     mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Deepak Kumar Singh <deesin@codeaurora.org>
-Subject: [PATCH V1 6/6] rpmsg: glink: Send READ_NOTIFY command in FIFO full case
-Date:   Thu, 30 Jul 2020 10:48:16 +0530
-Message-Id: <1596086296-28529-7-git-send-email-deesin@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1596086296-28529-1-git-send-email-deesin@codeaurora.org>
-References: <1596086296-28529-1-git-send-email-deesin@codeaurora.org>
+        id S1728195AbgG3FWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Jul 2020 01:22:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55744 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727838AbgG3FWV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Jul 2020 01:22:21 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60556C061794
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 22:22:21 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id m8so7511689pfh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Jul 2020 22:22:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9eLz0BWx8S96G1qfWUgXbjO4lxX1Lc7rRHHWAD1aY5A=;
+        b=X95D/MuqDzqrROZkE8p5eqhur+GmU1ev/+SoZH/Lkuoy7WM0dCs2RK3/o+pfYhNSYR
+         VZKueJQMeuEnLhTJHGVIJWHDRix7yKZywVH9Z+oDQjy0xxpUZjY5bk0D+Rk4NI41zMp7
+         kYRY7twmw0V6+bTX1uX2XjLBdffciQ7+KVbmdM5IWvn3pthD0IalPyPivrT2waTk0811
+         qf9/2hdoAAIQO2zlcETcA7EihXsM1b5Fsu4QARuC5Dx3jef/3QRNhUttxiEjzTcaWGob
+         ozdXIQ2mUE0l3tu5Ydx1gYYezmn/uHXXWSIkStGp/YOHB3DEJ6XLN7x6S6eAYgSr9cNV
+         +YOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9eLz0BWx8S96G1qfWUgXbjO4lxX1Lc7rRHHWAD1aY5A=;
+        b=PmRBi3GEzF31qQzwWNmlJ6LNHIiAB7pC5XIvSDirhbVQ7daSMmdliLO1QQm/Kzo/hJ
+         0GPrOP4WSw3KxDv9qNe7cAFKqLaa05HBi4B7Gkn53ar2Kamk2xV1KKZBc11RmZOi0ZiH
+         hKIDa5zHEqe9Tl1pchrV4eZiy0qf2eAlh8oKevDokMNTZriCC7Mi4+qQzfbDCXFy763o
+         R4a7R5r4gnFrNxoJS/NSAU1HVqs24nl1eeMFDvadzXEGKxvEEhOMbkwGTya5GlYBVlbE
+         eOzlW03x8HDWNjRtTsJTH4MVSRACVeQDiYYaqMosMBrZn+DbT+kjf8E85YA74zdFGyeE
+         oyJQ==
+X-Gm-Message-State: AOAM532ZRYkXe+x9+/WU2QDFAZA1cTkwh8MgxHs7vcfLVjMrM7ncGcHC
+        vdUBXSn9MvFS2rV4/Q8/t2+0TA==
+X-Google-Smtp-Source: ABdhPJwC7jzQ1E8qMJAE0Bgvymc9fOdgq7Q3V3fZDqtxeggES0wmFri+m8+caLVo0O71iWQsLNo1SQ==
+X-Received: by 2002:a63:1d4:: with SMTP id 203mr31957417pgb.356.1596086540752;
+        Wed, 29 Jul 2020 22:22:20 -0700 (PDT)
+Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id n124sm2268808pfn.53.2020.07.29.22.22.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2020 22:22:20 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        YueHaibing <yuehaibing@huawei.com>
+Subject: [GIT PULL] Qualcomm driver additional updates for 5.9
+Date:   Wed, 29 Jul 2020 22:18:52 -0700
+Message-Id: <20200730051852.649761-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arun Kumar Neelakantam <aneela@codeaurora.org>
+The following changes since commit 03c900b3be116003ccd0e798431f6d0c25ff6729:
 
-The current design sleeps unconditionally in TX FIFO full case and
-wakeup only after sleep timer expires which adds random delays in
-clients TX path.
+  soc: qcom: geni: Fix NULL pointer dereference (2020-07-20 13:11:15 -0700)
 
-Avoid sleep and use READ_NOTIFY command so that writer can be woken up
-when remote notifies about read completion by sending IRQ.
+are available in the Git repository at:
 
-Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
----
- drivers/rpmsg/qcom_glink_native.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.9-2
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index efaf32d..098039d 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -92,6 +92,8 @@ struct glink_core_rx_intent {
-  * @rcids:	idr of all channels with a known remote channel id
-  * @features:	remote features
-  * @intentless:	flag to indicate that there is no intent
-+ * @tx_avail_notify: Waitqueue for pending tx tasks
-+ * @sent_read_notify: flag to check cmd sent or not
-  */
- struct qcom_glink {
- 	struct device *dev;
-@@ -118,6 +120,8 @@ struct qcom_glink {
- 	unsigned long features;
- 
- 	bool intentless;
-+	wait_queue_head_t tx_avail_notify;
-+	bool sent_read_notify;
- };
- 
- enum {
-@@ -301,6 +305,20 @@ static void qcom_glink_tx_write(struct qcom_glink *glink,
- 	glink->tx_pipe->write(glink->tx_pipe, hdr, hlen, data, dlen);
- }
- 
-+static void qcom_glink_send_read_notify(struct qcom_glink *glink)
-+{
-+	struct glink_msg msg;
-+
-+	msg.cmd = cpu_to_le16(RPM_CMD_READ_NOTIF);
-+	msg.param1 = 0;
-+	msg.param2 = 0;
-+
-+	qcom_glink_tx_write(glink, &msg, sizeof(msg), NULL, 0);
-+
-+	mbox_send_message(glink->mbox_chan, NULL);
-+	mbox_client_txdone(glink->mbox_chan, 0);
-+}
-+
- static int qcom_glink_tx(struct qcom_glink *glink,
- 			 const void *hdr, size_t hlen,
- 			 const void *data, size_t dlen, bool wait)
-@@ -321,12 +339,21 @@ static int qcom_glink_tx(struct qcom_glink *glink,
- 			goto out;
- 		}
- 
-+		if (!glink->sent_read_notify) {
-+			glink->sent_read_notify = true;
-+			qcom_glink_send_read_notify(glink);
-+		}
-+
- 		/* Wait without holding the tx_lock */
- 		spin_unlock_irqrestore(&glink->tx_lock, flags);
- 
--		usleep_range(10000, 15000);
-+		wait_event_timeout(glink->tx_avail_notify,
-+				qcom_glink_tx_avail(glink) >= tlen, 10 * HZ);
- 
- 		spin_lock_irqsave(&glink->tx_lock, flags);
-+
-+		if (qcom_glink_tx_avail(glink) >= tlen)
-+			glink->sent_read_notify = false;
- 	}
- 
- 	qcom_glink_tx_write(glink, hdr, hlen, data, dlen);
-@@ -1000,6 +1027,9 @@ static irqreturn_t qcom_glink_native_intr(int irq, void *data)
- 	unsigned int cmd;
- 	int ret = 0;
- 
-+	/* To wakeup any blocking writers */
-+	wake_up_all(&glink->tx_avail_notify);
-+
- 	for (;;) {
- 		avail = qcom_glink_rx_avail(glink);
- 		if (avail < sizeof(msg))
-@@ -1542,6 +1572,9 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-+	/* To wakeup any blocking writers */
-+	wake_up_all(&glink->tx_avail_notify);
-+
- 	spin_lock_irqsave(&glink->idr_lock, flags);
- 	channel = idr_find(&glink->lcids, lcid);
- 	if (WARN(!channel, "close ack on unknown channel\n")) {
-@@ -1658,6 +1691,7 @@ struct qcom_glink *qcom_glink_native_probe(struct device *dev,
- 	spin_lock_init(&glink->rx_lock);
- 	INIT_LIST_HEAD(&glink->rx_queue);
- 	INIT_WORK(&glink->rx_work, qcom_glink_work);
-+	init_waitqueue_head(&glink->tx_avail_notify);
- 
- 	spin_lock_init(&glink->idr_lock);
- 	idr_init(&glink->lcids);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+for you to fetch changes up to 0fec8617a1df7b676b8a1d7afea2c4af1f4f963e:
 
+  soc: qcom: geni: Fix unused label warning (2020-07-29 22:10:30 -0700)
+
+----------------------------------------------------------------
+Qualcomm driver additional updates for 5.9
+
+This fixes a potential race condition with remoteprocs by not sending
+acknowledgements until after registered drivers has processed the event.
+It adds IPQ6018 support to the SMD RPM driver, fixes kerneldoc in the
+same and converts the related DT binding to YAML.
+Finally it fixes a compilation warning in the geni serial engine driver
+when compiled without CONFIG_SERIAL_EARLYCON.
+
+----------------------------------------------------------------
+Kathiravan T (3):
+      dt-bindings: soc: qcom: smd-rpm: Add IPQ6018 compatible
+      soc: qcom: smd-rpm: Add IPQ6018 compatible
+      dt-bindings: soc: qcom: smd-rpm: Convert binding to YAML schema
+
+Krzysztof Kozlowski (1):
+      soc: qcom: smd-rpm: Fix kerneldoc
+
+Sibi Sankar (1):
+      soc: qcom: pdr: Reorder the PD state indication ack
+
+YueHaibing (1):
+      soc: qcom: geni: Fix unused label warning
+
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.txt  | 64 ----------------
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 87 ++++++++++++++++++++++
+ drivers/soc/qcom/pdr_interface.c                   |  4 +-
+ drivers/soc/qcom/qcom-geni-se.c                    |  2 +-
+ drivers/soc/qcom/smd-rpm.c                         |  3 +
+ 5 files changed, 94 insertions(+), 66 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
