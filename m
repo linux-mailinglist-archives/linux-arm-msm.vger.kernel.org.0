@@ -2,103 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54DE12341A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 10:56:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A3F5234237
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 11:18:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732008AbgGaI4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 04:56:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55908 "EHLO
+        id S1732032AbgGaJRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 05:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731968AbgGaI4R (ORCPT
+        with ESMTP id S1731981AbgGaJRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 04:56:17 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B589C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jul 2020 01:56:17 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id a5so17299033wrm.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jul 2020 01:56:17 -0700 (PDT)
+        Fri, 31 Jul 2020 05:17:52 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 723CDC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jul 2020 02:17:52 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id p14so7980925wmg.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Jul 2020 02:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uKHultmexfuWBdCK9WRDRk/vbhZ+37y2O3wAMlcu988=;
-        b=aE1OHooxwN4CtoTfKoukXZmAijnt7lUt7g2YEmORS3cT7AcMzMNPBMqe8jdLYclZBm
-         eOHaWEarxXuFCjto12aNCFolbMakz+DiEVyPF5mrDDnb4gRfoCRQPp7jBy5l2R7n/un1
-         nBoT11Vhvh4xhvgqwcqKCnGpBSQmKQyJHI6yE=
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zap5mCPdXGfCBoAglpFSUI584futiyKZR3trwr0wzD8=;
+        b=hrXPg9RLOgJQDEhP1zScUI2NKWRyxq+SOMDtubqqTm9OhE3LSXNrEngEmNAZLOTL0H
+         fBRH5ArtO84NfTCYG8xBTJddOZMVD63HOKJ+1I9ZLDreM4zYgFi9cYauzula4Crybhif
+         4yKDC5LtUynoFNpru4vkUKuO2Vq2Dnh4f8Z6k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uKHultmexfuWBdCK9WRDRk/vbhZ+37y2O3wAMlcu988=;
-        b=OnByCHFRXPuzRDkHuxLKZCd9Z/WV4C77v9JUeEezU8OONABVNWvO4Y5hmfqliutrQC
-         V/pPOJjgLmTw6dNUVVWF/tbOfIA9NXxqgegOGxGH+fPVWn7vGXk7fvybWpY/F2ULYr9l
-         a1AeP5rvDvGPLXXkEl/aHS6Z0JeUMqV3YIiV4J5urvNTJOhwEKF2F+djGhhJnwjJ6Ihe
-         dH7Cs2zY+WGd7IoWGIlG5jJyrctn9s9GoegxkK3r1QuCBgwZxq2OR1daLdWgj2b+DkGc
-         nEZNQjmCNnfcNC1NIQq6Xq3EE6gMGlogww87WYfQ/dH4IWrl60D6RMRrsiyTbq2qmQx8
-         8rDg==
-X-Gm-Message-State: AOAM532UNkyjOxLk2e4N+R5nUazSSHilnPZ/NowrfAp4M+mfoA+SdlOd
-        PmiyNiB9DJDrnFyJLpt7ARpP/C/KVxbloRTkXkz5xQ==
-X-Google-Smtp-Source: ABdhPJzWn3jZhPtcamUMQKgiq4Q2WoIJL296BZio2qPps8qapt7QAgo3rn4E433qso7peWw9XBVW+myXjp0sLi36trw=
-X-Received: by 2002:adf:e486:: with SMTP id i6mr2505317wrm.258.1596185775852;
- Fri, 31 Jul 2020 01:56:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zap5mCPdXGfCBoAglpFSUI584futiyKZR3trwr0wzD8=;
+        b=ERvLOnlAp8OYYsW5bGkxXnZEzVUN7BdIGppymE7dQhkJydYH3CuuoixW5xnJzkZaf1
+         aNuYVSWg5oEmONbT+WJYE0cNkp08eyCxPLG5J/Au0hiT+gcHQUqj/VElJHyxfqdvsSAv
+         mIp6HYT6dLqR5uR6oz7tBv4zd9cdsDyTdQlI3Ms8M49snfDA9IJitf8rRtRAaCCDSopD
+         74E5m1luJIHLD5bjYShjcFkxLMXIOdp58KJ/5sBA6KZcj5zdA39eaq0lJZVQzLmXO3gD
+         1oxjqZ8Sor21AhhZ5fPvlI4vl6af3N9x96zKOWVGRx0WS26Vv4n9fy8ujrO0reru4dDq
+         GilQ==
+X-Gm-Message-State: AOAM530Du9lu7EdrSMeT4Oym+WJj/1vakrm9Bz/0ZlI1SMOeOyJHScWO
+        aMa3ePkWl2LgxAsPss1VbpHlPw==
+X-Google-Smtp-Source: ABdhPJzcg+Saw+jf9MpEs60W0A+5dDIrQXLHf8yAkzEyQPQJ2WoiIqn+/xFeKy/ou89Ul0fBMASB5w==
+X-Received: by 2002:a1c:80c3:: with SMTP id b186mr3024941wmd.10.1596187071227;
+        Fri, 31 Jul 2020 02:17:51 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id w14sm12443489wrt.55.2020.07.31.02.17.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2020 02:17:50 -0700 (PDT)
+Date:   Fri, 31 Jul 2020 11:17:48 +0200
+From:   daniel@ffwll.ch
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, sam@ravnborg.org, daniel@ffwll.ch,
+        pdhaval@codeaurora.org, jsanka@codeaurora.org, adelva@google.com,
+        gregkh@linuxfoundation.org
+Subject: Re: [PATCH] drm: re-add deleted doc for drm_gem_open_ioctl
+Message-ID: <20200731091748.GU6419@phenom.ffwll.local>
+References: <1596000952-27621-1-git-send-email-cohens@codeaurora.org>
 MIME-Version: 1.0
-References: <20200721104422.369368-1-cychiang@chromium.org>
- <20200721104422.369368-3-cychiang@chromium.org> <ce029818-5082-643b-ff63-25aafea3de6c@linaro.org>
- <20200723184432.GA321518@gerhold.net>
-In-Reply-To: <20200723184432.GA321518@gerhold.net>
-From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Fri, 31 Jul 2020 16:55:49 +0800
-Message-ID: <CAFv8Nw+Y7S2EWZMUYEeFeTmt+TdzBQUTBzgHDa7reWT9CiOA1Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] ASoC: qcom: sc7180: Add machine driver for sound
- card registration
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>, Ajit Pandey <ajitp@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1596000952-27621-1-git-send-email-cohens@codeaurora.org>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 24, 2020 at 2:45 AM Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Wed, Jul 22, 2020 at 10:25:14AM +0100, Srinivas Kandagatla wrote:
-> > > +static int sc7180_parse_of(struct snd_soc_card *card)
-> > > +{
-> >
-> > This code is getting duplicated in various places like apq8016_sbc_parse_of,
-> > it will be nice to common this up, if possible!
-> >
->
-> FYI, I started work on making apq8016_sbc use qcom_snd_parse_of()
-> a while ago already, but didn't find the time to finish it up.
-> I have now sent it, this should make it possible to use the common
-> qcom_snd_parse_of() function in this driver as well.
->
-> See: https://lore.kernel.org/alsa-devel/20200723183904.321040-1-stephan@gerhold.net/
->
-> Stephan
->
-Hi Stephan, thanks a lot for jumping on this to help.
-It indeed makes this new driver much cleaner.
-I have tested with your patches and it works great.
+On Wed, Jul 29, 2020 at 01:35:52AM -0400, Steve Cohen wrote:
+> Add back the removed documentation for drm_gem_open_ioctl.
+> This patch is submitted in response to [1].
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20200728085244.GY6419@phenom.ffwll.local/
+> 
+> Signed-off-by: Steve Cohen <cohens@codeaurora.org>
+> ---
+>  drivers/gpu/drm/drm_gem.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> index ee2058a..fe94122 100644
+> --- a/drivers/gpu/drm/drm_gem.c
+> +++ b/drivers/gpu/drm/drm_gem.c
+> @@ -871,6 +871,9 @@ drm_gem_flink_ioctl(struct drm_device *dev, void *data,
+>   * @file_priv: drm file-private structure
+>   *
+>   * Open an object using the global name, returning a handle and the size.
+> + *
+> + * This handle (of course) holds a reference to the object, so the object
+> + * will not go away until the handle is deleted.
+
+Applied, thanks.
+-Daniel
+
+>   */
+>  int
+>  drm_gem_open_ioctl(struct drm_device *dev, void *data,
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
