@@ -2,68 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3913B234D8A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 00:28:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE7A2234E87
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 01:21:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726482AbgGaW2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 18:28:09 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:39323 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbgGaW2J (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 18:28:09 -0400
-Received: by mail-io1-f68.google.com with SMTP id z6so33218201iow.6;
-        Fri, 31 Jul 2020 15:28:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lVipxMk9ygvfpcjJVZrzThQ+Zrm2/v1HmQBOyDjm7ck=;
-        b=Sofo4MdpHe9O4EDhPqdveguegDLMJKt5Na+Xlz0BIuKTBefPONNojth4VES3hxFi6n
-         JHh203C5roLXh0sy/X83jkrERuDpueO7dqnhTFTd/jFhbZ8PjCWYkLh2u1JFdlc5638x
-         stk1wfHV6BSrO7Zb3nhj/AlrCV35bQzlFpT3t9PWCyUl8vy+KeJhV5AhoFHwpcC5/RDo
-         peVMg3bs2IYWYlg5Lmu9eSUoosqSu+FaD1OeRfy0lk2N24536GyxuQq8Pzox6axQSpwT
-         fgEzSWXWGRlxMB9KyO1BZyhGn9NuzLIHtloK2c6NmQ8qNISJXkojchb+DL07HkAb5Y+z
-         xWGA==
-X-Gm-Message-State: AOAM531+XDxyRXqUL0qzLJi/OmPKMDGSe0fCTy6fQYGkGJl4Kdl+M1R0
-        g0Bfg1uOLoOa/MrqQ5gIaw==
-X-Google-Smtp-Source: ABdhPJyhgkkbf5wFHQLPFhUz3p3G2zL0Mah1EkGWTiI20QWPkSh0QjyT3bIC9/72a43QevxfhpwLXQ==
-X-Received: by 2002:a02:7786:: with SMTP id g128mr7214587jac.45.1596234488622;
-        Fri, 31 Jul 2020 15:28:08 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id s8sm5361787iow.11.2020.07.31.15.28.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2020 15:28:07 -0700 (PDT)
-Received: (nullmailer pid 919097 invoked by uid 1000);
-        Fri, 31 Jul 2020 22:28:07 -0000
-Date:   Fri, 31 Jul 2020 16:28:07 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Kathiravan T <kathirav@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, sivaprak@codeaurora.org,
-        robh+dt@kernel.org, broonie@kernel.org, agross@kernel.org,
-        lgirdwood@gmail.com, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: mailbox: add compatible for the IPQ6018
- SoC
-Message-ID: <20200731222807.GA919019@bogus>
-References: <1596098964-19878-1-git-send-email-kathirav@codeaurora.org>
- <1596098964-19878-2-git-send-email-kathirav@codeaurora.org>
+        id S1727088AbgGaXU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 19:20:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46298 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726471AbgGaXU6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 31 Jul 2020 19:20:58 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6DD2220791;
+        Fri, 31 Jul 2020 23:20:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596237658;
+        bh=n5x7Sfjfv0nDyBJcaRAYdP/bxR49Er90sgjkvQtMBwo=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=EflDU+VHZSN5DCYmQBleTYsvkKKfARTPs3jZ/uF5Dd1ySJ3xUx8YqYJRZqy8Bc0eU
+         aQLjLraamVp/Uv+8wQrGClie+sdHvXNDITCEvTuYCsZbjr8Kx9E/FTqzc8chCfbTjL
+         +8OgAOvxlMA5I+wcYs7rQHlrRSkzR31vxvyVvRU4=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1596098964-19878-2-git-send-email-kathirav@codeaurora.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200731133006.1.Iee81b115f5be50d6d69500fe1bda11bba6e16143@changeid>
+References: <20200731133006.1.Iee81b115f5be50d6d69500fe1bda11bba6e16143@changeid>
+Subject: Re: [PATCH] dt-bindings: clock: Fix YAML schemas for LPASS clocks on SC7180
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Douglas Anderson <dianders@chromium.org>
+Date:   Fri, 31 Jul 2020 16:20:57 -0700
+Message-ID: <159623765728.1360974.15372294562830293191@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Jul 2020 14:19:22 +0530, Kathiravan T wrote:
-> Add the mailbox compatible for the IPQ6018 SoC.
-> 
-> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+Quoting Douglas Anderson (2020-07-31 13:30:10)
+> The YAML schemas that landed forgot one clock: "bi_tcxo".  Presumably
+> the bindings were developed against the v4 version of the driver and
+> when the ".name" was removed in v5 of the driver things broke.
+>=20
+> While touching this, add the needed includes in each example.  I
+> believe both examples are supposed to be independent of each other.
+>=20
+> Let's fix the bindings.
+>=20
+> Fixes: 381cc6f97cda ("dt-bindings: clock: Add YAML schemas for LPASS cloc=
+ks on SC7180")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Applied to clk-next
