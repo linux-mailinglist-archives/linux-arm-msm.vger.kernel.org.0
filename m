@@ -2,78 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B094E233B5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 00:29:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A0EC233E87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 06:57:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730641AbgG3W3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Jul 2020 18:29:05 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41174 "EHLO mail.kernel.org"
+        id S1730644AbgGaE5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 00:57:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:58620 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730024AbgG3W3E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Jul 2020 18:29:04 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1730163AbgGaE5W (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 31 Jul 2020 00:57:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596171442; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=jcFirJ/dUhDWyz1vByGCswLs5dDzUqVUvnRcpcUgCac=; b=fZGxoK9BOrkU4NJufoG0uM/5136tYk4rxrgXhx0TDYDu9xFCfoMX/LrzcglS55Hyxuo3xdwL
+ 2/w1eKmqInTOLjQutjm1r54AcAhiEW6zREYjER6BbkMpa7BaxVd908V6NuSzoA7ESS1UsuGh
+ YBj8Tw5gGobHMI99skMcKjQBjNo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f23a4ad9403087e1060546d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 31 Jul 2020 04:57:17
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B3891C43395; Fri, 31 Jul 2020 04:57:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BA27320838;
-        Thu, 30 Jul 2020 22:29:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596148144;
-        bh=3E2zv9US9vLZ0at3kxD0+KN3nNVdL4vqBHT/gU3kpKg=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=TCa1Fr1V54rnXcOaXy7ogD1GOXg392RrdbZxgon1IDI3C5rvcPSqCBlOQrzxnkWiZ
-         HeubyUagR8xBdeL87DACfSBiFFP9fWqlhMDuJhXgqnFqZ1an6TtMoAw1/p/3pVwLqt
-         /4RugqH3IL+I7EmI2w0jU2ooRr0IMW0qCsjzIkCQ=
-Date:   Thu, 30 Jul 2020 23:28:44 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Kathiravan T <kathirav@codeaurora.org>,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, lgirdwood@gmail.com,
-        devicetree@vger.kernel.org, sivaprak@codeaurora.org
-In-Reply-To: <1596098964-19878-1-git-send-email-kathirav@codeaurora.org>
-References: <1596098964-19878-1-git-send-email-kathirav@codeaurora.org>
-Subject: Re: [PATCH 0/3] Enable DVFS support for IPQ6018
-Message-Id: <159614812412.1677.11866049151869161352.b4-ty@kernel.org>
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A93F2C433C9;
+        Fri, 31 Jul 2020 04:57:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A93F2C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     bjorn.andersson@linaro.org, kishon@ti.com, vkoul@kernel.org,
+        agross@kernel.org, balbi@kernel.org, gregkh@linuxfoundation.org,
+        robh+dt@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH 0/3] Enable USB type C support on SM8150
+Date:   Thu, 30 Jul 2020 21:57:09 -0700
+Message-Id: <20200731045712.28495-1-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Jul 2020 14:19:21 +0530, Kathiravan T wrote:
-> Add A53 PLL, APCS clock, RPM Glink, RPM message RAM, cpu-opp-table,
-> SMPA2 regulator to enable the cpu frequency on IPQ6018.
-> 
-> Kathiravan T (3):
->   dt-bindings: mailbox: add compatible for the IPQ6018 SoC
->   dt-bindings: regulator: add the sub node names for the MP5496 PMIC
->   arm64: dts: ipq6018: enable DVFS support
-> 
-> [...]
+This series adds support for setting of the orientation multiplexor within the
+QMP PHY based on the detection output from the PM8150B.  It will also introduce
+a role switch in DWC3 QCOM, which is used so that the DWC3 QCOM glue can receive
+role switch change events, and set the vbus override accordingly.  This event
+will then be propagated down to the DWC3 core driver, by the DWC3 QCOM getting a
+handle to the DWC3 core's role switch.
 
-Applied to
+Wesley Cheng (3):
+  arm64: boot: dts: qcom: sm8150: Add nodes for PMIC based typec
+    detection
+  phy: qcom-qmp: Register as a typec switch for orientation detection
+  usb: dwc3: dwc3-qcom: Find USB connector and register role switch
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts |  37 ++++++++-
+ drivers/phy/qualcomm/Kconfig            |  11 +++
+ drivers/phy/qualcomm/phy-qcom-qmp.c     |  71 +++++++++++++++-
+ drivers/usb/dwc3/dwc3-qcom.c            | 103 +++++++++++++++++++++++-
+ 4 files changed, 216 insertions(+), 6 deletions(-)
 
-Thanks!
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-[1/1] regulator: add the sub node names for the MP5496 PMIC
-      commit: bcb3b2a7639db2412875520cddc3abd179068793
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
