@@ -2,75 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20028234C72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 22:47:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74E01234CCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 23:14:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbgGaUrG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 16:47:06 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:34544 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726884AbgGaUrG (ORCPT
+        id S1727021AbgGaVOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 17:14:36 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:39733 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728204AbgGaVOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 16:47:06 -0400
-Received: by mail-io1-f67.google.com with SMTP id q75so24792693iod.1;
-        Fri, 31 Jul 2020 13:47:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RB00g1jQXZ6Bb9+PZy/KFtGEl3EC1jQ5rDd2W8wczN0=;
-        b=uVsHWJYOs/XPmltwCT2EhzVxEdxPJLPvP0R4WxxFOiwRv0hiJIlp05YTyb8/2e+9qe
-         N5XPf8ccUc5FpTy9CE3c9H/U51b8mH6lFBS/ftLnauuz+ZlEYd3dGwohHgTd+bsG42HR
-         uzUtOhjpnWYIsyaXZCO+SjfWLVILPgTT4A/Z68Ojh7f5a8egH9QWnvS0ECZa8zHXWMyv
-         43phgDkNoiLkd60Mb89yKGM5XttemvkZFrp4JuDfp8ssMco1PFiTr6jHC5zMkOvpHcxF
-         gjSUBoi/o83QCAaygfmWWuzVaGEvu+Eg8QxtCZub6KjJZQSzGCtQ7EkX3drqLrvngNnt
-         cJFg==
-X-Gm-Message-State: AOAM530V2qdhETGw2M70ttXIGhRlh13tRW8AKPIAaTfGWFhFF3SHRakF
-        LAYbVo/7Plpb1TpYVxWrWQ==
-X-Google-Smtp-Source: ABdhPJwEcVesRAv6xuF9lKc82DjJG0leBtkckB+qcJCfeV9wmVrA4IGlp/jkc/uo9o5uUf2NwHzVXQ==
-X-Received: by 2002:a5e:c703:: with SMTP id f3mr5245265iop.185.1596228424954;
-        Fri, 31 Jul 2020 13:47:04 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id e84sm5550872ill.60.2020.07.31.13.47.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2020 13:47:04 -0700 (PDT)
-Received: (nullmailer pid 756710 invoked by uid 1000);
-        Fri, 31 Jul 2020 20:47:00 -0000
-Date:   Fri, 31 Jul 2020 14:47:00 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Odelu Kukatla <okukatla@codeaurora.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/7] dt-bindings: interconnect: single yaml file for
- RPMh interconnect drivers
-Message-ID: <20200731204700.GA756344@bogus>
-References: <20200728023811.5607-1-jonathan@marek.ca>
- <20200728023811.5607-2-jonathan@marek.ca>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200728023811.5607-2-jonathan@marek.ca>
+        Fri, 31 Jul 2020 17:14:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596230075; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=dURvjg+v1UCqBQ4hlCLmLOVZo/34TjDJA5WmTO9SFL8=; b=VUOulxi+y5X6mHPtfdp6MK73XyGu+cQfHjiVw282AFolzfvdaqfTp35c0HfrL9+CpIY/poAr
+ MuySEtOUAfPOP96JnoU+2eb8/5Q/jhjAue+GhW5TuemACNrr66BJE8GgyVW+yDdMEFW/UYEO
+ CG2qdXjQC3yoCIwivlWPQVJ4Hyc=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n19.prod.us-east-1.postgun.com with SMTP id
+ 5f2489b2d2bd131f680e1a8a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 31 Jul 2020 21:14:26
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C151DC433CA; Fri, 31 Jul 2020 21:14:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from eberman-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: eberman)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C71D7C433CA;
+        Fri, 31 Jul 2020 21:14:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C71D7C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
+From:   Elliot Berman <eberman@codeaurora.org>
+To:     Sebastian Reichel <sre@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Elliot Berman <eberman@codeaurora.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Trilok Soni <tsoni@codeaurora.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+Subject: [PATCH 0/4] Add restart commands for PM8150
+Date:   Fri, 31 Jul 2020 14:14:16 -0700
+Message-Id: <1596230060-6065-1-git-send-email-eberman@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Jul 2020 22:38:00 -0400, Jonathan Marek wrote:
-> These two bindings are almost identical, so combine them into one. This
-> will make it easier to add the sm8150 and sm8250 interconnect bindings.
-> 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  .../{qcom,sdm845.yaml => qcom,rpmh.yaml}      | 20 ++++-
->  .../bindings/interconnect/qcom,sc7180.yaml    | 85 -------------------
->  2 files changed, 17 insertions(+), 88 deletions(-)
->  rename Documentation/devicetree/bindings/interconnect/{qcom,sdm845.yaml => qcom,rpmh.yaml} (76%)
->  delete mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sc7180.yaml
-> 
+PM8150 uses reboot-mode framework to set magic values for bootloader to read
+during next boot. dm-verity wants to use "dm-verity device corrupted" [1] as
+the restart command, however the reboot-mode framework does not support spaces
+in the command line as devicetree property names cannot have spaces. This
+patch series adds two new optional array properties to reboot-mode framework: 
+reboot-mode-names and reboot-mode-magic. The arrays supply the commands and 
+magic values, respectively.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/md/dm-verity-target.c?h=v5.5#n255
+
+Elliot Berman (4):
+  dt-bindings: power: reset: Convert reboot-mode to YAML
+  dt-bindings: power: reset: Add alternate reboot mode format
+  power: reset: Add support for reboot mode alternate properties
+  arm64: dts: qcom: pm8150: Add reboot magic
+
+ .../bindings/power/reset/reboot-mode.txt           | 25 ---------
+ .../bindings/power/reset/reboot-mode.yaml          | 64 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8150.dtsi               |  5 ++
+ drivers/power/reset/reboot-mode.c                  | 42 +++++++++++++-
+ 4 files changed, 110 insertions(+), 26 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/power/reset/reboot-mode.txt
+ create mode 100644 Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
