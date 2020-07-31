@@ -2,88 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3FC5234CC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 23:14:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3913B234D8A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 00:28:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728261AbgGaVO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 17:14:29 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:39733 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728226AbgGaVO3 (ORCPT
+        id S1726482AbgGaW2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 18:28:09 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:39323 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbgGaW2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 17:14:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596230068; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=6DulG01UloH1B3/zaPlweK3VbZQJuf7WosjBzTW4G7U=; b=wthPwdZ1VUvknLe1CYmOMUBonMCD2vhW6V11/QtWKVhyHhhTvdc1whQn/UT2FDuLdnEaDxc0
- wfGN+73fKXLK89+VcVB2fwn6snaTStQfZcyRd77Vjo/xB93OZ4VBTERYdm2SsW0XNDWgubLD
- A2OcWkTnzf1s0+ApvgLLFEEmScs=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f2489b49403087e1054a6df (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 31 Jul 2020 21:14:28
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 13379C433AF; Fri, 31 Jul 2020 21:14:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from eberman-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: eberman)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01FD1C433A0;
-        Fri, 31 Jul 2020 21:14:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01FD1C433A0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
-From:   Elliot Berman <eberman@codeaurora.org>
-To:     Sebastian Reichel <sre@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Elliot Berman <eberman@codeaurora.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: [PATCH 4/4] arm64: dts: qcom: pm8150: Add reboot magic
-Date:   Fri, 31 Jul 2020 14:14:20 -0700
-Message-Id: <1596230060-6065-5-git-send-email-eberman@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1596230060-6065-1-git-send-email-eberman@codeaurora.org>
-References: <1596230060-6065-1-git-send-email-eberman@codeaurora.org>
+        Fri, 31 Jul 2020 18:28:09 -0400
+Received: by mail-io1-f68.google.com with SMTP id z6so33218201iow.6;
+        Fri, 31 Jul 2020 15:28:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lVipxMk9ygvfpcjJVZrzThQ+Zrm2/v1HmQBOyDjm7ck=;
+        b=Sofo4MdpHe9O4EDhPqdveguegDLMJKt5Na+Xlz0BIuKTBefPONNojth4VES3hxFi6n
+         JHh203C5roLXh0sy/X83jkrERuDpueO7dqnhTFTd/jFhbZ8PjCWYkLh2u1JFdlc5638x
+         stk1wfHV6BSrO7Zb3nhj/AlrCV35bQzlFpT3t9PWCyUl8vy+KeJhV5AhoFHwpcC5/RDo
+         peVMg3bs2IYWYlg5Lmu9eSUoosqSu+FaD1OeRfy0lk2N24536GyxuQq8Pzox6axQSpwT
+         fgEzSWXWGRlxMB9KyO1BZyhGn9NuzLIHtloK2c6NmQ8qNISJXkojchb+DL07HkAb5Y+z
+         xWGA==
+X-Gm-Message-State: AOAM531+XDxyRXqUL0qzLJi/OmPKMDGSe0fCTy6fQYGkGJl4Kdl+M1R0
+        g0Bfg1uOLoOa/MrqQ5gIaw==
+X-Google-Smtp-Source: ABdhPJyhgkkbf5wFHQLPFhUz3p3G2zL0Mah1EkGWTiI20QWPkSh0QjyT3bIC9/72a43QevxfhpwLXQ==
+X-Received: by 2002:a02:7786:: with SMTP id g128mr7214587jac.45.1596234488622;
+        Fri, 31 Jul 2020 15:28:08 -0700 (PDT)
+Received: from xps15 ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id s8sm5361787iow.11.2020.07.31.15.28.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2020 15:28:07 -0700 (PDT)
+Received: (nullmailer pid 919097 invoked by uid 1000);
+        Fri, 31 Jul 2020 22:28:07 -0000
+Date:   Fri, 31 Jul 2020 16:28:07 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kathiravan T <kathirav@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, sivaprak@codeaurora.org,
+        robh+dt@kernel.org, broonie@kernel.org, agross@kernel.org,
+        lgirdwood@gmail.com, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: mailbox: add compatible for the IPQ6018
+ SoC
+Message-ID: <20200731222807.GA919019@bogus>
+References: <1596098964-19878-1-git-send-email-kathirav@codeaurora.org>
+ <1596098964-19878-2-git-send-email-kathirav@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1596098964-19878-2-git-send-email-kathirav@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add reboot command magic values for pon device.
+On Thu, 30 Jul 2020 14:19:22 +0530, Kathiravan T wrote:
+> Add the mailbox compatible for the IPQ6018 SoC.
+> 
+> Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Signed-off-by: Elliot Berman <eberman@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/pm8150.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-index 1b64069..afd6231 100644
---- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-@@ -50,6 +50,11 @@
- 		pon: power-on@800 {
- 			compatible = "qcom,pm8916-pon";
- 			reg = <0x0800>;
-+
-+			reboot-mode-names = "bootloader", "recovery",
-+					    "dm-verity device corrupted";
-+			reboot-mode-magic = <0x1>, <0x2>, <0x4>;
-+
- 			pwrkey {
- 				compatible = "qcom,pm8941-pwrkey";
- 				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Acked-by: Rob Herring <robh@kernel.org>
