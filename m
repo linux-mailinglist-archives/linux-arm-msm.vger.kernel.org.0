@@ -2,110 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0010323475C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 16:08:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A66E4234A8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Jul 2020 19:53:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387493AbgGaOIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 10:08:09 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:15506 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732281AbgGaOIG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 10:08:06 -0400
-IronPort-SDR: x/CIroGFlnK3xA+D1zoFkwhnfxsuVCE+xszbAMqI6ufoSAmniObRCYKq4CPxw58fsV7UOWci9r
- hiN0La5d9wU3duMr5/HhuFbOHmV9m0XL7gH7e4XbamUV+6IRHrM4LJNKPFh/wbF8QZ5ZRLR+SE
- gV5on1rUYtljiHFiQqDqx/2YYIYBnL8QnRwROgruOZDETizu25dpXgjUllvhvw7xxWvAe77xq2
- aQ9vfIVXXwwzdIwf6XAzBCNvnX+M4q8PcGkFmHfjejxzSn96vUEM1X40helVbBoo0Ctns0zL1N
- 34k=
-X-IronPort-AV: E=Sophos;i="5.75,418,1589266800"; 
-   d="scan'208";a="47235770"
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by labrats.qualcomm.com with ESMTP; 31 Jul 2020 07:08:05 -0700
-Received: from pacamara-linux.qualcomm.com ([192.168.140.135])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 31 Jul 2020 07:08:04 -0700
-Received: by pacamara-linux.qualcomm.com (Postfix, from userid 359480)
-        id 6735922E4D; Fri, 31 Jul 2020 07:08:04 -0700 (PDT)
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/8] scsi: ufs-qcom: Remove testbus dump in ufs_qcom_dump_dbg_regs
-Date:   Fri, 31 Jul 2020 07:07:51 -0700
-Message-Id: <1596204478-5420-4-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1596204478-5420-1-git-send-email-cang@codeaurora.org>
-References: <1596204478-5420-1-git-send-email-cang@codeaurora.org>
+        id S1733194AbgGaRxr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 13:53:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34036 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730069AbgGaRxr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 31 Jul 2020 13:53:47 -0400
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C28D722B43;
+        Fri, 31 Jul 2020 17:53:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596218026;
+        bh=YYLcZCHdY4A4VUdOJs2UDmzQcnxwkeaqns0wcevhtAM=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=C4KlEpSgXN7Aaj5tK5AZK6HQgoKDrS1Y5tm93AImK925+eQz4jLa8x1freHiv91iy
+         trNbZb0ODUR0u3Ys2IIHU5SsTJ3li9svr87VFNlz00CqttOXC5wo9p1agzLKrJEoY1
+         gDZgK56jQ26VX0e0sURXYKuezY90OPwUEQzOcufQ=
+Received: by mail-oi1-f170.google.com with SMTP id v13so10804587oiv.13;
+        Fri, 31 Jul 2020 10:53:46 -0700 (PDT)
+X-Gm-Message-State: AOAM53074Ku4jzcI6M1QdgwTzYz5S7CbVqNLo98xGNWs6fSIsXUZ+BeN
+        APndfD/Ihl0CM6cib7nDULt0py3AQ0Y1wux/Ug==
+X-Google-Smtp-Source: ABdhPJyak9HSVsNL8SbsIPvigrG7TnsIRtLgH+VAaGhZvk5l27JI1wNfmLdXy63nRSFcEJbEIC19SD99QW9FiZu87tw=
+X-Received: by 2002:aca:190c:: with SMTP id l12mr3893214oii.147.1596218026159;
+ Fri, 31 Jul 2020 10:53:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200729004757.1901107-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20200729004757.1901107-1-bjorn.andersson@linaro.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 31 Jul 2020 11:53:35 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKKQmLNwQDVJDOQdVZ9iYb4DXDCnfzsBE9q32jaRcefCg@mail.gmail.com>
+Message-ID: <CAL_JsqKKQmLNwQDVJDOQdVZ9iYb4DXDCnfzsBE9q32jaRcefCg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: hwlock: qcom: Remove invalid binding
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
+        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dumping testbus registers is heavy enough to cause stability issues
-sometime, just remove them as of now.
+On Tue, Jul 28, 2020 at 6:48 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> The Qualcomm hwlock is described in DeviceTree either directly on the
+> mmio bus or split between a syscon and a mutex node, but as noted in
+> [1] the latter is not valid DT, so remove any traces of this from the
+> binding.
+>
+> [1] https://lore.kernel.org/r/CAL_JsqLa9GBtbgN6aL7AQ=A6V-YRtPgYqh6XgM2kpx532+r4Gg@mail.gmail.com/
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/hwlock/qcom-hwspinlock.yaml      | 25 +------------------
+>  1 file changed, 1 insertion(+), 24 deletions(-)
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
-Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 7da27ee..96e0999 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1620,44 +1620,12 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	return 0;
- }
- 
--static void ufs_qcom_testbus_read(struct ufs_hba *hba)
--{
--	ufshcd_dump_regs(hba, UFS_TEST_BUS, 4, "UFS_TEST_BUS ");
--}
--
--static void ufs_qcom_print_unipro_testbus(struct ufs_hba *hba)
--{
--	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	u32 *testbus = NULL;
--	int i, nminor = 256, testbus_len = nminor * sizeof(u32);
--
--	testbus = kmalloc(testbus_len, GFP_KERNEL);
--	if (!testbus)
--		return;
--
--	host->testbus.select_major = TSTBUS_UNIPRO;
--	for (i = 0; i < nminor; i++) {
--		host->testbus.select_minor = i;
--		ufs_qcom_testbus_config(host);
--		testbus[i] = ufshcd_readl(hba, UFS_TEST_BUS);
--	}
--	print_hex_dump(KERN_ERR, "UNIPRO_TEST_BUS ", DUMP_PREFIX_OFFSET,
--			16, 4, testbus, testbus_len, false);
--	kfree(testbus);
--}
--
- static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- {
- 	ufshcd_dump_regs(hba, REG_UFS_SYS1CLK_1US, 16 * 4,
- 			 "HCI Vendor Specific Registers ");
- 
--	/* sleep a bit intermittently as we are dumping too much data */
- 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
--	udelay(1000);
--	ufs_qcom_testbus_read(hba);
--	udelay(1000);
--	ufs_qcom_print_unipro_testbus(hba);
--	udelay(1000);
- }
- 
- /**
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+Reviewed-by: Rob Herring <robh@kernel.org>
