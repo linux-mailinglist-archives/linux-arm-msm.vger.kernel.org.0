@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D064234E97
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 01:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59F7B234F78
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 04:37:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726847AbgGaXdH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 19:33:07 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:64865 "EHLO
+        id S1728335AbgHAChR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 22:37:17 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:24084 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725938AbgGaXdH (ORCPT
+        by vger.kernel.org with ESMTP id S1727824AbgHAChQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 19:33:07 -0400
+        Fri, 31 Jul 2020 22:37:16 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596238385; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1596249435; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=vF/ZfSy0GW8C+ioPXlIi2t6ZaQN9VfKaJ+Oof9fc1KQ=; b=N1gArN1D7TFW7i3PHK5PgCzsCAenheZkG9QoHr2yZuC8t2IuPQaFzz/P1ShvgvaB4qCGB+0n
- YEKv43l0jAuNsEkOM4hTBV80WA7JHKWPmBZASlYbb4NCHNulcbyty/XFWE6XNgPnBEVWqcV8
- s1C8qRTVxmJeiMFsWkl+rFyj5EI=
+ Subject: Sender; bh=OptR6uFR4LgTpWN1RfzXVooY5E2MVRFuTtO4DpUTtsQ=; b=e5cFKha1Z7bAYNIdenGwSX92otuxh5fPtvKVE196jUujKkUpKDzsRPk+YkmNr1r9iOPe8/jl
+ +g9+t/sxn6PsiJljP46UHqjM9rE20ca62gRK1J9jTnn3EoNSAHeJTqPlc5Dg2mg3yqCGb0uN
+ YBtYtBCYeP2jGv0wr4ycQgz8zQw=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n15.prod.us-east-1.postgun.com with SMTP id
- 5f24a9d990893260dd39d2ef (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 31 Jul 2020 23:31:37
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f24d53ef89b692ba2f29171 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 01 Aug 2020 02:36:46
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7DBDAC43395; Fri, 31 Jul 2020 23:31:36 +0000 (UTC)
+        id C84D1C433C9; Sat,  1 Aug 2020 02:36:45 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.7 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
         SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.121.73] (i-global254.qualcomm.com [199.106.103.254])
+Received: from [192.168.1.117] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C569EC433C9;
-        Fri, 31 Jul 2020 23:31:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C569EC433C9
+        (Authenticated sender: mdtipton)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0A4FAC433C6;
+        Sat,  1 Aug 2020 02:36:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0A4FAC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [PATCH v6 1/4] usb: typec: Add QCOM PMIC typec detection driver
-To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, gregkh@linuxfoundation.org,
-        heikki.krogerus@linux.intel.com, robh+dt@kernel.org
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        jackp@codeaurora.org
-References: <20200729071340.7673-1-wcheng@codeaurora.org>
- <20200729071340.7673-2-wcheng@codeaurora.org>
- <159601160976.1360974.10172804658083744292@swboyd.mtv.corp.google.com>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <e11fc325-7f82-b13f-3e8a-f444ddc50257@codeaurora.org>
-Date:   Fri, 31 Jul 2020 16:31:33 -0700
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
+Subject: Re: [PATCH v2 1/2] interconnect: Add sync state support
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>, okukatla@codeaurora.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <20200722110139.24778-1-georgi.djakov@linaro.org>
+ <20200722110139.24778-2-georgi.djakov@linaro.org>
+ <CAGETcx-QM8P2nVxcQJZz+m5Zwi==2qLfinb0FkDXJ7dNVP5bEA@mail.gmail.com>
+ <e4f68ae5-5cf7-bac4-e7f2-c074327ea659@codeaurora.org>
+ <CAGETcx-i=wBB4Ooch734B0ejK6F5mGPLQ6c_K4FeFyNmMLsL=Q@mail.gmail.com>
+From:   Mike Tipton <mdtipton@codeaurora.org>
+Message-ID: <df0cfd7c-442b-810b-1bb2-58d628e7fe85@codeaurora.org>
+Date:   Fri, 31 Jul 2020 19:36:43 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <159601160976.1360974.10172804658083744292@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAGETcx-i=wBB4Ooch734B0ejK6F5mGPLQ6c_K4FeFyNmMLsL=Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -67,109 +70,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/29/2020 1:33 AM, Stephen Boyd wrote:
-> Quoting Wesley Cheng (2020-07-29 00:13:37)
->> diff --git a/drivers/usb/typec/Kconfig b/drivers/usb/typec/Kconfig
->> index 559dd06117e7..3e375f82849d 100644
->> --- a/drivers/usb/typec/Kconfig
->> +++ b/drivers/usb/typec/Kconfig
->> @@ -73,6 +73,18 @@ config TYPEC_TPS6598X
->>           If you choose to build this driver as a dynamically linked module, the
->>           module will be called tps6598x.ko.
->>  
->> +config TYPEC_QCOM_PMIC
->> +       tristate "Qualcomm PMIC USB Type-C driver"
->> +       depends on ARCH_QCOM
+On 7/30/2020 12:07 PM, Saravana Kannan wrote:
+> On Mon, Jul 27, 2020 at 11:18 PM Mike Tipton <mdtipton@codeaurora.org> wrote:
+>>
+>> On 7/22/2020 10:07 AM, Saravana Kannan wrote:
+>>> On Wed, Jul 22, 2020 at 4:01 AM Georgi Djakov <georgi.djakov@linaro.org> wrote:
+>>>>
+>>>> The bootloaders often do some initial configuration of the interconnects
+>>>> in the system and we want to keep this configuration until all consumers
+>>>> have probed and expressed their bandwidth needs. This is because we don't
+>>>> want to change the configuration by starting to disable unused paths until
+>>>> every user had a chance to request the amount of bandwidth it needs.
+>>>>
+>>>> To accomplish this we will implement an interconnect specific sync_state
+>>>> callback which will synchronize (aggregate and set) the current bandwidth
+>>>> settings when all consumers have been probed.
+>>>>
+>>>> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+>>>> ---
+>>>>    drivers/interconnect/core.c           | 61 +++++++++++++++++++++++++++
+>>>>    include/linux/interconnect-provider.h |  5 +++
+>>>>    2 files changed, 66 insertions(+)
+>>>>
+>>>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+>>>> index e5f998744501..0c4e38d9f1fa 100644
+>>>> --- a/drivers/interconnect/core.c
+>>>> +++ b/drivers/interconnect/core.c
+>>>> @@ -26,6 +26,8 @@
+>>>>
+>>>>    static DEFINE_IDR(icc_idr);
+>>>>    static LIST_HEAD(icc_providers);
+>>>> +static int providers_count;
+>>>> +static bool synced_state;
+>>>>    static DEFINE_MUTEX(icc_lock);
+>>>>    static struct dentry *icc_debugfs_dir;
+>>>>
+>>>> @@ -255,6 +257,12 @@ static int aggregate_requests(struct icc_node *node)
+>>>>                           continue;
+>>>>                   p->aggregate(node, r->tag, r->avg_bw, r->peak_bw,
+>>>>                                &node->avg_bw, &node->peak_bw);
+>>>> +
+>>>> +               /* during boot use the initial bandwidth as a floor value */
+>>>> +               if (!synced_state) {
+>>>> +                       node->avg_bw = max(node->avg_bw, node->init_avg);
+>>>> +                       node->peak_bw = max(node->peak_bw, node->init_peak);
+>>>> +               }
+>>>
+>>> Sorry I didn't reply earlier.
+>>>
+>>> I liked your previous approach with the get_bw ops. The v2 approach
+>>> forces every interconnect provider driver to set up these values even
+>>> if they are okay with just maxing out the bandwidth. Also, if they can
+>>> actually query their hardware, this adds additional steps for them.
+>>
+>> The problem with using something like get_bw() is that while we can
+>> dynamically query the HW, we have far less granularity in HW than we
+>> have nodes in the framework. We vote at BCM-level granularity, but each
+>> BCM can have many nodes. For example, the sdm845 CN0 BCM has 47 nodes.
+>> If we implement get_bw() generically, then it would return the BW for
+>> each node, which would be the queried BCM vote scaled to account for
+>> differences in BCM/node widths. While this could be useful in general as
+>> an informational callback, we wouldn't want to use this as a proxy for
+>> our initial BW vote requirements. For CN0, we wouldn't want or need to
+>> vote 47 times for the same CN0 BCM. Each of the 47 node requests would
+>> result in the same BCM request.
 > 
-> Can you add || COMPILE_TEST here?
-> 
+> Firstly most people in the list don't know what BCM means. Also, all
+> of this is your provider driver specific issues. If you are exposing
+> more nodes than available HW granularity, then you might want to
+> question why it needs to be done (probably to make aggregation easier
+> for the driver). If it's needed, then optimize your get/set() calls by
+> caching the value in an internal variable so that you don't send a
+> request to your BCM if you haven't changed the value since the last
+> request. This is not a reason to not have get_bw() calls at the
+> framework level. Other providers might support it and it'd make their
+> lives easier.
 
-Sure, will do.
+The nodes capture the HW topology, so they are all needed to expose the 
+necessary paths and aggregate properly. However, HW doesn't support 
+voting for each node individually. Instead, they are grouped together 
+and collections of nodes are voted using a single "BCM". So in addition 
+to the node aggregation done in the framework, we also aggregate across 
+all nodes belonging to the BCM.
 
->> +#include <linux/err.h>
->> +#include <linux/regmap.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/slab.h>
->> +#include <linux/interrupt.h>
->> +#include <linux/of_irq.h>
 > 
-> Is this include used?
+>> All we'd really need is a single node per-BCM to serve as the proxy
+>> node. We'd query the HW, scale the queried value for the chosen proxy
+>> node, and set init_avg/init_peak appropriately. This would save a lot of
+>> unnecessary votes. Based on the current implementation, the set() call
+>> in icc_node_add() for initial BW wouldn't trigger any actual HW requests
+>> since we only queue BCMs that require updating in the aggregate()
+>> callback. However, the set() call in icc_sync_state() would, since we
+>> re-aggregate each node that has a non-zero init_avg/init_peak.
 > 
->> +#include <linux/platform_device.h>
->> +#include <linux/of_device.h>
-> 
-> Is this include used?
-> 
+> Having a fake "proxy node" seems like a bad internal design. Also,
+> have you timed the cost of these calls to justify your concern? If you
+> cache the values after aggregation and check before you send it down
+> to a "BCM", at worst you get one additional call to rpmh per BCM due
+> to this feature. I'm guessing any time delta would be lost as noise
+> compared to the boot up time.
 
-Reviewed which includes I used, and removed the ones that were not needed.
+It wouldn't be a fake node. It would be one of the real, existing nodes. 
+But since we can only query/vote the BCM (and a single BCM can have 
+multiple nodes), then we'd just have to choose one node per-BCM in order 
+to "hold" the initial BW from boot.
 
->> +static void qcom_pmic_typec_enable_vbus_regulator(struct qcom_pmic_typec
->> +                                                       *qcom_usb, bool enable)
->> +{
->> +       int ret = 0;
+I don't have specific timing numbers offhand. But now that I think about 
+it it's a bigger functional issue. If we implement get_bw() to return 
+the available BW for each node in the BCM, then our internal BCM 
+aggregation will quickly ramp to max. The avg_bw for each node in the 
+BCM is summed. If every node in the BCM votes for the queried BW, then 
+it will sum to something much higher.
+
+As I mentioned before, we could solve this problem by implementing 
+get_bw() to only return non-zero BW for one node per-BCM. This would 
+work for the initial proxy voting. The only downside is that it wouldn't 
+be a generic "get_bw" callback anymore. It would return our initial BW 
+vote instead. That's not a big deal, unless the framework wants to use 
+it for other purposes in the future. But that doesn't seem particularly 
+likely. The framework already knows the BW explicitly voted by clients. 
+So querying is only useful to find out how much BW is configured in HW, 
+but isn't explicitly voted for. Outside of the initial sync-state 
+context I don't see that being necessary.
+
 > 
-> Please don't assign and then reassign before testing this variable.
+>> There's nothing stopping us from implementing get_bw() as if it were
+>> get_initial_bw(), but that only works until the framework decides to use
+>> get_bw() for more things than just the initial vote. I suppose we could
+>> also just have a "get_initial_bw" callback, but it only needs to be
+>> called once, so doesn't necessarily need a callback as opposed to
+>> additional init_avg/init_peak members in the icc_node struct.
 > 
-
-I will just remove the assignment here.
-
->> +       if (stat & CC_ATTACHED) {
->> +               orientation = ((stat & CC_ORIENTATION) >> 1) ?
+> The benefit of "ops" vs "fill up these variables" is that you can
+> differentiate between "I don't care, framework can decide" vs "I need
+> it to be 0". Put another way, there's no way to say "I don't care" if
+> you use variables. And by default drivers that don't really care (as
+> in, okay if it's set to INT_MAX) shouldn't have to do extra code/work.
 > 
-> Do we really need to shift >> by 1? Seems useless for a test.
+> Long story short, there's nothing wrong with get_bw(). If your
+> specific driver needs to optimize the calls to your RPMH hardware,
+> that should be hidden inside your driver.
+
+Yeah, I get all that. I was mainly pointing out that sometimes there's a 
+distinction between the available BW (get_bw) and the desired initial BW 
+vote (get_initial_bw). I'm fine if we go with get_bw(), but our 
+implementation may look a bit odd.
+
 > 
-
-Agreed, we can remove the shift.
-
->> +       ret = of_property_read_u32(dev->of_node, "reg", &reg);
->> +       if (ret < 0) {
->> +               dev_err(dev, "missing base address");
+> -Saravana
 > 
-> Please add newlines at the end of printk messages.
-> 
-
-Done.
-
->> +       irq = platform_get_irq(pdev, 0);
->> +       if (irq < 0) {
->> +               dev_err(dev, "Failed to get CC irq\n");
-> 
-> platform_get_irq() already prints an error message. Please remove this.
-> 
-
-Got it.
-
->> +static const struct of_device_id qcom_pmic_typec_table[] = {
->> +       { .compatible = "qcom,pm8150b-usb-typec" },
->> +       { },
-> 
-> Nitpick: Drop the comma here so nothing can come after without causing a
-> compile error.
-> 
-
-Sure.
-
->> +static struct platform_driver qcom_pmic_typec = {
->> +       .driver = {
->> +               .name = "qcom,pmic-typec",
->> +               .of_match_table = qcom_pmic_typec_table,
->> +       },
->> +       .probe = qcom_pmic_typec_probe,
->> +       .remove = qcom_pmic_typec_remove,
->> +};
->> +
-> 
-> Another nitpick: Drop the newline and make module_platform_driver()
-> follow directly after the driver.
-> 
-
-Ok, will do.
-
-Thanks for the review/feedback, Stephen.
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
