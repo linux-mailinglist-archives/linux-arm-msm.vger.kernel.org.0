@@ -2,459 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7D46235322
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 17:55:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC38D2353FB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 20:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbgHAPzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Aug 2020 11:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbgHAPzs (ORCPT
+        id S1726345AbgHASNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Aug 2020 14:13:54 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:37994 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726571AbgHASNx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Aug 2020 11:55:48 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7475EC061757
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Aug 2020 08:55:48 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id r11so8039390pfl.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Aug 2020 08:55:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=0Wn78/296Qy1st3iknU+pUA9jwJA0s8u3uTb8Py5Nes=;
-        b=SAcuan/gmMsOgDsEIp52jsbTxE7MosBclJGep0D4ltA1w4VymmjoKjvBObK1hmjDcK
-         aHwYC2NGbHQ/yvPXpNGxXWxcE/dezKns2DWd/pY+aRSvksjqThSMBF2B12RoLzI56R0n
-         6o7TECI4W1lvt8D+XgAcgvyPp9TG9x6Vza4FSkcI/UAhedbvLLYA+Cw3WuYT1D21uw10
-         +8nkAxoH6Ck+jmIADZ2h4YlVEP3uTP17JnAIYSeCtPMsUNK/OKTlHK2WMKsn+nb89kOA
-         nIVOaQbe41mX/8ftNlK4J1GM9ZVKzmjglA38a2g3AZwwIvoLLzxgRrD0kxz9WGyKKZyk
-         bVxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=0Wn78/296Qy1st3iknU+pUA9jwJA0s8u3uTb8Py5Nes=;
-        b=UnUFARx++2R+MLCnfpoCqT/jG9Zs9KQ2h6m2n9z67Q5SwI/b9BtgY2oSv9H8CKOhZX
-         jj2NOKnobVy2axCUkprz/0wjRYs/rlm9xGML2OhWusj7Cob/92kAX7H/z4herioZOB3D
-         m5mU6Xo/MOpQIT9i20HWFzfT8+KBOCyms+GG1cF6rDYzhL30SRkGRPmveMFHe/M6qXKa
-         AHB5brzJTZf7sysDf2K/jhfDyOdOhSfdhE9ngyuFhnx+Y9dOQPOuI50ml+Qw5U1zfbyJ
-         HpkWa2OInQOabSybL0kN4yQXJMhriAQtH/NzV9GpHfQvUZxC6h8WAPrbB9fuiK5cK/5/
-         BKbA==
-X-Gm-Message-State: AOAM531rUAtAwRI1YMIF95zRFJNM33kg42+20MOPBvyNQ9jh/RNA3poX
-        f73qynSY5FsHcnCfJZ36F0shvg==
-X-Google-Smtp-Source: ABdhPJx6IzoI6dimScoHAofUj1L5DxSy5BEGij39n/MtnZJYZ8yqPWToroiddoVEWXOkbYtXVE/thg==
-X-Received: by 2002:a63:3fc2:: with SMTP id m185mr8486191pga.426.1596297347706;
-        Sat, 01 Aug 2020 08:55:47 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:6803:6805:2abe:7330:1229:6bc])
-        by smtp.gmail.com with ESMTPSA id 21sm13828213pfa.4.2020.08.01.08.55.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 01 Aug 2020 08:55:46 -0700 (PDT)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Sat, 1 Aug 2020 14:13:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596305633; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=cJyeRZPN9m3WfcT3UaEZE4Gf1yPYYNx/SsDF1xhJnSc=; b=K76BjiEeHuo0lkzavtVT7BqSu5xiLKSpUAIfGHgnpz0IQfK1V4Q1w2PenAPnQWf7O1k31FdO
+ 2YhBqXUnfsudZ6lny+vhB7p5UVBHRiZgh9u8WImeV5WJMun46juzPhzyk35RJdq5dKxspCxv
+ H8DPEd5fFYA675UNY3U3GmLyYQU=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n16.prod.us-east-1.postgun.com with SMTP id
+ 5f25b0debcdc2fe47193e77d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 01 Aug 2020 18:13:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DEC6BC43391; Sat,  1 Aug 2020 18:13:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C85ECC433C6;
+        Sat,  1 Aug 2020 18:13:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C85ECC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
-Date:   Sat,  1 Aug 2020 21:25:41 +0530
-Message-Id: <1596297341-13549-1-git-send-email-amit.pundir@linaro.org>
+        Doug Anderson <dianders@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v2] Add LPASS clock controller Node for SC7180
+Date:   Sat,  1 Aug 2020 23:43:34 +0530
+Message-Id: <1596305615-5894-1-git-send-email-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial dts support for Xiaomi Poco F1 (Beryllium).
+[v2]
+ - Update the node in sorted order.
+ - Depends on the patch
+  https://lore.kernel.org/r/20200731133006.1.Iee81b115f5be50d6d69500fe1bda11bba6e16143@changeid
 
-This initial support is based on upstream Dragonboard 845c
-(sdm845) device. With this dts, Beryllium boots AOSP up to
-ADB shell over USB-C.
+[v1]
+ - Clock controller LPASS device Node.
 
-Supported functionality includes UFS, USB-C (peripheral),
-microSD card and Vol+/Vol-/power keys. Bluetooth should work
-too but couldn't be verified from adb command line, it is
-verified when enabled from UI with few WIP display patches.
+Taniya Das (1):
+  arm64: dts: qcom: sc7180: Add LPASS clock controller nodes
 
-Just like initial db845c support, initializing the SMMU is
-clearing the mapping used for the splash screen framebuffer,
-which causes the device to hang during boot and recovery
-needs a hard power reset. This can be worked around using:
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-    fastboot oem select-display-panel none
-
-To switch ON the display back run:
-
-    fastboot oem select-display-panel
-
-But this only works on Beryllium devices running bootloader
-version BOOT.XF.2.0-00369-SDM845LZB-1 that shipped with
-Android-9 based release. Newer bootloader version do not
-support switching OFF the display panel at all. So we need
-a few additional smmu patches (under review) from here to
-boot to shell:
-https://github.com/pundiramit/linux/commits/beryllium-mainline
-
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
-v3: Added a reserved-memory region from downstream kernel to fix
-    a boot regression with recent dma-pool changes in v5.8-rc6.
-v2: Updated machine compatible string for seemingly inevitable
-    future quirks.
-
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- arch/arm64/boot/dts/qcom/sdm845-beryllium.dts | 331 ++++++++++++++++++++++++++
- 2 files changed, 332 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0f2c33d611df..3ef1b48bc0cb 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-beryllium.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
-new file mode 100644
-index 000000000000..af66459712fe
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
-@@ -0,0 +1,331 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sdm845.dtsi"
-+#include "pm8998.dtsi"
-+#include "pmi8998.dtsi"
-+
-+/ {
-+	model = "Xiaomi Technologies Inc. Beryllium";
-+	compatible = "xiaomi,beryllium", "qcom,sdm845";
-+
-+	/* required for bootloader to select correct board */
-+	qcom,board-id = <69 0>;
-+	qcom,msm-id = <321 0x20001>;
-+
-+	aliases {
-+		hsuart0 = &uart6;
-+	};
-+
-+	dc12v: dc12v-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "DC12V";
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+		regulator-always-on;
-+	};
-+
-+	gpio_keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vol_up_pin_a>;
-+
-+		vol-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm8998_gpio 6 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	vbat: vbat-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VBAT";
-+
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <4200000>;
-+		regulator-max-microvolt = <4200000>;
-+		regulator-always-on;
-+	};
-+
-+	vbat_som: vbat-som-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VBAT_SOM";
-+
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <4200000>;
-+		regulator-max-microvolt = <4200000>;
-+		regulator-always-on;
-+	};
-+
-+	vdc_3v3: vdc-3v3-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VDC_3V3";
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-always-on;
-+	};
-+
-+	vdc_5v: vdc-5v-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VDC_5V";
-+
-+		vin-supply = <&dc12v>;
-+		regulator-min-microvolt = <500000>;
-+		regulator-max-microvolt = <500000>;
-+		regulator-always-on;
-+	};
-+
-+	vreg_s4a_1p8: vreg-s4a-1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	pm8998-rpmh-regulators {
-+		compatible = "qcom,pm8998-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vreg_l1a_0p875: ldo1 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_2p95: ldo13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17a_1p3: ldo17 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l20a_2p95: ldo20 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l21a_2p95: ldo21 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l24a_3p075: ldo24 {
-+			regulator-min-microvolt = <3088000>;
-+			regulator-max-microvolt = <3088000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l25a_3p3: ldo25 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l26a_1p2: ldo26 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&gcc {
-+	protected-clocks = <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
-+};
-+
-+/* Reserved memory changes from downstream */
-+/ {
-+	reserved-memory {
-+		removed_region: memory@88f00000 {
-+			no-map;
-+			reg = <0 0x88f00000 0 0x1A00000>;
-+		};
-+	};
-+};
-+
-+&pm8998_gpio {
-+	vol_up_pin_a: vol-up-active {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+};
-+
-+&pm8998_pon {
-+	resin {
-+		compatible = "qcom,pm8941-resin";
-+		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+		debounce = <15625>;
-+		bias-pull-up;
-+		linux,code = <KEY_VOLUMEDOWN>;
-+	};
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
-+
-+	vmmc-supply = <&vreg_l21a_2p95>;
-+	vqmmc-supply = <&vreg_l13a_2p95>;
-+
-+	bus-width = <4>;
-+	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <81 4>;
-+
-+	sdc2_default_state: sdc2-default {
-+		clk {
-+			pins = "sdc2_clk";
-+			bias-disable;
-+
-+			/*
-+			 * It seems that mmc_test reports errors if drive
-+			 * strength is not 16 on clk, cmd, and data pins.
-+			 */
-+			drive-strength = <16>;
-+		};
-+
-+		cmd {
-+			pins = "sdc2_cmd";
-+			bias-pull-up;
-+			drive-strength = <10>;
-+		};
-+
-+		data {
-+			pins = "sdc2_data";
-+			bias-pull-up;
-+			drive-strength = <10>;
-+		};
-+	};
-+
-+	sdc2_card_det_n: sd-card-det-n {
-+		pins = "gpio126";
-+		function = "gpio";
-+		bias-pull-up;
-+	};
-+};
-+
-+&uart6 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn3990-bt";
-+
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdd-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l12a_1p8>;
-+	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
-+
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l26a_1p2>;
-+	vdda-pll-supply = <&vreg_l1a_0p875>;
-+};
-+
-+&ufs_mem_hc {
-+	status = "okay";
-+
-+	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l20a_2p95>;
-+	vcc-max-microamp = <800000>;
-+};
-+
-+&ufs_mem_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l26a_1p2>;
-+};
-+
-+/* PINCTRL - additions to nodes defined in sdm845.dtsi */
-+
-+&qup_uart6_default {
-+	pinmux {
-+		pins = "gpio45", "gpio46", "gpio47", "gpio48";
-+		function = "qup6";
-+	};
-+
-+	cts {
-+		pins = "gpio45";
-+		bias-disable;
-+	};
-+
-+	rts-tx {
-+		pins = "gpio46", "gpio47";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	rx {
-+		pins = "gpio48";
-+		bias-pull-up;
-+	};
-+};
--- 
-2.7.4
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
