@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6C15234FA6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 05:33:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0DAE234FA2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 05:33:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728551AbgHADcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Jul 2020 23:32:43 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:38813 "EHLO
+        id S1728465AbgHADck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Jul 2020 23:32:40 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:54092 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728480AbgHADcm (ORCPT
+        by vger.kernel.org with ESMTP id S1728470AbgHADck (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Jul 2020 23:32:42 -0400
+        Fri, 31 Jul 2020 23:32:40 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596252762; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1596252759; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=gcqQzQVXCs7enCe/CsT0vSZrIaJ9bCn32XECqcM0XFI=; b=WFJ4kBPOd3ppAQDFGqTiAVdcs8SCesaD8fkpaBzJ9UIQ/y2Eemu4WcYZkNTMpGj762eyPka3
- UAacIdNp6jobA7YAEuxSLBPmjfsh4dsFzY0kMzNWoYDZhM7yZmiQ4Ad141Tdk4EFPkgLMqi0
- R4HSfdbhTIfX6+wYioMs8VBWBL8=
+ Sender; bh=FwOsBUwW6ySFHOCeZdm5uzF0UBLnzcbxYV4r9s7dT0E=; b=LpoJO1L5uxmlHyRxDnG6s1EvnUR5dsESJ2wY8KgTRSJa01JM+3mXwToqQyVbrTG0aBHQXOA8
+ ZLCJ8IEGFYe/Nfeb67c5bUfi6P39EDrqTlPriMFU9PeE67C+CQhUTXZftqHd3XonnowfSCdw
+ Atgodn/fajP+zWusn6r3KHolyOk=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
- 5f24e24beb556d49a60e44eb (version=TLS1.2,
+ smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
+ 5f24e24b21feae908bf871fb (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 01 Aug 2020 03:32:27
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 07BC5C433CB; Sat,  1 Aug 2020 03:32:27 +0000 (UTC)
+        id BF47BC43391; Sat,  1 Aug 2020 03:32:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from mdtipton-linux.qualcomm.com (i-global254.qualcomm.com [199.106.10
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 433BFC433C6;
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1832C433C9;
         Sat,  1 Aug 2020 03:32:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 433BFC433C6
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1832C433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mdtipton@codeaurora.org
 From:   Mike Tipton <mdtipton@codeaurora.org>
@@ -48,9 +48,9 @@ Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
         linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Mike Tipton <mdtipton@codeaurora.org>
-Subject: [PATCH v3 4/6] interconnect: qcom: Only wait for completion in AMC/WAKE by default
-Date:   Fri, 31 Jul 2020 20:32:13 -0700
-Message-Id: <20200801033215.1440-5-mdtipton@codeaurora.org>
+Subject: [PATCH v3 5/6] interconnect: qcom: Add support for per-BCM scaling factors
+Date:   Fri, 31 Jul 2020 20:32:14 -0700
+Message-Id: <20200801033215.1440-6-mdtipton@codeaurora.org>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20200801033215.1440-1-mdtipton@codeaurora.org>
 References: <20200801033215.1440-1-mdtipton@codeaurora.org>
@@ -61,30 +61,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the default TCS wait behavior to only wait for completion in AMC
-and WAKE. Waiting isn't necessary in the SLEEP TCS, since votes are only
-being removed in this case. Resources can be safely disabled
-asynchronously in parallel with the rest of the power collapse sequence.
-This reduces the sleep entry latency.
+Currently, bcm-voter always assumes requests are made in KBps and that
+BCM HW always wants them in Bps, so it always scales the requests by
+1000. However, certain use cases and BCMs may use different units.
+Thus, add support for BCM-specific scaling factors.
 
 Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
 ---
- drivers/interconnect/qcom/bcm-voter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/qcom/bcm-voter.c | 4 ++--
+ drivers/interconnect/qcom/icc-rpmh.c  | 3 +++
+ drivers/interconnect/qcom/icc-rpmh.h  | 2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
-index 4bba3b42b648..d95725b9208c 100644
+index d95725b9208c..be7660b95ccc 100644
 --- a/drivers/interconnect/qcom/bcm-voter.c
 +++ b/drivers/interconnect/qcom/bcm-voter.c
-@@ -341,7 +341,7 @@ static int qcom_icc_bcm_voter_probe(struct platform_device *pdev)
- 	voter->np = np;
+@@ -72,11 +72,11 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+ 			agg_peak[bucket] = max(agg_peak[bucket], temp);
+ 		}
  
- 	if (of_property_read_u32(np, "qcom,tcs-wait", &voter->tcs_wait))
--		voter->tcs_wait = QCOM_ICC_TAG_ALWAYS;
-+		voter->tcs_wait = QCOM_ICC_TAG_ACTIVE_ONLY;
+-		temp = agg_avg[bucket] * 1000ULL;
++		temp = agg_avg[bucket] * bcm->vote_scale;
+ 		do_div(temp, bcm->aux_data.unit);
+ 		bcm->vote_x[bucket] = temp;
  
- 	mutex_init(&voter->lock);
- 	INIT_LIST_HEAD(&voter->commit_list);
+-		temp = agg_peak[bucket] * 1000ULL;
++		temp = agg_peak[bucket] * bcm->vote_scale;
+ 		do_div(temp, bcm->aux_data.unit);
+ 		bcm->vote_y[bucket] = temp;
+ 	}
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index 3ac5182c9ab2..008846c17bec 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -136,6 +136,9 @@ int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev)
+ 	INIT_LIST_HEAD(&bcm->list);
+ 	INIT_LIST_HEAD(&bcm->ws_list);
+ 
++	if (!bcm->vote_scale)
++		bcm->vote_scale = 1000;
++
+ 	/* Link Qnodes to their respective BCMs */
+ 	for (i = 0; i < bcm->num_nodes; i++) {
+ 		qn = bcm->nodes[i];
+diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+index cb736b745e1a..10b1890345b1 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.h
++++ b/drivers/interconnect/qcom/icc-rpmh.h
+@@ -80,6 +80,7 @@ struct qcom_icc_node {
+  * @addr: address offsets used when voting to RPMH
+  * @vote_x: aggregated threshold values, represents sum_bw when @type is bw bcm
+  * @vote_y: aggregated threshold values, represents peak_bw when @type is bw bcm
++ * @vote_scale: scaling factor for vote_x and vote_y
+  * @dirty: flag used to indicate whether the bcm needs to be committed
+  * @keepalive: flag used to indicate whether a keepalive is required
+  * @aux_data: auxiliary data used when calculating threshold values and
+@@ -95,6 +96,7 @@ struct qcom_icc_bcm {
+ 	u32 addr;
+ 	u64 vote_x[QCOM_ICC_NUM_BUCKETS];
+ 	u64 vote_y[QCOM_ICC_NUM_BUCKETS];
++	u64 vote_scale;
+ 	bool dirty;
+ 	bool keepalive;
+ 	struct bcm_db aux_data;
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
