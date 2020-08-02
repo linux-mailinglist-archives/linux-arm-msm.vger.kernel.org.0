@@ -2,121 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95C502353FD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Aug 2020 20:14:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E0D02355C0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Aug 2020 08:53:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727784AbgHASOU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Aug 2020 14:14:20 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:26982 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726477AbgHASOU (ORCPT
+        id S1725882AbgHBGxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Aug 2020 02:53:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725850AbgHBGxb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Aug 2020 14:14:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596305660; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=4G27Zl1+E0JAY/pLZNnLlP6h3k5h3oQBdUrO9rd3Gi4=; b=ms13z3AY/dKfe3ip6kQ0loMusf0bjfiWPPS6c9He/4ftqNDDAWJ9Ns/Ivj3v5qwgD9Mtitdm
- dzGMeGKlUuXdkj6c4flyK68AnSjuCTy148IU+mS5MJvsbER0cos9MIXP1D2OUymQq/qBY6U/
- tYSOlj/s1HuMmq0hOHGxfvMuk3Q=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n19.prod.us-east-1.postgun.com with SMTP id
- 5f25b0e59403087e10de4306 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 01 Aug 2020 18:13:57
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F2F6EC433CA; Sat,  1 Aug 2020 18:13:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3303BC433C6;
-        Sat,  1 Aug 2020 18:13:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3303BC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc7180: Add LPASS clock controller nodes
-Date:   Sat,  1 Aug 2020 23:43:35 +0530
-Message-Id: <1596305615-5894-2-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1596305615-5894-1-git-send-email-tdas@codeaurora.org>
-References: <1596305615-5894-1-git-send-email-tdas@codeaurora.org>
+        Sun, 2 Aug 2020 02:53:31 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7AF4C06174A;
+        Sat,  1 Aug 2020 23:53:30 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id f1so30808265wro.2;
+        Sat, 01 Aug 2020 23:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=rs54B29tWCCrVhPxX04t7FFEWHnrLOxSKBgk2U1YFCA=;
+        b=caiM1fPnBhKvSeFdy1yX0uOl+tlPe4753gxbKBZEzWEgr6vZKU9rmQ60bEnTBrDSs6
+         gJOsHkGP1rNPQ+qvIpQZ5cj6Q+9osarcGlzLhvhYpjH0MeetPbVxbB58F5M7UvCAE+FJ
+         vnUg/jGtxOyOdkWcWTou73fL2CSkr1vHa0xJQT9gzuK68gy5LXWg2qTsnq3TrPf7m217
+         UQXwxadJuStCyop06PfNfgJMBskS8fTeZ7d0DoxRX7NUspkORquJO6o3G54oTbwS8/bj
+         ICISk4CRzmp+JUvmwyTSNDbory9P0oUOajXOQ9NkUYjV1UXJ78EA92za88r5GmxTviOv
+         ObvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rs54B29tWCCrVhPxX04t7FFEWHnrLOxSKBgk2U1YFCA=;
+        b=Dbjt2k1pIDPvqXhgi8wRGnuIz7GN2YrlzfQ4PBFy+St7ZeaRo/R3ueaFbnAfhWRHYl
+         1kK+j8YpUCCAisCaHdhEWEjgmK1TNYCaiYikgJoDDfq6uuQWT+pHAdvS0DMPelvWONVa
+         Wkrn+/8XSM3BV0RMTP4RS8th3HcsiH+DXrSg9r15LiZvvBR2zcPzNjMym9zjd6zrMmlU
+         +gkk9n5obKh0k21FfbCySUs/jBkI+5mPeb3HSdrYNh71K+VEOzRI3VPVoGt0dfJw+rAV
+         pWVtqzv8KmPEmatTkZHRWPDz9pC9yU1pa9VzCnrFhvxE3StlNKV10krUx07uceIVCZzO
+         skgQ==
+X-Gm-Message-State: AOAM530P8qiHpNjZT65bPSM4lKARy7Gcl0tVMnVHx6FuGz4V+hKafnNS
+        5rcMfBxwn1D1mHxXy0pnscoKA0lZp2A=
+X-Google-Smtp-Source: ABdhPJzU737g4BQ0PI02QtqBBrYd5JaxPm0earZrC3QMVjeilkQqYT0dbhQi2VFzRmn+G1KvW9DkHA==
+X-Received: by 2002:a5d:4610:: with SMTP id t16mr10494065wrq.101.1596351209301;
+        Sat, 01 Aug 2020 23:53:29 -0700 (PDT)
+Received: from felia.fritz.box ([2001:16b8:2dd3:b900:b425:3ccc:d91f:7988])
+        by smtp.gmail.com with ESMTPSA id m126sm18166966wmf.3.2020.08.01.23.53.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Aug 2020 23:53:28 -0700 (PDT)
+From:   Lukas Bulwahn <lukas.bulwahn@gmail.com>
+To:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>, kernel-team@android.com,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>,
+        Pia Eichinger <pia.eichinger@st.oth-regensburg.de>,
+        Joe Perches <joe@perches.com>, kernel-janitors@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Subject: [PATCH] MAINTAINERS: update QUALCOMM IOMMU after Arm SSMU drivers move
+Date:   Sun,  2 Aug 2020 08:53:20 +0200
+Message-Id: <20200802065320.7470-1-lukas.bulwahn@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the clock controller nodes for Low power audio subsystem
-functionality.
+Commit e86d1aa8b60f ("iommu/arm-smmu: Move Arm SMMU drivers into their own
+subdirectory") moved drivers/iommu/qcom_iommu.c to
+drivers/iommu/arm/arm-smmu/qcom_iommu.c amongst other moves, adjusted some
+sections in MAINTAINERS, but missed adjusting the QUALCOMM IOMMU section.
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Hence, ./scripts/get_maintainer.pl --self-test=patterns complains:
+
+  warning: no file matches    F:    drivers/iommu/qcom_iommu.c
+
+Update the file entry in MAINTAINERS to the new location.
+
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Will, please ack.
+Joerg, please pick this minor non-urgent patch for your -next branch.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index d46b383..7cf8bfe 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
- #include <dt-bindings/clock/qcom,gcc-sc7180.h>
- #include <dt-bindings/clock/qcom,gpucc-sc7180.h>
-+#include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,videocc-sc7180.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
-@@ -3312,6 +3313,30 @@
- 			qcom,msa-fixed-perm;
- 			status = "disabled";
- 		};
-+
-+		lpasscc: clock-controller@62d00000 {
-+			compatible = "qcom,sc7180-lpasscorecc";
-+			reg = <0 0x62d00000 0 0x50000>,
-+			    <0 0x62780000 0 0x30000>;
-+			reg-names = "lpass_core_cc", "lpass_audio_cc";
-+			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "iface", "bi_tcxo";
-+			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
-+			#clock-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		lpass_hm: clock-controller@63000000 {
-+			compatible = "qcom,sc7180-lpasshm";
-+			reg = <0 0x63000000 0 0x28>;
-+			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "iface", "bi_tcxo";
-+			#clock-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 	};
+applies cleanly on next-20200731
 
- 	thermal-zones {
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1469cb81261d..e175c0741653 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14358,7 +14358,7 @@ M:	Rob Clark <robdclark@gmail.com>
+ L:	iommu@lists.linux-foundation.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+-F:	drivers/iommu/qcom_iommu.c
++F:	drivers/iommu/arm/arm-smmu/qcom_iommu.c
+ 
+ QUALCOMM IPCC MAILBOX DRIVER
+ M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+-- 
+2.17.1
 
