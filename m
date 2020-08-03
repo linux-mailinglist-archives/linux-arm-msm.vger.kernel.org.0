@@ -2,449 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCE3823A10D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 10:29:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6503123A12A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 10:40:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726478AbgHCI3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Aug 2020 04:29:23 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:13621 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725884AbgHCI3X (ORCPT
+        id S1726246AbgHCIka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Aug 2020 04:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35612 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725945AbgHCIk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Aug 2020 04:29:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596443361; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=XQeboF4lpOcm46vfqHGKsp2skmiyZ45Y2T/APbyxdZw=; b=O5zwGuzbsC/GyPWmmapgje393z5Y6KRGQlf7xxFokNlyBu/M1HUVi1W9zkrRrSouYH2KG4zR
- wY8ONemM+UgPxQFsNr/HgMK/m+Yq2lbAJKEGZTmtTVsGzf9p8S1WJHA79Mo0PaC7iEoXDGdO
- m7yq/2mHogW3SdDkP+kga+LXjl0=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
- 5f27cacaeb556d49a64c8650 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 Aug 2020 08:28:58
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 238BAC433C9; Mon,  3 Aug 2020 08:28:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.129] (unknown [183.83.142.110])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rohitkr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 89EF0C433C6;
-        Mon,  3 Aug 2020 08:28:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 89EF0C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
-Subject: Re: [PATCH v4 12/12] dt-bindings: sound: lpass-cpu: Move to yaml
- format
-To:     Rob Herring <robh@kernel.org>
-Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        plai@codeaurora.org, tiwai@suse.com, agross@kernel.org,
-        lgirdwood@gmail.com, broonie@kernel.org,
-        srinivas.kandagatla@linaro.org, bjorn.andersson@linaro.org,
-        linux-kernel@vger.kernel.org
-References: <1595413915-17867-1-git-send-email-rohitkr@codeaurora.org>
- <1595413915-17867-13-git-send-email-rohitkr@codeaurora.org>
- <20200723171629.GA547775@bogus>
-From:   Rohit Kumar <rohitkr@codeaurora.org>
-Message-ID: <d00456e3-00e1-e373-760c-8292d6e7dd1b@codeaurora.org>
-Date:   Mon, 3 Aug 2020 13:58:34 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Mon, 3 Aug 2020 04:40:29 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E1B1C061757
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 01:40:29 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id k8so14666608wma.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 01:40:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Cq5+lj+HxdPKUksR7gRNmns7ju/WhDWUsP3NFKOReq8=;
+        b=Bw8H8gOuWbx14/g/EG6O1Y8+gAH1srU5wsQImYaHnDeDvfgbsnQKLIlyY2i6Yk44la
+         kqnaNemfWLvh+APs8IfLgZPvzxWXxtXUuHX7Ic8rW+ccSp6HA2zUh8KrW1aoQICqaqJq
+         DX4cOJ6oyKiLOXjJwV24MKgUSxxNtoZN9DJvk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Cq5+lj+HxdPKUksR7gRNmns7ju/WhDWUsP3NFKOReq8=;
+        b=AlM2a+F4YvCmBi50GanhgHykzXpaX8zaeJ4Oo37IBT0k1zH3x99qgLBomBxWg4Hbnk
+         IoG+rVx96Gdv/c0ruQuiAX2lw0/Gg6R4X3q4fZWC6F0UKg2BMdB3JBCllk3YHZxcxqs0
+         6dT2XPP8gnA53T4nbDE4QjVHdg+4nLZtbbOJ1LV9XBb9D77RrczJJm2F/eRYN6Vit8+k
+         /ZQEdpCu5xdD0mE8E+FLIObp6e9dv72AYanhQyBKGw+ORRN5xQX6nbeBDcigjPwegXZi
+         Noh/BwY8KjGlm1jCpg/QFrHFP1ispie6NwuWzqytr7u0ExVtkIfymYrdqdxCjyW1jQkn
+         JTLg==
+X-Gm-Message-State: AOAM533fC9ePG35DRq2RyU8/VfnqKJ06A8sWZltEOSO9o9l4RlDXAPdP
+        OVCmlzHMJ1OTSPzQ/7agha2uJepyKf1O9u3xC+LEbg==
+X-Google-Smtp-Source: ABdhPJyAahynHEVEn2oNVJMFau2e96vW5t5i5ugRhfFM5wveqNbnogUdLR+Dmsz70dO7HSAwUKUwpj9F129+6y4tr7I=
+X-Received: by 2002:a1c:4e17:: with SMTP id g23mr14528398wmh.42.1596444027706;
+ Mon, 03 Aug 2020 01:40:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200723171629.GA547775@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20200731084023.2678931-1-cychiang@chromium.org>
+ <20200731084023.2678931-2-cychiang@chromium.org> <20200731183248.GB531472@bogus>
+In-Reply-To: <20200731183248.GB531472@bogus>
+From:   Cheng-yi Chiang <cychiang@chromium.org>
+Date:   Mon, 3 Aug 2020 16:40:00 +0800
+Message-ID: <CAFv8Nw+e=tO+720-CDXy2Fk84qxk2C2Tbrh19ngmsBRY4D1M1w@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux-kernel <linux-kernel@vger.kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Doug Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
+        <alsa-devel@alsa-project.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Rob for reviewing
-
-On 7/23/2020 10:46 PM, Rob Herring wrote:
-> On Wed, Jul 22, 2020 at 04:01:55PM +0530, Rohit kumar wrote:
->> Update lpass-cpu binding with yaml formats.
->>
->> Signed-off-by: Rohit kumar <rohitkr@codeaurora.org>
->> ---
->>   .../devicetree/bindings/sound/qcom,lpass-cpu.txt   | 130 ---------------
->>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 185 +++++++++++++++++++++
->>   2 files changed, 185 insertions(+), 130 deletions(-)
->>   delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
->>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
->> deleted file mode 100644
->> index c21392e..00000000
->> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
->> +++ /dev/null
->> @@ -1,130 +0,0 @@
->> -* Qualcomm Technologies LPASS CPU DAI
->> -
->> -This node models the Qualcomm Technologies Low-Power Audio SubSystem (LPASS).
->> -
->> -Required properties:
->> -
->> -- compatible		: "qcom,lpass-cpu" or "qcom,apq8016-lpass-cpu" or
->> -			  "qcom,lpass-cpu-sc7180"
->> -- clocks		: Must contain an entry for each entry in clock-names.
->> -- clock-names		: A list which must include the following entries:
->> -				* "ahbix-clk"
->> -				* "mi2s-osr-clk"
->> -				* "mi2s-bit-clk"
->> -			: required clocks for "qcom,lpass-cpu-apq8016"
->> -				* "ahbix-clk"
->> -				* "mi2s-bit-clk0"
->> -				* "mi2s-bit-clk1"
->> -				* "mi2s-bit-clk2"
->> -				* "mi2s-bit-clk3"
->> -				* "pcnoc-mport-clk"
->> -				* "pcnoc-sway-clk"
->> -			: required clocks for "qcom,lpass-cpu-sc7180"
->> -				* "audio-core"
->> -				* "mclk0"
->> -				* "mi2s-bit-clk0"
->> -				* "mi2s-bit-clk1"
->> -				* "pcnoc-sway-clk"
->> -				* "pcnoc-mport-clk"
->> -
->> -- interrupts		: Must contain an entry for each entry in
->> -			  interrupt-names.
->> -- interrupt-names	: A list which must include the following entries:
->> -				* "lpass-irq-lpaif"
->> -- pinctrl-N		: One property must exist for each entry in
->> -			  pinctrl-names.  See ../pinctrl/pinctrl-bindings.txt
->> -			  for details of the property values.
->> -- pinctrl-names		: Must contain a "default" entry.
->> -- reg			: Must contain an address for each entry in reg-names.
->> -- reg-names		: A list which must include the following entries:
->> -				* "lpass-lpaif"
->> -- #address-cells	: Must be 1
->> -- #size-cells		: Must be 0
->> -
->> -
->> -
->> -Optional properties:
->> -
->> -- qcom,adsp		: Phandle for the audio DSP node
->> -
->> -By default, the driver uses up to 4 MI2S SD lines, for a total of 8 channels.
->> -The SD lines to use can be configured by adding subnodes for each of the DAIs.
->> -
->> -Required properties for each DAI (represented by a subnode):
->> -- reg			: Must be one of the DAI IDs
->> -			  (usually part of dt-bindings header)
->> -- qcom,playback-sd-lines: List of serial data lines to use for playback
->> -			  Each SD line should be represented by a number from 0-3.
->> -- qcom,capture-sd-lines	: List of serial data lines to use for capture
->> -			  Each SD line should be represented by a number from 0-3.
->> -
->> -Note that adding a subnode changes the default to "no lines configured",
->> -so both playback and capture lines should be configured when a subnode is added.
->> -
->> -Examples:
->> -1)
->> -
->> -lpass@28100000 {
->> -	compatible = "qcom,lpass-cpu";
->> -	clocks = <&lcc AHBIX_CLK>, <&lcc MI2S_OSR_CLK>, <&lcc MI2S_BIT_CLK>;
->> -	clock-names = "ahbix-clk", "mi2s-osr-clk", "mi2s-bit-clk";
->> -	interrupts = <0 85 1>;
->> -	interrupt-names = "lpass-irq-lpaif";
->> -	pinctrl-names = "default", "idle";
->> -	pinctrl-0 = <&mi2s_default>;
->> -	pinctrl-1 = <&mi2s_idle>;
->> -	reg = <0x28100000 0x10000>;
->> -	reg-names = "lpass-lpaif";
->> -	qcom,adsp = <&adsp>;
->> -
->> -	#address-cells = <1>;
->> -	#size-cells = <0>;
->> -
->> -	/* Optional to set different MI2S SD lines */
->> -	dai@3 {
->> -		reg = <MI2S_QUATERNARY>;
->> -		qcom,playback-sd-lines = <0 1>;
->> -	};
->> -};
->> -
->> -2)
->> -
->> -#include <dt-bindings/sound/sc7180-lpass.h>
->> -
->> -lpass_cpu: lpass {
->> -	compatible = "qcom,lpass-cpu-sc7180";
->> -
->> -	reg = <0 0x62F00000 0 0x29000>;
->> -
->> -	iommus = <&apps_smmu 0x1020 0>;
->> -
->> -	power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
->> -	clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
->> -		<&lpasscorecc LPASS_AUDIO_CORE_CORE_CLK>,
->> -		<&lpasscorecc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
->> -		<&lpasscorecc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
->> -		<&lpasscorecc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
->> -		<&lpasscorecc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
->> -	clock-names = "pcnoc-sway-clk", "audio-core",
->> -			"mclk0", "pcnoc-mport-clk",
->> -			"mi2s-bit-clk0", "mi2s-bit-clk1";
->> -	interrupts = <0 160 IRQ_TYPE_LEVEL_HIGH>;
->> -	interrupt-names = "lpass-irq-lpaif";
->> -
->> -
->> -	#sound-dai-cells = <1>;
->> -
->> -	#address-cells = <1>;
->> -	#size-cells = <0>;
->> -
->> -	mi2s-primary@0 {
->> -		reg = <MI2S_PRIMARY>;
->> -		qcom,playback-sd-lines = <1>;
->> -		qcom,capture-sd-lines = <0>;
->> -	};
->> -
->> -	mi2s-secondary@1 {
->> -		reg = <MI2S_SECONDARY>;
->> -		qcom,playback-sd-lines = <0>;
->> -	};
->> -};
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
->> new file mode 100644
->> index 00000000..03c598f
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
->> @@ -0,0 +1,185 @@
->> +# SPDX-License-Identifier: GPL-2.0-only
-> If all the authors are QCom or Linaro please dual license.
-Ok
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/sound/qcom,lpass-cpu.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm LPASS CPU dai driver bindings
->> +
->> +maintainers:
->> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> +  - Rohit kumar <rohitkr@codeaurora.org>
->> +
->> +description: |
->> +  Qualcomm SOC Low-Power Audio SubSystem (LPASS) that consist of MI2S interface
->> +  for audio data transfer on external codecs. LPASS cpu driver is a module to
->> +  configure Low-Power Audio Interface(LPAIF) core registers across different
->> +  IP versions.
->> +
->> +properties:
->> +  compatible:
->> +    oneOf:
->> +      - const: qcom,lpass-cpu
->> +        description: For IPQ806x
->> +
->> +      - const: qcom,apq8016-lpass-cpu
->> +        description: For APQ8016
->> +
->> +      - const: qcom,lpass-cpu-sc7180
->> +        description: For SC7180
-> Use enum rather than oneOf+const
-Sure
->> +
->> +  reg:
->> +    maxItems: 1
->> +    description: LPAIF core registers
->> +
->> +  clocks:
->> +    minItems: 3
->> +    maxItems: 6
->> +
->> +  clock-names:
->> +    minItems: 3
->> +    maxItems: 6
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +    description: LPAIF DMA buffer interrupt
->> +
->> +  qcom,adsp:
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +    description: Phandle for the audio DSP node
->> +
->> +  iommus:
->> +    maxItems: 1
->> +    description: Phandle to apps_smmu node with sid mask
->> +
->> +  power-domains:
->> +    maxItems: 1
->> +
->> +  '#sound-dai-cells':
->> +    const: 1
->> +
->> +patternProperties:
->> +  "(^mi2s-[0-9a-f]$|mi2s)":
->> +    type: object
->> +    description: Required properties for each DAI
->> +
->> +    properties:
->> +      reg:
->> +        maxItems: 1
->> +        description: Must be one of the DAI ID
->> +
->> +    required:
->> +      - reg
->> +
->> +
-> Extra blank line.
-Ok
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +  - interrupts
->> +  - '#sound-dai-cells'
-> Add:
+On Sat, Aug 1, 2020 at 2:32 AM Rob Herring <robh@kernel.org> wrote:
 >
-> additionalProperties: false
+> On Fri, Jul 31, 2020 at 04:40:22PM +0800, Cheng-Yi Chiang wrote:
+> > Add devicetree bindings documentation file for sc7180 sound card.
+> >
+> > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> > ---
+> >  .../bindings/sound/qcom,sc7180.yaml           | 113 ++++++++++++++++++
+> >  1 file changed, 113 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> > new file mode 100644
+> > index 000000000000..ce8a5a2d9df9
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> > @@ -0,0 +1,113 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
+> > +
+> > +maintainers:
+> > +  - Rohit kumar <rohitkr@codeaurora.org>
+> > +  - Cheng-Yi Chiang <cychiang@chromium.org>
+> > +
+> > +description:
+> > +  This binding describes the SC7180 sound card which uses LPASS for audio.
+> > +
+> > +definitions:
+>
+> Please don't use 'definitions'. Either just duplicate it or you can do
+> 'patternProperties'.
+>
+Removed dai definition in v4.
+> > +
+> > +  dai:
+> > +    type: object
+> > +    properties:
+> > +      sound-dai:
+> > +        maxItems: 1
+> > +        $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +        description: phandle array of the codec or CPU DAI
+>
+> This is a common property. You can assume we have a common schema
+> definition for it. IOW, 'sound-dai: true' is enough as it's always a
+> single phandle+args.
+>
+In the examples I found,
+Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml,
+Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+use:
 
-If I am adding this, I am getting below error:
+      sound-dai:
+        $ref: /schemas/types.yaml#/definitions/phandle
+        description: phandle of the CPU DAI
 
-Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: 
-lpass@62f00000: '#address-cells', '#size-cells' do not match any of the 
-regexes: '(^mi2s-[0-9a-f]$|mi2s)', 'pinctrl-[0-9]+'
+Documentation/devicetree/bindings/sound/simple-card.yaml
+just use
 
+      sound-dai:
+        maxItems: 1
 
-I think  this is coming because we have not mentioned mi2s-primary@0 in 
-required fields.
-The field name is variable based on the interface to which peripheral is 
-connected to.
-It can be either of primary/secondary/tertiary/quaternary. Can you 
-please suggest how to
-avoid this error?
->> +
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,lpass-cpu-sc7180
->> +
->> +    then:
->> +      required:
->> +        - iommus
->> +        - power-domains
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,lpass-cpu
->> +
->> +    then:
->> +      properties:
->> +        clock-names:
->> +          items:
->> +            - const: ahbix-clk
->> +            - const: mi2s-osr-clk
->> +            - const: mi2s-bit-clk
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,apq8016-lpass-cpu
->> +
->> +    then:
->> +      properties:
->> +        clock-names:
->> +          items:
->> +            - const: ahbix-clk
->> +            - const: mi2s-bit-clk0
->> +            - const: mi2s-bit-clk1
->> +            - const: mi2s-bit-clk2
->> +            - const: mi2s-bit-clk3
->> +            - const: pcnoc-mport-clk
->> +            - const: pcnoc-sway-clk
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,lpass-cpu-sc7180
-> You already have the same condition previously. Combine into 1.
-Ok
->> +
->> +    then:
->> +      properties:
->> +        clock-names:
->> +          items:
->> +            - const: pcnoc-sway-clk
->> +            - const: audio-core
->> +            - const: mclk0
->> +            - const: pcnoc-mport-clk
->> +            - const: mi2s-bit-clk0
->> +            - const: mi2s-bit-clk1
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/sound/sc7180-lpass.h>
->> +
->> +    soc {
->> +        #address-cells = <2>;
->> +        #size-cells = <2>;
->> +        lpass@62f00000 {
->> +            compatible = "qcom,lpass-cpu-sc7180";
->> +
->> +            reg = <0 0x62f00000  0 0x29000>;
->> +
->> +            iommus = <&apps_smmu 0x1020 0>;
->> +            power-domains = <&lpass_hm 0>;
->> +
->> +            clocks = <&gcc 131>,
->> +                 <&lpasscorecc 6>,
->> +                 <&lpasscorecc 7>,
->> +                 <&lpasscorecc 10>,
->> +                 <&lpasscorecc 8>,
->> +                 <&lpasscorecc 9>;
->> +
->> +            clock-names = "pcnoc-sway-clk", "audio-core",
->> +                          "mclk0", "pcnoc-mport-clk",
->> +                          "mi2s-bit-clk0", "mi2s-bit-clk1";
->> +
->> +            interrupts = <0 160 1>;
->> +
->> +            #sound-dai-cells = <1>;
->> +
->> +            #address-cells = <1>;
->> +            #size-cells = <0>;
->> +            /* Optional to set different MI2S SD lines */
->> +            mi2s-primary@0 {
->> +                reg = <MI2S_PRIMARY>;
->> +                qcom,playback-sd-lines = <1>;
->> +                qcom,capture-sd-lines = <0>;
->> +            };
->> +        };
->> +    };
->> +
->> +...
->> -- 
->> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
->> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+In v4, I used 'sound-dai: true' as suggested.
 
-Thanks,
+But I am a bit confused about assuming there is a common schema
+definition for it.
+I checked the code at https://github.com/devicetree-org/dt-schema but
+did not found the definition for it.
+Did I miss something here ?
 
-Rohit
+Thanks for the help!
 
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the Linux Foundation.
-
+> > +
+> > +    required:
+> > +      - sound-dai
+> > +
+> > +properties:
+> > +  compatible:
+> > +    contains:
+> > +      const: qcom,sc7180-sndcard
+> > +
+> > +  audio-routing:
+> > +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> > +    description:
+> > +      A list of the connections between audio components. Each entry is a
+> > +      pair of strings, the first being the connection's sink, the second
+> > +      being the connection's source.
+> > +
+> > +  model:
+> > +    $ref: /schemas/types.yaml#/definitions/string
+> > +    description: User specified audio sound card name
+> > +
+> > +  aux-dev:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description: phandle of the codec for headset detection
+> > +
+> > +patternProperties:
+> > +  "^dai-link(@[0-9]+)?$":
+> > +    description:
+> > +      Each subnode represents a dai link. Subnodes of each dai links would be
+> > +      cpu/codec dais.
+> > +
+> > +    type: object
+> > +
+> > +    properties:
+> > +      link-name:
+> > +        description: Indicates dai-link name and PCM stream name.
+> > +        $ref: /schemas/types.yaml#/definitions/string
+> > +        maxItems: 1
+> > +
+> > +      cpu:
+> > +        $ref: "#/definitions/dai"
+> > +
+> > +      codec:
+> > +        $ref: "#/definitions/dai"
+> > +
+> > +    required:
+> > +      - link-name
+> > +      - cpu
+> > +      - codec
+> > +
+> > +    additionalProperties: false
+> > +
+> > +examples:
+> > +
+> > +  - |
+> > +    sound {
+> > +        compatible = "qcom,sc7180-sndcard";
+> > +        model = "sc7180-snd-card";
+> > +
+> > +        audio-routing =
+> > +                    "Headphone Jack", "HPOL",
+> > +                    "Headphone Jack", "HPOR";
+> > +
+> > +        aux-dev = <&alc5682>;
+> > +
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        dai-link@0 {
+> > +            link-name = "MultiMedia0";
+> > +            cpu {
+> > +                sound-dai = <&lpass_cpu 0>;
+> > +            };
+> > +
+> > +            codec {
+> > +                sound-dai = <&alc5682 0>;
+> > +            };
+> > +        };
+> > +
+> > +        dai-link@1 {
+> > +            link-name = "MultiMedia1";
+> > +            cpu {
+> > +                sound-dai = <&lpass_cpu 1>;
+> > +            };
+> > +
+> > +            codec {
+> > +                sound-dai = <&max98357a>;
+> > +            };
+> > +        };
+> > +    };
+> > --
+> > 2.28.0.163.g6104cc2f0b6-goog
+> >
