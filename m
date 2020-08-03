@@ -2,91 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5789123AD5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 21:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 829F323AD66
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 21:39:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728555AbgHCThJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Aug 2020 15:37:09 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:39977 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728575AbgHCThJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Aug 2020 15:37:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596483428; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=yOMYncf5nMXrU1PRqoN8EKXZ0DovQfRsHybdYeETpeQ=; b=fWD4kZ9Zj7QuM+7bPCWyLA+UH48V0HD/5M4LYZzCLVeHmDczp+mWqGy6oAAq1ITWRZ06aX/i
- Iodk2BIxgtf1OlOVib2MZb98TFzBMDPyV8zB5KJOay73DpKnWIW8kyBvwXNh+4RZqkAfpGAy
- hCC1DDC7LUgDEMgy/RThuNslVmM=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n16.prod.us-west-2.postgun.com with SMTP id
- 5f286748849144fbcbc4eea2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 Aug 2020 19:36:40
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0A0E8C43469; Mon,  3 Aug 2020 19:36:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1728152AbgHCTiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Aug 2020 15:38:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54650 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727813AbgHCTiK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 Aug 2020 15:38:10 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C831C43456;
-        Mon,  3 Aug 2020 19:36:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C831C43456
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        freedreno@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v11 12/12] arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
-Date:   Mon,  3 Aug 2020 13:35:47 -0600
-Message-Id: <20200803193547.305660-13-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200803193547.305660-1-jcrouse@codeaurora.org>
-References: <20200803193547.305660-1-jcrouse@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 9F274207DF;
+        Mon,  3 Aug 2020 19:38:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596483489;
+        bh=p+3byzfdILkweAsKrQ9Yt4O2JghYZujOzpv9UZtCJVY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=j25T+3N/REJyCpJq6+QYcqKXJz5UVtMco4cNO9YH2S+1M81RBwL7rY1xsdoHNv+xW
+         fWHmfUSnoOJua0nFT6IX0KXaJjTjB/IY2q1ICKduYtSSGn2iPY8zMhnYLBiunnlZZU
+         Su59NeWPklJqBRHSIRkhzU+VS+U2ezxB+u4KT7Vs=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1596305615-5894-2-git-send-email-tdas@codeaurora.org>
+References: <1596305615-5894-1-git-send-email-tdas@codeaurora.org> <1596305615-5894-2-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Add LPASS clock controller nodes
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Mon, 03 Aug 2020 12:38:08 -0700
+Message-ID: <159648348836.1360974.18393181327075773516@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set the qcom,adreno-smmu compatible string for the GPU SMMU to enable
-split pagetables and per-instance pagetables for drm/msm.
+Quoting Taniya Das (2020-08-01 11:13:35)
+> Update the clock controller nodes for Low power audio subsystem
+> functionality.
+>=20
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
+com/sc7180.dtsi
+> index d46b383..7cf8bfe 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -8,6 +8,7 @@
+>  #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+>  #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+>  #include <dt-bindings/clock/qcom,gpucc-sc7180.h>
+> +#include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,videocc-sc7180.h>
+>  #include <dt-bindings/interconnect/qcom,osm-l3.h>
+> @@ -3312,6 +3313,30 @@
+>                         qcom,msa-fixed-perm;
+>                         status =3D "disabled";
+>                 };
+> +
+> +               lpasscc: clock-controller@62d00000 {
+> +                       compatible =3D "qcom,sc7180-lpasscorecc";
+> +                       reg =3D <0 0x62d00000 0 0x50000>,
+> +                           <0 0x62780000 0 0x30000>;
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
----
+Doesn't look aligned in my MUA, but who knows!
 
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 2884577dcb77..6a9adaa401a9 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4058,7 +4058,7 @@ opp-257000000 {
- 		};
- 
- 		adreno_smmu: iommu@5040000 {
--			compatible = "qcom,sdm845-smmu-v2", "qcom,smmu-v2";
-+			compatible = "qcom,adreno-smmu", "qcom,smmu-v2";
- 			reg = <0 0x5040000 0 0x10000>;
- 			#iommu-cells = <1>;
- 			#global-interrupts = <2>;
--- 
-2.25.1
-
+> +                       reg-names =3D "lpass_core_cc", "lpass_audio_cc";
+> +                       clocks =3D <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
+> +                                <&rpmhcc RPMH_CXO_CLK>;
+> +                       clock-names =3D "iface", "bi_tcxo";
+> +                       power-domains =3D <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +                       #clock-cells =3D <1>;
+> +                       #power-domain-cells =3D <1>;
+> +               };
+> +
