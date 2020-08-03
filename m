@@ -2,113 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7350123A16E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 11:04:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C579823A307
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 13:00:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbgHCJEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Aug 2020 05:04:53 -0400
-Received: from labrats.qualcomm.com ([199.106.110.90]:8658 "EHLO
-        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725971AbgHCJEw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Aug 2020 05:04:52 -0400
-IronPort-SDR: /Ez29SrVwXZjHEoGl3kpa6/DOIdI0wmUOnW6dHdFZD7L+CfvVKUSLxU0ASJMm90ztGWYnDQdJn
- 3rn6tuiAESWQkGtv5gTDTjQoHZeJXk33tX5elokpDq3ElgBmE8JtgqGe4Xu7ELAuwbwAlpaSsh
- gTWnEAZXOTBHQY5GfORm8BA65sBgBVHKyoon3dTolVwUsdzXsOb9KfD5fIS32KvgTntucQyu4o
- 6/n+4n4DyEWb9DKU4SCN/5wz8uBKOYsPhPJTRIikHR5R6aB0svawy6E1y3UG8Lzn/nhY/eK9q3
- ed8=
-X-IronPort-AV: E=Sophos;i="5.75,429,1589266800"; 
-   d="scan'208";a="47240954"
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by labrats.qualcomm.com with ESMTP; 03 Aug 2020 02:04:51 -0700
-Received: from wsp769891wss.qualcomm.com (HELO stor-presley.qualcomm.com) ([192.168.140.85])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 03 Aug 2020 02:04:50 -0700
-Received: by stor-presley.qualcomm.com (Postfix, from userid 359480)
-        id A4965214E4; Mon,  3 Aug 2020 02:04:50 -0700 (PDT)
-From:   Can Guo <cang@codeaurora.org>
-To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, rnayak@codeaurora.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com,
-        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1726276AbgHCLAV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Aug 2020 07:00:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48884 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725945AbgHCLAV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 Aug 2020 07:00:21 -0400
+Received: from localhost (unknown [122.171.202.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 55DB520578;
+        Mon,  3 Aug 2020 11:00:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596452419;
+        bh=LYS0GWdRpiOi06IUzhl5C/4AAkTdXCxhTjn+IAoTmwI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aknNQkg/fkfqlAJkanuP86F0U0ybdq+0nVqKK3c/cmMK5Mb6txJZRRA1KeHacl4Ag
+         dK3x2SQOz0k+OrDtiLPy69xBdcaBIjnIudeR7vBhfUGph9ozVgDa17Ee5EG9vZ/U25
+         yJmSjh9Iz+yOg9ZX2laUFq6EgqSS3LUUiCNeGX3U=
+Date:   Mon, 3 Aug 2020 16:30:16 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Konrad Dybcio <konradybcio@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v9 3/9] scsi: ufs-qcom: Remove testbus dump in ufs_qcom_dump_dbg_regs
-Date:   Mon,  3 Aug 2020 02:04:38 -0700
-Message-Id: <1596445485-19834-4-git-send-email-cang@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1596445485-19834-1-git-send-email-cang@codeaurora.org>
-References: <1596445485-19834-1-git-send-email-cang@codeaurora.org>
+        Rob Clark <robdclark@gmail.com>
+Cc:     martin.botka1@gmail.com, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        zhengbin <zhengbin13@huawei.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
+        Krzysztof Wilczynski <kw@linux.com>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Xiaozhe Shi <xiaozhes@codeaurora.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [PATCH 4/9] drm/msm/dsi: Add phy configuration for SDM630/636/660
+Message-ID: <20200803110016.GL12965@vkoul-mobl>
+References: <20200726111215.22361-1-konradybcio@gmail.com>
+ <20200726111215.22361-5-konradybcio@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200726111215.22361-5-konradybcio@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dumping testbus registers is heavy enough to cause stability issues
-sometime, just remove them as of now.
+On 26-07-20, 13:12, Konrad Dybcio wrote:
+> These SoCs make use of the 14nm phy, but at different
+> addresses than other 14nm units.
+> 
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> ---
+>  .../devicetree/bindings/display/msm/dsi.txt    |  1 +
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c          |  2 ++
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h          |  1 +
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c     | 18 ++++++++++++++++++
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
-Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
----
- drivers/scsi/ufs/ufs-qcom.c | 32 --------------------------------
- 1 file changed, 32 deletions(-)
+Is there a reason why dsi phy needs to be here and not in phy subsystem
+drivers/phy/ ?
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 823eccf..6b75338 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1630,44 +1630,12 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
- 	return 0;
- }
- 
--static void ufs_qcom_testbus_read(struct ufs_hba *hba)
--{
--	ufshcd_dump_regs(hba, UFS_TEST_BUS, 4, "UFS_TEST_BUS ");
--}
--
--static void ufs_qcom_print_unipro_testbus(struct ufs_hba *hba)
--{
--	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	u32 *testbus = NULL;
--	int i, nminor = 256, testbus_len = nminor * sizeof(u32);
--
--	testbus = kmalloc(testbus_len, GFP_KERNEL);
--	if (!testbus)
--		return;
--
--	host->testbus.select_major = TSTBUS_UNIPRO;
--	for (i = 0; i < nminor; i++) {
--		host->testbus.select_minor = i;
--		ufs_qcom_testbus_config(host);
--		testbus[i] = ufshcd_readl(hba, UFS_TEST_BUS);
--	}
--	print_hex_dump(KERN_ERR, "UNIPRO_TEST_BUS ", DUMP_PREFIX_OFFSET,
--			16, 4, testbus, testbus_len, false);
--	kfree(testbus);
--}
--
- static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- {
- 	ufshcd_dump_regs(hba, REG_UFS_SYS1CLK_1US, 16 * 4,
- 			 "HCI Vendor Specific Registers ");
- 
--	/* sleep a bit intermittently as we are dumping too much data */
- 	ufs_qcom_print_hw_debug_reg_all(hba, NULL, ufs_qcom_dump_regs_wrapper);
--	udelay(1000);
--	ufs_qcom_testbus_read(hba);
--	udelay(1000);
--	ufs_qcom_print_unipro_testbus(hba);
--	udelay(1000);
- }
- 
- /**
+>  4 files changed, 22 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
+> index af95586c898f..7884fd7a85c1 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi.txt
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
+> @@ -87,6 +87,7 @@ Required properties:
+>    * "qcom,dsi-phy-20nm"
+>    * "qcom,dsi-phy-28nm-8960"
+>    * "qcom,dsi-phy-14nm"
+> +  * "qcom,dsi-phy-14nm-660"
+>    * "qcom,dsi-phy-10nm"
+>    * "qcom,dsi-phy-10nm-8998"
+>  - reg: Physical base address and length of the registers of PLL, PHY. Some
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index f509ebd77500..009f5b843dd1 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -499,6 +499,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+>  #ifdef CONFIG_DRM_MSM_DSI_14NM_PHY
+>  	{ .compatible = "qcom,dsi-phy-14nm",
+>  	  .data = &dsi_phy_14nm_cfgs },
+> +	{ .compatible = "qcom,dsi-phy-14nm-660",
+> +	  .data = &dsi_phy_14nm_660_cfgs },
+>  #endif
+>  #ifdef CONFIG_DRM_MSM_DSI_10NM_PHY
+>  	{ .compatible = "qcom,dsi-phy-10nm",
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index 24b294ed3059..ef8672d7b123 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -45,6 +45,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
+>  
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> index 1594f1422372..519400501bcd 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> @@ -161,3 +161,21 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs = {
+>  	.io_start = { 0x994400, 0x996400 },
+>  	.num_dsi_phy = 2,
+>  };
+> +
+> +const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
+> +	.type = MSM_DSI_PHY_14NM,
+> +	.src_pll_truthtable = { {false, false}, {true, false} },
+> +	.reg_cfg = {
+> +		.num = 1,
+> +		.regs = {
+> +			{"vcca", 17000, 32},
+> +		},
+> +	},
+> +	.ops = {
+> +		.enable = dsi_14nm_phy_enable,
+> +		.disable = dsi_14nm_phy_disable,
+> +		.init = dsi_14nm_phy_init,
+> +	},
+> +	.io_start = { 0xc994400, 0xc996000 },
+> +	.num_dsi_phy = 2,
+> +};
+> -- 
+> 2.27.0
+
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+~Vinod
