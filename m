@@ -2,94 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9628C23A0AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 10:08:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A706C23A0F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Aug 2020 10:25:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725948AbgHCIIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Aug 2020 04:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58990 "EHLO
+        id S1725933AbgHCIZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Aug 2020 04:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgHCIIl (ORCPT
+        with ESMTP id S1725867AbgHCIZA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Aug 2020 04:08:41 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D23C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 01:08:41 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id p3so19433055pgh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 01:08:41 -0700 (PDT)
+        Mon, 3 Aug 2020 04:25:00 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C73C061756
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 01:25:00 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id r4so30360956wrx.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 01:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=PkmepxYYZt/gqn/wBw6S8aNdATAO4cXfwYhCsxDd/Ng=;
-        b=a8TS8r5mQuMldgAH/R3NmPcGGy9ukPw0/rhTRH7cOtb2vPUdd8obl4siT0oAArbwmN
-         kAuEqDRC24QX2Cp8DmgkfIy+K7FDQ2jz2lkV3DKVSZ+Gcv5flRNHqrrlSXu97E3cmeOS
-         I52aNv7nFo9wltaDnUuCS5AVNdaQeckYIMJkI+mW5Mhw4krNS37BYv6fAgyg6gWdXe7t
-         gIc8srHkvwg9RGR7HULvDrnxt8uv5sCzrvaHTtU5Zbr5Dk4KDeM0KvWJmliq8bHvqJQg
-         WSo4LxwSQsY2uOcH/CWrxg1t+Oc1xj/p8DLvHfRbK59YGY3XdhrYtzZaDVvKCtPe6NCb
-         f6jw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=idno4XA8cyFxWToJkaA+wyHL6pf3C4NEsthkMu6eKrE=;
+        b=DIizX0esDlRGwFEkVKmrfd9GB9tB45pOEX3X2zXslub6Z2+O8utOXdqcr5nQ/Oa2Zr
+         qtDmg3vVY5gz7a0B5axSSwjHiudMITKOUM74BbyU9hsICaPu+1LFFu3AYhyE9TyuARBH
+         GvuSes6pSGu2yftPCeqqaMsKqEtQaeiIFz3pk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=PkmepxYYZt/gqn/wBw6S8aNdATAO4cXfwYhCsxDd/Ng=;
-        b=lVYLTbAvZ6SBLYF5DNTVZkSEc5OAcQS9OXGoXJyDboJtSl4n+BTd6zsDyXsOr3t5xi
-         D9k22PsX/AcmBPU9pMB4dnt86JspCHVf7Uw111cQShuzeNeNzLvQEev+xUSB8YvNvSWu
-         2CSAz78xDkje7CPYbaXEMk/8ngVHHC3RH/N6xsI/p6kLMJ97MWY4aN4kRJ+q0VJLsnrq
-         IqUjKytyrM3ip8h9i/qphz0AIHRNngDcwwcOoB3KV4V0X6wnNLs6jjx7eRE72lghpERv
-         50kgKUjjBKCjrbWckFAZJZxHzbuHfMBJpojZ5tF4EGK5/aWHi8aMRwa8WE7kulRDTYzp
-         WB/A==
-X-Gm-Message-State: AOAM530+a3hlXrqzXKUwJWtTbE8VQby6ghzNzgAjRkwOevtpDa6EMaA4
-        ZKliBoe9ZPU7kOwYEoqqD8K23Q==
-X-Google-Smtp-Source: ABdhPJzUXgJNCtWqsgjWMPHtkAVu5jZs/8pYf/KbIST56Ur1am3XBMFdL2PaUaOj2bijUvrdbFWD5A==
-X-Received: by 2002:a65:6554:: with SMTP id a20mr12439078pgw.301.1596442121516;
-        Mon, 03 Aug 2020 01:08:41 -0700 (PDT)
-Received: from localhost.localdomain (li519-153.members.linode.com. [66.175.222.153])
-        by smtp.gmail.com with ESMTPSA id y23sm18609226pfb.66.2020.08.03.01.08.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 01:08:40 -0700 (PDT)
-From:   Jun Nie <jun.nie@linaro.org>
-To:     shawn.guo@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     Jun Nie <jun.nie@linaro.org>
-Subject: [PATCH] i2c: qup: use pm runtime func to manage clk
-Date:   Mon,  3 Aug 2020 16:08:08 +0800
-Message-Id: <20200803080808.28134-1-jun.nie@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=idno4XA8cyFxWToJkaA+wyHL6pf3C4NEsthkMu6eKrE=;
+        b=MUU1hNw5Gcw3/y47wSxVLLat+6I3meKE0hoe7axg6J9xRh4zxodOoAA7ESaY7EmPMN
+         MMk6hE1Tp5/c/+MgeoIEkBYoZXXCyrENlsQvVXkkq0EFtMkZQdvliIVMAUH27VRykh+2
+         DEntqDoEklXwA9Xaa3HBSQHzR5wZS66J5/f9VKm3NyRfN5SbhYjL7NZGSAZUu2hSNv3l
+         2E6gDHWtasuhxMkXHXioblAaCeqmp8zuex1DtvF0h1ZziNMk0qRC57863lnZNPdnmDj0
+         /fwVgku95n7nrZzPKKPHqD9aZGg5nIyDCRxKDe7NVZ20qUirl/SJ65Xl/HmN6YpyR9GA
+         4O+A==
+X-Gm-Message-State: AOAM533bFK6SzkilNRftcnqqtpZTIhLADjdGpUmR2CSZ9Qe20bv7act2
+        o18Pjip3f2Tw6+u3A2AI+xyRtqiwBgtu0OpnQcR4qQ==
+X-Google-Smtp-Source: ABdhPJyMr8Qvm79z3JxDUYSbnhyiu1LPeKjwbT1/t95HT7mmACCwcVs3ic5l8CuEVZXehyw2+vldMmejt18EJU2jItw=
+X-Received: by 2002:adf:e486:: with SMTP id i6mr13791882wrm.258.1596443098745;
+ Mon, 03 Aug 2020 01:24:58 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200731084023.2678931-1-cychiang@chromium.org>
+ <20200731084023.2678931-2-cychiang@chromium.org> <20200731182712.GA531472@bogus>
+In-Reply-To: <20200731182712.GA531472@bogus>
+From:   Cheng-yi Chiang <cychiang@chromium.org>
+Date:   Mon, 3 Aug 2020 16:24:32 +0800
+Message-ID: <CAFv8NwLCkHBVE-JcaDLOrRs6U_MhS4_n1oBicNG1DjQxh-d3UQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     Dylan Reid <dgreid@chromium.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Takashi Iwai <tiwai@suse.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
+        <alsa-devel@alsa-project.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rohit kumar <rohitkr@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use pm runtime callback to manage clock. Otherwise, clock is
-enabled in resume without notifying pm rumetime core and result
-no gating in next suspend.
-
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
----
- drivers/i2c/busses/i2c-qup.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index fbc04b60cfd1..b447fcbaa3f0 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1943,15 +1943,13 @@ static int qup_i2c_pm_resume_runtime(struct device *device)
- #ifdef CONFIG_PM_SLEEP
- static int qup_i2c_suspend(struct device *device)
- {
--	if (!pm_runtime_suspended(device))
--		return qup_i2c_pm_suspend_runtime(device);
-+	pm_runtime_force_suspend(device);
- 	return 0;
- }
- 
- static int qup_i2c_resume(struct device *device)
- {
--	qup_i2c_pm_resume_runtime(device);
--	pm_runtime_mark_last_busy(device);
-+	pm_runtime_force_resume(device);
- 	pm_request_autosuspend(device);
- 	return 0;
- }
--- 
-2.17.1
-
+On Sat, Aug 1, 2020 at 2:27 AM Rob Herring <robh@kernel.org> wrote:
+>
+> On Fri, 31 Jul 2020 16:40:22 +0800, Cheng-Yi Chiang wrote:
+> > Add devicetree bindings documentation file for sc7180 sound card.
+> >
+> > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> > ---
+> >  .../bindings/sound/qcom,sc7180.yaml           | 113 ++++++++++++++++++
+> >  1 file changed, 113 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> >
+>
+>
+> My bot found errors running 'make dt_binding_check' on your patch:
+>
+> Documentation/devicetree/bindings/sound/qcom,sc7180.example.dts:32.24-41.15: Warning (unit_address_vs_reg): /example-0/sound/dai-link@0: node has a unit name, but no reg or ranges property
+> Documentation/devicetree/bindings/sound/qcom,sc7180.example.dts:43.24-52.15: Warning (unit_address_vs_reg): /example-0/sound/dai-link@1: node has a unit name, but no reg or ranges property
+>
+>
+> See https://patchwork.ozlabs.org/patch/1339316
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure dt-schema is up to date:
+>
+> pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+>
+> Please check and re-submit.
+>
+I have passed this in v2 patch, but removed reg in v3 patch since it
+is not used.
+In v4, I have added back reg = <0> and reg = <1> into the example, and
+reg property into schema to fix this error.
+Since reg property is not used in the driver, I am not sure whether I
+should add it in the schema.
+Please let me know which is preferred. Thanks!
