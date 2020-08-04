@@ -2,136 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4AA423B61D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 09:54:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA44F23B653
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 10:08:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729478AbgHDHyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Aug 2020 03:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbgHDHyF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Aug 2020 03:54:05 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEFFEC06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Aug 2020 00:54:04 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id d190so1756248wmd.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Aug 2020 00:54:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=H2zCW/kQ6aCvtur961Ynj7Bn0wcaRINKRQWdR+heL0s=;
-        b=k9fRH+9ZtxBpRHtuM9z2fdTe/S7XZeGu3Z1phZPH7Gs0CeWKZbhFlIOzGK2PgN6/X+
-         lQoCgx1WshDVTgIOSMJYgXrTNiej3IY6nqA7DU5f94tkKazD5dt9bMMBpGDDlTZVUmha
-         IePJtQUYNLAuCHnIgCjVMAHHdp8kkSn7ACsnwFI3HGJyPfr05Q6Ud0IC0YCjAnc9xEbx
-         1bzbukNJKDLg7RIW5EEfdODn7tEDv+il4TVFkWaM3OijcxhmTSRnOztPrCMjngDQ1Jng
-         j0ygWKRYwV34Hh/cTHg/Poyh0vEoy8P9c5CZxLgzJX0iXirGwH0VO/b2gFMeTlVRbw/Z
-         prAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=H2zCW/kQ6aCvtur961Ynj7Bn0wcaRINKRQWdR+heL0s=;
-        b=ckIEFEYkGdxxTL0SaHzN493coiltEBOPjOOFvX9wMl7NLqcR5K7MuDE3ILU68LWq0a
-         LEAt2LVEdWQz8TabYbi9wXdkoTMn9yLFX+htyRKKnYKpmm40Fsx4lQ38BPPM972r9+sQ
-         4DvwK4UVRQvowvQqoSLIYpY9IGbZPNHtzs7QYgwoUy1jgURkE7GMmQhA0D7l7ILjNPyk
-         iU3zyrHQx1anN3zfIvLHTPTfHDRQ+wxaAMypk79Ku6ZrSeULU+iatmt0T7kw8k4BKPDg
-         08kbMn+4JBVVY2sqADKpkYU/hBz92sNYVGqcScCuM/aRXAViwRrOyp6ku2l2HRoW8Bw9
-         jiFw==
-X-Gm-Message-State: AOAM5317x9BcPZGqctFtB0StaXY9iBAnhYR/TuMlGib4APaYUaTP9BFK
-        uJ2XCjnvAVF73TCZ8lC5lxbEiw==
-X-Google-Smtp-Source: ABdhPJzsLRcRIdeD7uMwiFMA9OnMMg+wBok0W54IJT5RDIP6Gz4Wm+D58D95Zh8ZmIqWqU2tT/UtNw==
-X-Received: by 2002:a1c:f60d:: with SMTP id w13mr2970557wmc.51.1596527643385;
-        Tue, 04 Aug 2020 00:54:03 -0700 (PDT)
-Received: from [192.168.1.9] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id r3sm2103516wro.1.2020.08.04.00.54.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Aug 2020 00:54:02 -0700 (PDT)
-Subject: Re: [PATCH] media: venus: Fix reported frame intervals
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        stanimir.varbanov@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-References: <1596464268-7382-1-git-send-email-loic.poulain@linaro.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <4cf40f23-1181-1543-cd5c-212ad2bb0ead@linaro.org>
-Date:   Tue, 4 Aug 2020 10:54:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <1596464268-7382-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1726793AbgHDIID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Aug 2020 04:08:03 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20314 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726201AbgHDIID (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Aug 2020 04:08:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596528482; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=kh1oVc6YO4R1j2xoiwGx/wGlgh7RD83i0V1vly7q1ok=; b=ZN1oatzCiqtsMKWRITtmxZFhoFs8BxYNNUfbczcOfR4mHA1CGx5XKnqIPneJ4whJaWUFXUIa
+ ml5AHJELyYqsnbCsCtP+967oBEWOaOEAo1MR36nLfcY0fmef5G1/5df+doqbMI++3PYGHZv1
+ fBS81DwKDXItRDKgTUE+5c4MPng=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
+ 5f291754e1ac2727649bff98 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 Aug 2020 08:07:48
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2F170C433C9; Tue,  4 Aug 2020 08:07:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from rohkumar-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2E105C433CA;
+        Tue,  4 Aug 2020 08:07:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2E105C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+From:   Rohit kumar <rohitkr@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Rohit kumar <rohitkr@codeaurora.org>
+Subject: [PATCH v5 00/12] ASoC: qcom: Add support for SC7180 lpass variant
+Date:   Tue,  4 Aug 2020 13:37:21 +0530
+Message-Id: <1596528453-11437-1-git-send-email-rohitkr@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+This patch chain add audio support for SC7180 soc by doing the required
+modification in existing common lpass-cpu/lpass-platform driver.
+This also fixes some concurrency issue.
 
-On 8/3/20 5:17 PM, Loic Poulain wrote:
-> On dragonboard-410c (apq8016) with HFI_VERSION_1XX, the reported
-> framerate is in unit of 1/65535 fps (for fine grained control).
-> So the current reported supported frame intervals is wrong (max
-> is 1/65535 fps), leading to encoding issues or format negotiation
-> failures with gstreamer.
-> 
-> Fix that by setting the framerate numerator according the framerate
-> factor (65535).
-> 
-> The factor is not always the same, e.g. with db820c (apq8096) HFI
-> reports framerate in fps unit. So only apply that for HFI_VERSION_1XX.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/venc.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 9981a2a..654bbaf 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -575,7 +575,9 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
->  				    struct v4l2_frmivalenum *fival)
->  {
->  	struct venus_inst *inst = to_inst(file);
-> +	enum hfi_version ver = inst->core->res->hfi_version;
->  	const struct venus_format *fmt;
-> +	unsigned int framerate_factor = 1;
->  
->  	fival->type = V4L2_FRMIVAL_TYPE_STEPWISE;
->  
-> @@ -600,11 +602,16 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
->  	    fival->height < frame_height_min(inst))
->  		return -EINVAL;
->  
-> -	fival->stepwise.min.numerator = 1;
-> +	if (ver == HFI_VERSION_1XX) {
+This patch series is already tested by Srinivas on Dragon Board 410c.
+Changes since v4:
+        - Updated compatible string for sc7180 lpass cpu as suggested by Rob
+        - Addressed comments by Rob in yaml Documentation.
 
-Could you use IS_V1(inst->core) macro instead.
+Ajit Pandey (4):
+  ASoC: qcom: Add common array to initialize soc based core clocks
+  ASoC: qcom: lpass-platform: Replace card->dev with component->dev
+  include: dt-bindings: sound: Add sc7180-lpass bindings header
+  ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
 
-> +		/* framerate is reported in 1/65535 fps unit */
+Rohit kumar (8):
+  ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+  ASoC: qcom: lpass-platform: fix memory leak
+  ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
+  ASoC: qcom: lpass-cpu: fix concurrency issue
+  dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
+  ASoC: qcom: lpass-cpu: Use platform_get_resource
+  ASoC: qcom: lpass-platform: Use platform_get_irq
+  dt-bindings: sound: lpass-cpu: Move to yaml format
 
-I wonder isn't better to be consistent for all venus versions and return
-1/1 to 1/120 instead of 65535/65535 to 65535/7864320?
-
-> +		framerate_factor = (1 << 16);
-> +	}
-> +
-> +	fival->stepwise.min.numerator = framerate_factor;
->  	fival->stepwise.min.denominator = frate_max(inst);
-> -	fival->stepwise.max.numerator = 1;
-> +	fival->stepwise.max.numerator = framerate_factor;
->  	fival->stepwise.max.denominator = frate_min(inst);
-> -	fival->stepwise.step.numerator = 1;
-> +	fival->stepwise.step.numerator = framerate_factor;
->  	fival->stepwise.step.denominator = frate_max(inst);
->  
->  	return 0;
-> 
+ .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  79 --------
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 179 +++++++++++++++++
+ include/dt-bindings/sound/sc7180-lpass.h           |  10 +
+ sound/soc/qcom/Kconfig                             |   5 +
+ sound/soc/qcom/Makefile                            |   2 +
+ sound/soc/qcom/lpass-apq8016.c                     |  86 ++++++--
+ sound/soc/qcom/lpass-cpu.c                         | 204 ++++++++++---------
+ sound/soc/qcom/lpass-ipq806x.c                     |  67 +++++++
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 157 ++++++++-------
+ sound/soc/qcom/lpass-platform.c                    | 155 +++++++++++----
+ sound/soc/qcom/lpass-sc7180.c                      | 216 +++++++++++++++++++++
+ sound/soc/qcom/lpass.h                             |  63 +++++-
+ 12 files changed, 924 insertions(+), 299 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+ create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
+ create mode 100644 sound/soc/qcom/lpass-sc7180.c
 
 -- 
-regards,
-Stan
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
