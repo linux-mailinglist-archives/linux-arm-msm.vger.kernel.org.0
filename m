@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E6DFA23B669
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 10:08:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71DE623B674
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 10:09:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729629AbgHDIIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Aug 2020 04:08:45 -0400
+        id S1729769AbgHDIJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Aug 2020 04:09:08 -0400
 Received: from mail29.static.mailgun.info ([104.130.122.29]:50867 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729617AbgHDIIp (ORCPT
+        by vger.kernel.org with ESMTP id S1729617AbgHDIJH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Aug 2020 04:08:45 -0400
+        Tue, 4 Aug 2020 04:09:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596528524; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1596528547; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=wzkE1gcsoctw3hiDqTWdfJ/SEs/ShA6LmWUp5yuAKJA=; b=liZhsIwJOaT4RNwUIGiTG1N7S8HqwIXvJH7mZX5IbP2mK1XjqTaUvBYgRzy9fwogS3mYoNyo
- OitKdcJJP7pPsQekEyZGPTGoSoekn0O0KeTlf6RyASLUuVrqxJ6b7Fcl3tQNWupTcfdcCfHl
- 4EPFTeOppZJoTgrNjdQGrq+eAj0=
+ bh=GZkjDkpKTKSPxQOn1C6nl629XIJ2Lx9Les5Owq+DC0A=; b=BltMmNYrrUP7ERfWzj3RmOsAh3ntmbl3cV++w0JHrX6ITeIvhPXj3rer1Q6leg0RjJLsDo9R
+ 7wfMw3SDaImnxfPms3Hq+y3lKoL1hpoIr5uFteAv7VzdKJXJwLv478HWG7/dfApqDtADJJRg
+ 1tfOu49C3q53UPytMgEUTHcrrfk=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
- 5f29178c9fdcd87189b5ad47 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 Aug 2020 08:08:44
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5f2917939fdcd87189b5b5a0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 Aug 2020 08:08:51
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B7536C4344B; Tue,  4 Aug 2020 08:08:43 +0000 (UTC)
+        id 50FDFC433B2; Tue,  4 Aug 2020 08:08:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from rohkumar-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rohitkr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCCDFC433CB;
-        Tue,  4 Aug 2020 08:08:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCCDFC433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70AEAC433B2;
+        Tue,  4 Aug 2020 08:08:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70AEAC433B2
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
 From:   Rohit kumar <rohitkr@codeaurora.org>
@@ -49,10 +49,11 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Rohit kumar <rohitkr@codeaurora.org>
-Subject: [PATCH v5 07/12] dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
-Date:   Tue,  4 Aug 2020 13:37:28 +0530
-Message-Id: <1596528453-11437-8-git-send-email-rohitkr@codeaurora.org>
+Cc:     Ajit Pandey <ajitp@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>
+Subject: [PATCH v5 08/12] include: dt-bindings: sound: Add sc7180-lpass bindings header
+Date:   Tue,  4 Aug 2020 13:37:29 +0530
+Message-Id: <1596528453-11437-9-git-send-email-rohitkr@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1596528453-11437-1-git-send-email-rohitkr@codeaurora.org>
 References: <1596528453-11437-1-git-send-email-rohitkr@codeaurora.org>
@@ -61,97 +62,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add dt-bindings to support "qcom,lpass-cpu-sc7180" node.
+From: Ajit Pandey <ajitp@codeaurora.org>
 
+Add header defining dai-id and mclk id for SC7180 lpass soc.
+
+Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
 Signed-off-by: Rohit kumar <rohitkr@codeaurora.org>
+Acked-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/sound/qcom,lpass-cpu.txt   | 55 +++++++++++++++++++++-
- 1 file changed, 53 insertions(+), 2 deletions(-)
+ include/dt-bindings/sound/sc7180-lpass.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+ create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
-index 32c2cdb..c07202c 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
-@@ -4,7 +4,8 @@ This node models the Qualcomm Technologies Low-Power Audio SubSystem (LPASS).
- 
- Required properties:
- 
--- compatible		: "qcom,lpass-cpu" or "qcom,apq8016-lpass-cpu"
-+- compatible		: "qcom,lpass-cpu" or "qcom,apq8016-lpass-cpu" or
-+			  "qcom,sc7180-lpass-cpu"
- - clocks		: Must contain an entry for each entry in clock-names.
- - clock-names		: A list which must include the following entries:
- 				* "ahbix-clk"
-@@ -18,6 +19,13 @@ Required properties:
- 				* "mi2s-bit-clk3"
- 				* "pcnoc-mport-clk"
- 				* "pcnoc-sway-clk"
-+			: required clocks for "qcom,lpass-cpu-sc7180"
-+				* "audio-core"
-+				* "mclk0"
-+				* "mi2s-bit-clk0"
-+				* "mi2s-bit-clk1"
-+				* "pcnoc-sway-clk"
-+				* "pcnoc-mport-clk"
- 
- - interrupts		: Must contain an entry for each entry in
- 			  interrupt-names.
-@@ -53,7 +61,8 @@ Required properties for each DAI (represented by a subnode):
- Note that adding a subnode changes the default to "no lines configured",
- so both playback and capture lines should be configured when a subnode is added.
- 
--Example:
-+Examples:
-+1)
- 
- lpass@28100000 {
- 	compatible = "qcom,lpass-cpu";
-@@ -77,3 +86,45 @@ lpass@28100000 {
- 		qcom,playback-sd-lines = <0 1>;
- 	};
- };
+diff --git a/include/dt-bindings/sound/sc7180-lpass.h b/include/dt-bindings/sound/sc7180-lpass.h
+new file mode 100644
+index 00000000..7d988f6
+--- /dev/null
++++ b/include/dt-bindings/sound/sc7180-lpass.h
+@@ -0,0 +1,10 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __DT_SC7180_LPASS_H
++#define __DT_SC7180_LPASS_H
 +
-+2)
++#define MI2S_PRIMARY	0
++#define MI2S_SECONDARY	1
 +
-+#include <dt-bindings/sound/sc7180-lpass.h>
++#define LPASS_MCLK0	0
 +
-+lpass_cpu: lpass {
-+	compatible = "qcom,sc7180-lpass-cpu";
-+
-+	reg = <0 0x62F00000 0 0x29000>;
-+
-+	iommus = <&apps_smmu 0x1020 0>;
-+
-+	power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
-+	clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
-+		<&lpasscorecc LPASS_AUDIO_CORE_CORE_CLK>,
-+		<&lpasscorecc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
-+		<&lpasscorecc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
-+		<&lpasscorecc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
-+		<&lpasscorecc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
-+	clock-names = "pcnoc-sway-clk", "audio-core",
-+			"mclk0", "pcnoc-mport-clk",
-+			"mi2s-bit-clk0", "mi2s-bit-clk1";
-+	interrupts = <0 160 IRQ_TYPE_LEVEL_HIGH>;
-+	interrupt-names = "lpass-irq-lpaif";
-+
-+
-+	#sound-dai-cells = <1>;
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	mi2s-primary@0 {
-+		reg = <MI2S_PRIMARY>;
-+		qcom,playback-sd-lines = <1>;
-+		qcom,capture-sd-lines = <0>;
-+	};
-+
-+	mi2s-secondary@1 {
-+		reg = <MI2S_SECONDARY>;
-+		qcom,playback-sd-lines = <0>;
-+	};
-+};
++#endif /* __DT_APQ8016_LPASS_H */
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
