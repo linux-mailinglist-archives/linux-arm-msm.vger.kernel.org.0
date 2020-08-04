@@ -2,143 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8266C23B1D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 02:50:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AA8523B27F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 03:51:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726398AbgHDAsu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Aug 2020 20:48:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44050 "EHLO
+        id S1726756AbgHDBvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Aug 2020 21:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726823AbgHDAsu (ORCPT
+        with ESMTP id S1726130AbgHDBvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Aug 2020 20:48:50 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA33C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 17:48:50 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id k12so12526519otr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 17:48:50 -0700 (PDT)
+        Mon, 3 Aug 2020 21:51:15 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F17CCC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 18:51:14 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id 1so15616630vsl.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 18:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=H2vuZwapNF5SY96ImcvQKBxAdYTUIocJnP2+tFQw1Cs=;
-        b=cO691Y4BMf4ps3AJh/Y/fA337JoELDzwQJZnF1XDKwLjD32hTFOYbYZ9CQBbVItKll
-         EppsWEsMpVQ3lFu5Q41Furs4iceDP1gdbmLNgQDiUgrII72FXLUGGUel1U6Gl8scYeeb
-         p+faUAZS1ku28ZXI2Cmuqo9tOhpJXdYBUH2jlRZYtWmPOnq//e3a2pLtZXL9FYrIMw+H
-         pV4Y93xjjhgRSH7NerHJRHMWgkPJhIkr38ul1j99PyaADQAAUs/NC5LCJo4RbbYfCvri
-         n2Rye4Mzd6ycNPnjC7Jq0+1sHKXow9Q8o+YqxGhD03snC9E4A1l+4/uqo66QQqpBhXB9
-         tDAg==
+        bh=ZjddNGXz3YzU7Pvdk0bKn7EGChBBYHNzVV19el9GvN4=;
+        b=aaf257HYCPeWHrjBXePaOYS8VFb1Q/czqyneX50WCTw9iwZoobQcG+o1I1MWB7iKJs
+         smazrjiW0L6F2JZ72ElWTxCb5NTLzF2eL/KqMeWC9AHOwb9tlBgjdHwOTBLnOa+PAG0y
+         GzfieF4oG1m72F66pbXCb9LhKUeoz73OImW5s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=H2vuZwapNF5SY96ImcvQKBxAdYTUIocJnP2+tFQw1Cs=;
-        b=B9kj3FnLLmoAsaKQacSEJ2ZrJ6pxYrQ9mJX8GsPKi46m8seB99TGgzAi0fz4bhkJfg
-         3Pzf30NauHGjddHY79sP8rRxacDDxkkPzZ1yp0wMLeuZMx6rckBpaCCCnfF8J/ST0K15
-         oFtBtKezk1aKxocfmtmTTNTDZ+nTeNvEHnMkttqcyErov3oCLi/mI5zOOkh5y7ruZY+R
-         cAQ03+9HXUnVfEL5Ub7EOio4R+3pRrvnkDp3Lu2OO2OnMb3j37h9XF4VCaAkVBB45Hd5
-         G3w9eBq43DS5iqrE9CKQqU4OjCa+uvysH25gJMphNBJBkK9Vwycw2GQ9vXQsfOqsC/uj
-         Znbw==
-X-Gm-Message-State: AOAM531HgxP6mR4VgubQ+DwGWRkGnRaWy7OI5+JeHWPXZ8pbBalFwL8t
-        pbOn9xH8deBd5FwV5A+9/mDqByZyllzfJxnyVoFxqYZV
-X-Google-Smtp-Source: ABdhPJyn7E460ohTdt8DCEf76ua+Wb3lwAXOyx60eoAK03RiF2uxbAJwRo47dnCpYne0nL6Ya4O5Td1e9XaI/t7Xz2M=
-X-Received: by 2002:a05:6830:3196:: with SMTP id p22mr16791603ots.102.1596502129252;
- Mon, 03 Aug 2020 17:48:49 -0700 (PDT)
+        bh=ZjddNGXz3YzU7Pvdk0bKn7EGChBBYHNzVV19el9GvN4=;
+        b=HOWVxakfm9HvG7P2CreFAZLEMiVUu6USnxXqrVkUvi0ScGnMVskAT6iW8YdBMWEiS/
+         /D8kx/FbfLGSDBbskjimfugjYncWBBbrHgyfC7WfY51OYkZVeyDg7WMZ6ADBNMwUe00/
+         BFBG7sfBl4lgV5InMEUC1yL6iJnqELT/VDOIMKglIqvC2srPPCNgWqr8yCGhaujDmFtE
+         USNIA4isg8Nq8d1YXcqTZO4NoWFiWyR1MIfr4FLgW2d+ZMgu540TqDOyuT105fxh5mth
+         BdbUEbTzZvwfQFIxBleIAH6jX9Hm85jdZM4CDM2izKiTNiMBF8PaPOBvvmyokSHY8OcA
+         dSoQ==
+X-Gm-Message-State: AOAM530P6BIFdlp8oP1bkpB00/glH54DRM/UO2jJFnmdUPRL2t9idEVD
+        bOerQPHZ6ecOUYFwUitr3IhdF2NiojCG6q1PZv3S1g==
+X-Google-Smtp-Source: ABdhPJy1lRFt2xIEK6BlHw92IYkKS9uhFUQMHmq60wCSuWixqVxrgiG9sOnX8EEpNmGgC5HX8UN7Ug7KXZjZv9nKfx8=
+X-Received: by 2002:a67:bb06:: with SMTP id m6mr13785000vsn.54.1596505874070;
+ Mon, 03 Aug 2020 18:51:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200714080254.v3.1.Ie0d730120b232a86a4eac1e2909bcbec844d1766@changeid>
- <CANcMJZC-kAc1kqqNhfd9wvFS4ans8t7cpAfNVZbybA4W6x5-KQ@mail.gmail.com> <CAD=FV=WNY8vR4ip2w47rf7rnBmtenEXtjXstj8PWNaXjCN3ZXQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=WNY8vR4ip2w47rf7rnBmtenEXtjXstj8PWNaXjCN3ZXQ@mail.gmail.com>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Mon, 3 Aug 2020 17:48:38 -0700
-Message-ID: <CALAqxLUJDGeQ1+k0Cz4rLujW_A=UAFLEuhMWrE8im1NF6XwjtQ@mail.gmail.com>
-Subject: Re: [PATCH v3] pinctrl: qcom: Handle broken/missing PDC dual edge
- IRQs on sc7180
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Amit Pundir <amit.pundir@linaro.org>
+References: <1596445047-2975-1-git-send-email-hsin-hsiung.wang@mediatek.com> <1596445047-2975-2-git-send-email-hsin-hsiung.wang@mediatek.com>
+In-Reply-To: <1596445047-2975-2-git-send-email-hsin-hsiung.wang@mediatek.com>
+From:   Nicolas Boichat <drinkcat@chromium.org>
+Date:   Tue, 4 Aug 2020 09:51:03 +0800
+Message-ID: <CANMq1KCSiRwCvPcbdA-g4Xwm5Jwk7VLDNpsR-_zoxEOv9ZFHWQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] spmi: Add driver shutdown support
+To:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+Cc:     Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Devicetree List <devicetree@vger.kernel.org>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        srv_heupstream <srv_heupstream@mediatek.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 3, 2020 at 2:58 PM Doug Anderson <dianders@chromium.org> wrote:
+On Mon, Aug 3, 2020 at 4:57 PM Hsin-Hsiung Wang
+<hsin-hsiung.wang@mediatek.com> wrote:
 >
-> Hi,
+> Add new shutdown() method.  Use it in the standard driver model style.
 >
-> On Mon, Aug 3, 2020 at 2:06 PM John Stultz <john.stultz@linaro.org> wrote:
-> >
-> > On Tue, Jul 14, 2020 at 8:08 AM Douglas Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Depending on how you look at it, you can either say that:
-> > > a) There is a PDC hardware issue (with the specific IP rev that exists
-> > >    on sc7180) that causes the PDC not to work properly when configured
-> > >    to handle dual edges.
-> > > b) The dual edge feature of the PDC hardware was only added in later
-> > >    HW revisions and thus isn't in all hardware.
-> > >
-> > > Regardless of how you look at it, let's work around the lack of dual
-> > > edge support by only ever letting our parent see requests for single
-> > > edge interrupts on affected hardware.
-> > >
-> > > NOTE: it's possible that a driver requesting a dual edge interrupt
-> > > might get several edges coalesced into a single IRQ.  For instance if
-> > > a line starts low and then goes high and low again, the driver that
-> > > requested the IRQ is not guaranteed to be called twice.  However, it
-> > > is guaranteed that once the driver's interrupt handler starts running
-> > > its first instruction that any new edges coming in will cause the
-> > > interrupt to fire again.  This is relatively commonplace for dual-edge
-> > > gpio interrupts (many gpio controllers require software to emulate
-> > > dual edge with single edge) so client drivers should be setup to
-> > > handle it.
-> > >
-> > > Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >
-> > Just as a heads up. I started seeing boot failures (crashes really
-> > early before we get serial output) with db845c when testing with the
-> > android-mainline tree that pulled v5.8 in.
+> Signed-off-by: Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+> ---
+>  drivers/spmi/spmi.c  | 12 ++++++++++++
+>  drivers/spmi/spmi.c  | 12 ++++++++++++
+>  include/linux/spmi.h |  1 +
+>  2 files changed, 13 insertions(+)
 >
-> Even before earlycon?  Ick.  For me earlycon comes up way before
-> pinctrl and I thought that, by design, earlycon came up so dang early
-> that you could debug almost anything with it.
+> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+> index c16b60f..5fde024 100644
+> --- a/drivers/spmi/spmi.c
+> +++ b/drivers/spmi/spmi.c
+> @@ -357,6 +357,17 @@ static int spmi_drv_remove(struct device *dev)
+>         return 0;
+>  }
 >
-> To confirm, I could even drop into earlycon_kgdb (which starts later
-> than earlycon), then set a breakpoint on msm_pinctrl_probe() and I'd
-> hit my breakpoint.  Enabling earlycon should be super easy these
-> days--just add the "earlycon" command line parameter and the kernel
-> seems to do the rest of the magic based on the "stdout-path".  I guess
-> if your bootloader doesn't cooperate and leave the system in an OK
-> state then you'll be in bad shape, but otherwise it should be nice...
->
-> NOTE: if you have earlycon and this is still causing crashes before
-> earlycon starts, the only things I can think of are side effects of
-> this patch.  Could it have made your kernel just a little too big and
-> now you're overflowing some hard limit of the bootloader?  Maybe
-> you're hitting a ccache bug and using some stale garbage (don't laugh,
-> this happened to me the other year)?  Maybe there's a pointer bug and
-> this moves addresses just enough to make it cause havoc?
->
+> +static void spmi_drv_shutdown(struct device *dev)
+> +{
+> +       const struct spmi_driver *sdrv = to_spmi_driver(dev->driver);
+> +
+> +       if (!sdrv)
+> +               return;
+> +
+> +
+> +       if (sdrv->shutdown)
+> +               sdrv->shutdown(to_spmi_device(dev));
 
-Sorry! False positive on this one. The android-mainline tree has
-serial drivers as modules, so earlycon doesn't help right off.
-I reworked the config so I could use earlycon and realized the trouble
-was with the new selected configs in this patch which need to also be
-selected in the GKI kernel.
+Slight more succinct (assuming sdrv _can_ actually be NULL, I'm not
+sure about that)
 
-Apologies for the noise.
+if (srdv && sdrv->shutdown)
 
-thanks
--john
+> +}
+> +}
+> +
+>  static int spmi_drv_uevent(struct device *dev, struct kobj_uevent_env *env)
+>  {
+>         int ret;
+> @@ -373,6 +384,7 @@ static struct bus_type spmi_bus_type = {
+> @@ -373,6 +384,7 @@ static struct bus_type spmi_bus_type = {
+>         .match          = spmi_device_match,
+>         .probe          = spmi_drv_probe,
+>         .remove         = spmi_drv_remove,
+> +       .shutdown       = spmi_drv_shutdown,
+>         .uevent         = spmi_drv_uevent,
+>  };
+>
+> diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+> index 394a3f6..729bcbf 100644
+> --- a/include/linux/spmi.h
+> +++ b/include/linux/spmi.h
+> @@ -138,6 +138,7 @@ struct spmi_driver {
+>         struct device_driver driver;
+>         int     (*probe)(struct spmi_device *sdev);
+>         void    (*remove)(struct spmi_device *sdev);
+> +       void    (*shutdown)(struct spmi_device *sdev);
+>  };
+>
+>  static inline struct spmi_driver *to_spmi_driver(struct device_driver *d)
+> --
+> 2.6.4
