@@ -2,210 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3196823B2A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 04:13:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06DE523B4C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 08:05:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725877AbgHDCND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Aug 2020 22:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57032 "EHLO
+        id S1728119AbgHDGFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Aug 2020 02:05:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbgHDCNB (ORCPT
+        with ESMTP id S1726797AbgHDGFJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Aug 2020 22:13:01 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F136EC061756
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 19:13:00 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id g20so8026229uan.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 19:13:00 -0700 (PDT)
+        Tue, 4 Aug 2020 02:05:09 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2078AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Aug 2020 23:05:09 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id t6so1416735pjr.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Aug 2020 23:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ek5IwSL+ashZL9KTOZdz56TvgUVWfpkvY3pBa7EzP2A=;
-        b=n0tp/hA48FqUCnJQSr6N0Wcwa/cJmyK+gKVLEMeh/2VJb5aP7fHr3/7KKZjGS8Ipad
-         cqhcBps/kGqgbW1ttxwbhSgAoFgq9fppfYPqf0fGv+DyPKHd/w6YwgZUB7CTKqTISkN1
-         nRX+PT8O2EH1LOoXschOC9MaFkSn35tNphz5Q=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=29RX8bXAuW3G0jtpg7c07xftgd6wAAyG9UIW4GkKkEE=;
+        b=KkLn8YU63zAqqKEqBxzj8VgPytKimcuOSG62fWGwsmSKCplvu+pSTTOhZlnhVMl0x2
+         3FYwjL8gJehForcHWlq53ixj/peur2dmTjDXxvGpprq/z9uGcT9NW+RPBItW2ty2zn/K
+         d1RmHMauflrekOsAZtkgMo1WTH+sipmLGpIRHev75H610NRRiIKqTSflqwJMNs5EdOEo
+         yVNc7LotapWaHklZdxCIuObQmNZACw5oxP064/kWiY2fQ/4pM/Qg4J3MGQzUw5WmvXAY
+         juJEJRrK2ZUtHjWDdwwzejVi9+HpL/jSNxmCxVrhrRlg/ok2iR167hKTGZZwo6ac/1HH
+         JjGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ek5IwSL+ashZL9KTOZdz56TvgUVWfpkvY3pBa7EzP2A=;
-        b=MlGz7Aus8RE+f/cTWusoIgsRz8z2zlm9uk7yMVaUXUTCrkBKUEm4B1y494/Xr7BjG0
-         w159W2reul6Q8n6zdrf3k55pK98uiu1iqeZPPNu2Ky70a4bLjK3b+gGvK4/43PIZXtim
-         8HWBT4Gc0AJ4URSd4dAsVSHGN3AP3KpcwKP8p2+Gq1Z8/3yhpG7Eu5ubZumXofUcIrW2
-         1hc8fkhS6T01HvXqwlLks/cZtZwwF+0jLelJfF4kQnYOJuDaFTb7C6a/58r85aFTf14/
-         fHUML1htZ5JC9bf34xN1X2jLxFu9pDLgUW8dAmIF9Ajnk7cRJnkzTM7n+SYjU80E1QAL
-         JEHg==
-X-Gm-Message-State: AOAM530L5zokzP9nKI8AgoE67xCi2iRvT/3XyX5oybWHDkz2TweJRVB6
-        y/GeVNkx+DInSzwDQptGAeStFBmD5zFq/OGsY8UNXw==
-X-Google-Smtp-Source: ABdhPJwghGSLbe8ZU4D96mdziHWtR9hqw1MkwSUkRpmFW/D404GQmjvXpH25/+Xs6ReDM3GKg6kZtrzus7DmgAVTxUk=
-X-Received: by 2002:ab0:20b6:: with SMTP id y22mr13153458ual.77.1596507180138;
- Mon, 03 Aug 2020 19:13:00 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=29RX8bXAuW3G0jtpg7c07xftgd6wAAyG9UIW4GkKkEE=;
+        b=EgDj/NQdKQ5B2MsoG6uB/MJuLQb+CZpsMmiRiEBs7Plqo8E8AEA4ht9/Lz/CqFYuTT
+         64Y1SO1mFeIRS+UyWkQvJGMTyGd1Kpb7nN9DRoXp1c+5G3irfUl0kmmrUa61fPVD/IWA
+         i4lMH8nDmtU8I8l10PNN5BOpoSo+FJmg5IpKt7mZBhWgznIXq/XI73RNt0siRwMoi3rp
+         wBB/kTwEYyD4tr5eWxp0ZLno6Nhwib9lEM3n1PUocNwq9qaJXx7A90LuRoTVUMiEQLKG
+         LxBL7jFuM62QVhAXkWAg+71PHg2iWjfh+uvkQmqfMl386fXc5zR/zhNQ2q8beoNxSRRP
+         rxIw==
+X-Gm-Message-State: AOAM533RtB6Qlslp3Bbg9FzGinXT1OU7d7wnnYRCfZTQpjTV+bVMbAhQ
+        pD7ynXJEjcplkvHJZHaBb5mDcQ==
+X-Google-Smtp-Source: ABdhPJwLL5n6gEYWYzbVJtSX2UtSyopSxs/VQFcZUH1Ttai8mPQYDOSqhsn/4gxSrBnvlERUgZaFkw==
+X-Received: by 2002:a17:902:221:: with SMTP id 30mr18452271plc.222.1596521108530;
+        Mon, 03 Aug 2020 23:05:08 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id n26sm16606191pgl.42.2020.08.03.23.05.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Aug 2020 23:05:07 -0700 (PDT)
+Date:   Mon, 3 Aug 2020 23:05:05 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Cc:     agross@kernel.org, kishon@ti.com, vkoul@kernel.org,
+        dovl@codeaurora.org, ygardi@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        tianjia.zhang@alibaba.com
+Subject: Re: [PATCH] phy: qcom-ufs: Fix wrong return value in
+ ufs_qcom_phy_calibrate()
+Message-ID: <20200804060505.GJ61202@yoga>
+References: <20200802111546.5611-1-tianjia.zhang@linux.alibaba.com>
 MIME-Version: 1.0
-References: <1596445047-2975-1-git-send-email-hsin-hsiung.wang@mediatek.com> <1596445047-2975-3-git-send-email-hsin-hsiung.wang@mediatek.com>
-In-Reply-To: <1596445047-2975-3-git-send-email-hsin-hsiung.wang@mediatek.com>
-From:   Nicolas Boichat <drinkcat@chromium.org>
-Date:   Tue, 4 Aug 2020 10:12:49 +0800
-Message-ID: <CANMq1KDDbPBsnxPHvPTcTreW7OrTwC_=8GyM=rrU2QOLPKp2Bg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] regulator: bindings: Add document for MT6315 regulator
-To:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-Cc:     Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        linux-arm-msm@vger.kernel.org,
-        srv_heupstream <srv_heupstream@mediatek.com>,
-        Fei Shao <fshao@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200802111546.5611-1-tianjia.zhang@linux.alibaba.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hsin-Hsiung,
+On Sun 02 Aug 04:15 PDT 2020, Tianjia Zhang wrote:
 
-On Mon, Aug 3, 2020 at 4:57 PM Hsin-Hsiung Wang
-<hsin-hsiung.wang@mediatek.com> wrote:
->
-> Add device tree binding information for mt6315 regulator driver.
-> Example bindings for mt6315 are added.
->
-> Signed-off-by: Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+> On an error exit path, a negative error code should be returned
+> instead of a positive return value.
+> 
+> Fixes: adaafaa393ef1 ("phy: qcom-ufs: add support for QUALCOMM Technologies UFS PHY drivers")
+> Cc: Yaniv Gardi <ygardi@codeaurora.org>
+> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+
+Thanks for your patch Tianjia.
+
+The support provided by this driver was added to phy-qcom-qmp.c a while
+back and in what's will become 5.9 the phy-qcom-ufs.c driver is removed.
+So your change is unfortunately no longer needed.
+
+Regards,
+Bjorn
+
 > ---
->  .../bindings/regulator/mt6315-regulator.txt        | 45 ++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/regulator/mt6315-regulator.txt
->
-> diff --git a/Documentation/devicetree/bindings/regulator/mt6315-regulator.txt b/Documentation/devicetree/bindings/regulator/mt6315-regulator.txt
-> new file mode 100644
-> index 0000000..1c14537
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/regulator/mt6315-regulator.txt
-> @@ -0,0 +1,45 @@
-> +Mediatek MT6315 Regulator
-> +
-> +Required properties:
-> +- compatible: Must be one of the following.
-> +       "mediatek,mt6315_3-regulator"
-> +       "mediatek,mt6315_6-regulator"
-> +       "mediatek,mt6315_7-regulator"
-
-As highlighted on Gerrit [1], I think this is wrong. The device tree
-compatible should focus on actual hardware differences, _not_ the way
-the device is used.
-
-So I looked at the datasheet, and there are 5 variants of the MT6315.
-They all have the same number of VBUCKs, just with different _default_
-voltages, Imax, and sequencing. Since the regulator range is the same,
-I don't think you need to care about any of this, so I'd have a single
-compatible "mediatek,mt6315-regulator".
-
-The one thing that is special here, though, is that you want to
-combine regulators for BUCK1, right?
-
-That is, for MT6315PP (id 6), you want to combine BUCK1/2/4 to power
-the big cores (hence 0xb = "1011" in patch 3/3), and for MT6315SP (id
-7), you want to combine BUCK1/2 (hence 0x3 = 0011).
-
-So, instead of a table here, what I'd do is to figure out a way to
-indicate, in the device tree, that bucks 1, 2, 4 need to be combined.
-
-I think the correct way to handle this is to add a
-`regulator-coupled-with` property. That is you'd have a device tree
-that looks like this:
-
-mt6315_6: mt6315@6 {
-    compatible = "mediatek,mt6315-regulator";
-    reg = <0x6 0 0xb 1>;
-    mt6315_6_vbuck1: vbuck1 {
-        regulator-compatible = "vbuck1";
-        ...
-        regulator-coupled-with = <&mt6315_6_vbuck2, mt6315_6_vbuck4>;
-    };
-
-    mt6315_6_vbuck2: vbuck2 {
-        regulator-compatible = "vbuck2";
-        ...
-    };
-
-    mt6315_6_vbuck3: vbuck3 {
-        regulator-compatible = "vbuck3";
-        ...
-    };
-
-    mt6315_6_vbuck4: vbuck4 {
-        regulator-compatible = "vbuck4";
-        ...
-    };
-};
-
-Then, at probe time, you can figure out which regulators are coupled
-with another one, and only provide controls for the first regulator in
-the list (with the proper mask).
-
-Another, simpler way, may look like this:
-
-mt6315_6: mt6315@6 {
-    compatible = "mediatek,mt6315-regulator";
-    reg = <0x6 0 0xb 1>;
-    mt6315_6_vbuck1: vbuck1 {
-        regulator-compatible = "vbuck1";
-        regulator-mask = <0xb>;
-    };
-    mt6315_6_vbuck3: vbuck3 {
-        regulator-compatible = "vbuck3";
-        regulator-mask = <0x8>;
-    };
-};
-
-But then it's a bit weird, because 0x8 = 1 << 3, which we can already
-infer from "vbuck3" compatible...
-
-[1] https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/2229019/13/drivers/regulator/mt6315-regulator.c#283
-
-
-> +- reg: SPMI slave id.
-> +- regulators: List of regulators provided by this controller.
-> +  The definition for each of these nodes is defined using the standard binding
-> +  for regulators at Documentation/devicetree/bindings/regulator/regulator.txt.
-> +
-> +The valid names for regulators are:
-> +BUCK:
-> +  vbuck1, vbuck3, vbuck4
-> +
-> +Example:
-> +       mt6315_3: mt6315@3 {
-> +               compatible = "mediatek,mt6315_3-regulator";
-> +               reg = <0x3 0 0xb 1>;
-> +
-> +               mt6315_3_vbuck1: vbuck1 {
-> +                       regulator-compatible = "vbuck1";
-> +                       regulator-min-microvolt = <300000>;
-> +                       regulator-max-microvolt = <1193750>;
-> +                       regulator-enable-ramp-delay = <256>;
-> +                       regulator-allowed-modes = <0 1 2 4>;
-> +               };
-> +
-> +               mt6315_3_vbuck3: vbuck3 {
-> +                       regulator-compatible = "vbuck3";
-> +                       regulator-min-microvolt = <300000>;
-> +                       regulator-max-microvolt = <1193750>;
-> +                       regulator-enable-ramp-delay = <256>;
-> +                       regulator-allowed-modes = <0 1 2 4>;
-> +               };
-> +
-> +               mt6315_3_vbuck3: vbuck3 {
-> +                       regulator-compatible = "vbuck3";
-> +                       regulator-min-microvolt = <300000>;
-> +                       regulator-max-microvolt = <1193750>;
-> +                       regulator-enable-ramp-delay = <256>;
-> +                       regulator-allowed-modes = <0 1 2 4>;
-> +               };
-> +       };
-> --
-> 2.6.4
+>  drivers/phy/qualcomm/phy-qcom-ufs.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-ufs.c b/drivers/phy/qualcomm/phy-qcom-ufs.c
+> index 763c8d396af1..49d47dc5bfd4 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-ufs.c
+> @@ -24,7 +24,7 @@ int ufs_qcom_phy_calibrate(struct ufs_qcom_phy *ufs_qcom_phy,
+>  
+>  	if (!tbl_A) {
+>  		dev_err(ufs_qcom_phy->dev, "%s: tbl_A is NULL", __func__);
+> -		ret = EINVAL;
+> +		ret = -EINVAL;
+>  		goto out;
+>  	}
+>  
+> @@ -42,7 +42,7 @@ int ufs_qcom_phy_calibrate(struct ufs_qcom_phy *ufs_qcom_phy,
+>  		if (!tbl_B) {
+>  			dev_err(ufs_qcom_phy->dev, "%s: tbl_B is NULL",
+>  				__func__);
+> -			ret = EINVAL;
+> +			ret = -EINVAL;
+>  			goto out;
+>  		}
+>  
+> -- 
+> 2.26.2
+> 
