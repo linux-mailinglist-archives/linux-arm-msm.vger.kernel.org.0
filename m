@@ -2,166 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E486123B9E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 13:47:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A893C23B9EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 13:49:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730309AbgHDLrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Aug 2020 07:47:32 -0400
+        id S1730392AbgHDLtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Aug 2020 07:49:01 -0400
 Received: from mail29.static.mailgun.info ([104.130.122.29]:10836 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730323AbgHDLr2 (ORCPT
+        by vger.kernel.org with ESMTP id S1730385AbgHDLtA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Aug 2020 07:47:28 -0400
+        Tue, 4 Aug 2020 07:49:00 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596541647; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=kv7I/3RRqNOT13X3DGDmONEGT2EBJqW5mZB4sv1aNGA=; b=xhFtGzKnLTt9cKf8xAz9QhISY2BRhdk8jHFto6o5Ca98H0XS+/LyqNDruSpTFD7lFpwRkBP1
- U1yGAfujKgYVGhfY+rq4EWErN/qea2VJGEmYSkNWwOkJQDZB82kTcU55f5+Lxo7/As8D4lXO
- +Qax+hQbNPeSVgZlEVuRTzSTAjg=
+ s=smtp; t=1596541739; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From;
+ bh=vGH9LKTOm9sL1O4ddHVopCGrjaeylS/jHpnPnE8H5C0=; b=p0KhID1ROV6URe6qCzfaQMrPzfhunlP2zV8yit7Q+VIQ+ouqmW5owOvKDRL0zb+UketV3b1X
+ ljfxkCfoDr03+NFr7FWbPrpQC41ImtOELlLlL1DNlEew/0aYExtlwR/LxvxyyaGh5pJ/7yfy
+ 8kYhcw8jrOKcpAyQt1lptSHUKWY=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n17.prod.us-west-2.postgun.com with SMTP id
- 5f294ac3781ba1c5e2e70559 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 Aug 2020 11:47:15
+ smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
+ 5f294b2a781ba1c5e2e7a4a5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 04 Aug 2020 11:48:58
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3D8C4C43391; Tue,  4 Aug 2020 11:47:15 +0000 (UTC)
+        id 6E201C433C9; Tue,  4 Aug 2020 11:48:58 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+X-Spam-Level: *
+X-Spam-Status: No, score=1.9 required=2.0 tests=ALL_TRUSTED,FROM_ADDR_WS,
+        SPF_HELO_NONE,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from vgarodia-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D8E30C433CB;
-        Tue,  4 Aug 2020 11:47:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D8E30C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     ulf.hansson@linaro.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH 2/3] PM / Domains: Add support for 'assigned-performance-states'
-Date:   Tue,  4 Aug 2020 17:16:55 +0530
-Message-Id: <1596541616-27688-3-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1596541616-27688-1-git-send-email-rnayak@codeaurora.org>
-References: <1596541616-27688-1-git-send-email-rnayak@codeaurora.org>
+        (Authenticated sender: vgarodia)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70F7BC433C6;
+        Tue,  4 Aug 2020 11:48:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70F7BC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=qti.qualcomm.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.helo=vgarodia-linux.qualcomm.com
+From:   Vikash Garodia <"Vikash Garodia"@qti.qualcomm.com>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, mansur@codeaurora.org,
+        rkurapat@qti.qualcomm.com, gkapalli@qti.qualcomm.com
+Subject: [PATCH] venus: fixes for list corruption
+Date:   Tue,  4 Aug 2020 17:18:45 +0530
+Message-Id: <20200804114845.25086-1-user@vgarodia-linux>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For devices which have 'assigned-performance-states' specified in DT,
-set the specified performance state during attach and drop it on detach.
-Also drop/set as part of runtime suspend/resume callbacks.
+From: Vikash Garodia <vgarodia@codeaurora.org>
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+There are few list handling issues while adding and deleting
+node in the registered buf list in the driver.
+1. list addition - buffer added into the list during buf_init
+while not deleted during cleanup.
+2. list deletion - In capture streamoff, the list was reinitialized.
+As a result, if any node was present in the list, it would
+lead to issue while cleaning up that node during buf_cleanup.
+
+Corresponding call traces below:
+[  165.751014] Call trace:
+[  165.753541]  __list_add_valid+0x58/0x88
+[  165.757532]  venus_helper_vb2_buf_init+0x74/0xa8 [venus_core]
+[  165.763450]  vdec_buf_init+0x34/0xb4 [venus_dec]
+[  165.768271]  __buf_prepare+0x598/0x8a0 [videobuf2_common]
+[  165.773820]  vb2_core_qbuf+0xb4/0x334 [videobuf2_common]
+[  165.779298]  vb2_qbuf+0x78/0xb8 [videobuf2_v4l2]
+[  165.784053]  v4l2_m2m_qbuf+0x80/0xf8 [v4l2_mem2mem]
+[  165.789067]  v4l2_m2m_ioctl_qbuf+0x2c/0x38 [v4l2_mem2mem]
+[  165.794624]  v4l_qbuf+0x48/0x58
+
+[ 1797.556001] Call trace:
+[ 1797.558516]  __list_del_entry_valid+0x88/0x9c
+[ 1797.562989]  vdec_buf_cleanup+0x54/0x228 [venus_dec]
+[ 1797.568088]  __buf_prepare+0x270/0x8a0 [videobuf2_common]
+[ 1797.573625]  vb2_core_qbuf+0xb4/0x338 [videobuf2_common]
+[ 1797.579082]  vb2_qbuf+0x78/0xb8 [videobuf2_v4l2]
+[ 1797.583830]  v4l2_m2m_qbuf+0x80/0xf8 [v4l2_mem2mem]
+[ 1797.588843]  v4l2_m2m_ioctl_qbuf+0x2c/0x38 [v4l2_mem2mem]
+[ 1797.594389]  v4l_qbuf+0x48/0x58
+
+Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
 ---
- drivers/base/power/domain.c | 27 +++++++++++++++++++++++++++
- include/linux/pm_domain.h   |  1 +
- 2 files changed, 28 insertions(+)
+ drivers/media/platform/qcom/venus/vdec.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 0a01df60..8704823 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -810,6 +810,10 @@ static int genpd_runtime_suspend(struct device *dev)
- 	if (irq_safe_dev_in_no_sleep_domain(dev, genpd))
- 		return 0;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 7c4c483d5438..76be14efbfb0 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1088,8 +1088,6 @@ static int vdec_stop_capture(struct venus_inst *inst)
+ 		break;
+ 	}
  
-+	/* Drop the assigned performance state */
-+	if (dev_gpd_data(dev)->assigned_pstate)
-+		dev_pm_genpd_set_performance_state(dev, 0);
-+
- 	genpd_lock(genpd);
- 	genpd_power_off(genpd, true, 0);
- 	genpd_unlock(genpd);
-@@ -829,6 +833,7 @@ static int genpd_runtime_resume(struct device *dev)
- {
- 	struct generic_pm_domain *genpd;
- 	struct gpd_timing_data *td = &dev_gpd_data(dev)->td;
-+	unsigned int assigned_pstate = dev_gpd_data(dev)->assigned_pstate;
- 	bool runtime_pm = pm_runtime_enabled(dev);
- 	ktime_t time_start;
- 	s64 elapsed_ns;
-@@ -857,6 +862,9 @@ static int genpd_runtime_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	/* Set the assigned performance state */
-+	if (assigned_pstate)
-+		dev_pm_genpd_set_performance_state(dev, assigned_pstate);
-  out:
- 	/* Measure resume latency. */
- 	time_start = 0;
-@@ -890,6 +898,8 @@ static int genpd_runtime_resume(struct device *dev)
- err_poweroff:
- 	if (!pm_runtime_is_irq_safe(dev) ||
- 		(pm_runtime_is_irq_safe(dev) && genpd_is_irq_safe(genpd))) {
-+		if (assigned_pstate)
-+			dev_pm_genpd_set_performance_state(dev, 0);
- 		genpd_lock(genpd);
- 		genpd_power_off(genpd, true, 0);
- 		genpd_unlock(genpd);
-@@ -2405,6 +2415,12 @@ static void genpd_dev_pm_detach(struct device *dev, bool power_off)
- 
- 	dev_dbg(dev, "removing from PM domain %s\n", pd->name);
- 
-+	/* Drop the assigned performance state */
-+	if (dev_gpd_data(dev)->assigned_pstate) {
-+		dev_pm_genpd_set_performance_state(dev, 0);
-+		dev_gpd_data(dev)->assigned_pstate = 0;
-+	}
-+
- 	for (i = 1; i < GENPD_RETRY_MAX_MS; i <<= 1) {
- 		ret = genpd_remove_device(pd, dev);
- 		if (ret != -EAGAIN)
-@@ -2442,6 +2458,7 @@ static void genpd_dev_pm_sync(struct device *dev)
- static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
- 				 unsigned int index, bool power_on)
- {
-+	unsigned int assigned_pstate;
- 	struct of_phandle_args pd_args;
- 	struct generic_pm_domain *pd;
- 	int ret;
-@@ -2485,6 +2502,16 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
- 	if (ret)
- 		genpd_remove_device(pd, dev);
- 
-+	/* Set the assigned performance state */
-+	if (!of_property_read_u32_index(base_dev->of_node,
-+					"assigned-performance-states",
-+					index, &assigned_pstate)) {
-+		if (assigned_pstate) {
-+			dev_pm_genpd_set_performance_state(dev, assigned_pstate);
-+			dev_gpd_data(dev)->assigned_pstate = assigned_pstate;
-+		}
-+	}
-+
- 	return ret ? -EPROBE_DEFER : 1;
+-	INIT_LIST_HEAD(&inst->registeredbufs);
+-
+ 	return ret;
  }
  
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 9ec78ee..4a415ee 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -180,6 +180,7 @@ struct generic_pm_domain_data {
- 	struct notifier_block nb;
- 	int cpu;
- 	unsigned int performance_state;
-+	unsigned int assigned_pstate;
- 	void *data;
- };
+@@ -1189,6 +1187,14 @@ static int vdec_buf_init(struct vb2_buffer *vb)
+ static void vdec_buf_cleanup(struct vb2_buffer *vb)
+ {
+ 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
++	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
++	struct venus_buffer *buf = to_venus_buffer(vbuf);
++
++	mutex_lock(&inst->lock);
++	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
++		if (!list_empty(&inst->registeredbufs))
++			list_del_init(&buf->reg_list);
++	mutex_unlock(&inst->lock);
  
+ 	inst->buf_count--;
+ 	if (!inst->buf_count)
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
