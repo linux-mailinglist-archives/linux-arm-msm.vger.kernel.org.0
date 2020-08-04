@@ -2,71 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CABEF23B8C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 12:31:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56FF823B994
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Aug 2020 13:33:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726212AbgHDKbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Aug 2020 06:31:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726056AbgHDKbB (ORCPT
+        id S1730133AbgHDLc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Aug 2020 07:32:59 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:43527 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728157AbgHDLc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Aug 2020 06:31:01 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8BAC06174A;
-        Tue,  4 Aug 2020 03:31:01 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id df16so13109903edb.9;
-        Tue, 04 Aug 2020 03:31:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=g2cAJibiyxEQakU0b9WlYvDbYVxHzC3dgmfOqIe+6qo=;
-        b=EZfhhftaG8GT8nua7BtRoTHrPubgAq5syFZJQ1AdPbIM3zNuIsgvkBVYvQfheF45eH
-         l4PhWy1lergaun6Ab9iC34AwM5bJbkFKfDuc6NjwMf+I9Hf7prw4eGR5hf32Bg7V5968
-         P9gYqmDcbh2hYySCSAEGzlXunrzOPMfcsO/G3BH+V13euzFH+lhWMRD+vMPUNQMyUIeK
-         VZ541s5RvGKnGLkZuvvUzuYk3+htl6EdCZBQqsIViNYKyj47nX+tIwIX06fCKowSsuyo
-         tLnQG5wf6vyrrabWmtK2/K42416wN/psv/PzBT+L+w3eaaCWmcdJZ11DHEVGjBEt7Elz
-         +C3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=g2cAJibiyxEQakU0b9WlYvDbYVxHzC3dgmfOqIe+6qo=;
-        b=XRxPxyW7q60GtOdGv95+z9EvAIdKLQfftNuOvzZfr2OyX51xwpOnBCcxVyVbN5MKXo
-         SGe+NRMsWLiMvQjHiRMUI3cWRkiHHVINEsr1fBR1K98naN5Lp23K7EA0K8ahRGBSG+jp
-         bmet/wbCu55Ey45x1d2wd6B9HANrt3KYHpttGlphm9t7hXLISf6IfyojbQyix0qnOONs
-         lmnPXntTnCHSk8//7bMSeSHvyNbnRrLGhKpsxLeD4SlXJd3gZ+pZ68aUv4lwKLYidIos
-         kM0+UdFiQM8koG4fFfs2dbUGRgz3HOkYFs6FIRkofp2LYnTnoqbPy9T47DXCjdp0hqeU
-         lStA==
-X-Gm-Message-State: AOAM531bCmlxxoh89qMI4SoPwVlmdDgiQM2LXoBxEigRJGqcHavMZRPv
-        tnnQXzLVWEV3GkzSr67qQvHEs9Jk+wTlcGnqMn4=
-X-Google-Smtp-Source: ABdhPJwvhADRZrGOjLMoKF6mBnf1EepZ/BE5P0gUUEkje8oN6Zn6Qlwm/M+vCZhAMoDSYvpGauQ73yvuwF5i2wF9Bm4=
-X-Received: by 2002:a05:6402:28f:: with SMTP id l15mr19986969edv.233.1596537060231;
- Tue, 04 Aug 2020 03:31:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200729120057.35079-1-konradybcio@gmail.com>
-In-Reply-To: <20200729120057.35079-1-konradybcio@gmail.com>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Date:   Tue, 4 Aug 2020 12:30:24 +0200
-Message-ID: <CAMS8qEWQZPAZy71jx2Wx9B=RDximmC_A9On1Tk-3ekL-LTgsYg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/10] msm8992/4 updates
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     lauren.kelly@msn.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 4 Aug 2020 07:32:59 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 04 Aug 2020 04:32:58 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 Aug 2020 04:32:56 -0700
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 04 Aug 2020 17:02:29 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id F05E44BA0; Tue,  4 Aug 2020 17:02:26 +0530 (IST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        travitej@codeaurora.org, nganji@codeaurora.org,
+        swboyd@chromium.org, abhinavk@codeaurora.org,
+        ddavenport@chromium.org
+Subject: [v1] drm/msm/dpu: update reservations in commit path
+Date:   Tue,  4 Aug 2020 17:02:24 +0530
+Message-Id: <1596540744-6902-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bumping in case it was overlooked, hope to get this in the 5.9 merge window :)
+DPU resources reserved in the atomic_check path gets unwinded
+during modeset operation before commit happens in a non seamless
+transition.
 
-Konrad
+Update the reservations in the commit path to avoid resource
+failures. Secondly have dummy reservations in atomic_check path
+so that we can gracefully fail the composition if resources are
+not available.
+
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 63976dc..c6b8254 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -565,7 +565,7 @@ static int dpu_encoder_virt_atomic_check(
+ 	const struct drm_display_mode *mode;
+ 	struct drm_display_mode *adj_mode;
+ 	struct msm_display_topology topology;
+-	struct dpu_global_state *global_state;
++	struct dpu_global_state tmp_resv_state;
+ 	int i = 0;
+ 	int ret = 0;
+ 
+@@ -582,7 +582,7 @@ static int dpu_encoder_virt_atomic_check(
+ 	dpu_kms = to_dpu_kms(priv->kms);
+ 	mode = &crtc_state->mode;
+ 	adj_mode = &crtc_state->adjusted_mode;
+-	global_state = dpu_kms_get_existing_global_state(dpu_kms);
++	memset(&tmp_resv_state, 0, sizeof(tmp_resv_state));
+ 	trace_dpu_enc_atomic_check(DRMID(drm_enc));
+ 
+ 	/*
+@@ -621,7 +621,7 @@ static int dpu_encoder_virt_atomic_check(
+ 		 * info may not be available to complete reservation.
+ 		 */
+ 		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
+-			ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
++			ret = dpu_rm_reserve(&dpu_kms->rm, &tmp_resv_state,
+ 					drm_enc, crtc_state, topology);
+ 		}
+ 	}
+@@ -966,7 +966,7 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+ 	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
+ 	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
+ 	int num_lm, num_ctl, num_pp, num_dspp;
+-	int i, j;
++	int i, j, rc;
+ 
+ 	if (!drm_enc) {
+ 		DPU_ERROR("invalid encoder\n");
+@@ -1006,6 +1006,13 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+ 
+ 	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
+ 
++	rc = dpu_rm_reserve(&dpu_kms->rm, global_state, drm_enc,
++		drm_crtc->state, topology);
++	if (rc) {
++		DPU_ERROR_ENC(dpu_enc, "Failed to reserve resources\n");
++		return;
++	}
++
+ 	/* Query resource that have been reserved in atomic check step. */
+ 	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+ 		drm_enc->base.id, DPU_HW_BLK_PINGPONG, hw_pp,
+-- 
+1.9.1
+
