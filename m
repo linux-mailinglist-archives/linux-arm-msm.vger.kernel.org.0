@@ -2,92 +2,515 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A44823CFAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 21:24:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F6223D10E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 21:56:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728537AbgHER36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Aug 2020 13:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53320 "EHLO
+        id S1728257AbgHETzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Aug 2020 15:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728338AbgHER2P (ORCPT
+        with ESMTP id S1728042AbgHEQqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:28:15 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D613C061756
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 10:28:11 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id x6so9647925pgx.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 10:28:11 -0700 (PDT)
+        Wed, 5 Aug 2020 12:46:16 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BF80C0617A4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 03:51:56 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id r4so14399970pls.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 03:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=+NwscihkyAu/FXhdjfSfqJQ0G8XORbep4M6yL43omkw=;
-        b=AzpDX/pdttML8hpGnV7CYgVj7jzy9iJBwHCagRD5VIJLhBOLYpn/NezzEuxNPYyCx8
-         73ZKBGCorW3UK7rCTphBUubMD6bglVj+kOrX7Q3cYB1YBrNrj05mgMUC/AF9qvcTXjk7
-         xREJjWX1463a4osBUjJ8sX8BsGAEdx0lMxzFc=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=ZFpv2ZBZbI6Hg/4xwDSPnnVJH+aC+uhBBMIJ9YEAnyg=;
+        b=B9FwDk2eiTeR/bnQhTmbWUULpPxEcoChkOuQCwqEtwRvrvkmakE+XMErVwYNfgwAoP
+         fLa9GHI0/w1gfmkDg+OjOmgxWwbnfrc1ZbUFhO8D4d5Mwf3OSQl5OP7Q2PA7k31xGbn4
+         ayjv+ahYKYaUQr7fhRFKXFYTslc1siG55mKK7wexs5Hy9U78lp7UbIFgBxJ4eCngUXeu
+         qmEfmrHkGYxvo5bXXvyd6By1hRALcYBbxj+P7bW6FZbRYNukNLeA3i2vAsDe4+4MJBBI
+         OI+qGKKV5ASTbG09SRWEYrcr8/81vrUV4vDEooSur2H4+C4kz3+95cdRHnk8Jv56k1ye
+         ky0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=+NwscihkyAu/FXhdjfSfqJQ0G8XORbep4M6yL43omkw=;
-        b=WsmrSxGcxOxitQ7tBQ4k/Xq5DDqo3QpA/ac+vT/SGnLB7cbKaL0d44XhyIRBp4NQSU
-         v9DrX92VgF1MkeB6hMP48nHGRv3WaDd1LP2nyLODETa6Vo9t+e9/S29Uzuq+gH/ZmTzE
-         TtsOVDgqYArTsOHcQx3x9WTAUhZ107J9575w3W1dd9FQj19YE5smtfOMO0CKSn27CZ02
-         F88YdKfVaLZUVXD6pyYY9VPtXCt8B7RwOtzR9pAcHzX7NVV1wfOvsUerqBxqQuAPUwAl
-         OSMPG85YCFllRg57+Chw058kIFReTi25HyMupdMSjts/46ikeE4yXxJ7580NLqDxDY6a
-         2XPA==
-X-Gm-Message-State: AOAM533aYHlMmmtX0mJM3ll9gjLenvJk8eOuQxFh37cCbs9kiPxuePRy
-        OS0g0aTJWUWBKn9JzqAlYMAFVA==
-X-Google-Smtp-Source: ABdhPJx4G2QAgYi+0Fmqhi3sFod+CAkH5QH51SVLdpljhnVuosdpblgA0K7YEkZI9Nc/bAtLjfuHTQ==
-X-Received: by 2002:aa7:8d95:: with SMTP id i21mr4118213pfr.240.1596648491136;
-        Wed, 05 Aug 2020 10:28:11 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id y10sm4270672pfp.130.2020.08.05.10.28.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:28:10 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200805091141.2.If847565ed7568448c67804f3735d5f8a61eda560@changeid>
-References: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid> <20200805091141.2.If847565ed7568448c67804f3735d5f8a61eda560@changeid>
-Subject: Re: [PATCH 2/2] soc: qcom: aoss: qmp_send() can't handle interruptions so stop pretending
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Alex Elder <elder@linaro.org>, mka@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Date:   Wed, 05 Aug 2020 10:28:09 -0700
-Message-ID: <159664848938.1360974.193633020977562116@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ZFpv2ZBZbI6Hg/4xwDSPnnVJH+aC+uhBBMIJ9YEAnyg=;
+        b=MSRL7pxzXGAblturmC0VaSeFirzDqlBh08Lp1UXb+tA0+Cj3XPBDIi9amGWcaQDauy
+         r8m5yqg8EAoIl6Zz5GQ18wtoaq5W6OlXpOHv3QbrwDh2l9JXOjC6jxtyOLe0NAnvwQtP
+         T0MKWsOJ06X/rXOaWgRsTd6ulPKB9KPCj+XrcubD+M8aiF9N+CrNTyQnTGZ4YmdmX1al
+         t6Gm45g8MEgamw+i7m3kowEr9dPXV6qTRmaz+AaxtTzj14/Zx4zcl3E+xYEsuaOo3PP6
+         wWt/jLJm4BVGI1fh0rwSzzBuWU4oJuUZxbpKr+QyWWDF8URBLe4XddXTsJRBeFiyGAH6
+         jtzQ==
+X-Gm-Message-State: AOAM531IU4Bhe0NFJQskO3SyU162Q7Mzju1pleZFZRpwYA5aBtbhy4eI
+        qgVDH6Rn6EIH2CRh4JpvFmaFpQ==
+X-Google-Smtp-Source: ABdhPJyp9XHWW1InoKiwIAsn24DTtnplAo5mGebzToE/IEKYnYI/nK+NY5wGsy1kfvO4Rru/Ryy1uw==
+X-Received: by 2002:a17:90a:6787:: with SMTP id o7mr2593678pjj.76.1596624715410;
+        Wed, 05 Aug 2020 03:51:55 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:6803:602a:e1c6:591d:4252:ba1])
+        by smtp.gmail.com with ESMTPSA id e13sm2620485pgs.13.2020.08.05.03.51.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Aug 2020 03:51:54 -0700 (PDT)
+From:   Amit Pundir <amit.pundir@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
+Date:   Wed,  5 Aug 2020 16:21:48 +0530
+Message-Id: <1596624708-18417-1-git-send-email-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-08-05 09:16:11)
-> The function qmp_send() called wait_event_interruptible_timeout() to
-> wait for its interrupt.  However, this function did not check for
-> -ERESTARTSYS and assumed that any non-zero return value meant that the
-> event happened.
->=20
-> While we could try to figure out how to handle interruptions by
-> figuring out how to cancel and/or undo our transfer in a race-free way
-> and then communicating this status back to all of our callers, that
-> seems like a whole lot of complexity.  As I understand it the transfer
-> should happen rather quickly and if we're really hitting the 1 second
-> timeout we're in deep doggy doodoo anyway.  Let's just use the
-> non-interruptible version of the function and call it good enough.
->=20
-> Found by code inspection.  No known test cases expose the problem
-> described here.
->=20
-> Fixes: 2209481409b7 ("soc: qcom: Add AOSS QMP driver")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+Add initial dts support for Xiaomi Poco F1 (Beryllium).
 
-I would put this first in the series as it's an obvious bug fix.
+This initial support is based on upstream Dragonboard 845c
+(sdm845) device. With this dts, Beryllium boots AOSP up to
+ADB shell over USB-C.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Supported functionality includes UFS, USB-C (peripheral),
+microSD card and Vol+/Vol-/power keys. Bluetooth should work
+too but couldn't be verified from adb command line, it is
+verified when enabled from UI with few WIP display patches.
+
+Just like initial db845c support, initializing the SMMU is
+clearing the mapping used for the splash screen framebuffer,
+which causes the device to hang during boot and recovery
+needs a hard power reset. This can be worked around using:
+
+    fastboot oem select-display-panel none
+
+To switch ON the display back run:
+
+    fastboot oem select-display-panel
+
+But this only works on Beryllium devices running bootloader
+version BOOT.XF.2.0-00369-SDM845LZB-1 that shipped with
+Android-9 based release. Newer bootloader version do not
+support switching OFF the display panel at all. So we need
+a few additional smmu patches (under review) from here to
+boot to shell:
+https://github.com/pundiramit/linux/commits/beryllium-mainline
+
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+v4: Added more downstream reserved memory regions. It probably
+    need more work, but for now I see adsp/cdsp/wlan remoteprocs
+    powering up properly. Also removed the regulator nodes not
+    required for the device, as suggested by Bjorn.
+v3: Added a reserved-memory region from downstream kernel to fix
+    a boot regression with recent dma-pool changes in v5.8-rc6.
+v2: Updated machine compatible string for seemingly inevitable
+    future quirks.
+
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sdm845-beryllium.dts | 383 ++++++++++++++++++++++++++
+ 2 files changed, 384 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 0f2c33d611df..3ef1b48bc0cb 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-beryllium.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
+new file mode 100644
+index 000000000000..0f9f61bf9fa4
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sdm845-beryllium.dts
+@@ -0,0 +1,383 @@
++// SPDX-License-Identifier: GPL-2.0
++
++/dts-v1/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include "sdm845.dtsi"
++#include "pm8998.dtsi"
++#include "pmi8998.dtsi"
++
++/ {
++	model = "Xiaomi Technologies Inc. Beryllium";
++	compatible = "xiaomi,beryllium", "qcom,sdm845";
++
++	/* required for bootloader to select correct board */
++	qcom,board-id = <69 0>;
++	qcom,msm-id = <321 0x20001>;
++
++	aliases {
++		hsuart0 = &uart6;
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++		autorepeat;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&vol_up_pin_a>;
++
++		vol-up {
++			label = "Volume Up";
++			linux,code = <KEY_VOLUMEUP>;
++			gpios = <&pm8998_gpio 6 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	vreg_s4a_1p8: vreg-s4a-1p8 {
++		compatible = "regulator-fixed";
++		regulator-name = "vreg_s4a_1p8";
++
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-always-on;
++	};
++};
++
++&adsp_pas {
++	status = "okay";
++	firmware-name = "qcom/sdm845/adsp.mdt";
++};
++
++&apps_rsc {
++	pm8998-rpmh-regulators {
++		compatible = "qcom,pm8998-rpmh-regulators";
++		qcom,pmic-id = "a";
++
++		vreg_l1a_0p875: ldo1 {
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l5a_0p8: ldo5 {
++			regulator-min-microvolt = <800000>;
++			regulator-max-microvolt = <800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7a_1p8: ldo7 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l12a_1p8: ldo12 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l13a_2p95: ldo13 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l17a_1p3: ldo17 {
++			regulator-min-microvolt = <1304000>;
++			regulator-max-microvolt = <1304000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l20a_2p95: ldo20 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2968000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l21a_2p95: ldo21 {
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2968000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l24a_3p075: ldo24 {
++			regulator-min-microvolt = <3088000>;
++			regulator-max-microvolt = <3088000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l25a_3p3: ldo25 {
++			regulator-min-microvolt = <3300000>;
++			regulator-max-microvolt = <3312000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l26a_1p2: ldo26 {
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++};
++
++&cdsp_pas {
++	status = "okay";
++	firmware-name = "qcom/sdm845/cdsp.mdt";
++};
++
++&gcc {
++	protected-clocks = <GCC_QSPI_CORE_CLK>,
++			   <GCC_QSPI_CORE_CLK_SRC>,
++			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
++			   <GCC_LPASS_Q6_AXI_CLK>,
++			   <GCC_LPASS_SWAY_CLK>;
++};
++
++&gpu {
++	zap-shader {
++		memory-region = <&gpu_mem>;
++		firmware-name = "qcom/sdm845/a630_zap.mbn";
++	};
++};
++
++/* Reserved memory changes from downstream */
++/delete-node/ &adsp_mem;
++/delete-node/ &wlan_msa_mem;
++/delete-node/ &mpss_region;
++/delete-node/ &venus_mem;
++/delete-node/ &cdsp_mem;
++/delete-node/ &mba_region;
++/delete-node/ &slpi_mem;
++/delete-node/ &spss_mem;
++/delete-node/ &rmtfs_mem;
++/ {
++	reserved-memory {
++		// This removed_region is needed to boot the device
++		// TODO: Find out the user of this reserved memory
++		removed_region: memory@88f00000 {
++			reg = <0 0x88f00000 0 0x1a00000>;
++			no-map;
++		};
++
++		adsp_mem: memory@8c500000 {
++			reg = <0 0x8c500000 0 0x1e00000>;
++			no-map;
++		};
++
++		wlan_msa_mem: memory@8e300000 {
++			reg = <0 0x8e300000 0 0x100000>;
++			no-map;
++		};
++
++		mpss_region: memory@8e400000 {
++			reg = <0 0x8e400000 0 0x7800000>;
++			no-map;
++		};
++
++		venus_mem: memory@95c00000 {
++			reg = <0 0x95c00000 0 0x500000>;
++			no-map;
++		};
++
++		cdsp_mem: memory@96100000 {
++			reg = <0 0x96100000 0 0x800000>;
++			no-map;
++		};
++
++		mba_region: memory@96900000 {
++			reg = <0 0x96900000 0 0x200000>;
++			no-map;
++		};
++
++		slpi_mem: memory@96b00000 {
++			reg = <0 0x96b00000 0 0x1400000>;
++			no-map;
++		};
++
++		spss_mem: memory@97f00000 {
++			reg = <0 0x97f00000 0 0x100000>;
++			no-map;
++		};
++
++		rmtfs_mem: memory@f6301000 {
++			compatible = "qcom,rmtfs-mem";
++			reg = <0 0xf6301000 0 0x200000>;
++			no-map;
++
++			qcom,client-id = <1>;
++			qcom,vmid = <15>;
++		};
++	};
++};
++
++&mss_pil {
++	status = "okay";
++	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
++};
++
++&pm8998_gpio {
++	vol_up_pin_a: vol-up-active {
++		pins = "gpio6";
++		function = "normal";
++		input-enable;
++		bias-pull-up;
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
++	};
++};
++
++&pm8998_pon {
++	resin {
++		compatible = "qcom,pm8941-resin";
++		interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
++		debounce = <15625>;
++		bias-pull-up;
++		linux,code = <KEY_VOLUMEDOWN>;
++	};
++};
++
++&qupv3_id_0 {
++	status = "okay";
++};
++
++&sdhc_2 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
++
++	vmmc-supply = <&vreg_l21a_2p95>;
++	vqmmc-supply = <&vreg_l13a_2p95>;
++
++	bus-width = <4>;
++	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
++};
++
++&tlmm {
++	gpio-reserved-ranges = <0 4>, <81 4>;
++
++	sdc2_default_state: sdc2-default {
++		clk {
++			pins = "sdc2_clk";
++			bias-disable;
++
++			/*
++			 * It seems that mmc_test reports errors if drive
++			 * strength is not 16 on clk, cmd, and data pins.
++			 */
++			drive-strength = <16>;
++		};
++
++		cmd {
++			pins = "sdc2_cmd";
++			bias-pull-up;
++			drive-strength = <10>;
++		};
++
++		data {
++			pins = "sdc2_data";
++			bias-pull-up;
++			drive-strength = <10>;
++		};
++	};
++
++	sdc2_card_det_n: sd-card-det-n {
++		pins = "gpio126";
++		function = "gpio";
++		bias-pull-up;
++	};
++};
++
++&uart6 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn3990-bt";
++
++		vddio-supply = <&vreg_s4a_1p8>;
++		vddxo-supply = <&vreg_l7a_1p8>;
++		vddrf-supply = <&vreg_l17a_1p3>;
++		vddch0-supply = <&vreg_l25a_3p3>;
++		max-speed = <3200000>;
++	};
++};
++
++&usb_1 {
++	status = "okay";
++};
++
++&usb_1_dwc3 {
++	dr_mode = "peripheral";
++};
++
++&usb_1_hsphy {
++	status = "okay";
++
++	vdd-supply = <&vreg_l1a_0p875>;
++	vdda-pll-supply = <&vreg_l12a_1p8>;
++	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
++
++	qcom,imp-res-offset-value = <8>;
++	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
++	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
++	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
++};
++
++&usb_1_qmpphy {
++	status = "okay";
++
++	vdda-phy-supply = <&vreg_l26a_1p2>;
++	vdda-pll-supply = <&vreg_l1a_0p875>;
++};
++
++&ufs_mem_hc {
++	status = "okay";
++
++	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
++
++	vcc-supply = <&vreg_l20a_2p95>;
++	vcc-max-microamp = <800000>;
++};
++
++&ufs_mem_phy {
++	status = "okay";
++
++	vdda-phy-supply = <&vreg_l1a_0p875>;
++	vdda-pll-supply = <&vreg_l26a_1p2>;
++};
++
++&wifi {
++	status = "okay";
++
++	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
++	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
++	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
++	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
++};
++
++/* PINCTRL - additions to nodes defined in sdm845.dtsi */
++
++&qup_uart6_default {
++	pinmux {
++		pins = "gpio45", "gpio46", "gpio47", "gpio48";
++		function = "qup6";
++	};
++
++	cts {
++		pins = "gpio45";
++		bias-disable;
++	};
++
++	rts-tx {
++		pins = "gpio46", "gpio47";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	rx {
++		pins = "gpio48";
++		bias-pull-up;
++	};
++};
+-- 
+2.7.4
+
