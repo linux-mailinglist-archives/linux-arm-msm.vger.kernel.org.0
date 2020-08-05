@@ -2,112 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97E9B23D2F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 22:25:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFB6B23D385
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 23:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgHEUZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Aug 2020 16:25:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52788 "EHLO
+        id S1726660AbgHEVQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Aug 2020 17:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbgHEUZl (ORCPT
+        with ESMTP id S1726128AbgHEVQk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Aug 2020 16:25:41 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD59C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 13:25:41 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id 125so9164858vsg.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 13:25:41 -0700 (PDT)
+        Wed, 5 Aug 2020 17:16:40 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF1ABC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 14:16:40 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id j7so24538391oij.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 14:16:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NeLZEQ55IXSBwyK2UtcYBYdp7h3NvOqG3j88PCLKXdE=;
-        b=ldq66E588YQ2N2pcWRS0g7hqu2I61ObMKOqxKEQpKmUkiMb1rk5TLMnU+N5U1dEd70
-         ULvtiu9eFIosjAgCa3rwlD4dYGk2ZWh+iYydq0m5hfNWZB5g8//uQA0AeXXZtnh26n0h
-         nP+M6nQ+9eNipJt0FwYaO/LiVpyjl2JF22Dp8=
+        d=kali.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=Grm1cy93TykL2UQMLvitYfHftzNHr5WnvDxuij6JO+U=;
+        b=hDRflfqSy7WcRWVgHidQaxalAI6pcrvC53q01AJTbJpMbWw0sNYAQ9P8vdMHgeRPzt
+         pUMxybYMki+htTItPgxlEP+8j/xk9QLY3EMGVh9z6ID72rcfx2NsTFKdbZkn34p/DPpP
+         sATeXwBCbvxxrxPCwOuI8ihYtOlfZ7xmHXT9/x8dv+2qc4DekekRa9QXqMEbg4nPpLoe
+         mCp17blYYj28WG6NcfnvFnXtPSr1c/W8XUYmWMHx9vukbEXs2AwcAcUDWTuD7C8CDMIG
+         55CsIkGcXeDMzVmXgFMgfXN+LBKjaHa4o7RvWYyAjaNKs5sVrbjm4uCVACRUrrNdkB6H
+         aYeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NeLZEQ55IXSBwyK2UtcYBYdp7h3NvOqG3j88PCLKXdE=;
-        b=G5tcq6cqFvjf35QRi+BaziU775lTlTiDFO7enBufbQEmO+/bmOWiXAC22sV4ad+1q5
-         L+jLIn3+zP0QnLybc9wsKbNz/QIq3uuSiIEFMFktLx+JZRYe36s73FB+rfBKS8JlJZPC
-         G32h3yqKutylwu9L0VjlQgSeU0wyS25iCQsvFWfWDgRhtRNXjmvv/z4YXl91fi/IBzFE
-         jdcsTeVCfXQCeEvhaKbp/xTNhQyCSGpyF2P8G7fh4+vShf+n+KrODO1GLZJpe9g70Dwg
-         BHsDuFhJtT1XhELOizTA+EoRipp+gAuFnPfqcnRbl0/Tww4yZT0OERDxvYyCNuBzDjeW
-         mbUQ==
-X-Gm-Message-State: AOAM532L/NMc1j85rjZMFPe4NP028vX25WwTa1puGVHTr4evDxRDhwuF
-        vSzydxufsXuD8815pE/s60X1DwHc2Fw=
-X-Google-Smtp-Source: ABdhPJxSDUNcqovQ37H4sx29iV9nvuPUqsLKWxtn4yjjk0K22Ytz3HJ80Jv/5cDhsSD1j4IaHMj+ZA==
-X-Received: by 2002:a67:e189:: with SMTP id e9mr3752734vsl.3.1596659140502;
-        Wed, 05 Aug 2020 13:25:40 -0700 (PDT)
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com. [209.85.221.180])
-        by smtp.gmail.com with ESMTPSA id k2sm444405uaj.0.2020.08.05.13.25.39
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=Grm1cy93TykL2UQMLvitYfHftzNHr5WnvDxuij6JO+U=;
+        b=ENZa39cr7aNNE0OCwcSwbj6fnYLuy1UDuwElGg7ObsKJEEUpBaudQq2qMoH/0knt49
+         rk5uRKblzAWjsrZfStuufscV6LrnlbKpGEMG9i5txC9+cXT7Jwxljc4G+3ckRREBpywr
+         R55kMpq9izHZe/IHpRof5C5ydlIxz+G46tYQg/hdlFwH5pcyIwutzVukVHgkZmOkHQiA
+         MsTylP2waLmQtX+N5oo7X8SJPJHb/1zfVVJOLmE0hRe1P2+GpuMYMRqaGjOfQaQOfPDW
+         Zw7fGDO/txILjeNLXdwKgBAZROyWVEucth6eZeQNIeSsxN+9Wa6UBdDvUCJBJySeZ6Wh
+         1hew==
+X-Gm-Message-State: AOAM533C9Mt/RuWqN88VoWLgPZPzeE9IUb4+WDXEf4y2wsHCj6dpJmKz
+        r4mIOttvo6e3GH9fvinLwu+/Dw==
+X-Google-Smtp-Source: ABdhPJyq3up6BgBEF4JBbpDeMKpsNeJVYqW/Eie4xYc5kopvUzCGvKOxeLD5qDnmN0Ym3dFzcn5GIA==
+X-Received: by 2002:aca:c5d6:: with SMTP id v205mr4539034oif.143.1596662200100;
+        Wed, 05 Aug 2020 14:16:40 -0700 (PDT)
+Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
+        by smtp.gmail.com with ESMTPSA id 33sm609369ots.12.2020.08.05.14.16.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Aug 2020 13:25:39 -0700 (PDT)
-Received: by mail-vk1-f180.google.com with SMTP id q72so2794541vkb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 13:25:39 -0700 (PDT)
-X-Received: by 2002:a1f:8c09:: with SMTP id o9mr4278840vkd.28.1596659139113;
- Wed, 05 Aug 2020 13:25:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
- <20200805091141.2.If847565ed7568448c67804f3735d5f8a61eda560@changeid> <159664848938.1360974.193633020977562116@swboyd.mtv.corp.google.com>
-In-Reply-To: <159664848938.1360974.193633020977562116@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 5 Aug 2020 13:25:27 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V9K17Un9bPnUvieNO_6tpThPVqdk92_KcQxpOtMTYDxg@mail.gmail.com>
-Message-ID: <CAD=FV=V9K17Un9bPnUvieNO_6tpThPVqdk92_KcQxpOtMTYDxg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] soc: qcom: aoss: qmp_send() can't handle
- interruptions so stop pretending
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Wed, 05 Aug 2020 14:16:39 -0700 (PDT)
+Subject: Re: [PATCH v3 2/4] irqchip/qcom-pdc: Switch to using
+ IRQCHIP_PLATFORM_DRIVER helper macros
+To:     Saravana Kannan <saravanak@google.com>,
+        John Stultz <john.stultz@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Android Kernel Team <kernel-team@android.com>,
+        lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Hanks Chen <hanks.chen@mediatek.com>,
+        CC Hwang <cc.hwang@mediatek.com>,
+        Loda Chou <loda.chou@mediatek.com>
+References: <20200718000637.3632841-1-saravanak@google.com>
+ <20200718000637.3632841-3-saravanak@google.com>
+ <CALAqxLVZ+rFE+hM9OtQ46NqpTHeLu6oKLNWKstLv1U5zbwyq7g@mail.gmail.com>
+ <CAGETcx_rkK3-bKhDP_N4n_WyXLXFPoaUV9rbY_Y+H1Joj=dCyw@mail.gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <f314b687-11a9-5a5e-e79e-c46dd2f16c6f@kali.org>
+Date:   Wed, 5 Aug 2020 16:16:37 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAGETcx_rkK3-bKhDP_N4n_WyXLXFPoaUV9rbY_Y+H1Joj=dCyw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wed, Aug 5, 2020 at 10:28 AM Stephen Boyd <swboyd@chromium.org> wrote:
+On 8/5/20 3:19 PM, Saravana Kannan wrote:
+> On Wed, Aug 5, 2020 at 12:44 AM John Stultz <john.stultz@linaro.org> wrote:
+>> <sigh>
+>> So this is where I bashfully admit I didn't get a chance to try this
+>> patch series out, as I had success with a much older version of
+>> Saravana's macro magic.
+>>
+>> But unfortunately, now that this has landed in mainline, I'm seeing
+>> boot regressions on db845c. :( This is in the non-modular case,
+>> building the driver in.
+> Does that mean the modular version is working? Or you haven't tried
+> that yet? I'll wait for your reply before I try to fix it. I don't
+> have the hardware, but it should be easy to guess this issue looking
+> at the code delta.
+
+For what it's worth, I saw this too on the Lenovo C630 (started on -next
+around 20200727, but I didn't track it down as, well, there's less way
+to get debug output on the C630.
+
+In my testing, module or built-in doesn't matter, but reverting does
+allow me to boot again.
+
+> The only significant change from what your probe function is doing is
+> this snippet. But it'd be surprising if this only affects the builtin
+> case.
 >
-> Quoting Douglas Anderson (2020-08-05 09:16:11)
-> > The function qmp_send() called wait_event_interruptible_timeout() to
-> > wait for its interrupt.  However, this function did not check for
-> > -ERESTARTSYS and assumed that any non-zero return value meant that the
-> > event happened.
-> >
-> > While we could try to figure out how to handle interruptions by
-> > figuring out how to cancel and/or undo our transfer in a race-free way
-> > and then communicating this status back to all of our callers, that
-> > seems like a whole lot of complexity.  As I understand it the transfer
-> > should happen rather quickly and if we're really hitting the 1 second
-> > timeout we're in deep doggy doodoo anyway.  Let's just use the
-> > non-interruptible version of the function and call it good enough.
-> >
-> > Found by code inspection.  No known test cases expose the problem
-> > described here.
-> >
-> > Fixes: 2209481409b7 ("soc: qcom: Add AOSS QMP driver")
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
+> + if (par_np == np)
+> +         par_np = NULL;
+> +
+> + /*
+> + * If there's a parent interrupt controller and  none of the parent irq
+> + * domains have been registered, that means the parent interrupt
+> + * controller has not been initialized yet.  it's not time for this
+> + * interrupt controller to initialize. So, defer probe of this
+> + * interrupt controller. The actual initialization callback of this
+> + * interrupt controller can check for specific domains as necessary.
+> + */
+> + if (par_np && !irq_find_matching_host(np, DOMAIN_BUS_ANY))
+> +         return -EPROBE_DEFER;
 >
-> I would put this first in the series as it's an obvious bug fix.
-
-I guess I thought of it the other way.  This is a less serious problem
-(no known way to tickle it) and so deserved to be 2nd.  I'm happy to
-flip it as needed, though.  It would also be trivially easy to flip
-when applying.
-
-
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
-Thanks!
-
--Doug
+>> I managed to bisect it down to this patch, and reverting it avoids the
+>> issue. I don't see what is wrong right off, but I really need to get
+>> to bed, so I'll dig further tomorrow.
+>>
+>> Saravana: Apologies for not getting around to testing this beforehand!
+> No worries. Apologies for breaking it accidentally.
+>
+> -Saravana
