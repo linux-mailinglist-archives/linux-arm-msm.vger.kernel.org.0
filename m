@@ -2,135 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACFBB23CD8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 19:37:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AFE823CE02
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 20:05:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728291AbgHERhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Aug 2020 13:37:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54630 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728863AbgHERgl (ORCPT
+        id S1728779AbgHESFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Aug 2020 14:05:42 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:62074 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729165AbgHESDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:36:41 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09EF7C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 10:36:41 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id 17so2762232pfw.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 10:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=TqHSAMp8R9yjcJhJNY5gQmNjs+yy4KePPVj1aohM6WU=;
-        b=nGyF9IXoycCUHVld2Jm4U70zWA2OEiovVVkkhEDR3FzJ7SrBPFe2tSvCO48Zd3PpdG
-         rFPVdR6yV87Ms1+TZhRMyWyKIIxGdiidxGJzkdSB3ndJgbdk4TZ2uysIUdsmBSVsP5zS
-         tT2iVVfqa3eDiX600obX/fF8KMMUCPgJyPde4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=TqHSAMp8R9yjcJhJNY5gQmNjs+yy4KePPVj1aohM6WU=;
-        b=njV+KiPZ9exKGi3w3rqhRGXQabQeLUEune6ASOazB5U4rEjnzefxg+Pes3upxcEnjH
-         X38P3Atz8D7vfu076cb30wslR5HMozR4oJ6lWy/NvjNyxkokeNkEo7su9DLyMiw24mP0
-         qFJFHdzkeTvEjMOnvt8YoEIJv6IRUH1qNgtggAVP5JCCRjYdQV1v0CrQChTccrjFO981
-         avW60ULGJr52/vDFHS13ISgN+WQhmB2cxVZEv6cJ0WVkMPiZExSru6y1dxBb6gFTPPfi
-         sZZj2zLSbV35hBVSg8A8J72n5E1eve4YUxzqkmqvuZi5co2qC/TpjRNKCG5ep3HpIaWf
-         PBvA==
-X-Gm-Message-State: AOAM530oOcCMgkHpVbgM+iG4A6QpJ87JzM14lIVT8IyhMd0d+Tb8Uicm
-        i4b6un9WE7jBSBjAtVtRHGutBg==
-X-Google-Smtp-Source: ABdhPJyBez3FCD3PduZL9oHarwuFOeuYy5QPWKxvfznYBipmHne+NaoPymbxlbOaPwsJ3TQaYcky6A==
-X-Received: by 2002:a65:4502:: with SMTP id n2mr3917439pgq.132.1596649000378;
-        Wed, 05 Aug 2020 10:36:40 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id g18sm4350827pfi.141.2020.08.05.10.36.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:36:39 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
-References: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
-Subject: Re: [PATCH 1/2] soc: qcom: aoss: Don't wait for IRQ if we might be in suspend/resume noirq
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Alex Elder <elder@linaro.org>, mka@chromium.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Date:   Wed, 05 Aug 2020 10:36:38 -0700
-Message-ID: <159664899840.1360974.7548807728313161626@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Wed, 5 Aug 2020 14:03:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596650582; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=wDrn6qZ0UEY+b7/V0j8agr4SjPY1RYQe65RUiGn653k=; b=fk8PImoSiRdhxn8Ro0i//lYIv0WZ+Z0fExVfzEvOlmRdlR7hUCas6sZLHpyr8YHVNSQ8S3g6
+ o1HcOFjCdXjuJ3NJMa+vhaKki3pdvsEuVbLLTwhaIe/qBjcpNQ7n7SpWqF1L6uIDXyMVNtV4
+ JWUxfRIhST6hu3KbLo3pFybyktg=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n16.prod.us-west-2.postgun.com with SMTP id
+ 5f2af44d5a221ff37b3f5413 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 05 Aug 2020 18:02:53
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3297CC433CA; Wed,  5 Aug 2020 18:02:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 778BAC433C6;
+        Wed,  5 Aug 2020 18:02:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 778BAC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     kathirav@codeaurora.org
+Subject: [PATCH] arm64: dts: ipq8074: Use the A53 PMU compatible
+Date:   Wed,  5 Aug 2020 23:32:41 +0530
+Message-Id: <1596650561-11312-1-git-send-email-kathirav@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-08-05 09:16:10)
-> Running suspend/resume tests on a sc7180-based board with a modem I
-> found that both system suspend and system resume would hang for 1
-> second.  These messages indicate where:
->=20
->   genpd genpd:0:4080000.remoteproc: calling genpd_suspend_noirq+0x0/0x2c =
-@ 18659, parent: none
->   genpd genpd:0:4080000.remoteproc: genpd_suspend_noirq+0x0/0x2c returned=
- 0 after 987917 usecs
->=20
-> Adding a printout, I found that we were working with the power domain
-> where "res->pd.name" was "modem".
->=20
-> I found that we were hanging on the wait_event_interruptible_timeout()
-> call in qmp_send().  Specifically we'd wait for the whole 1 second
-> timeout to hit, then we'd notice that our condition was true and would
-> continue on our merry way.  Sure enough, I could confirm that
-> wait_event_interruptible_timeout() was returning "1" which indicates
-> that the condition evaluated to true and we also timed out.
->=20
-> Dumping the stack at the time of the failure made the problem clear.
-> Specifically the stack looked like:
->    qmp_send+0x1cc/0x210
->    qmp_pd_power_toggle+0x90/0xb8
->    qmp_pd_power_off+0x20/0x2c
->    genpd_sync_power_off+0x80/0x12c
->    genpd_finish_suspend+0xd8/0x108
->    genpd_suspend_noirq+0x20/0x2c
->    dpm_run_callback+0xe0/0x1d4
->    __device_suspend_noirq+0xfc/0x200
->    dpm_suspend_noirq+0x174/0x3bc
->    suspend_devices_and_enter+0x198/0x8a0
->    pm_suspend+0x550/0x6f4
-> As you can see we're running from the "noirq" callback.  Looking at
-> what was supposed to wake us up, it was qmp_intr() (our IRQ handler).
-> Doh!
+IPQ8074 has A53 cores, so lets use the corresponding PMU compatible.
 
-Why is the genpd being powered off at all? It looks like the driver is
-written in a way that it doesn't expect this to happen. See where
-adsp_pds_disable() is called from. Looks like the remoteproc "stop"
-callback should be called or the driver should be detached.
+Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It sort of looks like the genpd is expected to be at the max level all
-the time (it sets INT_MAX in adsp_pds_enable(), cool). Maybe we need to
-add some sort of suspend hooks to the remote proc driver instead? Where
-those suspend hooks are called earlier and drop the genpd performance
-state request but otherwise leave it enabled across suspend?
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 96a5ec89b5f0..e4859c7f6208 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -67,7 +67,7 @@
+ 	};
+ 
+ 	pmu {
+-		compatible = "arm,armv8-pmuv3";
++		compatible = "arm,cortex-a53-pmu";
+ 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+ 	};
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
-I know this isn't clearing the land mine that is calling this code from
-noirq phase of suspend, but I'm just looking at the driver and thinking
-that it never expected to be called from this phase of suspend to begin
-with.
-
->=20
-> I believe that the correct fix here is to assume that our power_off /
-> power_on functions might be called at "noirq" time and just always
-> poll if we're called via that path.  Other paths can continue to wait
-> for the IRQ.
->=20
-> Fixes: 2209481409b7 ("soc: qcom: Add AOSS QMP driver")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> This problem was observed on the Chrome OS 5.4 tree which has some
-> extra patches in it compared to mainline.  The top of the current
-> Qualcomm tree didn't have the delay, but that's probably because
-> everything isn't fully enabled there yet.  I at least confirmed that
-> this patch doesn't actually _break_ anything on mainline, though.
