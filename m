@@ -2,113 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2AC023D2EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 22:24:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97E9B23D2F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 22:25:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbgHEUYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Aug 2020 16:24:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56516 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725921AbgHEUYy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Aug 2020 16:24:54 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9F33422CAD;
-        Wed,  5 Aug 2020 20:24:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596659093;
-        bh=1pc0m+mor7fcXCDG3jZxLB2PnEuA2MfsacFWqfeX5CE=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=0tekPfO+EVNWpUVU8saTzhp7fiPLfF9kbHOizjy+L15rLvnb6b3s3nlXQnVEDDgYT
-         B1SuZTMBnHya1XTdBAzrMnM2eNxYmFxdUtddGL6uv1FieXSYDaRFbeyufRdcMQbJAE
-         Z5itMJrGoMtlgH7dbgdPFIrzDN6AupUqmVeAMLAU=
-Content-Type: text/plain; charset="utf-8"
+        id S1726204AbgHEUZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Aug 2020 16:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52788 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726400AbgHEUZl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 5 Aug 2020 16:25:41 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD59C061575
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 13:25:41 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id 125so9164858vsg.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 13:25:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NeLZEQ55IXSBwyK2UtcYBYdp7h3NvOqG3j88PCLKXdE=;
+        b=ldq66E588YQ2N2pcWRS0g7hqu2I61ObMKOqxKEQpKmUkiMb1rk5TLMnU+N5U1dEd70
+         ULvtiu9eFIosjAgCa3rwlD4dYGk2ZWh+iYydq0m5hfNWZB5g8//uQA0AeXXZtnh26n0h
+         nP+M6nQ+9eNipJt0FwYaO/LiVpyjl2JF22Dp8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NeLZEQ55IXSBwyK2UtcYBYdp7h3NvOqG3j88PCLKXdE=;
+        b=G5tcq6cqFvjf35QRi+BaziU775lTlTiDFO7enBufbQEmO+/bmOWiXAC22sV4ad+1q5
+         L+jLIn3+zP0QnLybc9wsKbNz/QIq3uuSiIEFMFktLx+JZRYe36s73FB+rfBKS8JlJZPC
+         G32h3yqKutylwu9L0VjlQgSeU0wyS25iCQsvFWfWDgRhtRNXjmvv/z4YXl91fi/IBzFE
+         jdcsTeVCfXQCeEvhaKbp/xTNhQyCSGpyF2P8G7fh4+vShf+n+KrODO1GLZJpe9g70Dwg
+         BHsDuFhJtT1XhELOizTA+EoRipp+gAuFnPfqcnRbl0/Tww4yZT0OERDxvYyCNuBzDjeW
+         mbUQ==
+X-Gm-Message-State: AOAM532L/NMc1j85rjZMFPe4NP028vX25WwTa1puGVHTr4evDxRDhwuF
+        vSzydxufsXuD8815pE/s60X1DwHc2Fw=
+X-Google-Smtp-Source: ABdhPJxSDUNcqovQ37H4sx29iV9nvuPUqsLKWxtn4yjjk0K22Ytz3HJ80Jv/5cDhsSD1j4IaHMj+ZA==
+X-Received: by 2002:a67:e189:: with SMTP id e9mr3752734vsl.3.1596659140502;
+        Wed, 05 Aug 2020 13:25:40 -0700 (PDT)
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com. [209.85.221.180])
+        by smtp.gmail.com with ESMTPSA id k2sm444405uaj.0.2020.08.05.13.25.39
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Aug 2020 13:25:39 -0700 (PDT)
+Received: by mail-vk1-f180.google.com with SMTP id q72so2794541vkb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 13:25:39 -0700 (PDT)
+X-Received: by 2002:a1f:8c09:: with SMTP id o9mr4278840vkd.28.1596659139113;
+ Wed, 05 Aug 2020 13:25:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1595606878-2664-5-git-send-email-tdas@codeaurora.org>
-References: <1595606878-2664-1-git-send-email-tdas@codeaurora.org> <1595606878-2664-5-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v5 4/4] clk: qcom: lpass: Add support for LPASS clock controller for SC7180
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 05 Aug 2020 13:24:52 -0700
-Message-ID: <159665909245.1360974.10366839079633595523@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+References: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
+ <20200805091141.2.If847565ed7568448c67804f3735d5f8a61eda560@changeid> <159664848938.1360974.193633020977562116@swboyd.mtv.corp.google.com>
+In-Reply-To: <159664848938.1360974.193633020977562116@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 5 Aug 2020 13:25:27 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V9K17Un9bPnUvieNO_6tpThPVqdk92_KcQxpOtMTYDxg@mail.gmail.com>
+Message-ID: <CAD=FV=V9K17Un9bPnUvieNO_6tpThPVqdk92_KcQxpOtMTYDxg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] soc: qcom: aoss: qmp_send() can't handle
+ interruptions so stop pretending
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alex Elder <elder@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2020-07-24 09:07:58)
-> +
-> +static struct clk_rcg2 core_clk_src =3D {
-> +       .cmd_rcgr =3D 0x1d000,
-> +       .mnd_width =3D 8,
-> +       .hid_width =3D 5,
-> +       .parent_map =3D lpass_core_cc_parent_map_2,
-> +       .clkr.hw.init =3D &(struct clk_init_data){
-> +               .name =3D "core_clk_src",
+Hi,
 
-Any chance this can get a better name? Something with LPASS prefix?
+On Wed, Aug 5, 2020 at 10:28 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2020-08-05 09:16:11)
+> > The function qmp_send() called wait_event_interruptible_timeout() to
+> > wait for its interrupt.  However, this function did not check for
+> > -ERESTARTSYS and assumed that any non-zero return value meant that the
+> > event happened.
+> >
+> > While we could try to figure out how to handle interruptions by
+> > figuring out how to cancel and/or undo our transfer in a race-free way
+> > and then communicating this status back to all of our callers, that
+> > seems like a whole lot of complexity.  As I understand it the transfer
+> > should happen rather quickly and if we're really hitting the 1 second
+> > timeout we're in deep doggy doodoo anyway.  Let's just use the
+> > non-interruptible version of the function and call it good enough.
+> >
+> > Found by code inspection.  No known test cases expose the problem
+> > described here.
+> >
+> > Fixes: 2209481409b7 ("soc: qcom: Add AOSS QMP driver")
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+>
+> I would put this first in the series as it's an obvious bug fix.
 
-> +               .parent_data =3D &(const struct clk_parent_data){
-> +                       .fw_name =3D "bi_tcxo",
-> +               },
-> +               .num_parents =3D 1,
-> +               .ops =3D &clk_rcg2_ops,
-> +       },
-> +};
-> +
-[...]
-> +
-> +static struct clk_branch lpass_audio_core_sysnoc_mport_core_clk =3D {
-> +       .halt_reg =3D 0x23000,
-> +       .halt_check =3D BRANCH_HALT,
-> +       .hwcg_reg =3D 0x23000,
-> +       .hwcg_bit =3D 1,
-> +       .clkr =3D {
-> +               .enable_reg =3D 0x23000,
-> +               .enable_mask =3D BIT(0),
-> +               .hw.init =3D &(struct clk_init_data){
-> +                       .name =3D "lpass_audio_core_sysnoc_mport_core_clk=
-",
-> +                       .parent_data =3D &(const struct clk_parent_data){
-> +                               .hw =3D &core_clk_src.clkr.hw,
-> +                       },
-> +                       .num_parents =3D 1,
-> +                       .flags =3D CLK_SET_RATE_PARENT,
-> +                       .ops =3D &clk_branch2_ops,
-> +               },
-> +       },
-> +};
-> +
-> +static struct clk_regmap *lpass_core_cc_sc7180_clocks[] =3D {
-> +       [EXT_MCLK0_CLK_SRC] =3D &ext_mclk0_clk_src.clkr,
-> +       [LPAIF_PRI_CLK_SRC] =3D &lpaif_pri_clk_src.clkr,
-> +       [LPAIF_SEC_CLK_SRC] =3D &lpaif_sec_clk_src.clkr,
-> +       [CORE_CLK_SRC] =3D &core_clk_src.clkr,
+I guess I thought of it the other way.  This is a less serious problem
+(no known way to tickle it) and so deserved to be 2nd.  I'm happy to
+flip it as needed, though.  It would also be trivially easy to flip
+when applying.
 
-And all of these, can they have LPASS_ prefix on the defines? Seems
-like we're missing a namespace otherwise.
 
-> +       [LPASS_AUDIO_CORE_EXT_MCLK0_CLK] =3D &lpass_audio_core_ext_mclk0_=
-clk.clkr,
-> +       [LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK] =3D
-> +               &lpass_audio_core_lpaif_pri_ibit_clk.clkr,
-> +       [LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK] =3D
-> +               &lpass_audio_core_lpaif_sec_ibit_clk.clkr,
-> +       [LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK] =3D
-> +               &lpass_audio_core_sysnoc_mport_core_clk.clkr,
-> +       [LPASS_LPAAUDIO_DIG_PLL] =3D &lpass_lpaaudio_dig_pll.clkr,
-> +       [LPASS_LPAAUDIO_DIG_PLL_OUT_ODD] =3D &lpass_lpaaudio_dig_pll_out_=
-odd.clkr,
-> +};
-> +
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+Thanks!
+
+-Doug
