@@ -2,106 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0696223D26C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 22:13:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFA0923D2E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Aug 2020 22:19:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbgHEUMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Aug 2020 16:12:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42986 "EHLO
+        id S1726013AbgHEUT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Aug 2020 16:19:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726968AbgHEQZe (ORCPT
+        with ESMTP id S1726644AbgHEUTq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Aug 2020 12:25:34 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C601C001FE1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 09:16:36 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id t6so24701987pgq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 09:16:36 -0700 (PDT)
+        Wed, 5 Aug 2020 16:19:46 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5D81C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Aug 2020 13:19:46 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id z20so5342626plo.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Aug 2020 13:19:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yoUWB0P6FTokCu5fDJiOmP1nTkXeVKywh1BuHo0WaYk=;
-        b=PH+mAesaWFdItU17aWsg/FXG5MD1NTJNqiVx4V5E7t/gK1JX24tKMa9SU33PBqiVlW
-         hJnkIvrbxMcLIfI/5vfig4MkwqT8ywcTqOzNQ1/MhO6RK4tW2PMqUofXj0H6dv6+NK9U
-         KmxgLN3iKX4j5mg3wdDNJ9wn2Was1zgft42N8=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qVjtbYhstiKuNQL6JeVbBPs4G1xXwyHdcoC1ZxR9HUQ=;
+        b=lBeyGQOGbakQKscP5qJp87U0BD2iPT7BShFj1oh45m4vW3V+uOyjQZjzqLblxE+DoG
+         ub+MTpdonw61jGuhYukxNyO/HMUXjsmaRDFu5GslTldXpvTE1UfUzpXvKOGxj4GBOLFJ
+         o1jzDk6g7iUKQwYW/KEivXAieYBSN294EgsiL2TdFPLYA4zX/pRBxN4U3YNsKkDsBxqR
+         aW+1CWTbx8Oktp2rcBVnX7xXXbWHanLCj0j5d3/0RGRRX8bdH+kVmgZKOjHTKoPbwrjy
+         kD9dI/VFWynhcgO7mpFsAc5PiwBbeklTcxzilRT/p1dFwFyC+yDqdJhCmaEC7t6r8Ihd
+         ix+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yoUWB0P6FTokCu5fDJiOmP1nTkXeVKywh1BuHo0WaYk=;
-        b=Q/J+Nxax+2O5+B/YQp3lKw9W1ulPgyQeLehXqLNTcONt4c616gDiwDN2sEql9rXdOz
-         ZTXOE5v3weeqt+D2b9n79+rhm3mVb5+02laJgAa5a2DpTtnr8Enkx1nviRYXXsWUG8sH
-         t/bkVAmfZrDOvdfJ0/0TZ9Pka+gd2DBleNjDbQlSV6HS+SzNHTJoyTseSXic6aeMryll
-         rn86n9aaRnRKCJNnTYaZys3SY1sYIk9rRPJyi8BapEohT7j7FubQOH8s0teUrVqUa1ZE
-         a/L7GoUZIBPgbRO3CFJRuLuFelbCL8dLVhZM4unPujIeFI49uI1oA2UclnMvT4DhEC9B
-         Oiew==
-X-Gm-Message-State: AOAM532/ibDPsdo78f76BdiS8+eCa3kFHF4zQ/tPBcJBuB5eKqIfHI0b
-        fpVeTJWnS9BqPhmZLbkXwV2+GA==
-X-Google-Smtp-Source: ABdhPJyI7n/ZnEwi7VJ7iEODyBwIQasFlmldWO0wkAr5x7dLBPwWfsy76ZCGbBdA4sMgeYeWOSX1XA==
-X-Received: by 2002:a63:1c23:: with SMTP id c35mr3471145pgc.91.1596644195727;
-        Wed, 05 Aug 2020 09:16:35 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id f2sm4259734pfb.184.2020.08.05.09.16.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 09:16:35 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     swboyd@chromium.org, Alex Elder <elder@linaro.org>,
-        mka@chromium.org, Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] soc: qcom: aoss: qmp_send() can't handle interruptions so stop pretending
-Date:   Wed,  5 Aug 2020 09:16:11 -0700
-Message-Id: <20200805091141.2.If847565ed7568448c67804f3735d5f8a61eda560@changeid>
-X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6-goog
-In-Reply-To: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
-References: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qVjtbYhstiKuNQL6JeVbBPs4G1xXwyHdcoC1ZxR9HUQ=;
+        b=T6ecrTbKOvqGwD87tG4nelxH5olT04Fq9PuGfDC5ZuYgQe3zAwbMtuySAgfMaezYFx
+         Kp41ofdbiMSm8y7mM9OEUuAsDQLY0m42nf9DTENPifzVFQUjFIJx/UWSCwE/Kp56XiiW
+         opLrgW8YhqqWWhBMhlyKM/ZApL2bCNzfz7P4ExWIHwbHhDMLPTE1vgWGhHssBA0FTc1y
+         K7aBrMX4eeqAJeHKHF5DXx++7irvRG4QaiIHqCO6KSxbBrN9TtqCyANXHEYzpFltIHG8
+         UN2jvlErGXCj/w9prb5agRx5cBxX5nZI6CvRLzsuPJ/Wm7rrZW4jAkCNpPUb9ghiLrQ+
+         IZvw==
+X-Gm-Message-State: AOAM5331NiTUD7DHgS7NWSAdxriV28etcpXswqgVRArIConEe2EZ5fv4
+        y43SHEbc0v2O3IRayxXJOFzWjez4PC9reOpFfUpFSQ==
+X-Google-Smtp-Source: ABdhPJyzC3W0lW0kRAsgMCPz7TzprnpMpUFYzlQwQ8cedIEf9CqmMuoAlFAGdxAKZ6AyjNgpHiemuwv1bJvRpW+qLtA=
+X-Received: by 2002:a17:90a:17e9:: with SMTP id q96mr4963217pja.91.1596658785977;
+ Wed, 05 Aug 2020 13:19:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200718000637.3632841-1-saravanak@google.com>
+ <20200718000637.3632841-3-saravanak@google.com> <CALAqxLVZ+rFE+hM9OtQ46NqpTHeLu6oKLNWKstLv1U5zbwyq7g@mail.gmail.com>
+In-Reply-To: <CALAqxLVZ+rFE+hM9OtQ46NqpTHeLu6oKLNWKstLv1U5zbwyq7g@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Wed, 5 Aug 2020 13:19:10 -0700
+Message-ID: <CAGETcx_rkK3-bKhDP_N4n_WyXLXFPoaUV9rbY_Y+H1Joj=dCyw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] irqchip/qcom-pdc: Switch to using
+ IRQCHIP_PLATFORM_DRIVER helper macros
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Android Kernel Team <kernel-team@android.com>,
+        lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hanks Chen <hanks.chen@mediatek.com>,
+        CC Hwang <cc.hwang@mediatek.com>,
+        Loda Chou <loda.chou@mediatek.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function qmp_send() called wait_event_interruptible_timeout() to
-wait for its interrupt.  However, this function did not check for
--ERESTARTSYS and assumed that any non-zero return value meant that the
-event happened.
+On Wed, Aug 5, 2020 at 12:44 AM John Stultz <john.stultz@linaro.org> wrote:
+>
+> On Fri, Jul 17, 2020 at 5:06 PM Saravana Kannan <saravanak@google.com> wrote:
+> >
+> > Switch the driver to use the helper macros. In addition to reducing the
+> > number of lines, this also adds module unload protection (if the driver
+> > is compiled as a module) by switching from module_platform_driver to
+> > builtin_platform_driver.
+> >
+> > Signed-off-by: Saravana Kannan <saravanak@google.com>
+> > ---
+> >  drivers/irqchip/qcom-pdc.c | 26 +++-----------------------
+> >  1 file changed, 3 insertions(+), 23 deletions(-)
+> >
+> > diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> > index 5b624e3295e4..c1c5dfad57cc 100644
+> > --- a/drivers/irqchip/qcom-pdc.c
+> > +++ b/drivers/irqchip/qcom-pdc.c
+> > @@ -432,28 +432,8 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+> >         return ret;
+> >  }
+> >
+> > -static int qcom_pdc_probe(struct platform_device *pdev)
+> > -{
+> > -       struct device_node *np = pdev->dev.of_node;
+> > -       struct device_node *parent = of_irq_find_parent(np);
+> > -
+> > -       return qcom_pdc_init(np, parent);
+> > -}
+> > -
+> > -static const struct of_device_id qcom_pdc_match_table[] = {
+> > -       { .compatible = "qcom,pdc" },
+> > -       {}
+> > -};
+> > -MODULE_DEVICE_TABLE(of, qcom_pdc_match_table);
+> > -
+> > -static struct platform_driver qcom_pdc_driver = {
+> > -       .probe = qcom_pdc_probe,
+> > -       .driver = {
+> > -               .name = "qcom-pdc",
+> > -               .of_match_table = qcom_pdc_match_table,
+> > -               .suppress_bind_attrs = true,
+> > -       },
+> > -};
+> > -module_platform_driver(qcom_pdc_driver);
+> > +IRQCHIP_PLATFORM_DRIVER_BEGIN(qcom_pdc)
+> > +IRQCHIP_MATCH("qcom,pdc", qcom_pdc_init)
+> > +IRQCHIP_PLATFORM_DRIVER_END(qcom_pdc)
+> >  MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
+> >  MODULE_LICENSE("GPL v2");
+>
+> <sigh>
+> So this is where I bashfully admit I didn't get a chance to try this
+> patch series out, as I had success with a much older version of
+> Saravana's macro magic.
+>
+> But unfortunately, now that this has landed in mainline, I'm seeing
+> boot regressions on db845c. :( This is in the non-modular case,
+> building the driver in.
 
-While we could try to figure out how to handle interruptions by
-figuring out how to cancel and/or undo our transfer in a race-free way
-and then communicating this status back to all of our callers, that
-seems like a whole lot of complexity.  As I understand it the transfer
-should happen rather quickly and if we're really hitting the 1 second
-timeout we're in deep doggy doodoo anyway.  Let's just use the
-non-interruptible version of the function and call it good enough.
+Does that mean the modular version is working? Or you haven't tried
+that yet? I'll wait for your reply before I try to fix it. I don't
+have the hardware, but it should be easy to guess this issue looking
+at the code delta.
 
-Found by code inspection.  No known test cases expose the problem
-described here.
+The only significant change from what your probe function is doing is
+this snippet. But it'd be surprising if this only affects the builtin
+case.
 
-Fixes: 2209481409b7 ("soc: qcom: Add AOSS QMP driver")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/soc/qcom/qcom_aoss.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 818cdf74a267..897f9f1c33ba 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -257,8 +257,8 @@ static int qmp_send(struct qmp *qmp, const void *data, size_t len, bool noirq)
- 		time_left = readx_poll_timeout_atomic(qmp_message_empty, qmp,
- 						      is_empty, is_empty, 1U, 1000000U);
- 	else
--		time_left = wait_event_interruptible_timeout(qmp->event,
--							     qmp_message_empty(qmp), HZ);
-+		time_left = wait_event_timeout(qmp->event, qmp_message_empty(qmp), HZ);
++ if (par_np == np)
++         par_np = NULL;
 +
- 	if (!time_left) {
- 		dev_err(qmp->dev, "ucore did not ack channel\n");
- 		ret = -ETIMEDOUT;
--- 
-2.28.0.163.g6104cc2f0b6-goog
++ /*
++ * If there's a parent interrupt controller and  none of the parent irq
++ * domains have been registered, that means the parent interrupt
++ * controller has not been initialized yet.  it's not time for this
++ * interrupt controller to initialize. So, defer probe of this
++ * interrupt controller. The actual initialization callback of this
++ * interrupt controller can check for specific domains as necessary.
++ */
++ if (par_np && !irq_find_matching_host(np, DOMAIN_BUS_ANY))
++         return -EPROBE_DEFER;
 
+> I managed to bisect it down to this patch, and reverting it avoids the
+> issue. I don't see what is wrong right off, but I really need to get
+> to bed, so I'll dig further tomorrow.
+>
+> Saravana: Apologies for not getting around to testing this beforehand!
+
+No worries. Apologies for breaking it accidentally.
+
+-Saravana
