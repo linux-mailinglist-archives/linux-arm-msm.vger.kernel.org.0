@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFC3323E013
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 20:00:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D9123E023
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 20:07:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726094AbgHFSAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Aug 2020 14:00:38 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:35748 "EHLO
+        id S1725927AbgHFSHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Aug 2020 14:07:23 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:31669 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728117AbgHFSAh (ORCPT
+        with ESMTP id S1727055AbgHFSHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Aug 2020 14:00:37 -0400
+        Thu, 6 Aug 2020 14:07:19 -0400
 Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 06 Aug 2020 06:17:54 -0700
+  by alexa-out.qualcomm.com with ESMTP; 06 Aug 2020 06:17:51 -0700
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Aug 2020 06:17:51 -0700
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Aug 2020 06:17:48 -0700
 Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 06 Aug 2020 18:47:41 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 06 Aug 2020 18:47:43 +0530
 Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id 2018F21C62; Thu,  6 Aug 2020 18:47:40 +0530 (IST)
+        id 284D721C62; Thu,  6 Aug 2020 18:47:42 +0530 (IST)
 From:   Mansur Alisha Shaik <mansur@codeaurora.org>
 To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org,
         Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH 1/3] venus: core: handle race condititon for core ops
-Date:   Thu,  6 Aug 2020 18:47:33 +0530
-Message-Id: <1596719855-1725-2-git-send-email-mansur@codeaurora.org>
+Subject: [PATCH 2/3] venus: core: cancel pending work items in workqueue
+Date:   Thu,  6 Aug 2020 18:47:34 +0530
+Message-Id: <1596719855-1725-3-git-send-email-mansur@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1596719855-1725-1-git-send-email-mansur@codeaurora.org>
 References: <1596719855-1725-1-git-send-email-mansur@codeaurora.org>
@@ -36,82 +36,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For core ops we are having only write protect but
-there is no read protect, because of this in mult
--threading and concurrency, one CPU core is readi
--ing without waiting which is causing the NULL
-pointer dereferece crash.
+In concurrency usecase and reboot scenario we are
+observing race condition and seeing NULL pointer
+dereference crash.when workqueue is in progress
+to handle system recovery and at same when device
+happends, in bothe paths we are trying to destryo
+the same mutex hence seeing the crash.
 
-one such scenario is as show below, where in one
-core core->ops becoming NULL and in another core
-calling core->ops->session_init().
+So this is hadled by protecting hfi_destroy in
+remove by mutext variable and cancel a delayed
+work items before reboot.
 
-CPU: 7(core):
+Below is the call trace for the crash
 Call trace:
- hfi_session_init+0x180/0x1dc [venus_core]
- vdec_queue_setup+0x9c/0x364 [venus_dec]
- vb2_core_reqbufs+0x1e4/0x368 [videobuf2_common]
- vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
- v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
- v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
- v4l_reqbufs+0x4c/0x5c
-__video_do_ioctl+0x2b0/0x39c
+ venus_remove+0xdc/0xec [venus_core]
+ venus_core_shutdown+0x1c/0x34 [venus_core]
+ platform_drv_shutdown+0x28/0x34
+ device_shutdown+0x154/0x1fc
+ kernel_restart_prepare+0x40/0x4c
+ kernel_restart+0x1c/0x64
 
-CPU: 0(core):
 Call trace:
- venus_shutdown+0x98/0xfc [venus_core]
- venus_sys_error_handler+0x64/0x148 [venus_core]
+ mutex_lock+0x34/0x60
+ venus_hfi_destroy+0x28/0x98 [venus_core]
+ hfi_destroy+0x1c/0x28 [venus_core]
+ venus_sys_error_handler+0x60/0x14c [venus_core]
  process_one_work+0x210/0x3d0
  worker_thread+0x248/0x3f4
  kthread+0x11c/0x12c
+ ret_from_fork+0x10/0x18
 
 Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 ---
- drivers/media/platform/qcom/venus/core.c | 2 +-
- drivers/media/platform/qcom/venus/hfi.c  | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 203c653..fe99c83 100644
+index fe99c83..41a293e 100644
 --- a/drivers/media/platform/qcom/venus/core.c
 +++ b/drivers/media/platform/qcom/venus/core.c
-@@ -64,8 +64,8 @@ static void venus_sys_error_handler(struct work_struct *work)
- 	pm_runtime_get_sync(core->dev);
- 
- 	hfi_core_deinit(core, true);
--	hfi_destroy(core);
- 	mutex_lock(&core->lock);
-+	hfi_destroy(core);
- 	venus_shutdown(core);
- 
- 	pm_runtime_put_sync(core->dev);
-diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-index a211eb9..2eeb31f 100644
---- a/drivers/media/platform/qcom/venus/hfi.c
-+++ b/drivers/media/platform/qcom/venus/hfi.c
-@@ -195,7 +195,7 @@ EXPORT_SYMBOL_GPL(hfi_session_create);
- int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
- {
- 	struct venus_core *core = inst->core;
--	const struct hfi_ops *ops = core->ops;
-+	const struct hfi_ops *ops;
+@@ -312,6 +312,8 @@ static int venus_remove(struct platform_device *pdev)
+ 	struct device *dev = core->dev;
  	int ret;
  
- 	if (inst->state != INST_UNINIT)
-@@ -204,10 +204,13 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
- 	inst->hfi_codec = to_codec_type(pixfmt);
- 	reinit_completion(&inst->done);
++	cancel_delayed_work_sync(&core->work);
++
+ 	ret = pm_runtime_get_sync(dev);
+ 	WARN_ON(ret < 0);
+ 
+@@ -329,7 +331,9 @@ static int venus_remove(struct platform_device *pdev)
+ 	if (pm_ops->core_put)
+ 		pm_ops->core_put(dev);
  
 +	mutex_lock(&core->lock);
-+	ops = core->ops;
- 	ret = ops->session_init(inst, inst->session_type, inst->hfi_codec);
- 	if (ret)
- 		return ret;
- 
+ 	hfi_destroy(core);
 +	mutex_unlock(&core->lock);
- 	ret = wait_session_msg(inst);
- 	if (ret)
- 		return ret;
+ 
+ 	icc_put(core->video_path);
+ 	icc_put(core->cpucfg_path);
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
