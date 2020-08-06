@@ -2,123 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C4E323D5DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 05:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A137723D5E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 06:00:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727045AbgHFDrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Aug 2020 23:47:51 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:44423 "EHLO
+        id S1725440AbgHFEAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Aug 2020 00:00:32 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:16491 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727837AbgHFDrv (ORCPT
+        by vger.kernel.org with ESMTP id S1725271AbgHFEAb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Aug 2020 23:47:51 -0400
+        Thu, 6 Aug 2020 00:00:31 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1596685670; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=t1wyWqVtkXEHbE514TF0VHElBeW1/dYqN2kCbkvgXv4=;
- b=ppYBrnfhenHGP81f17v/Ufxr0U52hQU752usT9PbeB+SE3EQ0B3NkbLmavoeDZg2M67yHcRp
- cfJ7KGsF0ewY18sonZjaDXgmLdMbWoOK2xnr0cp4eF3KBniGrvTCYvPe3UzT5aJnaDoo0m6f
- WolXefM4KCEM+ej8qmGk/gcJszA=
+ s=smtp; t=1596686430; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=385LRkURABpjFHvOhGppwgzxlDi5diqKefwwA9AZkPM=; b=YIUVgHlRwI0C6qiaiYB2fDQWoo7LmLDKO5AZs+xH46cwE1h7/3ETU4/ANGtJ7hxohnKzm5UU
+ 934u4IYh0lvRoUUuqgHNE+0iXAQhuzLetrUq1b6qTdE4qswPAXQg7SbPbeKb1XfGqqTDFDkG
+ SQLOl9IuB2kNiUG58iwHs1L/jBk=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n20.prod.us-west-2.postgun.com with SMTP id
- 5f2b7d5303528d4024d144d5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 Aug 2020 03:47:31
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5f2b804f56dc452789e2b7ee (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 Aug 2020 04:00:15
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 85407C433CB; Thu,  6 Aug 2020 03:47:31 +0000 (UTC)
+        id 754C9C433A0; Thu,  6 Aug 2020 04:00:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.129] (unknown [183.83.142.110])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mansur)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 001FAC433C9;
-        Thu,  6 Aug 2020 03:47:30 +0000 (UTC)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D254C433C6;
+        Thu,  6 Aug 2020 03:59:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D254C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+Subject: Re: [PATCH v4 01/12] ASoC: qcom: Add common array to initialize soc
+ based core clocks
+To:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com
+Cc:     Ajit Pandey <ajitp@codeaurora.org>
+References: <1595413915-17867-1-git-send-email-rohitkr@codeaurora.org>
+ <1595413915-17867-2-git-send-email-rohitkr@codeaurora.org>
+ <159667391634.1360974.15763918681460437981@swboyd.mtv.corp.google.com>
+From:   Rohit Kumar <rohitkr@codeaurora.org>
+Message-ID: <989f1d99-3cd0-e725-3f6d-43facf1ec04d@codeaurora.org>
+Date:   Thu, 6 Aug 2020 09:29:48 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <159667391634.1360974.15763918681460437981@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 06 Aug 2020 09:17:30 +0530
-From:   mansur@codeaurora.org
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     stanimir.varbanov@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] venus: core: add shutdown callback for venus
-In-Reply-To: <7223de0f80de73835238abe13a79d1bc@codeaurora.org>
-References: <1592044386-15654-1-git-send-email-mansur@codeaurora.org>
- <7223de0f80de73835238abe13a79d1bc@codeaurora.org>
-Message-ID: <eb92618f22fd5350ab7e4565d54e86a5@codeaurora.org>
-X-Sender: mansur@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+Thanks Stephen for reviewing.
 
-> On 2020-06-24 12:17, Sai Prakash Ranjan wrote:
->> Hi Mansur,
->> 
->> On 2020-06-13 16:03, Mansur Alisha Shaik wrote:
->>> After the SMMU translation is disabled in the
->>> arm-smmu shutdown callback during reboot, if
->>> any subsystem are still alive then IOVAs they
->>> are using will become PAs on bus, which may
->>> lead to crash.
->>> 
->>> Below are the consumers of smmu from venus
->>> arm-smmu: consumer: aa00000.video-codec supplier=15000000.iommu
->>> arm-smmu: consumer: video-firmware.0 supplier=15000000.iommu
->>> 
->>> So implemented shutdown callback, which detach iommu maps.
->>> 
->>> Change-Id: I0f0f331056e0b84b92f1d86f66618d4b1caaa24a
->>> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
->>> ---
->>>  drivers/media/platform/qcom/venus/core.c | 9 +++++++++
->>>  1 file changed, 9 insertions(+)
->>> 
->>> diff --git a/drivers/media/platform/qcom/venus/core.c
->>> b/drivers/media/platform/qcom/venus/core.c
->>> index 30d4b9e..acf798c 100644
->>> --- a/drivers/media/platform/qcom/venus/core.c
->>> +++ b/drivers/media/platform/qcom/venus/core.c
->>> @@ -371,6 +371,14 @@ static int venus_remove(struct platform_device 
->>> *pdev)
->>>  	return ret;
->>>  }
->>> 
->>> +static void venus_core_shutdown(struct platform_device *pdev)
->>> +{
->>> +	int ret;
->>> +
->>> +	ret = venus_remove(pdev);
->>> +	WARN_ON(ret < 0);
->> 
->> I don't think you should warn here, its shutdown path and you can't
->> do anything with this WARN unlike remove callback where you have
->> to be sure to cleanup properly so that you are able to reload module.
->> But if you still want a hint about this failure, then just add a 
->> dev_err()
->> to indicate the failure instead of a big stack trace spamming kernel 
->> log.
->> 
+On 8/6/2020 6:01 AM, Stephen Boyd wrote:
+> Quoting Rohit kumar (2020-07-22 03:31:44)
+>> From: Ajit Pandey <ajitp@codeaurora.org>
+>>
+>> LPASS variants have their own soc specific clocks that needs to be
+>> enabled for MI2S audio support. Added a common variable in drvdata to
+>> initialize such clocks using bulk clk api. Such clock names is
+>> defined in variants specific data and needs to fetched during init.
+> Why not just get all the clks and not even care about the names of them?
+> Use devm_clk_bulk_get_all() for that, unless some clks need to change
+> rates?
 
-posted V2 version by adding dev_warn during shutdown failure instead of 
-WARN_ON.
-V2 version : https://lore.kernel.org/patchwork/patch/1284693/
+There is ahbix clk which needs clk rate to be set. Please check below 
+patch in
 
->> Thanks,
->> Sai
+the series for reference
 
----
+[PATCH v5 02/12] ASoC: qcom: lpass-cpu: Move ahbix clk to platform 
+specific function
+
 Thanks,
-Mansur
+
+Rohit
+
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the Linux Foundation.
+
