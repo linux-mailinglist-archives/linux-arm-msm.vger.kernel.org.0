@@ -2,210 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD02623DCEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 18:58:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D5A823DC34
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 18:48:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729560AbgHFQ46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Aug 2020 12:56:58 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:40758 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728723AbgHFQkm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Aug 2020 12:40:42 -0400
-Received: by mail-il1-f194.google.com with SMTP id x1so20675139ilp.7;
-        Thu, 06 Aug 2020 09:39:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xk1+TxcE3QnIGMOvPraXoKHV6uIacnJL3Sj3a6NYZPM=;
-        b=N58pHWGrEBfXX6ulurZai9KKwSZKQyXXXeGIqHspMfWQ3boJDtauhQfgXIGMyS0jlC
-         h0JKwoll4DUykjdW23kB9e9urpcMdd7Vw1pkkP1nkeasL63Or4fkxoHrE/buXuNmTbvP
-         iHrrg/cJ28dwr7PYELBjFX8LKjqQLXHczvfz5xcNUqjnBwFpmNvkRsa9tuX2cIzkolM7
-         XJss5IvxakrXjZy/mVHtR0cphCWz8N18q4R0yqGcW17cvM3uca7xO2GzxK2dVSRFR79+
-         mQ32TAuukBpIPeTSJMOhZc/lqWCZRXsEszSsmcoE5eY60qQpTRbUyns20FmQj0qVEcYf
-         lMPQ==
-X-Gm-Message-State: AOAM531D69kdV7mzrS9XQI1KvdKCVlV3Chg9IGuv6m9BDe4L2oDtS+vF
-        eHb5OuWDNjLhQxYC+lsUQdHFXlI=
-X-Google-Smtp-Source: ABdhPJywUa1fS+mhDPPCoUj+LuP94rGkcgwbq8VHiTsnW6mBNPkpA3uSHzABW0gjnvpFFTpk6c+lhA==
-X-Received: by 2002:a05:6602:24d5:: with SMTP id h21mr10407216ioe.108.1596724757598;
-        Thu, 06 Aug 2020 07:39:17 -0700 (PDT)
-Received: from xps15 ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id a18sm4061245ilp.52.2020.08.06.07.39.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 07:39:16 -0700 (PDT)
-Received: (nullmailer pid 822114 invoked by uid 1000);
-        Thu, 06 Aug 2020 14:39:12 -0000
-Date:   Thu, 6 Aug 2020 08:39:12 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Cheng-Yi Chiang <cychiang@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, tzungbi@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Subject: Re: [PATCH v4 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine
- bindings
-Message-ID: <20200806143912.GA816294@bogus>
-References: <20200803040122.2063634-1-cychiang@chromium.org>
- <20200803040122.2063634-2-cychiang@chromium.org>
+        id S1729100AbgHFQrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Aug 2020 12:47:36 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:50486 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727081AbgHFQrd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 6 Aug 2020 12:47:33 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596732452; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=ggOg6zyHd/BJyz6p09BxDxipcYys+9vo5wRtRWDV+Dw=; b=EgmbyLCaRT1EGPwcvbTy8nGPgTn3CyurZ1s/BxqHt+sk+o/fhJheJRMy4fE+MmFMY+8Fa0il
+ EiaUj15xPdp1zgRYFqs2VR5rmLjm6L4rKaV9n8wSt3J1lSQkakXCXJAtVnakofgFM/7ca3km
+ /XEadsAR6wrz/9suG8vBGjxa/Jc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
+ 5f2c1da548ee73b1c7a30a66 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 Aug 2020 15:11:33
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 75D15C4339C; Thu,  6 Aug 2020 15:11:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.5 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.0.129] (unknown [183.83.142.110])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62261C433C9;
+        Thu,  6 Aug 2020 15:11:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62261C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+Subject: Re: [PATCH v5 00/12] ASoC: qcom: Add support for SC7180 lpass variant
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1596528453-11437-1-git-send-email-rohitkr@codeaurora.org>
+From:   Rohit Kumar <rohitkr@codeaurora.org>
+Message-ID: <1aa197e8-0c11-e2f1-d067-c74c1a185b8a@codeaurora.org>
+Date:   Thu, 6 Aug 2020 20:41:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200803040122.2063634-2-cychiang@chromium.org>
+In-Reply-To: <1596528453-11437-1-git-send-email-rohitkr@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 03, 2020 at 12:01:21PM +0800, Cheng-Yi Chiang wrote:
-> Add devicetree bindings documentation file for sc7180 sound card.
-> 
-> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
-> ---
->  .../bindings/sound/qcom,sc7180.yaml           | 113 ++++++++++++++++++
->  1 file changed, 113 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> new file mode 100644
-> index 000000000000..c74f0fe9fb3b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> @@ -0,0 +1,113 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
-> +
-> +maintainers:
-> +  - Rohit kumar <rohitkr@codeaurora.org>
-> +  - Cheng-Yi Chiang <cychiang@chromium.org>
-> +
-> +description:
-> +  This binding describes the SC7180 sound card which uses LPASS for audio.
-> +
-> +properties:
-> +  compatible:
-> +    contains:
-> +      const: qcom,sc7180-sndcard
-> +
-> +  audio-routing:
-> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +    description:
-> +      A list of the connections between audio components. Each entry is a
-> +      pair of strings, the first being the connection's sink, the second
-> +      being the connection's source.
-> +
-> +  model:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: User specified audio sound card name
-> +
-> +  aux-dev:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: phandle of the codec for headset detection
-> +
-> +patternProperties:
-> +  "^dai-link(@[0-9]+)?$":
-> +    description:
-> +      Each subnode represents a dai link. Subnodes of each dai links would be
-> +      cpu/codec dais.
-> +
-> +    type: object
-> +
-> +    properties:
-> +      link-name:
-> +        description: Indicates dai-link name and PCM stream name.
-> +        $ref: /schemas/types.yaml#/definitions/string
-> +        maxItems: 1
-> +
-> +      reg:
-> +        description: dai link address.
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        maxItems: 1
-> +
-> +      cpu:
-> +        description: Holds subnode which indicates cpu dai.
-> +        type: object
-> +        properties:
-> +          sound-dai: true
-> +
-> +      codec:
-> +        description: Holds subnode which indicates codec dai.
-> +        type: object
-> +        properties:
-> +          sound-dai: true
-> +
-> +    required:
-> +      - link-name
-> +      - cpu
-> +      - codec
-> +
-> +    additionalProperties: false
+Hello Mark,
 
-Nothing required?
+Other than patch 12, there is no comment on other patches from anyone as 
+of now.
 
-Add:
+[PATCH v5 12/12] dt-bindings: sound: lpass-cpu: Move to yaml format
 
-additionalProperties: false
+I will plan to post patch12 only with comments addressed if other
+changes does not have any comment. Please let me know your inputs.
 
-(And you'll need to define #address-cells and #size-cells)
+Thanks,
+Rohit
+On 8/4/2020 1:37 PM, Rohit kumar wrote:
+> This patch chain add audio support for SC7180 soc by doing the required
+> modification in existing common lpass-cpu/lpass-platform driver.
+> This also fixes some concurrency issue.
+>
+> This patch series is already tested by Srinivas on Dragon Board 410c.
+> Changes since v4:
+>          - Updated compatible string for sc7180 lpass cpu as suggested by Rob
+>          - Addressed comments by Rob in yaml Documentation.
+>
+> Ajit Pandey (4):
+>    ASoC: qcom: Add common array to initialize soc based core clocks
+>    ASoC: qcom: lpass-platform: Replace card->dev with component->dev
+>    include: dt-bindings: sound: Add sc7180-lpass bindings header
+>    ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
+>
+> Rohit kumar (8):
+>    ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+>    ASoC: qcom: lpass-platform: fix memory leak
+>    ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
+>    ASoC: qcom: lpass-cpu: fix concurrency issue
+>    dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
+>    ASoC: qcom: lpass-cpu: Use platform_get_resource
+>    ASoC: qcom: lpass-platform: Use platform_get_irq
+>    dt-bindings: sound: lpass-cpu: Move to yaml format
+>
+>   .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  79 --------
+>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 179 +++++++++++++++++
+>   include/dt-bindings/sound/sc7180-lpass.h           |  10 +
+>   sound/soc/qcom/Kconfig                             |   5 +
+>   sound/soc/qcom/Makefile                            |   2 +
+>   sound/soc/qcom/lpass-apq8016.c                     |  86 ++++++--
+>   sound/soc/qcom/lpass-cpu.c                         | 204 ++++++++++---------
+>   sound/soc/qcom/lpass-ipq806x.c                     |  67 +++++++
+>   sound/soc/qcom/lpass-lpaif-reg.h                   | 157 ++++++++-------
+>   sound/soc/qcom/lpass-platform.c                    | 155 +++++++++++----
+>   sound/soc/qcom/lpass-sc7180.c                      | 216 +++++++++++++++++++++
+>   sound/soc/qcom/lpass.h                             |  63 +++++-
+>   12 files changed, 924 insertions(+), 299 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+>   create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>   create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
+>   create mode 100644 sound/soc/qcom/lpass-sc7180.c
+>
+-- 
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the Linux Foundation.
 
-> +
-> +examples:
-> +
-> +  - |
-> +    sound {
-> +        compatible = "qcom,sc7180-sndcard";
-> +        model = "sc7180-snd-card";
-> +
-> +        audio-routing =
-> +                    "Headphone Jack", "HPOL",
-> +                    "Headphone Jack", "HPOR";
-> +
-> +        aux-dev = <&alc5682>;
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        dai-link@0 {
-> +            link-name = "MultiMedia0";
-> +            reg = <0>;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 0>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&alc5682 0>;
-> +            };
-> +        };
-> +
-> +        dai-link@1 {
-> +            link-name = "MultiMedia1";
-> +            reg = <1>;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 1>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&max98357a>;
-> +            };
-> +        };
-> +    };
-> -- 
-> 2.28.0.163.g6104cc2f0b6-goog
-> 
