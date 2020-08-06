@@ -2,87 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A8B623D6C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 08:22:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6978A23D6E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Aug 2020 08:41:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728091AbgHFGWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Aug 2020 02:22:18 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:65154 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726051AbgHFGWS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Aug 2020 02:22:18 -0400
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 05 Aug 2020 23:22:16 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 05 Aug 2020 23:22:15 -0700
-Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Aug 2020 11:52:01 +0530
-Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id D087F21C62; Thu,  6 Aug 2020 11:51:59 +0530 (IST)
-From:   Mansur Alisha Shaik <mansur@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, saiprakash.ranjan@codeaurora.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH V3] venus: core: add shutdown callback for venus
-Date:   Thu,  6 Aug 2020 11:51:57 +0530
-Message-Id: <1596694917-7761-1-git-send-email-mansur@codeaurora.org>
+        id S1728105AbgHFGlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Aug 2020 02:41:13 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16410 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726051AbgHFGlL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 6 Aug 2020 02:41:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1596696070; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Af/VYpmvsEYjvi37Y3sUb2zwrhWwLcQmLuM0BoB0o78=; b=DGutri21PFQEkpTW1hkPIcYO0VUoEVSZF0xVn+jThfH7bFgkB2NsNbKKsoRM9Ka1YvERyr7M
+ 6XQo/+X9aWaYlvsBeCEnmumikRsnYnxgjlpxhiXYY0Jf9XgvtpNrthDdz/RwePtoaHQEl//v
+ 9AWQMVzXGTlZd9bk4J6ihDtpgKk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f2ba6063f2ce11020000663 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 06 Aug 2020 06:41:10
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 30381C433C9; Thu,  6 Aug 2020 06:41:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54765C433C9;
+        Thu,  6 Aug 2020 06:41:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54765C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     gregkh@linuxfoundation.org, manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v5 0/4] user space client interface driver
+Date:   Wed,  5 Aug 2020 23:40:59 -0700
+Message-Id: <1596696063-17802-1-git-send-email-hemantk@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After the SMMU translation is disabled in the
-arm-smmu shutdown callback during reboot, if
-any subsystem are still alive then IOVAs they
-are using will become PAs on bus, which may
-lead to crash.
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
 
-Below are the consumers of smmu from venus
-arm-smmu: consumer: aa00000.video-codec supplier=15000000.iommu
-arm-smmu: consumer: video-firmware.0 supplier=15000000.iommu
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
 
-So implemented shutdown callback, which detach iommu maps.
+V3: Added documentation for MHI UCI driver.
 
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
----
-Changes in V3:
-- Fix build errors
+V2: Added mutex lock to prevent multiple readers to access same
+mhi buffer which can result into use after free.
 
- drivers/media/platform/qcom/venus/core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Hemant Kumar (4):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: clients: Add userspace client interface driver
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 203c653..cfe211a 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -341,6 +341,16 @@ static int venus_remove(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static void venus_core_shutdown(struct platform_device *pdev)
-+{
-+	struct venus_core *core = platform_get_drvdata(pdev);
-+	int ret;
-+
-+	ret = venus_remove(pdev);
-+	if (ret)
-+		dev_warn(core->dev, "shutdown failed %d\n", ret);
-+}
-+
- static __maybe_unused int venus_runtime_suspend(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -592,6 +602,7 @@ static struct platform_driver qcom_venus_driver = {
- 		.of_match_table = venus_dt_match,
- 		.pm = &venus_pm_ops,
- 	},
-+	.shutdown = venus_core_shutdown,
- };
- module_platform_driver(qcom_venus_driver);
- 
+ Documentation/mhi/index.rst      |   1 +
+ Documentation/mhi/uci.rst        |  39 +++
+ drivers/bus/mhi/Kconfig          |   6 +
+ drivers/bus/mhi/Makefile         |   1 +
+ drivers/bus/mhi/clients/Kconfig  |  15 +
+ drivers/bus/mhi/clients/Makefile |   3 +
+ drivers/bus/mhi/clients/uci.c    | 662 +++++++++++++++++++++++++++++++++++++++
+ drivers/bus/mhi/core/internal.h  |   1 -
+ drivers/bus/mhi/core/main.c      |  12 +
+ include/linux/mhi.h              |  12 +
+ 10 files changed, 751 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/clients/Kconfig
+ create mode 100644 drivers/bus/mhi/clients/Makefile
+ create mode 100644 drivers/bus/mhi/clients/uci.c
+
 -- 
-2.7.4
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
