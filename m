@@ -2,144 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFD5323E6FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 07:15:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC8DB23E6FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 07:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725379AbgHGFPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Aug 2020 01:15:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45220 "EHLO
+        id S1725845AbgHGFTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Aug 2020 01:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbgHGFPp (ORCPT
+        with ESMTP id S1725872AbgHGFTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Aug 2020 01:15:45 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF66CC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Aug 2020 22:15:45 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id ha11so343655pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Aug 2020 22:15:45 -0700 (PDT)
+        Fri, 7 Aug 2020 01:19:36 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF94C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Aug 2020 22:19:36 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id h12so341103pgm.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Aug 2020 22:19:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MBiQY6LTeMAyrNDctZTGpI85Qrwm/lT3KljbOVSIsIU=;
-        b=Ci362HhGecTknDyD27bYk4NYh2QVzDcBfO5JQOtXkzSJOH1PsDnNYNdS10gyCsxzW3
-         O2vhmsHj9bEZmccLTmftVbo7hou0KQZbD5F62V9aze/T99c8Pz4rIDbZ16gco/NaNnV9
-         2gFnxGn+VlYt1WQmNrIPkPzzlcdP81j+I9ccqNRBi1qWCgs6KlaaB7Kn70nb8v3hBOkR
-         emD26LjP48leji/aZd60gL0SZ8jY6Ghxx4HSXefXQncpDmKEFhFfIAgms+hYWTcbApsq
-         ARWz9fGTdBnBQS1ZgxG+WVvNwmKKKbKe0RTTFkztJjTGQTZ1be62Mn8S9/NJWpZkW2Mp
-         scvw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LKoQxM83Uc+FXvx6t5Ymg1IK53B/gKt39Gp0pbNTE/w=;
+        b=VyAVOpNiqddmfKMBU5li60da/RuApY8f29CHkpTimPilQ86j/gYbLdXJ1JoEKt6vpD
+         d2y9EUvtPB6CzlyDFnlal3mfMmer+GsWBqAAIygnmP1BPWq0yKdn9T5KLNJws9XbR+VJ
+         GgtQ18JNlytDCtEX7K8cs1KdMErJEwTQy/v1E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MBiQY6LTeMAyrNDctZTGpI85Qrwm/lT3KljbOVSIsIU=;
-        b=XUPOO0vy4tpSv3Hi+IccynFp4GN25a/vPVkG5XMeb4R7ImR8q4LRVuaV07/DztkG2G
-         IcRw1mCiVvcPi+odD7a4SpEQSnr9m91PaWNpNWsbVteLNvDqad0ZQH227WBQ4CrAuL0I
-         5iOPtkUb8l0zRThnSgTiEV5/VPgAhXV67+Kq66IDM8QBPHpRA6rthYUy6OiXyzGkMrjw
-         UBeVwq1quGyO0Fa3Formd0tZSos2PGtermf3BWv3tGqC3FK64y+Myh5t5fm/H3e28OuZ
-         qtkPsSkQV8G8vqKSa8PAfrTc/ufBF7Eg6eLalWsvgSTCbUttXL4VaHyA9sYFxVdSwxBR
-         8KVg==
-X-Gm-Message-State: AOAM530ue9BldmfbIhgT0boTa/HObGb/G9Gs7xPOWWVk/iPqMs7k67Fn
-        d3yY/z+ZOLpL/vraWjZiCjfSjyOUng==
-X-Google-Smtp-Source: ABdhPJzG9ys4l85i7KE9prlVjbCU4+da2W4YntUlOve0TVyv78oxfwb4fCiY74JgzuE5lkX2gZs0hg==
-X-Received: by 2002:a17:902:b20d:: with SMTP id t13mr11008275plr.312.1596777344811;
-        Thu, 06 Aug 2020 22:15:44 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6d15:d4c4:a84b:5551:d33e:ccd2])
-        by smtp.gmail.com with ESMTPSA id s61sm9630018pjb.57.2020.08.06.22.15.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Aug 2020 22:15:44 -0700 (PDT)
-Date:   Fri, 7 Aug 2020 10:45:38 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 10/11] bus: mhi: core: Introduce APIs to allocate and
- free the MHI controller
-Message-ID: <20200807051538.GC3230@Mani-XPS-13-9360>
-References: <1595901740-27379-1-git-send-email-bbhatt@codeaurora.org>
- <1595901740-27379-11-git-send-email-bbhatt@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LKoQxM83Uc+FXvx6t5Ymg1IK53B/gKt39Gp0pbNTE/w=;
+        b=YsQ6ueh5MLUTHp9cO5889PhgqbqcJQD1WdDpORLCYEXrDeqwCTUi4izJkm0EmTQUPi
+         /sBIZ+R3ebWHl7FRDDt2tkQDhF3wV5XR2cBdjYixQNBU3z7xNPXlPRizBDOUo8j5KByL
+         65k0SpPh2CyovVKM0igbWgZ05bkt0BVV3XcF9OLgktM5FQDPdtggWXnU4xm6o2yUG7fp
+         w1Cu31sDLYrAF08KrpwO3lSnnd446ikZlyGY179R1xSLtn0ZPjIy5/k1GlyGo9K6gEU0
+         5Kkd7AUvuvTW5s3wYW3deELiyBCJaH/Ws0cmvwiJdjuV8/zkGZ6GH5cQx8yXeS20OFNV
+         RNNA==
+X-Gm-Message-State: AOAM532t829M7KAPIWh0Hac2IXalnd8dR5R2gOSTPZYldE62PomsAETE
+        y+SiV+8Q3VD1QM74PehYhbY9tw==
+X-Google-Smtp-Source: ABdhPJyip5WtaSgO5LZF/l7/MXW9QhJe3s0OYmfhC0kSr5YBXvM+tKuZ31k0S09mlDItrxz9IXrAAQ==
+X-Received: by 2002:a65:4b85:: with SMTP id t5mr10043682pgq.36.1596777575437;
+        Thu, 06 Aug 2020 22:19:35 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id r15sm11381147pfq.189.2020.08.06.22.19.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Aug 2020 22:19:34 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Akash Asthana <akashast@codeaurora.org>,
+        kgdb-bugreport@lists.sourceforge.net,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Subject: [PATCH] serial: qcom_geni_serial: Fix recent kdb hang
+Date:   Thu,  6 Aug 2020 22:19:08 -0700
+Message-Id: <20200806221904.1.I4455ff86f0ef5281c2a0cd0a4712db614548a5ca@changeid>
+X-Mailer: git-send-email 2.28.0.236.gb10cc79966-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1595901740-27379-11-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 27, 2020 at 07:02:19PM -0700, Bhaumik Bhatt wrote:
-> Client devices should use the APIs provided to allocate and free
-> the MHI controller structure. This will help ensure that the
-> structure is zero-initialized and there are no false positives
-> with respect to reading any values such as the serial number or
-> the OEM PK hash.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+The commit e42d6c3ec0c7 ("serial: qcom_geni_serial: Make kgdb work
+even if UART isn't console") worked pretty well and I've been doing a
+lot of debugging with it.  However, recently I typed "dmesg" in kdb
+and then held the space key down to scroll through the pagination.  My
+device hung.  This was repeatable and I found that it was introduced
+with the aforementioned commit.
 
-Can you please also add the Suggested-by tag?
+It turns out that there are some strange boundary cases in geni where
+in some weird situations it will signal RX_LAST but then will put 0 in
+RX_LAST_BYTE.  This means that the entire last FIFO entry is valid.
+This weird corner case is handled in qcom_geni_serial_handle_rx()
+where you can see that we only honor RX_LAST_BYTE if RX_LAST is set
+_and_ RX_LAST_BYTE is non-zero.  If either of these is not true we use
+BYTES_PER_FIFO_WORD (4) for the size of the last FIFO word.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Let's fix kgdb.  While at it, also use the proper #define for 4.
 
-Thanks,
-Mani
+Fixes: e42d6c3ec0c7 ("serial: qcom_geni_serial: Make kgdb work even if UART isn't console")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-> ---
->  drivers/bus/mhi/core/init.c | 16 ++++++++++++++++
->  include/linux/mhi.h         | 12 ++++++++++++
->  2 files changed, 28 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index d2c0f6e..972dbf0 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -959,6 +959,22 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
->  }
->  EXPORT_SYMBOL_GPL(mhi_unregister_controller);
->  
-> +struct mhi_controller *mhi_alloc_controller(void)
-> +{
-> +	struct mhi_controller *mhi_cntrl;
-> +
-> +	mhi_cntrl = kzalloc(sizeof(*mhi_cntrl), GFP_KERNEL);
-> +
-> +	return mhi_cntrl;
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_alloc_controller);
-> +
-> +void mhi_free_controller(struct mhi_controller *mhi_cntrl)
-> +{
-> +	kfree(mhi_cntrl);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_free_controller);
-> +
->  int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->  {
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d15e9ce..a35d876 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -530,6 +530,18 @@ struct mhi_driver {
->  #define to_mhi_device(dev) container_of(dev, struct mhi_device, dev)
->  
->  /**
-> + * mhi_alloc_controller - Allocate the MHI Controller structure
-> + * Allocate the mhi_controller structure using zero initialized memory
-> + */
-> +struct mhi_controller *mhi_alloc_controller(void);
-> +
-> +/**
-> + * mhi_free_controller - Free the MHI Controller structure
-> + * Free the mhi_controller structure which was previously allocated
-> + */
-> +void mhi_free_controller(struct mhi_controller *mhi_cntrl);
-> +
-> +/**
->   * mhi_register_controller - Register MHI controller
->   * @mhi_cntrl: MHI controller to register
->   * @config: Configuration to use for the controller
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+ drivers/tty/serial/qcom_geni_serial.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 07b7b6b05b8b..e27077656939 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -361,11 +361,16 @@ static int qcom_geni_serial_get_char(struct uart_port *uport)
+ 			return NO_POLL_CHAR;
+ 
+ 		if (word_cnt == 1 && (status & RX_LAST))
++			/*
++			 * NOTE: If RX_LAST_BYTE_VALID is 0 it needs to be
++			 * treated as if it was BYTES_PER_FIFO_WORD.
++			 */
+ 			private_data->poll_cached_bytes_cnt =
+ 				(status & RX_LAST_BYTE_VALID_MSK) >>
+ 				RX_LAST_BYTE_VALID_SHFT;
+-		else
+-			private_data->poll_cached_bytes_cnt = 4;
++
++		if (private_data->poll_cached_bytes_cnt == 0)
++			private_data->poll_cached_bytes_cnt = BYTES_PER_FIFO_WORD;
+ 
+ 		private_data->poll_cached_bytes =
+ 			readl(uport->membase + SE_GENI_RX_FIFOn);
+-- 
+2.28.0.236.gb10cc79966-goog
+
