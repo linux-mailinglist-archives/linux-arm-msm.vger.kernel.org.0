@@ -2,179 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8448123F48C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 23:45:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A7C023F525
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Aug 2020 01:17:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726346AbgHGVpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Aug 2020 17:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55986 "EHLO
+        id S1726045AbgHGXRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Aug 2020 19:17:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbgHGVpj (ORCPT
+        with ESMTP id S1726096AbgHGXRr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Aug 2020 17:45:39 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E36F0C061756;
-        Fri,  7 Aug 2020 14:45:38 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id k8so3124180wma.2;
-        Fri, 07 Aug 2020 14:45:38 -0700 (PDT)
+        Fri, 7 Aug 2020 19:17:47 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2C52C061756
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Aug 2020 16:17:45 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id a26so3699160ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Aug 2020 16:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gSc3WQ+g0bVD00tftXx475OyaG+MO1Rw6PTdZ2MSKss=;
-        b=FEWJCMbk5AFlc069+ExQrG8l1jxFukCak7ElgUpHyVLEw4kEH+1RKYn1OWWQK8Qw52
-         Po3jwqb82+6HPsar2ubPm31bJncsy2zL2b00voh4MH1vE/yvAgEq9e3Ufv3R1WvWYlix
-         Bt3jVZv8bX4VyG1h5KsMQxWXA5ajVDr2jI5n1vh2bTv4BRMABmF734swqLcdKPJp1ygD
-         lEk47KyeYAKELUw3eedqJnGRv0e/COTOACxJe/WII23QQWz8FY3c0evz9h1w6E1NgDmT
-         oP62EAOgAaDCcpZgShRFAE+1Mnk39WobaNjkw1GnOVPgrRyWKX9KTzz3/T5AzfjT439t
-         nStg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc;
+        bh=uEfOm+DIoBJEQPRggKsqD/6K343VADgWw4J5soIp4mA=;
+        b=dv1DEOfjuOxASatUB7O3COgLAdZmAgtyeMQhG54fA3/2ZjH9iClolbSINHdcnp/rHF
+         JYFmq2+McWsQmT7AC4fDouu6tJ+Dr/S48tTQiuMj5WrOd+pDoWAOMKCkjyuQzCZHix0e
+         joB/jrcDY0nyj73Qft4ycQk/jW642GmEK1NAg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gSc3WQ+g0bVD00tftXx475OyaG+MO1Rw6PTdZ2MSKss=;
-        b=R/RvjLIbZvDCS3qc+PC7WiIVy+nW7OszzGDsVhOLekFQOsTzu8Px/Mk0cndkuVZpt8
-         rGhnCwSSu0WSe36YjcrtGo3oo3cwAOYmE+bcnKupPJY7avuzCYwqvZaZX3vnc/TnHCp9
-         fQYnsvWyyKmqiowk28o/VKX54WmRokJu9vjOdJHXrqlEQuVZ3odPUf4BfcGdV/ZauYKL
-         i2l4DAcqvRB3xRzjA3/Tfn4H6D9806M+D/NX6xS/DSeSwVMvgIOVsMPd0Zd6TsOnmiQW
-         ENoMh3rMe6VMrcw9zVjsZ/tyb4H7iHilIUomLM8/8b1Yp7iIwXCYm6MRROqlU/PHY4Vu
-         mzWg==
-X-Gm-Message-State: AOAM5326yIJ0rWH6hwk1FUF2KhRHhT0ayRnm7V140BvmQuTcCApcQFS2
-        jH0Qxrc10l3JKKoOdXOXbUYEOilRL4Op23nAMBw=
-X-Google-Smtp-Source: ABdhPJzkWuT3I3RweXfRYj4H3ZeNNpnhnAHZolkWqzpzdvL94gruFh4MON21DFocNq4h4AaLmbesJ5AsfYYMHDlXDAM=
-X-Received: by 2002:a7b:c257:: with SMTP id b23mr13997836wmj.164.1596836736069;
- Fri, 07 Aug 2020 14:45:36 -0700 (PDT)
+         :message-id:subject:cc;
+        bh=uEfOm+DIoBJEQPRggKsqD/6K343VADgWw4J5soIp4mA=;
+        b=qcqgX9os/lzXN3+QECudWLqmYZEsRSpyPdmqQnSm4D7QVQ5Y+vQfX0MbDj2FpZPpcI
+         iRk1h6i9irtaVzejARjgnf3mevL0Cf524pDh/SWHDXWKQbnZm0VKmRf647qKi8vHc4n3
+         fBcJ1c2t6l0F6NgmzSLjX9xu1JO5aw2ApE4gfpshMF/l496366b/EeQBSDaGXZCG94oW
+         xkxZRFYCAgVRgEqx+jrhYAlATCfNleEaICvzne4In+2KMRYathB7deUGk4bp/hk1vz21
+         y/eFvI9WAd1PRZsh7RXhOM+YJCremyLRFIU1Dt41palFcZ52m4qdVR3b4k6Mqj1fTTUo
+         BpzA==
+X-Gm-Message-State: AOAM532CzwJAEBIMT2ZUpBd92NsVQYLS/LH9ECOtI4xLgB1UqGXrUt6K
+        URtsaPtkeAziJn/kLYI2xIWRSTxvgi0=
+X-Google-Smtp-Source: ABdhPJyv+rP3r9Jnd4w6h4r8jA4eWml/XZ9VMjX9gxhAL6/+3NKnUqRIytNCD3HWkpk572kxrqI9Gw==
+X-Received: by 2002:a17:906:1911:: with SMTP id a17mr10853506eje.431.1596842264192;
+        Fri, 07 Aug 2020 16:17:44 -0700 (PDT)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id v14sm6845800ejb.63.2020.08.07.16.17.43
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Aug 2020 16:17:43 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id p14so3002684wmg.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Aug 2020 16:17:43 -0700 (PDT)
+X-Received: by 2002:a1c:6446:: with SMTP id y67mt9333959wmb.49.1596842262920;
+ Fri, 07 Aug 2020 16:17:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <1596805767-29339-1-git-send-email-kalyan_t@codeaurora.org>
-In-Reply-To: <1596805767-29339-1-git-send-email-kalyan_t@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 7 Aug 2020 14:46:20 -0700
-Message-ID: <CAF6AEGtY8xdy=KoJVWr1hMOdduv5b0EwENL1Txcs7R_2AFEK3Q@mail.gmail.com>
-Subject: Re: [v2] drm/msm/dpu: Fix reservation failures in modeset
-To:     Kalyan Thota <kalyan_t@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        nganji@codeaurora.org, Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Stephen Boyd <sboyd@kernel.org>
+References: <20200804114845.25086-1-user@vgarodia-linux>
+In-Reply-To: <20200804114845.25086-1-user@vgarodia-linux>
+From:   Fritz Koenig <frkoenig@chromium.org>
+Date:   Fri, 7 Aug 2020 16:17:30 -0700
+X-Gmail-Original-Message-ID: <CAMfZQbxE1KAC03_7L1qqkb1gDr12SoO-UFs+UN9jAhQ6dCs0zQ@mail.gmail.com>
+Message-ID: <CAMfZQbxE1KAC03_7L1qqkb1gDr12SoO-UFs+UN9jAhQ6dCs0zQ@mail.gmail.com>
+Subject: Re: [PATCH] venus: fixes for list corruption
+Cc:     linux-media@vger.kernel.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, mansur@codeaurora.org,
+        Rajeshwar Kurapaty <rkurapat@qti.qualcomm.com>,
+        Giri Kapalli <gkapalli@qti.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 7, 2020 at 6:10 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+On Tue, Aug 4, 2020 at 5:23 AM Vikash Garodia <"Vikash
+Garodia"@qti.qualcomm.com> wrote:
 >
-> In TEST_ONLY commit, rm global_state will duplicate the
-> object and request for new reservations, once they pass
-> then the new state will be swapped with the old and will
-> be available for the Atomic Commit.
+> From: Vikash Garodia <vgarodia@codeaurora.org>
 >
-> This patch fixes some of missing links in the resource
-> reservation sequence mentioned above.
+> There are few list handling issues while adding and deleting
+> node in the registered buf list in the driver.
+> 1. list addition - buffer added into the list during buf_init
+> while not deleted during cleanup.
+> 2. list deletion - In capture streamoff, the list was reinitialized.
+> As a result, if any node was present in the list, it would
+> lead to issue while cleaning up that node during buf_cleanup.
 >
-> 1) Creation of duplicate state in test_only commit (Rob)
-> 2) Allocate and release the resources on every modeset.
-> 3) Avoid allocation only when active is false.
+> Corresponding call traces below:
+> [  165.751014] Call trace:
+> [  165.753541]  __list_add_valid+0x58/0x88
+> [  165.757532]  venus_helper_vb2_buf_init+0x74/0xa8 [venus_core]
+> [  165.763450]  vdec_buf_init+0x34/0xb4 [venus_dec]
+> [  165.768271]  __buf_prepare+0x598/0x8a0 [videobuf2_common]
+> [  165.773820]  vb2_core_qbuf+0xb4/0x334 [videobuf2_common]
+> [  165.779298]  vb2_qbuf+0x78/0xb8 [videobuf2_v4l2]
+> [  165.784053]  v4l2_m2m_qbuf+0x80/0xf8 [v4l2_mem2mem]
+> [  165.789067]  v4l2_m2m_ioctl_qbuf+0x2c/0x38 [v4l2_mem2mem]
+> [  165.794624]  v4l_qbuf+0x48/0x58
 >
-> In a modeset operation, swap state happens well before
-> disable. Hence clearing reservations in disable will
-> cause failures in modeset enable.
+> [ 1797.556001] Call trace:
+> [ 1797.558516]  __list_del_entry_valid+0x88/0x9c
+> [ 1797.562989]  vdec_buf_cleanup+0x54/0x228 [venus_dec]
+> [ 1797.568088]  __buf_prepare+0x270/0x8a0 [videobuf2_common]
+> [ 1797.573625]  vb2_core_qbuf+0xb4/0x338 [videobuf2_common]
+> [ 1797.579082]  vb2_qbuf+0x78/0xb8 [videobuf2_v4l2]
+> [ 1797.583830]  v4l2_m2m_qbuf+0x80/0xf8 [v4l2_mem2mem]
+> [ 1797.588843]  v4l2_m2m_ioctl_qbuf+0x2c/0x38 [v4l2_mem2mem]
+> [ 1797.594389]  v4l_qbuf+0x48/0x58
 >
-> Allow reservations to be cleared/allocated before swap,
-> such that only newly committed resources are pushed to HW.
->
-> Changes in v1:
->  - Move the rm release to atomic_check.
->  - Ensure resource allocation and free happens when active
->    is not changed i.e only when mode is changed.(Rob)
->
-> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 17 ++++++++---------
->  1 file changed, 8 insertions(+), 9 deletions(-)
+>  drivers/media/platform/qcom/venus/vdec.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 63976dc..50a98d1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -582,7 +582,7 @@ static int dpu_encoder_virt_atomic_check(
->         dpu_kms = to_dpu_kms(priv->kms);
->         mode = &crtc_state->mode;
->         adj_mode = &crtc_state->adjusted_mode;
-> -       global_state = dpu_kms_get_existing_global_state(dpu_kms);
-> +       global_state = dpu_kms_get_global_state(crtc_state->state);
-
-sboyd noticed with lock debug enabled, that you are missing:
-
-   if (IS_ERR(global_state))
-     return PTR_ERR(global_state);
-
-since drm_modeset_lock() can fail (and if you have
-CONFIG_DEBUG_WW_MUTEX_SLOWPATH enabled, it frequently does return
--EDEADLK, to test the backoff path)
-
-BR,
--R
-
->         trace_dpu_enc_atomic_check(DRMID(drm_enc));
->
->         /*
-> @@ -617,12 +617,15 @@ static int dpu_encoder_virt_atomic_check(
->         /* Reserve dynamic resources now. */
->         if (!ret) {
->                 /*
-> -                * Avoid reserving resources when mode set is pending. Topology
-> -                * info may not be available to complete reservation.
-> +                * Release and Allocate resources on every modeset
-> +                * Dont allocate when active is false.
->                  */
->                 if (drm_atomic_crtc_needs_modeset(crtc_state)) {
-> -                       ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
-> -                                       drm_enc, crtc_state, topology);
-> +                       dpu_rm_release(global_state, drm_enc);
-> +
-> +                       if (!crtc_state->active_changed || crtc_state->active)
-> +                               ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
-> +                                               drm_enc, crtc_state, topology);
->                 }
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 7c4c483d5438..76be14efbfb0 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1088,8 +1088,6 @@ static int vdec_stop_capture(struct venus_inst *inst)
+>                 break;
 >         }
 >
-> @@ -1171,7 +1174,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
->         struct dpu_encoder_virt *dpu_enc = NULL;
->         struct msm_drm_private *priv;
->         struct dpu_kms *dpu_kms;
-> -       struct dpu_global_state *global_state;
->         int i = 0;
->
->         if (!drm_enc) {
-> @@ -1190,7 +1192,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
->
->         priv = drm_enc->dev->dev_private;
->         dpu_kms = to_dpu_kms(priv->kms);
-> -       global_state = dpu_kms_get_existing_global_state(dpu_kms);
->
->         trace_dpu_enc_disable(DRMID(drm_enc));
->
-> @@ -1220,8 +1221,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
->
->         DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
->
-> -       dpu_rm_release(global_state, drm_enc);
+> -       INIT_LIST_HEAD(&inst->registeredbufs);
 > -
->         mutex_unlock(&dpu_enc->enc_lock);
+>         return ret;
 >  }
 >
-> --
-> 1.9.1
+> @@ -1189,6 +1187,14 @@ static int vdec_buf_init(struct vb2_buffer *vb)
+>  static void vdec_buf_cleanup(struct vb2_buffer *vb)
+>  {
+>         struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+> +       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+> +       struct venus_buffer *buf = to_venus_buffer(vbuf);
+> +
+> +       mutex_lock(&inst->lock);
+> +       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+> +               if (!list_empty(&inst->registeredbufs))
+> +                       list_del_init(&buf->reg_list);
+> +       mutex_unlock(&inst->lock);
 >
+>         inst->buf_count--;
+>         if (!inst->buf_count)
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+Reviewed-by: Fritz Koenig <frkoenig@chromium.org>
