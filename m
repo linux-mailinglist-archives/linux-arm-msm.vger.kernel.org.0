@@ -2,212 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE38E23E705
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 07:22:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91B0D23E71E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 07:58:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725815AbgHGFWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Aug 2020 01:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46294 "EHLO
+        id S1725900AbgHGF6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Aug 2020 01:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbgHGFWu (ORCPT
+        with ESMTP id S1725379AbgHGF6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Aug 2020 01:22:50 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE7AC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Aug 2020 22:22:50 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id d4so343604pjx.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Aug 2020 22:22:50 -0700 (PDT)
+        Fri, 7 Aug 2020 01:58:47 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB12C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Aug 2020 22:58:47 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id e4so386660pjd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Aug 2020 22:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JxnD3/Pk7tGnhOkTuFO11epA3dxlvhmHX5n0F+oID6c=;
-        b=ZKeK46FNkuyyfRSMVpN2j8uKDk34aDJkC8yTWBJlHvfsLVg0xWZI0004hEFRZVZyRQ
-         /IzGWIYjgw332qsSsNd2H054P2Be4/LDNMFnbXSRoVgLEn6Wf5FbAZWQvQbX8KMlGKu+
-         aKRckxnOKJIm/Q3rz+kV/jyv8owGbr0L6mTFYRRIZm7/S8jIlXnQSLIju+30yp64ZRMb
-         sHwKafqXu25LjdrMGCJcHHnH7MIjQ24gZXNPZUki79PIF3bRH5Bcee8SKD1heQ/JkXAh
-         kMhmDcHhkLtAozdjh33wF/BsXGNCMcdf6knKa8jEsdJb+jsgGsyVjl1WmkPPWmCm9Yy1
-         hogA==
+         :content-disposition:in-reply-to;
+        bh=1vcDjP1C6ckosb0QbIDQlKL+iptwbO/UQeOPmtnLI2s=;
+        b=VJqh6yLUqRlU/8vDadsdticX2DRzG+Kxq9lYot76dh5LRzksBbdtgsE3LFXf3v+2rX
+         0w1da7TVRlRUQze0/fbyx6j37IUSCawzGMShbULjPYcZzlvUhW+taqbIj0V2sbMgpomX
+         +pVtD5tCIfwsuLkphI/IsToOBMYpnesLaC8TlxbjDeb0P1mdH7eEJf8C2AilREK5/XiJ
+         k0Xp9fQemDBhFQ7xdklsZg/x+MrMUI9mqx8gjGMOcA6mXzaWdt53UnYxN1LmvzItuC6S
+         UYJqOfGhypQxZX2w2thtGMwodaOTbnGtrhMzQ/iQE8OVbdBdNI4R5tmFkQ7BFso/6b3b
+         yEFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JxnD3/Pk7tGnhOkTuFO11epA3dxlvhmHX5n0F+oID6c=;
-        b=grIpX8PFETghRCFcWaTzb+Juvtjki4BJJ0B3qXmqRipuo/44JGXTBp2zs0iTYBXKBx
-         rYfxBuWCiqhuJJSwPe4hDK9s9GxPFNpezoLDysFiEEnPHwb4vQEcuFfRe8TE2zhh+XJK
-         SQbjIED01F7jBA8uS3FPLuxVBJPmHK1+U8C6lhpTVWz5dBnGVrP8H+hqElL0R/RvX7Ip
-         nl5tJj9itmowT/5nIZ8ST6/7QmJPMOU72zOtiyJhAxw4kv6DaGC9t+e7LoxsgMlzA7rk
-         RzepR4zQIkoQZ8eq+mIbBzHUnOQxxq2Y5hz75ioj4qUaxAJpT1mJTWPBt13ayjRmYdOo
-         PadA==
-X-Gm-Message-State: AOAM530uCAYy+WwfdnjaHy0tBnLOAFbh4r4zQvfFGCgE+Nf7C8wqogbs
-        h/RbHlcENjoyKG7wKt95hEb2
-X-Google-Smtp-Source: ABdhPJxmbvbEI5hmrW4eSH1i/wA0McdyTqgDffGrrEOfEBZo3k7iq0OJ4X/qpwLCdPoLKZHHf+dhcg==
-X-Received: by 2002:a17:90b:3603:: with SMTP id ml3mr11786232pjb.207.1596777769954;
-        Thu, 06 Aug 2020 22:22:49 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6d15:d4c4:a84b:5551:d33e:ccd2])
-        by smtp.gmail.com with ESMTPSA id mj6sm9249442pjb.15.2020.08.06.22.22.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Aug 2020 22:22:49 -0700 (PDT)
-Date:   Fri, 7 Aug 2020 10:52:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 11/11] bus: mhi: core: Introduce sysfs entries for MHI
-Message-ID: <20200807052242.GD3230@Mani-XPS-13-9360>
-References: <1595901740-27379-1-git-send-email-bbhatt@codeaurora.org>
- <1595901740-27379-12-git-send-email-bbhatt@codeaurora.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=1vcDjP1C6ckosb0QbIDQlKL+iptwbO/UQeOPmtnLI2s=;
+        b=U0/NPm6YUSICDerm90H7Mxta3LR6CZV/XFGvVVKCfROaB5PaSkak6OP7pbA0TI8GsH
+         b0oeI309ZWMWx9YdwZxzhjHkfzfPNCO8AAjG2AZEO2zYk58fZlGgtz/L3xhjd+EKBrH7
+         lxjTaoFs4ejd8y/TIFGqkw/qHPJu7bD2m+SiisXDNQ6RdANsyfg9/jKPxfYL/8za/SSC
+         qq+bJO30UMAVG6/X/K2icNnGwuHtTpbQ1TPRfnQfooTYcFyFaltIMAx2jTQQEVymDOjI
+         Ih76vofeqnf6WR/gFw+B5SltXuU0LZQ6Q0SWJ3bDSpE1+hF9m8KNC2Jrh/DPgez0IRgR
+         vQPA==
+X-Gm-Message-State: AOAM5307ORVh0KdgjlBvKZXg68kX+/qUaUSal2dem7DsdRb12kUlRelq
+        ac2kQgNiiPBbRl5XuPYZFIXHew==
+X-Google-Smtp-Source: ABdhPJwHM2B8c7EJm4dXQWTDr++7oOCRLBImV+xCcdlfTN8ALIrmwPvx4ZQtiTFHGhEypTdApi+ULw==
+X-Received: by 2002:a17:902:a610:: with SMTP id u16mr11166058plq.197.1596779926484;
+        Thu, 06 Aug 2020 22:58:46 -0700 (PDT)
+Received: from yoga (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
+        by smtp.gmail.com with ESMTPSA id f63sm8575773pjk.53.2020.08.06.22.58.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Aug 2020 22:58:45 -0700 (PDT)
+Date:   Thu, 6 Aug 2020 22:58:42 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     Steev Klimaszewski <steev@kali.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Android Kernel Team <kernel-team@android.com>,
+        lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hanks Chen <hanks.chen@mediatek.com>,
+        CC Hwang <cc.hwang@mediatek.com>,
+        Loda Chou <loda.chou@mediatek.com>,
+        Thierry Reding <thierry.reding@gmail.com>
+Subject: Re: [PATCH v3 2/4] irqchip/qcom-pdc: Switch to using
+ IRQCHIP_PLATFORM_DRIVER helper macros
+Message-ID: <20200807055842.GP61202@yoga>
+References: <20200718000637.3632841-3-saravanak@google.com>
+ <CALAqxLVZ+rFE+hM9OtQ46NqpTHeLu6oKLNWKstLv1U5zbwyq7g@mail.gmail.com>
+ <CAGETcx_rkK3-bKhDP_N4n_WyXLXFPoaUV9rbY_Y+H1Joj=dCyw@mail.gmail.com>
+ <f314b687-11a9-5a5e-e79e-c46dd2f16c6f@kali.org>
+ <78ad0914-6173-f753-9eba-b7cbfbb51fd6@kali.org>
+ <CALAqxLXPN9kThwF32YoWyApaWnfjthANXj3uk65Wc3ddaJQFFQ@mail.gmail.com>
+ <20200807004001.GF20825@builder.lan>
+ <CALAqxLWwY00PVUL7EM-tgbXeB5h8MsfPo7EFZTfDSzbb3P3eqQ@mail.gmail.com>
+ <20200807013903.GG20825@builder.lan>
+ <CALAqxLWmJisTA9836Rvb8f9m4hsTL7iZ=HQtz39anu2Bbgv44g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1595901740-27379-12-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CALAqxLWmJisTA9836Rvb8f9m4hsTL7iZ=HQtz39anu2Bbgv44g@mail.gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 27, 2020 at 07:02:20PM -0700, Bhaumik Bhatt wrote:
-> Introduce sysfs entries to enable userspace clients the ability to read
-> the serial number and the OEM PK Hash values obtained from BHI. OEMs
-> need to read these device-specific hardware information values through
-> userspace for factory testing purposes and cannot be exposed via degbufs
-> as it may remain disabled for performance reasons. Also, update the
-> documentation for ABI to include these entries.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  Documentation/ABI/stable/sysfs-bus-mhi | 21 ++++++++++++++
->  MAINTAINERS                            |  1 +
->  drivers/bus/mhi/core/init.c            | 53 ++++++++++++++++++++++++++++++++++
->  3 files changed, 75 insertions(+)
->  create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
-> 
-> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
-> new file mode 100644
-> index 0000000..1d5d0d6
-> --- /dev/null
-> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
-> @@ -0,0 +1,21 @@
-> +What:		/sys/bus/mhi/devices/.../serialnumber
-> +Date:		Jul 2020
-> +KernelVersion:	5.8
-> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
-> +Description:	The file holds the serial number of the client device obtained
-> +		using a BHI (Boot Host Interface) register read after at least
-> +		one attempt to power up the device has been done. If read
-> +		without having the device power on at least once, the file will
-> +		read all 0's.
-> +Users:		Any userspace application or clients interested in device info.
+On Thu 06 Aug 19:48 PDT 2020, John Stultz wrote:
 
-I think you're not using tabs here and that's why it is showing mangled. Please
-use tabs as like other files.
-
-Thanks,
-Mani
-
-> +
-> +What:		/sys/bus/mhi/devices/.../oem_pk_hash
-> +Date:		Jul 2020
-> +KernelVersion:	5.8
-> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
-> +Description:	The file holds the OEM PK Hash value of the endpoint device
-> +		obtained using a BHI (Boot Host Interface) register read after
-> +		at least one attempt to power up the device has been done. If
-> +		read without having the device power on at least once, the file
-> +		will read all 0's.
-> +Users:		Any userspace application or clients interested in device info.
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e64e5db..5e49316 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -11018,6 +11018,7 @@ M:	Hemant Kumar <hemantk@codeaurora.org>
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
-> +F:	Documentation/ABI/stable/sysfs-bus-mhi
->  F:	Documentation/mhi/
->  F:	drivers/bus/mhi/
->  F:	include/linux/mhi.h
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 972dbf0..c086ef2 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -76,6 +76,56 @@ const char *to_mhi_pm_state_str(enum mhi_pm_state state)
->  	return mhi_pm_state_str[index];
->  }
->  
-> +static ssize_t serial_number_show(struct device *dev,
-> +				  struct device_attribute *attr,
-> +				  char *buf)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +
-> +	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-> +			mhi_cntrl->serial_number);
-> +}
-> +static DEVICE_ATTR_RO(serial_number);
-> +
-> +static ssize_t oem_pk_hash_show(struct device *dev,
-> +				struct device_attribute *attr,
-> +				char *buf)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	int i, cnt = 0;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
-> +		cnt += snprintf(buf + cnt, PAGE_SIZE - cnt,
-> +				"OEMPKHASH[%d]: 0x%x\n", i,
-> +				mhi_cntrl->oem_pk_hash[i]);
-> +
-> +	return cnt;
-> +}
-> +static DEVICE_ATTR_RO(oem_pk_hash);
-> +
-> +static struct attribute *mhi_sysfs_attrs[] = {
-> +	&dev_attr_serial_number.attr,
-> +	&dev_attr_oem_pk_hash.attr,
-> +	NULL,
-> +};
-> +
-> +static const struct attribute_group mhi_sysfs_group = {
-> +	.attrs = mhi_sysfs_attrs,
-> +};
-> +
-> +static int mhi_create_sysfs(struct mhi_controller *mhi_cntrl)
-> +{
-> +	return sysfs_create_group(&mhi_cntrl->mhi_dev->dev.kobj,
-> +				  &mhi_sysfs_group);
-> +}
-> +
-> +static void mhi_destroy_sysfs(struct mhi_controller *mhi_cntrl)
-> +{
-> +	sysfs_remove_group(&mhi_cntrl->mhi_dev->dev.kobj, &mhi_sysfs_group);
-> +}
-> +
->  /* MHI protocol requires the transfer ring to be aligned with ring length */
->  static int mhi_alloc_aligned_ring(struct mhi_controller *mhi_cntrl,
->  				  struct mhi_ring *ring,
-> @@ -917,6 +967,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
->  	mhi_cntrl->mhi_dev = mhi_dev;
->  
->  	mhi_create_debugfs(mhi_cntrl);
-> +	if (mhi_create_sysfs(mhi_cntrl))
-> +		dev_err(mhi_cntrl->cntrl_dev, "Failed to create sysfs entries\n");
->  
->  	return 0;
->  
-> @@ -940,6 +992,7 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
->  	struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
->  	unsigned int i;
->  
-> +	mhi_destroy_sysfs(mhi_cntrl);
->  	mhi_destroy_debugfs(mhi_cntrl);
->  
->  	kfree(mhi_cntrl->mhi_cmd);
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> On Thu, Aug 6, 2020 at 6:42 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> > On Thu 06 Aug 18:22 PDT 2020, John Stultz wrote:
+> > > On Thu, Aug 6, 2020 at 5:43 PM Bjorn Andersson
+> > > <bjorn.andersson@linaro.org> wrote:
+> > > > On Wed 05 Aug 14:57 PDT 2020, John Stultz wrote:
+> > > > > On Wed, Aug 5, 2020 at 2:47 PM Steev Klimaszewski <steev@kali.org> wrote:
+> > > > > > On 8/5/20 4:16 PM, Steev Klimaszewski wrote:
+> > > > > > > On 8/5/20 3:19 PM, Saravana Kannan wrote:
+> > > > > > >> On Wed, Aug 5, 2020 at 12:44 AM John Stultz <john.stultz@linaro.org> wrote:
+> > > > > > >>> <sigh>
+> > > > > > >>> So this is where I bashfully admit I didn't get a chance to try this
+> > > > > > >>> patch series out, as I had success with a much older version of
+> > > > > > >>> Saravana's macro magic.
+> > > > > > >>>
+> > > > > > >>> But unfortunately, now that this has landed in mainline, I'm seeing
+> > > > > > >>> boot regressions on db845c. :( This is in the non-modular case,
+> > > > > > >>> building the driver in.
+> > > > > > >> Does that mean the modular version is working? Or you haven't tried
+> > > > > > >> that yet? I'll wait for your reply before I try to fix it. I don't
+> > > > > > >> have the hardware, but it should be easy to guess this issue looking
+> > > > > > >> at the code delta.
+> > > > > > > For what it's worth, I saw this too on the Lenovo C630 (started on -next
+> > > > > > > around 20200727, but I didn't track it down as, well, there's less way
+> > > > > > > to get debug output on the C630.
+> > > > > > >
+> > > > > > > In my testing, module or built-in doesn't matter, but reverting does
+> > > > > > > allow me to boot again.
+> > > > > > >
+> > > > > > Actually - I spoke too soon - QCOM_PDC built-in with the commit reverted
+> > > > > > boots, however, module (on the c630 at least) doesn't boot whether it's
+> > > > > > a module or built-in.
+> > > > >
+> > > > > You may need to set deferred_probe_timeout=30 to give things a bit
+> > > > > more grace time to load.
+> > > >
+> > > > With the risk of me reading more into this than what you're saying,
+> > > > please don't upstream anything that depend this parameter to be
+> > > > increased.
+> > > >
+> > > > Compiling any of these drivers as module should not require the user to
+> > > > pass additional kernel command line parameters in order to get their
+> > > > device to boot.
+> > >
+> > > So, ideally I agree, and Saravana's fw_devlink work should allow us to
+> > > avoid it. But the reality is that it is already required (at least in
+> > > configurations heavily using modules) to give more time for modules
+> > > loaded to resolve missing dependencies after init begins (due to
+> > > changes in the driver core to fail loading after init so that optional
+> > > dt links aren't eternally looked for). This was seen when trying to
+> > > enable the qualcom clk drivers to modules.
+> > >
+> >
+> > So to clarify what you're saying, any system that boots successfully
+> > with the default options is a sign of pure luck - regardless of being
+> > builtin or modules.
+> >
+> >
+> > And there you have my exact argument against the deferred timeout magic
+> > going on in the driver core. But as you know people insist that it's
+> > more important to be able to boot some defunct system from NFS than a
+> > properly configured one reliably.
 > 
+> I'd agree, but the NFS case was in use before, and when the original
+> deferred timeout/optional link handling stuff landed no one complained
+> they were broken by it (at least at the point where it landed).
+
+I did object when this was proposed and I've objected for the last two
+years, because we keep adding more and more subsystems to follow this
+broken behavior.
+
+> Only later when we started enabling more lower-level core drivers as
+> modules did the shortened dependency resolution time start to bite
+> folks.  My attempt to set the default to be 30 seconds helped there,
+> but caused trouble and delays for the NFS case, and "don't break
+> existing users" seemed to rule, so I set the default timeout back to
+> 0.
+> 
+
+I can't argue with that and I'm at loss on how to turn this around.
+
+> > > It doesn't seem necessary in this case, but I suggested it here as
+> > > I've got it enabled by default in my AOSP builds so that the
+> > > module-heavy configs for GKI boot properly (even if Saravana's
+> > > fw_devlink work is disabled).
+> > >
+> >
+> > With all due respect, that's your downstream kernel, the upstream kernel
+> > should not rely on luck, out-of-tree patches or kernel parameters.
+> 
+> I agree that would be preferred. But kernel parameters are often there
+> for these sorts of cases where we can't always do the right thing.
+> As for out-of-tree patches, broken things don't get fixed until
+> out-of-tree patches are developed and upstreamed, and I know Saravana
+> is doing exactly that, and I hope his fw_devlink work helps fix it so
+> the module loading is not just a matter of luck.
+> 
+
+I don't agree with this, upstream should be functional in its default
+configuration. Out-of-tree patches might be necessary to enable features
+or get the most out of the hardware, but what we have upstream should
+work.  And no, this is not always the case, but we should at least aim
+for this.
+
+> Also I think Thierry's comments in the other thread today are also
+> good ideas for ways to better handle the optional dt link handling
+> (rather than using a timeout).
+> 
+
+I'll take a look at that, but to repeat what I've said many times
+before, for Qualcomm platforms there's pretty much no such thing as
+optional links.
+
+Regards,
+Bjorn
