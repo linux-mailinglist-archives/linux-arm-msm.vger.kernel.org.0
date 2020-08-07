@@ -2,76 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E5CE23F3AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 22:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5B0423F3BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 22:24:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726126AbgHGURM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Aug 2020 16:17:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54264 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725970AbgHGURL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Aug 2020 16:17:11 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A66C12075A;
-        Fri,  7 Aug 2020 20:17:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596831430;
-        bh=FTGX8V3BOAmBXKLEXLdqfDBeFt3UQfICsLUdU64xJiE=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=TKFpExx251qL5pZuFJCespYGYMaO91U5zGyMF51r/UcvnqdQ2cu4NxBi6+9zjiCGf
-         lmcvOhlGpRNU36TuvI3XAqLhDBjrcVHwrZS9+IsIfeeMR3reH68iZAasoSq+1g2tBH
-         VusTYqJ1btk2P+wMSfIVfmFwXYmkU1ME6O/jKw20=
+        id S1726481AbgHGUYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Aug 2020 16:24:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43422 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725893AbgHGUYE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Aug 2020 16:24:04 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0F0C061756
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Aug 2020 13:24:04 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id t10so1649018plz.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Aug 2020 13:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=8kRWK6mpY0yuzrMz6VeBLLcMrpVG8ZtSX/iAsw+ut4A=;
+        b=WEQMKsvxL+jGuutK/BX9GjKhG9V6iqjN0wIPhLgvikM+b48e3QcXAaeBfnLsnUbVQM
+         sEPO5cpmUWUqe4CGQPLKERNzawMZGhiNtw2+3gnBjmoKN8srnzPI9ngJ2NslwuAjvSVk
+         RgOZqa5CfaRROKBbMjMpTLlU7cxtbupJL0vwY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=8kRWK6mpY0yuzrMz6VeBLLcMrpVG8ZtSX/iAsw+ut4A=;
+        b=TcrW6CgxbwFlKT78QAk1Gm+A4xHhp+SZaiohmfJIIB/Y9aGCJOj3BOs/SI9gqJ6XA6
+         H7G92oAbDoHsO4IaAjdiKpm6cf7QVnk2mqCYBRod67CxHWF7Vb4xlw5h1F9V1SHQ9Jbh
+         ZFCt0NAe4fqpADty4Bym+amV2lJpZXeZumOmukTIatCxrJQl3UmsI42WJUnp4IuaIWtt
+         349TkEzctsrXnXdfUSaDo6TRm2Sdbz2veZAXEJx/NxE/HIen/2YawxYEgH1KJvkqACXJ
+         nqMcrog1sTnL5Wm/w3JfsKgtEa+tTQUFgab8yQDicCH66jgcZMcacdjul4/FxddRInBg
+         07Sw==
+X-Gm-Message-State: AOAM531fndYkv78rvH8qtZITyKsKPo1PD6KOoEsKxcVLnd2TEUDRQye7
+        GutgbLRBm8Q2Ui1ItXFogXH1lQ==
+X-Google-Smtp-Source: ABdhPJwUCMA+qcCj4NBJ6bH6GJrNHolYmVbC63o7ey2y7ucXrSodd1KiH1QHhuAQODHYrQ6iqRsEPQ==
+X-Received: by 2002:a17:902:b089:: with SMTP id p9mr13616774plr.52.1596831843666;
+        Fri, 07 Aug 2020 13:24:03 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id z23sm11490482pgv.57.2020.08.07.13.24.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2020 13:24:03 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <989f1d99-3cd0-e725-3f6d-43facf1ec04d@codeaurora.org>
-References: <1595413915-17867-1-git-send-email-rohitkr@codeaurora.org> <1595413915-17867-2-git-send-email-rohitkr@codeaurora.org> <159667391634.1360974.15763918681460437981@swboyd.mtv.corp.google.com> <989f1d99-3cd0-e725-3f6d-43facf1ec04d@codeaurora.org>
-Subject: Re: [PATCH v4 01/12] ASoC: qcom: Add common array to initialize soc based core clocks
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Ajit Pandey <ajitp@codeaurora.org>
-To:     Rohit Kumar <rohitkr@codeaurora.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        srinivas.kandagatla@linaro.org, tiwai@suse.com
-Date:   Fri, 07 Aug 2020 13:17:09 -0700
-Message-ID: <159683142954.1360974.1307064087263696126@swboyd.mtv.corp.google.com>
+In-Reply-To: <CAF6AEGv5Yf1x7aCEauP7XtzTjpUCxJt6_GzxFhFXyf_DX_Gi+g@mail.gmail.com>
+References: <20200807071718.17937-1-tanmay@codeaurora.org> <20200807071718.17937-4-tanmay@codeaurora.org> <3b0d0e49-5fe8-e217-4ddc-1ff08e65ab48@infradead.org> <CAF6AEGv5Yf1x7aCEauP7XtzTjpUCxJt6_GzxFhFXyf_DX_Gi+g@mail.gmail.com>
+Subject: Re: [PATCH v9 3/5] drm/msm/dp: add support for DP PLL driver
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Tanmay Shah <tanmay@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, aravindh@codeaurora.org,
+        Abhinav Kumar <abhinavk@codeaurora.org>, khsieh@codeaurora.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>
+To:     Randy Dunlap <rdunlap@infradead.org>,
+        Rob Clark <robdclark@gmail.com>
+Date:   Fri, 07 Aug 2020 13:24:01 -0700
+Message-ID: <159683184187.1360974.15575847254880429529@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rohit Kumar (2020-08-05 20:59:48)
-> Thanks Stephen for reviewing.
+Quoting Rob Clark (2020-08-07 08:51:48)
+> On Fri, Aug 7, 2020 at 8:27 AM Randy Dunlap <rdunlap@infradead.org> wrote:
+> >
+> > On 8/7/20 12:17 AM, Tanmay Shah wrote:
+> > > diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> > > index ea3c4d094d09..cc1392b29022 100644
+> > > --- a/drivers/gpu/drm/msm/Kconfig
+> > > +++ b/drivers/gpu/drm/msm/Kconfig
+> > > @@ -60,6 +60,7 @@ config DRM_MSM_HDMI_HDCP
+> > >  config DRM_MSM_DP
+> > >       bool "Enable DP support in MSM DRM driver"
+> > >       depends on DRM_MSM
+> > > +     default y
+> > >       help
+> > >         Compile in support for DP driver in msm drm driver. DP extern=
+al
+> > >         display support is enabled through this config option. It can
+> >
+> > Hi,
+> >
+> > You need a very strong justification to make an optional part of a driv=
+er
+> > to be "default y".
 >=20
-> On 8/6/2020 6:01 AM, Stephen Boyd wrote:
-> > Quoting Rohit kumar (2020-07-22 03:31:44)
-> >> From: Ajit Pandey <ajitp@codeaurora.org>
-> >>
-> >> LPASS variants have their own soc specific clocks that needs to be
-> >> enabled for MI2S audio support. Added a common variable in drvdata to
-> >> initialize such clocks using bulk clk api. Such clock names is
-> >> defined in variants specific data and needs to fetched during init.
-> > Why not just get all the clks and not even care about the names of them?
-> > Use devm_clk_bulk_get_all() for that, unless some clks need to change
-> > rates?
->=20
-> There is ahbix clk which needs clk rate to be set. Please check below=20
-> patch in
->=20
-> the series for reference
->=20
-> [PATCH v5 02/12] ASoC: qcom: lpass-cpu: Move ahbix clk to platform=20
-> specific function
+> My opinion is that if the driver is built, everything should be built.
+> This is what makes sense for distro's.  It is only the embedded case
+> where you want to trim down unneeded features where you might want to
+> disable some parts.  So 'default y' makes sense to me.
 >=20
 
-Alright. I wonder if we could make the API better or the binding better
-and always have the rate settable clk first and then
-devm_clk_bulk_get_all() could be used along with clk_set_rate() on some=20
-array element 0 or something. Anyway, don't mind me, I'm just thinking
-how to make this simpler.
+Maybe use 'default DRM_MSM' so that it doesn't trigger the 'default y'
+filters people have?
