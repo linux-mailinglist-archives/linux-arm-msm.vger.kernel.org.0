@@ -2,343 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1537723E946
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 10:41:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA7F623E99E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 10:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbgHGIjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Aug 2020 04:39:46 -0400
-Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:45323 "EHLO
-        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726382AbgHGIjq (ORCPT
+        id S1727077AbgHGI5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Aug 2020 04:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726940AbgHGI5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Aug 2020 04:39:46 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id 3xuekF5rnuuXO3xufkszm8; Fri, 07 Aug 2020 10:39:42 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1596789582; bh=eMMpSzp/x05VVXxKx6q3KU0DWwYmTE0vBs0szmaelP4=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=At9Ufbe0xlj89T4UL10YEDb7dkjuWbq2Fk/Dk9YGjnuKQB2pmLtLqEOa6JECxUX5s
-         zVQtKDq6s7w6eroG708gVaS6z/O8GuRhIUeex37jnCqraCCuO7AwvsAJrCfdBFtlqt
-         cNuQnxZTlxgIKnzq9LTzMnp9nGykbYSY3U6aPVPpUj8M3qrha/bJAKeJ7zE2F3VL1q
-         7OyADTqIDQ4xr6Ee0Ci0pgmdIVRJEY0IFVd+ilCCJzZuRX6n27fi8y+JmEmI617/HC
-         RQdCs7fWKIP+NTKWxe9KAFlvn+B8JwTM+WvZHItBmU0Eo7wQpP4OIvYDVvt9dF1ccr
-         8V5peRnv00W3Q==
-Subject: Re: [RFC PATCH 0/1] Add LTR controls
-To:     dikshita@codeaurora.org
-Cc:     Nicolas Dufresne <nicolas@ndufresne.ca>, mchehab@kernel.org,
-        ezequiel@collabora.com, boris.brezillon@collabora.com,
-        ribalda@kernel.org, paul.kocialkowski@bootlin.com,
-        posciak@chromium.org, linux-media@vger.kernel.org,
-        stanimir.varbanov@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org,
-        majja@codeaurora.org, linux-media-owner@vger.kernel.org
-References: <1591871121-25420-1-git-send-email-dikshita@codeaurora.org>
- <f07c4aab69d2b333c0e36c50c526c0a85322e708.camel@ndufresne.ca>
- <1a9904b6-60a5-0faa-8a5e-c9dc00802184@xs4all.nl>
- <40040141fc3027c3eb1fdebc1a0e8ade@codeaurora.org>
- <d37e4e83-b7ae-7d44-c75f-2055f11ae898@xs4all.nl>
- <dd365fe82523c4e44af4353f4f457137@codeaurora.org>
- <976be099-f003-d08f-3394-ff2dad43d7aa@xs4all.nl>
- <32881c41f811e625779f88c6da9deefb@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <cafda0d3-627a-b5b7-813f-66320a83781e@xs4all.nl>
-Date:   Fri, 7 Aug 2020 10:39:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Fri, 7 Aug 2020 04:57:45 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7FCC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Aug 2020 01:57:45 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id k8so1113719wma.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Aug 2020 01:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=H73Msn3ig8oo+rXLBRFR40qhkjSySvB7pfbrGJDIkto=;
+        b=P5BLbM7NaQMP5e2hJpp/jGb9n9cEXDqguDO01xB7EI9UcQR7OyzK98j0PVhTipFk+W
+         TQ70UzqxnBDEJangW88G9Dq+lqyXD9Rf/jm+IVd7toPT5l6IrZDIoKO127KmFgkwabTs
+         W14uS0QIQXZq8BKcRvIVDm4eJj+ZOC+728qNQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=H73Msn3ig8oo+rXLBRFR40qhkjSySvB7pfbrGJDIkto=;
+        b=kJU31aW9U9S/6G2RhVY+GbSpHj08BCjzW+fO1L1AwMZQ84arpx2JIHu5cTXPr3KBt3
+         uhYHUF1SsT2MwNn1MHbyQnDQsQG4CzBQmPif5G3Cl3GHWiizIY80fffBtudkMwcmj/Cp
+         Wb6AhkbbI4OTMqsbx57X22QlRm9FxNyZS7Efpd8zpCBUcrN2Su8x9BVzNBxGZ7F8ab2i
+         jc2UvJ/yYXUFB47QALHJVvcBl9GH0Qf6fFX/0u5zu2jQWVgGLOOsd5HYgZ/EfGoS96Xg
+         gNKqmVuNg1Y676RPEBbmVup8MEMoFpA7XWKE0BtvdnPsqmsZzKdhtOQ4f1e8pkoNzUSC
+         4i1Q==
+X-Gm-Message-State: AOAM533+D27HdjOByEMUqW8g0AmYZIb3iU8OBoO+vC1Xm/E0ncKYvd1q
+        wVY0b0n790VzAuM9Iy2ZZTryRw==
+X-Google-Smtp-Source: ABdhPJynkqQfgSYGXyIhXXRsLuU2JaYCqT62Ezi3rAu3TCxoggostYXPfA0lWy6VQU0lDkGUgE8khA==
+X-Received: by 2002:a1c:df02:: with SMTP id w2mr12869666wmg.137.1596790663593;
+        Fri, 07 Aug 2020 01:57:43 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id o30sm9643520wra.67.2020.08.07.01.57.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2020 01:57:42 -0700 (PDT)
+Date:   Fri, 7 Aug 2020 10:57:40 +0200
+From:   daniel@ffwll.ch
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Drew Davenport <ddavenport@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [v1] drm/msm/dpu: Fix reservation failures in modeset
+Message-ID: <20200807085740.GR6419@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Drew Davenport <ddavenport@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+References: <1596634446-1413-1-git-send-email-kalyan_t@codeaurora.org>
+ <CAF6AEGtWNDGDsUBVk-Ud5OpretHA4qKDKtE+3mS=C8DAa=+Heg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <32881c41f811e625779f88c6da9deefb@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfJn9sAG3LeIle/NVsi/7v2crd6bMdtZlC/SwaakcJIZWxKQ5619PGpF2AmXoY8kb4Mdce+Ty87aA4qw1yKqd3/vrlnNrujv0k3M5uTM2mtlv13t4ovX9
- oaxv9y+zM2jHyxzaoUMHT7FOQ28AyF7UeJ9pCiQPcvj1V0reG1v1rIn4A1ZY+lUaf4u6BT1EZuZNYO94HVG2E1W9x/gQJdipdIJb6gK77nuQBmmUlmw0bxvV
- +8cHd5/SWPijABVx6ZUEcpac1PUb0Mi8sVNvxRN6PJACgwqifK/hOtXido5qt4JmZCmp/ntG/uPg9yJnqKjucZaGDBCxtnypF9uig4I1riJkCiX20JzpV6Fj
- RAkbpOCKWdMTtFAgnnPN48DdUZW4/m5zKi11iXqjOqc67rgKb57bPi7MaGkqjN439mXDN27BSgd0SeIhRsEY95pQb9sCh3qmFS84QDD/PXk6PcUP90o/xlOe
- 9xzXs+2mjfu7b6i6TMQl24g982hbd7FdKg58JSkVssDa5We/CRTCzUIB7ERrfzaoBbe/jEoB55A7/iDi7tBcyZMpAXoD/0Yc0uYld90nCfrTiCHWyoTy68D2
- 65EfXdmFHQTm/M37Lc2Uz7wClAulGPicJ5D+gr2JIDyQGs8H0SISGKQlFdXev/1Jb6VMFbc6Yg+CUKwNw9UpC01bj0iBx+TPXgKXPT0iKO+XsvitIUyQ/EhC
- WzFhaDkxAc+Fm2bbcHBHO+BQpMNMg74l+HxizHKTSzQ80NzMk8h032hgTjy/phh4W1iuezaXTbmsbZxXios6DOIDHFGVKKwegxd3AnOx5HEES5baBIb9pg==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtWNDGDsUBVk-Ud5OpretHA4qKDKtE+3mS=C8DAa=+Heg@mail.gmail.com>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
+To:     unlisted-recipients:; (no To-header on input)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/08/2020 13:05, dikshita@codeaurora.org wrote:
-> On 2020-07-22 19:56, Hans Verkuil wrote:
->> On 20/07/2020 16:33, dikshita@codeaurora.org wrote:
->>> On 2020-07-16 14:25, Hans Verkuil wrote:
->>>> On 16/06/2020 20:41, dikshita@codeaurora.org wrote:
->>>>> Hi Hans, Nicolas,
->>>>>
->>>>> Thanks for your comments.
->>>>>
->>>>> On 2020-06-12 14:41, Hans Verkuil wrote:
->>>>>> Hi Dikshita, Nicolas,
->>>>>>
->>>>>> On 11/06/2020 16:22, Nicolas Dufresne wrote:
->>>>>>> Le jeudi 11 juin 2020 à 15:55 +0530, Dikshita Agarwal a écrit :
->>>>>>>> LTR (Long Term Reference) frames are the frames that are encoded
->>>>>>>> sometime in the past
->>>>>>>> and stored in the DPB buffer list to be used as reference to encode
->>>>>>>> future frames.
->>>>>>>> One usage of LTR encoding is to reduce error propagation for video
->>>>>>>> transmission
->>>>>>>> in packet lossy networks.  For example, encoder may want to specify
->>>>>>>> some key frames as
->>>>>>>> LTR pictures and use them as reference frames for encoding. With
->>>>>>>> extra protection
->>>>>>>> selectively on these LTR frames or synchronization with the receiver
->>>>>>>> of reception of
->>>>>>>> the LTR frames during transmission, decoder can receive reference
->>>>>>>> frames more reliably
->>>>>>>> than other non-reference frames. As a result, transmission error can
->>>>>>>> be effectively
->>>>>>>> restricted within certain frames rather than propagated to future
->>>>>>>> frames.
->>>>>>>>
->>>>>>>> We are introducing below V4l2 Controls for this feature
->>>>>>>> 1. V4L2_CID_MPEG_VIDEO_LTRCOUNT
->>>>>>>>     a. This is used to query or configure the number of LTR frames.
->>>>>>>>        This is a static control and is controlled by the client.
->>>>>>>>     b. The LTR index varies from 0 to the max LTR-1.
->>>>>>>>     c. If LTR Count is more than max supported LTR count (max LTR) by
->>>>>>>> driver, it will be rejected.
->>>>>>>>     d. Auto Marking : If LTR count is non zero,
->>>>>>>>         1) first LTR count frames would be mark as LTR automatically
->>>>>>>> after
->>>>>>>>              every IDR frame (inclusive).
->>>>>>>>         2) For multilayer encoding: first LTR count base layer
->>>>>>>> reference frames starting after
->>>>>>>>            every IDR frame (inclusive) in encoding order would be
->>>>>>>> marked as LTR frames by the encoder.
->>>>>>>>         3) Auto marking of LTR due to IDR should consider following
->>>>>>>> conditions:
->>>>>>>>             1. The frame is not already set to be marked as LTR.
->>>>>>>>             2. The frame is part of the base layer in the
->>>>>>>> hierarchical layer case.
->>>>>>>>             3. The number of frames currently marked as LTR is less
->>>>>>>> than the maximum LTR frame index plus 1.
->>>>>>>>     e. Encoder needs to handle explicit Mark/Use command when encoder
->>>>>>>> is still doing "auto" marking
->>>>>>
->>>>>> I don't follow this, quite possibly due to lack of experience with
->>>>>> encoders.
->>>>>>
->>>>>> I kind of would expect to see two modes: either automatic where
->>>>>> encoders can
->>>>>> mark up to LTR_COUNT frames as long term reference, and userspace just
->>>>>> sets
->>>>>> LTR_COUNT and doesn't have to do anything else.
->>>>>>
->>>>>> Or it is manual mode where userspace explicitly marks long term
->>>>>> reference
->>>>>> frames.
->>>>>>
->>>>>> From the proposal above it looks like you can mix auto and manual
->>>>>> modes.
->>>>>>
->>>>>> BTW, how do you 'unmark' long term reference frames?
->>>>>>
->>>>>> This feature is for stateful encoders, right?
->>>>>>
->>>>>>>
->>>>>>> Perhaps we are missing a LONG_TERM_REFERENCE_MODE ? I bet some encoder
->>>>>>> can select by themself long term references and even some encoders may
->>>>>>> not let the user decide.
->>>>>>>
->>>>>>> (not huge han of LTR acronyme, but that could be fine too, assuming
->>>>>>> you
->>>>>>> add more _).
->>>>>>>
->>>>>
->>>>> Userspace sets LTR count which signifies the number of LTR frames
->>>>> encoder needs to generate or keep.
->>>>> The encoder has to build-up its internal buffer reference list (aka DBP
->>>>> list or recon buffer list).
->>>>> In order to achieve that encoder will fill It's LTR (long term
->>>>> references) list and STR (short term references) list
->>>>> by auto marking n frames as LTR frames(n is equal to LTR count) based on
->>>>> auto-marking dictated by the encoder spec.
->>>>> The client then can replace those automatically marked frames with new
->>>>> frames using V4L2_CID_MPEG_VIDEO_MARKLTRFRAME and can ask
->>>>> encoder to refer the newly marked frame for encoding the next frame
->>>>> using V4L2_CID_MPEG_VIDEO_USELTRFRAME.
->>>>>
->>>>>>>>
->>>>>>>> 2. V4L2_CID_MPEG_VIDEO_MARKLTRFRAME :
->>>>>>>>     a. This signals to mark the current frame as LTR frame. It is a
->>>>>>>> dynamic control and also provide the LTR index to be used.
->>>>>>>>     b. the LTR index provided by this control should never exceed the
->>>>>>>> max LTR-1. Else it will be rejected.
->>>>>>>
->>>>>>> The "current" frame seems a bit loose. Perhaps you wanted to use
->>>>>>> buffer
->>>>>>> flags ? A bit like what we have to signal TOP/BOTTOM fields in
->>>>>>> alternate interlacing.
->>>>>>
->>>>>> I was thinking the same thing. Using a control for this doesn't seem
->>>>>> right.
->>>>>>
->>>>>
->>>>> the client sets this to replace automatically marked frames by the
->>>>> encoder with a particular frame.
->>>>> this provides an index that ranges from 0 to LTR count-1 and then the
->>>>> particular frame will be marked with that index.
->>>>> this can be achieved through request by associating this control with a
->>>>> specific buffer to make it synchronized.
->>>>>
->>>>>>>
->>>>>>>>
->>>>>>>> 3. V4L2_CID_MPEG_VIDEO_USELTRFRAME :
->>>>>>>>     a. This specifies the LTR frame(s) to be used for encoding the
->>>>>>>> current frame. This is a dynamic control.
->>>>>>>>     b. LTR Use Bitmap : this consists of bits [0, 15]. A total of N
->>>>>>>> LSB bits of this field are valid,
->>>>>>>>        where N is the maximum number of LTRs supported. All the other
->>>>>>>> bits are invalid and should be rejected.
->>>>>>>>        The LSB corresponds to the LTR index 0. Bit N-1 from the LSB
->>>>>>>> corresponds to the LTR index max LTR-1.
->>>>>>
->>>>>> How would userspace know this? Esp. with auto marking since userspace
->>>>>> would have
->>>>>> to predict how auto marking works (if I understand this correctly).
->>>>>>
->>>>>
->>>>> Client sets LTR count which tells about the number of LTR frames
->>>>> automatically marked by the encoder.
->>>>> so client can use LTR index (0 to LTR count -1) to ask encoder to refer
->>>>> any particular
->>>>> frame (marked automatically by driver or marked by client with
->>>>> V4L2_CID_MPEG_VIDEO_MARKLTRFRAME) as a reference to encode the next
->>>>> frame.
->>>>>
->>>>>> For which HW encoder is this meant?
->>>>>>
->>>>> This is primarily meant for H264 and HEVC.
->>>>
->>>> The venus encoder?
->>> yes
->>>>
->>>> Some more questions:
->>>>
->>>> 1) How many LTR frames do h.264 and hevc allow?
->>> According to spec, MAX LTR allowed by H.264 is 15 and HEVC allows max 32 LTR frames.
->>>> 2) Given N LTR frames, is there a ordering of those frames? E.g.
->>>>    the LTR frame with index 0 is processed/used differently from
->>>>    LTR frame with index 1? Or are they all equal in that it is just a pool
->>>>    of LTR frames that the encoder can use as it wishes?
->>> they are different frames marked to be used as LTR and stored in available indices.
->>> Userspace notifies encoder which LTR frame index to use via USE LTR control.
->>
->> One more question: if a frame is marked as a LTR frame, does that mean
->> that userspace
->> can't reuse the buffer containing that frame? I assume that's the case.
->>
->> One thing that I don't like about this API is that it introduces the
->> LTR indices.
->> Would it be possible to instead use buffer indices? (i.e. the
->> v4l2_buffer index field).
->> Then you can use a buffer flag to indicate that a buffer should be an
->> LTR buffer,
->> or (for automarking) the driver can mark a buffer as an LTR buffer by
->> setting this flag
->> before returning the buffer to userspace.
->>
->> You would still need a V4L2_CID_MPEG_VIDEO_USELTRFRAME, but that can
->> be a bitmask
->> using the buffer index.
->>
->> This would avoid introducing a second method of referring to buffers
->> (LTR index),
->> and I think that V4L2_CID_MPEG_VIDEO_MARKLTRFRAME can be dropped.
->>
->> Regards,
->>
->>     Hans
+On Wed, Aug 05, 2020 at 08:48:34AM -0700, Rob Clark wrote:
+> On Wed, Aug 5, 2020 at 6:34 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+> >
+> > In TEST_ONLY commit, rm global_state will duplicate the
+> > object and request for new reservations, once they pass
+> > then the new state will be swapped with the old and will
+> > be available for the Atomic Commit.
+> >
+> > This patch fixes some of missing links in the resource
+> > reservation sequence mentioned above.
+> >
+> > 1) Creation of a duplicate state in test_only commit (Rob)
+> > 2) Allow resource release only during crtc_active false.
+> >
+> > For #2
+> > In a modeset operation, swap state happens well before disable.
+> > Hence clearing reservations in disable will cause failures
+> > in modeset enable.
+> >
+> > Sequence:
+> >     Swap state --> old, new
+> >     modeset disables --> virt disable
+> >     modeset enable --> virt modeset
+> >
+> > Allow reservations to be cleared only when crtc active is false
+> > as in that case there wont be any modeset enable after disable.
+> >
+> > Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 7 +++++--
+> >  1 file changed, 5 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > index 63976dc..b85a576 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -582,7 +582,7 @@ static int dpu_encoder_virt_atomic_check(
+> >         dpu_kms = to_dpu_kms(priv->kms);
+> >         mode = &crtc_state->mode;
+> >         adj_mode = &crtc_state->adjusted_mode;
+> > -       global_state = dpu_kms_get_existing_global_state(dpu_kms);
+> > +       global_state = dpu_kms_get_global_state(crtc_state->state);
+> >         trace_dpu_enc_atomic_check(DRMID(drm_enc));
+> >
+> >         /*
+> > @@ -1172,6 +1172,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+> >         struct msm_drm_private *priv;
+> >         struct dpu_kms *dpu_kms;
+> >         struct dpu_global_state *global_state;
+> > +       struct drm_crtc_state *crtc_state;
+> >         int i = 0;
+> >
+> >         if (!drm_enc) {
+> > @@ -1191,6 +1192,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+> >         priv = drm_enc->dev->dev_private;
+> >         dpu_kms = to_dpu_kms(priv->kms);
+> >         global_state = dpu_kms_get_existing_global_state(dpu_kms);
+> > +       crtc_state = drm_enc->crtc->state;
+> >
+> >         trace_dpu_enc_disable(DRMID(drm_enc));
+> >
+> > @@ -1220,7 +1222,8 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+> >
+> >         DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
+> >
+> > -       dpu_rm_release(global_state, drm_enc);
+> > +       if (crtc_state->active_changed && !crtc_state->active)
+> > +               dpu_rm_release(global_state, drm_enc);
 > 
-> Hi Hans,
-> LTR indices are part of the spec, we are not introducing anything new.
-> Also, there is no relation between v4l2 buffer index and LTR index. So we can't use V4l2 index as LTR index.
+> I still think releasing the state in the atomic_commit() path is the
+> wrong thing to do.  In the commit path, the various state objects
+> should be immutable.. ie. in the atomic_test() path you derive the new
+> hw state (including assignment/release of resources), and
+> atomic_commit() is simply pushing the state down to the hw.
+> 
+> Otherwise, this looks better than v1.
 
-Ah, I think I start to understand the cause of my confusion: I thought that the
-buffers containing LTR frames had to be kept around by userspace, but instead the
-driver/HW makes copies and userspace does not need to do anything special with
-those buffers.
+Yeah this races and is total no-go. If you touch your state in commit
+(except some very specific exceptions), then a next TEST_ONLY atomic_check
+might duplicate the atomic state object in an incosistent state, and fail.
 
-OK, can you post a v2?
+Worse, this looks like if you race like that then you might duplicate an
+object with old reservations still in place, and then we've essentially
+leaked those resources and need to reboot. Yes most compositors use
+blocking modesets, but some actually do full nonblocking modesets.
 
-Document the controls in Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+This stuff needs to be moved into the atomic_check code, and your commit
+code needs to be careful to use the right state (old or new) when pushing
+it into hw.
 
-Regards,
-
-	Hans
+Cheers, Daniel
 
 > 
-> below are some details about LTR from spec:
+> BR,
+> -R
 > 
-> Regarding LTR count:
-> max_num_ref_frames specifies the maximum number of short-term and long-term reference frames, complementary reference field pairs, and non-paired reference fields that may be used by the decoding
-> process for inter prediction of any picture in the coded video sequence. The value of max_num_ref_frames shall be in the range of 0 to MaxDpbFrames (as specified in clause A.3.1 or A.3.2), inclusive.
-> max_long_term_frame_idx_plus1 minus 1 specifies the maximum value of long-term frame index allowed for long-term reference pictures (until receipt of another value of max_long_term_frame_idx_plus1).
-> The value of max_long_term_frame_idx_plus1 shall be in the range of 0 to max_num_ref_frames, inclusive.
-> 
-> 
-> Regarding LTR index which will be specified by V4L2_CID_MPEG_VIDEO_MARKLTRFRAM :
-> long_term_pic_num specifies the long-term picture number of the picture being moved to the current index in the list. When decoding a coded frame, long_term_pic_num shall be equal to a LongTermPicNum
-> assigned to one of the reference frames or complementary reference field pairs marked as "used for long-term reference".
-> long_term_frame_idx is used (with memory_management_control_operation equal to 3 or 6) to assign a long-term frame index to a picture. When the associated memory_management_control_operation is
-> processed by the decoding process, the value of long_term_frame_idx shall be in the range of 0 to MaxLongTermFrameIdx, inclusive.
-> 
-> 
-> Also As there can be multiple LTR present. We can instruct encoder to use one and/or multiple of them using V4L2_CID_MPEG_VIDEO_USELTRFRAME with the bitmask.
-> 
-> Thanks,
-> Dikshita
-> 
->>
->>>
->>> Thanks,
->>> Dikshita
->>>>
->>>> Regards,
->>>>
->>>>     Hans
->>>>
->>>>>
->>>>> Thanks,
->>>>> Dikshita
->>>>>
->>>>>>>
->>>>>>> Note, I haven't captured very well the userspace control flow, perhaps
->>>>>>> this could be enhanced through writing some documentation.
->>>>>>>
->>>>>>> As per all other generic encoder controls, we need to make sure it
->>>>>>> will
->>>>>>> be usable and flexible enough for multiple HW blocks, as it can be
->>>>>>> tedious to extend later otherwise. It is important that along with
->>>>>>> this
->>>>>>> RFC you provide some comparisons with with other HW / SW APIs in order
->>>>>>> to help justify the design decisions. I also think there should be
->>>>>>> link made V4L2_CID_MPEG_VIDEO_GOP_* , number of B-Frames etc.
->>>>>>
->>>>>> I agree with Nicolas.
->>>>>>
->>>>>> Regards,
->>>>>>
->>>>>>     Hans
->>>>>>
->>>>>>>
->>>>>>> regards,
->>>>>>> Nicolas
->>>>>>>
->>>>>>>>
->>>>>>>> Dikshita Agarwal (1):
->>>>>>>>   media: v4l2-ctrls:  add control for ltr
->>>>>>>>
->>>>>>>>  drivers/media/v4l2-core/v4l2-ctrls.c | 6 ++++++
->>>>>>>>  include/uapi/linux/v4l2-controls.h   | 4 ++++
->>>>>>>>  2 files changed, 10 insertions(+)
->>>>>>>>
->>>>>>>
+> >
+> >         mutex_unlock(&dpu_enc->enc_lock);
+> >  }
+> > --
+> > 1.9.1
+> >
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
