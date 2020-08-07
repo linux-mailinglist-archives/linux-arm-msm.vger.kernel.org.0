@@ -2,255 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0547523F37B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 22:03:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E5CE23F3AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Aug 2020 22:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726481AbgHGUDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Aug 2020 16:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40204 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbgHGUDM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Aug 2020 16:03:12 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C848C061756;
-        Fri,  7 Aug 2020 13:03:11 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id f12so2704501wru.13;
-        Fri, 07 Aug 2020 13:03:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OSLWRy9ysyT4eibP6iMlQrzS7AS0P8deCWCZeNvVCDw=;
-        b=cKuC0uosBz+Tin+kAwwFiT57a/t33eF5zdr86svo0PRBao/R9rftfkIlicbGB/6CfQ
-         S4nfOQXRm7QbcyeEjObL4IOJvkpgekEuY1wHQomjGZu9fhQfYqghrxYjTyfu+hh5rIWB
-         s1XhiMeNyq9zTiHXWTbTKy/1YRjfnuTn7h3Z4fGWrvt3Q+0rFf9e5BSO2QL5hV2vbp5p
-         +blXEG1jfKgMoEI17LfReVX/qA8nv53xZ+ZkXxnvmeIRyGFemZ/gSUhc/xihJma7Kbfg
-         SrkH3q01dBRUJ7xQrEaXjgbNWMoGkX61z2jDW5CvPhNAY2axJmS/ZiA5aoh4XYO4h2EJ
-         j+fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OSLWRy9ysyT4eibP6iMlQrzS7AS0P8deCWCZeNvVCDw=;
-        b=qaAzS7yppJ+/fN0fVVmwyBia0FtXYhz7UbsbQNeI1m1ywxSCUr1k2nijkKkw9AyWkl
-         yZSd9jOSppJ++8rvd3UumOogNm9CxipRKXXdnev3M/jYLER1lOfmFhZzvF0KU4AexysZ
-         AmuXVpVgscD8qbIaYlcNV04hE+oP31IWWX0t5Eerj01o10wVEA58BWPjcmmgMY8nLjn8
-         qy26Hx5gxVOrq+Fc8ro3JIXSeSVmo2C9VgAPSPWwXv67ZQLwkLSbDGyUi+KqasGhW7Dk
-         aVTiMGfdPxr2IiHPZdHeHoUj40Bvo+VPt6QFnylqsOw0Rw6VueYqGzt70iAE54VHjI1Z
-         +gbg==
-X-Gm-Message-State: AOAM530vqLGo6p3bcqX0WilPIkgDAszn6cPeBhASEwg6qd+EjWkbjRlf
-        qnxSJ54voTLIr88nnBFj77nTrgbsJlbd5dzNsmI=
-X-Google-Smtp-Source: ABdhPJxMIcDcXDI1jEIi/2CWQ0HC/RAkG26jBGU/hI2e7LmI9IXbWAVf1mVql7wNxwQh+Fcvv0OGDkHMT6/AryEFd7Q=
-X-Received: by 2002:adf:ec04:: with SMTP id x4mr12769567wrn.28.1596830590085;
- Fri, 07 Aug 2020 13:03:10 -0700 (PDT)
+        id S1726126AbgHGURM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Aug 2020 16:17:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54264 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725970AbgHGURL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Aug 2020 16:17:11 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A66C12075A;
+        Fri,  7 Aug 2020 20:17:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596831430;
+        bh=FTGX8V3BOAmBXKLEXLdqfDBeFt3UQfICsLUdU64xJiE=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=TKFpExx251qL5pZuFJCespYGYMaO91U5zGyMF51r/UcvnqdQ2cu4NxBi6+9zjiCGf
+         lmcvOhlGpRNU36TuvI3XAqLhDBjrcVHwrZS9+IsIfeeMR3reH68iZAasoSq+1g2tBH
+         VusTYqJ1btk2P+wMSfIVfmFwXYmkU1ME6O/jKw20=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20200803193547.305660-1-jcrouse@codeaurora.org> <20200803193547.305660-11-jcrouse@codeaurora.org>
-In-Reply-To: <20200803193547.305660-11-jcrouse@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 7 Aug 2020 13:03:54 -0700
-Message-ID: <CAF6AEGv53rt=33TjQ5mim3hhQvsQugv+u61r68=FTctdmoXw0w@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v11 10/12] drm/msm: Add support for private
- address space instances
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        David Airlie <airlied@linux.ie>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Daniel Vetter <daniel@ffwll.ch>, Will Deacon <will@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <989f1d99-3cd0-e725-3f6d-43facf1ec04d@codeaurora.org>
+References: <1595413915-17867-1-git-send-email-rohitkr@codeaurora.org> <1595413915-17867-2-git-send-email-rohitkr@codeaurora.org> <159667391634.1360974.15763918681460437981@swboyd.mtv.corp.google.com> <989f1d99-3cd0-e725-3f6d-43facf1ec04d@codeaurora.org>
+Subject: Re: [PATCH v4 01/12] ASoC: qcom: Add common array to initialize soc based core clocks
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Ajit Pandey <ajitp@codeaurora.org>
+To:     Rohit Kumar <rohitkr@codeaurora.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com
+Date:   Fri, 07 Aug 2020 13:17:09 -0700
+Message-ID: <159683142954.1360974.1307064087263696126@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 3, 2020 at 12:36 PM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> Add support for allocating private address space instances. Targets that
-> support per-context pagetables should implement their own function to
-> allocate private address spaces.
->
-> The default will return a pointer to the global address space.
->
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> ---
->
->  drivers/gpu/drm/msm/msm_drv.c     | 13 +++++++------
->  drivers/gpu/drm/msm/msm_drv.h     |  5 +++++
->  drivers/gpu/drm/msm/msm_gem_vma.c |  9 +++++++++
->  drivers/gpu/drm/msm/msm_gpu.c     | 17 +++++++++++++++++
->  drivers/gpu/drm/msm/msm_gpu.h     |  5 +++++
->  5 files changed, 43 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 108b663c3ef2..f072306f1260 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -597,7 +597,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
->         kref_init(&ctx->ref);
->         msm_submitqueue_init(dev, ctx);
->
-> -       ctx->aspace = priv->gpu ? priv->gpu->aspace : NULL;
-> +       ctx->aspace = msm_gpu_create_private_address_space(priv->gpu);
->         file->driver_priv = ctx;
->
->         return 0;
-> @@ -780,18 +780,19 @@ static int msm_ioctl_gem_cpu_fini(struct drm_device *dev, void *data,
->  }
->
->  static int msm_ioctl_gem_info_iova(struct drm_device *dev,
-> -               struct drm_gem_object *obj, uint64_t *iova)
-> +               struct drm_file *file, struct drm_gem_object *obj,
-> +               uint64_t *iova)
->  {
-> -       struct msm_drm_private *priv = dev->dev_private;
-> +       struct msm_file_private *ctx = file->driver_priv;
->
-> -       if (!priv->gpu)
-> +       if (!ctx->aspace)
->                 return -EINVAL;
->
->         /*
->          * Don't pin the memory here - just get an address so that userspace can
->          * be productive
->          */
-> -       return msm_gem_get_iova(obj, priv->gpu->aspace, iova);
-> +       return msm_gem_get_iova(obj, ctx->aspace, iova);
->  }
->
->  static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
-> @@ -830,7 +831,7 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
->                 args->value = msm_gem_mmap_offset(obj);
->                 break;
->         case MSM_INFO_GET_IOVA:
-> -               ret = msm_ioctl_gem_info_iova(dev, obj, &args->value);
-> +               ret = msm_ioctl_gem_info_iova(dev, file, obj, &args->value);
->                 break;
->         case MSM_INFO_SET_NAME:
->                 /* length check should leave room for terminating null: */
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index f69c6d62584d..51a5c9083e13 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -249,6 +249,10 @@ int msm_gem_map_vma(struct msm_gem_address_space *aspace,
->  void msm_gem_close_vma(struct msm_gem_address_space *aspace,
->                 struct msm_gem_vma *vma);
->
-> +
-> +struct msm_gem_address_space *
-> +msm_gem_address_space_get(struct msm_gem_address_space *aspace);
-> +
->  void msm_gem_address_space_put(struct msm_gem_address_space *aspace);
->
->  struct msm_gem_address_space *
-> @@ -434,6 +438,7 @@ static inline void msm_file_private_destroy(struct kref *kref)
->         struct msm_file_private *ctx = container_of(kref,
->                 struct msm_file_private, ref);
->
-> +       msm_gem_address_space_put(ctx->aspace);
->         kfree(ctx);
->  }
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-> index 5f6a11211b64..29cc1305cf37 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> @@ -27,6 +27,15 @@ void msm_gem_address_space_put(struct msm_gem_address_space *aspace)
->                 kref_put(&aspace->kref, msm_gem_address_space_destroy);
->  }
->
-> +struct msm_gem_address_space *
-> +msm_gem_address_space_get(struct msm_gem_address_space *aspace)
-> +{
-> +       if (!IS_ERR_OR_NULL(aspace))
-> +               kref_get(&aspace->kref);
-> +
-> +       return aspace;
-> +}
-> +
->  /* Actually unmap memory for the vma */
->  void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
->                 struct msm_gem_vma *vma)
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index a1f3da6550e5..aabbd7908ee5 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -823,6 +823,23 @@ static int get_clocks(struct platform_device *pdev, struct msm_gpu *gpu)
->         return 0;
->  }
->
-> +/* Return a new address space for a msm_drm_private instance */
-> +struct msm_gem_address_space *
-> +msm_gpu_create_private_address_space(struct msm_gpu *gpu)
-> +{
-> +       if (!gpu)
-> +               return NULL;
-> +
-> +       /*
-> +        * If the target doesn't support private address spaces then return
-> +        * the global one
-> +        */
-> +       if (!gpu->funcs->create_private_address_space)
-> +               return msm_gem_address_space_get(gpu->aspace);
-> +
-> +       return gpu->funcs->create_private_address_space(gpu);
+Quoting Rohit Kumar (2020-08-05 20:59:48)
+> Thanks Stephen for reviewing.
+>=20
+> On 8/6/2020 6:01 AM, Stephen Boyd wrote:
+> > Quoting Rohit kumar (2020-07-22 03:31:44)
+> >> From: Ajit Pandey <ajitp@codeaurora.org>
+> >>
+> >> LPASS variants have their own soc specific clocks that needs to be
+> >> enabled for MI2S audio support. Added a common variable in drvdata to
+> >> initialize such clocks using bulk clk api. Such clock names is
+> >> defined in variants specific data and needs to fetched during init.
+> > Why not just get all the clks and not even care about the names of them?
+> > Use devm_clk_bulk_get_all() for that, unless some clks need to change
+> > rates?
+>=20
+> There is ahbix clk which needs clk rate to be set. Please check below=20
+> patch in
+>=20
+> the series for reference
+>=20
+> [PATCH v5 02/12] ASoC: qcom: lpass-cpu: Move ahbix clk to platform=20
+> specific function
+>=20
 
-so if you flip the logic around here, you can get rid of the
-msm_gem_address_space_get() in per-gen backend and consolidate the
-error handling here, ie.
-
-  struct msm_gem_address_space *aspace = NULL;
-
-  if (gpu->funcs->create_private_address_space)
-     aspace = gpu->funcs->create_private_address_space(...);
-
-  if (IS_ERR_OR_NULL(aspace))
-    aspace = msm_gem_address_space_get(...);
-
-(and that also simplifies a bit the patch I have on top to show comm in debugfs)
-
-BR,
--R
-
-> +}
-> +
->  int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->                 struct msm_gpu *gpu, const struct msm_gpu_funcs *funcs,
->                 const char *name, struct msm_gpu_config *config)
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index d496d488222c..d298657b4730 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -64,6 +64,8 @@ struct msm_gpu_funcs {
->         void (*gpu_set_freq)(struct msm_gpu *gpu, struct dev_pm_opp *opp);
->         struct msm_gem_address_space *(*create_address_space)
->                 (struct msm_gpu *gpu, struct platform_device *pdev);
-> +       struct msm_gem_address_space *(*create_private_address_space)
-> +               (struct msm_gpu *gpu);
->  };
->
->  struct msm_gpu {
-> @@ -286,6 +288,9 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->                 struct msm_gpu *gpu, const struct msm_gpu_funcs *funcs,
->                 const char *name, struct msm_gpu_config *config);
->
-> +struct msm_gem_address_space *
-> +msm_gpu_create_private_address_space(struct msm_gpu *gpu);
-> +
->  void msm_gpu_cleanup(struct msm_gpu *gpu);
->
->  struct msm_gpu *adreno_load_gpu(struct drm_device *dev);
-> --
-> 2.25.1
->
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+Alright. I wonder if we could make the API better or the binding better
+and always have the rate settable clk first and then
+devm_clk_bulk_get_all() could be used along with clk_set_rate() on some=20
+array element 0 or something. Anyway, don't mind me, I'm just thinking
+how to make this simpler.
