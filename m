@@ -2,37 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30FE423FBCC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4290923FB4F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:49:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727854AbgHHXvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Aug 2020 19:51:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48472 "EHLO mail.kernel.org"
+        id S1727118AbgHHXg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Aug 2020 19:36:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49760 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726640AbgHHXgH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Aug 2020 19:36:07 -0400
+        id S1727112AbgHHXg5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Aug 2020 19:36:57 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 02B0B206D8;
-        Sat,  8 Aug 2020 23:36:05 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id E6ED6206C3;
+        Sat,  8 Aug 2020 23:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596929766;
-        bh=PtAUaUXWVdMKmJKMJdJwK0Vyk3IPL8CzcjLOySQH6vk=;
+        s=default; t=1596929816;
+        bh=pheYLl1F1b+RkUaS318nzLCRhq4G0ZZVeOC/26y6vwE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xAg5oNWq7tEZvjPhrIDA2xr+sWwwcZRSbU353rxNpMPWdTqMtgcNhyQbNuIeBR98n
-         175va/DNv1t97fSbayHzJgF1HtIiiRwy68/JMzrnGUzTlvUDUJVSdDMyWYAT2MeIcA
-         nLtgJcrYS8zEFQwGXGnvoewJrPDJG3TWdER+oW4I=
+        b=SnPxvsMyJzcP/ix5LR91EdtFwsFIMmA9joFrHdwrPULcEKjN11LdehMxyH88ude17
+         wHENC8QwcxRFcjicddBUwXo8vo8qXfd4mVZi1wfP2wdBR+XXOZO1XlRsoETlTfo7dO
+         6CEa4/Ic92R5gvMnfZlErujOKch/013QgXynaIOg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.8 18/72] soc: qcom: rpmh-rsc: Don't use ktime for timeout in write_tcs_reg_sync()
-Date:   Sat,  8 Aug 2020 19:34:47 -0400
-Message-Id: <20200808233542.3617339-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.8 51/72] soc: qcom: pdr: Reorder the PD state indication ack
+Date:   Sat,  8 Aug 2020 19:35:20 -0400
+Message-Id: <20200808233542.3617339-51-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200808233542.3617339-1-sashal@kernel.org>
 References: <20200808233542.3617339-1-sashal@kernel.org>
@@ -45,67 +44,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Sibi Sankar <sibis@codeaurora.org>
 
-[ Upstream commit be24c6a71ecfbd9436ea1f496eb518a53e06368c ]
+[ Upstream commit 72fe996f9643043c8f84e32c0610975b01aa555b ]
 
-The write_tcs_reg_sync() may be called after timekeeping is suspended
-so it's not OK to use ktime.  The readl_poll_timeout_atomic() macro
-implicitly uses ktime.  This was causing a warning at suspend time.
+The Protection Domains (PD) have a mechanism to keep its resources
+enabled until the PD down indication is acked. Reorder the PD state
+indication ack so that clients get to release the relevant resources
+before the PD goes down.
 
-Change to just loop 1000000 times with a delay of 1 us between loops.
-This may give a timeout of more than 1 second but never less and is
-safe even if timekeeping is suspended.
-
-NOTE: I don't have any actual evidence that we need to loop here.
-It's possibly that all we really need to do is just read the value
-back to ensure that the pipes are cleaned and the looping/comparing is
-totally not needed.  I never saw the loop being needed in my tests.
-However, the loop shouldn't hurt.
-
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
-Fixes: 91160150aba0 ("soc: qcom: rpmh-rsc: Timeout after 1 second in write_tcs_reg_sync()")
-Reported-by: Maulik Shah <mkshah@codeaurora.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20200528074530.1.Ib86e5b406fe7d16575ae1bb276d650faa144b63c@changeid
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+Reported-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Link: https://lore.kernel.org/r/20200701195954.9007-1-sibis@codeaurora.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/soc/qcom/pdr_interface.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 076fd27f3081c..906778e2c1fae 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -175,13 +175,21 @@ static void write_tcs_reg(const struct rsc_drv *drv, int reg, int tcs_id,
- static void write_tcs_reg_sync(const struct rsc_drv *drv, int reg, int tcs_id,
- 			       u32 data)
- {
--	u32 new_data;
-+	int i;
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index bdcf16f88a97f..4c9225f15c4e6 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -278,13 +278,15 @@ static void pdr_indack_work(struct work_struct *work)
  
- 	writel(data, tcs_reg_addr(drv, reg, tcs_id));
--	if (readl_poll_timeout_atomic(tcs_reg_addr(drv, reg, tcs_id), new_data,
--				      new_data == data, 1, USEC_PER_SEC))
--		pr_err("%s: error writing %#x to %d:%#x\n", drv->name,
--		       data, tcs_id, reg);
+ 	list_for_each_entry_safe(ind, tmp, &pdr->indack_list, node) {
+ 		pds = ind->pds;
+-		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
+ 
+ 		mutex_lock(&pdr->status_lock);
+ 		pds->state = ind->curr_state;
+ 		pdr->status(pds->state, pds->service_path, pdr->priv);
+ 		mutex_unlock(&pdr->status_lock);
+ 
++		/* Ack the indication after clients release the PD resources */
++		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
 +
-+	/*
-+	 * Wait until we read back the same value.  Use a counter rather than
-+	 * ktime for timeout since this may be called after timekeeping stops.
-+	 */
-+	for (i = 0; i < USEC_PER_SEC; i++) {
-+		if (readl(tcs_reg_addr(drv, reg, tcs_id)) == data)
-+			return;
-+		udelay(1);
-+	}
-+	pr_err("%s: error writing %#x to %d:%#x\n", drv->name,
-+	       data, tcs_id, reg);
- }
- 
- /**
+ 		mutex_lock(&pdr->list_lock);
+ 		list_del(&ind->node);
+ 		mutex_unlock(&pdr->list_lock);
 -- 
 2.25.1
 
