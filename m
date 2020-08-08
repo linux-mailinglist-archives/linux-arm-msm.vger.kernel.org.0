@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BE3023FAC8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:45:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6155623FA78
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:43:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728332AbgHHXpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Aug 2020 19:45:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53372 "EHLO mail.kernel.org"
+        id S1728670AbgHHXjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Aug 2020 19:39:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54924 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728354AbgHHXi4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Aug 2020 19:38:56 -0400
+        id S1728660AbgHHXjw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Aug 2020 19:39:52 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 672A62177B;
-        Sat,  8 Aug 2020 23:38:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 379702177B;
+        Sat,  8 Aug 2020 23:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596929936;
-        bh=DBiaXqIuFdlZnQECKgMrDMKXCs/X1vQkapo9xw7XxWs=;
+        s=default; t=1596929992;
+        bh=ZqsSaEHvtOy52gcYLr/fBxsyzfTsBC6SGkRQ0JU6LgQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PFR6hvJ744GEBfSJ5MUw6GYQFuW0GtqV1YjOra74ECZDawllcTeEiZZKDLIkyJ+D5
-         NzYOYiFVuJejfTne9gcsWvl5WnhPT9LEY7veUDHQBsxEd1EV0Z4La6eP7eSak7CDcT
-         HBYoZ1wPy05J6MJqJp7HkfbRq7Y8WUbXHPKjFvY8=
+        b=hwKuyc1alvtG5JLoy6b+IiPWqkcGr5W4w4PKmrtIzru8fJ3HHVIm3ctnGcLIwI8MF
+         rGaxV+mfUqa2X+PrFO6x84L4W94a51EKbPcJT4yup5Sh8HKTYQOyeIeegnOnkXo0m6
+         0dEJhpA/MTbbr+sbxVdjITz1sEqgOHVVIvSGQzPA=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Stephan Gerhold <stephan@gerhold.net>,
@@ -30,12 +30,12 @@ Cc:     Stephan Gerhold <stephan@gerhold.net>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 09/40] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
-Date:   Sat,  8 Aug 2020 19:38:13 -0400
-Message-Id: <20200808233844.3618823-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 08/21] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
+Date:   Sat,  8 Aug 2020 19:39:28 -0400
+Message-Id: <20200808233941.3619277-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200808233844.3618823-1-sashal@kernel.org>
-References: <20200808233844.3618823-1-sashal@kernel.org>
+In-Reply-To: <20200808233941.3619277-1-sashal@kernel.org>
+References: <20200808233941.3619277-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -70,10 +70,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-index 242aaea688040..1235830ffd0b7 100644
+index 390a2fa285145..60d218c5275c1 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-@@ -508,7 +508,7 @@ pinconf {
+@@ -516,7 +516,7 @@ pinconf {
  				pins = "gpio63", "gpio64", "gpio65", "gpio66",
  				       "gpio67", "gpio68";
  				drive-strength = <8>;
@@ -82,7 +82,7 @@ index 242aaea688040..1235830ffd0b7 100644
  			};
  		};
  		cdc_pdm_lines_sus: pdm_lines_off {
-@@ -537,7 +537,7 @@ pinconf {
+@@ -545,7 +545,7 @@ pinconf {
  				pins = "gpio113", "gpio114", "gpio115",
  				       "gpio116";
  				drive-strength = <8>;
@@ -91,7 +91,7 @@ index 242aaea688040..1235830ffd0b7 100644
  			};
  		};
  
-@@ -565,7 +565,7 @@ pinmux {
+@@ -573,7 +573,7 @@ pinmux {
  			pinconf {
  				pins = "gpio110";
  				drive-strength = <8>;
@@ -100,7 +100,7 @@ index 242aaea688040..1235830ffd0b7 100644
  			};
  		};
  
-@@ -591,7 +591,7 @@ pinmux {
+@@ -599,7 +599,7 @@ pinmux {
  			pinconf {
  				pins = "gpio116";
  				drive-strength = <8>;
@@ -109,7 +109,7 @@ index 242aaea688040..1235830ffd0b7 100644
  			};
  		};
  		ext_mclk_tlmm_lines_sus: mclk_lines_off {
-@@ -619,7 +619,7 @@ pinconf {
+@@ -627,7 +627,7 @@ pinconf {
  				pins = "gpio112", "gpio117", "gpio118",
  					"gpio119";
  				drive-strength = <8>;
