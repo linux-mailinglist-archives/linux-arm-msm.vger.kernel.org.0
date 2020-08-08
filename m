@@ -2,39 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5114223FAD4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:46:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BE3023FAC8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:45:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728269AbgHHXi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Aug 2020 19:38:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52266 "EHLO mail.kernel.org"
+        id S1728332AbgHHXpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Aug 2020 19:45:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53372 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726643AbgHHXiZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Aug 2020 19:38:25 -0400
+        id S1728354AbgHHXi4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Aug 2020 19:38:56 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A453520748;
-        Sat,  8 Aug 2020 23:38:23 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 672A62177B;
+        Sat,  8 Aug 2020 23:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596929904;
-        bh=sXtgcI/FlirC232oacrQyf899CGFW8M7zfPMnh/iWzs=;
+        s=default; t=1596929936;
+        bh=DBiaXqIuFdlZnQECKgMrDMKXCs/X1vQkapo9xw7XxWs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xZZzHQdHYm+s0mSgcf9Ip8YAo7Zo4bTlzDheF0nkI+aiZih720A1Vt8lAuh1jQ1vu
-         aQ6e3ZY+NUmb5GNhyfqZ6mAILXA7N4DemmCNZWBOfFgWbmkzgIFpAGUQ55etKZM+oq
-         nSjT+tZpgVcdpm3aha2sevKuMe251NtXgOfAUkGw=
+        b=PFR6hvJ744GEBfSJ5MUw6GYQFuW0GtqV1YjOra74ECZDawllcTeEiZZKDLIkyJ+D5
+         NzYOYiFVuJejfTne9gcsWvl5WnhPT9LEY7veUDHQBsxEd1EV0Z4La6eP7eSak7CDcT
+         HBYoZ1wPy05J6MJqJp7HkfbRq7Y8WUbXHPKjFvY8=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Sibi Sankar <sibis@codeaurora.org>,
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.7 43/58] soc: qcom: pdr: Reorder the PD state indication ack
-Date:   Sat,  8 Aug 2020 19:37:09 -0400
-Message-Id: <20200808233724.3618168-43-sashal@kernel.org>
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 09/40] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
+Date:   Sat,  8 Aug 2020 19:38:13 -0400
+Message-Id: <20200808233844.3618823-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200808233724.3618168-1-sashal@kernel.org>
-References: <20200808233724.3618168-1-sashal@kernel.org>
+In-Reply-To: <20200808233844.3618823-1-sashal@kernel.org>
+References: <20200808233844.3618823-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,48 +45,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sibi Sankar <sibis@codeaurora.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit 72fe996f9643043c8f84e32c0610975b01aa555b ]
+[ Upstream commit 1b6a1a162defe649c5599d661b58ac64bb6f31b6 ]
 
-The Protection Domains (PD) have a mechanism to keep its resources
-enabled until the PD down indication is acked. Reorder the PD state
-indication ack so that clients get to release the relevant resources
-before the PD goes down.
+msm8916-pins.dtsi specifies "bias-pull-none" for most of the audio
+pin configurations. This was likely copied from the qcom kernel fork
+where the same property was used for these audio pins.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-Reported-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-Link: https://lore.kernel.org/r/20200701195954.9007-1-sibis@codeaurora.org
+However, "bias-pull-none" actually does not exist at all - not in
+mainline and not in downstream. I can only guess that the original
+intention was to configure "no pull", i.e. bias-disable.
+
+Change it to that instead.
+
+Fixes: 143bb9ad85b7 ("arm64: dts: qcom: add audio pinctrls")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20200605185916.318494-2-stephan@gerhold.net
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pdr_interface.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8916-pins.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-index 17ad3b8698e16..cd8828c857234 100644
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -282,13 +282,15 @@ static void pdr_indack_work(struct work_struct *work)
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
+index 242aaea688040..1235830ffd0b7 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
+@@ -508,7 +508,7 @@ pinconf {
+ 				pins = "gpio63", "gpio64", "gpio65", "gpio66",
+ 				       "gpio67", "gpio68";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 		cdc_pdm_lines_sus: pdm_lines_off {
+@@ -537,7 +537,7 @@ pinconf {
+ 				pins = "gpio113", "gpio114", "gpio115",
+ 				       "gpio116";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
  
- 	list_for_each_entry_safe(ind, tmp, &pdr->indack_list, node) {
- 		pds = ind->pds;
--		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
+@@ -565,7 +565,7 @@ pinmux {
+ 			pinconf {
+ 				pins = "gpio110";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
  
- 		mutex_lock(&pdr->status_lock);
- 		pds->state = ind->curr_state;
- 		pdr->status(pds->state, pds->service_path, pdr->priv);
- 		mutex_unlock(&pdr->status_lock);
- 
-+		/* Ack the indication after clients release the PD resources */
-+		pdr_send_indack_msg(pdr, pds, ind->transaction_id);
-+
- 		mutex_lock(&pdr->list_lock);
- 		list_del(&ind->node);
- 		mutex_unlock(&pdr->list_lock);
+@@ -591,7 +591,7 @@ pinmux {
+ 			pinconf {
+ 				pins = "gpio116";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 		ext_mclk_tlmm_lines_sus: mclk_lines_off {
+@@ -619,7 +619,7 @@ pinconf {
+ 				pins = "gpio112", "gpio117", "gpio118",
+ 					"gpio119";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 		ext_sec_tlmm_lines_sus: tlmm_lines_off {
 -- 
 2.25.1
 
