@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B843823FA53
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:42:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30B5523FA37
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:41:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728007AbgHHXmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Aug 2020 19:42:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55786 "EHLO mail.kernel.org"
+        id S1728872AbgHHXkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Aug 2020 19:40:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56294 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727074AbgHHXkV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Aug 2020 19:40:21 -0400
+        id S1728867AbgHHXkk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Aug 2020 19:40:40 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6BE37208B3;
-        Sat,  8 Aug 2020 23:40:20 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 47BFB20656;
+        Sat,  8 Aug 2020 23:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596930021;
-        bh=MN5EgeoI4ccyyJSmPxzesSCVCG8knB0bfsW7JeAjl2c=;
+        s=default; t=1596930040;
+        bh=ZXv7bnXuZvWW5Lt2pE/RNj6XrUbrKNUDy20z6LOBy3A=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=wFIYANe+6ri5veOVYVtmZ44wyEKg+4sMMChKGMA8+Igus9yj3ZPhUBL06WSVjsqal
-         sTOZNOqao+3ASld7ppuKTP81Bq241ynbHwJ4zdNgCeZlWXAptu0fZQAZFYhrZLQUDc
-         RwH8wt2hR0yzHO2GrUuxYaDqdeST++/H6fL28lB8=
+        b=CVF1ZoCR4fVIad+6xlbNMxenKCGz1/2Fb+SOEYHGX8F+0KIvNkG+mvIAmHKo46Wvr
+         5G84CZBtA2h1wMQJs2uurIN/OQfM4FsUFfPtUqqj/HJWncq9LCzsyCjlO2hRgjEmvt
+         9YoGvFaFEKyPmeiO58rRzZEXq2nlEE7lij6BlgUk=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Stephan Gerhold <stephan@gerhold.net>,
@@ -30,12 +30,12 @@ Cc:     Stephan Gerhold <stephan@gerhold.net>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 06/14] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
-Date:   Sat,  8 Aug 2020 19:40:05 -0400
-Message-Id: <20200808234013.3619541-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 2/9] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
+Date:   Sat,  8 Aug 2020 19:40:29 -0400
+Message-Id: <20200808234037.3619732-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200808234013.3619541-1-sashal@kernel.org>
-References: <20200808234013.3619541-1-sashal@kernel.org>
+In-Reply-To: <20200808234037.3619732-1-sashal@kernel.org>
+References: <20200808234037.3619732-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -70,7 +70,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-index 4cb0b58341432..69ba1d79bcd5d 100644
+index 10c83e11c272f..fabc0cebe2aa2 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
 @@ -542,7 +542,7 @@ pinconf {
