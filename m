@@ -2,101 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76F4023F853
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Aug 2020 19:28:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE98823FBD7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:51:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726307AbgHHR2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Aug 2020 13:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgHHR2a (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Aug 2020 13:28:30 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90F1FC061756;
-        Sat,  8 Aug 2020 10:28:30 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id ha11so2594120pjb.1;
-        Sat, 08 Aug 2020 10:28:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v4VG68yjsSgJtRppBPF3uOrudyHEUR7Dzur3xN68sJo=;
-        b=LrumZTBTGBsFlxmSWq3tdNULI4G/LxjTqO7lrauGcYh59HaMmOQ/HpjplxEAKGw3Wr
-         jnZC8tOCSXmxU/n9HkWPLYthFW4fCWd13GtKO5vG6VJfRz4I/IkwnAeddxRxGNOKvhBI
-         yGRkyfpKht291PbtrNkaNHspu/bkYnSPFQFoKTpeo5EXO20TcjjCrMPq3F9y1HfXXFVu
-         C1INfLwg9aSZiLnCDM7h6sAecEmB2JjpviqYLyw09Wp+Rr+rkHxHwbeTJBdu4Q+sGBFG
-         Cns1iJ+Rd4NQL+vC47RX4oLc3fCFhwP2Iv8VDSWc2a7C5RHJ2jccZXAvKzIypxC3SqU6
-         prbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v4VG68yjsSgJtRppBPF3uOrudyHEUR7Dzur3xN68sJo=;
-        b=qChbr6OMg7qr9QinAoVuWmZILRm+wwbYcXGC8J7+UQQeWKTb6hJUGjjHNT9+EJuBWC
-         +NXGn67qWPtnG7WacZq4e7bZNJlTw/Dx5IgoKRE0isXtM7NIAvTSULbo5s+ZtENhQ3qU
-         8cH1XtaSoGRX5esBNMgp+mX0vWOPc6PKhSJmLqSwYPaq8Qw9/O3e6DH8ClBOAjAJohUf
-         wvmMn5boUWw4ReVC5T3wEcrWlZionhTELcAcb6O+tiBxC0rq1walfUbsz79YwA1b9Bil
-         EHSw3bSJiLuvpOJBXx3AhxwWaCmQQBBdugiRHWZtQz8nLlLUWb2DG1dYuNu3uDJ2acHH
-         KfNQ==
-X-Gm-Message-State: AOAM532dxNlBho5NGzhw9c8Po5nmBA/R9JExREioxNDZb4Sx27US2EBj
-        NDLfV0WR8CDtuQE2vk4IlTc=
-X-Google-Smtp-Source: ABdhPJzYr7usx3fGNyyPrJWCnyL3rFFa3Db/Q54TjWtTPXqE1GkwwM99QtEJztB1F3g1c1ejhy8NjA==
-X-Received: by 2002:a17:90b:378d:: with SMTP id mz13mr18857396pjb.98.1596907709800;
-        Sat, 08 Aug 2020 10:28:29 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id a7sm7594801pfd.194.2020.08.08.10.28.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2020 10:28:28 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx: fix crashdec section name typo
-Date:   Sat,  8 Aug 2020 10:29:11 -0700
-Message-Id: <20200808172913.380050-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        id S1726464AbgHHXv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Aug 2020 19:51:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48328 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726584AbgHHXgC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Aug 2020 19:36:02 -0400
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5D85A206D8;
+        Sat,  8 Aug 2020 23:36:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1596929762;
+        bh=vc8NGM3wB9EpgjxwZ28okfuV02spWivhd7Nv1uL4HzE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=e9EgseR7w5PEQYCY3Um2pMFaNEJ2oOg/c5Oej7nMt7+0XynQ8ykum13Vj/BnevrcB
+         uATooZR27nQQ8nq+ZeS/3Z3xsAKhUtT8wpeaQUdz++D5Z01X3Pxg87FVSZR09p4K2L
+         lW9bZsDDZ0YeMnCZQLEZaecWkDWMZvLmrWpSNhLM=
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.8 15/72] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
+Date:   Sat,  8 Aug 2020 19:34:44 -0400
+Message-Id: <20200808233542.3617339-15-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200808233542.3617339-1-sashal@kernel.org>
+References: <20200808233542.3617339-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-Backport note: maybe wait some time for the crashdec MR[1] to look for
-both the old typo'd name and the corrected name to land in mesa 20.2
+[ Upstream commit 1b6a1a162defe649c5599d661b58ac64bb6f31b6 ]
 
-[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/6242
+msm8916-pins.dtsi specifies "bias-pull-none" for most of the audio
+pin configurations. This was likely copied from the qcom kernel fork
+where the same property was used for these audio pins.
 
-Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+However, "bias-pull-none" actually does not exist at all - not in
+mainline and not in downstream. I can only guess that the original
+intention was to configure "no pull", i.e. bias-disable.
+
+Change it to that instead.
+
+Fixes: 143bb9ad85b7 ("arm64: dts: qcom: add audio pinctrls")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20200605185916.318494-2-stephan@gerhold.net
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8916-pins.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index 846fd5b54c23..2fb58b7098e4 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -372,7 +372,7 @@ static const struct a6xx_indexed_registers {
- 	u32 data;
- 	u32 count;
- } a6xx_indexed_reglist[] = {
--	{ "CP_SEQ_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
-+	{ "CP_SQE_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
- 		REG_A6XX_CP_SQE_STAT_DATA, 0x33 },
- 	{ "CP_DRAW_STATE", REG_A6XX_CP_DRAW_STATE_ADDR,
- 		REG_A6XX_CP_DRAW_STATE_DATA, 0x100 },
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
+index e9c00367f7fd0..5785bf0a807ce 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
+@@ -556,7 +556,7 @@ pinconf {
+ 				pins = "gpio63", "gpio64", "gpio65", "gpio66",
+ 				       "gpio67", "gpio68";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 		cdc_pdm_lines_sus: pdm-lines-off {
+@@ -585,7 +585,7 @@ pinconf {
+ 				pins = "gpio113", "gpio114", "gpio115",
+ 				       "gpio116";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 
+@@ -613,7 +613,7 @@ pinmux {
+ 			pinconf {
+ 				pins = "gpio110";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 
+@@ -639,7 +639,7 @@ pinmux {
+ 			pinconf {
+ 				pins = "gpio116";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 		ext_mclk_tlmm_lines_sus: mclk-lines-off {
+@@ -667,7 +667,7 @@ pinconf {
+ 				pins = "gpio112", "gpio117", "gpio118",
+ 					"gpio119";
+ 				drive-strength = <8>;
+-				bias-pull-none;
++				bias-disable;
+ 			};
+ 		};
+ 		ext_sec_tlmm_lines_sus: tlmm-lines-off {
 -- 
-2.26.2
+2.25.1
 
