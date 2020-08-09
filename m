@@ -2,122 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30B5523FA37
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 01:41:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 701D623FE2E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 14:16:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728872AbgHHXkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Aug 2020 19:40:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56294 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728867AbgHHXkk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Aug 2020 19:40:40 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 47BFB20656;
-        Sat,  8 Aug 2020 23:40:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1596930040;
-        bh=ZXv7bnXuZvWW5Lt2pE/RNj6XrUbrKNUDy20z6LOBy3A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CVF1ZoCR4fVIad+6xlbNMxenKCGz1/2Fb+SOEYHGX8F+0KIvNkG+mvIAmHKo46Wvr
-         5G84CZBtA2h1wMQJs2uurIN/OQfM4FsUFfPtUqqj/HJWncq9LCzsyCjlO2hRgjEmvt
-         9YoGvFaFEKyPmeiO58rRzZEXq2nlEE7lij6BlgUk=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        id S1726207AbgHIMQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Aug 2020 08:16:22 -0400
+Received: from labrats.qualcomm.com ([199.106.110.90]:11462 "EHLO
+        labrats.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726120AbgHIMQS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 9 Aug 2020 08:16:18 -0400
+IronPort-SDR: CTO+rrLecow/2EGmT11P2EhNW5sCylJEbG2R7mqzG9VnT1USWkD1s1DAdASKPb5UUx80GL+rNP
+ e1SOnmKN+NBwmY/oz5IZoanGIpJ3tYyVl1FuWcYX/4znjmJGgli69lKaAI+yQ27KA+Q0MeW7F0
+ JwaRnGVRzT9la0942Q/9kcUbqNgvxqmfckXh/CJs2ahnaJBkYwZ2bnVCTqyqTIlYKTyXYXfQtb
+ MCXRFMSNgiEE6V6igiDgynSqXUSP2Rww2i8ogSaWsBb/Z+CIiXNb9bmKgoWQFGn+pGbWoTnY8N
+ vpc=
+X-IronPort-AV: E=Sophos;i="5.75,453,1589266800"; 
+   d="scan'208";a="47246498"
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by labrats.qualcomm.com with ESMTP; 09 Aug 2020 05:16:05 -0700
+Received: from stor-presley.qualcomm.com ([192.168.140.85])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 09 Aug 2020 05:16:03 -0700
+Received: by stor-presley.qualcomm.com (Postfix, from userid 359480)
+        id 7F1DC2156E; Sun,  9 Aug 2020 05:16:03 -0700 (PDT)
+From:   Can Guo <cang@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        linux-scsi@vger.kernel.org, kernel-team@android.com,
+        saravanak@google.com, salyzyn@google.com, cang@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 2/9] arm64: dts: qcom: msm8916: Replace invalid bias-pull-none property
-Date:   Sat,  8 Aug 2020 19:40:29 -0400
-Message-Id: <20200808234037.3619732-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200808234037.3619732-1-sashal@kernel.org>
-References: <20200808234037.3619732-1-sashal@kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 2/9] ufs: ufs-qcom: Fix race conditions caused by func ufs_qcom_testbus_config
+Date:   Sun,  9 Aug 2020 05:15:48 -0700
+Message-Id: <1596975355-39813-3-git-send-email-cang@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1596975355-39813-1-git-send-email-cang@codeaurora.org>
+References: <1596975355-39813-1-git-send-email-cang@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stephan Gerhold <stephan@gerhold.net>
+If ufs_qcom_dump_dbg_regs() calls ufs_qcom_testbus_config() from
+ufshcd_suspend/resume and/or clk gate/ungate context, pm_runtime_get_sync()
+and ufshcd_hold() will cause racing problems. Fix this by removing the
+unnecessary calls of pm_runtime_get_sync() and ufshcd_hold().
 
-[ Upstream commit 1b6a1a162defe649c5599d661b58ac64bb6f31b6 ]
+Signed-off-by: Can Guo <cang@codeaurora.org>
+Reviewed-by: Hongwu Su <hongwus@codeaurora.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
 
-msm8916-pins.dtsi specifies "bias-pull-none" for most of the audio
-pin configurations. This was likely copied from the qcom kernel fork
-where the same property was used for these audio pins.
-
-However, "bias-pull-none" actually does not exist at all - not in
-mainline and not in downstream. I can only guess that the original
-intention was to configure "no pull", i.e. bias-disable.
-
-Change it to that instead.
-
-Fixes: 143bb9ad85b7 ("arm64: dts: qcom: add audio pinctrls")
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20200605185916.318494-2-stephan@gerhold.net
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/msm8916-pins.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-index 10c83e11c272f..fabc0cebe2aa2 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-@@ -542,7 +542,7 @@ pinconf {
- 				pins = "gpio63", "gpio64", "gpio65", "gpio66",
- 				       "gpio67", "gpio68";
- 				drive-strength = <8>;
--				bias-pull-none;
-+				bias-disable;
- 			};
- 		};
- 		cdc_pdm_lines_sus: pdm_lines_off {
-@@ -571,7 +571,7 @@ pinconf {
- 				pins = "gpio113", "gpio114", "gpio115",
- 				       "gpio116";
- 				drive-strength = <8>;
--				bias-pull-none;
-+				bias-disable;
- 			};
- 		};
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index d0d7552..823eccf 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1614,9 +1614,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
+ 	 */
+ 	}
+ 	mask <<= offset;
+-
+-	pm_runtime_get_sync(host->hba->dev);
+-	ufshcd_hold(host->hba, false);
+ 	ufshcd_rmwl(host->hba, TEST_BUS_SEL,
+ 		    (u32)host->testbus.select_major << 19,
+ 		    REG_UFS_CFG1);
+@@ -1629,8 +1626,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
+ 	 * committed before returning.
+ 	 */
+ 	mb();
+-	ufshcd_release(host->hba);
+-	pm_runtime_put_sync(host->hba->dev);
  
-@@ -599,7 +599,7 @@ pinmux {
- 			pinconf {
- 				pins = "gpio110";
- 				drive-strength = <8>;
--				bias-pull-none;
-+				bias-disable;
- 			};
- 		};
- 
-@@ -625,7 +625,7 @@ pinmux {
- 			pinconf {
- 				pins = "gpio116";
- 				drive-strength = <8>;
--				bias-pull-none;
-+				bias-disable;
- 			};
- 		};
- 		ext_mclk_tlmm_lines_sus: mclk_lines_off {
-@@ -653,7 +653,7 @@ pinconf {
- 				pins = "gpio112", "gpio117", "gpio118",
- 					"gpio119";
- 				drive-strength = <8>;
--				bias-pull-none;
-+				bias-disable;
- 			};
- 		};
- 		ext_sec_tlmm_lines_sus: tlmm_lines_off {
+ 	return 0;
+ }
 -- 
-2.25.1
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
