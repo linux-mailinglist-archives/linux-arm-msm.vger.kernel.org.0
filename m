@@ -2,100 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 546B923FFE8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Aug 2020 21:55:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71432240230
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 09:08:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726399AbgHITzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Aug 2020 15:55:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726296AbgHITzf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Aug 2020 15:55:35 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32FCAC061756;
-        Sun,  9 Aug 2020 12:55:35 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id v9so7391323ljk.6;
-        Sun, 09 Aug 2020 12:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:cc:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=gEex+sxqDKUVPlri56W6GJ2mSxGnivkW+gKH+hakLOQ=;
-        b=HVj0/PQ/3OaMWrCoamAvziPNkznvcRrRng7jJaKfouGJ+fj8l4IdZmMKlgCVKAhg6k
-         2k0QP0SGtM0J+Ju8SxQt/OrmAc49RRrrjmjDlwzq1pBK2H8PnC/fuff6nYliQifl3lca
-         KDG3BWcSEF3QjnJGnHPfGbOb4dBs/e5FK8Uhbs1jokgiaSCHQiKzH9LR5bve08N4AMD8
-         HvsgNFESfguyXkbervtBdyrD7wOgh0NponO5mihsBkohjAoGWOVkrzgY+SyW8ZBgYRvr
-         e2XYU/fgjpDOoF4hd6a464pcVLGsDs4619zFK5pnAQodHNq5xZA4KrJOl5NA60YrFaKg
-         ZosA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gEex+sxqDKUVPlri56W6GJ2mSxGnivkW+gKH+hakLOQ=;
-        b=epCE/WcY5N6GN/mG/3Z/qtHmXXKoDVT19Xeaazchr8irDg5hi5zVlGc0fxi1LJDcDy
-         CiyJ8yYveK8pAbuUHtTYqdz2hz1+FH+ymmINJ+YSfMS8BZzfzFSg1YaKs7/hom7ltKLR
-         lzIrVk++a+qiYxM0p+jUCujsZJqTqZ+2Uf3QRfc1BkwCh/7OPt8W7UhuGag/Act5kOXq
-         twKGsCa3qv0mTahjQ494bYEgTdvvcXOaqwm1Ua3PBVL+xyLJiBZwvdcNtk/U2pSlQKBu
-         DLEERwmbKPqxRM8csS9RDWQFbS9apJ5bXWH1++U4HfHGqwjsVbjeTfNrs/POJoOk03pt
-         M8vg==
-X-Gm-Message-State: AOAM531ohVdTwIgL/CJNLl7ilT4ctPKWKX9obYF99miLOy563b+y3LCn
-        XQBJcjQy2A8IDlMF/APAGSUJEsOhxuk=
-X-Google-Smtp-Source: ABdhPJwDZkj1p7MsiBCLaRLyV7loewdezRxQeqbc7Ppnj9H8iwVf0EgGpDw2ny0QUDQTWNaa4Zp6mw==
-X-Received: by 2002:a2e:96d9:: with SMTP id d25mr10568109ljj.376.1597002933351;
-        Sun, 09 Aug 2020 12:55:33 -0700 (PDT)
-Received: from [192.168.1.100] (host-46-186-7-151.dynamic.mm.pl. [46.186.7.151])
-        by smtp.gmail.com with ESMTPSA id h17sm8191818ljj.118.2020.08.09.12.55.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 09 Aug 2020 12:55:32 -0700 (PDT)
-Subject: Re: [PATCH] arm64: dts: qcom: pm660: Fix missing pound sign in
- interrupt-cells
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200725082417.8507-1-priv.luk@gmail.com>
-From:   LuK1337 <priv.luk@gmail.com>
-Message-ID: <ce0da794-14fa-2e50-4b90-003d46668c8e@gmail.com>
-Date:   Sun, 9 Aug 2020 21:55:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20200725082417.8507-1-priv.luk@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+        id S1725869AbgHJHIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Aug 2020 03:08:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42243 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725846AbgHJHIW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Aug 2020 03:08:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597043302; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=DWno83mBRJaK7NOCf0kx0lg1MeEy1FowAQbEwyuoYr4=; b=rtIYty+tSYKZr74fa8dbTNc0yxmRbUKFFCa1uCXdE8aoYgtc3GpBIUVZ7C0EFALwTxGMpxlF
+ 573V8BAcZfjoNNRb/+tVTW1pMQtyB8XegI8EXN8ao05rXgKMPbym9fVSOU1aVIAZfCHlhH1Q
+ uCkEm0HuTGsr6uTz+yiEMrwKW48=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f30f20d1e4d3989d4ed2b25 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 Aug 2020 07:06:53
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 64E17C433CB; Mon, 10 Aug 2020 07:06:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7C2E4C433C6;
+        Mon, 10 Aug 2020 07:06:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7C2E4C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        viresh.kumar@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH] opp: Fix dev_pm_opp_set_rate() to not return early
+Date:   Mon, 10 Aug 2020 12:36:19 +0530
+Message-Id: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bumping this thread, would be nice if someone could handle this simple fix.
+dev_pm_opp_set_rate() can now be called with freq = 0 inorder
+to either drop performance or bandwidth votes or to disable
+regulators on platforms which support them.
+In such cases, a subsequent call to dev_pm_opp_set_rate() with
+the same frequency ends up returning early because 'old_freq == freq'
+Instead make it fall through and put back the dropped performance
+and bandwidth votes and/or enable back the regulators.
 
-On 7/25/20 10:24 AM, LuK1337 wrote:
-> From: Łukasz Patron <priv.luk@gmail.com>
-> 
-> Also add a space after '=' while at it.
-> 
-> Signed-off-by: Łukasz Patron <priv.luk@gmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/pm660.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-> index ea0e9558d0f2..2e6a6f6c3b66 100644
-> --- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-> @@ -44,7 +44,7 @@ pm660_gpios: gpios@c000 {
->   			gpio-ranges = <&pm660_gpios 0 0 13>;
->   			#gpio-cells = <2>;
->   			interrupt-controller;
-> -			interrupt-cells =<2>;
-> +			#interrupt-cells = <2>;
->   		};
->   	};
->   };
-> 
+Fixes: cd7ea582 ("opp: Make dev_pm_opp_set_rate() handle freq = 0 to drop performance votes")
+Reported-by: Sajida Bhanu <sbhanu@codeaurora.org>
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ drivers/opp/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index 0c8c74a..a994f30 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -901,6 +901,9 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+ 
+ 	/* Return early if nothing to do */
+ 	if (old_freq == freq) {
++		if (opp_table->required_opp_tables || opp_table->regulators ||
++		    opp_table->paths)
++			goto skip_clk_only;
+ 		dev_dbg(dev, "%s: old/new frequencies (%lu Hz) are same, nothing to do\n",
+ 			__func__, freq);
+ 		ret = 0;
+@@ -919,6 +922,7 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+ 		goto put_opp_table;
+ 	}
+ 
++skip_clk_only:
+ 	temp_freq = old_freq;
+ 	old_opp = _find_freq_ceil(opp_table, &temp_freq);
+ 	if (IS_ERR(old_opp)) {
+@@ -954,8 +958,10 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+ 						 IS_ERR(old_opp) ? NULL : old_opp->supplies,
+ 						 opp->supplies);
+ 	} else {
++		ret = 0;
+ 		/* Only frequency scaling */
+-		ret = _generic_set_opp_clk_only(dev, clk, freq);
++		if (freq != old_freq)
++			ret = _generic_set_opp_clk_only(dev, clk, freq);
+ 	}
+ 
+ 	/* Scaling down? Configure required OPPs after frequency */
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
