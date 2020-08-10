@@ -2,124 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 309C52404E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 12:41:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E9C924053D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 13:22:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgHJKlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Aug 2020 06:41:24 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:52749 "EHLO m43-7.mailgun.net"
+        id S1726141AbgHJLWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Aug 2020 07:22:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:54320 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726355AbgHJKlX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Aug 2020 06:41:23 -0400
+        id S1726462AbgHJLVl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Aug 2020 07:21:41 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597056082; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=bOfrWCltEVI8DM/7pKEvaC9vrWo0+jptX7+Cco4h2KM=;
- b=tht9aF//E++FpTcEnkpn2rRGAqUIGQoiCnuwiS6NOrzjUR14EHPjKyN3us6TlezTwCPV3iXs
- XY5Y9cNK66KSTUb978OXLs5Hobcwr8Ic+3GRJD/dk0blTyph74haWnQTfr8Aiz6U1qkxBP6d
- av4Q/7Ccs+VnzsfVauUeN6xChCM=
+ s=smtp; t=1597058501; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=wCH2n0Q7ydePXVwUlLWJAGuuKVfyJIQu6/ufchdgTHs=; b=BKII8mKWyDhHaFXhE/kCsEgwlMHO+EZEsujz6Euy5H5QpjCoZhj4DK2IezW4CmCiTphjISIf
+ ttgQNpmVTfbSrfgJSGGjkvBF99Lp9q0z1CS/RZUs4qTZsxcItQtTTsgs33hnlV0pc+FimkwW
+ MKujo3frpOoxJrHhqOPwlMyiVtM=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n12.prod.us-west-2.postgun.com with SMTP id
- 5f31243d1e4d3989d43ac09d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 Aug 2020 10:41:01
+ smtp-out-n17.prod.us-east-1.postgun.com with SMTP id
+ 5f312daed78a2e58335e0985 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 Aug 2020 11:21:18
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 36E27C433CA; Mon, 10 Aug 2020 10:41:01 +0000 (UTC)
+        id A7A78C43395; Mon, 10 Aug 2020 11:21:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 80FD0C433C6;
-        Mon, 10 Aug 2020 10:41:00 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 10 Aug 2020 16:11:00 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
-        viresh.kumar@linaro.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] opp: Fix dev_pm_opp_set_rate() to not return early
-In-Reply-To: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
-References: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
-Message-ID: <6b35716fbf56b2a37ed2a7e4e5bbec87@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3FCB3C433C6;
+        Mon, 10 Aug 2020 11:21:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3FCB3C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     bjorn.andersson@linaro.org, maz@kernel.org,
+        linus.walleij@linaro.org, swboyd@chromium.org,
+        evgreen@chromium.org, mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v4 0/7] irqchip: qcom: pdc: Introduce irq_set_wake call
+Date:   Mon, 10 Aug 2020 16:50:53 +0530
+Message-Id: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-10 12:36, Rajendra Nayak wrote:
-> dev_pm_opp_set_rate() can now be called with freq = 0 inorder
-> to either drop performance or bandwidth votes or to disable
-> regulators on platforms which support them.
-> In such cases, a subsequent call to dev_pm_opp_set_rate() with
-> the same frequency ends up returning early because 'old_freq == freq'
-> Instead make it fall through and put back the dropped performance
-> and bandwidth votes and/or enable back the regulators.
-> 
-> Fixes: cd7ea582 ("opp: Make dev_pm_opp_set_rate() handle freq = 0 to
-> drop performance votes")
-> Reported-by: Sajida Bhanu <sbhanu@codeaurora.org>
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Changes in v4:
+- Drop "Remove irq_disable callback from msmgpio irqchip" patch from v3
+- Introduce irq_suspend_one() and irq_resume_one() callbacks
+- Use the new callbacks to unmask wake interrupts during suspend
+- Reset only pdc interrupts that are mapped in DTSI
 
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
+Changes in v3:
+- Drop gpiolib change (v2 patch 1) since its already in linux-next
+- Add Acked-by Linus Walleij for v2 patch 2 and v2 patch 3.
+- Address Stephen's comment to on v2 patch 3
+- Address Stephen's comment to change variable to static on v2 patch 4.
+- Add a new change to use return value from .irq_set_wake callback
+- Add a new change to reset PDC irq enable bank during init time
 
-> ---
->  drivers/opp/core.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 0c8c74a..a994f30 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -901,6 +901,9 @@ int dev_pm_opp_set_rate(struct device *dev,
-> unsigned long target_freq)
-> 
->  	/* Return early if nothing to do */
->  	if (old_freq == freq) {
-> +		if (opp_table->required_opp_tables || opp_table->regulators ||
-> +		    opp_table->paths)
-> +			goto skip_clk_only;
->  		dev_dbg(dev, "%s: old/new frequencies (%lu Hz) are same, nothing to 
-> do\n",
->  			__func__, freq);
->  		ret = 0;
-> @@ -919,6 +922,7 @@ int dev_pm_opp_set_rate(struct device *dev,
-> unsigned long target_freq)
->  		goto put_opp_table;
->  	}
-> 
-> +skip_clk_only:
->  	temp_freq = old_freq;
->  	old_opp = _find_freq_ceil(opp_table, &temp_freq);
->  	if (IS_ERR(old_opp)) {
-> @@ -954,8 +958,10 @@ int dev_pm_opp_set_rate(struct device *dev,
-> unsigned long target_freq)
->  						 IS_ERR(old_opp) ? NULL : old_opp->supplies,
->  						 opp->supplies);
->  	} else {
-> +		ret = 0;
->  		/* Only frequency scaling */
-> -		ret = _generic_set_opp_clk_only(dev, clk, freq);
-> +		if (freq != old_freq)
-> +			ret = _generic_set_opp_clk_only(dev, clk, freq);
->  	}
-> 
->  	/* Scaling down? Configure required OPPs after frequency */
+Changes in v2:
+- Fix compiler error on gpiolib patch
+
+This series adds support to lazy disable pdc interrupt.
+
+Some drivers using gpio interrupts want to configure gpio for wakeup using
+enable_irq_wake() but during suspend entry disables irq and expects system
+to resume when interrupt occurs. In the driver resume call interrupt is
+re-enabled and removes wakeup capability using disable_irq_wake() one such
+example is cros ec driver.
+
+With [1] in documentation saying "An irq can be disabled with disable_irq()
+and still wake the system as long as the irq has wake enabled".
+
+The PDC IRQs are currently "unlazy disabled" (disable here means that it
+will be masked in PDC & GIC HW GICD_ISENABLER, the moment driver invokes
+disable_irq()) such IRQs can not wakeup from low power modes like suspend
+to RAM since the driver chosen to disable this.
+
+During suspend entry, no one re-enable/unmask in HW, even if its marked for
+wakeup.
+
+One solutions thought to address this problem was...During suspend entry at
+last point, irq chip driver re-enable/unmask IRQs in HW that are marked for
+wakeup. This was attemped in [2].
+
+This series adds alternate solution to [2] by "lazy disable" IRQs in HW.
+The genirq takes care of lazy disable in case if irqchip did not implement
+irq_disable callback. Below is high level steps on how this works out..
+
+a. During driver's disable_irq() call, IRQ will be marked disabled in SW
+b. IRQ will still be enabled(read unmasked in HW)
+c. The device then enters low power mode like suspend to RAM
+d. The HW detects unmasked IRQs and wakesup the CPU
+e. During resume after local_irq_enable() CPU goes to handle the wake IRQ
+f. Generic handler comes to know that IRQ is disabled in SW
+g. Generic handler marks IRQ as pending and now invokes mask callback
+h. IRQ gets disabled/masked in HW now
+i. When driver invokes enable_irq() the SW pending IRQ leads IRQ's handler
+j. enable_irq() will again enable/unmask in HW
+
+[1] https://www.spinics.net/lists/kernel/msg3398294.html
+[2] https://patchwork.kernel.org/patch/11466021/
+
+Douglas Anderson (4):
+  genirq: Introduce irq_suspend_one() and irq_resume_one() callbacks
+  genirq: introduce irq_suspend_parent() and irq_resume_parent()
+  pinctrl: qcom: Call our parent for irq_suspend_one / irq_resume_one
+  irqchip: qcom-pdc: Unmask wake up irqs during suspend
+
+Maulik Shah (3):
+  pinctrl: qcom: Add msmgpio irqchip flags
+  pinctrl: qcom: Use return value from irq_set_wake call
+  irqchip: qcom-pdc: Reset all pdc interrupts during init
+
+ drivers/irqchip/qcom-pdc.c         | 63 ++++++++++++++++++++++++++++++++++++--
+ drivers/pinctrl/qcom/pinctrl-msm.c | 12 +++++---
+ include/linux/irq.h                | 15 +++++++--
+ kernel/irq/chip.c                  | 44 ++++++++++++++++++++++++++
+ kernel/irq/internals.h             |  2 ++
+ kernel/irq/pm.c                    | 15 +++++++--
+ 6 files changed, 138 insertions(+), 13 deletions(-)
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
