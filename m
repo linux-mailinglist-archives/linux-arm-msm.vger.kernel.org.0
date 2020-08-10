@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2C1D240543
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 13:23:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBFB1240542
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 13:23:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726606AbgHJLW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726630AbgHJLW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 10 Aug 2020 07:22:56 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:30563 "EHLO
+Received: from mail29.static.mailgun.info ([104.130.122.29]:44288 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726585AbgHJLVv (ORCPT
+        by vger.kernel.org with ESMTP id S1726587AbgHJLVu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Aug 2020 07:21:51 -0400
+        Mon, 10 Aug 2020 07:21:50 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597058510; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1597058509; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=mqnn1tcO31+McILWR4pyqetsbXKoTzHXqLT8TDtPAjM=; b=hv0jzyri5w5V+45Cp+mKpemwufOqsZBsmgVlRaEjhCQsq4ITy94fVFkro3QCKZAasJ4LaKgv
- 5/WcvMqhM3kRlHDEcYj61HA4Vv7TVzJBPLRBHacp6kckAiYYzKt2cT6WPqmbJgN0W9cnQpNO
- pBqmcaIOQt5FsncVCZCSWcfjogU=
+ bh=KHtJaMwqw4OFU9lDgwQ9JJ7ac4zj7luu1qJVM1mOZyY=; b=nxaGG8Y4W0CV+jl1rHquj8KaXcpREJuVwZhIbefF7VW45ZF8xmUMA59kYl4KgQ/RxRoRc1eN
+ nfog7ljsnYbQVOT8e5/iE8P5FelU4n6+R1VCL83FeUn9D+WMoSYQ0QoF6kKPgrMnEaHKxYrF
+ Y5ectvD+KwaOVQ3D4cPU+z4cJbI=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
- 5f312dc72889723bf8070751 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 Aug 2020 11:21:43
+ smtp-out-n15.prod.us-west-2.postgun.com with SMTP id
+ 5f312dcdc85a1092b00bb4d1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 10 Aug 2020 11:21:49
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9B69C433CA; Mon, 10 Aug 2020 11:21:43 +0000 (UTC)
+        id 584D7C433AD; Mon, 10 Aug 2020 11:21:49 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 75A96C433C9;
-        Mon, 10 Aug 2020 11:21:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 75A96C433C9
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0A0AC43395;
+        Mon, 10 Aug 2020 11:21:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0A0AC43395
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
 From:   Maulik Shah <mkshah@codeaurora.org>
@@ -51,9 +51,9 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
         ilina@codeaurora.org, lsrao@codeaurora.org,
         Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v4 5/7] pinctrl: qcom: Call our parent for irq_suspend_one / irq_resume_one
-Date:   Mon, 10 Aug 2020 16:50:58 +0530
-Message-Id: <1597058460-16211-6-git-send-email-mkshah@codeaurora.org>
+Subject: [PATCH v4 6/7] irqchip: qcom-pdc: Unmask wake up irqs during suspend
+Date:   Mon, 10 Aug 2020 16:50:59 +0530
+Message-Id: <1597058460-16211-7-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org>
 References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org>
@@ -64,27 +64,117 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Douglas Anderson <dianders@chromium.org>
 
-The parent (PDC) needs to handle this.  Call it.
+An interrupt that is masked but set for wakeup still needs to be able
+to wake up the system.  Use the new irq_suspend_one() and
+irq_resume_one() callback to handle this by unmasking at the hardware
+level at suspend time and putting things back at resume time.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/irqchip/qcom-pdc.c | 51 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 49 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index c264561..eaad229 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1237,6 +1237,8 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
- 	pctrl->irq_chip.irq_ack = msm_gpio_irq_ack;
- 	pctrl->irq_chip.irq_set_type = msm_gpio_irq_set_type;
- 	pctrl->irq_chip.irq_set_wake = msm_gpio_irq_set_wake;
-+	pctrl->irq_chip.irq_suspend_one = irq_chip_suspend_one_parent;
-+	pctrl->irq_chip.irq_resume_one = irq_chip_resume_one_parent;
- 	pctrl->irq_chip.irq_request_resources = msm_gpio_irq_reqres;
- 	pctrl->irq_chip.irq_release_resources = msm_gpio_irq_relres;
- 	pctrl->irq_chip.irq_set_affinity = msm_gpio_irq_set_affinity;
+diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+index c1c5dfa..dfcdfc5 100644
+--- a/drivers/irqchip/qcom-pdc.c
++++ b/drivers/irqchip/qcom-pdc.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+  */
+ 
++#include <linux/bitops.h>
+ #include <linux/err.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+@@ -38,6 +39,9 @@ struct pdc_pin_region {
+ 	u32 cnt;
+ };
+ 
++static DECLARE_BITMAP(pdc_wake_irqs, PDC_MAX_IRQS);
++static DECLARE_BITMAP(pdc_disabled_irqs, PDC_MAX_IRQS);
++
+ static DEFINE_RAW_SPINLOCK(pdc_lock);
+ static void __iomem *pdc_base;
+ static struct pdc_pin_region *pdc_region;
+@@ -89,11 +93,51 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
+ 	raw_spin_unlock(&pdc_lock);
+ }
+ 
++static void qcom_pdc_irq_suspend_one(struct irq_data *d)
++{
++	if (d->hwirq == GPIO_NO_WAKE_IRQ)
++		return;
++
++	if (test_bit(d->hwirq, pdc_wake_irqs) &&
++	    test_bit(d->hwirq, pdc_disabled_irqs)) {
++		/*
++		 * Disabled interrupts that have wake enabled need to be able
++		 * to wake us up from suspend.  Unmask them now to enable
++		 * this.
++		 */
++		pdc_enable_intr(d, true);
++		irq_chip_unmask_parent(d);
++	}
++}
++
++static void qcom_pdc_irq_resume_one(struct irq_data *d)
++{
++	if (d->hwirq == GPIO_NO_WAKE_IRQ)
++		return;
++
++	if (test_bit(d->hwirq, pdc_wake_irqs) &&
++	    test_bit(d->hwirq, pdc_disabled_irqs)) {
++		irq_chip_mask_parent(d);
++		pdc_enable_intr(d, false);
++	}
++}
++
++static int qcom_pdc_gic_set_wake(struct irq_data *d, unsigned int on)
++{
++	if (on)
++		set_bit(d->hwirq, pdc_wake_irqs);
++	else
++		clear_bit(d->hwirq, pdc_wake_irqs);
++
++	return irq_chip_set_wake_parent(d, on);
++}
++
+ static void qcom_pdc_gic_disable(struct irq_data *d)
+ {
+ 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+ 		return;
+ 
++	set_bit(d->hwirq, pdc_disabled_irqs);
+ 	pdc_enable_intr(d, false);
+ 	irq_chip_disable_parent(d);
+ }
+@@ -103,6 +147,7 @@ static void qcom_pdc_gic_enable(struct irq_data *d)
+ 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+ 		return;
+ 
++	clear_bit(d->hwirq, pdc_disabled_irqs);
+ 	pdc_enable_intr(d, true);
+ 	irq_chip_enable_parent(d);
+ }
+@@ -201,13 +246,15 @@ static struct irq_chip qcom_pdc_gic_chip = {
+ 	.irq_unmask		= qcom_pdc_gic_unmask,
+ 	.irq_disable		= qcom_pdc_gic_disable,
+ 	.irq_enable		= qcom_pdc_gic_enable,
++	.irq_set_wake		= qcom_pdc_gic_set_wake,
++	.irq_suspend_one	= qcom_pdc_irq_suspend_one,
++	.irq_resume_one		= qcom_pdc_irq_resume_one,
+ 	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
+ 	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
+ 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+ 	.irq_set_type		= qcom_pdc_gic_set_type,
+ 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
+-				  IRQCHIP_SET_TYPE_MASKED |
+-				  IRQCHIP_SKIP_SET_WAKE,
++				  IRQCHIP_SET_TYPE_MASKED,
+ 	.irq_set_vcpu_affinity	= irq_chip_set_vcpu_affinity_parent,
+ 	.irq_set_affinity	= irq_chip_set_affinity_parent,
+ };
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
