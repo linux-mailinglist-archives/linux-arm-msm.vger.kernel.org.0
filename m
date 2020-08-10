@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E41D2240FE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 21:26:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5744240FA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 21:25:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729652AbgHJT0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Aug 2020 15:26:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40884 "EHLO mail.kernel.org"
+        id S1729526AbgHJTMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Aug 2020 15:12:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41928 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728539AbgHJTL5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Aug 2020 15:11:57 -0400
+        id S1729522AbgHJTMY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Aug 2020 15:12:24 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E2F8E22B47;
-        Mon, 10 Aug 2020 19:11:55 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5571422CA1;
+        Mon, 10 Aug 2020 19:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597086716;
-        bh=VdDv/tPrzl9Gjvzoe32tHMeY4aINAE3rMv3C+4ryWME=;
+        s=default; t=1597086743;
+        bh=ZiaolnjIZq/xKnJoPIeccT6Nyg/HSL5K/OjpsfDFZts=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qD+rLN+AqL+qKuz47bcWti9eVXB4aEWzje0Mi88LJ0wHDl5GkhMksu22InZscTvVL
-         NsLvxTDmvfNozvwn130LYDoWX6EywAKtigM8eunt3wFhYqTfEzIZWPGnCxbI+Ixc9Q
-         F4CM072UtlK4NWcFHxmngK4KFEbMz3u92DaDjBX4=
+        b=OUDNCw1MCZRkAR4Btk4o+Lw/f6PKE9dtEXb5Y1vSXbquhHQ2g5sQfhuWGPeSoHhnc
+         BJeKMEfJ6W7kfJiLs82pHOOj6vWftbKHKxChPUK/XCTQVFNdzkhGPwokVydhPR6WD0
+         b5OjKMJoynwy78QXZ3+UgDxCgLIUYdHS/A+3OcW8=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 02/45] soc: qcom: rpmh-rsc: Set suppress_bind_attrs flag
-Date:   Mon, 10 Aug 2020 15:11:10 -0400
-Message-Id: <20200810191153.3794446-2-sashal@kernel.org>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.4 21/45] drm: msm: a6xx: fix gpu failure after system resume
+Date:   Mon, 10 Aug 2020 15:11:29 -0400
+Message-Id: <20200810191153.3794446-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200810191153.3794446-1-sashal@kernel.org>
 References: <20200810191153.3794446-1-sashal@kernel.org>
@@ -44,38 +46,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Maulik Shah <mkshah@codeaurora.org>
+From: Akhil P Oommen <akhilpo@codeaurora.org>
 
-[ Upstream commit 1a53ce9ab4faeb841b33d62d23283dc76c0e7c5a ]
+[ Upstream commit 57c0bd517c06b088106b0236ed604056c8e06da5 ]
 
-rpmh-rsc driver is fairly core to system and should not be removable
-once its probed. However it allows to unbind driver from sysfs using
-below command which results into a crash on sc7180.
+On targets where GMU is available, GMU takes over the ownership of GX GDSC
+during its initialization. So, move the refcount-get on GX PD before we
+initialize the GMU. This ensures that nobody can collapse the GX GDSC
+once GMU owns the GX GDSC. This patch fixes some GMU OOB errors seen
+during GPU wake up during a system resume.
 
-echo 18200000.rsc > /sys/bus/platform/drivers/rpmh/unbind
-
-Lets prevent unbind at runtime by setting suppress_bind_attrs flag.
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Link: https://lore.kernel.org/r/1592808805-2437-1-git-send-email-mkshah@codeaurora.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reported-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 0ba1f465db122..8924fcd9f5f59 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -715,6 +715,7 @@ static struct platform_driver rpmh_driver = {
- 	.driver = {
- 		  .name = "rpmh",
- 		  .of_match_table = rpmh_drv_match,
-+		  .suppress_bind_attrs = true,
- 	},
- };
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index e62b286947a7f..9ea748667fab0 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -713,10 +713,19 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	/* Turn on the resources */
+ 	pm_runtime_get_sync(gmu->dev);
+ 
++	/*
++	 * "enable" the GX power domain which won't actually do anything but it
++	 * will make sure that the refcounting is correct in case we need to
++	 * bring down the GX after a GMU failure
++	 */
++	if (!IS_ERR_OR_NULL(gmu->gxpd))
++		pm_runtime_get_sync(gmu->gxpd);
++
+ 	/* Use a known rate to bring up the GMU */
+ 	clk_set_rate(gmu->core_clk, 200000000);
+ 	ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
+ 	if (ret) {
++		pm_runtime_put(gmu->gxpd);
+ 		pm_runtime_put(gmu->dev);
+ 		return ret;
+ 	}
+@@ -752,19 +761,12 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	/* Set the GPU to the highest power frequency */
+ 	__a6xx_gmu_set_freq(gmu, gmu->nr_gpu_freqs - 1);
+ 
+-	/*
+-	 * "enable" the GX power domain which won't actually do anything but it
+-	 * will make sure that the refcounting is correct in case we need to
+-	 * bring down the GX after a GMU failure
+-	 */
+-	if (!IS_ERR_OR_NULL(gmu->gxpd))
+-		pm_runtime_get(gmu->gxpd);
+-
+ out:
+ 	/* On failure, shut down the GMU to leave it in a good state */
+ 	if (ret) {
+ 		disable_irq(gmu->gmu_irq);
+ 		a6xx_rpmh_stop(gmu);
++		pm_runtime_put(gmu->gxpd);
+ 		pm_runtime_put(gmu->dev);
+ 	}
  
 -- 
 2.25.1
