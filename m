@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BDD4240F76
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 21:22:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7450240F7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Aug 2020 21:22:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729665AbgHJTND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Aug 2020 15:13:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43310 "EHLO mail.kernel.org"
+        id S1729520AbgHJTWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Aug 2020 15:22:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43524 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728776AbgHJTM5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Aug 2020 15:12:57 -0400
+        id S1728615AbgHJTND (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Aug 2020 15:13:03 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9CF062224D;
-        Mon, 10 Aug 2020 19:12:56 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id DD6E8207FF;
+        Mon, 10 Aug 2020 19:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597086777;
-        bh=SKGMe+AprkijJRliWRr1iYnN8WQZPb7T8w0+0v5Nv6g=;
+        s=default; t=1597086782;
+        bh=zU3gqLY6kXCnvnQO33yxmEPVxLImmHnlbLEUlpmEZko=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=w/+FSGAtPzg8/bs986RncAKfjeMh1AfSIcZpX8Cad5itJjVQQSTutoExkzsIn+2h3
-         rdHbqQ1IEFFDVaj2u+aeZziLXFY4LhOmquLsjPDcW691avJtjmonlw0Q9WXruyE3zn
-         9YS3i77QIRucZCE6mqVoTGL45HyCiiMv0j4ZjY54=
+        b=bxQjQvEImmUWKX5MXcvIP3DMT/dXh5+URzZKcO/JVXk/1fZo+iebzbYwoHS3f68ye
+         mCE2ft73xPeHE69tSpvqN49/U7pVYZDorEj14F5H2nEZWKIYIpyaBfJAH+5ztxvMe/
+         H5xo4Kt0SPMisJ58uawxT54sok1lOA6KiOmkJfpo=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.4 45/45] drm/msm: ratelimit crtc event overflow error
-Date:   Mon, 10 Aug 2020 15:11:53 -0400
-Message-Id: <20200810191153.3794446-45-sashal@kernel.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 02/31] soc: qcom: rpmh-rsc: Set suppress_bind_attrs flag
+Date:   Mon, 10 Aug 2020 15:12:30 -0400
+Message-Id: <20200810191259.3794858-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200810191153.3794446-1-sashal@kernel.org>
-References: <20200810191153.3794446-1-sashal@kernel.org>
+In-Reply-To: <20200810191259.3794858-1-sashal@kernel.org>
+References: <20200810191259.3794858-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,33 +44,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+From: Maulik Shah <mkshah@codeaurora.org>
 
-[ Upstream commit 5e16372b5940b1fecc3cc887fc02a50ba148d373 ]
+[ Upstream commit 1a53ce9ab4faeb841b33d62d23283dc76c0e7c5a ]
 
-This can happen a lot when things go pear shaped.  Lets not flood dmesg
-when this happens.
+rpmh-rsc driver is fairly core to system and should not be removable
+once its probed. However it allows to unbind driver from sysfs using
+below command which results into a crash on sc7180.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+echo 18200000.rsc > /sys/bus/platform/drivers/rpmh/unbind
+
+Lets prevent unbind at runtime by setting suppress_bind_attrs flag.
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Link: https://lore.kernel.org/r/1592808805-2437-1-git-send-email-mkshah@codeaurora.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/rpmh-rsc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index ce59adff06aa1..36c85c05b7cf7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -381,7 +381,7 @@ static void dpu_crtc_frame_event_cb(void *data, u32 event)
- 	spin_unlock_irqrestore(&dpu_crtc->spin_lock, flags);
- 
- 	if (!fevent) {
--		DRM_ERROR("crtc%d event %d overflow\n", crtc->base.id, event);
-+		DRM_ERROR_RATELIMITED("crtc%d event %d overflow\n", crtc->base.id, event);
- 		return;
- 	}
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index 3c6f920535eae..519d19f57eee2 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -715,6 +715,7 @@ static struct platform_driver rpmh_driver = {
+ 	.driver = {
+ 		  .name = "rpmh",
+ 		  .of_match_table = rpmh_drv_match,
++		  .suppress_bind_attrs = true,
+ 	},
+ };
  
 -- 
 2.25.1
