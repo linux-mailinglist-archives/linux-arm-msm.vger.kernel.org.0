@@ -2,115 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2213B241DD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 18:07:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 602A8241DD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 18:08:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729046AbgHKQH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 12:07:26 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:19531 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728965AbgHKQHY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 12:07:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597162043; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=aopWiCCtLIEBIrrQ/NhWFIPKW7qlpjHho6adIWqA26g=; b=vfV9K4HNRb4+HoaX0w5O00SKed+5XoGMjRLvdz5FAmfwdIKJKWHwNbQzMeHbZ1OnQUYHniwV
- tW+/PJK+aLyVJNOf4R9p01nqvt+ODufAdg7BjsMAgs4fMRNQm8jiV7ToIeN+lg+D0zOb8rA3
- ZWgMJw1IvcHYueM4HVdusf/gjxA=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f32c1f8d96d28d61ebbdb5f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 11 Aug 2020 16:06:16
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 50EF1C433AF; Tue, 11 Aug 2020 16:06:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1729085AbgHKQIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 12:08:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57096 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728924AbgHKQIm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Aug 2020 12:08:42 -0400
+Received: from coco.lan (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61799C433C6;
-        Tue, 11 Aug 2020 16:06:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 61799C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 11 Aug 2020 10:06:11 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm/a6xx: fix crashdec section name typo
-Message-ID: <20200811160611.GA3221@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20200808172913.380050-1-robdclark@gmail.com>
+        by mail.kernel.org (Postfix) with ESMTPSA id 368E020756;
+        Tue, 11 Aug 2020 16:08:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597162122;
+        bh=c0bG2i1Yo67i7IiXHYRfswulMbXblEFqkOVi4XhGV88=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=qEZSye+miar8vUJnqElxOTF+POpDxRLrwgb4PFF6bSP2+ggDRLHJqs/AfECj87jDo
+         1dznyQAFkuNwLkHu0LO3+yWcPxweWPpRdDSW8sKfRXW3yCDeVZMbUR7azBqArgGOTe
+         KV83OQUa/6vq3aQLEdM8lF2WgrK1juCFqTxYsaIw=
+Date:   Tue, 11 Aug 2020 18:08:37 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        Mayulong <mayulong1@huawei.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 02/33] spmi, regulator, mfd: add drivers for hikey970
+ SPMI PMIC
+Message-ID: <20200811180837.2285c8b5@coco.lan>
+In-Reply-To: <20200811155810.GH6967@sirena.org.uk>
+References: <cover.1597160086.git.mchehab+huawei@kernel.org>
+        <36a548c10ea8c75d13c3e796c4cee65132819ef1.1597160086.git.mchehab+huawei@kernel.org>
+        <20200811155810.GH6967@sirena.org.uk>
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200808172913.380050-1-robdclark@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Aug 08, 2020 at 10:29:11AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Backport note: maybe wait some time for the crashdec MR[1] to look for
-> both the old typo'd name and the corrected name to land in mesa 20.2
-> 
-> [1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/6242
+Em Tue, 11 Aug 2020 16:58:10 +0100
+Mark Brown <broonie@kernel.org> escreveu:
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-
-> Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Tue, Aug 11, 2020 at 05:41:28PM +0200, Mauro Carvalho Chehab wrote:
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-> index 846fd5b54c23..2fb58b7098e4 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-> @@ -372,7 +372,7 @@ static const struct a6xx_indexed_registers {
->  	u32 data;
->  	u32 count;
->  } a6xx_indexed_reglist[] = {
-> -	{ "CP_SEQ_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
-> +	{ "CP_SQE_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
->  		REG_A6XX_CP_SQE_STAT_DATA, 0x33 },
->  	{ "CP_DRAW_STATE", REG_A6XX_CP_DRAW_STATE_ADDR,
->  		REG_A6XX_CP_DRAW_STATE_DATA, 0x100 },
-> -- 
-> 2.26.2
+> >  drivers/mfd/hisi_pmic_spmi.c            | 759 ++++++++++++++++++++++++
+> >  drivers/regulator/hisi_regulator_spmi.c | 741 +++++++++++++++++++++++
+> >  drivers/spmi/hisi-spmi-controller.c     | 390 ++++++++++++
+> >  include/linux/mfd/hisi_pmic.h           | 165 ++++++  
 > 
+> This is a single patch for three subsystems, please split it into per
+> subsystem patches.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Ok, I'll split on a next version. 
+
+
+Yet, it would be good to have all tree drivers applied via the same tree,
+as those drivers are needed altogether in order for this PMIC to work:
+
+- The SPMI controller driver talks with the hardware and provides
+  support via the SPMI bus calls;
+- The MFD PMIC driver binds into the SPMI bus and provide support
+  for interrupts. It also has support for binding the regulator
+  driver;
+- The regulator driver needs the PMIC driver (which in turn needs
+  the SPMI bus) in order to be able to talk with the hardware and
+  set the power supplied.
+
+That's basically why I opted to send the entire series altogether.
+
+Thanks,
+Mauro
