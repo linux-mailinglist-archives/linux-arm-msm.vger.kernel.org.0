@@ -2,39 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A547E241D78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 17:44:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06C6A241D64
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 17:42:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728998AbgHKPnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 11:43:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47564 "EHLO mail.kernel.org"
+        id S1728894AbgHKPmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 11:42:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47664 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728966AbgHKPmF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 11:42:05 -0400
+        id S1729041AbgHKPmJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Aug 2020 11:42:09 -0400
 Received: from mail.kernel.org (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9D88822BED;
-        Tue, 11 Aug 2020 15:42:03 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5931A22E02;
+        Tue, 11 Aug 2020 15:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597160523;
-        bh=Mv6bUdWC+SpZr0Ygy9V4QusAzRKfdHVnIi7cmc3ugqw=;
+        s=default; t=1597160524;
+        bh=2dtYAFvIXzlE8IJbj/8Y9D+YfRwjSvBfDUirFQOrAzA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lXAajxkH4rDw8N0yfJNEtKSJBzOTVILSCqBIDjP6kvBnFBBrCcYhbqTQxevCfDTMr
-         xz/fGSZnDgaXQE1bbUUdRgPorItokDsrVRv0YeC54bUGDlcyeZsRJhMYAQMySwSrQT
-         kAMPaUSHkYpZjkoqMvTMMwMmRq1nBrQ+buNLqT98=
+        b=kxbg52TX4tPINiN9Na3z9UOc2DmuBBhdPU67m9e900Nhem8yuzXQcMwfYqPANnxta
+         lu4egku0dn8CEvQb3b1HmSnc2xnvwDmuamn5fmsH025f9/zErkxE++bXf1MXXICULq
+         zjjhTZrzCi+HpxEICz87ZnMvbrhasP0XMBfGpRww=
 Received: from mchehab by mail.kernel.org with local (Exim 4.94)
         (envelope-from <mchehab@kernel.org>)
-        id 1k5WPZ-004bmw-Po; Tue, 11 Aug 2020 17:42:01 +0200
+        id 1k5WPa-004bnj-BS; Tue, 11 Aug 2020 17:42:02 +0200
 From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
         Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mayulong <mayulong1@huawei.com>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 16/33] spmi: hisi-spmi-controller: fix the dev_foo() logic
-Date:   Tue, 11 Aug 2020 17:41:42 +0200
-Message-Id: <3d20ec2b40ba1c339fd7e0d74ff34863b3d58e35.1597160086.git.mchehab+huawei@kernel.org>
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 30/33] mfd, spmi, regulator: fix some coding style issues at HiSilicon SPMI PMIC
+Date:   Tue, 11 Aug 2020 17:41:56 +0200
+Message-Id: <cb87f9f562f48db3a97fe122941adbde6a742023.1597160086.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1597160086.git.mchehab+huawei@kernel.org>
 References: <cover.1597160086.git.mchehab+huawei@kernel.org>
@@ -46,141 +48,201 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Right now, driver is printing some messages as:
+Checkpatch complains about some minor issues inside the
+new mft/regulator/spmi drivers for HiSilicon 6421v600.
 
-	[   33.833026] (NULL device *): spmi_read_cmd: id:0 addr:0x17, read value: 00
-
-This is because dev_foo() are not using a device with a name
-set. Change the logic for it to print it right.
+Address them.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- drivers/spmi/hisi-spmi-controller.c | 41 +++++++++++++++--------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+ drivers/mfd/hi6421-spmi-pmic.c           |  4 ++--
+ drivers/regulator/hi6421v600-regulator.c | 28 ++++++++++++------------
+ drivers/spmi/spmi.c                      |  5 ++++-
+ include/linux/mfd/hi6421-spmi-pmic.h     |  3 ++-
+ 4 files changed, 22 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/spmi/hisi-spmi-controller.c b/drivers/spmi/hisi-spmi-controller.c
-index e996114bc717..153bcdb0cde4 100644
---- a/drivers/spmi/hisi-spmi-controller.c
-+++ b/drivers/spmi/hisi-spmi-controller.c
-@@ -102,7 +102,8 @@ struct spmi_controller_dev {
- 	u32			channel;
+diff --git a/drivers/mfd/hi6421-spmi-pmic.c b/drivers/mfd/hi6421-spmi-pmic.c
+index 09cedfa1e4bb..d8b84d64041e 100644
+--- a/drivers/mfd/hi6421-spmi-pmic.c
++++ b/drivers/mfd/hi6421-spmi-pmic.c
+@@ -189,7 +189,7 @@ static struct irq_chip hi6421_spmi_pmu_irqchip = {
  };
  
--static int spmi_controller_wait_for_done(struct spmi_controller_dev *ctrl_dev,
-+static int spmi_controller_wait_for_done(struct device *dev,
-+					 struct spmi_controller_dev *ctrl_dev,
- 					 void __iomem *base, u8 sid, u16 addr)
+ static int hi6421_spmi_irq_map(struct irq_domain *d, unsigned int virq,
+-			irq_hw_number_t hw)
++			       irq_hw_number_t hw)
  {
- 	u32 status = 0;
-@@ -117,19 +118,17 @@ static int spmi_controller_wait_for_done(struct spmi_controller_dev *ctrl_dev,
+ 	struct hi6421_spmi_pmic *pmic = d->host_data;
  
- 		if (status & SPMI_APB_TRANS_DONE) {
- 			if (status & SPMI_APB_TRANS_FAIL) {
--				dev_err(ctrl_dev->dev,
--					"%s: transaction failed (0x%x)\n",
-+				dev_err(dev, "%s: transaction failed (0x%x)\n",
- 					__func__, status);
- 				return -EIO;
- 			}
-+			dev_dbg(dev, "%s: status 0x%x\n", __func__, status);
- 			return 0;
- 		}
- 		udelay(1);
- 	}
+@@ -350,7 +350,7 @@ static int hi6421_spmi_pmic_probe(struct spmi_device *pdev)
+ 	 * The logic below will rely that the pmic is already stored at
+ 	 * drvdata.
+ 	 */
+-	dev_dbg(&pdev->dev, "SPMI-PMIC: adding childs for %pOF\n",
++	dev_dbg(&pdev->dev, "SPMI-PMIC: adding children for %pOF\n",
+ 		pdev->dev.of_node);
+ 	ret = devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_NONE,
+ 				   hi6421v600_devs, ARRAY_SIZE(hi6421v600_devs),
+diff --git a/drivers/regulator/hi6421v600-regulator.c b/drivers/regulator/hi6421v600-regulator.c
+index 72f51594b5ff..c80dfac1e4c3 100644
+--- a/drivers/regulator/hi6421v600-regulator.c
++++ b/drivers/regulator/hi6421v600-regulator.c
+@@ -40,7 +40,7 @@
+ #include <linux/spmi.h>
  
--	dev_err(ctrl_dev->dev,
--		"%s: timeout, status 0x%x\n",
--		__func__, status);
-+	dev_err(dev, "%s: timeout, status 0x%x\n", __func__, status);
- 	return -ETIMEDOUT;
+ #define rdev_dbg(rdev, fmt, arg...)	\
+-		 pr_debug("%s: %s: " fmt, rdev->desc->name, __func__, ##arg)
++		 pr_debug("%s: %s: " fmt, (rdev)->desc->name, __func__, ##arg)
+ 
+ struct hi6421v600_regulator {
+ 	struct regulator_desc rdesc;
+@@ -105,7 +105,7 @@ static int hi6421_spmi_regulator_disable(struct regulator_dev *rdev)
+ 		 rdev->desc->enable_reg, rdev->desc->enable_mask);
+ 
+ 	hi6421_spmi_pmic_rmw(pmic, rdev->desc->enable_reg,
+-		      rdev->desc->enable_mask, 0);
++			     rdev->desc->enable_mask, 0);
+ 
+ 	return 0;
+ }
+@@ -122,7 +122,7 @@ static int hi6421_spmi_regulator_get_voltage_sel(struct regulator_dev *rdev)
+ 	selector = (reg_val & rdev->desc->vsel_mask) >>	(ffs(rdev->desc->vsel_mask) - 1);
+ 
+ 	rdev_dbg(rdev,
+-		"vsel_reg=0x%x, value=0x%x, entry=0x%x, voltage=%d mV\n",
++		 "vsel_reg=0x%x, value=0x%x, entry=0x%x, voltage=%d mV\n",
+ 		 rdev->desc->vsel_reg, reg_val, selector,
+ 		rdev->desc->ops->list_voltage(rdev, selector) / 1000);
+ 
+@@ -144,7 +144,7 @@ static int hi6421_spmi_regulator_set_voltage_sel(struct regulator_dev *rdev,
+ 
+ 	/* set voltage selector */
+ 	rdev_dbg(rdev,
+-		"vsel_reg=0x%x, mask=0x%x, value=0x%x, voltage=%d mV\n",
++		 "vsel_reg=0x%x, mask=0x%x, value=0x%x, voltage=%d mV\n",
+ 		 rdev->desc->vsel_reg, rdev->desc->vsel_mask, reg_val,
+ 		 rdev->desc->ops->list_voltage(rdev, selector) / 1000);
+ 
+@@ -169,7 +169,7 @@ static unsigned int hi6421_spmi_regulator_get_mode(struct regulator_dev *rdev)
+ 		mode = REGULATOR_MODE_NORMAL;
+ 
+ 	rdev_dbg(rdev,
+-		"enable_reg=0x%x, eco_mode_mask=0x%x, reg_val=0x%x, %s mode\n",
++		 "enable_reg=0x%x, eco_mode_mask=0x%x, reg_val=0x%x, %s mode\n",
+ 		 rdev->desc->enable_reg, sreg->eco_mode_mask, reg_val,
+ 		 mode == REGULATOR_MODE_IDLE ? "idle" : "normal");
+ 
+@@ -177,7 +177,7 @@ static unsigned int hi6421_spmi_regulator_get_mode(struct regulator_dev *rdev)
  }
  
-@@ -145,9 +144,9 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
- 	u8 op_code, i;
+ static int hi6421_spmi_regulator_set_mode(struct regulator_dev *rdev,
+-				   unsigned int mode)
++					  unsigned int mode)
+ {
+ 	struct hi6421v600_regulator *sreg = rdev_get_drvdata(rdev);
+ 	struct hi6421_spmi_pmic *pmic = sreg->pmic;
+@@ -204,9 +204,10 @@ static int hi6421_spmi_regulator_set_mode(struct regulator_dev *rdev,
+ 	return 0;
+ }
  
- 	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
--		dev_err(spmi_controller->dev
--		, "spmi_controller supports 1..%d bytes per trans, but:%ld requested"
--					, SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
-+		dev_err(&ctrl->dev,
-+			"spmi_controller supports 1..%d bytes per trans, but:%ld requested",
-+			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
- 		return  -EINVAL;
- 	}
+-static unsigned int hi6421_spmi_regulator_get_optimum_mode(struct regulator_dev *rdev,
+-						    int input_uV, int output_uV,
+-						    int load_uA)
++static unsigned int
++hi6421_spmi_regulator_get_optimum_mode(struct regulator_dev *rdev,
++				       int input_uV, int output_uV,
++				       int load_uA)
+ {
+ 	struct hi6421v600_regulator *sreg = rdev_get_drvdata(rdev);
  
-@@ -159,7 +158,7 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
- 	} else if (opc == SPMI_CMD_EXT_READL) {
- 		op_code = SPMI_CMD_EXT_REG_READ_L;
+@@ -220,7 +221,7 @@ static unsigned int hi6421_spmi_regulator_get_optimum_mode(struct regulator_dev
+ }
+ 
+ static int hi6421_spmi_dt_parse(struct platform_device *pdev,
+-			 struct hi6421v600_regulator *sreg,
++				struct hi6421v600_regulator *sreg,
+ 			 struct regulator_desc *rdesc)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -256,7 +257,7 @@ static int hi6421_spmi_dt_parse(struct platform_device *pdev,
+ 		sreg->eco_uA = 0;
  	} else {
--		dev_err(spmi_controller->dev, "invalid read cmd 0x%x", opc);
-+		dev_err(&ctrl->dev, "invalid read cmd 0x%x", opc);
- 		return -EINVAL;
- 	}
+ 		ret = of_property_read_u32(np, "eco-microamp",
+-					&sreg->eco_uA);
++					   &sreg->eco_uA);
+ 		if (ret) {
+ 			dev_err(dev, "missing eco-microamp property\n");
+ 			return ret;
+@@ -331,8 +332,8 @@ static struct regulator_ops hi6421_spmi_ldo_rops = {
+  */
  
-@@ -173,7 +172,7 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
+ static int hi6421_spmi_regulator_probe_ldo(struct platform_device *pdev,
+-				    struct device_node *np,
+-				    struct hi6421_spmi_pmic *pmic)
++					   struct device_node *np,
++					   struct hi6421_spmi_pmic *pmic)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct regulator_desc *rdesc;
+@@ -404,7 +405,6 @@ static int hi6421_spmi_regulator_probe_ldo(struct platform_device *pdev,
+ 	return ret;
+ }
  
- 	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
+-
+ static int hi6421_spmi_regulator_probe(struct platform_device *pdev)
+ {
+ 	struct device *pmic_dev = pdev->dev.parent;
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index fd3ff6079b15..253340e10dab 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -23,6 +23,7 @@ static DEFINE_IDA(ctrl_ida);
+ static void spmi_dev_release(struct device *dev)
+ {
+ 	struct spmi_device *sdev = to_spmi_device(dev);
++
+ 	kfree(sdev);
+ }
  
--	rc = spmi_controller_wait_for_done(spmi_controller,
-+	rc = spmi_controller_wait_for_done(&ctrl->dev, spmi_controller,
- 					   spmi_controller->base, sid, addr);
- 	if (rc)
- 		goto done;
-@@ -195,10 +194,11 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
- done:
- 	spin_unlock_irqrestore(&spmi_controller->lock, flags);
- 	if (rc)
--		dev_err(spmi_controller->dev, "spmi read wait timeout op:0x%x sid:%d addr:0x%x bc:%ld\n",
-+		dev_err(&ctrl->dev,
-+			"spmi read wait timeout op:0x%x sid:%d addr:0x%x bc:%ld\n",
- 			opc, sid, addr, bc + 1);
- 	else
--		dev_dbg(spmi_controller->dev, "%s: id:%d addr:0x%x, read value: %*ph\n",
-+		dev_dbg(&ctrl->dev, "%s: id:%d addr:0x%x, read value: %*ph\n",
- 			__func__, sid, addr, (int)bc, __buf);
+@@ -33,6 +34,7 @@ static const struct device_type spmi_dev_type = {
+ static void spmi_ctrl_release(struct device *dev)
+ {
+ 	struct spmi_controller *ctrl = to_spmi_controller(dev);
++
+ 	ida_simple_remove(&ctrl_ida, ctrl->nr);
+ 	kfree(ctrl);
+ }
+@@ -487,7 +489,7 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
+ 			continue;
  
- 	return rc;
-@@ -216,9 +216,9 @@ static int spmi_write_cmd(struct spmi_controller *ctrl,
- 	u8 op_code, i;
+ 		sdev->dev.of_node = node;
+-		sdev->usid = (u8) reg[0];
++		sdev->usid = (u8)reg[0];
  
- 	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
--		dev_err(spmi_controller->dev
--		, "spmi_controller supports 1..%d bytes per trans, but:%ld requested"
--					, SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
-+		dev_err(&ctrl->dev,
-+			"spmi_controller supports 1..%d bytes per trans, but:%ld requested",
-+			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
- 		return  -EINVAL;
- 	}
+ 		err = spmi_device_add(sdev);
+ 		if (err) {
+@@ -531,6 +533,7 @@ EXPORT_SYMBOL_GPL(spmi_controller_add);
+ static int spmi_ctrl_remove_device(struct device *dev, void *data)
+ {
+ 	struct spmi_device *spmidev = to_spmi_device(dev);
++
+ 	if (dev->type == &spmi_dev_type)
+ 		spmi_device_remove(spmidev);
+ 	return 0;
+diff --git a/include/linux/mfd/hi6421-spmi-pmic.h b/include/linux/mfd/hi6421-spmi-pmic.h
+index d12ad7484018..aeff96c4a37e 100644
+--- a/include/linux/mfd/hi6421-spmi-pmic.h
++++ b/include/linux/mfd/hi6421-spmi-pmic.h
+@@ -38,7 +38,8 @@ struct hi6421_spmi_pmic {
+ 	unsigned int				*irqs;
+ 	int					irqnum;
+ 	int					irqarray;
+-	struct hi6421_spmi_irq_mask_info 	irq_mask_addr;
++
++	struct hi6421_spmi_irq_mask_info	irq_mask_addr;
+ 	struct hi6421_spmi_irq_info		irq_addr;
+ };
  
-@@ -230,7 +230,7 @@ static int spmi_write_cmd(struct spmi_controller *ctrl,
- 	} else if (opc == SPMI_CMD_EXT_WRITEL) {
- 		op_code = SPMI_CMD_EXT_REG_WRITE_L;
- 	} else {
--		dev_err(spmi_controller->dev, "invalid write cmd 0x%x", opc);
-+		dev_err(&ctrl->dev, "invalid write cmd 0x%x", opc);
- 		return -EINVAL;
- 	}
- 
-@@ -262,14 +262,15 @@ static int spmi_write_cmd(struct spmi_controller *ctrl,
- 	/* Start the transaction */
- 	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
- 
--	rc = spmi_controller_wait_for_done(spmi_controller, spmi_controller->base, sid, addr);
-+	rc = spmi_controller_wait_for_done(&ctrl->dev, spmi_controller,
-+					   spmi_controller->base, sid, addr);
- 	spin_unlock_irqrestore(&spmi_controller->lock, flags);
- 
- 	if (rc)
--		dev_err(spmi_controller->dev, "spmi write wait timeout op:0x%x sid:%d addr:0x%x bc:%ld\n",
-+		dev_err(&ctrl->dev, "spmi write wait timeout op:0x%x sid:%d addr:0x%x bc:%ld\n",
- 			opc, sid, addr, bc);
- 	else
--		dev_dbg(spmi_controller->dev, "%s: id:%d addr:0x%x, wrote value: %*ph\n",
-+		dev_dbg(&ctrl->dev, "%s: id:%d addr:0x%x, wrote value: %*ph\n",
- 			__func__, sid, addr, (int)bc, __buf);
- 
- 	return rc;
 -- 
 2.26.2
 
