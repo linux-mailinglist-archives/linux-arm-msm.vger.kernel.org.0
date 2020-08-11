@@ -2,85 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1945F2421FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:31:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D02424220D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:38:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbgHKVbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 17:31:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59570 "EHLO
+        id S1726154AbgHKVis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 17:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbgHKVbw (ORCPT
+        with ESMTP id S1725987AbgHKVis (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 17:31:52 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB5EC06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:31:52 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id k13so126102plk.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:31:52 -0700 (PDT)
+        Tue, 11 Aug 2020 17:38:48 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D33C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:38:47 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id o13so7341466pgf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=AfVxpgJxZ32N1LOm+xuOB6bkmTr53McK9vmsomA92LE=;
-        b=ic5XdKk6gydxMYgraTNOoIX9Qr9I7gTNGubgAXooXrZz721fDPz4m2EjMsb00Sz127
-         fbvckWvmv30KrMBqS0QhDkKbbJcxA7HlsSi94cHs+zcHYOvkq3S86i84M0rblZRajpOf
-         IcSFe1DZhwHH7CyGIHN64J+Tvo+CwqO7p+XM4=
+        bh=1nrb3NgtDDxsWCZ3942wbgZJjyuNTJop0IAqdy46x2E=;
+        b=SLAg/bSB8leuas1NGcLTVpkt9V5S65bDnusR0xr7dHetnOCWWkPJVYCBGHKPw4KBGd
+         wTycZoIu+xB9k7Y6zp7TA3bcCo1foX5tbAG6ocFqOmD+2aqDJ/GweFjavdECAIN6HfgZ
+         f6PIxnZlemV4sNORNrJzBhVnbuVUzA4msZp8U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=AfVxpgJxZ32N1LOm+xuOB6bkmTr53McK9vmsomA92LE=;
-        b=QVFCZc5pzSAVu7cs3j+KJETriGAoCJhPNkdDz+gJs9XQOmLj/YYYxwb9O+Gbc61jyU
-         66sK15QZGqtzommYfTWuMIBTIJJ/xy2KqNQJKA1dEf3zabk/wkbwwtC8bhHtgtqDkB1i
-         dQppNkxZ6w5ATV24V6PO1G9l1mINE61DyU+7v/CvC6UsjeO+rI2dCg3BXPBpmh1JjfRb
-         P7ICL7ws5J3CHHj9sMcGskjmTo6wal/f8UjtuyMkQsyQzRfHjZasPEP7m++8uD5DRNUG
-         hdDGJfWYWre8YW5yKAWXwNpLjaIYcxmmoNSa6hMx+l5Kw/SlOO8Z5teNfm8IX8k4IJiD
-         onSA==
-X-Gm-Message-State: AOAM530EUbidCn0qPm9YAI81rPeNueM20RMxys8eEjdN2Ndts0Dubshe
-        uCH4i0n0ACALRXz4My+j3d4oug==
-X-Google-Smtp-Source: ABdhPJyqL4TIDkhnnHdUryy4LGUhSjye4Oo+pBg8Wb1pq/wCqARm+tYcIqMsZ0lHBAcH7HwPz+7cPg==
-X-Received: by 2002:a17:902:6ac3:: with SMTP id i3mr2101777plt.21.1597181511570;
-        Tue, 11 Aug 2020 14:31:51 -0700 (PDT)
+        bh=1nrb3NgtDDxsWCZ3942wbgZJjyuNTJop0IAqdy46x2E=;
+        b=obSmUARjFdeM/sCiuLT8Let2FgU+T/YO9WYBWE/N53z41tJOXP9rOvVvf7QKb5K7WD
+         6AvrnxigkQ5w+S5G+cjBvHMf9JMInHobP+0XtEap33WYH9BXepB1uBd/Xu1KfQciM7fo
+         LZ0fEKsXbtKLApF39M82y7ys2ydrjn5Dc7ofX1/+ju3SvbT639XUctyz5aL3vj+3fV8e
+         0qOuHc8Q1QCg/zK3UftB4FnuyiXx3iNETy93yQvzUpHUwD+oxvMFR7KHTP+P3Wqv3qFx
+         DNbMuQdMcQGJqegf0DJ8ZmQg9jpY1VothKkmC3azVFJaBalHlDjyYYX8Ez9isl94mjkt
+         btcw==
+X-Gm-Message-State: AOAM5312ugAH5uJqPjYB8pYWitQVMpRzK5/Id4Tl+5kQHNvmH4baAp6r
+        nxjbRPkW7o4mPlQMccHz8rBDVA==
+X-Google-Smtp-Source: ABdhPJwtxwh5lCBGmCPx0ZPwhsatN1s9hf+e8/eO+zY0pcyW6mpIB0WR+zdT98h80OGBjoMKHaFxZg==
+X-Received: by 2002:a63:3ec2:: with SMTP id l185mr2431941pga.365.1597181927521;
+        Tue, 11 Aug 2020 14:38:47 -0700 (PDT)
 Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id w15sm3796047pjk.13.2020.08.11.14.31.50
+        by smtp.gmail.com with ESMTPSA id n22sm3465728pjq.25.2020.08.11.14.38.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 14:31:50 -0700 (PDT)
+        Tue, 11 Aug 2020 14:38:47 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1597058460-16211-8-git-send-email-mkshah@codeaurora.org>
-References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org> <1597058460-16211-8-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v4 7/7] irqchip: qcom-pdc: Reset all pdc interrupts during init
+In-Reply-To: <20200811190252.10559-1-sibis@codeaurora.org>
+References: <20200811190252.10559-1-sibis@codeaurora.org>
+Subject: Re: [PATCH 1/2] PM / Domains: Add GENPD_FLAG_SUSPEND_ON flag
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Date:   Tue, 11 Aug 2020 14:31:49 -0700
-Message-ID: <159718150946.1360974.10983789401181131846@swboyd.mtv.corp.google.com>
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        gregkh@linuxfoundation.org, pavel@ucw.cz, len.brown@intel.com,
+        rnayak@codeaurora.org, dianders@chromium.org, khilman@kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>
+To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
+        rjw@rjwysocki.net, ulf.hansson@linaro.org
+Date:   Tue, 11 Aug 2020 14:38:45 -0700
+Message-ID: <159718192589.1360974.15808376172581486987@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-08-10 04:21:00)
-> Clear previous kernel's configuration during init by resetting
-> interrupts in enable bank to zero.
+Quoting Sibi Sankar (2020-08-11 12:02:51)
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index ee11502a575b0..3002a2d68936a 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -55,6 +55,10 @@
+>   *
+>   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM dom=
+ain
+>   *                             powered on except for system suspend.
+> + *
+> + * GENPD_FLAG_SUSPEND_ON:      Instructs genpd to keep the PM domain pow=
+ered
+> + *                             on during suspend and runtime PM controll=
+ed
 
-Can you please add some more information here about why we're not
-clearing all the pdc irqs and only the ones that are listed in DT? Is
-that because the pdc is shared between exception levels of the CPU and
-so some irqs shouldn't be used? Does the DT binding need to change to
-only list the hwirqs that are usable by the OS instead of the ones that
-are usable for the entire system? The binding doesn't mention this at
-all so I am just guessing here.
+Maybe, "powered on across system suspend (if it is already powered on)"
+to match the hunk above that talks about system suspend for
+GENPD_FLAG_RPM_ALWAYS_ON. Otherwise someone may think that this powers
+on the genpd during suspend or powers it on during runtime suspend.
 
->=20
-> Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> + *                             otherwise.
+>   */
+>  #define GENPD_FLAG_PM_CLK       (1U << 0)
+>  #define GENPD_FLAG_IRQ_SAFE     (1U << 1)
