@@ -2,185 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E8A92415FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 07:33:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13767241640
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 08:19:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727804AbgHKFdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 01:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53168 "EHLO
+        id S1727066AbgHKGTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 02:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726735AbgHKFdc (ORCPT
+        with ESMTP id S1726154AbgHKGTH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 01:33:32 -0400
+        Tue, 11 Aug 2020 02:19:07 -0400
 Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D55C061756
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Aug 2020 22:33:31 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id l60so1271481pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Aug 2020 22:33:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82B88C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Aug 2020 23:19:07 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id mt12so1320115pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Aug 2020 23:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+xKWNhXUsJiYvk1+a8fEWrWaR7NXfzlzjTUeULn8Q6c=;
-        b=H6BRJHmok6rlDTDj9saLrefsrAuL4Q9ISG7Z+Wv5UL54l6u+0c85vTJOnAbCMaRvxt
-         2jqNfX4nxXqMM4Fte95OImp3GZbwcuOt+R2YciBsh81vvI69mxAIhs6EJPDve1fI5Xr9
-         4WJCJj8V+zJVFbNI+s9/MKAumHQauW6HrF2w+D7sfy0sQe38zsEZDRn1dMPPyhpmKCVW
-         KWJUZFv1TX1rj3UkVGLnaF+YG21sqklD4PQGKemjsRLKR1EUc63W8kKEe+lcJE+gHhQz
-         gJQEfSoU3bIps8oTXfDaGOPl9nXP4Q2V0Pk1zuwAnOH+1yOBu47ruNjJSgskxRxgFhJj
-         5CWQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=QbYFQHGSCXTkvfzhzlvcOi9Xb1MZRYIzSuZhAaf4ogg=;
+        b=jjPUmn9Lsaby7YWOEHYVxw7NjUcc2XEAqI+KTvGwJbQ5sXeI0N7xtHBwQhgdkH9QwM
+         cCW7V6UicLfBIyKXAmvO9I6eygdvPopF4k5ayaoKxvsMHhQx7+NywLzHDeDEoIwfDWHj
+         +BSq5yRlsxeC37IUkWWrpFKFU8QZnzNYiTSqrpKYFRlYecG5ua3/hI0Q/FigPoFpn2zh
+         9Z58I7TymrMm7j0xweui01+Ru9wVlhRLtu4YyUagwJqG5wmrpsMxTwFbrddl2YxPcjvg
+         AyLxKfbY0p7pcF4CMAVCU2TiXPxhxgkmix1XbtnO2ed0oFjWx0zNE9ce9SpkzjaNaJ6z
+         5Gag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+xKWNhXUsJiYvk1+a8fEWrWaR7NXfzlzjTUeULn8Q6c=;
-        b=o0Ult1sCCtT3hrZeCi33l6Sa+Y2jk8LBf1AilUs2FXKSNyLMOtVrGr/BMxB6Vy0Eoq
-         cHlDzfcPMsGLmCVULXT/twZ25reRr0/TZNLXqggfI6DThGMBfhpL82s0mUOeRX/hCxDb
-         BGDDpOguj48zmNvPD7K+JXe3W0NPeJl8u2YV6u6EHmlG8Ncp/SMDrYgAVT0KVV8pEySc
-         SAov4OedfQAh8hDl39WuYyyCpdgyl7d1Ddr8rBLFAOVuJCuOHoOSGrvjuP4rqbnq74uB
-         W5LYdOHnt2Wj+jtyJvSDPCluReaHFCKcLYXFjNMX3V9bVdyevA3XZsY1NnV35EaPfRyI
-         FU3A==
-X-Gm-Message-State: AOAM5312AqMBBkvuEcqOFmCYkG9NzxDPYBzyF8Su1nEjnQqOb2HKdTXi
-        cN3yDkoSs1Sjz5FnEs7c1G1H6Q==
-X-Google-Smtp-Source: ABdhPJx3jQTkXncqgt4b+LbpuZnZD8+z5xDcuHUu4W3b7sBDGMZOWVPPuSU3CSXQ4D7jkwyqbhECDA==
-X-Received: by 2002:a17:90a:a65:: with SMTP id o92mr3032631pjo.104.1597124010736;
-        Mon, 10 Aug 2020 22:33:30 -0700 (PDT)
-Received: from builder.lan (104-188-17-28.lightspeed.sndgca.sbcglobal.net. [104.188.17.28])
-        by smtp.gmail.com with ESMTPSA id b20sm24140621pfo.88.2020.08.10.22.33.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2020 22:33:30 -0700 (PDT)
-Date:   Mon, 10 Aug 2020 22:29:59 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: Re: [RFC][PATCH] tty: serial: qcom_geni_serial: Drop __init from
- qcom_geni_console_setup
-Message-ID: <20200811052959.GJ20825@builder.lan>
-References: <20200811025044.70626-1-john.stultz@linaro.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QbYFQHGSCXTkvfzhzlvcOi9Xb1MZRYIzSuZhAaf4ogg=;
+        b=dHeGss6Ev/2DP+lvyloaN2rHWtfQT9SqkKKh/gvPT7wM0oRzdk7naevXc7mWSXfrpn
+         RwgclOHJJRzngiOrAnbDZSZq1wQ/o9k8BaeR8O4/+mwZCmrgWvxQ9cQ7ha0BW9nirplu
+         taQFFcq56aDuu6FhiM3/NARKe/x0Qx2iKssDailYCXbDwzpqzcHsWeTLWPxVRI4BaoOw
+         4WpDatxXmZ0d7kUsdkbzMXPOc40quiCLAgtitEdMrZsLKUr5JqHAsULrzb7bQRKrhFfA
+         o2Mt/9nWgCDUzeclCv66uvOLSbZ1XTXXMcaqRkuKDHdhD93LGNd4vvpjw0ZG967yO0k/
+         qPlQ==
+X-Gm-Message-State: AOAM530mIwgqirhkhuBm79GQNAPT0vEd3hKqEtfJHm+Dag3BEAMBwHXS
+        SkFhKVYcEmhRPngV4RiOKULD
+X-Google-Smtp-Source: ABdhPJx2lcz2WImeiaWDVuA+zI4eXGDZSWy/gMYcxblM3kwTHN5s884Cxps+4YXpyVXiEjSxsjNF7A==
+X-Received: by 2002:a17:90a:b386:: with SMTP id e6mr3150762pjr.57.1597126746781;
+        Mon, 10 Aug 2020 23:19:06 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:699:2bc7:b9eb:9a30:bf89:3f3d])
+        by smtp.gmail.com with ESMTPSA id y23sm23826436pfb.66.2020.08.10.23.19.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Aug 2020 23:19:05 -0700 (PDT)
+Date:   Tue, 11 Aug 2020 11:48:58 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 11/11] bus: mhi: core: Introduce sysfs entries for MHI
+Message-ID: <20200811061858.GB2762@Mani-XPS-13-9360>
+References: <1597096865-19636-1-git-send-email-bbhatt@codeaurora.org>
+ <1597096865-19636-12-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200811025044.70626-1-john.stultz@linaro.org>
+In-Reply-To: <1597096865-19636-12-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 10 Aug 19:50 PDT 2020, John Stultz wrote:
-
-> When booting with heavily modularized config, the serial console
-> may not be able to load until after init when modules that
-> satisfy needed dependencies have time to load.
+On Mon, Aug 10, 2020 at 03:01:05PM -0700, Bhaumik Bhatt wrote:
+> Introduce sysfs entries to enable userspace clients the ability to read
+> the serial number and the OEM PK Hash values obtained from BHI. OEMs
+> need to read these device-specific hardware information values through
+> userspace for factory testing purposes and cannot be exposed via degbufs
+> as it may remain disabled for performance reasons. Also, update the
+> documentation for ABI to include these entries.
 > 
-> Unfortunately, as qcom_geni_console_setup is marked as __init,
-> the function may have been freed before we get to run it,
-> causing boot time crashes such as:
-> 
-> [    6.469057] Unable to handle kernel paging request at virtual address ffffffe645d4e6cc
-> [    6.481623] Mem abort info:
-> [    6.484466]   ESR = 0x86000007
-> [    6.487557]   EC = 0x21: IABT (current EL), IL = 32 bits
-> [    6.492929]   SET = 0, FnV = 0g
-> [    6.496016]   EA = 0, S1PTW = 0
-> [    6.499202] swapper pgtable: 4k pages, 39-bit VAs, pgdp=000000008151e000
-> [    6.501286] ufshcd-qcom 1d84000.ufshc: ufshcd_print_pwr_info:[RX, TX]: gear=[3, 3], lane[2, 2], pwr[FAST MODE, FAST MODE], rate = 2
-> [    6.505977] [ffffffe645d4e6cc] pgd=000000017df9f003, p4d=000000017df9f003, pud=000000017df9f003, pmd=000000017df9c003, pte=0000000000000000
-> [    6.505990] Internal error: Oops: 86000007 [#1] PREEMPT SMP
-> [    6.505995] Modules linked in: zl10353 zl10039 zl10036 zd1301_demod xc5000 xc4000 ves1x93 ves1820 tuner_xc2028 tuner_simple tuner_types tua9001 tua6100 1
-> [    6.506152]  isl6405
-> [    6.518104] ufshcd-qcom 1d84000.ufshc: ufshcd_find_max_sup_active_icc_level: Regulator capability was not set, actvIccLevel=0
-> [    6.530549]  horus3a helene fc2580 fc0013 fc0012 fc0011 ec100 e4000 dvb_pll ds3000 drxk drxd drx39xyj dib9000 dib8000 dib7000p dib7000m dib3000mc dibx003
-> [    6.624271] CPU: 7 PID: 148 Comm: kworker/7:2 Tainted: G        W       5.8.0-mainline-12021-g6defd37ba1cd #3455
-> [    6.624273] Hardware name: Thundercomm Dragonboard 845c (DT)
-> [    6.624290] Workqueue: events deferred_probe_work_func
-> [    6.624296] pstate: 40c00005 (nZcv daif +PAN +UAO BTYPE=--)
-> [    6.624307] pc : qcom_geni_console_setup+0x0/0x110
-> [    6.624316] lr : try_enable_new_console+0xa0/0x140
-> [    6.624318] sp : ffffffc010843a30
-> [    6.624320] x29: ffffffc010843a30 x28: ffffffe645c3e7d0
-> [    6.624325] x27: ffffff80f8022180 x26: ffffffc010843b28
-> [    6.637937] x25: 0000000000000000 x24: ffffffe6462a2000
-> [    6.637941] x23: ffffffe646398000 x22: 0000000000000000
-> [    6.637945] x21: 0000000000000000 x20: ffffffe6462a5ce8
-> [    6.637952] x19: ffffffe646398e38 x18: ffffffffffffffff
-> [    6.680296] x17: 0000000000000000 x16: ffffffe64492b900
-> [    6.680300] x15: ffffffe6461e9d08 x14: 69202930203d2064
-> [    6.680305] x13: 7561625f65736162 x12: 202c363331203d20
-> [    6.696434] x11: 0000000000000030 x10: 0101010101010101
-> [    6.696438] x9 : 4d4d20746120304d x8 : 7f7f7f7f7f7f7f7f
-> [    6.707249] x7 : feff4c524c787373 x6 : 0000000000008080
-> [    6.707253] x5 : 0000000000000000 x4 : 8080000000000000
-> [    6.707257] x3 : 0000000000000000 x2 : ffffffe645d4e6cc
-> [    6.744223] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate: failed to find OPP for freq 102400000 (-34)
-> [    6.744966] x1 : fffffffefe74e174 x0 : ffffffe6462a5ce8
-> [    6.753580] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate: failed to find OPP for freq 102400000 (-34)
-> [    6.761634] Call trace:
-> [    6.761639]  qcom_geni_console_setup+0x0/0x110
-> [    6.761645]  register_console+0x29c/0x2f8
-> [    6.767981] Bluetooth: hci0: Frame reassembly failed (-84)
-> [    6.775252]  uart_add_one_port+0x438/0x500
-> [    6.775258]  qcom_geni_serial_probe+0x2c4/0x4a8
-> [    6.775266]  platform_drv_probe+0x58/0xa8
-> [    6.855359]  really_probe+0xec/0x398
-> [    6.855362]  driver_probe_device+0x5c/0xb8
-> [    6.855367]  __device_attach_driver+0x98/0xb8
-> [    7.184945]  bus_for_each_drv+0x74/0xd8
-> [    7.188825]  __device_attach+0xec/0x148
-> [    7.192705]  device_initial_probe+0x24/0x30
-> [    7.196937]  bus_probe_device+0x9c/0xa8
-> [    7.200816]  deferred_probe_work_func+0x7c/0xb8
-> [    7.205398]  process_one_work+0x20c/0x4b0
-> [    7.209456]  worker_thread+0x48/0x460
-> [    7.213157]  kthread+0x14c/0x158
-> [    7.216432]  ret_from_fork+0x10/0x18
-> [    7.220049] Code: bad PC value
-> [    7.223139] ---[ end trace 73f3b21e251d5a70 ]---
-> 
-> Thus this patch removes the __init avoiding crash in such
-> configs.
-> 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Jiri Slaby <jirislaby@kernel.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Amit Pundir <amit.pundir@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-serial@vger.kernel.org
-> Suggested-by: Saravana Kannan <saravanak@google.com>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Good find, that's definitely broken.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
+Thanks,
+Mani
 
 > ---
->  drivers/tty/serial/qcom_geni_serial.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/ABI/stable/sysfs-bus-mhi | 21 ++++++++++++++
+>  MAINTAINERS                            |  1 +
+>  drivers/bus/mhi/core/init.c            | 53 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 75 insertions(+)
+>  create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
 > 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 3aa29d201f54..f7c6c7466520 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1098,7 +1098,7 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *uport)
+> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
+> new file mode 100644
+> index 0000000..59da56d
+> --- /dev/null
+> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
+> @@ -0,0 +1,21 @@
+> +What:		/sys/bus/mhi/devices/.../serialnumber
+> +Date:		Aug 2020
+> +KernelVersion:	5.10
+> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
+> +Description:	The file holds the serial number of the client device obtained
+> +		using a BHI (Boot Host Interface) register read after at least
+> +		one attempt to power up the device has been done. If read
+> +		without having the device power on at least once, the file will
+> +		read all 0's.
+> +Users:		Any userspace application or clients interested in device info.
+> +
+> +What:		/sys/bus/mhi/devices/.../oem_pk_hash
+> +Date:		Aug 2020
+> +KernelVersion:	5.10
+> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
+> +Description:	The file holds the OEM PK Hash value of the endpoint device
+> +		obtained using a BHI (Boot Host Interface) register read after
+> +		at least one attempt to power up the device has been done. If
+> +		read without having the device power on at least once, the file
+> +		will read all 0's.
+> +Users:		Any userspace application or clients interested in device info.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e64e5db..5e49316 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -11018,6 +11018,7 @@ M:	Hemant Kumar <hemantk@codeaurora.org>
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
+>  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
+> +F:	Documentation/ABI/stable/sysfs-bus-mhi
+>  F:	Documentation/mhi/
+>  F:	drivers/bus/mhi/
+>  F:	include/linux/mhi.h
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 972dbf0..c086ef2 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -76,6 +76,56 @@ const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+>  	return mhi_pm_state_str[index];
 >  }
 >  
->  #ifdef CONFIG_SERIAL_QCOM_GENI_CONSOLE
-> -static int __init qcom_geni_console_setup(struct console *co, char *options)
-> +static int qcom_geni_console_setup(struct console *co, char *options)
->  {
->  	struct uart_port *uport;
->  	struct qcom_geni_serial_port *port;
+> +static ssize_t serial_number_show(struct device *dev,
+> +				  struct device_attribute *attr,
+> +				  char *buf)
+> +{
+> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +
+> +	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
+> +			mhi_cntrl->serial_number);
+> +}
+> +static DEVICE_ATTR_RO(serial_number);
+> +
+> +static ssize_t oem_pk_hash_show(struct device *dev,
+> +				struct device_attribute *attr,
+> +				char *buf)
+> +{
+> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	int i, cnt = 0;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
+> +		cnt += snprintf(buf + cnt, PAGE_SIZE - cnt,
+> +				"OEMPKHASH[%d]: 0x%x\n", i,
+> +				mhi_cntrl->oem_pk_hash[i]);
+> +
+> +	return cnt;
+> +}
+> +static DEVICE_ATTR_RO(oem_pk_hash);
+> +
+> +static struct attribute *mhi_sysfs_attrs[] = {
+> +	&dev_attr_serial_number.attr,
+> +	&dev_attr_oem_pk_hash.attr,
+> +	NULL,
+> +};
+> +
+> +static const struct attribute_group mhi_sysfs_group = {
+> +	.attrs = mhi_sysfs_attrs,
+> +};
+> +
+> +static int mhi_create_sysfs(struct mhi_controller *mhi_cntrl)
+> +{
+> +	return sysfs_create_group(&mhi_cntrl->mhi_dev->dev.kobj,
+> +				  &mhi_sysfs_group);
+> +}
+> +
+> +static void mhi_destroy_sysfs(struct mhi_controller *mhi_cntrl)
+> +{
+> +	sysfs_remove_group(&mhi_cntrl->mhi_dev->dev.kobj, &mhi_sysfs_group);
+> +}
+> +
+>  /* MHI protocol requires the transfer ring to be aligned with ring length */
+>  static int mhi_alloc_aligned_ring(struct mhi_controller *mhi_cntrl,
+>  				  struct mhi_ring *ring,
+> @@ -917,6 +967,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+>  	mhi_cntrl->mhi_dev = mhi_dev;
+>  
+>  	mhi_create_debugfs(mhi_cntrl);
+> +	if (mhi_create_sysfs(mhi_cntrl))
+> +		dev_err(mhi_cntrl->cntrl_dev, "Failed to create sysfs entries\n");
+>  
+>  	return 0;
+>  
+> @@ -940,6 +992,7 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
+>  	struct mhi_chan *mhi_chan = mhi_cntrl->mhi_chan;
+>  	unsigned int i;
+>  
+> +	mhi_destroy_sysfs(mhi_cntrl);
+>  	mhi_destroy_debugfs(mhi_cntrl);
+>  
+>  	kfree(mhi_cntrl->mhi_cmd);
 > -- 
-> 2.17.1
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
