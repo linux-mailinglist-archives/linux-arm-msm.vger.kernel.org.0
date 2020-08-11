@@ -2,234 +2,371 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D203C241AA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 13:54:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBD7D241B3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 14:58:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728733AbgHKLyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 07:54:21 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:29173 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728326AbgHKLyV (ORCPT
+        id S1728619AbgHKM5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 08:57:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36674 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728526AbgHKM5w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 07:54:21 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597146859; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=BbgBllrGixV1VF5JA2+YDRoW43ZC6IFJKZUmb8h6+nw=; b=FqGGNMUL78nrG83nyHCaua+q4PesYVRYbOe3/fHm4NwqpBr2vcr2VSa8todVbSgdx4a8BhD5
- NhFSq4CWnHPxgRoGXpBbGXnkhDNCh9Bwc3TfPx+13jt/1rbtU0kzcm1eLVwxkaOWs4xlf2mv
- sck9lQ6NP/yuu7vDxKVs+SkeX3Y=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f3286eb4c787f237b268b1a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 11 Aug 2020 11:54:19
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF4FCC433CA; Tue, 11 Aug 2020 11:54:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [157.43.31.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9B877C433C6;
-        Tue, 11 Aug 2020 11:54:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9B877C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH] serial: qcom_geni_serial: Fix recent kdb hang
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        kgdb-bugreport@lists.sourceforge.net,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>, linux-serial@vger.kernel.org
-References: <20200806221904.1.I4455ff86f0ef5281c2a0cd0a4712db614548a5ca@changeid>
- <adaef6bf-7887-feea-fedf-d3bc5566bb9d@codeaurora.org>
- <CAD=FV=X8tNpmkSrEjXgKPKsBOZfjt8aVQe47gzi5FvPqdOQN+A@mail.gmail.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <b4cd8daf-ef37-4cc1-546e-ba46cb19392a@codeaurora.org>
-Date:   Tue, 11 Aug 2020 17:24:08 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Tue, 11 Aug 2020 08:57:52 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE594C061787
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 05:57:51 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id o2so2596629vkn.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 05:57:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AL6Rc0fjEZsUIiqTKaF4QuZnNQMFT5drdpMHmwxBtLE=;
+        b=dOLn0qQiuPhr7thP74vx2KSfABzfXum3+YLt83xU5hH8EgFgq8mlO4lRH+rQs7BeP/
+         UT7/Agbj25A/CFn5jGgRTfO3EbgHSqajG/aiJyDwY3SkZcUkJr0ta4c+yr41x4kr87j8
+         QqX/JR0QoARZOxK7a2ak1khlq7CctO0tIBoloN+YxjSZnIaRYjL3caSUn5kOs+823UTu
+         s7Sug6qdrseeL9pWqMLjaP8d4m1yagaRvZnNkYQqTGwbl1b2Y6csg6CKVLUxt2j1S7YP
+         x83IXmLLFXvwUe/OpYSZ5B6eENKejjpQUXBLjb2dPsSGiSlmO/kJs+Lkvt9snleE9Fpp
+         KgrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AL6Rc0fjEZsUIiqTKaF4QuZnNQMFT5drdpMHmwxBtLE=;
+        b=DE/0iwcTU+dXCxozAwkMinRPp16Yw57zE8QgEQYoaBqCMuAUaVqtofSzh8z57P17G/
+         mtG/0qSns6Jb07U4JHJeM/Xs9DvXT7OCSUuE6funbawOZGybv+5QAb0L3mrlAgkKl5qQ
+         Cr4MJlxUeJSzsBL+tw+hgLojYl0sxIknlCinBL6Z2pUTkDuRncsubLGhTM/2ukJxEOWE
+         8ABc3QyGdn8t4BKWIUKAjLzRW8ZKQBShCeSTcDs7EMgUh1Ixx4uB2udb3DkYBDPFCk/8
+         5XEWPht5O/r1ToZKHPf9EBvOIV4ZiqZDd8Oh543yJiNRcC7ZXKRYOxQ3bcWqPNx2iK5O
+         8nMQ==
+X-Gm-Message-State: AOAM533qd3IKNivIQ8ZM6oPW+DSzRRUEk1MwVgbSUZq3VjCHyEdm/T+7
+        1e1JQg8amQN/AVeRQnXd4Ja7/GtZw9w6saDxDfYSFw==
+X-Google-Smtp-Source: ABdhPJy7GhXD9WF+vFOxBmvqLYSQ9qGDvGcYcKLvAoiMERjbXwoEosLE/h7Z2U0e3Ob+MQEwh3ibR3YWWu/7+eIUqds=
+X-Received: by 2002:a1f:6282:: with SMTP id w124mr24283068vkb.46.1597150670494;
+ Tue, 11 Aug 2020 05:57:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=X8tNpmkSrEjXgKPKsBOZfjt8aVQe47gzi5FvPqdOQN+A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20200725181404.18951-1-ansuelsmth@gmail.com> <20200725181404.18951-2-ansuelsmth@gmail.com>
+In-Reply-To: <20200725181404.18951-2-ansuelsmth@gmail.com>
+From:   Amit Kucheria <amit.kucheria@linaro.org>
+Date:   Tue, 11 Aug 2020 18:27:39 +0530
+Message-ID: <CAHLCerMc8yUjh9qwUCa=jMZHs18GC4qeS3rqT1_6K90QJd=nVA@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 1/7] drivers: thermal: tsens: Add VER_0 tsens version
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Jul 25, 2020 at 11:44 PM Ansuel Smith <ansuelsmth@gmail.com> wrote:
+>
+> VER_0 is used to describe device based on tsens version before v0.1.
+> These device are devices based on msm8960 for example apq8064 or
+> ipq806x.
+>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/thermal/qcom/tsens.c | 160 +++++++++++++++++++++++++++--------
+>  drivers/thermal/qcom/tsens.h |   7 +-
+>  2 files changed, 132 insertions(+), 35 deletions(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 9fe9a2b26705..78840c1bc5d2 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -516,6 +516,15 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+>                         dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
+>                                 hw_id, __func__, temp);
+>                 }
+> +
+> +               if (tsens_version(priv) < VER_0_1) {
+> +                       /* Constraint: There is only 1 interrupt control register for all
+> +                        * 11 temperature sensor. So monitoring more than 1 sensor based
+> +                        * on interrupts will yield inconsistent result. To overcome this
+> +                        * issue we will monitor only sensor 0 which is the master sensor.
+> +                        */
+> +                       break;
+> +               }
+>         }
+>
+>         return IRQ_HANDLED;
+> @@ -531,6 +540,13 @@ static int tsens_set_trips(void *_sensor, int low, int high)
+>         int high_val, low_val, cl_high, cl_low;
+>         u32 hw_id = s->hw_id;
+>
+> +       if (tsens_version(priv) < VER_0_1) {
+> +               /* Pre v0.1 IP had a single register for each type of interrupt
+> +                * and thresholds
+> +                */
+> +               hw_id = 0;
+> +       }
+> +
+>         dev_dbg(dev, "[%u] %s: proposed thresholds: (%d:%d)\n",
+>                 hw_id, __func__, low, high);
+>
+> @@ -550,6 +566,12 @@ static int tsens_set_trips(void *_sensor, int low, int high)
+>         tsens_set_interrupt(priv, hw_id, LOWER, true);
+>         tsens_set_interrupt(priv, hw_id, UPPER, true);
+>
+> +       /* VER_0 require to set MIN and MAX THRESH */
+> +       if (tsens_version(priv) < VER_0_1) {
+> +               regmap_field_write(priv->rf[MIN_THRESH_0], 0);
+> +               regmap_field_write(priv->rf[MAX_THRESH_0], 120000);
 
-On 8/11/2020 2:56 AM, Doug Anderson wrote:
-> Hi,
->
-> On Mon, Aug 10, 2020 at 5:32 AM Akash Asthana <akashast@codeaurora.org> wrote:
->> Hi Doug,
->>
->> On 8/7/2020 10:49 AM, Douglas Anderson wrote:
->>> The commit e42d6c3ec0c7 ("serial: qcom_geni_serial: Make kgdb work
->>> even if UART isn't console") worked pretty well and I've been doing a
->>> lot of debugging with it.  However, recently I typed "dmesg" in kdb
->>> and then held the space key down to scroll through the pagination.  My
->>> device hung.  This was repeatable and I found that it was introduced
->>> with the aforementioned commit.
->>>
->>> It turns out that there are some strange boundary cases in geni where
->>> in some weird situations it will signal RX_LAST but then will put 0 in
->>> RX_LAST_BYTE.  This means that the entire last FIFO entry is valid.
->> IMO that means we received a word in RX_FIFO and it is the last word
->> hence RX_LAST bit is set.
-> What you say would make logical sense, but it's not how I have
-> observed geni to work.  See below.
->
->
->> RX_LAST_BYTE is 0 means none of the bytes are valid in the last word.
-> This would imply that qcom_geni_serial_handle_rx() is also broken
-> though, wouldn't it?  Specifically imagine that WORD_CNT is 1 and
-> RX_LAST is set and RX_LAST_BYTE_VALID is true.  Here's the logic from
-> that function:
->
->    total_bytes = BYTES_PER_FIFO_WORD * (word_cnt - 1);
->    if (last_word_partial && last_word_byte_cnt)
->      total_bytes += last_word_byte_cnt;
->    else
->      total_bytes += BYTES_PER_FIFO_WORD;
->    port->handle_rx(uport, total_bytes, drop);
->
-> As you can see that logic will set "total_bytes" to 4 in the case I'm
-> talking about.
+Since MIN_THRESH_0 and MAX_THRESH_0 are the only two threshold on pre
+0.1 IP, just (mis)use the already predefined LOW_THRESH_0 and
+UP_THRESH_0 in regfield_ids in init_common() below? Then we won't need
+this special casing here. All the special casing ugliness can then
+stay in init_common() with comments.
 
-Yeah IMO as per theory this should also be corrected but since you have 
-already pulled out few experiment to prove garbage data issue(which I  
-was suspecting) is not seen.
+> +       }
+> +
+>         spin_unlock_irqrestore(&priv->ul_lock, flags);
+>
+>         dev_dbg(dev, "[%u] %s: (%d:%d)->(%d:%d)\n",
+> @@ -584,18 +606,21 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+>         u32 valid;
+>         int ret;
+>
+> -       ret = regmap_field_read(priv->rf[valid_idx], &valid);
+> -       if (ret)
+> -               return ret;
+> -       while (!valid) {
+> -               /* Valid bit is 0 for 6 AHB clock cycles.
+> -                * At 19.2MHz, 1 AHB clock is ~60ns.
+> -                * We should enter this loop very, very rarely.
+> -                */
+> -               ndelay(400);
+> +       /* VER_0 doesn't have VALID bit */
+> +       if (tsens_version(priv) >= VER_0_1) {
 
-It's already consistent with existing logic and it behaves well 
-practically . So the changes could be merge. Meanwhile I am checking 
-with HW team to get clarity.
+Since 8960 needs a custom get_temp function, is this change really needed?
 
+>                 ret = regmap_field_read(priv->rf[valid_idx], &valid);
+>                 if (ret)
+>                         return ret;
+> +               while (!valid) {
+> +                       /* Valid bit is 0 for 6 AHB clock cycles.
+> +                        * At 19.2MHz, 1 AHB clock is ~60ns.
+> +                        * We should enter this loop very, very rarely.
+> +                        */
+> +                       ndelay(400);
+> +                       ret = regmap_field_read(priv->rf[valid_idx], &valid);
+> +                       if (ret)
+> +                               return ret;
+> +               }
+>         }
 >
+>         /* Valid bit is set, OK to read the temperature */
+> @@ -765,8 +790,8 @@ int __init init_common(struct tsens_priv *priv)
 >
->> In such scenario we should just read RX_FIFO buffer (to empty it),
->> discard the word and return NO_POLL_CHAR. Something like below.
->>
->> ---------------------------------------------------------------------------------------------------------------------------------------------------------
->>
->>                   else
->>                           private_data->poll_cached_bytes_cnt = 4;
->>
->>                   private_data->poll_cached_bytes =
->>                           readl(uport->membase + SE_GENI_RX_FIFOn);
->>           }
->>
->> +        if (!private_data->poll_cached_bytes_cnt)
->> +              return NO_POLL_CHAR;
->>           private_data->poll_cached_bytes_cnt--;
->>           ret = private_data->poll_cached_bytes & 0xff;
->> -------------------------------------------------------------------------------------------------------------------------------------------------------------
->>
->> Please let me know whether above code helps.
-> Your code will avoid the hang.  Yes.  ...but it will drop bytes.  I
-> devised a quick-n-dirty test.  Here's a test of your code:
-I assumed those as invalid bytes and don't wanted to read them so yeah 
-dropping of bytes was expected.
->
-> https://crrev.com/c/2346886
->
-> ...and here's a test of my code:
->
-> https://crrev.com/c/2346884
->
-> I had to keep a buffer around since it's hard to debug the serial
-> driver.  In both cases I put "DOUG" into the buffer when I detect this
-> case.  If my theory about how geni worked was wrong then we should
-> expect to see some garbage in the buffer right after the DOUG, right?
-> ...but my code gets the alphabet in nice sequence.  Your code drops 4
-> bytes.
-Yeah I was expecting garbage data.
->
->
-> NOTE: while poking around with the above two test patches I found it
-> was pretty easy to get geni to drop bytes / hit overflow cases and
-> also to insert bogus 0 bytes in the stream (I believe these are
-> related).  I was able to reproduce this:
-> * With ${SUBJECT} patch in place.
-> * With your proposed patch.
-> * With the recent "geni" patches reverted (in other words back to 1
-> byte per FIFO entry).
->
-> It's not terribly surprising that we're overflowing since I believe
-> kgdb isn't too keen to read characters at the same time it's writing.
-> That doesn't explain the weird 0-bytes that geni seemed to be
-> inserting, but at least it would explain the overflows.  However, even
-> after I fixed this I _still_ was getting problems.  Specifically geni
-> seemed to be hiding bytes from me until it was too late.  I put
-> logging in and would see this:
->
-> 1 word in FIFO - wxyz
-> 1 word in FIFO (last set, last FIFO has 1 byte) - \n
-> Check again, still 0 bytes in FIFO
-> Suddenly 16 bytes are in FIFO and S_RX_FIFO_WR_ERR_EN is set.
+>         if (tsens_version(priv) > VER_0_1) {
+>                 for (i = VER_MAJOR; i <= VER_STEP; i++) {
+> -                       priv->rf[i] = devm_regmap_field_alloc(dev, priv->srot_map,
+> -                                                             priv->fields[i]);
+> +                       priv->rf[i] = devm_regmap_field_alloc(
+> +                               dev, priv->srot_map, priv->fields[i]);
 
-RX data first stored in RX_ASYNC_FIFO then it's transfered to RX_FIFO
+This doesn't change any code, simply reformats the code to 80 columns.
+Avoid adding such lines to other features, makes it harder to review
+changes.
 
-When get_char is called and we observe 0 bytes in RX_FIFO, most probably 
-data is not transfered from RX_ASYNC_FIFO to RX_FIFO.
-
-BITS 27:25 of SE_GENI_RX_FIFO_STATUS register shows RX_ASYNC_FIFO word 
-count.
+Please ignore the 80 column warning here and elsewhere below when it
+is only going over by a few characters. Run checkpatch on your patches
+which has now increased the number of columns to 100 now.
 
 
+>                         if (IS_ERR(priv->rf[i]))
+>                                 return PTR_ERR(priv->rf[i]);
+>                 }
+> @@ -775,12 +800,80 @@ int __init init_common(struct tsens_priv *priv)
+>                         goto err_put_device;
+>         }
 >
-> I spent a whole bunch of time poking at this and couldn't find any
-> sort of workaround.  Presumably geni is taking some time between me
-> reading the last word out of the FIFO from the "previous" packet and
-> then transitioning to the new packet.  I found a lot of references to
-> this process in the hardware register description (see GENI_CFG_REG69,
-> for instance), but I couldn't manage to make the kick to happen any
-> faster.  Presumably this isn't a problem for things like Bluetooth
-> since flow control saves them.  ...and I guess this isn't a problem in
-> practice because we usually _send_ a lot of data to the host for
-> console/kgdb and it's only the host => DUT path that has problems.
->
->
->> I am not sure about what all scenario can leads to this behavior from
->> hardware, I will try to get an answer from hardware team.
->>
->> Any error bit was set for SE_GENI_S_IRQ_STATUS & SE_GENI_M_IRQ_STATUS
->> registers?
-> As per above I can see overflows in my test case and geni seems to be
-> behaving pretty badly.  If you have ideas on how to fix this I'd love
-> it.  However, it still seems like my patch is right because (at least
-> in the cases I tested) it avoids dropping bytes in some cases.  It
-> also matches how qcom_geni_serial_handle_rx() works and if that was
-> broken we'd have noticed by now.
+> -       priv->rf[TSENS_EN] = devm_regmap_field_alloc(dev, priv->srot_map,
+> -                                                    priv->fields[TSENS_EN]);
+> -       if (IS_ERR(priv->rf[TSENS_EN])) {
+> -               ret = PTR_ERR(priv->rf[TSENS_EN]);
+> -               goto err_put_device;
+> +       if (tsens_version(priv) >= VER_0_1) {
+> +               priv->rf[TSENS_EN] = devm_regmap_field_alloc(
+> +                       dev, priv->srot_map, priv->fields[TSENS_EN]);
+> +               if (IS_ERR(priv->rf[TSENS_EN])) {
+> +                       ret = PTR_ERR(priv->rf[TSENS_EN]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               priv->rf[SENSOR_EN] = devm_regmap_field_alloc(
+> +                       dev, priv->srot_map, priv->fields[SENSOR_EN]);
+> +               if (IS_ERR(priv->rf[SENSOR_EN])) {
+> +                       ret = PTR_ERR(priv->rf[SENSOR_EN]);
+> +                       goto err_put_device;
+> +               }
+> +               priv->rf[INT_EN] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[INT_EN]);
+> +               if (IS_ERR(priv->rf[INT_EN])) {
+> +                       ret = PTR_ERR(priv->rf[INT_EN]);
+> +                       goto err_put_device;
+> +               }
+> +       } else {
 
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+Let's not create two big sections with if-else for 8960 and everything
+else. For example, what is wrong with using common code for TSENS_EN?
 
+If the concern is memory wasted trying to allocate fields not present
+on this older platform, perhaps consider adding a check in the loop to
+break early in case of 8960?
 
+> +               priv->rf[TSENS_EN] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[TSENS_EN]);
+> +               if (IS_ERR(priv->rf[TSENS_EN])) {
+> +                       ret = PTR_ERR(priv->rf[TSENS_EN]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               priv->rf[TSENS_SW_RST] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[TSENS_EN]);
+> +               if (IS_ERR(priv->rf[TSENS_EN])) {
+> +                       ret = PTR_ERR(priv->rf[TSENS_EN]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               /* enable TSENS */
+> +               regmap_field_write(priv->rf[TSENS_EN], 1);
+> +
+> +               priv->rf[LOW_INT_CLEAR_0] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[LOW_INT_CLEAR_0]);
+> +               if (IS_ERR(priv->rf[LOW_INT_CLEAR_0])) {
+> +                       ret = PTR_ERR(priv->rf[LOW_INT_CLEAR_0]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               priv->rf[UP_INT_CLEAR_0] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[UP_INT_CLEAR_0]);
+> +               if (IS_ERR(priv->rf[UP_INT_CLEAR_0])) {
+> +                       ret = PTR_ERR(priv->rf[UP_INT_CLEAR_0]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               priv->rf[MIN_THRESH_0] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[MIN_THRESH_0]);
+> +               if (IS_ERR(priv->rf[MIN_THRESH_0])) {
+> +                       ret = PTR_ERR(priv->rf[MIN_THRESH_0]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               priv->rf[MAX_THRESH_0] = devm_regmap_field_alloc(
+> +                       dev, priv->tm_map, priv->fields[MAX_THRESH_0]);
+> +               if (IS_ERR(priv->rf[MAX_THRESH_0])) {
+> +                       ret = PTR_ERR(priv->rf[MAX_THRESH_0]);
+> +                       goto err_put_device;
+> +               }
+> +
+> +               priv->rf[TRDY] = devm_regmap_field_alloc(dev, priv->tm_map,
+> +                                                        priv->fields[TRDY]);
+> +               if (IS_ERR(priv->rf[TRDY])) {
+> +                       ret = PTR_ERR(priv->rf[TRDY]);
+> +                       goto err_put_device;
+> +               }
+>         }
+> +
+>         ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
+>         if (ret)
+>                 goto err_put_device;
+> @@ -790,19 +883,6 @@ int __init init_common(struct tsens_priv *priv)
+>                 goto err_put_device;
+>         }
 >
->> I guess the hang was seen because *poll_cached_bytes_cnt* is unsigned
->> int and it's value was 0, when it's decremented by 1 it's value become
->> '4294967295' (very large) and dummy RX (0x00) would happen that
->>
->> many times before reading any actual RX transfers/bytes.
-> Right.  That would be why it was hanging.
+> -       priv->rf[SENSOR_EN] = devm_regmap_field_alloc(dev, priv->srot_map,
+> -                                                     priv->fields[SENSOR_EN]);
+> -       if (IS_ERR(priv->rf[SENSOR_EN])) {
+> -               ret = PTR_ERR(priv->rf[SENSOR_EN]);
+> -               goto err_put_device;
+> -       }
+> -       priv->rf[INT_EN] = devm_regmap_field_alloc(dev, priv->tm_map,
+> -                                                  priv->fields[INT_EN]);
+> -       if (IS_ERR(priv->rf[INT_EN])) {
+> -               ret = PTR_ERR(priv->rf[INT_EN]);
+> -               goto err_put_device;
+> -       }
+> -
+>         /* This loop might need changes if enum regfield_ids is reordered */
+>         for (j = LAST_TEMP_0; j <= UP_THRESH_15; j += 16) {
+>                 for (i = 0; i < priv->feat->max_sensors; i++) {
+> @@ -856,7 +936,11 @@ int __init init_common(struct tsens_priv *priv)
+>         }
 >
+>         spin_lock_init(&priv->ul_lock);
+> -       tsens_enable_irq(priv);
+> +
+> +       /* VER_0 interrupt doesn't need to be enabled */
+> +       if (tsens_version(priv) >= VER_0_1)
+> +               tsens_enable_irq(priv);
+> +
+>         tsens_debug_init(op);
 >
-> -Doug
+>  err_put_device:
+> @@ -952,10 +1036,18 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+>                 if (irq == -ENXIO)
+>                         ret = 0;
+>         } else {
+> -               ret = devm_request_threaded_irq(&pdev->dev, irq,
+> -                                               NULL, thread_fn,
+> -                                               IRQF_ONESHOT,
+> -                                               dev_name(&pdev->dev), priv);
+> +               /* VER_0 have a different interrupt type */
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+Say how it is different.
 
+
+> +               if (tsens_version(priv) > VER_0)
+> +                       ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+> +                                                       thread_fn, IRQF_ONESHOT,
+> +                                                       dev_name(&pdev->dev),
+> +                                                       priv);
+> +               else
+> +                       ret = devm_request_threaded_irq(&pdev->dev, irq,
+> +                                                       thread_fn, NULL,
+> +                                                       IRQF_TRIGGER_RISING,
+> +                                                       dev_name(&pdev->dev),
+> +                                                       priv);
+>                 if (ret)
+>                         dev_err(&pdev->dev, "%s: failed to get irq\n",
+>                                 __func__);
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 59d01162c66a..f1120791737c 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -25,7 +25,8 @@ struct tsens_priv;
+>
+>  /* IP version numbers in ascending order */
+>  enum tsens_ver {
+> -       VER_0_1 = 0,
+> +       VER_0 = 0,
+> +       VER_0_1,
+>         VER_1_X,
+>         VER_2_X,
+>  };
+> @@ -441,6 +442,10 @@ enum regfield_ids {
+>         CRIT_THRESH_14,
+>         CRIT_THRESH_15,
+>
+> +       /* VER_0 MIN MAX THRESH */
+> +       MIN_THRESH_0,
+> +       MAX_THRESH_0,
+> +
+>         /* WATCHDOG */
+>         WDOG_BARK_STATUS,
+>         WDOG_BARK_CLEAR,
+> --
+> 2.27.0
+>
