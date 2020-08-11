@@ -2,204 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 911E92421DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:21:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1945F2421FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:31:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726474AbgHKVVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 17:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58002 "EHLO
+        id S1726165AbgHKVbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 17:31:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbgHKVVr (ORCPT
+        with ESMTP id S1726023AbgHKVbw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 17:21:47 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A9EC06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:21:47 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id r7so38241vsq.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:21:47 -0700 (PDT)
+        Tue, 11 Aug 2020 17:31:52 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB5EC06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:31:52 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id k13so126102plk.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YkOspF4zgYBjdY3oC8rtcOqQAQAqXdWA9ihgYSGWztw=;
-        b=U/GN/C0aEZYEX3j/COiQ5AVesJ9TnprTlzhKvppyFnKnGwH2QHMTzwfcP7m9Fs3d49
-         7hfDZ5yNcB6yPQ1aru+wLlMnLRMCLbOrto01CE22pWxykc6rtv9W+itgCb+biyrZx3yJ
-         QYYcRfxq6PxwuCi4CBx30SByo78sd0kjujYOI=
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=AfVxpgJxZ32N1LOm+xuOB6bkmTr53McK9vmsomA92LE=;
+        b=ic5XdKk6gydxMYgraTNOoIX9Qr9I7gTNGubgAXooXrZz721fDPz4m2EjMsb00Sz127
+         fbvckWvmv30KrMBqS0QhDkKbbJcxA7HlsSi94cHs+zcHYOvkq3S86i84M0rblZRajpOf
+         IcSFe1DZhwHH7CyGIHN64J+Tvo+CwqO7p+XM4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YkOspF4zgYBjdY3oC8rtcOqQAQAqXdWA9ihgYSGWztw=;
-        b=q7+z0gjKYMqxaYADJwt+cTSonBFO4eFig7Zzp4VF5Aa1fEJeU6OpVQUATtpSUk2igS
-         Di7MOW7Qvi6XizTMmF0Be0ppeyWoXi9U2eHIM5ufqkh3EUxioD50Vg/Dk3n/Fedo42ip
-         KdA+KThWzmrKL9IQzlm/2+idlm2BtsblOxN+J4Bgi90h8QUwNG4t6v2EVrZKAAbibXYr
-         vVYh2OjTxkDt0k6pfi4xstPsDvoBHI3h8Mwf6zTpJIIwNd2Try+4DI99321CH8cP35ud
-         Alq9z5nRnybDneFHK6ybeqTyIjxBLQyYD09MsrXzeZc9Q6N37oCyxl0zaTVvpgD0GWPC
-         e9mg==
-X-Gm-Message-State: AOAM532tB3tXIy6rOtpBZvLrE8UVV1Y+fBE7fVFhKh7fxjGgWxz2c4U8
-        FW+cmH6tN8HYcXcFmpFyurO0ZXXkQWI=
-X-Google-Smtp-Source: ABdhPJxsCMq51VBjBwNYZsN2NfMmJ8W9FCqAa6Lq2cX8lsS0TUP81JVyBiq0RQ69gPaapfz1nhNU3Q==
-X-Received: by 2002:a05:6102:9ca:: with SMTP id g10mr24934528vsi.231.1597180906620;
-        Tue, 11 Aug 2020 14:21:46 -0700 (PDT)
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
-        by smtp.gmail.com with ESMTPSA id r202sm26713vke.55.2020.08.11.14.21.45
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Aug 2020 14:21:45 -0700 (PDT)
-Received: by mail-ua1-f50.google.com with SMTP id g11so1706ual.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 14:21:45 -0700 (PDT)
-X-Received: by 2002:ab0:623:: with SMTP id f32mr10207868uaf.121.1597180904985;
- Tue, 11 Aug 2020 14:21:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=AfVxpgJxZ32N1LOm+xuOB6bkmTr53McK9vmsomA92LE=;
+        b=QVFCZc5pzSAVu7cs3j+KJETriGAoCJhPNkdDz+gJs9XQOmLj/YYYxwb9O+Gbc61jyU
+         66sK15QZGqtzommYfTWuMIBTIJJ/xy2KqNQJKA1dEf3zabk/wkbwwtC8bhHtgtqDkB1i
+         dQppNkxZ6w5ATV24V6PO1G9l1mINE61DyU+7v/CvC6UsjeO+rI2dCg3BXPBpmh1JjfRb
+         P7ICL7ws5J3CHHj9sMcGskjmTo6wal/f8UjtuyMkQsyQzRfHjZasPEP7m++8uD5DRNUG
+         hdDGJfWYWre8YW5yKAWXwNpLjaIYcxmmoNSa6hMx+l5Kw/SlOO8Z5teNfm8IX8k4IJiD
+         onSA==
+X-Gm-Message-State: AOAM530EUbidCn0qPm9YAI81rPeNueM20RMxys8eEjdN2Ndts0Dubshe
+        uCH4i0n0ACALRXz4My+j3d4oug==
+X-Google-Smtp-Source: ABdhPJyqL4TIDkhnnHdUryy4LGUhSjye4Oo+pBg8Wb1pq/wCqARm+tYcIqMsZ0lHBAcH7HwPz+7cPg==
+X-Received: by 2002:a17:902:6ac3:: with SMTP id i3mr2101777plt.21.1597181511570;
+        Tue, 11 Aug 2020 14:31:51 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id w15sm3796047pjk.13.2020.08.11.14.31.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2020 14:31:50 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20200805091141.1.I86b3faaecb0d82997b599b1300f879606c71e116@changeid>
- <159664899840.1360974.7548807728313161626@swboyd.mtv.corp.google.com>
- <CAD=FV=UK+xHV6qsr2AsPB=BzmzN77AT-du8G2tt1QZMQUpGgKg@mail.gmail.com>
- <159666852526.1360974.3062132560884413001@swboyd.mtv.corp.google.com>
- <4c40db0fe88dd9aff6897ebc103aa3e9@codeaurora.org> <CAD=FV=Xmf5Qj8obuKdE5CqYL7ek7CQQLPt4j4eTu=RpwcDwM2w@mail.gmail.com>
- <8450aff2d16aed092295c61a8e4ca850@codeaurora.org>
-In-Reply-To: <8450aff2d16aed092295c61a8e4ca850@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 11 Aug 2020 14:21:33 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WWYA-hxdAVdLHj9Ej9nCWohOHsh9GA1GZ3Mg-XuJfeyA@mail.gmail.com>
-Message-ID: <CAD=FV=WWYA-hxdAVdLHj9Ej9nCWohOHsh9GA1GZ3Mg-XuJfeyA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] soc: qcom: aoss: Don't wait for IRQ if we might be in
- suspend/resume noirq
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1597058460-16211-8-git-send-email-mkshah@codeaurora.org>
+References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org> <1597058460-16211-8-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH v4 7/7] irqchip: qcom-pdc: Reset all pdc interrupts during init
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
+        mka@chromium.org
+Date:   Tue, 11 Aug 2020 14:31:49 -0700
+Message-ID: <159718150946.1360974.10983789401181131846@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Quoting Maulik Shah (2020-08-10 04:21:00)
+> Clear previous kernel's configuration during init by resetting
+> interrupts in enable bank to zero.
 
-On Thu, Aug 6, 2020 at 10:33 AM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> On 2020-08-06 22:40, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Thu, Aug 6, 2020 at 7:36 AM Sibi Sankar <sibis@codeaurora.org>
-> > wrote:
-> >>
-> >> On 2020-08-06 04:32, Stephen Boyd wrote:
-> >> > +Sibi who wrote the code
-> >> >
-> >> > Quoting Doug Anderson (2020-08-05 13:24:06)
-> >> >>
-> >> >> On Wed, Aug 5, 2020 at 10:36 AM Stephen Boyd <swboyd@chromium.org>
-> >> >> wrote:
-> >> >> >
-> >> >> > Why is the genpd being powered off at all? It looks like the driver is
-> >> >> > written in a way that it doesn't expect this to happen. See where
-> >> >> > adsp_pds_disable() is called from. Looks like the remoteproc "stop"
-> >> >> > callback should be called or the driver should be detached.
-> >> >> >
-> >> >> > It sort of looks like the genpd is expected to be at the max level all
-> >> >> > the time (it sets INT_MAX in adsp_pds_enable(), cool).
-> >> >>
-> >> >> In general in Linux there are some things that, at suspend time, get
-> >> >> done behind a driver's back.  The regulator API, for instance, allows
-> >> >> for regulators to be turned off in suspend even if a driver leaves
-> >> >> them on.  Sure, it's good practice for a driver to be explicit but the
-> >> >> regulator suspend states do allow for the more heavy-handed approach.
-> >> >>
-> >> >> I guess I assume that genpd is a bit similar.  If a driver leaves a
-> >> >> genpd on all the time then it will still be turned off at suspend time
-> >> >> and then turned back on at resume time.  It seems like it must be part
-> >> >> of the genpd API.  Specifically genpd_sync_power_off() says: "Check if
-> >> >> the given PM domain can be powered off (during system suspend or
-> >> >> hibernation) and do that if so."  That makes it seem like it's how
-> >> >> genpd works.
-> >> >>
-> >> >> Reading all the descriptions of things like GENPD_FLAG_ALWAYS_ON,
-> >> >> GENPD_FLAG_ACTIVE_WAKEUP, GENPD_FLAG_RPM_ALWAYS_ON makes me even more
-> >> >> convinced that it's normal (unless otherwise specified) for genpds to
-> >> >> get turned off in suspend even if a driver just blindly left them on.
-> >> >>
-> >> >> Presumably if this "modem" genpd is supposed to stay on in suspend
-> >> >> time it should have been marked "always on"?  I'd guess we'd need to
-> >> >> add "GENPD_FLAG_ALWAYS_ON" in some (or all?) cases in qmp_pd_add() if
-> >> >> this was true?
-> >> >
-> >> > Agreed. I can't read the mind of Sibi so I can only guess that Sibi
-> >> > wasn't expecting this behavior by reading the driver structure. That
-> >> > could be a wrong assumption.
-> >> >
-> >> >>
-> >> >>
-> >> >> > Maybe we need to
-> >> >> > add some sort of suspend hooks to the remote proc driver instead? Where
-> >> >> > those suspend hooks are called earlier and drop the genpd performance
-> >> >> > state request but otherwise leave it enabled across suspend?
-> >> >>
-> >> >> I think you're saying:
-> >> >>
-> >> >> a) You think it's a bug today that the "modem" genpd is being powered
-> >> >> off in suspend.  Any evidence to back this up?
-> >> >>
-> >> >> b) Assuming it's a bug today, we should mark the "modem" as
-> >> >> GENPD_FLAG_ALWAYS_ON.
-> >> >>
-> >> >> c) If there are genpds that sometimes should be left on in suspend but
-> >> >> sometimes not (and that doesn't match up with what
-> >> >> GENPD_FLAG_ACTIVE_WAKEUP does), then we'd have to pass
-> >> >> GENPD_FLAG_ALWAYS_ON as a flag and then add suspend hooks to make the
-> >> >> decision for us.
-> >>
-> >> Doug/Stephen,
-> >>
-> >> Yes this is a bug, we wouldn't want
-> >> to disable aoss_qmp genpd for modem
-> >> during suspend (when the modem is
-> >> running). The qmp send for modem
-> >> is the primary means through which
-> >> aoss determines whether to wait for
-> >> modem before proceeding to sleep. So
-> >> looks like updating the flag with
-> >> GENPD_FLAG_ACTIVE_WAKEUP is the way
-> >> to go. But introducing another flag
-> >> that doesn't touch genpd's during
-> >> suspend/resume should also work.
-> >
-> > OK, sounds good.  As per out-of-band conversation:
-> >
-> > * You'll plan to post a patch updating the flag.
-> >
-> > * There's still nothing here that says my patch is the wrong thing to
-> > do also.  It seems like genpd poweroff routine are expected to be able
-> > to run at "noirq" time so we should make sure we are able to do that.
-> >
-> > I'm also curious: my patch doesn't affect the behavior.  The genpd
-> > would be powered off with or without my patch, my patch just removes a
-> > pointless 1 second delay.  Therefore I guess today there is some type
-> > of bug because the genpd is being turned off.  What would be the
-> > visible impact of that bug?  ...or is it somehow masked by something
-> > else keeping this power on so it wasn't an issue right now?
->
-> I've been told AOSS decides to wait
-> for modem suspend if its been notified
-> that modem is on through qmp_send. AFAIK
-> we never ran into this because AOSS sleep
-> sequence starts after xo-shutdown which
-> wont be reached in the presence of active
-> rpmh votes from modem.
->
-> Regardless we definitely want this genpd left
-> untouched during suspend/resume.
+Can you please add some more information here about why we're not
+clearing all the pdc irqs and only the ones that are listed in DT? Is
+that because the pdc is shared between exception levels of the CPU and
+so some irqs shouldn't be used? Does the DT binding need to change to
+only list the hwirqs that are usable by the OS instead of the ones that
+are usable for the entire system? The binding doesn't mention this at
+all so I am just guessing here.
 
-With Sibi's patch [1] then ${SUBJECT} patch is no longer needed since
-we are no longer called during "noirq" / "syscore" time.  Assuming
-Sibi's patches (or something similar to them) are OK, we can consider
-this patch abandoned.  I'll re-post patch #2 on its own once we get
-confirmation that Sibi's patches are OK w/ folks.
-
-[1] https://lore.kernel.org/r/20200811190252.10559-2-sibis@codeaurora.org
-
--Doug
+>=20
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
