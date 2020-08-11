@@ -2,115 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA4124205F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 21:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82D81242089
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 21:49:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbgHKTeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 15:34:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbgHKTeE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 15:34:04 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35547C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 12:34:04 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id d19so7181562pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 12:34:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=HPJgVYMlOVpx8CMW1iLnfKWUU9aKgZyZKqJZiVOc4AE=;
-        b=X2nYMD+XxV/+IOGD2YouE5zjPO0QlFLkjP5eXZT/K91Na9ZuG+TaAJ8H31hRXuj8p7
-         /SKbAPVGvH8U61Mievn5GpQS0s2MgET9lCLkypee8LiqhWmCPazJRIr/Bb815s2YPD3f
-         TJojCe6sU4MxN57aVFFFCNoyGsqTSiwLKRJLw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=HPJgVYMlOVpx8CMW1iLnfKWUU9aKgZyZKqJZiVOc4AE=;
-        b=c4K3XgJAOEtM+Eg1l1NaXtGOtmT2ugKPb1L9sUyNR8HkP27xIFCXCIljoPMwv0dr4b
-         L6jquuR3oiySQAe+aSMZrq1j1VAQ7CMj9p48dj/0VDVcNPTBM2AtNBhS0PjRGclGsZ53
-         K8cmXRqc3N7G9H/VaSxbM9TACb/av/jsWfMsrF74SFgUjXi+9YNiTDX6jycT7i3T+74Z
-         PZx489T7vsOnOdAJvPzodjwjUWB5C7MCBUoDvewgKJZAnb1yUII+UO9H5lP6NTJJhXUD
-         Vlr387QSh0p3VGTxnxg9Q1OrwkDqp9DFrFM1+fBwArKU0iOSwXVsgTDfrZSThWwl8Ufd
-         WTfg==
-X-Gm-Message-State: AOAM532nbzCDPyLsFGaMz5pckuurnAzyEvpOBO7OjBrmL7Axlk9g+6b/
-        locOrHuWY/o7xmSGk0KQLu15Aw==
-X-Google-Smtp-Source: ABdhPJzVrCh0RgLLeubSmT8J282uZRpSEPD3234rQ5lD8brIDeACcdBYgQwKmuKSC4td4opzp7cm4Q==
-X-Received: by 2002:a63:fe54:: with SMTP id x20mr1968326pgj.438.1597174443718;
-        Tue, 11 Aug 2020 12:34:03 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id lb1sm3355502pjb.26.2020.08.11.12.34.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 12:34:03 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1726165AbgHKTtE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 15:49:04 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:55961 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726164AbgHKTtE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Aug 2020 15:49:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597175344; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=JjTim0gb+1hEs7u9Q27jb9eJJjx9k1/9OYuzAM5+4TM=;
+ b=X/J9wGSOPA0ty28YYGMRwYKINwjzTeZTWfGeCjJ13qH5kAeW50SYOmVNOGIuK/75KDb6Wkdz
+ XFOZPPe4GPjk4lh11boAtViMcVPj7zhwMUBAvN4eer0cZqBU+T6c4QCSW4y9r3PsH5LpDUFc
+ +GvgbjreV/NN9OQAIrtJrUoCcJA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f32f62fcbcd42bdee6d2e58 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 11 Aug 2020 19:49:03
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DA6F7C433AD; Tue, 11 Aug 2020 19:49:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tanmay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F82BC433C9;
+        Tue, 11 Aug 2020 19:49:00 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1597058460-16211-3-git-send-email-mkshah@codeaurora.org>
-References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org> <1597058460-16211-3-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v4 2/7] pinctrl: qcom: Use return value from irq_set_wake call
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Date:   Tue, 11 Aug 2020 12:34:01 -0700
-Message-ID: <159717444178.1360974.6520145243224264090@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 11 Aug 2020 12:49:00 -0700
+From:   tanmay@codeaurora.org
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, aravindh@codeaurora.org,
+        Abhinav Kumar <abhinavk@codeaurora.org>, khsieh@codeaurora.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>
+Subject: Re: [PATCH v9 3/5] drm/msm/dp: add support for DP PLL driver
+In-Reply-To: <75acac5a-b4a5-9c5a-4404-fb936d738e46@infradead.org>
+References: <20200807071718.17937-1-tanmay@codeaurora.org>
+ <20200807071718.17937-4-tanmay@codeaurora.org>
+ <3b0d0e49-5fe8-e217-4ddc-1ff08e65ab48@infradead.org>
+ <CAF6AEGv5Yf1x7aCEauP7XtzTjpUCxJt6_GzxFhFXyf_DX_Gi+g@mail.gmail.com>
+ <159683184187.1360974.15575847254880429529@swboyd.mtv.corp.google.com>
+ <75acac5a-b4a5-9c5a-4404-fb936d738e46@infradead.org>
+Message-ID: <639438051c1b2fe1d9bec5f6343a6dec@codeaurora.org>
+X-Sender: tanmay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-08-10 04:20:55)
-> msmgpio irqchip is not using return value of irq_set_wake call.
-> Start using it.
+On 2020-08-07 13:28, Randy Dunlap wrote:
+> On 8/7/20 1:24 PM, Stephen Boyd wrote:
+>> Quoting Rob Clark (2020-08-07 08:51:48)
+>>> On Fri, Aug 7, 2020 at 8:27 AM Randy Dunlap <rdunlap@infradead.org>
+>>> wrote:
+>>>> 
+>>>> On 8/7/20 12:17 AM, Tanmay Shah wrote:
+>>>>> diff --git a/drivers/gpu/drm/msm/Kconfig 
+>>>>> b/drivers/gpu/drm/msm/Kconfig
+>>>>> index ea3c4d094d09..cc1392b29022 100644
+>>>>> --- a/drivers/gpu/drm/msm/Kconfig
+>>>>> +++ b/drivers/gpu/drm/msm/Kconfig
+>>>>> @@ -60,6 +60,7 @@ config DRM_MSM_HDMI_HDCP
+>>>>>  config DRM_MSM_DP
+>>>>>       bool "Enable DP support in MSM DRM driver"
+>>>>>       depends on DRM_MSM
+>>>>> +     default y
+>>>>>       help
+>>>>>         Compile in support for DP driver in msm drm driver. DP 
+>>>>> external
+>>>>>         display support is enabled through this config option. It 
+>>>>> can
+>>>> 
+>>>> Hi,
+>>>> 
+>>>> You need a very strong justification to make an optional part of a
+>>>> driver
+>>>> to be "default y".
+>>> 
+>>> My opinion is that if the driver is built, everything should be 
+>>> built.
+>>> This is what makes sense for distro's.  It is only the embedded case
+>>> where you want to trim down unneeded features where you might want to
+>>> disable some parts.  So 'default y' makes sense to me.
+> 
+> We don't set defaults for distro convenience.
+> 
+>> 
+>> Maybe use 'default DRM_MSM' so that it doesn't trigger the 'default y'
+>> filters people have?
+> 
+> Most people can figure that one out.  ;)
+> I don't have any automated filters.
 
-Does this work when the irq parent isn't setup in a hierarchy? I seem to
-recall that this was written this way because sometimes
-irq_set_irq_wake() would fail for the summary irq so it was a best
-effort setting of wake on the summary line.
+After after further reviews, I agree with Rob. Display Port is required 
+module as of now so it makes sense to keep 'default y'.
 
->=20
-> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
->=20
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pi=
-nctrl-msm.c
-> index 90edf61..c264561 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -1077,12 +1077,10 @@ static int msm_gpio_irq_set_wake(struct irq_data =
-*d, unsigned int on)
->          * when TLMM is powered on. To allow that, enable the GPIO
->          * summary line to be wakeup capable at GIC.
->          */
-> -       if (d->parent_data)
-> -               irq_chip_set_wake_parent(d, on);
-> -
-> -       irq_set_irq_wake(pctrl->irq, on);
-> +       if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-> +               return irq_chip_set_wake_parent(d, on);
-
-So this bit is probably fine.
-
-> =20
-> -       return 0;
-> +       return irq_set_irq_wake(pctrl->irq, on);
-
-But this one is probably not fine.
-
->  }
-> =20
->  static int msm_gpio_irq_reqres(struct irq_data *d)
