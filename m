@@ -2,114 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E37924213E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 22:21:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 197C72421A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:09:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726235AbgHKUVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 16:21:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48778 "EHLO
+        id S1726179AbgHKVI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 17:08:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbgHKUVq (ORCPT
+        with ESMTP id S1725987AbgHKVI7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 16:21:46 -0400
-Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1ED7C06174A;
-        Tue, 11 Aug 2020 13:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description;
-        bh=mu8ZGHCtLzfb4Q1brYigGzESLOWdAu8Y0s2c7XTplC8=; b=284/OXxnHd747ZUgC23m/S9th+
-        7fU/+S+BrIfZAzGbDCJ9hKskEz65vFxHjCYXwR4+nsltIHh+uEV/PLGeTNtQC67TxZlyxTE5fERG2
-        NXdSnWsZnb/Br3YZBMqcz/n7ERi4JfJoRq4CuklWCIfbeneuN0b9BMPvKXOGFde8FCQ7gV/5EY9PW
-        pZfsQHsKAwqKnIugSYP8VXO1scYbxv1Ti4ZmOQP0BlDCVlv01mHc9AYEw7lLzmQXUzL1u22oywuqC
-        lXrNFtsh2UvZp5u61MAbyx9tQ/22xMJ+iZ1Du7AaVB5bNd8V+n7m8NM23Jiv/GMi2iAQPbVGGq32e
-        bsdMdEgw==;
-Received: from [2601:1c0:6280:3f0::19c2]
-        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1k5amB-0001WQ-HM; Tue, 11 Aug 2020 20:21:39 +0000
-Subject: Re: [PATCH v9 3/5] drm/msm/dp: add support for DP PLL driver
-To:     tanmay@codeaurora.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
+        Tue, 11 Aug 2020 17:08:59 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CA5C06174A;
+        Tue, 11 Aug 2020 14:08:58 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id e4so66033pjd.0;
+        Tue, 11 Aug 2020 14:08:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MndcDzC/7AcUJRluxUgqjFCuSvCxnzh1AGFXbovDx5M=;
+        b=noltbly0zKrpOk/SZeDEHs3VqJnIemgq0K4S5/hbOHx1rrIgo5711lTz2awSjikBfz
+         5SeO5QIt37qI7/qXsIKttKFObQpZ1LN/725Z2XqnFj0Gtgt7bu2OfZ/D0g8VjAD9RyaI
+         UJLvwVf5hOGPnlYzVJPWdvpD7Wlmvn88hYBOVs9ynTEDRhglJdmRnBt+yNadEVFRZepo
+         r1nEmHabYv/7cBf2Vw8G5rdFHnYOZmdMLHlGOojo5CBs9FUqJAdsrG1TUJGmBJ7wf/cY
+         GZ0O7It4V3Rd66hTUvL4kZq0ZgEZlp7MWNakNS46uDYsjN45EUplATuK2iBPhJAB0k9T
+         O8zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MndcDzC/7AcUJRluxUgqjFCuSvCxnzh1AGFXbovDx5M=;
+        b=mMXIZ3l+PqVZ9UjEv7WbKG+3RaC2870lcxM/ZRZI/SMsmYAqDWcHTWe5u1EUUmnL61
+         7/9hC39oSsjN5n6D2qgSnY8/NR4kJJILAPiVgt9xpDu10cJ8TZ+YckFW31yumzWw8rnm
+         jkEuuWh9R0EPOJwn8YIgkQfevaelj98Ok7wgPspWk4stPOoyGWmXSD4se2OiXHTE95GB
+         zC5mOTfazPBXgv3iKijfsxP2+lIVLxzdSV7kMSh9UCjVO1g44APPW0G1/82EueDywtV1
+         LhddUgDM/J8eiClH8zY8A3CvQtCE7XuLhVGycHeK+pYiYb3bQfR3dnuxzxNGewUv8/ie
+         tvYA==
+X-Gm-Message-State: AOAM533EocbWgOSN1DXL3ltn5Mbqm7nQ9yQ0iGr2tqr6XBh6Pif2+joW
+        1zdcAyrpAisybD5H0N/orVo=
+X-Google-Smtp-Source: ABdhPJxQYo13BOHv9SR2FnAADb18QXpqroXf/pda53QGuHBM1XL/wjykqI6CGbWG6k9YJwfLrhDjWA==
+X-Received: by 2002:a17:902:b18b:: with SMTP id s11mr2646637plr.211.1597180138472;
+        Tue, 11 Aug 2020 14:08:58 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id b63sm6060pfg.43.2020.08.11.14.08.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2020 14:08:56 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        kernel test robot <lkp@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, aravindh@codeaurora.org,
-        Abhinav Kumar <abhinavk@codeaurora.org>, khsieh@codeaurora.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-References: <20200807071718.17937-1-tanmay@codeaurora.org>
- <20200807071718.17937-4-tanmay@codeaurora.org>
- <3b0d0e49-5fe8-e217-4ddc-1ff08e65ab48@infradead.org>
- <CAF6AEGv5Yf1x7aCEauP7XtzTjpUCxJt6_GzxFhFXyf_DX_Gi+g@mail.gmail.com>
- <159683184187.1360974.15575847254880429529@swboyd.mtv.corp.google.com>
- <75acac5a-b4a5-9c5a-4404-fb936d738e46@infradead.org>
- <639438051c1b2fe1d9bec5f6343a6dec@codeaurora.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <7222ceca-9fe2-f91b-4129-5a70952875f7@infradead.org>
-Date:   Tue, 11 Aug 2020 13:21:32 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Drew Davenport <ddavenport@chromium.org>,
+        Bernard <bernard@vivo.com>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Hongbo Yao <yaohongbo@huawei.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/dpu: fix unitialized variable error
+Date:   Tue, 11 Aug 2020 14:09:35 -0700
+Message-Id: <20200811210938.552939-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <639438051c1b2fe1d9bec5f6343a6dec@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/11/20 12:49 PM, tanmay@codeaurora.org wrote:
-> On 2020-08-07 13:28, Randy Dunlap wrote:
->> On 8/7/20 1:24 PM, Stephen Boyd wrote:
->>> Quoting Rob Clark (2020-08-07 08:51:48)
->>>> On Fri, Aug 7, 2020 at 8:27 AM Randy Dunlap <rdunlap@infradead.org>
->>>> wrote:
->>>>>
->>>>> On 8/7/20 12:17 AM, Tanmay Shah wrote:
->>>>>> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
->>>>>> index ea3c4d094d09..cc1392b29022 100644
->>>>>> --- a/drivers/gpu/drm/msm/Kconfig
->>>>>> +++ b/drivers/gpu/drm/msm/Kconfig
->>>>>> @@ -60,6 +60,7 @@ config DRM_MSM_HDMI_HDCP
->>>>>>  config DRM_MSM_DP
->>>>>>       bool "Enable DP support in MSM DRM driver"
->>>>>>       depends on DRM_MSM
->>>>>> +     default y
->>>>>>       help
->>>>>>         Compile in support for DP driver in msm drm driver. DP external
->>>>>>         display support is enabled through this config option. It can
->>>>>
->>>>> Hi,
->>>>>
->>>>> You need a very strong justification to make an optional part of a
->>>>> driver
->>>>> to be "default y".
->>>>
->>>> My opinion is that if the driver is built, everything should be built.
->>>> This is what makes sense for distro's.  It is only the embedded case
->>>> where you want to trim down unneeded features where you might want to
->>>> disable some parts.  So 'default y' makes sense to me.
->>
->> We don't set defaults for distro convenience.
->>
->>>
->>> Maybe use 'default DRM_MSM' so that it doesn't trigger the 'default y'
->>> filters people have?
->>
->> Most people can figure that one out.  ;)
->> I don't have any automated filters.
-> 
-> After after further reviews, I agree with Rob. Display Port is required module as of now so it makes sense to keep 'default y'.
+From: Rob Clark <robdclark@chromium.org>
 
-If it is required, then you don't need to have a Kconfig entry/symbol for it.
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:817 dpu_crtc_enable() error: uninitialized symbol 'request_bandwidth'.
 
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index f272a8d0f95b..c2729f71e2fa 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -827,7 +827,7 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
+ {
+ 	struct dpu_crtc *dpu_crtc;
+ 	struct drm_encoder *encoder;
+-	bool request_bandwidth;
++	bool request_bandwidth = false;
+ 
+ 	if (!crtc) {
+ 		DPU_ERROR("invalid crtc\n");
 -- 
-~Randy
+2.26.2
 
