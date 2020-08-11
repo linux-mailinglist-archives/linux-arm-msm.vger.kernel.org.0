@@ -2,59 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1129242015
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 21:03:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C601242034
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 21:25:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726173AbgHKTDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 15:03:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:52059 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726023AbgHKTDj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 15:03:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597172618; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=+3oLMOjRVphuPQ+PhEKkKC/mDHCGYkvA89mtuFU3+3Y=; b=hvhuJbOuGaphz0WsoSwyVu8F/m8qGmPfPj5IuOZdnQYf2GeqBm87IvPKH7dw05G5nknSla8N
- UhRXXwGyQMVEBgu0XoKCfD/9yEmkaJ4a7jlBsGpUI0/smEFYMHMoo1bWQ3uLt3DJ/2sC9lqK
- 97SAhe1tjtEgQDt8KSn3koOOjhc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-east-1.postgun.com with SMTP id
- 5f32eb79ba4c2cd3676fcc0a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 11 Aug 2020 19:03:21
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 15EF5C433C6; Tue, 11 Aug 2020 19:03:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9FCB0C433CB;
-        Tue, 11 Aug 2020 19:03:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9FCB0C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        rjw@rjwysocki.net
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        gregkh@linuxfoundation.org, pavel@ucw.cz, len.brown@intel.com,
-        rnayak@codeaurora.org, dianders@chromium.org, khilman@kernel.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH 2/2] soc: qcom: aoss: Use GENPD_FLAG_SUSPEND_ON flag
-Date:   Wed, 12 Aug 2020 00:32:52 +0530
-Message-Id: <20200811190252.10559-2-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200811190252.10559-1-sibis@codeaurora.org>
-References: <20200811190252.10559-1-sibis@codeaurora.org>
+        id S1726420AbgHKTZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 15:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39996 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726366AbgHKTZF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Aug 2020 15:25:05 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C3BC061787
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 12:25:05 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id mt12so2361710pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 12:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Th9F+Ys6njcnXzjyOUMQAgDagGiaCGUsjwgut8vgfCA=;
+        b=hWEBPhJHpzylK4ONAg1gpYb9KIbwqmMPtXitCIHPnAw9YWb10rGjpru87lXragFiLz
+         1/+Kpcu+HvtIoXL54Vnk6MZAo3jkVnkcLBm9F9014pGcL3pmxrfCh57lYLeTX3wlhlX7
+         FywIHupGsfeUSlmjvwHyV98MhAgYCpI40YBJE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Th9F+Ys6njcnXzjyOUMQAgDagGiaCGUsjwgut8vgfCA=;
+        b=NRCVZcrrL9Qldbi7ySyP9LmdrVCK6iV9ZLBBUfOtzA5wzwkNQMaKkI+gR517J3ynGr
+         5dlqA1OSdTm8uLwkqi18lhBRX3/VOOrm88bIx9bnRhZDD+mnMNPTp1tBjpvUh4IFh0MD
+         SuuTiH525rsasSONhAiz3c1uk0SZiJG5CXV0vNYDYamzc4hQyILgjMsM8D2HcAlegNWr
+         dOGs7k0Opyyyg6EEbLYERF3DmVvEUqKGuxaT6vLa5DW92xu3siym05vMDzHVRcMXRY67
+         Es8irkI2D6NISxBuN/baFMg8YP+3/liR7rXoTyu9P9JHDR598qb58Lr0Vp8xhXDVV+KN
+         Rjrg==
+X-Gm-Message-State: AOAM530ZDbj4diKQXXr6SpOQRKpYvqAQ2dXCh2J2IdBz4qlaI3hVuFGV
+        NvWUlnMm81CfkEE8S4F4Bfj8xQ==
+X-Google-Smtp-Source: ABdhPJxwDq2Ukpnrjta9HOf8EzBQkMdphnR9aadRRe8ZViQFmoGG6OMd9DM7Ta7RY6yTK3Z6LOitAA==
+X-Received: by 2002:a17:902:7205:: with SMTP id ba5mr2112076plb.230.1597173904802;
+        Tue, 11 Aug 2020 12:25:04 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id i14sm3432227pjz.25.2020.08.11.12.25.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2020 12:25:04 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Kalyan Thota <kalyan_t@codeaurora.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Drop flags on mdss irqs
+Date:   Tue, 11 Aug 2020 12:25:03 -0700
+Message-Id: <20200811192503.1811462-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.28.0.236.gb10cc79966-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -62,29 +61,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All the power domains exposed as part of AOSS QMP driver require to stay
-powered on for suspend. They are powered on when the remote processors
-boots up and powered off on remote processor crash/shutdown. Mark the
-power domains with GENPD_FLAG_SUSPEND_ON to model this behavior.
+The number of interrupt cells for the mdss interrupt controller is 1,
+meaning there should only be one cell for the interrupt number, not two
+where the second cell is the irq flags. Drop the second cell to match
+the binding.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Cc: Kalyan Thota <kalyan_t@codeaurora.org>
+Cc: Harigovindan P <harigovi@codeaurora.org
+Fixes: a3db7ad1af49 ("arm64: dts: sc7180: add display dt nodes")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/soc/qcom/qcom_aoss.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index ed2c687c16b31..5a5b4bf928147 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -366,6 +366,7 @@ static int qmp_pd_add(struct qmp *qmp)
- 		res[i].pd.name = sdm845_resources[i];
- 		res[i].pd.power_on = qmp_pd_power_on;
- 		res[i].pd.power_off = qmp_pd_power_off;
-+		res[i].pd.flags = GENPD_FLAG_SUSPEND_ON;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 31b9217bb5bf..9d1660e1a6f0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2357,7 +2357,7 @@ mdp: mdp@ae01000 {
+ 						       <19200000>;
  
- 		ret = pm_genpd_init(&res[i].pd, NULL, true);
- 		if (ret < 0) {
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <0>;
+ 
+ 				status = "disabled";
+ 
+@@ -2380,7 +2380,7 @@ dsi0: dsi@ae94000 {
+ 				reg-names = "dsi_ctrl";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <4>;
+ 
+ 				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+
+base-commit: bcf876870b95592b52519ed4aafcf9d95999bc9c
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Sent by a computer, using git, on the internet
 
