@@ -2,81 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 602A8241DD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 18:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79DB5241DDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 18:09:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729085AbgHKQIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 12:08:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57096 "EHLO mail.kernel.org"
+        id S1728947AbgHKQJm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 12:09:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57748 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728924AbgHKQIm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 12:08:42 -0400
-Received: from coco.lan (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
+        id S1728906AbgHKQJl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Aug 2020 12:09:41 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 368E020756;
-        Tue, 11 Aug 2020 16:08:40 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id A6CB6206B5;
+        Tue, 11 Aug 2020 16:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597162122;
-        bh=c0bG2i1Yo67i7IiXHYRfswulMbXblEFqkOVi4XhGV88=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=qEZSye+miar8vUJnqElxOTF+POpDxRLrwgb4PFF6bSP2+ggDRLHJqs/AfECj87jDo
-         1dznyQAFkuNwLkHu0LO3+yWcPxweWPpRdDSW8sKfRXW3yCDeVZMbUR7azBqArgGOTe
-         KV83OQUa/6vq3aQLEdM8lF2WgrK1juCFqTxYsaIw=
-Date:   Tue, 11 Aug 2020 18:08:37 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
+        s=default; t=1597162181;
+        bh=8jTFVmarRZLLRTfqotP58rz//cPI05u7z4Z4fPoK9ZQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mhmVk4N7ydGphZMmV4huNncs+K5JbFMJHish1R9dGkgTYL6kwjf20Ear+JYinh9vw
+         1iY2fdLQvpZ7mwxTFteKfpXr99Pt/ga5y+Eg2ClZP3ayBqChJ4UeMkKhZcp98SzAc9
+         VS8D3yP7VivBmmiyeuHdrPazLiOUK0tETerRsx8Y=
+Date:   Tue, 11 Aug 2020 17:09:13 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mayulong <mayulong1@huawei.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 02/33] spmi, regulator, mfd: add drivers for hikey970
- SPMI PMIC
-Message-ID: <20200811180837.2285c8b5@coco.lan>
-In-Reply-To: <20200811155810.GH6967@sirena.org.uk>
+        linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>, devicetree@vger.kernel.org,
+        Mayulong <mayulong1@huawei.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/33] Add driver for HiSilicon SPMI PMIC for Hikey 970
+Message-ID: <20200811160913.GJ6967@sirena.org.uk>
 References: <cover.1597160086.git.mchehab+huawei@kernel.org>
-        <36a548c10ea8c75d13c3e796c4cee65132819ef1.1597160086.git.mchehab+huawei@kernel.org>
-        <20200811155810.GH6967@sirena.org.uk>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AXxEqdD4tcVTjWte"
+Content-Disposition: inline
+In-Reply-To: <cover.1597160086.git.mchehab+huawei@kernel.org>
+X-Cookie: Gravity is a myth, the Earth sucks.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Tue, 11 Aug 2020 16:58:10 +0100
-Mark Brown <broonie@kernel.org> escreveu:
 
-> On Tue, Aug 11, 2020 at 05:41:28PM +0200, Mauro Carvalho Chehab wrote:
-> 
-> >  drivers/mfd/hisi_pmic_spmi.c            | 759 ++++++++++++++++++++++++
-> >  drivers/regulator/hisi_regulator_spmi.c | 741 +++++++++++++++++++++++
-> >  drivers/spmi/hisi-spmi-controller.c     | 390 ++++++++++++
-> >  include/linux/mfd/hisi_pmic.h           | 165 ++++++  
-> 
-> This is a single patch for three subsystems, please split it into per
-> subsystem patches.
+--AXxEqdD4tcVTjWte
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ok, I'll split on a next version. 
+On Tue, Aug 11, 2020 at 05:41:26PM +0200, Mauro Carvalho Chehab wrote:
 
+> This patch series backport the OOT drivers from the Linaro's official
+> tree for this board:
 
-Yet, it would be good to have all tree drivers applied via the same tree,
-as those drivers are needed altogether in order for this PMIC to work:
+> 	https://github.com/96boards-hikey/linux/tree/hikey970-v4.9
 
-- The SPMI controller driver talks with the hardware and provides
-  support via the SPMI bus calls;
-- The MFD PMIC driver binds into the SPMI bus and provide support
-  for interrupts. It also has support for binding the regulator
-  driver;
-- The regulator driver needs the PMIC driver (which in turn needs
-  the SPMI bus) in order to be able to talk with the hardware and
-  set the power supplied.
+> Porting them to upstream, cleaning up coding style issues, solving
+> driver probing order and adding DT documentation.
 
-That's basically why I opted to send the entire series altogether.
+> I opted to not fold all patches into a single one, in order to:
+>=20
+> - Preserve the authorship of the original authors;
+> - Keep a history of changes.
 
-Thanks,
-Mauro
+Please don't do this, please send this as a normal upstream submission
+like other MFD drivers - split things up per subsystem and fold any
+fixes into the initial submission of the driver.
+
+--AXxEqdD4tcVTjWte
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEyBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl8ywqgACgkQJNaLcl1U
+h9Drcgf47oBDBjVvpLy10e9lrcilMI2JzHAypdkY4X1XY/G0vFSIROQ2rUrUJ7/k
+M3cRmaTWtkUkodo499B1yKd6PgsCk3GbeHV/KOUMjEJTkDZrAby0EPGu3tqggJ+6
+kh5Y768OqrCx68KN3RWcQH5cIch4+ewb7b89veaufmLcga8yI2sSWUsezKk1Z9D3
+uZLImihVf2au7uQ27Y9lMHuN2g8xsVeR7F1Y6rmfSK75GvlPfzvNntHPfcs2aig+
+hbXJR/mV6z8HhRBYiWOCaOturerbIYpRt/pfOaFN/OaQNB0FSi/C5M1Od4icg0UG
++ymksv0gSyzXpjNIj5NmPgp5Jqso
+=2YNd
+-----END PGP SIGNATURE-----
+
+--AXxEqdD4tcVTjWte--
