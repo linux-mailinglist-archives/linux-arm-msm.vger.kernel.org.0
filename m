@@ -2,94 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D681C2420BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 22:02:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 810652420BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 22:03:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726405AbgHKUCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 16:02:13 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:16233 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726329AbgHKUCM (ORCPT
+        id S1726586AbgHKUDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 16:03:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45890 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbgHKUDD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 16:02:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597176131; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Eg0yaT7k7a3ozvjvXJg0xCTB4GB4zNL/QNKAE2MeKPE=; b=we6tQy3TpR1faNPkFYYwZCwcQCDCISW+s6xSELV68uQRScKmEjFUFQL6Nz7nFuxHQv9lIR/+
- cigP6VEW4iUMkzjKCKGhLl363Hif+3ZbFFqff/0XqgFLk9XDy1PrP9rSPXsLhQDWIdfMZfpP
- nq0n/vO6mZzGyTaUwljxAK9Ia/o=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f32f937440a07969ae5f5d3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 11 Aug 2020 20:01:59
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 39C92C433C9; Tue, 11 Aug 2020 20:01:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.206.24.160] (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sanm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B4793C433C6;
-        Tue, 11 Aug 2020 20:01:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B4793C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=sanm@codeaurora.org
-Subject: Re: [PATCH v11 1/2] usb: dwc3: qcom: Add interconnect support in dwc3
- driver
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 11 Aug 2020 16:03:03 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3BDC061788
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 13:03:03 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id e6so13394346oii.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 13:03:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/L5XEoeU6SfSw+3MAGdjCZdmWhATe3RdZadKI67cXZo=;
+        b=xuN4qX3cNWgNZIkfenGKniMbJgU7TWaqGefaAdIjgLuz82L5ys44wwFfm/lbiuAeqp
+         4VNghtvxbMCCekrVw0BRCBmXO9EaCB87qMJrh1o012IFDkTI98U+tXoJihtWFJ+jfWUA
+         EY6iMFHKCFRaJylHUFxYYoEEUfwAhTVukp+ihgaa/4iNizF25DEGM/0sOVpOR71L6uTF
+         sqJxHU3UJoHadr/CQTgQJSYvd8hjuGu59uFWF0Z7gd2Q7UgZLCloetJljvx5SDVBx8Ak
+         oRoLdr3njf+UyhcXOp9HMgJxsWrn9XeFLZRP57ixcuHAtf30QAU/ljV84hWWf5+COulF
+         L+ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/L5XEoeU6SfSw+3MAGdjCZdmWhATe3RdZadKI67cXZo=;
+        b=jIpzp9qF9OCJGmnzcyfUpYhcZmywem7l7+Vvqk/Yc0gaubDm0u2xaL0hjvxt3gMC16
+         r+/rKFelhHaMpua7SEjpXCwSBVLAX/SlZyqI465aQcNLTf6fmjfuBHm2P1vFlIwbc+9O
+         dXU7iicz4RpxaYJLPYGq09YwC6BuAOt97xRQxQ7M20YFBJnFTM9wxklIQIxFuK5oMQrY
+         iTrtUWmw9aq8IcPlJcf8TcR0tLXfGV++cEcrhgkScDouTZL4WDjhTyGwPtvvwxhT+fZ1
+         CCfPKL8bGAUm97yXl9RLyMfUhozOILh7zHDXvW8XGLUzZYGAhUqSweVfyFqz3YNjOniC
+         n3Bw==
+X-Gm-Message-State: AOAM53183Bn5uuhfyv3qCIvlF4L/oPXP+PZHVvrOSwa7jgnO87Jj8CTV
+        7It6SxHZ+qm4HPv2q2NceC4mHDBllLH5ORF7HsdOAg==
+X-Google-Smtp-Source: ABdhPJwUnhWji9+O9FsKo96nRE2LnEz6aMDJgYGbDEg7BsXVRFWBFXMET8NIbAlW54wWzH2BYtM26yo4Bx/x2QiRfLI=
+X-Received: by 2002:aca:b50b:: with SMTP id e11mr5131759oif.10.1597176182150;
+ Tue, 11 Aug 2020 13:03:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200811025044.70626-1-john.stultz@linaro.org> <CAGETcx8qjnVNNB_z-Ar8gxKAy7Sc8kcj8oAWQ76mXcBpaqnagg@mail.gmail.com>
+In-Reply-To: <CAGETcx8qjnVNNB_z-Ar8gxKAy7Sc8kcj8oAWQ76mXcBpaqnagg@mail.gmail.com>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 11 Aug 2020 13:02:50 -0700
+Message-ID: <CALAqxLUhX0JLLvn=4fNXk0z6dm=teqCaBmz2VDPEKGfZ+EDFZw@mail.gmail.com>
+Subject: Re: [RFC][PATCH] tty: serial: qcom_geni_serial: Drop __init from qcom_geni_console_setup
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-References: <1595869597-26049-1-git-send-email-sanm@codeaurora.org>
- <1595869597-26049-2-git-send-email-sanm@codeaurora.org>
- <20200727192050.GD3191083@google.com>
-From:   "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org>
-Message-ID: <cd5c6c99-d8ee-da59-1abf-e64e5f7f6f8f@codeaurora.org>
-Date:   Wed, 12 Aug 2020 01:31:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20200727192050.GD3191083@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Jiri Slaby <jirislaby@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-serial@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Felipe,
+On Tue, Aug 11, 2020 at 10:00 AM Saravana Kannan <saravanak@google.com> wrote:
+>
+> On Mon, Aug 10, 2020 at 7:50 PM John Stultz <john.stultz@linaro.org> wrote:
+> >
+> > When booting with heavily modularized config, the serial console
+> > may not be able to load until after init when modules that
+> > satisfy needed dependencies have time to load.
+> >
+> > Unfortunately, as qcom_geni_console_setup is marked as __init,
+> > the function may have been freed before we get to run it,
+> > causing boot time crashes such as:
+>
+> Btw, I thought non-__init functions calling __init functions would be
+> caught by the build system. Is that not correct? If it's correct, do
+> we know how this gets past that check?
 
-On 7/28/2020 12:50 AM, Matthias Kaehlcke wrote:
-> On Mon, Jul 27, 2020 at 10:36:36PM +0530, Sandeep Maheswaram wrote:
->> Add interconnect support in dwc3-qcom driver to vote for bus
->> bandwidth.
->>
->> This requires for two different paths - from USB to
->> DDR. The other is from APPS to USB.
->>
->> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
->> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-Please ack if you are ok with this patch.
+I think it's because it's indirectly called through a function pointer.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+thanks
+-john
