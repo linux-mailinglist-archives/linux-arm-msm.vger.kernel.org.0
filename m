@@ -2,102 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 197C72421A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:09:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 870DB2421B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Aug 2020 23:10:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726179AbgHKVI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 17:08:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgHKVI7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 17:08:59 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CA5C06174A;
-        Tue, 11 Aug 2020 14:08:58 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id e4so66033pjd.0;
-        Tue, 11 Aug 2020 14:08:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MndcDzC/7AcUJRluxUgqjFCuSvCxnzh1AGFXbovDx5M=;
-        b=noltbly0zKrpOk/SZeDEHs3VqJnIemgq0K4S5/hbOHx1rrIgo5711lTz2awSjikBfz
-         5SeO5QIt37qI7/qXsIKttKFObQpZ1LN/725Z2XqnFj0Gtgt7bu2OfZ/D0g8VjAD9RyaI
-         UJLvwVf5hOGPnlYzVJPWdvpD7Wlmvn88hYBOVs9ynTEDRhglJdmRnBt+yNadEVFRZepo
-         r1nEmHabYv/7cBf2Vw8G5rdFHnYOZmdMLHlGOojo5CBs9FUqJAdsrG1TUJGmBJ7wf/cY
-         GZ0O7It4V3Rd66hTUvL4kZq0ZgEZlp7MWNakNS46uDYsjN45EUplATuK2iBPhJAB0k9T
-         O8zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MndcDzC/7AcUJRluxUgqjFCuSvCxnzh1AGFXbovDx5M=;
-        b=mMXIZ3l+PqVZ9UjEv7WbKG+3RaC2870lcxM/ZRZI/SMsmYAqDWcHTWe5u1EUUmnL61
-         7/9hC39oSsjN5n6D2qgSnY8/NR4kJJILAPiVgt9xpDu10cJ8TZ+YckFW31yumzWw8rnm
-         jkEuuWh9R0EPOJwn8YIgkQfevaelj98Ok7wgPspWk4stPOoyGWmXSD4se2OiXHTE95GB
-         zC5mOTfazPBXgv3iKijfsxP2+lIVLxzdSV7kMSh9UCjVO1g44APPW0G1/82EueDywtV1
-         LhddUgDM/J8eiClH8zY8A3CvQtCE7XuLhVGycHeK+pYiYb3bQfR3dnuxzxNGewUv8/ie
-         tvYA==
-X-Gm-Message-State: AOAM533EocbWgOSN1DXL3ltn5Mbqm7nQ9yQ0iGr2tqr6XBh6Pif2+joW
-        1zdcAyrpAisybD5H0N/orVo=
-X-Google-Smtp-Source: ABdhPJxQYo13BOHv9SR2FnAADb18QXpqroXf/pda53QGuHBM1XL/wjykqI6CGbWG6k9YJwfLrhDjWA==
-X-Received: by 2002:a17:902:b18b:: with SMTP id s11mr2646637plr.211.1597180138472;
-        Tue, 11 Aug 2020 14:08:58 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id b63sm6060pfg.43.2020.08.11.14.08.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 14:08:56 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        kernel test robot <lkp@intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Bernard <bernard@vivo.com>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Hongbo Yao <yaohongbo@huawei.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/dpu: fix unitialized variable error
-Date:   Tue, 11 Aug 2020 14:09:35 -0700
-Message-Id: <20200811210938.552939-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        id S1726165AbgHKVJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 17:09:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47704 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725987AbgHKVJx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Aug 2020 17:09:53 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id DBF7B20756;
+        Tue, 11 Aug 2020 21:09:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597180193;
+        bh=tRswQoz3Io4eMiflFk/mgoD1e+JXoOIFlknWdgL+hpY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=WmURh5WkywPN/blLRM+aGB36g8bCzzVjMJpdf93L+PHOu3H1Ec6Dws0y5hOntY/NB
+         EzrviXE6f4BvXf0TjLYUbvZcWF8Qh7qv0iayQG2szwFLNFfSZsW6fLbu9HNSVW3Unj
+         XTnyr/QXj2bvdgtAiVza3O+LsVHICGzgxR3VGhZg=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
+References: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
+Subject: Re: [PATCH] opp: Fix dev_pm_opp_set_rate() to not return early
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>, nm@ti.com,
+        viresh.kumar@linaro.org, vireshk@kernel.org
+Date:   Tue, 11 Aug 2020 14:09:51 -0700
+Message-ID: <159718019170.1360974.4800051292737590657@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Quoting Rajendra Nayak (2020-08-10 00:06:19)
+> dev_pm_opp_set_rate() can now be called with freq =3D 0 inorder
+> to either drop performance or bandwidth votes or to disable
+> regulators on platforms which support them.
+> In such cases, a subsequent call to dev_pm_opp_set_rate() with
+> the same frequency ends up returning early because 'old_freq =3D=3D freq'
+> Instead make it fall through and put back the dropped performance
+> and bandwidth votes and/or enable back the regulators.
+>=20
+> Fixes: cd7ea582 ("opp: Make dev_pm_opp_set_rate() handle freq =3D 0 to dr=
+op performance votes")
+> Reported-by: Sajida Bhanu <sbhanu@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  drivers/opp/core.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> index 0c8c74a..a994f30 100644
+> --- a/drivers/opp/core.c
+> +++ b/drivers/opp/core.c
+> @@ -901,6 +901,9 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned =
+long target_freq)
+> =20
+>         /* Return early if nothing to do */
+>         if (old_freq =3D=3D freq) {
+> +               if (opp_table->required_opp_tables || opp_table->regulato=
+rs ||
+> +                   opp_table->paths)
+> +                       goto skip_clk_only;
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:817 dpu_crtc_enable() error: uninitialized symbol 'request_bandwidth'.
+This is a goto maze! Any chance we can clean this up?
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+        if (!opp_table->required_opp_tables && !opp_table->regulators &&
+	    !opp_table->paths)
+	    if (old_freq =3D=3D freq) {
+		    ret =3D 0
+		    dev_dbg(..)
+	    } else if (!_get_opp_count(opp_table)) {
+		    ret =3D _generic_set_opp_clk_only(dev, clk, freq);
+	    }
+	} else {
+		temp_freq =3D old_freq;
+		old_opp =3D _find_freq_ceil(opp_table, &temp_freq);
+		...
+	        dev_pm_opp_put(opp);
+	put_old_opp:
+		if (!IS_ERR(old_opp))
+			dev_pm_opp_put(old_opp);
+	}
+put_opp_table:
+	dev_pm_opp_put_opp_table(opp_table);
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index f272a8d0f95b..c2729f71e2fa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -827,7 +827,7 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- {
- 	struct dpu_crtc *dpu_crtc;
- 	struct drm_encoder *encoder;
--	bool request_bandwidth;
-+	bool request_bandwidth = false;
- 
- 	if (!crtc) {
- 		DPU_ERROR("invalid crtc\n");
--- 
-2.26.2
+And that stuff in the else should probably go to another function.
 
+>                 dev_dbg(dev, "%s: old/new frequencies (%lu Hz) are same, =
+nothing to do\n",
+>                         __func__, freq);
+>                 ret =3D 0;
+> @@ -919,6 +922,7 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned =
+long target_freq)
+>                 goto put_opp_table;
+>         }
+> =20
+> +skip_clk_only:
+>         temp_freq =3D old_freq;
+>         old_opp =3D _find_freq_ceil(opp_table, &temp_freq);
+>         if (IS_ERR(old_opp)) {
+> @@ -954,8 +958,10 @@ int dev_pm_opp_set_rate(struct device *dev, unsigned=
+ long target_freq)
+>                                                  IS_ERR(old_opp) ? NULL :=
+ old_opp->supplies,
+>                                                  opp->supplies);
+>         } else {
+> +               ret =3D 0;
+>                 /* Only frequency scaling */
+> -               ret =3D _generic_set_opp_clk_only(dev, clk, freq);
+> +               if (freq !=3D old_freq)
+> +                       ret =3D _generic_set_opp_clk_only(dev, clk, freq);
+>         }
+
+And write this as=20
+
+	else if (freq !=3D old_freq) {
+		ret =3D _generic_set_opp_clk_only(..)
+	} else {
+		ret =3D 0;
+	}
