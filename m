@@ -2,104 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FEF6242B26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 16:17:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18EAF242BE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 17:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726488AbgHLORK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 10:17:10 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:40977 "EHLO
+        id S1726567AbgHLPGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 11:06:30 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:34545 "EHLO
         mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726485AbgHLORJ (ORCPT
+        by vger.kernel.org with ESMTP id S1726447AbgHLPG1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 10:17:09 -0400
+        Wed, 12 Aug 2020 11:06:27 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597241828; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=LaIie0T8WfNxBF7kx8MMK1iBQQRCchKqnnmUJgmGsU8=; b=IODe42bvSs5cZwJuF17sBUd5ZgYGKj+ZpqLXnjjd/dYCIvmQaUgP+ihskXEQF+panPLziuE4
- y4lb4E124PHCmI6CND1/hxFDqp8My7rL/U51dHY+V5vlQgpQ8dy+R5jZjXp+9JRXrRi2Brnv
- nKmpjNYNPXTWVsxtcHgo/YhQLxw=
+ s=smtp; t=1597244786; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=he48vNhB/H7o1FXWZlCjSNh7DZeQpxJ6JMe+OQtpTL4=; b=BJrQwIxIrPieCkOmHYqRUXU0gy6puxUbf1R51vNCtYxeKfN/jYaF3+I4mxlvPl1zWwBa/YQ0
+ gMOr3Ycn4tWJmvjcUzdBMLVG6pcclLoJcedU7vJfAMjf0vskIy5x7uI8pJdYHv/jdFL+8W2e
+ 1RV58IK0w/2qkb6ntl27vN//quk=
 X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
- 5f33f976d78a2e5833bbde35 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 14:15:18
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f3405222b87d66049349722 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 15:05:06
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F24A3C43391; Wed, 12 Aug 2020 14:15:17 +0000 (UTC)
+        id BDB3EC433AD; Wed, 12 Aug 2020 15:05:05 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.4] (unknown [136.185.246.224])
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: gkohli)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A72E6C433C9;
-        Wed, 12 Aug 2020 14:15:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A72E6C433C9
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 676D4C433C6;
+        Wed, 12 Aug 2020 15:05:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 676D4C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=gkohli@codeaurora.org
-Subject: Re: [PATCH] arm64: Skip apply SSBS call for non SSBS system
-To:     Will Deacon <will@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, maz@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        neeraju@codeaurora.org
-References: <1596550484-11029-1-git-send-email-gkohli@codeaurora.org>
- <20200812133043.GA8924@willie-the-truck>
-From:   Gaurav Kohli <gkohli@codeaurora.org>
-Message-ID: <5b1ad0e0-bbe7-9869-ee19-1b62023203ed@codeaurora.org>
-Date:   Wed, 12 Aug 2020 19:45:12 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 12 Aug 2020 09:05:00 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Wambui Karuga <wambui.karugax@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/a6xx: add module param to enable debugbus
+ snapshot
+Message-ID: <20200812150459.GB3221@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Wambui Karuga <wambui.karugax@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200811233702.580744-1-robdclark@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200812133043.GA8924@willie-the-truck>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200811233702.580744-1-robdclark@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/12/2020 7:00 PM, Will Deacon wrote:
-> On Tue, Aug 04, 2020 at 07:44:42PM +0530, Gaurav Kohli wrote:
->> In a system where no cpu's implement SSBS, for
->> them no need to set pstate. This might help to save
->> few cpu cycles during context switch.
->>
->> Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
->>
->> diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
->> index 6089638..79f80f1 100644
->> --- a/arch/arm64/kernel/process.c
->> +++ b/arch/arm64/kernel/process.c
->> @@ -477,6 +477,13 @@ static void ssbs_thread_switch(struct task_struct *next)
->>   	struct pt_regs *regs = task_pt_regs(next);
->>   
->>   	/*
->> +	 * For Targets which don't have SSBS support, they
->> +	 * can return from here.
->> +	 */
->> +	if (!IS_ENABLED(CONFIG_ARM64_SSBD))
->> +		return;
+On Tue, Aug 11, 2020 at 04:36:57PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Does this actually make a measurable difference?
+> For production devices, the debugbus sections will typically be fused
+> off and empty in the gpu device coredump.  But since this may contain
+> data like cache contents, don't capture it by default.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 3 ++-
+>  drivers/gpu/drm/msm/adreno/adreno_device.c  | 4 ++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h     | 2 ++
+>  3 files changed, 8 insertions(+), 1 deletion(-)
 > 
-> Will
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index 959656ad6987..b12f5b4a1bea 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -938,7 +938,8 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
+>  		msm_gem_kernel_put(dumper.bo, gpu->aspace, true);
+>  	}
+>  
+> -	a6xx_get_debugbus(gpu, a6xx_state);
+> +	if (snapshot_debugbus)
+> +		a6xx_get_debugbus(gpu, a6xx_state);
+>  
+>  	return  &a6xx_state->base;
+>  }
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 4e84f3c76f4f..9eeb46bf2a5d 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -14,6 +14,10 @@ bool hang_debug = false;
+>  MODULE_PARM_DESC(hang_debug, "Dump registers when hang is detected (can be slow!)");
+>  module_param_named(hang_debug, hang_debug, bool, 0600);
+>  
+> +bool snapshot_debugbus = false;
+> +MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
+> +module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
+> +
+>  static const struct adreno_info gpulist[] = {
+>  	{
+>  		.rev   = ADRENO_REV(2, 0, 0, 0),
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 99bb468f5f24..e55abae365b5 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -21,6 +21,8 @@
+>  #define REG_SKIP ~0
+>  #define REG_ADRENO_SKIP(_offset) [_offset] = REG_SKIP
+>  
+> +extern bool snapshot_debugbus;
+> +
+>  /**
+>   * adreno_regs: List of registers that are used in across all
+>   * 3D devices. Each device type has different offset value for the same
+> -- 
+> 2.26.2
 > 
 
-Hi Will,
-
-While doing code review between older kernel and latest kernel for 
-context switch case, there i have found this and thought it is good to 
-have for non-ssbs system to return early(as this might improve).
-
-Please let me know if you want to run some tests.
-
-Regards
-Gaurav
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
