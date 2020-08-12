@@ -2,134 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FEC32422D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 01:36:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00724242330
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 02:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726173AbgHKXgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Aug 2020 19:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50536 "EHLO
+        id S1726642AbgHLATJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Aug 2020 20:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726143AbgHKXgS (ORCPT
+        with ESMTP id S1726143AbgHLATJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Aug 2020 19:36:18 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5400C06174A;
-        Tue, 11 Aug 2020 16:36:17 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id ha11so212918pjb.1;
-        Tue, 11 Aug 2020 16:36:17 -0700 (PDT)
+        Tue, 11 Aug 2020 20:19:09 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2063C061787
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 17:19:07 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id f18so3121361wmc.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Aug 2020 17:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qJacNYTNjzvH1OwtDhhId+31gqWxjTcV/w1QSNegM+s=;
-        b=CaYwq5LCxIlp+3gYSayjOxXtKRP6v2EROxO/iEm3y8UwMofSDO5cUtWm+cKJOVBFoM
-         2rKFMuaC9rhvn/bSxR6nyOPkWatNI5cpAVIV+Oldh4XzmE0yQzHd1jtiaH9oRfLeOiUn
-         GvUGjf+1xeTxs7BAU4shdSlz0LMPkQhtsptdYDhayUc+8qzs15B7BpjPnI2C3NHIEjPf
-         67fHHiF5O0JD0tDCP04f7Fs987VRj2UjMrGhDMJEgj6pOmlHuTnh9MnAdLbuw4BLVDbH
-         wXPbJ14LJwDPjhrGvLv3LlJNIMegdoDBw9fqvk4AORulucMVy56eDx9TQC0xaWInAUfa
-         Y9IA==
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=YEjwPZh5RXt3Ie4FbKarHOy1S3LP80s3dHh0ey0Ay4c=;
+        b=oxTXEciBXvnoM4ZLAb8X5sfDonmIlC+BBp8vPKTxI3GL6ri2Fp0SBg69HUYV0+50dy
+         hoaCxYBxWL7N/kYFMTRWL23dGWY4xtzMaBW6350pxKg9sD3t0bgXSyW9HkBBUNLB7+fn
+         kdqveXEEa+wJnIDhUOxFrGuQEMXkBEEDCGEKbTWTGByO2v8fpAIccs1LlsDE/8AG8Usy
+         lY7BnpqF3vUverHMsV+w5jpI/qoZaSHivLLBYPNlhT/bsdeljxKvF9vsyT8WDvdsEWM3
+         u1kQ82vIkN/EeQVy7U5o0WqyH57XTsmvXB4O8y8iiI+u4PzL8XRrHsECY4k8Cx3L/FWR
+         Wt2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qJacNYTNjzvH1OwtDhhId+31gqWxjTcV/w1QSNegM+s=;
-        b=bJIJG4AS0XbxCYxFzZr71xDqZHIfaYBd54OKyQlHy9zW77lDTs7eGBZKXgeAsdXzcT
-         Ro+uAFgkf/I6iwEtJuXkCy3WleA5YLVIHMg39DxCjlUHEWqHWakj6Vm5b0104FOqitjK
-         CkXVKFgVGQdBlcAMzDOajtJ9HEslr8LiR7mwSgEjael8fB/zUz1mK4YFIyxn3IKNkW2Y
-         g1HYJ49f3k2vmqUJ7mpj2+FFWFTUBDnhkNMqufeuhzePNzUXQaOkeek390Ba2P0xoXGc
-         6RbptsPq/oB16YjsM3E//YSCcrzA8pb6FZBfp7KuVPqbojkJ3jU6iZGGQpvYVCHJpRo0
-         +H8w==
-X-Gm-Message-State: AOAM530BVgGS4ecROfB3lk7juxic0WZuR681kBf7+/wx3u1m3ZBnusGO
-        Ak+p+S2GwLjDCN/q4WZatzU=
-X-Google-Smtp-Source: ABdhPJwxWi7J5+1MuA33io5kkO68CeF200KVuyXZNGvfWESG3ekCOHUR+qXq4mmgKbNk3jfCFaQofA==
-X-Received: by 2002:a17:902:523:: with SMTP id 32mr2948980plf.176.1597188976937;
-        Tue, 11 Aug 2020 16:36:16 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id j20sm90019pjy.51.2020.08.11.16.36.14
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version;
+        bh=YEjwPZh5RXt3Ie4FbKarHOy1S3LP80s3dHh0ey0Ay4c=;
+        b=elQBEHVsZU+IUjXFVM9g9FRlx3uVY8WaN/ZOV4eEzJBFNXK5Dnzeby5Nn224T2a10N
+         FOj7BIszSODdIq2JtuD3VG/pm6eb5VKhCOLzggie7kM7h8XR0gAF1q/rPBfT19JSgV1y
+         OVTNF3Ra7txdy3QlQSbg6RALj+JJsaqiCFHQHHI9yPMvIr3HjjvJ2KOw8m+YYkJoIiZb
+         EIDUtbbtt1SqUj61PkGmbND3R4eoCbjY9reY3Q0kyHyHFZk0g1X1HMCDNcPk2GiLjbnr
+         3CntkwIcdf8il04YraF9l+lonYXQlfg4ub3Y0/AqAfp/wx4dsjJzwKOby3rHviRsGggh
+         l9nQ==
+X-Gm-Message-State: AOAM531VP18BiSVRE7eldHsZgB4E1fVxRpQc52OFU0q4LYmf+/zbxGgm
+        YPCvk4mk02R5fBzC3r4/sYGAag==
+X-Google-Smtp-Source: ABdhPJx1rPs1jQi+VpfsboKy/mFx11ZgBxMh2H/MVyfAqyy8DznA/GYinlhj+AbBtVqFp1QrxeOV+A==
+X-Received: by 2002:a1c:2742:: with SMTP id n63mr5827207wmn.24.1597191546141;
+        Tue, 11 Aug 2020 17:19:06 -0700 (PDT)
+Received: from localhost (c-71-197-186-152.hsd1.wa.comcast.net. [71.197.186.152])
+        by smtp.gmail.com with ESMTPSA id j5sm747480wmb.12.2020.08.11.17.19.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 16:36:15 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        Brian Masney <masneyb@onstation.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx: add module param to enable debugbus snapshot
-Date:   Tue, 11 Aug 2020 16:36:57 -0700
-Message-Id: <20200811233702.580744-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Tue, 11 Aug 2020 17:19:05 -0700 (PDT)
+From:   Kevin Hilman <khilman@baylibre.com>
+To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
+        ulf.hansson@linaro.org, rjw@rjwysocki.net
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        gregkh@linuxfoundation.org, pavel@ucw.cz, len.brown@intel.com,
+        rnayak@codeaurora.org, dianders@chromium.org, khilman@kernel.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: Re: [PATCH 1/2] PM / Domains: Add GENPD_FLAG_SUSPEND_ON flag
+In-Reply-To: <20200811190252.10559-1-sibis@codeaurora.org>
+References: <20200811190252.10559-1-sibis@codeaurora.org>
+Date:   Tue, 11 Aug 2020 17:19:03 -0700
+Message-ID: <7heeoc3edk.fsf@baylibre.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Sibi Sankar <sibis@codeaurora.org> writes:
 
-For production devices, the debugbus sections will typically be fused
-off and empty in the gpu device coredump.  But since this may contain
-data like cache contents, don't capture it by default.
+> This is for power domains which needs to stay powered on for suspend
+> but can be powered on/off as part of runtime PM. This flag is aimed at
+> power domains coupled to remote processors which enter suspend states
+> independent to that of the application processor. Such power domains
+> are turned off only on remote processor crash/shutdown.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 3 ++-
- drivers/gpu/drm/msm/adreno/adreno_device.c  | 4 ++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h     | 2 ++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+Seems like a useful use-case, but i think there should be a bit more
+description/documentation about what is the expected/desired behavior
+during system suspsend when a power-domain with this flag is already
+runtime-PM suspended.  Similarily, on system resume, what is the
+expected/desired behavior?
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 959656ad6987..b12f5b4a1bea 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -938,7 +938,8 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
- 		msm_gem_kernel_put(dumper.bo, gpu->aspace, true);
- 	}
- 
--	a6xx_get_debugbus(gpu, a6xx_state);
-+	if (snapshot_debugbus)
-+		a6xx_get_debugbus(gpu, a6xx_state);
- 
- 	return  &a6xx_state->base;
- }
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 4e84f3c76f4f..9eeb46bf2a5d 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -14,6 +14,10 @@ bool hang_debug = false;
- MODULE_PARM_DESC(hang_debug, "Dump registers when hang is detected (can be slow!)");
- module_param_named(hang_debug, hang_debug, bool, 0600);
- 
-+bool snapshot_debugbus = false;
-+MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
-+module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
-+
- static const struct adreno_info gpulist[] = {
- 	{
- 		.rev   = ADRENO_REV(2, 0, 0, 0),
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 99bb468f5f24..e55abae365b5 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -21,6 +21,8 @@
- #define REG_SKIP ~0
- #define REG_ADRENO_SKIP(_offset) [_offset] = REG_SKIP
- 
-+extern bool snapshot_debugbus;
-+
- /**
-  * adreno_regs: List of registers that are used in across all
-  * 3D devices. Each device type has different offset value for the same
--- 
-2.26.2
-
+Kevin
