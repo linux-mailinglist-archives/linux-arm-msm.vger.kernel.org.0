@@ -2,59 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 619E7242FEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 22:13:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EF0724318D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 01:55:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726658AbgHLUNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 16:13:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726512AbgHLUNs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 16:13:48 -0400
-Received: from shards.monkeyblade.net (shards.monkeyblade.net [IPv6:2620:137:e000::1:9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3690EC061383;
-        Wed, 12 Aug 2020 13:13:48 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2601:601:9f00:477::3d5])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: davem-davemloft)
-        by shards.monkeyblade.net (Postfix) with ESMTPSA id 51A4012905D74;
-        Wed, 12 Aug 2020 12:57:01 -0700 (PDT)
-Date:   Wed, 12 Aug 2020 13:13:46 -0700 (PDT)
-Message-Id: <20200812.131346.1049273548567735486.davem@davemloft.net>
-To:     noodles@earth.li
-Cc:     peppe.cavallaro@st.com, alexandre.torgue@st.com,
-        joabreu@synopsys.com, kuba@kernel.org, mcoquelin.stm32@gmail.com,
-        netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net 0/2] net: stmmac: Fix multicast filter on IPQ806x
-From:   David Miller <davem@davemloft.net>
-In-Reply-To: <cover.1597260787.git.noodles@earth.li>
-References: <cover.1597260787.git.noodles@earth.li>
-X-Mailer: Mew version 6.8 on Emacs 26.3
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Wed, 12 Aug 2020 12:57:01 -0700 (PDT)
+        id S1726564AbgHLXzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 19:55:55 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:36232 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726078AbgHLXzz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 19:55:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597276554; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=jmWOs7dUstJ+xpaEhBZheCFEL5CtWJqUMAkhh10xqGo=; b=RafHGn2h32He+MRLKfxhupchHus8Ws4pRMjv/tY9e0PyQuzmNsb0YF6s84RMrq+f9GRq0pNf
+ 7NBTlQetOM+Qyui0aiB0hAqmfvyHvrO8QTez28H6oteIciZLmWlbbniiaJTuI3BVVLNzJzAY
+ QffXHzG3CZ1zPcZlq6wUS7KymRc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f3481862b87d6604943c0c1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 23:55:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C7632C4339C; Wed, 12 Aug 2020 23:55:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B14B0C433C9;
+        Wed, 12 Aug 2020 23:55:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B14B0C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Gustavo Padovan <gustavo@padovan.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+Subject: [RFC PATCH v1] dma-fence-array: Deal with sub-fences that are signaled late
+Date:   Wed, 12 Aug 2020 17:55:44 -0600
+Message-Id: <20200812235544.2289895-1-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jonathan McDowell <noodles@earth.li>
-Date: Wed, 12 Aug 2020 20:36:54 +0100
+This is an RFC because I'm still trying to grok the correct behavior.
 
-> This pair of patches are the result of discovering a failure to
-> correctly receive IPv6 multicast packets on such a device (in particular
-> DHCPv6 requests and RA solicitations). Putting the device into
-> promiscuous mode, or allmulti, both resulted in such packets correctly
-> being received. Examination of the vendor driver (nss-gmac from the
-> qsdk) shows that it does not enable the multicast filter and instead
-> falls back to allmulti.
-> 
-> Extend the base dwmac1000 driver to fall back when there's no suitable
-> hardware filter, and update the ipq806x platform to request this.
+Consider a dma_fence_array created two two fence and signal_on_any is true.
+A reference to dma_fence_array is taken for each waiting fence.
 
-Series applied, thank you.
+When the client calls dma_fence_wait() only one of the fences is signaled.
+The client returns successfully from the wait and puts it's reference to
+the array fence but the array fence still remains because of the remaining
+un-signaled fence.
+
+Now consider that the unsignaled fence is signaled while the timeline is being
+destroyed much later. The timeline destroy calls dma_fence_signal_locked(). The
+following sequence occurs:
+
+1) dma_fence_array_cb_func is called
+
+2) array->num_pending is 0 (because it was set to 1 due to signal_on_any) so the
+callback function calls dma_fence_put() instead of triggering the irq work
+
+3) The array fence is released which in turn puts the lingering fence which is
+then released
+
+4) deadlock with the timeline
+
+I think that we can fix this with the attached patch. Once the fence is
+signaled signaling it again in the irq worker shouldn't hurt anything. The only
+gotcha might be how the error is propagated - I wasn't quite sure the intent of
+clearing it only after getting to the irq worker.
+
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+---
+
+ drivers/dma-buf/dma-fence-array.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/dma-buf/dma-fence-array.c b/drivers/dma-buf/dma-fence-array.c
+index d3fbd950be94..b8829b024255 100644
+--- a/drivers/dma-buf/dma-fence-array.c
++++ b/drivers/dma-buf/dma-fence-array.c
+@@ -46,8 +46,6 @@ static void irq_dma_fence_array_work(struct irq_work *wrk)
+ {
+ 	struct dma_fence_array *array = container_of(wrk, typeof(*array), work);
+ 
+-	dma_fence_array_clear_pending_error(array);
+-
+ 	dma_fence_signal(&array->base);
+ 	dma_fence_put(&array->base);
+ }
+@@ -61,10 +59,10 @@ static void dma_fence_array_cb_func(struct dma_fence *f,
+ 
+ 	dma_fence_array_set_pending_error(array, f->error);
+ 
+-	if (atomic_dec_and_test(&array->num_pending))
+-		irq_work_queue(&array->work);
+-	else
+-		dma_fence_put(&array->base);
++	if (!atomic_dec_and_test(&array->num_pending))
++		dma_fence_array_set_pending_error(array, f->error);
++
++	irq_work_queue(&array->work);
+ }
+ 
+ static bool dma_fence_array_enable_signaling(struct dma_fence *fence)
+-- 
+2.25.1
+
