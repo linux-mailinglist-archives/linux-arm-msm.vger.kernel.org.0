@@ -2,94 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D712429CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 14:53:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B955242A57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 15:30:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728088AbgHLMxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 08:53:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58354 "EHLO mail.kernel.org"
+        id S1728001AbgHLNav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 09:30:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53394 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728077AbgHLMxb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 08:53:31 -0400
-Received: from mail.kernel.org (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
+        id S1727977AbgHLNas (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 09:30:48 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id ADB4A20855;
-        Wed, 12 Aug 2020 12:53:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3BAC8207F7;
+        Wed, 12 Aug 2020 13:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597236810;
-        bh=sMR5WfU/yDqf04UKZ+4F9gNr4i3+0PkGJ5r2jnWOGds=;
-        h=From:To:Cc:Subject:Date:From;
-        b=wFrep99YdXa9sIM8tOmHVjJNWR/xF0x/zDxDubDPzMm/FYL2ZVMFbRcqJzRqELQ1H
-         QdqSQsaYjVeKK6/JP4s1QN9gi2fa/HBJBFiCP57fxuWUR2IiK9UeY4miij15qkq0Jj
-         SfuOUGOawD3V5fzjyUeHPv/ELyjOCfb3O4OoxsZk=
-Received: from mchehab by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1k5qG0-005gsV-Hr; Wed, 12 Aug 2020 14:53:28 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] spmi: fix some coding style issues at the spmi core
-Date:   Wed, 12 Aug 2020 14:53:27 +0200
-Message-Id: <2736eaf03a5b8bf3aa4566198a98f3d2073d0070.1597236805.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.26.2
+        s=default; t=1597239048;
+        bh=qONd+uebxuHxqWaUJyHKSu5dged4G+IxGWG78tjLPcM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=sYB7dZLHVZ6TZh/+w9McXu9gV8/m4bTlrJ/NIEwTCZW44NkpnA/167w84fBx/RVUX
+         ZXN7VctIATKR+floFs+XHZlRAUN0eNW/3EQi8WTVB7h+6jrGMMip+aqXsPMUYJwcI2
+         vW10Q56VWGZ2NWGM7Cw1D00tu9jMf0gseOQP1uZ8=
+Date:   Wed, 12 Aug 2020 14:30:44 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Gaurav Kohli <gkohli@codeaurora.org>
+Cc:     linux-arm-kernel@lists.infradead.org, maz@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        neeraju@codeaurora.org
+Subject: Re: [PATCH] arm64: Skip apply SSBS call for non SSBS system
+Message-ID: <20200812133043.GA8924@willie-the-truck>
+References: <1596550484-11029-1-git-send-email-gkohli@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1596550484-11029-1-git-send-email-gkohli@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While preparing to port the HiSilicon 6421v600 SPMI driver,
-I noticed some coding style issues at the SPMI core.
+On Tue, Aug 04, 2020 at 07:44:42PM +0530, Gaurav Kohli wrote:
+> In a system where no cpu's implement SSBS, for
+> them no need to set pstate. This might help to save
+> few cpu cycles during context switch.
+> 
+> Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
+> 
+> diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+> index 6089638..79f80f1 100644
+> --- a/arch/arm64/kernel/process.c
+> +++ b/arch/arm64/kernel/process.c
+> @@ -477,6 +477,13 @@ static void ssbs_thread_switch(struct task_struct *next)
+>  	struct pt_regs *regs = task_pt_regs(next);
+>  
+>  	/*
+> +	 * For Targets which don't have SSBS support, they
+> +	 * can return from here.
+> +	 */
+> +	if (!IS_ENABLED(CONFIG_ARM64_SSBD))
+> +		return;
 
-Address them.
+Does this actually make a measurable difference?
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- drivers/spmi/spmi.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-index fd3ff6079b15..253340e10dab 100644
---- a/drivers/spmi/spmi.c
-+++ b/drivers/spmi/spmi.c
-@@ -23,6 +23,7 @@ static DEFINE_IDA(ctrl_ida);
- static void spmi_dev_release(struct device *dev)
- {
- 	struct spmi_device *sdev = to_spmi_device(dev);
-+
- 	kfree(sdev);
- }
- 
-@@ -33,6 +34,7 @@ static const struct device_type spmi_dev_type = {
- static void spmi_ctrl_release(struct device *dev)
- {
- 	struct spmi_controller *ctrl = to_spmi_controller(dev);
-+
- 	ida_simple_remove(&ctrl_ida, ctrl->nr);
- 	kfree(ctrl);
- }
-@@ -487,7 +489,7 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
- 			continue;
- 
- 		sdev->dev.of_node = node;
--		sdev->usid = (u8) reg[0];
-+		sdev->usid = (u8)reg[0];
- 
- 		err = spmi_device_add(sdev);
- 		if (err) {
-@@ -531,6 +533,7 @@ EXPORT_SYMBOL_GPL(spmi_controller_add);
- static int spmi_ctrl_remove_device(struct device *dev, void *data)
- {
- 	struct spmi_device *spmidev = to_spmi_device(dev);
-+
- 	if (dev->type == &spmi_dev_type)
- 		spmi_device_remove(spmidev);
- 	return 0;
--- 
-2.26.2
-
+Will
