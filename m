@@ -2,102 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 908B7242A71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 15:36:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 672D4242A7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 15:38:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727872AbgHLNge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 09:36:34 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:12708 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726829AbgHLNgd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 09:36:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597239393; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=EqmfoHwHYf9z8PU4YayuKnZvoScvaXacGH6oCTRqhOg=;
- b=W4Hk9s21Z8rNHaZGOfQEYW6xTsnA+N/+HOzpoRJZS3Gz5PWSRw42+XKFYBzIXEMpBa6gOrfB
- Sf2Sd8O+1vdvWv7TNVUzLfXwMxJbieBFfZced7NzpWec0r7mMpRN/M+KTNfIKj4KO9boiTF+
- 4yFZZZ0v2M7/QI0nOK51U5x5xWw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f33f05c247ccc308c1f0f05 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 13:36:28
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88453C433CA; Wed, 12 Aug 2020 13:36:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3641C433C6;
-        Wed, 12 Aug 2020 13:36:26 +0000 (UTC)
+        id S1728071AbgHLNiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 09:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727817AbgHLNiN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 09:38:13 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FF7C061787
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 06:38:13 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id g8so1814765wmk.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 06:38:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=U6a+d3dtYp0KjTU5EEF1X/oH34jCVu+NBd+4qq9Ixtw=;
+        b=yDBDdIyN79nLSMZt2ii6ECd0ccqcb4C9/zsl/VF4QcmYRhUqFZTNGn8S1O05yLbG8m
+         ubDQCxhglZD3VIDoqHNTs9nrCaRyzEAwfy56sy+jta0zY4ozoKLFQi8y/RL6LbyXtsg7
+         vPPzvQUdqo40z1n1oftLgNHQDjSWftJjjBDsQhvTEzJKLV/UljBn1O8TgzytjsFt9w8U
+         TJcSCoUGsmpvlQAouUYl2WNa4NJG9STXIifpmKWhao4D+DxMBSRLDd4A1cuJ2pp1KVzb
+         6SjO2F73k6YQ1HGycCizuxtmTBUcGfkSqURV3MFuAbgx20pDncLVyrW2c/POdaOxoRFd
+         /XpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=U6a+d3dtYp0KjTU5EEF1X/oH34jCVu+NBd+4qq9Ixtw=;
+        b=tvMwzvnY9ghWETQ7ecMNGimy7kHjH+Re39E6RuR42if7CU//jHOG+uRkO4bTUWK/bh
+         6hy8uF8E7fu8xMld8h5ENP+EdgtsyQgY4P8YWs8OQAEXwrOVWvOblxcY5STNRazxV3Ts
+         0iyFaCTt5XU2f0K1/nsWpt5WLld3Bvp0zGZorLXZ9sLkVtn3XuSK3yOqskJTilGoufJE
+         EOusO2ZA5TceVX/z1DUvAblLAMsoW8y1Un9/QJ0vIAKGE55LayfUqNEibZHWHLL6GR0F
+         LhPLSlCk30nCKWtH2lD5ePjNDULZpYV11e2fwfpBNlhbp/FWPTr4jJj/srMfJDyau5IA
+         FD+Q==
+X-Gm-Message-State: AOAM533K9SRsaZyVkqsNpa9mZw8RxOolc2iYM/quLnyqnfsoDuBqYEVO
+        Bs3U2SCrSBDVDunbw5NVYjNSd2dMU1Q3Cm/XJSv2VQ==
+X-Google-Smtp-Source: ABdhPJwqMh6ofIFWi0PgnalLBz97O6pS4TLZaTLUZpUxWvbz7fQU77ZzO8rJnHikMk86N01F3K2+jUdwRSWt3HpDtNI=
+X-Received: by 2002:a1c:3dd6:: with SMTP id k205mr8592936wma.21.1597239491828;
+ Wed, 12 Aug 2020 06:38:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 12 Aug 2020 19:06:26 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     bjorn.andersson@linaro.org, rjw@rjwysocki.net,
-        ulf.hansson@linaro.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, gregkh@linuxfoundation.org, pavel@ucw.cz,
-        len.brown@intel.com, rnayak@codeaurora.org, dianders@chromium.org,
-        khilman@kernel.org
-Subject: Re: [PATCH 1/2] PM / Domains: Add GENPD_FLAG_SUSPEND_ON flag
-In-Reply-To: <159718192589.1360974.15808376172581486987@swboyd.mtv.corp.google.com>
-References: <20200811190252.10559-1-sibis@codeaurora.org>
- <159718192589.1360974.15808376172581486987@swboyd.mtv.corp.google.com>
-Message-ID: <4f87d7dfbee7553f3ea7a1a6e12b3fa7@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <CAMi1Hd3Dv_T7kgThLTk2QLtfS7LBvhJ5R=6C3seUYK0GvNV6eA@mail.gmail.com>
+ <20200806223134.42748-1-konradybcio@gmail.com>
+In-Reply-To: <20200806223134.42748-1-konradybcio@gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Wed, 12 Aug 2020 19:07:35 +0530
+Message-ID: <CAMi1Hd2P47PWjnRaACE9oyxRpZZwFwTamwCCxufN6qW+8SKFrA@mail.gmail.com>
+Subject: Re:
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dt <devicetree@vger.kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Stephen,
-Thanks for taking time to review the
-series!
+On Fri, 7 Aug 2020 at 04:02, Konrad Dybcio <konradybcio@gmail.com> wrote:
+>
+> Subject: Re: [PATCH v4] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
+>
+> >// This removed_region is needed to boot the device
+> >               // TODO: Find out the user of this reserved memory
+> >               removed_region: memory@88f00000 {
+>
+> This region seems to belong to the Trust Zone. When Linux tries to access it, TZ bites and shuts the device down.
 
-On 2020-08-12 03:08, Stephen Boyd wrote:
-> Quoting Sibi Sankar (2020-08-11 12:02:51)
->> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
->> index ee11502a575b0..3002a2d68936a 100644
->> --- a/include/linux/pm_domain.h
->> +++ b/include/linux/pm_domain.h
->> @@ -55,6 +55,10 @@
->>   *
->>   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM 
->> domain
->>   *                             powered on except for system suspend.
->> + *
->> + * GENPD_FLAG_SUSPEND_ON:      Instructs genpd to keep the PM domain 
->> powered
->> + *                             on during suspend and runtime PM 
->> controlled
-> 
-> Maybe, "powered on across system suspend (if it is already powered on)"
-> to match the hunk above that talks about system suspend for
-> GENPD_FLAG_RPM_ALWAYS_ON. Otherwise someone may think that this powers
-> on the genpd during suspend or powers it on during runtime suspend.
+That is totally possible. Plus it falls right in between TZ and QSEE
+reserved-memory regions. However, I do not find any credible source
+of information which can confirm this. So I'm hesitant to update the
+TODO item in the above comment.
 
-Sure, I'll add ^^ in the next re-spin.
-
-> 
->> + *                             otherwise.
->>   */
->>  #define GENPD_FLAG_PM_CLK       (1U << 0)
->>  #define GENPD_FLAG_IRQ_SAFE     (1U << 1)
-
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+>
+> Konrad
