@@ -2,179 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AE6A242785
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 11:26:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F2462427A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 11:32:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727881AbgHLJ01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 05:26:27 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:58853 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727065AbgHLJ01 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 05:26:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597224385; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
- Subject: Sender; bh=Ut7UsXyyt3w1ZkSYeaLSTk9Ej6vXqnbWm3dpszGQbYk=; b=d20ue8ZG+WnVsgznsTyLSMkrNVmrN1V0RWSyg4BGAZaSVelC/JqE1l1oPQYl4fMcP7yaXcpG
- O1yzklwDHur+sJf1WOxIsi8m2epuw1YGbv8FyM6oWE95msaN3oC3jINQlupT6V7MEda3679e
- AKYhoWosGDgy3YYA5TAXPSQ0k9g=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
- 5f33b5c1247ccc308cb55ffd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 09:26:25
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9D184C433A0; Wed, 12 Aug 2020 09:26:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.16] (unknown [61.1.229.169])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0A60C433CA;
-        Wed, 12 Aug 2020 09:26:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0A60C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [RFC v2 03/11] tty: serial: qcom_geni_serial: Use OPP API to set
- clk/perf state
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-scsi@vger.kernel.org,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+        id S1727089AbgHLJcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 05:32:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57362 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726755AbgHLJcq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 05:32:46 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEAB8C06174A;
+        Wed, 12 Aug 2020 02:32:45 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id v9so1467136ljk.6;
+        Wed, 12 Aug 2020 02:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=ikRO5317g1JTomZhkPieEwMdPdc6yb7MWeGDygUVu/Y=;
+        b=vUyHDSQQkg+zffYc5aA+4vVtl6rhVC0g/fpJmdxy0gIbFlEQXiGCpnItPScFwzGAop
+         rosPSHex6qTHBb5Si00mD9g20pFu5uYcAOsOi/N7vBXOBEL4wL9XFkZkxFHmoIz2/kQ8
+         n4+OvlfzbX8kD77eWHuXrZX3CixsJd0xAdvmsgXOY4tjyG4ZhQO0gJlTWZLlcWK+twha
+         XfKf0T5D0i6RoDacqbwaA7ELtkt14WUF00/qbr+9UneI65GjixwJj3nFF4HPKkWGJm/k
+         U1isUxGpWlERfWu2wBSRlAm8D8EWBL/6ZpvZHTMSuNu5rW4oyq48FTa+FAWy1ijZbHZI
+         q/Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :date:message-id:mime-version;
+        bh=ikRO5317g1JTomZhkPieEwMdPdc6yb7MWeGDygUVu/Y=;
+        b=R4nbTdgZXLzPdpCPXpM3g4enwddY+6aG7/kH35gUZbjGG43ZK1ntswQxorYZPxGN9J
+         KD/28NMFRTxn05WdN1jjaWCa8vaQbLz/KmXEnlp56zpvYLaza/USvQ4KpGZNpCrXotnR
+         /cBdF4wK3hAXrU8Isk31NtKeAoA16+019FksUr50HOrlaDJovGLtfGLUOfeuPZ5EFelK
+         jyENR19KlulWHt3x7k6BwYM2oBnVbk1yRHtQcRahTqoUR7w5i2B2bomryUecKnFuMWj5
+         5WGf+qUGzw0zMIKKf7d1yUNpgkIFRMKITKyuh3qUBxdi7BTdYujPJEcEc8Bk+CqhiWVv
+         lGQA==
+X-Gm-Message-State: AOAM532Q7qnsy7PpopOqw6Dsr2RzZCKWgSVNkpokDr7KvOlNKyCnEwFt
+        eOGWP+h4rgkiVuXOPNaozJ0=
+X-Google-Smtp-Source: ABdhPJzr8SlpLA4gz+moz1FILxb2p8bIze9B0/QqnNBGx/GDRP+DopWHZPwBQofemKUkLLZkJBZwDA==
+X-Received: by 2002:a2e:2c18:: with SMTP id s24mr4675952ljs.260.1597224764335;
+        Wed, 12 Aug 2020 02:32:44 -0700 (PDT)
+Received: from saruman ([194.34.132.58])
+        by smtp.gmail.com with ESMTPSA id p9sm320265ljg.76.2020.08.12.02.32.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Aug 2020 02:32:43 -0700 (PDT)
+From:   Felipe Balbi <balbi@kernel.org>
+To:     "Sandeep Maheswaram \(Temp\)" <sanm@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
         Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20190320094918.20234-1-rnayak@codeaurora.org>
- <20190320094918.20234-4-rnayak@codeaurora.org>
- <CALAqxLV2TBk9ScUM6MeJMCkL8kJnCihjQ7ac5fLzcqOg1rREVQ@mail.gmail.com>
- <CALAqxLWg3jJKJFLnnne-mrQEnH=m7R_9azCGaGnEmFYR4EMh=A@mail.gmail.com>
- <ec5eeb21-48e4-5dcc-583a-ac9419659e44@codeaurora.org>
- <CAMi1Hd1O+3bjQN6c9WQr+t0YXGBAukfFzJWtkgXDp1Zcir-0-w@mail.gmail.com>
- <aab760b8-2a06-ae96-584a-301d5326fc0d@codeaurora.org>
-Message-ID: <fb5b6abf-b26a-5db2-1f8f-23d457c7235e@codeaurora.org>
-Date:   Wed, 12 Aug 2020 14:56:17 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: Re: [PATCH v11 1/2] usb: dwc3: qcom: Add interconnect support in dwc3 driver
+In-Reply-To: <322d193c-d4d2-789b-ffec-ebdee2730c1e@codeaurora.org>
+References: <1595869597-26049-1-git-send-email-sanm@codeaurora.org> <1595869597-26049-2-git-send-email-sanm@codeaurora.org> <20200727192050.GD3191083@google.com> <cd5c6c99-d8ee-da59-1abf-e64e5f7f6f8f@codeaurora.org> <87v9honyff.fsf@kernel.org> <322d193c-d4d2-789b-ffec-ebdee2730c1e@codeaurora.org>
+Date:   Wed, 12 Aug 2020 12:32:38 +0300
+Message-ID: <87sgcsnr9l.fsf@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <aab760b8-2a06-ae96-584a-301d5326fc0d@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On 8/12/2020 1:09 PM, Rajendra Nayak wrote:
-> 
-> On 8/12/2020 1:05 PM, Amit Pundir wrote:
->> Hi Rajendra,
->>
->> On Wed, 12 Aug 2020 at 11:18, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>>
->>>
->>> On 8/12/2020 7:03 AM, John Stultz wrote:
->>>> On Tue, Aug 11, 2020 at 4:11 PM John Stultz <john.stultz@linaro.org> wrote:
->>>>>
->>>>> On Wed, Mar 20, 2019 at 2:49 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>>>>>
->>>>>> geni serial needs to express a perforamnce state requirement on CX
->>>>>> depending on the frequency of the clock rates. Use OPP table from
->>>>>> DT to register with OPP framework and use dev_pm_opp_set_rate() to
->>>>>> set the clk/perf state.
->>>>>>
->>>>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->>>>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>>>>> ---
->>>>>>    drivers/tty/serial/qcom_geni_serial.c | 15 +++++++++++++--
->>>>>>    1 file changed, 13 insertions(+), 2 deletions(-)
->>>>>>
->>>>>
->>>>> Hey,
->>>>>     I just wanted to follow up on this patch, as I've bisected it
->>>>> (a5819b548af0) down as having broken qca bluetooth on the Dragonboard
->>>>> 845c.
->>>>>
->>>>> I haven't yet had time to debug it yet, but wanted to raise the issue
->>>>> in case anyone else has seen similar trouble.
->>>>
->>>> So I dug in a bit further, and this chunk seems to be causing the issue:
->>>>> @@ -961,7 +963,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->>>>>                   goto out_restart_rx;
->>>>>
->>>>>           uport->uartclk = clk_rate;
->>>>> -       clk_set_rate(port->se.clk, clk_rate);
->>>>> +       dev_pm_opp_set_rate(port->dev, clk_rate);
->>>>>           ser_clk_cfg = SER_CLK_EN;
->>>>>           ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
->>>>>
->>>>
->>>>
->>>> With that applied, I see the following errors in dmesg and bluetooth
->>>> fails to function:
->>>> [    4.763467] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate:
->>>> failed to find OPP for freq 102400000 (-34)
->>>> [    4.773493] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate:
->>>> failed to find OPP for freq 102400000 (-34)
->>>>
->>>> With just that chunk reverted on linus/HEAD, bluetooth seems to work ok.
->>>
->>> This seems like the same issue that was also reported on venus [1] because the
->>> clock frequency tables apparently don;t exactly match the achievable clock
->>> frequencies (which we also used to construct the OPP tables)
->>>
->>> Can you try updating the OPP table for QUP to have 102400000 instead of the
->>> current 100000000 and see if that fixes it?
->>
->> That worked. Thanks.
->>
->> Should this change be common to base sdm845.dtsi or platform specific dts?
->> For what it's worth, we see this BT breakage on PocoF1 phone too.
-> 
-> Thanks for confirming, it will have to be part of the SoC dtsi, and I am
-> guessing a similar change is perhaps also needed on sc7180.
-> I will send a patch out to fix the OPP tables for both.
+"Sandeep Maheswaram (Temp)" <sanm@codeaurora.org> writes:
 
-I spent some more time looking at this and it does not look like this is the
-rounding issues with clock FMAX tables. I had these tables picked from downstream
-clock code and it turns out these tables were reworked at clock init based on
-the silicon rev, so I need to fix up the OPP tables accordingly which will add
-a new OPP entry for 102.4Mhz. I'll post a patch shortly.
+> Hi
+>
+> On 8/12/2020 12:27 PM, Felipe Balbi wrote:
+>> "Sandeep Maheswaram (Temp)" <sanm@codeaurora.org> writes:
+>>
+>>> Hi Felipe,
+>>>
+>>> On 7/28/2020 12:50 AM, Matthias Kaehlcke wrote:
+>>>> On Mon, Jul 27, 2020 at 10:36:36PM +0530, Sandeep Maheswaram wrote:
+>>>>> Add interconnect support in dwc3-qcom driver to vote for bus
+>>>>> bandwidth.
+>>>>>
+>>>>> This requires for two different paths - from USB to
+>>>>> DDR. The other is from APPS to USB.
+>>>>>
+>>>>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+>>>>> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+>>>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>>> Please ack if you are ok with this patch.
+>> What's the plan to get this upstream? Should I take dwc3-qcom patch and
+>> ignore the rest? Is there a hard-dependency on something else?
+> Yes take dwc3-qcom patch only,the dt change is already in linux-next.
 
-> 
->>
->> Regards,
->> Amit Pundir
->>
->>
->>>
->>> [1] https://lkml.org/lkml/2020/7/27/507
->>>
->>>>
->>>> thanks
->>>> -john
->>>>
->>>
->>> -- 
->>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->>> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+Thanks for confirming :-)
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl8ztzYACgkQzL64meEa
+mQZqww/+Nh/OyjjF70wAKlgxreYyvAeXNRcYmLwKx8SenVcwYn3xsDNr5zck42Of
+4ImN2g/80ArjbgxHdXKpsvkly6wy1I8FX+WZj4jzp1pRo3XCR0Nccts+t1ETt+4j
+FEmzRMlzu4KDBVixhUUC+8YNpmPcG1pdJky5usr+5OQpx8PwuhSCKp3tjWAYkgiH
+w9SaCl8V78iUYJ0XdkEfmsf77r2gw4lpbcohpWkWaTZAWsQ2JITEEsDAYxP4YVm2
+Jrl3JmTRC/gTEMyYNlf0oNv6Sb8XKQROYT7EfVDHVkMuDUbP9QphQAsVFvgGJ0ZW
+O+zjG2yraLzMmwcZ+5wpWUh/i89+aBEOJBYsXB6GYO5ut27brckPQUR992IeE7ZS
+jzdQi3bLe2t5K1Be2y9VPNkaKhu3sdVB/WvhxLf4mjrdlW76nLKwyy+tx9LeLX6Q
+G30fBJwRdk1BmKfF6slk36GEhnpb+yU6x6+CqE9Z2Yod6hLSVAVfuJVimiBp/5dy
+JWQqx6ubA6ZTskM7lgI1e3W8u1HEQPcGLdwuUJKKKjITa5OECe1h+F5hxaltF6Y5
+BJ9+0DUehwBVWCVXeByC7cOCAXpDJ8u2qBofHnLSATMMp1wo7f3yEUpETboPwbTu
+xP09hkyCTMYR1d61hhvsG897UkAalAu8sZQCRukbM0yOos2lFFM=
+=UTp+
+-----END PGP SIGNATURE-----
+--=-=-=--
