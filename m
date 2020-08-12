@@ -2,190 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23D46242DF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 19:20:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C249E242E37
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 19:44:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726276AbgHLRUo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 13:20:44 -0400
-Received: from smtprelay0173.hostedemail.com ([216.40.44.173]:52828 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725993AbgHLRUo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 13:20:44 -0400
-X-Greylist: delayed 407 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Aug 2020 13:20:43 EDT
-Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com [10.5.19.251])
-        by smtpgrave06.hostedemail.com (Postfix) with ESMTP id 7727E80105A7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 17:13:57 +0000 (UTC)
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay05.hostedemail.com (Postfix) with ESMTP id 9308C18029144;
-        Wed, 12 Aug 2020 17:13:55 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,,RULES_HIT:2:41:355:379:599:960:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1535:1593:1594:1606:1730:1747:1777:1792:2194:2198:2199:2200:2393:2559:2562:2731:2828:3138:3139:3140:3141:3142:3355:3865:4117:4321:4605:5007:6119:6742:7901:7903:9036:10004:10848:11026:11473:11658:11914:12043:12296:12297:12438:12555:12697:12737:12760:13439:13868:14659:21080:21451:21611:21627:21990:30046:30054:30070,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:0,DNSBL:none,Custom_rules:0:0:0,LFtime:2,LUA_SUMMARY:none
-X-HE-Tag: place34_20016de26fed
-X-Filterd-Recvd-Size: 6706
-Received: from XPS-9350.home (unknown [47.151.133.149])
-        (Authenticated sender: joe@perches.com)
-        by omf10.hostedemail.com (Postfix) with ESMTPA;
-        Wed, 12 Aug 2020 17:13:52 +0000 (UTC)
-Message-ID: <305f0df155e89e0c626b8f7366c4ab5f6741aedd.camel@perches.com>
-Subject: Re: [PATCH 00/44] SPMI patches needed by Hikey 970
-From:   Joe Perches <joe@perches.com>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Stephen Boyd <sboyd@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Wei Xu <xuwei5@hisilicon.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, devel@driverdev.osuosl.org,
-        linux-arm-msm@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Date:   Wed, 12 Aug 2020 10:13:51 -0700
-In-Reply-To: <cover.1597247164.git.mchehab+huawei@kernel.org>
-References: <cover.1597247164.git.mchehab+huawei@kernel.org>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.4-0ubuntu1 
+        id S1726540AbgHLRob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 13:44:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39426 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725993AbgHLRoa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 13:44:30 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 31ABD20781;
+        Wed, 12 Aug 2020 17:44:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597254270;
+        bh=28DUEag+8EHTAqymbd12JJo2CcoS2UDf2nbADDMAw8o=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=TD1K2eLRsFkw1pUi6MRPtrhRIEWAKzNvstiEGr0NudRvwcqMv9bBJzasuUao9Wca4
+         9zB4zfWRjRp7MbfjoWUO/B9qDO8avGbG9BlQMsnY6PRmyeP47R2LjL7wYlLfokUpgI
+         VjIoZG+ogWktoIfhIGCKTytYWHNyZCHvkpSced3Y=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <159549996283.3847286.2480782726716664105@swboyd.mtv.corp.google.com>
+References: <CA+G9fYvGXOcsF=70FVwOxqVYOeGTUuzhUzh5od1cKV1hshsW_g@mail.gmail.com> <CAK8P3a1ReCDR8REM7AWMisiEJ_D45pC8dXaoYFFVG3aZj91e7Q@mail.gmail.com> <159549159798.3847286.18202724980881020289@swboyd.mtv.corp.google.com> <CA+G9fYte5U-D7fqps2qJga_LSuGrb6t9Y1rOvPCPzz46BwchyA@mail.gmail.com> <159549996283.3847286.2480782726716664105@swboyd.mtv.corp.google.com>
+Subject: Re: stable-rc 4.14: arm64: Internal error: Oops: clk_reparent __clk_set_parent_before on db410c
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        linux- stable <stable@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sasha Levin <sashal@kernel.org>, lkft-triage@lists.linaro.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        samuel@sholland.org
+To:     Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Wed, 12 Aug 2020 10:44:28 -0700
+Message-ID: <159725426896.33733.4908725817224764584@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Perhaps these trivial bits on top:
----
- drivers/staging/hikey9xx/hi6421-spmi-pmic.c     |  5 +++--
- drivers/staging/hikey9xx/hi6421v600-regulator.c |  6 +++---
- drivers/staging/hikey9xx/hisi-spmi-controller.c | 21 +++++++++++++--------
- 3 files changed, 19 insertions(+), 13 deletions(-)
+Quoting Stephen Boyd (2020-07-23 03:26:02)
+> Quoting Naresh Kamboju (2020-07-23 03:10:37)
+> > On Thu, 23 Jul 2020 at 13:36, Stephen Boyd <sboyd@kernel.org> wrote:
+> > >
+> > > It sounds like maybe you need this patch?
+> > >
+> > > bdcf1dc25324 ("clk: Evict unregistered clks from parent caches")
+> >=20
+> > Cherry-pick did not work on stable-rc 4.14
+> > this patch might need backporting.
+> > I am not sure.
+> >=20
+>=20
+> Ok. That commit fixes a regression in the 3.x series of the kernel so it
+> should go back to any LTS kernels. It looks like at least on 4.14 it's a
+> trivial conflict. Here's a backport to 4.14
 
-diff --git a/drivers/staging/hikey9xx/hi6421-spmi-pmic.c b/drivers/staging/hikey9xx/hi6421-spmi-pmic.c
-index 76766e7b8bf9..9d73458ca65a 100644
---- a/drivers/staging/hikey9xx/hi6421-spmi-pmic.c
-+++ b/drivers/staging/hikey9xx/hi6421-spmi-pmic.c
-@@ -99,7 +99,7 @@ int hi6421_spmi_pmic_write(struct hi6421_spmi_pmic *pmic, int reg, u32 val)
- EXPORT_SYMBOL(hi6421_spmi_pmic_write);
- 
- int hi6421_spmi_pmic_rmw(struct hi6421_spmi_pmic *pmic, int reg,
--			  u32 mask, u32 bits)
-+			 u32 mask, u32 bits)
- {
- 	unsigned long flags;
- 	u32 data;
-@@ -130,7 +130,8 @@ static irqreturn_t hi6421_spmi_irq_handler(int irq, void *data)
- 		hi6421_spmi_pmic_write(pmic, (i + pmic->irq_addr), pending);
- 
- 		/* solve powerkey order */
--		if ((i == HISI_IRQ_KEY_NUM) && ((pending & HISI_IRQ_KEY_VALUE) == HISI_IRQ_KEY_VALUE)) {
-+		if ((i == HISI_IRQ_KEY_NUM) &&
-+		    ((pending & HISI_IRQ_KEY_VALUE) == HISI_IRQ_KEY_VALUE)) {
- 			generic_handle_irq(pmic->irqs[HISI_IRQ_KEY_DOWN]);
- 			generic_handle_irq(pmic->irqs[HISI_IRQ_KEY_UP]);
- 			pending &= (~HISI_IRQ_KEY_VALUE);
-diff --git a/drivers/staging/hikey9xx/hi6421v600-regulator.c b/drivers/staging/hikey9xx/hi6421v600-regulator.c
-index 29ef6bcadd84..82635ff54a74 100644
---- a/drivers/staging/hikey9xx/hi6421v600-regulator.c
-+++ b/drivers/staging/hikey9xx/hi6421v600-regulator.c
-@@ -227,7 +227,7 @@ static int hi6421_spmi_dt_parse(struct platform_device *pdev,
- 
- 	ret = of_property_read_u32(np, "reg", &rdesc->enable_reg);
- 	if (ret) {
--		dev_err(dev, "missing reg property\nn");
-+		dev_err(dev, "missing reg property\n");
- 		return ret;
- 	}
- 
-@@ -303,13 +303,13 @@ static int hi6421_spmi_dt_parse(struct platform_device *pdev,
- 	 */
- 	rdesc->vsel_mask = (1 << (fls(rdesc->n_voltages) - 1)) - 1;
- 
--	dev_dbg(dev, "voltage selector settings: reg: 0x%x, mask: 0x%x",
-+	dev_dbg(dev, "voltage selector settings: reg: 0x%x, mask: 0x%x\n",
- 		rdesc->vsel_reg, rdesc->vsel_mask);
- 
- 	return 0;
- }
- 
--static struct regulator_ops hi6421_spmi_ldo_rops = {
-+static const struct regulator_ops hi6421_spmi_ldo_rops = {
- 	.is_enabled = hi6421_spmi_regulator_is_enabled,
- 	.enable = hi6421_spmi_regulator_enable,
- 	.disable = hi6421_spmi_regulator_disable,
-diff --git a/drivers/staging/hikey9xx/hisi-spmi-controller.c b/drivers/staging/hikey9xx/hisi-spmi-controller.c
-index 583df10cbf1a..513d962b8bce 100644
---- a/drivers/staging/hikey9xx/hisi-spmi-controller.c
-+++ b/drivers/staging/hikey9xx/hisi-spmi-controller.c
-@@ -102,7 +102,7 @@ static int spmi_controller_wait_for_done(struct device *dev,
- 			return 0;
- 		}
- 		udelay(1);
--	}  while(timeout--);
-+	} while (timeout--);
- 
- 	dev_err(dev, "%s: timeout, status 0x%x\n", __func__, status);
- 	return -ETIMEDOUT;
-@@ -121,7 +121,7 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
- 
- 	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
- 		dev_err(&ctrl->dev,
--			"spmi_controller supports 1..%d bytes per trans, but:%ld requested",
-+			"spmi_controller supports 1..%d bytes per trans, but:%ld requested\n",
- 			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
- 		return  -EINVAL;
- 	}
-@@ -137,7 +137,7 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
- 		op_code = SPMI_CMD_EXT_REG_READ_L;
- 		break;
- 	default:
--		dev_err(&ctrl->dev, "invalid read cmd 0x%x", opc);
-+		dev_err(&ctrl->dev, "invalid read cmd 0x%x\n", opc);
- 		return -EINVAL;
- 	}
- 
-@@ -157,7 +157,10 @@ static int spmi_read_cmd(struct spmi_controller *ctrl,
- 		goto done;
- 
- 	for (i = 0; bc > i * SPMI_PER_DATAREG_BYTE; i++) {
--		data = readl(spmi_controller->base + chnl_ofst + SPMI_SLAVE_OFFSET * slave_id + SPMI_APB_SPMI_RDATA0_BASE_ADDR + i * SPMI_PER_DATAREG_BYTE);
-+		data = readl(spmi_controller->base + chnl_ofst +
-+			     SPMI_SLAVE_OFFSET * slave_id +
-+			     SPMI_APB_SPMI_RDATA0_BASE_ADDR +
-+			     i * SPMI_PER_DATAREG_BYTE);
- 		data = be32_to_cpu((__be32)data);
- 		if ((bc - i * SPMI_PER_DATAREG_BYTE) >> 2) {
- 			memcpy(buf, &data, sizeof(data));
-@@ -194,7 +197,7 @@ static int spmi_write_cmd(struct spmi_controller *ctrl,
- 
- 	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
- 		dev_err(&ctrl->dev,
--			"spmi_controller supports 1..%d bytes per trans, but:%ld requested",
-+			"spmi_controller supports 1..%d bytes per trans, but:%ld requested\n",
- 			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
- 		return  -EINVAL;
- 	}
-@@ -210,7 +213,7 @@ static int spmi_write_cmd(struct spmi_controller *ctrl,
- 		op_code = SPMI_CMD_EXT_REG_WRITE_L;
- 		break;
- 	default:
--		dev_err(&ctrl->dev, "invalid write cmd 0x%x", opc);
-+		dev_err(&ctrl->dev, "invalid write cmd 0x%x\n", opc);
- 		return -EINVAL;
- 	}
- 
-@@ -234,8 +237,10 @@ static int spmi_write_cmd(struct spmi_controller *ctrl,
- 		}
- 
- 		writel((u32)cpu_to_be32(data),
--		       spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_WDATA0_BASE_ADDR + SPMI_PER_DATAREG_BYTE * i);
--	};
-+		       spmi_controller->base + chnl_ofst +
-+		       SPMI_APB_SPMI_WDATA0_BASE_ADDR +
-+		       SPMI_PER_DATAREG_BYTE * i);
-+	}
- 
- 	/* Start the transaction */
- 	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
-
-
+Did this help?
