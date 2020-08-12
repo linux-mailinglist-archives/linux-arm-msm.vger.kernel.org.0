@@ -2,116 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B0524251C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 07:49:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8E3A2425B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 08:58:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbgHLFtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 01:49:24 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60702 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726430AbgHLFtY (ORCPT
+        id S1726182AbgHLG6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 02:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33532 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725845AbgHLG6K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 01:49:24 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 11 Aug 2020 22:49:23 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Aug 2020 22:49:21 -0700
-Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 12 Aug 2020 11:19:04 +0530
-Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 59E2E43FA; Wed, 12 Aug 2020 11:19:03 +0530 (IST)
-From:   satya priya <skakit@codeaurora.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     swboyd@chromium.org, mgautam@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        akashast@codeaurora.org, rojay@codeaurora.org,
-        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>
-Subject: [PATCH] tty: serial: qcom_geni_serial: Remove the UART frequency table
-Date:   Wed, 12 Aug 2020 11:18:48 +0530
-Message-Id: <1597211328-23500-1-git-send-email-skakit@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 12 Aug 2020 02:58:10 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9497C06174A;
+        Tue, 11 Aug 2020 23:58:09 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id v4so1066249ljd.0;
+        Tue, 11 Aug 2020 23:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=JDo/BACFUxJcnbPKuRjxysz+ibKnzqeL4/IU1qfe/OU=;
+        b=mz3OVwjODnqn65vdacVrQiFPA1vOaCAoYiB5WT6oEvEd8L8Sncni3/5D68IOlz+wTW
+         HdE/UzuLQnU7UK9TUNBXbidbYiXgREpSJYrREgKn+CguVrUFT0pzK0DPQ6mYlkasmdDN
+         BGxcpOZnQIBfdkcyc2lfXiq7ZNF5gWDgDlToFroW1rCbei4t90jCT5q/qO1RPDKneC58
+         QMJHSL/vAmCs7geoIDSh8nXGj7xFZFgJl9s7xc10WmohgX+GBozBVThWQlahkx29S++7
+         gO8DDZm9Yq2xCRtxh/2+93S0cektm0qmwB54UouGs9Nv50jYSyf13idwSRRL/XDb/7ry
+         rUMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :date:message-id:mime-version;
+        bh=JDo/BACFUxJcnbPKuRjxysz+ibKnzqeL4/IU1qfe/OU=;
+        b=sAFD5aFHkxJQSL0ORSMatdKa1c3ji9VBPgcDczqG5NNSnjkvJRUzKQEfINTddC9UVx
+         ATbofgPPwC8ASkvrm0xPcgithZoUJUX9CO0z1roa8wYkqEbn0vgypQBzaYLKbgWkKOIn
+         lpnCTtb+UA5LCFeZh7ibhlZ+BVTe5I0C7O9cp70Tr0+OHDuF/e66FPddN2zMb/IrQ1hQ
+         sQHU+w//r6Eqz4OZz5B5JJ3inZga9DHpn4KHs4+xw0WBLSWeAcQ3RkE2w/BwDM/uE8pT
+         EjQp7z/x0oFIOovFCjmZPhjECCVzKi/JXc9WaHx6WCMldKInosg0MfNTZcFMLosrx8nJ
+         fcNA==
+X-Gm-Message-State: AOAM531ax39K39AX7DiCyRvc0kqSMnVq7EYS42lSLsap/UkP23+oEXuR
+        E5SWYqe/0STT6zkmJuQubQMBGTJ2ROg=
+X-Google-Smtp-Source: ABdhPJx+BrV4abo+2L2SpPIELjzqPN1tFHwc9ZdV9OZvI8hh2TNoDpuM4R8+7/Do3EaLSNt66fHsxQ==
+X-Received: by 2002:a2e:85d3:: with SMTP id h19mr5005266ljj.363.1597215488366;
+        Tue, 11 Aug 2020 23:58:08 -0700 (PDT)
+Received: from saruman ([194.34.132.58])
+        by smtp.gmail.com with ESMTPSA id k12sm238314ljh.95.2020.08.11.23.58.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 11 Aug 2020 23:58:07 -0700 (PDT)
+From:   Felipe Balbi <balbi@kernel.org>
+To:     "Sandeep Maheswaram \(Temp\)" <sanm@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+Subject: Re: [PATCH v11 1/2] usb: dwc3: qcom: Add interconnect support in dwc3 driver
+In-Reply-To: <cd5c6c99-d8ee-da59-1abf-e64e5f7f6f8f@codeaurora.org>
+References: <1595869597-26049-1-git-send-email-sanm@codeaurora.org> <1595869597-26049-2-git-send-email-sanm@codeaurora.org> <20200727192050.GD3191083@google.com> <cd5c6c99-d8ee-da59-1abf-e64e5f7f6f8f@codeaurora.org>
+Date:   Wed, 12 Aug 2020 09:57:56 +0300
+Message-ID: <87v9honyff.fsf@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use clk_round_rate() API to find a frequency that will work with the
-requested baud rate. With this we can avoid updating the table each time
-we add a new frquency to the table. We can just call clk_round_rate() and
-make sure it is evenly divisible by the requested rate and then it will be
-the same as before.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: satya priya <skakit@codeaurora.org>
----
- drivers/tty/serial/qcom_geni_serial.c | 32 +++++++++-----------------------
- 1 file changed, 9 insertions(+), 23 deletions(-)
+"Sandeep Maheswaram (Temp)" <sanm@codeaurora.org> writes:
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 3aa29d2..312daa24 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
- static void qcom_geni_serial_stop_rx(struct uart_port *uport);
- static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
- 
--static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
--					32000000, 48000000, 51200000, 64000000,
--					80000000, 96000000, 100000000,
--					102400000, 112000000, 120000000,
--					128000000};
--
- #define to_dev_port(ptr, member) \
- 		container_of(ptr, struct qcom_geni_serial_port, member)
- 
-@@ -941,30 +935,22 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 	return 0;
- }
- 
--static unsigned long get_clk_cfg(unsigned long clk_freq)
--{
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
--		if (!(root_freq[i] % clk_freq))
--			return root_freq[i];
--	}
--	return 0;
--}
--
--static unsigned long get_clk_div_rate(unsigned int baud,
--			unsigned int sampling_rate, unsigned int *clk_div)
-+static unsigned long get_clk_div_rate(const struct geni_se *se,
-+			unsigned int baud, unsigned int sampling_rate,
-+			unsigned int *clk_div)
- {
- 	unsigned long ser_clk;
- 	unsigned long desired_clk;
-+	long actual_clk;
- 
- 	desired_clk = baud * sampling_rate;
--	ser_clk = get_clk_cfg(desired_clk);
--	if (!ser_clk) {
-+	actual_clk = clk_round_rate(se->clk, desired_clk);
-+	if (actual_clk % desired_clk != 0) {
- 		pr_err("%s: Can't find matching DFS entry for baud %d\n",
- 								__func__, baud);
--		return ser_clk;
-+		return 0;
- 	}
-+	ser_clk = actual_clk;
- 
- 	*clk_div = ser_clk / desired_clk;
- 	return ser_clk;
-@@ -998,7 +984,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
- 	if (GENI_SE_VERSION_MAJOR(ver) >= 2 && GENI_SE_VERSION_MINOR(ver) >= 5)
- 		sampling_rate /= 2;
- 
--	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
-+	clk_rate = get_clk_div_rate(&port->se, baud, sampling_rate, &clk_div);
- 	if (!clk_rate)
- 		goto out_restart_rx;
- 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+> Hi Felipe,
+>
+> On 7/28/2020 12:50 AM, Matthias Kaehlcke wrote:
+>> On Mon, Jul 27, 2020 at 10:36:36PM +0530, Sandeep Maheswaram wrote:
+>>> Add interconnect support in dwc3-qcom driver to vote for bus
+>>> bandwidth.
+>>>
+>>> This requires for two different paths - from USB to
+>>> DDR. The other is from APPS to USB.
+>>>
+>>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+>>> Signed-off-by: Chandana Kishori Chiluveru <cchiluve@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Please ack if you are ok with this patch.
 
+What's the plan to get this upstream? Should I take dwc3-qcom patch and
+ignore the rest? Is there a hard-dependency on something else?
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElLzh7wn96CXwjh2IzL64meEamQYFAl8zkvYACgkQzL64meEa
+mQbfthAArA2X5kasW3EQ1RHkC0s8Kj6X9CHWtuc7UnHOJu2ulKa5ARoXPQN8p1fd
+mY/t/GcAZzZDppRMumqRnFEqTzNlpMMjnW9drd2F6mwo5+posxbLnaeSRf+xDS5D
+/08z/fpkE5t6HVPqU/WihWTVuprRcxWVxmToP1YxYvXwfOEU/6cJfgCi2CsXp0nm
+BM7FVGkMaU6aMfB/Alp34QvT81VxTr7Ex3NJpiyHvJRsp1AT1hzTxlX7BUjj15gZ
+Qp4l/6w7OG8kqQISj/08k7ljq990ldyc+P1oHpXxF8AAUUonZHnWLzWKgpMTcfNN
+ZpqrmdHWQrtduSz8eMCOA8Sho/kM+XGkPor/p8UGV+PtArIQ392n/+/fNcWwkh8x
+yvxieFM5LoTIIEpMX9FxxMtGS0HI/n0X/AziPonfpykW1EjwvxXAutBVN7tCq+Jk
+m4aLWJzTAvCkqzZm2BvInrLJvYpRNWkHvh149FEVDENh4rTWpO9lhpOjHvmJ/2M+
+pwakvMKM2KsmKNaxTW+uVWaNe10hQZ97LN66FcaqP7omOSoXeYaC8V2vjlUSEvEH
+PVOE797mwB+vU3yiS5DyZXBinpbucGTZ7yw8Z0A6Ud/vNWAdTBEX3sBFOu8mjBSF
+z4Ji6yAJe14TzrCZSblilGQ+vOkhlAauiOTDt200wHiJgMKU7NQ=
+=km0q
+-----END PGP SIGNATURE-----
+--=-=-=--
