@@ -2,97 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DD77242739
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 11:12:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AE6A242785
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 11:26:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726572AbgHLJMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 05:12:03 -0400
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:43573 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726409AbgHLJMD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 05:12:03 -0400
-Received: by mail-ej1-f65.google.com with SMTP id m22so1416760eje.10;
-        Wed, 12 Aug 2020 02:12:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=OTisqPWsNaLTBYitGN0ANbWIWidBebEjPE1GGi+XHPo=;
-        b=WCUHjJcRRwnGAq9VOuOmTvmvip3lFPELMqiMREB4HgYk75LxdFGk5cszIv0f2c6crd
-         cJj0Dxgj82uhRS+RUN4CnouF7qJayJMvZ9h8odbQOWue6jIdkuC3k/W+Q+UK2NdajNCx
-         4LsVQXPmzTNKGpK9NkZxk/7U6SjCHHysjrn4rh4ow008TZscUgfmUiNWvO9LG3fsoF2U
-         f2RJLIwNp30CUtsJJEbpOzP7Ynh6M0EB6grrJaHOru2o/ADy4ubrCNrVaG1vAfzaNac0
-         PcdP9L5RokNlHBPtq8m5EWFtrFzRIK22tQ3H3L3IARhpsQsvj57oYaAEtn9up9rbONdT
-         Pjgw==
-X-Gm-Message-State: AOAM530972VnIAy31LcF0NTiWq/0i8RMAGLGcGzwcV4CBg5hwcFKvIX6
-        8lHepuQNNyTT/m2TXk1g/gjevcMH
-X-Google-Smtp-Source: ABdhPJx4Ji37nXDxN20tn3PvjQIZPTdXvsFQViO+KYO2t3kFaOFPoZTfU7qrcm4UESPYpxrGCY3/WA==
-X-Received: by 2002:a17:906:e0e:: with SMTP id l14mr28652549eji.398.1597223521309;
-        Wed, 12 Aug 2020 02:12:01 -0700 (PDT)
-Received: from ?IPv6:2a0b:e7c0:0:107::ee2? ([2a0b:e7c0:0:107::ee2])
-        by smtp.gmail.com with ESMTPSA id p3sm1053769edx.75.2020.08.12.02.11.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Aug 2020 02:12:00 -0700 (PDT)
-Subject: Re: [RFC][PATCH] tty: serial: qcom_geni_serial: Drop __init from
- qcom_geni_console_setup
-To:     John Stultz <john.stultz@linaro.org>,
-        Saravana Kannan <saravanak@google.com>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Todd Kjos <tkjos@google.com>,
-        Amit Pundir <amit.pundir@linaro.org>,
+        id S1727881AbgHLJ01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 05:26:27 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:58853 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727065AbgHLJ01 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 05:26:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597224385; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=Ut7UsXyyt3w1ZkSYeaLSTk9Ej6vXqnbWm3dpszGQbYk=; b=d20ue8ZG+WnVsgznsTyLSMkrNVmrN1V0RWSyg4BGAZaSVelC/JqE1l1oPQYl4fMcP7yaXcpG
+ O1yzklwDHur+sJf1WOxIsi8m2epuw1YGbv8FyM6oWE95msaN3oC3jINQlupT6V7MEda3679e
+ AKYhoWosGDgy3YYA5TAXPSQ0k9g=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n13.prod.us-east-1.postgun.com with SMTP id
+ 5f33b5c1247ccc308cb55ffd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 09:26:25
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9D184C433A0; Wed, 12 Aug 2020 09:26:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.16] (unknown [61.1.229.169])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0A60C433CA;
+        Wed, 12 Aug 2020 09:26:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0A60C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [RFC v2 03/11] tty: serial: qcom_geni_serial: Use OPP API to set
+ clk/perf state
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-scsi@vger.kernel.org,
+        Linux PM list <linux-pm@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-serial@vger.kernel.org
-References: <20200811025044.70626-1-john.stultz@linaro.org>
- <CAGETcx8qjnVNNB_z-Ar8gxKAy7Sc8kcj8oAWQ76mXcBpaqnagg@mail.gmail.com>
- <CALAqxLUhX0JLLvn=4fNXk0z6dm=teqCaBmz2VDPEKGfZ+EDFZw@mail.gmail.com>
-From:   Jiri Slaby <jirislaby@kernel.org>
-Message-ID: <74bc87df-db5a-4388-9b8d-4eed78196685@kernel.org>
-Date:   Wed, 12 Aug 2020 11:11:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20190320094918.20234-1-rnayak@codeaurora.org>
+ <20190320094918.20234-4-rnayak@codeaurora.org>
+ <CALAqxLV2TBk9ScUM6MeJMCkL8kJnCihjQ7ac5fLzcqOg1rREVQ@mail.gmail.com>
+ <CALAqxLWg3jJKJFLnnne-mrQEnH=m7R_9azCGaGnEmFYR4EMh=A@mail.gmail.com>
+ <ec5eeb21-48e4-5dcc-583a-ac9419659e44@codeaurora.org>
+ <CAMi1Hd1O+3bjQN6c9WQr+t0YXGBAukfFzJWtkgXDp1Zcir-0-w@mail.gmail.com>
+ <aab760b8-2a06-ae96-584a-301d5326fc0d@codeaurora.org>
+Message-ID: <fb5b6abf-b26a-5db2-1f8f-23d457c7235e@codeaurora.org>
+Date:   Wed, 12 Aug 2020 14:56:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <CALAqxLUhX0JLLvn=4fNXk0z6dm=teqCaBmz2VDPEKGfZ+EDFZw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <aab760b8-2a06-ae96-584a-301d5326fc0d@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11. 08. 20, 22:02, John Stultz wrote:
-> On Tue, Aug 11, 2020 at 10:00 AM Saravana Kannan <saravanak@google.com> wrote:
->>
->> On Mon, Aug 10, 2020 at 7:50 PM John Stultz <john.stultz@linaro.org> wrote:
->>>
->>> When booting with heavily modularized config, the serial console
->>> may not be able to load until after init when modules that
->>> satisfy needed dependencies have time to load.
->>>
->>> Unfortunately, as qcom_geni_console_setup is marked as __init,
->>> the function may have been freed before we get to run it,
->>> causing boot time crashes such as:
->>
->> Btw, I thought non-__init functions calling __init functions would be
->> caught by the build system. Is that not correct? If it's correct, do
->> we know how this gets past that check?
+
+On 8/12/2020 1:09 PM, Rajendra Nayak wrote:
 > 
-> I think it's because it's indirectly called through a function pointer.
+> On 8/12/2020 1:05 PM, Amit Pundir wrote:
+>> Hi Rajendra,
+>>
+>> On Wed, 12 Aug 2020 at 11:18, Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>>
+>>>
+>>> On 8/12/2020 7:03 AM, John Stultz wrote:
+>>>> On Tue, Aug 11, 2020 at 4:11 PM John Stultz <john.stultz@linaro.org> wrote:
+>>>>>
+>>>>> On Wed, Mar 20, 2019 at 2:49 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+>>>>>>
+>>>>>> geni serial needs to express a perforamnce state requirement on CX
+>>>>>> depending on the frequency of the clock rates. Use OPP table from
+>>>>>> DT to register with OPP framework and use dev_pm_opp_set_rate() to
+>>>>>> set the clk/perf state.
+>>>>>>
+>>>>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>>>>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>>>>>> ---
+>>>>>>    drivers/tty/serial/qcom_geni_serial.c | 15 +++++++++++++--
+>>>>>>    1 file changed, 13 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>
+>>>>> Hey,
+>>>>>     I just wanted to follow up on this patch, as I've bisected it
+>>>>> (a5819b548af0) down as having broken qca bluetooth on the Dragonboard
+>>>>> 845c.
+>>>>>
+>>>>> I haven't yet had time to debug it yet, but wanted to raise the issue
+>>>>> in case anyone else has seen similar trouble.
+>>>>
+>>>> So I dug in a bit further, and this chunk seems to be causing the issue:
+>>>>> @@ -961,7 +963,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+>>>>>                   goto out_restart_rx;
+>>>>>
+>>>>>           uport->uartclk = clk_rate;
+>>>>> -       clk_set_rate(port->se.clk, clk_rate);
+>>>>> +       dev_pm_opp_set_rate(port->dev, clk_rate);
+>>>>>           ser_clk_cfg = SER_CLK_EN;
+>>>>>           ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
+>>>>>
+>>>>
+>>>>
+>>>> With that applied, I see the following errors in dmesg and bluetooth
+>>>> fails to function:
+>>>> [    4.763467] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate:
+>>>> failed to find OPP for freq 102400000 (-34)
+>>>> [    4.773493] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate:
+>>>> failed to find OPP for freq 102400000 (-34)
+>>>>
+>>>> With just that chunk reverted on linus/HEAD, bluetooth seems to work ok.
+>>>
+>>> This seems like the same issue that was also reported on venus [1] because the
+>>> clock frequency tables apparently don;t exactly match the achievable clock
+>>> frequencies (which we also used to construct the OPP tables)
+>>>
+>>> Can you try updating the OPP table for QUP to have 102400000 instead of the
+>>> current 100000000 and see if that fixes it?
+>>
+>> That worked. Thanks.
+>>
+>> Should this change be common to base sdm845.dtsi or platform specific dts?
+>> For what it's worth, we see this BT breakage on PocoF1 phone too.
+> 
+> Thanks for confirming, it will have to be part of the SoC dtsi, and I am
+> guessing a similar change is perhaps also needed on sc7180.
+> I will send a patch out to fix the OPP tables for both.
 
-Definitely.
+I spent some more time looking at this and it does not look like this is the
+rounding issues with clock FMAX tables. I had these tables picked from downstream
+clock code and it turns out these tables were reworked at clock init based on
+the silicon rev, so I need to fix up the OPP tables accordingly which will add
+a new OPP entry for 102.4Mhz. I'll post a patch shortly.
 
-Given there are lots of __init by *_console_setup, I wonder how many
-console drivers return EPROBE_DEFER from probe and then register the
-console from the same (but deferred) probe like this driver does...
+> 
+>>
+>> Regards,
+>> Amit Pundir
+>>
+>>
+>>>
+>>> [1] https://lkml.org/lkml/2020/7/27/507
+>>>
+>>>>
+>>>> thanks
+>>>> -john
+>>>>
+>>>
+>>> -- 
+>>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>>> of Code Aurora Forum, hosted by The Linux Foundation
+> 
 
-In fact, it doesn't even matter if the probe returns EPROBE_DEFER. The
-probe is not marked __init, so the setup shouldn't be either.
-
-thanks,
 -- 
-js
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
