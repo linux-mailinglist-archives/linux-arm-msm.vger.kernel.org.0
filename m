@@ -2,68 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E9C5242FDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 22:07:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 619E7242FEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 22:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbgHLUHU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 16:07:20 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:33514 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726557AbgHLUHT (ORCPT
+        id S1726658AbgHLUNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 16:13:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43032 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726512AbgHLUNs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 16:07:19 -0400
-Received: by mail-io1-f68.google.com with SMTP id g14so4470768iom.0;
-        Wed, 12 Aug 2020 13:07:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hxHMhON1JG9ZFONE2veN/0itnMUh36BjPV6tUvv2D0Q=;
-        b=D1SvGS4y1II9/HC3Jhr4kreXPxlWlaFbmek8NWMGE9OuZElapd2h8dZqKcIBjcvMg4
-         zJIrIZpOv+rpmeMtBgxZSQbVdpf+dcYIY0mJR5+Ggo8nza9jsppNFK030mPQA4+tiUKC
-         FXhbtcPSUnv1YfKYkra9SVfzQSgMs1JsUDqkkIwTsWiWjQFikaiyFjYI9LKymY+Pgmds
-         yfwp1sQg0EnQRdEmsGzG2G2IRh7bAPzz7MZW9htUL1DHHNqJmJAQXsJ+KTenEG/r7FYd
-         NqC6OKOvcZuLbzDNr9136qu4oNfN5V//4NF+ysm9H5s/pvzROM7Vju2PKEEZGqdLOUNA
-         byUg==
-X-Gm-Message-State: AOAM530Y8Xjgt9X9Xro1GcXNiJC4j/dCNqdGUu7JXgZwY8nPqgvZQaNV
-        SM+EhURqDJMCARvUqDydog==
-X-Google-Smtp-Source: ABdhPJxB0IOO/+sIXpqu3113Vv6ucgevf5fE6iKJeKfCPFqkh94bwjGUuUo+yjYcolHnEzfsUcyB3w==
-X-Received: by 2002:a6b:c98b:: with SMTP id z133mr1468377iof.3.1597262838693;
-        Wed, 12 Aug 2020 13:07:18 -0700 (PDT)
-Received: from xps15 ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id t187sm1389892iof.54.2020.08.12.13.07.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2020 13:07:18 -0700 (PDT)
-Received: (nullmailer pid 2618892 invoked by uid 1000);
-        Wed, 12 Aug 2020 20:07:16 -0000
-Date:   Wed, 12 Aug 2020 14:07:16 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        sricharan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, sboyd@codeaurora.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: qcom: Add ipq8074 bindings
-Message-ID: <20200812200716.GA2618840@bogus>
-References: <1596706332-12957-1-git-send-email-gokulsri@codeaurora.org>
- <1596706332-12957-2-git-send-email-gokulsri@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1596706332-12957-2-git-send-email-gokulsri@codeaurora.org>
+        Wed, 12 Aug 2020 16:13:48 -0400
+Received: from shards.monkeyblade.net (shards.monkeyblade.net [IPv6:2620:137:e000::1:9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3690EC061383;
+        Wed, 12 Aug 2020 13:13:48 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2601:601:9f00:477::3d5])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: davem-davemloft)
+        by shards.monkeyblade.net (Postfix) with ESMTPSA id 51A4012905D74;
+        Wed, 12 Aug 2020 12:57:01 -0700 (PDT)
+Date:   Wed, 12 Aug 2020 13:13:46 -0700 (PDT)
+Message-Id: <20200812.131346.1049273548567735486.davem@davemloft.net>
+To:     noodles@earth.li
+Cc:     peppe.cavallaro@st.com, alexandre.torgue@st.com,
+        joabreu@synopsys.com, kuba@kernel.org, mcoquelin.stm32@gmail.com,
+        netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net 0/2] net: stmmac: Fix multicast filter on IPQ806x
+From:   David Miller <davem@davemloft.net>
+In-Reply-To: <cover.1597260787.git.noodles@earth.li>
+References: <cover.1597260787.git.noodles@earth.li>
+X-Mailer: Mew version 6.8 on Emacs 26.3
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12 (shards.monkeyblade.net [149.20.54.216]); Wed, 12 Aug 2020 12:57:01 -0700 (PDT)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 06 Aug 2020 15:02:10 +0530, Gokul Sriram Palanisamy wrote:
-> Document the new device-tree bindings for boards
-> HK10-C1 and HK10-C2 based on ipq8074 SoC.
-> 
-> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+From: Jonathan McDowell <noodles@earth.li>
+Date: Wed, 12 Aug 2020 20:36:54 +0100
 
-Acked-by: Rob Herring <robh@kernel.org>
+> This pair of patches are the result of discovering a failure to
+> correctly receive IPv6 multicast packets on such a device (in particular
+> DHCPv6 requests and RA solicitations). Putting the device into
+> promiscuous mode, or allmulti, both resulted in such packets correctly
+> being received. Examination of the vendor driver (nss-gmac from the
+> qsdk) shows that it does not enable the multicast filter and instead
+> falls back to allmulti.
+> 
+> Extend the base dwmac1000 driver to fall back when there's no suitable
+> hardware filter, and update the ipq806x platform to request this.
+
+Series applied, thank you.
