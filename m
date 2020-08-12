@@ -2,462 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D79522424CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 06:43:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D421824250B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 07:44:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgHLEno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 00:43:44 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:47610 "EHLO m43-7.mailgun.net"
+        id S1726264AbgHLFoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 01:44:25 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20952 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726017AbgHLEnn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 00:43:43 -0400
+        id S1725944AbgHLFoZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 01:44:25 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597207422; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=1Yt3WgR6pbjW91EyE2P0uEN00ukYc144Z2IAF+biMD0=; b=thRVR804ag6CsNJp4xOcROPD6+g/IX8wJ6XjMPL8Na9s3d5rHJOgPeCJSIDPk6MykTcq0jSR
- WauKt9OEEuNvIik9iv9GfwocKnxj3C+5Tee0+bj+htfBzx7PDS1vq2rd8q1/Ch8snh27BOmE
- BRydOWbvayRdzb4QdYz5h+dsQ8Q=
+ s=smtp; t=1597211064; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=m01s5x5/4OPtVhR5XhuB+WL65++5knXHg8y55k3ANL8=; b=VFWO1AKTM0i7Dgjtxrcw+R3UEHZjKXc6VGfXNLji2ryfpSKa3PC2ULCd4XVe6tGo4IHphS/v
+ pEjFtLCRJnEIQuuAvuDjZnBb8fyx0cWEF8cXtSP6aYaqkk3HOHEyuzXnCVQk31uUYNxFDqSy
+ QxQuA7J77VMn+O0zugw6FU/px0k=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f33737d2b87d660493491ea (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 04:43:41
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f3381b81e4d3989d431ce44 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 05:44:24
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A77B8C4339C; Wed, 12 Aug 2020 04:43:40 +0000 (UTC)
+        id BE983C43395; Wed, 12 Aug 2020 05:44:23 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
         autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from linuxdisplay-lab-04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: tanmay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6A5FEC43391;
-        Wed, 12 Aug 2020 04:43:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6A5FEC43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tanmay@codeaurora.org
-From:   Tanmay Shah <tanmay@codeaurora.org>
-To:     swboyd@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com
-Cc:     linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
-        seanpaul@chromium.org, daniel@ffwll.ch, airlied@linux.ie,
-        aravindh@codeaurora.org, abhinavk@codeaurora.org,
-        khsieh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>
-Subject: [PATCH v10 5/5] drm/msm/dp: Add Display Port HPD feature
-Date:   Tue, 11 Aug 2020 21:42:23 -0700
-Message-Id: <20200812044223.19279-6-tanmay@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200812044223.19279-1-tanmay@codeaurora.org>
-References: <20200812044223.19279-1-tanmay@codeaurora.org>
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1A92C433C9;
+        Wed, 12 Aug 2020 05:44:22 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 12 Aug 2020 11:14:22 +0530
+From:   skakit@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     gregkh@linuxfoundation.org, mgautam@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        akashast@codeaurora.org, rojay@codeaurora.org,
+        msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH] tty: serial: qcom_geni_serial: Add 51.2MHz frequency
+ support
+Message-ID: <4038aa8b67405c89e4917791f147e8fa@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure HPD registers in DP controller and
-enable HPD interrupt.
+Hi Stephen,
 
-Add interrupt to handle HPD connect and disconnect events.
+On 2020-05-31 00:39, Stephen Boyd wrote:
+> Quoting satya priya (2020-05-29 03:14:42)
+>> To support BT use case over UART at baud rate of 3.2 Mbps,
+>> we need SE clocks to run at 51.2MHz frequency. Previously this
+>> frequency was not available in clk src, so, we were requesting
+>> for 102.4 MHz and dividing it internally by 2 to get 51.2MHz.
+>> 
+>> As now 51.2MHz frequency is made available in clk src,
+>> adding this frequency to UART frequency table.
+>> 
+>> We will save significant amount of power, if 51.2 is used
+>> because it belongs to LowSVS range whereas 102.4 fall into
+>> Nominal category.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+> 
+> Great commit text! Maybe point to the commit that adds it to the
+> frequency table in the gcc clk driver instead of the patchwork link.
+> 
+>> ---
+>> 
+>> Note: This depend on clk patch 
+>> https://patchwork.kernel.org/patch/11554073/
+>> 
+>>  drivers/tty/serial/qcom_geni_serial.c | 7 ++++---
+>>  1 file changed, 4 insertions(+), 3 deletions(-)
+>> 
+>> diff --git a/drivers/tty/serial/qcom_geni_serial.c 
+>> b/drivers/tty/serial/qcom_geni_serial.c
+>> index 6119090..168e1c0 100644
+>> --- a/drivers/tty/serial/qcom_geni_serial.c
+>> +++ b/drivers/tty/serial/qcom_geni_serial.c
+>> @@ -141,9 +141,10 @@ static void qcom_geni_serial_stop_rx(struct 
+>> uart_port *uport);
+>>  static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool 
+>> drop);
+>> 
+>>  static const unsigned long root_freq[] = {7372800, 14745600, 
+>> 19200000, 29491200,
+>> -                                       32000000, 48000000, 64000000, 
+>> 80000000,
+>> -                                       96000000, 100000000, 
+>> 102400000,
+>> -                                       112000000, 120000000, 
+>> 128000000};
+>> +                                       32000000, 48000000, 51200000, 
+>> 64000000,
+>> +                                       80000000, 96000000, 100000000,
+>> +                                       102400000, 112000000, 
+>> 120000000,
+>> +                                       128000000};
+> 
+> Will this break sdm845? That clk frequency table hasn't been updated to
+> add 51.2 MHz.
 
-Changes in v8: None
+No, as the sampling rate in sdm845 is 32, we will not be requesting 51.2 
+over there.
 
-Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  18 ++++
- drivers/gpu/drm/msm/dp/dp_catalog.c     |  63 ++++++++------
- drivers/gpu/drm/msm/dp/dp_catalog.h     |   5 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.c        |   1 -
- drivers/gpu/drm/msm/dp/dp_display.c     | 108 ++++++++++++++++++++++--
- drivers/gpu/drm/msm/dp/dp_reg.h         |  12 +++
- drivers/gpu/drm/msm/msm_drv.h           |   6 ++
- 7 files changed, 180 insertions(+), 33 deletions(-)
+> 
+> Furthermore, it would be nice to get rid of this table and use
+> clk_round_rate() to find a frequency that will work with the requested
+> baud rate. Can we do that instead? That would make it work regardless 
+> of
+> what the clk driver supports for the particular SoC. Presumably we can
+> just call clk_round_rate() and then make sure it is evenly divisible by
+> the requested rate and then it will be mostly the same as before.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index fe86d760ed01..99a83d75ce23 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -765,6 +765,23 @@ static void dpu_irq_preinstall(struct msm_kms *kms)
- 	dpu_core_irq_preinstall(dpu_kms);
- }
- 
-+static int dpu_irq_postinstall(struct msm_kms *kms)
-+{
-+	struct msm_drm_private *priv;
-+	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-+
-+	if (!dpu_kms || !dpu_kms->dev)
-+		return -EINVAL;
-+
-+	priv = dpu_kms->dev->dev_private;
-+	if (!priv)
-+		return -EINVAL;
-+
-+	msm_dp_irq_postinstall(priv->dp);
-+
-+	return 0;
-+}
-+
- static void dpu_irq_uninstall(struct msm_kms *kms)
- {
- 	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-@@ -775,6 +792,7 @@ static void dpu_irq_uninstall(struct msm_kms *kms)
- static const struct msm_kms_funcs kms_funcs = {
- 	.hw_init         = dpu_kms_hw_init,
- 	.irq_preinstall  = dpu_irq_preinstall,
-+	.irq_postinstall = dpu_irq_postinstall,
- 	.irq_uninstall   = dpu_irq_uninstall,
- 	.irq             = dpu_irq,
- 	.enable_commit   = dpu_kms_enable_commit,
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index e506e0756e92..d186424044b1 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -17,7 +17,6 @@
- #define POLLING_SLEEP_US			1000
- #define POLLING_TIMEOUT_US			10000
- 
--#define REFTIMER_DEFAULT_VALUE			0x20000
- #define SCRAMBLER_RESET_COUNT_VALUE		0xFC
- 
- #define DP_INTERRUPT_STATUS_ACK_SHIFT	1
-@@ -731,35 +730,51 @@ void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog,
- 	}
- }
- 
--void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog, bool en)
-+void dp_catalog_hpd_config_intr(struct dp_catalog *dp_catalog,
-+			u32 intr_mask, bool en)
- {
- 	struct dp_catalog_private *catalog = container_of(dp_catalog,
- 				struct dp_catalog_private, dp_catalog);
- 
--	if (en) {
--		u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
-+	u32 config = dp_read_aux(catalog, REG_DP_DP_HPD_INT_MASK);
- 
--		dp_write_aux(catalog, REG_DP_DP_HPD_INT_ACK,
--				DP_DP_HPD_PLUG_INT_ACK |
--				DP_DP_IRQ_HPD_INT_ACK |
--				DP_DP_HPD_REPLUG_INT_ACK |
--				DP_DP_HPD_UNPLUG_INT_ACK);
--		dp_write_aux(catalog, REG_DP_DP_HPD_INT_MASK,
--				DP_DP_HPD_PLUG_INT_MASK |
--				DP_DP_IRQ_HPD_INT_MASK |
--				DP_DP_HPD_REPLUG_INT_MASK |
--				DP_DP_HPD_UNPLUG_INT_MASK);
-+	config = (en ? config | intr_mask : config & ~intr_mask);
- 
--		/* Configure REFTIMER */
--		reftimer |= REFTIMER_DEFAULT_VALUE;
--		dp_write_aux(catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
--		/* Enable HPD */
--		dp_write_aux(catalog, REG_DP_DP_HPD_CTRL,
--				DP_DP_HPD_CTRL_HPD_EN);
--	} else {
--		/* Disable HPD */
--		dp_write_aux(catalog, REG_DP_DP_HPD_CTRL, 0x0);
--	}
-+	dp_write_aux(catalog, REG_DP_DP_HPD_INT_MASK,
-+				config & DP_DP_HPD_INT_MASK);
-+}
-+
-+void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
-+{
-+	struct dp_catalog_private *catalog = container_of(dp_catalog,
-+				struct dp_catalog_private, dp_catalog);
-+
-+	u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
-+
-+	/* enable HPD interrupts */
-+	dp_catalog_hpd_config_intr(dp_catalog,
-+		DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
-+		| DP_DP_HPD_UNPLUG_INT_MASK, true);
-+
-+	/* Configure REFTIMER and enable it */
-+	reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
-+	dp_write_aux(catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
-+
-+	/* Enable HPD */
-+	dp_write_aux(catalog, REG_DP_DP_HPD_CTRL, DP_DP_HPD_CTRL_HPD_EN);
-+}
-+
-+u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog)
-+{
-+	struct dp_catalog_private *catalog = container_of(dp_catalog,
-+				struct dp_catalog_private, dp_catalog);
-+	int isr = 0;
-+
-+	isr = dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
-+	dp_write_aux(catalog, REG_DP_DP_HPD_INT_ACK,
-+				 (isr & DP_DP_HPD_INT_MASK));
-+
-+	return isr;
- }
- 
- int dp_catalog_ctrl_get_interrupt(struct dp_catalog *dp_catalog)
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index 4cf9ad4206cc..bcd381bfc9cd 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -75,7 +75,10 @@ void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_usb_reset(struct dp_catalog *dp_catalog, bool flip);
- bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
--void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog, bool enable);
-+void dp_catalog_hpd_config_intr(struct dp_catalog *dp_catalog,
-+			u32 intr_mask, bool en);
-+void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog);
-+u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_phy_reset(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_phy_lane_cfg(struct dp_catalog *dp_catalog, bool flipped,
- 				u8 lane_cnt);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 9a06cbf40af1..ae07e43b541b 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1563,7 +1563,6 @@ int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
- 	rate = ctrl->panel->link_info.rate;
- 
- 	dp_power_clk_enable(ctrl->power, DP_CORE_PM, true);
--	dp_catalog_ctrl_hpd_config(ctrl->catalog, true);
- 
- 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
- 		DRM_DEBUG_DP("using phy test link parameters\n");
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 86c958b21c97..36b6ee4131bb 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -17,6 +17,7 @@
- #include "dp_power.h"
- #include "dp_catalog.h"
- #include "dp_aux.h"
-+#include "dp_reg.h"
- #include "dp_link.h"
- #include "dp_panel.h"
- #include "dp_ctrl.h"
-@@ -36,6 +37,7 @@ struct dp_display_private {
- 	bool power_on;
- 	bool hpd_irq_on;
- 	bool audio_supported;
-+	atomic_t hpd_isr_status;
- 
- 	struct platform_device *pdev;
- 	struct dentry *root;
-@@ -54,6 +56,8 @@ struct dp_display_private {
- 	struct dp_usbpd_cb usbpd_cb;
- 	struct dp_display_mode dp_mode;
- 	struct msm_dp dp_display;
-+
-+	struct delayed_work config_hpd_work;
- };
- 
- static const struct of_device_id dp_dt_match[] = {
-@@ -64,6 +68,20 @@ static const struct of_device_id dp_dt_match[] = {
- static irqreturn_t dp_display_irq(int irq, void *dev_id)
- {
- 	struct dp_display_private *dp = dev_id;
-+	irqreturn_t ret = IRQ_HANDLED;
-+	u32 hpd_isr_status;
-+
-+	if (!dp) {
-+		DRM_ERROR("invalid data\n");
-+		return IRQ_NONE;
-+	}
-+
-+	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
-+
-+	if (hpd_isr_status & DP_DP_HPD_INT_MASK) {
-+		atomic_set(&dp->hpd_isr_status, hpd_isr_status);
-+		ret = IRQ_WAKE_THREAD;
-+	}
- 
- 	/* DP controller isr */
- 	dp_ctrl_isr(dp->ctrl);
-@@ -71,6 +89,54 @@ static irqreturn_t dp_display_irq(int irq, void *dev_id)
- 	/* DP aux isr */
- 	dp_aux_isr(dp->aux);
- 
-+	return ret;
-+}
-+
-+static irqreturn_t dp_display_hpd_isr_work(int irq, void *data)
-+{
-+	struct dp_display_private *dp;
-+	struct dp_usbpd *hpd;
-+	u32 isr = 0;
-+
-+	dp = (struct dp_display_private *)data;
-+	if (!dp)
-+		return IRQ_NONE;
-+
-+	isr = atomic_read(&dp->hpd_isr_status);
-+
-+	/* reset to default */
-+	atomic_set(&dp->hpd_isr_status, 0);
-+
-+	hpd = dp->usbpd;
-+	if (!hpd)
-+		return IRQ_NONE;
-+
-+	if (isr & DP_DP_HPD_PLUG_INT_MASK &&
-+		isr & DP_DP_HPD_STATE_STATUS_CONNECTED) {
-+		hpd->hpd_high = 1;
-+		dp->usbpd_cb.configure(&dp->pdev->dev);
-+	} else if (isr & DP_DP_HPD_UNPLUG_INT_MASK &&
-+		(isr & DP_DP_HPD_STATE_STATUS_MASK) ==
-+			 DP_DP_HPD_STATE_STATUS_DISCONNECTED) {
-+
-+		/* disable HPD plug interrupt until disconnect is done
-+		 */
-+		dp_catalog_hpd_config_intr(dp->catalog,
-+			DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK,
-+			false);
-+
-+		hpd->hpd_high = 0;
-+
-+		/* We don't need separate work for disconnect as
-+		 * connect/attention interrupts are disabled
-+		 */
-+		dp->usbpd_cb.disconnect(&dp->pdev->dev);
-+
-+		dp_catalog_hpd_config_intr(dp->catalog,
-+			DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK,
-+			true);
-+	}
-+
- 	return IRQ_HANDLED;
- }
- 
-@@ -212,8 +278,6 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	int rc = 0;
- 	struct edid *edid;
- 
--	dp_aux_init(dp->aux);
--
- 	if (dp->link->psm_enabled)
- 		goto notify;
- 
-@@ -270,10 +334,6 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
- 		return;
- 	}
- 
--	dp_ctrl_host_deinit(dp->ctrl);
--	dp_aux_deinit(dp->aux);
--	dp_power_deinit(dp->power);
--	disable_irq(dp->irq);
- 	dp->core_initialized = false;
- }
- 
-@@ -630,7 +690,8 @@ int dp_display_request_irq(struct msm_dp *dp_display)
- 		return rc;
- 	}
- 
--	rc = devm_request_irq(&dp->pdev->dev, dp->irq, dp_display_irq,
-+	rc = devm_request_threaded_irq(&dp->pdev->dev, dp->irq,
-+		dp_display_irq, dp_display_hpd_isr_work,
- 		IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
- 	if (rc < 0) {
- 		DRM_ERROR("failed to request IRQ%u: %d\n",
-@@ -800,6 +861,39 @@ void __exit msm_dp_unregister(void)
- 	platform_driver_unregister(&dp_display_driver);
- }
- 
-+static void dp_display_config_hpd_work(struct work_struct *work)
-+{
-+	struct dp_display_private *dp;
-+	struct delayed_work *dw = to_delayed_work(work);
-+
-+	dp = container_of(dw, struct dp_display_private, config_hpd_work);
-+
-+	dp_display_host_init(dp);
-+	dp_catalog_ctrl_hpd_config(dp->catalog);
-+
-+	/* set default to 0 */
-+	atomic_set(&dp->hpd_isr_status, 0);
-+
-+	/* Enable interrupt first time
-+	 * we are leaving dp clocks on during disconnect
-+	 * and never disable interrupt
-+	 */
-+	enable_irq(dp->irq);
-+}
-+
-+void msm_dp_irq_postinstall(struct msm_dp *dp_display)
-+{
-+	struct dp_display_private *dp;
-+
-+	if (!dp_display)
-+		return;
-+
-+	dp = container_of(dp_display, struct dp_display_private, dp_display);
-+
-+	INIT_DELAYED_WORK(&dp->config_hpd_work, dp_display_config_hpd_work);
-+	queue_delayed_work(system_wq, &dp->config_hpd_work, HZ * 10);
-+}
-+
- int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder)
- {
-diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-index ad6f1760f893..6b3e297e4e04 100644
---- a/drivers/gpu/drm/msm/dp/dp_reg.h
-+++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-@@ -54,10 +54,22 @@
- #define DP_DP_IRQ_HPD_INT_MASK			(0x00000002)
- #define DP_DP_HPD_REPLUG_INT_MASK		(0x00000004)
- #define DP_DP_HPD_UNPLUG_INT_MASK		(0x00000008)
-+#define DP_DP_HPD_INT_MASK			(DP_DP_HPD_PLUG_INT_MASK | \
-+						DP_DP_IRQ_HPD_INT_MASK | \
-+						DP_DP_HPD_REPLUG_INT_MASK | \
-+						DP_DP_HPD_UNPLUG_INT_MASK)
-+#define DP_DP_HPD_STATE_STATUS_CONNECTED	(0x40000000)
-+#define DP_DP_HPD_STATE_STATUS_PENDING		(0x20000000)
-+#define DP_DP_HPD_STATE_STATUS_DISCONNECTED	(0x00000000)
-+#define DP_DP_HPD_STATE_STATUS_MASK		(0xE0000000)
- 
- #define REG_DP_DP_HPD_REFTIMER			(0x00000018)
-+#define DP_DP_HPD_REFTIMER_ENABLE		(1 << 16)
-+
- #define REG_DP_DP_HPD_EVENT_TIME_0		(0x0000001C)
- #define REG_DP_DP_HPD_EVENT_TIME_1		(0x00000020)
-+#define DP_DP_HPD_EVENT_TIME_0_VAL		(0x3E800FA)
-+#define DP_DP_HPD_EVENT_TIME_1_VAL		(0x1F407D0)
- 
- #define REG_DP_AUX_CTRL				(0x00000030)
- #define DP_AUX_CTRL_ENABLE			(0x00000001)
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 7be4c4f17fcd..d0b79321080c 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -391,6 +391,7 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
- void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
- 				struct drm_display_mode *mode,
- 				struct drm_display_mode *adjusted_mode);
-+void msm_dp_irq_postinstall(struct msm_dp *dp_display);
- 
- #else
- static inline int __init msm_dp_register(void)
-@@ -422,6 +423,11 @@ static inline void msm_dp_display_mode_set(struct msm_dp *dp,
- 				struct drm_display_mode *adjusted_mode)
- {
- }
-+
-+static inline void msm_dp_irq_postinstall(struct msm_dp *dp_display)
-+{
-+}
-+
- #endif
- 
- void __init msm_mdp_register(void);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Okay.
 
+> 
+> Or if we need to we can keep multiplying the rate 10 or 20 times and
+> test with clk_round_rate() each time and then give up if we don't find 
+> a
+> frequency that will work. The divider value looks like it is 12 bits
+> wide so there are 4095 possible dividers. If we need to loop through 
+> all
+> possible dividers then it may make sense to register a clk in this
+> driver and have it call divider_round_rate() to find the closest rate 
+> to
+> the desired rate. That would avoid reinventing a bunch of code that we
+> already have to implement clk dividers.
+> 
+
+If i understand correctly, clk_round_rate gives the nearest possible 
+value to the desired clk rate, but i am not very clear about 
+divider_round_rate API, is it an alternate method to get nearest clk 
+rate? Also it has few parameters like prate, clk_hw etc which we are not 
+sure of. For now we are planning to post the change for clk_round_rate 
+API.
+
+> And one more thing, I see that this driver doesn't use DFS. Instead it
+> relies on the clk_set_rate() call to change the qup clk frequency. We
+> could support DFS by adding a driver specific member to struct
+> clk_rate_request that can be used to communicate back extra info to the
+> child clk. The idea is that the DFS clk (the qup uart one) can round 
+> the
+> rate and jam in the DFS index that corresponds to the rate into the new
+> member. Then the clk implemented in this serial driver can stash away
+> that index into some table that maps frequency of parent to DFS index
+> and then look up the DFS index during clk_set_rate() based on the 
+> parent
+> rate the clk_op is called with to program the DFS value in the uart
+> registers in addition to the divider.
+> 
+okay will look into this.
+
+> ---8<---
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c
+> b/drivers/tty/serial/qcom_geni_serial.c
+> index 6119090ce045..7d147be997e5 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -140,11 +140,6 @@ static unsigned int
+> qcom_geni_serial_tx_empty(struct uart_port *port);
+>  static void qcom_geni_serial_stop_rx(struct uart_port *uport);
+>  static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool 
+> drop);
+> 
+> -static const unsigned long root_freq[] = {7372800, 14745600,
+> 19200000, 29491200,
+> -					32000000, 48000000, 64000000, 80000000,
+> -					96000000, 100000000, 102400000,
+> -					112000000, 120000000, 128000000};
+> -
+>  #define to_dev_port(ptr, member) \
+>  		container_of(ptr, struct qcom_geni_serial_port, member)
+> 
+> @@ -900,30 +895,22 @@ static int qcom_geni_serial_startup(struct
+> uart_port *uport)
+>  	return 0;
+>  }
+> 
+> -static unsigned long get_clk_cfg(unsigned long clk_freq)
+> -{
+> -	int i;
+> -
+> -	for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
+> -		if (!(root_freq[i] % clk_freq))
+> -			return root_freq[i];
+> -	}
+> -	return 0;
+> -}
+> -
+> -static unsigned long get_clk_div_rate(unsigned int baud,
+> +static unsigned long get_clk_div_rate(const struct geni_se *se,
+> +			unsigned int baud,
+>  			unsigned int sampling_rate, unsigned int *clk_div)
+>  {
+>  	unsigned long ser_clk;
+>  	unsigned long desired_clk;
+> +	long actual_clk;
+> 
+>  	desired_clk = baud * sampling_rate;
+> -	ser_clk = get_clk_cfg(desired_clk);
+> -	if (!ser_clk) {
+> +	actual_clk = clk_round_rate(se->clk, desired_clk);
+> +	if (actual_clk % desired_clk != 0) {
+>  		pr_err("%s: Can't find matching DFS entry for baud %d\n",
+>  								__func__, baud);
+> -		return ser_clk;
+> +		return 0;
+>  	}
+> +	ser_clk = actual_clk;
+> 
+>  	*clk_div = ser_clk / desired_clk;
+>  	return ser_clk;
+> @@ -956,7 +943,7 @@ static void qcom_geni_serial_set_termios(struct
+> uart_port *uport,
+>  	if (GENI_SE_VERSION_MAJOR(ver) >= 2 && GENI_SE_VERSION_MINOR(ver) >= 
+> 5)
+>  		sampling_rate /= 2;
+> 
+> -	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
+> +	clk_rate = get_clk_div_rate(&port->se, baud, sampling_rate, 
+> &clk_div);
+>  	if (!clk_rate)
+>  		goto out_restart_rx;
+
+Thanks,
+Satya Priya
