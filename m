@@ -2,249 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58AEA24284D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 12:38:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A8DB24287A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 12:58:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbgHLKic (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 06:38:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52850 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726404AbgHLKi2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 06:38:28 -0400
-Received: from coco.lan (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7713720838;
-        Wed, 12 Aug 2020 10:38:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597228706;
-        bh=g6m2gf+6OBWGn05WPGw6L9qsMIa6by+okI+mSWeQnNo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=OZKhUZ1nNA7h16NoZvqKrSSMLoAEgHrDumMmmOAoE8cskcUXIGxGGF8/8f7q5bgBZ
-         xRuVMbeZ5p4FU0cj0sH3T1QqA1qHLpxuCTU6sIDSQo1G9UdFf7wSKUmW8q/QsXDoYn
-         dRvExUU7pzCJqAAIiy7ah4Bca9bihRA4tprKTgu0=
-Date:   Wed, 12 Aug 2020 12:38:20 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc:     Rob Herring <robh@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, Mark Brown <broonie@kernel.org>,
-        Mayulong <mayulong1@huawei.com>, <linuxarm@huawei.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 00/33] Add driver for HiSilicon SPMI PMIC for Hikey 970
-Message-ID: <20200812123820.61fcdcc0@coco.lan>
-In-Reply-To: <20200812094353.00006311@huawei.com>
-References: <cover.1597160086.git.mchehab+huawei@kernel.org>
-        <20200811175429.748a69b6@coco.lan>
-        <20200811185111.00000648@Huawei.com>
-        <20200812094540.3ab13185@coco.lan>
-        <20200812094353.00006311@huawei.com>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        id S1727066AbgHLK6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 06:58:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727801AbgHLKyl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 06:54:41 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A75C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 03:54:11 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id g8so1379528wmk.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 03:54:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=z+jAzkAYbm8dRi6meS5Ks6bwjI53FeOFtpVqTfL46wc=;
+        b=Px4MzpFxqro1h3xEn3hbGCmlHGC9AUOZhBWro5yZdAKbQ1CtAQQsY2R6Qg7ZveQysP
+         eN26mgXanaiNs+6VV2GDBf1/ii/oD7QuOrGxSrZTtnWDzz44k+G9n+xzWdbN0OUOkNOD
+         dRoleTQIaU4iodD/SbRX65KLB9QDNr/lapHwoasiy35wAfHLMiQo2PzgyfQVP3nf2mf5
+         AmmniBz0mCw9iVTdKZmnbx5rVJ0LQFfDjEy6AkvJes+5Hbm/6UxgvmX4rLDyyC072oqK
+         EnCGHyJCnBIu05gAluXOeyo6nny/hdd6sfxcAJ+yeyRIYmzUW0hXmIOOo5Ya5z+6i2Su
+         8M4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=z+jAzkAYbm8dRi6meS5Ks6bwjI53FeOFtpVqTfL46wc=;
+        b=RRFtaHm++JSU5ciSjeZTwjiqQw2Xkq5QNMI0DQDG5VbkcUApS7mRtisImJylP+WRW4
+         mhEhYyXgGg+oP96zdNGV/XjxgOn/H2Lu7+FYWTOc2GfrzfslxjY1qftrIIQg5YYJrM3x
+         RuQEPc1wjh76ZzXROIyeqloJlK58bQhByegxgotCtwPd0jmekq3B/3ErZEExEBa5UueR
+         UAVAjFu7kysR4Fgmq5nFmmgv1R3GJ/O5BN6yXqW5C6aMtoH0EHLeX844VetQZ022ZN1z
+         EmbADYyp4XqrADHmH0kr9wPGea38z6RJO3jBHCQLxTGzy/wjsc6iAknCmepDb5bAMAAO
+         EVDQ==
+X-Gm-Message-State: AOAM531oO1LUWLSHkhY8pvOAYwvfzJLFnbd27o2pw189UBdajRPtVW6D
+        vrfYiNUsVHLvh2yJ+rCV0pbg3g==
+X-Google-Smtp-Source: ABdhPJxOX8KY3sja99cOHmyJ0eZOgpp0Zu2wnZrvweWHbVIO6LQ1fckTETTNEdKj14vX0kyacVHntw==
+X-Received: by 2002:a1c:4c17:: with SMTP id z23mr8426384wmf.49.1597229649440;
+        Wed, 12 Aug 2020 03:54:09 -0700 (PDT)
+Received: from [192.168.1.14] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id r11sm3424811wrw.78.2020.08.12.03.54.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Aug 2020 03:54:08 -0700 (PDT)
+Subject: Re: [PATCH v2] media: venus: Fix reported frame intervals
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        stanimir.varbanov@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        anibal.limon@linaro.org
+References: <1596543717-9106-1-git-send-email-loic.poulain@linaro.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <503a3674-0697-8955-f0c2-109e5f700e41@linaro.org>
+Date:   Wed, 12 Aug 2020 13:54:06 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <1596543717-9106-1-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Wed, 12 Aug 2020 09:43:53 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> escreveu:
+Hi Loic,
 
-> On Wed, 12 Aug 2020 09:45:40 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > > 
-> > > This is mixing and matching managed an unmanaged. Should be one or the other
-> > > or we might be hiding some race conditions.    
+Thanks for the patch!
+
+On 8/4/20 3:21 PM, Loic Poulain wrote:
+> On dragonboard-410c (apq8016) with HFI_VERSION_1XX, the reported
+> framerate is in unit of 1/65535 fps (for fine grained control).
+> So the current reported supported frame intervals is wrong (max
+> is 1/65535 fps), leading to encoding issues or format negotiation
+> failures with gstreamer.
 > 
-> I intended this as a more localized comment, though the following answers
-> another question I had.
+> Fix that by setting the framerate denominator to coherent value
+> based on the the framerate factor.
 > 
-> request_threaded_irq is not using devm_ whilst the add devices is.
-> As a result we might have a path in which the irq goes away before
-> the device cleanup happens.   
-
-Ah, good point! I'll address it.
-
-> > Actually, it is just the opposite. It took me a lot of time to
-> > figure out a good solution that will prevent all race conditions at
-> > probe time.
-> > 
-> > See, the SPMI variant of HiSilicon 6421 requires the drivers to be
-> > probed on a very specific order:
-> > 
-> > - The SPMI controller should be loaded first, as it provides 
-> >   the low-level I/O access to the serial bus used to talk with the
-> >   PMICs. This bus is somewhat similar to the I2C bus.
-> > 
-> >   Once the controller is registered, the SPMI bus probes the PMIC
-> >   driver.
-> > 
-> > - Then, the MFD PMIC driver should be loaded. This adds support for
-> >   a high level set of I/O operations, which are used by the regulator
-> >   driver. Again, this approach is similar to the one taken by the
-> >   I2C Kernel drivers.
-> > 
-> > - Finally, the regulator drivers should come, as they rely on the
-> >   MFD I/O operations in order to talk with the SPMI bus.
-> > 
-> > The OOT driver probing was based on a some dirty hacks: it had an
-> > empty SPMI entry at the SoC, carrying on just the "compatible" line.
-> > 
-> > Then, another entry at DT with the real SPMI settings.
-> > 
-> > With such dirty hack, on Kernel 4.9, the PMIC driver were always 
-> > loading before the regulator ones, as the SPMI bus code were 
-> > serializing the probe there.
-> > 
-> > However, such settings were too fragile and broke after porting to
-> > upstream Kernels, because the regulator drivers were probed on
-> > a random order, typically before the MFD one (and sometimes even 
-> > before the SPMI controller driver). Adding EPROBE_DEFER didn't
-> > solve all the issues, and made a complex and hard to debug scenario.
-> > Also, regulators were probed on a random order, making harder to
-> > debug issues there.  
+> The factor is not always the same, e.g. with db820c (apq8096) HFI
+> reports framerate in fps unit. So only apply that for HFI_VERSION_1XX.
 > 
-> There are no ordering guarantees IIRC in mfd children coming up even
-> in the normal path.  It might currently happen in a particular order
-> but relying on that seems fragile to me.
-
-True, but in the case of SPMI controller and PMIC, there's no way
-to support them to be initialized on a random order.
-
-That's why the approach I took is serializing the probe.
-
-> > 
-> > So, I ended using the same solution used by the already-existing
-> > drivers/mfd/hi6421-pmic-core.c driver[1].
-> > 
-> > [1] This variant of the 6421 chipset is a lot simpler, as it
-> >     doesn't use the SPMI bus.
-> > 
-> > With such approach, the probing is warranted to happen the
-> > way it is expected by the driver:
-> > 
-> > SPMI controller code starts:
-> > 	[    0.416862] spmi_controller fff24000.spmi: HISI SPMI probe
-> > 	[    0.422419] spmi spmi-0: allocated controller 0x(____ptrval____) id 0
-> > 	[    0.428929] spmi_controller fff24000.spmi: spmi_add_controller base addr=0xffff800012055000!
-> > 	[    0.437480] spmi spmi-0: adding child /spmi@fff24000/pmic@0
-> > 	[    0.443109] spmi spmi-0: read usid 00
-> > 	[    0.446821] spmi 2-00: device 2-00 registered
-> > 	[    0.451220] spmi spmi-0: spmi-2 registered: dev:(____ptrval____)
-> > 	[    0.457286] spmi_controller fff24000.spmi: spmi_add_controller initialized
-> > 
-> > The PMIC probe happens sometime after spmi_controller registers itself
-> > at the SPMI bus:
-> > 
-> > 	[    1.955838] [hi6421_spmi_pmic_probe]. pmic->irqs[0] = 43
-> > ...
-> > 	[    2.036298] [hi6421_spmi_pmic_probe]. pmic->irqs[15] = 58
-> > 
-> > After being ready to handle I/O requests, it starts probing the
-> > regulators:
-> > 
-> > 	[    2.057815] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo3@16
-> > 	[    2.199827] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo4@17
-> > 	[    2.336284] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo9@1C
-> > 	[    2.472675] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo15@21
-> > 	[    2.609402] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo16@22
-> > 	[    2.746378] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo17@23
-> > 	[    2.846707] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo33@32
-> > 	[    2.988646] hi6421v600-regulator hi6421v600-regulator: adding child /spmi@fff24000/pmic@0/regulators/ldo34@33
-> > 
-> > As the current code serializes the regulator probing, it ensured that
-> > they'll happen at the right order, avoiding race conditions at
-> > probe time.  
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  v2: Use IS_V1 helper for retrieveing venus core version
+>      Adjust denominator instead of numerator
 > 
-> Why do we need the regulators to come up in a particular order?
-> That sounds suspicious as any relationships between different ones should be expressed
-> either in DT or in the order they are enabled in the drivers using them.
+>  drivers/media/platform/qcom/venus/venc.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
 
-There's no need for them to come up on a particular order.
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-What I meant to say is that the that the SPMI controller and MFD
-should go first.
-
-- 
-
-Yet, incidentally, the current code also serializes the regulator
-probe. I could have written the code on a different way that
-would allow them to be probed in parallel, by moving a loop
-from the regulator driver to the PMIC one. However, I don't see any 
-advantage on doing that, as the regulator initialization code ends 
-calling the SPMI serial bus, whose access is already serialized by 
-a spinlock.
-
-So, there's no performance gain by allowing them to be probed
-in parallel, as most of the regulator's probing time is probably
-waiting for the relatively slow I/O serial transfers to happen. 
-
-Also, a nice a side effect of serializing the probe at the 
-regulator driver is that the devices are ordered according
-their LDO numbers, and the debug logs from probing time will
-be altogether, helping to debug potential issues over there.
-
-> > > > +static int hi6421_spmi_regulator_set_voltage_sel(struct regulator_dev *rdev,
-> > > > +						 unsigned int selector)
-> > > > +{
-> > > > +	struct hi6421v600_regulator *sreg = rdev_get_drvdata(rdev);
-> > > > +	struct hi6421_spmi_pmic *pmic = sreg->pmic;
-> > > > +	u32 reg_val;
-> > > > +
-> > > > +	/* unlikely to happen. sanity test done by regulator core */      
-> > > 
-> > > Unlikely or can't?
-> > >     
-> > > > +	if (unlikely(selector >= rdev->desc->n_voltages))
-> > > > +		return -EINVAL;    
-> > 
-> > Good question. I almost removed this check, but I didn't check the
-> > regulator code with enough care to be 100% sure. So, I opted to keep it
-> > here.  
 > 
-> I'd drop the comment then :)  If someone else wants to figure it out
-> in future then they are welcome to.
-
-Ok.
-
-> > > > +	if (load_uA || ((unsigned int)load_uA > sreg->eco_uA)) {
-> > > > +		rdev_dbg(rdev, "normal mode");      
-> > > 
-> > > Debug seems unnecessary to me, but maybe keep it if you want.    
-> > 
-> > I actually used this debug. There are some LDO lines which don't
-> > support eco mode. The original driver was hard to understand that.
-> > So, I ended by re-writing the part of the code which sets/uses it[1]:
-> > 
-> > +	/* hisi regulator supports two modes */
-> > +	constraint = &initdata->constraints;
-> > +
-> > +	constraint->valid_modes_mask = REGULATOR_MODE_NORMAL;
-> > +	if (sreg->eco_mode_mask) {
-> > +		constraint->valid_modes_mask |= REGULATOR_MODE_IDLE;
-> > +		constraint->valid_ops_mask |= REGULATOR_CHANGE_MODE;
-> > +	}
-> > +
-> > 
-> > [1] https://lore.kernel.org/lkml/176043f329dfa9889f014feec04e7e1553077873.1597160086.git.mchehab+huawei@kernel.org/T/#m337e09adf04e4b8ce56af93ba37e3720b2a3002b
-> > 
-> > Those debug messages are useful to double-check if something bad is
-> > not happening with the modes/ops masks.  
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 9981a2a..5b3df09 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -576,6 +576,7 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
+>  {
+>  	struct venus_inst *inst = to_inst(file);
+>  	const struct venus_format *fmt;
+> +	unsigned int framerate_factor = 1;
+>  
+>  	fival->type = V4L2_FRMIVAL_TYPE_STEPWISE;
+>  
+> @@ -600,12 +601,17 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
+>  	    fival->height < frame_height_min(inst))
+>  		return -EINVAL;
+>  
+> +	if (IS_V1(inst->core)) {
+> +		/* framerate is reported in 1/65535 fps unit */
+> +		framerate_factor = (1 << 16);
+> +	}
+> +
+>  	fival->stepwise.min.numerator = 1;
+> -	fival->stepwise.min.denominator = frate_max(inst);
+> +	fival->stepwise.min.denominator = frate_max(inst) / framerate_factor;
+>  	fival->stepwise.max.numerator = 1;
+> -	fival->stepwise.max.denominator = frate_min(inst);
+> +	fival->stepwise.max.denominator = frate_min(inst) / framerate_factor;
+>  	fival->stepwise.step.numerator = 1;
+> -	fival->stepwise.step.denominator = frate_max(inst);
+> +	fival->stepwise.step.denominator = frate_max(inst) / framerate_factor;
+>  
+>  	return 0;
+>  }
 > 
-> That's fine, but is it useful to have it upstream now you have debugged
-> those issues?  I'm not completely convinced it is and debug prints have
-> a habit of rotting just like comments.
 
-Good point. I'll do a review at the printks inside the driver anyway.
-
-I'll try to cleanup some things that doesn't make much sense
-after having the driver working properly.
-
-
-Thanks,
-Mauro
+-- 
+regards,
+Stan
