@@ -2,253 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6638E242876
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 12:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAC1B24287D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 13:01:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727858AbgHLK5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 06:57:42 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:26138 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727121AbgHLK4b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 06:56:31 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597229777; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=+/GcN/uLcX86TA26NdQtGXl4jyQxmPmf10bKOB3HJrc=;
- b=gr/IH9vExda6DgyE+HcgLOaVHOHHNP2r9lmT/J+6DiLxifQKpWXvA60hz51PUcuUr7nZCVP2
- +2mZ6JBzSCEa/TW6Z552KlOGjpLQP96AkDgDvidUD26gXVQ2p1Vt6BMNqXWeUWcZQqPhG1gy
- 4EH5VDJo11wC7iFyTrxtJC16+fM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n13.prod.us-west-2.postgun.com with SMTP id
- 5f33caca668ab3fef65a6559 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 10:56:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 55698C433CB; Wed, 12 Aug 2020 10:56:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sbhanu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D774C433C9;
-        Wed, 12 Aug 2020 10:56:09 +0000 (UTC)
+        id S1726804AbgHLLB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 07:01:56 -0400
+Received: from mail-eopbgr80045.outbound.protection.outlook.com ([40.107.8.45]:57732
+        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726698AbgHLLBz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 07:01:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GQoOuLKQZnDLpj5nPckerL7GnOPf4PmguQNaqBxNCy7bwrW2Jk2PK2P/YkiJzqxGGiGxLvSK5N8WIEp94HBGN6d1srlOXIGPLE31fFdUO9202fa/eG4nHT2umHuwehbviReqTMyz6TzK1JRc9JQX7ZAhneiSD5R+3es0ta7t5IYXe+M2PvlogCndvmQL+HMnEUxgI2eYkrb+NV5Rc5oH6aKJusVyktyADiyZsx3AXKRnrubDjoXxzQmxLtWIFl+ek023zmkOI66b9CuzMF3uCHNzZ5j1XRe2BX2TcUANw/eOFvNO8VNeknoUTU6jQPw6MtENTpRxBzXgy+Jlf+B1Wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dxqRbgqKm2XKjrl5bfpySiwJyTlm/kKLI4WIyrmGMnQ=;
+ b=hEGSINrki42cq36C/KNE7+f4naHG+nFIguJBZpHrc29Oyf2coDoqkiGp5B4L8ytZs02r5J4jFu3ToVtzw4c4y57LSQY/SFoJMnqb345svIAH3JY1SdfvrqzOLS9eFEB/eo/N8npK1TBuLi87mVQHQMEZyS9nusGpGKoDbwq/X1wmah7BDZ2FEDBrZnAuom4NRzB5rdv2nuzc0+Kx5r3ucHqAuUhRWtZd9iqCKnn9caARV8eGxYzBy+HpSlrAhpogTxBMxxn4aXlEfuosMNqr3aeaRATxays+qCd/edDcjcjJlChIrdf6ZRi5svaUn0BbG9bJfIiOFCrO9NCmmeFyzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dxqRbgqKm2XKjrl5bfpySiwJyTlm/kKLI4WIyrmGMnQ=;
+ b=qTYzXqogyh5FyPbI5pyDls7XvHdMR6ruRpJoZlTYtiYqQvKBiJkpURvCWkr0C6fFLurHO4u0fbXPLiO4UTihNDCUDFe8ck+/XzZv4Nd+iSui2Qmro9MI75gpteR2UJYz5OjtOuSmp4QYAXwiKRXeil/V8Xbtj1dfrwVbOiMCPPE=
+Received: from AM7PR04MB7157.eurprd04.prod.outlook.com (2603:10a6:20b:118::20)
+ by AM6PR04MB6038.eurprd04.prod.outlook.com (2603:10a6:20b:b4::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3261.20; Wed, 12 Aug
+ 2020 11:01:50 +0000
+Received: from AM7PR04MB7157.eurprd04.prod.outlook.com
+ ([fe80::ed7f:8755:5994:7fcf]) by AM7PR04MB7157.eurprd04.prod.outlook.com
+ ([fe80::ed7f:8755:5994:7fcf%5]) with mapi id 15.20.3261.025; Wed, 12 Aug 2020
+ 11:01:50 +0000
+From:   Peter Chen <peter.chen@nxp.com>
+To:     Wesley Cheng <wcheng@codeaurora.org>,
+        Peter Chen <hzpeterchen@gmail.com>
+CC:     "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "balbi@kernel.org" <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        USB list <linux-usb@vger.kernel.org>,
+        "jackp@codeaurora.org" <jackp@codeaurora.org>
+Subject: RE: [RFC v4 1/3] usb: dwc3: Resize TX FIFOs to meet EP bursting
+ requirements
+Thread-Topic: [RFC v4 1/3] usb: dwc3: Resize TX FIFOs to meet EP bursting
+ requirements
+Thread-Index: AQHWSc87byU7iOasIkijiJXYgKAteqk0CyuAgABNvICAADToIA==
+Date:   Wed, 12 Aug 2020 11:01:50 +0000
+Message-ID: <AM7PR04MB7157E57CA693586D6C6F96BE8B420@AM7PR04MB7157.eurprd04.prod.outlook.com>
+References: <20200624022848.7765-1-wcheng@codeaurora.org>
+ <20200624022848.7765-2-wcheng@codeaurora.org>
+ <CAL411-qvuCTib1VBV9uRwL-rEHkefFLm1x-WLLP4kYzcNtQd_g@mail.gmail.com>
+ <47f1568e-ba8f-b7f2-9f67-a891c0e06541@codeaurora.org>
+In-Reply-To: <47f1568e-ba8f-b7f2-9f67-a891c0e06541@codeaurora.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: codeaurora.org; dkim=none (message not signed)
+ header.d=none;codeaurora.org; dmarc=none action=none header.from=nxp.com;
+x-originating-ip: [92.121.64.197]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: ba787484-ff59-4b52-1cb8-08d83eaf1d3d
+x-ms-traffictypediagnostic: AM6PR04MB6038:
+x-microsoft-antispam-prvs: <AM6PR04MB60381E74D9ABC70D1784225C8B420@AM6PR04MB6038.eurprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ef7JVVd0sqatsx8o385Vpi1ZgsNXTs8nVOs0AXu4Zz7sTZDdUwvhRX0HeWjct5PESevnKapuMWZmGH56UE5UCItwN3EcX2sp8CiIOU7TA5z/KJVP1BU7Vdhn1VWblj2d/kPfIV2/tNse7+SBT9ZcPYLLj9CcaoJGZ2s88nRspnRsYY5Bx4J/xiEmm27J+mRQU3Q+P0rsKa4uKhFoqvT/N8E8IeCbID0WndW+3gVCWUw6Cc8tGXQ83o7iB5vG8oLc0sP4QclyesO9qlNbcCabJYMuCjFYZb0/vdRWOSz3rYHAvoa0sGb3Oj8c8fBbQV2dP0TEqKewE72o8FKi8qRWDw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR04MB7157.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(136003)(346002)(39860400002)(396003)(376002)(366004)(4326008)(186003)(55016002)(316002)(9686003)(6506007)(86362001)(8676002)(478600001)(110136005)(54906003)(8936002)(26005)(64756008)(66556008)(66476007)(66446008)(76116006)(66946007)(5660300002)(2906002)(7696005)(44832011)(52536014)(7416002)(71200400001)(33656002);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: PCq5u5ngG4X5bjXdXPpiTjkFCexTX5ANWyT0EjUVTjXgCVx2k1s2/9gu2KQs4kz6+QB0G1lGfB4GwpJD2cm7Jpxcryu0d+oQIhEWCW0FKfk809kxL+oSHKLs83cl5p42qq6RLGtiFmXlHRUEnCPH/EPq0kxfXvy0AiR4atNHdcMlhoH5Xq1IThxD1kk/TAkWi+rj0I0erne9kGTNYn55YTsOR9KK9lsbK62UNIRq+COYsDeEafZK0b20kMyNnlkFo0DHfT6WWWC/kFR9UmEPjozimtiLe6Hlno4fG2BAU0E7Fh2bDaumh4zmZrHW4Nxy/iGDgMbPjm7xkbetfTjJG9yHr/TA7U1sa6HY3zjUcdSHor2KgxArkjYwD4bK37NeJVIZx6mvFgYUnZLOki9w7R8tAGexcOV1HN/ljrH0zPG40tfzKcWoTFpCz6CuLzWdqSjSsiX8GkOZAUC6SfqqsZ5I3ZX2nq4Nj34C8DBdN0aQrCLl8PhZo6eUlT9frd7ZQKzeRx4uOkCqnmTi0W1ocJ5yyk0R0pnkyXTdMEZPWVxV8QkATw4Eps4EXAXlQTLa4yO48ZmKFD9hYKQh4Gi9eoEhhMDUs+RZSROyUIqEkmh1zJoqaiRDSIOWIft+F/VvmOm1+wTY4MX9dhtN/WJfBw==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 12 Aug 2020 16:26:08 +0530
-From:   sbhanu@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, rnayak@codeaurora.org,
-        Pradeep P V K <ppvk@codeaurora.org>,
-        devicetree-owner@vger.kernel.org
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7180: Add bandwidth votes for eMMC
- and SDcard
-In-Reply-To: <20200811170855.GK3191083@google.com>
-References: <1595328381-29552-1-git-send-email-sbhanu@codeaurora.org>
- <20200724171018.GZ3191083@google.com>
- <7ffcb56e9e6723f4bae687e0f491cb93@codeaurora.org>
- <20200727191029.GA3191083@google.com>
- <e83f559bb8691cd602f35e3bd739e5c4@codeaurora.org>
- <20200811170855.GK3191083@google.com>
-Message-ID: <be51df4466bc92574555bc762ff002d5@codeaurora.org>
-X-Sender: sbhanu@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR04MB7157.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba787484-ff59-4b52-1cb8-08d83eaf1d3d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Aug 2020 11:01:50.3200
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XVPwb2GVQ6VxII0nUXXSWvOATRWcomk1RITrjyuh6OsLIb1Iyi5/n7exP97ApUhE9cug1CmbX22sOMNf/WCqvA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR04MB6038
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-11 22:38, Matthias Kaehlcke wrote:
-> On Tue, Jul 28, 2020 at 04:49:05PM +0530, sbhanu@codeaurora.org wrote:
->> On 2020-07-28 00:40, Matthias Kaehlcke wrote:
->> > Hi,
->> >
->> > On Mon, Jul 27, 2020 at 12:20:38PM +0530, sbhanu@codeaurora.org wrote:
->> > > On 2020-07-24 22:40, Matthias Kaehlcke wrote:
->> > > > Hi Shaik,
->> > > >
->> > > > On Tue, Jul 21, 2020 at 04:16:21PM +0530, Shaik Sajida Bhanu wrote:
->> > > > > From: Pradeep P V K <ppvk@codeaurora.org>
->> > > > >
->> > > > > Add the bandwidth domain supporting performance state and
->> > > > > the corresponding OPP tables for the sdhc device on sc7180.
->> > > > >
->> > > > > Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
->> > > > > Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
->> > > > > ---
->> > > > >
->> > > > > Changes since V1:
->> > > > > 	- Incorporated review comments by Bjorn Andersson.
->> > > > > ---
->> > > > >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 15 +++++++++++++++
->> > > > >  1 file changed, 15 insertions(+)
->> > > > >
->> > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> > > > > b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> > > > > index 68f9894..d78a066 100644
->> > > > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> > > > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> > > > > @@ -684,6 +684,9 @@
->> > > > >  			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
->> > > > >  					<&gcc GCC_SDCC1_AHB_CLK>;
->> > > > >  			clock-names = "core", "iface";
->> > > > > +			interconnects = <&aggre1_noc MASTER_EMMC &mc_virt SLAVE_EBI1>,
->> > > > > +				<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_EMMC_CFG>;
->> > > > > +			interconnect-names = "sdhc-ddr","cpu-sdhc";
->> > > > >  			power-domains = <&rpmhpd SC7180_CX>;
->> > > > >  			operating-points-v2 = <&sdhc1_opp_table>;
->> > > > >
->> > > > > @@ -704,11 +707,15 @@
->> > > > >  				opp-100000000 {
->> > > > >  					opp-hz = /bits/ 64 <100000000>;
->> > > > >  					required-opps = <&rpmhpd_opp_low_svs>;
->> > > > > +					opp-peak-kBps = <100000 100000>;
->> > > > > +					opp-avg-kBps = <100000 50000>;
->> > > > >  				};
->> > > > >
->> > > > >  				opp-384000000 {
->> > > > >  					opp-hz = /bits/ 64 <384000000>;
->> > > > >  					required-opps = <&rpmhpd_opp_svs_l1>;
->> > > > > +					opp-peak-kBps = <600000 900000>;
->> > > > > +					opp-avg-kBps = <261438 300000>;
->> > > > >  				};
->> > > > >  			};
->> > > > >  		};
->> > > > > @@ -2476,6 +2483,10 @@
->> > > > >  			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
->> > > > >  					<&gcc GCC_SDCC2_AHB_CLK>;
->> > > > >  			clock-names = "core", "iface";
->> > > > > +
->> > > > > +			interconnects = <&aggre1_noc MASTER_SDCC_2 &mc_virt SLAVE_EBI1>,
->> > > > > +				<&gem_noc MASTER_APPSS_PROC &config_noc	SLAVE_SDCC_2>;
->> > > > > +			interconnect-names = "sdhc-ddr","cpu-sdhc";
->> > > > >  			power-domains = <&rpmhpd SC7180_CX>;
->> > > > >  			operating-points-v2 = <&sdhc2_opp_table>;
->> > > > >
->> > > > > @@ -2489,11 +2500,15 @@
->> > > > >  				opp-100000000 {
->> > > > >  					opp-hz = /bits/ 64 <100000000>;
->> > > > >  					required-opps = <&rpmhpd_opp_low_svs>;
->> > > > > +					opp-peak-kBps = <160000 100000>;
->> > > > > +					opp-avg-kBps = <80000 50000>;
->> > > > >  				};
->> > > > >
->> > > > >  				opp-202000000 {
->> > > > >  					opp-hz = /bits/ 64 <202000000>;
->> > > > >  					required-opps = <&rpmhpd_opp_svs_l1>;
->> > > > > +					opp-peak-kBps = <200000	120000>;
->> > > > > +					opp-avg-kBps = <100000 60000>;
->> > > > >  				};
->> > > > >  			};
->> > > > >  		};
->> > > >
->> > > > Does the sdhci-msm driver actually have BW scaling support at this
->> > > > point?
->> > > >
->> > >
->> > > yes
->> > >
->> > > > There is commit 4ece9795be56 ("mmc: sdhci-msm: Add interconnect
->> > > > bandwidth scaling support"), whose commit message says "make sure
->> > > > interconnect driver is ready before handling interconnect scaling.".
->> > > >
->> > > > I haven't seen any patch adding the scaling support (supposedly by
->> > > > adding dev_pm_opp_set_bw() calls?). Did I miss it? If not it seems
->> > > > it would make sense to post it in a series together with this patch,
->> > > > as far as I can tell this patch alone does nothing in practical terms.
->> > > >
->> > > > grep sdhc /sys/kernel/debug/interconnect/interconnect_summary
->> > > >   8804000.sdhci                          0            0            0
->> > > >   7c4000.sdhci                           0            0            0
->> > > >   7c4000.sdhci                           0            0            0
->> > > >   8804000.sdhci                          0            0            0
->> > > >   ...
->> > >
->> > > "mmc: sdhci-msm: Use OPP API to set clk/perf
->> > > state"(https://lkml.org/lkml/2020/4/8/425) and "mmc: sdhci-msm: Add
->> > > interconnect bandwidth scaling
->> > > support"(https://lkml.org/lkml/2020/3/12/60)
->> > > with these two patches scaling will be supported for sdhci-msm driver.
->> >
->> > Are you testing with exactly these patches or with the ones that landed
->> > upstream? At least the second one changed substantially
->> >
->> > > the values  in  grep sdhc
->> > > /sys/kernel/debug/interconnect/interconnect_summary will be zero
->> > > during
->> > > device is in suspend state...
->> >
->> > Yes, I forgot to mention that I started MMC IO before looking at
->> > 'interconnect_summary'.
->> >
->> > > and the values in  grep sdhc
->> > > /sys/kernel/debug/interconnect/interconnect_summary during device in
->> > > resume
->> > > state will be like the following::
->> > >
->> > > cicalhost / # cat
->> > > /sys/kernel/debug/interconnect/interconnect_summary | grep
->> > > sdh
->> > >   8804000.sdhci                          0        60000       120000
->> > >   7c4000.sdhci                           0       300000       900000
->> > >   7c4000.sdhci                           0       300000       900000
->> > >   8804000.sdhci                          0        60000       120000
->> > >   8804000.sdhci                          0       100000       200000
->> > >   7c4000.sdhci                           0       261438       600000
->> > >   8804000.sdhci                          0        60000       120000
->> >
->> > On my system the bandwidth is never set:
->> >
->> > 3.590152] sdhci_msm 7c4000.sdhci: DBG: old/new frequencies (384000000
->> > Hz) are same, nothing to do
->> > https://elixir.bootlin.com/linux/v5.7.8/source/drivers/opp/core.c#L847
->> >
->> > This happens every time, even after the bandwith is set to 0. The
->> > problem
->> > seems to be that opp_table->clk doesn't change for target_freq = 0.
->> >
->> > My system is based on v5.4, so it is possible that my kernel is missing
->> > some
->> > relevant patch from upstream.
->> Hi matthias,
->> 
->> In order to aviod confusion this patch is continuation of the below 
->> patch::
->> "mmc: sdhci-msm: Add interconnect bandwidth scaling support"
->> (https://lkml.org/lkml/2020/6/9/160).
-> 
-> My kernel contains this patch.
-> 
-> As you told me in private, the patch "opp: Fix dev_pm_opp_set_rate()
-> to not return early" (https://patchwork.kernel.org/patch/11707003/) is
-> needed, which fixes exactly the problem I described.
-> 
-> It seems the tree you tested was not based on the maintainer tree or 
-> upstream,
-> please make that clear when someone reports issues. Since you said it 
-> works
-> for you I wasted time trying to chase down a missing patch which did 
-> not exist
-> (yet).
-
-
-Hi Matthis,
-
-Can you confirm from your end the issue that you reported got fixed
-with Rajendra patch or not. Once you confirm, I can ask Bjorn to pull
-this dt change.
-
-thanks,
-sajida
+IA0KIA0KPiANCj4gVGhhbmsgeW91IGZvciB5b3VyIGlucHV0LiAgSSd2ZSBhY3R1YWxseSBjb25z
+aWRlcmVkIGRvaW5nIHNvbWUgbWF0Y2hpbmcvcmVzaXppbmcgaW4NCj4gdGhlIC5tYXRjaF9lcCBy
+b3V0ZSBhcyB3ZWxsLCBidXQgaXQgZG9lc24ndCB3b3JrIHdlbGwgZm9yIHNpdHVhdGlvbnMgd2hl
+cmUgbXVsdGlwbGUNCj4gY29uZmlndXJhdGlvbnMgYXJlIGluIHBsYXkuIFRoZSByZWFzb24gYmVp
+bmcgdGhhdCBpZiB5b3UgbG9vayBhdCB0aGUgZXBhdXRvY29uZiBBUElzLA0KPiB0aGUgY29uZmln
+ZnMgZHJpdmVyIHdpbGwgdXNlIHRoZSB1c2JfZXBfYXV0b2NvbmZpZ19yZXNldCgpIHRvIHJlc2V0
+IHRoZSBlbmRwb2ludHMNCj4gY2xhaW1lZCBiZXR3ZWVuIGluaXRpYWxpemF0aW9uIG9mIGVhY2gg
+Y29uZmlndXJhdGlvbi4gIFRoaXMgbWVhbnMgdGhhdCB0aGUNCj4gZXBhdXRvY29uZiBkcml2ZXIg
+ZXhwZWN0cyB0byByZS11c2UgdGhlIHVzYl9lbmRwb2ludHM6DQo+IA0KPiBzdGF0aWMgaW50IGNv
+bmZpZ2ZzX2NvbXBvc2l0ZV9iaW5kKHN0cnVjdCB1c2JfZ2FkZ2V0ICpnYWRnZXQsDQo+IAlzdHJ1
+Y3QgdXNiX2dhZGdldF9kcml2ZXIgKmdkcml2ZXIpDQo+IHsNCj4gLi4uDQo+IA0KPiAvKiBHbyB0
+aHJvdWdoIGFsbCBjb25maWdzLCBhdHRhY2ggYWxsIGZ1bmN0aW9ucyAqLyBsaXN0X2Zvcl9lYWNo
+X2VudHJ5KGMsICZnaS0NCj4gPmNkZXYuY29uZmlncywgbGlzdCkgeyAuLi4NCj4gbGlzdF9mb3Jf
+ZWFjaF9lbnRyeV9zYWZlKGYsIHRtcCwgJmNmZy0+ZnVuY19saXN0LCBsaXN0KSB7DQo+IAlsaXN0
+X2RlbCgmZi0+bGlzdCk7DQo+IAlyZXQgPSB1c2JfYWRkX2Z1bmN0aW9uKGMsIGYpOw0KPiAJaWYg
+KHJldCkgew0KPiAJCWxpc3RfYWRkKCZmLT5saXN0LCAmY2ZnLT5mdW5jX2xpc3QpOw0KPiAJCWdv
+dG8gZXJyX3B1cmdlX2Z1bmNzOw0KPiAJfQ0KPiB9DQo+IHVzYl9lcF9hdXRvY29uZmlnX3Jlc2V0
+KGNkZXYtPmdhZGdldCk7DQo+IH0NCj4gDQo+IFNvIGluIHRoaXMgc2l0dWF0aW9uLCBJIHdvdWxk
+bid0IHdhbnQgdGhlIGR3YzMgZ2FkZ2V0IGRyaXZlciB0byBhc3NpZ24gYSBkaWZmZXJlbnQNCj4g
+ZHdjMyBlcCBmb3IgZW5kcG9pbnRzIGluIGVhY2ggY29uZmlndXJhdGlvbiwgd2hlbiB3ZSBrbm93
+IHRoYXQgb25seSBvbmUgc2V0IG9mDQo+IEVQcyB3aWxsIGJlIGFjdGl2ZSB3aGVuIHRoZSBob3N0
+IGNob29zZXMuICBJIGhvcGUgSSB1bmRlcnN0b29kIHlvdXIgZmVlZGJhY2sNCj4gY29ycmVjdGx5
+LCBhbmQgZGVmaW5pdGVseSBhcHByZWNpYXRlIHRoZSBpbnB1dCENCj4gDQogDQpUaGFua3MgZm9y
+IG1lbnRpb24gdGhhdCwgd2UgZGlkbid0IGNvbnNpZGVyIG11bHRpcGxlIGNvbmZpZ3VyYXRpb25z
+IHVzZSBjYXNlLCBpdCBuZWVkcw0KdGhlIFVEQyBkcml2ZXIgdG8gcmVjb3JkIHRoZSBjb25maWd1
+cmF0aW9uIGluZm9ybWF0aW9uLCBpdCBpcyB0b28gY29tcGxleCBhdCBjdXJyZW50IGZyYW1ld29y
+ay4NCg0KSSB0aGluayB5b3VyIHNvbHV0aW9uIGlzIE9LLCByZXNlcnZpbmcgb25lIHBhY2tldCBm
+b3IgZWFjaCBJTiBlbmRwb2ludCB0byBhdm9pZCBydW5uaW5nIG91dCBvZg0KRklGTyBmb3IgbGF0
+ZXIgZW5kcG9pbnRzIGFuZCBmaXQgdGhlIGZpcnN0IGVuZHBvaW50cyB3aXRoIGxhcmdlciBGSUZP
+IHJvb20gdG8gZ2V0IHRoZSBiZXN0DQpwZXJmb3JtYW5jZSwgaXQgY291bGQgdXNlIGFzIG1hbnkg
+YXMgRklGT3MgdGhlIGRldmljZSBvd25zLg0KDQpQZXRlcg0KDQo=
