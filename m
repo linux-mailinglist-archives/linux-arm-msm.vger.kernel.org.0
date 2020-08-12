@@ -2,168 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93A76242633
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 09:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D2DE242639
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Aug 2020 09:42:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726745AbgHLHk3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 03:40:29 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17140 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726479AbgHLHk2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 03:40:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597218027; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=2L3L1433xPSIuFOwgxbwV9jFqwSQQyfGabN9mWsVC/c=; b=cQiKsjlSUIs/CFHJaLaYwQOySrRvz0mlD2LeXxUrJnIbNUQ3a6BL4/iWtRPvgWNU4v85vBSs
- w3m34mtsPkKK5Wv85OJavuoaTdYA4PBMw0amQZilyTQeaEhGqaMq6cfH2WlriO3olxsWLspj
- K1jT94S1nTSNYhVysm6gI1KGUTg=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n11.prod.us-west-2.postgun.com with SMTP id
- 5f339cca46ed996674559e6f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 07:39:54
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EABE1C43391; Wed, 12 Aug 2020 07:39:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.15] (unknown [61.1.229.169])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DD3D9C433CA;
-        Wed, 12 Aug 2020 07:39:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DD3D9C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [RFC v2 03/11] tty: serial: qcom_geni_serial: Use OPP API to set
- clk/perf state
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-scsi@vger.kernel.org,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-spi@vger.kernel.org, linux-serial@vger.kernel.org,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20190320094918.20234-1-rnayak@codeaurora.org>
- <20190320094918.20234-4-rnayak@codeaurora.org>
- <CALAqxLV2TBk9ScUM6MeJMCkL8kJnCihjQ7ac5fLzcqOg1rREVQ@mail.gmail.com>
- <CALAqxLWg3jJKJFLnnne-mrQEnH=m7R_9azCGaGnEmFYR4EMh=A@mail.gmail.com>
- <ec5eeb21-48e4-5dcc-583a-ac9419659e44@codeaurora.org>
- <CAMi1Hd1O+3bjQN6c9WQr+t0YXGBAukfFzJWtkgXDp1Zcir-0-w@mail.gmail.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <aab760b8-2a06-ae96-584a-301d5326fc0d@codeaurora.org>
-Date:   Wed, 12 Aug 2020 13:09:44 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        id S1726868AbgHLHmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 03:42:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40284 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726517AbgHLHmC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 03:42:02 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74DEC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 00:42:02 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id f5so711086plr.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 00:42:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=5TtyJc5f+z90IMWpY4SLjVhTX8xv82FaqtlU9ijwJsU=;
+        b=oNdWSaFHCLhqlFxLDcPMNRz7V6vdp40bk1vwxL3DK0HT819d/1HmzftJmzN4plgS+J
+         ldfmIbC0Vl5h5BfPXF6zcAHNNtCwWnixJ8J4eDQhQyp4KFfaYDwEOd7M8KdeQKiT/6nH
+         Dmy0KZt1/EgjsPx5kS3UK94wSEuUV3Ur8nPVg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=5TtyJc5f+z90IMWpY4SLjVhTX8xv82FaqtlU9ijwJsU=;
+        b=iDL6VADa9SY9qPJNepyYhRzxB+bQ2Ry9EY3slUaIP9WSvcDTMVrjrASgs1R/D5UWeX
+         qSRsSdTfwoq5dZfeUzxrW9MqaGgU27EF3p9DtpFN2033l572mpPyVWqBQFHkYv0+QLl7
+         W0QYg2iW29H1f7cZOhvAsCOoFRLU0btyH6qB+evKgIAn6TNMIgh8rxYOtlTo4HUubYSL
+         Y9hZVcsWwi9kzutSa+MZh03By6klsuC62dsQ3Et8MjQDuoXA0222oMrrmtfsqrDGh4fM
+         HuLKRYffjFjunha/N7QQnE23pT2vL4y6a6I9DM+sknOI0rs61o6n00AWEr4P7JigyUIN
+         GrIw==
+X-Gm-Message-State: AOAM531laRiDXdD8MTjCIWxdYMUlZncm7aSfNvltzbGKPAHJ8ITb/9NG
+        QCOqNRetPploq/ZV4o5OwhSS/g==
+X-Google-Smtp-Source: ABdhPJzN64xwwe+sitVOfTG/lg/D2FU1b3vkA7UXprF3CM4A6bpsaKkduGP7B4HwqstaEjcxRH81SQ==
+X-Received: by 2002:a17:90a:c781:: with SMTP id gn1mr4674206pjb.151.1597218122210;
+        Wed, 12 Aug 2020 00:42:02 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id e9sm1421282pfh.151.2020.08.12.00.42.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2020 00:42:01 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAMi1Hd1O+3bjQN6c9WQr+t0YXGBAukfFzJWtkgXDp1Zcir-0-w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1597211328-23500-1-git-send-email-skakit@codeaurora.org>
+References: <1597211328-23500-1-git-send-email-skakit@codeaurora.org>
+Subject: Re: [PATCH] tty: serial: qcom_geni_serial: Remove the UART frequency table
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     mgautam@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
+        satya priya <skakit@codeaurora.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        satya priya <skakit@codeaurora.org>
+Date:   Wed, 12 Aug 2020 00:42:00 -0700
+Message-ID: <159721812037.1360974.11604578290766022830@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting satya priya (2020-08-11 22:48:48)
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
+com_geni_serial.c
+> index 3aa29d2..312daa24 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -941,30 +935,22 @@ static int qcom_geni_serial_startup(struct uart_por=
+t *uport)
+>         return 0;
+>  }
+> =20
+> -static unsigned long get_clk_cfg(unsigned long clk_freq)
+> -{
+> -       int i;
+> -
+> -       for (i =3D 0; i < ARRAY_SIZE(root_freq); i++) {
+> -               if (!(root_freq[i] % clk_freq))
+> -                       return root_freq[i];
+> -       }
+> -       return 0;
+> -}
+> -
+> -static unsigned long get_clk_div_rate(unsigned int baud,
+> -                       unsigned int sampling_rate, unsigned int *clk_div)
+> +static unsigned long get_clk_div_rate(const struct geni_se *se,
+> +                       unsigned int baud, unsigned int sampling_rate,
+> +                       unsigned int *clk_div)
+>  {
+>         unsigned long ser_clk;
+>         unsigned long desired_clk;
+> +       long actual_clk;
+> =20
+>         desired_clk =3D baud * sampling_rate;
+> -       ser_clk =3D get_clk_cfg(desired_clk);
+> -       if (!ser_clk) {
+> +       actual_clk =3D clk_round_rate(se->clk, desired_clk);
+> +       if (actual_clk % desired_clk !=3D 0) {
 
-On 8/12/2020 1:05 PM, Amit Pundir wrote:
-> Hi Rajendra,
-> 
-> On Wed, 12 Aug 2020 at 11:18, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>
->>
->> On 8/12/2020 7:03 AM, John Stultz wrote:
->>> On Tue, Aug 11, 2020 at 4:11 PM John Stultz <john.stultz@linaro.org> wrote:
->>>>
->>>> On Wed, Mar 20, 2019 at 2:49 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>>>>
->>>>> geni serial needs to express a perforamnce state requirement on CX
->>>>> depending on the frequency of the clock rates. Use OPP table from
->>>>> DT to register with OPP framework and use dev_pm_opp_set_rate() to
->>>>> set the clk/perf state.
->>>>>
->>>>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->>>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>>>> ---
->>>>>    drivers/tty/serial/qcom_geni_serial.c | 15 +++++++++++++--
->>>>>    1 file changed, 13 insertions(+), 2 deletions(-)
->>>>>
->>>>
->>>> Hey,
->>>>     I just wanted to follow up on this patch, as I've bisected it
->>>> (a5819b548af0) down as having broken qca bluetooth on the Dragonboard
->>>> 845c.
->>>>
->>>> I haven't yet had time to debug it yet, but wanted to raise the issue
->>>> in case anyone else has seen similar trouble.
->>>
->>> So I dug in a bit further, and this chunk seems to be causing the issue:
->>>> @@ -961,7 +963,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->>>>                   goto out_restart_rx;
->>>>
->>>>           uport->uartclk = clk_rate;
->>>> -       clk_set_rate(port->se.clk, clk_rate);
->>>> +       dev_pm_opp_set_rate(port->dev, clk_rate);
->>>>           ser_clk_cfg = SER_CLK_EN;
->>>>           ser_clk_cfg |= clk_div << CLK_DIV_SHFT;
->>>>
->>>
->>>
->>> With that applied, I see the following errors in dmesg and bluetooth
->>> fails to function:
->>> [    4.763467] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate:
->>> failed to find OPP for freq 102400000 (-34)
->>> [    4.773493] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate:
->>> failed to find OPP for freq 102400000 (-34)
->>>
->>> With just that chunk reverted on linus/HEAD, bluetooth seems to work ok.
->>
->> This seems like the same issue that was also reported on venus [1] because the
->> clock frequency tables apparently don;t exactly match the achievable clock
->> frequencies (which we also used to construct the OPP tables)
->>
->> Can you try updating the OPP table for QUP to have 102400000 instead of the
->> current 100000000 and see if that fixes it?
-> 
-> That worked. Thanks.
-> 
-> Should this change be common to base sdm845.dtsi or platform specific dts?
-> For what it's worth, we see this BT breakage on PocoF1 phone too.
+The logic isn't the same. Is that a concern? Before we would loop
+through all the frequencies this driver knew about and try to find a
+frequency that evenly divides by the 'desired_clk'. With this patch
+we'll do that calculation exactly once, and ask the clk driver what rate
+can be achieved if we call clk_set_rate() with 'desired_clk' as the
+argument.
 
-Thanks for confirming, it will have to be part of the SoC dtsi, and I am
-guessing a similar change is perhaps also needed on sc7180.
-I will send a patch out to fix the OPP tables for both.
+Maybe we need to loop and call clk_round_rate() with 'desired_clk <<=3D 1'
+until it overflows or reaches some limit?
 
-> 
-> Regards,
-> Amit Pundir
-> 
-> 
->>
->> [1] https://lkml.org/lkml/2020/7/27/507
->>
->>>
->>> thanks
->>> -john
->>>
->>
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+>                 pr_err("%s: Can't find matching DFS entry for baud %d\n",
+>                                                                 __func__,=
+ baud);
+> -               return ser_clk;
+> +               return 0;
+>         }
+> +       ser_clk =3D actual_clk;
+> =20
+>         *clk_div =3D ser_clk / desired_clk;
+>         return ser_clk;
