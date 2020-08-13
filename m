@@ -2,75 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70F80244166
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 00:44:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9609724418E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 00:59:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726531AbgHMWoz convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 18:44:55 -0400
-Received: from [186.47.21.114] ([186.47.21.114]:53372 "EHLO mail.hmvi.gob.ec"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726205AbgHMWoz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 18:44:55 -0400
-X-Greylist: delayed 14200 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Aug 2020 18:44:54 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.hmvi.gob.ec (Postfix) with ESMTP id 6B8FCC02CB335;
-        Thu, 13 Aug 2020 12:23:54 -0500 (-05)
-Received: from mail.hmvi.gob.ec ([127.0.0.1])
-        by localhost (mail.hmvi.gob.ec [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id zsDL-W7PtzkJ; Thu, 13 Aug 2020 12:23:54 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.hmvi.gob.ec (Postfix) with ESMTP id A474AC035FD71;
-        Thu, 13 Aug 2020 12:06:19 -0500 (-05)
-X-Virus-Scanned: amavisd-new at hmvi.gob.ec
-Received: from mail.hmvi.gob.ec ([127.0.0.1])
-        by localhost (mail.hmvi.gob.ec [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id hu_70tWhAedw; Thu, 13 Aug 2020 12:06:19 -0500 (-05)
-Received: from [10.73.80.190] (unknown [105.8.3.183])
-        by mail.hmvi.gob.ec (Postfix) with ESMTPSA id 76DDFC03509FA;
-        Thu, 13 Aug 2020 11:55:18 -0500 (-05)
-Content-Type: text/plain; charset="utf-8"
+        id S1726499AbgHMW7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 18:59:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726205AbgHMW7E (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 18:59:04 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB120C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Aug 2020 15:59:03 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id q200so1632623vke.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Aug 2020 15:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=X0gX4eWr1/ebRNhUOFdjjldrlfyAtArfMfYSU2M/IDs=;
+        b=nNIyh4yXC3P8AV5HVGVCyZB96qURK7ACagbp9qszCefal6hW3g/vhFIFUZL01cJ83e
+         2EIWjFZ8qpY3IFtfEdQWG8AFOjRflmIilXxvAvOtU8GJQfUNGPiLw2HsmmfogXkt06wE
+         QxNYwcdUvaK4ytUpt+7JqAeL8emTWqzaZgteE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X0gX4eWr1/ebRNhUOFdjjldrlfyAtArfMfYSU2M/IDs=;
+        b=tpP9nPqIzdNKY7eXeuXMoVgQcx3TOkKuy32+18Upa/mfG9xgTmrD9Cg8mCIfPGtpsX
+         bVBMYRIU48sfsxQxFfSfPIZCCmRoJIx62rtqM6IBaqEcdc0KvweyEWzPSmlaPkkPmhev
+         j00SeFF3tzTbjFQlJCtbdv2+ZT3ViUO1zKBqzSNL7u8OqdikPvmkoAZdL1ETNN9qAx5t
+         JhMA0PDsG9ftK0020CmjK/x5n7LgIdDl0mqnBu5MXwes/w+2aIemRBOO8fTZHZ06jWnM
+         V2nOzzA8oc+el+CJWTEGhn/I5+vglg3D/L2tY27qq0RjycVOjO8n1QvglRdCZlQ66Wtg
+         6kOg==
+X-Gm-Message-State: AOAM530Z4v06OsI24GM51LHYTGeKbA824MNljQX3kd+6flkKjCbH+ab9
+        FKBFQsWnv1QFnQYmg9ISJ5TYuMqtfmc=
+X-Google-Smtp-Source: ABdhPJzXf1bIg2R/G4DXThzEIxUu5TIwlnhotbAiypaPW1TJwOZLyouD6jGIN0wteRHelXwyYItE2g==
+X-Received: by 2002:a1f:320b:: with SMTP id y11mr5517251vky.57.1597359542473;
+        Thu, 13 Aug 2020 15:59:02 -0700 (PDT)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id f16sm1041658vka.7.2020.08.13.15.59.01
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Aug 2020 15:59:01 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id y8so3764876vsq.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Aug 2020 15:59:01 -0700 (PDT)
+X-Received: by 2002:a67:fd67:: with SMTP id h7mr4962382vsa.121.1597359540516;
+ Thu, 13 Aug 2020 15:59:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
-To:     Recipients <danny.puetate@mail.hmvi.gob.ec>
-From:   ''Tayeb Souami'' <danny.puetate@mail.hmvi.gob.ec>
-Date:   Thu, 13 Aug 2020 18:54:58 +0200
-Reply-To: Tayebsouam.spende@gmail.com
-Message-Id: <20200813165519.76DDFC03509FA@mail.hmvi.gob.ec>
+References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org>
+ <1597058460-16211-4-git-send-email-mkshah@codeaurora.org> <87pn7ulwr5.fsf@nanos.tec.linutronix.de>
+ <CAD=FV=WN4R1tS47ZzdZa_hsbvLifwnv6rgETVaiea0+QSZmiOw@mail.gmail.com> <878sei42ql.fsf@nanos.tec.linutronix.de>
+In-Reply-To: <878sei42ql.fsf@nanos.tec.linutronix.de>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 13 Aug 2020 15:58:48 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wyp8B6183avk4on4Akz6dANkuJ25h_o_ERDuiZ87mwNw@mail.gmail.com>
+Message-ID: <CAD=FV=Wyp8B6183avk4on4Akz6dANkuJ25h_o_ERDuiZ87mwNw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/7] genirq: Introduce irq_suspend_one() and
+ irq_resume_one() callbacks
+To:     Thomas Gleixner <tglx@linutronix.de>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        LinusW <linus.walleij@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Srinivas Rao L <lsrao@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lieber Freund,
+Hi,
 
-Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika,
-der Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich
-an 5 zufällige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre
-E-Mail nach einem Spinball ausgewählt.Ich habe den größten Teil meines
-Vermögens auf eine Reihe von Wohltätigkeitsorganisationen und
-Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die
-Summe von € 2.000.000,00 an Sie als eine der ausgewählten 5 zu spenden,
-um meine Gewinne zu überprüfen, sehen Sie bitte meine You Tube Seite
-unten.
+On Thu, Aug 13, 2020 at 3:09 PM Thomas Gleixner <tglx@linutronix.de> wrote:
+>
+> > Specifically the problem we're trying to address is when an IRQ is
+> > marked as "disabled" (driver called disable_irq()) but also marked as
+> > "wakeup" (driver called enable_irq_wake()).  As per my understanding,
+> > this means:
+> >
+> > * Don't call the interrupt handler for this interrupt until I call
+> > enable_irq() but keep tracking it (either in hardware or in software).
+> > Specifically it's a requirement that if the interrupt fires one or
+> > more times while masked the interrupt handler should be called as soon
+> > as enable_irq() is called.
+>
+> irq_disable() has two operating modes:
+>
+>     1) Immediately mask the interrupt at the irq chip level
+>
+>     2) Software disable it. If an interrupt is raised while disabled
+>        then the flow handler observes disabled state, masks it, marks it
+>        pending and returns without invoking any device handler.
+>
+> On a subsequent irq_enable() the interrupt is unmasked if it was masked
+> and if the interrupt is marked pending and the interrupt is not level
+> type then it's attempted to retrigger it. Either in hardware or by a
+> software replay mechanism.
+>
+> > * If this interrupt fires while the system is suspended then please
+> > wake the system up.
+>
+> Well, that's kinda contradicting itself. If the interrupt is masked then
+> what is the point? I'm surely missing something subtle here.
+
+This is how I've always been told that the API works and there are at
+least a handful of drivers in the kernel whose suspend routines both
+enable wakeup and call disable_irq().  Isn't this also documented as
+of commit f9f21cea3113 ("genirq: Clarify that irq wake state is
+orthogonal to enable/disable")?
 
 
-UHR MICH HIER: https://www.youtube.com/watch?v=Z6ui8ZDQ6Ks
+> > On some (many?) interrupt controllers a masked interrupt won't wake
+> > the system up.  Thus we need some point in time where the interrupt
+> > controller can unmask interrupts in hardware so that they can act as
+> > wakeups.
+>
+> So far nobody told me about this until now, but why exactly do we need
+> yet another unspecified callback instead of simply telling the core via
+> an irq chip flag that it should always unmask the interrupt if it is a
+> wakeup source?
+>
+> > Also: if an interrupt was masked lazily this could be a good
+> > time to ensure that these interrupts _won't_ wake the system up.
+>
+> Setting IRQCHIP_MASK_ON_SUSPEND does exactly that. No need for a chip
+> driver to do any magic. You just have to use it.
+>
+> So the really obvious counterpart for this is to have:
+>
+>        IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND
+>
+> and then do:
+>
+> @@ -81,6 +81,8 @@ static bool suspend_device_irq(struct ir
+>                  * IRQD_WAKEUP_ARMED is visible before we return from
+>                  * suspend_device_irqs().
+>                  */
+> +               if (chip->flags & IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND)
+> +                       unmask_irq(desc);
+>                 return true;
+>         }
+>
+> plus the counterpart in the resume path. This also ensures that state is
+> consistent.
+
+This sounds wonderful to me.  Maulik: I think you could replace quite
+a few of the patches in the series and just use that.
 
 
-Das ist dein Spendencode: [TS530342018]
+> The magic behind the back of the core code unmask brings core state and
+> hardware state out of sync. So if for whatever reason the interrupt is
+> raised in the CPU before the resume path can mask it again, then the
+> flow handler will see disabled state, invoke mask_irq() which does
+> nothing because core state is masked and if that's a level irq it will
+> come back forever.
+>
+> > Thus the point of these callbacks is to provide a hook for IRQ chips
+> > to do this.  Now that you understand the motivation perhaps you can
+> > suggest a better way to accomplish this if the approach in this patch
+> > is not OK.
+>
+> See above.
+>
+> > I will note that a quick audit of existing users of the gernic-chip's
+> > irq_suspend() show that they are doing exactly this.  So the point of
+> > my patch is to actually allow other IRQ chips (ones that aren't using
+> > generic-chip) to do this type of thing.  At the same time my patch
+> > provides a way for current users of generic-chip to adapt their
+> > routines so they work without syscore (which, I guess, isn't
+> > compatible with s2idle).
+>
+> If that's the main problem which is solved in these callbacks, then I
+> really have to ask why this has not been raised years ago. Why can't
+> people talk?
+
+Not all of us have the big picture that you do to know how things
+ought to work, I guess.  If nothing else someone looking at this
+problem would think: "this must be a common problem, let's go see how
+all the other places do it" and then they find how everyone else is
+doing it and do it that way.  It requires the grander picture that a
+maintainer has in order to say: whoa, everyone's copying the same
+hack--let's come up with a better solution.
 
 
-Antworten Sie mit dem SPENDE-CODE an diese
+> IIRC back then when the callbacks for GC were added the reason was that
+> the affected chips needed a way to save and restore the full chip state
+> because the hardware lost it during suspend. S2idle did not exist back
+> then at least not in it's current form. Oh well...
+>
+> But gust replacing them by something which is yet another sinkhole for
+> horrible hacks behind the core code is not making it any better.
+>
+> I fear another sweep through the unpleasantries of chip drivers is due
+> sooner than later. Aside of finding time, I need to find my eyecancer
+> protection glasses and check my schnaps stock.
+>
+> >> So what happens in this case:
+> >>
+> >>    CPU0                         CPU1
+> >>    interrupt                    suspend_device_irq()
+> >>      handle()                     chip->suspend_one()
+> >>        action()                 ...
+> >>        chip->fiddle();
+> >>
+> >> ????
+> >
+> > Ah, so I guess we need to move the call to suspend_one_irq() till
+> > after the (potential) call to synchronize_irq() in in
+> > suspend_device_irqs()?
+>
+> For what you are trying to achieve, no. IRQCHIP_MASK_ON_SUSPEND is
+> already safe.
+>
+> If we add IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND then there is no sync
+> problem either.
+>
+> > Hopefully with the above explanation this makes more sense?
+>
+> At least the explanation helped to understand the problem, while the
+> changelog was pretty useless in that regard:
+>
+>   "These two callbacks are interesting because sometimes an irq chip
+>    needs to know about suspend/resume."
+>
+> Really valuable and precise technical information.
 
-E-Mail:Tayebsouam.spende@gmail.com
+Funny to get yelled at for not providing a detailed enough changelog.
+Usually people complain that my changelogs are too detailed.  Sigh.
 
 
-Ich hoffe, Sie und Ihre Familie glücklich zu machen.
+> But aside of the confusion, even with your explanation of what you are
+> trying to solve, I really want a coherent explanation why this should be
+> done for any of those:
+>
+>   1) an interrupt which has no action, i.e. an interrupt which has no
+>      active users and is in the worst case completely deactivated or was
+>      never activated to begin with.
+>
+>      In the inactive case it might be in a state where unmask issues an
+>      invalid vector, causes hardware malfunction or hits undefined
+>      software state in the chip drivers in the hierarchy.
+>
+>      If you want to be woken up by irq X, then request irq X which
+>      ensures that irq X is in a usable state at all levels of the
+>      stack. If you call disable_irq() or mark the interrupt with
+>      IRQ_NOAUTOEN, fine, it's still consistent state.
+>
+>   2) interrupts which have no_suspend_depth > 0 which means that
+>      there is an action requested which explicitely says: don't touch me
+>      on suspend.
+>
+>      If that driver invokes disable_irq() then it can keep the pieces.
+>
+>   3) chained interrupts
+>
+>      They are never disabled and never masked. So why would anything
+>      need to be done here?
+>
+>      Side note: they should not exist at all, but that's a different
+>      story.
+>
+> If you don't have coherent explanations, then please just don't touch
+> that condition at all.
+>
+> Hint: "Sometimes a chip needs to know" does not qualify :)
+
+Clearly I am not coherent.  ;-)  My only goal was to help enable
+interrupts that were disabled / marked as wakeup (as per above,
+documented to be OK) to work on Qualcomm chips.  This specifically
+affects me because a driver that I need to work (cros_ec) does this.
+If IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND is good to add then it sounds like
+a great plan to me.
 
 
-Grüße
-
-Herr Tayeb Souami
+-Doug
