@@ -2,181 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 924F3243E9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 19:59:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF38243ED9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 20:30:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbgHMR7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 13:59:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56802 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726167AbgHMR7e (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 13:59:34 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6DF132078D;
-        Thu, 13 Aug 2020 17:59:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597341573;
-        bh=CFADI5K3ybqlcI8c32cfvSt3eSFxRcdgnW/IUHOEoBQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=A/rtatHY8zbxQCJNEvrAKDbUf6pObl+Ye84cXF2q7CRd0h6vC7MfxK+hMRgde2x7W
-         UxkKBq/1LN6WZ8eMxAG6QEd3N9jesHDIdJlY4sHd5+WVLvZdhE5S0nS3yR96dppNXu
-         gNNsCaG81ubAsaYs5P9khhRJ8Q2sez93yO/ydg4I=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1k6HVj-001yy9-UI; Thu, 13 Aug 2020 18:59:32 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 13 Aug 2020 18:59:31 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Andre Przywara <andre.przywara@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
+        id S1726334AbgHMSaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 14:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51354 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726249AbgHMSaj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 14:30:39 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22A1C061383
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Aug 2020 11:30:38 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id v5so834788plo.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Aug 2020 11:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pM9K305gwu8RlzAPQvohHtve+36DV7y7hr4S9W7Zm3Y=;
+        b=YoMMQhWR9TeO1U0zCVSFy6Foz723aPw27dBj+vjMRJdGoPZvXr47oDHsP+QEi0u+ql
+         M/zsf/PFuPAB3OjbQWHqg7L6nEszjqBgocL3Nr1RcofM7qL0OyCKXty0iDp4kAhXwTBC
+         hzvIMmhFkPH1l17BZVR4wqb6qjwTDSd7QMBNo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pM9K305gwu8RlzAPQvohHtve+36DV7y7hr4S9W7Zm3Y=;
+        b=AsrxPV5i1syZcUYlrwzF5nExRpyC8NIykSDIZRWhdAwh2ZVNdmMd0e/R+TznD7Vy2j
+         STJZPaj/JzbOIHAPWhAQ2FXi2gw63XDmRzFRWEIJMRv8JYCY4QeRN2Pc4qHsDd5+FjZx
+         SP1Kfkd57PIncGKTZqcs6LKuQxOkR0hsbrRGCy4jJbYWtYIEfueX2sA08EplnuN5oYvO
+         1WjNidHWr/RIlLY8y7Xh5qC+xtR3cy0OiHM1vZPU3fisLF/mUgAZTidW0ortXI1v11ne
+         nEFPrA4o4BcYwJ4jS6Ab7dlKqpVlTrpdG/y8heLF2ZsK/wlDOQCs9T5bhNkCS0sQcrpO
+         Oe4w==
+X-Gm-Message-State: AOAM531cOOX9Rvvrenb9WCT5r+9ry8DSPbqVLCyIDnuRPeoWizg5xtxA
+        Kny54A8zJCUZrhZKjJVt95EnEQ==
+X-Google-Smtp-Source: ABdhPJwfUsLTxn6iHL5pLE4vvpb0tGBo8GEBl2HKgqY8vZ6GoQ1i3GnogQaDyl8Rh3qoKuJwPWiJ4w==
+X-Received: by 2002:a17:90a:718c:: with SMTP id i12mr6421314pjk.101.1597343437308;
+        Thu, 13 Aug 2020 11:30:37 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id z9sm6231843pgh.94.2020.08.13.11.30.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Aug 2020 11:30:36 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: Add KRYO4XX gold CPU core to spectre-v2 safe list
-In-Reply-To: <368280026c8af5b5a58a52c1e19cfae9@codeaurora.org>
-References: <20200813081834.13576-1-saiprakash.ranjan@codeaurora.org>
- <20200813090324.GB9829@willie-the-truck>
- <89f0f41514e547533c3fa66364e5a2ac@codeaurora.org>
- <20200813094041.GA9894@willie-the-truck>
- <ff6fa7bd817d49e8ef9bee5c1e13d99c@kernel.org>
- <368280026c8af5b5a58a52c1e19cfae9@codeaurora.org>
-User-Agent: Roundcube Webmail/1.4.7
-Message-ID: <8ffd22d5926aedda0c9fa6ea429fd84e@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: saiprakash.ranjan@codeaurora.org, will@kernel.org, catalin.marinas@arm.com, andre.przywara@arm.com, mark.rutland@arm.com, suzuki.poulose@arm.com, swboyd@chromium.org, dianders@chromium.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Add 'sustainable_power' for CPU thermal zones
+Date:   Thu, 13 Aug 2020 11:30:33 -0700
+Message-Id: <20200813113030.1.I89c33c4119eaffb986b1e8c1bc6f0e30267089cd@changeid>
+X-Mailer: git-send-email 2.28.0.220.ged08abb693-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-13 13:33, Sai Prakash Ranjan wrote:
-> On 2020-08-13 16:09, Marc Zyngier wrote:
->> On 2020-08-13 10:40, Will Deacon wrote:
->>> On Thu, Aug 13, 2020 at 02:49:37PM +0530, Sai Prakash Ranjan wrote:
->>>> On 2020-08-13 14:33, Will Deacon wrote:
->>>> > On Thu, Aug 13, 2020 at 01:48:34PM +0530, Sai Prakash Ranjan wrote:
->>>> > > KRYO4XX gold/big CPU cores are based on Cortex-A76 which has CSV2
->>>> > > bits set and are spectre-v2 safe. But on big.LITTLE systems where
->>>> > > they are coupled with other CPU cores such as the KRYO4XX silver
->>>> > > based on Cortex-A55 which are spectre-v2 safe but do not have CSV2
->>>> > > bits set, the system wide safe value will be set to the lowest value
->>>> > > of CSV2 bits as per FTR_LOWER_SAFE defined for CSV2 bits of register
->>>> > > ID_AA64PFR0_EL1.
->>>> > >
->>>> > > This is a problem when booting a guest kernel on gold CPU cores
->>>> > > where it will incorrectly report ARM_SMCCC_ARCH_WORKAROUND_1 warning
->>>> > > and consider them as vulnerable for Spectre variant 2 due to system
->>>> > > wide safe value which is used in kvm emulation code when reading id
->>>> > > registers. One wrong way of fixing this is to set the FTR_HIGHER_SAFE
->>>> > > for CSV2 bits, so instead add the KRYO4XX gold CPU core to the safe
->>>> > > list which will be consulted even when the sanitised read reports
->>>> > > that CSV2 bits are not set for KRYO4XX gold cores.
->>>> > >
->>>> > > Reported-by: Stephen Boyd <swboyd@chromium.org>
->>>> > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->>>> > > ---
->>>> > >  arch/arm64/kernel/cpu_errata.c | 1 +
->>>> > >  1 file changed, 1 insertion(+)
->>>> > >
->>>> > > diff --git a/arch/arm64/kernel/cpu_errata.c
->>>> > > b/arch/arm64/kernel/cpu_errata.c
->>>> > > index 6bd1d3ad037a..6cbdd2d98a2a 100644
->>>> > > --- a/arch/arm64/kernel/cpu_errata.c
->>>> > > +++ b/arch/arm64/kernel/cpu_errata.c
->>>> > > @@ -545,6 +545,7 @@ static const struct midr_range
->>>> > > spectre_v2_safe_list[] = {
->>>> > >  	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
->>>> > >  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
->>>> > >  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
->>>> > > +	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
->>>> >
->>>> > We shouldn't be putting CPUs in the safe list when they have CSV2
->>>> > reporting
->>>> > that they are mitigated in hardware, so I don't think this is the right
->>>> > approach.
->>>> >
->>>> 
->>>> Ok but the only thing I find wrong in this approach is that it is a
->>>> redundant
->>>> information because CSV2 is already advertising the mitigation, but 
->>>> again
->>>> CSV2 check is done first so it doesn't really hurt to add it to the 
->>>> safe
->>>> list because we already know that it is safe.
->>> 
->>> It simply doesn't scale. That's why CSV2 exists in the first place, 
->>> so we
->>> don't have to modify the kernel everytime a new CPU is invented.
->>> 
->>>> > Sounds more like KVM should advertise CSV2 for the vCPUs if all of the
->>>> > physical CPUs without CSV2 set are on the safe list. But then again, KVM
->>>> > has always been slightly in denial about big.LITTLE because you can't
->>>> > sensibly expose it to a guest if there are detectable differences...
->>>> >
->>>> 
->>>> Sorry but I don't see how the guest kernel will see the CSV2 bits 
->>>> set for
->>>> gold CPU cores without actually adding them to the safe list or 
->>>> reading the
->>>> not sanitised value of ID_AA64PFR0_EL1 ?
->>> 
->>> Well that's for somebody to figure out in the patch. I'm just saying 
->>> that
->>> adding cores to the safe list when they already have a CSV2 field 
->>> conveying
->>> the same information is the wrong approach. The right appproach is 
->>> for KVM
->>> to expose CSV2 as set when the system is not affected by the erratum.
->> 
->> A sensible way to fix this would be with something like that:
->> 
->> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
->> index 077293b5115f..2735db21ff0d 100644
->> --- a/arch/arm64/kvm/sys_regs.c
->> +++ b/arch/arm64/kvm/sys_regs.c
->> @@ -1131,6 +1131,9 @@ static u64 read_id_reg(const struct kvm_vcpu 
->> *vcpu,
->>  		if (!vcpu_has_sve(vcpu))
->>  			val &= ~(0xfUL << ID_AA64PFR0_SVE_SHIFT);
->>  		val &= ~(0xfUL << ID_AA64PFR0_AMU_SHIFT);
->> +		if (!(val & (0xfUL << ID_AA64PFR0_CSV2_SHIFT)) &&
->> +		    get_spectre_v2_workaround_state() == 
->> ARM64_BP_HARDEN_NOT_REQUIRED)
->> +			val |= (1UL << ID_AA64PFR0_CSV2_SHIFT);
->>  	} else if (id == SYS_ID_AA64ISAR1_EL1 && !vcpu_has_ptrauth(vcpu)) {
->>  		val &= ~((0xfUL << ID_AA64ISAR1_APA_SHIFT) |
->>  			 (0xfUL << ID_AA64ISAR1_API_SHIFT) |
->> 
-> 
-> Thanks Marc, I gave this a go on SC7180 where the issue was seen and
-> this fix is good.
-> 
-> Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+The 'sustainable_power' attribute provides an estimate of the sustained
+power that can be dissipated at the desired control temperature. One
+could argue that this value is not necessarily the same for all devices
+with the same SoC, which may have different form factors or thermal
+designs. However there are reasons to specify a (default) value at SoC
+level for SC7180: most importantly, if no value is specified at all the
+power_allocator thermal governor (aka 'IPA') estimates a value, using the
+minimum power of all cooling devices of the zone, which can result in
+overly aggressive thermal throttling. For most devices an approximate
+conservative value should be more useful than the minimum guesstimate
+of power_allocator. Devices that need a different value can overwrite
+it in their <device>.dts. Also the thermal zones for SC7180 have a high
+level of granularity (essentially one for each function block), which
+makes it more likely that the default value just works for many devices.
 
-There is still a problem with this approach. A late CPU could
-come up after a guest has been started. If that CPU identified
-as vulnerable by the host kernel, get_spectre_v2_workaround_state()
-will return a different value, breaking the guest (or more
-likely, leaving it exposed to Spectre-v2 attacks).
+The values correspond to 1901 MHz for the big cores, and 1804 MHz for
+the small cores. The values were determined by limiting the CPU
+frequencies to different max values and launching a bunch of processes
+that cause high CPU load ('while true; do true; done &' is simple and
+does a good job). A frequency is deemed sustainable if the CPU
+temperatures don't rise (consistently) above the second trip point
+('control temperature', 95 degC in this case). Once the highest
+sustainable frequency is found, the sustainable power can be calculated
+by multiplying the energy consumption per core at this frequency (which
+can be found in /sys/kernel/debug/energy_model/) with the number of
+cores that are specified as cooling devices.
 
-We'd need to disable the late onlining of CPUs that would change
-the mitigation state, and this is... ugly.
+The sustainable frequencies were determined at room temperature
+on a device without heat sink or other passive cooling elements.
 
-         M.
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+If maintainers think 'sustainable_power' should be specified at
+device level (with which I conceptually agree) I'm fine with
+doing that, just seemed it could be useful to have a reasonable
+'default' at SoC level in this case.
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index d46b3833e52f..23f84639d6b9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3320,6 +3320,7 @@ cpu0-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 1>;
++			sustainable-power = <768>;
+ 
+ 			trips {
+ 				cpu0_alert0: trip-point0 {
+@@ -3368,6 +3369,7 @@ cpu1-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 2>;
++			sustainable-power = <768>;
+ 
+ 			trips {
+ 				cpu1_alert0: trip-point0 {
+@@ -3416,6 +3418,7 @@ cpu2-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 3>;
++			sustainable-power = <768>;
+ 
+ 			trips {
+ 				cpu2_alert0: trip-point0 {
+@@ -3464,6 +3467,7 @@ cpu3-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 4>;
++			sustainable-power = <768>;
+ 
+ 			trips {
+ 				cpu3_alert0: trip-point0 {
+@@ -3512,6 +3516,7 @@ cpu4-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 5>;
++			sustainable-power = <768>;
+ 
+ 			trips {
+ 				cpu4_alert0: trip-point0 {
+@@ -3560,6 +3565,7 @@ cpu5-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 6>;
++			sustainable-power = <768>;
+ 
+ 			trips {
+ 				cpu5_alert0: trip-point0 {
+@@ -3608,6 +3614,7 @@ cpu6-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 9>;
++			sustainable-power = <1202>;
+ 
+ 			trips {
+ 				cpu6_alert0: trip-point0 {
+@@ -3648,6 +3655,7 @@ cpu7-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 10>;
++			sustainable-power = <1202>;
+ 
+ 			trips {
+ 				cpu7_alert0: trip-point0 {
+@@ -3688,6 +3696,7 @@ cpu8-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 11>;
++			sustainable-power = <1202>;
+ 
+ 			trips {
+ 				cpu8_alert0: trip-point0 {
+@@ -3728,6 +3737,7 @@ cpu9-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 12>;
++			sustainable-power = <1202>;
+ 
+ 			trips {
+ 				cpu9_alert0: trip-point0 {
 -- 
-Jazz is not dead. It just smells funny...
+2.28.0.220.ged08abb693-goog
+
