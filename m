@@ -2,77 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E552243359
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 06:29:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C4FB2433B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 07:47:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726334AbgHME3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 00:29:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34952 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726081AbgHME3o (ORCPT
+        id S1725964AbgHMFrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 01:47:36 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:31065 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725972AbgHMFrg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 00:29:44 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DC1C061383
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 21:29:43 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id 74so2147398pfx.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 21:29:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xIdIpbnx60CzDLvbTVQD5OyHFhB3i0JZtsYS6xXe3jc=;
-        b=MejU3VUHQfeX/8vP4xljEDExyeMgyTbHPaDCkHdMQ3sPCnWKfITG1MPAnqQR12gc+r
-         VPzYyjc24N79BG8NU2kpGB7/BBYiTcvI+ZmxfkIUC7I9iZW2g1Jsjeraj83mbk7P8LFu
-         Tz3n9Z5OSUaheVep1IHXkIGK0KxGMwo0XThXEjv2jMJ/RUS6pZ999qKL7XswloRgrhAB
-         9Nb5ZBJHT2wfgzR/ayhogd3alNISpLYKx2a8dYsxQM8uqOgHauYx3z+uA13O05Mj7U2m
-         GkjAWeHjcX+VE6QK+T/23OFOzL4mXHU/zzEnKcBjTpoEZEALz0dcf7hco+DrRMnw1WyB
-         Papg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xIdIpbnx60CzDLvbTVQD5OyHFhB3i0JZtsYS6xXe3jc=;
-        b=Z8iZBfRxDgRX1Mj7H9Ci7jMlaEKMFpLmrdUBKPRmXp6kjjQrsBlAjOxAMNdk+gLVDm
-         MiOb6aJn5eB8weELIhWhPGhIa095ylnN3h4V/Z2MOx+Tkuq/1NSiRA0YgAny1nSHqTzj
-         l0JU9EBbNm2DH95gDBQn7jgsr9LAzDemE/4cgsrCi6gGA+j8+J2+cAJ9Pjv0g1Nl3Bhe
-         lM6F3K9zjiQIVlA4OfandzY/F9NqjFMHXsAZpatStE1MwYJJug25pMxeb3G1Qpa1OBFh
-         3gNS2ryo8gdMUyXZdZQAgOu2udc2WCd+29KzzQEv/EntfBiaTf9fxVJXzUexD/a9HY7M
-         9lTg==
-X-Gm-Message-State: AOAM531DqC7z1GaCg0pWtBwMoLNs+mFEyrO6YHFRMi1Ek110nHlqoege
-        DaWwpLz4SGPN42WAkEKEy6Djpw==
-X-Google-Smtp-Source: ABdhPJx6frQktQqrAUHEZ1iFW6nmiLYBgM7XrzuzOuqkpNDkGl/pJc+JVQoakHmORATi5XJ8nxy2AA==
-X-Received: by 2002:a05:6a00:1509:: with SMTP id q9mr2625321pfu.24.1597292983508;
-        Wed, 12 Aug 2020 21:29:43 -0700 (PDT)
-Received: from localhost ([171.79.32.211])
-        by smtp.gmail.com with ESMTPSA id u14sm4080239pfm.103.2020.08.12.21.29.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Aug 2020 21:29:42 -0700 (PDT)
-Date:   Thu, 13 Aug 2020 09:59:40 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, nm@ti.com,
-        vireshk@kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] opp: Fix dev_pm_opp_set_rate() to not return early
-Message-ID: <20200813042940.dg75g7oj3iiyuu4k@vireshk-mac-ubuntu>
-References: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
- <159718019170.1360974.4800051292737590657@swboyd.mtv.corp.google.com>
+        Thu, 13 Aug 2020 01:47:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597297655; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=b0DJcUHjzFWq9ObgzTOR68emrB/phIhPyW57gsGau7g=; b=jowLIS51shkTF9sc/BtPZJ5C/CDEwgDSHJspmhHqn8WGtf3L8kZHgFDDtmoDT5vCMh2nBp4Q
+ yCeMtPhhBbs91TIPJUqFPtcsflEBX68Okw1G5yoGLf4oTwj7SLK6+EYbLICSlJbsGGDEkKE5
+ Yz29qxl4RpW2YCKYA4CAQJ7YkjA=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f34d3f61e4d3989d458c6b9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 13 Aug 2020 05:47:34
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 330DFC433C9; Thu, 13 Aug 2020 05:47:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.77.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 98AE7C433C6;
+        Thu, 13 Aug 2020 05:47:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 98AE7C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v4 1/7] pinctrl: qcom: Add msmgpio irqchip flags
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
+        mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org
+References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org>
+ <1597058460-16211-2-git-send-email-mkshah@codeaurora.org>
+ <159717432398.1360974.1005323166939228511@swboyd.mtv.corp.google.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <7a0a6fcd-33ed-0427-6b42-b5d467f743f5@codeaurora.org>
+Date:   Thu, 13 Aug 2020 11:17:25 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <159718019170.1360974.4800051292737590657@swboyd.mtv.corp.google.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <159717432398.1360974.1005323166939228511@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-08-20, 14:09, Stephen Boyd wrote:
-> This is a goto maze! Any chance we can clean this up?
+Hi,
 
-I have sent a short series in reply to this series, please have a
-look. It should look better now.
+On 8/12/2020 1:02 AM, Stephen Boyd wrote:
+> Can the subject be more specific? "pinctrl: qcom: Set IRQCHIP_SET_TYPE_MASKED flag"?
+
+Sure i can update subject in v5.
+
+Thanks,
+Maulik
+
+>
+> Quoting Maulik Shah (2020-08-10 04:20:54)
+>> Add irqchip specific flags for msmgpio irqchip to mask non wakeirqs
+>> during suspend and mask before setting irq type.
+>>
+>> Masking before changing type should make sure any spurious interrupt
+>> is not detected during this operation.
+>>
+>> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+>> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
 
 -- 
-viresh
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
