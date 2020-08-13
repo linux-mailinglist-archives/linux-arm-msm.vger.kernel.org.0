@@ -2,49 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84D85243740
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 11:08:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E20D7243766
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 11:13:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726131AbgHMJIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 05:08:50 -0400
-Received: from mga07.intel.com ([134.134.136.100]:6798 "EHLO mga07.intel.com"
+        id S1726053AbgHMJNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 05:13:13 -0400
+Received: from mx2.suse.de ([195.135.220.15]:53964 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726053AbgHMJIt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 05:08:49 -0400
-IronPort-SDR: 00QbEfF72nisPJYXqTaJq/W9ISoFl1LPH/CLzt+Q0oukCG7IdbgLPnkWOqeBURyzbuAHR/lhif
- 2MPdsT4yySjg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9711"; a="218522299"
-X-IronPort-AV: E=Sophos;i="5.76,307,1592895600"; 
-   d="scan'208";a="218522299"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2020 02:08:48 -0700
-IronPort-SDR: MzLdBg29y17Qw947zHTwHA+CSmHBs2Zvn+6Bs6sqi/aBfHd1F5a0YahIdS8U60Hdv6sgpLlMWW
- /z+PVkWCy4qA==
-X-IronPort-AV: E=Sophos;i="5.76,307,1592895600"; 
-   d="scan'208";a="470144306"
-Received: from jgronski-mobl.ger.corp.intel.com (HELO localhost) ([10.252.50.170])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2020 02:08:15 -0700
-From:   Jani Nikula <jani.nikula@linux.intel.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>, alexander.deucher@amd.com,
-        christian.koenig@amd.com, airlied@linux.ie, daniel@ffwll.ch,
-        linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, l.stach@pengutronix.de,
-        christian.gmeiner@gmail.com, inki.dae@samsung.com,
-        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
-        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
-        patrik.r.jakobsson@gmail.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
-        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
-        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
-        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
-        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
-        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
-        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        id S1726048AbgHMJNL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 05:13:11 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id 23EE7AF27;
+        Thu, 13 Aug 2020 09:13:32 +0000 (UTC)
+Subject: Re: [PATCH 06/20] drm/i915: Introduce GEM object functions
+To:     Jani Nikula <jani.nikula@linux.intel.com>,
+        alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+        chunkuang.hu@kernel.org, p.zabel@pengutronix.de,
+        matthias.bgg@gmail.com, robdclark@gmail.com, sean@poorly.run,
+        bskeggs@redhat.com, tomi.valkeinen@ti.com, eric@anholt.net,
+        hjc@rock-chips.com, heiko@sntech.de, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, rodrigosiqueiramelo@gmail.com,
+        hamohammed.sa@gmail.com, oleksandr_andrushchenko@epam.com,
+        hyun.kwon@xilinx.com, laurent.pinchart@ideasonboard.com,
+        michal.simek@xilinx.com, sumit.semwal@linaro.org,
+        evan.quan@amd.com, Hawking.Zhang@amd.com, tianci.yin@amd.com,
+        marek.olsak@amd.com, hdegoede@redhat.com,
         andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
         xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
         chris@chris-wilson.co.uk, matthew.auld@intel.com,
@@ -58,118 +48,212 @@ Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH 06/20] drm/i915: Introduce GEM object functions
-In-Reply-To: <20200813083644.31711-7-tzimmermann@suse.de>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20200813083644.31711-1-tzimmermann@suse.de> <20200813083644.31711-7-tzimmermann@suse.de>
-Date:   Thu, 13 Aug 2020 12:08:12 +0300
-Message-ID: <877du2j4lf.fsf@intel.com>
+        xen-devel@lists.xenproject.org
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-7-tzimmermann@suse.de> <877du2j4lf.fsf@intel.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Message-ID: <ce599990-7b0e-d0b1-8df2-ae3499560510@suse.de>
+Date:   Thu, 13 Aug 2020 11:13:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <877du2j4lf.fsf@intel.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="2y1rj4S6iEPyEIbObjrxB2iAqUSpEnhqy"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Aug 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> GEM object functions deprecate several similar callback interfaces in
-> struct drm_driver. This patch replaces the per-driver callbacks with
-> per-instance callbacks in i915.
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/i915/gem/i915_gem_object.c       |  9 ++++++++-
->  drivers/gpu/drm/i915/i915_drv.c                  | 10 ++++++----
->  drivers/gpu/drm/i915/i915_drv.h                  |  1 +
->  drivers/gpu/drm/i915/selftests/mock_gem_device.c |  3 ---
->  4 files changed, 15 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object.c b/drivers/gpu/drm/i915/gem/i915_gem_object.c
-> index c8421fd9d2dc..bc15ee4f2bd5 100644
-> --- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
-> +++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
-> @@ -41,7 +41,14 @@ static struct i915_global_object {
->  
->  struct drm_i915_gem_object *i915_gem_object_alloc(void)
->  {
-> -	return kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
-> +	struct drm_i915_gem_object *obj;
-> +
-> +	obj = kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
-> +	if (!obj)
-> +		return NULL;
-> +	obj->base.funcs = &i915_gem_object_funcs;
-> +
-> +	return obj;
->  }
->  
->  void i915_gem_object_free(struct drm_i915_gem_object *obj)
-> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
-> index 068447f565a9..b09eee11c540 100644
-> --- a/drivers/gpu/drm/i915/i915_drv.c
-> +++ b/drivers/gpu/drm/i915/i915_drv.c
-> @@ -1840,6 +1840,12 @@ static const struct drm_ioctl_desc i915_ioctls[] = {
->  	DRM_IOCTL_DEF_DRV(I915_GEM_VM_DESTROY, i915_gem_vm_destroy_ioctl, DRM_RENDER_ALLOW),
->  };
->  
-> +const struct drm_gem_object_funcs i915_gem_object_funcs = {
-> +	.free = i915_gem_free_object,
-> +	.close = i915_gem_close_object,
-> +	.export = i915_gem_prime_export,
-> +};
-> +
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--2y1rj4S6iEPyEIbObjrxB2iAqUSpEnhqy
+Content-Type: multipart/mixed; boundary="yYJlHp22f67rhAArb1qx5xbB6QTfa6gjL";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Jani Nikula <jani.nikula@linux.intel.com>, alexander.deucher@amd.com,
+ christian.koenig@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+ linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+ inki.dae@samsung.com, jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+ patrik.r.jakobsson@gmail.com, joonas.lahtinen@linux.intel.com,
+ rodrigo.vivi@intel.com, chunkuang.hu@kernel.org, p.zabel@pengutronix.de,
+ matthias.bgg@gmail.com, robdclark@gmail.com, sean@poorly.run,
+ bskeggs@redhat.com, tomi.valkeinen@ti.com, eric@anholt.net,
+ hjc@rock-chips.com, heiko@sntech.de, thierry.reding@gmail.com,
+ jonathanh@nvidia.com, rodrigosiqueiramelo@gmail.com,
+ hamohammed.sa@gmail.com, oleksandr_andrushchenko@epam.com,
+ hyun.kwon@xilinx.com, laurent.pinchart@ideasonboard.com,
+ michal.simek@xilinx.com, sumit.semwal@linaro.org, evan.quan@amd.com,
+ Hawking.Zhang@amd.com, tianci.yin@amd.com, marek.olsak@amd.com,
+ hdegoede@redhat.com, andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+ xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+ chris@chris-wilson.co.uk, matthew.auld@intel.com,
+ abdiel.janulgue@linux.intel.com, tvrtko.ursulin@linux.intel.com,
+ andi.shyti@intel.com, sam@ravnborg.org, miaoqinglang@huawei.com,
+ emil.velikov@collabora.com
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ xen-devel@lists.xenproject.org
+Message-ID: <ce599990-7b0e-d0b1-8df2-ae3499560510@suse.de>
+Subject: Re: [PATCH 06/20] drm/i915: Introduce GEM object functions
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-7-tzimmermann@suse.de> <877du2j4lf.fsf@intel.com>
+In-Reply-To: <877du2j4lf.fsf@intel.com>
 
-Any reason not to make this static in i915_gem_object.c next to its only
-user?
+--yYJlHp22f67rhAArb1qx5xbB6QTfa6gjL
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-BR,
-Jani.
+Hi
+
+Am 13.08.20 um 11:08 schrieb Jani Nikula:
+> On Thu, 13 Aug 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>> GEM object functions deprecate several similar callback interfaces in
+>> struct drm_driver. This patch replaces the per-driver callbacks with
+>> per-instance callbacks in i915.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>>  drivers/gpu/drm/i915/gem/i915_gem_object.c       |  9 ++++++++-
+>>  drivers/gpu/drm/i915/i915_drv.c                  | 10 ++++++----
+>>  drivers/gpu/drm/i915/i915_drv.h                  |  1 +
+>>  drivers/gpu/drm/i915/selftests/mock_gem_device.c |  3 ---
+>>  4 files changed, 15 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object.c b/drivers/gpu/=
+drm/i915/gem/i915_gem_object.c
+>> index c8421fd9d2dc..bc15ee4f2bd5 100644
+>> --- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
+>> +++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+>> @@ -41,7 +41,14 @@ static struct i915_global_object {
+>> =20
+>>  struct drm_i915_gem_object *i915_gem_object_alloc(void)
+>>  {
+>> -	return kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
+>> +	struct drm_i915_gem_object *obj;
+>> +
+>> +	obj =3D kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
+>> +	if (!obj)
+>> +		return NULL;
+>> +	obj->base.funcs =3D &i915_gem_object_funcs;
+>> +
+>> +	return obj;
+>>  }
+>> =20
+>>  void i915_gem_object_free(struct drm_i915_gem_object *obj)
+>> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i9=
+15_drv.c
+>> index 068447f565a9..b09eee11c540 100644
+>> --- a/drivers/gpu/drm/i915/i915_drv.c
+>> +++ b/drivers/gpu/drm/i915/i915_drv.c
+>> @@ -1840,6 +1840,12 @@ static const struct drm_ioctl_desc i915_ioctls[=
+] =3D {
+>>  	DRM_IOCTL_DEF_DRV(I915_GEM_VM_DESTROY, i915_gem_vm_destroy_ioctl, DR=
+M_RENDER_ALLOW),
+>>  };
+>> =20
+>> +const struct drm_gem_object_funcs i915_gem_object_funcs =3D {
+>> +	.free =3D i915_gem_free_object,
+>> +	.close =3D i915_gem_close_object,
+>> +	.export =3D i915_gem_prime_export,
+>> +};
+>> +
+>=20
+> Any reason not to make this static in i915_gem_object.c next to its onl=
+y
+> user?
+
+That is just an oversight. Will be fixed in the next iteration. Thanks.
+
+Best regards
+Thomas
+
+>=20
+> BR,
+> Jani.
+>=20
+>=20
+>>  static struct drm_driver driver =3D {
+>>  	/* Don't use MTRRs here; the Xserver or userspace app should
+>>  	 * deal with them for Intel hardware.
+>> @@ -1853,12 +1859,8 @@ static struct drm_driver driver =3D {
+>>  	.lastclose =3D i915_driver_lastclose,
+>>  	.postclose =3D i915_driver_postclose,
+>> =20
+>> -	.gem_close_object =3D i915_gem_close_object,
+>> -	.gem_free_object_unlocked =3D i915_gem_free_object,
+>> -
+>>  	.prime_handle_to_fd =3D drm_gem_prime_handle_to_fd,
+>>  	.prime_fd_to_handle =3D drm_gem_prime_fd_to_handle,
+>> -	.gem_prime_export =3D i915_gem_prime_export,
+>>  	.gem_prime_import =3D i915_gem_prime_import,
+>> =20
+>>  	.dumb_create =3D i915_gem_dumb_create,
+>> diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i9=
+15_drv.h
+>> index bacb4c762f5b..666db65fe69e 100644
+>> --- a/drivers/gpu/drm/i915/i915_drv.h
+>> +++ b/drivers/gpu/drm/i915/i915_drv.h
+>> @@ -1736,6 +1736,7 @@ intel_ggtt_update_needs_vtd_wa(struct drm_i915_p=
+rivate *dev_priv)
+>> =20
+>>  /* i915_drv.c */
+>>  extern const struct dev_pm_ops i915_pm_ops;
+>> +extern const struct drm_gem_object_funcs i915_gem_object_funcs;
+>> =20
+>>  int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_i=
+d *ent);
+>>  void i915_driver_remove(struct drm_i915_private *i915);
+>> diff --git a/drivers/gpu/drm/i915/selftests/mock_gem_device.c b/driver=
+s/gpu/drm/i915/selftests/mock_gem_device.c
+>> index ce4d4303229c..4725dad63e0a 100644
+>> --- a/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+>> +++ b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+>> @@ -86,9 +86,6 @@ static struct drm_driver mock_driver =3D {
+>>  	.name =3D "mock",
+>>  	.driver_features =3D DRIVER_GEM,
+>>  	.release =3D mock_device_release,
+>> -
+>> -	.gem_close_object =3D i915_gem_close_object,
+>> -	.gem_free_object_unlocked =3D i915_gem_free_object,
+>>  };
+>> =20
+>>  static void release_dev(struct device *dev)
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 
 
->  static struct drm_driver driver = {
->  	/* Don't use MTRRs here; the Xserver or userspace app should
->  	 * deal with them for Intel hardware.
-> @@ -1853,12 +1859,8 @@ static struct drm_driver driver = {
->  	.lastclose = i915_driver_lastclose,
->  	.postclose = i915_driver_postclose,
->  
-> -	.gem_close_object = i915_gem_close_object,
-> -	.gem_free_object_unlocked = i915_gem_free_object,
-> -
->  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
->  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
-> -	.gem_prime_export = i915_gem_prime_export,
->  	.gem_prime_import = i915_gem_prime_import,
->  
->  	.dumb_create = i915_gem_dumb_create,
-> diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
-> index bacb4c762f5b..666db65fe69e 100644
-> --- a/drivers/gpu/drm/i915/i915_drv.h
-> +++ b/drivers/gpu/drm/i915/i915_drv.h
-> @@ -1736,6 +1736,7 @@ intel_ggtt_update_needs_vtd_wa(struct drm_i915_private *dev_priv)
->  
->  /* i915_drv.c */
->  extern const struct dev_pm_ops i915_pm_ops;
-> +extern const struct drm_gem_object_funcs i915_gem_object_funcs;
->  
->  int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent);
->  void i915_driver_remove(struct drm_i915_private *i915);
-> diff --git a/drivers/gpu/drm/i915/selftests/mock_gem_device.c b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
-> index ce4d4303229c..4725dad63e0a 100644
-> --- a/drivers/gpu/drm/i915/selftests/mock_gem_device.c
-> +++ b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
-> @@ -86,9 +86,6 @@ static struct drm_driver mock_driver = {
->  	.name = "mock",
->  	.driver_features = DRIVER_GEM,
->  	.release = mock_device_release,
-> -
-> -	.gem_close_object = i915_gem_close_object,
-> -	.gem_free_object_unlocked = i915_gem_free_object,
->  };
->  
->  static void release_dev(struct device *dev)
+--yYJlHp22f67rhAArb1qx5xbB6QTfa6gjL--
 
--- 
-Jani Nikula, Intel Open Source Graphics Center
+--2y1rj4S6iEPyEIbObjrxB2iAqUSpEnhqy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFIBAEBCAAyFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl81BCAUHHR6aW1tZXJt
+YW5uQHN1c2UuZGUACgkQaA3BHVMLeiN1ywf/TqGV8rsRsYb3ww1QippHM0DMEqo+
+g5vm+Ctnvb+7yYo55pBoy8VEA970jCg0p6DPFL/qs1Tgtbcz3OD7CTs31iLaYKHU
+ERKsFVmG/Hu80m0rBZDTZkRoTxqe3YdsVWT0f5Xit6uCvLLVC3A7bkuVP7CmMC6p
+F4csWP6RkD3FCCqZQTSgCJqnhy2Y3BuD3oeVumqDUfeLWSf8fh3cd45Oy3vn990a
+L8lS7mR1NTADuYO/AmVtxTgU42KttCnazOpd79Zluy8poPpVtfKdGp1sKdLuUKWf
+yNcvr8w6ucWFKZ6eqBOVGvTgmNIsF1v1JXcFuizVX8HnDY0pSs27p4kt3w==
+=BuPp
+-----END PGP SIGNATURE-----
+
+--2y1rj4S6iEPyEIbObjrxB2iAqUSpEnhqy--
