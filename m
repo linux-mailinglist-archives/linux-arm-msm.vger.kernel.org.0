@@ -2,129 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9250724324F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 03:55:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E552243359
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 06:29:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726615AbgHMBzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 21:55:49 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:33516 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726574AbgHMBzt (ORCPT
+        id S1726334AbgHME3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 00:29:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34952 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbgHME3o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 21:55:49 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597283748; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Rhkk8eunrihHd8pV4roEkHcXijF9QoLlK6Dbc6fdia8=; b=gCoNGt9BkrR2IM5ddWrK+SPA+/Mfl0k7QifsN/IgAXvMBRT58gqvstFmUi+ee5B2yzY2E26r
- gnkHjiHgAGLE4iag4GVcAJwMY78O4WBzehQdQuKiSR2iAd89KJb18/w0wqCgYVTgfrgV7071
- HFNOu1VRwOOAxBSe0vbG0JYRvBc=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5f349d7846ed99667452e551 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 13 Aug 2020 01:55:04
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 99647C433CB; Thu, 13 Aug 2020 01:55:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8D79DC433CA;
-        Thu, 13 Aug 2020 01:55:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8D79DC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
-From:   Abhinav Kumar <abhinavk@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
-        aravindh@codeaurora.org, tanmay@codeaurora.org,
-        cychiang@chromium.org, khsieh@codeaurora.org,
-        vsujithk@codeaurora.org, rohitkr@codeaurora.org
-Subject: [PATCH 4/4] drm/msm/dp: signal the hotplug disconnect in the event handler
-Date:   Wed, 12 Aug 2020 18:54:39 -0700
-Message-Id: <20200813015439.4174-5-abhinavk@codeaurora.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20200813015439.4174-1-abhinavk@codeaurora.org>
-References: <20200813015439.4174-1-abhinavk@codeaurora.org>
+        Thu, 13 Aug 2020 00:29:44 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DC1C061383
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 21:29:43 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id 74so2147398pfx.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Aug 2020 21:29:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xIdIpbnx60CzDLvbTVQD5OyHFhB3i0JZtsYS6xXe3jc=;
+        b=MejU3VUHQfeX/8vP4xljEDExyeMgyTbHPaDCkHdMQ3sPCnWKfITG1MPAnqQR12gc+r
+         VPzYyjc24N79BG8NU2kpGB7/BBYiTcvI+ZmxfkIUC7I9iZW2g1Jsjeraj83mbk7P8LFu
+         Tz3n9Z5OSUaheVep1IHXkIGK0KxGMwo0XThXEjv2jMJ/RUS6pZ999qKL7XswloRgrhAB
+         9Nb5ZBJHT2wfgzR/ayhogd3alNISpLYKx2a8dYsxQM8uqOgHauYx3z+uA13O05Mj7U2m
+         GkjAWeHjcX+VE6QK+T/23OFOzL4mXHU/zzEnKcBjTpoEZEALz0dcf7hco+DrRMnw1WyB
+         Papg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xIdIpbnx60CzDLvbTVQD5OyHFhB3i0JZtsYS6xXe3jc=;
+        b=Z8iZBfRxDgRX1Mj7H9Ci7jMlaEKMFpLmrdUBKPRmXp6kjjQrsBlAjOxAMNdk+gLVDm
+         MiOb6aJn5eB8weELIhWhPGhIa095ylnN3h4V/Z2MOx+Tkuq/1NSiRA0YgAny1nSHqTzj
+         l0JU9EBbNm2DH95gDBQn7jgsr9LAzDemE/4cgsrCi6gGA+j8+J2+cAJ9Pjv0g1Nl3Bhe
+         lM6F3K9zjiQIVlA4OfandzY/F9NqjFMHXsAZpatStE1MwYJJug25pMxeb3G1Qpa1OBFh
+         3gNS2ryo8gdMUyXZdZQAgOu2udc2WCd+29KzzQEv/EntfBiaTf9fxVJXzUexD/a9HY7M
+         9lTg==
+X-Gm-Message-State: AOAM531DqC7z1GaCg0pWtBwMoLNs+mFEyrO6YHFRMi1Ek110nHlqoege
+        DaWwpLz4SGPN42WAkEKEy6Djpw==
+X-Google-Smtp-Source: ABdhPJx6frQktQqrAUHEZ1iFW6nmiLYBgM7XrzuzOuqkpNDkGl/pJc+JVQoakHmORATi5XJ8nxy2AA==
+X-Received: by 2002:a05:6a00:1509:: with SMTP id q9mr2625321pfu.24.1597292983508;
+        Wed, 12 Aug 2020 21:29:43 -0700 (PDT)
+Received: from localhost ([171.79.32.211])
+        by smtp.gmail.com with ESMTPSA id u14sm4080239pfm.103.2020.08.12.21.29.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Aug 2020 21:29:42 -0700 (PDT)
+Date:   Thu, 13 Aug 2020 09:59:40 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>, nm@ti.com,
+        vireshk@kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] opp: Fix dev_pm_opp_set_rate() to not return early
+Message-ID: <20200813042940.dg75g7oj3iiyuu4k@vireshk-mac-ubuntu>
+References: <1597043179-17903-1-git-send-email-rnayak@codeaurora.org>
+ <159718019170.1360974.4800051292737590657@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <159718019170.1360974.4800051292737590657@swboyd.mtv.corp.google.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signal the hotplug disconnect event to the audio side in the
-event handler so that they are notified earlier and have more
-time to process the disconnect event.
+On 11-08-20, 14:09, Stephen Boyd wrote:
+> This is a goto maze! Any chance we can clean this up?
 
-Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+I have sent a short series in reply to this series, please have a
+look. It should look better now.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 302cf7ea65d7..11960be33fdb 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -504,6 +504,13 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	return 0;
- };
- 
-+static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
-+		bool plugged)
-+{
-+	if (dp_display->plugged_cb && dp_display->codec_dev)
-+		dp_display->plugged_cb(dp_display->codec_dev, plugged);
-+}
-+
- static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- {
- 	struct dp_usbpd *hpd = dp->usbpd;
-@@ -544,6 +551,9 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	 */
- 	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
- 
-+	/* signal the disconnect event early to ensure proper teardown */
-+	dp_display_handle_plugged_change(g_dp_display, false);
-+
- 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
- 					DP_DP_IRQ_HPD_INT_MASK, true);
- 
-@@ -711,13 +721,6 @@ static int dp_display_prepare(struct msm_dp *dp)
- 	return 0;
- }
- 
--static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
--		bool plugged)
--{
--	if (dp_display->plugged_cb && dp_display->codec_dev)
--		dp_display->plugged_cb(dp_display->codec_dev, plugged);
--}
--
- static int dp_display_enable(struct dp_display_private *dp, u32 data)
- {
- 	int rc = 0;
-@@ -759,9 +762,6 @@ static int dp_display_pre_disable(struct msm_dp *dp_display)
- 
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 
--	/* signal the disconnect event early to ensure proper teardown */
--	dp_display_handle_plugged_change(dp_display, false);
--
- 	return 0;
- }
- 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+viresh
