@@ -2,576 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE3124389B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 12:33:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D8CA2438BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 12:39:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbgHMKdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 06:33:09 -0400
-Received: from mx2.suse.de ([195.135.220.15]:41872 "EHLO mx2.suse.de"
+        id S1726204AbgHMKjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 06:39:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48310 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726053AbgHMKdI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 06:33:08 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 74E77AF30;
-        Thu, 13 Aug 2020 10:33:26 +0000 (UTC)
-Subject: Re: [PATCH 20/20] drm: Remove obsolete GEM and PRIME callbacks from
- struct drm_driver
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     hamohammed.sa@gmail.com, airlied@linux.ie,
-        nouveau@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        michal.simek@xilinx.com, thierry.reding@gmail.com, krzk@kernel.org,
-        emil.velikov@collabora.com, abdiel.janulgue@linux.intel.com,
-        linux-samsung-soc@vger.kernel.org, jy0922.shim@samsung.com,
-        oleksandr_andrushchenko@epam.com, tomi.valkeinen@ti.com,
-        linux-tegra@vger.kernel.org, linux@armlinux.org.uk,
-        jonathanh@nvidia.com, linux-rockchip@lists.infradead.org,
-        kgene@kernel.org, bskeggs@redhat.com,
-        xen-devel@lists.xenproject.org, miaoqinglang@huawei.com,
-        intel-gfx@lists.freedesktop.org, matthew.auld@intel.com,
-        chunkuang.hu@kernel.org, andi.shyti@intel.com,
-        linux-arm-msm@vger.kernel.org, marek.olsak@amd.com,
-        tianci.yin@amd.com, etnaviv@lists.freedesktop.org,
-        hdegoede@redhat.com, linux-mediatek@lists.infradead.org,
-        rodrigo.vivi@intel.com, matthias.bgg@gmail.com, evan.quan@amd.com,
-        sean@poorly.run, linux-arm-kernel@lists.infradead.org,
-        tvrtko.ursulin@linux.intel.com, amd-gfx@lists.freedesktop.org,
-        laurent.pinchart@ideasonboard.com, hyun.kwon@xilinx.com,
-        rodrigosiqueiramelo@gmail.com, aaron.liu@amd.com,
-        Felix.Kuehling@amd.com, xinhui.pan@amd.com, sw0312.kim@samsung.com,
-        hjc@rock-chips.com, chris@chris-wilson.co.uk,
-        kyungmin.park@samsung.com, nirmoy.das@amd.com,
-        alexander.deucher@amd.com, Hawking.Zhang@amd.com,
-        freedreno@lists.freedesktop.org, christian.koenig@amd.com
-References: <20200813083644.31711-1-tzimmermann@suse.de>
- <20200813083644.31711-21-tzimmermann@suse.de>
- <20200813101659.GA752979@ravnborg.org>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Message-ID: <b9943bf0-8a7d-96b3-c5f3-1e940d524efb@suse.de>
-Date:   Thu, 13 Aug 2020 12:33:03 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        id S1726053AbgHMKjq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 06:39:46 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id EF8AC206A4;
+        Thu, 13 Aug 2020 10:39:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597315185;
+        bh=TWydt69E31XoB01H3gVdHDzdQbsd2O4Gh1nyh2dthuk=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=TG+TdSTyyjFkf2ylVgb99HLo6AfeTTG1DjP4k1HOdzJZBOwGuzPCwpIqNfkhpZAd0
+         Ev031unx4MiV0PePocfeA+Hw+5qNS8s/um2OZc+1s+MInabuyro71jbdr9yjsdtj0U
+         IuL+ewyuVlHzydevPcDVlFP8UfmZXtIWN7tmnojI=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <maz@kernel.org>)
+        id 1k6Ae7-001l9U-Cb; Thu, 13 Aug 2020 11:39:43 +0100
 MIME-Version: 1.0
-In-Reply-To: <20200813101659.GA752979@ravnborg.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="9y9KMsxjjShQF8iXyEFXxsTSVMHBOxC7u"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 13 Aug 2020 11:39:43 +0100
+From:   Marc Zyngier <maz@kernel.org>
+To:     Will Deacon <will@kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Andre Przywara <andre.przywara@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: Add KRYO4XX gold CPU core to spectre-v2 safe list
+In-Reply-To: <20200813094041.GA9894@willie-the-truck>
+References: <20200813081834.13576-1-saiprakash.ranjan@codeaurora.org>
+ <20200813090324.GB9829@willie-the-truck>
+ <89f0f41514e547533c3fa66364e5a2ac@codeaurora.org>
+ <20200813094041.GA9894@willie-the-truck>
+User-Agent: Roundcube Webmail/1.4.5
+Message-ID: <ff6fa7bd817d49e8ef9bee5c1e13d99c@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: will@kernel.org, saiprakash.ranjan@codeaurora.org, catalin.marinas@arm.com, andre.przywara@arm.com, mark.rutland@arm.com, suzuki.poulose@arm.com, swboyd@chromium.org, dianders@chromium.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---9y9KMsxjjShQF8iXyEFXxsTSVMHBOxC7u
-Content-Type: multipart/mixed; boundary="0fRH42pD71PFUBQdjrec5q0Fp6owMu0hv";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Sam Ravnborg <sam@ravnborg.org>
-Cc: hamohammed.sa@gmail.com, airlied@linux.ie, nouveau@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, michal.simek@xilinx.com,
- thierry.reding@gmail.com, krzk@kernel.org, emil.velikov@collabora.com,
- abdiel.janulgue@linux.intel.com, linux-samsung-soc@vger.kernel.org,
- jy0922.shim@samsung.com, oleksandr_andrushchenko@epam.com,
- tomi.valkeinen@ti.com, linux-tegra@vger.kernel.org, linux@armlinux.org.uk,
- jonathanh@nvidia.com, linux-rockchip@lists.infradead.org, kgene@kernel.org,
- bskeggs@redhat.com, xen-devel@lists.xenproject.org, miaoqinglang@huawei.com,
- intel-gfx@lists.freedesktop.org, matthew.auld@intel.com,
- chunkuang.hu@kernel.org, andi.shyti@intel.com,
- linux-arm-msm@vger.kernel.org, marek.olsak@amd.com, tianci.yin@amd.com,
- etnaviv@lists.freedesktop.org, hdegoede@redhat.com,
- linux-mediatek@lists.infradead.org, rodrigo.vivi@intel.com,
- matthias.bgg@gmail.com, evan.quan@amd.com, sean@poorly.run,
- linux-arm-kernel@lists.infradead.org, tvrtko.ursulin@linux.intel.com,
- amd-gfx@lists.freedesktop.org, laurent.pinchart@ideasonboard.com,
- hyun.kwon@xilinx.com, rodrigosiqueiramelo@gmail.com, aaron.liu@amd.com,
- Felix.Kuehling@amd.com, xinhui.pan@amd.com, sw0312.kim@samsung.com,
- hjc@rock-chips.com, chris@chris-wilson.co.uk, kyungmin.park@samsung.com,
- nirmoy.das@amd.com, alexander.deucher@amd.com, Hawking.Zhang@amd.com,
- freedreno@lists.freedesktop.org, christian.koenig@amd.com
-Message-ID: <b9943bf0-8a7d-96b3-c5f3-1e940d524efb@suse.de>
-Subject: Re: [PATCH 20/20] drm: Remove obsolete GEM and PRIME callbacks from
- struct drm_driver
-References: <20200813083644.31711-1-tzimmermann@suse.de>
- <20200813083644.31711-21-tzimmermann@suse.de>
- <20200813101659.GA752979@ravnborg.org>
-In-Reply-To: <20200813101659.GA752979@ravnborg.org>
+On 2020-08-13 10:40, Will Deacon wrote:
+> On Thu, Aug 13, 2020 at 02:49:37PM +0530, Sai Prakash Ranjan wrote:
+>> On 2020-08-13 14:33, Will Deacon wrote:
+>> > On Thu, Aug 13, 2020 at 01:48:34PM +0530, Sai Prakash Ranjan wrote:
+>> > > KRYO4XX gold/big CPU cores are based on Cortex-A76 which has CSV2
+>> > > bits set and are spectre-v2 safe. But on big.LITTLE systems where
+>> > > they are coupled with other CPU cores such as the KRYO4XX silver
+>> > > based on Cortex-A55 which are spectre-v2 safe but do not have CSV2
+>> > > bits set, the system wide safe value will be set to the lowest value
+>> > > of CSV2 bits as per FTR_LOWER_SAFE defined for CSV2 bits of register
+>> > > ID_AA64PFR0_EL1.
+>> > >
+>> > > This is a problem when booting a guest kernel on gold CPU cores
+>> > > where it will incorrectly report ARM_SMCCC_ARCH_WORKAROUND_1 warning
+>> > > and consider them as vulnerable for Spectre variant 2 due to system
+>> > > wide safe value which is used in kvm emulation code when reading id
+>> > > registers. One wrong way of fixing this is to set the FTR_HIGHER_SAFE
+>> > > for CSV2 bits, so instead add the KRYO4XX gold CPU core to the safe
+>> > > list which will be consulted even when the sanitised read reports
+>> > > that CSV2 bits are not set for KRYO4XX gold cores.
+>> > >
+>> > > Reported-by: Stephen Boyd <swboyd@chromium.org>
+>> > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> > > ---
+>> > >  arch/arm64/kernel/cpu_errata.c | 1 +
+>> > >  1 file changed, 1 insertion(+)
+>> > >
+>> > > diff --git a/arch/arm64/kernel/cpu_errata.c
+>> > > b/arch/arm64/kernel/cpu_errata.c
+>> > > index 6bd1d3ad037a..6cbdd2d98a2a 100644
+>> > > --- a/arch/arm64/kernel/cpu_errata.c
+>> > > +++ b/arch/arm64/kernel/cpu_errata.c
+>> > > @@ -545,6 +545,7 @@ static const struct midr_range
+>> > > spectre_v2_safe_list[] = {
+>> > >  	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
+>> > >  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
+>> > >  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
+>> > > +	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+>> >
+>> > We shouldn't be putting CPUs in the safe list when they have CSV2
+>> > reporting
+>> > that they are mitigated in hardware, so I don't think this is the right
+>> > approach.
+>> >
+>> 
+>> Ok but the only thing I find wrong in this approach is that it is a
+>> redundant
+>> information because CSV2 is already advertising the mitigation, but 
+>> again
+>> CSV2 check is done first so it doesn't really hurt to add it to the 
+>> safe
+>> list because we already know that it is safe.
+> 
+> It simply doesn't scale. That's why CSV2 exists in the first place, so 
+> we
+> don't have to modify the kernel everytime a new CPU is invented.
+> 
+>> > Sounds more like KVM should advertise CSV2 for the vCPUs if all of the
+>> > physical CPUs without CSV2 set are on the safe list. But then again, KVM
+>> > has always been slightly in denial about big.LITTLE because you can't
+>> > sensibly expose it to a guest if there are detectable differences...
+>> >
+>> 
+>> Sorry but I don't see how the guest kernel will see the CSV2 bits set 
+>> for
+>> gold CPU cores without actually adding them to the safe list or 
+>> reading the
+>> not sanitised value of ID_AA64PFR0_EL1 ?
+> 
+> Well that's for somebody to figure out in the patch. I'm just saying 
+> that
+> adding cores to the safe list when they already have a CSV2 field 
+> conveying
+> the same information is the wrong approach. The right appproach is for 
+> KVM
+> to expose CSV2 as set when the system is not affected by the erratum.
 
---0fRH42pD71PFUBQdjrec5q0Fp6owMu0hv
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+A sensible way to fix this would be with something like that:
 
-Hi
-
-Am 13.08.20 um 12:16 schrieb Sam Ravnborg:
-> Hi Thomas.
->=20
-> On Thu, Aug 13, 2020 at 10:36:44AM +0200, Thomas Zimmermann wrote:
->> Several GEM and PRIME callbacks have been deprecated in favor of
->> per-instance GEM object functions. Remove the callbacks as they are
->> now unused. The only exception is .gem_prime_mmap, which is still
->> in use by several drivers.
->>
->> What is also gone is gem_vm_ops in struct drm_driver. All drivers now
->> use struct drm_gem_object_funcs.vm_ops instead.
->>
->> While at it, the patch also improves error handling around calls
->> to .free and .get_sg_table callbacks.
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->=20
-> After this following entry in todo.rst is done?
->=20
-> "
-> struct drm_gem_object_funcs
-> ---------------------------
->=20
-> GEM objects can now have a function table instead of having the callbac=
-ks on the
-> DRM driver struct. This is now the preferred way and drivers can be mov=
-ed over.
-
-This should only say that .gem_prime_mmap() is left in struct
-drm_drivers for conversion.
-
->=20
-> We also need a 2nd version of the CMA define that doesn't require the
-> vmapping to be present (different hook for prime importing). Plus this =
-needs to
-> be rolled out to all drivers using their own implementations, too.
-> "
-
-This sounds like it got fixed in the recent CMA clean-up series. There
-are CMA initializer macros for drivers with and without vmap. I have to
-take a closer look, but I think it can be removed.
-
-Thanks for bringing this up.
-
-Best regards
-Thomas
-
->=20
-> If yes, then delete it too.
->=20
-> 	Sam
->=20
->> ---
->>  drivers/gpu/drm/drm_gem.c            | 35 +++---------
->>  drivers/gpu/drm/drm_gem_cma_helper.c |  6 +-
->>  drivers/gpu/drm/drm_prime.c          | 17 +++---
->>  include/drm/drm_drv.h                | 85 ++-------------------------=
--
->>  4 files changed, 23 insertions(+), 120 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
->> index 19d73868490e..96945bed8291 100644
->> --- a/drivers/gpu/drm/drm_gem.c
->> +++ b/drivers/gpu/drm/drm_gem.c
->> @@ -247,12 +247,9 @@ drm_gem_object_release_handle(int id, void *ptr, =
-void *data)
->>  {
->>  	struct drm_file *file_priv =3D data;
->>  	struct drm_gem_object *obj =3D ptr;
->> -	struct drm_device *dev =3D obj->dev;
->> =20
->>  	if (obj->funcs && obj->funcs->close)
->>  		obj->funcs->close(obj, file_priv);
->> -	else if (dev->driver->gem_close_object)
->> -		dev->driver->gem_close_object(obj, file_priv);
->> =20
->>  	drm_gem_remove_prime_handles(obj, file_priv);
->>  	drm_vma_node_revoke(&obj->vma_node, file_priv);
->> @@ -407,10 +404,6 @@ drm_gem_handle_create_tail(struct drm_file *file_=
-priv,
->>  		ret =3D obj->funcs->open(obj, file_priv);
->>  		if (ret)
->>  			goto err_revoke;
->> -	} else if (dev->driver->gem_open_object) {
->> -		ret =3D dev->driver->gem_open_object(obj, file_priv);
->> -		if (ret)
->> -			goto err_revoke;
->>  	}
->> =20
->>  	*handlep =3D handle;
->> @@ -982,12 +975,11 @@ drm_gem_object_free(struct kref *kref)
->>  {
->>  	struct drm_gem_object *obj =3D
->>  		container_of(kref, struct drm_gem_object, refcount);
->> -	struct drm_device *dev =3D obj->dev;
->> =20
->> -	if (obj->funcs)
->> -		obj->funcs->free(obj);
->> -	else if (dev->driver->gem_free_object_unlocked)
->> -		dev->driver->gem_free_object_unlocked(obj);
->> +	if (drm_WARN_ON_ONCE(obj->dev, !obj->funcs || !obj->funcs->free))
->> +		return;
->> +
->> +	obj->funcs->free(obj);
->>  }
->>  EXPORT_SYMBOL(drm_gem_object_free);
->> =20
->> @@ -1049,9 +1041,9 @@ EXPORT_SYMBOL(drm_gem_vm_close);
->>   * @obj_size: the object size to be mapped, in bytes
->>   * @vma: VMA for the area to be mapped
->>   *
->> - * Set up the VMA to prepare mapping of the GEM object using the gem_=
-vm_ops
->> - * provided by the driver. Depending on their requirements, drivers c=
-an either
->> - * provide a fault handler in their gem_vm_ops (in which case any acc=
-esses to
->> + * Set up the VMA to prepare mapping of the GEM object using the GEM =
-object's
->> + * vm_ops. Depending on their requirements, GEM objects can either
->> + * provide a fault handler in their vm_ops (in which case any accesse=
-s to
->>   * the object will be trapped, to perform migration, GTT binding, sur=
-face
->>   * register allocation, or performance monitoring), or mmap the buffe=
-r memory
->>   * synchronously after calling drm_gem_mmap_obj.
->> @@ -1065,12 +1057,11 @@ EXPORT_SYMBOL(drm_gem_vm_close);
->>   * callers must verify access restrictions before calling this helper=
-=2E
->>   *
->>   * Return 0 or success or -EINVAL if the object size is smaller than =
-the VMA
->> - * size, or if no gem_vm_ops are provided.
->> + * size, or if no vm_ops are provided.
->>   */
->>  int drm_gem_mmap_obj(struct drm_gem_object *obj, unsigned long obj_si=
-ze,
->>  		     struct vm_area_struct *vma)
->>  {
->> -	struct drm_device *dev =3D obj->dev;
->>  	int ret;
->> =20
->>  	/* Check for valid size. */
->> @@ -1095,8 +1086,6 @@ int drm_gem_mmap_obj(struct drm_gem_object *obj,=
- unsigned long obj_size,
->>  	} else {
->>  		if (obj->funcs && obj->funcs->vm_ops)
->>  			vma->vm_ops =3D obj->funcs->vm_ops;
->> -		else if (dev->driver->gem_vm_ops)
->> -			vma->vm_ops =3D dev->driver->gem_vm_ops;
->>  		else {
->>  			drm_gem_object_put(obj);
->>  			return -EINVAL;
->> @@ -1206,8 +1195,6 @@ int drm_gem_pin(struct drm_gem_object *obj)
->>  {
->>  	if (obj->funcs && obj->funcs->pin)
->>  		return obj->funcs->pin(obj);
->> -	else if (obj->dev->driver->gem_prime_pin)
->> -		return obj->dev->driver->gem_prime_pin(obj);
->>  	else
->>  		return 0;
->>  }
->> @@ -1216,8 +1203,6 @@ void drm_gem_unpin(struct drm_gem_object *obj)
->>  {
->>  	if (obj->funcs && obj->funcs->unpin)
->>  		obj->funcs->unpin(obj);
->> -	else if (obj->dev->driver->gem_prime_unpin)
->> -		obj->dev->driver->gem_prime_unpin(obj);
->>  }
->> =20
->>  void *drm_gem_vmap(struct drm_gem_object *obj)
->> @@ -1226,8 +1211,6 @@ void *drm_gem_vmap(struct drm_gem_object *obj)
->> =20
->>  	if (obj->funcs && obj->funcs->vmap)
->>  		vaddr =3D obj->funcs->vmap(obj);
->> -	else if (obj->dev->driver->gem_prime_vmap)
->> -		vaddr =3D obj->dev->driver->gem_prime_vmap(obj);
->>  	else
->>  		vaddr =3D ERR_PTR(-EOPNOTSUPP);
->> =20
->> @@ -1244,8 +1227,6 @@ void drm_gem_vunmap(struct drm_gem_object *obj, =
-void *vaddr)
->> =20
->>  	if (obj->funcs && obj->funcs->vunmap)
->>  		obj->funcs->vunmap(obj, vaddr);
->> -	else if (obj->dev->driver->gem_prime_vunmap)
->> -		obj->dev->driver->gem_prime_vunmap(obj, vaddr);
->>  }
->> =20
->>  /**
->> diff --git a/drivers/gpu/drm/drm_gem_cma_helper.c b/drivers/gpu/drm/dr=
-m_gem_cma_helper.c
->> index 822edeadbab3..209202257cc2 100644
->> --- a/drivers/gpu/drm/drm_gem_cma_helper.c
->> +++ b/drivers/gpu/drm/drm_gem_cma_helper.c
->> @@ -419,7 +419,7 @@ EXPORT_SYMBOL(drm_gem_cma_print_info);
->>   *
->>   * This function exports a scatter/gather table suitable for PRIME us=
-age by
->>   * calling the standard DMA mapping API. Drivers using the CMA helper=
-s should
->> - * set this as their &drm_driver.gem_prime_get_sg_table callback.
->> + * set this as their &drm_gem_object_funcs.get_sg_table callback.
->>   *
->>   * Returns:
->>   * A pointer to the scatter/gather table of pinned pages or NULL on f=
-ailure.
->> @@ -542,7 +542,7 @@ EXPORT_SYMBOL_GPL(drm_gem_cma_prime_mmap);
->>   * virtual address space. Since the CMA buffers are already mapped in=
-to the
->>   * kernel virtual address space this simply returns the cached virtua=
-l
->>   * address. Drivers using the CMA helpers should set this as their DR=
-M
->> - * driver's &drm_driver.gem_prime_vmap callback.
->> + * driver's &drm_gem_object_funcs.vmap callback.
->>   *
->>   * Returns:
->>   * The kernel virtual address of the CMA GEM object's backing store.
->> @@ -564,7 +564,7 @@ EXPORT_SYMBOL_GPL(drm_gem_cma_prime_vmap);
->>   * This function removes a buffer exported via DRM PRIME from the ker=
-nel's
->>   * virtual address space. This is a no-op because CMA buffers cannot =
-be
->>   * unmapped from kernel space. Drivers using the CMA helpers should s=
-et this
->> - * as their &drm_driver.gem_prime_vunmap callback.
->> + * as their &drm_gem_object_funcs.vunmap callback.
->>   */
->>  void drm_gem_cma_prime_vunmap(struct drm_gem_object *obj, void *vaddr=
-)
->>  {
->> diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c=
-
->> index 1693aa7c14b5..9a87639e7008 100644
->> --- a/drivers/gpu/drm/drm_prime.c
->> +++ b/drivers/gpu/drm/drm_prime.c
->> @@ -386,10 +386,6 @@ static struct dma_buf *export_and_register_object=
-(struct drm_device *dev,
->> =20
->>  	if (obj->funcs && obj->funcs->export)
->>  		dmabuf =3D obj->funcs->export(obj, flags);
->> -	else if (dev->driver->gem_prime_export)
->> -		dmabuf =3D dev->driver->gem_prime_export(obj, flags);
->> -	else
->> -		dmabuf =3D drm_gem_prime_export(obj, flags);
->>  	if (IS_ERR(dmabuf)) {
->>  		/* normally the created dma-buf takes ownership of the ref,
->>  		 * but if that fails then drop the ref
->> @@ -419,7 +415,7 @@ static struct dma_buf *export_and_register_object(=
-struct drm_device *dev,
->>   * This is the PRIME export function which must be used mandatorily b=
-y GEM
->>   * drivers to ensure correct lifetime management of the underlying GE=
-M object.
->>   * The actual exporting from GEM object to a dma-buf is done through =
-the
->> - * &drm_driver.gem_prime_export driver callback.
->> + * &drm_gem_object_funcs.export callback.
->>   */
->>  int drm_gem_prime_handle_to_fd(struct drm_device *dev,
->>  			       struct drm_file *file_priv, uint32_t handle,
->> @@ -616,15 +612,18 @@ struct sg_table *drm_gem_map_dma_buf(struct dma_=
-buf_attachment *attach,
->>  				     enum dma_data_direction dir)
->>  {
->>  	struct drm_gem_object *obj =3D attach->dmabuf->priv;
->> -	struct sg_table *sgt;
->> +	struct sg_table *sgt =3D NULL;
->> =20
->>  	if (WARN_ON(dir =3D=3D DMA_NONE))
->>  		return ERR_PTR(-EINVAL);
->> =20
->> -	if (obj->funcs)
->> +	if (obj->funcs && obj->funcs->get_sg_table)
->>  		sgt =3D obj->funcs->get_sg_table(obj);
->> -	else
->> -		sgt =3D obj->dev->driver->gem_prime_get_sg_table(obj);
->> +
->> +	if (!sgt)
->> +		return ERR_PTR(-EINVAL);
->> +	else if (IS_ERR(sgt))
->> +		return sgt;
->> =20
->>  	if (!dma_map_sg_attrs(attach->dev, sgt->sgl, sgt->nents, dir,
->>  			      DMA_ATTR_SKIP_CPU_SYNC)) {
->> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
->> index 7116abc1a04e..8b325bf6cef4 100644
->> --- a/include/drm/drm_drv.h
->> +++ b/include/drm/drm_drv.h
->> @@ -36,10 +36,12 @@ struct drm_file;
->>  struct drm_gem_object;
->>  struct drm_master;
->>  struct drm_minor;
->> +struct dma_buf;
->>  struct dma_buf_attachment;
->>  struct drm_display_mode;
->>  struct drm_mode_create_dumb;
->>  struct drm_printer;
->> +struct sg_table;
->> =20
->>  /**
->>   * enum drm_driver_feature - feature flags
->> @@ -327,32 +329,6 @@ struct drm_driver {
->>  	 */
->>  	void (*debugfs_init)(struct drm_minor *minor);
->> =20
->> -	/**
->> -	 * @gem_free_object_unlocked: deconstructor for drm_gem_objects
->> -	 *
->> -	 * This is deprecated and should not be used by new drivers. Use
->> -	 * &drm_gem_object_funcs.free instead.
->> -	 */
->> -	void (*gem_free_object_unlocked) (struct drm_gem_object *obj);
->> -
->> -	/**
->> -	 * @gem_open_object:
->> -	 *
->> -	 * This callback is deprecated in favour of &drm_gem_object_funcs.op=
-en.
->> -	 *
->> -	 * Driver hook called upon gem handle creation
->> -	 */
->> -	int (*gem_open_object) (struct drm_gem_object *, struct drm_file *);=
-
->> -
->> -	/**
->> -	 * @gem_close_object:
->> -	 *
->> -	 * This callback is deprecated in favour of &drm_gem_object_funcs.cl=
-ose.
->> -	 *
->> -	 * Driver hook called upon gem handle release
->> -	 */
->> -	void (*gem_close_object) (struct drm_gem_object *, struct drm_file *=
-);
->> -
->>  	/**
->>  	 * @gem_create_object: constructor for gem objects
->>  	 *
->> @@ -361,6 +337,7 @@ struct drm_driver {
->>  	 */
->>  	struct drm_gem_object *(*gem_create_object)(struct drm_device *dev,
->>  						    size_t size);
->> +
->>  	/**
->>  	 * @prime_handle_to_fd:
->>  	 *
->> @@ -383,14 +360,7 @@ struct drm_driver {
->>  	 */
->>  	int (*prime_fd_to_handle)(struct drm_device *dev, struct drm_file *f=
-ile_priv,
->>  				int prime_fd, uint32_t *handle);
->> -	/**
->> -	 * @gem_prime_export:
->> -	 *
->> -	 * Export hook for GEM drivers. Deprecated in favour of
->> -	 * &drm_gem_object_funcs.export.
->> -	 */
->> -	struct dma_buf * (*gem_prime_export)(struct drm_gem_object *obj,
->> -					     int flags);
->> +
->>  	/**
->>  	 * @gem_prime_import:
->>  	 *
->> @@ -400,29 +370,6 @@ struct drm_driver {
->>  	 */
->>  	struct drm_gem_object * (*gem_prime_import)(struct drm_device *dev,
->>  				struct dma_buf *dma_buf);
->> -
->> -	/**
->> -	 * @gem_prime_pin:
->> -	 *
->> -	 * Deprecated hook in favour of &drm_gem_object_funcs.pin.
->> -	 */
->> -	int (*gem_prime_pin)(struct drm_gem_object *obj);
->> -
->> -	/**
->> -	 * @gem_prime_unpin:
->> -	 *
->> -	 * Deprecated hook in favour of &drm_gem_object_funcs.unpin.
->> -	 */
->> -	void (*gem_prime_unpin)(struct drm_gem_object *obj);
->> -
->> -
->> -	/**
->> -	 * @gem_prime_get_sg_table:
->> -	 *
->> -	 * Deprecated hook in favour of &drm_gem_object_funcs.get_sg_table.
->> -	 */
->> -	struct sg_table *(*gem_prime_get_sg_table)(struct drm_gem_object *ob=
-j);
->> -
->>  	/**
->>  	 * @gem_prime_import_sg_table:
->>  	 *
->> @@ -433,22 +380,6 @@ struct drm_driver {
->>  				struct drm_device *dev,
->>  				struct dma_buf_attachment *attach,
->>  				struct sg_table *sgt);
->> -	/**
->> -	 * @gem_prime_vmap:
->> -	 *
->> -	 * Deprecated vmap hook for GEM drivers. Please use
->> -	 * &drm_gem_object_funcs.vmap instead.
->> -	 */
->> -	void *(*gem_prime_vmap)(struct drm_gem_object *obj);
->> -
->> -	/**
->> -	 * @gem_prime_vunmap:
->> -	 *
->> -	 * Deprecated vunmap hook for GEM drivers. Please use
->> -	 * &drm_gem_object_funcs.vunmap instead.
->> -	 */
->> -	void (*gem_prime_vunmap)(struct drm_gem_object *obj, void *vaddr);
->> -
->>  	/**
->>  	 * @gem_prime_mmap:
->>  	 *
->> @@ -523,14 +454,6 @@ struct drm_driver {
->>  			    struct drm_device *dev,
->>  			    uint32_t handle);
->> =20
->> -	/**
->> -	 * @gem_vm_ops: Driver private ops for this object
->> -	 *
->> -	 * For GEM drivers this is deprecated in favour of
->> -	 * &drm_gem_object_funcs.vm_ops.
->> -	 */
->> -	const struct vm_operations_struct *gem_vm_ops;
->> -
->>  	/** @major: driver major number */
->>  	int major;
->>  	/** @minor: driver minor number */
->> --=20
->> 2.28.0
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
->=20
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 077293b5115f..2735db21ff0d 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1131,6 +1131,9 @@ static u64 read_id_reg(const struct kvm_vcpu 
+*vcpu,
+  		if (!vcpu_has_sve(vcpu))
+  			val &= ~(0xfUL << ID_AA64PFR0_SVE_SHIFT);
+  		val &= ~(0xfUL << ID_AA64PFR0_AMU_SHIFT);
++		if (!(val & (0xfUL << ID_AA64PFR0_CSV2_SHIFT)) &&
++		    get_spectre_v2_workaround_state() == 
+ARM64_BP_HARDEN_NOT_REQUIRED)
++			val |= (1UL << ID_AA64PFR0_CSV2_SHIFT);
+  	} else if (id == SYS_ID_AA64ISAR1_EL1 && !vcpu_has_ptrauth(vcpu)) {
+  		val &= ~((0xfUL << ID_AA64ISAR1_APA_SHIFT) |
+  			 (0xfUL << ID_AA64ISAR1_API_SHIFT) |
 
 
---0fRH42pD71PFUBQdjrec5q0Fp6owMu0hv--
-
---9y9KMsxjjShQF8iXyEFXxsTSVMHBOxC7u
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQFIBAEBCAAyFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl81Ft8UHHR6aW1tZXJt
-YW5uQHN1c2UuZGUACgkQaA3BHVMLeiM1lQf9G9wo3YjMP/60DuchnFCPn0Yb5R0r
-tQmou0fH68UXoP3fvghSWnMAy0Ioltew8tR3r+LZvtNfsI3JjjmJdjVEf8j3gq6/
-bkKIJm58WHGgjKpKVQSu4hD9+XY+eCVYb9C5wsi+HXsTf1iGL822wqXotd8EkTwJ
-0AP8ZNUm+DmPW0V0CiGoI/3s+fC+DqmLwTi2csS5IcjnCmL2ot/3T7rfXKl+GIj9
-928lvTdGm9lSHKdz9KlIwvcg99ukw5pi0T/7gz862uKhW51iKP46D446aLSPIChy
-UcAV9X14vIV1CKnmT97ngL1tMCICslKg3voVXTqcVsCkUYAiCqVBTZEnAg==
-=urNW
------END PGP SIGNATURE-----
-
---9y9KMsxjjShQF8iXyEFXxsTSVMHBOxC7u--
+         M.
+-- 
+Jazz is not dead. It just smells funny...
