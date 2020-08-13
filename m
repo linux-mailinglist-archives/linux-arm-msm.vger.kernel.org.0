@@ -2,246 +2,451 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0844B24381A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 11:58:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2930B243857
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 12:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726106AbgHMJ6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 05:58:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35862 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726048AbgHMJ6d (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 05:58:33 -0400
-Received: from coco.lan (ip5f5ad5c5.dynamic.kabel-deutschland.de [95.90.213.197])
+        id S1726204AbgHMKRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 06:17:17 -0400
+Received: from asavdk4.altibox.net ([109.247.116.15]:37292 "EHLO
+        asavdk4.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726053AbgHMKRQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 06:17:16 -0400
+Received: from ravnborg.org (unknown [188.228.123.71])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C8385206A4;
-        Thu, 13 Aug 2020 09:58:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597312712;
-        bh=9RgQzuhqlRmtPEcH71/uI/W3vda4Hj2yojosYlaMzQc=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=XfTzQarbNsyDPeTzjsFu2xl1etxDXCqda8LvDEXpdjegidj0Xgsr2kj27WVGm6slM
-         o8qXDSNIz8t27fK7IrRxoLEY5xrWvi+vTNigaxxqamJKt4vRAGMO9Ag7XojLkptG8B
-         OIGlea/1wskhl5ANMK5MBT5wraJ2/dxIfgFnj16o=
-Date:   Thu, 13 Aug 2020 11:58:23 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        by asavdk4.altibox.net (Postfix) with ESMTPS id 346C580503;
+        Thu, 13 Aug 2020 12:17:01 +0200 (CEST)
+Date:   Thu, 13 Aug 2020 12:16:59 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        abdiel.janulgue@linux.intel.com, tvrtko.ursulin@linux.intel.com,
+        andi.shyti@intel.com, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
-        Wei Xu <xuwei5@hisilicon.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, devel@driverdev.osuosl.org,
-        linux-arm-msm@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH 00/44] SPMI patches needed by Hikey 970
-Message-ID: <20200813115823.70f9016a@coco.lan>
-In-Reply-To: <20200813075827.GH4354@dell>
-References: <cover.1597247164.git.mchehab+huawei@kernel.org>
-        <20200813075827.GH4354@dell>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+Subject: Re: [PATCH 20/20] drm: Remove obsolete GEM and PRIME callbacks from
+ struct drm_driver
+Message-ID: <20200813101659.GA752979@ravnborg.org>
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-21-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200813083644.31711-21-tzimmermann@suse.de>
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=aP3eV41m c=1 sm=1 tr=0
+        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
+        a=kj9zAlcOel0A:10 a=N6sGBX8BiyC5GP_3pz8A:9 a=EQFFPReBfTXNiWI6:21
+        a=YPaO2tjWljxz4Jer:21 a=CjuIK1q_8ugA:10
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lee,
+Hi Thomas.
 
-Em Thu, 13 Aug 2020 08:58:27 +0100
-Lee Jones <lee.jones@linaro.org> escreveu:
+On Thu, Aug 13, 2020 at 10:36:44AM +0200, Thomas Zimmermann wrote:
+> Several GEM and PRIME callbacks have been deprecated in favor of
+> per-instance GEM object functions. Remove the callbacks as they are
+> now unused. The only exception is .gem_prime_mmap, which is still
+> in use by several drivers.
+> 
+> What is also gone is gem_vm_ops in struct drm_driver. All drivers now
+> use struct drm_gem_object_funcs.vm_ops instead.
+> 
+> While at it, the patch also improves error handling around calls
+> to .free and .get_sg_table callbacks.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-> On Wed, 12 Aug 2020, Mauro Carvalho Chehab wrote:
->=20
-> > Hi Greg,
-> >=20
-> > This patch series is part of a work I'm doing in order to be able to su=
-pport
-> > a HiKey 970 board that I recently got on my hands.
-> >=20
-> > I received some freedback from Mark and from Jonathan on a first
-> > attempt I made to upstream this.
-> >=20
-> > I'm opting to submit it via staging, because I had to start from the
-> > patch that originally added this driver on a 4.9 Kernel tree:
-> >=20
-> > 	https://github.com/96boards-hikey/linux/tree/hikey970-v4.9
-> >=20
-> > In order to preserve the original SOB from the driver's author.
-> >=20
-> > The patches following it are on the standard way: one patch per
-> > logical change.
-> >=20
-> > This is part of a bigger work whose goal is to have upstream support
-> > for USB and DRM/KMS on such boards.=20
-> >=20
-> > I suspect that, maybe except for the DT part, those 3 specific drivers
-> > are more or less ready to be moved from staging, but the other
-> > drivers that are also part of this attempt aren't ready. Specially the
-> > DRM driver has some bugs that came from the OOT version.
-> >=20
-> > So, my current plan is to submit those drivers to staging for 5.9
-> > and move the ones that are ok out of staging on Kernel 5.10. =20
->=20
-> What a mess.  This is no way to upstream a new driver.
->=20
-> Firstly, could you please add versioning to your submissions.  I know
-> this at least version 2.  Were there previous submissions?  Is this
-> the latest?
+After this following entry in todo.rst is done?
 
-Yeah, that's the second attempt. The first one was:
+"
+struct drm_gem_object_funcs
+---------------------------
 
-	https://lore.kernel.org/lkml/176043f329dfa9889f014feec04e7e1553077873.1597=
-160086.git.mchehab+huawei@kernel.org/T/#u
+GEM objects can now have a function table instead of having the callbacks on the
+DRM driver struct. This is now the preferred way and drivers can be moved over.
 
-I was in doubt about adding a v2 in this specific case or not,=20
-since I ended submitting it to the staging tree.
+We also need a 2nd version of the CMA define that doesn't require the
+vmapping to be present (different hook for prime importing). Plus this needs to
+be rolled out to all drivers using their own implementations, too.
+"
 
-> Secondly and more importantly, you have submitted what looks like a
-> new driver (bearing in mind that I'm only concerning myself with the
-> MFD related changes), then in the same submission you are adding and
-> removing large chunks.  Please just submit the new driver, on its own
-> as a single patch, complete with its associated Makefile and Kconfig
-> changes.
+If yes, then delete it too.
 
-I can't do like that because I'm not the author of the original patch that
-added the driver.
+	Sam
 
-The original patch came from the 96board's android-kernel based 4.9 tree:
-
-	https://github.com/96boards-hikey/linux/tree/hikey970-v4.9
-
-> What are your reasons for submitting this via Staging?=20
-
-The main reason is to preserve both the patch authorship and its
-history.
-
-After the original patch, I wrote several incremental changes cleaning
-up the original driver and stripping parts of it that aren't needed.
-
-By preserving the history, if someone wants to restore some removed
-functionality, it is just a matter of reverting a patch.
-
-For example, the original driver had its own sysfs interface for
-debugging the regulator driver.=20
-
-This is not needed for it to work. Also, the right interface for such=20
-things is via configfs. Yet, someone could think on restoring such=20
-feat and start from the existing code, instead of coming with=20
-something else from scratch.
-
-> Is it not ready yet?=20
-
-=46rom my side, I believe that, after my changes, the code now meets
-upstream requirements, maybe except for DT (and the parsing code).
-There are a few things at the DT properties on this driver that could=20
-be named on a different (more standard way).=20
-
-Yet, I'm not a regular contributor for mfd/regulator/spmi. So,
-I may have missed something.
-
-> Are the resultant components not at a high enough level of
-> quality or enablement to go straight into the subsystems, which is
-> more typical?  From an MFD perspective, I would be reviewing the
-> driver as a whole when (if) it moves from Staging into MFD anyway, so
-> why are you jumping through hoops with this additional, seemingly
-> superfluous step?
-
-I'm OK if this gets reviewed by MFD people only after moving it out of
-staging. Assuming that this would be merged for Kernel 5.10, I'll
-likely send a patch moving it out of staging for 5.11. Then,
-you can do a comprehensive review.
-
-> Finally, the subject of authorship is often a contentious one, but
-> this is a problem you need to work out with the original author, not
-> something that should require special handing by upstream.  You have a
-> couple of choices, but bear in mind that upstreaming a non-suitable
-> driver then bringing it up to standard is not one of them.
->=20
-> 1. Keep the original author's authorship and SoB, make your changes
->    and get them to review to ensure they are still happy about being
->    associated with the resultant code.  Ensure you mention all of the
->    changes you make in the commit message and follow-up by adding your
->    own SoB.
->=20
-> 2. This is the contentious bit.  If you've made enough changes, there
->    is an argument for you to adopt authorship.  You should discuss
->    with the original author whether they are happy for you to retain
->    their SoB.  My suggestion is always try to keep the SoB as a bare
->    minimum to preserve patch history and out of pure courtesy.
-
-It is not only the above. Both the original author and anyone
-touching the code should comply with applicable internal policies.
-
-=46rom my experience, dealing with such things takes a lot more of time
-then coding, as it require talking with legal departments on different
-continents, and with developers and with their bosses in order to be
-able to do things like that.=20
-
-This can also be a very frustrating process. During almost 20 years of
-being the media maintainer, I've seen several cases where trying to
-enforce a folded initial patch caused devs to receive NACKS, preventing=20
-them so submit otherwise good stuff.
-
-So, at the media subsystem, I'm perfectly fine if someone starts from=20
-the original OOT driver, preserving its original authorships. We're
-also dealing there with the patches sent to drivers/staging/media.
-
-I'm not saying that other subsystem maintainers should do the same.
-Dealing with staging is time consuming, and I completely understand
-that most maintainers prefer to stay out of it ;-)
-
--=20
-
-Since when staging tree started, if someone has to start from the
-original patch, such things can be merged at staging. Then,
-incremental patches are applied at the top until it reaches what's
-required to be promoted.
-
-That's said, there's no hush to have those drivers out of staging.
-My end goal is to have DRM/KMS and USB support for Hikey 970.=20
-
-The patchsets I have so far are at:
-
-	https://github.com/mchehab/linux/commits/hikey970/to_upstream-2.0-v1.1
-
-(this branch has the v1 of my patchset)
-
-Porting this driver is part of such effort. While this driver is
-on a good situation, the other ones may require some time to
-mature.
-
-The DRM/KMS driver for example, is not ready to be merged outside=20
-staging, as it carries several bugs that came from the original
-driver and are present at the official tree at 96boards. For example,
-there is a a very dirty hack that enforces the HDMI chipset to
-only work with a limited set of resolutions that are known to work:
-
-	https://github.com/96boards-hikey/linux/blob/hikey970-v4.9/drivers/gpu/drm=
-/hisilicon/kirin9xx/hdmi/adv7535.c#L869
-
-It also has problems reading the frequencies via EDID interface.
-Due to that, the driver fakes an EDID table:
-
-	https://github.com/96boards-hikey/linux/blob/hikey970-v4.9/drivers/gpu/drm=
-/hisilicon/kirin9xx/hdmi/adv7535.c#L463
-
-It sounds to me that some clocks are not properly set for a random
-resolution, but fixing it is not trivial and requires deep knowledge
-about how the display registers should be tuned to better support
-resolutions. The current settings cause underflows with 1080p,
-which in turn makes the display driver to (silently) stop working.
-
-So, in summary, I believe that some drivers from my port will
-require being at staging for a while. While I was planning to
-do that on my next patch submission, placing the PM drivers
-there won't make much difference from my side, as I'll need to
-be submitting patches anyway moving drivers out of staging as
-they become ready.
-
-Thanks,
-Mauro
+> ---
+>  drivers/gpu/drm/drm_gem.c            | 35 +++---------
+>  drivers/gpu/drm/drm_gem_cma_helper.c |  6 +-
+>  drivers/gpu/drm/drm_prime.c          | 17 +++---
+>  include/drm/drm_drv.h                | 85 ++--------------------------
+>  4 files changed, 23 insertions(+), 120 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> index 19d73868490e..96945bed8291 100644
+> --- a/drivers/gpu/drm/drm_gem.c
+> +++ b/drivers/gpu/drm/drm_gem.c
+> @@ -247,12 +247,9 @@ drm_gem_object_release_handle(int id, void *ptr, void *data)
+>  {
+>  	struct drm_file *file_priv = data;
+>  	struct drm_gem_object *obj = ptr;
+> -	struct drm_device *dev = obj->dev;
+>  
+>  	if (obj->funcs && obj->funcs->close)
+>  		obj->funcs->close(obj, file_priv);
+> -	else if (dev->driver->gem_close_object)
+> -		dev->driver->gem_close_object(obj, file_priv);
+>  
+>  	drm_gem_remove_prime_handles(obj, file_priv);
+>  	drm_vma_node_revoke(&obj->vma_node, file_priv);
+> @@ -407,10 +404,6 @@ drm_gem_handle_create_tail(struct drm_file *file_priv,
+>  		ret = obj->funcs->open(obj, file_priv);
+>  		if (ret)
+>  			goto err_revoke;
+> -	} else if (dev->driver->gem_open_object) {
+> -		ret = dev->driver->gem_open_object(obj, file_priv);
+> -		if (ret)
+> -			goto err_revoke;
+>  	}
+>  
+>  	*handlep = handle;
+> @@ -982,12 +975,11 @@ drm_gem_object_free(struct kref *kref)
+>  {
+>  	struct drm_gem_object *obj =
+>  		container_of(kref, struct drm_gem_object, refcount);
+> -	struct drm_device *dev = obj->dev;
+>  
+> -	if (obj->funcs)
+> -		obj->funcs->free(obj);
+> -	else if (dev->driver->gem_free_object_unlocked)
+> -		dev->driver->gem_free_object_unlocked(obj);
+> +	if (drm_WARN_ON_ONCE(obj->dev, !obj->funcs || !obj->funcs->free))
+> +		return;
+> +
+> +	obj->funcs->free(obj);
+>  }
+>  EXPORT_SYMBOL(drm_gem_object_free);
+>  
+> @@ -1049,9 +1041,9 @@ EXPORT_SYMBOL(drm_gem_vm_close);
+>   * @obj_size: the object size to be mapped, in bytes
+>   * @vma: VMA for the area to be mapped
+>   *
+> - * Set up the VMA to prepare mapping of the GEM object using the gem_vm_ops
+> - * provided by the driver. Depending on their requirements, drivers can either
+> - * provide a fault handler in their gem_vm_ops (in which case any accesses to
+> + * Set up the VMA to prepare mapping of the GEM object using the GEM object's
+> + * vm_ops. Depending on their requirements, GEM objects can either
+> + * provide a fault handler in their vm_ops (in which case any accesses to
+>   * the object will be trapped, to perform migration, GTT binding, surface
+>   * register allocation, or performance monitoring), or mmap the buffer memory
+>   * synchronously after calling drm_gem_mmap_obj.
+> @@ -1065,12 +1057,11 @@ EXPORT_SYMBOL(drm_gem_vm_close);
+>   * callers must verify access restrictions before calling this helper.
+>   *
+>   * Return 0 or success or -EINVAL if the object size is smaller than the VMA
+> - * size, or if no gem_vm_ops are provided.
+> + * size, or if no vm_ops are provided.
+>   */
+>  int drm_gem_mmap_obj(struct drm_gem_object *obj, unsigned long obj_size,
+>  		     struct vm_area_struct *vma)
+>  {
+> -	struct drm_device *dev = obj->dev;
+>  	int ret;
+>  
+>  	/* Check for valid size. */
+> @@ -1095,8 +1086,6 @@ int drm_gem_mmap_obj(struct drm_gem_object *obj, unsigned long obj_size,
+>  	} else {
+>  		if (obj->funcs && obj->funcs->vm_ops)
+>  			vma->vm_ops = obj->funcs->vm_ops;
+> -		else if (dev->driver->gem_vm_ops)
+> -			vma->vm_ops = dev->driver->gem_vm_ops;
+>  		else {
+>  			drm_gem_object_put(obj);
+>  			return -EINVAL;
+> @@ -1206,8 +1195,6 @@ int drm_gem_pin(struct drm_gem_object *obj)
+>  {
+>  	if (obj->funcs && obj->funcs->pin)
+>  		return obj->funcs->pin(obj);
+> -	else if (obj->dev->driver->gem_prime_pin)
+> -		return obj->dev->driver->gem_prime_pin(obj);
+>  	else
+>  		return 0;
+>  }
+> @@ -1216,8 +1203,6 @@ void drm_gem_unpin(struct drm_gem_object *obj)
+>  {
+>  	if (obj->funcs && obj->funcs->unpin)
+>  		obj->funcs->unpin(obj);
+> -	else if (obj->dev->driver->gem_prime_unpin)
+> -		obj->dev->driver->gem_prime_unpin(obj);
+>  }
+>  
+>  void *drm_gem_vmap(struct drm_gem_object *obj)
+> @@ -1226,8 +1211,6 @@ void *drm_gem_vmap(struct drm_gem_object *obj)
+>  
+>  	if (obj->funcs && obj->funcs->vmap)
+>  		vaddr = obj->funcs->vmap(obj);
+> -	else if (obj->dev->driver->gem_prime_vmap)
+> -		vaddr = obj->dev->driver->gem_prime_vmap(obj);
+>  	else
+>  		vaddr = ERR_PTR(-EOPNOTSUPP);
+>  
+> @@ -1244,8 +1227,6 @@ void drm_gem_vunmap(struct drm_gem_object *obj, void *vaddr)
+>  
+>  	if (obj->funcs && obj->funcs->vunmap)
+>  		obj->funcs->vunmap(obj, vaddr);
+> -	else if (obj->dev->driver->gem_prime_vunmap)
+> -		obj->dev->driver->gem_prime_vunmap(obj, vaddr);
+>  }
+>  
+>  /**
+> diff --git a/drivers/gpu/drm/drm_gem_cma_helper.c b/drivers/gpu/drm/drm_gem_cma_helper.c
+> index 822edeadbab3..209202257cc2 100644
+> --- a/drivers/gpu/drm/drm_gem_cma_helper.c
+> +++ b/drivers/gpu/drm/drm_gem_cma_helper.c
+> @@ -419,7 +419,7 @@ EXPORT_SYMBOL(drm_gem_cma_print_info);
+>   *
+>   * This function exports a scatter/gather table suitable for PRIME usage by
+>   * calling the standard DMA mapping API. Drivers using the CMA helpers should
+> - * set this as their &drm_driver.gem_prime_get_sg_table callback.
+> + * set this as their &drm_gem_object_funcs.get_sg_table callback.
+>   *
+>   * Returns:
+>   * A pointer to the scatter/gather table of pinned pages or NULL on failure.
+> @@ -542,7 +542,7 @@ EXPORT_SYMBOL_GPL(drm_gem_cma_prime_mmap);
+>   * virtual address space. Since the CMA buffers are already mapped into the
+>   * kernel virtual address space this simply returns the cached virtual
+>   * address. Drivers using the CMA helpers should set this as their DRM
+> - * driver's &drm_driver.gem_prime_vmap callback.
+> + * driver's &drm_gem_object_funcs.vmap callback.
+>   *
+>   * Returns:
+>   * The kernel virtual address of the CMA GEM object's backing store.
+> @@ -564,7 +564,7 @@ EXPORT_SYMBOL_GPL(drm_gem_cma_prime_vmap);
+>   * This function removes a buffer exported via DRM PRIME from the kernel's
+>   * virtual address space. This is a no-op because CMA buffers cannot be
+>   * unmapped from kernel space. Drivers using the CMA helpers should set this
+> - * as their &drm_driver.gem_prime_vunmap callback.
+> + * as their &drm_gem_object_funcs.vunmap callback.
+>   */
+>  void drm_gem_cma_prime_vunmap(struct drm_gem_object *obj, void *vaddr)
+>  {
+> diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+> index 1693aa7c14b5..9a87639e7008 100644
+> --- a/drivers/gpu/drm/drm_prime.c
+> +++ b/drivers/gpu/drm/drm_prime.c
+> @@ -386,10 +386,6 @@ static struct dma_buf *export_and_register_object(struct drm_device *dev,
+>  
+>  	if (obj->funcs && obj->funcs->export)
+>  		dmabuf = obj->funcs->export(obj, flags);
+> -	else if (dev->driver->gem_prime_export)
+> -		dmabuf = dev->driver->gem_prime_export(obj, flags);
+> -	else
+> -		dmabuf = drm_gem_prime_export(obj, flags);
+>  	if (IS_ERR(dmabuf)) {
+>  		/* normally the created dma-buf takes ownership of the ref,
+>  		 * but if that fails then drop the ref
+> @@ -419,7 +415,7 @@ static struct dma_buf *export_and_register_object(struct drm_device *dev,
+>   * This is the PRIME export function which must be used mandatorily by GEM
+>   * drivers to ensure correct lifetime management of the underlying GEM object.
+>   * The actual exporting from GEM object to a dma-buf is done through the
+> - * &drm_driver.gem_prime_export driver callback.
+> + * &drm_gem_object_funcs.export callback.
+>   */
+>  int drm_gem_prime_handle_to_fd(struct drm_device *dev,
+>  			       struct drm_file *file_priv, uint32_t handle,
+> @@ -616,15 +612,18 @@ struct sg_table *drm_gem_map_dma_buf(struct dma_buf_attachment *attach,
+>  				     enum dma_data_direction dir)
+>  {
+>  	struct drm_gem_object *obj = attach->dmabuf->priv;
+> -	struct sg_table *sgt;
+> +	struct sg_table *sgt = NULL;
+>  
+>  	if (WARN_ON(dir == DMA_NONE))
+>  		return ERR_PTR(-EINVAL);
+>  
+> -	if (obj->funcs)
+> +	if (obj->funcs && obj->funcs->get_sg_table)
+>  		sgt = obj->funcs->get_sg_table(obj);
+> -	else
+> -		sgt = obj->dev->driver->gem_prime_get_sg_table(obj);
+> +
+> +	if (!sgt)
+> +		return ERR_PTR(-EINVAL);
+> +	else if (IS_ERR(sgt))
+> +		return sgt;
+>  
+>  	if (!dma_map_sg_attrs(attach->dev, sgt->sgl, sgt->nents, dir,
+>  			      DMA_ATTR_SKIP_CPU_SYNC)) {
+> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
+> index 7116abc1a04e..8b325bf6cef4 100644
+> --- a/include/drm/drm_drv.h
+> +++ b/include/drm/drm_drv.h
+> @@ -36,10 +36,12 @@ struct drm_file;
+>  struct drm_gem_object;
+>  struct drm_master;
+>  struct drm_minor;
+> +struct dma_buf;
+>  struct dma_buf_attachment;
+>  struct drm_display_mode;
+>  struct drm_mode_create_dumb;
+>  struct drm_printer;
+> +struct sg_table;
+>  
+>  /**
+>   * enum drm_driver_feature - feature flags
+> @@ -327,32 +329,6 @@ struct drm_driver {
+>  	 */
+>  	void (*debugfs_init)(struct drm_minor *minor);
+>  
+> -	/**
+> -	 * @gem_free_object_unlocked: deconstructor for drm_gem_objects
+> -	 *
+> -	 * This is deprecated and should not be used by new drivers. Use
+> -	 * &drm_gem_object_funcs.free instead.
+> -	 */
+> -	void (*gem_free_object_unlocked) (struct drm_gem_object *obj);
+> -
+> -	/**
+> -	 * @gem_open_object:
+> -	 *
+> -	 * This callback is deprecated in favour of &drm_gem_object_funcs.open.
+> -	 *
+> -	 * Driver hook called upon gem handle creation
+> -	 */
+> -	int (*gem_open_object) (struct drm_gem_object *, struct drm_file *);
+> -
+> -	/**
+> -	 * @gem_close_object:
+> -	 *
+> -	 * This callback is deprecated in favour of &drm_gem_object_funcs.close.
+> -	 *
+> -	 * Driver hook called upon gem handle release
+> -	 */
+> -	void (*gem_close_object) (struct drm_gem_object *, struct drm_file *);
+> -
+>  	/**
+>  	 * @gem_create_object: constructor for gem objects
+>  	 *
+> @@ -361,6 +337,7 @@ struct drm_driver {
+>  	 */
+>  	struct drm_gem_object *(*gem_create_object)(struct drm_device *dev,
+>  						    size_t size);
+> +
+>  	/**
+>  	 * @prime_handle_to_fd:
+>  	 *
+> @@ -383,14 +360,7 @@ struct drm_driver {
+>  	 */
+>  	int (*prime_fd_to_handle)(struct drm_device *dev, struct drm_file *file_priv,
+>  				int prime_fd, uint32_t *handle);
+> -	/**
+> -	 * @gem_prime_export:
+> -	 *
+> -	 * Export hook for GEM drivers. Deprecated in favour of
+> -	 * &drm_gem_object_funcs.export.
+> -	 */
+> -	struct dma_buf * (*gem_prime_export)(struct drm_gem_object *obj,
+> -					     int flags);
+> +
+>  	/**
+>  	 * @gem_prime_import:
+>  	 *
+> @@ -400,29 +370,6 @@ struct drm_driver {
+>  	 */
+>  	struct drm_gem_object * (*gem_prime_import)(struct drm_device *dev,
+>  				struct dma_buf *dma_buf);
+> -
+> -	/**
+> -	 * @gem_prime_pin:
+> -	 *
+> -	 * Deprecated hook in favour of &drm_gem_object_funcs.pin.
+> -	 */
+> -	int (*gem_prime_pin)(struct drm_gem_object *obj);
+> -
+> -	/**
+> -	 * @gem_prime_unpin:
+> -	 *
+> -	 * Deprecated hook in favour of &drm_gem_object_funcs.unpin.
+> -	 */
+> -	void (*gem_prime_unpin)(struct drm_gem_object *obj);
+> -
+> -
+> -	/**
+> -	 * @gem_prime_get_sg_table:
+> -	 *
+> -	 * Deprecated hook in favour of &drm_gem_object_funcs.get_sg_table.
+> -	 */
+> -	struct sg_table *(*gem_prime_get_sg_table)(struct drm_gem_object *obj);
+> -
+>  	/**
+>  	 * @gem_prime_import_sg_table:
+>  	 *
+> @@ -433,22 +380,6 @@ struct drm_driver {
+>  				struct drm_device *dev,
+>  				struct dma_buf_attachment *attach,
+>  				struct sg_table *sgt);
+> -	/**
+> -	 * @gem_prime_vmap:
+> -	 *
+> -	 * Deprecated vmap hook for GEM drivers. Please use
+> -	 * &drm_gem_object_funcs.vmap instead.
+> -	 */
+> -	void *(*gem_prime_vmap)(struct drm_gem_object *obj);
+> -
+> -	/**
+> -	 * @gem_prime_vunmap:
+> -	 *
+> -	 * Deprecated vunmap hook for GEM drivers. Please use
+> -	 * &drm_gem_object_funcs.vunmap instead.
+> -	 */
+> -	void (*gem_prime_vunmap)(struct drm_gem_object *obj, void *vaddr);
+> -
+>  	/**
+>  	 * @gem_prime_mmap:
+>  	 *
+> @@ -523,14 +454,6 @@ struct drm_driver {
+>  			    struct drm_device *dev,
+>  			    uint32_t handle);
+>  
+> -	/**
+> -	 * @gem_vm_ops: Driver private ops for this object
+> -	 *
+> -	 * For GEM drivers this is deprecated in favour of
+> -	 * &drm_gem_object_funcs.vm_ops.
+> -	 */
+> -	const struct vm_operations_struct *gem_vm_ops;
+> -
+>  	/** @major: driver major number */
+>  	int major;
+>  	/** @minor: driver minor number */
+> -- 
+> 2.28.0
