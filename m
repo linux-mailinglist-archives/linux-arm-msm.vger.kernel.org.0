@@ -2,56 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EF0724318D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 01:55:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 746D724319A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 02:02:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbgHLXzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 19:55:55 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:36232 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726078AbgHLXzz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 19:55:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597276554; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=jmWOs7dUstJ+xpaEhBZheCFEL5CtWJqUMAkhh10xqGo=; b=RafHGn2h32He+MRLKfxhupchHus8Ws4pRMjv/tY9e0PyQuzmNsb0YF6s84RMrq+f9GRq0pNf
- 7NBTlQetOM+Qyui0aiB0hAqmfvyHvrO8QTez28H6oteIciZLmWlbbniiaJTuI3BVVLNzJzAY
- QffXHzG3CZ1zPcZlq6wUS7KymRc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f3481862b87d6604943c0c1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 12 Aug 2020 23:55:50
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C7632C4339C; Wed, 12 Aug 2020 23:55:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B14B0C433C9;
-        Wed, 12 Aug 2020 23:55:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B14B0C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Gustavo Padovan <gustavo@padovan.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-Subject: [RFC PATCH v1] dma-fence-array: Deal with sub-fences that are signaled late
-Date:   Wed, 12 Aug 2020 17:55:44 -0600
-Message-Id: <20200812235544.2289895-1-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
+        id S1726518AbgHMACU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 20:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50746 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbgHMACU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Aug 2020 20:02:20 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F62C061383;
+        Wed, 12 Aug 2020 17:02:20 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id x6so1876010pgx.12;
+        Wed, 12 Aug 2020 17:02:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NL6rjLUzSXMKDMOOhTr8S6EoaPbeYW69JWbRVQ0AlOQ=;
+        b=U2gNhKgvUtMwI0xzUVhx//Bq/+qwtjFeuaYS1iveIR3A4bsACyis1XddGwiY6dK2Sn
+         6jbT7RsiRVg4o5I9ePAPB9paTugf7W0AFcLzK5wXEbTZo+P35e/+ALwm2rCJrrKtDu3k
+         QF8c2z47qQ9ToSjndnfod7w9oaqdqX0rpY9OcEHNQNshW0I1MNOYt8B2wVa6hUuRfxLP
+         JX84Att2w1CT9xa5NObA6SMP5S2SXrU9yu9N1jAjKiD8MtKfyIvLn5dP8l7iZy+cIMPr
+         eafUH6Ta2blVR9Y7ToWsVuBk8fVhSdKCO5nOlGZBcndN73qqU5NcvBYHd5k9LbAGOJ7U
+         1ZZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NL6rjLUzSXMKDMOOhTr8S6EoaPbeYW69JWbRVQ0AlOQ=;
+        b=julcxlrFBIA58gh+dHoy4i5doghRosqY1UiB3S5eVZQXhWM2FUfHntEnmX5LnytCD4
+         IJAUfkMsQOj+Emap87btcFgXtCpByja0z1BB1KSPQBY7TLQR4irAjkWuCiOMcfqtL2u5
+         ctWPFH0Jrrtdb4UZzOevHjwxxhEmc0jaseWr8NjqXmpmVsPgYo0hdidDVxqSHmllBExE
+         CbMb7eBLmOMorIE9xCH0rsfnUpfwTq07Y07yTjECcZEvk37Azvn2MDUSkg9Ehv4mICMZ
+         OH291lX9v2l/+u7TNMTOj/yRO/WxfuDsqm0VyM6dNv8k/JqKfvZ3an06ffthnwLbYNTi
+         BPLw==
+X-Gm-Message-State: AOAM532ZU1N1Ufqz/N2Zy/xWJNwV9khpODZ5bEW5KOwWqYjDpWTJUpSJ
+        2gGRIR/Dx8TGo7/qtrf117de8x7eB9E=
+X-Google-Smtp-Source: ABdhPJyrSzvVBwV+Sltkyb+UhvogaKP8htnyL7cUHmv9324U3QvGSXf9RSUI9G2wmyoYoKvDJUop1g==
+X-Received: by 2002:a62:d149:: with SMTP id t9mr1853163pfl.59.1597276939794;
+        Wed, 12 Aug 2020 17:02:19 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id y20sm3563448pfn.183.2020.08.12.17.02.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2020 17:02:18 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Brian Masney <masneyb@onstation.org>,
+        Takashi Iwai <tiwai@suse.de>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/adreno: fix updating ring fence
+Date:   Wed, 12 Aug 2020 17:03:09 -0700
+Message-Id: <20200813000311.708728-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -59,69 +73,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an RFC because I'm still trying to grok the correct behavior.
+From: Rob Clark <robdclark@chromium.org>
 
-Consider a dma_fence_array created two two fence and signal_on_any is true.
-A reference to dma_fence_array is taken for each waiting fence.
+We need to set it to the most recent completed fence, not the most
+recent submitted.  Otherwise we have races where we think we can retire
+submits that the GPU is not finished with, if the GPU doesn't manage to
+overwrite the seqno before we look at it.
 
-When the client calls dma_fence_wait() only one of the fences is signaled.
-The client returns successfully from the wait and puts it's reference to
-the array fence but the array fence still remains because of the remaining
-un-signaled fence.
+This can show up with hang recovery if one of the submits after the
+crashing submit also hangs after it is replayed.
 
-Now consider that the unsignaled fence is signaled while the timeline is being
-destroyed much later. The timeline destroy calls dma_fence_signal_locked(). The
-following sequence occurs:
-
-1) dma_fence_array_cb_func is called
-
-2) array->num_pending is 0 (because it was set to 1 due to signal_on_any) so the
-callback function calls dma_fence_put() instead of triggering the irq work
-
-3) The array fence is released which in turn puts the lingering fence which is
-then released
-
-4) deadlock with the timeline
-
-I think that we can fix this with the attached patch. Once the fence is
-signaled signaling it again in the irq worker shouldn't hurt anything. The only
-gotcha might be how the error is propagated - I wasn't quite sure the intent of
-clearing it only after getting to the irq worker.
-
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+Fixes: f97decac5f4c ("drm/msm: Support multiple ringbuffers")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/dma-buf/dma-fence-array.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/dma-buf/dma-fence-array.c b/drivers/dma-buf/dma-fence-array.c
-index d3fbd950be94..b8829b024255 100644
---- a/drivers/dma-buf/dma-fence-array.c
-+++ b/drivers/dma-buf/dma-fence-array.c
-@@ -46,8 +46,6 @@ static void irq_dma_fence_array_work(struct irq_work *wrk)
- {
- 	struct dma_fence_array *array = container_of(wrk, typeof(*array), work);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index f9e3badf2fca..34e6242c1767 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -405,7 +405,7 @@ int adreno_hw_init(struct msm_gpu *gpu)
+ 		ring->next = ring->start;
  
--	dma_fence_array_clear_pending_error(array);
--
- 	dma_fence_signal(&array->base);
- 	dma_fence_put(&array->base);
- }
-@@ -61,10 +59,10 @@ static void dma_fence_array_cb_func(struct dma_fence *f,
+ 		/* reset completed fence seqno: */
+-		ring->memptrs->fence = ring->seqno;
++		ring->memptrs->fence = ring->fctx->completed_fence;
+ 		ring->memptrs->rptr = 0;
+ 	}
  
- 	dma_fence_array_set_pending_error(array, f->error);
- 
--	if (atomic_dec_and_test(&array->num_pending))
--		irq_work_queue(&array->work);
--	else
--		dma_fence_put(&array->base);
-+	if (!atomic_dec_and_test(&array->num_pending))
-+		dma_fence_array_set_pending_error(array, f->error);
-+
-+	irq_work_queue(&array->work);
- }
- 
- static bool dma_fence_array_enable_signaling(struct dma_fence *fence)
 -- 
-2.25.1
+2.26.2
 
