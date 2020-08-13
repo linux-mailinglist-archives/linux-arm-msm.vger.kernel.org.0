@@ -2,163 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D8CA2438BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 12:39:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46BAE2438C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 12:41:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgHMKjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 06:39:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48310 "EHLO mail.kernel.org"
+        id S1726567AbgHMKl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 06:41:56 -0400
+Received: from mx2.suse.de ([195.135.220.15]:45916 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726053AbgHMKjq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 06:39:46 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id EF8AC206A4;
-        Thu, 13 Aug 2020 10:39:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597315185;
-        bh=TWydt69E31XoB01H3gVdHDzdQbsd2O4Gh1nyh2dthuk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=TG+TdSTyyjFkf2ylVgb99HLo6AfeTTG1DjP4k1HOdzJZBOwGuzPCwpIqNfkhpZAd0
-         Ev031unx4MiV0PePocfeA+Hw+5qNS8s/um2OZc+1s+MInabuyro71jbdr9yjsdtj0U
-         IuL+ewyuVlHzydevPcDVlFP8UfmZXtIWN7tmnojI=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1k6Ae7-001l9U-Cb; Thu, 13 Aug 2020 11:39:43 +0100
+        id S1726053AbgHMKl4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 06:41:56 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id E5DAAB66D;
+        Thu, 13 Aug 2020 10:42:15 +0000 (UTC)
+Subject: Re: [PATCH 12/20] drm/radeon: Introduce GEM object functions
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        alexander.deucher@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+        linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, l.stach@pengutronix.de,
+        christian.gmeiner@gmail.com, inki.dae@samsung.com,
+        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+        patrik.r.jakobsson@gmail.com, jani.nikula@linux.intel.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+        chunkuang.hu@kernel.org, p.zabel@pengutronix.de,
+        matthias.bgg@gmail.com, robdclark@gmail.com, sean@poorly.run,
+        bskeggs@redhat.com, tomi.valkeinen@ti.com, eric@anholt.net,
+        hjc@rock-chips.com, heiko@sntech.de, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, rodrigosiqueiramelo@gmail.com,
+        hamohammed.sa@gmail.com, oleksandr_andrushchenko@epam.com,
+        hyun.kwon@xilinx.com, laurent.pinchart@ideasonboard.com,
+        michal.simek@xilinx.com, sumit.semwal@linaro.org,
+        evan.quan@amd.com, Hawking.Zhang@amd.com, tianci.yin@amd.com,
+        marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        abdiel.janulgue@linux.intel.com, tvrtko.ursulin@linux.intel.com,
+        andi.shyti@intel.com, sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-13-tzimmermann@suse.de>
+ <fb070238-b6ca-8e31-e559-51eda489915e@amd.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Message-ID: <5372b2ef-b7cf-f4e9-9199-6dee5bf6696f@suse.de>
+Date:   Thu, 13 Aug 2020 12:41:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 13 Aug 2020 11:39:43 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Will Deacon <will@kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Andre Przywara <andre.przywara@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: Add KRYO4XX gold CPU core to spectre-v2 safe list
-In-Reply-To: <20200813094041.GA9894@willie-the-truck>
-References: <20200813081834.13576-1-saiprakash.ranjan@codeaurora.org>
- <20200813090324.GB9829@willie-the-truck>
- <89f0f41514e547533c3fa66364e5a2ac@codeaurora.org>
- <20200813094041.GA9894@willie-the-truck>
-User-Agent: Roundcube Webmail/1.4.5
-Message-ID: <ff6fa7bd817d49e8ef9bee5c1e13d99c@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: will@kernel.org, saiprakash.ranjan@codeaurora.org, catalin.marinas@arm.com, andre.przywara@arm.com, mark.rutland@arm.com, suzuki.poulose@arm.com, swboyd@chromium.org, dianders@chromium.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+In-Reply-To: <fb070238-b6ca-8e31-e559-51eda489915e@amd.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="dvpyWKt9GfZXVkJReqmxwaKg1xVlNTKmH"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-13 10:40, Will Deacon wrote:
-> On Thu, Aug 13, 2020 at 02:49:37PM +0530, Sai Prakash Ranjan wrote:
->> On 2020-08-13 14:33, Will Deacon wrote:
->> > On Thu, Aug 13, 2020 at 01:48:34PM +0530, Sai Prakash Ranjan wrote:
->> > > KRYO4XX gold/big CPU cores are based on Cortex-A76 which has CSV2
->> > > bits set and are spectre-v2 safe. But on big.LITTLE systems where
->> > > they are coupled with other CPU cores such as the KRYO4XX silver
->> > > based on Cortex-A55 which are spectre-v2 safe but do not have CSV2
->> > > bits set, the system wide safe value will be set to the lowest value
->> > > of CSV2 bits as per FTR_LOWER_SAFE defined for CSV2 bits of register
->> > > ID_AA64PFR0_EL1.
->> > >
->> > > This is a problem when booting a guest kernel on gold CPU cores
->> > > where it will incorrectly report ARM_SMCCC_ARCH_WORKAROUND_1 warning
->> > > and consider them as vulnerable for Spectre variant 2 due to system
->> > > wide safe value which is used in kvm emulation code when reading id
->> > > registers. One wrong way of fixing this is to set the FTR_HIGHER_SAFE
->> > > for CSV2 bits, so instead add the KRYO4XX gold CPU core to the safe
->> > > list which will be consulted even when the sanitised read reports
->> > > that CSV2 bits are not set for KRYO4XX gold cores.
->> > >
->> > > Reported-by: Stephen Boyd <swboyd@chromium.org>
->> > > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> > > ---
->> > >  arch/arm64/kernel/cpu_errata.c | 1 +
->> > >  1 file changed, 1 insertion(+)
->> > >
->> > > diff --git a/arch/arm64/kernel/cpu_errata.c
->> > > b/arch/arm64/kernel/cpu_errata.c
->> > > index 6bd1d3ad037a..6cbdd2d98a2a 100644
->> > > --- a/arch/arm64/kernel/cpu_errata.c
->> > > +++ b/arch/arm64/kernel/cpu_errata.c
->> > > @@ -545,6 +545,7 @@ static const struct midr_range
->> > > spectre_v2_safe_list[] = {
->> > >  	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
->> > >  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
->> > >  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
->> > > +	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
->> >
->> > We shouldn't be putting CPUs in the safe list when they have CSV2
->> > reporting
->> > that they are mitigated in hardware, so I don't think this is the right
->> > approach.
->> >
->> 
->> Ok but the only thing I find wrong in this approach is that it is a
->> redundant
->> information because CSV2 is already advertising the mitigation, but 
->> again
->> CSV2 check is done first so it doesn't really hurt to add it to the 
->> safe
->> list because we already know that it is safe.
-> 
-> It simply doesn't scale. That's why CSV2 exists in the first place, so 
-> we
-> don't have to modify the kernel everytime a new CPU is invented.
-> 
->> > Sounds more like KVM should advertise CSV2 for the vCPUs if all of the
->> > physical CPUs without CSV2 set are on the safe list. But then again, KVM
->> > has always been slightly in denial about big.LITTLE because you can't
->> > sensibly expose it to a guest if there are detectable differences...
->> >
->> 
->> Sorry but I don't see how the guest kernel will see the CSV2 bits set 
->> for
->> gold CPU cores without actually adding them to the safe list or 
->> reading the
->> not sanitised value of ID_AA64PFR0_EL1 ?
-> 
-> Well that's for somebody to figure out in the patch. I'm just saying 
-> that
-> adding cores to the safe list when they already have a CSV2 field 
-> conveying
-> the same information is the wrong approach. The right appproach is for 
-> KVM
-> to expose CSV2 as set when the system is not affected by the erratum.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--dvpyWKt9GfZXVkJReqmxwaKg1xVlNTKmH
+Content-Type: multipart/mixed; boundary="oRxCNe57YCRejXLT0jiYdnWGOkpGgvM5x";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+ alexander.deucher@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+ linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+ inki.dae@samsung.com, jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+ patrik.r.jakobsson@gmail.com, jani.nikula@linux.intel.com,
+ joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+ chunkuang.hu@kernel.org, p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+ robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+ tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com, heiko@sntech.de,
+ thierry.reding@gmail.com, jonathanh@nvidia.com,
+ rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+ oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+ laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+ sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+ tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+ andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com, xinhui.pan@amd.com,
+ aaron.liu@amd.com, nirmoy.das@amd.com, chris@chris-wilson.co.uk,
+ matthew.auld@intel.com, abdiel.janulgue@linux.intel.com,
+ tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com, sam@ravnborg.org,
+ miaoqinglang@huawei.com, emil.velikov@collabora.com
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ xen-devel@lists.xenproject.org
+Message-ID: <5372b2ef-b7cf-f4e9-9199-6dee5bf6696f@suse.de>
+Subject: Re: [PATCH 12/20] drm/radeon: Introduce GEM object functions
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-13-tzimmermann@suse.de>
+ <fb070238-b6ca-8e31-e559-51eda489915e@amd.com>
+In-Reply-To: <fb070238-b6ca-8e31-e559-51eda489915e@amd.com>
 
-A sensible way to fix this would be with something like that:
+--oRxCNe57YCRejXLT0jiYdnWGOkpGgvM5x
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 077293b5115f..2735db21ff0d 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1131,6 +1131,9 @@ static u64 read_id_reg(const struct kvm_vcpu 
-*vcpu,
-  		if (!vcpu_has_sve(vcpu))
-  			val &= ~(0xfUL << ID_AA64PFR0_SVE_SHIFT);
-  		val &= ~(0xfUL << ID_AA64PFR0_AMU_SHIFT);
-+		if (!(val & (0xfUL << ID_AA64PFR0_CSV2_SHIFT)) &&
-+		    get_spectre_v2_workaround_state() == 
-ARM64_BP_HARDEN_NOT_REQUIRED)
-+			val |= (1UL << ID_AA64PFR0_CSV2_SHIFT);
-  	} else if (id == SYS_ID_AA64ISAR1_EL1 && !vcpu_has_ptrauth(vcpu)) {
-  		val &= ~((0xfUL << ID_AA64ISAR1_APA_SHIFT) |
-  			 (0xfUL << ID_AA64ISAR1_API_SHIFT) |
+Hi
+
+Am 13.08.20 um 12:24 schrieb Christian K=C3=B6nig:
+> Am 13.08.20 um 10:36 schrieb Thomas Zimmermann:
+>> GEM object functions deprecate several similar callback interfaces in
+>> struct drm_driver. This patch replaces the per-driver callbacks with
+>> per-instance callbacks in radeon.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>> =C2=A0 drivers/gpu/drm/radeon/radeon_drv.c=C2=A0=C2=A0=C2=A0 | 23 +---=
+-------------------
+>> =C2=A0 drivers/gpu/drm/radeon/radeon_object.c | 26 +++++++++++++++++++=
++++++++
+>> =C2=A0 2 files changed, 27 insertions(+), 22 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/radeon/radeon_drv.c
+>> b/drivers/gpu/drm/radeon/radeon_drv.c
+>> index 4cd30613fa1d..65061c949aee 100644
+>> --- a/drivers/gpu/drm/radeon/radeon_drv.c
+>> +++ b/drivers/gpu/drm/radeon/radeon_drv.c
+>> @@ -124,13 +124,6 @@ void radeon_driver_irq_preinstall_kms(struct
+>> drm_device *dev);
+>> =C2=A0 int radeon_driver_irq_postinstall_kms(struct drm_device *dev);
+>> =C2=A0 void radeon_driver_irq_uninstall_kms(struct drm_device *dev);
+>> =C2=A0 irqreturn_t radeon_driver_irq_handler_kms(int irq, void *arg);
+>> -void radeon_gem_object_free(struct drm_gem_object *obj);
+>> -int radeon_gem_object_open(struct drm_gem_object *obj,
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 struct drm_file *file_priv);
+>> -void radeon_gem_object_close(struct drm_gem_object *obj,
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 struct drm_file *file_priv);
+>> -struct dma_buf *radeon_gem_prime_export(struct drm_gem_object *gobj,
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int flags);
+>> =C2=A0 extern int radeon_get_crtc_scanoutpos(struct drm_device *dev,
+>> unsigned int crtc,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsign=
+ed int flags, int *vpos, int *hpos,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ktime_=
+t *stime, ktime_t *etime,
+>> @@ -145,14 +138,9 @@ int radeon_mode_dumb_mmap(struct drm_file *filp,
+>> =C2=A0 int radeon_mode_dumb_create(struct drm_file *file_priv,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_device *dev,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_mode_create_dumb *args);
+>> -struct sg_table *radeon_gem_prime_get_sg_table(struct drm_gem_object
+>> *obj);
+>> =C2=A0 struct drm_gem_object *radeon_gem_prime_import_sg_table(struct
+>> drm_device *dev,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct dma_buf_attachment *,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct sg_table *sg);
+>> -int radeon_gem_prime_pin(struct drm_gem_object *obj);
+>> -void radeon_gem_prime_unpin(struct drm_gem_object *obj);
+>> -void *radeon_gem_prime_vmap(struct drm_gem_object *obj);
+>> -void radeon_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr)=
+;
+>> =C2=A0 =C2=A0 /* atpx handler */
+>> =C2=A0 #if defined(CONFIG_VGA_SWITCHEROO)
+>> @@ -550,7 +538,7 @@ long radeon_drm_ioctl(struct file *filp,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D drm_ioctl(filp, cmd, arg=
+);
+>> -=C2=A0=C2=A0=C2=A0
+>> +
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pm_runtime_mark_last_busy(dev->dev);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pm_runtime_put_autosuspend(dev->dev);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ret;
+>> @@ -609,22 +597,13 @@ static struct drm_driver kms_driver =3D {
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .irq_uninstall =3D radeon_driver_irq_un=
+install_kms,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .irq_handler =3D radeon_driver_irq_hand=
+ler_kms,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .ioctls =3D radeon_ioctls_kms,
+>> -=C2=A0=C2=A0=C2=A0 .gem_free_object_unlocked =3D radeon_gem_object_fr=
+ee,
+>> -=C2=A0=C2=A0=C2=A0 .gem_open_object =3D radeon_gem_object_open,
+>> -=C2=A0=C2=A0=C2=A0 .gem_close_object =3D radeon_gem_object_close,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .dumb_create =3D radeon_mode_dumb_creat=
+e,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .dumb_map_offset =3D radeon_mode_dumb_m=
+map,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .fops =3D &radeon_driver_kms_fops,
+>> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .prime_handle_to_fd =3D drm_gem_=
+prime_handle_to_fd,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .prime_fd_to_handle =3D drm_gem_prime_f=
+d_to_handle,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_export =3D radeon_gem_prime_export,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_pin =3D radeon_gem_prime_pin,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_unpin =3D radeon_gem_prime_unpin,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_get_sg_table =3D radeon_gem_prime_get_s=
+g_table,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .gem_prime_import_sg_table =3D radeon_g=
+em_prime_import_sg_table,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_vmap =3D radeon_gem_prime_vmap,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_vunmap =3D radeon_gem_prime_vunmap,
+>> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .name =3D DRIVER_NAME,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .desc =3D DRIVER_DESC,
+>> diff --git a/drivers/gpu/drm/radeon/radeon_object.c
+>> b/drivers/gpu/drm/radeon/radeon_object.c
+>> index bb7582afd803..882390e15dfe 100644
+>> --- a/drivers/gpu/drm/radeon/radeon_object.c
+>> +++ b/drivers/gpu/drm/radeon/radeon_object.c
+>> @@ -45,6 +45,19 @@ int radeon_ttm_init(struct radeon_device *rdev);
+>> =C2=A0 void radeon_ttm_fini(struct radeon_device *rdev);
+>> =C2=A0 static void radeon_bo_clear_surface_reg(struct radeon_bo *bo);
+>> =C2=A0 +void radeon_gem_object_free(struct drm_gem_object *obj);
+>> +int radeon_gem_object_open(struct drm_gem_object *obj,
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 struct drm_file *file_priv);
+>> +void radeon_gem_object_close(struct drm_gem_object *obj,
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 struct drm_file *file_priv);
+>> +struct dma_buf *radeon_gem_prime_export(struct drm_gem_object *gobj,
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int flags);
+>> +struct sg_table *radeon_gem_prime_get_sg_table(struct drm_gem_object
+>> *obj);
+>> +int radeon_gem_prime_pin(struct drm_gem_object *obj);
+>> +void radeon_gem_prime_unpin(struct drm_gem_object *obj);
+>> +void *radeon_gem_prime_vmap(struct drm_gem_object *obj);
+>> +void radeon_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr)=
+;
+>> +
+>> =C2=A0 /*
+>> =C2=A0=C2=A0 * To exclude mutual BO access we rely on bo_reserve exclu=
+sion, as all
+>> =C2=A0=C2=A0 * function are calling it.
+>> @@ -180,6 +193,18 @@ void radeon_ttm_placement_from_domain(struct
+>> radeon_bo *rbo, u32 domain)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> =C2=A0 }
+>> =C2=A0 +static const struct drm_gem_object_funcs radeon_gem_object_fun=
+cs =3D {
+>> +=C2=A0=C2=A0=C2=A0 .free =3D radeon_gem_object_free,
+>> +=C2=A0=C2=A0=C2=A0 .open =3D radeon_gem_object_open,
+>> +=C2=A0=C2=A0=C2=A0 .close =3D radeon_gem_object_close,
+>> +=C2=A0=C2=A0=C2=A0 .export =3D radeon_gem_prime_export,
+>> +=C2=A0=C2=A0=C2=A0 .pin =3D radeon_gem_prime_pin,
+>> +=C2=A0=C2=A0=C2=A0 .unpin =3D radeon_gem_prime_unpin,
+>> +=C2=A0=C2=A0=C2=A0 .get_sg_table =3D radeon_gem_prime_get_sg_table,
+>> +=C2=A0=C2=A0=C2=A0 .vmap =3D radeon_gem_prime_vmap,
+>> +=C2=A0=C2=A0=C2=A0 .vunmap =3D radeon_gem_prime_vunmap,
+>> +};
+>> +
+>=20
+> Same comment as for amdgpu, please put that into radeon_gem.c instead.
+
+There's no good header file to put the declarations, right? I'm asking
+because checkpatch warns about declarations in the source files.
+
+Best regards
+Thomas
+
+>=20
+> Christian.
+>=20
+>> =C2=A0 int radeon_bo_create(struct radeon_device *rdev,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 unsigned long size, int byte_align, bool kernel,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 u32 domain, u32 flags, struct sg_table *sg,
+>> @@ -209,6 +234,7 @@ int radeon_bo_create(struct radeon_device *rdev,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bo =3D kzalloc(sizeof(struct radeon_bo)=
+, GFP_KERNEL);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (bo =3D=3D NULL)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENOMEM;=
+
+>> +=C2=A0=C2=A0=C2=A0 bo->tbo.base.funcs =3D &radeon_gem_object_funcs;
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_gem_private_object_init(rdev->ddev,=
+ &bo->tbo.base, size);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bo->rdev =3D rdev;
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bo->surface_reg =3D -1;
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+--oRxCNe57YCRejXLT0jiYdnWGOkpGgvM5x--
+
+--dvpyWKt9GfZXVkJReqmxwaKg1xVlNTKmH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFIBAEBCAAyFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl81GO8UHHR6aW1tZXJt
+YW5uQHN1c2UuZGUACgkQaA3BHVMLeiOA6ggAuUVnmM68uUP4+aYhVogVE45exMl2
+eaX7AfXNkklfKJwgOpnqu8g00U134y52xRGfOU1teV/kar0YzgqlKL2Af+YLw5Yp
+7QFKDQpwjXX+MQzei9GtyC9OMfz6nwQgt28MqaMrkaSPyIvqibwF4fzR/nXSTDCQ
+1PpwCVQ1TWGST7SZFdUfHo+v3vdJuOyw0ucRceiJoEX4RQorEqFWXOHx/kR4Z1em
+POPUqdQAxWu8nlX+VUsN9ga3/QtTQ82ZEKfinfr0+ZNobJDIMznNeNTA1uDOwi8O
+RaXxxoYxdOEfvAZatFluUpOPE5T5zrt45Y1jpksTKhfmKPbSZ8ItAAqDhA==
+=qHmz
+-----END PGP SIGNATURE-----
+
+--dvpyWKt9GfZXVkJReqmxwaKg1xVlNTKmH--
