@@ -2,93 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C663F243716
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 11:03:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84D85243740
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 11:08:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726244AbgHMJDa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 05:03:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39728 "EHLO mail.kernel.org"
+        id S1726131AbgHMJIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 05:08:50 -0400
+Received: from mga07.intel.com ([134.134.136.100]:6798 "EHLO mga07.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726100AbgHMJD3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 05:03:29 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6D39E2074D;
-        Thu, 13 Aug 2020 09:03:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597309409;
-        bh=CaBCHvtA9GW7Qr9xZ68IKnk2JX/CO+Mn7zxE/pGFe8Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cOYS6yMhfNbr0/cyaDDl3jeJVaqsIyoTFSlzorghpnDENkGXiXJVxodZlqQmQgXcL
-         PSvYmgm2A2KZtZrd1G1JvI1loTGBHz+N5C+lRdCGSFyg+L2hm9JdumxXfzOyNGtpY2
-         HAy68IjjyygZuOetkTHwx+K3exR+l/YQLKRPnCOQ=
-Date:   Thu, 13 Aug 2020 10:03:24 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Andre Przywara <andre.przywara@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: Add KRYO4XX gold CPU core to spectre-v2 safe list
-Message-ID: <20200813090324.GB9829@willie-the-truck>
-References: <20200813081834.13576-1-saiprakash.ranjan@codeaurora.org>
+        id S1726053AbgHMJIt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 05:08:49 -0400
+IronPort-SDR: 00QbEfF72nisPJYXqTaJq/W9ISoFl1LPH/CLzt+Q0oukCG7IdbgLPnkWOqeBURyzbuAHR/lhif
+ 2MPdsT4yySjg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9711"; a="218522299"
+X-IronPort-AV: E=Sophos;i="5.76,307,1592895600"; 
+   d="scan'208";a="218522299"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2020 02:08:48 -0700
+IronPort-SDR: MzLdBg29y17Qw947zHTwHA+CSmHBs2Zvn+6Bs6sqi/aBfHd1F5a0YahIdS8U60Hdv6sgpLlMWW
+ /z+PVkWCy4qA==
+X-IronPort-AV: E=Sophos;i="5.76,307,1592895600"; 
+   d="scan'208";a="470144306"
+Received: from jgronski-mobl.ger.corp.intel.com (HELO localhost) ([10.252.50.170])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2020 02:08:15 -0700
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, alexander.deucher@amd.com,
+        christian.koenig@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+        linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, l.stach@pengutronix.de,
+        christian.gmeiner@gmail.com, inki.dae@samsung.com,
+        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+        patrik.r.jakobsson@gmail.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        abdiel.janulgue@linux.intel.com, tvrtko.ursulin@linux.intel.com,
+        andi.shyti@intel.com, sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH 06/20] drm/i915: Introduce GEM object functions
+In-Reply-To: <20200813083644.31711-7-tzimmermann@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20200813083644.31711-1-tzimmermann@suse.de> <20200813083644.31711-7-tzimmermann@suse.de>
+Date:   Thu, 13 Aug 2020 12:08:12 +0300
+Message-ID: <877du2j4lf.fsf@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200813081834.13576-1-saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 13, 2020 at 01:48:34PM +0530, Sai Prakash Ranjan wrote:
-> KRYO4XX gold/big CPU cores are based on Cortex-A76 which has CSV2
-> bits set and are spectre-v2 safe. But on big.LITTLE systems where
-> they are coupled with other CPU cores such as the KRYO4XX silver
-> based on Cortex-A55 which are spectre-v2 safe but do not have CSV2
-> bits set, the system wide safe value will be set to the lowest value
-> of CSV2 bits as per FTR_LOWER_SAFE defined for CSV2 bits of register
-> ID_AA64PFR0_EL1.
-> 
-> This is a problem when booting a guest kernel on gold CPU cores
-> where it will incorrectly report ARM_SMCCC_ARCH_WORKAROUND_1 warning
-> and consider them as vulnerable for Spectre variant 2 due to system
-> wide safe value which is used in kvm emulation code when reading id
-> registers. One wrong way of fixing this is to set the FTR_HIGHER_SAFE
-> for CSV2 bits, so instead add the KRYO4XX gold CPU core to the safe
-> list which will be consulted even when the sanitised read reports
-> that CSV2 bits are not set for KRYO4XX gold cores.
-> 
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+On Thu, 13 Aug 2020, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> GEM object functions deprecate several similar callback interfaces in
+> struct drm_driver. This patch replaces the per-driver callbacks with
+> per-instance callbacks in i915.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
->  arch/arm64/kernel/cpu_errata.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-> index 6bd1d3ad037a..6cbdd2d98a2a 100644
-> --- a/arch/arm64/kernel/cpu_errata.c
-> +++ b/arch/arm64/kernel/cpu_errata.c
-> @@ -545,6 +545,7 @@ static const struct midr_range spectre_v2_safe_list[] = {
->  	MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
->  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_3XX_SILVER),
->  	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_SILVER),
-> +	MIDR_ALL_VERSIONS(MIDR_QCOM_KRYO_4XX_GOLD),
+>  drivers/gpu/drm/i915/gem/i915_gem_object.c       |  9 ++++++++-
+>  drivers/gpu/drm/i915/i915_drv.c                  | 10 ++++++----
+>  drivers/gpu/drm/i915/i915_drv.h                  |  1 +
+>  drivers/gpu/drm/i915/selftests/mock_gem_device.c |  3 ---
+>  4 files changed, 15 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object.c b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+> index c8421fd9d2dc..bc15ee4f2bd5 100644
+> --- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
+> +++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+> @@ -41,7 +41,14 @@ static struct i915_global_object {
+>  
+>  struct drm_i915_gem_object *i915_gem_object_alloc(void)
+>  {
+> -	return kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
+> +	struct drm_i915_gem_object *obj;
+> +
+> +	obj = kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
+> +	if (!obj)
+> +		return NULL;
+> +	obj->base.funcs = &i915_gem_object_funcs;
+> +
+> +	return obj;
+>  }
+>  
+>  void i915_gem_object_free(struct drm_i915_gem_object *obj)
+> diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
+> index 068447f565a9..b09eee11c540 100644
+> --- a/drivers/gpu/drm/i915/i915_drv.c
+> +++ b/drivers/gpu/drm/i915/i915_drv.c
+> @@ -1840,6 +1840,12 @@ static const struct drm_ioctl_desc i915_ioctls[] = {
+>  	DRM_IOCTL_DEF_DRV(I915_GEM_VM_DESTROY, i915_gem_vm_destroy_ioctl, DRM_RENDER_ALLOW),
+>  };
+>  
+> +const struct drm_gem_object_funcs i915_gem_object_funcs = {
+> +	.free = i915_gem_free_object,
+> +	.close = i915_gem_close_object,
+> +	.export = i915_gem_prime_export,
+> +};
+> +
 
-We shouldn't be putting CPUs in the safe list when they have CSV2 reporting
-that they are mitigated in hardware, so I don't think this is the right
-approach.
+Any reason not to make this static in i915_gem_object.c next to its only
+user?
 
-Sounds more like KVM should advertise CSV2 for the vCPUs if all of the
-physical CPUs without CSV2 set are on the safe list. But then again, KVM
-has always been slightly in denial about big.LITTLE because you can't
-sensibly expose it to a guest if there are detectable differences...
+BR,
+Jani.
 
-Will
+
+>  static struct drm_driver driver = {
+>  	/* Don't use MTRRs here; the Xserver or userspace app should
+>  	 * deal with them for Intel hardware.
+> @@ -1853,12 +1859,8 @@ static struct drm_driver driver = {
+>  	.lastclose = i915_driver_lastclose,
+>  	.postclose = i915_driver_postclose,
+>  
+> -	.gem_close_object = i915_gem_close_object,
+> -	.gem_free_object_unlocked = i915_gem_free_object,
+> -
+>  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+> -	.gem_prime_export = i915_gem_prime_export,
+>  	.gem_prime_import = i915_gem_prime_import,
+>  
+>  	.dumb_create = i915_gem_dumb_create,
+> diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
+> index bacb4c762f5b..666db65fe69e 100644
+> --- a/drivers/gpu/drm/i915/i915_drv.h
+> +++ b/drivers/gpu/drm/i915/i915_drv.h
+> @@ -1736,6 +1736,7 @@ intel_ggtt_update_needs_vtd_wa(struct drm_i915_private *dev_priv)
+>  
+>  /* i915_drv.c */
+>  extern const struct dev_pm_ops i915_pm_ops;
+> +extern const struct drm_gem_object_funcs i915_gem_object_funcs;
+>  
+>  int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent);
+>  void i915_driver_remove(struct drm_i915_private *i915);
+> diff --git a/drivers/gpu/drm/i915/selftests/mock_gem_device.c b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+> index ce4d4303229c..4725dad63e0a 100644
+> --- a/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+> +++ b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+> @@ -86,9 +86,6 @@ static struct drm_driver mock_driver = {
+>  	.name = "mock",
+>  	.driver_features = DRIVER_GEM,
+>  	.release = mock_device_release,
+> -
+> -	.gem_close_object = i915_gem_close_object,
+> -	.gem_free_object_unlocked = i915_gem_free_object,
+>  };
+>  
+>  static void release_dev(struct device *dev)
+
+-- 
+Jani Nikula, Intel Open Source Graphics Center
