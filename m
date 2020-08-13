@@ -2,70 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 746D724319A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 02:02:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CCBC243250
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 03:55:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbgHMACU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Aug 2020 20:02:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50746 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726126AbgHMACU (ORCPT
+        id S1726678AbgHMBzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Aug 2020 21:55:54 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:33516 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726574AbgHMBzy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Aug 2020 20:02:20 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F62C061383;
-        Wed, 12 Aug 2020 17:02:20 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id x6so1876010pgx.12;
-        Wed, 12 Aug 2020 17:02:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NL6rjLUzSXMKDMOOhTr8S6EoaPbeYW69JWbRVQ0AlOQ=;
-        b=U2gNhKgvUtMwI0xzUVhx//Bq/+qwtjFeuaYS1iveIR3A4bsACyis1XddGwiY6dK2Sn
-         6jbT7RsiRVg4o5I9ePAPB9paTugf7W0AFcLzK5wXEbTZo+P35e/+ALwm2rCJrrKtDu3k
-         QF8c2z47qQ9ToSjndnfod7w9oaqdqX0rpY9OcEHNQNshW0I1MNOYt8B2wVa6hUuRfxLP
-         JX84Att2w1CT9xa5NObA6SMP5S2SXrU9yu9N1jAjKiD8MtKfyIvLn5dP8l7iZy+cIMPr
-         eafUH6Ta2blVR9Y7ToWsVuBk8fVhSdKCO5nOlGZBcndN73qqU5NcvBYHd5k9LbAGOJ7U
-         1ZZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NL6rjLUzSXMKDMOOhTr8S6EoaPbeYW69JWbRVQ0AlOQ=;
-        b=julcxlrFBIA58gh+dHoy4i5doghRosqY1UiB3S5eVZQXhWM2FUfHntEnmX5LnytCD4
-         IJAUfkMsQOj+Emap87btcFgXtCpByja0z1BB1KSPQBY7TLQR4irAjkWuCiOMcfqtL2u5
-         ctWPFH0Jrrtdb4UZzOevHjwxxhEmc0jaseWr8NjqXmpmVsPgYo0hdidDVxqSHmllBExE
-         CbMb7eBLmOMorIE9xCH0rsfnUpfwTq07Y07yTjECcZEvk37Azvn2MDUSkg9Ehv4mICMZ
-         OH291lX9v2l/+u7TNMTOj/yRO/WxfuDsqm0VyM6dNv8k/JqKfvZ3an06ffthnwLbYNTi
-         BPLw==
-X-Gm-Message-State: AOAM532ZU1N1Ufqz/N2Zy/xWJNwV9khpODZ5bEW5KOwWqYjDpWTJUpSJ
-        2gGRIR/Dx8TGo7/qtrf117de8x7eB9E=
-X-Google-Smtp-Source: ABdhPJyrSzvVBwV+Sltkyb+UhvogaKP8htnyL7cUHmv9324U3QvGSXf9RSUI9G2wmyoYoKvDJUop1g==
-X-Received: by 2002:a62:d149:: with SMTP id t9mr1853163pfl.59.1597276939794;
-        Wed, 12 Aug 2020 17:02:19 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id y20sm3563448pfn.183.2020.08.12.17.02.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2020 17:02:18 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
+        Wed, 12 Aug 2020 21:55:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597283754; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=FVbzabU1TSlGFSA9oFBmqr0GMmd/zQHCX4wJhSe4MY0=; b=KDynTBS5u4eRuALa9rwZ98yYr5UmSzrrOtDllD3KHNHQ4reeAiib+/11gp9DcPEu/QxsckX7
+ vSrtOtuMOdNVdFTAQQykbjQm3En6dXi0mssN3HPDYGQoBrEFtqGjokdk98ZPWDVPHXuoZV+H
+ vAcqB7JZn5SU4xNkP3Df6HANrJM=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5f349d6ad96d28d61e390d54 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 13 Aug 2020 01:54:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8740DC43391; Thu, 13 Aug 2020 01:54:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 81046C433C9;
+        Thu, 13 Aug 2020 01:54:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 81046C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
 To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Brian Masney <masneyb@onstation.org>,
-        Takashi Iwai <tiwai@suse.de>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/adreno: fix updating ring fence
-Date:   Wed, 12 Aug 2020 17:03:09 -0700
-Message-Id: <20200813000311.708728-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, tanmay@codeaurora.org,
+        cychiang@chromium.org, khsieh@codeaurora.org,
+        vsujithk@codeaurora.org, rohitkr@codeaurora.org
+Subject: [PATCH 0/4] Add audio support for MSM DisplayPort driver
+Date:   Wed, 12 Aug 2020 18:54:35 -0700
+Message-Id: <20200813015439.4174-1-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -73,35 +61,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+This series adds audio support for DP on MSM chipsets. It leverages
+the hdmi-codec interface [1] to communicate between the Display Port
+driver and the audio subsystem. These changes depend on the series [2]
+which adds Display Port support to MSM chipsets.
 
-We need to set it to the most recent completed fence, not the most
-recent submitted.  Otherwise we have races where we think we can retire
-submits that the GPU is not finished with, if the GPU doesn't manage to
-overwrite the seqno before we look at it.
+[1] https://patchwork.kernel.org/patch/11047883/
+[2] https://patchwork.kernel.org/patch/11708677/
 
-This can show up with hang recovery if one of the submits after the
-crashing submit also hangs after it is replayed.
+Abhinav Kumar (4):
+  drm/msm/dp: store dp_display in the driver data
+  drm/msm/dp: add audio support for Display Port on MSM
+  drm/msm/dp: add hook_plugged_cb hdmi-codec op for MSM DP driver
+  drm/msm/dp: signal the hotplug disconnect in the event handler
 
-Fixes: f97decac5f4c ("drm/msm: Support multiple ringbuffers")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/Makefile                |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |   6 +
+ drivers/gpu/drm/msm/dp/dp_audio.c           | 606 ++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_audio.h           |  72 +++
+ drivers/gpu/drm/msm/dp/dp_catalog.c         | 192 +++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h         |  29 +
+ drivers/gpu/drm/msm/dp/dp_display.c         |  98 +++-
+ drivers/gpu/drm/msm/dp/dp_display.h         |   9 +
+ 8 files changed, 1004 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.c
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.h
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index f9e3badf2fca..34e6242c1767 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -405,7 +405,7 @@ int adreno_hw_init(struct msm_gpu *gpu)
- 		ring->next = ring->start;
- 
- 		/* reset completed fence seqno: */
--		ring->memptrs->fence = ring->seqno;
-+		ring->memptrs->fence = ring->fctx->completed_fence;
- 		ring->memptrs->rptr = 0;
- 	}
- 
 -- 
-2.26.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
