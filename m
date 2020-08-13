@@ -2,131 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 271DA243E34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 19:22:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91BD1243E44
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Aug 2020 19:26:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726546AbgHMRWW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Aug 2020 13:22:22 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:34592 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726248AbgHMRWU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Aug 2020 13:22:20 -0400
+        id S1726427AbgHMR0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Aug 2020 13:26:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40425 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726486AbgHMR0r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Aug 2020 13:26:47 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597339339; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=nNsuqpqMhY/Ve8/qq+tq5wp1UYEN4vCXC4kAPMaG1R8=; b=Jv53YIX6QlbPWrbR9EwoP4mr/rqn0N4NBi9uAG1J7FBMnRVBqez6AvwiICjVWGb8yDqMNv89
- +gFvmG+FQucqtaozLtcRFoiVFmYxRRfuJf2mqeydc4Wj1dcI1CWTedfabJVm6WEosmp6V9gB
- S9smTlJCoRUVlC3J5uI/KDPneNo=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ s=smtp; t=1597339605; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=oi6P8fKsHQ4rH2DcZ8NplCdAFudKxyEMedgiGuidvB4=;
+ b=ptTO6H/IwFxrfytfLD1stXY79q+o7QSIxsMvsJ7bUU1c4OyZhSE5urE+yFNtCSQA9qHOIYG/
+ 9c+VHQifSXoLPGKJUsVdhBT5ApZCpRJ0HLZrQT/pOrr0eSJqR5bcIjw+z2SE6Oes2BZToWDZ
+ gwsx+mWEsyPKdUz8eNG17ZEw7Ss=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5f3576c32b87d66049fc787c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 13 Aug 2020 17:22:11
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f3577be2f4952907dd24811 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 13 Aug 2020 17:26:22
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A2005C433C6; Thu, 13 Aug 2020 17:22:10 +0000 (UTC)
+        id B2C91C4339C; Thu, 13 Aug 2020 17:26:21 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C1111C433CB;
-        Thu, 13 Aug 2020 17:22:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C1111C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
-From:   Abhinav Kumar <abhinavk@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
-        aravindh@codeaurora.org, tanmay@codeaurora.org,
-        cychiang@chromium.org, khsieh@codeaurora.org,
-        vsujithk@codeaurora.org, rohitkr@codeaurora.org
-Subject: [PATCH v2 4/4] drm/msm/dp: signal the hotplug disconnect in the event handler
-Date:   Thu, 13 Aug 2020 10:21:54 -0700
-Message-Id: <20200813172154.24565-5-abhinavk@codeaurora.org>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20200813172154.24565-1-abhinavk@codeaurora.org>
-References: <20200813172154.24565-1-abhinavk@codeaurora.org>
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A15FDC433CA;
+        Thu, 13 Aug 2020 17:26:20 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 13 Aug 2020 22:56:20 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-kernel-owner@vger.kernel.org,
+        Kevin Hilman <khilman@kernel.org>
+Subject: Re: [PATCH 1/2] PM / Domains: Add GENPD_FLAG_SUSPEND_ON flag
+In-Reply-To: <CAPDyKFrH9WTg4O5L+e1AijNvsagLYZ9QVTeoD0x0SQgYd3hkBg@mail.gmail.com>
+References: <20200811190252.10559-1-sibis@codeaurora.org>
+ <CAPDyKFqNMEtHwcJFxYQP5H1Yjrsr1T3UUZoXes69EthSjAYs2A@mail.gmail.com>
+ <1ba3e4d703dd0a52547d63fa014451eb@codeaurora.org>
+ <CAPDyKFrH9WTg4O5L+e1AijNvsagLYZ9QVTeoD0x0SQgYd3hkBg@mail.gmail.com>
+Message-ID: <1ca666c336ebee569a429e729d5ae547@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signal the hotplug disconnect event to the audio side in the
-event handler so that they are notified earlier and have more
-time to process the disconnect event.
+On 2020-08-13 18:04, Ulf Hansson wrote:
+> On Wed, 12 Aug 2020 at 19:03, Sibi Sankar <sibis@codeaurora.org> wrote:
+>> 
+>> Uffe,
+>> Thanks for taking time to review the
+>> series!
+>> 
+>> On 2020-08-12 15:15, Ulf Hansson wrote:
+>> > On Tue, 11 Aug 2020 at 21:03, Sibi Sankar <sibis@codeaurora.org> wrote:
+>> >>
+>> >> This is for power domains which needs to stay powered on for suspend
+>> >> but can be powered on/off as part of runtime PM. This flag is aimed at
+>> >> power domains coupled to remote processors which enter suspend states
+>> >> independent to that of the application processor. Such power domains
+>> >> are turned off only on remote processor crash/shutdown.
+>> >
+>> > As Kevin also requested, please elaborate more on the use case.
+>> >
+>> > Why exactly must the PM domain stay powered on during system suspend?
+>> > Is there a wakeup configured that needs to be managed - or is there a
+>> > co-processor/FW behaviour that needs to be obeyed to?
+>> 
+>> Yes this is a co-processor behavior that
+>> needs to be obeyed. Specifically application
+>> processor notifies the Always on Subsystem
+>> (AOSS) that a particular co-processor is up
+>> using the power domains exposed by AOSS QMP
+>> driver. AOSS uses this information to wait
+>> for the co-processors to suspend before
+>> starting its sleep sequence. The application
+>> processor powers off these power domains only
+>> if the co-processor has crashed or powered
+>> off.
+> 
+> Thanks for clarifying!
+> 
+> Although, can you please elaborate a bit more on the actual use case?
+> What are the typical co-processor and what drivers are involved in
+> managing it?
 
-Changes in v2: none
+The co-processors using the power domains
+exposed by qcom_aoss driver are modem,
+audio dsp, compute dsp managed using
+qcom_q6v5_mss and qcom_q6v5_pas driver.
 
-Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+> 
+> As you may know, runtime PM becomes disabled during system suspend of
+> a device. Which means, if the driver tries to power off the
+> coprocessor (via calling pm_runtime_put() for example), somewhere in
+> the system suspend phase of the corresponding device, its attached PM
+> domain stays powered on when managed by genpd.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 5b4dcd5621d8..fcf30d8cc040 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -504,6 +504,13 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	return 0;
- };
- 
-+static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
-+		bool plugged)
-+{
-+	if (dp_display->plugged_cb && dp_display->codec_dev)
-+		dp_display->plugged_cb(dp_display->codec_dev, plugged);
-+}
-+
- static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- {
- 	struct dp_usbpd *hpd = dp->usbpd;
-@@ -544,6 +551,9 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	 */
- 	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
- 
-+	/* signal the disconnect event early to ensure proper teardown */
-+	dp_display_handle_plugged_change(g_dp_display, false);
-+
- 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
- 					DP_DP_IRQ_HPD_INT_MASK, true);
- 
-@@ -709,13 +719,6 @@ static int dp_display_prepare(struct msm_dp *dp)
- 	return 0;
- }
- 
--static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
--		bool plugged)
--{
--	if (dp_display->plugged_cb && dp_display->codec_dev)
--		dp_display->plugged_cb(dp_display->codec_dev, plugged);
--}
--
- static int dp_display_enable(struct dp_display_private *dp, u32 data)
- {
- 	int rc = 0;
-@@ -757,9 +760,6 @@ static int dp_display_pre_disable(struct msm_dp *dp_display)
- 
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 
--	/* signal the disconnect event early to ensure proper teardown */
--	dp_display_handle_plugged_change(dp_display, false);
--
- 	return 0;
- }
- 
+The drivers aren't really expected
+do anything during suspend/resume
+pretty much because the co-processors
+enter low-power modes independent to
+that of the application processor. On
+co-processor crash the remoteproc core
+does a pm_stay_awake followed by a
+pm_relax after crash recovery.
+
+> 
+> Then in the suspend_noirq phase, genpd tries to power off the PM
+> domain, unless there are wakeups to consider.
+> 
+> Taking the above into account, wouldn't that mean that you potentially
+> may end up keeping the PM domain powered on, even if it actually can
+> be powered off in the suspend_noirq phase by genpd?
+> 
+> Kind regards
+> Uffe
+> 
+>> >
+>> >>
+>> >> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> >> ---
+>> >>  drivers/base/power/domain.c | 3 ++-
+>> >>  include/linux/pm_domain.h   | 5 +++++
+>> >>  2 files changed, 7 insertions(+), 1 deletion(-)
+>> >>
+>> >> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+>> >> index 2cb5e04cf86cd..ba78ac4a450d4 100644
+>> >> --- a/drivers/base/power/domain.c
+>> >> +++ b/drivers/base/power/domain.c
+>> >> @@ -129,6 +129,7 @@ static const struct genpd_lock_ops genpd_spin_ops
+>> >> = {
+>> >>  #define genpd_is_active_wakeup(genpd)  (genpd->flags &
+>> >> GENPD_FLAG_ACTIVE_WAKEUP)
+>> >>  #define genpd_is_cpu_domain(genpd)     (genpd->flags &
+>> >> GENPD_FLAG_CPU_DOMAIN)
+>> >>  #define genpd_is_rpm_always_on(genpd)  (genpd->flags &
+>> >> GENPD_FLAG_RPM_ALWAYS_ON)
+>> >> +#define genpd_is_suspend_on(genpd)     (genpd->flags &
+>> >> GENPD_FLAG_SUSPEND_ON)
+>> >>
+>> >>  static inline bool irq_safe_dev_in_no_sleep_domain(struct device
+>> >> *dev,
+>> >>                 const struct generic_pm_domain *genpd)
+>> >> @@ -949,7 +950,7 @@ static void genpd_sync_power_off(struct
+>> >> generic_pm_domain *genpd, bool use_lock,
+>> >>  {
+>> >>         struct gpd_link *link;
+>> >>
+>> >> -       if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
+>> >> +       if (!genpd_status_on(genpd) || genpd_is_always_on(genpd) ||
+>> >> genpd_is_suspend_on(genpd))
+>> >>                 return;
+>> >>
+>> >>         if (genpd->suspended_count != genpd->device_count
+>> >> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+>> >> index ee11502a575b0..3002a2d68936a 100644
+>> >> --- a/include/linux/pm_domain.h
+>> >> +++ b/include/linux/pm_domain.h
+>> >> @@ -55,6 +55,10 @@
+>> >>   *
+>> >>   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM
+>> >> domain
+>> >>   *                             powered on except for system suspend.
+>> >> + *
+>> >> + * GENPD_FLAG_SUSPEND_ON:      Instructs genpd to keep the PM domain
+>> >> powered
+>> >> + *                             on during suspend and runtime PM
+>> >> controlled
+>> >> + *                             otherwise.
+>> >>   */
+>> >>  #define GENPD_FLAG_PM_CLK       (1U << 0)
+>> >>  #define GENPD_FLAG_IRQ_SAFE     (1U << 1)
+>> >> @@ -62,6 +66,7 @@
+>> >>  #define GENPD_FLAG_ACTIVE_WAKEUP (1U << 3)
+>> >>  #define GENPD_FLAG_CPU_DOMAIN   (1U << 4)
+>> >>  #define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
+>> >> +#define GENPD_FLAG_SUSPEND_ON   (1U << 6)
+>> >>
+>> >>  enum gpd_status {
+>> >>         GPD_STATE_ACTIVE = 0,   /* PM domain is active */
+>> >> --
+>> >> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+>> >> Forum,
+>> >> a Linux Foundation Collaborative Project
+>> >>
+>> 
+>> --
+>> Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+>> a Linux Foundation Collaborative Project.
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
