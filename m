@@ -2,121 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFDB924448E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 07:29:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03499244655
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 10:17:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbgHNF3y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Aug 2020 01:29:54 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:10118 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbgHNF3y (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Aug 2020 01:29:54 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 13 Aug 2020 22:29:52 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Aug 2020 22:29:50 -0700
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Aug 2020 10:59:32 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 2AC0D4702; Fri, 14 Aug 2020 10:59:31 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        id S1726669AbgHNIRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Aug 2020 04:17:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55340 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726641AbgHNIRK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Aug 2020 04:17:10 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C69AD206B2;
+        Fri, 14 Aug 2020 08:17:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597393029;
+        bh=YgO/v+wl3RV6ZsbHn7D3JlpwNdtDIHAfZh9E27YIQpk=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=WxJFKyohdJoDrxE3CmmxAdxJPPTni1dRkGLrqOaUzEwjQbwBGDQ9rpVWSELhh1z+9
+         ToDvK8bcMSJoBVXkiIQveJMq7ypNmBabnyga3egg6Prvr0PAy77JwYJWbuP2kvP/JD
+         8fV95VGaXgxHcLjxQlIpC4yI1JoSsPEZ1BqHEkAE=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <maz@kernel.org>)
+        id 1k6Utg-0026vn-CN; Fri, 14 Aug 2020 09:17:08 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 14 Aug 2020 09:17:08 +0100
+From:   Marc Zyngier <maz@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Andre Przywara <andre.przywara@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org
-Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl, nicolas@ndufresne.ca,
-        majja@codeaurora.org, stanimir.varbanov@linaro.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v2] media: v4l2-ctrl: add control for long term reference.
-Date:   Fri, 14 Aug 2020 10:59:27 +0530
-Message-Id: <1597382967-32729-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+Subject: Re: [PATCH] arm64: Add KRYO4XX gold CPU core to spectre-v2 safe list
+In-Reply-To: <d4ad5ade9815632f450374c9b6bbe9d2@codeaurora.org>
+References: <20200813081834.13576-1-saiprakash.ranjan@codeaurora.org>
+ <20200813090324.GB9829@willie-the-truck>
+ <89f0f41514e547533c3fa66364e5a2ac@codeaurora.org>
+ <20200813094041.GA9894@willie-the-truck>
+ <ff6fa7bd817d49e8ef9bee5c1e13d99c@kernel.org>
+ <368280026c8af5b5a58a52c1e19cfae9@codeaurora.org>
+ <8ffd22d5926aedda0c9fa6ea429fd84e@kernel.org>
+ <d4ad5ade9815632f450374c9b6bbe9d2@codeaurora.org>
+User-Agent: Roundcube Webmail/1.4.7
+Message-ID: <961724681d6d3f8c37a4e3c8facbdea3@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: saiprakash.ranjan@codeaurora.org, will@kernel.org, catalin.marinas@arm.com, andre.przywara@arm.com, mark.rutland@arm.com, suzuki.poulose@arm.com, swboyd@chromium.org, dianders@chromium.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-LTR (Long Term Reference) frames are the frames that are encoded
-sometime in the past and stored in the DPB buffer list to be used
-as reference to encode future frames.
-This change adds controls to enable this feature.
+On 2020-08-14 05:34, Sai Prakash Ranjan wrote:
+> On 2020-08-13 23:29, Marc Zyngier wrote:
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 23 ++++++++++++++++++++++
- drivers/media/v4l2-core/v4l2-ctrls.c               |  6 ++++++
- include/uapi/linux/v4l2-controls.h                 |  4 ++++
- 3 files changed, 33 insertions(+)
+[...]
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index d0d506a..6d1b005 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -4272,3 +4272,26 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
-       - Selecting this value specifies that HEVC slices are expected
-         to be prefixed by Annex B start codes. According to :ref:`hevc`
-         valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
-+
-+``V4L2_CID_MPEG_VIDEO_LTRCOUNT (enum)``
-+	Specifies the number of Long Term Reference frames encoder needs to
-+	generate or keep.
-+	This control is used to query or configure the number of Long Term
-+	Reference frames.
-+
-+``V4L2_CID_MPEG_VIDEO_MARKLTRFRAME (enum)``
-+	This control is used to mark current frame as Long Term Reference
-+	frame.
-+	this provides a Long Term Reference index that ranges from 0
-+	to LTR count-1 and then the particular frame will be marked with that
-+	Long Term Reference index.
-+
-+``V4L2_CID_MPEG_VIDEO_USELTRFRAME (enum)``
-+	Specifies the Long Term Reference frame(s) to be used for encoding
-+	the current frame.
-+	This provides a bitmask which consists of bits [0, 15]. A total of N
-+	LSB bits of this field are valid, where N is the maximum number of
-+	Long Term Reference frames supported.
-+	All the other bits are invalid and should be rejected.
-+	The LSB corresponds to the Long Term Reference index 0. Bit N-1 from
-+	the LSB corresponds to the Long Term Reference index max LTR count-1.
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-index 3f3fbcd..3138c72 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-@@ -991,6 +991,9 @@ const char *v4l2_ctrl_get_name(u32 id)
- 	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:		return "HEVC Slice Parameters";
- 	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
- 	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
-+	case V4L2_CID_MPEG_VIDEO_LTRCOUNT:		return "LTR Count";
-+	case V4L2_CID_MPEG_VIDEO_MARKLTRFRAME:		return "Mark LTR";
-+	case V4L2_CID_MPEG_VIDEO_USELTRFRAME:		return "Use LTR";
- 
- 	/* CAMERA controls */
- 	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
-@@ -1224,6 +1227,9 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
- 		break;
- 	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
- 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
-+	case V4L2_CID_MPEG_VIDEO_LTRCOUNT:
-+	case V4L2_CID_MPEG_VIDEO_MARKLTRFRAME:
-+	case V4L2_CID_MPEG_VIDEO_USELTRFRAME:
- 		*type = V4L2_CTRL_TYPE_INTEGER;
- 		break;
- 	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index 6227141..f2daa86 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -742,6 +742,10 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
- #define V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
- #define V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
- #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
-+#define V4L2_CID_MPEG_VIDEO_LTRCOUNT	(V4L2_CID_MPEG_BASE + 645)
-+#define V4L2_CID_MPEG_VIDEO_MARKLTRFRAME	(V4L2_CID_MPEG_BASE + 646)
-+#define V4L2_CID_MPEG_VIDEO_USELTRFRAME		(V4L2_CID_MPEG_BASE + 647)
-+
- 
- /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
- #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
+>> We'd need to disable the late onlining of CPUs that would change
+>> the mitigation state, and this is... ugly.
+>> 
+> 
+> Ugh, yes indeed and here I was thinking that these things are 
+> straightforward :(
+
+It never is. Big-little is a broken concept. I'll try and think of
+something next week, as I'm pretty swamped at the moment.
+
+         M.
 -- 
-1.9.1
-
+Jazz is not dead. It just smells funny...
