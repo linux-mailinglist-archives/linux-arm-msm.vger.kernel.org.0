@@ -2,108 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6557B244F57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 22:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67835244F7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 23:15:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbgHNUyt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Aug 2020 16:54:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727093AbgHNUyt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Aug 2020 16:54:49 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC3EC061386
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Aug 2020 13:54:49 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id h8so5479553lfp.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Aug 2020 13:54:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Vus0dqruI6TinEH786jbm9CqjsZKhoW6S8aHJE0MAZI=;
-        b=oSGqWf2l5TA8ZA0SPD8bY2gh1y82+4aeVyw0p7ICfdR3GbuWbL33M9ZfRZjI3ENw29
-         LFDIFcZ0jV4xo+wkraBPfGcEUMj8OHXHWGZwZpKl18Vfg2Rngl4QhGE42XOwSPDUJLEE
-         GcP/BPWO7InTFOPcXJ3zYEx7h4sUQWhFDB6SR++T45mfGqFxrMV/djpAMmytazphEboX
-         CeTKtvCnTCrAbMmsPpbvGskv6l0lW9zkSNqe+i4omobTrySF7aYjykinPZ1kCvWSnd0+
-         X5J1zuFoGp8OmZf/cbINotUUvtmZrx2UB9FvkMWDkQqk6CH5xnzOD9kaiJbTXfES0zMe
-         UaGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Vus0dqruI6TinEH786jbm9CqjsZKhoW6S8aHJE0MAZI=;
-        b=i68MamhMed3NPn1RA4DNsqfLy7+Lb4FGLv1XqQfaX86GfitVQmrCsh4eafcAVadMNe
-         uOKV9hPX6z2dxo3HMobPlQAavrl7aN1FomIOVjaGJ5tBGszRFLIa88nueggOxxGyhZkh
-         S3az49gEPSfh/olsXlEC9fiD6owDsVdd9fD18DZUK8HpUWRvjEM0mhd+o7vrwcYO/HVu
-         safgoLuYQCa6YNw7TQL0zTZ/ql89PhdVM0izs23wN3w+GO5teoE4oefIqjUBIKd/hV4B
-         5ijsZQjtqPYOcVK0oa9RTl186HnHbuQcg4emcr/iofFuzYM18JwVCBB/+HDLzWIjkM8G
-         HU7Q==
-X-Gm-Message-State: AOAM531K74r2dXy7MbN8Ng20ArepEphaDPMoxcW4rEDOGoMzw8AmOb1L
-        ThcNBnq6TBByaQTRoiU2OvCkCA==
-X-Google-Smtp-Source: ABdhPJwvQrLcRLSkM8k2mJwUx1SYP+yCZWhilsJrWl7+wqlC1QSyA7B8FE3J4HX+gD4yoBOOFUVz5Q==
-X-Received: by 2002:a19:8705:: with SMTP id j5mr2012582lfd.122.1597438487681;
-        Fri, 14 Aug 2020 13:54:47 -0700 (PDT)
-Received: from localhost.localdomain (37-144-159-139.broadband.corbina.ru. [37.144.159.139])
-        by smtp.googlemail.com with ESMTPSA id j26sm1963601lja.111.2020.08.14.13.54.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2020 13:54:47 -0700 (PDT)
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-To:     mchehab@kernel.org, robert.foss@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        peter.griffin@linaro.org,
-        Andrey Konovalov <andrey.konovalov@linaro.org>
-Subject: [PATCH 3/3] media: camss: __video_try_fmt(): don't use hardcoded constants
-Date:   Fri, 14 Aug 2020 23:54:03 +0300
-Message-Id: <20200814205403.27639-4-andrey.konovalov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200814205403.27639-1-andrey.konovalov@linaro.org>
-References: <20200814205403.27639-1-andrey.konovalov@linaro.org>
+        id S1728116AbgHNVPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Aug 2020 17:15:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:48761 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728112AbgHNVPL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Aug 2020 17:15:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597439711; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=2qKj4SNXimMKoQyi+qljyl20bGjTHCPTKE/IaXeY4B8=;
+ b=Z3sU2u6yFCw8yGbRYi33fpV3sMkAQY/F5eNrNpArYLYy9I4x87aDRVW4wdqHtRtLUAAUmnYK
+ wak4pF8J6iwE94B33ngvrleV8iEM3n6JDxl9F+d6b/P4WB0VYKV3Ppp53o/YMZAheXJ29lyp
+ XM5cemz982WPC6qfo/0sCmZfhuo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5f36fecfd48d4625cabca0b9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 14 Aug 2020 21:14:54
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 072FFC433CB; Fri, 14 Aug 2020 21:14:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tanmay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5FBB1C433C9;
+        Fri, 14 Aug 2020 21:14:53 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 14 Aug 2020 14:14:53 -0700
+From:   Tanmay Shah <tanmay@codeaurora.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     devicetree@vger.kernel.org, airlied@linux.ie,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+        khsieh@codeaurora.org, seanpaul@chromium.org,
+        abhinavk@codeaurora.org, Guenter Roeck <groeck@chromium.org>,
+        Vara Reddy <varar@codeaurora.org>, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH v10 2/5] drm/msm/dp: add displayPort driver
+ support
+In-Reply-To: <db6a4104ba9fc00edaf5542693ac6bd9@codeaurora.org>
+References: <20200812044223.19279-1-tanmay@codeaurora.org>
+ <20200812044223.19279-3-tanmay@codeaurora.org>
+ <324d61b6-fc26-03ea-f8af-ff74a9767da2@linaro.org>
+ <db6a4104ba9fc00edaf5542693ac6bd9@codeaurora.org>
+Message-ID: <fccbdceaf64a1e50561c6e9ece46d0d0@codeaurora.org>
+X-Sender: tanmay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the definitions introduced by commit "media: camss: add support
-for vidioc_enum_framesizes ioctl" instead of the hardcoded values.
+On 2020-08-14 10:56, Tanmay Shah wrote:
+> On 2020-08-14 10:12, Dmitry Baryshkov wrote:
+>> Hello,
+>> 
+>> On 12/08/2020 07:42, Tanmay Shah wrote:
+>>> From: Chandan Uddaraju <chandanu@codeaurora.org>
+>> 
+>> [skipped]
+>> 
+>>> +		} else if ((dp_parser_check_prefix("ctrl", clk_name) ||
+>>> +			   dp_parser_check_prefix("stream", clk_name))  &&
+>>> +			   ctrl_clk_index < ctrl_clk_count) {
+>>> +			struct dss_clk *clk =
+>>> +				&ctrl_power->clk_config[ctrl_clk_index];
+>>> +			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
+>>> +			ctrl_clk_index++;
+>>> +
+>>> +			if (!strncmp(clk_name, "ctrl_link",
+>>> +					strlen("ctrl_link")) ||
+>>> +					!strncmp(clk_name, "stream_pixel",
+>>> +					strlen("ctrl_pixel")))
+>> 
+>> This should be "stream_pixel", I believe. I don't like macros, but
+>> most probably it would help here. Also function/brace alignment could
+>> be better (sorry, it really hides the issue here).
+>> 
+> 
+> Thanks for reviews and good catch!! I completely missed it when I
+> renamed "ctrl_pixel".
+> Use of "stream_pixel" is very limited. So, instead of macros direct
+> name is used.
+> Fixing function and brace alignment sounds good idea insted.
+> 
+>> 
+Actually I will reuse dp_parser_check_prefix utility. It's already doing 
+same Job.
 
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-video.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index e6255f0e6174..546393ab0a52 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -670,7 +670,7 @@ static int __video_try_fmt(struct camss_video *video, struct v4l2_format *f)
- 						  1, 65528);
- 			sizeimage[i] = clamp_t(u32, p->sizeimage,
- 					       bytesperline[i],
--					       bytesperline[i] * 4096);
-+					       bytesperline[i] * CAMSS_FRAME_MAX_HEIGHT_PIX);
- 		}
- 
- 	for (j = 0; j < video->nformats; j++)
-@@ -687,8 +687,8 @@ static int __video_try_fmt(struct camss_video *video, struct v4l2_format *f)
- 	memset(pix_mp, 0, sizeof(*pix_mp));
- 
- 	pix_mp->pixelformat = fi->pixelformat;
--	pix_mp->width = clamp_t(u32, width, 1, 8191);
--	pix_mp->height = clamp_t(u32, height, 1, 8191);
-+	pix_mp->width = clamp_t(u32, width, 1, CAMSS_FRAME_MAX_WIDTH);
-+	pix_mp->height = clamp_t(u32, height, 1, CAMSS_FRAME_MAX_HEIGHT_RDI);
- 	pix_mp->num_planes = fi->planes;
- 	for (i = 0; i < pix_mp->num_planes; i++) {
- 		bpl = pix_mp->width / fi->hsub[i].numerator *
-@@ -714,7 +714,7 @@ static int __video_try_fmt(struct camss_video *video, struct v4l2_format *f)
- 						  1, 65528);
- 			p->sizeimage = clamp_t(u32, p->sizeimage,
- 					       p->bytesperline,
--					       p->bytesperline * 4096);
-+					       p->bytesperline * CAMSS_FRAME_MAX_HEIGHT_PIX);
- 			lines = p->sizeimage / p->bytesperline;
- 
- 			if (p->bytesperline < bytesperline[i])
--- 
-2.17.1
-
+> 
+>>> +				clk->type = DSS_CLK_PCLK;
+>>> +			else
+>>> +				clk->type = DSS_CLK_AHB;
+>>> +		}
+>>> +	}
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
