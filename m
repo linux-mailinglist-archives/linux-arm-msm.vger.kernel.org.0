@@ -2,69 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F349244ACA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 15:42:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5C67244BDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 17:22:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728562AbgHNNmk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Aug 2020 09:42:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58720 "EHLO
+        id S1726919AbgHNPWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Aug 2020 11:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728518AbgHNNmf (ORCPT
+        with ESMTP id S1726444AbgHNPWG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Aug 2020 09:42:35 -0400
+        Fri, 14 Aug 2020 11:22:06 -0400
 Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61736C061384;
-        Fri, 14 Aug 2020 06:42:35 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id bs17so6854768edb.1;
-        Fri, 14 Aug 2020 06:42:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F0CC061384;
+        Fri, 14 Aug 2020 08:22:06 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id i6so7096488edy.5;
+        Fri, 14 Aug 2020 08:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=I1za5GysOPtWQWJ7AUT6812STRUOq3UcNXr5lCeanqY=;
-        b=As6zWn+lPgGK3H5ouPqVtJISYiJHkGaSP0kZgo2tzD2ckwBRA2wjKeTRD8SWHFvsBq
-         au/4tzWcqFBOdux4Iph663HiXld6/YRFz8RhqUYVy2d2E6KAG0fm5ivr0kP/EDyWV6Kh
-         xcKO7z0auD2OY97WcYgqHeo+69uSmppRswCeFWD9JMwCvvr0Dc9xx4oR3qy/yLFJxY//
-         6K/jnolLRKdQr7WkluFA+BzAZfLzYvVWcpgZnWSezeXxPnKXclHMqJfsyutSggLXDLla
-         0Z2jzQMyilnVjH/BAGAEYkdjMYrRax9URc1ZDotI7VziKPPEf9wbHgzVOSFBbYYIvF1w
-         QJHg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fQmCXjIJLm4FOxf1HtQwARu0AkrMVdJ4Csr5yAIm0vc=;
+        b=E/t/2SEODb0FlrlwFdSy8mvqOSQ+hxjDltw15BEagw1Pc5SFcB3E5mKO32U9sQ/SMA
+         OGh5sBaVu4MVPBSD0qcSxykJDVd2KOoMKD+v6zw5Ct3sbclbEiMUK2Yq3d/ovECIp/76
+         JZsf4kFkoF7pgwtE6/HTJOffvD/8S4uKB24wSIJggfnuoKxiXOt16mWNUKYYBrNJCm+A
+         5kuUXMdsIS72j/MqkfkBzCUQsp9BZvI90MV5CkABPE4jXRecOzc5pat5o8cN/ilgMl3q
+         f+gY5nmc6Khm/FcmvRk1n7Yrx2vOO6lVGBbhLD0wVnKP8Y0faITGnAXnbhE6wZXn3z25
+         rqZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I1za5GysOPtWQWJ7AUT6812STRUOq3UcNXr5lCeanqY=;
-        b=l9GcM05NsA0HSFVlLlNcPRJgM1KRYvJzzOGWeTTl5MjKfP9T6fJ28vidcN9SrVpD0e
-         IK3LnKKXkZVeHv1mVNwevFa+0/ICYsag2NchNdKf6KScijax0CCYCrQ2fgotHOnT4t5K
-         X4ZjmC9h6B+TlogtUoCDPkcvJ8wNOu6n5S75J8sjEy9TPrBvzlRHD2+YZyQFiOvW27tN
-         WIMY0H025Z6PJ1EepH5bSBEDOcdOCikHBrMek1he1IRO5HIonZ7sUovZpqx6vOUXEXAz
-         f9c1u/0jq8YbGkMtMWksC+NQxFZAA6ZRALHa8ZlwbRwWXMTBUREGXtQgUtIh8C+1e647
-         qfag==
-X-Gm-Message-State: AOAM532osppnIWGaFwr53VPzdi4Zqq8BpzEX9RduTb0WPG76CkR/ELC/
-        RyfWa8TeRxvgw6xybqGhPDA=
-X-Google-Smtp-Source: ABdhPJx2k4MG7iEdVDeslT347UjBp7bBF1b+NBY5vchoCRwvt/GaIrHGb9TuxYB1CjKzALDpeMrufw==
-X-Received: by 2002:a50:ee0a:: with SMTP id g10mr2172023eds.289.1597412554058;
-        Fri, 14 Aug 2020 06:42:34 -0700 (PDT)
-Received: from Ansuel-XPS.localdomain (host-87-0-192-118.retail.telecomitalia.it. [87.0.192.118])
-        by smtp.googlemail.com with ESMTPSA id s2sm6767118ejd.17.2020.08.14.06.42.30
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fQmCXjIJLm4FOxf1HtQwARu0AkrMVdJ4Csr5yAIm0vc=;
+        b=i2l8H0+2M8wQPD0s4Rcc1O2xIuMkmLDJQ6IBqB6L9jyUyIM446e8mXqUTa1gTECmTk
+         FblWqMo7XOb9zVz70paTTnpK4pXe2xVPn+EfxQ5xpc07Pi8bDz+C4r1D96QZSQGIP3x6
+         8PKiYfx51kD8g54CF5Vpd+WUGRQp5H3urlpEVU+21zIKvsjRxAdFl1JkhHVDbVG8hG+w
+         IuOyVYof965mavQQXpO5Sc+14D6MHj6WlhBY721+1LrZAo4hFQ+fgqHSeL+L2s8G6ZIu
+         dMAXkSoIlqdXCFE58Cd6bcVEnfsBSuR9ybcwHQfSQXO6IbCvt8yxY74YZvZv52x5rdNW
+         RxvQ==
+X-Gm-Message-State: AOAM532f71dn7OPxtUgBN9uRMOUByrkSr5VB9BED/BNiHgDdzJGhmUCG
+        hsYG3/Bs9J82Ez0Xw1JVOmg=
+X-Google-Smtp-Source: ABdhPJyIyTb9/qHX42b92RxbUctP0qmUWK2msIV5OUMivkT40jOjszH4t2eA5MNELxhzAmTXQbDFCw==
+X-Received: by 2002:a05:6402:1282:: with SMTP id w2mr2593059edv.183.1597418525094;
+        Fri, 14 Aug 2020 08:22:05 -0700 (PDT)
+Received: from localhost.localdomain (abag79.neoplus.adsl.tpnet.pl. [83.6.170.79])
+        by smtp.googlemail.com with ESMTPSA id e8sm6087974edy.68.2020.08.14.08.22.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2020 06:42:33 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Amit Kucheria <amit.kucheria@linaro.org>
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>, Rob Herring <robh@kernel.org>,
+        Fri, 14 Aug 2020 08:22:04 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFC PATCH v6 8/8] dt-bindings: thermal: tsens: Document ipq8064 bindings
-Date:   Fri, 14 Aug 2020 15:41:22 +0200
-Message-Id: <20200814134123.14566-9-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200814134123.14566-1-ansuelsmth@gmail.com>
-References: <20200814134123.14566-1-ansuelsmth@gmail.com>
+        Adrian Hunter <adrian.hunter@intel.com>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/2] [-next] mmc: host: msm: Add optional full power cycle property.
+Date:   Fri, 14 Aug 2020 17:21:59 +0200
+Message-Id: <20200814152201.254010-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -72,100 +69,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the use of bindings used for msm8960 tsens based devices.
-msm8960 use the same gcc regs and is set as a child of the qcom gcc.
+On some eMMCs (at least the ones used on Sony msm8994 boards)
+enabling full power cycle is required to prevent permanent damage
+to the flash memory, whereas on others it results in better performance.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- .../bindings/thermal/qcom-tsens.yaml          | 50 ++++++++++++++++---
- 1 file changed, 43 insertions(+), 7 deletions(-)
+ Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 4 ++++
+ drivers/mmc/host/sdhci-msm.c                        | 6 ++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index d7be931b42d2..9d480e3943a2 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -19,6 +19,11 @@ description: |
- properties:
-   compatible:
-     oneOf:
-+      - description: msm9860 TSENS based
-+        items:
-+          - enum:
-+            - qcom,ipq8064-tsens
-+
-       - description: v0.1 of TSENS
-         items:
-           - enum:
-@@ -85,12 +90,18 @@ properties:
-       Number of cells required to uniquely identify the thermal sensors. Since
-       we have multiple sensors this is set to 1
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+index 3b602fd6180b..939c8df2a25c 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+@@ -54,6 +54,10 @@ Required properties:
+ - qcom,dll-config: Chipset and Platform specific value. Use this field to
+ 	specify the DLL_CONFIG register value as per Hardware Programming Guide.
  
-+required:
-+  - compatible
-+  - interrupts
-+  - "#thermal-sensor-cells"
++- qcom,full-pwr-cycle: Enable full power cycle CAP2. This is required for optimal
++	performance on some eMMCs, whereas others need it to prevent permanent
++	damage to the flash memory.
 +
- allOf:
-   - if:
-       properties:
-         compatible:
-           contains:
-             enum:
-+              - qcom,ipq8064-tsens
-               - qcom,msm8916-tsens
-               - qcom,msm8974-tsens
-               - qcom,msm8976-tsens
-@@ -111,17 +122,42 @@ allOf:
-         interrupt-names:
-           minItems: 2
+ Optional Properties:
+ * Following bus parameters are required for interconnect bandwidth scaling:
+ - interconnects: Pairs of phandles and interconnect provider specifier
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 5a33389037cd..8d5c65e13dca 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2242,6 +2242,12 @@ static int sdhci_msm_probe(struct platform_device *pdev)
  
--required:
--  - compatible
--  - reg
--  - "#qcom,sensors"
--  - interrupts
--  - interrupt-names
--  - "#thermal-sensor-cells"
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,tsens-v0_1
-+              - qcom,tsens-v1
-+              - qcom,tsens-v2
-+
-+    then:
-+      required:
-+        - reg
-+        - interrupt-names
-+        - "#qcom,sensors"
+ 	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
  
- additionalProperties: false
- 
- examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    // Example msm9860 based SoC (ipq8064):
-+    gcc: clock-controller {
++	if (of_find_property(pdev->dev.of_node, "qcom,full-pwr-cycle", NULL))
++		msm_host->mmc->caps2 |= MMC_CAP2_FULL_PWR_CYCLE;
 +
-+           /* ... */
++	else
++		dev_info(&pdev->dev, "MMC full power cycle is not enabled. This might result in subpar performance or permanent damage on some devices.\n");
 +
-+           tsens: thermal-sensor {
-+                compatible = "qcom,ipq8064-tsens";
-+
-+                 nvmem-cells = <&tsens_calib>, <&tsens_calsel>;
-+                 nvmem-cell-names = "calib", "calib_sel";
-+                 interrupts = <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>;
-+
-+                 #thermal-sensor-cells = <1>;
-+          };
-+    };
-+
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
-     // Example 1 (legacy: for pre v1 IP):
+ 	/* Setup SDCC bus voter clock. */
+ 	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+ 	if (!IS_ERR(msm_host->bus_clk)) {
 -- 
-2.27.0
+2.28.0
 
