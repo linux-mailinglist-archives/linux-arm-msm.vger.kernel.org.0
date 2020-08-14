@@ -2,142 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD18244785
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 11:57:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9813244850
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Aug 2020 12:53:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbgHNJ44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Aug 2020 05:56:56 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:55261 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726679AbgHNJ4z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Aug 2020 05:56:55 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 14 Aug 2020 02:56:54 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Aug 2020 02:56:52 -0700
-Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Aug 2020 15:26:33 +0530
-Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
-        id 477501AC8; Fri, 14 Aug 2020 15:26:32 +0530 (IST)
-From:   Roja Rani Yarubandi <rojay@codeaurora.org>
-To:     wsa@kernel.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: [PATCH 2/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-Date:   Fri, 14 Aug 2020 15:25:40 +0530
-Message-Id: <20200814095540.32115-3-rojay@codeaurora.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200814095540.32115-1-rojay@codeaurora.org>
-References: <20200814095540.32115-1-rojay@codeaurora.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1727845AbgHNKxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Aug 2020 06:53:51 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:55647 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727807AbgHNKxu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Aug 2020 06:53:50 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597402429; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rlS6jtvmdtc8gXzY+6308pLXZafr54hh4AT7H4tFc6g=; b=tfa0iOEs6qABejOXcqsX6vnwWUGLJA0Siz3JCMo09dWh47DAnk6ziDzg5z3Z0UhKpS7QqfT3
+ VCa7A06hSm5yZK3fXSwvq6oYbroi/uHa50BgVEEtMNtAQWr9gkKAZHHsdPX0arx66hMprBWE
+ kjTsqqs1EDAuQGP416TDvdEUaOo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5f366d2ed48d4625ca4fdb2c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 14 Aug 2020 10:53:34
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 31F11C43391; Fri, 14 Aug 2020 10:53:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from rohkumar-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rohitkr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8FE86C433C6;
+        Fri, 14 Aug 2020 10:53:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8FE86C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rohitkr@codeaurora.org
+From:   Rohit kumar <rohitkr@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Rohit kumar <rohitkr@codeaurora.org>
+Subject: [PATCH v6 00/12]  ASoC: qcom: Add support for SC7180 lpass variant
+Date:   Fri, 14 Aug 2020 16:22:56 +0530
+Message-Id: <1597402388-14112-1-git-send-email-rohitkr@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the hardware is still accessing memory after SMMU translation
-is disabled(as part of smmu shutdown callback), then the
-IOVAs(I/O virtual address) which it was using will go on the bus
-as the physical addresses which will result in unknown crashes
-like NoC/interconnect errors.
+This patch chain add audio support for SC7180 soc by doing the required
+modification in existing common lpass-cpu/lpass-platform driver.
+This also fixes some concurrency issue.
 
-So, adding shutdown callback to i2c driver to unmap DMA mappings
-during system "reboot" or "shutdown".
+This patch series is already tested by Srinivas on Dragon Board 410c.
+Changes since v5:
+        - Fixed remove api in lpass-sc7180.c
+        - Addressed comments by Rob in yaml Documentation.
 
-Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 36 ++++++++++++++++++++++++++++++
- include/linux/qcom-geni-se.h       |  5 +++++
- 2 files changed, 41 insertions(+)
+Ajit Pandey (4):
+  ASoC: qcom: Add common array to initialize soc based core clocks
+  ASoC: qcom: lpass-platform: Replace card->dev with component->dev
+  include: dt-bindings: sound: Add sc7180-lpass bindings header
+  ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 53ca41f76080..749c225f95c4 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -613,6 +613,41 @@ static int geni_i2c_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static void geni_i2c_shutdown(struct platform_device *pdev)
-+{
-+	int ret;
-+	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
-+	struct geni_se *se = &gi2c->se;
-+	u32 dma;
-+	u32 dma_dbg_reg;
-+
-+	ret = pm_runtime_get_sync(gi2c->se.dev);
-+	if (ret < 0) {
-+		dev_err(gi2c->se.dev, "Failed to resume device:%d\n", ret);
-+		return;
-+	}
-+
-+	dma = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
-+	if (dma) {
-+		dma_dbg_reg = readl_relaxed(gi2c->se.base + SE_DMA_DEBUG_REG0);
-+		if (dma_dbg_reg & DMA_TX_ACTIVE) {
-+			geni_i2c_abort_xfer(gi2c);
-+			gi2c->cur_wr = 0;
-+			if (gi2c->err)
-+				geni_i2c_tx_fsm_rst(gi2c);
-+			geni_se_tx_dma_unprep(se, gi2c->tx_dma, gi2c->xfer_len);
-+		}
-+		if (dma_dbg_reg & DMA_RX_ACTIVE) {
-+			geni_i2c_abort_xfer(gi2c);
-+			gi2c->cur_rd = 0;
-+			if (gi2c->err)
-+				geni_i2c_rx_fsm_rst(gi2c);
-+			geni_se_rx_dma_unprep(se, gi2c->rx_dma, gi2c->xfer_len);
-+		}
-+	}
-+	pm_runtime_put_sync_suspend(gi2c->se.dev);
-+}
-+
- static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- {
- 	int ret;
-@@ -673,6 +708,7 @@ MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
- static struct platform_driver geni_i2c_driver = {
- 	.probe  = geni_i2c_probe,
- 	.remove = geni_i2c_remove,
-+	.shutdown = geni_i2c_shutdown,
- 	.driver = {
- 		.name = "geni_i2c",
- 		.pm = &geni_i2c_pm_ops,
-diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-index dd464943f717..acad69be747d 100644
---- a/include/linux/qcom-geni-se.h
-+++ b/include/linux/qcom-geni-se.h
-@@ -77,6 +77,7 @@ struct geni_se {
- #define SE_DMA_RX_FSM_RST		0xd58
- #define SE_HW_PARAM_0			0xe24
- #define SE_HW_PARAM_1			0xe28
-+#define SE_DMA_DEBUG_REG0		0xe40
- 
- /* GENI_FORCE_DEFAULT_REG fields */
- #define FORCE_DEFAULT	BIT(0)
-@@ -207,6 +208,10 @@ struct geni_se {
- #define RX_GENI_CANCEL_IRQ		BIT(11)
- #define RX_GENI_GP_IRQ_EXT		GENMASK(13, 12)
- 
-+/* DMA DEBUG Register fields */
-+#define DMA_TX_ACTIVE			BIT(0)
-+#define DMA_RX_ACTIVE			BIT(1)
-+
- /* SE_HW_PARAM_0 fields */
- #define TX_FIFO_WIDTH_MSK		GENMASK(29, 24)
- #define TX_FIFO_WIDTH_SHFT		24
+Rohit kumar (8):
+  ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+  ASoC: qcom: lpass-platform: fix memory leak
+  ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
+  ASoC: qcom: lpass-cpu: fix concurrency issue
+  dt-bindings: sound: lpass-cpu: Add sc7180 lpass cpu node
+  ASoC: qcom: lpass-cpu: Use platform_get_resource
+  ASoC: qcom: lpass-platform: Use platform_get_irq
+  dt-bindings: sound: lpass-cpu: Move to yaml format
+
+ .../devicetree/bindings/sound/qcom,lpass-cpu.txt   |  79 --------
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 189 ++++++++++++++++++
+ include/dt-bindings/sound/sc7180-lpass.h           |  10 +
+ sound/soc/qcom/Kconfig                             |   5 +
+ sound/soc/qcom/Makefile                            |   2 +
+ sound/soc/qcom/lpass-apq8016.c                     |  86 ++++++--
+ sound/soc/qcom/lpass-cpu.c                         | 204 ++++++++++---------
+ sound/soc/qcom/lpass-ipq806x.c                     |  67 +++++++
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 157 ++++++++-------
+ sound/soc/qcom/lpass-platform.c                    | 155 +++++++++++----
+ sound/soc/qcom/lpass-sc7180.c                      | 216 +++++++++++++++++++++
+ sound/soc/qcom/lpass.h                             |  63 +++++-
+ 12 files changed, 934 insertions(+), 299 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+ create mode 100644 include/dt-bindings/sound/sc7180-lpass.h
+ create mode 100644 sound/soc/qcom/lpass-sc7180.c
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
