@@ -2,229 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D1A6245372
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Aug 2020 00:01:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26C392454C4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Aug 2020 00:45:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729307AbgHOWBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Aug 2020 18:01:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45600 "EHLO
+        id S1728047AbgHOWpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Aug 2020 18:45:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728753AbgHOVvZ (ORCPT
+        with ESMTP id S1726855AbgHOWpD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Aug 2020 17:51:25 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE967C02B8E3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Aug 2020 04:45:27 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id v12so12564203ljc.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Aug 2020 04:45:26 -0700 (PDT)
+        Sat, 15 Aug 2020 18:45:03 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C62C061786;
+        Sat, 15 Aug 2020 15:45:02 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id r15so1477334wrp.13;
+        Sat, 15 Aug 2020 15:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5kWxC8Q2TEsOvsKTGoT0rCit1An1OvXbLIdlQ6bd9Xs=;
-        b=ZS0e8CPjP36nUfDoaFcR/gSeh9MJeNUD3mEmkDjX5vrf2ZC5SX2Nm17xCI9sns7sGO
-         fQRiNyUy5ermFlaOZxi1TsUSVDW7nLZ6oyGj6VKZ60cewZW650VGIUyhUvuYoVpFu2Hd
-         7G0C9NCqROSsIQS6uMoYtBYF3CrjL1qiVKuMo3iR0rTxUzPxSKHLcAlTjKqAnFFsepvJ
-         GLk/Dsc2y3pQ5h9H/RS3E6TLLJ6q03JFZA/vQs06i/jRe5DpH24PHLKIPyI82EosvniK
-         AS20iIrPyh4qNM+mFTzaDa+tsovJSpucty7obPIPRELyjiQloHSM/P9trWlYgmESLLQQ
-         kD2A==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9v1OHYfpYYA5o/8gW7muupb2BSzWhmjZmmPoVg8UHwc=;
+        b=MpU7wlgpTu1VPsWReQOUM/Bp5mLVx+ftP/V75G52LjsbxIo0QsuOu+JU04yHVEg5S/
+         nsZ9/+Wnv2a2DwABGH8PnHx4rOhBACh5cu1geL49bsD+gBwXVp/6IcWK38MaAjWEXw41
+         ANFCNlEfCzomspwnKHST58MPeRpbLVzFvqI46n8PmPHZNgfqwOcTxworhoGkNcBEjjBz
+         wuKqXLFWBijjQirO2k5/IYcc1nnnNvNUIVLuhznkBUfdsCD69KMHrVsYoxcjAO/bAJs8
+         vkbN98ksfwqIcEU2E1doYtWGcoupmIAS4kSIHUpAxy/rGDPvMyasCQaqVXseENtyh/D8
+         OS1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5kWxC8Q2TEsOvsKTGoT0rCit1An1OvXbLIdlQ6bd9Xs=;
-        b=pGPBvwo8rnty0PeO0O38tn9gKVTS7R/KgYr2r2Lm0o3GK7HjH0RCzf3AIc4/4T3iRf
-         RNLbFhf3uKJzQ+c+zOG7K8M5Y3wQ5XotsbXQtN6gPgLQvN6w16duQ+yxjBWnq0tH4WO4
-         fRajiei59/2fsySNPjQLmHfYP9HXvVaixvGm4aPCK8wejXvMXaG43Q+4+T2BUQZvTj6u
-         gZ9wynSwLW0/GtQP41w4vBh0Dh6etgdUmF9P7RqgKIYZP0E116DCKj1sfngZ9eKufObo
-         9Xi6newdsFyHO8cmvJHu7A9VBcCT7djjYelI7L5xMro+9o+C2KjqEcMmxU/2XVFaTEbw
-         xWPA==
-X-Gm-Message-State: AOAM531yjvIsS81V14p9rbXaq1zjupUR9bJlAhyFEZ6RW6/YJ1Pviq3G
-        edDSf0g4FBZsITWmrFXLPuUlBA==
-X-Google-Smtp-Source: ABdhPJxCubHTocMX6RPP0TdHWoKCqAKVAzmoybFXXugys1W9NRplxlI5higWH1CbHPi3zmZY3Rsgow==
-X-Received: by 2002:a2e:8717:: with SMTP id m23mr3471731lji.245.1597491920894;
-        Sat, 15 Aug 2020 04:45:20 -0700 (PDT)
-Received: from [192.168.43.7] ([94.25.229.189])
-        by smtp.gmail.com with ESMTPSA id o1sm2361694ljc.3.2020.08.15.04.45.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Aug 2020 04:45:20 -0700 (PDT)
-Subject: Re: [PATCH v10 3/5] drm/msm/dp: add support for DP PLL driver
-To:     Tanmay Shah <tanmay@codeaurora.org>
-Cc:     swboyd@chromium.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org, seanpaul@chromium.org,
-        daniel@ffwll.ch, airlied@linux.ie, aravindh@codeaurora.org,
-        abhinavk@codeaurora.org, khsieh@codeaurora.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-References: <20200812044223.19279-1-tanmay@codeaurora.org>
- <20200812044223.19279-4-tanmay@codeaurora.org>
- <821b5cf9-5ca0-7026-fd99-9a32285ed030@linaro.org>
- <f6b330778c07abd3003da9acab4d3398@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <28b1f678-ab8f-cf6a-af9f-fcd79131bdc1@linaro.org>
-Date:   Sat, 15 Aug 2020 14:45:17 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9v1OHYfpYYA5o/8gW7muupb2BSzWhmjZmmPoVg8UHwc=;
+        b=HCxfO7MROZS0kL1OiCIp1exdRMkIhfs2ENcwxYUIdX5do4C6RJEy5wC+Z0Z6SxMWvK
+         CCX1lZOIpPCME+tiOIiefpqVvGKWobuOUOo0kL+gPlzt/9RLQ4qDnHSDVkcKVV8f07E9
+         dWXT/Pbc2XNcXnzqLGyf72J3F3+trnLOr0JwUkhHcmkWYZfk1SWeEknffAhKI9xecLhJ
+         VlhwN1V9d7zcfPBR2A7Eehza5uOz3N5njVFcaUeqRfa02Xy6ciSlP/77x/xyTYUvHYkC
+         G0UZh4FSe0M4UlmpQWkulBJwHfKqxfHhyRFwcYC2FwzU3J9bxJbdRPEGM6a4iwLZLYur
+         GBQA==
+X-Gm-Message-State: AOAM530AlGQ8ZADUVQbte5jPGRJKi164zguX26VLCDDdYFumnRyFGMjX
+        XFMEuGC3tkrPk6kKJ2RxYoKJ6GCqvwDFDqdUt6T7b29OKvo=
+X-Google-Smtp-Source: ABdhPJzr5FnMJX5imMejIe/UKLhmWfwhLVclXOj7FCJyMJx6rMCaQPKMBXCSD8ToEEmwQazfqzKj0xkGimx92he2ANI=
+X-Received: by 2002:adf:f485:: with SMTP id l5mr7848208wro.147.1597531500581;
+ Sat, 15 Aug 2020 15:45:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <f6b330778c07abd3003da9acab4d3398@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20200812044223.19279-1-tanmay@codeaurora.org> <20200812044223.19279-4-tanmay@codeaurora.org>
+ <821b5cf9-5ca0-7026-fd99-9a32285ed030@linaro.org> <CAF6AEGtcfXodN1_HSdTcH402FdwTk15Nt6p3F=QYeSRhTc+hqw@mail.gmail.com>
+ <1ea81fa2-1dc8-a0b9-aa32-3127e9354be2@marek.ca>
+In-Reply-To: <1ea81fa2-1dc8-a0b9-aa32-3127e9354be2@marek.ca>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 15 Aug 2020 15:45:48 -0700
+Message-ID: <CAF6AEGt+NV-T7Qo_-gLM981QBWy3865Vbj518sd-4XQJccX_WA@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v10 3/5] drm/msm/dp: add support for DP PLL driver
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>, khsieh@codeaurora.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Vara Reddy <varar@codeaurora.org>, aravindh@codeaurora.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/08/2020 02:22, Tanmay Shah wrote:
-> On 2020-08-14 10:05, Dmitry Baryshkov wrote:
->> On 12/08/2020 07:42, Tanmay Shah wrote:
->>> From: Chandan Uddaraju <chandanu@codeaurora.org>
->>>
->>> Add the needed DP PLL specific files to support
->>> display port interface on msm targets.
->>
->> [skipped]
->>
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_pll_private.h 
->>> b/drivers/gpu/drm/msm/dp/dp_pll_private.h
->>> new file mode 100644
->>> index 000000000000..475ba6ed59ab
->>> --- /dev/null
->>> +++ b/drivers/gpu/drm/msm/dp/dp_pll_private.h
->>> @@ -0,0 +1,98 @@
->>> +/* SPDX-License-Identifier: GPL-2.0-only */
->>> +/*
->>> + * Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
->>> + */
->>> +
->>> +#ifndef __DP_PLL_10NM_H
->>> +#define __DP_PLL_10NM_H
->>> +
->>> +#include "dp_pll.h"
->>> +#include "dp_reg.h"
->>> +
->>> +#define DP_VCO_HSCLK_RATE_1620MHZDIV1000    1620000UL
->>> +#define DP_VCO_HSCLK_RATE_2700MHZDIV1000    2700000UL
->>> +#define DP_VCO_HSCLK_RATE_5400MHZDIV1000    5400000UL
->>> +#define DP_VCO_HSCLK_RATE_8100MHZDIV1000    8100000UL
->>> +
->>> +#define NUM_DP_CLOCKS_MAX            6
->>> +
->>> +#define DP_PHY_PLL_POLL_SLEEP_US        500
->>> +#define DP_PHY_PLL_POLL_TIMEOUT_US        10000
->>> +
->>> +#define DP_VCO_RATE_8100MHZDIV1000        8100000UL
->>> +#define DP_VCO_RATE_9720MHZDIV1000        9720000UL
->>> +#define DP_VCO_RATE_10800MHZDIV1000        10800000UL
->>> +
->>> +struct dp_pll_vco_clk {
->>> +    struct clk_hw hw;
->>> +    unsigned long    rate;        /* current vco rate */
->>> +    u64        min_rate;    /* min vco rate */
->>> +    u64        max_rate;    /* max vco rate */
->>> +    void        *priv;
->>> +};
->>> +
->>> +struct dp_pll_db {
->>
->> This struct should probably go into dp_pll_10nm.c. dp_pll_7nm.c, for
->> example, will use slightly different structure.
->>
-> 
-> Sure, it sounds good. I will give it try. Thanks!
-> 
->>> +    struct msm_dp_pll *base;
->>> +
->>> +    int id;
->>> +    struct platform_device *pdev;
->>> +
->>> +    /* private clocks: */
->>> +    bool fixed_factor_clk[NUM_DP_CLOCKS_MAX];
->>> +    struct clk_hw *hws[NUM_DP_CLOCKS_MAX];
->>
->> Then these two fields can use exact number of clocks rather than
->> NUM_DP_CLOCKS_MAX.
->>
-> 
-> I didn't get this. I think NUM_DP_CLOCKS_MAX is doing same?
+On Sat, Aug 15, 2020 at 2:21 PM Jonathan Marek <jonathan@marek.ca> wrote:
+>
+> On 8/15/20 4:20 PM, Rob Clark wrote:
+> > On Fri, Aug 14, 2020 at 10:05 AM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> >>
+> >>
+> >> On 12/08/2020 07:42, Tanmay Shah wrote:
+> >>   > From: Chandan Uddaraju <chandanu@codeaurora.org>
+> >>   >
+> >>   > Add the needed DP PLL specific files to support
+> >>   > display port interface on msm targets.
+> >>
+> >> [skipped]
+> >>
+> >>   > diff --git a/drivers/gpu/drm/msm/dp/dp_pll_private.h
+> >> b/drivers/gpu/drm/msm/dp/dp_pll_private.h
+> >>   > new file mode 100644
+> >>   > index 000000000000..475ba6ed59ab
+> >>   > --- /dev/null
+> >>   > +++ b/drivers/gpu/drm/msm/dp/dp_pll_private.h
+> >>   > @@ -0,0 +1,98 @@
+> >>   > +/* SPDX-License-Identifier: GPL-2.0-only */
+> >>   > +/*
+> >>   > + * Copyright (c) 2016-2020, The Linux Foundation. All rights reserved.
+> >>   > + */
+> >>   > +
+> >>   > +#ifndef __DP_PLL_10NM_H
+> >>   > +#define __DP_PLL_10NM_H
+> >>   > +
+> >>   > +#include "dp_pll.h"
+> >>   > +#include "dp_reg.h"
+> >>   > +
+> >>   > +#define DP_VCO_HSCLK_RATE_1620MHZDIV1000    1620000UL
+> >>   > +#define DP_VCO_HSCLK_RATE_2700MHZDIV1000    2700000UL
+> >>   > +#define DP_VCO_HSCLK_RATE_5400MHZDIV1000    5400000UL
+> >>   > +#define DP_VCO_HSCLK_RATE_8100MHZDIV1000    8100000UL
+> >>   > +
+> >>   > +#define NUM_DP_CLOCKS_MAX            6
+> >>   > +
+> >>   > +#define DP_PHY_PLL_POLL_SLEEP_US        500
+> >>   > +#define DP_PHY_PLL_POLL_TIMEOUT_US        10000
+> >>   > +
+> >>   > +#define DP_VCO_RATE_8100MHZDIV1000        8100000UL
+> >>   > +#define DP_VCO_RATE_9720MHZDIV1000        9720000UL
+> >>   > +#define DP_VCO_RATE_10800MHZDIV1000        10800000UL
+> >>   > +
+> >>   > +struct dp_pll_vco_clk {
+> >>   > +    struct clk_hw hw;
+> >>   > +    unsigned long    rate;        /* current vco rate */
+> >>   > +    u64        min_rate;    /* min vco rate */
+> >>   > +    u64        max_rate;    /* max vco rate */
+> >>   > +    void        *priv;
+> >>   > +};
+> >>   > +
+> >>   > +struct dp_pll_db {
+> >>
+> >> This struct should probably go into dp_pll_10nm.c. dp_pll_7nm.c, for
+> >> example, will use slightly different structure.
+> >
+> > Note that sboyd has a WIP series to move all of the pll code out to a
+> > phy driver.  If there is work already happening on 7nm support, it
+> > might be better to go with the separate phy driver approach?  I'm
+> > still a bit undecided about whether to land the dp code initially with
+> > the pll stuff in drm, and then continue refactoring to move to
+> > separate phy driver upstream, or to strip out the pll code from the
+> > beginning.  If you/someone is working on 7nm support, then feedback
+> > about which approach is easier is welcome.
+> >
+> > https://lore.kernel.org/dri-devel/20200611091919.108018-1-swboyd@chromium.org/
+> >
+>
+> I have a sm8150/sm8250 (7nm) upstream kernel stack with DP enabled, and
+> I have done something similar, with the PLL driver in the QMP phy,
+> although not based on sboyd's series (along with some typec changes to
+> negotiate the DP alt mode and get HPD events, etc.). I don't think
+> having PLL in drm/msm makes sense, the drm/msm DP driver shouldn't need
+> to be aware of the DP PLL/PHY driver, it only needs to set the
+> link/pixel clock rates which are in dispcc (and those then have the PLL
+> clocks as a parent).
 
-Not exactly. We'd need fixed_factor_clk[4] for 10nm rather than 6. It's 
-not that important, just a small nitpick.
+yeah, in the dp case, having phy split out makes a ton of sense.. it
+would maybe be a nice cleanup in other cases (dsi, hdmi) but the
+combination of usb+dp makes burying this in drm not so great..
 
+It would be good if you could work w/ sboyd on this.. based on what
+I've seen on previous gens, it is probably a different phy driver for
+7nm vs 10nm, but I think where we want to end up upstream is with phy
+split out of drm.
 
->>> +    u32 num_hws;
->>> +
->>> +    /* lane and orientation settings */
->>> +    u8 lane_cnt;
->>> +    u8 orientation;
->>> +
->>> +    /* COM PHY settings */
->>> +    u32 hsclk_sel;
->>> +    u32 dec_start_mode0;
->>> +    u32 div_frac_start1_mode0;
->>> +    u32 div_frac_start2_mode0;
->>> +    u32 div_frac_start3_mode0;
->>> +    u32 integloop_gain0_mode0;
->>> +    u32 integloop_gain1_mode0;
->>> +    u32 vco_tune_map;
->>> +    u32 lock_cmp1_mode0;
->>> +    u32 lock_cmp2_mode0;
->>> +    u32 lock_cmp3_mode0;
->>> +    u32 lock_cmp_en;
->>> +
->>> +    /* PHY vco divider */
->>> +    u32 phy_vco_div;
->>> +    /*
->>> +     * Certain pll's needs to update the same vco rate after resume in
->>> +     * suspend/resume scenario. Cached the vco rate for such plls.
->>> +     */
->>> +    unsigned long    vco_cached_rate;
->>> +    u32        cached_cfg0;
->>> +    u32        cached_cfg1;
->>> +    u32        cached_outdiv;
->>> +
->>> +    uint32_t index;
->>> +};
->>> +
->>> +static inline struct dp_pll_vco_clk *to_dp_vco_hw(struct clk_hw *hw)
->>> +{
->>> +    return container_of(hw, struct dp_pll_vco_clk, hw);
->>> +}
->>> +
->>> +#define to_msm_dp_pll(vco) ((struct msm_dp_pll *)vco->priv)
->>> +
->>> +#define to_dp_pll_db(x)    ((struct dp_pll_db *)x->priv)
->>> +
->>> +int dp_vco_set_rate_10nm(struct clk_hw *hw, unsigned long rate,
->>> +                unsigned long parent_rate);
->>> +unsigned long dp_vco_recalc_rate_10nm(struct clk_hw *hw,
->>> +                unsigned long parent_rate);
->>> +long dp_vco_round_rate_10nm(struct clk_hw *hw, unsigned long rate,
->>> +                unsigned long *parent_rate);
->>> +int dp_vco_prepare_10nm(struct clk_hw *hw);
->>> +void dp_vco_unprepare_10nm(struct clk_hw *hw);
->>> +
->>> +int msm_dp_pll_10nm_init(struct msm_dp_pll *dp_pll, int id);
->>> +void msm_dp_pll_10nm_deinit(struct msm_dp_pll *dp_pll);
->>
->> These functions don't seem to be used outside of dp_pll_10nm. What
->> about making them static?
-> 
-> I can't declare static to "init" and "deinit" as they are exported to 
-> dp_pll.c.
-> Rest of them I can move to dp_pll_10nm and then define static.
+> FYI, since it sounds you are considering landing this: it is completely
+> broken, for example:
+> - ioremap()'s to #define'd addresses in the PLL driver
+> - main DP driver reading/writing to registers in the PHY region, but
+> getting the base address from devicetree was removed since earlier
+> revisions, so it just fails completely. Look at usb3_dp_com (for
+> example), which in dp_catalog_ctrl_usb_reset() would be used to
+> overwrite registers already being driven by the qmp phy driver - but now
+> the usb3_dp_com.base is never initialized.
 
-Please exuse me for not being exact enough. Of course I meant 
-dp_vco_FOO_10nm() functions, not init/exit.
+Yeah, the idea to land dp isn't that it is perfect (or even not
+broken), so much as having something upstream gives a common base for
+others to work against.. maybe we should make the dp parts 'depends on
+STAGING'?
 
-BTW: as I'm looking onto 7nm dp pll, which naming would you prefer?
+I could keep a separate msm-next-dp branch that I rebase, to give a
+common point for folks working dp support for various different gens
+to coordinate work on.. that kinda sounds like a bunch of extra work
+for me, so might as well land what we have somehow and work together
+from there ;-)
 
-We can have separate DP_PLL_10nm/DP_PLL_7nm namespaces (as DSI PLLs do) 
-or I can override only a set of constants (like downstream driver does).
+But it does sound like you are making the case for including the patch
+to drop the pll stuff and use phy framework as part of what initially
+goes upstream.
 
--- 
-With best wishes
-Dmitry
+BR,
+-R
+
+>
+> -Jonathan
+>
+> > BR,
+> > -R
+> > _______________________________________________
+> > Freedreno mailing list
+> > Freedreno@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/freedreno
+> >
