@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 833F424787C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 23:05:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21DBC247886
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 23:12:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbgHQVFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 17:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58108 "EHLO
+        id S1727828AbgHQVMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 17:12:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727114AbgHQVFZ (ORCPT
+        with ESMTP id S1727792AbgHQVMT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 17:05:25 -0400
+        Mon, 17 Aug 2020 17:12:19 -0400
 Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 098B9C061342
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:05:25 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id q13so8996734vsn.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:05:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B223C061342
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:12:19 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id y8so9016213vsq.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=d9PmqgIYzOOImZZLBY3kQUVlBb5GYyirm8BR71dJiqw=;
-        b=Mu5RMyAB30MGUDbsENNdXuRiV4xyLY//ASCMKcHhT9b9pGdREc4oXNbsUG5hi805D4
-         rgj+nxZBF8TrqjPsyn+0qTpc1hJHy6OSRmvOr5sp2Wrt+vSwYI9sp+9kyolCkSWUAuCT
-         2J8ztk9CcxehsHLwobsEvxlggS0Lv/GmrU8xM=
+        bh=ekTSKo1pbYsTe6haa619uXui/FKJjHYGUOaSFf17VjQ=;
+        b=QBOEjwUjtryHxtBvVTbC4f0ZBDkwpm75MZYBWIfR90Ktq2NgHymjo76sA9zuX1ejqT
+         gJN4UY+ePTJVNDgOSy/5RQkn7isZOpL1QmvO2HnjiETWqlotGNMX/0YDkv3IA/v66B0c
+         OLPA4KN7c42fNV2cJ/nsN1yHEiVJcWvTJlJvY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=d9PmqgIYzOOImZZLBY3kQUVlBb5GYyirm8BR71dJiqw=;
-        b=T9+KM22dd6t1Bf6aogF808Wq9hWRYSQjsL/9ALn+upAaUMpWfgRuYB+yiSCnMhjWu4
-         3ByxZb3w0938OuILmMCXBAotIz/Gv2cU/yTZIymp4uyUYkkQZug28UZ/OR7umZUHMjWO
-         I3ZYpAZdRAyaGhCqAGsglWAQe+qECogg/6asz2pCtrgt4TQ3LuIqyXO8elAH+pDy67mv
-         mR44Z3uZTAL5g7uotb/wgqBUsHs8uEBtq1OIWIl94XV6wOrqfKseshT9tThsIS7eG38U
-         1GHwDD84LFsGizCrNwihmwPd9kb3Dob+mMfTA73AaXfo4nxub5vhOZCjSVoKvVVilXTq
-         Mczg==
-X-Gm-Message-State: AOAM531Mopwv8ZTJ29joDYkkCaif16n1ywkSMKkhpJol3LvOFhSKOrds
-        VYWWZcjIqC0jbMmreohTVMbb85VJ90CLGA==
-X-Google-Smtp-Source: ABdhPJzLaarKEmCuiIS1ftLAZXKvDRyHWvZmoK5wkbD+OliRqNxmSxSon98GptfwoqI5IH5mmwDH/g==
-X-Received: by 2002:a67:2504:: with SMTP id l4mr9533229vsl.182.1597698323195;
-        Mon, 17 Aug 2020 14:05:23 -0700 (PDT)
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
-        by smtp.gmail.com with ESMTPSA id o16sm3612764vkn.26.2020.08.17.14.05.22
+        bh=ekTSKo1pbYsTe6haa619uXui/FKJjHYGUOaSFf17VjQ=;
+        b=KlgVDe9VT5jFhJCIAymKGtUDZseu58ackpHpoEc2CC0FswItpbBGSKZU8vDtRaTIQa
+         U47VIc8uFa/045G+z8XtO57v2FFRTLA21iwWhrdnAMP1FJda6y0+YiNJlSwdDlOKApv/
+         kck6q/wAl8cNI4qo1V+7lcbhJg/XVjrMx6sGF35SD6UsL8DO815ilK93dpA6+PFkfaRR
+         N6fSy9XB06ovW8SIPoE9lmiNsWWSMJ2GpWkUSGzYH43BW4l0cFDVC7Kx/A4gykp4Q9cS
+         +XLXY7uxQkdz1jOAqL0/yFddbihugsm6NlOwmyM5VXMcFF/rXX3oYl6RIF5dX/JytQH6
+         P9Xg==
+X-Gm-Message-State: AOAM53198VJoRWKCmhTH5xyokS59qkCnfSITvBCZU64Zd4BfDG3oDmlP
+        5Z8j9WUDKLdSfCFcwfkgIA19w3G5gOr4bQ==
+X-Google-Smtp-Source: ABdhPJx1smE6JaVWmPZB8s4j5m/ympblMo1iL/p6JsYuVFPY6YqwyLxY7gZppFPWxVS1BLGEauq7pw==
+X-Received: by 2002:a67:ec13:: with SMTP id d19mr10084121vso.28.1597698737919;
+        Mon, 17 Aug 2020 14:12:17 -0700 (PDT)
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com. [209.85.222.47])
+        by smtp.gmail.com with ESMTPSA id j195sm3692171vke.18.2020.08.17.14.12.17
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Aug 2020 14:05:22 -0700 (PDT)
-Received: by mail-ua1-f51.google.com with SMTP id g20so5173104uan.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:05:22 -0700 (PDT)
-X-Received: by 2002:a9f:2b89:: with SMTP id y9mr9057188uai.0.1597698321704;
- Mon, 17 Aug 2020 14:05:21 -0700 (PDT)
+        Mon, 17 Aug 2020 14:12:17 -0700 (PDT)
+Received: by mail-ua1-f47.google.com with SMTP id q68so5178759uaq.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:12:17 -0700 (PDT)
+X-Received: by 2002:a9f:2b89:: with SMTP id y9mr9076116uai.0.1597698736857;
+ Mon, 17 Aug 2020 14:12:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
+References: <20200817040417.11111-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20200817040417.11111-1-saiprakash.ranjan@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 17 Aug 2020 14:05:10 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
-Message-ID: <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
-Subject: Re: [PATCHv2] soc: qcom: llcc: Support chipsets that can write to
- llcc registers
+Date:   Mon, 17 Aug 2020 14:12:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VVeoqOsVzJiCxjYTpJc8JX4Qx3vB+0evzp8oMdYsRZvQ@mail.gmail.com>
+Message-ID: <CAD=FV=VVeoqOsVzJiCxjYTpJc8JX4Qx3vB+0evzp8oMdYsRZvQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Fix the LLCC base register size
 To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
@@ -74,125 +73,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Aug 17, 2020 at 7:47 AM Sai Prakash Ranjan
+On Sun, Aug 16, 2020 at 9:04 PM Sai Prakash Ranjan
 <saiprakash.ranjan@codeaurora.org> wrote:
 >
-> From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
->
-> Older chipsets may not be allowed to configure certain LLCC registers
-> as that is handled by the secure side software. However, this is not
-> the case for newer chipsets and they must configure these registers
-> according to the contents of the SCT table, while keeping in mind that
-> older targets may not have these capabilities. So add support to allow
-> such configuration of registers to enable capacity based allocation
-> and power collapse retention for capable chipsets.
+> There is only one LLCC logical bank on SC7180 SoC of size
+> 0x50000(320KB) not 2MB, so correct the size and fix copy
+> paste mistake from SDM845 which had 4 logical banks.
 
-I have very little idea about what the above means.  That being said,
-what's broken that this patch fixes?  Please include this in the CL
-description.  It should answer, in the very least, the following two
-questions:
-
-a) Were existing attempts to do capacity based allocation failing, or
-is capacity based allocation a new whizbang feature that a future
-patch will add and you need this one to land first?
-
-b) Why was it bad not to enable power collapse retention?  Was this
-causing things to get corrupted after resume?  Was this causing us to
-fail to suspend?  Were we burning too little power in S3 and the
-battery vendors are looking for an excuse to sell bigger batteries?
-
-I'm not very smart and am also lacking documentation for what the heck
-all this is, so I'm looking for the "why" of your patch.
+I guess SDM845 not only has 4 banks but each bank is bigger?  At first
+I thought "yeah, 4 banks and 4 * 0x5 = 0x20" except that's not true in
+hex.  ;-)
 
 
-> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
-> (sai: use table instead of dt property and minor commit msg change)
+> Fixes: 7cee5c742899 ("arm64: dts: qcom: sc7180: Fix node order")
+> Fixes: c831fa299996 ("arm64: dts: qcom: sc7180: Add Last level cache controller node")
 > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->
-> Changes in v2:
->  * Fix build errors reported by kernel test robot.
->
-> ---
->  drivers/soc/qcom/llcc-qcom.c | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
->
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 429b5a60a1ba..865f607cf502 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -45,6 +45,9 @@
->  #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
->  #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
->
-> +#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21F00
-> +#define LLCC_TRP_PCB_ACT              0x21F04
-> +
->  #define BANK_OFFSET_STRIDE           0x80000
->
->  /**
-> @@ -318,6 +321,11 @@ size_t llcc_get_slice_size(struct llcc_slice_desc *desc)
->  }
->  EXPORT_SYMBOL_GPL(llcc_get_slice_size);
->
-> +static const struct of_device_id __maybe_unused qcom_llcc_configure_of_match[] = {
-> +       { .compatible = "qcom,sc7180-llcc" },
-> +       { }
-> +};
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Why are you introducing a whole second table?  Shouldn't you just add
-a field to "struct qcom_llcc_config" ?
+Without having any documentation ,this seems sane to me.  I guess it
+doesn't do a whole lot because the driver just reads one register from
+this whole space (at 0x0003000c bytes off).  So it's just a cleanup,
+or is it needed to actually fix something?
 
-
-> +
->  static int qcom_llcc_cfg_program(struct platform_device *pdev)
->  {
->         int i;
-> @@ -327,13 +335,17 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
->         u32 attr0_val;
->         u32 max_cap_cacheline;
->         u32 sz;
-> +       u32 disable_cap_alloc = 0, retain_pc = 0;
-
-Don't init to 0.  See below.
-
-
->         int ret = 0;
->         const struct llcc_slice_config *llcc_table;
->         struct llcc_slice_desc desc;
-> +       const struct of_device_id *llcc_configure;
->
->         sz = drv_data->cfg_size;
->         llcc_table = drv_data->cfg;
->
-> +       llcc_configure = of_match_node(qcom_llcc_configure_of_match, pdev->dev.of_node);
-> +
-
-As per above, just use the existing config.
-
-
->         for (i = 0; i < sz; i++) {
->                 attr1_cfg = LLCC_TRP_ATTR1_CFGn(llcc_table[i].slice_id);
->                 attr0_cfg = LLCC_TRP_ATTR0_CFGn(llcc_table[i].slice_id);
-> @@ -369,6 +381,21 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
->                                         attr0_val);
->                 if (ret)
->                         return ret;
-> +
-> +               if (llcc_configure) {
-> +                       disable_cap_alloc |= llcc_table[i].dis_cap_alloc << llcc_table[i].slice_id;
-
-Don't "|=".  You're the only place touching this variable.  Just set it.
-
-
-> +                       ret = regmap_write(drv_data->bcast_regmap,
-> +                                               LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
-> +                       if (ret)
-> +                               return ret;
-> +
-> +                       retain_pc |= llcc_table[i].retain_on_pc << llcc_table[i].slice_id;
-
-Don't "|=".  You're the only place touching this variable.  Just set it.
+...the fact that there's a status register in the middle of this seems
+strange, though.  Your commit message makes it sound as if this range
+is describing the size of the cache itself and then I would think that
+this was the address range where you could read from the cache memory
+directly, but that doesn't seem to mesh in my mind with there being a
+status register.  Hrm.  Am I just confused as usual?
 
 
 -Doug
