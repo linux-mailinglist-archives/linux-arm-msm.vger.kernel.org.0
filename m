@@ -2,147 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99648246002
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 10:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D925246089
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 10:44:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728216AbgHQI2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 04:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52980 "EHLO
+        id S1726769AbgHQIov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 04:44:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728179AbgHQI1w (ORCPT
+        with ESMTP id S1726810AbgHQIok (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 04:27:52 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C176C061347
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 01:27:52 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 184so13175887wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 01:27:52 -0700 (PDT)
+        Mon, 17 Aug 2020 04:44:40 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F8FCC06138A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 01:44:40 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id i129so7855671vsi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 01:44:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zcfJN5PzuB9k5TgpYnzCkxNELSw0Z0tfL9cbkN0RIAE=;
-        b=fjZxmbWLVWfR0iLLGuf/88YpQ0F2ZWyj7hbPvHooli1oXIM6NFVLeWiKy4eFCCf3R6
-         HlhMr6GJD25u01TrOyorJfS+sRXj3vuQWiTv92F6rd5H47VJ/+1GAel98ubeckHKxs8t
-         +4n6xG+DWmYKXWf7C6skUSR5clsn/GzFBH9yij4am2tu+0Xh5G24UnQr2zAMgGsMA7po
-         UVAN8vRgdfnxCppv2Kc8DQGr2XDlXVlPk7zTfFlM+8ZyHNOSVlaTLadlJKLuNi/Dbh/R
-         cKOvVIiuiu12B1dFUu0ajdGrIXLIhK7OUW3asQ7OQklM/RwlNDmoYD8BQ9QfxUr5gEi9
-         sfKA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JW8u7xiSKNIzGMhYWbwC+RKDQR8pzglywvhzZXDEkZQ=;
+        b=WHXclwahJSz/Cxrjjcju+WOHdG8o0dUnAAakONyLI65BlMgWeRagwi6qVETf7MW9tm
+         R+5kFslbjP2FQgV8J8DYMH/8owm2iFxmwGKoNTkuKOQxor0qoEPZv9S2yPl596YZymuF
+         Xq9yPFKKxEuUBgsnaSXaDPciI8oqVyyjr6CY6DLm/rqst+003VjBk5l3IvB0VdXiMvQe
+         dhtFwQHIklZ9Wb+Gmrb4/yG9Pt248XXZunKUIzE045m7luJYAFPaLMQNV4PXRYaQd5A0
+         tMgC6NzU7nKj+SgOr3wxECIANIgB3N+nQkWv3H+yN3HRZcVmif44ZXgEiW5izAeanb0b
+         hroQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=zcfJN5PzuB9k5TgpYnzCkxNELSw0Z0tfL9cbkN0RIAE=;
-        b=Z5X2vFCQpiVUvrjo0Xd+sV3BixK5V03nEqTBgPupNnCD16CcbefU7mR14oAXaTbJ02
-         z7d+0tYD0sZbRdS2URLHyvYnDqoOuGfK3XfcZbfkRTJeJYyjiRlkVYDEl+S87jZuXb2P
-         9yAXRosne0e4Pr0pvNjnw46uIB6Zxab9IeVHnN5BBoAmZHywiZlMnGefIfJq8Bj+Rrv4
-         da3fM8tTsfOsnImk/HcB+WAmiTcWQRXcun9x1TaZY2XyTTEzd2mJz/xztm3M+hLcMVwK
-         1H5Ekg8vQxX9wTCTttmgDTBI+fvN/IouTji1CsgNt8XSyOsIHytyt9+96gVr0fWcgiV6
-         XOeg==
-X-Gm-Message-State: AOAM5319QhJjgw64oEwhqHAjwHRMm0rGecLaA4IKU2CyuPHd0D/CoNiJ
-        CoC15OlOvqdpwwf4tIPXcbrWzkeBC1FiCrOQ
-X-Google-Smtp-Source: ABdhPJzV34MVYAoelp6tQN1LOFleejfdrtFuDVhwoh1mI+jgsHOmK2DcSd33CQUuR/lA5lLOwz1QDQ==
-X-Received: by 2002:a1c:bcd6:: with SMTP id m205mr13252078wmf.47.1597652870880;
-        Mon, 17 Aug 2020 01:27:50 -0700 (PDT)
-Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id h5sm33270888wrc.97.2020.08.17.01.27.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2020 01:27:50 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-Cc:     Elliot Berman <eberman@codeaurora.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JW8u7xiSKNIzGMhYWbwC+RKDQR8pzglywvhzZXDEkZQ=;
+        b=hMXMvL7gfNJ2zqPHXh13G5sem22CoJdffRxNUi9ivAPibcbfnobhIkkJkrjYVWVPyT
+         SrjpP/nfPyJO4uFjxsO87L9sU5I7sHPZhltVLKMsZ3XET11oIXr1378Rr+TdxvPEIWFR
+         WXhT74us3jPl9iZS+qBDntkAekRx/u8vXzLhkoXTG/9oDeMgWHODqfMJdQDmcs4wfqYe
+         H+k6Nkmd3eVhS+tW6vBAK80bW3Lj4wo7WyblSu3ZPOeSa0Xf9DhGIXFKJ0dxGVZNToFn
+         rGOkajWkMWzjQpFkQnhS3nZDS8ltCP616ZZeb419xSSQ8AUlxIxixWWlbxDurAyQQ1/U
+         KFZA==
+X-Gm-Message-State: AOAM531ZmnAEsLdDVrpYuDbkGGvotI1vGw7IOjbnoTsFhybCmbu4oeZB
+        5FJ+qAzlm1eCUwx06EPK8ZjXB/mnKru73q7i6JRczw==
+X-Google-Smtp-Source: ABdhPJw35yYpOaJW1X+f4vuBqtH7/IKZ8YOmgvU3WY2dnnlAcinZeZ/zAzO2H+c6qCaz0SSHgyynVt0yqlzSmqmZ5Kc=
+X-Received: by 2002:a67:8c06:: with SMTP id o6mr7569090vsd.200.1597653878128;
+ Mon, 17 Aug 2020 01:44:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200811190252.10559-1-sibis@codeaurora.org> <CAPDyKFqNMEtHwcJFxYQP5H1Yjrsr1T3UUZoXes69EthSjAYs2A@mail.gmail.com>
+ <1ba3e4d703dd0a52547d63fa014451eb@codeaurora.org> <CAPDyKFrH9WTg4O5L+e1AijNvsagLYZ9QVTeoD0x0SQgYd3hkBg@mail.gmail.com>
+ <1ca666c336ebee569a429e729d5ae547@codeaurora.org>
+In-Reply-To: <1ca666c336ebee569a429e729d5ae547@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 17 Aug 2020 10:44:01 +0200
+Message-ID: <CAPDyKFrqxRrWSX5VaMy4DSjFNaMikKBYsZy5NiPMJvUybYttsw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] PM / Domains: Add GENPD_FLAG_SUSPEND_ON flag
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 2/2] venus: firmware: Set virtual address ranges
-Date:   Mon, 17 Aug 2020 11:27:23 +0300
-Message-Id: <20200817082723.17458-3-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200817082723.17458-1-stanimir.varbanov@linaro.org>
-References: <20200817082723.17458-1-stanimir.varbanov@linaro.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-kernel-owner@vger.kernel.org,
+        Kevin Hilman <khilman@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to boot some of the new Venus firmware versions TZ call to set
-virtual address ranges is needed. Add virtual address ranges for CP and
-CP_NONPIX in resource structure and use them when loading and booting
-the firmware on remote processor.
+On Thu, 13 Aug 2020 at 19:26, Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> On 2020-08-13 18:04, Ulf Hansson wrote:
+> > On Wed, 12 Aug 2020 at 19:03, Sibi Sankar <sibis@codeaurora.org> wrote:
+> >>
+> >> Uffe,
+> >> Thanks for taking time to review the
+> >> series!
+> >>
+> >> On 2020-08-12 15:15, Ulf Hansson wrote:
+> >> > On Tue, 11 Aug 2020 at 21:03, Sibi Sankar <sibis@codeaurora.org> wrote:
+> >> >>
+> >> >> This is for power domains which needs to stay powered on for suspend
+> >> >> but can be powered on/off as part of runtime PM. This flag is aimed at
+> >> >> power domains coupled to remote processors which enter suspend states
+> >> >> independent to that of the application processor. Such power domains
+> >> >> are turned off only on remote processor crash/shutdown.
+> >> >
+> >> > As Kevin also requested, please elaborate more on the use case.
+> >> >
+> >> > Why exactly must the PM domain stay powered on during system suspend?
+> >> > Is there a wakeup configured that needs to be managed - or is there a
+> >> > co-processor/FW behaviour that needs to be obeyed to?
+> >>
+> >> Yes this is a co-processor behavior that
+> >> needs to be obeyed. Specifically application
+> >> processor notifies the Always on Subsystem
+> >> (AOSS) that a particular co-processor is up
+> >> using the power domains exposed by AOSS QMP
+> >> driver. AOSS uses this information to wait
+> >> for the co-processors to suspend before
+> >> starting its sleep sequence. The application
+> >> processor powers off these power domains only
+> >> if the co-processor has crashed or powered
+> >> off.
+> >
+> > Thanks for clarifying!
+> >
+> > Although, can you please elaborate a bit more on the actual use case?
+> > What are the typical co-processor and what drivers are involved in
+> > managing it?
+>
+> The co-processors using the power domains
+> exposed by qcom_aoss driver are modem,
+> audio dsp, compute dsp managed using
+> qcom_q6v5_mss and qcom_q6v5_pas driver.
+>
+> >
+> > As you may know, runtime PM becomes disabled during system suspend of
+> > a device. Which means, if the driver tries to power off the
+> > coprocessor (via calling pm_runtime_put() for example), somewhere in
+> > the system suspend phase of the corresponding device, its attached PM
+> > domain stays powered on when managed by genpd.
+>
+> The drivers aren't really expected
+> do anything during suspend/resume
+> pretty much because the co-processors
+> enter low-power modes independent to
+> that of the application processor. On
+> co-processor crash the remoteproc core
+> does a pm_stay_awake followed by a
+> pm_relax after crash recovery.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c     |  4 ++++
- drivers/media/platform/qcom/venus/core.h     |  4 ++++
- drivers/media/platform/qcom/venus/firmware.c | 18 +++++++++++++++++-
- 3 files changed, 25 insertions(+), 1 deletion(-)
+Okay, thanks again for clarifying. You have convinced me about the
+need for a new flag to cope with these use cases.
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 203c6538044f..5f8f7b72731c 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -527,6 +527,10 @@ static const struct venus_resources sdm845_res_v2 = {
- 	.vmem_size = 0,
- 	.vmem_addr = 0,
- 	.dma_mask = 0xe0000000 - 1,
-+	.cp_start = 0,
-+	.cp_size = 0x70800000,
-+	.cp_nonpixel_start = 0x1000000,
-+	.cp_nonpixel_size = 0x24800000,
- 	.fwname = "qcom/venus-5.2/venus.mdt",
- };
- 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 7118612673c9..8c88516e4694 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -68,6 +68,10 @@ struct venus_resources {
- 	unsigned int vmem_id;
- 	u32 vmem_size;
- 	u32 vmem_addr;
-+	u32 cp_start;
-+	u32 cp_size;
-+	u32 cp_nonpixel_start;
-+	u32 cp_nonpixel_size;
- 	const char *fwname;
- };
- 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 8801a6a7543d..ac906ffc608f 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -181,6 +181,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
- int venus_boot(struct venus_core *core)
- {
- 	struct device *dev = core->dev;
-+	const struct venus_resources *res = core->res;
- 	phys_addr_t mem_phys;
- 	size_t mem_size;
- 	int ret;
-@@ -200,7 +201,22 @@ int venus_boot(struct venus_core *core)
- 	else
- 		ret = venus_boot_no_tz(core, mem_phys, mem_size);
- 
--	return ret;
-+	if (ret)
-+		return ret;
-+
-+	if (core->use_tz && res->cp_size) {
-+		ret = qcom_scm_mem_protect_video_var(res->cp_start,
-+						     res->cp_size,
-+						     res->cp_nonpixel_start,
-+						     res->cp_nonpixel_size);
-+		if (ret) {
-+			dev_err(dev, "set virtual address ranges fail (%d)\n",
-+				ret);
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
- }
- 
- int venus_shutdown(struct venus_core *core)
--- 
-2.17.1
+Would you mind updating the commit message with some of the
+information you just provided?
 
+Additionally, to make it clear that the flag should be used to keep
+the PM domain powered on during system suspend, but only if it's
+already powered on - please rename the flag to GENPD_FLAG_NO_SUSPEND,
+and update the corresponding description of it in the header file.
+
+[...]
+
+Kind regards
+Uffe
