@@ -2,97 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECA942457EA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Aug 2020 16:28:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE549245B49
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 06:05:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729467AbgHPO2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Aug 2020 10:28:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729429AbgHPO23 (ORCPT
+        id S1726315AbgHQEFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 00:05:00 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:20570 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725765AbgHQEE7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Aug 2020 10:28:29 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D09C061342
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Aug 2020 07:28:28 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id r2so12414360wrs.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Aug 2020 07:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=Duxa+mmNF3T3C2WDKsmzowR2OzvdY892XFjTPp0RWRI=;
-        b=WydAeewQhr1r/XNZpFH3zIH+szhFi1y3aL3E9C0t+/P/o9UraiFWbofR/CQ6sPEcpC
-         KyCeW8UEKHrP3ODzHNzRF0fXKVacBOmuLb8NECLyUFXYtyIqVUeYoDGst/1ZZTlDrSFg
-         UqSpOJ6dtUV1psB5nDXdq7xdyi/8gRNM1VbIFNZJZ/Jq19E7MYwhVDZIDPjgPqAXZhyn
-         GqeGT1PbpkDjLV3sLnwpKnct94lXuL+96hZmSmobGb3Qy2pozBmBDF2Jj9UT2J2RyTFf
-         8zkXh3Q26txE+QPN4s7K+eUJ2QneFKWjK5m2vP3HOTwJU8+CUBzlx8CYcMp2boJXkNFa
-         Q36Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=Duxa+mmNF3T3C2WDKsmzowR2OzvdY892XFjTPp0RWRI=;
-        b=dvWzTpijQ2+CARKw3rugB1zKlu6YE9S4xiMGsGHp1G5MJX2nxuvED/HTXH+22v+wlo
-         ukTi3TRZVBd0+u6wzlc3JMJ7pt0TzuIDUOu6EG4Z/8IW5eNa8mgEGNfg+nrG8b4o1m46
-         vYH966bL1+jm8s36TS+Oyn94kq20nQDqUGV/5yDS+5FO8ZdYBV1IfgMfEDyk7uUaabil
-         t/Jh99HncR/pM2zXo5tmpJ8dE3Xto6tSUcfhX2uCuL35zQIZ8+aKggIiWwNJ4gTdbpZU
-         sGdMdCPGP0ZUYkAe9HAsEZb9s/aJVn5Ui264+g+kks98G7tO5J2TPi5fe7P1/iCMnrbp
-         3znA==
-X-Gm-Message-State: AOAM532Z/H4x8eYhcHc9FJXhOWyzDtGFbYqbui28SCvrfp06hLrv29pK
-        1cdKPQ4QqCk3UIr3hwBv7T8VSgksc5fHTTxgXV4=
-X-Google-Smtp-Source: ABdhPJwBhDgN8zDFv7Vp+6FwrySrd7+zBZF+4bgjNBXNpkwqG/RDbCaE/Q6+6wMIFZa1PWMJ+xJlLCn7iN4TuC23ED4=
-X-Received: by 2002:adf:97dc:: with SMTP id t28mr10205969wrb.291.1597588104107;
- Sun, 16 Aug 2020 07:28:24 -0700 (PDT)
+        Mon, 17 Aug 2020 00:04:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597637099; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=3tzJwPgMhmWp2g1x0sfXafqBb2LcavWpjSfQTLWoul0=; b=d73uZyvECiD+MRhHGkqLDPwfR+EqHE1W28AuHu5BF/luYikDz/JcN3SoakUEIyjica1p5te0
+ T5Ol3Z4bYYHrXzfmhmHdiy1rARJOup6tn0X44omaPIeR6iyRNG1EaPjtMY6SC5q7CJjuATzD
+ 9RbmfPg2AuhCsp0a4tfCQCPG+9w=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f3a01d4247ccc308ca2d855 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 04:04:36
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3A60DC43391; Mon, 17 Aug 2020 04:04:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33428C433CA;
+        Mon, 17 Aug 2020 04:04:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33428C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Fix the LLCC base register size
+Date:   Mon, 17 Aug 2020 09:34:17 +0530
+Message-Id: <20200817040417.11111-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Received: by 2002:a5d:6cd3:0:0:0:0:0 with HTTP; Sun, 16 Aug 2020 07:28:23
- -0700 (PDT)
-Reply-To: sctnld11170@tlen.pl
-From:   "Mr. Scott Donald" <confianzayrentabilidad@gmail.com>
-Date:   Sun, 16 Aug 2020 07:28:23 -0700
-Message-ID: <CANrrfX4FE9qQHVqDqDeDgrqidfa8Ug7YqLDZJ5dm2fb1ExQM=w@mail.gmail.com>
-Subject: Hello, Please
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=20
-Dear Friend,
+There is only one LLCC logical bank on SC7180 SoC of size
+0x50000(320KB) not 2MB, so correct the size and fix copy
+paste mistake from SDM845 which had 4 logical banks.
 
-I'm Mr. Scott Donald a Successful businessMan dealing with
-Exportation, I got your mail contact through search to let you know my
-intension and my Ugly Situation Am a dying Man here in Los Angeles
-California Hospital Bed in (USA), I Lost my Wife and my only Daughter
-for Covid-19 and I also have a problem in my Health and I can die
-anytime I Know,
+Fixes: 7cee5c742899 ("arm64: dts: qcom: sc7180: Fix node order")
+Fixes: c831fa299996 ("arm64: dts: qcom: sc7180: Add Last level cache controller node")
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I have a project that I am about to hand over to you. and I already
-instructed the Bankia S.A. Madrid, Spain(BSA) to transfer my fund sum
-of =C2=A33,7M GBP. Equivalent to =E2=82=AC4,077,033.91 EUR, to you as to en=
-able you
-to give 50% of this fund to Charitable Home in your State and take 50%
-don't think otherwise and why would anybody send someone you barely
-know to help you deliver a message, help me do this for the happiness
-of my soul and for God to mercy me and my Family and give Us a good
-place.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index d46b3833e52f..e875f6c3b663 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2618,7 +2618,7 @@ dc_noc: interconnect@9160000 {
+ 
+ 		system-cache-controller@9200000 {
+ 			compatible = "qcom,sc7180-llcc";
+-			reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
++			reg = <0 0x09200000 0 0x50000>, <0 0x09600000 0 0x50000>;
+ 			reg-names = "llcc_base", "llcc_broadcast_base";
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-please, do as I said there was someone from your State that I deeply
-love so very very much and I miss her so badly I have no means to
-reach any Charitable Home there. that is why I go for a personal
-search of the Country and State and I got your mail contact through
-search to let you know my Bitterness and please, help me is getting
-Dark I ask my Doctor to help me keep you notice failure for me to
-reach you in person Your urgent Response, here is my Doctor Whats-app
-Number for urgent notice +13019692737
-
-Hope To Hear From You. I'm sending this email to you for the second
-time yet no response from you.
-
-My Regards.
-
-Mr. Scott Donald
-CEO
