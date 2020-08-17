@@ -2,125 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D6D82467FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 16:09:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33657246800
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 16:09:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728874AbgHQOJE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 10:09:04 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:14050 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728399AbgHQOJE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 10:09:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597673343; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=t4hLN9MLXcZJt9GM/Fc8JoQMEeFYiDnOvn2HIImnesY=;
- b=RqD/Z/7LpEoeCVP3lkCRHr5VVkhGA8hFrw8l7/7rXXbzQgbYlDiAb81BMmXDQLU2dH+vApq2
- hgI3+hzS9oTlsB3H52QVhOEnbifKAwLJjrAUyKM/GHlMVVd2H/V1hgjx806d/XOfF2EvqlRL
- uohSSjswVvH4Ir46bgajvsv0HN0=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f3a8f7346ed996674108e83 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 14:08:51
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 56138C4339C; Mon, 17 Aug 2020 14:08:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4B220C433CA;
-        Mon, 17 Aug 2020 14:08:50 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 17 Aug 2020 19:38:50 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     kernel test robot <lkp@intel.com>
+        id S1728873AbgHQOJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 10:09:31 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.165]:32300 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728399AbgHQOJa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 10:09:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1597673365;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=Message-Id:Date:Subject:Cc:To:From:X-RZG-CLASS-ID:X-RZG-AUTH:From:
+        Subject:Sender;
+        bh=96QQ8PNl0xmiHcHVIu3R5ojOtvOFdSRuSRXLHkBwY8Y=;
+        b=LH9JtpO4QWatkh79Y5WR+1hyacNruOE9V5JIrRG07IFn+DRytc3MF+w39bYYSlqrT/
+        UtVcdPDp3KF90McG3UyA4hv0l3vnvuZuJ6c4t/5j9ZN76Ek6p4haN78wKyegYt4scfGA
+        ABVvY4A++Mwg2fmpz3EvwzUVu9HnHH/oo+XmBtoe55Yb+71IXt/YWmS/YMWeDjHLLwnR
+        DJqhZmy7lwcwosD+CSHlBFS7krHJbaCyqayyFn9+85/H+2i2lBcxjlG+TIIKLMf5wmhW
+        htYG+IY0T0XHC0Ek8AO8PTTg3tw2PZODkUfAzcpxpTZQRUFBTI2JnJ6raz1mqcD2JID1
+        MnxA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB526O1+69"
+X-RZG-CLASS-ID: mo00
+Received: from localhost.localdomain
+        by smtp.strato.de (RZmta 46.10.5 DYNA|AUTH)
+        with ESMTPSA id Y0939ew7HE9MH9j
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Mon, 17 Aug 2020 16:09:22 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Stephen Boyd <sboyd@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>, kbuild-all@lists.01.org,
-        clang-built-linux@googlegroups.com, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>
-Subject: Re: [PATCH] soc: qcom: llcc: Support chipsets that can write to llcc
- registers
-In-Reply-To: <202008172052.mtVMHotl%lkp@intel.com>
-References: <20200817081138.6755-1-saiprakash.ranjan@codeaurora.org>
- <202008172052.mtVMHotl%lkp@intel.com>
-Message-ID: <ca48bfaf94267bc9883ad6c41de3f796@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: [PATCH] clk: qcom: smd: Disable unused clocks
+Date:   Mon, 17 Aug 2020 16:09:08 +0200
+Message-Id: <20200817140908.185976-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-17 18:13, kernel test robot wrote:
-> Hi Sai,
-> 
-> Thank you for the patch! Perhaps something to improve:
-> 
-> [auto build test WARNING on linux/master]
-> [also build test WARNING on linus/master v5.9-rc1 next-20200817]
-> [cannot apply to agross-msm/qcom/for-next]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch]
-> 
-> url:
-> https://github.com/0day-ci/linux/commits/Sai-Prakash-Ranjan/soc-qcom-llcc-Support-chipsets-that-can-write-to-llcc-registers/20200817-161342
-> base:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-> bcf876870b95592b52519ed4aafcf9d95999bc9c
-> config: mips-randconfig-r006-20200817 (attached as .config)
-> compiler: clang version 12.0.0 (https://github.com/llvm/llvm-project
-> de71b46a519db014ce906a39f8a0e1b235ef1568)
-> reproduce (this is a W=1 build):
->         wget
-> https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross
-> -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # install mips cross compiling tool for clang build
->         # apt-get install binutils-mips-linux-gnu
->         # save the attached .config to linux build tree
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross 
-> ARCH=mips
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All warnings (new ones prefixed by >>):
-> 
->    drivers/soc/qcom/llcc-qcom.c:343:28: warning: unused variable 'np'
-> [-Wunused-variable]
->            const struct device_node *np = dev_of_node(&pdev->dev);
->                                      ^
->>> drivers/soc/qcom/llcc-qcom.c:324:34: warning: unused variable 
->>> 'qcom_llcc_configure_of_match' [-Wunused-const-variable]
->    static const struct of_device_id qcom_llcc_configure_of_match[] = {
->                                     ^
->    2 warnings generated.
-> 
+At the moment, clk-smd-rpm forces all clocks on at probe time
+(for "handoff"). However, it does not make the clk core aware of that.
+This means that the clocks stay enabled forever if they are not used
+by anything.
 
-Ok, W=1 build and CONFIG_OF=n, so I need __maybe_unused for 
-qcom_llcc_configure_of_match.
-Will add and send v2.
+We can easily disable them again after bootup has been completed,
+by making the clk core aware of the state. This is implemented by
+returning the current state of the clock in is_prepared().
 
-Thanks,
-Sai
+Checking the SPMI clock registers reveals that this allows the RPM
+to disable unused BB/RF clocks. For example, on MSM8916 with all
+remote processors (except RPM) disabled, we get:
 
+ +--------------------------+------------+---------+--------+-------+
+ |                          | BOOTLOADER | HANDOFF | BEFORE | AFTER |
+ +--------------------------+------------+---------+--------+-------+
+ | BB_CLK1_STATUS1 (0x5108) |     ON*    |    ON   |   ON   |  ON*  |
+ | BB_CLK2_STATUS1 (0x5208) |     OFF    |    ON   |   ON   |  OFF  |
+ | RF_CLK1_STATUS1 (0x5408) |     OFF    |    ON   |   ON   |  OFF  |
+ | RF_CLK2_STATUS1 (0x5508) |     OFF    |    ON   |   ON   |  OFF  |
+ +--------------------------+------------+---------+--------+-------+
+  * BB_CLK1 seems to be always-on in RPM on MSM8916
+
+where:
+  - BOOTLOADER = clk-smd-rpm disabled entirely in device tree
+  - HANDOFF = temporarily after clk-smd-rpm was probed
+  - BEFORE/AFTER = after boot without/with the changes in this commit
+
+With this commit BB_CLK2/RF_CLK1/RF_CLK2 are disabled again when unused.
+
+Cc: Georgi Djakov <georgi.djakov@linaro.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Originally I reported this here:
+https://lore.kernel.org/linux-arm-msm/20200523120810.GA166540@gerhold.net/
+
+Overall I'm not entirely sure why we need to force all these clocks
+on at all... But the downstream driver also seems to do it and the RPM
+interface is barely documented, so I didn't feel comfortable changing it...
+---
+ drivers/clk/qcom/clk-smd-rpm.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 0e1dfa89489e..fa960cb794a8 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -171,6 +171,9 @@ static int clk_smd_rpm_handoff(struct clk_smd_rpm *r)
+ 	if (ret)
+ 		return ret;
+ 
++	/* During handoff we force all clocks on */
++	r->enabled = true;
++
+ 	return 0;
+ }
+ 
+@@ -300,6 +303,13 @@ static void clk_smd_rpm_unprepare(struct clk_hw *hw)
+ 	mutex_unlock(&rpm_smd_clk_lock);
+ }
+ 
++static int clk_smd_rpm_is_prepared(struct clk_hw *hw)
++{
++	struct clk_smd_rpm *r = to_clk_smd_rpm(hw);
++
++	return r->enabled;
++}
++
+ static int clk_smd_rpm_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				unsigned long parent_rate)
+ {
+@@ -396,6 +406,7 @@ static int clk_smd_rpm_enable_scaling(struct qcom_smd_rpm *rpm)
+ static const struct clk_ops clk_smd_rpm_ops = {
+ 	.prepare	= clk_smd_rpm_prepare,
+ 	.unprepare	= clk_smd_rpm_unprepare,
++	.is_prepared	= clk_smd_rpm_is_prepared,
+ 	.set_rate	= clk_smd_rpm_set_rate,
+ 	.round_rate	= clk_smd_rpm_round_rate,
+ 	.recalc_rate	= clk_smd_rpm_recalc_rate,
+@@ -404,6 +415,7 @@ static const struct clk_ops clk_smd_rpm_ops = {
+ static const struct clk_ops clk_smd_rpm_branch_ops = {
+ 	.prepare	= clk_smd_rpm_prepare,
+ 	.unprepare	= clk_smd_rpm_unprepare,
++	.is_prepared	= clk_smd_rpm_is_prepared,
+ };
+ 
+ /* msm8916 */
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.28.0
+
