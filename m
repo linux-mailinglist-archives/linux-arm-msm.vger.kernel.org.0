@@ -2,101 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D8E6246DC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 19:13:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E3FB246DD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 19:15:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389475AbgHQRNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 13:13:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388645AbgHQRMl (ORCPT
+        id S2389498AbgHQRO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 13:14:57 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:45083 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389527AbgHQROr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 13:12:41 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B364CC061343
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 10:12:40 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id f7so15744504wrw.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 10:12:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AueLUpVNwOplEaRIeklXnlMpQk/hv9PNTq+/4iLo0R0=;
-        b=Gpu1742R6bQKiE7BaePK5diMLvF+iZfSSkZ0BOARPwt42lhi8nz00uW6K89/MGg4zm
-         hZXZDUrk/4N+XUcR0wbbQo713rcnKWaOX9p4s60ZhAx89+KzEZhhA4saULYqOxNRGYdx
-         hUyQy65h8Dy4+B9yFynN1Kh1R/12oHa6Gs3j4u3Q4o3r9uQOP6RgH+35nG01K9CZdK68
-         rzoGzIXjOR9WHXTKTHVQO9vD4+jdCw3iMYQLPoCTJcpW+4tvowsYeLvIo21HjWRa2vmV
-         04Cx09aiVDy2hFLu9lZ+jRZdQNHnPp6FILixg0q9oSK7M9y8md8BFE7vFrK7eGa8X8yl
-         WMrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AueLUpVNwOplEaRIeklXnlMpQk/hv9PNTq+/4iLo0R0=;
-        b=tb4ow4/xXuq0zQv0wdQ9BUGDOjE5R+UMisc25TN24gj5KZi/kwCyKvyAwfg5SC8cL3
-         GgjKdnJvFVo9coe4U9u3whlxJHlAvmpH1N7LIR1mGESn1Ig3oin54EYhQWudncYYeg28
-         1tyxZEv4oRyzAW1ve/xYqg/A+VZeNyS82hieGARXTt36cdCvIrtNzutrzvAvEDS3b0nh
-         I7nManNKYaozTh+HvybV7H5jDgU6bpfTRRRc17ZNcke8X1I6JROtFuTHXtsvBb2TvwuD
-         4h2zphGIIOaeQZrrXSXkTqb24eWLHOscO49hI/LmwoIu557IiIy2WZX2Biw7g7pmCQ4q
-         kNlA==
-X-Gm-Message-State: AOAM531R9PtkA/6729QGB5fqIQ1T55p6LAQfowYLo+oJlzSFfsIRgNr+
-        QK6P5MjF183utnFo/elkMud2+NZ36l0gYr7FhVFSOA==
-X-Google-Smtp-Source: ABdhPJwzzJqqKP8Dz57WEH4mjrx29gWDTGQSyhqQk/3EQMn3h+P+wfHkvWUG7jnjma/rWD/FdEgspqJzfrhXMf85F+M=
-X-Received: by 2002:adf:fc06:: with SMTP id i6mr16257949wrr.79.1597684357045;
- Mon, 17 Aug 2020 10:12:37 -0700 (PDT)
+        Mon, 17 Aug 2020 13:14:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597684486; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=SwKYrRggeH5jHtgd4TNoplzKAYDNI0Gdz3xVzc6qu6k=; b=uFAq0MZj6mFNFje4FJ1hSHl07RfJaisXiqjVYm8rW2x0VtStaKv+jeMFZq4cSSTbdVpcpdfL
+ JIwqDGmHlOXObs7+QhtvjXPk3Xwoxi3HRmpORc7d+rH2SKBsb/UHva/WsB8ZJ2X/6uxSDYo/
+ gkm/lnHCze4ODsQT2JTHjpbMuBw=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f3abae01e4d3989d4acce8c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 17:14:08
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1077AC433AD; Mon, 17 Aug 2020 17:14:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8A427C433CB;
+        Mon, 17 Aug 2020 17:14:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8A427C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 17 Aug 2020 11:14:01 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, Will Deacon <will@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [Freedreno] [PATCH 19/19] drm/msm: show process names in
+ gem_describe
+Message-ID: <20200817171401.GB7438@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>, Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20200810222657.1841322-1-jcrouse@codeaurora.org>
+ <20200814024114.1177553-20-robdclark@gmail.com>
 MIME-Version: 1.0
-References: <CAMi1Hd3Dv_T7kgThLTk2QLtfS7LBvhJ5R=6C3seUYK0GvNV6eA@mail.gmail.com>
- <20200806223134.42748-1-konradybcio@gmail.com> <20200813070448.GA499758@builder.lan>
-In-Reply-To: <20200813070448.GA499758@builder.lan>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Mon, 17 Aug 2020 22:42:00 +0530
-Message-ID: <CAMi1Hd3j-A1Se9swD0TQ9YzTBGicPDc1nFZbf4uisVk5A+u1GQ@mail.gmail.com>
-Subject: Re: your mail
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200814024114.1177553-20-robdclark@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Aug 2020 at 12:38, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Thu 06 Aug 15:31 PDT 2020, Konrad Dybcio wrote:
->
-> > Subject: Re: [PATCH v4] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
-> >
-> > >// This removed_region is needed to boot the device
-> > >               // TODO: Find out the user of this reserved memory
-> > >               removed_region: memory@88f00000 {
-> >
-> > This region seems to belong to the Trust Zone. When Linux tries to access it, TZ bites and shuts the device down.
-> >
->
-> This is in line with what the documentation indicates and then it would
-> be better to just bump &tz_mem to a size of 0x4900000.
+On Thu, Aug 13, 2020 at 07:41:14PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> In $debugfs/gem we already show any vma(s) associated with an object.
+> Also show process names if the vma's address space is a per-process
+> address space.
 
-Hi, so just to be sure that I got this right, you want me to extend
-&tz_mem to the size of 0x4900000 from the default size of 0x2D00000 by
-including this downstream &removed_region (of size 0x1A00000) +
-previously unreserved downstream memory region (of size 0x200000), to
-align with the starting address of &qseecom_mem?
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-I just gave this &tz_mem change a spin and I do not see any obvious
-regression in my limited smoke testing (Boots AOSP to UI with
-v5.9-rc1. Touch/BT/WiFi works) so far, with 20+ out-of-tree patches.
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/msm_drv.c     |  2 +-
+>  drivers/gpu/drm/msm/msm_gem.c     | 25 +++++++++++++++++++++----
+>  drivers/gpu/drm/msm/msm_gem.h     |  5 +++++
+>  drivers/gpu/drm/msm/msm_gem_vma.c |  1 +
+>  drivers/gpu/drm/msm/msm_gpu.c     |  8 +++++---
+>  drivers/gpu/drm/msm/msm_gpu.h     |  2 +-
+>  6 files changed, 34 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 8e70d220bba8..8d5c4f98c332 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -597,7 +597,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
+>  	kref_init(&ctx->ref);
+>  	msm_submitqueue_init(dev, ctx);
+>  
+> -	ctx->aspace = msm_gpu_create_private_address_space(priv->gpu);
+> +	ctx->aspace = msm_gpu_create_private_address_space(priv->gpu, current);
+>  	file->driver_priv = ctx;
+>  
+>  	return 0;
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index 3cb7aeb93fd3..76a6c5271e57 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -842,11 +842,28 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m)
+>  
+>  		seq_puts(m, "      vmas:");
+>  
+> -		list_for_each_entry(vma, &msm_obj->vmas, list)
+> -			seq_printf(m, " [%s: %08llx,%s,inuse=%d]",
+> -				vma->aspace != NULL ? vma->aspace->name : NULL,
+> -				vma->iova, vma->mapped ? "mapped" : "unmapped",
+> +		list_for_each_entry(vma, &msm_obj->vmas, list) {
+> +			const char *name, *comm;
+> +			if (vma->aspace) {
+> +				struct msm_gem_address_space *aspace = vma->aspace;
+> +				struct task_struct *task =
+> +					get_pid_task(aspace->pid, PIDTYPE_PID);
+> +				if (task) {
+> +					comm = kstrdup(task->comm, GFP_KERNEL);
+> +				} else {
+> +					comm = NULL;
+> +				}
+> +				name = aspace->name;
+> +			} else {
+> +				name = comm = NULL;
+> +			}
+> +			seq_printf(m, " [%s%s%s: aspace=%p, %08llx,%s,inuse=%d]",
+> +				name, comm ? ":" : "", comm ? comm : "",
+> +				vma->aspace, vma->iova,
+> +				vma->mapped ? "mapped" : "unmapped",
+>  				vma->inuse);
+> +			kfree(comm);
+> +		}
+>  
+>  		seq_puts(m, "\n");
+>  	}
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index 9c573c4269cb..7b1c7a5f8eef 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -24,6 +24,11 @@ struct msm_gem_address_space {
+>  	spinlock_t lock; /* Protects drm_mm node allocation/removal */
+>  	struct msm_mmu *mmu;
+>  	struct kref kref;
+> +
+> +	/* For address spaces associated with a specific process, this
+> +	 * will be non-NULL:
+> +	 */
+> +	struct pid *pid;
+>  };
+>  
+>  struct msm_gem_vma {
+> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+> index 29cc1305cf37..80a8a266d68f 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+> @@ -17,6 +17,7 @@ msm_gem_address_space_destroy(struct kref *kref)
+>  	drm_mm_takedown(&aspace->mm);
+>  	if (aspace->mmu)
+>  		aspace->mmu->funcs->destroy(aspace->mmu);
+> +	put_pid(aspace->pid);
+>  	kfree(aspace);
+>  }
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 951850804d77..ac8961187a73 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -825,10 +825,9 @@ static int get_clocks(struct platform_device *pdev, struct msm_gpu *gpu)
+>  
+>  /* Return a new address space for a msm_drm_private instance */
+>  struct msm_gem_address_space *
+> -msm_gpu_create_private_address_space(struct msm_gpu *gpu)
+> +msm_gpu_create_private_address_space(struct msm_gpu *gpu, struct task_struct *task)
+>  {
+>  	struct msm_gem_address_space *aspace = NULL;
+> -
+>  	if (!gpu)
+>  		return NULL;
+>  
+> @@ -836,8 +835,11 @@ msm_gpu_create_private_address_space(struct msm_gpu *gpu)
+>  	 * If the target doesn't support private address spaces then return
+>  	 * the global one
+>  	 */
+> -	if (gpu->funcs->create_private_address_space)
+> +	if (gpu->funcs->create_private_address_space) {
+>  		aspace = gpu->funcs->create_private_address_space(gpu);
+> +		if (!IS_ERR(aspace))
+> +			aspace->pid = get_pid(task_pid(task));
+> +	}
+>  
+>  	if (IS_ERR_OR_NULL(aspace))
+>  		aspace = msm_gem_address_space_get(gpu->aspace);
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 4052a18e18c2..59f26bd0fe42 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -298,7 +298,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  		const char *name, struct msm_gpu_config *config);
+>  
+>  struct msm_gem_address_space *
+> -msm_gpu_create_private_address_space(struct msm_gpu *gpu);
+> +msm_gpu_create_private_address_space(struct msm_gpu *gpu, struct task_struct *task);
+>  
+>  void msm_gpu_cleanup(struct msm_gpu *gpu);
+>  
+> -- 
+> 2.26.2
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
-Regards,
-Amit Pundir
-
->
-> Regards,
-> Bjorn
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
