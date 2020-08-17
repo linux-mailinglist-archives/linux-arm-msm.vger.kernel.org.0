@@ -2,311 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 085AA245DB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 09:14:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF7C245DCE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 09:19:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbgHQHNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 03:13:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57844 "EHLO mail.kernel.org"
+        id S1726854AbgHQHTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 03:19:35 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:24368 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726896AbgHQHLs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 03:11:48 -0400
-Received: from mail.kernel.org (ip5f5ad5a3.dynamic.kabel-deutschland.de [95.90.213.163])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726798AbgHQHTZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 03:19:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597648764; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=hwlJ5WSyqLCQ3kLhAjhnixhlrCzC9z8oa3p4W6kt32o=; b=T1D2fY/LmVHKHzaE9f1nvXsRNCiCgaVZM/id6lHHy0SASEoM8a1hNDZMtSTvVcrXNXsu90U5
+ tLMC8i3foMzBrpAyGgWrqLAxZ55gX5bMYc15cZRSHksVOJGMVQUS7fw0UOwbVZ4UpF/P7zpr
+ 5h4n2ATr0jzJoR/Dp4kPJ81PvoM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f3a2f60f2b697637a623b47 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 07:18:56
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4F96DC43387; Mon, 17 Aug 2020 07:18:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 958B822EBE;
-        Mon, 17 Aug 2020 07:11:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597648278;
-        bh=ljY4hNkAYHQQVlNsazJvW+CoA58hsPice7owmwah8F4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=weJFB2dykeTzL4E2BzfsT+GmE7RVQ9oe4XudMt001kyS1aYQghz91NlAn9Q/BrI9Y
-         Ca/Gk6yuSNQHL/MI1tSJXnouSYWzRFOtMlMF4oqp160qXSAGScfim0FWQWzCgE+Oh2
-         leh5mO7b8NIl442glG0xaLE1AxW3f173F00QjGHA=
-Received: from mchehab by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1k7ZIa-00BdlG-Mi; Mon, 17 Aug 2020 09:11:16 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 43/44] dt: document HiSilicon SPMI controller and mfd/regulator properties
-Date:   Mon, 17 Aug 2020 09:11:02 +0200
-Message-Id: <2f88fed96d67b05fc033356fdbb7e3227955ab34.1597647359.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <cover.1597647359.git.mchehab+huawei@kernel.org>
-References: <cover.1597647359.git.mchehab+huawei@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 82022C433C6;
+        Mon, 17 Aug 2020 07:18:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 82022C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, sivaprak@codeaurora.org,
+        devicetree@vger.kernel.org
+Cc:     kathirav@codeaurora.org
+Subject: [PATCH V2 0/2] Enable DVFS support for IPQ6018
+Date:   Mon, 17 Aug 2020 12:48:38 +0530
+Message-Id: <1597648720-13649-1-git-send-email-kathirav@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation for the properties needed by the HiSilicon
-6421v600 driver, and by the SPMI controller used to access
-the chipset.
+Add A53 PLL, APCS clock, RPM Glink, RPM message RAM, cpu-opp-table,
+SMPA2 regulator to enable the cpu frequency on IPQ6018.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- .../mfd/hisilicon,hi6421-spmi-pmic.yaml       | 182 ++++++++++++++++++
- .../spmi/hisilicon,hisi-spmi-controller.yaml  |  54 ++++++
- 2 files changed, 236 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
- create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+[v2]
+	- Rebased on v5.9-rc1
+	- Picked up the Rob's Acked-by tag for mailbox YAML
+	- Regulator binding in V1 was picked by Mark and available in v5.9-rc1
 
-diff --git a/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
-new file mode 100644
-index 000000000000..95494114554d
---- /dev/null
-+++ b/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
-@@ -0,0 +1,182 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/mfd/hisilicon,hi6421-spmi-pmic.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: HiSilicon 6421v600 SPMI PMIC
-+
-+maintainers:
-+  - Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+
-+description: |
-+  HiSilicon 6421v600 uses a MIPI System Power Management (SPMI) bus in order
-+  to provide interrupts and power supply.
-+
-+  The GPIO and interrupt settings are represented as part of the top-level PMIC
-+  node.
-+
-+  The SPMI controller part is provided by
-+  Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml.
-+
-+properties:
-+  $nodename:
-+    pattern: "pmic@[0-9a-f]"
-+
-+  compatible:
-+    const: hisilicon,hi6421-spmi-pmic
-+
-+  reg:
-+    maxItems: 1
-+
-+  spmi-channel:
-+    description: number of the SPMI channel where the PMIC is connected
-+
-+  '#interrupt-cells':
-+    const: 2
-+
-+  interrupt-controller:
-+    description:
-+      Identify that the PMIC is capable of behaving as an interrupt controller.
-+
-+  gpios:
-+    maxItems: 1
-+
-+  irq-num:
-+    description: Interrupt request number
-+
-+  'irq-array':
-+    description: Interrupt request array
-+
-+  'irq-mask-addr':
-+    description: Address for the interrupt request mask
-+
-+  'irq-addr':
-+    description: Address for the interrupt request
-+
-+  regulators:
-+    type: object
-+
-+    properties:
-+      '#address-cells':
-+        const: 1
-+
-+      '#size-cells':
-+        const: 0
-+
-+    patternProperties:
-+      '^ldo@[0-9]+$':
-+        type: object
-+
-+        $ref: "/schemas/regulator/regulator.yaml#"
-+
-+        properties:
-+          reg:
-+            description: Enable register.
-+
-+          '#address-cells':
-+            const: 1
-+
-+          '#size-cells':
-+            const: 0
-+
-+          vsel-reg:
-+            description: Voltage selector register.
-+
-+          enable-mask:
-+            description: Bitmask used to enable the regulator.
-+
-+          voltage-table:
-+            description: Table with the selector items for the voltage regulator.
-+            minItems: 2
-+            maxItems: 16
-+
-+          off-on-delay-us:
-+            description: Time required for changing state to enabled in microseconds.
-+
-+          startup-delay-us:
-+            description: Startup time in microseconds.
-+
-+          idle-mode-mask:
-+            description: Bitmask used to put the regulator on idle mode.
-+
-+          eco-microamp:
-+            description: Maximum current while on idle mode.
-+
-+        required:
-+          - reg
-+          - vsel-reg
-+          - enable-mask
-+          - voltage-table
-+          - off-on-delay-us
-+          - startup-delay-us
-+
-+required:
-+  - compatible
-+  - reg
-+  - regulators
-+
-+examples:
-+  - |
-+    /* pmic properties */
-+
-+    pmic: pmic@0 {
-+      compatible = "hisilicon,hi6421-spmi-pmic";
-+      slave_id = <0>;
-+      reg = <0 0>;
-+
-+      #interrupt-cells = <2>;
-+      interrupt-controller;
-+      gpios = <&gpio28 0 0>;
-+      irq-num = <16>;
-+      irq-array = <2>;
-+      irq-mask-addr = <0x202 2>;
-+      irq-addr = <0x212 2>;
-+
-+      #address-cells = <1>;
-+      #size-cells = <0>;
-+
-+      regulators {
-+          #address-cells = <1>;
-+          #size-cells = <0>;
-+
-+        ldo3: ldo3@16 {
-+          reg = <0x16>;
-+          vsel-reg = <0x51>;
-+
-+          regulator-name = "ldo3";
-+          regulator-min-microvolt = <1500000>;
-+          regulator-max-microvolt = <2000000>;
-+          regulator-boot-on;
-+
-+          enable-mask = <0x01>;
-+
-+          voltage-table = <1500000>, <1550000>, <1600000>, <1650000>,
-+                          <1700000>, <1725000>, <1750000>, <1775000>,
-+                          <1800000>, <1825000>, <1850000>, <1875000>,
-+                          <1900000>, <1925000>, <1950000>, <2000000>;
-+          off-on-delay-us = <20000>;
-+          startup-delay-us = <120>;
-+        };
-+
-+        ldo4: ldo4@17 { /* 40 PIN */
-+          reg = <0x17>;
-+          vsel-reg = <0x52>;
-+
-+          regulator-name = "ldo4";
-+          regulator-min-microvolt = <1725000>;
-+          regulator-max-microvolt = <1900000>;
-+          regulator-boot-on;
-+
-+          enable-mask = <0x01>;
-+          idle-mode-mask = <0x10>;
-+          eco-microamp = <10000>;
-+
-+          hi6421-vsel = <0x52 0x07>;
-+          voltage-table = <1725000>, <1750000>, <1775000>, <1800000>,
-+                          <1825000>, <1850000>, <1875000>, <1900000>;
-+          off-on-delay-us = <20000>;
-+          startup-delay-us = <120>;
-+        };
-+      };
-+    };
-diff --git a/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-new file mode 100644
-index 000000000000..5aeb2ae12024
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-@@ -0,0 +1,54 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/hisilicon,hisi-spmi-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: HiSilicon SPMI controller
-+
-+maintainers:
-+  - Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+
-+description: |
-+  The HiSilicon SPMI controller is found on some Kirin-based designs.
-+  It is a MIPI System Power Management (SPMI) controller.
-+
-+  The PMIC part is provided by
-+  Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml.
-+
-+properties:
-+  $nodename:
-+    pattern: "spmi@[0-9a-f]"
-+
-+  compatible:
-+    const: hisilicon,spmi-controller
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#address-cells":
-+    const: 2
-+
-+  "#size-cells":
-+    const: 0
-+
-+  spmi-channel:
-+    description: number of the SPMI channel where the PMIC is connected
-+
-+patternProperties:
-+  "^pmic@[0-9a-f]$":
-+    $ref: "/schemas/mfd/hisilicon,hi6421-spmi-pmic.yaml#"
-+
-+examples:
-+  - |
-+    spmi: spmi@fff24000 {
-+      compatible = "hisilicon,spmi-controller";
-+      #address-cells = <2>;
-+      #size-cells = <0>;
-+      status = "ok";
-+      reg = <0x0 0xfff24000 0x0 0x1000>;
-+      spmi-channel = <2>;
-+
-+      /* pmic properties */
-+
-+    };
+Kathiravan T (2):
+  dt-bindings: mailbox: add compatible for the IPQ6018 SoC
+  arm64: dts: ipq6018: enable DVFS support
+
+ .../bindings/mailbox/qcom,apcs-kpss-global.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              | 96 +++++++++++++++++++++-
+ 2 files changed, 94 insertions(+), 3 deletions(-)
+
 -- 
-2.26.2
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
