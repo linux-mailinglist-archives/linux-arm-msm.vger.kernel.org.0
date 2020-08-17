@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02FFB245BF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 07:29:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9725F245C84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 08:31:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726251AbgHQF27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 01:28:59 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:35520 "EHLO m43-7.mailgun.net"
+        id S1726777AbgHQGbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 02:31:35 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:17694 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726185AbgHQF26 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 01:28:58 -0400
+        id S1726761AbgHQGbc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 02:31:32 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597642137; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=54+oQH+CEQlOQzUWT+fCfANJA0KB5CGoWMMpbTEkZAw=; b=uNkastvk5rOCawrAe0zcJi5+QQav3Jg8Mtg5AC5zGOa4PzkXQ42O05potWI9bAFB4dyxJuCO
- VTaKt68slgMY6Qb4ooNPrB4YUeEWyt2wMT+M2RN/ufOAdMzwKU6jORNB5r/49RJruphllfII
- xbwtGqLxO74kiaZBExpiVU/39zo=
+ s=smtp; t=1597645891; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=dxlcaa77DIjQ4l0a22lKh1DZtZt1EuLXw5TsUtc6bIs=; b=iQLWrqTJBZ/7QaZT9p0H9/RhNh5hGgPuggVpV5pX9Zmv5KghZORz8BZ0JxIWfrBbONfHxBJ6
+ q7WMPy0sQdlegLNg5SDaZ+/63cDqaM2yXNRrz5Npo35JIPPpGbb9v5k4kvypao2DxSTrBNUi
+ fWMooh1Nqj59bn5zJH3kjEkGzXw=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f3a1591d96d28d61ef97d62 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 05:28:49
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5f3a24111e4d3989d49234da (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 06:30:41
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C39B2C433CA; Mon, 17 Aug 2020 05:28:48 +0000 (UTC)
+        id 91105C43391; Mon, 17 Aug 2020 06:30:40 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,48 +35,46 @@ Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-O
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5BB77C433C6;
-        Mon, 17 Aug 2020 05:28:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5BB77C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A5B9C433CB;
+        Mon, 17 Aug 2020 06:30:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A5B9C433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
 From:   Kathiravan T <kathirav@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     kathirav@codeaurora.org
-Subject: [PATCH V2] arm64: dts: ipq8074: Use the A53 PMU compatible
-Date:   Mon, 17 Aug 2020 10:58:36 +0530
-Message-Id: <1597642116-15902-1-git-send-email-kathirav@codeaurora.org>
+Subject: [PATCH] soc: qcom: socinfo: add soc id for IPQ6018
+Date:   Mon, 17 Aug 2020 12:00:30 +0530
+Message-Id: <1597645830-30409-1-git-send-email-kathirav@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has A53 cores, so lets use the corresponding PMU compatible.
+Add the SoC ID for IPQ6018 variant.
 
 Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
 ---
-[V2]
+[V2]:
 	- Rebased on v5.9-rc1
 
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/socinfo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 96a5ec89b5f0..e4859c7f6208 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -67,7 +67,7 @@
- 	};
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index e19102f46302..2b28667e1c66 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -223,6 +223,7 @@ static const struct soc_id soc_id[] = {
+ 	{ 321, "SDM845" },
+ 	{ 341, "SDA845" },
+ 	{ 356, "SM8250" },
++	{ 402, "IPQ6018" },
+ };
  
- 	pmu {
--		compatible = "arm,armv8-pmuv3";
-+		compatible = "arm,cortex-a53-pmu";
- 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
- 	};
- 
+ static const char *socinfo_machine(struct device *dev, unsigned int id)
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
