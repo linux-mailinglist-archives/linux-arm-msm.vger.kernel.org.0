@@ -2,100 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 032FB246831
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 16:14:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E86F2468A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 16:47:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728512AbgHQOOC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 10:14:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48970 "EHLO mail.kernel.org"
+        id S1729038AbgHQOri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 10:47:38 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38348 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728465AbgHQOOB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 10:14:01 -0400
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726630AbgHQOrh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 10:47:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597675656; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=tgTAxFdftyFAguKX6yCWKGS0/ZD3dDVKkF/drriTSI4=; b=utA0RCO3f1E+254lgNapexfM5mrqpYm8HZN5VG4uPdHnLzW9upDReIdmDG511jWBO2lR7C8b
+ R2mwy9QJlzvrGY7+r9s2DjJlbxQZCKjLEGDRuOAGTH84Iv+F1FmAG4WjsBMUAnTCaFxI2ZvJ
+ ljWziyXvTMRbkxTKx1IRrcqdx5Q=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f3a9888247ccc308cb2ca5b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 14:47:36
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 49EDCC433A0; Mon, 17 Aug 2020 14:47:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7A87720729;
-        Mon, 17 Aug 2020 14:14:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597673640;
-        bh=8O7qw6BCN+efbgg/RYA0raLJkFhZsKOGJVtGubbB164=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Yi5vjPkHVvumnFVZRdbd4wh9eM7MLT0ZFpBuBiRacd99mxSSAX0ols3pxA1vIYlxk
-         qeJz3aoOprLanOD9VTnQfgXE+lYayxbkZVMA/N4kAG7nxUJ99bVrFdsaSucpNxyOYc
-         Hm1r/p+32ZIbGHr74T4/4+16NVgSz2AvDCMcZeQ0=
-Received: by mail-oi1-f178.google.com with SMTP id j7so14889947oij.9;
-        Mon, 17 Aug 2020 07:14:00 -0700 (PDT)
-X-Gm-Message-State: AOAM532VyIl6B/HnSWTyZx2DYNE9fzD6k6cwNJs9QGP6MK2Uda6R/wLH
-        ReODdXceUswTrSwgya85JGODeEWpyoWdajOuTQ==
-X-Google-Smtp-Source: ABdhPJzDyEB62OFCS0ZR6kCDWJDbaeab8pSiIIncA5711i8IP18JmASq9esmDP4wsdj5hEzDb6mZAZhkabYpBOIhyJs=
-X-Received: by 2002:aca:c3d8:: with SMTP id t207mr9793498oif.152.1597673639819;
- Mon, 17 Aug 2020 07:13:59 -0700 (PDT)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 08449C433C6;
+        Mon, 17 Aug 2020 14:47:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 08449C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2] soc: qcom: llcc: Support chipsets that can write to llcc registers
+Date:   Mon, 17 Aug 2020 20:17:22 +0530
+Message-Id: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <cover.1597247164.git.mchehab+huawei@kernel.org>
- <da65a508d01aa2092999d0ce7e9c061ccfd24036.1597247164.git.mchehab+huawei@kernel.org>
- <20200814201708.GA2665752@bogus> <20200815115536.6519a7f5@coco.lan>
-In-Reply-To: <20200815115536.6519a7f5@coco.lan>
-From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 17 Aug 2020 08:13:47 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+AsbJxsyjVt_YC=9ToqQC_0XPLymLkKnmpc0uuS-1eSQ@mail.gmail.com>
-Message-ID: <CAL_Jsq+AsbJxsyjVt_YC=9ToqQC_0XPLymLkKnmpc0uuS-1eSQ@mail.gmail.com>
-Subject: Re: [PATCH 43/44] dt: document HiSilicon SPMI controller and
- mfd/regulator properties
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     mauro.chehab@huawei.com,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Linuxarm <linuxarm@huawei.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Aug 15, 2020 at 3:55 AM Mauro Carvalho Chehab
-<mchehab+huawei@kernel.org> wrote:
->
-> Hi Rob,
->
-> Em Fri, 14 Aug 2020 14:17:08 -0600
-> Rob Herring <robh@kernel.org> escreveu:
->
-> > On Wed, 12 Aug 2020 17:56:53 +0200, Mauro Carvalho Chehab wrote:
-> > > Add documentation for the properties needed by the HiSilicon
-> > > 6421v600 driver, and by the SPMI controller used to access
-> > > the chipset.
-> > >
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > ---
-> > >  .../mfd/hisilicon,hi6421-spmi-pmic.yaml       | 182 ++++++++++++++++++
-> > >  .../spmi/hisilicon,hisi-spmi-controller.yaml  |  54 ++++++
-> > >  2 files changed, 236 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
-> > >  create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-> > >
-> >
-> >
-> > My bot found errors running 'make dt_binding_check' on your patch:
-> >
-> > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.example.dt.yaml: example-0: spmi@fff24000:reg:0: [0, 4294066176, 0, 4096] is too long
->
-> I was unable to find any way to solve this one. What's the proper
-> way to set the length of the root reg on some example?
+From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
 
-The default is 1 address and size cell. Either adjust 'reg' for that
-or you can define a bus node:
+Older chipsets may not be allowed to configure certain LLCC registers
+as that is handled by the secure side software. However, this is not
+the case for newer chipsets and they must configure these registers
+according to the contents of the SCT table, while keeping in mind that
+older targets may not have these capabilities. So add support to allow
+such configuration of registers to enable capacity based allocation
+and power collapse retention for capable chipsets.
 
-bus {
-  #address-cells = <2>;
-  #size-cells = <2>;
+Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
+(sai: use table instead of dt property and minor commit msg change)
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
 
-  spmi@123 {
-    ...
-  };
-};
+Changes in v2:
+ * Fix build errors reported by kernel test robot.
 
-My preference is doing the former.
+---
+ drivers/soc/qcom/llcc-qcom.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-Rob
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 429b5a60a1ba..865f607cf502 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -45,6 +45,9 @@
+ #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
+ #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
+ 
++#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21F00
++#define LLCC_TRP_PCB_ACT              0x21F04
++
+ #define BANK_OFFSET_STRIDE	      0x80000
+ 
+ /**
+@@ -318,6 +321,11 @@ size_t llcc_get_slice_size(struct llcc_slice_desc *desc)
+ }
+ EXPORT_SYMBOL_GPL(llcc_get_slice_size);
+ 
++static const struct of_device_id __maybe_unused qcom_llcc_configure_of_match[] = {
++	{ .compatible = "qcom,sc7180-llcc" },
++	{ }
++};
++
+ static int qcom_llcc_cfg_program(struct platform_device *pdev)
+ {
+ 	int i;
+@@ -327,13 +335,17 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
+ 	u32 attr0_val;
+ 	u32 max_cap_cacheline;
+ 	u32 sz;
++	u32 disable_cap_alloc = 0, retain_pc = 0;
+ 	int ret = 0;
+ 	const struct llcc_slice_config *llcc_table;
+ 	struct llcc_slice_desc desc;
++	const struct of_device_id *llcc_configure;
+ 
+ 	sz = drv_data->cfg_size;
+ 	llcc_table = drv_data->cfg;
+ 
++	llcc_configure = of_match_node(qcom_llcc_configure_of_match, pdev->dev.of_node);
++
+ 	for (i = 0; i < sz; i++) {
+ 		attr1_cfg = LLCC_TRP_ATTR1_CFGn(llcc_table[i].slice_id);
+ 		attr0_cfg = LLCC_TRP_ATTR0_CFGn(llcc_table[i].slice_id);
+@@ -369,6 +381,21 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
+ 					attr0_val);
+ 		if (ret)
+ 			return ret;
++
++		if (llcc_configure) {
++			disable_cap_alloc |= llcc_table[i].dis_cap_alloc << llcc_table[i].slice_id;
++			ret = regmap_write(drv_data->bcast_regmap,
++						LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
++			if (ret)
++				return ret;
++
++			retain_pc |= llcc_table[i].retain_on_pc << llcc_table[i].slice_id;
++			ret = regmap_write(drv_data->bcast_regmap,
++						LLCC_TRP_PCB_ACT, retain_pc);
++			if (ret)
++				return ret;
++		}
++
+ 		if (llcc_table[i].activate_on_init) {
+ 			desc.slice_id = llcc_table[i].slice_id;
+ 			ret = llcc_slice_activate(&desc);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
