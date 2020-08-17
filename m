@@ -2,113 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B0A8246E5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 19:28:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D8E6246DC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 19:13:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389434AbgHQR2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 13:28:18 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:32828 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389416AbgHQRLD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 13:11:03 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597684263; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=IqsNUvABr0OrpoE56YQ1186lSjWEeIkkE5qYTPlZ1U4=; b=Ae2OoQ+U1/a1XiMPhGVVf2vRKJwry+1DPXuKm0wKUn2KAmN7o+a0RSGZc7Qb/dqc6jyCmGS7
- YTd0qqE+oiuykT70DvldoYWJefr0xRCqz47ftrPt4eE55RV0dOSJDKqolWbSqIgtyUJagedX
- Y2p04ZJwL15ml3xW87XSSV99PdU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5f3aba26f2b697637aa36f5d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 17:11:02
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7229DC4339C; Mon, 17 Aug 2020 17:11:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C4EE4C433C6;
-        Mon, 17 Aug 2020 17:10:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C4EE4C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 17 Aug 2020 11:10:56 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm/gpu: make ringbuffer readonly
-Message-ID: <20200817171056.GA7438@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20200817162309.362032-1-robdclark@gmail.com>
+        id S2389475AbgHQRNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 13:13:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49794 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388645AbgHQRMl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 13:12:41 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B364CC061343
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 10:12:40 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id f7so15744504wrw.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 10:12:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AueLUpVNwOplEaRIeklXnlMpQk/hv9PNTq+/4iLo0R0=;
+        b=Gpu1742R6bQKiE7BaePK5diMLvF+iZfSSkZ0BOARPwt42lhi8nz00uW6K89/MGg4zm
+         hZXZDUrk/4N+XUcR0wbbQo713rcnKWaOX9p4s60ZhAx89+KzEZhhA4saULYqOxNRGYdx
+         hUyQy65h8Dy4+B9yFynN1Kh1R/12oHa6Gs3j4u3Q4o3r9uQOP6RgH+35nG01K9CZdK68
+         rzoGzIXjOR9WHXTKTHVQO9vD4+jdCw3iMYQLPoCTJcpW+4tvowsYeLvIo21HjWRa2vmV
+         04Cx09aiVDy2hFLu9lZ+jRZdQNHnPp6FILixg0q9oSK7M9y8md8BFE7vFrK7eGa8X8yl
+         WMrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AueLUpVNwOplEaRIeklXnlMpQk/hv9PNTq+/4iLo0R0=;
+        b=tb4ow4/xXuq0zQv0wdQ9BUGDOjE5R+UMisc25TN24gj5KZi/kwCyKvyAwfg5SC8cL3
+         GgjKdnJvFVo9coe4U9u3whlxJHlAvmpH1N7LIR1mGESn1Ig3oin54EYhQWudncYYeg28
+         1tyxZEv4oRyzAW1ve/xYqg/A+VZeNyS82hieGARXTt36cdCvIrtNzutrzvAvEDS3b0nh
+         I7nManNKYaozTh+HvybV7H5jDgU6bpfTRRRc17ZNcke8X1I6JROtFuTHXtsvBb2TvwuD
+         4h2zphGIIOaeQZrrXSXkTqb24eWLHOscO49hI/LmwoIu557IiIy2WZX2Biw7g7pmCQ4q
+         kNlA==
+X-Gm-Message-State: AOAM531R9PtkA/6729QGB5fqIQ1T55p6LAQfowYLo+oJlzSFfsIRgNr+
+        QK6P5MjF183utnFo/elkMud2+NZ36l0gYr7FhVFSOA==
+X-Google-Smtp-Source: ABdhPJwzzJqqKP8Dz57WEH4mjrx29gWDTGQSyhqQk/3EQMn3h+P+wfHkvWUG7jnjma/rWD/FdEgspqJzfrhXMf85F+M=
+X-Received: by 2002:adf:fc06:: with SMTP id i6mr16257949wrr.79.1597684357045;
+ Mon, 17 Aug 2020 10:12:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200817162309.362032-1-robdclark@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAMi1Hd3Dv_T7kgThLTk2QLtfS7LBvhJ5R=6C3seUYK0GvNV6eA@mail.gmail.com>
+ <20200806223134.42748-1-konradybcio@gmail.com> <20200813070448.GA499758@builder.lan>
+In-Reply-To: <20200813070448.GA499758@builder.lan>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Mon, 17 Aug 2020 22:42:00 +0530
+Message-ID: <CAMi1Hd3j-A1Se9swD0TQ9YzTBGicPDc1nFZbf4uisVk5A+u1GQ@mail.gmail.com>
+Subject: Re: your mail
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 17, 2020 at 09:23:09AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> The GPU has no business writing into the ringbuffer, let's make it
-> readonly to the GPU.
+On Thu, 13 Aug 2020 at 12:38, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Thu 06 Aug 15:31 PDT 2020, Konrad Dybcio wrote:
+>
+> > Subject: Re: [PATCH v4] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
+> >
+> > >// This removed_region is needed to boot the device
+> > >               // TODO: Find out the user of this reserved memory
+> > >               removed_region: memory@88f00000 {
+> >
+> > This region seems to belong to the Trust Zone. When Linux tries to access it, TZ bites and shuts the device down.
+> >
+>
+> This is in line with what the documentation indicates and then it would
+> be better to just bump &tz_mem to a size of 0x4900000.
 
-Yep. There are some additional things we can do in the a6xx family to make this
-even more robust but for the vast majority of targets out in this world this is
-a good and necessary fix.
+Hi, so just to be sure that I got this right, you want me to extend
+&tz_mem to the size of 0x4900000 from the default size of 0x2D00000 by
+including this downstream &removed_region (of size 0x1A00000) +
+previously unreserved downstream memory region (of size 0x200000), to
+align with the starting address of &qseecom_mem?
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+I just gave this &tz_mem change a spin and I do not see any obvious
+regression in my limited smoke testing (Boots AOSP to UI with
+v5.9-rc1. Touch/BT/WiFi works) so far, with 20+ out-of-tree patches.
 
-> Fixes: 7198e6b03155 ("drm/msm: add a3xx gpu support")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/msm_ringbuffer.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> index e397c44cc011..39ecb5a18431 100644
-> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> @@ -27,7 +27,8 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
->  	ring->id = id;
->  
->  	ring->start = msm_gem_kernel_new(gpu->dev, MSM_GPU_RINGBUFFER_SZ,
-> -		MSM_BO_WC, gpu->aspace, &ring->bo, &ring->iova);
-> +		MSM_BO_WC | MSM_BO_GPU_READONLY, gpu->aspace, &ring->bo,
-> +		&ring->iova);
->  
->  	if (IS_ERR(ring->start)) {
->  		ret = PTR_ERR(ring->start);
-> -- 
-> 2.26.2
-> 
+Regards,
+Amit Pundir
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>
+> Regards,
+> Bjorn
