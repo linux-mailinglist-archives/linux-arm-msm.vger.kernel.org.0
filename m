@@ -2,79 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9725F245C84
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 08:31:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4066245CA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 08:41:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbgHQGbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 02:31:35 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17694 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726761AbgHQGbc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 02:31:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597645891; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=dxlcaa77DIjQ4l0a22lKh1DZtZt1EuLXw5TsUtc6bIs=; b=iQLWrqTJBZ/7QaZT9p0H9/RhNh5hGgPuggVpV5pX9Zmv5KghZORz8BZ0JxIWfrBbONfHxBJ6
- q7WMPy0sQdlegLNg5SDaZ+/63cDqaM2yXNRrz5Npo35JIPPpGbb9v5k4kvypao2DxSTrBNUi
- fWMooh1Nqj59bn5zJH3kjEkGzXw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5f3a24111e4d3989d49234da (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 06:30:41
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 91105C43391; Mon, 17 Aug 2020 06:30:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A5B9C433CB;
-        Mon, 17 Aug 2020 06:30:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A5B9C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kathirav@codeaurora.org
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kathirav@codeaurora.org
-Subject: [PATCH] soc: qcom: socinfo: add soc id for IPQ6018
-Date:   Mon, 17 Aug 2020 12:00:30 +0530
-Message-Id: <1597645830-30409-1-git-send-email-kathirav@codeaurora.org>
+        id S1726308AbgHQGlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 02:41:39 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:31915 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726151AbgHQGli (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 02:41:38 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 16 Aug 2020 23:41:38 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Aug 2020 23:41:36 -0700
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 17 Aug 2020 12:11:12 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 435CC40A2; Mon, 17 Aug 2020 12:11:11 +0530 (IST)
+From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, mka@chromium.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        rnayak@codeaurora.org, Pradeep P V K <ppvk@codeaurora.org>,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Subject: [PATCH V3] arm64: dts: qcom: sc7180: Add bandwidth votes for eMMC and SDcard
+Date:   Mon, 17 Aug 2020 12:11:04 +0530
+Message-Id: <1597646464-1863-1-git-send-email-sbhanu@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the SoC ID for IPQ6018 variant.
+From: Pradeep P V K <ppvk@codeaurora.org>
 
-Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+Add the bandwidth domain supporting performance state and
+the corresponding OPP tables for the sdhc device on sc7180.
+
+Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
 ---
-[V2]:
-	- Rebased on v5.9-rc1
 
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+This change is depends on the below patch series:
+https://lore.kernel.org/patchwork/patch/1278294/
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index e19102f46302..2b28667e1c66 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -223,6 +223,7 @@ static const struct soc_id soc_id[] = {
- 	{ 321, "SDM845" },
- 	{ 341, "SDA845" },
- 	{ 356, "SM8250" },
-+	{ 402, "IPQ6018" },
- };
+Change since V2:
+	- Included tag in the of innerconnect-cells for sdhc nodes in-tune with
+	  https://lore.kernel.org/patchwork/patch/1278294/
+
+Changes since V1:
+	- Included Pradeep Pragalapati signoff.
+	- Removed dependency patch list as those patches already merged
+	  on linux-next.
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 68f9894..e5a7d88 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -684,6 +684,9 @@
+ 			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
+ 					<&gcc GCC_SDCC1_AHB_CLK>;
+ 			clock-names = "core", "iface";
++			interconnects = <&aggre1_noc MASTER_EMMC 0 &mc_virt SLAVE_EBI1 0>,
++				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_EMMC_CFG 0>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
+ 			power-domains = <&rpmhpd SC7180_CX>;
+ 			operating-points-v2 = <&sdhc1_opp_table>;
  
- static const char *socinfo_machine(struct device *dev, unsigned int id)
+@@ -704,11 +707,15 @@
+ 				opp-100000000 {
+ 					opp-hz = /bits/ 64 <100000000>;
+ 					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <100000 100000>;
++					opp-avg-kBps = <100000 50000>;
+ 				};
+ 
+ 				opp-384000000 {
+ 					opp-hz = /bits/ 64 <384000000>;
+ 					required-opps = <&rpmhpd_opp_svs_l1>;
++					opp-peak-kBps = <600000 900000>;
++					opp-avg-kBps = <261438 300000>;
+ 				};
+ 			};
+ 		};
+@@ -2476,6 +2483,10 @@
+ 			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
+ 					<&gcc GCC_SDCC2_AHB_CLK>;
+ 			clock-names = "core", "iface";
++
++			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
++				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
++			interconnect-names = "sdhc-ddr","cpu-sdhc";
+ 			power-domains = <&rpmhpd SC7180_CX>;
+ 			operating-points-v2 = <&sdhc2_opp_table>;
+ 
+@@ -2489,11 +2500,15 @@
+ 				opp-100000000 {
+ 					opp-hz = /bits/ 64 <100000000>;
+ 					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <160000 100000>;
++					opp-avg-kBps = <80000 50000>;
+ 				};
+ 
+ 				opp-202000000 {
+ 					opp-hz = /bits/ 64 <202000000>;
+ 					required-opps = <&rpmhpd_opp_svs_l1>;
++					opp-peak-kBps = <200000	120000>;
++					opp-avg-kBps = <100000 60000>;
+ 				};
+ 			};
+ 		};
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
