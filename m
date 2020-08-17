@@ -2,146 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E434F246F63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 19:46:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76A48246E9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 19:33:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731501AbgHQRq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 13:46:28 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:15381 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388768AbgHQQOI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 12:14:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1597680831;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=rKeNPXXZ5MJgiDN6W3hRxeQoXyTtsWjLXvZBTsWM7s8=;
-        b=KNcbpMse6Bn5w8fyYXwcvSaJITEp5bsH0IKVI/gr7WRdt5y6bFeekLbICfAZ+arhBU
-        oJKbwDndT4kBgRy548ahqvqtVX3BfKmzmoOVAzV1C7aR1iwpua57aitWILSFKA1yK/zr
-        G67w88zamwIX3HpOysktLmo7lmRfGjR+MQ4O4h79btBMxq7UPhRdjnmAm4mHTseBu6mu
-        hLhYWubAenSciYrd2d1i+zrV3ztkuoq0M7LEilFjlDyk4VWjc9nw3kceY7uPA4zytHDH
-        yZkwX2bB7hIW5vkatLYPj3q4TCoxdyKR235MM01CRt23zxKT87pLMI4X3SQ+VG7rmwt4
-        ClpA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j9IczHboo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.5 DYNA|AUTH)
-        with ESMTPSA id Y0939ew7HGDnInN
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 17 Aug 2020 18:13:49 +0200 (CEST)
-Date:   Mon, 17 Aug 2020 18:13:44 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH] clk: qcom: smd: Disable unused clocks
-Message-ID: <20200817161344.GA1446@gerhold.net>
-References: <20200817140908.185976-1-stephan@gerhold.net>
- <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com>
- <20200817152848.GA836@gerhold.net>
- <CAOCk7NpyiWO_DHidDWbwdBYbzJMrv26CmWOR4foTGRL_pQVbUQ@mail.gmail.com>
+        id S1730049AbgHQRdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 13:33:52 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:55586 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389012AbgHQQuH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Aug 2020 12:50:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597683006; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GhyGcHtsJNSaWRlw4MXPmZ9Q7h5P+6kgTtX8VYoSKpY=;
+ b=GwqwrHuBlxlYkVi1INhnbGt5b5qNvRNhrkD/by+Mhfh9G5XSvvkr6cQVZ9xJCZSXbfS+3tLR
+ X0pU9/FY9+2sRuq+KUv+PDi6u8y8a9pgwFjaoKwmSQ/I59I+pZsftkBbLcB+6qGEr7ZGw1X9
+ uwaFX2FQnbuBN+j8UiG0naI4Ucc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f3ab512f2b697637a95073e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 17 Aug 2020 16:49:22
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9E919C433AF; Mon, 17 Aug 2020 16:49:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2A69FC43391;
+        Mon, 17 Aug 2020 16:49:20 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7NpyiWO_DHidDWbwdBYbzJMrv26CmWOR4foTGRL_pQVbUQ@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 17 Aug 2020 22:19:20 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-kernel-owner@vger.kernel.org,
+        Kevin Hilman <khilman@kernel.org>,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH 1/2] PM / Domains: Add GENPD_FLAG_SUSPEND_ON flag
+In-Reply-To: <CAPDyKFrqxRrWSX5VaMy4DSjFNaMikKBYsZy5NiPMJvUybYttsw@mail.gmail.com>
+References: <20200811190252.10559-1-sibis@codeaurora.org>
+ <CAPDyKFqNMEtHwcJFxYQP5H1Yjrsr1T3UUZoXes69EthSjAYs2A@mail.gmail.com>
+ <1ba3e4d703dd0a52547d63fa014451eb@codeaurora.org>
+ <CAPDyKFrH9WTg4O5L+e1AijNvsagLYZ9QVTeoD0x0SQgYd3hkBg@mail.gmail.com>
+ <1ca666c336ebee569a429e729d5ae547@codeaurora.org>
+ <CAPDyKFrqxRrWSX5VaMy4DSjFNaMikKBYsZy5NiPMJvUybYttsw@mail.gmail.com>
+Message-ID: <33169e221707a2456397e478b275cfa9@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 17, 2020 at 09:46:08AM -0600, Jeffrey Hugo wrote:
-> > > So essentially, when the clk framework goes through late init, and
-> > > decides to turn off clocks that are not being used, it will also turn
-> > > off these clocks?
-> > >
-> >
-> > With this patch: yes.
-> >
-> > > I think this is going to break other targets where other subsystems
-> > > happen to rely on these sorts of votes from Linux inorder to run/boot
-> > > (not saying it's a good thing, just that is how it is and since we
-> > > can't change the FW on those....).
-> > >
-> >
-> > As far as I can tell the behavior implemented in this patch (= force
-> > clocks on during boot but disable them when unused) is the same on that
-> > is used on the downstream kernel. Most FW is probably written with the
-> > downstream kernel in mind, so I don't think this is going to cause trouble.
+On 2020-08-17 14:14, Ulf Hansson wrote:
+> On Thu, 13 Aug 2020 at 19:26, Sibi Sankar <sibis@codeaurora.org> wrote:
+>> 
+>> On 2020-08-13 18:04, Ulf Hansson wrote:
+>> > On Wed, 12 Aug 2020 at 19:03, Sibi Sankar <sibis@codeaurora.org> wrote:
+>> >>
+>> >> Uffe,
+>> >> Thanks for taking time to review the
+>> >> series!
+>> >>
+>> >> On 2020-08-12 15:15, Ulf Hansson wrote:
+>> >> > On Tue, 11 Aug 2020 at 21:03, Sibi Sankar <sibis@codeaurora.org> wrote:
+>> >> >>
+>> >> >> This is for power domains which needs to stay powered on for suspend
+>> >> >> but can be powered on/off as part of runtime PM. This flag is aimed at
+>> >> >> power domains coupled to remote processors which enter suspend states
+>> >> >> independent to that of the application processor. Such power domains
+>> >> >> are turned off only on remote processor crash/shutdown.
+>> >> >
+>> >> > As Kevin also requested, please elaborate more on the use case.
+>> >> >
+>> >> > Why exactly must the PM domain stay powered on during system suspend?
+>> >> > Is there a wakeup configured that needs to be managed - or is there a
+>> >> > co-processor/FW behaviour that needs to be obeyed to?
+>> >>
+>> >> Yes this is a co-processor behavior that
+>> >> needs to be obeyed. Specifically application
+>> >> processor notifies the Always on Subsystem
+>> >> (AOSS) that a particular co-processor is up
+>> >> using the power domains exposed by AOSS QMP
+>> >> driver. AOSS uses this information to wait
+>> >> for the co-processors to suspend before
+>> >> starting its sleep sequence. The application
+>> >> processor powers off these power domains only
+>> >> if the co-processor has crashed or powered
+>> >> off.
+>> >
+>> > Thanks for clarifying!
+>> >
+>> > Although, can you please elaborate a bit more on the actual use case?
+>> > What are the typical co-processor and what drivers are involved in
+>> > managing it?
+>> 
+>> The co-processors using the power domains
+>> exposed by qcom_aoss driver are modem,
+>> audio dsp, compute dsp managed using
+>> qcom_q6v5_mss and qcom_q6v5_pas driver.
+>> 
+>> >
+>> > As you may know, runtime PM becomes disabled during system suspend of
+>> > a device. Which means, if the driver tries to power off the
+>> > coprocessor (via calling pm_runtime_put() for example), somewhere in
+>> > the system suspend phase of the corresponding device, its attached PM
+>> > domain stays powered on when managed by genpd.
+>> 
+>> The drivers aren't really expected
+>> do anything during suspend/resume
+>> pretty much because the co-processors
+>> enter low-power modes independent to
+>> that of the application processor. On
+>> co-processor crash the remoteproc core
+>> does a pm_stay_awake followed by a
+>> pm_relax after crash recovery.
 > 
-> Based on my experience with 8998, I disagree.  I would need to dig up
-> the history for specifics.
+> Okay, thanks again for clarifying. You have convinced me about the
+> need for a new flag to cope with these use cases.
 > 
-
-I don't know anything about 8998, so it's possible.
-My statement was based on a quick look at the downstream code:
-
-For some reason there is an entirely separate MSM clock framework
-downstream:
-
- 1. During msm_clock_register() [1] it calls __handoff_clk()
-    for all the clocks.
-
- 2. __handoff_clk() [2] calls clk->ops->handoff(clk) and if that returns
-    success (HANDOFF_ENABLED_CLK) it adds the clock to a "handoff_list".
-    -> rpm_clk_handoff() [3] forces the clock on similar to mainline.
-
- 3. In a late init call (clock_late_init()) [4] it iterates over
-    "handoff_list" and reduces the prepare_count again and eventually
-    disables the clock.
-
-In this patch I implement something equivalent to (3).
-
-[1]: https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/clk/msm/clock.c?h=LA.UM.7.2.r2-06200-8x98.0#n985
-[2]: https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/clk/msm/clock.c?h=LA.UM.7.2.r2-06200-8x98.0#n873
-[3]: https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/clk/msm/clock-rpm.c?h=LA.UM.7.2.r2-06200-8x98.0#n263
-[4]: https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/clk/msm/clock.c?h=LA.UM.7.2.r2-06200-8x98.0#n1351
-
-> >
-> > > Also, out of curiosity, how are you validating that BB_CLK2 is
-> > > actually off after this change?
-> > >
-> >
-> > Since BB_CLK1/2 and RF_CLK1/2 are part of the PMIC (at least on MSM8916)
-> > I used the regmap debugfs interface to read the clock registers
-> > through SPMI from Linux.
-> >
-> > From the "PM8916 Hardware Register Description" [1] I got the registers
-> > mentioned in the table, e.g. for BB_CLK2:
-> >
-> > 0x5208: BB_CLK2_STATUS1
-> >         BIT(7): CLK_OK (Indicates Hardware or Software enable and
-> >                         includes warmup delay)
-> >                 0x0: BBCLK_OFF
-> >                 0x1: BBCLK_ON
-> >
-> > I read the registers from /sys/kernel/debug/regmap/0-00/registers:
-> >
-> > Without this patch:
-> >         5108: 80
-> >         5208: 80
-> >         5408: 80
-> >         5508: 80
-> >
-> > With this patch (and with clk-smd-rpm entirely disabled):
-> >         5108: 80
-> >         5208: 00
-> >         5408: 00
-> >         5508: 00
-> >
-> > Stephan
-> >
-> > [1]: https://developer.qualcomm.com/download/sd410/pm8916-hardware-register-description.pdf
+> Would you mind updating the commit message with some of the
+> information you just provided?
 > 
-> Hmm, 8916 is probably old enough where you can actually do that.  For
-> the modern SoCs, you'll have to go through jtag to get an accurate
-> view of the clocks.
+> Additionally, to make it clear that the flag should be used to keep
+> the PM domain powered on during system suspend, but only if it's
+> already powered on - please rename the flag to GENPD_FLAG_NO_SUSPEND,
+> and update the corresponding description of it in the header file.
 
-I guess I was lucky then :)
+Thanks, naming it ^^ makes more sense :)
 
-Stephan
+https://lore.kernel.org/lkml/340a7aafcf0301ff3158a4e211992041@codeaurora.org/
+
+Also we wouldn't want to power on
+runtime suspended power domains with
+the NO_SUSPEND flag set, on resume as
+explained ^^. Do you agree with that
+as well?
+
+> 
+> [...]
+> 
+> Kind regards
+> Uffe
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
