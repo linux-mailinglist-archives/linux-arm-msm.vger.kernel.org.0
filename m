@@ -2,417 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A240324784B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 22:45:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 833F424787C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Aug 2020 23:05:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726886AbgHQUpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Aug 2020 16:45:47 -0400
-Received: from mail-il1-f196.google.com ([209.85.166.196]:44714 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726273AbgHQUpp (ORCPT
+        id S1727123AbgHQVFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Aug 2020 17:05:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58108 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727114AbgHQVFZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Aug 2020 16:45:45 -0400
-Received: by mail-il1-f196.google.com with SMTP id j9so15697455ilc.11;
-        Mon, 17 Aug 2020 13:45:43 -0700 (PDT)
+        Mon, 17 Aug 2020 17:05:25 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 098B9C061342
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:05:25 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id q13so8996734vsn.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=d9PmqgIYzOOImZZLBY3kQUVlBb5GYyirm8BR71dJiqw=;
+        b=Mu5RMyAB30MGUDbsENNdXuRiV4xyLY//ASCMKcHhT9b9pGdREc4oXNbsUG5hi805D4
+         rgj+nxZBF8TrqjPsyn+0qTpc1hJHy6OSRmvOr5sp2Wrt+vSwYI9sp+9kyolCkSWUAuCT
+         2J8ztk9CcxehsHLwobsEvxlggS0Lv/GmrU8xM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8BJpUFruvhhEHxqofNhY/G7iCQHj547c9tNCNX6kgbg=;
-        b=ubaUFp6TYC0P7OMQFr2Lcu/QSp/sHnQ3Zu9dklt7+9Z9WwUd3ATACpOBJ2hwo6B/uk
-         WZGy70gafB+BFupbcE1yGgDojAhA9VBolM/hQTHcQY8A2Y/IdWEC/klXhzNh4uf+Zhvg
-         +DODdqOqNwp6x1RtO/lbLcK00Hn9WT96i0uKdPy+fuxZZAsoSSPnbwJGZcXarbovKoSs
-         rJafn/AK6eeYLJk/1259xvM2gl2+/CEJJkiV3LBftYCQN/dVdF42aLnNMfKlJzxHYz1o
-         X2PDU6VfMFym86RbS2dX/CJ+Yv3OqBt+bjUQ1xwBgHBxsKl2MwwkbeTSDzpMrjdv+kQo
-         Wrcg==
-X-Gm-Message-State: AOAM530MolVdTP0EYPDkldJA6w5q+J7kroXKrzyO123enGOmP1f7P/KL
-        yhqcHSo8oguWPIw4+0RXRQ==
-X-Google-Smtp-Source: ABdhPJytR1FxTi0bUkNGyhC8h+w18pWMjgJBz4sZPYA/pW7wZXQCMWd83VU3tLqjKxekg/37S7MOlA==
-X-Received: by 2002:a92:9e48:: with SMTP id q69mr15760069ili.170.1597697143190;
-        Mon, 17 Aug 2020 13:45:43 -0700 (PDT)
-Received: from xps15 ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id u17sm9552610ilj.0.2020.08.17.13.45.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2020 13:45:42 -0700 (PDT)
-Received: (nullmailer pid 1527573 invoked by uid 1000);
-        Mon, 17 Aug 2020 20:45:39 -0000
-Date:   Mon, 17 Aug 2020 14:45:39 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Rohit kumar <rohitkr@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 12/12] dt-bindings: sound: lpass-cpu: Move to yaml
- format
-Message-ID: <20200817204539.GB1512270@bogus>
-References: <1597402388-14112-1-git-send-email-rohitkr@codeaurora.org>
- <1597402388-14112-13-git-send-email-rohitkr@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=d9PmqgIYzOOImZZLBY3kQUVlBb5GYyirm8BR71dJiqw=;
+        b=T9+KM22dd6t1Bf6aogF808Wq9hWRYSQjsL/9ALn+upAaUMpWfgRuYB+yiSCnMhjWu4
+         3ByxZb3w0938OuILmMCXBAotIz/Gv2cU/yTZIymp4uyUYkkQZug28UZ/OR7umZUHMjWO
+         I3ZYpAZdRAyaGhCqAGsglWAQe+qECogg/6asz2pCtrgt4TQ3LuIqyXO8elAH+pDy67mv
+         mR44Z3uZTAL5g7uotb/wgqBUsHs8uEBtq1OIWIl94XV6wOrqfKseshT9tThsIS7eG38U
+         1GHwDD84LFsGizCrNwihmwPd9kb3Dob+mMfTA73AaXfo4nxub5vhOZCjSVoKvVVilXTq
+         Mczg==
+X-Gm-Message-State: AOAM531Mopwv8ZTJ29joDYkkCaif16n1ywkSMKkhpJol3LvOFhSKOrds
+        VYWWZcjIqC0jbMmreohTVMbb85VJ90CLGA==
+X-Google-Smtp-Source: ABdhPJzLaarKEmCuiIS1ftLAZXKvDRyHWvZmoK5wkbD+OliRqNxmSxSon98GptfwoqI5IH5mmwDH/g==
+X-Received: by 2002:a67:2504:: with SMTP id l4mr9533229vsl.182.1597698323195;
+        Mon, 17 Aug 2020 14:05:23 -0700 (PDT)
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
+        by smtp.gmail.com with ESMTPSA id o16sm3612764vkn.26.2020.08.17.14.05.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Aug 2020 14:05:22 -0700 (PDT)
+Received: by mail-ua1-f51.google.com with SMTP id g20so5173104uan.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Aug 2020 14:05:22 -0700 (PDT)
+X-Received: by 2002:a9f:2b89:: with SMTP id y9mr9057188uai.0.1597698321704;
+ Mon, 17 Aug 2020 14:05:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1597402388-14112-13-git-send-email-rohitkr@codeaurora.org>
+References: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 17 Aug 2020 14:05:10 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
+Message-ID: <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
+Subject: Re: [PATCHv2] soc: qcom: llcc: Support chipsets that can write to
+ llcc registers
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 14, 2020 at 04:23:08PM +0530, Rohit kumar wrote:
-> Update lpass-cpu binding with yaml formats.
-> 
-> Signed-off-by: Rohit kumar <rohitkr@codeaurora.org>
+Hi,
+
+On Mon, Aug 17, 2020 at 7:47 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
+>
+> Older chipsets may not be allowed to configure certain LLCC registers
+> as that is handled by the secure side software. However, this is not
+> the case for newer chipsets and they must configure these registers
+> according to the contents of the SCT table, while keeping in mind that
+> older targets may not have these capabilities. So add support to allow
+> such configuration of registers to enable capacity based allocation
+> and power collapse retention for capable chipsets.
+
+I have very little idea about what the above means.  That being said,
+what's broken that this patch fixes?  Please include this in the CL
+description.  It should answer, in the very least, the following two
+questions:
+
+a) Were existing attempts to do capacity based allocation failing, or
+is capacity based allocation a new whizbang feature that a future
+patch will add and you need this one to land first?
+
+b) Why was it bad not to enable power collapse retention?  Was this
+causing things to get corrupted after resume?  Was this causing us to
+fail to suspend?  Were we burning too little power in S3 and the
+battery vendors are looking for an excuse to sell bigger batteries?
+
+I'm not very smart and am also lacking documentation for what the heck
+all this is, so I'm looking for the "why" of your patch.
+
+
+> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
+> (sai: use table instead of dt property and minor commit msg change)
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > ---
->  .../devicetree/bindings/sound/qcom,lpass-cpu.txt   | 130 --------------
->  .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 189 +++++++++++++++++++++
->  2 files changed, 189 insertions(+), 130 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
-> deleted file mode 100644
-> index c07202c..00000000
-> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.txt
-> +++ /dev/null
-> @@ -1,130 +0,0 @@
-> -* Qualcomm Technologies LPASS CPU DAI
-> -
-> -This node models the Qualcomm Technologies Low-Power Audio SubSystem (LPASS).
-> -
-> -Required properties:
-> -
-> -- compatible		: "qcom,lpass-cpu" or "qcom,apq8016-lpass-cpu" or
-> -			  "qcom,sc7180-lpass-cpu"
-> -- clocks		: Must contain an entry for each entry in clock-names.
-> -- clock-names		: A list which must include the following entries:
-> -				* "ahbix-clk"
-> -				* "mi2s-osr-clk"
-> -				* "mi2s-bit-clk"
-> -			: required clocks for "qcom,lpass-cpu-apq8016"
-> -				* "ahbix-clk"
-> -				* "mi2s-bit-clk0"
-> -				* "mi2s-bit-clk1"
-> -				* "mi2s-bit-clk2"
-> -				* "mi2s-bit-clk3"
-> -				* "pcnoc-mport-clk"
-> -				* "pcnoc-sway-clk"
-> -			: required clocks for "qcom,lpass-cpu-sc7180"
-> -				* "audio-core"
-> -				* "mclk0"
-> -				* "mi2s-bit-clk0"
-> -				* "mi2s-bit-clk1"
-> -				* "pcnoc-sway-clk"
-> -				* "pcnoc-mport-clk"
-> -
-> -- interrupts		: Must contain an entry for each entry in
-> -			  interrupt-names.
-> -- interrupt-names	: A list which must include the following entries:
-> -				* "lpass-irq-lpaif"
-> -- pinctrl-N		: One property must exist for each entry in
-> -			  pinctrl-names.  See ../pinctrl/pinctrl-bindings.txt
-> -			  for details of the property values.
-> -- pinctrl-names		: Must contain a "default" entry.
-> -- reg			: Must contain an address for each entry in reg-names.
-> -- reg-names		: A list which must include the following entries:
-> -				* "lpass-lpaif"
-> -- #address-cells	: Must be 1
-> -- #size-cells		: Must be 0
-> -
-> -
-> -
-> -Optional properties:
-> -
-> -- qcom,adsp		: Phandle for the audio DSP node
-> -
-> -By default, the driver uses up to 4 MI2S SD lines, for a total of 8 channels.
-> -The SD lines to use can be configured by adding subnodes for each of the DAIs.
-> -
-> -Required properties for each DAI (represented by a subnode):
-> -- reg			: Must be one of the DAI IDs
-> -			  (usually part of dt-bindings header)
-> -- qcom,playback-sd-lines: List of serial data lines to use for playback
-> -			  Each SD line should be represented by a number from 0-3.
-> -- qcom,capture-sd-lines	: List of serial data lines to use for capture
-> -			  Each SD line should be represented by a number from 0-3.
-> -
-> -Note that adding a subnode changes the default to "no lines configured",
-> -so both playback and capture lines should be configured when a subnode is added.
-> -
-> -Examples:
-> -1)
-> -
-> -lpass@28100000 {
-> -	compatible = "qcom,lpass-cpu";
-> -	clocks = <&lcc AHBIX_CLK>, <&lcc MI2S_OSR_CLK>, <&lcc MI2S_BIT_CLK>;
-> -	clock-names = "ahbix-clk", "mi2s-osr-clk", "mi2s-bit-clk";
-> -	interrupts = <0 85 1>;
-> -	interrupt-names = "lpass-irq-lpaif";
-> -	pinctrl-names = "default", "idle";
-> -	pinctrl-0 = <&mi2s_default>;
-> -	pinctrl-1 = <&mi2s_idle>;
-> -	reg = <0x28100000 0x10000>;
-> -	reg-names = "lpass-lpaif";
-> -	qcom,adsp = <&adsp>;
-> -
-> -	#address-cells = <1>;
-> -	#size-cells = <0>;
-> -
-> -	/* Optional to set different MI2S SD lines */
-> -	dai@3 {
-> -		reg = <MI2S_QUATERNARY>;
-> -		qcom,playback-sd-lines = <0 1>;
-> -	};
-> -};
-> -
-> -2)
-> -
-> -#include <dt-bindings/sound/sc7180-lpass.h>
-> -
-> -lpass_cpu: lpass {
-> -	compatible = "qcom,sc7180-lpass-cpu";
-> -
-> -	reg = <0 0x62F00000 0 0x29000>;
-> -
-> -	iommus = <&apps_smmu 0x1020 0>;
-> -
-> -	power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
-> -	clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
-> -		<&lpasscorecc LPASS_AUDIO_CORE_CORE_CLK>,
-> -		<&lpasscorecc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
-> -		<&lpasscorecc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
-> -		<&lpasscorecc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
-> -		<&lpasscorecc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
-> -	clock-names = "pcnoc-sway-clk", "audio-core",
-> -			"mclk0", "pcnoc-mport-clk",
-> -			"mi2s-bit-clk0", "mi2s-bit-clk1";
-> -	interrupts = <0 160 IRQ_TYPE_LEVEL_HIGH>;
-> -	interrupt-names = "lpass-irq-lpaif";
-> -
-> -
-> -	#sound-dai-cells = <1>;
-> -
-> -	#address-cells = <1>;
-> -	#size-cells = <0>;
-> -
-> -	mi2s-primary@0 {
-> -		reg = <MI2S_PRIMARY>;
-> -		qcom,playback-sd-lines = <1>;
-> -		qcom,capture-sd-lines = <0>;
-> -	};
-> -
-> -	mi2s-secondary@1 {
-> -		reg = <MI2S_SECONDARY>;
-> -		qcom,playback-sd-lines = <0>;
-> -	};
-> -};
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> new file mode 100644
-> index 00000000..09c9bd2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> @@ -0,0 +1,189 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/qcom,lpass-cpu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>
+> Changes in v2:
+>  * Fix build errors reported by kernel test robot.
+>
+> ---
+>  drivers/soc/qcom/llcc-qcom.c | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 429b5a60a1ba..865f607cf502 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -45,6 +45,9 @@
+>  #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
+>  #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
+>
+> +#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21F00
+> +#define LLCC_TRP_PCB_ACT              0x21F04
 > +
-> +title: Qualcomm Technologies Inc. LPASS CPU dai driver bindings
-> +
-> +maintainers:
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> +  - Rohit kumar <rohitkr@codeaurora.org>
-> +
-> +description: |
-> +  Qualcomm Technologies Inc. SOC Low-Power Audio SubSystem (LPASS) that consist
-> +  of MI2S interface for audio data transfer on external codecs. LPASS cpu driver
-> +  is a module to configure Low-Power Audio Interface(LPAIF) core registers
-> +  across different IP versions.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,lpass-cpu
-> +      - qcom,apq8016-lpass-cpu
-> +      - qcom,sc7180-lpass-cpu
-> +
-> +  reg:
-> +    maxItems: 1
-> +    description: LPAIF core registers
-> +
-> +  clocks:
-> +    minItems: 3
-> +    maxItems: 6
-> +
-> +  clock-names:
-> +    minItems: 3
-> +    maxItems: 6
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +    description: LPAIF DMA buffer interrupt
-> +
-> +  qcom,adsp:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: Phandle for the audio DSP node
-> +
-> +  iommus:
-> +    maxItems: 1
-> +    description: Phandle to apps_smmu node with sid mask
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  '#sound-dai-cells':
-> +    const: 1
-> +
-> +  '#address-cells':
-> +    const: 1
-> +
-> +  '#size-cells':
-> +    const: 0
-> +
-> +patternProperties:
-> +  "(^mi2s-[0-9a-f]$|mi2s)":
+>  #define BANK_OFFSET_STRIDE           0x80000
+>
+>  /**
+> @@ -318,6 +321,11 @@ size_t llcc_get_slice_size(struct llcc_slice_desc *desc)
+>  }
+>  EXPORT_SYMBOL_GPL(llcc_get_slice_size);
+>
+> +static const struct of_device_id __maybe_unused qcom_llcc_configure_of_match[] = {
+> +       { .compatible = "qcom,sc7180-llcc" },
+> +       { }
+> +};
 
-This allows '.*mi2s.*' for a node name which is too lax. And since 
-there's a required 'reg' property, the unit-address should always be 
-there.
+Why are you introducing a whole second table?  Shouldn't you just add
+a field to "struct qcom_llcc_config" ?
 
-Looking at this again, the node names shouldn't imply instance 
-information. Just a generic '^dai@[0-9a-f]$' should suffice.
-
-> +    type: object
-> +    description: Required properties for each DAI
-
-'description' should be what the node is, not what the schema has. Plus 
-it is wrong as there's optional properties here too.
 
 > +
-> +    properties:
-> +      reg:
-> +        maxItems: 1
-> +        description: Must be one of the DAI ID
+>  static int qcom_llcc_cfg_program(struct platform_device *pdev)
+>  {
+>         int i;
+> @@ -327,13 +335,17 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
+>         u32 attr0_val;
+>         u32 max_cap_cacheline;
+>         u32 sz;
+> +       u32 disable_cap_alloc = 0, retain_pc = 0;
+
+Don't init to 0.  See below.
+
+
+>         int ret = 0;
+>         const struct llcc_slice_config *llcc_table;
+>         struct llcc_slice_desc desc;
+> +       const struct of_device_id *llcc_configure;
+>
+>         sz = drv_data->cfg_size;
+>         llcc_table = drv_data->cfg;
+>
+> +       llcc_configure = of_match_node(qcom_llcc_configure_of_match, pdev->dev.of_node);
 > +
-> +      qcom,playback-sd-lines:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description: list of MI2S data lines for playback
+
+As per above, just use the existing config.
+
+
+>         for (i = 0; i < sz; i++) {
+>                 attr1_cfg = LLCC_TRP_ATTR1_CFGn(llcc_table[i].slice_id);
+>                 attr0_cfg = LLCC_TRP_ATTR0_CFGn(llcc_table[i].slice_id);
+> @@ -369,6 +381,21 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
+>                                         attr0_val);
+>                 if (ret)
+>                         return ret;
 > +
-> +      qcom,capture-sd-lines:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description: list of MI2S data lines for capture
+> +               if (llcc_configure) {
+> +                       disable_cap_alloc |= llcc_table[i].dis_cap_alloc << llcc_table[i].slice_id;
+
+Don't "|=".  You're the only place touching this variable.  Just set it.
+
+
+> +                       ret = regmap_write(drv_data->bcast_regmap,
+> +                                               LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
+> +                       if (ret)
+> +                               return ret;
 > +
-> +    required:
-> +      - reg
-> +
-> +    additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - '#sound-dai-cells'
-> +
-> +additionalProperties: false
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,lpass-cpu
-> +
-> +    then:
-> +      properties:
-> +        clock-names:
-> +          items:
-> +            - const: ahbix-clk
-> +            - const: mi2s-osr-clk
-> +            - const: mi2s-bit-clk
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,apq8016-lpass-cpu
-> +
-> +    then:
-> +      properties:
-> +        clock-names:
-> +          items:
-> +            - const: ahbix-clk
-> +            - const: mi2s-bit-clk0
-> +            - const: mi2s-bit-clk1
-> +            - const: mi2s-bit-clk2
-> +            - const: mi2s-bit-clk3
-> +            - const: pcnoc-mport-clk
-> +            - const: pcnoc-sway-clk
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,sc7180-lpass-cpu
-> +
-> +    then:
-> +      properties:
-> +        clock-names:
-> +          items:
-> +            - const: pcnoc-sway-clk
-> +            - const: audio-core
-> +            - const: mclk0
-> +            - const: pcnoc-mport-clk
-> +            - const: mi2s-bit-clk0
-> +            - const: mi2s-bit-clk1
-> +      required:
-> +        - iommus
-> +        - power-domains
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/sound/sc7180-lpass.h>
-> +
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +        lpass@62f00000 {
-> +            compatible = "qcom,sc7180-lpass-cpu";
-> +
-> +            reg = <0 0x62f00000  0 0x29000>;
-> +
-> +            iommus = <&apps_smmu 0x1020 0>;
-> +            power-domains = <&lpass_hm 0>;
-> +
-> +            clocks = <&gcc 131>,
-> +                 <&lpasscorecc 6>,
-> +                 <&lpasscorecc 7>,
-> +                 <&lpasscorecc 10>,
-> +                 <&lpasscorecc 8>,
-> +                 <&lpasscorecc 9>;
-> +
-> +            clock-names = "pcnoc-sway-clk", "audio-core",
-> +                          "mclk0", "pcnoc-mport-clk",
-> +                          "mi2s-bit-clk0", "mi2s-bit-clk1";
-> +
-> +            interrupts = <0 160 1>;
-> +
-> +            #sound-dai-cells = <1>;
-> +
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +            /* Optional to set different MI2S SD lines */
-> +            mi2s-primary@0 {
-> +                reg = <MI2S_PRIMARY>;
-> +                qcom,playback-sd-lines = <1>;
-> +                qcom,capture-sd-lines = <0>;
-> +            };
-> +        };
-> +    };
-> +
-> +...
-> -- 
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+> +                       retain_pc |= llcc_table[i].retain_on_pc << llcc_table[i].slice_id;
+
+Don't "|=".  You're the only place touching this variable.  Just set it.
+
+
+-Doug
