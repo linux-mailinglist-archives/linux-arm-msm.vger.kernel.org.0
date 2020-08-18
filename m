@@ -2,146 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 537F22490AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 00:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4EC424914C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 01:01:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726766AbgHRWS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 18:18:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51668 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726539AbgHRWS1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 18:18:27 -0400
-Received: from coco.lan (ip5f5ad5a3.dynamic.kabel-deutschland.de [95.90.213.163])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727013AbgHRXBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 19:01:18 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:12217 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726799AbgHRXBR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 19:01:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597791677; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=q6lRhjA9zeB4fTgQes9XK0LoNkoG62IeMO8jAUu+N58=;
+ b=hSD/A6sWW4dwnxgr8zTOwQK/vdt957JOxZeR0r63OOwKhEa0TZYA3lXIik0YRAB0uXDX8eC3
+ rdNYUD9FTKfFu2l7tw+7TYOd2ThQqw3ZmPkLkj8bRzN9QrlGBSWC5wQb5hxxDfoQKSSyE2lk
+ d3aWugH2MVUIyJrQHoPPR5ze+eA=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f3c5daecbcd42bdee568661 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 18 Aug 2020 23:01:02
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AA9ACC4339C; Tue, 18 Aug 2020 23:01:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 69AA320786;
-        Tue, 18 Aug 2020 22:18:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597789106;
-        bh=QKSZI3J3mW0bAKJWZPuqJejya5eWTjv/sou73dl/S+4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=v8SmAx6Dcfc89wEfDqt1kmeDO4WnuQLkRXFolTVKDYa8EI7+hfFnddkn/T9/J3ciC
-         mD5HXDEjvbbh2RWPfz3lviIg/jsPYV6/O0/IJxHCyCL5+4AxUbtCxdIY7hvpMTQpnG
-         YWQCfK9FufDmA68sG1fNEnq/PqND+xOHu5ujf7a8=
-Date:   Wed, 19 Aug 2020 00:18:21 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 43/44] dt: document HiSilicon SPMI controller and
- mfd/regulator properties
-Message-ID: <20200819001821.651a7dcd@coco.lan>
-In-Reply-To: <20200818170755.GA3603438@bogus>
-References: <cover.1597647359.git.mchehab+huawei@kernel.org>
-        <2f88fed96d67b05fc033356fdbb7e3227955ab34.1597647359.git.mchehab+huawei@kernel.org>
-        <20200817201211.GA1437827@bogus>
-        <20200818111351.7e3fc780@coco.lan>
-        <20200818170755.GA3603438@bogus>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EE0FC433C6;
+        Tue, 18 Aug 2020 23:00:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Tue, 18 Aug 2020 16:00:59 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, tanmay@codeaurora.org,
+        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Guenter Roeck <groeck@chromium.org>
+Subject: Re: [PATCH v3] drm/msm/dp: Add DP compliance tests on Snapdragon
+ Chipsets
+In-Reply-To: <159778797494.334488.5009772006048435758@swboyd.mtv.corp.google.com>
+References: <20200818211546.559-1-khsieh@codeaurora.org>
+ <159778797494.334488.5009772006048435758@swboyd.mtv.corp.google.com>
+Message-ID: <ee1ad6b96a0d8be83abda0cb1b3ebc59@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Tue, 18 Aug 2020 11:07:55 -0600
-Rob Herring <robh@kernel.org> escreveu:
-
-> > > > +  spmi-channel:
-> > > > +    description: number of the SPMI channel where the PMIC is connected    
-> > > 
-> > > This looks like a common (to SPMI), but it's not something defined in 
-> > > spmi.txt   
-> > 
-> > This one is not part of the SPMI core. It is stored inside a private 
-> > structure inside at the HiSilicon spmi controller driver. It is stored 
-> > there as ctrl_dev->channel, and it is used to calculate the register offset
-> > for readl():
-> > 
-> > 	offset  = SPMI_APB_SPMI_STATUS_BASE_ADDR;
-> > 	offset += SPMI_CHANNEL_OFFSET * ctrl_dev->channel + SPMI_SLAVE_OFFSET * sid;
-> > 	do {
-> > 		status = readl(base + offset);
-> > 	...
-> > 
-> > The SPMI bus is somewhat similar to I2C: it is a 2-wire serial bus
-> > with up to 16 devices connected to it.
-> > 
-> > Now, most modern I2C chipsets provide multiple independent I2C
-> > channels, on different pins. Also, on some chipsets, certain
-> > GPIO pins can be used either as GPIO or as I2C.
-> > 
-> > I strongly suspect that this is the case here: according with
-> > the Hikey 970 schematics:
-> > 
-> > 	https://www.96boards.org/documentation/consumer/hikey/hikey970/hardware-docs/files/hikey970-schematics.pdf
-> > 
-> > The pins used by SPMI clock/data can also be used as GPIO.
-> > 
-> > While I don't have access to the datasheets for Kirin 970 (or any other
-> > chipsets on this board), for me, it sounds that different GPIO pins
-> > are allowed to use SPMI. The "spmi-channel" property specifies
-> > what pins will be used for SPMI, among the ones that are
-> > compatible with MIPI SPMI specs.  
+On 2020-08-18 14:59, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2020-08-18 14:15:46)
+>> add event thread to execute events serially from event queue. Also
+>> timeout mode is supported  which allow an event be deferred to be
+>> executed at later time. Both link and phy compliant tests had been
+>> done successfully.
+>> 
+>> Changes in v2:
+>> - Fix potential deadlock by removing redundant connect_mutex
+>> - Check and enable link clock during modeset
+>> - Drop unused code and fix function prototypes.
+>> - set sink power to normal operation state (D0) before DPCD read
+>> 
+>> Changes in v3:
+>> - push idle pattern at main link before timing generator off
+>> - add timeout handles for both connect and disconnect
+>> 
+>> This patch depends-on following series:
+>> https://lkml.kernel.org/lkml/20200812044223.19279-1-tanmay@codeaurora.org/t.atom
 > 
-> Based on this, I think it should be called 'hisilicon,spmi-channel' as 
-> it is vendor specific. 
-
-I'm fine with "hisilicon,spmi-channel".
-
-> > > > +
-> > > > +          vsel-reg:
-> > > > +            description: Voltage selector register.    
-> > > 
-> > > 'reg' can have multiple entries if you want.  
-> > 
-> > Yes, I know. I was in doubt if I should either place vsel-reg on
-> > a separate property or together with reg. I ended keeping it
-> > in separate on the submitted patch series.
-> > 
-> > What makes more sense?  
+> There's a v11 of this series. Can you rebase again?
 > 
-> Really, not putting it in DT. Like other things, it's fixed for the 
-> chip.
-
-I agree, but, as I said before, without the datasheet, we can only
-hardcode a small subset of the LDO settings.
-
-Due to that, I prefer keeping it at DT - either grouped together at "reg" or 
-as two separated properties (reg and vsel-reg).
-
-> > > > +description: |
-> > > > +  The HiSilicon SPMI controller is found on some Kirin-based designs.
-> > > > +  It is a MIPI System Power Management (SPMI) controller.
-> > > > +
-> > > > +  The PMIC part is provided by
-> > > > +  Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml.
-> > > > +
-> > > > +properties:
-> > > > +  $nodename:
-> > > > +    pattern: "spmi@[0-9a-f]"
-> > > > +
-> > > > +  compatible:
-> > > > +    const: hisilicon,spmi-controller    
-> > > 
-> > > Needs an SoC specific compatible.  
-> > 
-> > What about:
-> > 	hisilicon,kirin970-spmi-controller   
+>> 
+>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> Signed-off-by: Guenter Roeck <groeck@chromium.org>
+>> Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
 > 
-> Is 'kirin970' really the SoC name? The older ones are all 'hi[0-9]+'.
-
-This SoC is named Kirin 970. Yet, you can see places where 3670 is
-used, like:
-
-	https://en.wikichip.org/wiki/hisilicon/kirin/970
-
-There, it says that Hi3670 is the part number.
-
-Thanks,
-Mauro
+> And fix this SoB chain to be proper with Co-developed-by tags and your
+> tag coming last as you're the sender of the patch.
+Tanmay and Guenter signed-off were added by mistake. I will remove them
