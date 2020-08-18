@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3CDB248B09
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 18:06:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0219248B0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 18:06:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726870AbgHRQG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 12:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39022 "EHLO
+        id S1726894AbgHRQGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 12:06:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726697AbgHRQGT (ORCPT
+        with ESMTP id S1726810AbgHRQGX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 12:06:19 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C15AC061343
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 09:06:19 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id p4so18761458qkf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 09:06:19 -0700 (PDT)
+        Tue, 18 Aug 2020 12:06:23 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA89C061348
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 09:06:22 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id i20so4505252qkk.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 09:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xb6+E88tPfrh7pXAb8/QpJmE56xGtpeHAmtdqNrSre8=;
-        b=iFWIrMUj1y8bl5vDvdxItFMkHBHiLl3hFAn4vTP5yUsEd5zLRXmh+2g+omU4U+PsKd
-         ee99TzJ1jI8wfz8gbK+n8amNNPa4BM4m25x5SEMFB8s6k+KAEEqLm2kpfBuz6v0Z1igh
-         JUNdY0Ls0lIakRjtBkbWpyNk3UhMy6iosG8ZRdlpLla/8eHCOGJ5MlmVgCFXKXicM79B
-         nZ37CP3fQjmGvzVhCh0J4kMhtWq03CzOGKXhL0rqxIZh7r23FxTc4E4scARgIXDjIEBG
-         0vZKTD60YSzvm4udK3cS4jsEKDaLMItlBQOXx5NupganU2WohItyk+nDZSoJ3ex9hqPg
-         L0ig==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=67bzRpoZHKJN4TvGSl4PLgugaZtDFxIwY3BiNLQUAXw=;
+        b=ysnKismirQG3Tn/AWM5af8ZsuO66oyYjlC/XxOVL660MqjUFVAcXSzK/8QG+8pmW5p
+         VvxFtplJo/hpwUz7BNvpln85+THAg+OSXp3do0b98244SkuJdR6JWAQ0D/fIQ3t1boq/
+         pS32ajeF8bnUiuuL5G4Czk80Lfw+/9RW1hxpyN9ZriTGIlzPuftRUh7lf5j+V02r8lTk
+         3QyTiDTdlzXG8hRUZnwvPmqHGsdQIfsAPOZ7bBQr8UjU60NQcaQ7dFw1jbTvoVLysE1k
+         kOjD84peUIoX90nR/xEkMuF41sqlrjtXmIFS9fszVPPBgzy+04NEn222ksRXSEBjyFKe
+         bL8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xb6+E88tPfrh7pXAb8/QpJmE56xGtpeHAmtdqNrSre8=;
-        b=V2COJ4P4TaNfgIiNFRyamzXFXN8B8kcUodFGR/puKGkeHZOH6oPjsWpJTzmdkt/XCo
-         hn4Wvsi4VlbVJjMc/DBvk1a1KIwGac/+VwaxDAFJXk2ZY4LfBsQ9Dxr7Pd05fWdnd4+z
-         OQ1m/kF+DhqG5vBjsLHy0axLvqdgnmLHjJ58+q9wnl325XgsInaWLT8R61PEM3FA1WFy
-         bJ9YLAqoz7QpumuDQxk83Ovh9JlLphEi86KFiXuuG5+AgMRO34Q18RWGML4czgw114/a
-         y/K4Mi0n/O4oy7oOLAhHGF3Un/rkS3/U02WhXjA20zYguAzTMwKW9o/Y0bMLgz1rD/Vf
-         jF0w==
-X-Gm-Message-State: AOAM532GGeCa6rU5plt8TFMc4JGaD3Wg5KrK/GK3EtcaYXTKOwlDTT15
-        m4AKooFd2ZaoOOvRBtK3SkQdRvDqafu5oeN4
-X-Google-Smtp-Source: ABdhPJxRl+Vb8fTDjmbgOzk/DiCo6S63qpktDOPwsZIZMqiBL4j0ZZXaQ/Yn6ZwA2oXdSmuZOAKRew==
-X-Received: by 2002:a37:6644:: with SMTP id a65mr17827907qkc.4.1597766778037;
-        Tue, 18 Aug 2020 09:06:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=67bzRpoZHKJN4TvGSl4PLgugaZtDFxIwY3BiNLQUAXw=;
+        b=Ika0v+9zJXWXqRGK2ql4hvfL1qT1GYzaFaCp9tA81NrUW6n8piL8B+//DBRtxLMqTO
+         mtgLmRqjOAT3B4BH6gWa4/74b6lXLUiu1jOdKk3vEos1ws/QBbojEgMCixnTu3jALQFt
+         duTjbnX2PCTB96Mec40ZLRxf5v9H6RJrdA6OiVwE+Wu1YbkwkkPP5bQKfXbJ3pWsgkDz
+         41qkGLrPIX446wxVWcWi20eHHGZnIah0sqGac/5luUX8kDtzTPQqemXKn9PFBXPrh9Ik
+         OwoUlshwQc78Flu6GPembRsFHaC9OUWFV15ZRWvrf2A581XKGkPL+5ExzFA53CkW8CdV
+         XPHg==
+X-Gm-Message-State: AOAM533fjez6IM3IZco7b/Rmlac4h/en4A8iEST7pG0R5oCIuM227g/e
+        PYSekb1HxZP9iSwaY+14g++8zOIXO1jgG9Xa
+X-Google-Smtp-Source: ABdhPJz6YaHblVdUsO+t038UhP2eYwsT5GekIzGt1V1IH1hyXGi171nMB5ywW0xqb0tN9HseqE1rrQ==
+X-Received: by 2002:a05:620a:22f3:: with SMTP id p19mr17419632qki.116.1597766779360;
+        Tue, 18 Aug 2020 09:06:19 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id 128sm21198034qkk.101.2020.08.18.09.06.16
+        by smtp.gmail.com with ESMTPSA id 128sm21198034qkk.101.2020.08.18.09.06.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 09:06:17 -0700 (PDT)
+        Tue, 18 Aug 2020 09:06:18 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        Jack Pham <jackp@codeaurora.org>,
         devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
         DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/3] arm64: dts: qcom: sm8150: fix up primary USB nodes
-Date:   Tue, 18 Aug 2020 12:04:43 -0400
-Message-Id: <20200818160445.14008-1-jonathan@marek.ca>
+Subject: [PATCH 2/3] arm64: dts: qcom: use sm8150 gpucc dt-bindings
+Date:   Tue, 18 Aug 2020 12:04:44 -0400
+Message-Id: <20200818160445.14008-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20200818160445.14008-1-jonathan@marek.ca>
+References: <20200818160445.14008-1-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -69,39 +68,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The compatible for hsphy has out of place indentation, and the assigned
-clock rate for GCC_USB30_PRIM_MASTER_CLK is incorrect, the clock doesn't
-support a rate of 150000000. Use a rate of 200000000 to match downstream.
-
-Fixes: b33d2868e8d3 ("arm64: dts: qcom: sm8150: Add USB and PHY device nodes")
+Constants were used to allow merging separately from the dt-bindings,
+switch to symbolic names now that dt-bindings have landed.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index b86a7ead3006..ab8680c6672e 100644
+index ab8680c6672e..62d49e81483e 100644
 --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -767,7 +767,7 @@ glink-edge {
+@@ -10,6 +10,7 @@
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,gcc-sm8150.h>
++#include <dt-bindings/clock/qcom,gpucc-sm8150.h>
+ #include <dt-bindings/thermal/thermal.h>
  
- 		usb_1_hsphy: phy@88e2000 {
- 			compatible = "qcom,sm8150-usb-hs-phy",
--							"qcom,usb-snps-hs-7nm-phy";
-+				     "qcom,usb-snps-hs-7nm-phy";
- 			reg = <0 0x088e2000 0 0x400>;
- 			status = "disabled";
- 			#phy-cells = <0>;
-@@ -833,7 +833,7 @@ usb_1: usb@a6f8800 {
+ / {
+@@ -621,15 +622,15 @@ gmu: gmu@2c6a000 {
+ 				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "hfi", "gmu";
  
- 			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
--			assigned-clock-rates = <19200000>, <150000000>;
-+			assigned-clock-rates = <19200000>, <200000000>;
+-			clocks = <&gpucc 0>,
+-				 <&gpucc 3>,
+-				 <&gpucc 6>,
++			clocks = <&gpucc GPU_CC_AHB_CLK>,
++				 <&gpucc GPU_CC_CX_GMU_CLK>,
++				 <&gpucc GPU_CC_CXO_CLK>,
+ 				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+ 				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>;
+ 			clock-names = "ahb", "gmu", "cxo", "axi", "memnoc";
  
- 			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+-			power-domains = <&gpucc 0>,
+-					<&gpucc 1>;
++			power-domains = <&gpucc GPU_CX_GDSC>,
++					<&gpucc GPU_GX_GDSC>;
+ 			power-domain-names = "cx", "gx";
+ 
+ 			iommus = <&adreno_smmu 5 0x400>;
+@@ -674,12 +675,12 @@ adreno_smmu: iommu@2ca0000 {
+ 				<GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
+ 				<GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&gpucc 0>,
++			clocks = <&gpucc GPU_CC_AHB_CLK>,
+ 				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+ 				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>;
+ 			clock-names = "ahb", "bus", "iface";
+ 
+-			power-domains = <&gpucc 0>;
++			power-domains = <&gpucc GPU_CX_GDSC>;
+ 		};
+ 
+ 		tlmm: pinctrl@3100000 {
 -- 
 2.26.1
 
