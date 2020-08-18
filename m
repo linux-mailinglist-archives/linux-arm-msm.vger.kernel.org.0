@@ -2,81 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 645EB248780
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 16:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC5772487E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 16:40:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbgHRO22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 10:28:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44032 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726660AbgHRO21 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:28:27 -0400
-Received: from coco.lan (ip5f5ad5a3.dynamic.kabel-deutschland.de [95.90.213.163])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 6A1CD207D3;
-        Tue, 18 Aug 2020 14:28:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597760906;
-        bh=TyjAOtFLUcdkHJqVznsWOj1rsY2m5SGYugIkegCaavY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=bxizRbar0YqT2TrzigWWLFiyjHd8OrzPxdbiHrSL99ATPBIiho1ScQAO7glgsBm1d
-         CbqL8TXLmE9kPn/MY2ElMs8rz7fnLBvYK+P6j8yH2z/fv3Q506iLRcxsBsCOKM8oYr
-         TVBv9HaIJ85o0Un2VIykpVXUobCuAXfcoKVL/ss4=
-Date:   Tue, 18 Aug 2020 16:28:20 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     devel@driverdev.osuosl.org, devicetree@vger.kernel.org,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linuxarm@huawei.com, Wei Xu <xuwei5@hisilicon.com>,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, mauro.chehab@huawei.com,
-        Lee Jones <lee.jones@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v3 00/44] SPMI patches needed by Hikey 970
-Message-ID: <20200818162820.3c78c33c@coco.lan>
-In-Reply-To: <20200818141750.GA608639@kroah.com>
-References: <cover.1597647359.git.mchehab+huawei@kernel.org>
-        <20200818141750.GA608639@kroah.com>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        id S1726904AbgHROkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 10:40:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53710 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726585AbgHROkv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:40:51 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACD6C061389;
+        Tue, 18 Aug 2020 07:40:50 -0700 (PDT)
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1597761647;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=0c8j2FthIkH4rrs8WcTM9vpYXGsDLHIU2UqecOW6mFE=;
+        b=knmA7lev6zSXT2tMoQLvwdMcQzHtr7/8Cbb+IpJ1jW9bmVEmKHD3zJOWrmyCLXxzhfG4Tf
+        /bT/nJbCJ2g0vK2PCHxd9akVZRCf4/MZfrSLoFK451miG5SvH4BhJOuvCswIKul+tv+vKJ
+        JlZRCs7h0QKSz4Yz/g6ERdmpO3wlyiOd5XgXq45OokjavULsLFusOATLqfELp4FDRV4EHd
+        nyo78KeLSKq6TEfzDC0/PgLLxgTOqJ3CGKjYBKJk34xPFYtG1RU7DuLZdzBG3PP6cXSeAL
+        Q/ii9hEtu+kb6MmPks3D+imw018GftXrPHHLtbot6l51faGyZG5wytXm1YBklQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1597761647;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=0c8j2FthIkH4rrs8WcTM9vpYXGsDLHIU2UqecOW6mFE=;
+        b=hZC+iwiwb00r/MLzg2/nELa7fQVMZbtNy51g4o+TzG2x4Nx1/t4Fi4hJ04GfIMIUbdrup2
+        w1yTAUNrmLRDX+CA==
+To:     Maulik Shah <mkshah@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        LinusW <linus.walleij@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Srinivas Rao L <lsrao@codeaurora.org>
+Subject: Re: [PATCH v4 3/7] genirq: Introduce irq_suspend_one() and irq_resume_one() callbacks
+In-Reply-To: <74998fe6-761e-7375-c9ab-5c76d3044adf@codeaurora.org>
+References: <1597058460-16211-1-git-send-email-mkshah@codeaurora.org> <1597058460-16211-4-git-send-email-mkshah@codeaurora.org> <87pn7ulwr5.fsf@nanos.tec.linutronix.de> <CAD=FV=WN4R1tS47ZzdZa_hsbvLifwnv6rgETVaiea0+QSZmiOw@mail.gmail.com> <878sei42ql.fsf@nanos.tec.linutronix.de> <CAD=FV=Wyp8B6183avk4on4Akz6dANkuJ25h_o_ERDuiZ87mwNw@mail.gmail.com> <74998fe6-761e-7375-c9ab-5c76d3044adf@codeaurora.org>
+Date:   Tue, 18 Aug 2020 16:40:46 +0200
+Message-ID: <87r1s4hv9t.fsf@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Tue, 18 Aug 2020 16:17:50 +0200
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> escreveu:
+Maulik,
 
-> On Mon, Aug 17, 2020 at 09:10:19AM +0200, Mauro Carvalho Chehab wrote:
-> > Hi Greg,
-> > 
-> > This patch series is part of a work I'm doing in order to be able to support
-> > a HiKey 970 board that I recently got on my hands.  
-> 
-> With this applied, I get the following build error:
-> ERROR: modpost: "__spmi_driver_register" [drivers/staging/hikey9xx/hi6421-spmi-pmic.ko] undefined!
-> ERROR: modpost: "spmi_ext_register_writel" [drivers/staging/hikey9xx/hi6421-spmi-pmic.ko] undefined!
-> ERROR: modpost: "spmi_ext_register_readl" [drivers/staging/hikey9xx/hi6421-spmi-pmic.ko] undefined!
-> ERROR: modpost: "spmi_controller_add" [drivers/staging/hikey9xx/hisi-spmi-controller.ko] undefined!
-> ERROR: modpost: "spmi_controller_alloc" [drivers/staging/hikey9xx/hisi-spmi-controller.ko] undefined!
-> ERROR: modpost: "spmi_controller_remove" [drivers/staging/hikey9xx/hisi-spmi-controller.ko] undefined!
-> 
-> 
-> I'll take this in my testing tree for now, can you send a follow-on
-> patch to fix this?
+On Tue, Aug 18 2020 at 10:05, Maulik Shah wrote:
+> On 8/14/2020 4:28 AM, Doug Anderson wrote:
+>> On Thu, Aug 13, 2020 at 3:09 PM Thomas Gleixner <tglx@linutronix.de> wro=
+te:
+>
+> +               if (chip->flags & IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND)
+> +                       unmask_irq(desc);
+>
+> I tried this patch and it didnot work as is.
+>
+> Calling unmask_irq() only invoke's chip's .irq_unmask callback but the=20
+> underlying irq_chip have .irq_enable also present.
+>
+> Replacing the call with irq_enable() internally takes care of either=20
+> invoking chip's .irq_enable (if its present) else it invokes unmask_irq().
+>
+> +
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 if (chip->flags & IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_enable(des=
+c);
+>
+> probably IRQCHIP_UNMASK_WAKEUP_ON_SUSPEND should also be renamed to=20
+> IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND.
 
-Surely. That's because it got moved from drivers/spmi/Kconfig.
-The Kconfig var was inside a:
-
-if SPMI
-...
-endif
-
-This driver should "depends on SPMI". I'll send you a patch in a few.
+Makes sense and also works when the interrupt is already enabled.
 
 Thanks,
-Mauro
+
+        tglx
+
+
+
