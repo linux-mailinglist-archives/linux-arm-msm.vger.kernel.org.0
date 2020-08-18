@@ -2,158 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF036248BA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 18:30:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 382F2248C0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 18:54:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726759AbgHRQah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 12:30:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42884 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726676AbgHRQac (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 12:30:32 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD02C061389;
-        Tue, 18 Aug 2020 09:30:32 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id k13so9439541plk.13;
-        Tue, 18 Aug 2020 09:30:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uYxuSXULk2GwrV5tHUS7tlUyDew6i48Gt8hPnnZN84g=;
-        b=jlUvltomcG5Fs1zTsYqZ4MPlEO7mi885cnLyByLOf/phVAxDxC/U7iZvM77jJsGEon
-         BSB92p/40B+ItljjVLLfyC22l7nQGtkrG1fY4SSNZ6/h6lXzRO0A55vLcLqJAschsIAk
-         rWMmS6jskMc8PRfm2Fdc3eM+SAw68d28J38L9Mq22289DScuXoqjQEY2HPybucWrJNpb
-         eo95W8tP05JxIplOkGywaw3NvV5jayRJtLaVFtxS+Vj2rgkMvIUxwvCO4VGph/FYgCS1
-         U7tsrS0QrTXU0VV2fTmqNDJD97o2IIVqob3Mg9fq1BycbARA8d5fMoUbixGGQ5Wi/5WP
-         L7GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uYxuSXULk2GwrV5tHUS7tlUyDew6i48Gt8hPnnZN84g=;
-        b=Rd7CmLlekFCbPaIAHpIbinvxg9+w39odLLtLCOaI54EnzaXpY22JuNNyDZWfD0IYU6
-         BWl4e9bl2W+VbYbFtVtZAtOVUxsTgEGzT6kcQukfAQ6WIYjDgvjETdg2V9zqQiNhpuZD
-         e+pga/gMhuGRD9QmYNF27nO4zqZyclTcLNINlTGeSpaUxO6mszGvDiGiUHrHunQRT0gC
-         +w+uRaUD24Ow4MJpKeQadXP7KtGZsiijcmfqZoyXIv7VAWgCw/W4DyEEpT1W0u9iW+cn
-         f0qIcixEwYJR6AVGgxVzWMCH12YzwA9AOPe4fgTWz9UYzrUFdndC2sD07aj6chtu4VuD
-         zUYw==
-X-Gm-Message-State: AOAM53174wKaYCGQm0wVWefPXXJu9YZg5tE/ZIR+h0JI1WUZAYSgGgqI
-        7+GTwc4sJC2p/ALC/IEMH1o=
-X-Google-Smtp-Source: ABdhPJwGwtmXC5WmDnnwZPtj1PesksPhW1Ru5oVRk3RWoVgwq9xKWge/sunWKKolPUaWZ9nAMKTCQg==
-X-Received: by 2002:a17:90a:d70c:: with SMTP id y12mr621940pju.31.1597768231683;
-        Tue, 18 Aug 2020 09:30:31 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id g2sm374594pju.23.2020.08.18.09.30.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 09:30:30 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: enable vblank during atomic commits
-Date:   Tue, 18 Aug 2020 09:31:19 -0700
-Message-Id: <20200818163119.715410-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1728220AbgHRQyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 12:54:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34662 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726840AbgHRQyP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 12:54:15 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7C48A20786;
+        Tue, 18 Aug 2020 16:54:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597769650;
+        bh=PxM9+n8vVIqpRf0jfe4HVoCR3Hxu6WufuYAJnUBROT4=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=gUYGs4eMGo9kZaPbLsgoa9Ac73rnnbET5oal91nJ1x5zii7YwFryJq3BN3ZcuMXb4
+         +7MkNCsRLfFlMxKfJH0UR+bn9MXQ798+2obQ7OurbpMjqL7fO4qZuA+LxcrD+EYFGU
+         VqKfIY1uCkI02fGwhtF1gilroLiY3RAY5aRrR29U=
+Date:   Tue, 18 Aug 2020 17:53:39 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     devicetree@vger.kernel.org, robh+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com,
+        plai@codeaurora.org, Rohit kumar <rohitkr@codeaurora.org>,
+        lgirdwood@gmail.com, linux-kernel@vger.kernel.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, perex@perex.cz
+In-Reply-To: <1597402388-14112-1-git-send-email-rohitkr@codeaurora.org>
+References: <1597402388-14112-1-git-send-email-rohitkr@codeaurora.org>
+Subject: Re: [PATCH v6 00/12] ASoC: qcom: Add support for SC7180 lpass variant
+Message-Id: <159776961933.56094.17007093151985279828.b4-ty@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Fri, 14 Aug 2020 16:22:56 +0530, Rohit kumar wrote:
+> This patch chain add audio support for SC7180 soc by doing the required
+> modification in existing common lpass-cpu/lpass-platform driver.
+> This also fixes some concurrency issue.
+> 
+> This patch series is already tested by Srinivas on Dragon Board 410c.
+> Changes since v5:
+>         - Fixed remove api in lpass-sc7180.c
+>         - Addressed comments by Rob in yaml Documentation.
+> 
+> [...]
 
-This has roughly the same effect as drm_atomic_helper_wait_for_vblanks(),
-basically just ensuring that vblank accounting is enabled so that we get
-valid timestamp/seqn on pageflip events.
+Applied to
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_atomic.c | 36 ++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 5ccfad794c6a..561bfa48841c 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -27,6 +27,34 @@ int msm_atomic_prepare_fb(struct drm_plane *plane,
- 	return msm_framebuffer_prepare(new_state->fb, kms->aspace);
- }
- 
-+/*
-+ * Helpers to control vblanks while we flush.. basically just to ensure
-+ * that vblank accounting is switched on, so we get valid seqn/timestamp
-+ * on pageflip events (if requested)
-+ */
-+
-+static void vblank_get(struct msm_kms *kms, unsigned crtc_mask)
-+{
-+	struct drm_crtc *crtc;
-+
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask) {
-+		if (!crtc->state->active)
-+			continue;
-+		drm_crtc_vblank_get(crtc);
-+	}
-+}
-+
-+static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
-+{
-+	struct drm_crtc *crtc;
-+
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask) {
-+		if (!crtc->state->active)
-+			continue;
-+		drm_crtc_vblank_put(crtc);
-+	}
-+}
-+
- static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- {
- 	unsigned crtc_mask = BIT(crtc_idx);
-@@ -44,6 +72,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- 
- 	kms->funcs->enable_commit(kms);
- 
-+	vblank_get(kms, crtc_mask);
-+
- 	/*
- 	 * Flush hardware updates:
- 	 */
-@@ -58,6 +88,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- 	kms->funcs->wait_flush(kms, crtc_mask);
- 	trace_msm_atomic_wait_flush_finish(crtc_mask);
- 
-+	vblank_put(kms, crtc_mask);
-+
- 	mutex_lock(&kms->commit_lock);
- 	kms->funcs->complete_commit(kms, crtc_mask);
- 	mutex_unlock(&kms->commit_lock);
-@@ -221,6 +253,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	 */
- 	kms->pending_crtc_mask &= ~crtc_mask;
- 
-+	vblank_get(kms, crtc_mask);
-+
- 	/*
- 	 * Flush hardware updates:
- 	 */
-@@ -235,6 +269,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	kms->funcs->wait_flush(kms, crtc_mask);
- 	trace_msm_atomic_wait_flush_finish(crtc_mask);
- 
-+	vblank_put(kms, crtc_mask);
-+
- 	mutex_lock(&kms->commit_lock);
- 	kms->funcs->complete_commit(kms, crtc_mask);
- 	mutex_unlock(&kms->commit_lock);
--- 
-2.26.2
+Thanks!
 
+[01/12] ASoC: qcom: Add common array to initialize soc based core clocks
+        commit: 1220f6a76e77af8ac14fe67a11fcd7806764ea46
+[02/12] ASoC: qcom: lpass-cpu: Move ahbix clk to platform specific function
+        commit: a503567d70eca91796a4ab23053d4c70df8e1e3e
+[03/12] ASoC: qcom: lpass-platform: Replace card->dev with component->dev
+        commit: 784771863abae5f8878c62e9c624111c51bebe7c
+[04/12] ASoC: qcom: lpass-platform: fix memory leak
+        commit: 5fd188215d4eb52703600d8986b22311099a5940
+[05/12] ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers
+        commit: b5022a36d28f6a99c1a57f54246e8b566cf094d5
+[06/12] ASoC: qcom: lpass-cpu: fix concurrency issue
+        commit: 753a6e17942f6f425ca622e1610625998312ad89
+[07/12] ASoC: Add sc7180 lpass cpu node
+        commit: 2a7a3797ed2de6a55e1467bd11002fa7b13e12f3
+[08/12] ASoC: Add sc7180-lpass bindings header
+        commit: 68d8904b25df28821425753eaebc8fe992dde236
+[09/12] ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio
+        commit: 24caf8d9eb108c52e144bcc7af94bb1edcb70700
+[10/12] ASoC: qcom: lpass-cpu: Use platform_get_resource
+        commit: 93dbbd657167a796583506834cc03950ce25bce1
+[11/12] ASoC: qcom: lpass-platform: Use platform_get_irq
+        commit: b05372c84d61ad2a905274db7e3d63a65c835463
+[12/12] ASoC: lpass-cpu: Move to yaml format
+        commit: 4b381d7e86fd0b767456e07c49982fb4896e1166
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
