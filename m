@@ -2,692 +2,349 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1381248192
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 11:13:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 581E62481CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 11:20:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726043AbgHRJN7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 05:13:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57610 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726145AbgHRJN6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 05:13:58 -0400
-Received: from coco.lan (ip5f5ad5a3.dynamic.kabel-deutschland.de [95.90.213.163])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726483AbgHRJUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 05:20:36 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:53802 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726480AbgHRJUe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 05:20:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1597742431;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:in-reply-to:in-reply-to:references:references;
+        bh=xSCOP8wykTX8rw1Lrf0j5AZQYJ2Q0tirGIG9eXW9mxE=;
+        b=DtYCaISQ224Xmc1oQERrzxuXCWgq+x/CgRHEdn2ro1C53iimTqpmjybmYRLFqWnV8PoUJf
+        jt8nHNmV+DuU1DVdvuzXLDVMYlnlM84zbq74RAEMrV2MLKXI4Mrqihw7uwKYHKTxJUHu35
+        UGxWGgSA1eI1badIKZdCmGzbbfyCMXw=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-485-vJEi5jTHNoivX51nQ0FcGw-1; Tue, 18 Aug 2020 05:20:27 -0400
+X-MC-Unique: vJEi5jTHNoivX51nQ0FcGw-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9A928206B5;
-        Tue, 18 Aug 2020 09:13:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597742036;
-        bh=y6t/nDZtQAaatHx+Es3LX2J9jd8u3hy8rCEe/i31UrM=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=d9XRnInfBjaxiUhh7v2yUGiArHMESUlinwjmKn2kU17BwWrXAKw4S7MkRwRBP79bq
-         V2QsdIEGETwIvLoocU2a+P6rMW02dIZASv/g/Bu/w+wEp+kZCA/Tb9ZMxkSFRbyAQL
-         MwVlazcSkCfnsVmMpQu4YvuW+To1x1yhU4wltO8M=
-Date:   Tue, 18 Aug 2020 11:13:51 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 43/44] dt: document HiSilicon SPMI controller and
- mfd/regulator properties
-Message-ID: <20200818111351.7e3fc780@coco.lan>
-In-Reply-To: <20200817201211.GA1437827@bogus>
-References: <cover.1597647359.git.mchehab+huawei@kernel.org>
-        <2f88fed96d67b05fc033356fdbb7e3227955ab34.1597647359.git.mchehab+huawei@kernel.org>
-        <20200817201211.GA1437827@bogus>
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D969E81F012;
+        Tue, 18 Aug 2020 09:20:22 +0000 (UTC)
+Received: from sirius.home.kraxel.org (ovpn-112-195.ams2.redhat.com [10.36.112.195])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 17A7D5D9D2;
+        Tue, 18 Aug 2020 09:20:19 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+        id 32D199CBD; Tue, 18 Aug 2020 11:20:18 +0200 (CEST)
+From:   Gerd Hoffmann <kraxel@redhat.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     christian.koenig@amd.com, Gerd Hoffmann <kraxel@redhat.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        amd-gfx@lists.freedesktop.org (open list:RADEON and AMDGPU DRM DRIVERS),
+        linux-kernel@vger.kernel.org (open list),
+        etnaviv@lists.freedesktop.org (moderated list:DRM DRIVERS FOR VIVANTE
+        GPU IP),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        nouveau@lists.freedesktop.org (open list:DRM DRIVER FOR NVIDIA
+        GEFORCE/QUADRO GPUS),
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Rockchip SoC
+        support),
+        linux-rockchip@lists.infradead.org (open list:ARM/Rockchip SoC support),
+        linux-tegra@vger.kernel.org (open list:DRM DRIVERS FOR NVIDIA TEGRA),
+        xen-devel@lists.xenproject.org (moderated list:DRM DRIVERS FOR XEN)
+Subject: [PATCH v2 1/2] drm: allow limiting the scatter list size.
+Date:   Tue, 18 Aug 2020 11:20:16 +0200
+Message-Id: <20200818092017.26290-2-kraxel@redhat.com>
+In-Reply-To: <20200818092017.26290-1-kraxel@redhat.com>
+References: <20200818092017.26290-1-kraxel@redhat.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Mon, 17 Aug 2020 14:12:11 -0600
-Rob Herring <robh@kernel.org> escreveu:
+Add max_segment argument to drm_prime_pages_to_sg().  When set pass it
+through to the __sg_alloc_table_from_pages() call, otherwise use
+SCATTERLIST_MAX_SEGMENT.
+
+Also add max_segment field to drm driver and pass it to
+drm_prime_pages_to_sg() calls in drivers and helpers.
+
+v2: place max_segment in drm driver not gem object.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ include/drm/drm_device.h                    |  8 ++++++++
+ include/drm/drm_prime.h                     |  3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c |  3 ++-
+ drivers/gpu/drm/drm_gem_shmem_helper.c      |  3 ++-
+ drivers/gpu/drm/drm_prime.c                 | 10 +++++++---
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c       |  3 ++-
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c |  3 ++-
+ drivers/gpu/drm/msm/msm_gem.c               |  3 ++-
+ drivers/gpu/drm/msm/msm_gem_prime.c         |  3 ++-
+ drivers/gpu/drm/nouveau/nouveau_prime.c     |  3 ++-
+ drivers/gpu/drm/radeon/radeon_prime.c       |  3 ++-
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c |  6 ++++--
+ drivers/gpu/drm/tegra/gem.c                 |  3 ++-
+ drivers/gpu/drm/vgem/vgem_drv.c             |  3 ++-
+ drivers/gpu/drm/xen/xen_drm_front_gem.c     |  3 ++-
+ 15 files changed, 43 insertions(+), 17 deletions(-)
+
+diff --git a/include/drm/drm_device.h b/include/drm/drm_device.h
+index 0988351d743c..47cb547a8115 100644
+--- a/include/drm/drm_device.h
++++ b/include/drm/drm_device.h
+@@ -329,6 +329,14 @@ struct drm_device {
+ 	 */
+ 	struct drm_fb_helper *fb_helper;
+ 
++	/**
++	 * @max_segment:
++	 *
++	 * Max size for scatter list segments.  When unset the default
++	 * (SCATTERLIST_MAX_SEGMENT) is used.
++	 */
++	size_t max_segment;
++
+ 	/* Everything below here is for legacy driver, never use! */
+ 	/* private: */
+ #if IS_ENABLED(CONFIG_DRM_LEGACY)
+diff --git a/include/drm/drm_prime.h b/include/drm/drm_prime.h
+index 9af7422b44cf..2c3689435cb4 100644
+--- a/include/drm/drm_prime.h
++++ b/include/drm/drm_prime.h
+@@ -88,7 +88,8 @@ void drm_gem_dmabuf_vunmap(struct dma_buf *dma_buf, void *vaddr);
+ int drm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
+ int drm_gem_dmabuf_mmap(struct dma_buf *dma_buf, struct vm_area_struct *vma);
+ 
+-struct sg_table *drm_prime_pages_to_sg(struct page **pages, unsigned int nr_pages);
++struct sg_table *drm_prime_pages_to_sg(struct page **pages, unsigned int nr_pages,
++				       size_t max_segment);
+ struct dma_buf *drm_gem_prime_export(struct drm_gem_object *obj,
+ 				     int flags);
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+index 519ce4427fce..8f6a647757e7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+@@ -303,7 +303,8 @@ static struct sg_table *amdgpu_dma_buf_map(struct dma_buf_attachment *attach,
+ 	switch (bo->tbo.mem.mem_type) {
+ 	case TTM_PL_TT:
+ 		sgt = drm_prime_pages_to_sg(bo->tbo.ttm->pages,
+-					    bo->tbo.num_pages);
++					    bo->tbo.num_pages,
++					    obj->dev->max_segment);
+ 		if (IS_ERR(sgt))
+ 			return sgt;
+ 
+diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
+index 4b7cfbac4daa..8f47b41b0b2f 100644
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -656,7 +656,8 @@ struct sg_table *drm_gem_shmem_get_sg_table(struct drm_gem_object *obj)
+ 
+ 	WARN_ON(shmem->base.import_attach);
+ 
+-	return drm_prime_pages_to_sg(shmem->pages, obj->size >> PAGE_SHIFT);
++	return drm_prime_pages_to_sg(shmem->pages, obj->size >> PAGE_SHIFT,
++				     obj->dev->max_segment);
+ }
+ EXPORT_SYMBOL_GPL(drm_gem_shmem_get_sg_table);
+ 
+diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+index 1693aa7c14b5..27c783fd6633 100644
+--- a/drivers/gpu/drm/drm_prime.c
++++ b/drivers/gpu/drm/drm_prime.c
+@@ -802,7 +802,8 @@ static const struct dma_buf_ops drm_gem_prime_dmabuf_ops =  {
+  *
+  * This is useful for implementing &drm_gem_object_funcs.get_sg_table.
+  */
+-struct sg_table *drm_prime_pages_to_sg(struct page **pages, unsigned int nr_pages)
++struct sg_table *drm_prime_pages_to_sg(struct page **pages, unsigned int nr_pages,
++				       size_t max_segment)
+ {
+ 	struct sg_table *sg = NULL;
+ 	int ret;
+@@ -813,8 +814,11 @@ struct sg_table *drm_prime_pages_to_sg(struct page **pages, unsigned int nr_page
+ 		goto out;
+ 	}
+ 
+-	ret = sg_alloc_table_from_pages(sg, pages, nr_pages, 0,
+-				nr_pages << PAGE_SHIFT, GFP_KERNEL);
++	if (max_segment == 0 || max_segment > SCATTERLIST_MAX_SEGMENT)
++		max_segment = SCATTERLIST_MAX_SEGMENT;
++	ret = __sg_alloc_table_from_pages(sg, pages, nr_pages, 0,
++					  nr_pages << PAGE_SHIFT,
++					  max_segment, GFP_KERNEL);
+ 	if (ret)
+ 		goto out;
+ 
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
+index f06e19e7be04..90654246b335 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
+@@ -103,7 +103,8 @@ struct page **etnaviv_gem_get_pages(struct etnaviv_gem_object *etnaviv_obj)
+ 		int npages = etnaviv_obj->base.size >> PAGE_SHIFT;
+ 		struct sg_table *sgt;
+ 
+-		sgt = drm_prime_pages_to_sg(etnaviv_obj->pages, npages);
++		sgt = drm_prime_pages_to_sg(etnaviv_obj->pages, npages,
++					    etnaviv_obj->base.dev->max_segment);
+ 		if (IS_ERR(sgt)) {
+ 			dev_err(dev->dev, "failed to allocate sgt: %ld\n",
+ 				PTR_ERR(sgt));
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
+index 6d9e5c3c4dd5..f65be0fffb3d 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c
+@@ -19,7 +19,8 @@ struct sg_table *etnaviv_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ 	if (WARN_ON(!etnaviv_obj->pages))  /* should have already pinned! */
+ 		return ERR_PTR(-EINVAL);
+ 
+-	return drm_prime_pages_to_sg(etnaviv_obj->pages, npages);
++	return drm_prime_pages_to_sg(etnaviv_obj->pages, npages,
++				     obj->dev->max_segment);
+ }
+ 
+ void *etnaviv_gem_prime_vmap(struct drm_gem_object *obj)
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index b2f49152b4d4..dbf1437c3dac 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -126,7 +126,8 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 
+ 		msm_obj->pages = p;
+ 
+-		msm_obj->sgt = drm_prime_pages_to_sg(p, npages);
++		msm_obj->sgt = drm_prime_pages_to_sg(p, npages,
++						     obj->dev->max_segment);
+ 		if (IS_ERR(msm_obj->sgt)) {
+ 			void *ptr = ERR_CAST(msm_obj->sgt);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index d7c8948427fe..6337cd1f9428 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -19,7 +19,8 @@ struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ 	if (WARN_ON(!msm_obj->pages))  /* should have already pinned! */
+ 		return NULL;
+ 
+-	return drm_prime_pages_to_sg(msm_obj->pages, npages);
++	return drm_prime_pages_to_sg(msm_obj->pages, npages,
++				     obj->dev->max_segment);
+ }
+ 
+ void *msm_gem_prime_vmap(struct drm_gem_object *obj)
+diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
+index bae6a3eccee0..dd0ff032ae16 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_prime.c
++++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
+@@ -32,7 +32,8 @@ struct sg_table *nouveau_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ 	struct nouveau_bo *nvbo = nouveau_gem_object(obj);
+ 	int npages = nvbo->bo.num_pages;
+ 
+-	return drm_prime_pages_to_sg(nvbo->bo.ttm->pages, npages);
++	return drm_prime_pages_to_sg(nvbo->bo.ttm->pages, npages,
++				     obj->dev->max_segment);
+ }
+ 
+ void *nouveau_gem_prime_vmap(struct drm_gem_object *obj)
+diff --git a/drivers/gpu/drm/radeon/radeon_prime.c b/drivers/gpu/drm/radeon/radeon_prime.c
+index b906e8fbd5f3..61a3fe147489 100644
+--- a/drivers/gpu/drm/radeon/radeon_prime.c
++++ b/drivers/gpu/drm/radeon/radeon_prime.c
+@@ -36,7 +36,8 @@ struct sg_table *radeon_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ 	struct radeon_bo *bo = gem_to_radeon_bo(obj);
+ 	int npages = bo->tbo.num_pages;
+ 
+-	return drm_prime_pages_to_sg(bo->tbo.ttm->pages, npages);
++	return drm_prime_pages_to_sg(bo->tbo.ttm->pages, npages,
++				     obj->dev->max_segment);
+ }
+ 
+ void *radeon_gem_prime_vmap(struct drm_gem_object *obj)
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index b9275ba7c5a5..5ddb2d31a607 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -85,7 +85,8 @@ static int rockchip_gem_get_pages(struct rockchip_gem_object *rk_obj)
+ 
+ 	rk_obj->num_pages = rk_obj->base.size >> PAGE_SHIFT;
+ 
+-	rk_obj->sgt = drm_prime_pages_to_sg(rk_obj->pages, rk_obj->num_pages);
++	rk_obj->sgt = drm_prime_pages_to_sg(rk_obj->pages, rk_obj->num_pages,
++					    rk_obj->base.dev->max_segment);
+ 	if (IS_ERR(rk_obj->sgt)) {
+ 		ret = PTR_ERR(rk_obj->sgt);
+ 		goto err_put_pages;
+@@ -442,7 +443,8 @@ struct sg_table *rockchip_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ 	int ret;
+ 
+ 	if (rk_obj->pages)
+-		return drm_prime_pages_to_sg(rk_obj->pages, rk_obj->num_pages);
++		return drm_prime_pages_to_sg(rk_obj->pages, rk_obj->num_pages,
++					     obj->dev->max_segment);
+ 
+ 	sgt = kzalloc(sizeof(*sgt), GFP_KERNEL);
+ 	if (!sgt)
+diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
+index 723df142a981..a0abde747e95 100644
+--- a/drivers/gpu/drm/tegra/gem.c
++++ b/drivers/gpu/drm/tegra/gem.c
+@@ -284,7 +284,8 @@ static int tegra_bo_get_pages(struct drm_device *drm, struct tegra_bo *bo)
+ 
+ 	bo->num_pages = bo->gem.size >> PAGE_SHIFT;
+ 
+-	bo->sgt = drm_prime_pages_to_sg(bo->pages, bo->num_pages);
++	bo->sgt = drm_prime_pages_to_sg(bo->pages, bo->num_pages,
++					bo->gem.dev->max_segment);
+ 	if (IS_ERR(bo->sgt)) {
+ 		err = PTR_ERR(bo->sgt);
+ 		goto put_pages;
+diff --git a/drivers/gpu/drm/vgem/vgem_drv.c b/drivers/gpu/drm/vgem/vgem_drv.c
+index 313339bbff90..045461dc6319 100644
+--- a/drivers/gpu/drm/vgem/vgem_drv.c
++++ b/drivers/gpu/drm/vgem/vgem_drv.c
+@@ -321,7 +321,8 @@ static struct sg_table *vgem_prime_get_sg_table(struct drm_gem_object *obj)
+ {
+ 	struct drm_vgem_gem_object *bo = to_vgem_bo(obj);
+ 
+-	return drm_prime_pages_to_sg(bo->pages, bo->base.size >> PAGE_SHIFT);
++	return drm_prime_pages_to_sg(bo->pages, bo->base.size >> PAGE_SHIFT,
++				     obj->dev->max_segment);
+ }
+ 
+ static struct drm_gem_object* vgem_prime_import(struct drm_device *dev,
+diff --git a/drivers/gpu/drm/xen/xen_drm_front_gem.c b/drivers/gpu/drm/xen/xen_drm_front_gem.c
+index f0b85e094111..61a8c1a9fb04 100644
+--- a/drivers/gpu/drm/xen/xen_drm_front_gem.c
++++ b/drivers/gpu/drm/xen/xen_drm_front_gem.c
+@@ -179,7 +179,8 @@ struct sg_table *xen_drm_front_gem_get_sg_table(struct drm_gem_object *gem_obj)
+ 	if (!xen_obj->pages)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	return drm_prime_pages_to_sg(xen_obj->pages, xen_obj->num_pages);
++	return drm_prime_pages_to_sg(xen_obj->pages, xen_obj->num_pages,
++				     gem_obj->dev->max_segment);
+ }
+ 
+ struct drm_gem_object *
+-- 
+2.18.4
 
-> On Mon, Aug 17, 2020 at 09:11:02AM +0200, Mauro Carvalho Chehab wrote:
-> > Add documentation for the properties needed by the HiSilicon
-> > 6421v600 driver, and by the SPMI controller used to access
-> > the chipset.
-> >=20
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> >  .../mfd/hisilicon,hi6421-spmi-pmic.yaml       | 182 ++++++++++++++++++
-> >  .../spmi/hisilicon,hisi-spmi-controller.yaml  |  54 ++++++
-> >  2 files changed, 236 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/mfd/hisilicon,hi6=
-421-spmi-pmic.yaml
-> >  create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hi=
-si-spmi-controller.yaml
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spm=
-i-pmic.yaml b/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-p=
-mic.yaml
-> > new file mode 100644
-> > index 000000000000..95494114554d
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.=
-yaml
-> > @@ -0,0 +1,182 @@
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/mfd/hisilicon,hi6421-spmi-pmic.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: HiSilicon 6421v600 SPMI PMIC
-> > +
-> > +maintainers:
-> > +  - Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > +
-> > +description: |
-> > +  HiSilicon 6421v600 uses a MIPI System Power Management (SPMI) bus in=
- order
-> > +  to provide interrupts and power supply.
-> > +
-> > +  The GPIO and interrupt settings are represented as part of the top-l=
-evel PMIC
-> > +  node.
-> > +
-> > +  The SPMI controller part is provided by
-> > +  Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controlle=
-r.yaml.
-> > +
-> > +properties:
-> > +  $nodename:
-> > +    pattern: "pmic@[0-9a-f]"
-> > +
-> > +  compatible:
-> > +    const: hisilicon,hi6421-spmi-pmic =20
->=20
-> -spmi-pmic is redundant. Can the hi6421 be anything else?
-
-There are other HiSilicom 6421 variants that don't use SPMI bus:
-
-	Documentation/devicetree/bindings/mfd/hi6421.txt:       "hisilicon,hi6421-=
-pmic";
-	Documentation/devicetree/bindings/mfd/hi6421.txt:       "hisilicon,hi6421v=
-530-pmic";
-
-The DT file on Kernel 4.9 uses hi6421v600 (although the schematics
-from 96boards name it as hi6421v610).
-
-While I don't mind much,would prefer to keep "spmi" on its name, in order
-to distinguish this one from the non-spmi variants.
-
-Maybe we use this for compatible:
-
-	hisilicon,hi6421v600-spmi
-
->=20
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  spmi-channel:
-> > +    description: number of the SPMI channel where the PMIC is connecte=
-d =20
->=20
-> This looks like a common (to SPMI), but it's not something defined in=20
-> spmi.txt=20
-
-This one is not part of the SPMI core. It is stored inside a private=20
-structure inside at the HiSilicon spmi controller driver. It is stored=20
-there as ctrl_dev->channel, and it is used to calculate the register offset
-for readl():
-
-	offset  =3D SPMI_APB_SPMI_STATUS_BASE_ADDR;
-	offset +=3D SPMI_CHANNEL_OFFSET * ctrl_dev->channel + SPMI_SLAVE_OFFSET * =
-sid;
-	do {
-		status =3D readl(base + offset);
-	...
-
-The SPMI bus is somewhat similar to I2C: it is a 2-wire serial bus
-with up to 16 devices connected to it.
-
-Now, most modern I2C chipsets provide multiple independent I2C
-channels, on different pins. Also, on some chipsets, certain
-GPIO pins can be used either as GPIO or as I2C.
-
-I strongly suspect that this is the case here: according with
-the Hikey 970 schematics:
-
-	https://www.96boards.org/documentation/consumer/hikey/hikey970/hardware-do=
-cs/files/hikey970-schematics.pdf
-
-The pins used by SPMI clock/data can also be used as GPIO.
-
-While I don't have access to the datasheets for Kirin 970 (or any other
-chipsets on this board), for me, it sounds that different GPIO pins
-are allowed to use SPMI. The "spmi-channel" property specifies
-what pins will be used for SPMI, among the ones that are
-compatible with MIPI SPMI specs.
-
-> (which should ideally be converted to schema first).=20
-
-I can try porting spmi schema to yaml on a separate patch,
-and submit it independently of this series.
-
-> Minimally,=20
-> it needs a better explanation and determination if it should be common=20
-> or is HiSilicon specific.
-
-What about:
-
-  spmi-channel:
-    description: |
-      number of the SPMI channel at the HiSilicon SoC that will
-      be used for the MIPI SPMI controller.
-
->=20
-> > +
-> > +  '#interrupt-cells':
-> > +    const: 2
-> > +
-> > +  interrupt-controller:
-> > +    description:
-> > +      Identify that the PMIC is capable of behaving as an interrupt co=
-ntroller. =20
->=20
-> No need to redefine common properties if nothing specific to this device=
-=20
-> to say. Just:
->=20
-> interrupt-controller: true
-
-Ok.
-
->=20
-> > +
-> > +  gpios:
-> > +    maxItems: 1
-> > +
-> > +  irq-num:
-> > +    description: Interrupt request number
-> > +
-> > +  'irq-array':
-> > +    description: Interrupt request array
-> > +
-> > +  'irq-mask-addr':
-> > +    description: Address for the interrupt request mask
-> > +
-> > +  'irq-addr':
-> > +    description: Address for the interrupt request =20
->=20
-> What's all these non-standard interrupt properties?
-
-After doing a deeper look at the code which handles IRQs on this PMIC,
-I'm considering to get rid of two properties: irq-num and irq-array.
-
-See, the code does this:
-
-	/* During probe time */
-	pmic->irqs =3D devm_kzalloc(dev, pmic->irqnum * sizeof(int), GFP_KERNEL);
-
-	/* While handling IRQs */
-	for (i =3D 0; i < pmic->irqarray; i++) {
-		pending =3D hi6421_spmi_pmic_read(pmic, (i + pmic->irq_addr));
-		pending &=3D 0xff;
-
-		for_each_set_bit(offset, &pending, 8)
-			generic_handle_irq(pmic->irqs[offset + i * 8]);
-
-	}
-
-Right now, Hikey 970 sets:
-
-	irq-num =3D <16>;
-	irq-array =3D <2>;
-	irq-mask-addr =3D <0x202>;
-	irq-addr =3D <0x212>;
-
-=46rom the above code, it sounds to me that irq-array is the number of
-bytes used for IRQ, while irq-num is the number of bits. E. g:
-
-	irq_num =3D  irqarray * 8;
-
-So, we can get rid of at least one of them.
-
-Going further, the code provides an special treatment for some IRQs:
-
-	#define HISI_IRQ_KEY_NUM		0
-	#define HISI_IRQ_KEY_VALUE		0xc0
-	#define HISI_IRQ_KEY_DOWN		7
-	#define HISI_IRQ_KEY_UP			6
-
-	for (i =3D 0; i < pmic->irqarray; i++) {
-		pending =3D hi6421_spmi_pmic_read(pmic, (i + pmic->irq_addr));
-
-	...
-		/* solve powerkey order */
-		if ((i =3D=3D HISI_IRQ_KEY_NUM) &&
-		    ((pending & HISI_IRQ_KEY_VALUE) =3D=3D HISI_IRQ_KEY_VALUE)) {
-			generic_handle_irq(pmic->irqs[HISI_IRQ_KEY_DOWN]);
-			generic_handle_irq(pmic->irqs[HISI_IRQ_KEY_UP]);
-			pending &=3D (~HISI_IRQ_KEY_VALUE);
-		}
-
-As the values for HISI_IRQ_KEY_DOWN and HISI_IRQ_KEY_UP don't
-depend on irqarray, it sounds to me that this is actually hardcoded=20
-for irqarray =3D=3D 2.
-
-So, I'll just get rid of those, replacing them by some defines inside
-the code. If needed later, this patch can always be reverted.
-
-> > +  'irq-mask-addr':
-> > +    description: Address for the interrupt request mask
-> > +
-> > +  'irq-addr':
-> > +    description: Address for the interrupt request =20
-
-Those two seems more standard to me: irq-mask-addr is the address to
-enable/disable IRQs, while irq-addr is where the pending IRQs are
-stored.
-
-What would be the standard way to specify them both?
-
-> > +
-> > +  regulators:
-> > +    type: object =20
->=20
-> additionalProperties: false
->=20
-> > +
-> > +    properties:
-> > +      '#address-cells':
-> > +        const: 1
-> > +
-> > +      '#size-cells':
-> > +        const: 0
-> > +
-> > +    patternProperties:
-> > +      '^ldo@[0-9]+$': =20
->=20
-> Unit-addresses are hex.
->
-> Also, doesn't match the example.
-
-True. This should be, instead:
-
-	patternProperties:
-          '^ldo[0-9]+@[0-9a-f]+$': =20
-
-The name part of the property would better to stay in decimal,
-as it makes a in order to match the public schematics:
-
-	https://www.96boards.org/documentation/consumer/hikey/hikey970/hardware-do=
-cs/files/hikey970-schematics.pdf
-
-Using decimal values, the dmesg matches the schematics helps a lot when
-dealing issues related to PM, as the names of the LDO lines will match
-page 12 the schematics:
-
-	ldo3: 1500 <--> 2000 mV at 1800 mV normal=20
-	ldo4: 1725 <--> 1900 mV at 1800 mV normal idle=20
-	ldo9: 1750 <--> 3300 mV at 2950 mV normal idle=20
-	ldo15: 1800 <--> 3000 mV at 2950 mV normal idle=20
-	ldo16: 1800 <--> 3000 mV at 2950 mV normal idle=20
-	ldo17: 2500 <--> 3300 mV at 2500 mV normal idle=20
-	ldo33: 2500 <--> 3300 mV at 2500 mV normal=20
-	ldo34: 2600 <--> 3300 mV at 2600 mV normal=20
-	ldo4: disabling
-	ldo33: disabling
-
-So, from above, looking at the datasheet, it is clear that
-ldo33 - e. g. PCIe Switch VDD25 - is disabled.
-
->=20
-> > +        type: object
-> > +
-> > +        $ref: "/schemas/regulator/regulator.yaml#"
-> > +
-> > +        properties:
-> > +          reg:
-> > +            description: Enable register.
-> > + =20
->=20
-> > +          '#address-cells':
-> > +            const: 1
-> > +
-> > +          '#size-cells':
-> > +            const: 0 =20
->=20
-> No child nodes, you don't need these.
-
-It is needed. However, this is at the second file of the DT.
-
-See, as SPMI is actually a bus, the entire DT setting has 3
-parts:
-  - the SPMI controller;
-  - the PMICs;
-  - the regulators.
-
-A complete example is:
-
-	spmi: spmi@fff24000 {
-		compatible =3D "hisilicon,spmi-controller";
-		#address-cells =3D <2>;
-		#size-cells =3D <0>;
-		status =3D "ok";
-		reg =3D <0x0 0xfff24000 0x0 0x1000>;
-		spmi-channel =3D <2>;
-
-		pmic: pmic@0 {
-			compatible =3D "hisilicon,hi6421-spmi-pmic";
-			slave_id =3D <0>;
-			reg =3D <0 SPMI_USID>;
-
-			#interrupt-cells =3D <2>;
-			interrupt-controller;
-			gpios =3D <&gpio28 0 0>;
-			irq-mask-addr =3D <0x202>;
-			irq-addr =3D <0x212>;
-
-			regulators {
-				#address-cells =3D <1>;
-				#size-cells =3D <0>;
-
-				ldo3: ldo3@16 {
-					reg =3D <0x16>;
-					vsel-reg =3D <0x51>;
-
-					regulator-name =3D "ldo3";
-					regulator-min-microvolt =3D <1500000>;
-					regulator-max-microvolt =3D <2000000>;
-					regulator-boot-on;
-
-					enable-mask =3D <0x01>;
-
-					voltage-table =3D <1500000>, <1550000>,
-							<1600000>, <1650000>,
-							<1700000>, <1725000>,
-							<1750000>, <1775000>,
-							<1800000>, <1825000>,
-							<1850000>, <1875000>,
-							<1900000>, <1925000>,
-							<1950000>, <2000000>;
-					off-on-delay-us =3D <20000>;
-					startup-delay-us =3D <120>;
-				};
-				...
-			};
-		};
-	};
-
-The child nodes are at the regulator DT properties.
-
-Well, I can drop those from here, adding them only at the regulator's
-part, using "bus { ... };".
-
-> > +
-> > +          vsel-reg:
-> > +            description: Voltage selector register. =20
->=20
-> 'reg' can have multiple entries if you want.
-
-Yes, I know. I was in doubt if I should either place vsel-reg on
-a separate property or together with reg. I ended keeping it
-in separate on the submitted patch series.
-
-What makes more sense?
-
->=20
-> > +
-> > +          enable-mask:
-> > +            description: Bitmask used to enable the regulator. =20
->=20
-> But if there's a shared enable reg, then you shouldn't have duplicate=20
-> addresses (same 'reg' value in multiple nodes).
-
-At least for the LDOs supported on HiKey 970, values for
-"reg" and "vsel-reg" are unique: each LDO has their own.
-
-Right now, enable-mask is 0x01 for all LDOs at the Hikey 970
-DTS. However, only 8 LDOs are currently present at the DTS. From
-the schematics, it sounds that HiSilicon 6421v600 supports
-at least 37 lines. I've no idea if enable-mask remains the same
-for the other ones, nor if "reg" and "vsel-reg" won't be
-unique in the general case.
-
-> These perhaps should be driver data rather than in DT as it's all fixed=20
-> for this chip. We don't try to parameterize everything in DT.
-
-I considered that. However, I've no idea about the values and
-ranges for the other 29 LDOs. So, without knowing better about
-this silicon, I prefer to keep those at DT.
-
->=20
-> > +
-> > +          voltage-table:
-> > +            description: Table with the selector items for the voltage=
- regulator.
-> > +            minItems: 2
-> > +            maxItems: 16 =20
->=20
-> Needs a type $ref.
-
-Ok. I'll add:
-
-		$ref: /schemas/types.yaml#/definitions/uint32
-
-> > +
-> > +          off-on-delay-us:
-> > +            description: Time required for changing state to enabled i=
-n microseconds.
-> > +
-> > +          startup-delay-us:
-> > +            description: Startup time in microseconds.
-> > +
-> > +          idle-mode-mask:
-> > +            description: Bitmask used to put the regulator on idle mod=
-e.
-> > +
-> > +          eco-microamp:
-> > +            description: Maximum current while on idle mode.
-> > +
-> > +        required:
-> > +          - reg
-> > +          - vsel-reg
-> > +          - enable-mask
-> > +          - voltage-table
-> > +          - off-on-delay-us
-> > +          - startup-delay-us
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - regulators =20
->=20
-> Add:
->=20
-> additionalProperties: false
-
-Ok.
-
->=20
-> > +
-> > +examples:
-> > +  - |
-> > +    /* pmic properties */
-> > +
-> > +    pmic: pmic@0 {
-> > +      compatible =3D "hisilicon,hi6421-spmi-pmic";
-> > +      slave_id =3D <0>; =20
->=20
-> Not documented. I believe this is part of 'reg'.
-
-Good point. I'll double-check this one, but I guess you're right.
-
->=20
-> > +      reg =3D <0 0>;
-> > +
-> > +      #interrupt-cells =3D <2>;
-> > +      interrupt-controller;
-> > +      gpios =3D <&gpio28 0 0>;
-> > +      irq-num =3D <16>;
-> > +      irq-array =3D <2>;
-> > +      irq-mask-addr =3D <0x202 2>;
-> > +      irq-addr =3D <0x212 2>;
-> > +
-> > +      #address-cells =3D <1>;
-> > +      #size-cells =3D <0>;
-> > +
-> > +      regulators {
-> > +          #address-cells =3D <1>;
-> > +          #size-cells =3D <0>;
-> > +
-> > +        ldo3: ldo3@16 {
-> > +          reg =3D <0x16>;
-> > +          vsel-reg =3D <0x51>;
-> > +
-> > +          regulator-name =3D "ldo3";
-> > +          regulator-min-microvolt =3D <1500000>;
-> > +          regulator-max-microvolt =3D <2000000>;
-> > +          regulator-boot-on;
-> > +
-> > +          enable-mask =3D <0x01>;
-> > +
-> > +          voltage-table =3D <1500000>, <1550000>, <1600000>, <1650000>,
-> > +                          <1700000>, <1725000>, <1750000>, <1775000>,
-> > +                          <1800000>, <1825000>, <1850000>, <1875000>,
-> > +                          <1900000>, <1925000>, <1950000>, <2000000>;
-> > +          off-on-delay-us =3D <20000>;
-> > +          startup-delay-us =3D <120>;
-> > +        };
-> > +
-> > +        ldo4: ldo4@17 { /* 40 PIN */
-> > +          reg =3D <0x17>;
-> > +          vsel-reg =3D <0x52>;
-> > +
-> > +          regulator-name =3D "ldo4";
-> > +          regulator-min-microvolt =3D <1725000>;
-> > +          regulator-max-microvolt =3D <1900000>;
-> > +          regulator-boot-on;
-> > +
-> > +          enable-mask =3D <0x01>;
-> > +          idle-mode-mask =3D <0x10>;
-> > +          eco-microamp =3D <10000>;
-> > +
-> > +          hi6421-vsel =3D <0x52 0x07>; =20
->=20
-> Not documented.
-
-This is a left-over. I dropped this one, in favor of "vsel-reg"
-(plus a mask for the voltage-table size).
-
->=20
-> > +          voltage-table =3D <1725000>, <1750000>, <1775000>, <1800000>,
-> > +                          <1825000>, <1850000>, <1875000>, <1900000>;
-> > +          off-on-delay-us =3D <20000>;
-> > +          startup-delay-us =3D <120>;
-> > +        };
-> > +      };
-> > +    };
-> > diff --git a/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi=
--controller.yaml b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-sp=
-mi-controller.yaml
-> > new file mode 100644
-> > index 000000000000..5aeb2ae12024
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-contro=
-ller.yaml
-> > @@ -0,0 +1,54 @@
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/spmi/hisilicon,hisi-spmi-controller=
-.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: HiSilicon SPMI controller
-> > +
-> > +maintainers:
-> > +  - Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > +
-> > +description: |
-> > +  The HiSilicon SPMI controller is found on some Kirin-based designs.
-> > +  It is a MIPI System Power Management (SPMI) controller.
-> > +
-> > +  The PMIC part is provided by
-> > +  Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yam=
-l.
-> > +
-> > +properties:
-> > +  $nodename:
-> > +    pattern: "spmi@[0-9a-f]"
-> > +
-> > +  compatible:
-> > +    const: hisilicon,spmi-controller =20
->=20
-> Needs an SoC specific compatible.
-
-What about:
-	hisilicon,kirin970-spmi-controller=20
-
->=20
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  "#address-cells":
-> > +    const: 2
-> > +
-> > +  "#size-cells":
-> > +    const: 0
-> > +
-> > +  spmi-channel:
-> > +    description: number of the SPMI channel where the PMIC is connected
-> > +
-> > +patternProperties:
-> > +  "^pmic@[0-9a-f]$":
-> > +    $ref: "/schemas/mfd/hisilicon,hi6421-spmi-pmic.yaml#"
-> > +
-> > +examples:
-> > +  - |
-> > +    spmi: spmi@fff24000 {
-> > +      compatible =3D "hisilicon,spmi-controller";
-> > +      #address-cells =3D <2>;
-> > +      #size-cells =3D <0>;
-> > +      status =3D "ok";
-> > +      reg =3D <0x0 0xfff24000 0x0 0x1000>;
-> > +      spmi-channel =3D <2>; =20
->=20
-> Does this go in the SPMI controller or child (pmic)?
-
-Those belong to the SPMI controller. Maybe I did some mess trying to
-split up DT in order to place the Kirin970 SPMI bus controller on
-one file, and the HiSilicon 6421v600 on another one.
-
-I ended needing to duplicate some things, as otherwise the DT checks fail.
-
-Basically, the full DT is:
-
-	spmi: spmi@fff24000 {
-		/* Kirin 970 SPMI controller props */
-
-		pmic: pmic@0 {
-			/* HiSilicon 6421v600 PMIC props */
-
-			regulators {
-				ldo3: ldo3@16 {
-					/* HiSilicon 6421v600 ldo3 regulator props */
-				};
-				ldo4: ldo3@17 {
-					/* HiSilicon 6421v600 ldo4 regulator props */
-				};
-				...
-				ldo34: ldo3@33 {
-					/* HiSilicon 6421v600 ldo34 regulator props */
-				};
-			};
-		};
-	};
-
-Thanks,
-Mauro
