@@ -2,118 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CC7B248066
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 10:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC92324808E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 10:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbgHRITp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 04:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726519AbgHRITl (ORCPT
+        id S1726420AbgHRI1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 04:27:15 -0400
+Received: from us-smtp-2.mimecast.com ([207.211.31.81]:58742 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726203AbgHRI1O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 04:19:41 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F337C061343
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 01:19:41 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id j188so9683944vsd.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 01:19:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7qc0PHRmHyAV4s08h+mPSQ2AKSM82PMkMzXSGAIjIyU=;
-        b=DGV+F2+cb52Nj0BMWEB9lOedhoMtfTPFWPkhPnUA07d4XhpQRQncJtBjzy9Qd4fQvO
-         wKMC5NqMbgse/bTlW2J66+51iNFlL5zsDgzZ+IHpo/YO18KOA7/VLYohfqy1geb6Hv2T
-         6AamAPl7j4a62C9ohOa3SKrwZwXb5kf0R/790=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7qc0PHRmHyAV4s08h+mPSQ2AKSM82PMkMzXSGAIjIyU=;
-        b=ej25rLkjXcA4Bxd+nqWbnCXHUa/Ro30JyqYmvGlxjrAqjL+bTQOS5ksZWVpGzoXLqF
-         W0A4MKPivkKm1fpFiTdbHgozKmbVmuSNozpimoawpJlLFIsbA4KJ01dA+zSLaKWLA9gN
-         9Rtzjcdv46Ywu8fodNaZirA+6Gv1S/QBOCi7pfwMQO07+870XN/ls1sJ/VDl1GqXrddv
-         gz4ZmmIu4fpdQ2HpwH8Ndr52Jx/9epbfuyy2uKcSqT3wq7P17+PCwij71eBgy9eOwbN7
-         0FGrvX2L7KQkpDtmh/VkjnlIUTmhnXfGE14NcP+BbHX7e3xE5JAVoxCIWTUn6LshSNpM
-         hs2g==
-X-Gm-Message-State: AOAM531z4zgL7GiTBR/iM1fZAOt355odC2qTJxxDCMvP+5kcqbvaE9kX
-        vzQsid+9j+l39+TkB7PiuB96e+DEsir8r9sy3Pd1JA==
-X-Google-Smtp-Source: ABdhPJzreYfi0fbtitn2tr3QZ68MpwlV8vAMN6ra3gV3OoMTaqXKSc8vnlwpvhOn3Pco3m2Op2M0MAJHaVOIWKWSBNM=
-X-Received: by 2002:a67:68d2:: with SMTP id d201mr10537283vsc.186.1597738780361;
- Tue, 18 Aug 2020 01:19:40 -0700 (PDT)
+        Tue, 18 Aug 2020 04:27:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1597739233;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=YE9v2iUUt0C+eIB9363k6FZZUNnKbdhJpiU9fX/PhuY=;
+        b=Af/2mKqOvbxTNoooOkwf2vMQkD1fX7Bsqo7+NuMpZbcr6pnrUM1vF+jLc9VRucj8HrUKuL
+        iv8JWKvDfGeaP6e6lk06lWGvq0CYSjuR8dJzCJjewDkHxveVPC8sQTfsNg041G6Adz/VOk
+        MDAIKk1NmMkqOi9RnmuJ569MwcKJXQM=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-11-ahIv83ehNsqc6ofMzQXlaA-1; Tue, 18 Aug 2020 04:27:09 -0400
+X-MC-Unique: ahIv83ehNsqc6ofMzQXlaA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id B292C1DDF1;
+        Tue, 18 Aug 2020 08:27:06 +0000 (UTC)
+Received: from sirius.home.kraxel.org (ovpn-112-195.ams2.redhat.com [10.36.112.195])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id A5EAA261B9;
+        Tue, 18 Aug 2020 08:27:04 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+        id C21E09CBD; Tue, 18 Aug 2020 10:27:03 +0200 (CEST)
+Date:   Tue, 18 Aug 2020 10:27:03 +0200
+From:   Gerd Hoffmann <kraxel@redhat.com>
+To:     Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>
+Cc:     dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
+        <nouveau@lists.freedesktop.org>, Sandy Huang <hjc@rock-chips.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        "open list:ARM/Rockchip SoC support" 
+        <linux-rockchip@lists.infradead.org>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        "moderated list:DRM DRIVERS FOR XEN" <xen-devel@lists.xenproject.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR VIVANTE GPU IP" 
+        <etnaviv@lists.freedesktop.org>,
+        "open list:DRM DRIVERS FOR NVIDIA TEGRA" 
+        <linux-tegra@vger.kernel.org>, Sean Paul <sean@poorly.run>,
+        "moderated list:ARM/Rockchip SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH 1/2] drm: allow limiting the scatter list size.
+Message-ID: <20200818082703.7z6fcvoymiqow5kw@sirius.home.kraxel.org>
+References: <20200818074828.9509-1-kraxel@redhat.com>
+ <20200818074828.9509-2-kraxel@redhat.com>
+ <9c355d64-1a61-eb59-be80-d9fc863ddf22@amd.com>
 MIME-Version: 1.0
-References: <20200710144747.RESEND.1.Ifae7abaacb81af1cdc6475986cc788d71de8a13c@changeid>
-In-Reply-To: <20200710144747.RESEND.1.Ifae7abaacb81af1cdc6475986cc788d71de8a13c@changeid>
-From:   Nicolas Boichat <drinkcat@chromium.org>
-Date:   Tue, 18 Aug 2020 16:19:29 +0800
-Message-ID: <CANMq1KAe5o8oxzTyVMNsoZXBuopVFQqFdKassu67Fssx0xk8Ww@mail.gmail.com>
-Subject: Re: [RESEND PATCH] media: camss: vfe: Use trace_printk for debugging only
-To:     Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        linux-arm-msm@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9c355d64-1a61-eb59-be80-d9fc863ddf22@amd.com>
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 10, 2020 at 2:48 PM Nicolas Boichat <drinkcat@chromium.org> wrote:
->
-> trace_printk should not be used in production code. Since
-> tracing interrupts is presumably latency sensitive, pr_dbg is
-> not appropriate, so guard the call with a preprocessor symbol
-> that can be defined for debugging purpose.
->
-> Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
-> ---
-> Sent this before as part of a series (whose 4th patch was a
-> change that allows to detect such trace_printk), but maybe it's
-> easier to get individual maintainer attention by splitting it.
+On Tue, Aug 18, 2020 at 09:57:59AM +0200, Christian König wrote:
+> Am 18.08.20 um 09:48 schrieb Gerd Hoffmann:
+> > Add max_segment argument to drm_prime_pages_to_sg().  When set pass it
+> > through to the __sg_alloc_table_from_pages() call, otherwise use
+> > SCATTERLIST_MAX_SEGMENT.
+> > 
+> > Also add max_segment field to gem objects and pass it to
+> > drm_prime_pages_to_sg() calls in drivers and helpers.
+> > 
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> 
+> I'm missing an explanation why this should be useful (it certainly is).
 
-Mauro, can I get your attention on this patch? This still applies on
-the latest 5.9-rc1/linux-next.
+virtio-gpu needs this to work properly with SEV (see patch 2/2 of this
+series).
 
-Thanks!
+> And the maximum segment size seems misplaced in the GEM object. This is
+> usually a property of the device or even completely constant.
 
+Placing it in drm_device instead would indeed work for virtio-gpu, so I
+guess you are suggesting that instead?
 
->
->  drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 2 ++
->  drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 2 ++
->  2 files changed, 4 insertions(+)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-> index 174a36be6f5d866..0c57171fae4f9e9 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-> @@ -936,8 +936,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
->
->         vfe->ops->isr_read(vfe, &value0, &value1);
->
-> +#ifdef CAMSS_VFE_TRACE_IRQ
->         trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
->                      value0, value1);
-> +#endif
->
->         if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
->                 vfe->isr_ops.reset_ack(vfe);
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-> index 0dca8bf9281e774..307675925e5c779 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-> @@ -1058,8 +1058,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
->
->         vfe->ops->isr_read(vfe, &value0, &value1);
->
-> +#ifdef CAMSS_VFE_TRACE_IRQ
->         trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
->                      value0, value1);
-> +#endif
->
->         if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
->                 vfe->isr_ops.reset_ack(vfe);
-> --
-> 2.27.0.383.g050319c2ae-goog
->
+take care,
+  Gerd
+
