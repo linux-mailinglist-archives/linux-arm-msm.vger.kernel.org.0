@@ -2,283 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01000248210
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 11:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CD55248246
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 11:52:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726374AbgHRJkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 05:40:55 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:55185 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726370AbgHRJkz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 05:40:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597743654; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=uvO1Cuom7MQDHiD5guU9iypdCG5Ah4NoX6vDWiRvJqY=;
- b=HpFb3+xVBf2tAIXwUZtOfQ9EBOA33Q5mL4bv0+PCIe2Sp+siimLesqf2udFSdCP7Mjz2xtjP
- 57yOeHzyCSIIV9+R5da5sBG02EXphxJEPqEW6J5GpI6qab2hB1X/O7tx4mycLrr5qlxhcONW
- Ivt8aYGMqOYdsS2DAstvCWGGpg4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f3ba1fa2f4952907d7ab131 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 18 Aug 2020 09:40:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3A2E6C433CB; Tue, 18 Aug 2020 09:40:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EB677C433C6;
-        Tue, 18 Aug 2020 09:40:08 +0000 (UTC)
+        id S1726357AbgHRJwo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 05:52:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbgHRJwm (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 05:52:42 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19941C061342
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 02:52:42 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id c6so9186049pje.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 02:52:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HngpiG1gQB2OuVdbYZPjDidF2R9Sis8V4dhpfYTXD1k=;
+        b=qvZlWgB208NPxxvIaw2n/2K91FtxDWBHJczlBRp/y4tdticMmarHzpw8OWL8EnJLSG
+         cdAzk+TR5RvGzwYMWTbY2UXC9FiPatuFj98Ao56UWV/XmycpfhfO9OjIJl7i3r61SRmY
+         zi+scozI+NHZJEcfJUrPye7n7wl+tFkzUaJKhuH+DiTr10EYUAtNRMAmWhJGEO0LyI4K
+         LAMFeaIguZZJs1Qy6AeKbrZcPkAmfyn9m0HRVpJ4HsVEHzWndzyuqOhv2Usu9Tac0eNV
+         synyiAoJxIAvT3DeNua+Z2ggX2bD1LuKJdCststFAlJU5sjhH13F9wuGvF3snlXTvB8m
+         SLnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HngpiG1gQB2OuVdbYZPjDidF2R9Sis8V4dhpfYTXD1k=;
+        b=j7/EpozQLT286vXKkDXqN6uNwY4PAQHdKgQ65iYdTVbqmQNqwc0mnAN+KdBvzWYjx4
+         N0jUHxGg2wDcEdmIyo0lgPL7y6eVTpja5eRpyzh9cnCpIimiaLbmUgpQ3WDZwBV0Wr6S
+         mCQTh9R8DxfyDa7LCM9I4fnJwXB0KCXXxUl3z6kSrvtnd/TZ1iC3jj+NYl7eMS4F82YI
+         w+ALiyJ8ERqruWWS20BA6XTZYjHHQ3Jfpk0xEJEHH6d7VqxV21wJRK0Y9hYszTRYVUAV
+         aMPIyKs3nPMdhU+SgmCPd2EVt58SYX1VP3jdfbxotPFmIgV67XAOa8lsRrIP468coYIl
+         o9NQ==
+X-Gm-Message-State: AOAM532gNg1h+VIUGsW6mNroP1x71325ilWBdG2HfWH/WFJ1D60f6id3
+        xuF73iFNqw9lmkiIQd26wFzu
+X-Google-Smtp-Source: ABdhPJwULNcGMAqp61TcSMHe/zMDxpulczRRMG3x8iFICVkRFnfU9QVCQuo2Pdv0MDhG7rHTGXe1tA==
+X-Received: by 2002:a17:90b:796:: with SMTP id l22mr15965293pjz.46.1597744361514;
+        Tue, 18 Aug 2020 02:52:41 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:796:aa9c:e184:5916:ccba:b6d1])
+        by smtp.gmail.com with ESMTPSA id y19sm23186134pfn.77.2020.08.18.02.52.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 18 Aug 2020 02:52:40 -0700 (PDT)
+Date:   Tue, 18 Aug 2020 15:22:34 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 00/11] Introduce features and debugfs/sysfs entries
+ for MHI
+Message-ID: <20200818095234.GC13207@Mani-XPS-13-9360>
+References: <1597096865-19636-1-git-send-email-bbhatt@codeaurora.org>
+ <20200811062625.GD2762@Mani-XPS-13-9360>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 18 Aug 2020 15:10:08 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCHv2] soc: qcom: llcc: Support chipsets that can write to
- llcc registers
-In-Reply-To: <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
-References: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
- <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
-Message-ID: <2a0c5fa189dbb2e810ba88f59621b65c@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200811062625.GD2762@Mani-XPS-13-9360>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Aug 11, 2020 at 11:56:25AM +0530, Manivannan Sadhasivam wrote:
+> Hi Bhaumik,
+> 
+> On Mon, Aug 10, 2020 at 03:00:54PM -0700, Bhaumik Bhatt wrote:
+> > Save hardware information from BHI.
+> > Allow reading and modifying some MHI variables for debug, test, and
+> > informational purposes using debugfs.
+> > Read values for device specific hardware information to be used by OEMs in
+> > factory testing such as serial number and PK hash using sysfs.
+> > 
+> > This set of patches was tested on arm64 and x86.
+> > 
+> 
+> Sorry for stretching the review so long. Will apply the series to mhi-next
+> once v5.9-rc1 is out.
 
-On 2020-08-18 02:35, Doug Anderson wrote:
-> Hi,
-> 
-> On Mon, Aug 17, 2020 at 7:47 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
->> 
->> Older chipsets may not be allowed to configure certain LLCC registers
->> as that is handled by the secure side software. However, this is not
->> the case for newer chipsets and they must configure these registers
->> according to the contents of the SCT table, while keeping in mind that
->> older targets may not have these capabilities. So add support to allow
->> such configuration of registers to enable capacity based allocation
->> and power collapse retention for capable chipsets.
-> 
-> I have very little idea about what the above means.  That being said,
-> what's broken that this patch fixes?  Please include this in the CL
-> description.  It should answer, in the very least, the following two
-> questions:
-> 
-
-As the commit message says about secure software configuring these LLCC 
-registers,
-usually 2 things can happen in that case.
-
-1) Accessing those registers in non secure world like Kernel would 
-result in a
-fault which is trapped by secure side.
-
-2) Access to those registers may be just ignored and there will be no 
-faults.
-
-So for older chipsets, this is a fix to not allow them to access those 
-registers.
-For newer chipsets, we follow the recommended settings from HW/SW arch 
-teams.
-But... upstream llcc driver only supports SDM845 currently which is not 
-required
-to configure those registers and as per my testing, no crash is observed 
-on SDM845.
-So we won't need fixes tag.
-
-> a) Were existing attempts to do capacity based allocation failing, or
-> is capacity based allocation a new whizbang feature that a future
-> patch will add and you need this one to land first?
-> 
-
-Capacity-based allocation and Way-based allocation are cache 
-partitioning
-schemes/algorithms usually used in shared LLCs. Now which one to use or 
-why
-one is preferred over the other are decided by HW/SW architecture teams 
-and are
-recommended by them. So if the question is what is capacity based 
-allocation and
-how it works, then I am afraid that I will not be able to explain that 
-algorithm
-just like that.
-
-> b) Why was it bad not to enable power collapse retention?  Was this
-> causing things to get corrupted after resume?  Was this causing us to
-> fail to suspend?  Were we burning too little power in S3 and the
-> battery vendors are looking for an excuse to sell bigger batteries?
-> 
-> I'm not very smart and am also lacking documentation for what the heck
-> all this is, so I'm looking for the "why" of your patch.
-> 
-
-That's a fair point. I will try to dig through to find some context for 
-"question b"
-and check if there were any battery vendors involved in this decision ;)
-
-> 
->> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
->> (sai: use table instead of dt property and minor commit msg change)
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->> 
->> Changes in v2:
->>  * Fix build errors reported by kernel test robot.
->> 
->> ---
->>  drivers/soc/qcom/llcc-qcom.c | 27 +++++++++++++++++++++++++++
->>  1 file changed, 27 insertions(+)
->> 
->> diff --git a/drivers/soc/qcom/llcc-qcom.c 
->> b/drivers/soc/qcom/llcc-qcom.c
->> index 429b5a60a1ba..865f607cf502 100644
->> --- a/drivers/soc/qcom/llcc-qcom.c
->> +++ b/drivers/soc/qcom/llcc-qcom.c
->> @@ -45,6 +45,9 @@
->>  #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
->>  #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
->> 
->> +#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21F00
->> +#define LLCC_TRP_PCB_ACT              0x21F04
->> +
->>  #define BANK_OFFSET_STRIDE           0x80000
->> 
->>  /**
->> @@ -318,6 +321,11 @@ size_t llcc_get_slice_size(struct llcc_slice_desc 
->> *desc)
->>  }
->>  EXPORT_SYMBOL_GPL(llcc_get_slice_size);
->> 
->> +static const struct of_device_id __maybe_unused 
->> qcom_llcc_configure_of_match[] = {
->> +       { .compatible = "qcom,sc7180-llcc" },
->> +       { }
->> +};
-> 
-> Why are you introducing a whole second table?  Shouldn't you just add
-> a field to "struct qcom_llcc_config" ?
-> 
-
-This was my 2nd option, first one was to have this based on the version 
-of LLCC
-which are exposed by hw info registers. But that didn't turn out good 
-since I
-couldn't find any relation of this property with LLCC version.
-
-Second option was as you mentioned to have a field to qcom_llcc_config. 
-Now this is good,
-but then I thought that if we add LLCC support for 20(random number) 
-SoCs of which
-10 is capable of supporting cap_based_alloc and rest 10 are not, then we 
-will still be adding
-20 more lines to each SoC's llcc_config if we follow this 2nd option.
-
-So why not opt for a 3rd option with the table where you just need to 
-specify only the capable
-targets which is just 10 in our sample case above.
-
-Am I just overthinking this too much and should just go with the 2nd 
-option as you mentioned?
-
-> 
->> +
->>  static int qcom_llcc_cfg_program(struct platform_device *pdev)
->>  {
->>         int i;
->> @@ -327,13 +335,17 @@ static int qcom_llcc_cfg_program(struct 
->> platform_device *pdev)
->>         u32 attr0_val;
->>         u32 max_cap_cacheline;
->>         u32 sz;
->> +       u32 disable_cap_alloc = 0, retain_pc = 0;
-> 
-> Don't init to 0.  See below.
-> 
-> 
->>         int ret = 0;
->>         const struct llcc_slice_config *llcc_table;
->>         struct llcc_slice_desc desc;
->> +       const struct of_device_id *llcc_configure;
->> 
->>         sz = drv_data->cfg_size;
->>         llcc_table = drv_data->cfg;
->> 
->> +       llcc_configure = of_match_node(qcom_llcc_configure_of_match, 
->> pdev->dev.of_node);
->> +
-> 
-> As per above, just use the existing config.
-> 
-
-See above explanation.
-
-> 
->>         for (i = 0; i < sz; i++) {
->>                 attr1_cfg = 
->> LLCC_TRP_ATTR1_CFGn(llcc_table[i].slice_id);
->>                 attr0_cfg = 
->> LLCC_TRP_ATTR0_CFGn(llcc_table[i].slice_id);
->> @@ -369,6 +381,21 @@ static int qcom_llcc_cfg_program(struct 
->> platform_device *pdev)
->>                                         attr0_val);
->>                 if (ret)
->>                         return ret;
->> +
->> +               if (llcc_configure) {
->> +                       disable_cap_alloc |= 
->> llcc_table[i].dis_cap_alloc << llcc_table[i].slice_id;
-> 
-> Don't "|=".  You're the only place touching this variable.  Just set 
-> it.
-> 
-
-Ack, will change.
-
-> 
->> +                       ret = regmap_write(drv_data->bcast_regmap,
->> +                                               
->> LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
->> +                       if (ret)
->> +                               return ret;
->> +
->> +                       retain_pc |= llcc_table[i].retain_on_pc << 
->> llcc_table[i].slice_id;
-> 
-> Don't "|=".  You're the only place touching this variable.  Just set 
-> it.
-> 
-
-Ack, will change.
+Series applied to mhi-next!
 
 Thanks,
-Sai
+Mani
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+> 
+> Thanks,
+> Mani
+> 
+> > v7:
+> > -Added suggested-by and reviewed-by tags
+> > -Fixed nitpick on removal of M3_fast counter as it was unused
+> > -Updated sysfs documentation dates and intended kernel version
+> > -Fixed minor debugfs formatting by removing an extra newline character
+> > 
+> > v6:
+> > -Introduced APIs for allocating and freeing the MHI controller so as to ensure
+> > that it is always zero-initialized
+> > -Moved gerrits around for counter introduction
+> > -Fixed documentation for sysfs
+> > 
+> > v5:
+> > -Removed the debug entry to trigger reset and will be addressed in a seperate
+> > patch
+> > -Added patch bus: mhi: core: Use counters to track MHI device state transitions
+> > -Updated helper API to trigger a non-blocking host resume
+> > -Minor nitpicks also fixed
+> > 
+> > v4:
+> > -Removed bus: mhi: core: Introduce independent voting mechanism patch
+> > -Removed bus vote function from debugfs due to independent voting removal
+> > -Added helper resume APIs to aid consolidation of spread out code
+> > -Added a clean-up patch and a missing host resume in voting API
+> > 
+> > v3:
+> > -Add patch to check for pending packets in suspend as a dependency for the
+> > independent voting mechanism introduction
+> > -Include register dump entry for debugfs to dump MHI, BHI, and BHIe registers
+> > -Update commit message for the debugfs patch
+> > -Updated Documentation/ABI with the required info for sysfs
+> > -Updated debugfs patch to include a new KConfig entry and dependencies
+> > -Updated reviewed-by for some patches
+> > 
+> > v2:
+> > -Added a new debugfs.c file for specific debugfs entries and code
+> > -Updated commit text and addressed some comments for voting change
+> > -Made sure sysfs is only used for serial number and OEM PK hash usage
+> > 
+> > Bhaumik Bhatt (11):
+> >   bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task()
+> >     declaration
+> >   bus: mhi: core: Abort suspends due to outgoing pending packets
+> >   bus: mhi: core: Use helper API to trigger a non-blocking host resume
+> >   bus: mhi: core: Trigger host resume if suspended during
+> >     mhi_device_get()
+> >   bus: mhi: core: Use generic name field for an MHI device
+> >   bus: mhi: core: Introduce helper function to check device state
+> >   bus: mhi: core: Introduce counters to track MHI device state
+> >     transitions
+> >   bus: mhi: core: Introduce debugfs entries for MHI
+> >   bus: mhi: core: Read and save device hardware information from BHI
+> >   bus: mhi: core: Introduce APIs to allocate and free the MHI controller
+> >   bus: mhi: core: Introduce sysfs entries for MHI
+> > 
+> >  Documentation/ABI/stable/sysfs-bus-mhi |  21 ++
+> >  MAINTAINERS                            |   1 +
+> >  drivers/bus/mhi/Kconfig                |   8 +
+> >  drivers/bus/mhi/core/Makefile          |   5 +-
+> >  drivers/bus/mhi/core/boot.c            |  17 +-
+> >  drivers/bus/mhi/core/debugfs.c         | 409 +++++++++++++++++++++++++++++++++
+> >  drivers/bus/mhi/core/init.c            |  81 ++++++-
+> >  drivers/bus/mhi/core/internal.h        |  37 ++-
+> >  drivers/bus/mhi/core/main.c            |  27 +--
+> >  drivers/bus/mhi/core/pm.c              |  26 ++-
+> >  include/linux/mhi.h                    |  30 ++-
+> >  11 files changed, 623 insertions(+), 39 deletions(-)
+> >  create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+> >  create mode 100644 drivers/bus/mhi/core/debugfs.c
+> > 
+> > -- 
+> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
+> > 
