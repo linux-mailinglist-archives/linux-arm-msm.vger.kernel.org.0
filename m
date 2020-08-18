@@ -2,173 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75B65248A01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 17:37:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3CDB248B09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 18:06:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726585AbgHRPhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 11:37:40 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:27711 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728025AbgHRPhj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 11:37:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597765059; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=hsDdRxoJeEJ8Y/dmt5JkrFOLYYx8r7UcYhdUGHIviGc=;
- b=B083McDmsp5Ci5RfE3BmiEUpS0Z8/v9RyNywB09PG3JBjPSCnuVfxFfnWxSWsKC92MXo8UZ7
- fWRyEgyWTzRwH9US3DxBJx3xUaTqexEOqdDdYZWD183+PNQAqj6DKNMY2fb+JurkNc+7uKsT
- 3tKyHqWxP4yzOmnGFn+Sl4lSxL4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f3bf5c2ba4c2cd367552f9f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 18 Aug 2020 15:37:38
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7CE07C43391; Tue, 18 Aug 2020 15:37:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9D0ADC433C6;
-        Tue, 18 Aug 2020 15:37:36 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 18 Aug 2020 21:07:36 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Doug Anderson <dianders@chromium.org>
+        id S1726870AbgHRQG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 12:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39022 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbgHRQGT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 12:06:19 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C15AC061343
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 09:06:19 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id p4so18761458qkf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 09:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xb6+E88tPfrh7pXAb8/QpJmE56xGtpeHAmtdqNrSre8=;
+        b=iFWIrMUj1y8bl5vDvdxItFMkHBHiLl3hFAn4vTP5yUsEd5zLRXmh+2g+omU4U+PsKd
+         ee99TzJ1jI8wfz8gbK+n8amNNPa4BM4m25x5SEMFB8s6k+KAEEqLm2kpfBuz6v0Z1igh
+         JUNdY0Ls0lIakRjtBkbWpyNk3UhMy6iosG8ZRdlpLla/8eHCOGJ5MlmVgCFXKXicM79B
+         nZ37CP3fQjmGvzVhCh0J4kMhtWq03CzOGKXhL0rqxIZh7r23FxTc4E4scARgIXDjIEBG
+         0vZKTD60YSzvm4udK3cS4jsEKDaLMItlBQOXx5NupganU2WohItyk+nDZSoJ3ex9hqPg
+         L0ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xb6+E88tPfrh7pXAb8/QpJmE56xGtpeHAmtdqNrSre8=;
+        b=V2COJ4P4TaNfgIiNFRyamzXFXN8B8kcUodFGR/puKGkeHZOH6oPjsWpJTzmdkt/XCo
+         hn4Wvsi4VlbVJjMc/DBvk1a1KIwGac/+VwaxDAFJXk2ZY4LfBsQ9Dxr7Pd05fWdnd4+z
+         OQ1m/kF+DhqG5vBjsLHy0axLvqdgnmLHjJ58+q9wnl325XgsInaWLT8R61PEM3FA1WFy
+         bJ9YLAqoz7QpumuDQxk83Ovh9JlLphEi86KFiXuuG5+AgMRO34Q18RWGML4czgw114/a
+         y/K4Mi0n/O4oy7oOLAhHGF3Un/rkS3/U02WhXjA20zYguAzTMwKW9o/Y0bMLgz1rD/Vf
+         jF0w==
+X-Gm-Message-State: AOAM532GGeCa6rU5plt8TFMc4JGaD3Wg5KrK/GK3EtcaYXTKOwlDTT15
+        m4AKooFd2ZaoOOvRBtK3SkQdRvDqafu5oeN4
+X-Google-Smtp-Source: ABdhPJxRl+Vb8fTDjmbgOzk/DiCo6S63qpktDOPwsZIZMqiBL4j0ZZXaQ/Yn6ZwA2oXdSmuZOAKRew==
+X-Received: by 2002:a37:6644:: with SMTP id a65mr17827907qkc.4.1597766778037;
+        Tue, 18 Aug 2020 09:06:18 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id 128sm21198034qkk.101.2020.08.18.09.06.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Aug 2020 09:06:17 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCHv2] soc: qcom: llcc: Support chipsets that can write to
- llcc registers
-In-Reply-To: <CAD=FV=X8yS1gUNhhVNyfuRPzDUheG2Rco2g16KMegCG6fKJw7Q@mail.gmail.com>
-References: <20200817144722.6665-1-saiprakash.ranjan@codeaurora.org>
- <CAD=FV=VE6vCPjDvvP0e73tnd8u5rPuMUa-mwvDazrfUpXP+bKQ@mail.gmail.com>
- <2a0c5fa189dbb2e810ba88f59621b65c@codeaurora.org>
- <CAD=FV=X8yS1gUNhhVNyfuRPzDUheG2Rco2g16KMegCG6fKJw7Q@mail.gmail.com>
-Message-ID: <d949bdfa15b133f74a47727401553c76@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/3] arm64: dts: qcom: sm8150: fix up primary USB nodes
+Date:   Tue, 18 Aug 2020 12:04:43 -0400
+Message-Id: <20200818160445.14008-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Doug,
+The compatible for hsphy has out of place indentation, and the assigned
+clock rate for GCC_USB30_PRIM_MASTER_CLK is incorrect, the clock doesn't
+support a rate of 150000000. Use a rate of 200000000 to match downstream.
 
-On 2020-08-18 20:42, Doug Anderson wrote:
-> Hi,
-> 
-<snip>...
+Fixes: b33d2868e8d3 ("arm64: dts: qcom: sm8150: Add USB and PHY device nodes")
 
-> 
-> I guess to start, it wasn't obvious (to me) that there were two
-> choices and we were picking one.  Mentioning that the other
-> alternative was way-based allocation would help a lot.  Even if you
-> can't fully explain the differences between the two, adding something
-> to the commit message indicating that this is a policy decision (in
-> other words, both work but each have their tradeoffs) would help.
-> Something like this, if it's correct:
-> 
-> In general we try to enable capacity based allocation (instead of the
-> default way based allocation) since that gives us better performance
-> with the current software / hardware configuration.
-> 
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks, I will add it for next version. Let me also go poke some arch 
-teams
-to understand if we actually do gain something with this selection, who 
-knows
-we might get some additional details as well.
-
->> >
->> > Why are you introducing a whole second table?  Shouldn't you just add
->> > a field to "struct qcom_llcc_config" ?
->> >
->> 
->> This was my 2nd option, first one was to have this based on the 
->> version
->> of LLCC
->> which are exposed by hw info registers. But that didn't turn out good
->> since I
->> couldn't find any relation of this property with LLCC version.
->> 
->> Second option was as you mentioned to have a field to 
->> qcom_llcc_config.
->> Now this is good,
->> but then I thought that if we add LLCC support for 20(random number)
->> SoCs of which
->> 10 is capable of supporting cap_based_alloc and rest 10 are not, then 
->> we
->> will still be adding
->> 20 more lines to each SoC's llcc_config if we follow this 2nd option.
-> 
-> If you do it right, you'd only need to add lines to the SoCs that need
-> it.  Linux conventions in general are that it's OK (and encouraged) to
-> rely on the fact that if you don't mention a variable in static
-> initialization it's initted to 0/False/NULL.  So if the member
-> variable is "need_llcc_config" then you only need to add this in
-> places where you're setting it to true.  It only needs to be a boolean
-> so if later someone really is worried about all the bytes that flags
-> like this are taking up we can use a bitfield.  For now (presumably)
-> just adding a boolean would be more efficient since (presumably) the
-> extra code needed to access a bitfield would be more than the extra
-> data bytes used.  In theory this could also be initdata probably, too.
-> 
-
-Yes but in this case we would better be explicit about the capable SoCs
-because for someone in QCOM it would be easier to confirm if the SoC is
-actually capable but it will not be very obvious for outside folks that
-the particular SoC actually supports it. I will use a boolean field 
-properly
-initialized to indicate if a particular SoC is capable or not.
-
-> 
->> So why not opt for a 3rd option with the table where you just need to
->> specify only the capable
->> targets which is just 10 in our sample case above.
-> 
-> Are you trying to save space?  ...or complexity?  Sure a good compiler
-> will probably pool the constant string here so you won't need to
-> allocate it twice, but IMO having a second match table is more
-> complex.  You also need at least a pointer + bool per entry.  Each
-> probe will now need to parse through all these strings, too.  None of
-> this is a big deal, but I'd bet just adding a field to the existing
-> struct is lower overhead all around.
-> 
-
-Mostly space, but I agree now that the boolean field is indeed better 
-than
-a separate table.
-
-> 
->> Am I just overthinking this too much and should just go with the 2nd
->> option as you mentioned?
-> 
-> Someone could feel free to vote against me, but I'd just add to the
-> existing config.
-> 
-
-I vote for you :)
-
-Thanks,
-Sai
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index b86a7ead3006..ab8680c6672e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -767,7 +767,7 @@ glink-edge {
+ 
+ 		usb_1_hsphy: phy@88e2000 {
+ 			compatible = "qcom,sm8150-usb-hs-phy",
+-							"qcom,usb-snps-hs-7nm-phy";
++				     "qcom,usb-snps-hs-7nm-phy";
+ 			reg = <0 0x088e2000 0 0x400>;
+ 			status = "disabled";
+ 			#phy-cells = <0>;
+@@ -833,7 +833,7 @@ usb_1: usb@a6f8800 {
+ 
+ 			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+ 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+-			assigned-clock-rates = <19200000>, <150000000>;
++			assigned-clock-rates = <19200000>, <200000000>;
+ 
+ 			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.1
+
