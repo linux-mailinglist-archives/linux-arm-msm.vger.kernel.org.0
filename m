@@ -2,84 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41AAE248734
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 16:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 645EB248780
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 16:28:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726698AbgHROTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 10:19:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56950 "EHLO mail.kernel.org"
+        id S1726863AbgHRO22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 10:28:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44032 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726612AbgHROS6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:18:58 -0400
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl [83.86.89.107])
+        id S1726660AbgHRO21 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:28:27 -0400
+Received: from coco.lan (ip5f5ad5a3.dynamic.kabel-deutschland.de [95.90.213.163])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1E38C20786;
-        Tue, 18 Aug 2020 14:18:56 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6A1CD207D3;
+        Tue, 18 Aug 2020 14:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597760337;
-        bh=q04K0Ou4ZszLumqF/XYpooMQUDyI6Hxy/aWw2HXfGYc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=w8rlkhsf+Vd2d9PmYMVpOj596PW4Bq4XMG2+b01zpNHJa3svDOEdLzRyUNUZRQDLX
-         Y4THoJ4MiqLCMgr04IJkdqv89On51IXV2GzA1fMb8H7SXp1gb1s33RVdPg/ETSD0rD
-         gNfalzLF1t7JoWB1823T1+m8jqxUSNi3ZO2cqKCo=
-Date:   Tue, 18 Aug 2020 16:19:21 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linuxarm@huawei.com,
-        mauro.chehab@huawei.com, Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3.1 43/44] dt: document HiSilicon SPMI controller and
- mfd/regulator properties
-Message-ID: <20200818141921.GB608639@kroah.com>
+        s=default; t=1597760906;
+        bh=TyjAOtFLUcdkHJqVznsWOj1rsY2m5SGYugIkegCaavY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=bxizRbar0YqT2TrzigWWLFiyjHd8OrzPxdbiHrSL99ATPBIiho1ScQAO7glgsBm1d
+         CbqL8TXLmE9kPn/MY2ElMs8rz7fnLBvYK+P6j8yH2z/fv3Q506iLRcxsBsCOKM8oYr
+         TVBv9HaIJ85o0Un2VIykpVXUobCuAXfcoKVL/ss4=
+Date:   Tue, 18 Aug 2020 16:28:20 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     devel@driverdev.osuosl.org, devicetree@vger.kernel.org,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linuxarm@huawei.com, Wei Xu <xuwei5@hisilicon.com>,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, mauro.chehab@huawei.com,
+        Lee Jones <lee.jones@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 00/44] SPMI patches needed by Hikey 970
+Message-ID: <20200818162820.3c78c33c@coco.lan>
+In-Reply-To: <20200818141750.GA608639@kroah.com>
 References: <cover.1597647359.git.mchehab+huawei@kernel.org>
- <2f88fed96d67b05fc033356fdbb7e3227955ab34.1597647359.git.mchehab+huawei@kernel.org>
- <20200818131024.6918c5ca@coco.lan>
+        <20200818141750.GA608639@kroah.com>
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200818131024.6918c5ca@coco.lan>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 18, 2020 at 01:10:24PM +0200, Mauro Carvalho Chehab wrote:
-> From e464ec2c38c083403b556e60f189ee8ae2f2c9c6 Mon Sep 17 00:00:00 2001
-> From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Date: Fri, 31 Jul 2020 09:46:02 +0200
-> Subject: [PATCH] dt: document HiSilicon SPMI controller and mfd/regulator
->  properties
-> 
-> Add documentation for the properties needed by the HiSilicon
-> 6421v600 driver, and by the SPMI controller used to access
-> the chipset.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> 
+Em Tue, 18 Aug 2020 16:17:50 +0200
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> escreveu:
 
-Did you mean to enclose the whole patch, headers and all in here?
-
-
-> ---
+> On Mon, Aug 17, 2020 at 09:10:19AM +0200, Mauro Carvalho Chehab wrote:
+> > Hi Greg,
+> > 
+> > This patch series is part of a work I'm doing in order to be able to support
+> > a HiKey 970 board that I recently got on my hands.  
 > 
-> v3.1:
->   - Changed the DT properties to better match upstream requirements
+> With this applied, I get the following build error:
+> ERROR: modpost: "__spmi_driver_register" [drivers/staging/hikey9xx/hi6421-spmi-pmic.ko] undefined!
+> ERROR: modpost: "spmi_ext_register_writel" [drivers/staging/hikey9xx/hi6421-spmi-pmic.ko] undefined!
+> ERROR: modpost: "spmi_ext_register_readl" [drivers/staging/hikey9xx/hi6421-spmi-pmic.ko] undefined!
+> ERROR: modpost: "spmi_controller_add" [drivers/staging/hikey9xx/hisi-spmi-controller.ko] undefined!
+> ERROR: modpost: "spmi_controller_alloc" [drivers/staging/hikey9xx/hisi-spmi-controller.ko] undefined!
+> ERROR: modpost: "spmi_controller_remove" [drivers/staging/hikey9xx/hisi-spmi-controller.ko] undefined!
 > 
-> PS.: I opted to submit just this patch, instead of the entire
-> series, in order to avoid flooding people's ML.
 > 
-> I'll be posting the full series again after DT specs match
-> upstream requirements.
-> 
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
+> I'll take this in my testing tree for now, can you send a follow-on
+> patch to fix this?
 
-staging drivers should be self-contained, please keep dt files within
-the staging driver directory for the driver until they move out of
-staging if at all possible.
+Surely. That's because it got moved from drivers/spmi/Kconfig.
+The Kconfig var was inside a:
 
-thanks,
+if SPMI
+...
+endif
 
-greg k-h
+This driver should "depends on SPMI". I'll send you a patch in a few.
+
+Thanks,
+Mauro
