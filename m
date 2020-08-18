@@ -2,91 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F03BC24802C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 10:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CC7B248066
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Aug 2020 10:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbgHRIHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Aug 2020 04:07:49 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.164]:27443 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbgHRIHs (ORCPT
+        id S1726422AbgHRITp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Aug 2020 04:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726519AbgHRITl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Aug 2020 04:07:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1597738066;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=Sa6jvtdPVGZ4UY44hxrbez3dnraoZ3qAJx2JS97LFqc=;
-        b=mpjSzDdRvH0k1/laSfHU3+bjC/WNdEAPJxOd3cT921CpWZn83GKMIQOk21R0Yv+VML
-        C9K5mxTqjbViVJONjcx6hJUfpL4FJk8TZJaC6cbn9uhb4RGwA9YaGbqTrrOz4Fp0e+CF
-        9QU+St4aNtJApY2Llj5ezpdyB7DHuwcpW26w4mOq6BajNlZ66YZYuJQ7LlPhqzliOOUE
-        AO0QS69wUc/Ju38ZgaZEihOTRtSoZh542IcAICzPGdCfFv0PwlAkGHG6YuYQnLjBq9+Y
-        BUXTJGFBTvJbG7A6q9wU+WApEjdgRVkMj0VEDmo0DlI0CFg8o5XB9FYq+Em7k7I/PTgs
-        szbw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/CaIo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.5 DYNA|AUTH)
-        with ESMTPSA id Y0939ew7I87iLnK
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Tue, 18 Aug 2020 10:07:44 +0200 (CEST)
-Date:   Tue, 18 Aug 2020 10:07:38 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH] clk: qcom: smd: Disable unused clocks
-Message-ID: <20200818080738.GA46574@gerhold.net>
-References: <20200817140908.185976-1-stephan@gerhold.net>
- <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com>
+        Tue, 18 Aug 2020 04:19:41 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F337C061343
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 01:19:41 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id j188so9683944vsd.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Aug 2020 01:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7qc0PHRmHyAV4s08h+mPSQ2AKSM82PMkMzXSGAIjIyU=;
+        b=DGV+F2+cb52Nj0BMWEB9lOedhoMtfTPFWPkhPnUA07d4XhpQRQncJtBjzy9Qd4fQvO
+         wKMC5NqMbgse/bTlW2J66+51iNFlL5zsDgzZ+IHpo/YO18KOA7/VLYohfqy1geb6Hv2T
+         6AamAPl7j4a62C9ohOa3SKrwZwXb5kf0R/790=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7qc0PHRmHyAV4s08h+mPSQ2AKSM82PMkMzXSGAIjIyU=;
+        b=ej25rLkjXcA4Bxd+nqWbnCXHUa/Ro30JyqYmvGlxjrAqjL+bTQOS5ksZWVpGzoXLqF
+         W0A4MKPivkKm1fpFiTdbHgozKmbVmuSNozpimoawpJlLFIsbA4KJ01dA+zSLaKWLA9gN
+         9Rtzjcdv46Ywu8fodNaZirA+6Gv1S/QBOCi7pfwMQO07+870XN/ls1sJ/VDl1GqXrddv
+         gz4ZmmIu4fpdQ2HpwH8Ndr52Jx/9epbfuyy2uKcSqT3wq7P17+PCwij71eBgy9eOwbN7
+         0FGrvX2L7KQkpDtmh/VkjnlIUTmhnXfGE14NcP+BbHX7e3xE5JAVoxCIWTUn6LshSNpM
+         hs2g==
+X-Gm-Message-State: AOAM531z4zgL7GiTBR/iM1fZAOt355odC2qTJxxDCMvP+5kcqbvaE9kX
+        vzQsid+9j+l39+TkB7PiuB96e+DEsir8r9sy3Pd1JA==
+X-Google-Smtp-Source: ABdhPJzreYfi0fbtitn2tr3QZ68MpwlV8vAMN6ra3gV3OoMTaqXKSc8vnlwpvhOn3Pco3m2Op2M0MAJHaVOIWKWSBNM=
+X-Received: by 2002:a67:68d2:: with SMTP id d201mr10537283vsc.186.1597738780361;
+ Tue, 18 Aug 2020 01:19:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com>
+References: <20200710144747.RESEND.1.Ifae7abaacb81af1cdc6475986cc788d71de8a13c@changeid>
+In-Reply-To: <20200710144747.RESEND.1.Ifae7abaacb81af1cdc6475986cc788d71de8a13c@changeid>
+From:   Nicolas Boichat <drinkcat@chromium.org>
+Date:   Tue, 18 Aug 2020 16:19:29 +0800
+Message-ID: <CANMq1KAe5o8oxzTyVMNsoZXBuopVFQqFdKassu67Fssx0xk8Ww@mail.gmail.com>
+Subject: Re: [RESEND PATCH] media: camss: vfe: Use trace_printk for debugging only
+To:     Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        linux-arm-msm@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+On Fri, Jul 10, 2020 at 2:48 PM Nicolas Boichat <drinkcat@chromium.org> wrote:
+>
+> trace_printk should not be used in production code. Since
+> tracing interrupts is presumably latency sensitive, pr_dbg is
+> not appropriate, so guard the call with a preprocessor symbol
+> that can be defined for debugging purpose.
+>
+> Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
+> ---
+> Sent this before as part of a series (whose 4th patch was a
+> change that allows to detect such trace_printk), but maybe it's
+> easier to get individual maintainer attention by splitting it.
 
-On Mon, Aug 17, 2020 at 08:52:46AM -0600, Jeffrey Hugo wrote:
-> So essentially, when the clk framework goes through late init, and
-> decides to turn off clocks that are not being used, it will also turn
-> off these clocks?
-> 
-> I think this is going to break other targets where other subsystems
-> happen to rely on these sorts of votes from Linux inorder to run/boot
-> (not saying it's a good thing, just that is how it is and since we
-> can't change the FW on those....).
-> 
+Mauro, can I get your attention on this patch? This still applies on
+the latest 5.9-rc1/linux-next.
 
-After thinking about it some more I realized there are definitely some
-of the clocks we shouldn't disable even when unused, for example the
-interconnect clocks. With interconnect drivers disabled the system
-basically locked up entirely once the clock core disabled the clocks.
+Thanks!
 
-For now I fixed this by marking all of DEFINE_CLK_SMD_RPM() as
-CLK_IGNORE_UNUSED (essentially restoring the current behavior of the
-driver). For MSM8916 these are exactly the interconnect clocks, but on
-other platforms there are further clocks that might not need
-CLK_IGNORE_UNUSED. This could be still optimized later.
 
-> I think this needs to be validated on every single qcom platform using
-> this driver.
-> 
-
-After running into the issue above I kind of agree with you. While
-problems should be limited by marking the "rate" clocks as
-CLK_IGNORE_UNUSED, it's also possible that one of the platforms requires
-one of the branch clocks to stay on to boot successfully.
-
-I know for sure that this works properly on MSM8916, so maybe I should
-make it opt-in and then we add it for each platform after validating it?
-
-Stephan
+>
+>  drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 2 ++
+>  drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 2 ++
+>  2 files changed, 4 insertions(+)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> index 174a36be6f5d866..0c57171fae4f9e9 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> @@ -936,8 +936,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+>
+>         vfe->ops->isr_read(vfe, &value0, &value1);
+>
+> +#ifdef CAMSS_VFE_TRACE_IRQ
+>         trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
+>                      value0, value1);
+> +#endif
+>
+>         if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
+>                 vfe->isr_ops.reset_ack(vfe);
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> index 0dca8bf9281e774..307675925e5c779 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> @@ -1058,8 +1058,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+>
+>         vfe->ops->isr_read(vfe, &value0, &value1);
+>
+> +#ifdef CAMSS_VFE_TRACE_IRQ
+>         trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
+>                      value0, value1);
+> +#endif
+>
+>         if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
+>                 vfe->isr_ops.reset_ack(vfe);
+> --
+> 2.27.0.383.g050319c2ae-goog
+>
