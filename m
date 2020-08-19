@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B709F2499D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 12:08:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 532472499DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 12:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726851AbgHSKIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Aug 2020 06:08:41 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:24424 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726782AbgHSKIl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Aug 2020 06:08:41 -0400
+        id S1726634AbgHSKJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Aug 2020 06:09:23 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:21755 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726702AbgHSKJW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Aug 2020 06:09:22 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597831720; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1597831761; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=62a6fpIGjEYW5C+HhwDJTu6m6o0orHTEC1RoLTgLTbg=; b=typuU3XNG2tx5bdMw8fu99hzhBjSV9xPyK8q0Yt6G3Axn80o6LoWs+cv/Jv8oAEI52pbZxE7
- uydjlbb8q/2+6CLFWZPOW13Q/WZH1h58l3K1wrrF7dXf1zv97MG49MLPAR1p/MBGowq0M6uK
- lPdH5b2KGcPcc6sT365BbI7I9r8=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ bh=Ss165PFmLfrUltmfdxLdXxBgXxOxl/dVF2U4JC6NEFM=; b=ks/A8wJ+oc7tbzpWIJJ5R++xQ6zBPKfod0X87cfZZm+lBPkitF70wR/5EBFowDdoNiNporYI
+ QI+bH+wbvFxWHRYuGW/PSmKbv3el8YWnLRqWBHkcqoQPeVtgyak3TXBpO/aMqUjEr5MvHUmA
+ 6QsvbGjfsCIJSw0mSIPhIQm8S3E=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f3cfa2703528d40241c2688 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 19 Aug 2020 10:08:39
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f3cfa2d4c787f237be64bda (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 19 Aug 2020 10:08:45
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 73539C43391; Wed, 19 Aug 2020 10:08:39 +0000 (UTC)
+        id 4C488C433AD; Wed, 19 Aug 2020 10:08:45 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +36,9 @@ Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6162C433CA;
-        Wed, 19 Aug 2020 10:08:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B6162C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A4EDC433CA;
+        Wed, 19 Aug 2020 10:08:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A4EDC433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
 From:   Maulik Shah <mkshah@codeaurora.org>
@@ -48,12 +47,13 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         ulf.hansson@linaro.org, swboyd@chromium.org, dianders@chromium.org,
         rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
         Maulik Shah <mkshah@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         John Stultz <john.stultz@linaro.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: [PATCH 1/2] Revert "drivers: qcom: rpmh-rsc: Use rcuidle tracepoints for rpmh"
-Date:   Wed, 19 Aug 2020 15:37:49 +0530
-Message-Id: <1597831670-17401-2-git-send-email-mkshah@codeaurora.org>
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Todd Kjos <tkjos@google.com>,
+        Saravana Kannan <saravanak@google.com>
+Subject: [PATCH 2/2] Revert "Revert "soc: qcom: rpmh: Allow RPMH driver to be loaded as a module""
+Date:   Wed, 19 Aug 2020 15:37:50 +0530
+Message-Id: <1597831670-17401-3-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org>
 References: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org>
@@ -62,54 +62,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change was done based on an test results of unmerged series of
-adding RSC power domain and using .power_off callback of genpd to
-invoke rpmh_flush().
+The _rcuidle tracepoints are removed from RPMH driver which prevented
+to compile it as module. Bring back the change to make it module.
 
-     Call trace:
-      dump_backtrace+0x0/0x174
-      show_stack+0x20/0x2c
-      dump_stack+0xc8/0x124
-      lockdep_rcu_suspicious+0xe4/0x104
-      __tcs_buffer_write+0x230/0x2d0
-      rpmh_rsc_write_ctrl_data+0x210/0x270
-      rpmh_flush+0x84/0x24c
-      rpmh_domain_power_off+0x78/0x98
-      _genpd_power_off+0x40/0xc0
-      genpd_power_off+0x168/0x208
+This reverts commit 1f7a3eb785e4a4e196729cd3d5ec97bd5f9f2940.
 
-Later the final merged solution is to use CPU PM notification to invoke
-rpmh_flush() and .power_off callback of genpd is not implemented in the
-driver.
-
-Remove this change since RCU will not be idle during CPU PM notifications
-hence not required to use _rcuidle tracepoint. Using _rcuidle tracepoint
-prevented rpmh driver to be loadable module as these are not exported
-symbols.
-
-This reverts commit efde2659b0fe835732047357b2902cca14f054d9.
-
-Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 Cc: John Stultz <john.stultz@linaro.org>
 Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Todd Kjos <tkjos@google.com>
+Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/Kconfig    | 2 +-
+ drivers/soc/qcom/rpmh-rsc.c | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 3dc3e3d..892bdc7 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -92,7 +92,7 @@ config QCOM_RMTFS_MEM
+ 	  Say y here if you intend to boot the modem remoteproc.
+ 
+ config QCOM_RPMH
+-	bool "Qualcomm RPM-Hardened (RPMH) Communication"
++	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	help
+ 	  Support for communication with the hardened-RPM blocks in
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index ae66757..fabe390d 100644
+index fabe390d..5fce87c 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -495,7 +495,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
- 		write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
- 		write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
- 		write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
--		trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
-+		trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
- 	}
+@@ -13,6 +13,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
++#include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+ #include <linux/of_platform.h>
+@@ -1025,6 +1026,7 @@ static const struct of_device_id rpmh_drv_match[] = {
+ 	{ .compatible = "qcom,rpmh-rsc", },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, rpmh_drv_match);
  
- 	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
+ static struct platform_driver rpmh_driver = {
+ 	.probe = rpmh_rsc_probe,
+@@ -1040,3 +1042,6 @@ static int __init rpmh_driver_init(void)
+ 	return platform_driver_register(&rpmh_driver);
+ }
+ arch_initcall(rpmh_driver_init);
++
++MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPMh Driver");
++MODULE_LICENSE("GPL v2");
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
