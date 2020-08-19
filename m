@@ -2,96 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70E3A249996
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 11:48:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7377B2499DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 12:08:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726835AbgHSJsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Aug 2020 05:48:45 -0400
-Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:60123 "EHLO
-        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725804AbgHSJsm (ORCPT
+        id S1727019AbgHSKIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Aug 2020 06:08:51 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:61733 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726634AbgHSKIv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Aug 2020 05:48:42 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id 8KhzkbGWquuXO8Ki0kgC51; Wed, 19 Aug 2020 11:48:40 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1597830520; bh=rjyXPWRP1g01llTCNBoRc20RbTVne5BReTjfQigN/qE=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=aRVi+LKuPvEAGBtVbilrwMVfjfRiLtzdmajEDiu1Wcf8Cq7SZ/MBSBMR+w6OVcjDk
-         UhL1Qi21AUJsJabaE1KSxxbCIbD0Z5oKK/8Ptxow60bjJDawXc8fYi7YNCm5V1ibsC
-         lsEPGSgldRvXIZlLhjpfmp3dD0kvsD4lBYLJbgvTyQNI7JVR4jBc3HgmdYrlrr8vV5
-         vm/Ek0kr1l3NI46NWtkCGP1p4YAsc2F4nkwyBCphdgwGhRcxScH6SGlBleCG49C8K4
-         1qxFoO9oB3jtfmOKr4zYIUnW1NeThgBBON7T1hM/6c43oYuco5LAOSzjdEc4k8U8Uf
-         UN8P9OdvyHxoA==
-Subject: Re: [PATCH v2 6/6] media: docs: Deprecate mfc frame skip control
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Jeongtae Park <jtp.park@samsung.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Maheshwar Ajja <majja@codeaurora.org>,
-        Nicolas Dufresne <nicolas@ndufresne.ca>
-References: <20200721074538.505-1-stanimir.varbanov@linaro.org>
- <20200721074538.505-7-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil@xs4all.nl>
-Message-ID: <5619ba1a-c9e3-74f9-af21-76b4961d245b@xs4all.nl>
-Date:   Wed, 19 Aug 2020 11:48:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20200721074538.505-7-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOfshgSS/4pnrc0r98ip6Dp7/2WOW9Q9jCnxE/ED9msv5AQOlP+XJ5tWWhVxDHU0mlTIH0FrR+PsE0/EwbZdTLUask/ZDkVFfpZ5Uy80GCygBGP33h7V
- MAgQpLq0KKro9DdC9mn0LVhKYvIa263Y8Vmv9JN5Apk2Jw3LY4NuWis1+2F1QN0F6/m/2Q8CwXL5GBbngkSlLKMAM1kd52Z12VHTnCMMfdMld0S7pNJkFm4k
- rLP6fC/V8yGbbF/Ye/nsnhxypOy3iyBTLcgzN1DKVHcrDmxeIcckxTZp0HiMBYZZ78za+FGaCI191hlOCNlPsoFIoGk7kKaUxM8PIXFO4L1G91QhWeKXmi3y
- EkcxH2/0AeQoOsgJlQrxJOuOjvbe3Gd1Y8I4hdX/M692dtRZkvIb4e6HCuDjs1CNHc/XX9JAOvqIrsywYaJ93Ze84SwLFdYo6z4Ii9zIU/lit5mjUDngBmJi
- mS2XxKqkkz0b8zL8naJC4Hyk8azijsK/DBr48tU+KfSfTtPtUgGVtP0+fMOZ2bY8OSKWawMXYTijBQLxHmS3YcRbKDPHMbOa3hNcZHzJ+q+zP9li9IOsF4rk
- HObnjCxxPisc+u2eAOIhs6nCvzg6/bPRETL/yqAahSPtsICQ4VpyMBXEayuboK9HkIdYdswRdK1iINY+rQZqY6xQB/M1J/oipWXksuJoZrVdHG+EaSwYkBKB
- sl7s5yRg5Jo=
+        Wed, 19 Aug 2020 06:08:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597831731; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=acCLhPYF895rY4+YkNwOPoPFcn74g/cbAW8ROODxMPs=; b=PLRyN2HpQXlaImdWvff3fkuL1RrE/0zZg7RJ102H6PFR7eV/kN6nA2W6oSq5nNaROoPvX23O
+ lCH9HMIriS+Ukfxty4nI0b8kQwRVlfVnYbIRMRP2C+vHQnb9SbOBVr4UJc4d3dayqNp4C6wV
+ PKuyLazBAmDBHO4kLUyd3tIoQPg=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f3cfa2303528d40241c1fc8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 19 Aug 2020 10:08:35
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 23316C43387; Wed, 19 Aug 2020 10:08:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 16DD0C433C6;
+        Wed, 19 Aug 2020 10:08:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 16DD0C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        ulf.hansson@linaro.org, swboyd@chromium.org, dianders@chromium.org,
+        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH 0/2] Modularize RPMH driver
+Date:   Wed, 19 Aug 2020 15:37:48 +0530
+Message-Id: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/07/2020 09:45, Stanimir Varbanov wrote:
-> Deprecate mfc private frame skip mode control for new
-> clients and use the standard one instead.
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+This series is to modularize RPMH driver
 
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The tracepoint in RPMH driver was changed to _rcuidle variant based on the
+test results of unmerged series [1] where .power_off callback from genpd
+reported RCU warnings. 
 
-Regards,
+The series which finally got merged [2] uses CPU PM notifications
+and genpd .power_off callback is not implemented in RPMH driver to invoke
+rpmh_flush(). The CPU PM notifications are done with RCU non idle in kernel
+(see cpu_pm_notify() uses rcu_irq_enter_irqson() before notifications)
 
-	Hans
+However using _rcuidle variant prevented RPMH driver to compile as module
+since these _rcuidle are not exported symbols for tracepoints.
 
-> ---
->  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index 985e4c2d29bf..31d77d1cdcc9 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -2821,6 +2821,11 @@ MFC 5.1 Control IDs
->  ``V4L2_CID_MPEG_MFC51_VIDEO_FRAME_SKIP_MODE``
->      (enum)
->  
-> +    .. note::
-> +
-> +       This control is deprecated. Use the standard
-> +       ``V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE`` control instead.
-> +
->  enum v4l2_mpeg_mfc51_video_frame_skip_mode -
->      Indicates in what conditions the encoder should skip frames. If
->      encoding a frame would cause the encoded stream to be larger then a
-> 
+This seris reverts the change [3] to remove _rcuidle variant for tracepoint
+as its no more valid test case (genpd .power_off is not implemented)
+and bring backs the change [4] that was reverted due to _rcuidle preventing
+to become modular.
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=243931
+[2] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=269733
+[3] https://lore.kernel.org/r/20200115013751.249588-1-swboyd@chromium.org 
+[4] https://lore.kernel.org/r/20200326224459.105170-3-john.stultz@linaro.org 
+
+Maulik Shah (2):
+  Revert "drivers: qcom: rpmh-rsc: Use rcuidle tracepoints for rpmh"
+  Revert "Revert "soc: qcom: rpmh: Allow RPMH driver to be loaded as a
+    module""
+
+ drivers/soc/qcom/Kconfig    | 2 +-
+ drivers/soc/qcom/rpmh-rsc.c | 7 ++++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
