@@ -2,122 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 532472499DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 12:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47CA5249AAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 12:45:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726634AbgHSKJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Aug 2020 06:09:23 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:21755 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726702AbgHSKJW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Aug 2020 06:09:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597831761; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Ss165PFmLfrUltmfdxLdXxBgXxOxl/dVF2U4JC6NEFM=; b=ks/A8wJ+oc7tbzpWIJJ5R++xQ6zBPKfod0X87cfZZm+lBPkitF70wR/5EBFowDdoNiNporYI
- QI+bH+wbvFxWHRYuGW/PSmKbv3el8YWnLRqWBHkcqoQPeVtgyak3TXBpO/aMqUjEr5MvHUmA
- 6QsvbGjfsCIJSw0mSIPhIQm8S3E=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f3cfa2d4c787f237be64bda (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 19 Aug 2020 10:08:45
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4C488C433AD; Wed, 19 Aug 2020 10:08:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A4EDC433CA;
-        Wed, 19 Aug 2020 10:08:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A4EDC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ulf.hansson@linaro.org, swboyd@chromium.org, dianders@chromium.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Todd Kjos <tkjos@google.com>,
-        Saravana Kannan <saravanak@google.com>
-Subject: [PATCH 2/2] Revert "Revert "soc: qcom: rpmh: Allow RPMH driver to be loaded as a module""
-Date:   Wed, 19 Aug 2020 15:37:50 +0530
-Message-Id: <1597831670-17401-3-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org>
-References: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org>
+        id S1726782AbgHSKpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Aug 2020 06:45:14 -0400
+Received: from lelv0142.ext.ti.com ([198.47.23.249]:35654 "EHLO
+        lelv0142.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726642AbgHSKpN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Aug 2020 06:45:13 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07JAhS5P011860;
+        Wed, 19 Aug 2020 05:43:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1597833808;
+        bh=FQ/P96RlmX4WL6iS15Y4+TdcnOXuRLw5jD5fcCLIPRM=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=hq3DNU8GyRjS+6Rnn7skcN1ku0AwIVNiB8bZ3hVmcFFpSNzKBAUK00toMRz1KnLCE
+         NxcnurQiObMWPuedh5shwC1BCu6hnnUua5zjmH8lZNKmxDlxcyNuA14gMqszA0YtC2
+         JjErGKTXzkqOL97zfTZs8nV570QUwaiW3pOgGLAw=
+Received: from DLEE114.ent.ti.com (dlee114.ent.ti.com [157.170.170.25])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 07JAhSRj019744
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 19 Aug 2020 05:43:28 -0500
+Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE114.ent.ti.com
+ (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 19
+ Aug 2020 05:43:28 -0500
+Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE111.ent.ti.com
+ (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Wed, 19 Aug 2020 05:43:27 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07JAhFih039071;
+        Wed, 19 Aug 2020 05:43:15 -0500
+Subject: Re: [PATCH 10/20] drm/omapdrm: Introduce GEM object functions
+To:     Thomas Zimmermann <tzimmermann@suse.de>,
+        <alexander.deucher@amd.com>, <christian.koenig@amd.com>,
+        <airlied@linux.ie>, <daniel@ffwll.ch>, <linux@armlinux.org.uk>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <l.stach@pengutronix.de>, <christian.gmeiner@gmail.com>,
+        <inki.dae@samsung.com>, <jy0922.shim@samsung.com>,
+        <sw0312.kim@samsung.com>, <kyungmin.park@samsung.com>,
+        <kgene@kernel.org>, <krzk@kernel.org>,
+        <patrik.r.jakobsson@gmail.com>, <jani.nikula@linux.intel.com>,
+        <joonas.lahtinen@linux.intel.com>, <rodrigo.vivi@intel.com>,
+        <chunkuang.hu@kernel.org>, <p.zabel@pengutronix.de>,
+        <matthias.bgg@gmail.com>, <robdclark@gmail.com>, <sean@poorly.run>,
+        <bskeggs@redhat.com>, <eric@anholt.net>, <hjc@rock-chips.com>,
+        <heiko@sntech.de>, <thierry.reding@gmail.com>,
+        <jonathanh@nvidia.com>, <rodrigosiqueiramelo@gmail.com>,
+        <hamohammed.sa@gmail.com>, <oleksandr_andrushchenko@epam.com>,
+        <hyun.kwon@xilinx.com>, <laurent.pinchart@ideasonboard.com>,
+        <michal.simek@xilinx.com>, <sumit.semwal@linaro.org>,
+        <evan.quan@amd.com>, <Hawking.Zhang@amd.com>, <tianci.yin@amd.com>,
+        <marek.olsak@amd.com>, <hdegoede@redhat.com>,
+        <andrey.grodzovsky@amd.com>, <Felix.Kuehling@amd.com>,
+        <xinhui.pan@amd.com>, <aaron.liu@amd.com>, <nirmoy.das@amd.com>,
+        <chris@chris-wilson.co.uk>, <matthew.auld@intel.com>,
+        <abdiel.janulgue@linux.intel.com>,
+        <tvrtko.ursulin@linux.intel.com>, <andi.shyti@intel.com>,
+        <sam@ravnborg.org>, <miaoqinglang@huawei.com>,
+        <emil.velikov@collabora.com>
+CC:     <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+        <etnaviv@lists.freedesktop.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <intel-gfx@lists.freedesktop.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <nouveau@lists.freedesktop.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>, <xen-devel@lists.xenproject.org>
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-11-tzimmermann@suse.de>
+From:   Tomi Valkeinen <tomi.valkeinen@ti.com>
+Message-ID: <8739b085-0342-4c43-60e3-a21d6b257319@ti.com>
+Date:   Wed, 19 Aug 2020 13:43:14 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20200813083644.31711-11-tzimmermann@suse.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The _rcuidle tracepoints are removed from RPMH driver which prevented
-to compile it as module. Bring back the change to make it module.
+Hi,
 
-This reverts commit 1f7a3eb785e4a4e196729cd3d5ec97bd5f9f2940.
+On 13/08/2020 11:36, Thomas Zimmermann wrote:
+> GEM object functions deprecate several similar callback interfaces in
+> struct drm_driver. This patch replaces the per-driver callbacks with
+> per-instance callbacks in omapdrm.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/omapdrm/omap_drv.c |  9 ---------
+>  drivers/gpu/drm/omapdrm/omap_gem.c | 16 +++++++++++++++-
+>  drivers/gpu/drm/omapdrm/omap_gem.h |  1 -
+>  3 files changed, 15 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/omapdrm/omap_drv.c b/drivers/gpu/drm/omapdrm/omap_drv.c
+> index 53d5e184ee77..2e598b8b72af 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_drv.c
+> +++ b/drivers/gpu/drm/omapdrm/omap_drv.c
+> @@ -521,12 +521,6 @@ static int dev_open(struct drm_device *dev, struct drm_file *file)
+>  	return 0;
+>  }
+>  
+> -static const struct vm_operations_struct omap_gem_vm_ops = {
+> -	.fault = omap_gem_fault,
+> -	.open = drm_gem_vm_open,
+> -	.close = drm_gem_vm_close,
+> -};
+> -
+>  static const struct file_operations omapdriver_fops = {
+>  	.owner = THIS_MODULE,
+>  	.open = drm_open,
+> @@ -549,10 +543,7 @@ static struct drm_driver omap_drm_driver = {
+>  #endif
+>  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+> -	.gem_prime_export = omap_gem_prime_export,
+>  	.gem_prime_import = omap_gem_prime_import,
+> -	.gem_free_object_unlocked = omap_gem_free_object,
+> -	.gem_vm_ops = &omap_gem_vm_ops,
+>  	.dumb_create = omap_gem_dumb_create,
+>  	.dumb_map_offset = omap_gem_dumb_map_offset,
+>  	.ioctls = ioctls,
+> diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
+> index d0d12d5dd76c..d68dc63dea0a 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_gem.c
+> +++ b/drivers/gpu/drm/omapdrm/omap_gem.c
+> @@ -487,7 +487,7 @@ static vm_fault_t omap_gem_fault_2d(struct drm_gem_object *obj,
+>   * vma->vm_private_data points to the GEM object that is backing this
+>   * mapping.
+>   */
+> -vm_fault_t omap_gem_fault(struct vm_fault *vmf)
+> +static vm_fault_t omap_gem_fault(struct vm_fault *vmf)
+>  {
+>  	struct vm_area_struct *vma = vmf->vma;
+>  	struct drm_gem_object *obj = vma->vm_private_data;
+> @@ -1169,6 +1169,18 @@ static bool omap_gem_validate_flags(struct drm_device *dev, u32 flags)
+>  	return true;
+>  }
+>  
+> +static const struct vm_operations_struct omap_gem_vm_ops = {
+> +	.fault = omap_gem_fault,
+> +	.open = drm_gem_vm_open,
+> +	.close = drm_gem_vm_close,
+> +};
+> +
+> +static const struct drm_gem_object_funcs omap_gem_object_funcs = {
+> +	.free = omap_gem_free_object,
+> +	.export = omap_gem_prime_export,
+> +	.vm_ops = &omap_gem_vm_ops,
+> +};
+> +
+>  /* GEM buffer object constructor */
+>  struct drm_gem_object *omap_gem_new(struct drm_device *dev,
+>  		union omap_gem_size gsize, u32 flags)
+> @@ -1236,6 +1248,8 @@ struct drm_gem_object *omap_gem_new(struct drm_device *dev,
+>  		size = PAGE_ALIGN(gsize.bytes);
+>  	}
+>  
+> +	obj->funcs = &omap_gem_object_funcs;
+> +
+>  	/* Initialize the GEM object. */
+>  	if (!(flags & OMAP_BO_MEM_SHMEM)) {
+>  		drm_gem_private_object_init(dev, obj, size);
+> diff --git a/drivers/gpu/drm/omapdrm/omap_gem.h b/drivers/gpu/drm/omapdrm/omap_gem.h
+> index 729b7812a815..9e6b5c8195d9 100644
+> --- a/drivers/gpu/drm/omapdrm/omap_gem.h
+> +++ b/drivers/gpu/drm/omapdrm/omap_gem.h
+> @@ -69,7 +69,6 @@ struct dma_buf *omap_gem_prime_export(struct drm_gem_object *obj, int flags);
+>  struct drm_gem_object *omap_gem_prime_import(struct drm_device *dev,
+>  		struct dma_buf *buffer);
+>  
+> -vm_fault_t omap_gem_fault(struct vm_fault *vmf);
+>  int omap_gem_roll(struct drm_gem_object *obj, u32 roll);
+>  void omap_gem_cpu_sync_page(struct drm_gem_object *obj, int pgoff);
+>  void omap_gem_dma_sync_buffer(struct drm_gem_object *obj,
 
-Cc: John Stultz <john.stultz@linaro.org>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- drivers/soc/qcom/Kconfig    | 2 +-
- drivers/soc/qcom/rpmh-rsc.c | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+omap_gem_free_object() can also be made static, and removed from omap_gem.h.
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 3dc3e3d..892bdc7 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -92,7 +92,7 @@ config QCOM_RMTFS_MEM
- 	  Say y here if you intend to boot the modem remoteproc.
- 
- config QCOM_RPMH
--	bool "Qualcomm RPM-Hardened (RPMH) Communication"
-+	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	help
- 	  Support for communication with the hardened-RPM blocks in
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index fabe390d..5fce87c 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -13,6 +13,7 @@
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
-+#include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
- #include <linux/of_platform.h>
-@@ -1025,6 +1026,7 @@ static const struct of_device_id rpmh_drv_match[] = {
- 	{ .compatible = "qcom,rpmh-rsc", },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, rpmh_drv_match);
- 
- static struct platform_driver rpmh_driver = {
- 	.probe = rpmh_rsc_probe,
-@@ -1040,3 +1042,6 @@ static int __init rpmh_driver_init(void)
- 	return platform_driver_register(&rpmh_driver);
- }
- arch_initcall(rpmh_driver_init);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPMh Driver");
-+MODULE_LICENSE("GPL v2");
+Tested on AM5 EVM.
+
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ti.com>
+
+ Tomi
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
