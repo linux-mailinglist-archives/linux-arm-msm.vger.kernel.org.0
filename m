@@ -2,217 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8749A24A2B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 17:20:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5619924A3D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 18:14:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728670AbgHSPUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Aug 2020 11:20:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58898 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728481AbgHSPUK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Aug 2020 11:20:10 -0400
-Received: from mail.kernel.org (ip5f5ad5a3.dynamic.kabel-deutschland.de [95.90.213.163])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D544E207FF;
-        Wed, 19 Aug 2020 15:20:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597850410;
-        bh=+CZjqAP9BwS+oTcWjIBCOd8FUJx3ft6iDVH+DtcWMB4=;
-        h=From:To:Cc:Subject:Date:From;
-        b=djUeEd0jYaP/1UoT2NFZF8s/WQ4NPOTacoHKkkpD4kZ9FgvDB9EjDoeG7NyVfe2mZ
-         /ZGkTWx/FIMDIMYavM8CTiyzJ3C23ott1fbGAo50wvQGwsBhIAwct8aM5bVYK6edEZ
-         kIjkD2z8dZ3LpLvDpMdHtSDhsaFQbc6O+JP5nGt4=
-Received: from mchehab by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1k8Psl-00F4N9-H5; Wed, 19 Aug 2020 17:20:07 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
+        id S1726809AbgHSQOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Aug 2020 12:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38310 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726794AbgHSQN0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Aug 2020 12:13:26 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851DBC061383
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 09:13:19 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 17so11917302pfw.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 09:13:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=svPB6Dx2TnAYZrDOVEx7GGT/OFxWuzJDOOju30QjJAE=;
+        b=JwatJcZDWJUg7wm9SrtG/5bKuhac0JrlRAk2L1mqP90r5iyxNbrx1FrO5h+QLq3wzn
+         u/9/7f6WiMHmLKp4W7kd4ZNgnbYs304qcIEa149X5Kl7p2bsEsAurgGu46OiDUgo0KRr
+         cFZEzsVziWoUcb57aiu6qwn2r2hbBluDXvfew=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=svPB6Dx2TnAYZrDOVEx7GGT/OFxWuzJDOOju30QjJAE=;
+        b=lVB+1Q+LCudvSl3bm1NZtA29i4bx2ybOF4iJuOX+B8zu3aT8WTecNK2bP+qQ6Gjg6N
+         rCDhwMmZDLbo0999vJSUVL5nT3eUMpWsn09L5AmlTmSa37oGh9xrzBjaVwCCUdVUUHi7
+         uTkjSfNWGZ7MPlldC+dPEivgiGtuCm3V7noQdfYpJjBGA8QowZhTh9ETV0M/eqTxvaoQ
+         xgbvpHlUbM9MmQiixpM2p9vwZ+DD9hDwkrhh/resd1DoVoA6UBVoAR0NIBpyzQl33hum
+         un9kfU0u2qMYIuQ+1Xlb5nmHVPBa0ZwxUHDbWKMTFVKZA1wzY2MgY8Te6dNPg3K4tAi0
+         Za9g==
+X-Gm-Message-State: AOAM532vSDcHATUZjdJEJoQgDLRvPdl8HQteygUUIzQ0Rwkd0v+pAsx4
+        L60zcHfofDsGLizIE5va9jXeAA==
+X-Google-Smtp-Source: ABdhPJzcLsplNpOc6XnXL8EJZ1d7DWp1h/KUcd/QKTGpcnw4edJEuDOLVWlRLaoEjg+23g98e/it+A==
+X-Received: by 2002:a62:1d1:: with SMTP id 200mr19296177pfb.161.1597853594084;
+        Wed, 19 Aug 2020 09:13:14 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id 2sm31342643pfv.27.2020.08.19.09.13.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Aug 2020 09:13:13 -0700 (PDT)
+Date:   Wed, 19 Aug 2020 09:13:11 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     skakit@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        gregkh@linuxfoundation.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Josh Cartwright <joshc@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: convert spmi.txt to spmi.yaml
-Date:   Wed, 19 Aug 2020 17:20:06 +0200
-Message-Id: <94b055687143c9593cd4311f8bcda99a743a619f.1597850327.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.26.2
+        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: sc7180: Add sleep pin ctrl for
+ BT uart
+Message-ID: <20200819161311.GF2995789@google.com>
+References: <1595563082-2353-1-git-send-email-skakit@codeaurora.org>
+ <1595563082-2353-3-git-send-email-skakit@codeaurora.org>
+ <20200817180158.GD2995789@google.com>
+ <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the SPMI bus documentation to JSON/yaml.
+On Wed, Aug 19, 2020 at 07:19:25PM +0530, skakit@codeaurora.org wrote:
+> On 2020-08-17 23:31, Matthias Kaehlcke wrote:
+> > On Fri, Jul 24, 2020 at 09:28:01AM +0530, satya priya wrote:
+> > > Add sleep pin ctrl for BT uart, and also change the bias
+> > > configuration to match Bluetooth module.
+> > > 
+> > > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > > ---
+> > > Changes in V2:
+> > >  - This patch adds sleep state for BT UART. Newly added in V2.
+> > > 
+> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42
+> > > ++++++++++++++++++++++++++++-----
+> > >  1 file changed, 36 insertions(+), 6 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > index 26cc491..bc919f2 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > @@ -469,20 +469,50 @@
+> > > 
+> > >  &qup_uart3_default {
+> > >  	pinconf-cts {
+> > > -		/*
+> > > -		 * Configure a pull-down on 38 (CTS) to match the pull of
+> > > -		 * the Bluetooth module.
+> > > -		 */
+> > > +		/* Configure no pull on 38 (CTS) to match Bluetooth module */
+> > 
+> > Has the pull from the Bluetooth module been removed or did the previous
+> > config
+> > incorrectly claim that the Bluetooth module has a pull-down?
+> > 
+> 
+> The previous config was incorrect, so we corrected it to match the pull of
+> BT.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
+The pull config of the BT controller varies depending on its state, could
+you clarify which state you intend to match?
 
-Rob,
+> 
+> > >  		pins = "gpio38";
+> > > +		bias-disable;
+> > > +	};
+> > > +
+> > > +	pinconf-rts {
+> > > +		/* We'll drive 39 (RTS), so configure pull-down */
+> > > +		pins = "gpio39";
+> > > +		drive-strength = <2>;
+> > >  		bias-pull-down;
+> > > +	};
+> > > +
+> > > +	pinconf-tx {
+> > > +		/* We'll drive 40 (TX), so no pull */
+> > 
+> > The rationales for RTS and TX contradict each other. According to the
+> > comment
+> > the reason to configure a pull-down on RTS is that it is driven by the
+> > host.
+> > Then for TX the reason to configure no pull is that it is driven by the
+> > host.
+> > 
+> > Please make sure the comments *really* describe the rationale, otherwise
+> > they
+> > are just confusing.
+> 
+> The rationale for RTS is that we don't want it to be floating and want to
+> make sure that it is pulled down, to receive bytes. Will modify the comment
+> mentioning the same.
 
-As promissed, this patch converts the spmi.txt generic bus bindings to
-html.
+Could you clarify what you mean with "to receive bytes"?
 
- .../bindings/mfd/qcom,spmi-pmic.txt           |  2 +-
- .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  4 +-
- .../devicetree/bindings/spmi/spmi.txt         | 41 ------------
- .../devicetree/bindings/spmi/spmi.yaml        | 62 +++++++++++++++++++
- 4 files changed, 65 insertions(+), 44 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spmi/spmi.txt
- create mode 100644 Documentation/devicetree/bindings/spmi/spmi.yaml
+Thanks
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-index fffc8fde3302..79367a43b27d 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-@@ -37,7 +37,7 @@ Required properties:
-                    or generalized "qcom,spmi-pmic".
- - reg:             Specifies the SPMI USID slave address for this device.
-                    For more information see:
--                   Documentation/devicetree/bindings/spmi/spmi.txt
-+                   Documentation/devicetree/bindings/spmi/spmi.yaml
- 
- Required properties for peripheral child nodes:
- - compatible:      Should contain "qcom,xxx", where "xxx" is a peripheral name.
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-index e16b9b5afc70..ca645e21fe47 100644
---- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-+++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-@@ -7,8 +7,8 @@ devices to control a single SPMI master.
- The PMIC Arbiter can also act as an interrupt controller, providing interrupts
- to slave devices.
- 
--See spmi.txt for the generic SPMI controller binding requirements for child
--nodes.
-+See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
-+controller binding requirements for child nodes.
- 
- See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
- generic interrupt controller binding documentation.
-diff --git a/Documentation/devicetree/bindings/spmi/spmi.txt b/Documentation/devicetree/bindings/spmi/spmi.txt
-deleted file mode 100644
-index 4bb10d161a27..000000000000
---- a/Documentation/devicetree/bindings/spmi/spmi.txt
-+++ /dev/null
-@@ -1,41 +0,0 @@
--System Power Management Interface (SPMI) Controller
--
--This document defines a generic set of bindings for use by SPMI controllers.  A
--controller is modelled in device tree as a node with zero or more child nodes,
--each representing a unique slave on the bus.
--
--Required properties:
--- #address-cells : must be set to 2
--- #size-cells : must be set to 0
--
--Child nodes:
--
--An SPMI controller node can contain zero or more child nodes representing slave
--devices on the bus.  Child 'reg' properties are specified as an address, type
--pair.  The address must be in the range 0-15 (4 bits).  The type must be one of
--SPMI_USID (0) or SPMI_GSID (1) for Unique Slave ID or Group Slave ID respectively.
--These are the identifiers "statically assigned by the system integrator", as
--per the SPMI spec.
--
--Each child node must have one and only one 'reg' entry of type SPMI_USID.
--
--#include <dt-bindings/spmi/spmi.h>
--
--	spmi@.. {
--		compatible = "...";
--		reg = <...>;
--
--		#address-cells = <2>;
--		#size-cells = <0>;
--
--		child@0 {
--			compatible = "...";
--			reg = <0 SPMI_USID>;
--		};
--
--		child@7 {
--			compatible = "...";
--			reg = <7 SPMI_USID
--			       3 SPMI_GSID>;
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/spmi/spmi.yaml b/Documentation/devicetree/bindings/spmi/spmi.yaml
-new file mode 100644
-index 000000000000..8d72796b9bec
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/spmi.yaml
-@@ -0,0 +1,62 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/spmi.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: System Power Management Interface (SPMI) Controller
-+
-+maintainers:
-+  - Josh Cartwright <joshc@codeaurora.org>
-+
-+description: |
-+  The System Power Management (SPMI) controller is a 2-wire bus defined
-+  by the MIPI Alliance for power management control to be used on SoC designs.
-+
-+  SPMI controllers are modelled in device tree using a generic set of
-+  bindings defined here, plus any bus controller specific properties, if
-+  needed.
-+
-+  Each SPMI controller has zero or more child nodes (up to 16 ones), each
-+  one representing an unique slave at the bus.
-+
-+properties:
-+  $nodename:
-+    pattern: "spmi@[0-9a-f]+"
-+
-+  compatible:
-+    description: filled by the SPMI bus controller
-+
-+  reg:
-+    maxItems: 1
-+
-+patternProperties:
-+  "@([0-9]|1[0-5])$":
-+    description: up to 16 child PMIC nodes
-+
-+required:
-+  - compatible
-+  - reg
-+
-+examples:
-+  - |
-+    #include <dt-bindings/spmi/spmi.h>
-+
-+    spmi@.. {
-+      compatible = "...";
-+      reg = <...>;
-+
-+      #address-cells = <2>;
-+      #size-cells = <0>;
-+
-+      child@0 {
-+        compatible = "...";
-+        reg = <0 SPMI_USID>;
-+      };
-+
-+      child@7 {
-+        compatible = "...";
-+        reg = <7 SPMI_USID
-+               3 SPMI_GSID>;
-+      };
-+    };
--- 
-2.26.2
-
-
+Matthias
