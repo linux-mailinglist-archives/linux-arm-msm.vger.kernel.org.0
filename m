@@ -2,83 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E441924A5F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 20:27:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 742FD24A626
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 20:47:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726609AbgHSS1h convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Aug 2020 14:27:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59024 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbgHSS1g (ORCPT
+        id S1726603AbgHSSrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Aug 2020 14:47:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:53162 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726466AbgHSSrQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Aug 2020 14:27:36 -0400
-X-Greylist: delayed 313 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 19 Aug 2020 11:27:35 PDT
-Received: from unicorn.mansr.com (unicorn.mansr.com [IPv6:2001:8b0:ca0d:8d8e::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11456C061757;
-        Wed, 19 Aug 2020 11:27:35 -0700 (PDT)
-Received: from raven.mansr.com (raven.mansr.com [81.2.72.235])
-        by unicorn.mansr.com (Postfix) with ESMTPS id D67C915360;
-        Wed, 19 Aug 2020 19:22:15 +0100 (BST)
-Received: by raven.mansr.com (Postfix, from userid 51770)
-        id 9535A21A6F2; Wed, 19 Aug 2020 19:22:15 +0100 (BST)
-From:   =?iso-8859-1?Q?M=E5ns_Rullg=E5rd?= <mans@mansr.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Barry Song <baohua@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Jun Nie <jun.nie@linaro.org>, Shawn Guo <shawnguo@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [RESEND PATCH 4/5] ARM: dts: tango: Align L2 cache-controller nodename with dtschema
-References: <20200819175853.21492-1-krzk@kernel.org>
-        <20200819175853.21492-4-krzk@kernel.org>
-Date:   Wed, 19 Aug 2020 19:22:15 +0100
-In-Reply-To: <20200819175853.21492-4-krzk@kernel.org> (Krzysztof Kozlowski's
-        message of "Wed, 19 Aug 2020 19:58:52 +0200")
-Message-ID: <yw1x5z9eqyw8.fsf@mansr.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+        Wed, 19 Aug 2020 14:47:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1597862835;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc; bh=n1r99O9sF3KmCtBpBDuUEdXHcIRahMGRsJ4wLhKM7X4=;
+        b=UCa6lW2zyTtD76NQjiBoWJqjcdGQVu1JbBuAV1nYAu1UejvVulLRXKhRnyseYwxVNexP9i
+        X275g+93XYy20W20wdKguIN4ehMfHQldZSrB6hWSzRkgwhwEiouYNH7lq4WbYEpMvLC3gO
+        fnhOa/jWbZolBPccFS6rRxLraTAQR+E=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-234-Uj9oQGDPP6aJfe-jB8Q11g-1; Wed, 19 Aug 2020 14:47:13 -0400
+X-MC-Unique: Uj9oQGDPP6aJfe-jB8Q11g-1
+Received: by mail-qk1-f200.google.com with SMTP id q3so16001355qkj.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 11:47:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=n1r99O9sF3KmCtBpBDuUEdXHcIRahMGRsJ4wLhKM7X4=;
+        b=PyIgptKaQqQTWzAJTldoHjCzM5uXFX/WyuuxNEFUN9kjoZoE6OnbFcDqNQvNrbKsGp
+         4WI5+5tyz2Kjeyf+xcd4PhxT4vj4wF+va9D1zYSJzMZCDijOrVJrZU1Z1CZW4H88kSQi
+         yb3Hq9yZ/sl00PsUhGY/4Mb2gzmEuzs/irNuvuce23tOX7OlK7UB4e88rKTmwPuTZ/9A
+         l94rHOfXlhhuDwOqpEgOs2qS2NQOTh2BNXeeWIzlR0y+ZavU9utI+wJYBycTAVUfTCI3
+         zzAFa/4v/MJ7BF/bAdK4LMgZOS3+tN2LnzW2x4VAuHBC96wLckQkdBKC3JaF5yFUgiYS
+         xS6w==
+X-Gm-Message-State: AOAM532SlTtHU8dYCDuZiSYCddxhzIZJA9ED39C7TQNhwhXQ4eMDP3yO
+        0oPLVhIPdXp00kgJzcjL4iAiTlGeXiIlp2GNn+VPG9iMPvpBouFM2mofNX+XZzdCdhOBb6i0wAN
+        sllwpJBBUkfgAd/BtfUadbCCKig==
+X-Received: by 2002:ac8:568a:: with SMTP id h10mr23862125qta.239.1597862832926;
+        Wed, 19 Aug 2020 11:47:12 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxzBbFyRJFyOM+0EEV33sP7wXkBj/aJZVelGHRYuIOT/f/OlA76miUUwSBAv7jlSbeVETUZcw==
+X-Received: by 2002:ac8:568a:: with SMTP id h10mr23862108qta.239.1597862832688;
+        Wed, 19 Aug 2020 11:47:12 -0700 (PDT)
+Received: from trix.remote.csb (075-142-250-213.res.spectrum.com. [75.142.250.213])
+        by smtp.gmail.com with ESMTPSA id 20sm29006673qtp.53.2020.08.19.11.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Aug 2020 11:47:12 -0700 (PDT)
+From:   trix@redhat.com
+To:     agross@kernel.org, bjorn.andersson@linaro.org, sibis@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tom Rix <trix@redhat.com>
+Subject: [PATCH] soc: qcom: initialize local variable
+Date:   Wed, 19 Aug 2020 11:46:37 -0700
+Message-Id: <20200819184637.15648-1-trix@redhat.com>
+X-Mailer: git-send-email 2.18.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Krzysztof Kozlowski <krzk@kernel.org> writes:
+From: Tom Rix <trix@redhat.com>
 
-> Fix dtschema validator warnings like:
->     l2-cache-controller@20100000: $nodename:0:
->         'l2-cache-controller@20100000' does not match '^(cache-controller|cpu)(@[0-9a-f,]+)*$'
->
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+clang static analysis reports this problem
 
-Acked-by: Mans Rullgard <mans@mansr.com>
+pdr_interface.c:596:6: warning: Branch condition evaluates
+  to a garbage value
+        if (!req.service_path[0])
+            ^~~~~~~~~~~~~~~~~~~~
 
-> ---
->  arch/arm/boot/dts/tango4-common.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm/boot/dts/tango4-common.dtsi b/arch/arm/boot/dts/tango4-common.dtsi
-> index 54fd522badfc..d584da314500 100644
-> --- a/arch/arm/boot/dts/tango4-common.dtsi
-> +++ b/arch/arm/boot/dts/tango4-common.dtsi
-> @@ -51,7 +51,7 @@
->  		};
->  	};
->
-> -	l2cc: l2-cache-controller@20100000 {
-> +	l2cc: cache-controller@20100000 {
->  		compatible = "arm,pl310-cache";
->  		reg = <0x20100000 0x1000>;
->  		cache-level = <2>;
-> -- 
-> 2.17.1
->
+This check that req.service_path was set in an earlier loop.
+However req is a stack variable and its initial value
+is undefined.
 
+So initialize req to 0.
+
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+
+Signed-off-by: Tom Rix <trix@redhat.com>
+---
+ drivers/soc/qcom/pdr_interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index 088dc99f77f3..f63135c09667 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -569,7 +569,7 @@ EXPORT_SYMBOL(pdr_add_lookup);
+ int pdr_restart_pd(struct pdr_handle *pdr, struct pdr_service *pds)
+ {
+ 	struct servreg_restart_pd_resp resp;
+-	struct servreg_restart_pd_req req;
++	struct servreg_restart_pd_req req = { 0 };
+ 	struct sockaddr_qrtr addr;
+ 	struct pdr_service *tmp;
+ 	struct qmi_txn txn;
 -- 
-Måns Rullgård
+2.18.1
+
