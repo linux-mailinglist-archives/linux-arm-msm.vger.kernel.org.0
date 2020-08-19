@@ -2,147 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5619924A3D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 18:14:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 269BC24A494
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Aug 2020 19:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726809AbgHSQOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Aug 2020 12:14:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38310 "EHLO
+        id S1725939AbgHSRDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Aug 2020 13:03:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726794AbgHSQN0 (ORCPT
+        with ESMTP id S1726703AbgHSRDF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Aug 2020 12:13:26 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851DBC061383
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 09:13:19 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id 17so11917302pfw.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 09:13:19 -0700 (PDT)
+        Wed, 19 Aug 2020 13:03:05 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800F4C061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 10:03:05 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id 2so22208543qkf.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 10:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=svPB6Dx2TnAYZrDOVEx7GGT/OFxWuzJDOOju30QjJAE=;
-        b=JwatJcZDWJUg7wm9SrtG/5bKuhac0JrlRAk2L1mqP90r5iyxNbrx1FrO5h+QLq3wzn
-         u/9/7f6WiMHmLKp4W7kd4ZNgnbYs304qcIEa149X5Kl7p2bsEsAurgGu46OiDUgo0KRr
-         cFZEzsVziWoUcb57aiu6qwn2r2hbBluDXvfew=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ktYpsCxiLWJOQgFpjU6rm698Y/qLm2dIO8jCJsadEOU=;
+        b=Cf6w4ypyePA72N9OwZ/X/gIqgQ3/Z2O3rsVEAnbMsPXxSteDXfBbrAJ2YKaLKzi+2G
+         eJlNvZyKM6mcCsbB8rTNwjE0zNlCUOU27vLJyO1vH/Kf6P5hVdc0XLNeLzE0ilaNzTIL
+         c/q/2eCUoXXxQCiuP4bqs7wWJmNaxuO94MGUY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=svPB6Dx2TnAYZrDOVEx7GGT/OFxWuzJDOOju30QjJAE=;
-        b=lVB+1Q+LCudvSl3bm1NZtA29i4bx2ybOF4iJuOX+B8zu3aT8WTecNK2bP+qQ6Gjg6N
-         rCDhwMmZDLbo0999vJSUVL5nT3eUMpWsn09L5AmlTmSa37oGh9xrzBjaVwCCUdVUUHi7
-         uTkjSfNWGZ7MPlldC+dPEivgiGtuCm3V7noQdfYpJjBGA8QowZhTh9ETV0M/eqTxvaoQ
-         xgbvpHlUbM9MmQiixpM2p9vwZ+DD9hDwkrhh/resd1DoVoA6UBVoAR0NIBpyzQl33hum
-         un9kfU0u2qMYIuQ+1Xlb5nmHVPBa0ZwxUHDbWKMTFVKZA1wzY2MgY8Te6dNPg3K4tAi0
-         Za9g==
-X-Gm-Message-State: AOAM532vSDcHATUZjdJEJoQgDLRvPdl8HQteygUUIzQ0Rwkd0v+pAsx4
-        L60zcHfofDsGLizIE5va9jXeAA==
-X-Google-Smtp-Source: ABdhPJzcLsplNpOc6XnXL8EJZ1d7DWp1h/KUcd/QKTGpcnw4edJEuDOLVWlRLaoEjg+23g98e/it+A==
-X-Received: by 2002:a62:1d1:: with SMTP id 200mr19296177pfb.161.1597853594084;
-        Wed, 19 Aug 2020 09:13:14 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id 2sm31342643pfv.27.2020.08.19.09.13.12
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ktYpsCxiLWJOQgFpjU6rm698Y/qLm2dIO8jCJsadEOU=;
+        b=POMbuoIhgqU9DZ9CMkdnMKTUpP4FCaeqs9ufkPDVtvLlVkKPJaUPUVGowMYLBJmDyG
+         wAapOxPjB3pBWv2SG9AYa6Kd2bt5z4MZW0IFS6fWrMi+/CyomoeHDv2Hhe+UKAXZ3jgU
+         SaeZopbwnAwgEULz96OfloswllvJAfrP4S+grTeh03OdVf9+p9jQcFwYTk7iO80ZP/IJ
+         VG3SXtpvEvY1nxh8a/DspLfVZ8vEzD0lhmhPauXBpNZXg5+AdHOA8bQHdYlJBtdSsjec
+         9yWGCcmbnGjMlplfbURUawfzvb/u7NymW51UY75E6+RnidPkQCCiIp5QBQfpH6OLIDQc
+         KMaQ==
+X-Gm-Message-State: AOAM531+1ycU9HT5KlzdY4WAOEJXYy8W3m8s91NBxDkPIrHC6sM1UdDx
+        +t0gb3jBe91NhqGBI13EDhiQ3OKzlAHPSA==
+X-Google-Smtp-Source: ABdhPJx84xLS/TgQVWRjmwBVRMb8xdYU6iSEqX1a3CtVzpufq/pPaR1vIkICWDbLL1hh8N1yizhs6A==
+X-Received: by 2002:a37:a70c:: with SMTP id q12mr21263566qke.180.1597856575243;
+        Wed, 19 Aug 2020 10:02:55 -0700 (PDT)
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
+        by smtp.gmail.com with ESMTPSA id d203sm24613639qkc.10.2020.08.19.10.02.35
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Aug 2020 09:13:13 -0700 (PDT)
-Date:   Wed, 19 Aug 2020 09:13:11 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     skakit@codeaurora.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        gregkh@linuxfoundation.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
-        rojay@codeaurora.org, msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: sc7180: Add sleep pin ctrl for
- BT uart
-Message-ID: <20200819161311.GF2995789@google.com>
-References: <1595563082-2353-1-git-send-email-skakit@codeaurora.org>
- <1595563082-2353-3-git-send-email-skakit@codeaurora.org>
- <20200817180158.GD2995789@google.com>
- <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
+        Wed, 19 Aug 2020 10:02:41 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id q16so13709957ybk.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Aug 2020 10:02:35 -0700 (PDT)
+X-Received: by 2002:a25:d802:: with SMTP id p2mr37420399ybg.446.1597856554388;
+ Wed, 19 Aug 2020 10:02:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
+References: <20200817220238.603465-1-robdclark@gmail.com> <20200817220238.603465-11-robdclark@gmail.com>
+In-Reply-To: <20200817220238.603465-11-robdclark@gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 19 Aug 2020 10:02:20 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VzYSL-3q0oFPPSP7FiEdLeTEN6Zy=kp-73B=8LAavmVw@mail.gmail.com>
+Message-ID: <CAD=FV=VzYSL-3q0oFPPSP7FiEdLeTEN6Zy=kp-73B=8LAavmVw@mail.gmail.com>
+Subject: Re: [PATCH 10/20] dt-bindings: arm-smmu: Add compatible string for
+ Adreno GPU SMMU
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 19, 2020 at 07:19:25PM +0530, skakit@codeaurora.org wrote:
-> On 2020-08-17 23:31, Matthias Kaehlcke wrote:
-> > On Fri, Jul 24, 2020 at 09:28:01AM +0530, satya priya wrote:
-> > > Add sleep pin ctrl for BT uart, and also change the bias
-> > > configuration to match Bluetooth module.
-> > > 
-> > > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > > ---
-> > > Changes in V2:
-> > >  - This patch adds sleep state for BT UART. Newly added in V2.
-> > > 
-> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42
-> > > ++++++++++++++++++++++++++++-----
-> > >  1 file changed, 36 insertions(+), 6 deletions(-)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > index 26cc491..bc919f2 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > @@ -469,20 +469,50 @@
-> > > 
-> > >  &qup_uart3_default {
-> > >  	pinconf-cts {
-> > > -		/*
-> > > -		 * Configure a pull-down on 38 (CTS) to match the pull of
-> > > -		 * the Bluetooth module.
-> > > -		 */
-> > > +		/* Configure no pull on 38 (CTS) to match Bluetooth module */
-> > 
-> > Has the pull from the Bluetooth module been removed or did the previous
-> > config
-> > incorrectly claim that the Bluetooth module has a pull-down?
-> > 
-> 
-> The previous config was incorrect, so we corrected it to match the pull of
-> BT.
+Hi,
 
-The pull config of the BT controller varies depending on its state, could
-you clarify which state you intend to match?
+On Mon, Aug 17, 2020 at 3:03 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Jordan Crouse <jcrouse@codeaurora.org>
+>
+> Every Qcom Adreno GPU has an embedded SMMU for its own use. These
+> devices depend on unique features such as split pagetables,
+> different stall/halt requirements and other settings. Identify them
+> with a compatible string so that they can be identified in the
+> arm-smmu implementation specific code.
+>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index 503160a7b9a0..5ec5d0d691f6 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -40,6 +40,10 @@ properties:
+>                - qcom,sm8150-smmu-500
+>                - qcom,sm8250-smmu-500
+>            - const: arm,mmu-500
+> +      - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+> +        items:
+> +          - const: qcom,adreno-smmu
+> +          - const: qcom,smmu-v2
 
-> 
-> > >  		pins = "gpio38";
-> > > +		bias-disable;
-> > > +	};
-> > > +
-> > > +	pinconf-rts {
-> > > +		/* We'll drive 39 (RTS), so configure pull-down */
-> > > +		pins = "gpio39";
-> > > +		drive-strength = <2>;
-> > >  		bias-pull-down;
-> > > +	};
-> > > +
-> > > +	pinconf-tx {
-> > > +		/* We'll drive 40 (TX), so no pull */
-> > 
-> > The rationales for RTS and TX contradict each other. According to the
-> > comment
-> > the reason to configure a pull-down on RTS is that it is driven by the
-> > host.
-> > Then for TX the reason to configure no pull is that it is driven by the
-> > host.
-> > 
-> > Please make sure the comments *really* describe the rationale, otherwise
-> > they
-> > are just confusing.
-> 
-> The rationale for RTS is that we don't want it to be floating and want to
-> make sure that it is pulled down, to receive bytes. Will modify the comment
-> mentioning the same.
+I know I'm kinda late to the game, but this seems weird to me,
+especially given the later patches in the series like:
 
-Could you clarify what you mean with "to receive bytes"?
+https://lore.kernel.org/r/20200817220238.603465-19-robdclark@gmail.com
 
-Thanks
+Specifically in that patch you can see that this IOMMU already had a
+compatible string and we're changing it and throwing away the
+model-specific string?  I'm guessing that you're just trying to make
+it easier for code to identify the adreno iommu, but it seems like a
+better way would have been to just add the adreno compatible in the
+middle, like:
 
-Matthias
+      - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+        items:
+          - enum:
+              - qcom,msm8996-smmu-v2
+              - qcom,msm8998-smmu-v2
+              - qcom,sc7180-smmu-v2
+              - qcom,sdm845-smmu-v2
+        - const: qcom,adreno-smmu
+        - const: qcom,smmu-v2
+
+Then we still have the SoC-specific compatible string in case we need
+it but we also have the generic one?  It also means that we're not
+deleting the old compatible string...
+
+-Doug
+
+
+>        - description: Marvell SoCs implementing "arm,mmu-500"
+>          items:
+>            - const: marvell,ap806-smmu-500
+> --
+> 2.26.2
+>
