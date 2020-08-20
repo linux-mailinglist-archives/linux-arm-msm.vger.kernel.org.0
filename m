@@ -2,133 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 035EC24B1AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 11:06:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B35EB24B1E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 11:15:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbgHTJGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 05:06:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53242 "EHLO
+        id S1726976AbgHTJPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 05:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbgHTJGg (ORCPT
+        with ESMTP id S1726962AbgHTJOT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 05:06:36 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0F53C061757;
-        Thu, 20 Aug 2020 02:06:35 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id v15so546933lfg.6;
-        Thu, 20 Aug 2020 02:06:35 -0700 (PDT)
+        Thu, 20 Aug 2020 05:14:19 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CD28C061384
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 02:14:19 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id ep8so713821pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 02:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:organization:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZB4PCuqp8Bl2dkJy5Fm6Sj2/MRT/e7zYVg69/U7Iw3A=;
-        b=jRSU7EbPYuaZa+y1ww5c1uQFbyH05AS+4/y9F7u0zfd9hNB2tnzBPNp8je59myQNMQ
-         jHPH6tBd1Wwn7BdCa00KVXc60BSdX0Ndq10P7ka8NPFWg1ZJ3LsSZv0w8HBp6uQ3NiAh
-         dj5XA0KHwLfCp0cjSlMmH6bx+JfVFMeQqSseCHBBmtyfNIM9YIojgpQJL8XUFhtSBjsW
-         EUKBfwxwlk5cLYa8WcK31DAuysfcZ2hLaBPSEULzoNNVE+3ShAUapOTgWe+4CkfB57ZP
-         mL01BWILpPiVjIBecOCA99KxCmG02TPxV3cr0jcgUSZ2kUozu8reoSXmgLtmVOjnXzBX
-         ScIQ==
+        bh=fteDDvG0lAwDUKEWhtTwY7pAZbLV3gpQe5mpBnV9oBQ=;
+        b=etECKGb7kbalwLBAoTrpPMX3ZW67xpLBEkM9fyGckTzOZQc9DC0gGPbOm/C35mHFUm
+         0SUiqk7LBNR7opllyTOPxqomZuk4ireVz+J8Ga3shwzH4euw0XT3cv65tWQwR+27OhjE
+         LtA3zSxIdezdqeHB0ICydm6cDZ3QF3utr7BKE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ZB4PCuqp8Bl2dkJy5Fm6Sj2/MRT/e7zYVg69/U7Iw3A=;
-        b=Lsh2CwfShDBkNd0QHhxQpJ5PFwQ1O8F9BGOG7/khoezcFf5LJAMoZGtHtZ+OGM4S1t
-         W0/XsySxQa++blbuW0C9ETdM8ZGWeMkPl38hwiELgHemG4gCp9ih2UGuzNe/GujRc+FC
-         54yc/StFO5BdUEj0vM0vKtS4C/Pg/3Gk28AvEaCqo98kxuQmVHyUJkd27LPGY6zFkm7t
-         njkNlXJVXwKYs4NuSCpDj1AnYMCIuS0R51n+YLWEkE/Qh4YFMYuYsS2EpGf36FnRaT5Q
-         6eca+EpWPxIo1Wz2rxy7H44u1N+LWAtrsRqZKkahr2MAkeNdt4uxFPLnMqXWJ4fL12lV
-         JS8w==
-X-Gm-Message-State: AOAM530BxC/WcGbim/ATHLCysKAIaCi3aeOFZKnI9gM7PGg/7HvA9a6O
-        Iv8QqWBaYwqN/6Vs1jhuHPI/GMgpAa/Iwgub
-X-Google-Smtp-Source: ABdhPJx586OB1ZFNi8bmTijB1iKrXx0pOQq+0PCvDWVugFZLEr8cnAEYNYIu9kBNKKo6DTiGbe/wQw==
-X-Received: by 2002:a05:6512:3185:: with SMTP id i5mr1144189lfe.205.1597914394167;
-        Thu, 20 Aug 2020 02:06:34 -0700 (PDT)
-Received: from ?IPv6:2a00:1fa0:42ab:a165:4cb2:5f04:a1e8:63b? ([2a00:1fa0:42ab:a165:4cb2:5f04:a1e8:63b])
-        by smtp.gmail.com with ESMTPSA id j2sm322988ljb.98.2020.08.20.02.06.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Aug 2020 02:06:33 -0700 (PDT)
-Subject: Re: [PATCH v8 4/4] arm64: boot: dts: qcom: pm8150b: Add DTS node for
- PMIC VBUS booster
-To:     Wesley Cheng <wcheng@codeaurora.org>, sboyd@kernel.org,
-        heikki.krogerus@linux.intel.com, agross@kernel.org,
-        robh+dt@kernel.org, gregkh@linuxfoundation.org,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20200812071925.315-1-wcheng@codeaurora.org>
- <20200812071925.315-5-wcheng@codeaurora.org>
- <1ed0a34c-6219-fe3d-7d9c-13a74ce2d4d0@gmail.com>
- <02111c69-73fd-5e8c-5594-27393865d458@codeaurora.org>
-From:   Sergei Shtylyov <sergei.shtylyov@gmail.com>
-Organization: Brain-dead Software
-Message-ID: <eaf4618c-54da-c522-52c6-1edec7744872@gmail.com>
-Date:   Thu, 20 Aug 2020 12:06:23 +0300
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fteDDvG0lAwDUKEWhtTwY7pAZbLV3gpQe5mpBnV9oBQ=;
+        b=Ih1tWlX2mogu20D/o49SLCGFJ2bFTpfWwtJWNdzPzjPioMwwt78npjX/SQN+Lee6kA
+         pPM3oSUuGmeBtmnA4FMR0yCQGdj2pOdiyiwWjHOZyRXA8kgbCnANf5RSxWTbEO0B5rnc
+         HtGyV7h/V97IvlGClkKwdfx1KjnsHkG7ydwqzrWyFKm2XgxU5E7idiLsdc/e0NlBVEil
+         QnvdF6vMkr7KEsGof+KjuHhrfhQiOG/hRh7rc0uMt4sgCyRE71fmi51SeyFQYEwPuqc+
+         rm5ABuBTPIm8sK7PFDy/a5V2yyLGc2r6lA9vigtPMuBnI9/yzv4a9HtkD5/i2CESyy7D
+         5xsQ==
+X-Gm-Message-State: AOAM530ASJdimp8TPdFvnhszggNloj4DE8NrLonjBH49mxTp8MP33eay
+        YO0gX8q0OV/OWdQy3bFYxdpd3w==
+X-Google-Smtp-Source: ABdhPJwipjFEnEYG5Qh0oqH5IY0sSRTeSp67cThk/5qNE520m8larxCy1jbleF0kZrX6bBQPlpO9VQ==
+X-Received: by 2002:a17:90a:7488:: with SMTP id p8mr1884427pjk.158.1597914858908;
+        Thu, 20 Aug 2020 02:14:18 -0700 (PDT)
+Received: from drinkcat2.tpe.corp.google.com ([2401:fa00:1:b:7220:84ff:fe09:41dc])
+        by smtp.gmail.com with ESMTPSA id o15sm1954448pfu.167.2020.08.20.02.14.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Aug 2020 02:14:17 -0700 (PDT)
+From:   Nicolas Boichat <drinkcat@chromium.org>
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Nicolas Boichat <drinkcat@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Subject: [PATCH v4 1/3, RESEND] media: camss: vfe: Use trace_printk for debugging only
+Date:   Thu, 20 Aug 2020 17:14:10 +0800
+Message-Id: <20200820170951.v4.1.Ia54fe801f246a0b0aee36fb1f3bfb0922a8842b0@changeid>
+X-Mailer: git-send-email 2.28.0.220.ged08abb693-goog
 MIME-Version: 1.0
-In-Reply-To: <02111c69-73fd-5e8c-5594-27393865d458@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.08.2020 10:47, Wesley Cheng wrote:
+trace_printk should not be used in production code. Since
+tracing interrupts is presumably latency sensitive, pr_dbg is
+not appropriate, so guard the call with a preprocessor symbol
+that can be defined for debugging purpose.
 
-[...]
->>> Add the required DTS node for the USB VBUS output regulator, which is
->>> available on PM8150B.  This will provide the VBUS source to connected
->>> peripherals.
->>>
->>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->>> ---
->>>    arch/arm64/boot/dts/qcom/pm8150b.dtsi   | 6 ++++++
->>>    arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 4 ++++
->>>    2 files changed, 10 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
->>> b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
->>> index 053c659734a7..9e560c1ca30d 100644
->>> --- a/arch/arm64/boot/dts/qcom/pm8150b.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/pm8150b.dtsi
->>> @@ -53,6 +53,12 @@ power-on@800 {
->>>                status = "disabled";
->>>            };
->>>    +        pm8150b_vbus: dcdc@1100 {
->>
->>     s/dcdc/regulator/? What is "dcdc", anyway?
->>     The device nodes must have the generic names, according to the DT spec.
->>
-> 
-> Hi Sergei,
-> 
-> Thanks for the comment!
+Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
+---
 
-     You're welcome.
+(resending this patch as part of the whole series, since we need a new
+patch 3/3 now).
 
-> DCDC is the label that we use for the DC to DC converter block, since
-> the VBUS booster will output 5V to the connected devices.  Would it make
-> more sense to have "dc-dc?"
+ drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 2 ++
+ drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-    Better use s/th like "regulator-dcdc". As I said, the names should be 
-generic, reflecting the device class.
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+index 174a36be6f5d866..0c57171fae4f9e9 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+@@ -936,8 +936,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 
+ 	vfe->ops->isr_read(vfe, &value0, &value1);
+ 
++#ifdef CAMSS_VFE_TRACE_IRQ
+ 	trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
+ 		     value0, value1);
++#endif
+ 
+ 	if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
+ 		vfe->isr_ops.reset_ack(vfe);
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+index 0dca8bf9281e774..307675925e5c779 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+@@ -1058,8 +1058,10 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 
+ 	vfe->ops->isr_read(vfe, &value0, &value1);
+ 
++#ifdef CAMSS_VFE_TRACE_IRQ
+ 	trace_printk("VFE: status0 = 0x%08x, status1 = 0x%08x\n",
+ 		     value0, value1);
++#endif
+ 
+ 	if (value0 & VFE_0_IRQ_STATUS_0_RESET_ACK)
+ 		vfe->isr_ops.reset_ack(vfe);
+-- 
+2.28.0.220.ged08abb693-goog
 
-> Thanks
-> Wesley
-> 
->>> +            compatible = "qcom,pm8150b-vbus-reg";
->>> +            status = "disabled";
->>> +            reg = <0x1100>;
->>> +        };
->>> +
->>>            pm8150b_typec: typec@1500 {
->>>                compatible = "qcom,pm8150b-usb-typec";
->>>                status = "disabled";
->> [...]
-
-MBR, Sergei
