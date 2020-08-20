@@ -2,61 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5F5B24C6AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 22:16:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC46B24C829
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 01:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbgHTUQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 16:16:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43994 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbgHTUQH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 16:16:07 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17780C061385;
-        Thu, 20 Aug 2020 13:16:07 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id c15so1591559lfi.3;
-        Thu, 20 Aug 2020 13:16:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=z4/wj3Fu4Eph1sTO7GVhSlXHwAR3nCexyHHqjazhrhI=;
-        b=eH0fXemGHyYrqVaXCSwoyiADThja4royuk8E2W7qgm+q+qNvxSE7WFI1GWAcUNWol5
-         TkSlaIwWXfpGCu1rdKd4xbo6v5YOfOA1VqIE+e7I3KOFxP8uY8gZHQ5hEn18nNUkQltB
-         61cD6GShkUj7anmSjHmNJJyQtWOSzcA/6WiCmvyl1yqsI+3JLWIFkxCEfZSA0Tkc4rwt
-         Al0YwbiQoEnH/bE6QfOQS6mPRhuh/7eJUl9miYuu6EqyUaDTzmIFC9UVy73ZFdaDHzDh
-         OoBwM1FfdFr2C2ppdWQEZQUf+F4zaBl1T3JBG+3PU5tvXyUEefM3HxjeLEu6sI20OYUe
-         7V6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=z4/wj3Fu4Eph1sTO7GVhSlXHwAR3nCexyHHqjazhrhI=;
-        b=TWuDxjjFwRXcadLlVK32S4+MO8nzNERN61fDk4dMutwF2kLuFoiBeVAILAobSKoFe7
-         T5fYNH5dDGfVkx8ck4ZIXxnc0CHTOYBQ0SU7PEj2eo8UDglG5IsX1W5T5KS+nHtsl0Sw
-         NAv3jdIY2SGwf9g5550gz5PZqGubX4ArtxlYgRLqgFbb3M32Zs/H3G/vWNeyVo67dK3C
-         VvPvpmXbzqLw/OzIPz5H0xGTWTCpgvcneCD0yJ1NB97PsGcPYyM8WSoHnOQVBMDX9u5K
-         FRtCnCNUbo9M26IjdKLm60Vsq3BEefRIaIEXzjaiRylMGE7BzuQD0816J1RAgjQ+wRD+
-         59hQ==
-X-Gm-Message-State: AOAM530S9Z9R5++BhFdVyJkwmHPBvw7Zp8J/vQ6+X22uW1efLnNyGRZA
-        iELyDsTt65rpkzuT9g3msVUPiSJ4r3k=
-X-Google-Smtp-Source: ABdhPJwrxwMvfMIi1WMXou3rl8xDa6keRlOnRHgj5dYDGe39qslojpYQkA223xf57H7QsDS0Qr4vug==
-X-Received: by 2002:a19:8a57:: with SMTP id m84mr30938lfd.159.1597954564373;
-        Thu, 20 Aug 2020 13:16:04 -0700 (PDT)
-Received: from [192.168.2.145] (109-252-170-211.dynamic.spd-mgts.ru. [109.252.170.211])
-        by smtp.googlemail.com with ESMTPSA id b15sm638637lji.140.2020.08.20.13.16.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Aug 2020 13:16:03 -0700 (PDT)
-Subject: Re: [PATCH 12/18] iommu/tegra-gart: Add IOMMU_DOMAIN_DMA support
-To:     Robin Murphy <robin.murphy@arm.com>, hch@lst.de, joro@8bytes.org,
-        linux@armlinux.org.uk
-Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
+        id S1728498AbgHTXBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 19:01:46 -0400
+Received: from foss.arm.com ([217.140.110.172]:46972 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728368AbgHTXBq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 19:01:46 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6C6331B;
+        Thu, 20 Aug 2020 16:01:44 -0700 (PDT)
+Received: from [10.57.40.122] (unknown [10.57.40.122])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 98AAB3F71F;
+        Thu, 20 Aug 2020 16:01:39 -0700 (PDT)
+Subject: Re: [PATCH 17/18] media/omap3isp: Clean up IOMMU workaround
+To:     Sakari Ailus <sakari.ailus@iki.fi>
+Cc:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk,
+        will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
         kyungmin.park@samsung.com, m.szyprowski@samsung.com,
         agross@kernel.org, bjorn.andersson@linaro.org,
         thierry.reding@gmail.com, jonathanh@nvidia.com, vdumpa@nvidia.com,
-        matthias.bgg@gmail.com, yong.wu@mediatek.com,
+        digetx@gmail.com, matthias.bgg@gmail.com, yong.wu@mediatek.com,
         geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
         s-anna@ti.com, laurent.pinchart@ideasonboard.com,
         linux-arm-kernel@lists.infradead.org,
@@ -66,72 +34,65 @@ Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
         dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <cover.1597931875.git.robin.murphy@arm.com>
- <516b33118d489e56499ff8c64c019709b744110c.1597931876.git.robin.murphy@arm.com>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <081f7532-9ca0-0af3-35a1-cbaba0782237@gmail.com>
-Date:   Thu, 20 Aug 2020 23:16:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ <11d8419744e4e744a9448180801b0c4683328afd.1597931876.git.robin.murphy@arm.com>
+ <20200820165339.GK7145@valkosipuli.retiisi.org.uk>
+ <be010209-4abc-ba48-4e31-185427776a13@arm.com>
+ <20200820195536.GL7145@valkosipuli.retiisi.org.uk>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <5190a40e-ad24-d98e-3588-b95592ea2db3@arm.com>
+Date:   Fri, 21 Aug 2020 00:01:38 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <516b33118d489e56499ff8c64c019709b744110c.1597931876.git.robin.murphy@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200820195536.GL7145@valkosipuli.retiisi.org.uk>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-20.08.2020 18:08, Robin Murphy пишет:
-> Now that arch/arm is wired up for default domains and iommu-dma,
-> implement the corresponding driver-side support for DMA domains.
+On 2020-08-20 20:55, Sakari Ailus wrote:
+> On Thu, Aug 20, 2020 at 06:25:19PM +0100, Robin Murphy wrote:
+>> On 2020-08-20 17:53, Sakari Ailus wrote:
+>>> Hi Robin,
+>>>
+>>> On Thu, Aug 20, 2020 at 04:08:36PM +0100, Robin Murphy wrote:
+>>>> Now that arch/arm is wired up for default domains and iommu-dma, devices
+>>>> behind IOMMUs will get mappings set up automatically as appropriate, so
+>>>> there is no need for drivers to do so manually.
+>>>>
+>>>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+>>>
+>>> Thanks for the patch.
+>>
+>> Many thanks for testing so quickly!
+>>
+>>> I haven't looked at the details but it seems that this causes the buffer
+>>> memory allocation to be physically contiguous, which causes a failure to
+>>> allocate video buffers of entirely normal size. I guess that was not
+>>> intentional?
+>>
+>> Hmm, it looks like the device ends up with the wrong DMA ops, which implies
+>> something didn't go as expected with the earlier IOMMU setup and default
+>> domain creation. Chances are that either I missed some subtlety in the
+>> omap_iommu change, or I've fundamentally misjudged how the ISP probing works
+>> and it never actually goes down the of_iommu_configure() path in the first
+>> place. Do you get any messages from the IOMMU layer earlier on during boot?
 > 
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-> ---
->  drivers/iommu/tegra-gart.c | 17 ++++++++++++-----
->  1 file changed, 12 insertions(+), 5 deletions(-)
+> I do get these:
 > 
-> diff --git a/drivers/iommu/tegra-gart.c b/drivers/iommu/tegra-gart.c
-> index fac720273889..e081387080f6 100644
-> --- a/drivers/iommu/tegra-gart.c
-> +++ b/drivers/iommu/tegra-gart.c
-> @@ -9,6 +9,7 @@
->  
->  #define dev_fmt(fmt)	"gart: " fmt
->  
-> +#include <linux/dma-iommu.h>
->  #include <linux/io.h>
->  #include <linux/iommu.h>
->  #include <linux/moduleparam.h>
-> @@ -145,16 +146,22 @@ static struct iommu_domain *gart_iommu_domain_alloc(unsigned type)
->  {
->  	struct iommu_domain *domain;
+> [    2.934936] iommu: Default domain type: Translated
+> [    2.940917] omap-iommu 480bd400.mmu: 480bd400.mmu registered
+> [    2.946899] platform 480bc000.isp: Adding to iommu group 0
+> 
 
-Hello, Robin!
+So that much looks OK, if there are no obvious errors. Unfortunately 
+there's no easy way to tell exactly what of_iommu_configure() is doing 
+(beyond enabling a couple of vague debug messages). The first thing I'll 
+do tomorrow is double-check whether it's really working on my boards 
+here, or whether I was just getting lucky with CMA... (I assume you 
+don't have CMA enabled if you're ending up in remap_allocator_alloc())
 
-Tegra20 GART isn't a real IOMMU, but a small relocation aperture. We
-would only want to use it for a temporal mappings (managed by GPU
-driver) for the time while GPU hardware is busy and working with a
-sparse DMA buffers, the driver will take care of unmapping the sparse
-buffers once GPU work is finished [1]. In a case of contiguous DMA
-buffers, we want to bypass the IOMMU and use buffer's phys address
-because GART aperture is small and all buffers simply can't fit into
-GART for a complex GPU operations that involve multiple buffers [2][3].
-The upstream GPU driver still doesn't support GART, but eventually it
-needs to be changed.
-
-[1]
-https://github.com/grate-driver/linux/blob/master/drivers/gpu/drm/tegra/gart.c#L489
-
-[2]
-https://github.com/grate-driver/linux/blob/master/drivers/gpu/drm/tegra/gart.c#L542
-
-[3]
-https://github.com/grate-driver/linux/blob/master/drivers/gpu/drm/tegra/uapi/patching.c#L90
-
-> -	if (type != IOMMU_DOMAIN_UNMANAGED)
-> +	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
->  		return NULL;
-
-Will a returned NULL tell to IOMMU core that implicit domain shouldn't
-be used? Is it possible to leave this driver as-is?
+Robin.
