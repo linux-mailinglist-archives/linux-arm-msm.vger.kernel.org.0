@@ -2,149 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15FC524B979
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 13:48:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74ADB24BAEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 14:20:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727972AbgHTLqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 07:46:42 -0400
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:35512 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728936AbgHTLpG (ORCPT
+        id S1730320AbgHTMUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 08:20:11 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:46149 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730274AbgHTMUJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 07:45:06 -0400
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07KBiLjh034621;
-        Thu, 20 Aug 2020 06:44:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1597923861;
-        bh=KekPuX5bW5OV7WGA42Ji5+dWGwrpNIKAh0IFJGWPkgw=;
-        h=Date:From:To:CC:Subject:References:In-Reply-To;
-        b=wumWcYu2C1Uab0K7/BhHt6am8WARnusXkgQxTV42cLperHvWAMr73TNd+wDsAw3wy
-         hNKVGdTP4DXYch+0pLpm6EayzBWxfb8hWJXgwCbJaBPkYV500cFpib37witpJiU5fe
-         I4uAGHEHelb5GRoGXgpVe6o/YlhZ9+BiuU3VMDj8=
-Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 07KBiLbD128554
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Thu, 20 Aug 2020 06:44:21 -0500
-Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE104.ent.ti.com
- (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Thu, 20
- Aug 2020 06:44:20 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Thu, 20 Aug 2020 06:44:20 -0500
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07KBiK7d068400;
-        Thu, 20 Aug 2020 06:44:20 -0500
-Date:   Thu, 20 Aug 2020 06:44:20 -0500
-From:   Nishanth Menon <nm@ti.com>
-To:     Rob Herring <robh@kernel.org>
-CC:     <soc@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, Kevin Hilman <khilman@baylibre.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Robert Richter <rrichter@marvell.com>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Wei Xu <xuwei5@hisilicon.com>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Tero Kristo <t-kristo@ti.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>
-Subject: Re: [PATCH] arm64: dts: Reformat PCI ranges/dma-ranges entries
-Message-ID: <20200820114420.sjlqvn2tbpa7vcbb@akan>
-References: <20200819221750.2055932-1-robh@kernel.org>
+        Thu, 20 Aug 2020 08:20:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597926008; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yHVAvexqEWvuHwpqCiJJpqti28GNOsRReJIvgdeT+YM=;
+ b=UJH6ED2QZ1Pz2NXTWAreyKLWW5oaCTzZ6SVqFl/GvrhN2NY0V2F38ceiLQ4NBYf1r/DHc0he
+ Il+UcZvZclqQ9nV8WxrNVZ88atoxE9P+tY/0J65t35H4fxkCGz+9/Q64MyMrJrT+92SvKQH3
+ ObfWUfMl9/JIV4778yQRmK/GM/0=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f3e6a6bc3a55812b159c543 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 Aug 2020 12:19:55
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 126D9C433AD; Thu, 20 Aug 2020 12:19:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BB6EAC433C6;
+        Thu, 20 Aug 2020 12:19:53 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jgbt6anitnjafjun"
-Content-Disposition: inline
-In-Reply-To: <20200819221750.2055932-1-robh@kernel.org>
-User-Agent: NeoMutt/20171215
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 20 Aug 2020 17:49:53 +0530
+From:   skakit@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        gregkh@linuxfoundation.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: sc7180: Add sleep pin ctrl for
+ BT uart
+In-Reply-To: <20200819161311.GF2995789@google.com>
+References: <1595563082-2353-1-git-send-email-skakit@codeaurora.org>
+ <1595563082-2353-3-git-send-email-skakit@codeaurora.org>
+ <20200817180158.GD2995789@google.com>
+ <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
+ <20200819161311.GF2995789@google.com>
+Message-ID: <29d523f4a46ecce8e4a62a5310528969@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---jgbt6anitnjafjun
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Matthias,
 
-On 16:17-20200819, Rob Herring wrote:
-> While bracketing doesn't matter for a DTB, the DT schema checks rely on
-[..]
-> ---
-> SoC maintainers, please apply this directly.
-	  [...]
-> diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/d=
-ts/ti/k3-am65-main.dtsi
-> index 9edfae5944f7..2c762e725d89 100644
-> --- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-> +++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-> @@ -678,8 +678,8 @@ pcie0_rc: pcie@5500000 {
->  		power-domains =3D <&k3_pds 120 TI_SCI_PD_EXCLUSIVE>;
->  		#address-cells =3D <3>;
->  		#size-cells =3D <2>;
-> -		ranges =3D <0x81000000 0 0          0x0 0x10020000 0 0x00010000
-> -			  0x82000000 0 0x10030000 0x0 0x10030000 0 0x07FD0000>;
-> +		ranges =3D <0x81000000 0 0          0x0 0x10020000 0 0x00010000>,
-> +			 <0x82000000 0 0x10030000 0x0 0x10030000 0 0x07FD0000>;
->  		ti,syscon-pcie-id =3D <&pcie_devid>;
->  		ti,syscon-pcie-mode =3D <&pcie0_mode>;
->  		bus-range =3D <0x0 0xff>;
-> @@ -710,8 +710,8 @@ pcie1_rc: pcie@5600000 {
->  		power-domains =3D <&k3_pds 121 TI_SCI_PD_EXCLUSIVE>;
->  		#address-cells =3D <3>;
->  		#size-cells =3D <2>;
-> -		ranges =3D <0x81000000 0 0          0x0   0x18020000 0 0x00010000
-> -			  0x82000000 0 0x18030000 0x0   0x18030000 0 0x07FD0000>;
-> +		ranges =3D <0x81000000 0 0          0x0   0x18020000 0 0x00010000>,
-> +			 <0x82000000 0 0x18030000 0x0   0x18030000 0 0x07FD0000>;
->  		ti,syscon-pcie-id =3D <&pcie_devid>;
->  		ti,syscon-pcie-mode =3D <&pcie1_mode>;
->  		bus-range =3D <0x0 0xff>;
+On 2020-08-19 21:43, Matthias Kaehlcke wrote:
+> On Wed, Aug 19, 2020 at 07:19:25PM +0530, skakit@codeaurora.org wrote:
+>> On 2020-08-17 23:31, Matthias Kaehlcke wrote:
+>> > On Fri, Jul 24, 2020 at 09:28:01AM +0530, satya priya wrote:
+>> > > Add sleep pin ctrl for BT uart, and also change the bias
+>> > > configuration to match Bluetooth module.
+>> > >
+>> > > Signed-off-by: satya priya <skakit@codeaurora.org>
+>> > > ---
+>> > > Changes in V2:
+>> > >  - This patch adds sleep state for BT UART. Newly added in V2.
+>> > >
+>> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42
+>> > > ++++++++++++++++++++++++++++-----
+>> > >  1 file changed, 36 insertions(+), 6 deletions(-)
+>> > >
+>> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> > > index 26cc491..bc919f2 100644
+>> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> > > @@ -469,20 +469,50 @@
+>> > >
+>> > >  &qup_uart3_default {
+>> > >  	pinconf-cts {
+>> > > -		/*
+>> > > -		 * Configure a pull-down on 38 (CTS) to match the pull of
+>> > > -		 * the Bluetooth module.
+>> > > -		 */
+>> > > +		/* Configure no pull on 38 (CTS) to match Bluetooth module */
+>> >
+>> > Has the pull from the Bluetooth module been removed or did the previous
+>> > config
+>> > incorrectly claim that the Bluetooth module has a pull-down?
+>> >
+>> 
+>> The previous config was incorrect, so we corrected it to match the 
+>> pull of
+>> BT.
+> 
+> The pull config of the BT controller varies depending on its state, 
+> could
+> you clarify which state you intend to match?
+> 
 
-For the TI chunk:
-Acked-by: Nishanth Menon <nm@ti.com>
---=20
-Regards,
-Nishanth Menon
-Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5=
- 849D 1736 249D
+Since this line is driven by BT SoC, they could change their 
+pull(although it's less likely). Recently on cherokee we worked with BT 
+team and came to an agreement to keep no-pull from our side in order to 
+not conflict with their pull in any state.
 
---jgbt6anitnjafjun
-Content-Type: application/pgp-signature; name="signature.asc"
+>> 
+>> > >  		pins = "gpio38";
+>> > > +		bias-disable;
+>> > > +	};
+>> > > +
+>> > > +	pinconf-rts {
+>> > > +		/* We'll drive 39 (RTS), so configure pull-down */
+>> > > +		pins = "gpio39";
+>> > > +		drive-strength = <2>;
+>> > >  		bias-pull-down;
+>> > > +	};
+>> > > +
+>> > > +	pinconf-tx {
+>> > > +		/* We'll drive 40 (TX), so no pull */
+>> >
+>> > The rationales for RTS and TX contradict each other. According to the
+>> > comment
+>> > the reason to configure a pull-down on RTS is that it is driven by the
+>> > host.
+>> > Then for TX the reason to configure no pull is that it is driven by the
+>> > host.
+>> >
+>> > Please make sure the comments *really* describe the rationale, otherwise
+>> > they
+>> > are just confusing.
+>> 
+>> The rationale for RTS is that we don't want it to be floating and want 
+>> to
+>> make sure that it is pulled down, to receive bytes. Will modify the 
+>> comment
+>> mentioning the same.
+> 
+> Could you clarify what you mean with "to receive bytes"?
+> 
 
------BEGIN PGP SIGNATURE-----
+When we keep no-pull(floating), sometimes it may be pulled high and UART 
+flow will be turned off(RFR_NOT_READY), due to this BT SoC wont be able 
+to send data even though host is ready.
 
-iQIzBAABCgAdFiEE+KKGk1TrgjIXoxo03bWEnRc2JJ0FAl8+YgwACgkQ3bWEnRc2
-JJ0WIg//YBZVg8WDT/O8r7i2UkktHsq0s0v55hHAOfcl47v8FQtw84RgUhFCn+9i
-U/VpPbU7ZvIUlpbADflEHrnXkYfhikLBFJ90DEde63M1DkFyvjnMXJVImmuiK7E7
-WbWZpo21fRKfbFje9l6upMgfiM4ZB7GS/NkKssavEX22oaG5+GTjNjEI1EJijNG/
-K0hD2jvRdQ59eyfdvKL8ezXthEaJdCyWuREOKCsE/VUDHC/KgXcpZjLA7BICegYn
-J/UeEhSJGtV2UaUkU621yg3gRF2f7on236lG4cs4QnYIzACww4MA2r3UdM+zsOI0
-RJR8/LbNzBtfzPUmyQldvvBKQ80HtgMe0jhuFGflT4rjzbMQXYbOdIFR0A2Jhw2/
-tt2YH0rmxV3rhRLsPtcmltMQW/2iccVbvHZaz8xQ9HirP2XaAvhTUfG5ayFTD3jb
-uxU9HV/SMapoo56gvFRkg09K4vNAtTwc8TZLOo29FbKSv0+PUXFDBODeygVgNYxL
-RI8OFjIgAiWTgAow/5CNkPwKLjR7F/dMj5T2hX1WVjwD5ds1bdl6dJP6WejEs3OU
-iEYUy5PR23cZoVrH6V4FMcyWv/6D+7C8UzHIqzkUulviPpSofpb8muTAlsyAe9gx
-YZPxS3DHyObqDoJbspVmD2acwVGz6KQBvvyEqvsC42qkJ0T5ByA=
-=TsAH
------END PGP SIGNATURE-----
+> Thanks
+> 
+> Matthias
 
---jgbt6anitnjafjun--
+Thanks,
+Satya Priya
