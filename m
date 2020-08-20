@@ -2,167 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74ADB24BAEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 14:20:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CC8624BDD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 15:14:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730320AbgHTMUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 08:20:11 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:46149 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730274AbgHTMUJ (ORCPT
+        id S1729007AbgHTNOM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 09:14:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728417AbgHTJg0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 08:20:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597926008; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=yHVAvexqEWvuHwpqCiJJpqti28GNOsRReJIvgdeT+YM=;
- b=UJH6ED2QZ1Pz2NXTWAreyKLWW5oaCTzZ6SVqFl/GvrhN2NY0V2F38ceiLQ4NBYf1r/DHc0he
- Il+UcZvZclqQ9nV8WxrNVZ88atoxE9P+tY/0J65t35H4fxkCGz+9/Q64MyMrJrT+92SvKQH3
- ObfWUfMl9/JIV4778yQRmK/GM/0=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f3e6a6bc3a55812b159c543 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 Aug 2020 12:19:55
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 126D9C433AD; Thu, 20 Aug 2020 12:19:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BB6EAC433C6;
-        Thu, 20 Aug 2020 12:19:53 +0000 (UTC)
+        Thu, 20 Aug 2020 05:36:26 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDF6C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 02:36:26 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id w14so1348178ljj.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 02:36:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iyIFHI/GagIm4is2IjKR4dFCd2u6tmF485sTbdWxVbM=;
+        b=MLkiiqpTIK0T8bIG8a7cw3MlTUto09mHqhVzUWPfnkk4OxAgoe4yk5RS+KzyPkc0rV
+         fSzxXaaHo2Ohq+lyWw4WVH93TRgv0UhPZUicHg09AtCULq+HW79090fk/I68wSIlGQG2
+         2YPoUJB+09rDM1BounEJ/4DbnRsg71ly86n0zyynHqByO23KsJ1MgRQ/VchwqV4iuXtR
+         EPP+1nsst3H0kTK7jgtwccEi40dav3czNwj4Djj7S330dhKMPaA5ZW7WUY6bzUnGclve
+         uVQdReKKsIlH6FcLOEOc27TBBv89loXlhqZcWAYQOMFu+5mX+RGolF/sT/kU6WzuEh1Z
+         mtCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iyIFHI/GagIm4is2IjKR4dFCd2u6tmF485sTbdWxVbM=;
+        b=szyYNUq67pK4qNjG5NVhCYk8y+TCuCSNG6TLJ8NDhfLHJjnAeHlnQbzuCY9h7b0Huo
+         mVxTPefQSUVbD9XokfxvjkBZVjerViLk0vDy5psLGxF7J8FnmhFaRJmg44qpnKRfAdcw
+         PdDufDt0d5DgEiOe7PhGtShCG25RpiNknXvuWcD6s6NE8XwBtuECTrNyZ+yutyKgUOhx
+         o1pgYOYgSQu99o51dMUFileBnkeosnUJ9u51JKNThlbtzuJC0LZOGcTaG/+txuB8PhFF
+         yi0xPBKRzz6dP/PTGs8A7n+qe/sx27MSrXzrBfET8fdduJXuUu4W7uZOJkz50qfpLDEP
+         iPrQ==
+X-Gm-Message-State: AOAM532765YTaJ3/Xc6yjcWJvhMd1j/iEsWekHa7kDLa0e31uMSgWyvx
+        gSyyZCt/0VRvgUeEoCZOcJd4cdgbgaNelg==
+X-Google-Smtp-Source: ABdhPJzkrJAsNCFVlqgWwzF85xdP8TGCbYUj+sMOPyxm2W8leLqPgVkA3ZiRvIiKvXe8klbPf8wjPA==
+X-Received: by 2002:a2e:71a:: with SMTP id 26mr1262048ljh.198.1597916184580;
+        Thu, 20 Aug 2020 02:36:24 -0700 (PDT)
+Received: from eriador.lan ([188.162.65.245])
+        by smtp.gmail.com with ESMTPSA id o1sm341811ljc.3.2020.08.20.02.36.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Aug 2020 02:36:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Subject: [PATCH] drm/msm/a6xx: fix gmu start on newer firmware
+Date:   Thu, 20 Aug 2020 12:36:22 +0300
+Message-Id: <20200820093622.3801751-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 20 Aug 2020 17:49:53 +0530
-From:   skakit@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        gregkh@linuxfoundation.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
-        rojay@codeaurora.org, msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: sc7180: Add sleep pin ctrl for
- BT uart
-In-Reply-To: <20200819161311.GF2995789@google.com>
-References: <1595563082-2353-1-git-send-email-skakit@codeaurora.org>
- <1595563082-2353-3-git-send-email-skakit@codeaurora.org>
- <20200817180158.GD2995789@google.com>
- <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
- <20200819161311.GF2995789@google.com>
-Message-ID: <29d523f4a46ecce8e4a62a5310528969@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+New Qualcomm firmware has changed a way it reports back the 'started'
+event. Support new register values.
 
-On 2020-08-19 21:43, Matthias Kaehlcke wrote:
-> On Wed, Aug 19, 2020 at 07:19:25PM +0530, skakit@codeaurora.org wrote:
->> On 2020-08-17 23:31, Matthias Kaehlcke wrote:
->> > On Fri, Jul 24, 2020 at 09:28:01AM +0530, satya priya wrote:
->> > > Add sleep pin ctrl for BT uart, and also change the bias
->> > > configuration to match Bluetooth module.
->> > >
->> > > Signed-off-by: satya priya <skakit@codeaurora.org>
->> > > ---
->> > > Changes in V2:
->> > >  - This patch adds sleep state for BT UART. Newly added in V2.
->> > >
->> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42
->> > > ++++++++++++++++++++++++++++-----
->> > >  1 file changed, 36 insertions(+), 6 deletions(-)
->> > >
->> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> > > index 26cc491..bc919f2 100644
->> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> > > @@ -469,20 +469,50 @@
->> > >
->> > >  &qup_uart3_default {
->> > >  	pinconf-cts {
->> > > -		/*
->> > > -		 * Configure a pull-down on 38 (CTS) to match the pull of
->> > > -		 * the Bluetooth module.
->> > > -		 */
->> > > +		/* Configure no pull on 38 (CTS) to match Bluetooth module */
->> >
->> > Has the pull from the Bluetooth module been removed or did the previous
->> > config
->> > incorrectly claim that the Bluetooth module has a pull-down?
->> >
->> 
->> The previous config was incorrect, so we corrected it to match the 
->> pull of
->> BT.
-> 
-> The pull config of the BT controller varies depending on its state, 
-> could
-> you clarify which state you intend to match?
-> 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-Since this line is driven by BT SoC, they could change their 
-pull(although it's less likely). Recently on cherokee we worked with BT 
-team and came to an agreement to keep no-pull from our side in order to 
-not conflict with their pull in any state.
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index b67b38c8fadf..0df56292e227 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -204,6 +204,16 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
+ {
+ 	int ret;
+ 	u32 val;
++	u32 mask, reset_val;
++
++	val = gmu_read(gmu, REG_A6XX_GMU_CM3_DTCM_START + 0xff8);
++	if (val <= 0x20010004) {
++		mask = 0xffffffff;
++		reset_val = 0xbabeface;
++	} else {
++		mask = 0x1ff;
++		reset_val = 0x100;
++	}
+ 
+ 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
+ 
+@@ -215,7 +225,7 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
+ 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 0);
+ 
+ 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_CM3_FW_INIT_RESULT, val,
+-		val == 0xbabeface, 100, 10000);
++		(val & mask) == reset_val, 100, 10000);
+ 
+ 	if (ret)
+ 		DRM_DEV_ERROR(gmu->dev, "GMU firmware initialization timed out\n");
+-- 
+2.28.0
 
->> 
->> > >  		pins = "gpio38";
->> > > +		bias-disable;
->> > > +	};
->> > > +
->> > > +	pinconf-rts {
->> > > +		/* We'll drive 39 (RTS), so configure pull-down */
->> > > +		pins = "gpio39";
->> > > +		drive-strength = <2>;
->> > >  		bias-pull-down;
->> > > +	};
->> > > +
->> > > +	pinconf-tx {
->> > > +		/* We'll drive 40 (TX), so no pull */
->> >
->> > The rationales for RTS and TX contradict each other. According to the
->> > comment
->> > the reason to configure a pull-down on RTS is that it is driven by the
->> > host.
->> > Then for TX the reason to configure no pull is that it is driven by the
->> > host.
->> >
->> > Please make sure the comments *really* describe the rationale, otherwise
->> > they
->> > are just confusing.
->> 
->> The rationale for RTS is that we don't want it to be floating and want 
->> to
->> make sure that it is pulled down, to receive bytes. Will modify the 
->> comment
->> mentioning the same.
-> 
-> Could you clarify what you mean with "to receive bytes"?
-> 
-
-When we keep no-pull(floating), sometimes it may be pulled high and UART 
-flow will be turned off(RFR_NOT_READY), due to this BT SoC wont be able 
-to send data even though host is ready.
-
-> Thanks
-> 
-> Matthias
-
-Thanks,
-Satya Priya
