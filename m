@@ -2,77 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F3AF24B282
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 11:32:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6F9024B5F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 12:31:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728251AbgHTJbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 05:31:44 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38410 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728227AbgHTJbX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 05:31:23 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a14so1358797wra.5;
-        Thu, 20 Aug 2020 02:31:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b1bNFiZgiP0kbWWwCg17EvjL33DK3FeILPEpJ0Dhl/Q=;
-        b=uA9edRSq25TmKCGVnHYoP5cHkYNbN41oRl3S0afOBoDXd5TLtLaExA7B33xt2MhSiJ
-         tynMT5tmW36TyXYGDl7xffBHurmHwGax/+S6tjoTX/P9gN3jD8iF+krSUTP/Hc+Kk6mR
-         lcKyg3SujxHl29mGtm1vGl/ZEgup7NFXxpjA0xaB6pJafcQjQQAJvaV3jgzhtVrZOa6+
-         zcPq0Y85hXtTTnLPVNIdJ4nG5+hiTBS/wHrHZ94ysK23SZi4Nft5nGZAJWpLaIAtFgcQ
-         dbX8ewA8PZpR9odN9OP6q2a6jOLHFnfcoC3tq0tn2S7siySvVqziRATeKZE1PBkjbWfy
-         3GHg==
-X-Gm-Message-State: AOAM533ZBSqaMRM6oNuol5vyFNIOeR0XYYluJov1DSv2EPYXr9WhnORU
-        3b1vtAvJ5tRtVBDlqXWTY6Y=
-X-Google-Smtp-Source: ABdhPJyp9/7bHjGRhaR63apXcQFn01iJGOXs1Poxb/moYU7gYPKQXpIuQVliKswmp5fn+tzr2fBnTw==
-X-Received: by 2002:a5d:4c45:: with SMTP id n5mr2319721wrt.68.1597915881386;
-        Thu, 20 Aug 2020 02:31:21 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.216])
-        by smtp.googlemail.com with ESMTPSA id z7sm3102928wmk.6.2020.08.20.02.31.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Aug 2020 02:31:20 -0700 (PDT)
-Date:   Thu, 20 Aug 2020 11:31:18 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Barry Song <baohua@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>,
-        Mans Rullgard <mans@mansr.com>, Jun Nie <jun.nie@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [RESEND PATCH 4/5] ARM: dts: tango: Align L2 cache-controller
- nodename with dtschema
-Message-ID: <20200820093118.GC15884@kozik-lap>
-References: <20200819175853.21492-1-krzk@kernel.org>
- <20200819175853.21492-4-krzk@kernel.org>
+        id S1731443AbgHTKag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 06:30:36 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:51052 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731600AbgHTKaW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 06:30:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1597919417; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=km9nW3C7eCummePhEdybTk2b7eYw/T0nXcPSw02yQc8=;
+ b=C/VSxCaa6+MoehnMKEROTy1OgrnIsNvMWlVBCD/VWs8WALlGN3XtK68bHwm/22XXiKODC5R7
+ AtCfxEsI55/x57m2++3xg5TY5JJyHm+SN5Ov9WEoFeYlvdZ1LWiD9R70bqLqGJUGCsAZbh70
+ sv/xLuA597uqTvenZYemhDnZdcQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f3e50a5f37da9fb0ef5ccea (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 20 Aug 2020 10:29:57
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 427F8C433A0; Thu, 20 Aug 2020 10:29:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 099F2C433CA;
+        Thu, 20 Aug 2020 10:29:55 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200819175853.21492-4-krzk@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 20 Aug 2020 15:59:54 +0530
+From:   rojay@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     wsa@kernel.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH 1/2] i2c: i2c-qcom-geni: Add tx_dma, rx_dma and xfer_len
+ to geni_i2c_dev struct
+In-Reply-To: <159780835380.334488.10270114810481187992@swboyd.mtv.corp.google.com>
+References: <20200814095540.32115-1-rojay@codeaurora.org>
+ <20200814095540.32115-2-rojay@codeaurora.org>
+ <159780835380.334488.10270114810481187992@swboyd.mtv.corp.google.com>
+Message-ID: <872641764c4a03b92c8f2dafe6f2764a@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 19, 2020 at 07:58:52PM +0200, Krzysztof Kozlowski wrote:
-> Fix dtschema validator warnings like:
->     l2-cache-controller@20100000: $nodename:0:
->         'l2-cache-controller@20100000' does not match '^(cache-controller|cpu)(@[0-9a-f,]+)*$'
+Hi Stephen,
+
+Thanks for reviewing the patches.
+
+On 2020-08-19 09:09, Stephen Boyd wrote:
+> Quoting Roja Rani Yarubandi (2020-08-14 02:55:39)
+>> Adding tx_dma, rx_dma and xfer length in geni_i2c_dev struct to
+>> store DMA mapping data to enhance its scope. For example during
+>> shutdown callback to unmap DMA mapping, these new struct members
+>> can be used as part of geni_se_tx_dma_unprep and
+>> geni_se_rx_dma_unprep calls.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  arch/arm/boot/dts/tango4-common.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Please read about how to write commit text from kernel docs[1]. Hint,
+> use imperative mood.
+> 
 
-I forgot to add the tag provided on previous submission:
-Acked-by: Mans Rullgard <mans@mansr.com>
+Ok, will update the commit text.
 
-Best regards,
-Krzysztof
+>> 
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> ---
+>>  drivers/i2c/busses/i2c-qcom-geni.c | 23 +++++++++++++----------
+>>  1 file changed, 13 insertions(+), 10 deletions(-)
+>> 
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+>> b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index 7f130829bf01..53ca41f76080 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -86,6 +86,9 @@ struct geni_i2c_dev {
+>>         u32 clk_freq_out;
+>>         const struct geni_i2c_clk_fld *clk_fld;
+>>         int suspended;
+>> +       dma_addr_t tx_dma;
+>> +       dma_addr_t rx_dma;
+>> +       u32 xfer_len;
+> 
+> Why not size_t?
+> 
+
+Will change it to size_t.
+
+>>  };
+>> 
+>>  struct geni_i2c_err_log {
+>> @@ -352,12 +355,11 @@ static void geni_i2c_tx_fsm_rst(struct 
+>> geni_i2c_dev *gi2c)
+>>  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct 
+>> i2c_msg *msg,
+>>                                 u32 m_param)
+>>  {
+>> -       dma_addr_t rx_dma;
+>>         unsigned long time_left;
+>>         void *dma_buf = NULL;
+>>         struct geni_se *se = &gi2c->se;
+>> -       size_t len = msg->len;
+>> 
+>> +       gi2c->xfer_len = msg->len;
+> 
+> I'd prefer to keep the local variable and then have
+> 
+> 	len = gi2c->xfer_len = msg->len;
+> 
+
+Ok, will keep the local variable.
+
+>>         if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>>                 dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+>> 
+>> @@ -366,9 +368,10 @@ static int geni_i2c_rx_one_msg(struct 
+>> geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>>         else
+>>                 geni_se_select_mode(se, GENI_SE_FIFO);
+>> 
+>> -       writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
+>> +       writel_relaxed(gi2c->xfer_len, se->base + 
+>> SE_I2C_RX_TRANS_LEN);
+> 
+> So that all this doesn't have to change.
+> 
+>> 
+>> -       if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) 
+>> {
+>> +       if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, 
+>> gi2c->xfer_len,
+>> +                                          &gi2c->rx_dma)) {
+>>                 geni_se_select_mode(se, GENI_SE_FIFO);
+>>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+>>                 dma_buf = NULL;
+>> @@ -384,7 +387,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg *msg,
+>>         if (dma_buf) {
+>>                 if (gi2c->err)
+>>                         geni_i2c_rx_fsm_rst(gi2c);
+>> -               geni_se_rx_dma_unprep(se, rx_dma, len);
+>> +               geni_se_rx_dma_unprep(se, gi2c->rx_dma, 
+>> gi2c->xfer_len);
+>>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+>>         }
+>> 
+>> @@ -394,12 +397,11 @@ static int geni_i2c_rx_one_msg(struct 
+>> geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>>  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct 
+>> i2c_msg *msg,
+>>                                 u32 m_param)
+>>  {
+>> -       dma_addr_t tx_dma;
+>>         unsigned long time_left;
+>>         void *dma_buf = NULL;
+>>         struct geni_se *se = &gi2c->se;
+>> -       size_t len = msg->len;
+>> 
+>> +       gi2c->xfer_len = msg->len;
+> 
+> Same comment.
+> 
+
+Ok.
+
+>>         if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>>                 dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+>> 
+> 
+> [1]
+> https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
+
+Thanks,
+Roja
