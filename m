@@ -2,88 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A4FE24C834
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 01:12:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D76924C885
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 01:27:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728633AbgHTXMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 19:12:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728368AbgHTXMF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 19:12:05 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F9DC061385
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 16:12:05 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id k13so2619plk.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 16:12:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=25VvJRAxxSKZOja+m6/X23XfJDnDiYp/jYGjfMbcAb0=;
-        b=jIR7tO3qoi5slAacYS+iETQLXWk1DQkkglZGqJ+4elEWjSZruJbneRmnrPIo97LQvf
-         q/vETU/eIWQWYgpnEEuNQU9fPEZ5Ma+G9wHb7cy1QZTLD7+hgcGHlUhec4X+ULeBmuIs
-         mZ+EjHo39gcE5PDuOziXfU70k2mkN1S/vFLDk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=25VvJRAxxSKZOja+m6/X23XfJDnDiYp/jYGjfMbcAb0=;
-        b=gzIf/RsWIjdMdJf662TUzl4KLdgL7yRwYZONgtUhPz02enrAYYK3IQ8t0OuBE9MfIb
-         YV1vlRWi7logZ2rW0P7+KxkRYYPJTHeMKxFrxRUkGLAKvKFBzjdhHGHxdhJNc9BwahyU
-         uBtE8BCxZ8imfzN26IOIB0wkkk0uDV4MXpWoad8jH8ZFoKJCOr1v0WI21R9fVGDOLlLR
-         sRzWjptQ2a/3bXeu/q8RPer7eyB/Lok1dLWvA2UI8ddPaHx/OXOg0V03Ua+MMqix/lyE
-         aAHiDfeT5gi14RGi91tq0j5ASmpON6BuEmg5yy7WXdR3nQsIBXbDfqUssYRAxSs+XNni
-         JWUQ==
-X-Gm-Message-State: AOAM530e5CGLTNUH+mWqezeDhrkaRfYzM/nJG+2q+yEC36qDXZ8lRt6c
-        8yHhOCJ/A2yQzAiQqeLQTQ7BWnjTdsfOtw==
-X-Google-Smtp-Source: ABdhPJxg6gWWIr+NYNyeNoh/vt3CrN4ueRdwUBhK+gGqkDpx2GGsrTCxJyCGNkmaTYlqXYnvTmNnvg==
-X-Received: by 2002:a17:90b:885:: with SMTP id bj5mr133571pjb.133.1597965124880;
-        Thu, 20 Aug 2020 16:12:04 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id 8sm117847pjx.14.2020.08.20.16.12.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2020 16:12:04 -0700 (PDT)
+        id S1728754AbgHTX1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 19:27:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49928 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728498AbgHTX1h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 19:27:37 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1513C20748;
+        Thu, 20 Aug 2020 23:27:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597966057;
+        bh=31Y6NUC/jEe/HxiXYkm3+iT80kHa+NgUWjEZ87ZO7Tw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=SmVuzgtEOXKFTdIq8kzckGoPuu1pGzk1gkIcVB/AFojLEoZF1j/MVFK3AXx4/ZdW3
+         a1bEUyUe9Ua84lWHG7rMcJkOThr3PmXVYQlbxV6F/GDCIzwGj13IqA2kx4lrjoRSGI
+         XXdnXSvk6ptWicl939xigBNv5rsV/pCt/5/vHNI8=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1597831670-17401-3-git-send-email-mkshah@codeaurora.org>
-References: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org> <1597831670-17401-3-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH 2/2] Revert "Revert "soc: qcom: rpmh: Allow RPMH driver to be loaded as a module""
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ulf.hansson@linaro.org, dianders@chromium.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Todd Kjos <tkjos@google.com>,
-        Saravana Kannan <saravanak@google.com>
-To:     Maulik Shah <mkshah@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Date:   Thu, 20 Aug 2020 16:12:02 -0700
-Message-ID: <159796512284.334488.2457174259443414342@swboyd.mtv.corp.google.com>
+In-Reply-To: <20200818080738.GA46574@gerhold.net>
+References: <20200817140908.185976-1-stephan@gerhold.net> <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com> <20200818080738.GA46574@gerhold.net>
+Subject: Re: [PATCH] clk: qcom: smd: Disable unused clocks
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Georgi Djakov <georgi.djakov@linaro.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>
+Date:   Thu, 20 Aug 2020 16:27:35 -0700
+Message-ID: <159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-08-19 03:07:50)
-> The _rcuidle tracepoints are removed from RPMH driver which prevented
-> to compile it as module. Bring back the change to make it module.
+Quoting Stephan Gerhold (2020-08-18 01:07:38)
+> Hi Jeffrey,
 >=20
-> This reverts commit 1f7a3eb785e4a4e196729cd3d5ec97bd5f9f2940.
+> On Mon, Aug 17, 2020 at 08:52:46AM -0600, Jeffrey Hugo wrote:
+> > So essentially, when the clk framework goes through late init, and
+> > decides to turn off clocks that are not being used, it will also turn
+> > off these clocks?
+> >=20
+> > I think this is going to break other targets where other subsystems
+> > happen to rely on these sorts of votes from Linux inorder to run/boot
+> > (not saying it's a good thing, just that is how it is and since we
+> > can't change the FW on those....).
+> >=20
 >=20
-> Cc: John Stultz <john.stultz@linaro.org>
-> Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
+> After thinking about it some more I realized there are definitely some
+> of the clocks we shouldn't disable even when unused, for example the
+> interconnect clocks. With interconnect drivers disabled the system
+> basically locked up entirely once the clock core disabled the clocks.
 
-Please send the original patch and add your SoB to it. Reverting a patch
-out of the history works, but doesn't do justice to the authorship of
-the patch.
+The interconnect clks should be moved out of the RPM clk drivers. It's
+over-engineering to have the RPM interconnect drivers talk to the RPM
+clk drivers to change the frequency of interconnects based on a
+calculation in the interconnect driver. It makes sense from a logical
+perspective to express that these are clks, and they have frequencies,
+etc., but when you look closer at it you see that it's nonsense.
+
+The RPMh interconnect driver should be able to talk directly to the RPM
+and turn knobs as it see fit. Nobody else is going to use those clks
+from the RPM clk driver. Any potential consumer is going to go through
+the interconnect layer to change frequencies. So now we've got two
+frameworks interfacing with the same wire protocol and remote processor,
+when we could have only one. And furthermore to the point, the RPM
+interconnect clks are all parented to nothing, so putting them behind
+the clk APIs provides practically zero benefits, like managing the clk
+tree or determining rates down the tree.
+
+Honestly I'd like to see all the various RPM drivers combined into one
+driver that knows what is going on between regulators, interconnects,
+and clks, etc. Carving it up into these different drivers spread across
+the tree helps us review the code and logically split the device into
+pieces, but the flip side is that nobody sees the big picture that a
+call into a framework here boils down to a couple RPM messages sent over
+the wire to the same device.
+
+> For now I fixed this by marking all of DEFINE_CLK_SMD_RPM() as
+> CLK_IGNORE_UNUSED (essentially restoring the current behavior of the
+> driver). For MSM8916 these are exactly the interconnect clocks, but on
+> other platforms there are further clocks that might not need
+> CLK_IGNORE_UNUSED. This could be still optimized later.
+>=20
+> > I think this needs to be validated on every single qcom platform using
+> > this driver.
+> >=20
+>=20
+> After running into the issue above I kind of agree with you. While
+> problems should be limited by marking the "rate" clocks as
+> CLK_IGNORE_UNUSED, it's also possible that one of the platforms requires
+> one of the branch clocks to stay on to boot successfully.
+>=20
+> I know for sure that this works properly on MSM8916, so maybe I should
+> make it opt-in and then we add it for each platform after validating it?
+>=20
+
+No! Instead of putting band-aids on this broken mess, please just move
+the interconnect clks out of the clk driver and into the interconnect
+driver.
+
+Sorry for the rant and thanks for sending a patch to fix problems you're
+seeing.
