@@ -2,99 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E312424B6FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 12:46:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15FC524B979
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 13:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727914AbgHTKp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 06:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40448 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731412AbgHTKpo (ORCPT
+        id S1727972AbgHTLqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 07:46:42 -0400
+Received: from lelv0143.ext.ti.com ([198.47.23.248]:35512 "EHLO
+        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728936AbgHTLpG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 06:45:44 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 940CCC061386
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 03:45:43 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id v15so937718pgh.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 03:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=e8inUcZeC1EMvDkcDtQU8bF16fiEKmHQKTdE6UvD9Ao=;
-        b=ZP0QD+506tNSnZWgxhklM3ACdIxHLDAKs7Y13NpvZb2lV6r7xBuNUnDBfXq2jvNYt5
-         7/lQtWJa3Cu4CfERXUOwODKWYU+mc5q5qYgKK8atZQD/l3Z7Zcqfa36O+ah8JEkloJ7/
-         4QI/MwpTcOG0VE1ecRxhrUQkH0pIEadmkkaLn0VK5zuxbvSE/NDTjXl7TAQDuoYLIrg7
-         lZTOkJP3RN5mhSYnn8+JpyUvQtmpkgc0Oenv7D/7CoFEV7ycyqokUoEQRnSzpdLZ3gXr
-         77bL4G/C9sDbJETUHN0n73YPe+3B9OdykJGXhLF73vdoXwUpld0sK/DvCVXPwvGnU8BH
-         JPOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=e8inUcZeC1EMvDkcDtQU8bF16fiEKmHQKTdE6UvD9Ao=;
-        b=QBqFsh0JYvL3j67lJN7oz2JbQ6BeFuPOn0GqeRo1SvH+eDBHUStaO8z4Wdb8pyeEHi
-         3WyaKSehYhn097WG/8UFTKsRz+NTO0LAJKrkLXPju8hfBYuMJw7YnOlm4fzGilz+n3ff
-         jipE7ee5T0umBrjonaRPai2dt6EFfMRkvnTjinJZjooKL9sAOgPWd3DxYXn+2LEEjdhL
-         JNTciJZOIs1FeQXNeXWCYx+3B2kPvXg3Yh674ODVtScfa1yyAOuSe1j6pLrRMMjX4t5J
-         N9HDknebzrc/2tPpySz26bUB2ivhJ9By+WkcZ/qbZMu9lIl8KgY7L75ST3cPnnjqBYpS
-         Gb1A==
-X-Gm-Message-State: AOAM530A+b1d/FaoUBC6iOpoWgTLRtdumEsniE+bcmgCCGIdku4rAzTN
-        fN5THQiW6s1UEerBoBQ5vd5gKw==
-X-Google-Smtp-Source: ABdhPJxOJujoHIwJeXRT5jnwcXre+SjocPhd74ZRzEkHGK2rTIfJshGRbE/6smUIR6n+rpoJPe8BDw==
-X-Received: by 2002:aa7:83cf:: with SMTP id j15mr1682989pfn.251.1597920342783;
-        Thu, 20 Aug 2020 03:45:42 -0700 (PDT)
-Received: from localhost ([122.172.43.13])
-        by smtp.gmail.com with ESMTPSA id s125sm2589935pfc.63.2020.08.20.03.45.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Aug 2020 03:45:42 -0700 (PDT)
-Date:   Thu, 20 Aug 2020 16:15:40 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robdclark@chromium.org,
-        robdclark@gmail.com, stanimir.varbanov@linaro.org,
-        mka@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-serial@vger.kernel.org
-Subject: Re: [PATCH v6 1/6] tty: serial: qcom_geni_serial: Use OPP API to set
- clk/perf state
-Message-ID: <20200820104540.4c4cg4rn4oa4rh6t@vireshk-i7>
-References: <1592222564-13556-1-git-send-email-rnayak@codeaurora.org>
- <1592222564-13556-2-git-send-email-rnayak@codeaurora.org>
- <159347264530.1987609.11350620235820019545@swboyd.mtv.corp.google.com>
- <a3d53f82-b29d-97ef-3ba1-ca9bd650d354@codeaurora.org>
- <20200630030552.cfp5oh33qde6nlnf@vireshk-i7>
- <159532101373.3847286.9695594340556014384@swboyd.mtv.corp.google.com>
- <20200722052444.updchi2yfjgbf3hb@vireshk-mac-ubuntu>
+        Thu, 20 Aug 2020 07:45:06 -0400
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07KBiLjh034621;
+        Thu, 20 Aug 2020 06:44:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1597923861;
+        bh=KekPuX5bW5OV7WGA42Ji5+dWGwrpNIKAh0IFJGWPkgw=;
+        h=Date:From:To:CC:Subject:References:In-Reply-To;
+        b=wumWcYu2C1Uab0K7/BhHt6am8WARnusXkgQxTV42cLperHvWAMr73TNd+wDsAw3wy
+         hNKVGdTP4DXYch+0pLpm6EayzBWxfb8hWJXgwCbJaBPkYV500cFpib37witpJiU5fe
+         I4uAGHEHelb5GRoGXgpVe6o/YlhZ9+BiuU3VMDj8=
+Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
+        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 07KBiLbD128554
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Thu, 20 Aug 2020 06:44:21 -0500
+Received: from DLEE105.ent.ti.com (157.170.170.35) by DLEE104.ent.ti.com
+ (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Thu, 20
+ Aug 2020 06:44:20 -0500
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE105.ent.ti.com
+ (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Thu, 20 Aug 2020 06:44:20 -0500
+Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07KBiK7d068400;
+        Thu, 20 Aug 2020 06:44:20 -0500
+Date:   Thu, 20 Aug 2020 06:44:20 -0500
+From:   Nishanth Menon <nm@ti.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     <soc@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, Kevin Hilman <khilman@baylibre.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Robert Richter <rrichter@marvell.com>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Wei Xu <xuwei5@hisilicon.com>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Tero Kristo <t-kristo@ti.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>
+Subject: Re: [PATCH] arm64: dts: Reformat PCI ranges/dma-ranges entries
+Message-ID: <20200820114420.sjlqvn2tbpa7vcbb@akan>
+References: <20200819221750.2055932-1-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jgbt6anitnjafjun"
 Content-Disposition: inline
-In-Reply-To: <20200722052444.updchi2yfjgbf3hb@vireshk-mac-ubuntu>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20200819221750.2055932-1-robh@kernel.org>
+User-Agent: NeoMutt/20171215
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-07-20, 10:54, Viresh Kumar wrote:
-> On 21-07-20, 01:43, Stephen Boyd wrote:
-> > It seems that dev_pm_opp_set_rate() calls _find_opp_table() and finds
-> > something that isn't an error pointer but then dev_pm_opp_of_add_table()
-> > returns an error value because there isn't an operating-points property
-> > in DT. We're getting saved because this driver also happens to call
-> > dev_pm_opp_set_clkname() which allocates the OPP table a second time
-> > (because the first time it got freed when dev_pm_opp_of_add_table()
-> > return -ENODEV because the property was missing).
-> > 
-> > Why do we need 'has_opp_table' logic? It seems that we have to keep
-> > track of the fact that dev_pm_opp_of_add_table() failed so that we don't
-> > put the table again, but then dev_pm_opp_set_clkname() can be called
-> > to allocate the table regardless.
+--jgbt6anitnjafjun
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I have sent a patchset to clean this stuff up a bit now.
+On 16:17-20200819, Rob Herring wrote:
+> While bracketing doesn't matter for a DTB, the DT schema checks rely on
+[..]
+> ---
+> SoC maintainers, please apply this directly.
+	  [...]
+> diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/d=
+ts/ti/k3-am65-main.dtsi
+> index 9edfae5944f7..2c762e725d89 100644
+> --- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+> +++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+> @@ -678,8 +678,8 @@ pcie0_rc: pcie@5500000 {
+>  		power-domains =3D <&k3_pds 120 TI_SCI_PD_EXCLUSIVE>;
+>  		#address-cells =3D <3>;
+>  		#size-cells =3D <2>;
+> -		ranges =3D <0x81000000 0 0          0x0 0x10020000 0 0x00010000
+> -			  0x82000000 0 0x10030000 0x0 0x10030000 0 0x07FD0000>;
+> +		ranges =3D <0x81000000 0 0          0x0 0x10020000 0 0x00010000>,
+> +			 <0x82000000 0 0x10030000 0x0 0x10030000 0 0x07FD0000>;
+>  		ti,syscon-pcie-id =3D <&pcie_devid>;
+>  		ti,syscon-pcie-mode =3D <&pcie0_mode>;
+>  		bus-range =3D <0x0 0xff>;
+> @@ -710,8 +710,8 @@ pcie1_rc: pcie@5600000 {
+>  		power-domains =3D <&k3_pds 121 TI_SCI_PD_EXCLUSIVE>;
+>  		#address-cells =3D <3>;
+>  		#size-cells =3D <2>;
+> -		ranges =3D <0x81000000 0 0          0x0   0x18020000 0 0x00010000
+> -			  0x82000000 0 0x18030000 0x0   0x18030000 0 0x07FD0000>;
+> +		ranges =3D <0x81000000 0 0          0x0   0x18020000 0 0x00010000>,
+> +			 <0x82000000 0 0x18030000 0x0   0x18030000 0 0x07FD0000>;
+>  		ti,syscon-pcie-id =3D <&pcie_devid>;
+>  		ti,syscon-pcie-mode =3D <&pcie1_mode>;
+>  		bus-range =3D <0x0 0xff>;
 
--- 
-viresh
+For the TI chunk:
+Acked-by: Nishanth Menon <nm@ti.com>
+--=20
+Regards,
+Nishanth Menon
+Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5=
+ 849D 1736 249D
+
+--jgbt6anitnjafjun
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE+KKGk1TrgjIXoxo03bWEnRc2JJ0FAl8+YgwACgkQ3bWEnRc2
+JJ0WIg//YBZVg8WDT/O8r7i2UkktHsq0s0v55hHAOfcl47v8FQtw84RgUhFCn+9i
+U/VpPbU7ZvIUlpbADflEHrnXkYfhikLBFJ90DEde63M1DkFyvjnMXJVImmuiK7E7
+WbWZpo21fRKfbFje9l6upMgfiM4ZB7GS/NkKssavEX22oaG5+GTjNjEI1EJijNG/
+K0hD2jvRdQ59eyfdvKL8ezXthEaJdCyWuREOKCsE/VUDHC/KgXcpZjLA7BICegYn
+J/UeEhSJGtV2UaUkU621yg3gRF2f7on236lG4cs4QnYIzACww4MA2r3UdM+zsOI0
+RJR8/LbNzBtfzPUmyQldvvBKQ80HtgMe0jhuFGflT4rjzbMQXYbOdIFR0A2Jhw2/
+tt2YH0rmxV3rhRLsPtcmltMQW/2iccVbvHZaz8xQ9HirP2XaAvhTUfG5ayFTD3jb
+uxU9HV/SMapoo56gvFRkg09K4vNAtTwc8TZLOo29FbKSv0+PUXFDBODeygVgNYxL
+RI8OFjIgAiWTgAow/5CNkPwKLjR7F/dMj5T2hX1WVjwD5ds1bdl6dJP6WejEs3OU
+iEYUy5PR23cZoVrH6V4FMcyWv/6D+7C8UzHIqzkUulviPpSofpb8muTAlsyAe9gx
+YZPxS3DHyObqDoJbspVmD2acwVGz6KQBvvyEqvsC42qkJ0T5ByA=
+=TsAH
+-----END PGP SIGNATURE-----
+
+--jgbt6anitnjafjun--
