@@ -2,478 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3172624C18C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 17:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D67FF24C29E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 17:55:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728916AbgHTPKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 11:10:46 -0400
-Received: from foss.arm.com ([217.140.110.172]:41298 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728838AbgHTPKE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 11:10:04 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 51BFC1597;
-        Thu, 20 Aug 2020 08:10:02 -0700 (PDT)
-Received: from e121345-lin.cambridge.arm.com (e121345-lin.cambridge.arm.com [10.1.196.37])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id B6D8F3F6CF;
-        Thu, 20 Aug 2020 08:09:58 -0700 (PDT)
-From:   Robin Murphy <robin.murphy@arm.com>
-To:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk
-Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
-        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com, vdumpa@nvidia.com,
-        digetx@gmail.com, matthias.bgg@gmail.com, yong.wu@mediatek.com,
-        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
-        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 18/18] ARM/dma-mapping: Remove legacy dma-iommu API
-Date:   Thu, 20 Aug 2020 16:08:37 +0100
-Message-Id: <ae8fc6c61f38d8ddc8e94041deda0fcc6333bae3.1597931876.git.robin.murphy@arm.com>
-X-Mailer: git-send-email 2.28.0.dirty
-In-Reply-To: <cover.1597931875.git.robin.murphy@arm.com>
-References: <cover.1597931875.git.robin.murphy@arm.com>
+        id S1728240AbgHTPzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 11:55:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60174 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726731AbgHTPzQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 11:55:16 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F250C061385;
+        Thu, 20 Aug 2020 08:55:15 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id f18so4058327wmc.0;
+        Thu, 20 Aug 2020 08:55:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4gsAD01Lu/a6HHuOZz2Js+H3gnol7gh8tJ3zMDutdDc=;
+        b=ebljxtw8UtQQ032VUUuCGK812jroSyyHZHtTYoOMrud/UydGhZ3UMgBUN9qe9aAvk4
+         EHygzdAvntJ9+R/Y3KA0p2V8fSCNXm6RFtsp3+CZNKezVJQ8X2aAKOeBHvVnuXgBzp1O
+         Z4mdnxldoQFQbYRJYgGPkdtLHKlnlIzkaDXqkqTa3laBrCC8GM7uy1HvEv9ndhSWNfl7
+         gtrl6II21EVeL5x1fdWpBOS2x6s/Ea7ce8pWBuPej62eiBTIeFwATx0cPhjPkPFtdmbp
+         cpVIJwigFocq1ZQgZzWrnaG3CAmE48jwTnhO+RO8Uw3CBwiyc46QOxMJqP5MrYAE3v9X
+         TZPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4gsAD01Lu/a6HHuOZz2Js+H3gnol7gh8tJ3zMDutdDc=;
+        b=M2YK8C25wXwiSlREDrwaje+Pc+ecbq1cXWwfA8Fk0e9DOJid8OOBnn1mdwH3HLoous
+         spe0JTBTU3BNH/1lUxcQP12SqaQP8TYy2nFQR2zIJ3JzMtU+1MdVXEvzUuz+ynyXOHiF
+         NNTrAesVGO/237I03JgLbMlQPOIN5jPIWKW4dzmQMu3ka0K3Syc1BFhzgpSjAKYmIIUS
+         Ro13v0tmcQNrOn33wGG5SB10T/CLuBTvcn77p1DsTRl0j6dZ9dv/YDzJlp/D+ELCDXbC
+         G7VxZ0V+V37l9EphncDzikuoaGxD/q+oXognZs/fniQ6Xkup3rk+ZulWtNICnYb73WzT
+         76mQ==
+X-Gm-Message-State: AOAM530phEGQ7c76G/posaBLJMHDsZTTmg628O0OV4MvnhllB/svZFvP
+        zyvsTVBmsgak4Hyt5yvUQEi8fi8A0NvkmP5s33Q=
+X-Google-Smtp-Source: ABdhPJymrLvmSo2mjxf1P+WzawgnYC5TC99FhFkAg2iJ/mZCttmTx/9BBIkjwyymKsU721sVZprDLyZXm16x0EfQzm0=
+X-Received: by 2002:a7b:c257:: with SMTP id b23mr3974646wmj.164.1597938913876;
+ Thu, 20 Aug 2020 08:55:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1597931875.git.robin.murphy@arm.com> <93d7de3533cfd952aecd6198b9221d7a58c0e521.1597931876.git.robin.murphy@arm.com>
+In-Reply-To: <93d7de3533cfd952aecd6198b9221d7a58c0e521.1597931876.git.robin.murphy@arm.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 20 Aug 2020 08:55:02 -0700
+Message-ID: <CAF6AEGuKa4P=gfus08CdfT2H5pG6a2PBumGb=Pw3qvD=NWueig@mail.gmail.com>
+Subject: Re: [PATCH 10/18] iommu/msm: Add IOMMU_DOMAIN_DMA support
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Christoph Hellwig <hch@lst.de>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <joro@8bytes.org>,
+        Russell King - ARM Linux <linux@armlinux.org.uk>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        digetx@gmail.com, Suman Anna <s-anna@ti.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        "moderated list:ARM/S5P EXYNOS AR..." 
+        <linux-samsung-soc@vger.kernel.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>, Yong Wu <yong.wu@mediatek.com>,
+        linux-media@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        "moderated list:ARM/Mediatek SoC..." 
+        <linux-mediatek@lists.infradead.org>, linux-tegra@vger.kernel.org,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        t-kristo@ti.com,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With no users left and generic iommu-dma now doing all the work,
-clean up the last traces of the arch-specific API, plus the temporary
-workarounds that you'd forgotten about because you were thinking about
-zebras instead.
+Side note, I suspect we'll end up needing something like
+0e764a01015dfebff8a8ffd297d74663772e248a .. if someone can dig a 32b
+device out of the closet and dust it off, the fix is easy enough.
+Just wanted to mention that here so anyone with a 32b device could
+find what is needed.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
----
- arch/arm/common/dmabounce.c      |   1 -
- arch/arm/include/asm/device.h    |   9 --
- arch/arm/include/asm/dma-iommu.h |  29 -----
- arch/arm/mm/dma-mapping.c        | 200 +------------------------------
- drivers/iommu/dma-iommu.c        |  38 ++----
- 5 files changed, 11 insertions(+), 266 deletions(-)
- delete mode 100644 arch/arm/include/asm/dma-iommu.h
+BR,
+-R
 
-diff --git a/arch/arm/common/dmabounce.c b/arch/arm/common/dmabounce.c
-index f4b719bde763..064349df7bbf 100644
---- a/arch/arm/common/dmabounce.c
-+++ b/arch/arm/common/dmabounce.c
-@@ -30,7 +30,6 @@
- #include <linux/scatterlist.h>
- 
- #include <asm/cacheflush.h>
--#include <asm/dma-iommu.h>
- 
- #undef STATS
- 
-diff --git a/arch/arm/include/asm/device.h b/arch/arm/include/asm/device.h
-index be666f58bf7a..db33f389c94e 100644
---- a/arch/arm/include/asm/device.h
-+++ b/arch/arm/include/asm/device.h
-@@ -8,9 +8,6 @@
- struct dev_archdata {
- #ifdef CONFIG_DMABOUNCE
- 	struct dmabounce_device_info *dmabounce;
--#endif
--#ifdef CONFIG_ARM_DMA_USE_IOMMU
--	struct dma_iommu_mapping	*mapping;
- #endif
- 	unsigned int dma_coherent:1;
- 	unsigned int dma_ops_setup:1;
-@@ -24,10 +21,4 @@ struct pdev_archdata {
- #endif
- };
- 
--#ifdef CONFIG_ARM_DMA_USE_IOMMU
--#define to_dma_iommu_mapping(dev) ((dev)->archdata.mapping)
--#else
--#define to_dma_iommu_mapping(dev) NULL
--#endif
--
- #endif
-diff --git a/arch/arm/include/asm/dma-iommu.h b/arch/arm/include/asm/dma-iommu.h
-deleted file mode 100644
-index f39cfa509fe4..000000000000
---- a/arch/arm/include/asm/dma-iommu.h
-+++ /dev/null
-@@ -1,29 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--#ifndef ASMARM_DMA_IOMMU_H
--#define ASMARM_DMA_IOMMU_H
--
--#ifdef __KERNEL__
--
--#include <linux/mm_types.h>
--#include <linux/scatterlist.h>
--#include <linux/dma-debug.h>
--#include <linux/kref.h>
--
--struct dma_iommu_mapping {
--	/* iommu specific data */
--	struct iommu_domain	*domain;
--
--	struct kref		kref;
--};
--
--struct dma_iommu_mapping *
--arm_iommu_create_mapping(struct bus_type *bus, dma_addr_t base, u64 size);
--
--void arm_iommu_release_mapping(struct dma_iommu_mapping *mapping);
--
--int arm_iommu_attach_device(struct device *dev,
--					struct dma_iommu_mapping *mapping);
--void arm_iommu_detach_device(struct device *dev);
--
--#endif /* __KERNEL__ */
--#endif
-diff --git a/arch/arm/mm/dma-mapping.c b/arch/arm/mm/dma-mapping.c
-index 2ef0afc17645..ff6c4962161a 100644
---- a/arch/arm/mm/dma-mapping.c
-+++ b/arch/arm/mm/dma-mapping.c
-@@ -33,7 +33,6 @@
- #include <asm/cacheflush.h>
- #include <asm/tlbflush.h>
- #include <asm/mach/arch.h>
--#include <asm/dma-iommu.h>
- #include <asm/mach/map.h>
- #include <asm/system_info.h>
- #include <asm/dma-contiguous.h>
-@@ -1073,201 +1072,6 @@ static const struct dma_map_ops *arm_get_dma_map_ops(bool coherent)
- 	return coherent ? &arm_coherent_dma_ops : &arm_dma_ops;
- }
- 
--#ifdef CONFIG_ARM_DMA_USE_IOMMU
--
--extern const struct dma_map_ops iommu_dma_ops;
--extern int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
--		u64 size, struct device *dev);
--/**
-- * arm_iommu_create_mapping
-- * @bus: pointer to the bus holding the client device (for IOMMU calls)
-- * @base: start address of the valid IO address space
-- * @size: maximum size of the valid IO address space
-- *
-- * Creates a mapping structure which holds information about used/unused
-- * IO address ranges, which is required to perform memory allocation and
-- * mapping with IOMMU aware functions.
-- *
-- * The client device need to be attached to the mapping with
-- * arm_iommu_attach_device function.
-- */
--struct dma_iommu_mapping *
--arm_iommu_create_mapping(struct bus_type *bus, dma_addr_t base, u64 size)
--{
--	struct dma_iommu_mapping *mapping;
--	int err = -ENOMEM;
--
--	mapping = kzalloc(sizeof(*mapping), GFP_KERNEL);
--	if (!mapping)
--		goto err;
--
--	mapping->domain = iommu_domain_alloc(bus);
--	if (!mapping->domain)
--		goto err2;
--
--	err = iommu_get_dma_cookie(mapping->domain);
--	if (err)
--		goto err3;
--
--	err = iommu_dma_init_domain(mapping->domain, base, size, NULL);
--	if (err)
--		goto err4;
--
--	kref_init(&mapping->kref);
--	return mapping;
--err4:
--	iommu_put_dma_cookie(mapping->domain);
--err3:
--	iommu_domain_free(mapping->domain);
--err2:
--	kfree(mapping);
--err:
--	return ERR_PTR(err);
--}
--EXPORT_SYMBOL_GPL(arm_iommu_create_mapping);
--
--static void release_iommu_mapping(struct kref *kref)
--{
--	struct dma_iommu_mapping *mapping =
--		container_of(kref, struct dma_iommu_mapping, kref);
--
--	iommu_put_dma_cookie(mapping->domain);
--	iommu_domain_free(mapping->domain);
--	kfree(mapping);
--}
--
--void arm_iommu_release_mapping(struct dma_iommu_mapping *mapping)
--{
--	if (mapping)
--		kref_put(&mapping->kref, release_iommu_mapping);
--}
--EXPORT_SYMBOL_GPL(arm_iommu_release_mapping);
--
--static int __arm_iommu_attach_device(struct device *dev,
--				     struct dma_iommu_mapping *mapping)
--{
--	int err;
--
--	err = iommu_attach_device(mapping->domain, dev);
--	if (err)
--		return err;
--
--	kref_get(&mapping->kref);
--	to_dma_iommu_mapping(dev) = mapping;
--
--	pr_debug("Attached IOMMU controller to %s device.\n", dev_name(dev));
--	return 0;
--}
--
--/**
-- * arm_iommu_attach_device
-- * @dev: valid struct device pointer
-- * @mapping: io address space mapping structure (returned from
-- *	arm_iommu_create_mapping)
-- *
-- * Attaches specified io address space mapping to the provided device.
-- * This replaces the dma operations (dma_map_ops pointer) with the
-- * IOMMU aware version.
-- *
-- * More than one client might be attached to the same io address space
-- * mapping.
-- */
--int arm_iommu_attach_device(struct device *dev,
--			    struct dma_iommu_mapping *mapping)
--{
--	int err;
--
--	err = __arm_iommu_attach_device(dev, mapping);
--	if (err)
--		return err;
--
--	set_dma_ops(dev, &iommu_dma_ops);
--	return 0;
--}
--EXPORT_SYMBOL_GPL(arm_iommu_attach_device);
--
--/**
-- * arm_iommu_detach_device
-- * @dev: valid struct device pointer
-- *
-- * Detaches the provided device from a previously attached map.
-- * This overwrites the dma_ops pointer with appropriate non-IOMMU ops.
-- */
--void arm_iommu_detach_device(struct device *dev)
--{
--	struct dma_iommu_mapping *mapping;
--
--	mapping = to_dma_iommu_mapping(dev);
--	if (!mapping) {
--		dev_warn(dev, "Not attached\n");
--		return;
--	}
--
--	iommu_detach_device(mapping->domain, dev);
--	kref_put(&mapping->kref, release_iommu_mapping);
--	to_dma_iommu_mapping(dev) = NULL;
--	set_dma_ops(dev, arm_get_dma_map_ops(dev->archdata.dma_coherent));
--
--	pr_debug("Detached IOMMU controller from %s device.\n", dev_name(dev));
--}
--EXPORT_SYMBOL_GPL(arm_iommu_detach_device);
--
--static bool arm_setup_iommu_dma_ops(struct device *dev, u64 dma_base, u64 size,
--				    const struct iommu_ops *iommu)
--{
--	struct dma_iommu_mapping *mapping;
--
--	if (!iommu)
--		return false;
--
--	/* If a default domain exists, just let iommu-dma work normally */
--	if (iommu_get_domain_for_dev(dev)) {
--		iommu_setup_dma_ops(dev, dma_base, size);
--		return true;
--	}
--
--	/* Otherwise, use the workaround until the IOMMU driver is updated */
--	mapping = arm_iommu_create_mapping(dev->bus, dma_base, size);
--	if (IS_ERR(mapping)) {
--		pr_warn("Failed to create %llu-byte IOMMU mapping for device %s\n",
--				size, dev_name(dev));
--		return false;
--	}
--
--	if (__arm_iommu_attach_device(dev, mapping)) {
--		pr_warn("Failed to attached device %s to IOMMU_mapping\n",
--				dev_name(dev));
--		arm_iommu_release_mapping(mapping);
--		return false;
--	}
--
--	set_dma_ops(dev, &iommu_dma_ops);
--	return true;
--}
--
--static void arm_teardown_iommu_dma_ops(struct device *dev)
--{
--	struct dma_iommu_mapping *mapping = to_dma_iommu_mapping(dev);
--
--	if (!mapping)
--		return;
--
--	arm_iommu_detach_device(dev);
--	arm_iommu_release_mapping(mapping);
--}
--
--#else
--
--static bool arm_setup_iommu_dma_ops(struct device *dev, u64 dma_base, u64 size,
--				    const struct iommu_ops *iommu)
--{
--	return false;
--}
--
--static void arm_teardown_iommu_dma_ops(struct device *dev) { }
--
--#endif	/* CONFIG_ARM_DMA_USE_IOMMU */
--
- void arch_setup_dma_ops(struct device *dev, u64 dma_base, u64 size,
- 			const struct iommu_ops *iommu, bool coherent)
- {
-@@ -1286,7 +1090,8 @@ void arch_setup_dma_ops(struct device *dev, u64 dma_base, u64 size,
- 
- 	set_dma_ops(dev, arm_get_dma_map_ops(coherent));
- 
--	arm_setup_iommu_dma_ops(dev, dma_base, size, iommu);
-+	if (iommu)
-+		iommu_setup_dma_ops(dev, dma_base, size);
- 
- #ifdef CONFIG_XEN
- 	if (xen_initial_domain())
-@@ -1300,7 +1105,6 @@ void arch_teardown_dma_ops(struct device *dev)
- 	if (!dev->archdata.dma_ops_setup)
- 		return;
- 
--	arm_teardown_iommu_dma_ops(dev);
- 	/* Let arch_setup_dma_ops() start again from scratch upon re-probe */
- 	set_dma_ops(dev, NULL);
- }
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index ab157d155bf7..4959f5df21bd 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -25,19 +25,6 @@
- #include <linux/vmalloc.h>
- #include <linux/crash_dump.h>
- 
--#ifdef CONFIG_ARM
--#include <asm/dma-iommu.h>
--#endif
--static struct iommu_domain *__iommu_get_dma_domain(struct device *dev)
--{
--#ifdef CONFIG_ARM
--	struct dma_iommu_mapping *mapping = to_dma_iommu_mapping(dev);
--	if (mapping)
--		return mapping->domain;
--#endif
--	return iommu_get_dma_domain(dev);
--}
--
- struct iommu_dma_msi_page {
- 	struct list_head	list;
- 	dma_addr_t		iova;
-@@ -311,11 +298,8 @@ static void iommu_dma_flush_iotlb_all(struct iova_domain *iovad)
-  * avoid rounding surprises. If necessary, we reserve the page at address 0
-  * to ensure it is an invalid IOVA. It is safe to reinitialise a domain, but
-  * any change which could make prior IOVAs invalid will fail.
-- *
-- * XXX: Not formally exported, but needs to be referenced
-- * from arch/arm/mm/dma-mapping.c temporarily
-  */
--int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
-+static int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
- 		u64 size, struct device *dev)
- {
- 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
-@@ -472,7 +456,7 @@ static void iommu_dma_free_iova(struct iommu_dma_cookie *cookie,
- static void __iommu_dma_unmap(struct device *dev, dma_addr_t dma_addr,
- 		size_t size)
- {
--	struct iommu_domain *domain = __iommu_get_dma_domain(dev);
-+	struct iommu_domain *domain = iommu_get_dma_domain(dev);
- 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
- 	struct iova_domain *iovad = &cookie->iovad;
- 	size_t iova_off = iova_offset(iovad, dma_addr);
-@@ -494,7 +478,7 @@ static void __iommu_dma_unmap(struct device *dev, dma_addr_t dma_addr,
- static dma_addr_t __iommu_dma_map(struct device *dev, phys_addr_t phys,
- 		size_t size, int prot, u64 dma_mask)
- {
--	struct iommu_domain *domain = __iommu_get_dma_domain(dev);
-+	struct iommu_domain *domain = iommu_get_dma_domain(dev);
- 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
- 	struct iova_domain *iovad = &cookie->iovad;
- 	size_t iova_off = iova_offset(iovad, phys);
-@@ -598,7 +582,7 @@ static struct page **__iommu_dma_alloc_pages(struct device *dev,
- static void *iommu_dma_alloc_remap(struct device *dev, size_t size,
- 		dma_addr_t *dma_handle, gfp_t gfp, unsigned long attrs)
- {
--	struct iommu_domain *domain = __iommu_get_dma_domain(dev);
-+	struct iommu_domain *domain = iommu_get_dma_domain(dev);
- 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
- 	struct iova_domain *iovad = &cookie->iovad;
- 	bool coherent = dev_is_dma_coherent(dev);
-@@ -694,7 +678,7 @@ static void iommu_dma_sync_single_for_cpu(struct device *dev,
- 	if (dev_is_dma_coherent(dev))
- 		return;
- 
--	phys = iommu_iova_to_phys(__iommu_get_dma_domain(dev), dma_handle);
-+	phys = iommu_iova_to_phys(iommu_get_dma_domain(dev), dma_handle);
- 	arch_sync_dma_for_cpu(phys, size, dir);
- }
- 
-@@ -706,7 +690,7 @@ static void iommu_dma_sync_single_for_device(struct device *dev,
- 	if (dev_is_dma_coherent(dev))
- 		return;
- 
--	phys = iommu_iova_to_phys(__iommu_get_dma_domain(dev), dma_handle);
-+	phys = iommu_iova_to_phys(iommu_get_dma_domain(dev), dma_handle);
- 	arch_sync_dma_for_device(phys, size, dir);
- }
- 
-@@ -847,7 +831,7 @@ static void __invalidate_sg(struct scatterlist *sg, int nents)
- static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
- 		int nents, enum dma_data_direction dir, unsigned long attrs)
- {
--	struct iommu_domain *domain = __iommu_get_dma_domain(dev);
-+	struct iommu_domain *domain = iommu_get_dma_domain(dev);
- 	struct iommu_dma_cookie *cookie = domain->iova_cookie;
- 	struct iova_domain *iovad = &cookie->iovad;
- 	struct scatterlist *s, *prev = NULL;
-@@ -1128,16 +1112,12 @@ static int iommu_dma_get_sgtable(struct device *dev, struct sg_table *sgt,
- 
- static unsigned long iommu_dma_get_merge_boundary(struct device *dev)
- {
--	struct iommu_domain *domain = __iommu_get_dma_domain(dev);
-+	struct iommu_domain *domain = iommu_get_dma_domain(dev);
- 
- 	return (1UL << __ffs(domain->pgsize_bitmap)) - 1;
- }
- 
--/*
-- * XXX: Not formally exported, but needs to be referenced
-- * from arch/arm/mm/dma-mapping.c temporarily
-- */
--const struct dma_map_ops iommu_dma_ops = {
-+static const struct dma_map_ops iommu_dma_ops = {
- 	.alloc			= iommu_dma_alloc,
- 	.free			= iommu_dma_free,
- 	.mmap			= iommu_dma_mmap,
--- 
-2.28.0.dirty
-
+On Thu, Aug 20, 2020 at 8:09 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>
+> Now that arch/arm is wired up for default domains and iommu-dma,
+> implement the corresponding driver-side support for DMA domains.
+>
+> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> ---
+>  drivers/iommu/msm_iommu.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+> index 3615cd6241c4..f34efcbb0b2b 100644
+> --- a/drivers/iommu/msm_iommu.c
+> +++ b/drivers/iommu/msm_iommu.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/kernel.h>
+>  #include <linux/init.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/dma-iommu.h>
+>  #include <linux/errno.h>
+>  #include <linux/io.h>
+>  #include <linux/io-pgtable.h>
+> @@ -314,13 +315,16 @@ static struct iommu_domain *msm_iommu_domain_alloc(unsigned type)
+>  {
+>         struct msm_priv *priv;
+>
+> -       if (type != IOMMU_DOMAIN_UNMANAGED)
+> +       if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
+>                 return NULL;
+>
+>         priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+>         if (!priv)
+>                 goto fail_nomem;
+>
+> +       if (type == IOMMU_DOMAIN_DMA && iommu_get_dma_cookie(&priv->domain))
+> +               goto fail_nomem;
+> +
+>         INIT_LIST_HEAD(&priv->list_attached);
+>
+>         priv->domain.geometry.aperture_start = 0;
+> @@ -339,6 +343,7 @@ static void msm_iommu_domain_free(struct iommu_domain *domain)
+>         struct msm_priv *priv;
+>         unsigned long flags;
+>
+> +       iommu_put_dma_cookie(domain);
+>         spin_lock_irqsave(&msm_iommu_lock, flags);
+>         priv = to_msm_priv(domain);
+>         kfree(priv);
+> --
+> 2.28.0.dirty
+>
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
