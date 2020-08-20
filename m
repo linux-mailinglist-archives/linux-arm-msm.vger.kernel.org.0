@@ -2,42 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1761024B67C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 12:36:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A213824B70C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 12:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731811AbgHTKgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 06:36:14 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:62150 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731420AbgHTKgL (ORCPT
+        id S1731180AbgHTKqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 06:46:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731367AbgHTKoc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 06:36:11 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 20 Aug 2020 03:36:10 -0700
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Aug 2020 03:36:08 -0700
-Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Aug 2020 16:05:36 +0530
-Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
-        id 937791F44; Thu, 20 Aug 2020 16:05:35 +0530 (IST)
-From:   Roja Rani Yarubandi <rojay@codeaurora.org>
-To:     wsa@kernel.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: [PATCH V2 2/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-Date:   Thu, 20 Aug 2020 16:05:22 +0530
-Message-Id: <20200820103522.26242-3-rojay@codeaurora.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200820103522.26242-1-rojay@codeaurora.org>
-References: <20200820103522.26242-1-rojay@codeaurora.org>
+        Thu, 20 Aug 2020 06:44:32 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDB6C061343
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 03:44:19 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id a79so820179pfa.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 03:44:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3PXtPhgN15xkqptqDoOT+6OR5bz1DwLunRYJNev9KR4=;
+        b=zkaFZto0eMoTUXrhXnN5c215rPk2SI+mYKS6axiQrRCTTNkAxc+HQ1zvbE+9q8CdK3
+         ejrwiC5XvbU1VEVR0PkGPGG669EkRUf07na+UAjM95hQEAsG4rAcauD7W4QS/mQQK9Ji
+         aHAzBEJD8cb3YAopp2IN0BnKR0TfeOemTuipy2eA7MsVI9rqpSpfngZuJ3YGffGgvoOr
+         2qaNwaJ3BQvjLM/eOrXzy4yluttDslK9WrVaLBIAQGyCyGmcBfTPfVT8FfIY5a1ueI/3
+         qAMmm3cwSJncp0MSZc3c4f5Ucf1L5617fzuL31JE1OimTfSyQCLy69f4jWzzKMfRVtbY
+         sboA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3PXtPhgN15xkqptqDoOT+6OR5bz1DwLunRYJNev9KR4=;
+        b=Y0aUTyBvj2e5rO9DBY3oEPweXjikXdOipXTaR+I0gNNG6c19SDyREncNV2m5ZZ+QaJ
+         8lqKbPnK7m9jSASC/Lew8GEqYswz0qVcZhBUsW91uKOWoRhM+UDdAZCRFMymCoy/ujGu
+         DSefvpug+2lOesLQZy+eQUMatCHyrFQ91ch4YlWtz43uN/RF/QBXhilHYqLKSHVIxO7Z
+         lJT/on9hTZ8NeYN7WOUIw1dk2YdfomTivrMg9hMh2r0Y8N/FPiDq1iSpdqLOymOkn9kk
+         d81fp0/XD8wxLIQ4VwG2Oz2Q2Gpyh7tqdiWTo3g0MaRP4+BKFN+qWS84LMQVYDLKXm2C
+         ZS9g==
+X-Gm-Message-State: AOAM530rChNlnnK4jPKN+AfQxpO2P90J1xSG/aiBzQNtjr6oadFpvBsE
+        OqGZgplv7OjlWwWKq7tEzKlKeg==
+X-Google-Smtp-Source: ABdhPJzGI4PMt2rxPglqL7BKdt2SWVVgHiE/GuL96GZfgXci06o5FRoVl3y2qYxeBmL8p5wYvmHOSw==
+X-Received: by 2002:a65:4808:: with SMTP id h8mr2045357pgs.113.1597920255960;
+        Thu, 20 Aug 2020 03:44:15 -0700 (PDT)
+Received: from localhost ([122.172.43.13])
+        by smtp.gmail.com with ESMTPSA id e8sm2352323pfd.34.2020.08.20.03.44.14
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Aug 2020 03:44:15 -0700 (PDT)
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     rnayak@codeaurora.org, Adrian Hunter <adrian.hunter@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Fabio Estevam <festevam@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Qiang Yu <yuq825@gmail.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Clark <robdclark@gmail.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>, Shawn Guo <shawnguo@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        lima@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: [PATCH 0/8] opp: Unconditionally call dev_pm_opp_of_remove_table()
+Date:   Thu, 20 Aug 2020 16:13:49 +0530
+Message-Id: <cover.1597919647.git.viresh.kumar@linaro.org>
+X-Mailer: git-send-email 2.25.0.rc1.19.g042ed3e048af
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -45,117 +86,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the hardware is still accessing memory after SMMU translation
-is disabled (as part of smmu shutdown callback), then the
-IOVAs (I/O virtual address) which it was using will go on the bus
-as the physical addresses which will result in unknown crashes
-like NoC/interconnect errors.
+Hello,
 
-So, implement shutdown callback to i2c driver to unmap DMA mappings
-during system "reboot" or "shutdown".
+This cleans up some of the user code around calls to
+dev_pm_opp_of_remove_table().
 
-Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
----
-Changes in V2:
- - As per Stephen's comments added seperate function for stop transfer,
-   fixed minor nitpicks.
+All the patches can be picked by respective maintainers directly except
+for the last patch, which needs the previous two to get merged first.
 
- drivers/i2c/busses/i2c-qcom-geni.c | 43 ++++++++++++++++++++++++++++++
- include/linux/qcom-geni-se.h       |  5 ++++
- 2 files changed, 48 insertions(+)
+These are based for 5.9-rc1.
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 1fda5c7c2cfc..d07f2f33bb75 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -486,6 +486,28 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 	return ret;
- }
- 
-+static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
-+{
-+	u32 val;
-+	struct geni_se *se = &gi2c->se;
-+
-+	val = readl_relaxed(gi2c->se.base + SE_DMA_DEBUG_REG0);
-+	if (val & DMA_TX_ACTIVE) {
-+		geni_i2c_abort_xfer(gi2c);
-+		gi2c->cur_wr = 0;
-+		if (gi2c->err)
-+			geni_i2c_tx_fsm_rst(gi2c);
-+		geni_se_tx_dma_unprep(se, gi2c->tx_dma, gi2c->xfer_len);
-+	}
-+	if (val & DMA_RX_ACTIVE) {
-+		geni_i2c_abort_xfer(gi2c);
-+		gi2c->cur_rd = 0;
-+		if (gi2c->err)
-+			geni_i2c_rx_fsm_rst(gi2c);
-+		geni_se_rx_dma_unprep(se, gi2c->rx_dma, gi2c->xfer_len);
-+	}
-+}
-+
- static u32 geni_i2c_func(struct i2c_adapter *adap)
- {
- 	return I2C_FUNC_I2C | (I2C_FUNC_SMBUS_EMUL & ~I2C_FUNC_SMBUS_QUICK);
-@@ -617,6 +639,26 @@ static int geni_i2c_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static void geni_i2c_shutdown(struct platform_device *pdev)
-+{
-+	int ret;
-+	u32 dma;
-+	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
-+	struct geni_se *se = &gi2c->se;
-+
-+	ret = pm_runtime_get_sync(gi2c->se.dev);
-+	if (ret < 0) {
-+		dev_err(gi2c->se.dev, "Failed to resume device: %d\n", ret);
-+		return;
-+	}
-+
-+	dma = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
-+	if (dma)
-+		geni_i2c_stop_xfer(gi2c);
-+
-+	pm_runtime_put_sync_suspend(gi2c->se.dev);
-+}
-+
- static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- {
- 	int ret;
-@@ -677,6 +719,7 @@ MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
- static struct platform_driver geni_i2c_driver = {
- 	.probe  = geni_i2c_probe,
- 	.remove = geni_i2c_remove,
-+	.shutdown = geni_i2c_shutdown,
- 	.driver = {
- 		.name = "geni_i2c",
- 		.pm = &geni_i2c_pm_ops,
-diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-index dd464943f717..c3c016496d98 100644
---- a/include/linux/qcom-geni-se.h
-+++ b/include/linux/qcom-geni-se.h
-@@ -77,6 +77,7 @@ struct geni_se {
- #define SE_DMA_RX_FSM_RST		0xd58
- #define SE_HW_PARAM_0			0xe24
- #define SE_HW_PARAM_1			0xe28
-+#define SE_DMA_DEBUG_REG0		0xe40
- 
- /* GENI_FORCE_DEFAULT_REG fields */
- #define FORCE_DEFAULT	BIT(0)
-@@ -207,6 +208,10 @@ struct geni_se {
- #define RX_GENI_CANCEL_IRQ		BIT(11)
- #define RX_GENI_GP_IRQ_EXT		GENMASK(13, 12)
- 
-+/* SE_DMA_DEBUG_REG0 Register fields */
-+#define DMA_TX_ACTIVE			BIT(0)
-+#define DMA_RX_ACTIVE			BIT(1)
-+
- /* SE_HW_PARAM_0 fields */
- #define TX_FIFO_WIDTH_MSK		GENMASK(29, 24)
- #define TX_FIFO_WIDTH_SHFT		24
+Rajendra, Since most of these changes are related to qcom stuff, it
+would be great if you can give them a try. I wasn't able to test them
+due to lack of hardware.
+
+Viresh Kumar (8):
+  cpufreq: imx6q: Unconditionally call dev_pm_opp_of_remove_table()
+  drm/lima: Unconditionally call dev_pm_opp_of_remove_table()
+  drm/msm: Unconditionally call dev_pm_opp_of_remove_table()
+  mmc: sdhci-msm: Unconditionally call dev_pm_opp_of_remove_table()
+  spi: spi-geni-qcom: Unconditionally call dev_pm_opp_of_remove_table()
+  spi: spi-qcom-qspi: Unconditionally call dev_pm_opp_of_remove_table()
+  tty: serial: qcom_geni_serial: Unconditionally call
+    dev_pm_opp_of_remove_table()
+  qcom-geni-se: remove has_opp_table
+
+ drivers/cpufreq/imx6q-cpufreq.c         | 10 ++--------
+ drivers/gpu/drm/lima/lima_devfreq.c     |  6 +-----
+ drivers/gpu/drm/lima/lima_devfreq.h     |  1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 10 +++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 -
+ drivers/gpu/drm/msm/dsi/dsi_host.c      |  8 ++------
+ drivers/mmc/host/sdhci-msm.c            | 11 +++--------
+ drivers/spi/spi-geni-qcom.c             | 10 +++-------
+ drivers/spi/spi-qcom-qspi.c             | 11 +++--------
+ drivers/tty/serial/qcom_geni_serial.c   | 10 +++-------
+ include/linux/qcom-geni-se.h            |  2 --
+ 11 files changed, 20 insertions(+), 60 deletions(-)
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.25.0.rc1.19.g042ed3e048af
 
