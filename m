@@ -2,105 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC8624BDD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 15:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0306424BF10
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Aug 2020 15:39:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729007AbgHTNOM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 09:14:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728417AbgHTJg0 (ORCPT
+        id S1730437AbgHTNj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 09:39:27 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53019 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728139AbgHTJaP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 05:36:26 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDF6C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 02:36:26 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id w14so1348178ljj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 02:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iyIFHI/GagIm4is2IjKR4dFCd2u6tmF485sTbdWxVbM=;
-        b=MLkiiqpTIK0T8bIG8a7cw3MlTUto09mHqhVzUWPfnkk4OxAgoe4yk5RS+KzyPkc0rV
-         fSzxXaaHo2Ohq+lyWw4WVH93TRgv0UhPZUicHg09AtCULq+HW79090fk/I68wSIlGQG2
-         2YPoUJB+09rDM1BounEJ/4DbnRsg71ly86n0zyynHqByO23KsJ1MgRQ/VchwqV4iuXtR
-         EPP+1nsst3H0kTK7jgtwccEi40dav3czNwj4Djj7S330dhKMPaA5ZW7WUY6bzUnGclve
-         uVQdReKKsIlH6FcLOEOc27TBBv89loXlhqZcWAYQOMFu+5mX+RGolF/sT/kU6WzuEh1Z
-         mtCw==
+        Thu, 20 Aug 2020 05:30:15 -0400
+Received: by mail-wm1-f68.google.com with SMTP id x5so976710wmi.2;
+        Thu, 20 Aug 2020 02:30:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iyIFHI/GagIm4is2IjKR4dFCd2u6tmF485sTbdWxVbM=;
-        b=szyYNUq67pK4qNjG5NVhCYk8y+TCuCSNG6TLJ8NDhfLHJjnAeHlnQbzuCY9h7b0Huo
-         mVxTPefQSUVbD9XokfxvjkBZVjerViLk0vDy5psLGxF7J8FnmhFaRJmg44qpnKRfAdcw
-         PdDufDt0d5DgEiOe7PhGtShCG25RpiNknXvuWcD6s6NE8XwBtuECTrNyZ+yutyKgUOhx
-         o1pgYOYgSQu99o51dMUFileBnkeosnUJ9u51JKNThlbtzuJC0LZOGcTaG/+txuB8PhFF
-         yi0xPBKRzz6dP/PTGs8A7n+qe/sx27MSrXzrBfET8fdduJXuUu4W7uZOJkz50qfpLDEP
-         iPrQ==
-X-Gm-Message-State: AOAM532765YTaJ3/Xc6yjcWJvhMd1j/iEsWekHa7kDLa0e31uMSgWyvx
-        gSyyZCt/0VRvgUeEoCZOcJd4cdgbgaNelg==
-X-Google-Smtp-Source: ABdhPJzkrJAsNCFVlqgWwzF85xdP8TGCbYUj+sMOPyxm2W8leLqPgVkA3ZiRvIiKvXe8klbPf8wjPA==
-X-Received: by 2002:a2e:71a:: with SMTP id 26mr1262048ljh.198.1597916184580;
-        Thu, 20 Aug 2020 02:36:24 -0700 (PDT)
-Received: from eriador.lan ([188.162.65.245])
-        by smtp.gmail.com with ESMTPSA id o1sm341811ljc.3.2020.08.20.02.36.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2020 02:36:23 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Subject: [PATCH] drm/msm/a6xx: fix gmu start on newer firmware
-Date:   Thu, 20 Aug 2020 12:36:22 +0300
-Message-Id: <20200820093622.3801751-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tUnRntDeM2Z0wZOlftJYnlbiTXDqBXyNsySaCh9zCmY=;
+        b=SvJm8/wDP+0NcFQQ6EcJiW2c1pBJodLfRnSCUH214i0B5bACBo/O0iTE+g6fMmP8xk
+         Pf9wsIVGgID6O8tuWskHpwHk8mkIhVIZrbF1yK00ZDNlP/QDshVMiBaHQrM+YjwLv2X7
+         U0xDcXE1ywTYcuu4qt1EdB5HJGdEfkK7CQbVs23P6lZmtlI4XNqKexGPthkqDA4hPcJc
+         IhPBcRS2Xz8vNoFtrNXsB0TnqzLvka+lthDfV0tOZLSOFOrIJ7Osfc+oVjPA290S3jF2
+         p8bJ8XriUzi8vDx9d1pe4ipOluGshbj1omGRrVb/C4vZWPKaBOenM/vsW2N2ljP5TCtV
+         hS5A==
+X-Gm-Message-State: AOAM533mZhB3cZ8YRh5T1ZgqMYGEYrJyQyvRg7/+2sYukQZMTzyaKYDq
+        l1/IrY5OgxO0SDTIW7dLYUI=
+X-Google-Smtp-Source: ABdhPJyodhIy3b6biA58amHmZjnvQq4nyDVjNDGAvrKAsLjjKYeZihDIwmPPHhe2+ewpkCAnODpbww==
+X-Received: by 2002:a1c:2808:: with SMTP id o8mr2510138wmo.108.1597915813392;
+        Thu, 20 Aug 2020 02:30:13 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.216])
+        by smtp.googlemail.com with ESMTPSA id z8sm3045868wmf.10.2020.08.20.02.30.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 20 Aug 2020 02:30:12 -0700 (PDT)
+Date:   Thu, 20 Aug 2020 11:30:10 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Barry Song <baohua@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Mans Rullgard <mans@mansr.com>, Jun Nie <jun.nie@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND PATCH 5/5] ARM: dts: zx: Align L2 cache-controller
+ nodename with dtschema
+Message-ID: <20200820093010.GA15884@kozik-lap>
+References: <20200819175853.21492-1-krzk@kernel.org>
+ <20200819175853.21492-5-krzk@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200819175853.21492-5-krzk@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-New Qualcomm firmware has changed a way it reports back the 'started'
-event. Support new register values.
+On Wed, Aug 19, 2020 at 07:58:53PM +0200, Krzysztof Kozlowski wrote:
+> Fix dtschema validator warnings like:
+>     l2-cache-controller@c00000: $nodename:0:
+>         'l2-cache-controller@c00000' does not match '^(cache-controller|cpu)(@[0-9a-f,]+)*$'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+I forgot to add the tag from Jun provided on previous submission:
+Reviewed-by: Jun Nie <jun.nie@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index b67b38c8fadf..0df56292e227 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -204,6 +204,16 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
- {
- 	int ret;
- 	u32 val;
-+	u32 mask, reset_val;
-+
-+	val = gmu_read(gmu, REG_A6XX_GMU_CM3_DTCM_START + 0xff8);
-+	if (val <= 0x20010004) {
-+		mask = 0xffffffff;
-+		reset_val = 0xbabeface;
-+	} else {
-+		mask = 0x1ff;
-+		reset_val = 0x100;
-+	}
- 
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
- 
-@@ -215,7 +225,7 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 0);
- 
- 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_CM3_FW_INIT_RESULT, val,
--		val == 0xbabeface, 100, 10000);
-+		(val & mask) == reset_val, 100, 10000);
- 
- 	if (ret)
- 		DRM_DEV_ERROR(gmu->dev, "GMU firmware initialization timed out\n");
--- 
-2.28.0
+Best regards,
+Krzysztof
 
+> ---
+>  arch/arm/boot/dts/zx296702.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm/boot/dts/zx296702.dtsi b/arch/arm/boot/dts/zx296702.dtsi
+> index afd98de029be..f378c661b3bf 100644
+> --- a/arch/arm/boot/dts/zx296702.dtsi
+> +++ b/arch/arm/boot/dts/zx296702.dtsi
+> @@ -58,7 +58,7 @@
+>  			clocks = <&topclk ZX296702_A9_PERIPHCLK>;
+>  		};
+>  
+> -		l2cc: l2-cache-controller@c00000 {
+> +		l2cc: cache-controller@c00000 {
+>  			compatible = "arm,pl310-cache";
+>  			reg = <0x00c00000 0x1000>;
+>  			cache-unified;
+> -- 
+> 2.17.1
+> 
