@@ -2,97 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC46B24C829
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 01:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A4FE24C834
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 01:12:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728498AbgHTXBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 19:01:46 -0400
-Received: from foss.arm.com ([217.140.110.172]:46972 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728368AbgHTXBq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 19:01:46 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6C6331B;
-        Thu, 20 Aug 2020 16:01:44 -0700 (PDT)
-Received: from [10.57.40.122] (unknown [10.57.40.122])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 98AAB3F71F;
-        Thu, 20 Aug 2020 16:01:39 -0700 (PDT)
-Subject: Re: [PATCH 17/18] media/omap3isp: Clean up IOMMU workaround
-To:     Sakari Ailus <sakari.ailus@iki.fi>
-Cc:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk,
-        will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
-        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com, vdumpa@nvidia.com,
-        digetx@gmail.com, matthias.bgg@gmail.com, yong.wu@mediatek.com,
-        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
-        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <cover.1597931875.git.robin.murphy@arm.com>
- <11d8419744e4e744a9448180801b0c4683328afd.1597931876.git.robin.murphy@arm.com>
- <20200820165339.GK7145@valkosipuli.retiisi.org.uk>
- <be010209-4abc-ba48-4e31-185427776a13@arm.com>
- <20200820195536.GL7145@valkosipuli.retiisi.org.uk>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <5190a40e-ad24-d98e-3588-b95592ea2db3@arm.com>
-Date:   Fri, 21 Aug 2020 00:01:38 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        id S1728633AbgHTXMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 19:12:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728368AbgHTXMF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 19:12:05 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F9DC061385
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 16:12:05 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id k13so2619plk.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Aug 2020 16:12:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=25VvJRAxxSKZOja+m6/X23XfJDnDiYp/jYGjfMbcAb0=;
+        b=jIR7tO3qoi5slAacYS+iETQLXWk1DQkkglZGqJ+4elEWjSZruJbneRmnrPIo97LQvf
+         q/vETU/eIWQWYgpnEEuNQU9fPEZ5Ma+G9wHb7cy1QZTLD7+hgcGHlUhec4X+ULeBmuIs
+         mZ+EjHo39gcE5PDuOziXfU70k2mkN1S/vFLDk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=25VvJRAxxSKZOja+m6/X23XfJDnDiYp/jYGjfMbcAb0=;
+        b=gzIf/RsWIjdMdJf662TUzl4KLdgL7yRwYZONgtUhPz02enrAYYK3IQ8t0OuBE9MfIb
+         YV1vlRWi7logZ2rW0P7+KxkRYYPJTHeMKxFrxRUkGLAKvKFBzjdhHGHxdhJNc9BwahyU
+         uBtE8BCxZ8imfzN26IOIB0wkkk0uDV4MXpWoad8jH8ZFoKJCOr1v0WI21R9fVGDOLlLR
+         sRzWjptQ2a/3bXeu/q8RPer7eyB/Lok1dLWvA2UI8ddPaHx/OXOg0V03Ua+MMqix/lyE
+         aAHiDfeT5gi14RGi91tq0j5ASmpON6BuEmg5yy7WXdR3nQsIBXbDfqUssYRAxSs+XNni
+         JWUQ==
+X-Gm-Message-State: AOAM530e5CGLTNUH+mWqezeDhrkaRfYzM/nJG+2q+yEC36qDXZ8lRt6c
+        8yHhOCJ/A2yQzAiQqeLQTQ7BWnjTdsfOtw==
+X-Google-Smtp-Source: ABdhPJxg6gWWIr+NYNyeNoh/vt3CrN4ueRdwUBhK+gGqkDpx2GGsrTCxJyCGNkmaTYlqXYnvTmNnvg==
+X-Received: by 2002:a17:90b:885:: with SMTP id bj5mr133571pjb.133.1597965124880;
+        Thu, 20 Aug 2020 16:12:04 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id 8sm117847pjx.14.2020.08.20.16.12.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Aug 2020 16:12:04 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20200820195536.GL7145@valkosipuli.retiisi.org.uk>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1597831670-17401-3-git-send-email-mkshah@codeaurora.org>
+References: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org> <1597831670-17401-3-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH 2/2] Revert "Revert "soc: qcom: rpmh: Allow RPMH driver to be loaded as a module""
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        ulf.hansson@linaro.org, dianders@chromium.org,
+        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Todd Kjos <tkjos@google.com>,
+        Saravana Kannan <saravanak@google.com>
+To:     Maulik Shah <mkshah@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Date:   Thu, 20 Aug 2020 16:12:02 -0700
+Message-ID: <159796512284.334488.2457174259443414342@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-20 20:55, Sakari Ailus wrote:
-> On Thu, Aug 20, 2020 at 06:25:19PM +0100, Robin Murphy wrote:
->> On 2020-08-20 17:53, Sakari Ailus wrote:
->>> Hi Robin,
->>>
->>> On Thu, Aug 20, 2020 at 04:08:36PM +0100, Robin Murphy wrote:
->>>> Now that arch/arm is wired up for default domains and iommu-dma, devices
->>>> behind IOMMUs will get mappings set up automatically as appropriate, so
->>>> there is no need for drivers to do so manually.
->>>>
->>>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
->>>
->>> Thanks for the patch.
->>
->> Many thanks for testing so quickly!
->>
->>> I haven't looked at the details but it seems that this causes the buffer
->>> memory allocation to be physically contiguous, which causes a failure to
->>> allocate video buffers of entirely normal size. I guess that was not
->>> intentional?
->>
->> Hmm, it looks like the device ends up with the wrong DMA ops, which implies
->> something didn't go as expected with the earlier IOMMU setup and default
->> domain creation. Chances are that either I missed some subtlety in the
->> omap_iommu change, or I've fundamentally misjudged how the ISP probing works
->> and it never actually goes down the of_iommu_configure() path in the first
->> place. Do you get any messages from the IOMMU layer earlier on during boot?
-> 
-> I do get these:
-> 
-> [    2.934936] iommu: Default domain type: Translated
-> [    2.940917] omap-iommu 480bd400.mmu: 480bd400.mmu registered
-> [    2.946899] platform 480bc000.isp: Adding to iommu group 0
-> 
+Quoting Maulik Shah (2020-08-19 03:07:50)
+> The _rcuidle tracepoints are removed from RPMH driver which prevented
+> to compile it as module. Bring back the change to make it module.
+>=20
+> This reverts commit 1f7a3eb785e4a4e196729cd3d5ec97bd5f9f2940.
+>=20
+> Cc: John Stultz <john.stultz@linaro.org>
+> Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> ---
 
-So that much looks OK, if there are no obvious errors. Unfortunately 
-there's no easy way to tell exactly what of_iommu_configure() is doing 
-(beyond enabling a couple of vague debug messages). The first thing I'll 
-do tomorrow is double-check whether it's really working on my boards 
-here, or whether I was just getting lucky with CMA... (I assume you 
-don't have CMA enabled if you're ending up in remap_allocator_alloc())
-
-Robin.
+Please send the original patch and add your SoB to it. Reverting a patch
+out of the history works, but doesn't do justice to the authorship of
+the patch.
