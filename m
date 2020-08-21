@@ -2,196 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECD8E24D774
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 16:40:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C0F624D936
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 17:59:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727829AbgHUOkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 10:40:12 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:21532 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727828AbgHUOkH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 10:40:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598020805; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=f4QpQDB+MbSkZZvbfEWSvvZ3/lzOjyR6dXGT/NcXAIQ=; b=XT1PBmhfdW7ZVDHmGDEuGCS0AlH6Ep30PPlKYHQ8/sr3pf7/DXuxgNiZQt8MTkSJSHfZdXig
- 6And8WdBmIL3yRDynCKx3PMUfU1zz8f/k51scQeYUJAsMZvPMZr/216YpxVjfoAMdm3J658T
- XL0/7qEtAnKQSk+ixY7aeZk6hI0=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f3fdcb5b09c62898fb51371 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 Aug 2020 14:39:49
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8331CC433A1; Fri, 21 Aug 2020 14:39:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC05CC433C6;
-        Fri, 21 Aug 2020 14:39:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC05CC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Fri, 21 Aug 2020 08:39:38 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
+        id S1727087AbgHUP75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 11:59:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58392 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726189AbgHUP7z (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Aug 2020 11:59:55 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E344EC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 08:59:55 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id d188so1281830pfd.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 08:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PHpiChL5JGq/LZstNZ28HM8fDTmJE8/7UUfCPtEQhGQ=;
+        b=QRaFm8718FJefFz/ypkWhug9/DCf/520wNooIeoa6t5O4C45AC95WUTi1ttLZiYLRn
+         jr7dWao9AJB1UbBIpKv95dwEGAH0dnhLIpO7Y4ni6VA9BaBNQVe0hU3PiXIfSUwTllE+
+         X2hydUevanG1SL0jAjD59jjfs0PY0SWj0tsrM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PHpiChL5JGq/LZstNZ28HM8fDTmJE8/7UUfCPtEQhGQ=;
+        b=fiKrzsboSYoJNyDI9Ezt8joAIUEvrNwbSoRmqcwQu9LtBTNK3gVkVJj06LOMLR6VKE
+         5SBxUy049TkRLsuzCnbmAmbMCv7xFf4aXdvqsJFb9lXYtarWRcsWnoriEBAbHub6/6nO
+         eVGEJGIotjYo3fmXF2Q2KqS8wLFfmcdGTtnErSEm70qkgL+0mc0sgazI4SCK7t0kBjdC
+         8LtIN+/bCsRjND3grOHFMo/DyOlDf/+UFHWwUHnkeMRmVdxk0GrCqK8NrguR2J97TfqK
+         O2vjPIadbEM67DfzF+2TBizOsCMVITYmVFu63nDKV73RQmKvekjeL3wzskkLakKS7Xf4
+         Bi6A==
+X-Gm-Message-State: AOAM531LfkPg7HxTwYz6dzD8O09fa6MZe9Bx6y9FC6wC9uKGqVbosOJJ
+        EsFF3ghHZvKvJMV4fXaAT8VZVQ==
+X-Google-Smtp-Source: ABdhPJxu94S4fcnRQU+u1dFIIXVlfyW3pAeruNuWAjh/VFOzFXlkhNvwvKybp1t2lQ+XH5CYv1OZUg==
+X-Received: by 2002:a62:7f0e:: with SMTP id a14mr3083836pfd.320.1598025595418;
+        Fri, 21 Aug 2020 08:59:55 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id f13sm2885733pfd.215.2020.08.21.08.59.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Aug 2020 08:59:54 -0700 (PDT)
+Date:   Fri, 21 Aug 2020 08:59:53 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     skakit@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        gregkh@linuxfoundation.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        "moderated list:ARM SMMU DRIVERS" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 10/20] dt-bindings: arm-smmu: Add compatible string for
- Adreno GPU SMMU
-Message-ID: <20200821143938.GA27918@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Doug Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20200817220238.603465-1-robdclark@gmail.com>
- <20200817220238.603465-11-robdclark@gmail.com>
- <CAD=FV=VzYSL-3q0oFPPSP7FiEdLeTEN6Zy=kp-73B=8LAavmVw@mail.gmail.com>
- <CAF6AEGt=tGe3WQfyF_NuvJVXRbMH1=fnNK63MLpz0zxjZ9cwgQ@mail.gmail.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: sc7180: Add sleep pin ctrl for
+ BT uart
+Message-ID: <20200821155953.GG2995789@google.com>
+References: <1595563082-2353-1-git-send-email-skakit@codeaurora.org>
+ <1595563082-2353-3-git-send-email-skakit@codeaurora.org>
+ <20200817180158.GD2995789@google.com>
+ <1cbbc8cf5c918c6a9eee5ef349707fc6@codeaurora.org>
+ <20200819161311.GF2995789@google.com>
+ <29d523f4a46ecce8e4a62a5310528969@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAF6AEGt=tGe3WQfyF_NuvJVXRbMH1=fnNK63MLpz0zxjZ9cwgQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <29d523f4a46ecce8e4a62a5310528969@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 19, 2020 at 10:36:38AM -0700, Rob Clark wrote:
-> On Wed, Aug 19, 2020 at 10:03 AM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Mon, Aug 17, 2020 at 3:03 PM Rob Clark <robdclark@gmail.com> wrote:
-> > >
-> > > From: Jordan Crouse <jcrouse@codeaurora.org>
-> > >
-> > > Every Qcom Adreno GPU has an embedded SMMU for its own use. These
-> > > devices depend on unique features such as split pagetables,
-> > > different stall/halt requirements and other settings. Identify them
-> > > with a compatible string so that they can be identified in the
-> > > arm-smmu implementation specific code.
-> > >
-> > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> > > Reviewed-by: Rob Herring <robh@kernel.org>
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 4 ++++
-> > >  1 file changed, 4 insertions(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> > > index 503160a7b9a0..5ec5d0d691f6 100644
-> > > --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> > > +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> > > @@ -40,6 +40,10 @@ properties:
-> > >                - qcom,sm8150-smmu-500
-> > >                - qcom,sm8250-smmu-500
-> > >            - const: arm,mmu-500
-> > > +      - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
-> > > +        items:
-> > > +          - const: qcom,adreno-smmu
-> > > +          - const: qcom,smmu-v2
-> >
-> > I know I'm kinda late to the game, but this seems weird to me,
-> > especially given the later patches in the series like:
-> >
-> > https://lore.kernel.org/r/20200817220238.603465-19-robdclark@gmail.com
-> >
-> > Specifically in that patch you can see that this IOMMU already had a
-> > compatible string and we're changing it and throwing away the
-> > model-specific string?  I'm guessing that you're just trying to make
-> > it easier for code to identify the adreno iommu, but it seems like a
-> > better way would have been to just add the adreno compatible in the
-> > middle, like:
-> >
-> >       - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
-> >         items:
-> >           - enum:
-> >               - qcom,msm8996-smmu-v2
-> >               - qcom,msm8998-smmu-v2
-> >               - qcom,sc7180-smmu-v2
-> >               - qcom,sdm845-smmu-v2
-> >         - const: qcom,adreno-smmu
-> >         - const: qcom,smmu-v2
-> >
-> > Then we still have the SoC-specific compatible string in case we need
-> > it but we also have the generic one?  It also means that we're not
-> > deleting the old compatible string...
+On Thu, Aug 20, 2020 at 05:49:53PM +0530, skakit@codeaurora.org wrote:
+> Hi Matthias,
 > 
-> I did bring up the thing about removing the compat string in an
-> earlier revision of the series.. but then we realized that
-> qcom,sc7180-smmu-v2 was never actually used anywhere.
+> On 2020-08-19 21:43, Matthias Kaehlcke wrote:
+> > On Wed, Aug 19, 2020 at 07:19:25PM +0530, skakit@codeaurora.org wrote:
+> > > On 2020-08-17 23:31, Matthias Kaehlcke wrote:
+> > > > On Fri, Jul 24, 2020 at 09:28:01AM +0530, satya priya wrote:
+> > > > > Add sleep pin ctrl for BT uart, and also change the bias
+> > > > > configuration to match Bluetooth module.
+> > > > >
+> > > > > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > > > > ---
+> > > > > Changes in V2:
+> > > > >  - This patch adds sleep state for BT UART. Newly added in V2.
+> > > > >
+> > > > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 42
+> > > > > ++++++++++++++++++++++++++++-----
+> > > > >  1 file changed, 36 insertions(+), 6 deletions(-)
+> > > > >
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > index 26cc491..bc919f2 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> > > > > @@ -469,20 +469,50 @@
+> > > > >
+> > > > >  &qup_uart3_default {
+> > > > >  	pinconf-cts {
+> > > > > -		/*
+> > > > > -		 * Configure a pull-down on 38 (CTS) to match the pull of
+> > > > > -		 * the Bluetooth module.
+> > > > > -		 */
+> > > > > +		/* Configure no pull on 38 (CTS) to match Bluetooth module */
+> > > >
+> > > > Has the pull from the Bluetooth module been removed or did the previous
+> > > > config
+> > > > incorrectly claim that the Bluetooth module has a pull-down?
+> > > >
+> > > 
+> > > The previous config was incorrect, so we corrected it to match the
+> > > pull of
+> > > BT.
+> > 
+> > The pull config of the BT controller varies depending on its state,
+> > could
+> > you clarify which state you intend to match?
+> > 
 > 
-> But I guess we could:  compatible = "qcom,sc7180-smmu-v2",
-> "qcom,adreno-smmu", "qcom,smmu-v2";
+> Since this line is driven by BT SoC, they could change their pull(although
+> it's less likely). Recently on cherokee we worked with BT team and came to
+> an agreement to keep no-pull from our side in order to not conflict with
+> their pull in any state.
+> 
+> > > 
+> > > > >  		pins = "gpio38";
+> > > > > +		bias-disable;
+> > > > > +	};
+> > > > > +
+> > > > > +	pinconf-rts {
+> > > > > +		/* We'll drive 39 (RTS), so configure pull-down */
+> > > > > +		pins = "gpio39";
+> > > > > +		drive-strength = <2>;
+> > > > >  		bias-pull-down;
+> > > > > +	};
+> > > > > +
+> > > > > +	pinconf-tx {
+> > > > > +		/* We'll drive 40 (TX), so no pull */
+> > > >
+> > > > The rationales for RTS and TX contradict each other. According to the
+> > > > comment
+> > > > the reason to configure a pull-down on RTS is that it is driven by the
+> > > > host.
+> > > > Then for TX the reason to configure no pull is that it is driven by the
+> > > > host.
+> > > >
+> > > > Please make sure the comments *really* describe the rationale, otherwise
+> > > > they
+> > > > are just confusing.
+> > > 
+> > > The rationale for RTS is that we don't want it to be floating and
+> > > want to
+> > > make sure that it is pulled down, to receive bytes. Will modify the
+> > > comment
+> > > mentioning the same.
+> > 
+> > Could you clarify what you mean with "to receive bytes"?
+> > 
+> 
+> When we keep no-pull(floating), sometimes it may be pulled high and UART
+> flow will be turned off(RFR_NOT_READY), due to this BT SoC wont be able to
+> send data even though host is ready.
 
-I think the SoC specific string is intended for the "other" SMMU that everybody
-else uses. Rarely would a workaround for that SMMU affect the GPU and vice
-versa. Since these are the bindings it doesn't hurt to allow for the possibility
-but I would be surprised if the occasion presented itself.
+I'm a bit at a loss here, about two things:
 
-Jordan
+RTS is an output pin controlled by the UART. IIUC if the UART port is active
+and hardware flow control is enabled the RTS signal is either driven to high
+or low, but not floating.
 
-> BR,
-> -R
-> 
-> 
-> 
-> 
-> >
-> > -Doug
-> >
-> >
-> > >        - description: Marvell SoCs implementing "arm,mmu-500"
-> > >          items:
-> > >            - const: marvell,ap806-smmu-500
-> > > --
-> > > 2.26.2
-> > >
+Now lets assume I'm wrong with the above and RTS can be floating. We only want
+the BT SoC to send data when the host UART is ready to receive them, right?
+RTS is an active low signal, hence by configuring it as a pull-down the BT
+SoC can send data regardless of whether the host UART actually asserts RTS,
+so the host UART may not be ready to receive it. I would argue that if there
+is really such a thing as a floating RTS signal then it should have a pull-up,
+to prevent the BT SoC from sending data at any time.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I'm not an expert in UART communication and pinconf, so it could be that I
+got something wrong, but as of now it seems to me that no pull is the correct
+config for RTS.
