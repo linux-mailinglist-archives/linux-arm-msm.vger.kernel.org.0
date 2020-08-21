@@ -2,123 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EFDC24CB6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 05:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEEF324CBB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 05:54:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727840AbgHUDYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 23:24:34 -0400
-Received: from mail-co1nam11on2076.outbound.protection.outlook.com ([40.107.220.76]:37568
-        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727040AbgHUDYc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 23:24:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JBf95kVgF0sHMz09iUrqTPLF02sEltg06RmdjBU0jpCGhp/aMJhFfUsu375aPllzxPFmCXz2+z92FycNvaLL0IQbxFzdlNULSqiCVpz3XhJf/aoLWai7QDHNV4AK7EcBBUX2avCwApTice/WFQFz+K0v56qoK/6TPEFBcGHFi6AuheqdXjBw4CLmEikvNKvbLBEb/ghSfiW7eKn8wl/li8Bntj/DJoXvXJVKnrrke5R/N9yvj6cfm+7TPwcxbmc4TqdD8dj44F3cx3vv+tgkNNZwdMxvxT9O1ifXwhfag3y5/Dsq9QSVhey7PA1ORPBeoyV9jo+EIggRFh3cA/gTLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9tj3s7SRjf75wzTK5bzLKsJPYFVtVnMBXOPHUf/ySg8=;
- b=QrO0kv01iALsadFmnsq8EFoBhF6BjebpcVcnAVcVrTY2O3X1XFUy76RH3Xr0FxZMvTS3MuzzSwb5hP5m8Bl5UzcK9OMBEaWNWil30znq24S2Yv2VUuIvZa+KxYaiUDxFz/A6Kg0fAavRqHJckvCdlQh4rZCYvjDPx+mu/SrfD3W88+SFcajO1Ij5hLtOiq2y34Huwh8oRIrUIDioJDmdKsJT+M+2O2UU6TJYlmh1Ub00BlVxc4Wm+Iigx5XYvfcyddUp4YUmA4lFCWuJ52dEFYS9WaHLgw3CGRn1Xv8UAYLZKySN/TE+yzfH9KaGbjMTnvMXXgMZXAIEiPBxMyhREg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synaptics.com; dmarc=pass action=none
- header.from=synaptics.com; dkim=pass header.d=synaptics.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=Synaptics.onmicrosoft.com; s=selector2-Synaptics-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9tj3s7SRjf75wzTK5bzLKsJPYFVtVnMBXOPHUf/ySg8=;
- b=bOPQowneyyyXRaahzZB+mnbrD+75b5Ud29+w0aFO7DGjAX6ZwVjP25tnduGgbsHwezGqYPsDWkZxuqDsIPSbXd+OTo5xD/5cDLGDAVaZv+bDB4KlftL/MRpLCfNTmsJIDxvpMA00OOxnOzbmlXsdM6hzjzRXV8ni8kpETug16sc=
-Authentication-Results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=synaptics.com;
-Received: from DM6PR03MB4555.namprd03.prod.outlook.com (2603:10b6:5:102::17)
- by DM6PR03MB5308.namprd03.prod.outlook.com (2603:10b6:5:242::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24; Fri, 21 Aug
- 2020 03:24:31 +0000
-Received: from DM6PR03MB4555.namprd03.prod.outlook.com
- ([fe80::e494:740f:155:4a38]) by DM6PR03MB4555.namprd03.prod.outlook.com
- ([fe80::e494:740f:155:4a38%7]) with mapi id 15.20.3305.025; Fri, 21 Aug 2020
- 03:24:31 +0000
-Date:   Fri, 21 Aug 2020 11:20:09 +0800
-From:   Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-To:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Andy Gross <agross@kernel.org>,
+        id S1727050AbgHUDy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 23:54:27 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:39107 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727066AbgHUDy0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 23:54:26 -0400
+Received: by mail-io1-f68.google.com with SMTP id z17so470442ioi.6;
+        Thu, 20 Aug 2020 20:54:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3xQSyuidDHE000cQW3ruY29YdVzjzemLhdUCUqMHH4g=;
+        b=uoec5P7k+QAy4T9/nm7pq0b8CZje786rS41068pS6CuvKKElqVH0zc86wKhU1rkXSe
+         ge4AYyvkGT10QcwxPl5s4FNn3zXyEh88p3p7pnatrqZhv+8a0fAED8IrnyN0dOuA0dP3
+         FoJu6YDc31iTC92MApZVcmxVDWZMOXpghYkKpthOhc5K6RqEKpd4hPOY76gUymCZH13d
+         ADQ4fUteyv4DoXI3X+A6sOndgAcxHQdQar6paKB5HJNIkWA7rPzYxpLn+Gyxuayc5Eeq
+         2Ug4CDQwa90FUQtT0CiLaNF8vHAlG96DLJDiHRO8Pv0SM6bnnDFX27RUyoJkpf04SbF9
+         Wzxg==
+X-Gm-Message-State: AOAM5328FtueSOGCteuIevaPKX7ePcTf/Z+LVefPGpw5+H6RkW6wmSme
+        yR4WJssPaXKPcUZ+tWasnA==
+X-Google-Smtp-Source: ABdhPJwWDZ2uF1UR52gyVwJrVKI7xgxX5Bug8MFl6x6tEW09K4V+Q0/1o3ijFf216rQPvCw1DGjTMQ==
+X-Received: by 2002:a6b:e70d:: with SMTP id b13mr795565ioh.141.1597982065025;
+        Thu, 20 Aug 2020 20:54:25 -0700 (PDT)
+Received: from xps15.herring.priv ([64.188.179.249])
+        by smtp.googlemail.com with ESMTPSA id 79sm413923ilc.9.2020.08.20.20.54.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Aug 2020 20:54:24 -0700 (PDT)
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-pci@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Icenowy Zheng <icenowy@aosc.io>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 15/15] regulator: tps65023: Fix W=1 build warning when
- CONFIG_OF=n
-Message-ID: <20200821112009.58ee8511@xhacker.debian>
-In-Reply-To: <20200821111135.0b958d3a@xhacker.debian>
-References: <20200821111135.0b958d3a@xhacker.debian>
-X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: TY2PR06CA0043.apcprd06.prod.outlook.com
- (2603:1096:404:2e::31) To DM6PR03MB4555.namprd03.prod.outlook.com
- (2603:10b6:5:102::17)
+        Dilip Kota <eswara.kota@linux.intel.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Yue Wang <yue.wang@Amlogic.com>, Marc Zyngier <maz@kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH v2 00/40] PCI: dwc: Driver clean-ups
+Date:   Thu, 20 Aug 2020 21:53:40 -0600
+Message-Id: <20200821035420.380495-1-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from 255.255.255.255 (255.255.255.255) by TY2PR06CA0043.apcprd06.prod.outlook.com (2603:1096:404:2e::31) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24 via Frontend Transport; Fri, 21 Aug 2020 03:24:27 +0000
-X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Originating-IP: [124.74.246.114]
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 199c562a-186d-4f10-79d4-08d84581b7ae
-X-MS-TrafficTypeDiagnostic: DM6PR03MB5308:
-X-Microsoft-Antispam-PRVS: <DM6PR03MB5308B778A5332F4D2EA75A2FED5B0@DM6PR03MB5308.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:449;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Ku+7YAOY2Z5d59qAsjCEHsnyENGCwFBmqhsM22JOGp/dOvFpymVJOIElffyEoSPMq9x8uL/EbF0huisUCBHLNh+lZlSQ2lbRsaPM1ZUzO41r1O0jzZtdgdyUk6YOC9+W7NzOosyOF55DjfT6GfS+rP+GVeRZP7ZmwFLnE5agqTrzuVWh7Rcu41GsRNz5MUjtD9m/+N2tJvTXVueZ8JM6Ul8jsHtHfLgxCturkAorN5iADvXoJmsVNkel7LJze5uhbVqT4aMEuJ+Z7fcsZd4a/KMGP9G3GeXvOOexXgY26eycEnIQ3NqPfLOObgdZpsk8yOidDtgAsdrOOQceVvFPMSkD6FepOKPB1pMjIXRU8uZ1qtQ+FkFFYP47A70gbzk/
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR03MB4555.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(376002)(366004)(39860400002)(346002)(396003)(136003)(9686003)(2906002)(478600001)(5660300002)(66556008)(66946007)(7416002)(316002)(83380400001)(16576012)(66476007)(110136005)(8676002)(86362001)(956004)(4326008)(6486002)(6666004)(26005)(186003)(1076003)(110011004)(8936002)(52116002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: HLULFGt7TmQxigPKqASfsQ9bqfdplMpHE+m5iMkXUvYTv4MMOulhBujJ32TctsOglR9CjIl3VyanjiKWr30KrZ8Mobb3FUCtyLJE5DDTTC61vOqy4TggqXHzPo3cnsFg7AkuaxtdD1EAoZ7UBMTUXZOa9UoAsFYeUlZJqj4PjlLI1WH8//anJSnC6N9xm7nJ/LjcwnyocIDFpwg84M+sd3Z0KWGJBL5gbto+SOoIZTwChSGtHpfyZSRFC7Hw5SSXvQHBj+x+0C9PL3JsgtR4CZBMYiK0QlQtThbLsiYAI7I+fbBGkITEcg3+4AXvSx8gfcxy7FtcFZy5zDb3CYKF2M8VEjYR/3yE97JI2IiIbzo5UboZIpJcTotDmy28J5wrHnx5sXXCErF/7LDJGFdEbwSSvnEzS8mCr1vJ9TEP0GdhwwNGjmPtZlx+P+wtw+KbH6/VgeDQOvh8PyVdf1kil8/2Oqgmf11ln8vYkLyTgeLCYyFc4LZTmEBflE9Cor2FF7TKeuZvcvubZyqfC+0fMsuasd+k7PoRsdXHgv5/xqUNozFbIw1vz815oGcNyv7bKnEXKzyPVhuOaE+9z1vpbFSTa8evLw30sM7H75tnwwoxcsOEtBUstPz06e8ti2CUnSQPifkyhSRQuPxDVmUzpg==
-X-OriginatorOrg: synaptics.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 199c562a-186d-4f10-79d4-08d84581b7ae
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR03MB4555.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2020 03:24:31.0326
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 335d1fbc-2124-4173-9863-17e7051a2a0e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YkeDlqZo7hkTLjgMHUDm2JksuP5NghPLz3bnsQoGO+r0MY14gSC5fFMpKz4dc8jRNnkOpNSbTrFmtzobTOyeiw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR03MB5308
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix below warning when CONFIG_OF=3Dn:
+This is a series of clean-ups for the Designware PCI driver. The series
+initially reworks the config space accessors to use the existing pci_ops
+struct. Then there's removal of various private data that's also present
+in the pci_host_bridge struct. There's also some duplicated common (PCI
+and DWC) register defines which I converted to use the common defines.
+Finally, the initialization for speed/gen, number of lanes, and N_FTS
+are all moved to the common DWC code.
 
-drivers/regulator/tps65023-regulator.c:319:34: warning: =E2=80=98tps65023_o=
-f_match=E2=80=99 defined but not used [-Wunused-const-variable=3D]
-  319 | static const struct of_device_id tps65023_of_match[] =3D {
-      |                                  ^~~~~~~~~~~~~~~~~
+This is compile tested only as I don't have any DWC based h/w, so any
+testing would be helpful. A branch is here[1].
 
-Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
----
- drivers/regulator/tps65023-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Rob
 
-diff --git a/drivers/regulator/tps65023-regulator.c b/drivers/regulator/tps=
-65023-regulator.c
-index 795d459ff3cf..f25806531c7e 100644
---- a/drivers/regulator/tps65023-regulator.c
-+++ b/drivers/regulator/tps65023-regulator.c
-@@ -316,7 +316,7 @@ static int tps_65023_probe(struct i2c_client *client,
- 	return 0;
- }
-=20
--static const struct of_device_id tps65023_of_match[] =3D {
-+static const struct of_device_id __maybe_unused tps65023_of_match[] =3D {
- 	{ .compatible =3D "ti,tps65020", .data =3D &tps65020_drv_data},
- 	{ .compatible =3D "ti,tps65021", .data =3D &tps65021_drv_data},
- 	{ .compatible =3D "ti,tps65023", .data =3D &tps65023_drv_data},
---=20
-2.28.0
+[1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git pci-dw-cleanups
 
+Rob Herring (40):
+  PCI: Allow root and child buses to have different pci_ops
+  PCI: dwc: Use DBI accessors instead of own config accessors
+  PCI: dwc: Allow overriding bridge pci_ops
+  PCI: dwc: Add a default pci_ops.map_bus for root port
+  PCI: dwc: al: Use pci_ops for child config space accessors
+  PCI: dwc: keystone: Use pci_ops for config space accessors
+  PCI: dwc: tegra: Use pci_ops for root config space accessors
+  PCI: dwc: meson: Use pci_ops for root config space accessors
+  PCI: dwc: kirin: Use pci_ops for root config space accessors
+  PCI: dwc: exynos: Use pci_ops for root config space accessors
+  PCI: dwc: histb: Use pci_ops for root config space accessors
+  PCI: dwc: Remove dwc specific config accessor ops
+  PCI: dwc: Use generic config accessors
+  PCI: Also call .add_bus() callback for root bus
+  PCI: dwc: keystone: Convert .scan_bus() callback to use add_bus
+  PCI: dwc: Convert to use pci_host_probe()
+  PCI: dwc: Remove root_bus pointer
+  PCI: dwc: Remove storing of PCI resources
+  PCI: dwc: Simplify config space handling
+  PCI: dwc/keystone: Drop duplicated 'num-viewport'
+  PCI: dwc: Check CONFIG_PCI_MSI inside dw_pcie_msi_init()
+  PCI: dwc/imx6: Remove duplicate define PCIE_LINK_WIDTH_SPEED_CONTROL
+  PCI: dwc: Add a 'num_lanes' field to struct dw_pcie
+  PCI: dwc: Ensure FAST_LINK_MODE is cleared
+  PCI: dwc/meson: Drop the duplicate number of lanes setup
+  PCI: dwc/meson: Drop unnecessary RC config space initialization
+  PCI: dwc/meson: Rework PCI config and DW port logic register accesses
+  PCI: dwc/imx6: Use common PCI register definitions
+  PCI: dwc/qcom: Use common PCI register definitions
+  PCI: dwc: Remove hardcoded PCI_CAP_ID_EXP offset
+  PCI: dwc/tegra: Use common Designware port logic register definitions
+  PCI: dwc: Remove read_dbi2 code
+  PCI: dwc: Make ATU accessors private
+  PCI: dwc: Centralize link gen setting
+  PCI: dwc: Set PORT_LINK_DLL_LINK_EN in common setup code
+  PCI: dwc/intel-gw: Drop unnecessary checking of DT 'device_type'
+    property
+  PCI: dwc/intel-gw: Move getting PCI_CAP_ID_EXP offset to
+    intel_pcie_link_setup()
+  PCI: dwc/intel-gw: Drop unused max_width
+  PCI: dwc: Move N_FTS setup to common setup
+  PCI: dwc: Use DBI accessors
+
+ drivers/pci/controller/dwc/pci-dra7xx.c       |  29 +-
+ drivers/pci/controller/dwc/pci-exynos.c       |  45 +--
+ drivers/pci/controller/dwc/pci-imx6.c         |  52 +--
+ drivers/pci/controller/dwc/pci-keystone.c     | 126 ++-----
+ drivers/pci/controller/dwc/pci-meson.c        | 156 ++-------
+ drivers/pci/controller/dwc/pcie-al.c          |  70 +---
+ drivers/pci/controller/dwc/pcie-artpec6.c     |  48 +--
+ .../pci/controller/dwc/pcie-designware-ep.c   |  11 +-
+ .../pci/controller/dwc/pcie-designware-host.c | 319 ++++++------------
+ .../pci/controller/dwc/pcie-designware-plat.c |   4 +-
+ drivers/pci/controller/dwc/pcie-designware.c  | 104 +++---
+ drivers/pci/controller/dwc/pcie-designware.h  |  54 +--
+ drivers/pci/controller/dwc/pcie-histb.c       |  45 +--
+ drivers/pci/controller/dwc/pcie-intel-gw.c    |  65 +---
+ drivers/pci/controller/dwc/pcie-kirin.c       |  43 +--
+ drivers/pci/controller/dwc/pcie-qcom.c        |  33 +-
+ drivers/pci/controller/dwc/pcie-spear13xx.c   |  39 +--
+ drivers/pci/controller/dwc/pcie-tegra194.c    | 120 ++-----
+ drivers/pci/controller/dwc/pcie-uniphier.c    |   3 +-
+ drivers/pci/probe.c                           |  14 +-
+ include/linux/pci.h                           |   1 +
+ 21 files changed, 443 insertions(+), 938 deletions(-)
+
+--
+2.25.1
