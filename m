@@ -2,147 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F99824D52C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 14:40:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECD8E24D774
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 16:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727837AbgHUMkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 08:40:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728130AbgHUMju (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 08:39:50 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCEFFC061342
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 05:39:47 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id y2so1699896ljc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 05:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BgadfB5krB76vfFemnEl7mqgct62PL+apkSnkJxl7rU=;
-        b=ma7MklMjGebHXVITBxNbYWKvzeVCHEEv2w4uRwrCZWKJfCPo/Xohjc33bXMAFoZdZp
-         Go2mliTpWUs1YKQsOazavcnLSoYEUB0nXNGKiOoFpMoA0S8Mb3Ppz/X1VDvRQoVr0+dB
-         MYvzJJA6fv+pm/K4TXRGZV4efPJFJBTW896CgoLZNqsx2xpUCC0NEFAICsY5hwrJ/PdX
-         D9r0Tpl81tj/65fnbK+GT6NITd3YgnIumqJliQZgXQxEDxgsVyYEJHMMW753jC1opnjy
-         56257a68ZMZ9hToPyc6zP9NJwLq2suunXtQBSKJJsihQWJuvYFPKncDGVnmpIlfSN1GW
-         /R4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BgadfB5krB76vfFemnEl7mqgct62PL+apkSnkJxl7rU=;
-        b=cgUfNS6VHMnrMa3Du09RNdzW26sUHcodXXP6F1Gi/ZGNqV2r8EdzP5Ccdoe4D5IXfc
-         maVn18BAt9Wlnk6IjCj+VRX7ws2BhzrBOZqPayqz04iwb6HzUNPjlLoyezRcWK0bv141
-         rqeZAlLwaDgm4iU+Qf8nWOqtMamM2+5m2mR5eG1QN3wgJTQgj9S+pr8Qrv73EI4gZYhG
-         TEYTxn3no9AYbpRHRwG6DhTLhPPW5ZHORUVZ9pJFnv89KiEwOvnMI3R1cEIBglQpvefz
-         TR/xMoP6oPjsOufMCzIYkZCgJ/QPdshr8OOBwqkmrMNkTbAKVDB+nusYSqMERwMDAY5U
-         jyjg==
-X-Gm-Message-State: AOAM533EZH1RlT3DfVIDhKoF/WvtHaMV2j4/VEbjoO9pZiJuciCKXHMa
-        2s0pRDTl51e9TgB7P0CFEWwERQ==
-X-Google-Smtp-Source: ABdhPJwwRoyWuCA/jxRCW+gf7PjPRYF9nemTwDytYDgYNg5YWY4J4XWUmqB+xElYWYM3G+O6qRinEA==
-X-Received: by 2002:a2e:9946:: with SMTP id r6mr1453104ljj.35.1598013586176;
-        Fri, 21 Aug 2020 05:39:46 -0700 (PDT)
-Received: from genomnajs.ideon.se ([85.235.10.227])
-        by smtp.gmail.com with ESMTPSA id s4sm360782lja.124.2020.08.21.05.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 05:39:45 -0700 (PDT)
-From:   Linus Walleij <linus.walleij@linaro.org>
-To:     Russell King <linux@armlinux.org.uk>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
+        id S1727829AbgHUOkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 10:40:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:21532 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727828AbgHUOkH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Aug 2020 10:40:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598020805; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=f4QpQDB+MbSkZZvbfEWSvvZ3/lzOjyR6dXGT/NcXAIQ=; b=XT1PBmhfdW7ZVDHmGDEuGCS0AlH6Ep30PPlKYHQ8/sr3pf7/DXuxgNiZQt8MTkSJSHfZdXig
+ 6And8WdBmIL3yRDynCKx3PMUfU1zz8f/k51scQeYUJAsMZvPMZr/216YpxVjfoAMdm3J658T
+ XL0/7qEtAnKQSk+ixY7aeZk6hI0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f3fdcb5b09c62898fb51371 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 Aug 2020 14:39:49
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8331CC433A1; Fri, 21 Aug 2020 14:39:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC05CC433C6;
+        Fri, 21 Aug 2020 14:39:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC05CC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Fri, 21 Aug 2020 08:39:38 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Nicolas Pitre <nico@fluxnic.net>,
-        Fabrizio Castro <fabrizio.castro@bp.renesas.com>,
-        Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 3/3] ARM: uncompress: Wait for ready and busy in debug prints
-Date:   Fri, 21 Aug 2020 14:39:36 +0200
-Message-Id: <20200821123936.153793-4-linus.walleij@linaro.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200821123936.153793-1-linus.walleij@linaro.org>
-References: <20200821123936.153793-1-linus.walleij@linaro.org>
+        Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 10/20] dt-bindings: arm-smmu: Add compatible string for
+ Adreno GPU SMMU
+Message-ID: <20200821143938.GA27918@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        Doug Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200817220238.603465-1-robdclark@gmail.com>
+ <20200817220238.603465-11-robdclark@gmail.com>
+ <CAD=FV=VzYSL-3q0oFPPSP7FiEdLeTEN6Zy=kp-73B=8LAavmVw@mail.gmail.com>
+ <CAF6AEGt=tGe3WQfyF_NuvJVXRbMH1=fnNK63MLpz0zxjZ9cwgQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGt=tGe3WQfyF_NuvJVXRbMH1=fnNK63MLpz0zxjZ9cwgQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For some platforms such as Qualcomm we need to wait for the
-UART to be ready before writing characters to the UART
-in the same manner as the macro in debug.S used with the
-main "Uncompressing Linux ..." text. Pass an extra temporary
-variable to writeb and make it call waituarttxrdy and
-busyuart just like the other decomression messages.
+On Wed, Aug 19, 2020 at 10:36:38AM -0700, Rob Clark wrote:
+> On Wed, Aug 19, 2020 at 10:03 AM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > Hi,
+> >
+> > On Mon, Aug 17, 2020 at 3:03 PM Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > From: Jordan Crouse <jcrouse@codeaurora.org>
+> > >
+> > > Every Qcom Adreno GPU has an embedded SMMU for its own use. These
+> > > devices depend on unique features such as split pagetables,
+> > > different stall/halt requirements and other settings. Identify them
+> > > with a compatible string so that they can be identified in the
+> > > arm-smmu implementation specific code.
+> > >
+> > > Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> > > Reviewed-by: Rob Herring <robh@kernel.org>
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 4 ++++
+> > >  1 file changed, 4 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> > > index 503160a7b9a0..5ec5d0d691f6 100644
+> > > --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> > > +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> > > @@ -40,6 +40,10 @@ properties:
+> > >                - qcom,sm8150-smmu-500
+> > >                - qcom,sm8250-smmu-500
+> > >            - const: arm,mmu-500
+> > > +      - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+> > > +        items:
+> > > +          - const: qcom,adreno-smmu
+> > > +          - const: qcom,smmu-v2
+> >
+> > I know I'm kinda late to the game, but this seems weird to me,
+> > especially given the later patches in the series like:
+> >
+> > https://lore.kernel.org/r/20200817220238.603465-19-robdclark@gmail.com
+> >
+> > Specifically in that patch you can see that this IOMMU already had a
+> > compatible string and we're changing it and throwing away the
+> > model-specific string?  I'm guessing that you're just trying to make
+> > it easier for code to identify the adreno iommu, but it seems like a
+> > better way would have been to just add the adreno compatible in the
+> > middle, like:
+> >
+> >       - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+> >         items:
+> >           - enum:
+> >               - qcom,msm8996-smmu-v2
+> >               - qcom,msm8998-smmu-v2
+> >               - qcom,sc7180-smmu-v2
+> >               - qcom,sdm845-smmu-v2
+> >         - const: qcom,adreno-smmu
+> >         - const: qcom,smmu-v2
+> >
+> > Then we still have the SoC-specific compatible string in case we need
+> > it but we also have the generic one?  It also means that we're not
+> > deleting the old compatible string...
+> 
+> I did bring up the thing about removing the compat string in an
+> earlier revision of the series.. but then we realized that
+> qcom,sc7180-smmu-v2 was never actually used anywhere.
+> 
+> But I guess we could:  compatible = "qcom,sc7180-smmu-v2",
+> "qcom,adreno-smmu", "qcom,smmu-v2";
 
-Optionally it will also call waituartcts if and only if
-CONFIG_DEBUG_UART_FLOW_CONTROL is selected.
+I think the SoC specific string is intended for the "other" SMMU that everybody
+else uses. Rarely would a workaround for that SMMU affect the GPU and vice
+versa. Since these are the bindings it doesn't hurt to allow for the possibility
+but I would be surprised if the occasion presented itself.
 
-After this the decompression debug messages work fine on
-Qualcomm platforms if you compile head.S with -DDEBUG.
+Jordan
 
-Cc: Nicolas Pitre <nico@fluxnic.net>
-Cc: Fabrizio Castro <fabrizio.castro@bp.renesas.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
----
- arch/arm/boot/compressed/head.S | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+> BR,
+> -R
+> 
+> 
+> 
+> 
+> >
+> > -Doug
+> >
+> >
+> > >        - description: Marvell SoCs implementing "arm,mmu-500"
+> > >          items:
+> > >            - const: marvell,ap806-smmu-500
+> > > --
+> > > 2.26.2
+> > >
 
-diff --git a/arch/arm/boot/compressed/head.S b/arch/arm/boot/compressed/head.S
-index ba121eea9468..5c9c6fe590cb 100644
---- a/arch/arm/boot/compressed/head.S
-+++ b/arch/arm/boot/compressed/head.S
-@@ -28,19 +28,19 @@
- #if defined(CONFIG_CPU_V6) || defined(CONFIG_CPU_V6K) || defined(CONFIG_CPU_V7)
- 		.macro	loadsp, rb, tmp1, tmp2
- 		.endm
--		.macro	writeb, ch, rb
-+		.macro	writeb, ch, rb, tmp
- 		mcr	p14, 0, \ch, c0, c5, 0
- 		.endm
- #elif defined(CONFIG_CPU_XSCALE)
- 		.macro	loadsp, rb, tmp1, tmp2
- 		.endm
--		.macro	writeb, ch, rb
-+		.macro	writeb, ch, rb, tmp
- 		mcr	p14, 0, \ch, c8, c0, 0
- 		.endm
- #else
- 		.macro	loadsp, rb, tmp1, tmp2
- 		.endm
--		.macro	writeb, ch, rb
-+		.macro	writeb, ch, rb, tmp
- 		mcr	p14, 0, \ch, c1, c0, 0
- 		.endm
- #endif
-@@ -49,8 +49,13 @@
- 
- #include CONFIG_DEBUG_LL_INCLUDE
- 
--		.macro	writeb,	ch, rb
-+		.macro	writeb,	ch, rb, tmp
-+#ifdef CONFIG_DEBUG_UART_FLOW_CONTROL
-+		waituartcts \tmp, \rb
-+#endif
-+		waituarttxrdy \tmp, \rb
- 		senduart \ch, \rb
-+		busyuart \tmp, \rb
- 		.endm
- 
- #if defined(CONFIG_ARCH_SA1100)
-@@ -1326,7 +1331,7 @@ puts:		loadsp	r3, r2, r1
- 1:		ldrb	r2, [r0], #1
- 		teq	r2, #0
- 		moveq	pc, lr
--2:		writeb	r2, r3
-+2:		writeb	r2, r3, r1
- 		mov	r1, #0x00020000
- 3:		subs	r1, r1, #1
- 		bne	3b
 -- 
-2.26.2
-
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
