@@ -2,107 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E89C24D04E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 10:06:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCFBD24D056
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 10:07:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727084AbgHUIGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 04:06:31 -0400
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:54530 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725965AbgHUIG2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 04:06:28 -0400
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 07L82JJr002831;
-        Fri, 21 Aug 2020 10:06:18 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=STMicroelectronics;
- bh=th7iteinfJ5v35Fs8Ofjskmkk4fXfBSVgD7G2rq8Rbw=;
- b=vB2upX7yZQWJVaoHeJvA3i5JRJJufz9ih3al4Dd9JKa2GMqA5VyPqnnFOF/r/X/W+jq+
- /kmqWUqSs25OkbIl/0JXNogFpSWe0waYNiCVIFCWS/KSHWtBNlg9svjcCQYXXlJUo1eV
- fa/9BtjoTwvZVcAmNoSi8pbnGbmTxXOqGJDY69vN+jKP8y2jNagCcrMVtBwL8TC3vTP2
- ZJBly60IK16ZzesyuJ6jOLtTjEDi/qMUfgLxcSmeCPxoyKAMcUwMQkH4lS1JtLS2Auy4
- NF8DPTL+9fIINFL3zMJSQpZHdDe92fTw/Jr3lT0fm3maRnF4lyA9h3Lg/b//YdcdrAoc gA== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 330jg7nrvs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Aug 2020 10:06:18 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 7D0F310002A;
-        Fri, 21 Aug 2020 10:06:17 +0200 (CEST)
-Received: from Webmail-eu.st.com (sfhdag5node3.st.com [10.75.127.15])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 6DBE721FE90;
-        Fri, 21 Aug 2020 10:06:17 +0200 (CEST)
-Received: from [10.48.1.149] (10.75.127.45) by SFHDAG5NODE3.st.com
- (10.75.127.15) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 21 Aug
- 2020 10:06:16 +0200
-Subject: Re: [PATCH v2 14/15] regulator: stm32-booster: Fix W=1 build warning
- when CONFIG_OF=n
-To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Icenowy Zheng <icenowy@aosc.io>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20200821111135.0b958d3a@xhacker.debian>
- <20200821111943.29b2b4ca@xhacker.debian>
-From:   Fabrice Gasnier <fabrice.gasnier@st.com>
-Message-ID: <98a8224e-9797-cbd0-7a99-972f3c6db292@st.com>
-Date:   Fri, 21 Aug 2020 10:06:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1727870AbgHUIHf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 04:07:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35258 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727840AbgHUIHd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Aug 2020 04:07:33 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4DA4C2078D;
+        Fri, 21 Aug 2020 08:07:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1597997252;
+        bh=LaMlJ8OWitxR94LYzLAW+/aCIQp70S1xt+7fdRecGkM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lvzNVTn3kK+R6rhX3v2r5kGGWFVmcbdZ4VJtDADKQTwh2Aes+1MU5H+LAHiN8OQ+H
+         ket2nq3Gs0f+y7KGGrtoh30Khl+NLrKZB5sMVZ4StNWFcKM28IvThm25QAGBbg8Bw9
+         DAQdnRs+m1kjIK5XxPYS+MsULpHW1cs7ylBpEn4U=
+Date:   Fri, 21 Aug 2020 09:07:25 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk,
+        inki.dae@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com, vdumpa@nvidia.com,
+        digetx@gmail.com, matthias.bgg@gmail.com, yong.wu@mediatek.com,
+        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
+        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 07/18] iommu/arm-smmu: Remove arch/arm workaround
+Message-ID: <20200821080724.GA20060@willie-the-truck>
+References: <cover.1597931875.git.robin.murphy@arm.com>
+ <ef39be82b98d2471c9e99c82d0eeda37ba30e4fa.1597931876.git.robin.murphy@arm.com>
 MIME-Version: 1.0
-In-Reply-To: <20200821111943.29b2b4ca@xhacker.debian>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.75.127.45]
-X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG5NODE3.st.com
- (10.75.127.15)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
- definitions=2020-08-21_06:2020-08-19,2020-08-21 signatures=0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ef39be82b98d2471c9e99c82d0eeda37ba30e4fa.1597931876.git.robin.murphy@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/21/20 5:19 AM, Jisheng Zhang wrote:
-> Fix below warning when CONFIG_OF=n:
+On Thu, Aug 20, 2020 at 04:08:26PM +0100, Robin Murphy wrote:
+> Now that arch/arm is wired up for default domains and iommu-dma, remove
+> the add_device workaround.
 > 
-> drivers/regulator/stm32-booster.c:104:34: warning: ‘stm32_booster_of_match’ defined but not used [-Wunused-const-variable=]
->   104 | static const struct of_device_id stm32_booster_of_match[] = {
->       |                                  ^~~~~~~~~~~~~~~~~~~~~~
-> 
-> Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-
-Hi Jisheng,
-
-Acked-by: Fabrice Gasnier <fabrice.gasnier@st.com>
-
-Thanks for the patch,
-Fabrice
+> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 > ---
->  drivers/regulator/stm32-booster.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 10 ----------
+>  1 file changed, 10 deletions(-)
 > 
-> diff --git a/drivers/regulator/stm32-booster.c b/drivers/regulator/stm32-booster.c
-> index 03f162ffd144..3136ea8a35d5 100644
-> --- a/drivers/regulator/stm32-booster.c
-> +++ b/drivers/regulator/stm32-booster.c
-> @@ -101,7 +101,7 @@ static int stm32_booster_probe(struct platform_device *pdev)
->  	return 0;
->  }
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 09c42af9f31e..4e52d8cb67dd 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -1164,17 +1164,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  		return -ENXIO;
+>  	}
 >  
-> -static const struct of_device_id stm32_booster_of_match[] = {
-> +static const struct of_device_id __maybe_unused stm32_booster_of_match[] = {
->  	{
->  		.compatible = "st,stm32h7-booster",
->  		.data = (void *)&stm32h7_booster_desc
-> 
+> -	/*
+> -	 * FIXME: The arch/arm DMA API code tries to attach devices to its own
+> -	 * domains between of_xlate() and probe_device() - we have no way to cope
+> -	 * with that, so until ARM gets converted to rely on groups and default
+> -	 * domains, just say no (but more politely than by dereferencing NULL).
+> -	 * This should be at least a WARN_ON once that's sorted.
+> -	 */
+>  	cfg = dev_iommu_priv_get(dev);
+> -	if (!cfg)
+> -		return -ENODEV;
+> -
+>  	smmu = cfg->smmu;
+>  
+>  	ret = arm_smmu_rpm_get(smmu);
+
+Acked-by: Will Deacon <will@kernel.org>
+
+Will
