@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD6EF24DC09
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 18:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D2BC24DB9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 18:44:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728739AbgHUQwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 12:52:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51618 "EHLO mail.kernel.org"
+        id S1728580AbgHUQoj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 12:44:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50002 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727769AbgHUQTy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 12:19:54 -0400
+        id S1728379AbgHUQUl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Aug 2020 12:20:41 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7718722BEB;
-        Fri, 21 Aug 2020 16:19:02 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id ECCF520578;
+        Fri, 21 Aug 2020 16:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598026743;
-        bh=qcmUxhb8wbPzUc04il8NAjtvIzc/l6G5x7Bioq7PlBU=;
+        s=default; t=1598026782;
+        bh=/2qLc6JqZACE5iaGnaL1n1of4zIMi6pGTKpFUHPyJh4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ia+omy2D4Z/N1kZ5mzNoC4LED1v0ByVO1WmyjhI0LwpOFy7bIoe06aXMf9FYrNxzX
-         lIQ/iNEOyBXuzXfiAY6qkAAiugFcIbtdQ+iqHpl4AgB9lhaVmvv5qZsSk0+r7JOilB
-         AxIeR88dpftE5SukAuqtndyy9pIM108z1uJ3bO0Y=
+        b=wrfu9ZaJ85BluxB1gyKVf+9nTfmwy4nFKKi/t9c1Xyvrc00g8lkj3c3SADs9qj3a6
+         QYcCFQDpRgpjez/FJUbnhVRi1rbrZ+Vb4cP7rVuzBhoK8AM30Xi8oXWymK2AhXOdZs
+         Sp7eWUKVgnRCZGWCDJhxjLqJkvXwgHL8rOh8q2PU=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Stephan Gerhold <stephan@gerhold.net>,
@@ -30,12 +30,12 @@ Cc:     Stephan Gerhold <stephan@gerhold.net>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 04/30] arm64: dts: qcom: msm8916: Pull down PDM GPIOs during sleep
-Date:   Fri, 21 Aug 2020 12:18:31 -0400
-Message-Id: <20200821161857.348955-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 03/26] arm64: dts: qcom: msm8916: Pull down PDM GPIOs during sleep
+Date:   Fri, 21 Aug 2020 12:19:14 -0400
+Message-Id: <20200821161938.349246-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200821161857.348955-1-sashal@kernel.org>
-References: <20200821161857.348955-1-sashal@kernel.org>
+In-Reply-To: <20200821161938.349246-1-sashal@kernel.org>
+References: <20200821161938.349246-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -69,7 +69,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
-index 4cb0b58341432..0264b6769746c 100644
+index 10c83e11c272f..93856ac6f1d33 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8916-pins.dtsi
 @@ -555,7 +555,7 @@ pinconf {
