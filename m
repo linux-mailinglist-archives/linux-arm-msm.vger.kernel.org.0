@@ -2,158 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 586C624CE3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 08:49:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0D4B24D04B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 10:06:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727887AbgHUGtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 02:49:11 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:35308 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726119AbgHUGtK (ORCPT
+        id S1726993AbgHUIGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 04:06:02 -0400
+Received: from mx08-00178001.pphosted.com ([91.207.212.93]:54288 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725965AbgHUIFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 02:49:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1597992546;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=V1ysYwsBw9cTeNCdgwcpfFak0p/RNbnJO+auxIHEaGg=;
-        b=kQKpurwaJ6xNVxALMVF4XadXxg1cKG9d4VsvdOJu3qwYG8vGmVVRM0KyQLeRa8C1Bn
-        qy08hWRAeytJ/+hMPG33l61rY/9/W+IZB0BdFAIyO8LSHfY5Ibzu0MYv3ToD+tcUiAxU
-        RUO6WkUONHblKC226UYHDESWKXLzB9NIMR8/ywP+z14wdQtR6eeXRV09lIocGtxjdJSh
-        BobWTgObzfgKg5+FywLv8yWVigu6b02gPsESEYUyNk8r7AYL+Qk/1Fu5M4K/cRtIjXXB
-        QKe5ZkuQTADjwKupeplG+xJ4SFoPh4jJC9SiDGi/h/LwgZJvEVui85n2hRlf2tlAo3PM
-        cwtA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/Fboo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w7L6n3Hqg
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Fri, 21 Aug 2020 08:49:03 +0200 (CEST)
-Date:   Fri, 21 Aug 2020 08:48:57 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Fri, 21 Aug 2020 04:05:41 -0400
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 07L82M8Y002909;
+        Fri, 21 Aug 2020 10:05:21 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=STMicroelectronics;
+ bh=mEEFGwxCR0LLzSzT8N8HBawMHqEEzWXO7414JAV6Gqg=;
+ b=eYPOpaotWPQ4f7pbwo3lzzRAHL9gJ56LxFpuIA7vitShstnf99AMesLYK1sXmMGj/Kt2
+ bBCxV5KgtkMg0X9xo0FN4bPkE5S5KtfzMPpfBoilBcOiK/ljUVnxz/mGV3ya/OOAVhH7
+ rGofCoqqfd+XpWN4ikYKTdell/ML0x6/ro4sxUHBAI4QeWBse9thJNWaohSYgwtozo1/
+ 4sunJcWcCUUJNMlYMO38jj9TZWvepJU/yKbdC9IMSFPsiqEUpEfks79Uivx6BZ6cp78e
+ gY9ONdq1bPVS1uTsFuG55lCrxYhpak8wh3TRj7Qa7u4t9dRL9E/okTsxWFD6Jj4OxA0D Pg== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com with ESMTP id 330jg7nrr1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Aug 2020 10:05:21 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id DF69B10002A;
+        Fri, 21 Aug 2020 10:05:20 +0200 (CEST)
+Received: from Webmail-eu.st.com (sfhdag5node3.st.com [10.75.127.15])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id C439321FE90;
+        Fri, 21 Aug 2020 10:05:20 +0200 (CEST)
+Received: from [10.48.1.149] (10.75.127.47) by SFHDAG5NODE3.st.com
+ (10.75.127.15) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Fri, 21 Aug
+ 2020 10:05:19 +0200
+Subject: Re: [PATCH v2 11/15] regulator: stm32-vrefbuf: Fix W=1 build warning
+ when CONFIG_OF=n
+To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Support Opensource <support.opensource@diasemi.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH] clk: qcom: smd: Disable unused clocks
-Message-ID: <20200821064857.GA905@gerhold.net>
-References: <20200817140908.185976-1-stephan@gerhold.net>
- <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com>
- <20200818080738.GA46574@gerhold.net>
- <159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com>
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Icenowy Zheng <icenowy@aosc.io>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+References: <20200821111135.0b958d3a@xhacker.debian>
+ <20200821111755.4c461039@xhacker.debian>
+From:   Fabrice Gasnier <fabrice.gasnier@st.com>
+Message-ID: <fc1035fe-b90f-59d5-cb4c-aff31136459a@st.com>
+Date:   Fri, 21 Aug 2020 10:05:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com>
+In-Reply-To: <20200821111755.4c461039@xhacker.debian>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.75.127.47]
+X-ClientProxiedBy: SFHDAG2NODE2.st.com (10.75.127.5) To SFHDAG5NODE3.st.com
+ (10.75.127.15)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
+ definitions=2020-08-21_06:2020-08-19,2020-08-21 signatures=0
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 20, 2020 at 04:27:35PM -0700, Stephen Boyd wrote:
-> Quoting Stephan Gerhold (2020-08-18 01:07:38)
-> > Hi Jeffrey,
-> > 
-> > On Mon, Aug 17, 2020 at 08:52:46AM -0600, Jeffrey Hugo wrote:
-> > > So essentially, when the clk framework goes through late init, and
-> > > decides to turn off clocks that are not being used, it will also turn
-> > > off these clocks?
-> > > 
-> > > I think this is going to break other targets where other subsystems
-> > > happen to rely on these sorts of votes from Linux inorder to run/boot
-> > > (not saying it's a good thing, just that is how it is and since we
-> > > can't change the FW on those....).
-> > > 
-> > 
-> > After thinking about it some more I realized there are definitely some
-> > of the clocks we shouldn't disable even when unused, for example the
-> > interconnect clocks. With interconnect drivers disabled the system
-> > basically locked up entirely once the clock core disabled the clocks.
+On 8/21/20 5:17 AM, Jisheng Zhang wrote:
+> Fix below warning when CONFIG_OF=n:
 > 
-> The interconnect clks should be moved out of the RPM clk drivers. It's
-> over-engineering to have the RPM interconnect drivers talk to the RPM
-> clk drivers to change the frequency of interconnects based on a
-> calculation in the interconnect driver. It makes sense from a logical
-> perspective to express that these are clks, and they have frequencies,
-> etc., but when you look closer at it you see that it's nonsense.
+> drivers/regulator/stm32-vrefbuf.c:287:34: warning: ‘stm32_vrefbuf_of_match’ defined but not used [-Wunused-const-variable=]
+>   287 | static const struct of_device_id stm32_vrefbuf_of_match[] = {
+>       |                                  ^~~~~~~~~~~~~~~~~~~~~~
 > 
-> The RPMh interconnect driver should be able to talk directly to the RPM
+> Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
 
-Note: I'm talking about the clk-smd-rpm (+ SMD RPM interconnect)
-drivers here (not RPMh), but I guess the same applies for that as well.
+Hi Jisheng,
 
-> and turn knobs as it see fit. Nobody else is going to use those clks
-> from the RPM clk driver. Any potential consumer is going to go through
-> the interconnect layer to change frequencies. So now we've got two
-> frameworks interfacing with the same wire protocol and remote processor,
-> when we could have only one. And furthermore to the point, the RPM
-> interconnect clks are all parented to nothing, so putting them behind
-> the clk APIs provides practically zero benefits, like managing the clk
-> tree or determining rates down the tree.
+Acked-by: Fabrice Gasnier <fabrice.gasnier@st.com>
+
+Thanks for the patch,
+Fabrice
+> ---
+>  drivers/regulator/stm32-vrefbuf.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-That makes sense to me since it would also prevent these clocks from
-getting "disabled" when unused.
-
-> Honestly I'd like to see all the various RPM drivers combined into one
-> driver that knows what is going on between regulators, interconnects,
-> and clks, etc. Carving it up into these different drivers spread across
-> the tree helps us review the code and logically split the device into
-> pieces, but the flip side is that nobody sees the big picture that a
-> call into a framework here boils down to a couple RPM messages sent over
-> the wire to the same device.
+> diff --git a/drivers/regulator/stm32-vrefbuf.c b/drivers/regulator/stm32-vrefbuf.c
+> index 992bc18101ef..161622ea7259 100644
+> --- a/drivers/regulator/stm32-vrefbuf.c
+> +++ b/drivers/regulator/stm32-vrefbuf.c
+> @@ -284,7 +284,7 @@ static const struct dev_pm_ops stm32_vrefbuf_pm_ops = {
+>  			   NULL)
+>  };
+>  
+> -static const struct of_device_id stm32_vrefbuf_of_match[] = {
+> +static const struct of_device_id __maybe_unused stm32_vrefbuf_of_match[] = {
+>  	{ .compatible = "st,stm32-vrefbuf", },
+>  	{},
+>  };
 > 
-
-I'm not sure, most of the RPM drivers are basically pretty much just
-long struct definitions for the available regulators, clks,
-interconnects, ... of one SoC. Combining this all into one driver would
-likely become rather "messy"...
-
-> > For now I fixed this by marking all of DEFINE_CLK_SMD_RPM() as
-> > CLK_IGNORE_UNUSED (essentially restoring the current behavior of the
-> > driver). For MSM8916 these are exactly the interconnect clocks, but on
-> > other platforms there are further clocks that might not need
-> > CLK_IGNORE_UNUSED. This could be still optimized later.
-> > 
-> > > I think this needs to be validated on every single qcom platform using
-> > > this driver.
-> > > 
-> > 
-> > After running into the issue above I kind of agree with you. While
-> > problems should be limited by marking the "rate" clocks as
-> > CLK_IGNORE_UNUSED, it's also possible that one of the platforms requires
-> > one of the branch clocks to stay on to boot successfully.
-> > 
-> > I know for sure that this works properly on MSM8916, so maybe I should
-> > make it opt-in and then we add it for each platform after validating it?
-> > 
-> 
-> No! Instead of putting band-aids on this broken mess, please just move
-> the interconnect clks out of the clk driver and into the interconnect
-> driver.
-> 
-
-Hmm, I'm not sure how to implement this in a backwards compatible way.
-In particular, clk-smd-rpm supports SoCs that:
-
-  - Have no interconnect driver at all (MSM8998, SDM660, ...)
-  - Had the interconnect device nodes added much later than rpmcc
-    (MSM8916, MSM8974, ...)
-  - Have some clocks that are not covered by the interconnect drivers yet,
-    e.g. RPM_SMD_GFX3D_CLK_SRC (Is this even interconnect? Not sure...)
-
-In all those cases they likely (implicitly) rely on rpmcc to keep all
-clocks at maximum rate, even if unused. If we were to move the
-interconnect clock management to the interconnect drivers, we would
-still need to handle the clocks somewhere in all those cases.
-
-How would this work?
-
-Thanks,
-Stephan
