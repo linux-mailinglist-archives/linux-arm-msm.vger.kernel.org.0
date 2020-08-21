@@ -2,199 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93EBE24CC8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 06:17:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 586C624CE3A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 08:49:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725806AbgHUERp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 00:17:45 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:44534 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725844AbgHUERo (ORCPT
+        id S1727887AbgHUGtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 02:49:11 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:35308 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726119AbgHUGtK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 00:17:44 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1597983463; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=dp3nIlYMWIpEqxxYOG00yGTEXD2AmqqdUiwBKlzCCso=;
- b=qs/7hL7NQCJmuwkxAMAJEE1YPX4lGxaMJQIDyvR+8bgdJgw8OIiLs0Y4PouctYJSp8Oyo1w5
- op9DPTGN/wr6BnNiuI84VIOuDsu0/6eWcQuGNa1cpTfZoE7c/drkjCCdYNvB1wTkg2PJqaJq
- 7D03hItjLjfFX0axMSpjFDl2YZw=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f3f4ada108e5ef85ac306ef (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 21 Aug 2020 04:17:30
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4F3BBC433C6; Fri, 21 Aug 2020 04:17:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: cgoldswo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A3BFC433CA;
-        Fri, 21 Aug 2020 04:17:28 +0000 (UTC)
+        Fri, 21 Aug 2020 02:49:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1597992546;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=V1ysYwsBw9cTeNCdgwcpfFak0p/RNbnJO+auxIHEaGg=;
+        b=kQKpurwaJ6xNVxALMVF4XadXxg1cKG9d4VsvdOJu3qwYG8vGmVVRM0KyQLeRa8C1Bn
+        qy08hWRAeytJ/+hMPG33l61rY/9/W+IZB0BdFAIyO8LSHfY5Ibzu0MYv3ToD+tcUiAxU
+        RUO6WkUONHblKC226UYHDESWKXLzB9NIMR8/ywP+z14wdQtR6eeXRV09lIocGtxjdJSh
+        BobWTgObzfgKg5+FywLv8yWVigu6b02gPsESEYUyNk8r7AYL+Qk/1Fu5M4K/cRtIjXXB
+        QKe5ZkuQTADjwKupeplG+xJ4SFoPh4jJC9SiDGi/h/LwgZJvEVui85n2hRlf2tlAo3PM
+        cwtA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/Fboo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
+        with ESMTPSA id g0b6c1w7L6n3Hqg
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Fri, 21 Aug 2020 08:49:03 +0200 (CEST)
+Date:   Fri, 21 Aug 2020 08:48:57 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: Re: [PATCH] clk: qcom: smd: Disable unused clocks
+Message-ID: <20200821064857.GA905@gerhold.net>
+References: <20200817140908.185976-1-stephan@gerhold.net>
+ <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com>
+ <20200818080738.GA46574@gerhold.net>
+ <159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 20 Aug 2020 21:17:28 -0700
-From:   cgoldswo@codeaurora.org
-To:     Andrew Morton <akpm@linux-foundation.org>
-Cc:     linux-mm@kvack.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, pratikp@codeaurora.org,
-        pdaly@codeaurora.org, sudraja@codeaurora.org,
-        iamjoonsoo.kim@lge.com, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: cma_alloc(), add sleep-and-retry for temporary page pinning
-In-Reply-To: <896f92e8c37936e7cb2914e79273e9e8@codeaurora.org>
-References: <896f92e8c37936e7cb2914e79273e9e8@codeaurora.org>
-Message-ID: <896458e8daf87a274ba1ce8ced30ac8e@codeaurora.org>
-X-Sender: cgoldswo@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-11 15:20, cgoldswo@codeaurora.org wrote:
-> On 2020-08-06 18:31, Andrew Morton wrote:
->> On Wed,  5 Aug 2020 19:56:21 -0700 Chris Goldsworthy
->> <cgoldswo@codeaurora.org> wrote:
->> 
->>> On mobile devices, failure to allocate from a CMA area constitutes a
->>> functional failure.  Sometimes during CMA allocations, we have 
->>> observed
->>> that pages in a CMA area allocated through alloc_pages(), that we're 
->>> trying
->>> to migrate away to make room for a CMA allocation, are temporarily 
->>> pinned.
->>> This temporary pinning can occur when a process that owns the pinned 
->>> page
->>> is being forked (the example is explained further in the commit 
->>> text).
->>> This patch addresses this issue by adding a sleep-and-retry loop in
->>> cma_alloc() . There's another example we know of similar to the above 
->>> that
->>> occurs during exit_mmap() (in zap_pte_range() specifically), but I 
->>> need to
->>> determine if this is still relevant today.
->> 
+On Thu, Aug 20, 2020 at 04:27:35PM -0700, Stephen Boyd wrote:
+> Quoting Stephan Gerhold (2020-08-18 01:07:38)
+> > Hi Jeffrey,
+> > 
+> > On Mon, Aug 17, 2020 at 08:52:46AM -0600, Jeffrey Hugo wrote:
+> > > So essentially, when the clk framework goes through late init, and
+> > > decides to turn off clocks that are not being used, it will also turn
+> > > off these clocks?
+> > > 
+> > > I think this is going to break other targets where other subsystems
+> > > happen to rely on these sorts of votes from Linux inorder to run/boot
+> > > (not saying it's a good thing, just that is how it is and since we
+> > > can't change the FW on those....).
+> > > 
+> > 
+> > After thinking about it some more I realized there are definitely some
+> > of the clocks we shouldn't disable even when unused, for example the
+> > interconnect clocks. With interconnect drivers disabled the system
+> > basically locked up entirely once the clock core disabled the clocks.
 > 
->> Sounds fairly serious but boy, we're late for 5.9.
->> 
->> I can queue it for 5.10 with a cc:stable so that it gets backported
->> into earlier kernels a couple of months from now, if we think the
->> seriousness justifies backporting(?).
->> 
+> The interconnect clks should be moved out of the RPM clk drivers. It's
+> over-engineering to have the RPM interconnect drivers talk to the RPM
+> clk drivers to change the frequency of interconnects based on a
+> calculation in the interconnect driver. It makes sense from a logical
+> perspective to express that these are clks, and they have frequencies,
+> etc., but when you look closer at it you see that it's nonsense.
 > 
-> Queuing this seems like the best way to proceed, if we were to pick up
-> this patch.
-> I think we can forgo back-porting this, as this is something that will 
-> only be
-> needed as vendors such as our selves start using Google's Generic 
-> Kernel Image
-> (we've carried this patch in our tree for over four years).
-> 
->> 
->> And...  it really is a sad little patch, isn't it?  Instead of fixing
->> the problem, it reduces the problem's probability by 5x.  Can't we do
->> better than this?
-> 
-> I have one alternative in mind.  I have been able to review the 
-> exit_mmap()
-> case, so before proceeding, let's do a breakdown of the problem: we can
-> categorize the pinning issue we're trying to address here as being one 
-> of
-> (1) incrementing _refcount and getting context-switched out before
-> incrementing _mapcount (applies to forking a process / copy_one_pte()), 
-> and
-> (2) decrementing _mapcount and getting context-switched out before
-> decrementing _refcount (applies to tearing down a process / 
-> exit_mmap()).
-> So, one alternative would be to insert preempt_disable/enable() calls 
-> at
-> affected sites. So, for the copy_one_pte() pinning case, we could do 
-> the
-> following inside of copy_one_pte():
-> 
->         if (page) {
-> +               preempt_disable();
->                 get_page(page);
->                 page_dup_rmap(page, false);
-> +               preempt_enable();
->                 rss[mm_counter(page)]++;
->         }
-> 
-> I'm not sure if this approach would be acceptable for the exit_mmap()
-> pinning case (applicable when CONFIG_MMU_GATHER_NO_GATHER=y).  For the
-> purposes of this discussion, we can look at two function calls inside 
-> of
-> exit_mmap(), in the order they're called in, to show how the pinning is
-> occuring:
-> 
->     1. Calling unmap_vmas(): this unmaps the pages in each VMA for an
->     exiting task, using zap_pte_range() - zap_pte_range() reduces the
->     _mapcount for each page in a VMA, using page_remove_rmap().  After
->     calling page_remove_rmap(), the page is placed into a list in
->     __tlb_remove_page().  This list of pages will be used when flushing
->     TLB entries later on during the process teardown.
-> 
->     2. Calling tlb_finish_mmu(): This is will flush the TLB entries
->     associated with pages, before calling put_page() on them, using the
->     previously collected pages from __tlb_remove_page() - the call flow 
-> is
->     tlb_flush_mmu() > tlb_flush_mmu() > tlb_flush_mmu_free()
->     > tlb_batch_pages_flush() > free_pages_and_swap_cache() >
->     release_pages(), where release_pages() is described as a "batched
->     put_page()"
-> 
-> The preempt_disable/enable() approach would entail doing the following
-> inside of exit_mmap():
-> 
-> +       preempt_disable();
->         unmap_vmas(&tlb, vma, 0, -1);
->         free_pgtables(&tlb, vma, FIRST_USER_ADDRESS, 
-> USER_PGTABLES_CEILING);
->         tlb_finish_mmu(&tlb, 0, -1);
-> +       preempt_enable();
-> 
-> I'm not sure doing this is feasible, given how long it could take to do 
-> the
-> process teardown.
-> 
-> The good thing about this patch is that it has been stable in our 
-> kernel
-> for four years (though for some SoCs we increased the retry counts).  
-> One
-> thing to stress is that there are other instances of CMA page pinning, 
-> that
-> this patch isn't attempting to address. Please let me know if you're 
-> okay
-> with queuing this for the 5.10 merge window - if you are, I can add an
-> option to configure the number of retries, and will resend the patch 
-> once
-> the 5.9 merge window closes.
-> 
-> Thanks,
-> 
-> Chris.
+> The RPMh interconnect driver should be able to talk directly to the RPM
 
-Hi Andrew,
+Note: I'm talking about the clk-smd-rpm (+ SMD RPM interconnect)
+drivers here (not RPMh), but I guess the same applies for that as well.
 
-Have you been able to give the patch any further consideration?
+> and turn knobs as it see fit. Nobody else is going to use those clks
+> from the RPM clk driver. Any potential consumer is going to go through
+> the interconnect layer to change frequencies. So now we've got two
+> frameworks interfacing with the same wire protocol and remote processor,
+> when we could have only one. And furthermore to the point, the RPM
+> interconnect clks are all parented to nothing, so putting them behind
+> the clk APIs provides practically zero benefits, like managing the clk
+> tree or determining rates down the tree.
+> 
+
+That makes sense to me since it would also prevent these clocks from
+getting "disabled" when unused.
+
+> Honestly I'd like to see all the various RPM drivers combined into one
+> driver that knows what is going on between regulators, interconnects,
+> and clks, etc. Carving it up into these different drivers spread across
+> the tree helps us review the code and logically split the device into
+> pieces, but the flip side is that nobody sees the big picture that a
+> call into a framework here boils down to a couple RPM messages sent over
+> the wire to the same device.
+> 
+
+I'm not sure, most of the RPM drivers are basically pretty much just
+long struct definitions for the available regulators, clks,
+interconnects, ... of one SoC. Combining this all into one driver would
+likely become rather "messy"...
+
+> > For now I fixed this by marking all of DEFINE_CLK_SMD_RPM() as
+> > CLK_IGNORE_UNUSED (essentially restoring the current behavior of the
+> > driver). For MSM8916 these are exactly the interconnect clocks, but on
+> > other platforms there are further clocks that might not need
+> > CLK_IGNORE_UNUSED. This could be still optimized later.
+> > 
+> > > I think this needs to be validated on every single qcom platform using
+> > > this driver.
+> > > 
+> > 
+> > After running into the issue above I kind of agree with you. While
+> > problems should be limited by marking the "rate" clocks as
+> > CLK_IGNORE_UNUSED, it's also possible that one of the platforms requires
+> > one of the branch clocks to stay on to boot successfully.
+> > 
+> > I know for sure that this works properly on MSM8916, so maybe I should
+> > make it opt-in and then we add it for each platform after validating it?
+> > 
+> 
+> No! Instead of putting band-aids on this broken mess, please just move
+> the interconnect clks out of the clk driver and into the interconnect
+> driver.
+> 
+
+Hmm, I'm not sure how to implement this in a backwards compatible way.
+In particular, clk-smd-rpm supports SoCs that:
+
+  - Have no interconnect driver at all (MSM8998, SDM660, ...)
+  - Had the interconnect device nodes added much later than rpmcc
+    (MSM8916, MSM8974, ...)
+  - Have some clocks that are not covered by the interconnect drivers yet,
+    e.g. RPM_SMD_GFX3D_CLK_SRC (Is this even interconnect? Not sure...)
+
+In all those cases they likely (implicitly) rely on rpmcc to keep all
+clocks at maximum rate, even if unused. If we were to move the
+interconnect clock management to the interconnect drivers, we would
+still need to handle the clocks somewhere in all those cases.
+
+How would this work?
 
 Thanks,
-
-Chris.
-
--- 
-The Qualcomm Innovation Center, Inc.
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Stephan
