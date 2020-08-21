@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E83C324CB64
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 05:24:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA74924CB58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 05:22:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727093AbgHUDYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 23:24:18 -0400
-Received: from mail-co1nam11on2040.outbound.protection.outlook.com ([40.107.220.40]:6785
-        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
+        id S1727921AbgHUDWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 23:22:34 -0400
+Received: from mail-mw2nam10on2068.outbound.protection.outlook.com ([40.107.94.68]:47072
+        "EHLO NAM10-MW2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727040AbgHUDYQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 23:24:16 -0400
+        id S1727888AbgHUDWd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 23:22:33 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=oGgqyTAl0CYk4FoQckzBjk/L9QqB9sIZf/UxF9cy8gscWiDe6CKO7CHrxLC6hE2Mvp+R9oVUCinEjCvnSW+T1q2Uec6k2lZTPkmm0CTz3p+K3+aTbIy5KXfmURiNjj+jzvmtBItxNAzFc4P35zYO4FoA27gSzTkblGIRfMNdmE1T6Kip7g20h6grHG7XDgKVDM25DT2v3d4hIcoB4QIe99BNZbT7EO5AZS5xZ9zU0KImhJudJqBueaAvxSIAuA4BGlRX/bd0l8eSzSH9CoOWpvu37hqSjyMp49NDbVNfQ0km3i9XDG6uqKMIVclwTatdzsZussvZQLVrLgRq4cqQBg==
+ b=QISZ0iPb8ZABuePXLarwpznFt8qv8KGi0SZQ36WLy5CKE/coQByqzcEhjd/XwE+WgWZ3nfy+pNLYqyZ/o71JzuAdW8+OFElid0zvROuSSblZMxDHVk8Sadrdg+vzuOLHwx8PK1tBwN74DEZz/gfBDpqW4c34CmHpQNQxSTNol3PdI3eYOgJgKJVvdCFxAvKak+qCChDxhBVqmItzfPxkhDuRnMXoFbsywIEunNS9FGOhkftHiwldVG7eCauO5/c08DspRyhOtzmrDyuJDcj/iHDFyWwRPTPoCXNPIWvsOwW9CNauYqivY90T3U4oEOgcpMoPBE+zmEkQM3WBbGaXjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pL9/r6+ll0NF1Y/kbEJugrkxt8+RNVyCXvxply89DKw=;
- b=D8re5+twJjWFWBn6i4OY6Y8RMyX5QBgVouaafN2CriHQ1lgiNXXvihEYp0QP0tCXytQWGR5vs0Ca7W0mx2AUtINPlIBHEXyCLnDK3JjJby7rwGIc8bZYgNfV4cdrzlz7BgZgGMaPb2/7+WHtQjTrqAvuU7z1SfVy8Co8eP9eYMSwlYq92lxs94C1Q79+qpp2wXckSFyq4jWtoAKsCMahvRv6bqUcT/aJQXcsFWJHsek7cMU0zooQF5HI2cBW8Whhv1+CckZluvj+ZjxuyqA1St91B1PMQAgUoZFNh36Wu7gG1tt8vkRIvnihEbQ9ihEw045NpwLQf5ys0wN8ATOgsw==
+ bh=KHvYbXKB637tjZ3eQiUxscttQbltDndxqdCobT2il9g=;
+ b=F7OU2/QhqgGDhT3p5ZVw2aVe36iarBv+qZ7yKaYMn81ByLTMxiQwjTl5bjh9ENzNPCAOY6KU+IIu+WBOjS/UnYnub1LZ27ADpRAy+kqOwalWzUJ1SFWuqqI5co9VXLOaSQssf23K2xCYZKJpdX5XezwA+wSwn5xPaao+2gfRHV+Pq3XFHGms3ofIeNYs7RjyJfpLOjmh1+/v6tvbF+Ob/fKnn1XO3LKl25W0d/81iCwqiJabBXSsCXSchTSTgkXSGlRPrsjI3NPe7xCQZqznb3k0udkjGAlFG7njpam1w4pEcFxLCfkfNLsDaImDVgaVJAQTE5hc9Bb5HvWid3eQpA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=synaptics.com; dmarc=pass action=none
  header.from=synaptics.com; dkim=pass header.d=synaptics.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=Synaptics.onmicrosoft.com; s=selector2-Synaptics-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pL9/r6+ll0NF1Y/kbEJugrkxt8+RNVyCXvxply89DKw=;
- b=TUZY2Q9UgNdO75wDbqY+CxWMY2idiv7zf9A/9CuA5qm2JmP0SRn/qXFNv6XOD3ToNbFamR5HR6KZUTET3L1ZFmKovkWbmC9rx+U73yVAnUKAJkzmx9phKQ0icj7wmda4FwuKl0E9tCyRMAW17q+GSx8WIZfj4sBIg7aYFhyIl5s=
+ bh=KHvYbXKB637tjZ3eQiUxscttQbltDndxqdCobT2il9g=;
+ b=Jyvd5tP+oUG3negd4+if5tPAIBcx9QxmC27IimgMVaZdIueq/yiKfNwAEO/e6qeaL6Sc6uUxpThF/vlS1LiDXor8mG4dmVIRrYpCgOTtozJHJL+yUMOH0+9IvjDqad/WmPp1dhUjueK/jee0DRuWxXnHl4sKF1lYyEbYP/Fpigg=
 Authentication-Results: gmail.com; dkim=none (message not signed)
  header.d=none;gmail.com; dmarc=none action=none header.from=synaptics.com;
 Received: from DM6PR03MB4555.namprd03.prod.outlook.com (2603:10b6:5:102::17)
- by DM6PR03MB5308.namprd03.prod.outlook.com (2603:10b6:5:242::23) with
+ by DM6PR03MB4617.namprd03.prod.outlook.com (2603:10b6:5:15e::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24; Fri, 21 Aug
- 2020 03:24:14 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.25; Fri, 21 Aug
+ 2020 03:22:31 +0000
 Received: from DM6PR03MB4555.namprd03.prod.outlook.com
  ([fe80::e494:740f:155:4a38]) by DM6PR03MB4555.namprd03.prod.outlook.com
  ([fe80::e494:740f:155:4a38%7]) with mapi id 15.20.3305.025; Fri, 21 Aug 2020
- 03:24:14 +0000
-Date:   Fri, 21 Aug 2020 11:18:20 +0800
+ 03:22:31 +0000
+Date:   Fri, 21 Aug 2020 11:19:13 +0800
 From:   Jisheng Zhang <Jisheng.Zhang@synaptics.com>
 To:     Liam Girdwood <lgirdwood@gmail.com>,
         Mark Brown <broonie@kernel.org>,
@@ -51,9 +51,9 @@ To:     Liam Girdwood <lgirdwood@gmail.com>,
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 12/15] regulator: sy8106a: Fix W=1 build warning when
+Subject: [PATCH v2 13/15] regulator: qcom-rpmh: Fix W=1 build warning when
  CONFIG_OF=n
-Message-ID: <20200821111820.5c6ddb04@xhacker.debian>
+Message-ID: <20200821111913.1096f7cc@xhacker.debian>
 In-Reply-To: <20200821111135.0b958d3a@xhacker.debian>
 References: <20200821111135.0b958d3a@xhacker.debian>
 X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
@@ -64,30 +64,30 @@ X-ClientProxiedBy: TY2PR06CA0043.apcprd06.prod.outlook.com
  (2603:10b6:5:102::17)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from 255.255.255.255 (255.255.255.255) by TY2PR06CA0043.apcprd06.prod.outlook.com (2603:1096:404:2e::31) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24 via Frontend Transport; Fri, 21 Aug 2020 03:24:10 +0000
+Received: from 255.255.255.255 (255.255.255.255) by TY2PR06CA0043.apcprd06.prod.outlook.com (2603:1096:404:2e::31) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24 via Frontend Transport; Fri, 21 Aug 2020 03:22:27 +0000
 X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 X-Originating-IP: [124.74.246.114]
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: bbffe17e-23b7-42bc-1138-08d84581ada4
-X-MS-TrafficTypeDiagnostic: DM6PR03MB5308:
-X-Microsoft-Antispam-PRVS: <DM6PR03MB530826ADAE22DA2AC56E0A6FED5B0@DM6PR03MB5308.namprd03.prod.outlook.com>
+X-MS-Office365-Filtering-Correlation-Id: 35d47033-3d8b-4a12-3b03-08d845817079
+X-MS-TrafficTypeDiagnostic: DM6PR03MB4617:
+X-Microsoft-Antispam-PRVS: <DM6PR03MB46177F0CDD5D114F09A5EB8AED5B0@DM6PR03MB4617.namprd03.prod.outlook.com>
 X-MS-Oob-TLC-OOBClassifiers: OLM:449;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: rbG1598npT3dwXkM5rNRKSkRZ9VbnqFisjrxD/9L8RG8ZLRsnMpKz61Q8ZOTNN9agySFGFvL9vea+/pEB/z08K3QI/8JEe5t7HZo9PJUWIFZXG/uQySDzj7j/OIqAhKHbvqBKz1AwBPCE5RemLA4/igJ5IIKbXUGDZe3uGXchakYjqGWPgGnAa2WJADUR0aZBKWgfI8LuSp8ryxWOYeb+M4T1g0SENMWk/XM4BUrPzjuGlsS6kGdWElf+98V5sA4U/gVIjmzinx/QW5BDIJUGyJz8eqhakIE+YXx+W7TYotIXfIDCZrosd114vbQu7SSpnOcLiFrmzPOmid6UGeYuMB9qHfT6lNVVotsAYSkLy398KmqDppezHn0rms+NEnc
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR03MB4555.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(376002)(366004)(39860400002)(346002)(396003)(136003)(9686003)(2906002)(478600001)(5660300002)(66556008)(66946007)(7416002)(316002)(83380400001)(16576012)(66476007)(110136005)(8676002)(86362001)(956004)(4744005)(4326008)(6486002)(6666004)(26005)(186003)(1076003)(110011004)(8936002)(52116002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: mVMGrK/boeQNtSQhfryT2LY8G7gt9RRCMxcp9B4RvyzEsswLW+eFtu1sKt5HOzxxeC0X5X6zY4V2Jsu+96ibe4K0rQd2qaK5/rwRpOzCzPplWKsZveGEhtR0x0ZwIzZJHdg+Eju5hABDGsIVqX8uQzADW4A49pquAW/XykCYvJmbLHJjrh06WC2WPyUSGBM+NajCKKwpjmiG403wdq2bhQAwq7t0jlt/VLlp8uh54xv9vsuIY6fAzPKn/xafBIX7pVM1I8jJllCstXIPa6fMTzRYLn3IB74cdd3yL8seor1P/f9pxBb4dm8iWrq6EXn3CV/u5h7MBGwN305ZFBpZvUksh5Iv+oYNBQJdrRylryCS8Kx40p72NpZ8wOLxyJLA3M+TJajyOA/ZthfJ1ILazYmuRFICRMocxesmu69S+RCLLG7FvcmUt0IldBAMRppyTNw7m/41nJPdQB5SMTBQ/Q2i1FBkTqXYM8iIjLBiIQ9ElGyzsruz0gK2+W1s5Q1czg8LpS3MzuUlg2g9ezgnsR+T3DruAt1+L8fe2KZansnONHrX+c5wxLHlrRiG4IDGHeADmKkwiSphiTIbL559GldkQ92Rr4Ntl4yj3cGearxTaFbnEqVtbzCZpfUAAG+8IL+9/EWkSiPQWN5e/qBA4A==
+X-Microsoft-Antispam-Message-Info: eQlpmQdaVw6Hpp+cBsemuEZZNol67DOvhyEmwjITU+PBiNLW6phz5m331JUhh7aCyFlw0r847PixmhAEMaBBNNv2zJ85aDKAsG7DTYTHIEYRLA8PfD17uSeUdeN3zElwIwLgsz3srSnHXBWTq2wu+h3rTUY/ljGNxasufhTNjTAGOjrTHW4dnGR6etf6nen6moDyP8h0nCCrW8kBitT7/Es3R4Abroq0ZDqbUoPrfKPZVuJtFypjyh8yXa7RDFPVbCEZyHd/KL3FYqDuIeg9ZxBb5K9wSMt+UABsnA99SX6pzIn/HyPc6oBZPvo2nCVwGINBQ/IujEqFlq1+o61Wl+o0OcJqyz/zxZl1t50+QW7D2iVRyg9bxNjAmCVufq/Y
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR03MB4555.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(136003)(396003)(376002)(366004)(39860400002)(346002)(66946007)(478600001)(8936002)(1076003)(7416002)(66556008)(6486002)(52116002)(110011004)(9686003)(4326008)(66476007)(8676002)(6666004)(5660300002)(86362001)(956004)(16576012)(186003)(316002)(4744005)(26005)(110136005)(2906002)(83380400001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: ZozzH3w/rJCYb0jrRctBPEEtsmetV03d+JorS7rfxSQtncbsYE7IXZk/Cf7mRq4NumPSJ2M4D5B/hgmPwvhgWEOKUo0RKx0vIIwnkklGHVyz+Kkq5hx5E1rPVqRvNkwOzRa2IHySBvZrllu88BlE2rUFzzhPGg3J8YAa2l4sIMRMpB4Z1ZNqbUlWZUahD324irCtTrmyiDQrEtNMISlVLsi4XipSDwB9/ciacBPbP/xoRYB7/3JwW78k2kKGuWIwHoO2T/3KdXuuPHJd3tEVZroJv/zieUQGFS7eXaNZEBhmp4cTwML5WobLsd1MsHQF73ApmVl0Pl+66rY8bbnCrUxdLvN1GmWo0y8Ae19Gw5MuUHG2nx5nDEqEYx1+VwNnwF7atF9DA9+k0YcRviirA/d4wFKKE4AwTNs594/EHqmdskeUTjVJ+hv/H3CZqw/rKRNuNoELlghIGCY0bR7siRQRkEktExBBtdweufPQOm1yfM4BmQUW8BLnUv1qbuAFBJzCZWozu1XJAhmVNCOQ/C5XVo7UX12AYppECQQyMgD/f1kpHMMRJkJkksKqMMdCi+Z7R+saFWDEn3eSXZLWVe8jSopQvxSbhRiRToMu2cu9yJtjFzRCY7qcmitTxlT+59Tk6qzcOJsizQPUkFOlkQ==
 X-OriginatorOrg: synaptics.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bbffe17e-23b7-42bc-1138-08d84581ada4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35d47033-3d8b-4a12-3b03-08d845817079
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR03MB4555.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2020 03:24:14.2521
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2020 03:22:31.7033
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 335d1fbc-2124-4173-9863-17e7051a2a0e
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bp2+EcRw6hhwnA3iF4j9snzpPXHQk/Vdvko5hpzoreQ8hXEQDIWbPocvwl4TRYF6DN841WbZSEZ7VTVAgfbMtA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR03MB5308
+X-MS-Exchange-CrossTenant-UserPrincipalName: xemi8rU5Edv/2oHXSRVGOqaQ3acohBTBhmzQXOBJ0AGcXCt93mIeMHtOh94Ty24MgVvnJZem8ovhiGybnTxiEw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR03MB4617
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -95,31 +95,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Fix below warning when CONFIG_OF=3Dn:
 
-drivers/regulator/sy8106a-regulator.c:126:34: warning: =E2=80=98sy8106a_i2c=
-_of_match=E2=80=99 defined but not used [-Wunused-const-variable=3D]
-  126 | static const struct of_device_id sy8106a_i2c_of_match[] =3D {
-      |                                  ^~~~~~~~~~~~~~~~~~~~
+drivers/regulator/qcom-rpmh-regulator.c:970:34: warning: =E2=80=98rpmh_regu=
+lator_match_table=E2=80=99 defined but not used [-Wunused-const-variable=3D=
+]
+  970 | static const struct of_device_id rpmh_regulator_match_table[] =3D {
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
 ---
- drivers/regulator/sy8106a-regulator.c | 2 +-
+ drivers/regulator/qcom-rpmh-regulator.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/sy8106a-regulator.c b/drivers/regulator/sy81=
-06a-regulator.c
-index 2222e739e62b..c119f85259a5 100644
---- a/drivers/regulator/sy8106a-regulator.c
-+++ b/drivers/regulator/sy8106a-regulator.c
-@@ -123,7 +123,7 @@ static int sy8106a_i2c_probe(struct i2c_client *i2c)
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qc=
+om-rpmh-regulator.c
+index 08dcc614efa7..d488325499a9 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -967,7 +967,7 @@ static int rpmh_regulator_probe(struct platform_device =
+*pdev)
  	return 0;
  }
 =20
--static const struct of_device_id sy8106a_i2c_of_match[] =3D {
-+static const struct of_device_id __maybe_unused sy8106a_i2c_of_match[] =3D=
- {
- 	{ .compatible =3D "silergy,sy8106a" },
- 	{ },
- };
+-static const struct of_device_id rpmh_regulator_match_table[] =3D {
++static const struct of_device_id __maybe_unused rpmh_regulator_match_table=
+[] =3D {
+ 	{
+ 		.compatible =3D "qcom,pm8005-rpmh-regulators",
+ 		.data =3D pm8005_vreg_data,
 --=20
 2.28.0
 
