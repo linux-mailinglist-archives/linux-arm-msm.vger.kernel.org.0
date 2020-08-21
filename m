@@ -2,179 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C51B324D363
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 12:59:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DD7924D526
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 14:39:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727979AbgHUK70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 06:59:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39890 "EHLO
+        id S1728236AbgHUMju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 08:39:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727103AbgHUK7U (ORCPT
+        with ESMTP id S1725935AbgHUMjq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 06:59:20 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4042C061386
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 03:59:19 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id b17so760223wru.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 03:59:19 -0700 (PDT)
+        Fri, 21 Aug 2020 08:39:46 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C89EC061385
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 05:39:42 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id w14so1684112ljj.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 05:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DWzJKlBqj+ETWply20oeGR0JgeiRlkCiLTUFUHWKjwM=;
-        b=t0xTV4U5Td+eNmIlxf/eYJMwt6PF+n8ubRnrhCalOEdOmfkSGplkjY6rk7G7YMJp9M
-         ttb+fHztHJU8Njmagfi4u0RwDggXF+idcAqS8fFX59ngKxvaHR9ui3rkh2PeC+qsYTe7
-         zOqpqeYUu3K/+5IfwW8Wqy2BmCucDDFNid4wNi2cjW0cNu2b0wmmLcxpVKxkajvmt8SS
-         1DBWF+oGtOV22bFuUjQul4vMlE87WMCDq678RNgjOCS0bmM51QlBijlTDx4h2+8CNS+C
-         2lf8BzGi/iAZG/oU2+rsbDHZtaVmM8bBLwgTIUdhTSR4puGmlQ0kF/7oTJILCylrtLlb
-         PCBQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nIFTXiqdlJiH5Ff+L1iQE7Y7lj+PmoFksQbwOIlNgxo=;
+        b=kiBhSfJ5PEpcHfVUu5C2cMfC9rQEBCLDMn3aPchEAe7VavcR0XsOTFPVGDmykEgVRW
+         Btbv1uY2yErJSs6WWRTSxMX76gkyNiBx9gWfjuP1Z7Wo4xU2wcBCFnhbhtHVdRjU2G6T
+         kBiMfEll3ZHLapavJDBcoxwoBoI2rnThQAehRQW7n16B5IaR73syb+NcXWGltGwmHJqm
+         H3fWiPVnPZeZ1CrLc0giTSmIoVNDgnw4ZMibmb6mMcw+YvQMKV9dByz9ZNURGG1Kqg2B
+         BNThmPTPcK1S1lY6okNvLZF/YvDXffPjdBg3SNOcNVdNtglVU2glMtmWwuGDq39Hw6CN
+         vdVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=DWzJKlBqj+ETWply20oeGR0JgeiRlkCiLTUFUHWKjwM=;
-        b=XIhq3829nOJDiuV4vg4QMvwSN8KVN8HwfemDjxDr5yIeAUCTjQmLeQnX/V0K+jA4+S
-         86KC9PWcf1psWZlsX0WSNVDa3DfKyKvml0/BcXZrXFJpqG1ED6rX2GTZ3qI08gSpk1no
-         XoTSe7MdKl6dJf+r3se3wx+WMYseFyM/vVaau4ruVNp2Bk1OJd0yOQPnpOa2+LrcdS5W
-         4Aj37aJpk7Uj85WVMwAaYa07Y7CbJvpRhXd9Ro1o8nt+qHpH0ZmQKgEqSgOFcGu5jfMF
-         e8JPHDqB6pPo2OxVTFb2FQtg5snmbb7SNQikgLhhZP9m7pD+H2sxxM54K3gSeAC3oK99
-         +5Lg==
-X-Gm-Message-State: AOAM531IxJjm7pffxE6RZanKJN/yG30Pm0AjVpC7Ce2M9d0oGEAgeXpO
-        Yv/MJItKZIvmgQB1way0ehb0dU5u0qXe6YLJ
-X-Google-Smtp-Source: ABdhPJyY91m5m50oqY/49f1quJLC58SElhlHSiO5ugma7tofFe6F3B2uD1UvxWhhzS5KOCn3NxNLsg==
-X-Received: by 2002:adf:c7ca:: with SMTP id y10mr2332284wrg.255.1598007558028;
-        Fri, 21 Aug 2020 03:59:18 -0700 (PDT)
-Received: from [192.168.1.14] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id z207sm4976739wmc.2.2020.08.21.03.59.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Aug 2020 03:59:17 -0700 (PDT)
-Subject: Re: [RESEND 1/3] venus: core: handle race condititon for core ops
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
-        linux-media@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1596781478-12216-1-git-send-email-mansur@codeaurora.org>
- <1596781478-12216-2-git-send-email-mansur@codeaurora.org>
- <dc1f37ed-3786-5bb2-3763-368b0165478b@linaro.org>
-Message-ID: <ef0d6eb2-1834-f4de-7eb2-aad665fc69e4@linaro.org>
-Date:   Fri, 21 Aug 2020 13:59:15 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        bh=nIFTXiqdlJiH5Ff+L1iQE7Y7lj+PmoFksQbwOIlNgxo=;
+        b=l9ndGhU0VkajYN5DDRxNytAdNK2jN56sARKYfxFmhYimT1dEz8q9HPSXvnszZQQ+y0
+         ieKNn3JLUcuDc6in4YD4V3Ygdys5rtUXZNjfUe/o0SCV3W9NlqCJszoDhBa7I9KTs9hV
+         ky2P4ebv9bJkiagyhz6dbKQP+l4C66Cbe8R9g62+qHbNy1uejMU+dzpXYEhy/qHjp4Wk
+         kO5wHL7HFfPrN3jZqIB0IxkMl2pVlbqgGA3esWJrRF7H0gIdr3zp1p6SayDgfmXwgjqK
+         ytFskgjLYflPGkTcEvfW0e9+bjj6zXo3akAIclnHXUeXIzNvc9BnFYwkSOxVRmX06O1r
+         lIeA==
+X-Gm-Message-State: AOAM533HhST9bdNiGFT6+3hcvvVPR3X1ONKrOBcW7dSYhDCTJsCRiT0s
+        bXLUPeFwt3WC4UF75yrf70lqgg==
+X-Google-Smtp-Source: ABdhPJwSQ/OoMbOcVAUSJti1sYkQ3liRlRisl7pN51zUlNafL0BgOSJ5FZI6ki5puknfwx2YpogpJQ==
+X-Received: by 2002:a05:651c:503:: with SMTP id o3mr1571977ljp.312.1598013581021;
+        Fri, 21 Aug 2020 05:39:41 -0700 (PDT)
+Received: from genomnajs.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id s4sm360782lja.124.2020.08.21.05.39.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Aug 2020 05:39:40 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     Russell King <linux@armlinux.org.uk>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 0/3] Fix uncompress debug prints on Qualcomm
+Date:   Fri, 21 Aug 2020 14:39:33 +0200
+Message-Id: <20200821123936.153793-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <dc1f37ed-3786-5bb2-3763-368b0165478b@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mansur,
+This fixes the earlies debug prints on the Qualcomm platform
+and possibly others. The root cause that the "Uncompressing Linux..."
+and other super-early debug prints were not working was that
+the Qualcomm UART has some elaborate TX ready code in waituart
+(after this waituarttxrdy) that was not called.
 
-On 8/10/20 12:50 PM, Stanimir Varbanov wrote:
-> Hi Mansur,
-> 
-> Thanks for the patches!
-> 
-> On 8/7/20 9:24 AM, Mansur Alisha Shaik wrote:
->> For core ops we are having only write protect but there
->> is no read protect, because of this in multthreading
->> and concurrency, one CPU core is reading without wait
->> which is causing the NULL pointer dereferece crash.
->>
->> one such scenario is as show below, where in one
->> core core->ops becoming NULL and in another core
->> calling core->ops->session_init().
->>
->> CPU: core-7:
->> Call trace:
->>  hfi_session_init+0x180/0x1dc [venus_core]
->>  vdec_queue_setup+0x9c/0x364 [venus_dec]
->>  vb2_core_reqbufs+0x1e4/0x368 [videobuf2_common]
->>  vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
->>  v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
->>  v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
->>  v4l_reqbufs+0x4c/0x5c
->> __video_do_ioctl+0x2b0/0x39c
->>
->> CPU: core-0:
->> Call trace:
->>  venus_shutdown+0x98/0xfc [venus_core]
->>  venus_sys_error_handler+0x64/0x148 [venus_core]
->>  process_one_work+0x210/0x3d0
->>  worker_thread+0x248/0x3f4
->>  kthread+0x11c/0x12c
->>
->> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
->> ---
->>  drivers/media/platform/qcom/venus/core.c | 2 +-
->>  drivers/media/platform/qcom/venus/hfi.c  | 5 ++++-
->>  2 files changed, 5 insertions(+), 2 deletions(-)
+waituart would sometimes check for CTS (clear to send) which
+would make the kernel unstable on these platforms if we
+introduce more users of that macro without thinking twice.
 
-See below comment, otherwise:
+To fix this properly I first split the CTS check into its own
+function and make it clear when we do or do not check for CTS.
 
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+I then convert the flow control option for 8250 to a generic flow
+control option so that other debug UART drivers can look for
+CTS to be asserted if they support it.
 
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 203c653..fe99c83 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -64,8 +64,8 @@ static void venus_sys_error_handler(struct work_struct *work)
->>  	pm_runtime_get_sync(core->dev);
->>  
->>  	hfi_core_deinit(core, true);
->> -	hfi_destroy(core);
->>  	mutex_lock(&core->lock);
->> +	hfi_destroy(core);
-> 
-> As my recovery fixes [1] touches this part also, could you please apply
-> them on top of yours and re-test?
+Linus Walleij (3):
+  ARM: debug: Split waituart to CTS and TXRDY
+  ARM: debug: Select flow control for all debug UARTs
+  ARM: uncompress: Wait for ready and busy in debug prints
 
-I'll drop above chunk from the patch because it is already taken into
-account in my recovery fixes series and queue up the patch for v5.10.
-
-> 
-> Otherwise this patch looks good to me.
-> 
-> [1] https://www.spinics.net/lists/linux-arm-msm/msg70092.html
-> 
->>  	venus_shutdown(core);
->>  
->>  	pm_runtime_put_sync(core->dev);
->> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
->> index a211eb9..2eeb31f 100644
->> --- a/drivers/media/platform/qcom/venus/hfi.c
->> +++ b/drivers/media/platform/qcom/venus/hfi.c
->> @@ -195,7 +195,7 @@ EXPORT_SYMBOL_GPL(hfi_session_create);
->>  int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
->>  {
->>  	struct venus_core *core = inst->core;
->> -	const struct hfi_ops *ops = core->ops;
->> +	const struct hfi_ops *ops;
->>  	int ret;
->>  
->>  	if (inst->state != INST_UNINIT)
->> @@ -204,10 +204,13 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
->>  	inst->hfi_codec = to_codec_type(pixfmt);
->>  	reinit_completion(&inst->done);
->>  
->> +	mutex_lock(&core->lock);
->> +	ops = core->ops;
->>  	ret = ops->session_init(inst, inst->session_type, inst->hfi_codec);
->>  	if (ret)
->>  		return ret;
->>  
->> +	mutex_unlock(&core->lock);
->>  	ret = wait_session_msg(inst);
->>  	if (ret)
->>  		return ret;
->>
-> 
+ arch/arm/Kconfig.debug                | 16 +++++++++++-----
+ arch/arm/boot/compressed/debug.S      |  5 ++++-
+ arch/arm/boot/compressed/head.S       | 15 ++++++++++-----
+ arch/arm/include/debug/8250.S         |  7 ++++---
+ arch/arm/include/debug/asm9260.S      |  5 ++++-
+ arch/arm/include/debug/at91.S         |  5 ++++-
+ arch/arm/include/debug/bcm63xx.S      |  5 ++++-
+ arch/arm/include/debug/brcmstb.S      |  5 ++++-
+ arch/arm/include/debug/clps711x.S     |  5 ++++-
+ arch/arm/include/debug/dc21285.S      |  5 ++++-
+ arch/arm/include/debug/digicolor.S    |  5 ++++-
+ arch/arm/include/debug/efm32.S        |  5 ++++-
+ arch/arm/include/debug/icedcc.S       | 15 ++++++++++++---
+ arch/arm/include/debug/imx.S          |  5 ++++-
+ arch/arm/include/debug/meson.S        |  5 ++++-
+ arch/arm/include/debug/msm.S          |  5 ++++-
+ arch/arm/include/debug/omap2plus.S    |  5 ++++-
+ arch/arm/include/debug/pl01x.S        |  5 ++++-
+ arch/arm/include/debug/renesas-scif.S |  5 ++++-
+ arch/arm/include/debug/sa1100.S       |  5 ++++-
+ arch/arm/include/debug/samsung.S      |  5 ++++-
+ arch/arm/include/debug/sirf.S         |  5 ++++-
+ arch/arm/include/debug/sti.S          |  5 ++++-
+ arch/arm/include/debug/stm32.S        |  5 ++++-
+ arch/arm/include/debug/tegra.S        |  7 ++++---
+ arch/arm/include/debug/vf.S           |  5 ++++-
+ arch/arm/include/debug/vt8500.S       |  5 ++++-
+ arch/arm/include/debug/zynq.S         |  5 ++++-
+ arch/arm/kernel/debug.S               | 11 +++++++++--
+ 29 files changed, 142 insertions(+), 44 deletions(-)
 
 -- 
-regards,
-Stan
+2.26.2
+
