@@ -2,116 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D76924C885
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 01:27:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3349824C901
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 02:12:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728754AbgHTX1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Aug 2020 19:27:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49928 "EHLO mail.kernel.org"
+        id S1726387AbgHUAMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Aug 2020 20:12:08 -0400
+Received: from foss.arm.com ([217.140.110.172]:48692 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728498AbgHTX1h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Aug 2020 19:27:37 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 1513C20748;
-        Thu, 20 Aug 2020 23:27:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1597966057;
-        bh=31Y6NUC/jEe/HxiXYkm3+iT80kHa+NgUWjEZ87ZO7Tw=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=SmVuzgtEOXKFTdIq8kzckGoPuu1pGzk1gkIcVB/AFojLEoZF1j/MVFK3AXx4/ZdW3
-         a1bEUyUe9Ua84lWHG7rMcJkOThr3PmXVYQlbxV6F/GDCIzwGj13IqA2kx4lrjoRSGI
-         XXdnXSvk6ptWicl939xigBNv5rsV/pCt/5/vHNI8=
-Content-Type: text/plain; charset="utf-8"
+        id S1725859AbgHUAMF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Aug 2020 20:12:05 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CF7E230E;
+        Thu, 20 Aug 2020 17:12:04 -0700 (PDT)
+Received: from [10.57.40.122] (unknown [10.57.40.122])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 346943F71F;
+        Thu, 20 Aug 2020 17:11:59 -0700 (PDT)
+Subject: Re: [PATCH 16/18] staging/media/tegra-vde: Clean up IOMMU workaround
+To:     Dmitry Osipenko <digetx@gmail.com>, hch@lst.de, joro@8bytes.org,
+        linux@armlinux.org.uk
+Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com, vdumpa@nvidia.com,
+        matthias.bgg@gmail.com, yong.wu@mediatek.com,
+        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
+        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <cover.1597931875.git.robin.murphy@arm.com>
+ <3535c205b9bce52556abbf2f63384fb38e009df9.1597931876.git.robin.murphy@arm.com>
+ <07135a55-cbc9-83e5-60dc-731282192554@gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <cb12808b-7316-19db-7413-b7f852a6f8ae@arm.com>
+Date:   Fri, 21 Aug 2020 01:11:57 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200818080738.GA46574@gerhold.net>
-References: <20200817140908.185976-1-stephan@gerhold.net> <CAOCk7Nq6CT5q_aXG2jZ2t5=3YKVKM4r=gSnJLJkVccpwyc3XnQ@mail.gmail.com> <20200818080738.GA46574@gerhold.net>
-Subject: Re: [PATCH] clk: qcom: smd: Disable unused clocks
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        MSM <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Georgi Djakov <georgi.djakov@linaro.org>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 20 Aug 2020 16:27:35 -0700
-Message-ID: <159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <07135a55-cbc9-83e5-60dc-731282192554@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Stephan Gerhold (2020-08-18 01:07:38)
-> Hi Jeffrey,
->=20
-> On Mon, Aug 17, 2020 at 08:52:46AM -0600, Jeffrey Hugo wrote:
-> > So essentially, when the clk framework goes through late init, and
-> > decides to turn off clocks that are not being used, it will also turn
-> > off these clocks?
-> >=20
-> > I think this is going to break other targets where other subsystems
-> > happen to rely on these sorts of votes from Linux inorder to run/boot
-> > (not saying it's a good thing, just that is how it is and since we
-> > can't change the FW on those....).
-> >=20
->=20
-> After thinking about it some more I realized there are definitely some
-> of the clocks we shouldn't disable even when unused, for example the
-> interconnect clocks. With interconnect drivers disabled the system
-> basically locked up entirely once the clock core disabled the clocks.
+On 2020-08-20 20:51, Dmitry Osipenko wrote:
+> 20.08.2020 18:08, Robin Murphy пишет:
+>> Now that arch/arm is wired up for default domains and iommu-dma, we no
+>> longer need to work around the arch-private mapping.
+>>
+>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+>> ---
+>>   drivers/staging/media/tegra-vde/iommu.c | 12 ------------
+>>   1 file changed, 12 deletions(-)
+>>
+>> diff --git a/drivers/staging/media/tegra-vde/iommu.c b/drivers/staging/media/tegra-vde/iommu.c
+>> index 6af863d92123..4f770189ed34 100644
+>> --- a/drivers/staging/media/tegra-vde/iommu.c
+>> +++ b/drivers/staging/media/tegra-vde/iommu.c
+>> @@ -10,10 +10,6 @@
+>>   #include <linux/kernel.h>
+>>   #include <linux/platform_device.h>
+>>   
+>> -#if IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU)
+>> -#include <asm/dma-iommu.h>
+>> -#endif
+>> -
+>>   #include "vde.h"
+>>   
+>>   int tegra_vde_iommu_map(struct tegra_vde *vde,
+>> @@ -70,14 +66,6 @@ int tegra_vde_iommu_init(struct tegra_vde *vde)
+>>   	if (!vde->group)
+>>   		return 0;
+>>   
+>> -#if IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU)
+>> -	if (dev->archdata.mapping) {
+>> -		struct dma_iommu_mapping *mapping = to_dma_iommu_mapping(dev);
+>> -
+>> -		arm_iommu_detach_device(dev);
+>> -		arm_iommu_release_mapping(mapping);
+>> -	}
+>> -#endif
+>>   	vde->domain = iommu_domain_alloc(&platform_bus_type);
+>>   	if (!vde->domain) {
+>>   		err = -ENOMEM;
+>>
+> 
+> Hello, Robin! Thank you for yours work!
+> 
+> Some drivers, like this Tegra VDE (Video Decoder Engine) driver for
+> example, do not want to use implicit IOMMU domain.
 
-The interconnect clks should be moved out of the RPM clk drivers. It's
-over-engineering to have the RPM interconnect drivers talk to the RPM
-clk drivers to change the frequency of interconnects based on a
-calculation in the interconnect driver. It makes sense from a logical
-perspective to express that these are clks, and they have frequencies,
-etc., but when you look closer at it you see that it's nonsense.
+That isn't (intentionally) changing here - the only difference should be 
+that instead of having the ARM-special implicit domain, which you have 
+to kick out of the way with the ARM-specific API before you're able to 
+attach your own domain, the implicit domain is now a proper IOMMU API 
+default domain, which automatically gets bumped by your attach. The 
+default domains should still only be created in the same cases that the 
+ARM dma_iommu_mappings were.
 
-The RPMh interconnect driver should be able to talk directly to the RPM
-and turn knobs as it see fit. Nobody else is going to use those clks
-from the RPM clk driver. Any potential consumer is going to go through
-the interconnect layer to change frequencies. So now we've got two
-frameworks interfacing with the same wire protocol and remote processor,
-when we could have only one. And furthermore to the point, the RPM
-interconnect clks are all parented to nothing, so putting them behind
-the clk APIs provides practically zero benefits, like managing the clk
-tree or determining rates down the tree.
+> Tegra VDE driver
+> relies on explicit IOMMU domain in a case of Tegra SMMU because VDE
+> hardware can't access last page of the AS and because driver wants to
+> reserve some fixed addresses [1].
+> 
+> [1]
+> https://elixir.bootlin.com/linux/v5.9-rc1/source/drivers/staging/media/tegra-vde/iommu.c#L100
+> 
+> Tegra30 SoC supports up to 4 domains, hence it's not possible to afford
+> wasting unused implicit domains. I think this needs to be addressed
+> before this patch could be applied.
 
-Honestly I'd like to see all the various RPM drivers combined into one
-driver that knows what is going on between regulators, interconnects,
-and clks, etc. Carving it up into these different drivers spread across
-the tree helps us review the code and logically split the device into
-pieces, but the flip side is that nobody sees the big picture that a
-call into a framework here boils down to a couple RPM messages sent over
-the wire to the same device.
+Yeah, there is one subtle change in behaviour from removing the ARM 
+layer on top of the core API, in that the IOMMU driver will no longer 
+see an explicit detach call. Thus it does stand to benefit from being a 
+bit cleverer about noticing devices being moved from one domain to 
+another by an attach call, either by releasing the hardware context for 
+the inactive domain once the device(s) are moved across to the new one, 
+or by simply reprogramming the hardware context in-place for the new 
+domain's address space without allocating a new one at all (most of the 
+drivers that don't have multiple contexts already handle the latter 
+approach quite well).
 
-> For now I fixed this by marking all of DEFINE_CLK_SMD_RPM() as
-> CLK_IGNORE_UNUSED (essentially restoring the current behavior of the
-> driver). For MSM8916 these are exactly the interconnect clocks, but on
-> other platforms there are further clocks that might not need
-> CLK_IGNORE_UNUSED. This could be still optimized later.
->=20
-> > I think this needs to be validated on every single qcom platform using
-> > this driver.
-> >=20
->=20
-> After running into the issue above I kind of agree with you. While
-> problems should be limited by marking the "rate" clocks as
-> CLK_IGNORE_UNUSED, it's also possible that one of the platforms requires
-> one of the branch clocks to stay on to boot successfully.
->=20
-> I know for sure that this works properly on MSM8916, so maybe I should
-> make it opt-in and then we add it for each platform after validating it?
->=20
+> Would it be possible for IOMMU drivers to gain support for filtering out
+> devices in iommu_domain_alloc(dev, type)? Then perhaps Tegra SMMU driver
+> could simply return NULL in a case of type=IOMMU_DOMAIN_DMA and
+> dev=tegra-vde.
 
-No! Instead of putting band-aids on this broken mess, please just move
-the interconnect clks out of the clk driver and into the interconnect
-driver.
+If you can implement IOMMU_DOMAIN_IDENTITY by allowing the relevant 
+devices to bypass translation entirely without needing a hardware 
+context (or at worst, can spare one context which all identity-mapped 
+logical domains can share), then you could certainly do that kind of 
+filtering with the .def_domain_type callback if you really wanted to. As 
+above, the intent is that that shouldn't be necessary for this 
+particular case, since only one of a group's default domain and 
+explicitly attached domain can be live at any given time, so the driver 
+should be able to take advantage of that.
 
-Sorry for the rant and thanks for sending a patch to fix problems you're
-seeing.
+If you simply have more active devices (groups) than available contexts 
+then yes, you probably would want to do some filtering to decide who 
+deserves a translation domain and who doesn't, but in that case you 
+should already have had a long-standing problem with the ARM implicit 
+domains.
+
+> Alternatively, the Tegra SMMU could be changed such that the devices
+> will be attached to a domain at the time of a first IOMMU mapping
+> invocation instead of attaching at the time of attach_dev() callback
+> invocation.
+> 
+> Or maybe even IOMMU core could be changed to attach devices at the time
+> of the first IOMMU mapping invocation? This could be a universal
+> solution for all drivers.
+
+I suppose technically you could do that within an IOMMU driver already 
+(similar to how some defer most of setup that logically belongs to 
+->domain_alloc until the first ->attach_dev). It's a bit grim from the 
+caller's PoV though, in terms of the failure mode being non-obvious and 
+having no real way to recover. Again, you'd be better off simply making 
+decisions up-front at domain_alloc or attach time based on the domain type.
+
+Robin.
