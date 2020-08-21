@@ -2,139 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13BB924E295
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 23:21:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7505224E2A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Aug 2020 23:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbgHUVVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 17:21:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51908 "EHLO
+        id S1726672AbgHUV0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 17:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbgHUVV3 (ORCPT
+        with ESMTP id S1726570AbgHUV0N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 17:21:29 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07381C061573;
-        Fri, 21 Aug 2020 14:21:29 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id f24so394751edw.10;
-        Fri, 21 Aug 2020 14:21:28 -0700 (PDT)
+        Fri, 21 Aug 2020 17:26:13 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3461EC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 14:26:13 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id r7so1539067vsq.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 14:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FsSHEkxuTyYKBr+RaPBvNnmq19cuPmIHZizROaUDX+g=;
-        b=K4kuDA232grAmwo2sAq8iTB5jsLokPktZ/nMcqEO/7PrGBBspH1i2W9rLOzU0JYL7i
-         D14lVcQtQ0SoUWVJ8zQh6K1fqBT17oJ6wSz5mjGOLL/rdJSrvhiyowchckMg/lYp8f/i
-         6udNeBQph1xBiTy6QdXH/4RWosEw3BojmDcxUuz+aq0L+fWnawcHorpCiZ9/+pSnRO5O
-         xLEkO35D1ZO97U1rHChvdY51/H/U7MG9V8EvW3I1S8Ixtk2USfsBDhHQnn0EcIsN7xGc
-         xxAMpMbuOTxMw6H6CMghsZfWBzl/C9//KyJ+zfdS9L9VmtdGtTJCEwo92zha/1O2i6WM
-         Chog==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=078+CiH7lVt29oWJpgwXIBkmUDbeJffsaSjW+OIcOZA=;
+        b=AHpmjfdLdmfBLldw9lQ0tRe+lGasQ3Wz8M5iSX7ICT4hyybMHrjbo14GoGAXCLge29
+         aPxUpd++RRLoFxUzIY78Eusp1qdRdl2Se5TWUd+g1AN0pnChMXZnr4l+HTAVpXkoFRJQ
+         TZ2wFZ04ad9De40QwE3vqDUkVLDJrHFPIrSAc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=FsSHEkxuTyYKBr+RaPBvNnmq19cuPmIHZizROaUDX+g=;
-        b=EiGNpUPVyEkgK+dcVsPyJeY6QMaJH1kuEz5flbUBUPlwcWq+4gpvpbs66c5PqRdxY9
-         mPjdObTrtpXRyEyP4wiRuux1Lc+xErQg+icKpFfracmA0YbL7HtJYbkkbbX2mk9qV1wh
-         HE/Vl7/Xl2SuWp9imIWGwIjfkbnZoM29rbNe0SP04bBVgarafZDhx+tY82o3PX6Q7P0c
-         Xoa3FGU8piuu/vGxAvQl+RzctxXMNE9WU2OT+ByS4IhbEhIBc/bGaIxDQODN5yE4PtOM
-         Ngpub/lKmzXQmd1fJ32DoT87Ob01c93+hXL3xlPU+uVIpVUn0ii51e5ctmfRzAgk1KSg
-         tz9g==
-X-Gm-Message-State: AOAM531ApUUFqA/OQ6BeO6Oka81E2sC4r32IA3Gp4ObcE8pOXX/0UR6B
-        tno+xgAoYtbvt9eSxnrqF9Y95GJkDMKyjQ==
-X-Google-Smtp-Source: ABdhPJxdpixX0Vn75qgMUReBJYW4RhCAvJYy6dVGGHvbKdvo8mmbtSPxxIL3xj+ifrEeNisYTa8TrQ==
-X-Received: by 2002:a05:6402:22c8:: with SMTP id dm8mr5001024edb.41.1598044887418;
-        Fri, 21 Aug 2020 14:21:27 -0700 (PDT)
-Received: from [192.168.1.106] (abab36.neoplus.adsl.tpnet.pl. [83.6.165.36])
-        by smtp.gmail.com with ESMTPSA id p12sm1741093edt.27.2020.08.21.14.21.26
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=078+CiH7lVt29oWJpgwXIBkmUDbeJffsaSjW+OIcOZA=;
+        b=RQncGCSgouqOcl2NXthsO01kNXZW00n766MBXKN2r02tsbuv/QldgexT4QKRAlXCsn
+         Cm8JlkQ9grwvGjhXlj2UEmn/I4gcy92XPw4ST8JmfPjKcI2rrLi7tE4pF8KI/ZFfQHaH
+         aTM/Gy8buGehft+PxI7maTwLiAywCB/1hP6+bv8J32EOcJC8cDYwardtQa26/0OnojNL
+         +d1rCA6LP4NZKUpKJDAfguxhFKlWIRnUZbZkxb53oPutB5zSq6E/izcCf52Olw6uWtOY
+         uYz/S2xbNo3OY61qCimJKNEw3xBMPHePmDEaScLgrhY0W8uNgPkZMS04G8AINuhVFL9R
+         MU7Q==
+X-Gm-Message-State: AOAM533AlQLqTvBj3weAp5iHFC3aE7H8hNdk9lAwbV/hbUFfX8Cb2qEh
+        jLRXzq+Unlv8SauPTRoKilxRoDFPNkg10w==
+X-Google-Smtp-Source: ABdhPJyujZS7E/0alu/bdR/PWkq04w8MB1eHw2SRfeRnpVgidHYKxu7IqL0zTe4jjcKRK4RMv9M54A==
+X-Received: by 2002:a67:cb8a:: with SMTP id h10mr28905vsl.3.1598045171923;
+        Fri, 21 Aug 2020 14:26:11 -0700 (PDT)
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com. [209.85.222.53])
+        by smtp.gmail.com with ESMTPSA id d198sm411001vke.50.2020.08.21.14.26.10
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Aug 2020 14:21:27 -0700 (PDT)
-Subject: Re: [PATCH v5] arm64: dts: qcom: Add support for Xiaomi Poco F1
- (Beryllium)
-To:     Amit Pundir <amit.pundir@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <1598029961-2474-1-git-send-email-amit.pundir@linaro.org>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-Message-ID: <23c4191e-4d64-80d8-e688-27d004729ea1@gmail.com>
-Date:   Fri, 21 Aug 2020 23:21:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Fri, 21 Aug 2020 14:26:11 -0700 (PDT)
+Received: by mail-ua1-f53.google.com with SMTP id g20so940805uap.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 14:26:10 -0700 (PDT)
+X-Received: by 2002:a9f:2b89:: with SMTP id y9mr3066484uai.0.1598045170522;
+ Fri, 21 Aug 2020 14:26:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1598029961-2474-1-git-send-email-amit.pundir@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
+In-Reply-To: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 21 Aug 2020 14:25:59 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U1WGrDDspTLJJk1jTSY-Raizm55+8szVADNLTa+tvekw@mail.gmail.com>
+Message-ID: <CAD=FV=U1WGrDDspTLJJk1jTSY-Raizm55+8szVADNLTa+tvekw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] ath10k: Keep track of which interrupts fired,
+ don't poll them
+To:     Kalle Valo <kvalo@codeaurora.org>,
+        ath10k <ath10k@lists.infradead.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Brian Norris <briannorris@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        Rakesh Pillai <pillair@codeaurora.org>,
+        Abhishek Kumar <kuabhs@google.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        netdev <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+Kalle,
 
-First of all, sorry if anybody sees this twice. I've been messing with Thunderbird lately.
+On Thu, Jul 9, 2020 at 8:22 AM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> If we have a per CE (Copy Engine) IRQ then we have no summary
+> register.  Right now the code generates a summary register by
+> iterating over all copy engines and seeing if they have an interrupt
+> pending.
+>
+> This has a problem.  Specifically if _none_ if the Copy Engines have
+> an interrupt pending then they might go into low power mode and
+> reading from their address space will cause a full system crash.  This
+> was seen to happen when two interrupts went off at nearly the same
+> time.  Both were handled by a single call of ath10k_snoc_napi_poll()
+> but, because there were two interrupts handled and thus two calls to
+> napi_schedule() there was still a second call to
+> ath10k_snoc_napi_poll() which ran with no interrupts pending.
+>
+> Instead of iterating over all the copy engines, let's just keep track
+> of the IRQs that fire.  Then we can effectively generate our own
+> summary without ever needing to read the Copy Engines.
+>
+> Tested-on: WCN3990 SNOC WLAN.HL.3.2.2-00490-QCAHLSWMTPL-1
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Rakesh Pillai <pillair@codeaurora.org>
+> Reviewed-by: Brian Norris <briannorris@chromium.org>
+> ---
+> This patch continues work to try to squash all instances of the crash
+> we've been seeing while reading CE registers and hopefully this patch
+> addresses the true root of the issue.
+>
+> The first patch that attempted to address these problems landed as
+> commit 8f9ed93d09a9 ("ath10k: Wait until copy complete is actually
+> done before completing").  After that Rakesh Pillai posted ("ath10k:
+> Add interrupt summary based CE processing") [1] and this patch is
+> based atop that one.  Both of those patches significantly reduced the
+> instances of problems but didn't fully eliminate them.  Crossing my
+> fingers that they're all gone now.
+>
+> [1] https://lore.kernel.org/r/1593193967-29897-1-git-send-email-pillair@codeaurora.org
+>
+> Changes in v2:
+> - Add bitmap_clear() in ath10k_snoc_hif_start().
+>
+>  drivers/net/wireless/ath/ath10k/ce.c   | 84 ++++++++++----------------
+>  drivers/net/wireless/ath/ath10k/ce.h   | 14 ++---
+>  drivers/net/wireless/ath/ath10k/snoc.c | 19 ++++--
+>  drivers/net/wireless/ath/ath10k/snoc.h |  1 +
+>  4 files changed, 52 insertions(+), 66 deletions(-)
 
+I'm wondering if there's anything else you're looking for here.  If I
+just need to sit tight that's fine, but I want to make sure this patch
+isn't lost and you're not waiting for any actions on my part.  The
+patch it depends on from Rakesh (see above or patchwork ID 11628289)
+is also still marked as "Under Review".
 
+We have been using this patch for the last few months and we haven't
+hit a single crash like we were getting before.  At the same time, we
+haven't found any regressions that have been attributed to this patch.
 
-> dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
-> dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-beryllium.dtb
+Anyway, just figured I'd check in.  Thanks!
 
-[B]eryllium should come before [C]heza, no? Also, aren't the non-development boards supposed to include the vendor name? i.e. sdm845-(xiaomi/poco)-beryllium.dtb
-
-
-> +	model = "Xiaomi Technologies Inc. Beryllium";
-
-At least with Xperias, we settled on setting the model property to the "pretty" name, in this case Poco F1
-
-
-> +	pm8998-rpmh-regulators {
-> +		compatible = "qcom,pm8998-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vreg_l1a_0p875: ldo1 {
-
-I think you forgot to include (regulatorname)-supply properties which should cause havoc with all things regulators..
-
-
-> +		vreg_l1a_0p875: ldo1 {
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-0p88? Unless it's a PMIC limitation.. Please also confirm names for the rest of the regulators.
-
-Also why are there so few regulators? And none from pmi8998? Are the rest WIP/coming in a followup commit, or are they disabled on this board? AFAICS you only include SoC/PMIC DTs which would suggest they should be there.
-
-
-> +/* Reserved memory changes from downstream */
-
-Wouldn't it look better if you included that in the main {} node instead of reopening it in the middle of the file? I mean, it works, but let's hear what others have to say.
-
-
-> +			 * It seems that mmc_test reports errors if drive
-> +			 * strength is not 16 on clk, cmd, and data pins.
-
-You say that, but then you set "drive-strength = <10>;" for cmd and data, please confirm it's intentional.
-
-
-> +&ufs_mem_hc {
-
-UFS comes before USB alphabetically.
-
-
-> +&ufs_mem_phy
-
-Ditto
-
-
-> +&qup_uart6_default
-
-Ditto
-
-
-Konrad
+-Doug
