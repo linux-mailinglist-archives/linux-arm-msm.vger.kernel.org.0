@@ -2,142 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1297C24E2EE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Aug 2020 00:01:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99AB124E46E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Aug 2020 03:20:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726873AbgHUWBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Aug 2020 18:01:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37208 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726731AbgHUWBo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Aug 2020 18:01:44 -0400
-Received: from localhost.localdomain (c-73-231-172-41.hsd1.ca.comcast.net [73.231.172.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 95B9D207C3;
-        Fri, 21 Aug 2020 22:01:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598047304;
-        bh=aq7qmIMUGdMaoUlA+6jQpfeWcG91tpxIXFUSsaIi1FU=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=yQNLm87wvpu/PSjqkUXCuyDFfqEx5vmk96zjhAzeD2wDj86JlCP+M142C36DgZQkP
-         pvwYdh0H9KVArGe0M6Ah0Rd8+GCxjWa9LNEE+BeYyaOuaPAENds6qAanbnF/rZP3Kv
-         vcsfzrgfrj5bsVjBAnLSE9AsG9/HbFjoj11LyXIc=
-Date:   Fri, 21 Aug 2020 15:01:43 -0700
-From:   Andrew Morton <akpm@linux-foundation.org>
-To:     cgoldswo@codeaurora.org
-Cc:     linux-mm@kvack.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, pratikp@codeaurora.org,
-        pdaly@codeaurora.org, sudraja@codeaurora.org,
-        iamjoonsoo.kim@lge.com, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: cma_alloc(), add sleep-and-retry for temporary page pinning
-Message-Id: <20200821150143.8a8645b3fabc11016311b78d@linux-foundation.org>
-In-Reply-To: <896f92e8c37936e7cb2914e79273e9e8@codeaurora.org>
-References: <896f92e8c37936e7cb2914e79273e9e8@codeaurora.org>
-X-Mailer: Sylpheed 3.5.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1726938AbgHVBUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Aug 2020 21:20:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60268 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726856AbgHVBUW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Aug 2020 21:20:22 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A9C2C061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 18:20:21 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id m8so1922747pfh.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Aug 2020 18:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=+grt2lq7z6Xfwjj3obNToZK2iikIyYEevhepcH8Y3zA=;
+        b=K5ahScP0ndnTcA/McyN9stxj4UZT171xHGRjMWbB5W8cDeTg/1iLTqmTGsaqDu0fiK
+         rfF4DBi8OBRUiMAZBtP8Qx8amcB9RrJEwsC86I3XR89LNYY/IO64eHSPHRS+LFrZIFcj
+         HxA4U4qMiFI5/bRQZbT4d6+Ss8gvk4W2oqZeQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=+grt2lq7z6Xfwjj3obNToZK2iikIyYEevhepcH8Y3zA=;
+        b=iZ+1ez9Z5Hql1W7xwXOovIFkg5re++Jl31MZuzbRQBnZ0JOSc0jbyWhRtBuU1C++Zb
+         pB61SFA9y0x1R33HSlmAGNZMoWQ/JaWLuq7+C79Q3cYUFOSmy06B94WmBbH6v2nbhYDq
+         gtpPHJeYzhuXAPZ1PmtUk7y+YwFDLBSWx9OC0J0KvWP0qDKwPgZ5eOfabKyVMxfw7U00
+         seb5dEV12yaauu0E72R8a9GjL2uBXMexK5KKkY7j0CMj2O8oQIem6e2/deh1Vm5GJv5n
+         sLp2ibPNw59bZKQYtp1qnoSDZoZ6AKO9cBE4Enh+BWjqxTptDe84zXuz5fLTMqLx1q/w
+         eqXg==
+X-Gm-Message-State: AOAM531vQQ/FHT/xuAtMb/ZksGcBs+KX33hoR3QNA7e2eFodHzdH2cbx
+        aASYRIuRvx80w+kN0zhF1ADj1w==
+X-Google-Smtp-Source: ABdhPJyy/NybCCraoY2LInilmxjLXa17wS6eM5dZSb+zo1iqkBgmWudnyHSBaYln4qN66CDjiBjOJA==
+X-Received: by 2002:a63:4b10:: with SMTP id y16mr4067214pga.93.1598059220930;
+        Fri, 21 Aug 2020 18:20:20 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id u8sm2912191pjy.35.2020.08.21.18.20.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Aug 2020 18:20:20 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200818163119.715410-1-robdclark@gmail.com>
+References: <20200818163119.715410-1-robdclark@gmail.com>
+Subject: Re: [PATCH] drm/msm: enable vblank during atomic commits
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Date:   Fri, 21 Aug 2020 18:20:18 -0700
+Message-ID: <159805921877.334488.15322995741035336582@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 Aug 2020 15:20:47 -0700 cgoldswo@codeaurora.org wrote:
+Quoting Rob Clark (2020-08-18 09:31:19)
+> From: Rob Clark <robdclark@chromium.org>
+>=20
+> This has roughly the same effect as drm_atomic_helper_wait_for_vblanks(),
+> basically just ensuring that vblank accounting is enabled so that we get
+> valid timestamp/seqn on pageflip events.
+>=20
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
 
-> On 2020-08-06 18:31, Andrew Morton wrote:
-> > On Wed,  5 Aug 2020 19:56:21 -0700 Chris Goldsworthy
-> > <cgoldswo@codeaurora.org> wrote:
-> > 
-> >> On mobile devices, failure to allocate from a CMA area constitutes a
-> >> functional failure.  Sometimes during CMA allocations, we have 
-> >> observed
-> >> that pages in a CMA area allocated through alloc_pages(), that we're 
-> >> trying
-> >> to migrate away to make room for a CMA allocation, are temporarily 
-> >> pinned.
-> >> This temporary pinning can occur when a process that owns the pinned 
-> >> page
-> >> is being forked (the example is explained further in the commit text).
-> >> This patch addresses this issue by adding a sleep-and-retry loop in
-> >> cma_alloc() . There's another example we know of similar to the above 
-> >> that
-> >> occurs during exit_mmap() (in zap_pte_range() specifically), but I 
-> >> need to
-> >> determine if this is still relevant today.
-> > 
-> 
-> > Sounds fairly serious but boy, we're late for 5.9.
-> > 
-> > I can queue it for 5.10 with a cc:stable so that it gets backported
-> > into earlier kernels a couple of months from now, if we think the
-> > seriousness justifies backporting(?).
-> > 
-> 
-> Queuing this seems like the best way to proceed
-
-I'd really prefer not.  It's very hacky and it isn't a fix - it's a
-likelihood-reducer.
-
-> > 
-> > And...  it really is a sad little patch, isn't it?  Instead of fixing
-> > the problem, it reduces the problem's probability by 5x.  Can't we do
-> > better than this?
-> 
-> I have one alternative in mind.  I have been able to review the 
-> exit_mmap()
-> case, so before proceeding, let's do a breakdown of the problem: we can
-> categorize the pinning issue we're trying to address here as being one 
-> of
-> (1) incrementing _refcount and getting context-switched out before
-> incrementing _mapcount (applies to forking a process / copy_one_pte()), 
-> and
-> (2) decrementing _mapcount and getting context-switched out before
-> decrementing _refcount (applies to tearing down a process / 
-> exit_mmap()).
-> So, one alternative would be to insert preempt_disable/enable() calls at
-> affected sites. So, for the copy_one_pte() pinning case, we could do the
-> following inside of copy_one_pte():
-> 
->          if (page) {
-> +               preempt_disable();
->                  get_page(page);
->                  page_dup_rmap(page, false);
-> +               preempt_enable();
->                  rss[mm_counter(page)]++;
->          }
-
-This would make the retry loop much more reliable, and
-preempt_disable() is fast.  Such additions should be clearly commented
-(a bare preempt_disable() explains nothing).  Perhaps by wrapping the
-prerempt_disable() in a suitably-named wrapper function.
-
-But it's still really unpleasant.
-
-> 
-> The good thing about this patch is that it has been stable in our kernel
-> for four years (though for some SoCs we increased the retry counts).  
-
-That's discouraging!
-
-> One
-> thing to stress is that there are other instances of CMA page pinning, 
-> that
-> this patch isn't attempting to address.
-
-Oh.  How severe are these?
-
-> Please let me know if you're 
-> okay
-> with queuing this for the 5.10 merge window - if you are, I can add an
-> option to configure the number of retries, and will resend the patch 
-> once
-> the 5.9 merge window closes.
-
-Well.  Why not wait infinitely?  Because there are other sources of CMA
-page pinning, I guess.
-
-
-Could we take a sleeping lock on the exit_mmap() path and on the
-migration path?  So that the migration path automatically waits for
-the exact amount of time?
+Tested-by: Stephen Boyd <swboyd@chromium.org>
