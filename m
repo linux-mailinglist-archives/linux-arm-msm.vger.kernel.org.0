@@ -2,117 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57D5224E925
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Aug 2020 19:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB7C224EDEB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Aug 2020 17:32:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728120AbgHVRwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Aug 2020 13:52:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43598 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727945AbgHVRwB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Aug 2020 13:52:01 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35742C061573;
-        Sat, 22 Aug 2020 10:52:01 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id f193so2671583pfa.12;
-        Sat, 22 Aug 2020 10:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6pe9e9T2twD5/s7EIOh11y2F9Qe9Loy+s9jYVy+9GcQ=;
-        b=Kae2hkjtqCH1AQ3t4ujJSspPFilOMnRYd30SkprY1/HQlAqanO9AnTcVRpuFx1naL3
-         jvJZFzPdgU8U5LkBJm/ThV/bfJgxViwpzT6V4SCi+j8C5XVTSAc4aj5KtUHQbkKrhAyz
-         Ty3YxQXHJDRyx9UsRAW8ZRO5EEo4brOuXoOfRuP+k+TokknisUrOix68px/R6BRJ85yX
-         epWv9DFDNYSA8dfjoIwwCnaxGoZRbOt/r7Cqk9+Yv7OGX/fFEg6P+EEt2o77qyKYxTUn
-         PzMA0P23jZeEatVaUuDbqHNoI9LAx97fH3I1x1Z3sMhBr38uDZJTEsNtJGWgGj1iSH08
-         bZvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6pe9e9T2twD5/s7EIOh11y2F9Qe9Loy+s9jYVy+9GcQ=;
-        b=bj0CR8RHmt4xDe2z1wtFcyOzm+2+jiyh4U4+7u/6eEqx5z4mcCekAUIuUGfZY+W0IY
-         roM95rP46NEJIhrcHVNJj51nqmJ0L7sTDl8F26iliab4L/6iuTMZK2swmlTdfZqFroGU
-         lNBOtZ7HRAAllG2P6m9Tzy0Ia2ltikmP+yjbxUrcuSt9888GsnLqhxoZG1IQPuehsnVU
-         gALLrWzQ9hQRI/oFG6f8WT2aaTdJfO57v53bkmEUK1GxPYuK0opX5so28LSJvzGd811A
-         Drap7UTLUq1yMCpRrsLaZFlY7tOiRAXFsIM7/3Z6cnTdEUlop0XKpmOtpSogqKsqzSC/
-         zHgQ==
-X-Gm-Message-State: AOAM533xB6k9a6Qex5iSvE7SMKmr0mtvyMtamjf65m0vWr9G0ibBlXHg
-        Tj5NnuPvrmlzug+mabb1M10=
-X-Google-Smtp-Source: ABdhPJxTIF8SEg5kQ7iKSi30Rkzh/VQZDW09KS3xVrB6DSdOUljq+/rLGKP+iwW+mx/5pQhPJb/Byg==
-X-Received: by 2002:a65:49c9:: with SMTP id t9mr526692pgs.256.1598118720669;
-        Sat, 22 Aug 2020 10:52:00 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id f19sm5496232pgn.10.2020.08.22.10.51.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Aug 2020 10:51:59 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: drop cache sync hack
-Date:   Sat, 22 Aug 2020 10:52:54 -0700
-Message-Id: <20200822175254.1105377-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        id S1727769AbgHWPc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Aug 2020 11:32:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48592 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726581AbgHWPc2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 23 Aug 2020 11:32:28 -0400
+Received: from localhost (unknown [122.171.38.130])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4A7CD206B5;
+        Sun, 23 Aug 2020 15:32:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1598196747;
+        bh=Z6ZPWRlmCAHW1jTvwzP3xfRIxulAioPOnJbhxtTXie8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jRJJUrAWNUG6/ToeybbY5+Zm9YBoUmBTb3xPRl8DpTR/5eUibABGHFx9+tyO8sA1W
+         toktLTkNX2qKqeH6Ih4FD29VPty/AojWiASr436+QMsheofeY+JtAwQqei+KeSd7IX
+         Hlkqhjy9Do+iMJkHBY4GqkSqi0HSerBNHksTX7gk=
+Date:   Sun, 23 Aug 2020 21:02:22 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, kishon@ti.com, svarbanov@mm-sol.com,
+        lorenzo.pieralisi@arm.com, p.zabel@pengutronix.de,
+        mgautam@codeaurora.org, smuthayy@codeaurora.org,
+        varada@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+Subject: Re: [PATCH V2 1/7] dt-bindings: PCI: qcom: Add ipq8074 Gen3 PCIe
+ compatible
+Message-ID: <20200823153222.GS2639@vkoul-mobl>
+References: <1596036607-11877-1-git-send-email-sivaprak@codeaurora.org>
+ <1596036607-11877-2-git-send-email-sivaprak@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1596036607-11877-2-git-send-email-sivaprak@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 29-07-20, 21:00, Sivaprakash Murugesan wrote:
+> ipq8074 has two PCIe ports while the support for Gen2 PCIe port is
+> already available add the support for Gen3 binding.
+> 
+> Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml         | 47 ++++++++++++++++++++++
 
-Now that it isn't causing problems to use dma_map/unmap, we can drop the
-hack of using dma_sync in certain cases.
+The issue is the yaml file is not in linux-phy next.. did we get the
+conversion done?
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+>  1 file changed, 47 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 2eef6d5..e0559dd 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -23,6 +23,7 @@ properties:
+>        - qcom,pcie-ipq8064
+>        - qcom,pcie-ipq8064-v2
+>        - qcom,pcie-ipq8074
+> +      - qcom,pcie-ipq8074-gen3
+>        - qcom,pcie-msm8996
+>        - qcom,pcie-qcs404
+>        - qcom,pcie-sdm845
+> @@ -295,6 +296,52 @@ allOf:
+>         compatible:
+>           contains:
+>             enum:
+> +             - qcom,pcie-ipq8074-gen3
+> +   then:
+> +     properties:
+> +       clocks:
+> +         items:
+> +           - description: sys noc interface clock
+> +           - description: AXI master clock
+> +           - description: AXI secondary clock
+> +           - description: AHB clock
+> +           - description: Auxilary clock
+> +           - description: AXI secondary bridge clock
+> +           - description: PCIe rchng clock
+> +       clock-names:
+> +         items:
+> +           - const: iface
+> +           - const: axi_m
+> +           - const: axi_s
+> +           - const: ahb
+> +           - const: aux
+> +           - const: axi_bridge
+> +           - const: rchng
+> +       resets:
+> +         items:
+> +           - description: PIPE reset
+> +           - description: PCIe sleep reset
+> +           - description: PCIe sticky reset
+> +           - description: AXI master reset
+> +           - description: AXI secondary reset
+> +           - description: AHB reset
+> +           - description: AXI master sticky reset
+> +           - description: AXI secondary sticky reset
+> +       reset-names:
+> +         items:
+> +           - const: pipe
+> +           - const: sleep
+> +           - const: sticky
+> +           - const: axi_m
+> +           - const: axi_s
+> +           - const: ahb
+> +           - const: axi_m_sticky
+> +           - const: axi_s_sticky
+> + - if:
+> +     properties:
+> +       compatible:
+> +         contains:
+> +           enum:
+>               - qcom,pcie-msm8996
+>     then:
+>       properties:
+> -- 
+> 2.7.4
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index b2f49152b4d4..3cb7aeb93fd3 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -52,26 +52,16 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
- {
- 	struct device *dev = msm_obj->base.dev->dev;
- 
--	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
--		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
--	} else {
--		dma_map_sg(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
--	}
-+	dma_map_sg(dev, msm_obj->sgt->sgl,
-+		msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
- }
- 
- static void sync_for_cpu(struct msm_gem_object *msm_obj)
- {
- 	struct device *dev = msm_obj->base.dev->dev;
- 
--	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
--		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
--	} else {
--		dma_unmap_sg(dev, msm_obj->sgt->sgl,
--			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
--	}
-+	dma_unmap_sg(dev, msm_obj->sgt->sgl,
-+		msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
- }
- 
- /* allocate pages from VRAM carveout, used when no IOMMU: */
 -- 
-2.26.2
-
+~Vinod
