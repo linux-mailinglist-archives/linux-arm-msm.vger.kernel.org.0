@@ -2,181 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99B4D24FF75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 16:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1FB25035A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 18:43:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726878AbgHXOCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Aug 2020 10:02:01 -0400
-Received: from foss.arm.com ([217.140.110.172]:34574 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725780AbgHXOCA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Aug 2020 10:02:00 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6AE61FB;
-        Mon, 24 Aug 2020 07:01:58 -0700 (PDT)
-Received: from [10.57.40.122] (unknown [10.57.40.122])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A711F3F71F;
-        Mon, 24 Aug 2020 07:01:52 -0700 (PDT)
-Subject: Re: [PATCH 16/18] staging/media/tegra-vde: Clean up IOMMU workaround
-To:     Dmitry Osipenko <digetx@gmail.com>, hch@lst.de, joro@8bytes.org,
-        linux@armlinux.org.uk
-Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
-        kyungmin.park@samsung.com, m.szyprowski@samsung.com,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com, vdumpa@nvidia.com,
-        matthias.bgg@gmail.com, yong.wu@mediatek.com,
-        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
-        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <cover.1597931875.git.robin.murphy@arm.com>
- <3535c205b9bce52556abbf2f63384fb38e009df9.1597931876.git.robin.murphy@arm.com>
- <07135a55-cbc9-83e5-60dc-731282192554@gmail.com>
- <cb12808b-7316-19db-7413-b7f852a6f8ae@arm.com>
- <62a72187-442b-2103-46c3-39d3cd999f54@gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <affe2cfb-19e8-8e55-acd0-7170e274ab34@arm.com>
-Date:   Mon, 24 Aug 2020 15:01:51 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        id S1728654AbgHXQng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 12:43:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728716AbgHXQmS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Aug 2020 12:42:18 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29513C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 09:42:17 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id z195so5792892oia.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 09:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cCBCq0smwjMsQiJp7+SlIOuIjjFC1mVZRWyztc0HMaw=;
+        b=tzUKyh8cbZXfplMGX1hzIr2igvRn/W0uccmqfu1ctMcLyMVDkN+CQZbHVWbzsMZ7Ho
+         fewxaFLsEY8HT7IBt2VFzqVoPlvcHqSD8GJocHx7tRYLWWDwOCyTul/8MBpW1dtK7kDo
+         Bga3bS3sMCdSXNMqEEPKOy2ZYe91oCJP53bNEQe/dcRNGn29NuZdlIGgMGpOENhtZzOn
+         OUxjHSwDvAgAbcVlPRvusMYP2tPvo7WaGc9EEsphpsl/jCxZtvipPGX5RP+ICQ7GPsRG
+         Ynt2gRdgXua5zKC8omb3OrkyX1QqIKspR3qTI6BhDrPk9JS0FHIPnhg+uQPzMnBp7f6M
+         GOrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cCBCq0smwjMsQiJp7+SlIOuIjjFC1mVZRWyztc0HMaw=;
+        b=WTajcO6+6TI4T5Ub+t4Egg0HckquvXu0QQ0tPoOPKwoqh1tCLNrfy9F4YKnPa2YdB7
+         mI61tRe1d4WEMB233FGjS7gb9YO6RUB3Afzxn27uMvJBS7f/R6DNe5zGfWPyE4ML5cSH
+         9Ozd/syAcfErIl5f2J8eMyyxsGrvf94usVDFcYswnQvfhwsBLU5j36yLqDjH8fEFrcFq
+         ujje+BVtIfvJsBUDYwpciYAhapAuCEaDMsjv9EqdmUmWXfDCy4a9BviTDXNGpKR+VCe3
+         dbsZDTJBrZxINnaTILNdgnINmOy/ISqhD5cd+h2nQHXZ9Zazo2UKkMTgQpcEwMCah+wo
+         +exg==
+X-Gm-Message-State: AOAM5322UB8e7GFF0Ufb81FacIKVeynE2UPd4Qx987waddKDXwsLxJzb
+        cG58tMh0G5xQv1fxXyko5lliRA==
+X-Google-Smtp-Source: ABdhPJyUsgnTMuoRHaD0AXUL/sdNx23OYcYq/51u75IfcA3X1IE5/xmqfStdQKejGbL8gHVy8NqSbA==
+X-Received: by 2002:aca:a9d0:: with SMTP id s199mr125719oie.154.1598287336742;
+        Mon, 24 Aug 2020 09:42:16 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
+        by smtp.gmail.com with ESMTPSA id 143sm2102701oie.11.2020.08.24.09.42.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Aug 2020 09:42:16 -0700 (PDT)
+Date:   Mon, 24 Aug 2020 09:42:12 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, khilman@kernel.org,
+        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, gregkh@linuxfoundation.org, pavel@ucw.cz,
+        len.brown@intel.com, rnayak@codeaurora.org, dianders@chromium.org,
+        mka@chromium.org
+Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME
+ flags
+Message-ID: <20200824164212.GA3715@yoga>
+References: <20200821204921.32536-1-sibis@codeaurora.org>
+ <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <62a72187-442b-2103-46c3-39d3cd999f54@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-23 22:34, Dmitry Osipenko wrote:
-> 21.08.2020 03:11, Robin Murphy пишет:
-> ...
->>> Hello, Robin! Thank you for yours work!
->>>
->>> Some drivers, like this Tegra VDE (Video Decoder Engine) driver for
->>> example, do not want to use implicit IOMMU domain.
->>
->> That isn't (intentionally) changing here - the only difference should be
->> that instead of having the ARM-special implicit domain, which you have
->> to kick out of the way with the ARM-specific API before you're able to
->> attach your own domain, the implicit domain is now a proper IOMMU API
->> default domain, which automatically gets bumped by your attach. The
->> default domains should still only be created in the same cases that the
->> ARM dma_iommu_mappings were.
->>
->>> Tegra VDE driver
->>> relies on explicit IOMMU domain in a case of Tegra SMMU because VDE
->>> hardware can't access last page of the AS and because driver wants to
->>> reserve some fixed addresses [1].
->>>
->>> [1]
->>> https://elixir.bootlin.com/linux/v5.9-rc1/source/drivers/staging/media/tegra-vde/iommu.c#L100
->>>
->>>
->>> Tegra30 SoC supports up to 4 domains, hence it's not possible to afford
->>> wasting unused implicit domains. I think this needs to be addressed
->>> before this patch could be applied.
->>
->> Yeah, there is one subtle change in behaviour from removing the ARM
->> layer on top of the core API, in that the IOMMU driver will no longer
->> see an explicit detach call. Thus it does stand to benefit from being a
->> bit cleverer about noticing devices being moved from one domain to
->> another by an attach call, either by releasing the hardware context for
->> the inactive domain once the device(s) are moved across to the new one,
->> or by simply reprogramming the hardware context in-place for the new
->> domain's address space without allocating a new one at all (most of the
->> drivers that don't have multiple contexts already handle the latter
->> approach quite well).
->>
->>> Would it be possible for IOMMU drivers to gain support for filtering out
->>> devices in iommu_domain_alloc(dev, type)? Then perhaps Tegra SMMU driver
->>> could simply return NULL in a case of type=IOMMU_DOMAIN_DMA and
->>> dev=tegra-vde.
->>
->> If you can implement IOMMU_DOMAIN_IDENTITY by allowing the relevant
->> devices to bypass translation entirely without needing a hardware
->> context (or at worst, can spare one context which all identity-mapped
->> logical domains can share), then you could certainly do that kind of
->> filtering with the .def_domain_type callback if you really wanted to. As
->> above, the intent is that that shouldn't be necessary for this
->> particular case, since only one of a group's default domain and
->> explicitly attached domain can be live at any given time, so the driver
->> should be able to take advantage of that.
->>
->> If you simply have more active devices (groups) than available contexts
->> then yes, you probably would want to do some filtering to decide who
->> deserves a translation domain and who doesn't, but in that case you
->> should already have had a long-standing problem with the ARM implicit
->> domains.
->>
->>> Alternatively, the Tegra SMMU could be changed such that the devices
->>> will be attached to a domain at the time of a first IOMMU mapping
->>> invocation instead of attaching at the time of attach_dev() callback
->>> invocation.
->>>
->>> Or maybe even IOMMU core could be changed to attach devices at the time
->>> of the first IOMMU mapping invocation? This could be a universal
->>> solution for all drivers.
->>
->> I suppose technically you could do that within an IOMMU driver already
->> (similar to how some defer most of setup that logically belongs to
->> ->domain_alloc until the first ->attach_dev). It's a bit grim from the
->> caller's PoV though, in terms of the failure mode being non-obvious and
->> having no real way to recover. Again, you'd be better off simply making
->> decisions up-front at domain_alloc or attach time based on the domain type.
-> 
-> Robin, thank you very much for the clarifications!
-> 
-> In accordance to yours comments, this patch can't be applied until Tegra
-> SMMU will support IOMMU_DOMAIN_IDENTITY and implement def_domain_type()
-> callback that returns IOMMU_DOMAIN_IDENTITY for the VDE device.
-> 
-> Otherwise you're breaking the VDE driver because
-> dma_buf_map_attachment() [1] returns the IOMMU SGT of the implicit
-> domain which is then mapped into the VDE's explicit domain [2], and this
-> is a nonsense.
+On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
 
-It's true that iommu_dma_ops will do some work in the unattached default 
-domain, but non-coherent cache maintenance will still be performed 
-correctly on the underlying memory, which is really all that you care 
-about for this case. As for tegra_vde_iommu_map(), that seems to do the 
-right thing in only referencing the physical side of the scatterlist 
-(via iommu_map_sg()) and ignoring the DMA side, so things ought to work 
-out OK even if it is a little non-obvious.
-
-> [1]
-> https://elixir.bootlin.com/linux/v5.9-rc1/source/drivers/staging/media/tegra-vde/dmabuf-cache.c#L102
+> Quoting Sibi Sankar (2020-08-21 13:49:20)
+> > Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
+> > status of the PM domain unaltered during suspend/resume respectively.
+> > The flags are aimed at power domains coupled to co-processors which
+> > enter low-power modes independent to that of the application processor.
+> > 
+> > Specifically the flags are to be used by the power domains exposed
+> > by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
+> > power domains are used to notify the Always on Subsystem (AOSS) that
+> > a particular co-processor is up. AOSS uses this information to wait
+> > for the co-processors to suspend before starting its sleep sequence.
+> > The application processor powers off these power domains only if the
+> > co-processor has crashed or powered off and remains unaltered during
+> > system suspend/resume.
 > 
-> [2]
-> https://elixir.bootlin.com/linux/v5.9-rc1/source/drivers/staging/media/tegra-vde/dmabuf-cache.c#L122
+> Why are these power domains instead of some QMP message sent during
+> remote proc power up?
+
+The understanding I gained as I researched this, was that with this
+property enabled resources related to the particular subsystem will be
+kept enabled when the apss enters some power save mode. So my
+interpretation was that it does "keep something powered".
+
+> If this has been discussed before feel free to
+> disregard and please link to prior mailing list discussions.
 > 
-> Hence, either VDE driver should bypass iommu_dma_ops from the start or
-> it needs a way to kick out the ops, like it does this using ARM's
-> arm_iommu_detach_device().
-> 
-> 
-> The same applies to the Tegra GPU devices, otherwise you're breaking
-> them as well because Tegra DRM is sensible to implicit vs explicit domain.
 
-Note that Tegra DRM will only be as broken as its current state on 
-arm64, and I was under the impression that that was OK now - at least I 
-don't recall seeing any complaints since 43c5bf11a610. Although that 
-commit and the one before it are resolving the scalability issue that 
-they describe, it was very much in my mind at the time that they also 
-have the happy side-effect described above - the default domain isn't 
-*completely* out of the way, but it's far enough that sensible cases 
-should be able to work as expected.
+There where some discussions related to the "QDSS clk" in that series,
+but I don't remember getting any feedback on modelling these things as
+power-domains.
 
-> BTW, I tried to apply this series and T30 doesn't boot anymore. I don't
-> have more info for now.
+> I find it odd that this is modeled as a power domain instead of some
+> Qualcomm specific message that the remoteproc driver sends to AOSS. Is
+> there some sort of benefit the driver gets from using the power domain
+> APIs for this vs. using a custom API?
 
-Yeah, I'm still trying to get to the bottom of whether it's actually 
-working as intended at all, even on my RK3288. So far my debugging 
-instrumentation has been confusingly inconclusive :/
+We need to send "up" and "down" notifications and this needs to happen
+at the same time as other standard resources are enabled/disabled.
 
-Robin.
+Further more, at the time the all resources handled by the downstream
+driver was either power-domains (per above understanding) or clocks, so
+it made sense to me not to spin up a custom API.
+
+Regards,
+Bjorn
