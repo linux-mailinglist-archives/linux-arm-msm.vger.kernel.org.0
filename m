@@ -2,65 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ECFD24FA45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 11:55:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D82D124F8D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 11:38:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728352AbgHXIg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Aug 2020 04:36:57 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:45978 "EHLO ns.iliad.fr"
+        id S1729738AbgHXJiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 05:38:07 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47194 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728329AbgHXIg4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Aug 2020 04:36:56 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id E7C42204F4;
-        Mon, 24 Aug 2020 10:36:54 +0200 (CEST)
-Received: from [192.168.108.70] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id C5F2A2040A;
-        Mon, 24 Aug 2020 10:36:54 +0200 (CEST)
-Subject: Re: [PATCH v2 1/2] ath10k: Keep track of which interrupts fired,
- don't poll them
-To:     Douglas Anderson <dianders@chromium.org>
-References: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
-Cc:     Kalle Valo <kvalo@adurom.com>, MSM <linux-arm-msm@vger.kernel.org>,
-        ath10k@lists.infradead.org
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <50240c03-f120-ad18-a844-94abd1c7ae70@free.fr>
-Date:   Mon, 24 Aug 2020 10:36:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1729460AbgHXIr0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Aug 2020 04:47:26 -0400
+Received: from localhost.localdomain (unknown [122.171.38.130])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C5324204FD;
+        Mon, 24 Aug 2020 08:47:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1598258845;
+        bh=FrBso4fIdHgK+2J7oFtYR56l7zEdAlo1N90r7YDQ9WI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=mxkNnl6RQL4MJs0VwWJz9u5g+UxyDb3kb1U7CqQb2TQi+dAvW29VIywXJmzdgrcmi
+         f55874SPMco08TgiGledUdy4nNV8OW4/7PJPxlUzY9MNibPJxG76JuPOpaKJ8DZB1P
+         ZVgHM67WAaNPD8jYCtLL9bHjCO5hW1ji8XYqfryg=
+From:   Vinod Koul <vkoul@kernel.org>
+To:     dmaengine@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: dmaengine: Document qcom,gpi dma binding
+Date:   Mon, 24 Aug 2020 14:17:10 +0530
+Message-Id: <20200824084712.2526079-2-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200824084712.2526079-1-vkoul@kernel.org>
+References: <20200824084712.2526079-1-vkoul@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Mon Aug 24 10:36:54 2020 +0200 (CEST)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/07/2020 17:21, Douglas Anderson wrote:
+Add devicetree binding documentation for GPI DMA controller
+implemented on Qualcomm SoCs
 
-> If we have a per CE (Copy Engine) IRQ then we have no summary
-> register.  Right now the code generates a summary register by
-> iterating over all copy engines and seeing if they have an interrupt
-> pending.
-> 
-> This has a problem.  Specifically if _none_ if the Copy Engines have
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ .../devicetree/bindings/dma/qcom-gpi.yaml     | 87 +++++++++++++++++++
+ 1 file changed, 87 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/qcom-gpi.yaml
 
-s/_none_ if/_none_ of
-
-Hopefully, Kalle can just fixup before applying :-)
-
-> an interrupt pending then they might go into low power mode and
-> reading from their address space will cause a full system crash.  This
-> was seen to happen when two interrupts went off at nearly the same
-> time.  Both were handled by a single call of ath10k_snoc_napi_poll()
-> but, because there were two interrupts handled and thus two calls to
-> napi_schedule() there was still a second call to
-> ath10k_snoc_napi_poll() which ran with no interrupts pending.
-> 
-> Instead of iterating over all the copy engines, let's just keep track
-> of the IRQs that fire.  Then we can effectively generate our own
-> summary without ever needing to read the Copy Engines.
+diff --git a/Documentation/devicetree/bindings/dma/qcom-gpi.yaml b/Documentation/devicetree/bindings/dma/qcom-gpi.yaml
+new file mode 100644
+index 000000000000..c56d601ad2d6
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/qcom-gpi.yaml
+@@ -0,0 +1,87 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/gpi-dma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies Inc GPI DMA controller
++
++description: |
++  QCOM GPI DMA controller provides DMA capabilities for
++  peripheral buses such as I2C, UART, and SPI.
++
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
++
++allOf:
++  - $ref: "dma-controller.yaml#"
++
++properties:
++  compatible:
++    enum:
++      - qcom,gpi-dma
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    description:
++      Interrupt lines for each GPII instance
++    maxItems: 14
++
++  qcom,max-num-gpii:
++    description:
++      Maximum number of GPII instances available
++    maxItems: 1
++
++  "#dma-cells":
++    const: 1
++
++  qcom,gpii-mask:
++    description:
++      Bitmap of supported GPII instances for OS
++    maxItems: 1
++
++  qcom,ev-factor:
++    description:
++      Event ring transfer size compare to channel transfer ring. Event
++        ring length = ev-factor * transfer ring size
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - qcom,max-num-gpii
++  - qcom,gpii-mask
++  - qcom,ev-factor
++  - "#dma-cells"
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    gpi_dma0: dma@800000 {
++        #dma-cells = <5>;
++        compatible = "qcom,gpi-dma";
++        reg = <0 0x00800000 0 0x60000>;
++        qcom,max-num-gpii = <13>;
++        qcom,gpii-mask = <0xfa>;
++        qcom,ev-factor = <2>;
++        interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
++    };
++
++...
+-- 
+2.26.2
 
