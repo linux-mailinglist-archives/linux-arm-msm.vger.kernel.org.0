@@ -2,135 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA52E24F9FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 11:51:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C68424FC53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 13:12:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726429AbgHXJvy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Aug 2020 05:51:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46534 "EHLO
+        id S1725963AbgHXLMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 07:12:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729553AbgHXJvo (ORCPT
+        with ESMTP id S1725883AbgHXLMD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Aug 2020 05:51:44 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78619C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 02:51:44 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id r7so4104178vsq.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 02:51:44 -0700 (PDT)
+        Mon, 24 Aug 2020 07:12:03 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE602C061573
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:12:02 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id i129so4201131vsi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Ln8SN+7RLvf7fE2ywm+jg35Tyq/B4Xvx0WH4mCC+yU4=;
-        b=KcKirNkka0lXfE/G1WBoDbs+9xUm6m7RRxLyArxUXcL+MBqMttUxIXZhdzZWelj9Iu
-         RIgZPOet2uKIWEXK3Tlxykk+fNi0PJil1M+PImvo5F0X8/RATfwREkQbFkLLiw5p2k7c
-         t9iiul5OGNaFNW/S1V7pKehZycdtVOCpXmYmd8Am7Q0OfD0G+63tpvWkVv2f3ykk4yer
-         4Sq03SUehpTCjbB60/O66CIcZwzYttH8wREWhi4ah5J50SPfglsPpZPfu/APbYEigphG
-         cN6yB72HGAtq8Iz5ZvMYOEqV1tgKQDeARxw6lV1aiHLD2GrWPL+yIjWwWO5xROzTmYC/
-         bpgg==
+        bh=Z5//TYxZEOCDa9uWvHD+L7cx/6ym8bakqnq3Q8GLwSg=;
+        b=R1EqGgYF8Wxxa2OwrltVEoRoT3rNWtuEFWR6lyfr5X9wcp3Im26/m7Scaz4YYlu8ud
+         IrOmpZb4PpTZT6UqYQB23SgX9z4JcO0NqTrpu/0kFNLiCuNZXJ9pjlRRKqDHlQfvsfMW
+         c2j1qiSCOBPmi51xjgk/CRV4JtxIX79CGluGEvJnPPBoQIieM8LxAe8kBONTLfT8/X3S
+         8sOVtXqvkgN8x2A15SYhcoE/C0Br1LyjHtTE8/paLLhLI2Vr7mvzg20doVSltIlYq/3F
+         gCC4j7vCcVqPU72PvEypC18575bEpDXhKnyzclOH4LN8kdUrYzBSEU5/n3CQgzntABON
+         4UbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ln8SN+7RLvf7fE2ywm+jg35Tyq/B4Xvx0WH4mCC+yU4=;
-        b=NXBYKRJeJamin5MLZExr8/fPHXGHbixEsnTV5PHBXrvofSErH6Njuy2tnNOl5j+c6g
-         2JpYRluEXxJiZpYrqIThti1QNzAFzaE0VHsRjFaVcyEWIhLAE1rfc6kyH0IafJRveN5C
-         3L0Bv5S2fwQGfJyp7kIBURo3x4GR8DiQsdFWFViWV1LjR1HSfPbF8I+S39tWB1mGzaea
-         bkjbYMEFb43Qsrc2T++guvUQm/DnivAoyAHoF9vKBiVWICjlDjo9ASDBdabKji5tBeFv
-         csT0XBVjJg+sQZGQ9y7cwtQ6fVF1x/1bqoIzI4y2hE7Uf0JBCrVDIz48iXarnCy/oTz7
-         H3+Q==
-X-Gm-Message-State: AOAM532ESz65UM83P1pPEQDVxpf8Jv3km4NpsYzSo6w/t6vQ0Jis86r4
-        fBdiNWDxbhnvxAu38e8Rp9leWJoN/rmi3PsRdDX5ng==
-X-Google-Smtp-Source: ABdhPJwd+jCqwoXcVEZBQ1HvErLYStyQ+OkTEJZDJuVbqozu9T2Ah5ho52VM3ZSTTAdEQ07d2iqF066sx8wJHfqQdWE=
-X-Received: by 2002:a67:8c06:: with SMTP id o6mr2038655vsd.200.1598262703392;
- Mon, 24 Aug 2020 02:51:43 -0700 (PDT)
+        bh=Z5//TYxZEOCDa9uWvHD+L7cx/6ym8bakqnq3Q8GLwSg=;
+        b=T0jSC/BGx4ez0L+RBTSO+vkbs4jPTDOelTLzarI9ovNdi1dKAd9fyxAhZxQMfwbGlt
+         BCxh6cW+jFFfXahDoJXU9T2HPmGuL796PSNfagWx1fZ3zICz7c/gQP5lD2wBC1WNhC7C
+         O5Wv+XZw9lPzFn7l92h+JdmEQnUTAaOh6G0eWH9E3HdkTUGUp8v980NCaM2x38AVMPjo
+         uMqKYYzIZiXzyIm+67cLP62LwMUW5+7rcrvh6TgB561IkQs5tCyhSsFNcF+VEVvaCkyr
+         yQpIhF6oUcSaiU5fXtgpMy2/EbiNIXsVBsQ8ADLEj0prNJTW7jgMPfgVBIJrXfZZODeZ
+         20SA==
+X-Gm-Message-State: AOAM531/Vi2e7yUxIZa8FF9lU0pTqkmJEqHeIP0MvnHhK8RqpyXsWS8I
+        PTA8Uk2ad61Yere+oUcXmFkbOI4qXGieuLL1Aa8e+Q==
+X-Google-Smtp-Source: ABdhPJze/D9HVcYXvdcyq/7lNrWTczFdsDI21S3RCgmJznLBy+cBgBLCFL3jGBjQHDoxy6kyph7U84dFDrb0p3LTFE0=
+X-Received: by 2002:a67:fd0a:: with SMTP id f10mr1836903vsr.35.1598267522158;
+ Mon, 24 Aug 2020 04:12:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1597919647.git.viresh.kumar@linaro.org> <e88128c48349723636b7c35e95289b50b27e235a.1597919647.git.viresh.kumar@linaro.org>
-In-Reply-To: <e88128c48349723636b7c35e95289b50b27e235a.1597919647.git.viresh.kumar@linaro.org>
+References: <20200821204921.32536-1-sibis@codeaurora.org>
+In-Reply-To: <20200821204921.32536-1-sibis@codeaurora.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 24 Aug 2020 11:51:07 +0200
-Message-ID: <CAPDyKFp58Sqvmq7CFmDkHXX3ohgyqt1VPELGdq0mtOSZq+uc2Q@mail.gmail.com>
-Subject: Re: [PATCH 4/8] mmc: sdhci-msm: Unconditionally call dev_pm_opp_of_remove_table()
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+Date:   Mon, 24 Aug 2020 13:11:26 +0200
+Message-ID: <CAPDyKFoXzskRW7W_7EHQatQ=-OeAaLGTdzUx0FtY96=bZXt6aw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME flags
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Linux PM <linux-pm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 20 Aug 2020 at 12:44, Viresh Kumar <viresh.kumar@linaro.org> wrote:
+On Fri, 21 Aug 2020 at 22:49, Sibi Sankar <sibis@codeaurora.org> wrote:
 >
-> dev_pm_opp_of_remove_table() doesn't report any errors when it fails to
-> find the OPP table with error -ENODEV (i.e. OPP table not present for
-> the device). And we can call dev_pm_opp_of_remove_table()
-> unconditionally here.
+> Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
+> status of the PM domain unaltered during suspend/resume respectively.
+> The flags are aimed at power domains coupled to co-processors which
+> enter low-power modes independent to that of the application processor.
 >
-> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+> Specifically the flags are to be used by the power domains exposed
+> by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
+> power domains are used to notify the Always on Subsystem (AOSS) that
+> a particular co-processor is up. AOSS uses this information to wait
+> for the co-processors to suspend before starting its sleep sequence.
+> The application processor powers off these power domains only if the
+> co-processor has crashed or powered off and remains unaltered during
+> system suspend/resume.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-Applied for next, thanks!
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Although, I would like Stephen's question to get an answer in the
+other thread, before this gets applied.
 
 Kind regards
 Uffe
 
-
 > ---
->  drivers/mmc/host/sdhci-msm.c | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
 >
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 5a33389037cd..b7e47107a31a 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -263,7 +263,6 @@ struct sdhci_msm_host {
->         unsigned long clk_rate;
->         struct mmc_host *mmc;
->         struct opp_table *opp_table;
-> -       bool has_opp_table;
->         bool use_14lpp_dll_reset;
->         bool tuning_done;
->         bool calibration_done;
-> @@ -2285,9 +2284,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+> V2:
+>  * Add more info in commit msg and description [Uffe/Kevin/Stephen]
+>  * Rename and split functionality into two flags [Uffe]
+>  * Drop R-b/T-b
 >
->         /* OPP table is optional */
->         ret = dev_pm_opp_of_add_table(&pdev->dev);
-> -       if (!ret) {
-> -               msm_host->has_opp_table = true;
-> -       } else if (ret != -ENODEV) {
-> +       if (ret != -ENODEV) {
->                 dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
->                 goto opp_cleanup;
->         }
-> @@ -2453,8 +2450,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->         clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
->                                    msm_host->bulk_clks);
->  opp_cleanup:
-> -       if (msm_host->has_opp_table)
-> -               dev_pm_opp_of_remove_table(&pdev->dev);
-> +       dev_pm_opp_of_remove_table(&pdev->dev);
->         dev_pm_opp_put_clkname(msm_host->opp_table);
->  bus_clk_disable:
->         if (!IS_ERR(msm_host->bus_clk))
-> @@ -2474,8 +2470,7 @@ static int sdhci_msm_remove(struct platform_device *pdev)
+>  drivers/base/power/domain.c |  6 ++++--
+>  include/linux/pm_domain.h   | 10 ++++++++++
+>  2 files changed, 14 insertions(+), 2 deletions(-)
 >
->         sdhci_remove_host(host, dead);
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 2cb5e04cf86cd..a5df5916f30f8 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -129,6 +129,8 @@ static const struct genpd_lock_ops genpd_spin_ops = {
+>  #define genpd_is_active_wakeup(genpd)  (genpd->flags & GENPD_FLAG_ACTIVE_WAKEUP)
+>  #define genpd_is_cpu_domain(genpd)     (genpd->flags & GENPD_FLAG_CPU_DOMAIN)
+>  #define genpd_is_rpm_always_on(genpd)  (genpd->flags & GENPD_FLAG_RPM_ALWAYS_ON)
+> +#define genpd_is_no_suspend(genpd)     (genpd->flags & GENPD_FLAG_NO_SUSPEND)
+> +#define genpd_is_no_resume(genpd)      (genpd->flags & GENPD_FLAG_NO_RESUME)
 >
-> -       if (msm_host->has_opp_table)
-> -               dev_pm_opp_of_remove_table(&pdev->dev);
-> +       dev_pm_opp_of_remove_table(&pdev->dev);
->         dev_pm_opp_put_clkname(msm_host->opp_table);
->         pm_runtime_get_sync(&pdev->dev);
->         pm_runtime_disable(&pdev->dev);
+>  static inline bool irq_safe_dev_in_no_sleep_domain(struct device *dev,
+>                 const struct generic_pm_domain *genpd)
+> @@ -949,7 +951,7 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
+>  {
+>         struct gpd_link *link;
+>
+> -       if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
+> +       if (!genpd_status_on(genpd) || genpd_is_always_on(genpd) || genpd_is_no_suspend(genpd))
+>                 return;
+>
+>         if (genpd->suspended_count != genpd->device_count
+> @@ -991,7 +993,7 @@ static void genpd_sync_power_on(struct generic_pm_domain *genpd, bool use_lock,
+>  {
+>         struct gpd_link *link;
+>
+> -       if (genpd_status_on(genpd))
+> +       if (genpd_status_on(genpd) || genpd_is_no_resume(genpd))
+>                 return;
+>
+>         list_for_each_entry(link, &genpd->child_links, child_node) {
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index ee11502a575b0..568abdf2e89cf 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -55,6 +55,14 @@
+>   *
+>   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM domain
+>   *                             powered on except for system suspend.
+> + *
+> + * GENPD_FLAG_NO_SUSPEND:      Instructs genpd to keep the PM domain powered
+> + *                             on during suspend (if it's already powered on)
+> + *                             and runtime PM controlled otherwise.
+> + *
+> + * GENPD_FLAG_NO_RESUME:       Instructs genpd to keep the PM domain powered
+> + *                             off during resume (if it's already powered off)
+> + *                             and runtime PM controlled otherwise.
+>   */
+>  #define GENPD_FLAG_PM_CLK       (1U << 0)
+>  #define GENPD_FLAG_IRQ_SAFE     (1U << 1)
+> @@ -62,6 +70,8 @@
+>  #define GENPD_FLAG_ACTIVE_WAKEUP (1U << 3)
+>  #define GENPD_FLAG_CPU_DOMAIN   (1U << 4)
+>  #define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
+> +#define GENPD_FLAG_NO_SUSPEND   (1U << 6)
+> +#define GENPD_FLAG_NO_RESUME    (1U << 7)
+>
+>  enum gpd_status {
+>         GPD_STATE_ACTIVE = 0,   /* PM domain is active */
 > --
-> 2.25.0.rc1.19.g042ed3e048af
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 >
