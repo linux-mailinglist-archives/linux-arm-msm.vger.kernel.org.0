@@ -2,155 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 843A624F0A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 02:04:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B09424F2F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 09:15:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727858AbgHXAE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Aug 2020 20:04:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40214 "EHLO
+        id S1725977AbgHXHPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 03:15:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727829AbgHXAEs (ORCPT
+        with ESMTP id S1725946AbgHXHPM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Aug 2020 20:04:48 -0400
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 521C0C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Aug 2020 17:04:47 -0700 (PDT)
-Received: by mail-il1-x143.google.com with SMTP id q14so5803157ilj.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Aug 2020 17:04:47 -0700 (PDT)
+        Mon, 24 Aug 2020 03:15:12 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E957C061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 00:15:12 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id a5so7570921wrm.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 00:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2qvzvkep7ZlQHNyjrGsuXQAp+x7s+RjdNiOv81NxtoQ=;
-        b=ph3cmZeijsQTsHnHnrr9eCGgxMPexaLwCGnu3F9Od9T7oE9SJ1xriseSecoaLR+A31
-         cxdttU99z8vHmtpSvs9wLGOOgPOY6GzwuKuovZh4UMjplaxKJu/wyAtKKGV99cTnuUCc
-         b9jW667DJd78gpOSqL093TQrnCvZ9zpW4sDgc9e3s4gqdpHbIh0cqwIbSVLaQrTLqDAX
-         thER0vKrZAtqkOJvYQeGZuITMeh4kPZ6AWC1kOvIEmnWvuxZr35lD2OOnlXMpkqB5GBo
-         XlqFU7D/ggoXmysuTUVEiDWk1jvnBEMzHRuwpliqu/K2HYrSEPvB6WXxqYArt4mYifKa
-         QdMw==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=v2AcXNM/RwmQxoIUWLpETnAZjFM9cKvvsGDBzZ8s8tU=;
+        b=yNkmQig7Z6xT5X9MFS2ygbAucqr3neSCdyX7P6DQ2az6ewTQQeQgeB/e5pC4hppIRe
+         WFQWE0H2wMj3xdaHXYypan0M4OV9qUTKJZhjhMkpa1+1mE7qcmUXn4vXYH3TFDjDqXGv
+         wDo2vjkXC1QsqX8xgGbUMsbPwJ0k52Vna4knmD5Fun5Hb7IFWWWHlMSThenpvwv1QbL4
+         7SUiymFvbNLzdeg3fq/wu4MaQf2YTpm0cyw2/XTxK3InWOTiPFNWPDnRnLTTyuNn46cb
+         xYnDzAD5LT+/eekOZlcyJTp1+qqCZp4Rnyfc1d5g6Po06pXMOy4OZpksYcJEukkohEPa
+         Y1yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2qvzvkep7ZlQHNyjrGsuXQAp+x7s+RjdNiOv81NxtoQ=;
-        b=s6Fo6rK/nkhEdlJXwAy7kC5h1+woXIpLEOt4Ad5WfUy7EGqmYRknpdadiARQEVoJ23
-         2IXJDbkvH31Lt6mk5pDPEG36qmVEPnBj47WiPszYFbnsush4kcPj3bWCm3Rta1upkC1c
-         zt7+mvkQwP0ywg912v6P9L4vElOowwvV3s7aAfyBpx/6l1VhgHJzlPNlXL5hxi1WG+Hn
-         t40YAlbxJAC6roqy9GTFfHs60n1osL8T9D4fCGk6YzZWc/lQCeNjF7y/Alxj961hta9k
-         nzBlaJzku/q4ZbOAS5EL9lCK93H90DXkqTFAqkYHo+QSpAn3CRzRdT6Hol+FJNoToKJu
-         n0yA==
-X-Gm-Message-State: AOAM5314kGd6Rr8aDK3EEYB7xKFkvDlceNkSJy3v1A5UXol/dwQKqRrE
-        hoKIduPWABvytTTaBs0ETzNw98gKP3d/aaRg11HDPg==
-X-Google-Smtp-Source: ABdhPJx+Rb9Dh5afCkPV93ubbfa83YINwHuyBNL6aGGIC9gNFt/GVdQQ5DqMV2LQPpqLPd5cGrS+QMzugsAJ9rHE3h4=
-X-Received: by 2002:a92:4f:: with SMTP id 76mr2640989ila.11.1598227486317;
- Sun, 23 Aug 2020 17:04:46 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=v2AcXNM/RwmQxoIUWLpETnAZjFM9cKvvsGDBzZ8s8tU=;
+        b=n76kaEbrBj7QZ6wRdGU1jdtb80KyrY6ueoO8h74FstBQNiz98Qq53WyPT9AUPj4JC6
+         H2XqmUH12uslnldSw13PRWQM4t3MvircMGjIMZ5zqhR9gFr82fuagO2uLKcJFHO+NwBI
+         hziT3EU+YP4TP6I/aNrSV4psmOPssZ2JFW2fI3BvO47xJ6iXtYPNSiXB5UT6cabkuwOv
+         L8ZYBL/tt8NSCEzOfUFiaw2gOPnXKs91DFyhh03PHJ9GMjI2UcmmAFateJ7RAoRBjxFy
+         5zNAFCnOOY96iIRQK5jRzeJlNKuxnlbkiDdUGLMUS59HoogSleyVzEvfgEmZJaEtENa2
+         vzZg==
+X-Gm-Message-State: AOAM531AS7a9+SqUeBvu4pggjdVP6j5ijo2TkiEyrH/eD5HcetHmxT//
+        7x68ag/p9SVhIn+62Ln0fCXJsQ==
+X-Google-Smtp-Source: ABdhPJxd/szKSLNN6/XQR5TVLz2m2UUS4oEY9/vGslB5tLxWopsB1oAiE1Qk1WuEOYT2R/QxKR9KMQ==
+X-Received: by 2002:adf:ff8a:: with SMTP id j10mr4213992wrr.323.1598253310616;
+        Mon, 24 Aug 2020 00:15:10 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:cd42:2fa4:120f:76b0? ([2a01:e34:ed2f:f020:cd42:2fa4:120f:76b0])
+        by smtp.googlemail.com with ESMTPSA id l1sm23522540wrb.12.2020.08.24.00.15.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Aug 2020 00:15:09 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] thermal: qcom-spmi-temp-alarm: Don't suppress
+ negative temp
+To:     Guru Das Srinagesh <gurus@codeaurora.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-kernel@vger.kernel.org,
+        Veera Vegivada <vvegivad@codeaurora.org>
+References: <944856eb819081268fab783236a916257de120e4.1596040416.git.gurus@codeaurora.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <de23e464-3789-02a2-b16e-eb1cd4e015d5@linaro.org>
+Date:   Mon, 24 Aug 2020 09:15:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20191221150402.13868-1-murphyt7@tcd.ie> <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
- <20200529124523.GA11817@infradead.org> <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
- <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com> <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
- <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
-In-Reply-To: <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
-From:   Tom Murphy <murphyt7@tcd.ie>
-Date:   Mon, 24 Aug 2020 01:04:35 +0100
-Message-ID: <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
-To:     Logan Gunthorpe <logang@deltatee.com>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        iommu@lists.linux-foundation.org, kvm@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org,
-        Alex Williamson <alex.williamson@redhat.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <944856eb819081268fab783236a916257de120e4.1596040416.git.gurus@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Logan/All,
+On 29/07/2020 18:52, Guru Das Srinagesh wrote:
+> From: Veera Vegivada <vvegivad@codeaurora.org>
+> 
+> Currently driver is suppressing the negative temperature
+> readings from the vadc. Consumers of the thermal zones need
+> to read the negative temperature too. Don't suppress the
+> readings.
+> 
+> Fixes: c610afaa21d3c6e ("thermal: Add QPNP PMIC temperature alarm driver")
+> Signed-off-by: Veera Vegivada <vvegivad@codeaurora.org>
+> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> ---
 
-I have added a check for the sg_dma_len == 0 :
-"""
- } __sgt_iter(struct scatterlist *sgl, bool dma) {
-        struct sgt_iter s = { .sgp = sgl };
+Applied, thanks
 
-+       if (sgl && sg_dma_len(sgl) == 0)
-+           s.sgp = NULL;
 
-        if (s.sgp) {
-            .....
-"""
-at location [1].
-but it doens't fix the problem.
 
-You're right though, this change does need to be made, this code
-doesn't handle pages of sg_dma_len(sg) == 0 correctly
-So my guess is that we have more bugs in other parts of the i915
-driver (or there is a problem with my "sg_dma_len == 0" fix above).
-I have been trying to spot where else the code might be buggy but I
-haven't had any luck so far.
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-I'm doing a microconfernce (at LPC 2020) this wednesdays [1] on this
-if you're interested in attending.
-I'm hoping I can chat about it with a few people and find how can
-reproduce and fix this issues. I don't have any more time I can give
-to this unfortunately and it would be a shame for the work to go to
-waste.
-
-[0] https://github.com/torvalds/linux/blob/d012a7190fc1fd72ed48911e77ca97ba4521bccd/drivers/gpu/drm/i915/i915_scatterlist.h#L28
-[1] https://linuxplumbersconf.org/event/7/contributions/846/
-
-On Fri, 29 May 2020 at 22:21, Logan Gunthorpe <logang@deltatee.com> wrote:
->
->
->
-> On 2020-05-29 3:11 p.m., Marek Szyprowski wrote:
-> > Patches are pending:
-> > https://lore.kernel.org/linux-iommu/20200513132114.6046-1-m.szyprowski@samsung.com/T/
->
-> Cool, nice! Though, I still don't think that fixes the issue in
-> i915_scatterlist.h given it still ignores sg_dma_len() and strictly
-> relies on sg_next()/sg_is_last() to stop iterating -- and I suspect this
-> is the bug that got in Tom's way.
->
-> >> However, as Robin pointed out, there are other ugly tricks like stopping
-> >> iterating through the SGL when sg_dma_len() is zero. For example, the
-> >> AMD driver appears to use drm_prime_sg_to_page_addr_arrays() which does
-> >> this trick and thus likely isn't buggy (otherwise, I'd expect someone to
-> >> have complained by now seeing AMD has already switched to IOMMU-DMA.
-> >
-> > I'm not sure that this is a trick. Stopping at zero sg_dma_len() was
-> > somewhere documented.
->
-> Well whatever you want to call it, it is ugly to have some drivers doing
-> one thing with the returned value and others assuming there's an extra
-> zero at the end. It just causes confusion for people reading/copying the
-> code. It would be better if they are all consistent. However, I concede
-> stopping at zero should not be broken, presently.
->
-> Logan
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
