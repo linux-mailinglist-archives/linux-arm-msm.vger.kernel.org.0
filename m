@@ -2,172 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C68424FC53
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 13:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C647B24FCCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 13:40:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725963AbgHXLMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Aug 2020 07:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59420 "EHLO
+        id S1726075AbgHXLkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 07:40:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbgHXLMD (ORCPT
+        with ESMTP id S1726934AbgHXLh2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Aug 2020 07:12:03 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE602C061573
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:12:02 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id i129so4201131vsi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:12:02 -0700 (PDT)
+        Mon, 24 Aug 2020 07:37:28 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30EABC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:36:34 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id k1so1887137vkb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Z5//TYxZEOCDa9uWvHD+L7cx/6ym8bakqnq3Q8GLwSg=;
-        b=R1EqGgYF8Wxxa2OwrltVEoRoT3rNWtuEFWR6lyfr5X9wcp3Im26/m7Scaz4YYlu8ud
-         IrOmpZb4PpTZT6UqYQB23SgX9z4JcO0NqTrpu/0kFNLiCuNZXJ9pjlRRKqDHlQfvsfMW
-         c2j1qiSCOBPmi51xjgk/CRV4JtxIX79CGluGEvJnPPBoQIieM8LxAe8kBONTLfT8/X3S
-         8sOVtXqvkgN8x2A15SYhcoE/C0Br1LyjHtTE8/paLLhLI2Vr7mvzg20doVSltIlYq/3F
-         gCC4j7vCcVqPU72PvEypC18575bEpDXhKnyzclOH4LN8kdUrYzBSEU5/n3CQgzntABON
-         4UbQ==
+        bh=JV6tfVfklUu/NgG7bOgXNfj+ClShTy9jxY/fWbFwF1Q=;
+        b=SR05v7vEY5sKMrTnPQXPXjzApuQk/oa1b/hk2ngKloy/+6+cKi9GyhYUL4kt+JBbkY
+         pFsINiplBoi0Ijf2LF4x2ZBTFIlXpzah5m1eCE1AAbUdy18LYtncpit+/50yr2Bi39Ny
+         hvRSdgcNB9nMuCfwtSzRJ3WblfiSUa/jY0qujdILepfgqr9S+YVHx3xavukh/XkrBCxv
+         E5SNrxD4DJuOb8KyVzuWTGGv1qeL/evptBdSvJ/beTaeUmXX8B59rdysWiEuUI2k47r7
+         /W9m4FCDtZmVl9PidXfCiGiCOpanM1+y208zn60nqEDwUoD5RyT3KQ7KcBmpcDGMkL2G
+         SRnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Z5//TYxZEOCDa9uWvHD+L7cx/6ym8bakqnq3Q8GLwSg=;
-        b=T0jSC/BGx4ez0L+RBTSO+vkbs4jPTDOelTLzarI9ovNdi1dKAd9fyxAhZxQMfwbGlt
-         BCxh6cW+jFFfXahDoJXU9T2HPmGuL796PSNfagWx1fZ3zICz7c/gQP5lD2wBC1WNhC7C
-         O5Wv+XZw9lPzFn7l92h+JdmEQnUTAaOh6G0eWH9E3HdkTUGUp8v980NCaM2x38AVMPjo
-         uMqKYYzIZiXzyIm+67cLP62LwMUW5+7rcrvh6TgB561IkQs5tCyhSsFNcF+VEVvaCkyr
-         yQpIhF6oUcSaiU5fXtgpMy2/EbiNIXsVBsQ8ADLEj0prNJTW7jgMPfgVBIJrXfZZODeZ
-         20SA==
-X-Gm-Message-State: AOAM531/Vi2e7yUxIZa8FF9lU0pTqkmJEqHeIP0MvnHhK8RqpyXsWS8I
-        PTA8Uk2ad61Yere+oUcXmFkbOI4qXGieuLL1Aa8e+Q==
-X-Google-Smtp-Source: ABdhPJze/D9HVcYXvdcyq/7lNrWTczFdsDI21S3RCgmJznLBy+cBgBLCFL3jGBjQHDoxy6kyph7U84dFDrb0p3LTFE0=
-X-Received: by 2002:a67:fd0a:: with SMTP id f10mr1836903vsr.35.1598267522158;
- Mon, 24 Aug 2020 04:12:02 -0700 (PDT)
+        bh=JV6tfVfklUu/NgG7bOgXNfj+ClShTy9jxY/fWbFwF1Q=;
+        b=TPO035OwBz+6ECrQI0wkJOCPBdjJ+I/T9sl4SwdozCW1EPH212qlCYKXh0LDf25ChV
+         DMN+etCBLcQrjJrWzFGd2Bvc3q2oKZunWVtkmfrF/vyzAmi6wUlU+YeHNDL7dF9eJBKB
+         E4zkRxjrmqEH2jYWDi4DV5B55x1MwkjsLPFi/G0fwlzQbylCsHQmoBLmoXxM20ZEbBUu
+         P75WIGU1ZdjoY6Xki+D2Wy+Qh5o2whEEJE1WBSfQDlGun+D5t53S2EbL71VrfC7tVnzO
+         Kl9Adii1PMwhr3BkRcBgB6Od9KJN2wk/KnzrIfO2PGDiaKpngdTTetY+VgK/ztC51IgN
+         1buQ==
+X-Gm-Message-State: AOAM530ETKbMe0nXmXd4JkvSuPJlVFZPCc9QgiLXHrBLUV1C5akue2Ow
+        8X1NApM64lEskEyYi7pXvWrpuNW1vXsDrQq6xWZH6g==
+X-Google-Smtp-Source: ABdhPJwV339wbAhfl6NpdVN6lNoSFp1QLhcdRK1T9FWMbikCYbOeJPxGF0aDPlZioYf/71LuBla4tnSiHVkKQV97zsY=
+X-Received: by 2002:a1f:2895:: with SMTP id o143mr2131690vko.59.1598268993288;
+ Mon, 24 Aug 2020 04:36:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200821204921.32536-1-sibis@codeaurora.org>
-In-Reply-To: <20200821204921.32536-1-sibis@codeaurora.org>
+References: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org> <1597831670-17401-2-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1597831670-17401-2-git-send-email-mkshah@codeaurora.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 24 Aug 2020 13:11:26 +0200
-Message-ID: <CAPDyKFoXzskRW7W_7EHQatQ=-OeAaLGTdzUx0FtY96=bZXt6aw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME flags
-To:     Sibi Sankar <sibis@codeaurora.org>
+Date:   Mon, 24 Aug 2020 13:35:57 +0200
+Message-ID: <CAPDyKFrY=U45K6NSkoJwvYuWWzMUdZNLaQn5XmnMGkJnCLgvdQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] Revert "drivers: qcom: rpmh-rsc: Use rcuidle
+ tracepoints for rpmh"
+To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Andy Gross <agross@kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Aug 2020 at 22:49, Sibi Sankar <sibis@codeaurora.org> wrote:
+On Wed, 19 Aug 2020 at 12:08, Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
-> status of the PM domain unaltered during suspend/resume respectively.
-> The flags are aimed at power domains coupled to co-processors which
-> enter low-power modes independent to that of the application processor.
+> This change was done based on an test results of unmerged series of
+> adding RSC power domain and using .power_off callback of genpd to
+> invoke rpmh_flush().
 >
-> Specifically the flags are to be used by the power domains exposed
-> by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
-> power domains are used to notify the Always on Subsystem (AOSS) that
-> a particular co-processor is up. AOSS uses this information to wait
-> for the co-processors to suspend before starting its sleep sequence.
-> The application processor powers off these power domains only if the
-> co-processor has crashed or powered off and remains unaltered during
-> system suspend/resume.
+>      Call trace:
+>       dump_backtrace+0x0/0x174
+>       show_stack+0x20/0x2c
+>       dump_stack+0xc8/0x124
+>       lockdep_rcu_suspicious+0xe4/0x104
+>       __tcs_buffer_write+0x230/0x2d0
+>       rpmh_rsc_write_ctrl_data+0x210/0x270
+>       rpmh_flush+0x84/0x24c
+>       rpmh_domain_power_off+0x78/0x98
+>       _genpd_power_off+0x40/0xc0
+>       genpd_power_off+0x168/0x208
 >
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Later the final merged solution is to use CPU PM notification to invoke
+> rpmh_flush() and .power_off callback of genpd is not implemented in the
+> driver.
+>
+> Remove this change since RCU will not be idle during CPU PM notifications
+> hence not required to use _rcuidle tracepoint. Using _rcuidle tracepoint
+> prevented rpmh driver to be loadable module as these are not exported
+> symbols.
+>
+> This reverts commit efde2659b0fe835732047357b2902cca14f054d9.
+>
+> Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Cc: John Stultz <john.stultz@linaro.org>
+> Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+
+Along with Stephen's comments, feel free to add:
 
 Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-Although, I would like Stephen's question to get an answer in the
-other thread, before this gets applied.
+Also note, when using the PSCI OSI mode, I am proposing to use "genpd
+on/off notifiers" [1]. This may lead to similar RCU issues, but let's
+come back to adress that later on, when/if needed.
 
 Kind regards
 Uffe
 
+[1]
+https://www.spinics.net/lists/kernel/msg3629443.html
+
+
 > ---
+>  drivers/soc/qcom/rpmh-rsc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> V2:
->  * Add more info in commit msg and description [Uffe/Kevin/Stephen]
->  * Rename and split functionality into two flags [Uffe]
->  * Drop R-b/T-b
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index ae66757..fabe390d 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -495,7 +495,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+>                 write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
+>                 write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
+>                 write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
+> -               trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
+> +               trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
+>         }
 >
->  drivers/base/power/domain.c |  6 ++++--
->  include/linux/pm_domain.h   | 10 ++++++++++
->  2 files changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 2cb5e04cf86cd..a5df5916f30f8 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -129,6 +129,8 @@ static const struct genpd_lock_ops genpd_spin_ops = {
->  #define genpd_is_active_wakeup(genpd)  (genpd->flags & GENPD_FLAG_ACTIVE_WAKEUP)
->  #define genpd_is_cpu_domain(genpd)     (genpd->flags & GENPD_FLAG_CPU_DOMAIN)
->  #define genpd_is_rpm_always_on(genpd)  (genpd->flags & GENPD_FLAG_RPM_ALWAYS_ON)
-> +#define genpd_is_no_suspend(genpd)     (genpd->flags & GENPD_FLAG_NO_SUSPEND)
-> +#define genpd_is_no_resume(genpd)      (genpd->flags & GENPD_FLAG_NO_RESUME)
->
->  static inline bool irq_safe_dev_in_no_sleep_domain(struct device *dev,
->                 const struct generic_pm_domain *genpd)
-> @@ -949,7 +951,7 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
->  {
->         struct gpd_link *link;
->
-> -       if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
-> +       if (!genpd_status_on(genpd) || genpd_is_always_on(genpd) || genpd_is_no_suspend(genpd))
->                 return;
->
->         if (genpd->suspended_count != genpd->device_count
-> @@ -991,7 +993,7 @@ static void genpd_sync_power_on(struct generic_pm_domain *genpd, bool use_lock,
->  {
->         struct gpd_link *link;
->
-> -       if (genpd_status_on(genpd))
-> +       if (genpd_status_on(genpd) || genpd_is_no_resume(genpd))
->                 return;
->
->         list_for_each_entry(link, &genpd->child_links, child_node) {
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index ee11502a575b0..568abdf2e89cf 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -55,6 +55,14 @@
->   *
->   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM domain
->   *                             powered on except for system suspend.
-> + *
-> + * GENPD_FLAG_NO_SUSPEND:      Instructs genpd to keep the PM domain powered
-> + *                             on during suspend (if it's already powered on)
-> + *                             and runtime PM controlled otherwise.
-> + *
-> + * GENPD_FLAG_NO_RESUME:       Instructs genpd to keep the PM domain powered
-> + *                             off during resume (if it's already powered off)
-> + *                             and runtime PM controlled otherwise.
->   */
->  #define GENPD_FLAG_PM_CLK       (1U << 0)
->  #define GENPD_FLAG_IRQ_SAFE     (1U << 1)
-> @@ -62,6 +70,8 @@
->  #define GENPD_FLAG_ACTIVE_WAKEUP (1U << 3)
->  #define GENPD_FLAG_CPU_DOMAIN   (1U << 4)
->  #define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
-> +#define GENPD_FLAG_NO_SUSPEND   (1U << 6)
-> +#define GENPD_FLAG_NO_RESUME    (1U << 7)
->
->  enum gpd_status {
->         GPD_STATE_ACTIVE = 0,   /* PM domain is active */
+>         write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
 > --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
 >
