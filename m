@@ -2,141 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C647B24FCCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 13:40:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37CD824FCDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Aug 2020 13:41:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726075AbgHXLkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Aug 2020 07:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726934AbgHXLh2 (ORCPT
+        id S1727781AbgHXLk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 07:40:57 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:35678 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726938AbgHXLkx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Aug 2020 07:37:28 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30EABC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:36:34 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id k1so1887137vkb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 04:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JV6tfVfklUu/NgG7bOgXNfj+ClShTy9jxY/fWbFwF1Q=;
-        b=SR05v7vEY5sKMrTnPQXPXjzApuQk/oa1b/hk2ngKloy/+6+cKi9GyhYUL4kt+JBbkY
-         pFsINiplBoi0Ijf2LF4x2ZBTFIlXpzah5m1eCE1AAbUdy18LYtncpit+/50yr2Bi39Ny
-         hvRSdgcNB9nMuCfwtSzRJ3WblfiSUa/jY0qujdILepfgqr9S+YVHx3xavukh/XkrBCxv
-         E5SNrxD4DJuOb8KyVzuWTGGv1qeL/evptBdSvJ/beTaeUmXX8B59rdysWiEuUI2k47r7
-         /W9m4FCDtZmVl9PidXfCiGiCOpanM1+y208zn60nqEDwUoD5RyT3KQ7KcBmpcDGMkL2G
-         SRnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JV6tfVfklUu/NgG7bOgXNfj+ClShTy9jxY/fWbFwF1Q=;
-        b=TPO035OwBz+6ECrQI0wkJOCPBdjJ+I/T9sl4SwdozCW1EPH212qlCYKXh0LDf25ChV
-         DMN+etCBLcQrjJrWzFGd2Bvc3q2oKZunWVtkmfrF/vyzAmi6wUlU+YeHNDL7dF9eJBKB
-         E4zkRxjrmqEH2jYWDi4DV5B55x1MwkjsLPFi/G0fwlzQbylCsHQmoBLmoXxM20ZEbBUu
-         P75WIGU1ZdjoY6Xki+D2Wy+Qh5o2whEEJE1WBSfQDlGun+D5t53S2EbL71VrfC7tVnzO
-         Kl9Adii1PMwhr3BkRcBgB6Od9KJN2wk/KnzrIfO2PGDiaKpngdTTetY+VgK/ztC51IgN
-         1buQ==
-X-Gm-Message-State: AOAM530ETKbMe0nXmXd4JkvSuPJlVFZPCc9QgiLXHrBLUV1C5akue2Ow
-        8X1NApM64lEskEyYi7pXvWrpuNW1vXsDrQq6xWZH6g==
-X-Google-Smtp-Source: ABdhPJwV339wbAhfl6NpdVN6lNoSFp1QLhcdRK1T9FWMbikCYbOeJPxGF0aDPlZioYf/71LuBla4tnSiHVkKQV97zsY=
-X-Received: by 2002:a1f:2895:: with SMTP id o143mr2131690vko.59.1598268993288;
- Mon, 24 Aug 2020 04:36:33 -0700 (PDT)
+        Mon, 24 Aug 2020 07:40:53 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20200824114050euoutp02db8d325df069f185d9b4796b8c82edf8~uMWplHtnW1883818838euoutp02S
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Aug 2020 11:40:50 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20200824114050euoutp02db8d325df069f185d9b4796b8c82edf8~uMWplHtnW1883818838euoutp02S
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1598269250;
+        bh=ba4YL16aB6a2EgaaQucW8uhtGVOy2S8TT7bz8yWdugc=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=KLAl8/rj3via+ICyNo0UrZsfOePBv8yAnKLfFFNZkRLpi1AUovjtx1hj+gFec6B+F
+         Uw0S26HFxG8sI6Xskt//PtxLlFnriEo6WuSpR09wfCWN7QsPgwc/brB4gFx9cblYxC
+         4OyoWvO9wtyzaoJmBtjXOxcqRSp+SCHpjVL+Gz/g=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200824114050eucas1p22a241e6d641aab84d27b1ef438e39c3f~uMWpJBJnF2495524955eucas1p2m;
+        Mon, 24 Aug 2020 11:40:50 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 2E.25.05997.247A34F5; Mon, 24
+        Aug 2020 12:40:50 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200824114049eucas1p13aea77bc609874909fed72db8f8b9cc5~uMWok_7LR0700207002eucas1p10;
+        Mon, 24 Aug 2020 11:40:49 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20200824114049eusmtrp164506cbb2e6fd6c17cfe4ae606e3d8f6~uMWokBqNW1930519305eusmtrp18;
+        Mon, 24 Aug 2020 11:40:49 +0000 (GMT)
+X-AuditID: cbfec7f4-677ff7000000176d-cd-5f43a742d9db
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 2A.FE.06017.147A34F5; Mon, 24
+        Aug 2020 12:40:49 +0100 (BST)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200824114048eusmtip189507904f024364f3e302a180a26ef55~uMWnEiCIc2041620416eusmtip1J;
+        Mon, 24 Aug 2020 11:40:48 +0000 (GMT)
+Subject: Re: [PATCH 00/18] Convert arch/arm to use iommu-dma
+To:     Robin Murphy <robin.murphy@arm.com>, hch@lst.de, joro@8bytes.org,
+        linux@armlinux.org.uk
+Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, vdumpa@nvidia.com, digetx@gmail.com,
+        matthias.bgg@gmail.com, yong.wu@mediatek.com,
+        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
+        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <bf32cdea-ee5b-1431-3b97-c0889acdacc6@samsung.com>
+Date:   Mon, 24 Aug 2020 13:40:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.11.0
 MIME-Version: 1.0
-References: <1597831670-17401-1-git-send-email-mkshah@codeaurora.org> <1597831670-17401-2-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1597831670-17401-2-git-send-email-mkshah@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 24 Aug 2020 13:35:57 +0200
-Message-ID: <CAPDyKFrY=U45K6NSkoJwvYuWWzMUdZNLaQn5XmnMGkJnCLgvdQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Revert "drivers: qcom: rpmh-rsc: Use rcuidle
- tracepoints for rpmh"
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, lsrao@codeaurora.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <cover.1597931875.git.robin.murphy@arm.com>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA01SbUxTZxjNe+/b29u66qVAeOLMTKoucYsyhiaviB+oPy7RH+qyhJgo6+QG
+        DB+aVhT8obVUUwoitBKxxWK0BgdYCSCwDqhUS6OkIKIVFYIKumFERDGRauZorzr+nec557zn
+        OcnL0so+Zj67J2e/oMlRZ6kYOW7umu5dtqF6Y+pPZouC9Ix8wKTb/QqT2skRRO6+m2DIWZsZ
+        kT9qvRQxD5dics69mhis5zEptNVLiV//UkoKyxxS0jASkJAyt19K+l2VDCmuvyoh/QV9iFT0
+        dlCkcMrKEE95OyKPa8cZojfEk87XoxLSHuyQkArLGEMcz4wMmXbZMSlp304MgyvJsLkRr/+O
+        H+20U3ydvQ7x/YE+mi/zL+P/tA5JeZvxjIRvqClk+MFAG8MPF/kovtFxhLcMVCP+rwc6hjfc
+        dGP+RMErhi9pqkG8b6CF2hqxQ56YJmTtOSBoYtf+Js9wX39A7TNE5XlL4nToLGdCMha4FfDO
+        9gabkJxVcpcQ3PB2UOIwhaBg4thn5i2C+/90Ml8srheVEpGoRvB8rOjzMIGg6eEtKqSK5BLB
+        2/c3HcJR3E4Itn6UhkQ01yYBnXkYhwiGiwPTuCn8rIJbC5/8z1AIY24JOI8+DpujuV1w1XeP
+        EjURcPPMaNgr4wgM9kyGMc0thJbxSlrEMfBwtCpcArgqGbx2BGnx7k1Qe2kKizgSXviapCJe
+        AN2WYiwaChA86bksFYdiBP36CiSqVs/EBWdOZWcilsIVV6y4TgLvUFt4DdxcGBiPEI+YC+bm
+        07S4VoDxuFJUfw9Wn/NrbOftO3QpUllnVbPOqmOdVcf6f+45hGtQjJCrzU4XtD/nCAeXa9XZ
+        2tyc9OW792Y3oJmP3v2vb6oVuT7+7kEci1TfKN571qUqJeoD2vxsDwKWVkUpNvi7dykVaer8
+        Q4Jmb6omN0vQetC3LFbFKOLPj+1Ucunq/UKmIOwTNF9YipXN16HE9PpgXnxK5q3mDF1R/uno
+        4Dpn1jxZS8K2wK+O66d+TLavMToXX3iTNNmkwAknUlKuRUeWP5Lnrm9ddfHYo5f2tJOZeQnJ
+        8+oG3UweozPp50QcKTfaPmx2Hr5WarIUbVmUjJPuxfyiPzQZO625/bS08Ulg6GiXxq/+9Pzw
+        wd6uQJIKazPUcT/QGq36P1600WDkAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SW0xTWRSGs8+txdh4bFE3ZKKmBjRGiqdYWTgM6mjIeVBjrHHG8YJHPSlG
+        Sk1PMeporNIHWoWhEA0WrDe04SLpgMKIQIciImIxBENEIaitMRqLOlEjOkGBasLbl/3/315Z
+        yZKTymd0rHxPtkU0ZwtZamYK1TXaMZiw0rMqY/GN0gXQHfxCQZdvmIKqd0EEDz68YeBsaRGC
+        iqp2AoqGCik47/sZbK6LFNhLvTIIHH8tA7uzXAa1wT4anL6ADHobyxg46b1OQ29uD4KS+y0E
+        2N+7GPCfakbwpCrMwHFbErS+DdHQ/LmFhpLilwyUP89jYKTRTUFB8wawDehgqKiOWjGbD7W6
+        Cb7aXY343r4ekncGEvgbrkEZX5p3huZrK+0MP9DXxPBDJzoIvq78KF/80IP4m/1Whrd1+ig+
+        P3eY4QuuVSK+42EDsX76H5pUsynHIs7NNEmWX9RbONBquBTQaJekaLik5G3LtDp1YlrqbjFr
+        z37RnJi2Q5Ppa+sn9tmiD7QXcFZ0lnWgKDlml+DGV2W0A02RK9nLCHv/vkpEgp9w52krHWEV
+        /r/PwURKYYRHa/6lxgMVm4rbe16Q4xzNbsPvPVXMOJNsE40vh2MjwgmEB+/a0HjAsBx2hB0T
+        JQWbhr8Gnk+8U2wcrjn2ZOKjGex2HMz/SkY603HnmdDEsCgW8ED3OyoyYCl21z0lIzwHN4TL
+        vvMs/Ch0jihEStck3TVJcU1SXJOU84iqRNFijmQ0GCWtRhKMUk62QbPLZKxFY/dVf3vk2j/I
+        Maz3I1aO1FMVn/zLM5S0sF86aPQjLCfV0YpfA13blYrdwsFDotmUYc7JEiU/0o0t5yRjZ+wy
+        jV1rtiWD03HJkMIlJyUnLQX1LEUe27pVyRoEi7hXFPeJ5h8eIY+KtaLa0JHC9Hq9p2XTxq3C
+        zPSY4BG9HA7HXInbHN8W415lcspu/rfuBcy7Uxd3UbtW2bawJGGntfrkomfOR4nejyvnT9Ov
+        LjoMHTohX1+/tyX9nuHP1DXF1F+HVPaK0fAFqPH0L172OP63pks74k9fmDliaPJefXmrW1X9
+        e1aFWpXekKumpEyBW0iaJeEbK502LHUDAAA=
+X-CMS-MailID: 20200824114049eucas1p13aea77bc609874909fed72db8f8b9cc5
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200820150857eucas1p18f5f2ad87703a68b6ed20a090f7c1c57
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200820150857eucas1p18f5f2ad87703a68b6ed20a090f7c1c57
+References: <CGME20200820150857eucas1p18f5f2ad87703a68b6ed20a090f7c1c57@eucas1p1.samsung.com>
+        <cover.1597931875.git.robin.murphy@arm.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 19 Aug 2020 at 12:08, Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> This change was done based on an test results of unmerged series of
-> adding RSC power domain and using .power_off callback of genpd to
-> invoke rpmh_flush().
->
->      Call trace:
->       dump_backtrace+0x0/0x174
->       show_stack+0x20/0x2c
->       dump_stack+0xc8/0x124
->       lockdep_rcu_suspicious+0xe4/0x104
->       __tcs_buffer_write+0x230/0x2d0
->       rpmh_rsc_write_ctrl_data+0x210/0x270
->       rpmh_flush+0x84/0x24c
->       rpmh_domain_power_off+0x78/0x98
->       _genpd_power_off+0x40/0xc0
->       genpd_power_off+0x168/0x208
->
-> Later the final merged solution is to use CPU PM notification to invoke
-> rpmh_flush() and .power_off callback of genpd is not implemented in the
-> driver.
->
-> Remove this change since RCU will not be idle during CPU PM notifications
-> hence not required to use _rcuidle tracepoint. Using _rcuidle tracepoint
-> prevented rpmh driver to be loadable module as these are not exported
-> symbols.
->
-> This reverts commit efde2659b0fe835732047357b2902cca14f054d9.
->
-> Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> Cc: John Stultz <john.stultz@linaro.org>
-> Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+Hi Robin,
 
-Along with Stephen's comments, feel free to add:
-
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-
-Also note, when using the PSCI OSI mode, I am proposing to use "genpd
-on/off notifiers" [1]. This may lead to similar RCU issues, but let's
-come back to adress that later on, when/if needed.
-
-Kind regards
-Uffe
-
-[1]
-https://www.spinics.net/lists/kernel/msg3629443.html
-
-
-> ---
->  drivers/soc/qcom/rpmh-rsc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 20.08.2020 17:08, Robin Murphy wrote:
+> Hi all,
 >
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index ae66757..fabe390d 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -495,7 +495,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
->                 write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
->                 write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
->                 write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
-> -               trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
-> +               trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
->         }
+> After 5 years or so of intending to get round to this, finally the
+> time comes! The changes themselves actualy turn out to be relatively
+> mechanical; the bigger concern appears to be how to get everything
+> merged across about 5 diffferent trees given the dependencies.
 >
->         write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> I've lightly boot-tested things on Rockchip RK3288 and Exynos 4412
+> (Odroid-U3), to the degree that their display drivers should be using
+> IOMMU-backed buffers and don't explode (the Odroid doesn't manage to
+> send a working HDMI signal to the one monitor I have that it actually
+> detects, but that's a pre-existing condition...) Confirmation that the
+> Mediatek, OMAP and Tegra changes work will be most welcome.
 >
+> Patches are based on 5.9-rc1, branch available here:
+>
+>    git://linux-arm.org/linux-rm arm/dma
+
+Well, my first proposal for the ARM and ARM64 DMA-mapping unification 
+has been posted long time ago: https://lkml.org/lkml/2016/2/19/79
+
+Thanks for resurrecting it! :)
+
+I've tested this patchset on various ARM32bit Exynos based boards (not 
+only Exynos4412) and most of them works fine after your conversion. 
+However there are issues you cannot learn from the code.
+
+Conversion of the Exynos DRM was straightforward (thanks!), but there 
+are other Exynos drivers that depends on the old ARM implementation. The 
+S5P-MFC (only for the v5 hardware) and Exynos4 FIMC-ISP drivers depends 
+on the first-fit IOVA allocation algorithm in the old ARM DMA-mapping. 
+This was the main reason I've didn't continue my initial conversion attempt.
+
+Both drivers allocate a buffer for their firmware and then in the 
+hardware registers address video buffers as an offset from the 
+begginning of the firmware. This doesn't work when underlying 
+DMA-mapping allocates IOVA with the last-fit algorithm, what the 
+drivers/iommu/dma-iommu.c does. So far I didn't find a good solution for 
+that issue.
+
+I'm open for suggestions. One more limitation for the S5P-MFC driver is 
+that the hardware is capable only for addressing 128MiB. They will 
+probably need to call IOMMU API directly, but I would like to keep as 
+much from the IOMMU/DMA-mapping code as possible.
+
+
+Anyway, we need to move ARM 32bit forward, so for the ARM DMA-mapping 
+and Exynos DRM changes, feel free to add:
+
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
