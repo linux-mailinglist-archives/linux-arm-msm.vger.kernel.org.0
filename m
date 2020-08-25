@@ -2,289 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A2A9251559
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 11:29:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29C3B251636
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 12:04:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728901AbgHYJ3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 05:29:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59734 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726149AbgHYJ3S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 05:29:18 -0400
-Received: from coco.lan (ip5f5ad5a4.dynamic.kabel-deutschland.de [95.90.213.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A4DDB2068F;
-        Tue, 25 Aug 2020 09:29:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598347757;
-        bh=giUh8kfdw+J36IN0Ge8r43Cgn1ew0GISv68WF0PHD6c=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=OKFVKlDTuVbtfdKMEfHQBUFSi6MOoM/ICBdx2oNDMshzM1tuFmSkFC0ODT1FPGhDr
-         b7AS2aRWF8NI00LIOrrbKPdWaBa0Gjyn1+ysZ6fqrQbtNQrvTE1vPu95P57J0bncnn
-         Gq9NmF0ow7xDJkWWG20g38ccq9mUWJW5xrahMJrU=
-Date:   Tue, 25 Aug 2020 11:29:12 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        John Stultz <john.stultz@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Josh Cartwright <joshc@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: convert spmi.txt to spmi.yaml
-Message-ID: <20200825112912.4fca31ad@coco.lan>
-In-Reply-To: <20200819230812.GB2090217@bogus>
-References: <94b055687143c9593cd4311f8bcda99a743a619f.1597850327.git.mchehab+huawei@kernel.org>
-        <20200819230812.GB2090217@bogus>
-X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+        id S1729253AbgHYKEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 06:04:22 -0400
+Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:52713 "EHLO
+        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726000AbgHYKEV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Aug 2020 06:04:21 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id AVoOkYOrquuXOAVoPk7QX1; Tue, 25 Aug 2020 12:04:18 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1598349858; bh=5CZunLEd5xnbFkpUz48qiQTHttRCVtgcuUVGBoE7kro=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=BSD13bCELTO0+DqrZut+HtzDsKSgizA6NSozwCTaZfkSKtNvXjKyXMZE8dtV+CUgQ
+         XnjAXzWZ87TL5j1e8PZeP23sm0ukDTg2DUXiwQGmcSEQ9PY6gUMRBYfubL5VncN9u9
+         57dnI5oQMCx+twgoNOV32k7jC4KMHv3DJ5WQB0QZ8df1zWNUQjs+T4YmlxHLxx/kQF
+         wK7F3x+Jtztb5FPRUYBVUkmzGukBjP5kDfOyfS9yfTGrTVy5l3LdzP8bZLylvTo1u5
+         yczYJy4qJXaqFZCLgaUcfZRuSSmC6clMWI1JzxQHRj5T7OUfRDS79RNfZ5QAtsKF2+
+         jEIswMo0fohDg==
+Subject: Re: [PATCH v2] media: v4l2-ctrl: add control for long term reference.
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     mchehab@kernel.org, nicolas@ndufresne.ca, majja@codeaurora.org,
+        stanimir.varbanov@linaro.org, vgarodia@codeaurora.org
+References: <1597382967-32729-1-git-send-email-dikshita@codeaurora.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <506c9e88-e54b-2534-0df9-f7855456dcd8@xs4all.nl>
+Date:   Tue, 25 Aug 2020 12:04:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <1597382967-32729-1-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfDdiqtOo6GCNqu7J8S9J81dzKRyGJWwRTup/WEpb3WTphfrTWQ+rHNZvYdI8lycVuu1b1Ce98t4ppZFrYepQvav6ujHwxSPexMQqCvw8DdwRi/fBLJ5l
+ QNqTj0pyZ/NWcdEkp4zn6E3uHv959/FPzZW0cfjJg3YSMGKxn1WixNBWQ2WxWGGihWiez/BVzSR2yvnzrTY0pzPQ8W0/zjL3hJH/kOdRDfM6ZAWXPm2R6t7F
+ wVcrIHTkbb+JryRxrN1P85xBNRWJ+CjcI6Oz5R4O2xX4negHvSZho53z50myGsGLC8VVshqQ3kaO+OmCvjxg19VnUVGOvZmywXueyxpd2C4KYy8kt67q5Ryv
+ 7DHv6JrItQ3/dqZz96ZGPJvtAH9OY6V7y6GHaNYiusCj0G44NjwC0G4FvAHtgCt/+WRdBdHgOnQPFkTd3mbg7NLSz7H0U8i7MEA27842ei53SxIvs3gvNnhC
+ 4TpLzd1G70pml98F3MKJ0ncQt7pKyZ1OoVsJd8eVjU+crluIS/i9WC5ouCvrwJzkTJ8BcQFymDIqlY9PXzjRxXv5TquYSmrY5yKOYji+ugoxo/GEq3TWNgFS
+ 3+8=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Wed, 19 Aug 2020 17:08:12 -0600
-Rob Herring <robh@kernel.org> escreveu:
-
-> On Wed, Aug 19, 2020 at 05:20:06PM +0200, Mauro Carvalho Chehab wrote:
-> > Convert the SPMI bus documentation to JSON/yaml.
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> > 
-> > Rob,
-> > 
-> > As promissed, this patch converts the spmi.txt generic bus bindings to
-> > html.  
+On 14/08/2020 07:29, Dikshita Agarwal wrote:
+> LTR (Long Term Reference) frames are the frames that are encoded
+> sometime in the past and stored in the DPB buffer list to be used
+> as reference to encode future frames.
+> This change adds controls to enable this feature.
 > 
-> Thanks!
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 23 ++++++++++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c               |  6 ++++++
+>  include/uapi/linux/v4l2-controls.h                 |  4 ++++
+>  3 files changed, 33 insertions(+)
 > 
-> > 
-> >  .../bindings/mfd/qcom,spmi-pmic.txt           |  2 +-
-> >  .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  4 +-
-> >  .../devicetree/bindings/spmi/spmi.txt         | 41 ------------
-> >  .../devicetree/bindings/spmi/spmi.yaml        | 62 +++++++++++++++++++
-> >  4 files changed, 65 insertions(+), 44 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/spmi/spmi.txt
-> >  create mode 100644 Documentation/devicetree/bindings/spmi/spmi.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> > index fffc8fde3302..79367a43b27d 100644
-> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-> > @@ -37,7 +37,7 @@ Required properties:
-> >                     or generalized "qcom,spmi-pmic".
-> >  - reg:             Specifies the SPMI USID slave address for this device.
-> >                     For more information see:
-> > -                   Documentation/devicetree/bindings/spmi/spmi.txt
-> > +                   Documentation/devicetree/bindings/spmi/spmi.yaml
-> >  
-> >  Required properties for peripheral child nodes:
-> >  - compatible:      Should contain "qcom,xxx", where "xxx" is a peripheral name.
-> > diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-> > index e16b9b5afc70..ca645e21fe47 100644
-> > --- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-> > +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-> > @@ -7,8 +7,8 @@ devices to control a single SPMI master.
-> >  The PMIC Arbiter can also act as an interrupt controller, providing interrupts
-> >  to slave devices.
-> >  
-> > -See spmi.txt for the generic SPMI controller binding requirements for child
-> > -nodes.
-> > +See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
-> > +controller binding requirements for child nodes.
-> >  
-> >  See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
-> >  generic interrupt controller binding documentation.
-> > diff --git a/Documentation/devicetree/bindings/spmi/spmi.txt b/Documentation/devicetree/bindings/spmi/spmi.txt
-> > deleted file mode 100644
-> > index 4bb10d161a27..000000000000
-> > --- a/Documentation/devicetree/bindings/spmi/spmi.txt
-> > +++ /dev/null
-> > @@ -1,41 +0,0 @@
-> > -System Power Management Interface (SPMI) Controller
-> > -
-> > -This document defines a generic set of bindings for use by SPMI controllers.  A
-> > -controller is modelled in device tree as a node with zero or more child nodes,
-> > -each representing a unique slave on the bus.
-> > -
-> > -Required properties:
-> > -- #address-cells : must be set to 2
-> > -- #size-cells : must be set to 0
-> > -
-> > -Child nodes:
-> > -
-> > -An SPMI controller node can contain zero or more child nodes representing slave
-> > -devices on the bus.  Child 'reg' properties are specified as an address, type
-> > -pair.  The address must be in the range 0-15 (4 bits).  The type must be one of
-> > -SPMI_USID (0) or SPMI_GSID (1) for Unique Slave ID or Group Slave ID respectively.
-> > -These are the identifiers "statically assigned by the system integrator", as
-> > -per the SPMI spec.
-> > -
-> > -Each child node must have one and only one 'reg' entry of type SPMI_USID.
-> > -
-> > -#include <dt-bindings/spmi/spmi.h>
-> > -
-> > -	spmi@.. {
-> > -		compatible = "...";
-> > -		reg = <...>;
-> > -
-> > -		#address-cells = <2>;
-> > -		#size-cells = <0>;
-> > -
-> > -		child@0 {
-> > -			compatible = "...";
-> > -			reg = <0 SPMI_USID>;
-> > -		};
-> > -
-> > -		child@7 {
-> > -			compatible = "...";
-> > -			reg = <7 SPMI_USID
-> > -			       3 SPMI_GSID>;
-> > -		};
-> > -	};
-> > diff --git a/Documentation/devicetree/bindings/spmi/spmi.yaml b/Documentation/devicetree/bindings/spmi/spmi.yaml
-> > new file mode 100644
-> > index 000000000000..8d72796b9bec
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/spmi/spmi.yaml
-> > @@ -0,0 +1,62 @@
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/spmi/spmi.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: System Power Management Interface (SPMI) Controller
-> > +
-> > +maintainers:
-> > +  - Josh Cartwright <joshc@codeaurora.org>
-> > +
-> > +description: |
-> > +  The System Power Management (SPMI) controller is a 2-wire bus defined
-> > +  by the MIPI Alliance for power management control to be used on SoC designs.
-> > +
-> > +  SPMI controllers are modelled in device tree using a generic set of
-> > +  bindings defined here, plus any bus controller specific properties, if
-> > +  needed.
-> > +
-> > +  Each SPMI controller has zero or more child nodes (up to 16 ones), each
-> > +  one representing an unique slave at the bus.
-> > +
-> > +properties:
-> > +  $nodename:
-> > +    pattern: "spmi@[0-9a-f]+"  
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index d0d506a..6d1b005 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -4272,3 +4272,26 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
+>        - Selecting this value specifies that HEVC slices are expected
+>          to be prefixed by Annex B start codes. According to :ref:`hevc`
+>          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
+> +
+> +``V4L2_CID_MPEG_VIDEO_LTRCOUNT (enum)``
+
+I prefer _LTR_COUNT (same for the other control defines).
+
+I assume 'enum' is a mistake? This should be 'integer', right?
+
+> +	Specifies the number of Long Term Reference frames encoder needs to
+> +	generate or keep.
+> +	This control is used to query or configure the number of Long Term
+> +	Reference frames.
+
+Add something like: "Applicable to the H264 and HEVC encoder."
+
+> +
+> +``V4L2_CID_MPEG_VIDEO_MARKLTRFRAME (enum)``
+> +	This control is used to mark current frame as Long Term Reference
+> +	frame.
+
+enum -> integer
+_MARK_LTR_FRAME
+
+How about renaming this to: "_FRAME_LTR_INDEX"?
+
+I would also suggest having the range as 0..LTR_COUNT where 0 means that
+this is not a LTR frame. An alternative is to have two controls: one boolean
+that determines if the frame is a LTR frame or not, and one control containing
+the LTR index.
+
+Is the LTR index 0 or 1 based according to the standard? I think that if it is
+1 based you can use 0 to mean 'not an LTR frame'. If it is 0 based in the standard,
+then having two controls might be better.
+
+A third alternative might be to use -1 as the value to indicate that it is not
+an LTR frame, but it feels hackish. I'm not sure yet.
+
+> +	this provides a Long Term Reference index that ranges from 0
+> +	to LTR count-1 and then the particular frame will be marked with that
+> +	Long Term Reference index.
+
+Add something like: "Applicable to the H264 and HEVC encoder."
+
+This only makes sense when used with requests, right? Otherwise you cannot
+reliably associate this control with a frame. That should be mentioned here.
+
+> +
+> +``V4L2_CID_MPEG_VIDEO_USELTRFRAME (enum)``
+
+enum -> bitmask
+_USE_LTR_FRAMES
+
+> +	Specifies the Long Term Reference frame(s) to be used for encoding
+> +	the current frame.
+> +	This provides a bitmask which consists of bits [0, 15]. A total of N
+> +	LSB bits of this field are valid, where N is the maximum number of
+> +	Long Term Reference frames supported.
+> +	All the other bits are invalid and should be rejected.
+> +	The LSB corresponds to the Long Term Reference index 0. Bit N-1 from
+> +	the LSB corresponds to the Long Term Reference index max LTR count-1.
+
+Add something like: "Applicable to the H264 and HEVC encoder."
+
+This too only makes sense when using requests, correct? That should be mentioned
+here.
+
+I assume that this must be set to 0 for LTR frames? Or at least this control will
+be ignored for LTR frames.
+
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index 3f3fbcd..3138c72 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -991,6 +991,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:		return "HEVC Slice Parameters";
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
+> +	case V4L2_CID_MPEG_VIDEO_LTRCOUNT:		return "LTR Count";
+> +	case V4L2_CID_MPEG_VIDEO_MARKLTRFRAME:		return "Mark LTR";
+> +	case V4L2_CID_MPEG_VIDEO_USELTRFRAME:		return "Use LTR";
+
+"Use LTR Frames"
+
+>  
+>  	/* CAMERA controls */
+>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
+> @@ -1224,6 +1227,9 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
+>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+> +	case V4L2_CID_MPEG_VIDEO_LTRCOUNT:
+> +	case V4L2_CID_MPEG_VIDEO_MARKLTRFRAME:
+> +	case V4L2_CID_MPEG_VIDEO_USELTRFRAME:
+>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index 6227141..f2daa86 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -742,6 +742,10 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
+>  #define V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
+>  #define V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
+>  #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
+> +#define V4L2_CID_MPEG_VIDEO_LTRCOUNT	(V4L2_CID_MPEG_BASE + 645)
+> +#define V4L2_CID_MPEG_VIDEO_MARKLTRFRAME	(V4L2_CID_MPEG_BASE + 646)
+> +#define V4L2_CID_MPEG_VIDEO_USELTRFRAME		(V4L2_CID_MPEG_BASE + 647)
+> +
+>  
+>  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
+>  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
 > 
-> Just "spmi@.*" as we shouldn't assume unit-address details of the parent 
-> bus.
 
-Ok.
+Regards,
 
-> 
-> > +
-> > +  compatible:
-> > +    description: filled by the SPMI bus controller
-> > +
-> > +  reg:
-> > +    maxItems: 1  
-> 
-> No need for 'reg' and 'compatible' here. Those will be covered by 
-> specific SPMI controller schemas.
-
-Ok. I was in doubt about those, as the original .txt file had it with
-a <...>.
-
-> But you do need:
-> 
-> "#address-cells":
->   const: 2
-> 
-> "#size-cells":
->   const: 0
-
-Ok. 
-
-> 
-> > +
-> > +patternProperties:
-> > +  "@([0-9]|1[0-5])$":  
-> 
-> While buses define their own unit-address format, unit addresses are 
-> normally hex.
-
-I don't have a strong preference here. Yet, as this bus can have only up 
-to 16 child (starting from 0), I guess decimal would make more sense.
-
-> 
-> > +    description: up to 16 child PMIC nodes  
-> 
->        type: object
-> 
-> Need to also define 'reg' constraints as defined by the bus:
-> 
-> properties:
->   reg:
->     minItems: 1
->     maxItems: 2  #??? Not sure about this. Is it 1 SPMI_USID and 1 \
-> SPMI_GSID entry at most?
-
-
-I guess so. Currently, no devices use SPMI_GSID. I guess that we
-can place maxItems: 2. If later needed, this could be changed in
-the future.
-
->     items:
->       items:
->         - minimum: 0
->           maximum: 0xf
->         - enum: [ 0, 1 ]
-> 
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/spmi/spmi.h>
-> > +
-> > +    spmi@.. {
-> > +      compatible = "...";
-> > +      reg = <...>;  
-> 
-> Example has to build now. Just drop these 2 properties.
-
-OK.
-
-> 
-> > +
-> > +      #address-cells = <2>;
-> > +      #size-cells = <0>;
-> > +
-> > +      child@0 {
-> > +        compatible = "...";
-> > +        reg = <0 SPMI_USID>;
-> > +      };
-> > +
-> > +      child@7 {
-> > +        compatible = "...";
-> > +        reg = <7 SPMI_USID
-> > +               3 SPMI_GSID>;
-> > +      };
-> > +    };
-> > -- 
-> > 2.26.2
-> > 
-> >   
-
-
-
-Thanks,
-Mauro
+	Hans
