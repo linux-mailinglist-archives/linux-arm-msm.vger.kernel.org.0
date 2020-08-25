@@ -2,167 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C908251C7B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 17:43:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA17E251CF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 18:10:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726838AbgHYPnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 11:43:12 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:36206 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725998AbgHYPnM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 11:43:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598370190; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=vPjwRTcbHtJglbBEf+g+zBKRbHTS9GuM+a7BNj5yuBU=; b=l3NflHqHz45ZTRzHX/DoD28WgNGKqmuRExDDgLkmcVc/iC4fC4o+uydqpj30RgPOSJb0Edaj
- ohgmMjSfKA1+3fh1IpnbHcC8dMP820VpC6JfOxBukEoWyNP681IFquY4AenxF0z8WxUEVmUR
- JUWn3WuHrvWTRmycrJDBlPkHny4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f45318dca327a6430ed31f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 Aug 2020 15:43:09
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5DD32C43395; Tue, 25 Aug 2020 15:43:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65BAAC433C6;
-        Tue, 25 Aug 2020 15:43:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 65BAAC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        id S1726673AbgHYQK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 12:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49398 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbgHYQKz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Aug 2020 12:10:55 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61389C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 09:10:55 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id x17so3896623uao.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 09:10:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WgWByWGvguKIeIoz2+159dX6x4UuEkDuTZbs4BUSmnA=;
+        b=bFps5sAmhdTDJhNVxL1nFnSKSn5gg1ysP1pQuHcF2HYjtCQl+LECrZqH7IHlUmNWY7
+         k42yemoAfbjbGsQdB3VL4GU1eGJDvTb0Lf5BCj305ARzwvSADE3QxswOOxOFEAvUeynp
+         pGEol79S1Wfm/yaUHQYpiWmto96jvLx6UpnVI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WgWByWGvguKIeIoz2+159dX6x4UuEkDuTZbs4BUSmnA=;
+        b=XuIdUZAYcCln/JOkrCQdU7LPW/IHl0YKKWARphkGZH5hJYK/o+QavezdW5ohicgJbk
+         QOsiVrKQ8prMgvPFt9cxYCzeT4bq7ggyl6rW4uYtbNpIoabDejTczgfHwW7SByRWf/Jf
+         lxzjaypA+ys6lVnPSjwDUw0FCAbav8qberYkbsXfTtTiplmoAo+ewL2zDlj7vjQoGYwZ
+         70tBguE2x2Xhrj15AjvXYJzw+SuJHjaSfGZxShkmQ3LibzXWOCON6jwEpTn3GijSzI3u
+         UKwXDiLfxSYZxM2Dj46L96XXlht6ZC2HVi7YDmUTh8oL3ujgPOpjZAcv0xOL245B/OgD
+         RS0Q==
+X-Gm-Message-State: AOAM532iZ0cNivInLyDJGvAtr9MWhRdBwHi8TPiPP80z5OHEHnfwttB/
+        vCkdyzFjI1/9k6oYdj3Ng6gq7FWuRQwH1A==
+X-Google-Smtp-Source: ABdhPJyH1dIBgBSV0gvNz48hv08O4Zn1raQ0+q8QYia3UMSFGCPoY3RLwIX5YFl3rgt0R2PnGIIkWA==
+X-Received: by 2002:a9f:24f2:: with SMTP id 105mr6113627uar.48.1598371854154;
+        Tue, 25 Aug 2020 09:10:54 -0700 (PDT)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
+        by smtp.gmail.com with ESMTPSA id u185sm1919049vke.17.2020.08.25.09.10.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2020 09:10:52 -0700 (PDT)
+Received: by mail-vs1-f47.google.com with SMTP id i129so6622462vsi.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 09:10:52 -0700 (PDT)
+X-Received: by 2002:a67:fbcc:: with SMTP id o12mr6262613vsr.213.1598371852357;
+ Tue, 25 Aug 2020 09:10:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 25 Aug 2020 09:10:40 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
+Message-ID: <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
+Subject: Re: [PATCH] iommu: Add support to filter non-strict/lazy mode based
+ on device names
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
         Tomasz Figa <tfiga@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] iommu: Add support to filter non-strict/lazy mode based on device names
-Date:   Tue, 25 Aug 2020 21:12:49 +0530
-Message-Id: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently the non-strict or lazy mode of TLB invalidation can only be set
-for all or no domains. This works well for development platforms where
-setting to non-strict/lazy mode is fine for performance reasons but on
-production devices, we need a more fine grained control to allow only
-certain peripherals to support this mode where we can be sure that it is
-safe. So add support to filter non-strict/lazy mode based on the device
-names that are passed via cmdline parameter "iommu.nonstrict_device".
+Hi,
 
-Example: iommu.nonstrict_device="7c4000.sdhci,a600000.dwc3,6048000.etr"
+On Tue, Aug 25, 2020 at 8:43 AM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Currently the non-strict or lazy mode of TLB invalidation can only be set
+> for all or no domains. This works well for development platforms where
+> setting to non-strict/lazy mode is fine for performance reasons but on
+> production devices, we need a more fine grained control to allow only
+> certain peripherals to support this mode where we can be sure that it is
+> safe. So add support to filter non-strict/lazy mode based on the device
+> names that are passed via cmdline parameter "iommu.nonstrict_device".
+>
+> Example: iommu.nonstrict_device="7c4000.sdhci,a600000.dwc3,6048000.etr"
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/iommu/iommu.c | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+I have an inherent dislike of jamming things like this onto the
+command line.  IMHO the command line is the last resort for specifying
+configuration and generally should be limited to some specialized
+debug options and cases where the person running the kernel needs to
+override a config that was set by the person (or company) compiling
+the kernel.  Specifically, having a long/unwieldy command line makes
+it harder to use for the case when an end user actually wants to use
+it to override something.  It's also just another place to look for
+config.
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 609bd25bf154..fd10a073f557 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -32,6 +32,9 @@ static unsigned int iommu_def_domain_type __read_mostly;
- static bool iommu_dma_strict __read_mostly = true;
- static u32 iommu_cmd_line __read_mostly;
- 
-+#define DEVICE_NAME_LEN		1024
-+static char nonstrict_device[DEVICE_NAME_LEN] __read_mostly;
-+
- struct iommu_group {
- 	struct kobject kobj;
- 	struct kobject *devices_kobj;
-@@ -327,6 +330,32 @@ static int __init iommu_dma_setup(char *str)
- }
- early_param("iommu.strict", iommu_dma_setup);
- 
-+static int __init iommu_nonstrict_filter_setup(char *str)
-+{
-+	strlcpy(nonstrict_device, str, DEVICE_NAME_LEN);
-+	return 1;
-+}
-+__setup("iommu.nonstrict_device=", iommu_nonstrict_filter_setup);
-+
-+static bool iommu_nonstrict_device(struct device *dev)
-+{
-+	char *filter, *device;
-+
-+	if (!dev)
-+		return false;
-+
-+	filter = kstrdup(nonstrict_device, GFP_KERNEL);
-+	if (!filter)
-+		return false;
-+
-+	while ((device = strsep(&filter, ","))) {
-+		if (!strcmp(device, dev_name(dev)))
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static ssize_t iommu_group_attr_show(struct kobject *kobj,
- 				     struct attribute *__attr, char *buf)
- {
-@@ -1470,7 +1499,7 @@ static int iommu_get_def_domain_type(struct device *dev)
- 
- static int iommu_group_alloc_default_domain(struct bus_type *bus,
- 					    struct iommu_group *group,
--					    unsigned int type)
-+					    unsigned int type, struct device *dev)
- {
- 	struct iommu_domain *dom;
- 
-@@ -1489,7 +1518,7 @@ static int iommu_group_alloc_default_domain(struct bus_type *bus,
- 	if (!group->domain)
- 		group->domain = dom;
- 
--	if (!iommu_dma_strict) {
-+	if (!iommu_dma_strict || iommu_nonstrict_device(dev)) {
- 		int attr = 1;
- 		iommu_domain_set_attr(dom,
- 				      DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE,
-@@ -1509,7 +1538,7 @@ static int iommu_alloc_default_domain(struct iommu_group *group,
- 
- 	type = iommu_get_def_domain_type(dev);
- 
--	return iommu_group_alloc_default_domain(dev->bus, group, type);
-+	return iommu_group_alloc_default_domain(dev->bus, group, type, dev);
- }
- 
- /**
-@@ -1684,7 +1713,7 @@ static void probe_alloc_default_domain(struct bus_type *bus,
- 	if (!gtype.type)
- 		gtype.type = iommu_def_domain_type;
- 
--	iommu_group_alloc_default_domain(bus, group, gtype.type);
-+	iommu_group_alloc_default_domain(bus, group, gtype.type, NULL);
- 
- }
- 
+The other problem is that this doesn't necessarily scale very well.
+While it works OK for embedded cases it doesn't work terribly well for
+distributions.  I know that in an out-of-band thread you indicated
+that it doesn't break anything that's not already broken (AKA this
+doesn't fix the distro case but it doesn't make it worse), it would be
+better to come up with a more universal solution.
 
-base-commit: e46b3c0d011eab9933c183d5b47569db8e377281
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Ideally it feels like we should figure out how to tag devices in a
+generic manner automatically (hardcode at the driver or in the device
+tree).  I think the out-of-band discussions talked about "external
+facing" and the like.  We could also, perhaps, tag devices that have
+"binary blob" firmware if we wanted.  Then we'd have a policy (set by
+Kconfig, perhaps overridable via commandline) that indicated the
+strictness level for the various classes of devices.  So policy would
+be decided by KConfig and/or command line.
 
+-Doug
