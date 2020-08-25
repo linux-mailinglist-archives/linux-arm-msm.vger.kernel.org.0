@@ -2,118 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA17E251CF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 18:10:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5018251D11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 18:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbgHYQK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 12:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726336AbgHYQKz (ORCPT
+        id S1725947AbgHYQVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 12:21:06 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:60460 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbgHYQVF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 12:10:55 -0400
-Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61389C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 09:10:55 -0700 (PDT)
-Received: by mail-ua1-x943.google.com with SMTP id x17so3896623uao.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 09:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WgWByWGvguKIeIoz2+159dX6x4UuEkDuTZbs4BUSmnA=;
-        b=bFps5sAmhdTDJhNVxL1nFnSKSn5gg1ysP1pQuHcF2HYjtCQl+LECrZqH7IHlUmNWY7
-         k42yemoAfbjbGsQdB3VL4GU1eGJDvTb0Lf5BCj305ARzwvSADE3QxswOOxOFEAvUeynp
-         pGEol79S1Wfm/yaUHQYpiWmto96jvLx6UpnVI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WgWByWGvguKIeIoz2+159dX6x4UuEkDuTZbs4BUSmnA=;
-        b=XuIdUZAYcCln/JOkrCQdU7LPW/IHl0YKKWARphkGZH5hJYK/o+QavezdW5ohicgJbk
-         QOsiVrKQ8prMgvPFt9cxYCzeT4bq7ggyl6rW4uYtbNpIoabDejTczgfHwW7SByRWf/Jf
-         lxzjaypA+ys6lVnPSjwDUw0FCAbav8qberYkbsXfTtTiplmoAo+ewL2zDlj7vjQoGYwZ
-         70tBguE2x2Xhrj15AjvXYJzw+SuJHjaSfGZxShkmQ3LibzXWOCON6jwEpTn3GijSzI3u
-         UKwXDiLfxSYZxM2Dj46L96XXlht6ZC2HVi7YDmUTh8oL3ujgPOpjZAcv0xOL245B/OgD
-         RS0Q==
-X-Gm-Message-State: AOAM532iZ0cNivInLyDJGvAtr9MWhRdBwHi8TPiPP80z5OHEHnfwttB/
-        vCkdyzFjI1/9k6oYdj3Ng6gq7FWuRQwH1A==
-X-Google-Smtp-Source: ABdhPJyH1dIBgBSV0gvNz48hv08O4Zn1raQ0+q8QYia3UMSFGCPoY3RLwIX5YFl3rgt0R2PnGIIkWA==
-X-Received: by 2002:a9f:24f2:: with SMTP id 105mr6113627uar.48.1598371854154;
-        Tue, 25 Aug 2020 09:10:54 -0700 (PDT)
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
-        by smtp.gmail.com with ESMTPSA id u185sm1919049vke.17.2020.08.25.09.10.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Aug 2020 09:10:52 -0700 (PDT)
-Received: by mail-vs1-f47.google.com with SMTP id i129so6622462vsi.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 09:10:52 -0700 (PDT)
-X-Received: by 2002:a67:fbcc:: with SMTP id o12mr6262613vsr.213.1598371852357;
- Tue, 25 Aug 2020 09:10:52 -0700 (PDT)
+        Tue, 25 Aug 2020 12:21:05 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: sre)
+        with ESMTPSA id 2409C29244F
+Received: by earth.universe (Postfix, from userid 1000)
+        id A3C303C0C82; Tue, 25 Aug 2020 18:21:01 +0200 (CEST)
+Date:   Tue, 25 Aug 2020 18:21:01 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Elliot Berman <eberman@codeaurora.org>
+Cc:     Andy Yan <andy.yan@rock-chips.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Trilok Soni <tsoni@codeaurora.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+Subject: Re: [RESEND PATCH v1 1/4] dt-bindings: power: reset: Convert
+ reboot-mode to YAML
+Message-ID: <20200825162101.27ivwlxbby7q7hy6@earth.universe>
+References: <1597776856-12014-1-git-send-email-eberman@codeaurora.org>
+ <1597776856-12014-2-git-send-email-eberman@codeaurora.org>
 MIME-Version: 1.0
-References: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
-In-Reply-To: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 25 Aug 2020 09:10:40 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
-Message-ID: <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
-Subject: Re: [PATCH] iommu: Add support to filter non-strict/lazy mode based
- on device names
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="svvw56udockwuh7v"
+Content-Disposition: inline
+In-Reply-To: <1597776856-12014-2-git-send-email-eberman@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+
+--svvw56udockwuh7v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
 Hi,
 
-On Tue, Aug 25, 2020 at 8:43 AM Sai Prakash Ranjan
-<saiprakash.ranjan@codeaurora.org> wrote:
->
-> Currently the non-strict or lazy mode of TLB invalidation can only be set
-> for all or no domains. This works well for development platforms where
-> setting to non-strict/lazy mode is fine for performance reasons but on
-> production devices, we need a more fine grained control to allow only
-> certain peripherals to support this mode where we can be sure that it is
-> safe. So add support to filter non-strict/lazy mode based on the device
-> names that are passed via cmdline parameter "iommu.nonstrict_device".
->
-> Example: iommu.nonstrict_device="7c4000.sdhci,a600000.dwc3,6048000.etr"
+Thanks, queued.
 
-I have an inherent dislike of jamming things like this onto the
-command line.  IMHO the command line is the last resort for specifying
-configuration and generally should be limited to some specialized
-debug options and cases where the person running the kernel needs to
-override a config that was set by the person (or company) compiling
-the kernel.  Specifically, having a long/unwieldy command line makes
-it harder to use for the case when an end user actually wants to use
-it to override something.  It's also just another place to look for
-config.
+-- Sebastian
 
-The other problem is that this doesn't necessarily scale very well.
-While it works OK for embedded cases it doesn't work terribly well for
-distributions.  I know that in an out-of-band thread you indicated
-that it doesn't break anything that's not already broken (AKA this
-doesn't fix the distro case but it doesn't make it worse), it would be
-better to come up with a more universal solution.
+On Tue, Aug 18, 2020 at 11:54:13AM -0700, Elliot Berman wrote:
+> Convert reboot-mode bindings to YAML.
+>=20
+> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
+> ---
+>  .../bindings/power/reset/reboot-mode.txt           | 25 ------------
+>  .../bindings/power/reset/reboot-mode.yaml          | 47 ++++++++++++++++=
+++++++
+>  2 files changed, 47 insertions(+), 25 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/power/reset/reboot-=
+mode.txt
+>  create mode 100644 Documentation/devicetree/bindings/power/reset/reboot-=
+mode.yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.tx=
+t b/Documentation/devicetree/bindings/power/reset/reboot-mode.txt
+> deleted file mode 100644
+> index de34f27..0000000
+> --- a/Documentation/devicetree/bindings/power/reset/reboot-mode.txt
+> +++ /dev/null
+> @@ -1,25 +0,0 @@
+> -Generic reboot mode core map driver
+> -
+> -This driver get reboot mode arguments and call the write
+> -interface to store the magic value in special register
+> -or ram. Then the bootloader can read it and take different
+> -action according to the argument stored.
+> -
+> -All mode properties are vendor specific, it is a indication to tell
+> -the bootloader what to do when the system reboots, and should be named
+> -as mode-xxx =3D <magic> (xxx is mode name, magic should be a none-zero v=
+alue).
+> -
+> -For example modes common on Android platform:
+> -- mode-normal: Normal reboot mode, system reboot with command "reboot".
+> -- mode-recovery: Android Recovery mode, it is a mode to format the devic=
+e or update a new image.
+> -- mode-bootloader: Android fastboot mode, it's a mode to re-flash partit=
+ions on the Android based device.
+> -- mode-loader: A bootloader mode, it's a mode used to download image on =
+Rockchip platform,
+> -	       usually used in development.
+> -
+> -Example:
+> -	reboot-mode {
+> -		mode-normal =3D <BOOT_NORMAL>;
+> -		mode-recovery =3D <BOOT_RECOVERY>;
+> -		mode-bootloader =3D <BOOT_FASTBOOT>;
+> -		mode-loader =3D <BOOT_BL_DOWNLOAD>;
+> -	}
+> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.ya=
+ml b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
+> new file mode 100644
+> index 0000000..a6c9102
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
+> @@ -0,0 +1,47 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/reset/reboot-mode.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Generic reboot mode core map
+> +
+> +maintainers:
+> +  - Andy Yan <andy.yan@rock-chips.com>
+> +
+> +description: |
+> +  This driver get reboot mode arguments and call the write
+> +  interface to store the magic value in special register
+> +  or ram. Then the bootloader can read it and take different
+> +  action according to the argument stored.
+> +
+> +  All mode properties are vendor specific, it is a indication to tell
+> +  the bootloader what to do when the system reboots, and should be named
+> +  as mode-xxx =3D <magic> (xxx is mode name, magic should be a non-zero =
+value).
+> +
+> +  For example, modes common Android platform are:
+> +    - normal: Normal reboot mode, system reboot with command "reboot".
+> +    - recovery: Android Recovery mode, it is a mode to format the device=
+ or update a new image.
+> +    - bootloader: Android fastboot mode, it's a mode to re-flash partiti=
+ons on the Android based device.
+> +    - loader: A bootloader mode, it's a mode used to download image on R=
+ockchip platform,
+> +              usually used in development.
+> +
+> +properties:
+> +  mode-normal:
+> +      $ref: /schemas/types.yaml#/definitions/uint32
+> +      description: |
+> +        Default value to set on a reboot if no command was provided.
+> +
+> +patternProperties:
+> +  "^mode-.*$":
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +
+> +examples:
+> +  - |
+> +    reboot-mode {
+> +      mode-normal =3D <0>;
+> +      mode-recovery =3D <1>;
+> +      mode-bootloader =3D <2>;
+> +      mode-loader =3D <3>;
+> +    };
+> +...
+> --=20
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>=20
 
-Ideally it feels like we should figure out how to tag devices in a
-generic manner automatically (hardcode at the driver or in the device
-tree).  I think the out-of-band discussions talked about "external
-facing" and the like.  We could also, perhaps, tag devices that have
-"binary blob" firmware if we wanted.  Then we'd have a policy (set by
-Kconfig, perhaps overridable via commandline) that indicated the
-strictness level for the various classes of devices.  So policy would
-be decided by KConfig and/or command line.
+--svvw56udockwuh7v
+Content-Type: application/pgp-signature; name="signature.asc"
 
--Doug
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAl9FOl8ACgkQ2O7X88g7
++ppIVA//Q7sFR8KWW2DLHJO66JM9waRoFhMR0niAYGKNORlj8MIbR5ruDIQ7iX2K
+E0Q+7igrfRF2nOxuVOEYD8dIS9PygAeLyiCY8u5gZorISVf2GveENkWSDGZeY//G
+nkoEjTFKI17uEmwgw5PO07xuHJvmhUJ3UvaA+gNHIWOrkO2P6zH4s4jEZsqGs1uu
+xJk+BFCVBjb7cX6cWZLyF1cgw660n3bNtF9iPjHnNLKpVxIwK+OEB/hCeatEayTh
+3jPeZ1zLtI3Umo3dhEo0H+s5Hjt/HIt/bQhuvirTTrDyDQF4n3gxWwIeRKUY3z8N
+jTw2esV/61m8ZpIX4cSuwoAroCUlK4jYRRdNDuCfwT07HbLiUs/YdC3KtZGXXrdn
+xacoaTXQWP/7FL7URwPEsc4KcRImU3sodyPs+ReXfk8DAQA2DjT95hSqLUaZvh8h
+1uilDsSLFJauzWR7hDGuhPyA/3qvm9AU2BrZ0ziskT7XoZ/hq0GB/Dtuuq+5lV8c
+dGMNmLIbMyXO+hGnIODXl5fxMiayEJ9mW3wN0P8ynTZ/2N7IKm3tTXeDGwHosd7Y
+M+d+JHY4p9T8tF84p9eqQf1CqFVLffZjnEfRTLMY60AJBdDHSp9SdjrdoYNs4/AH
+So9SKU3ssbJLe9c2Ea1DjQx773vfq1iFAFaS2WvWPX/Up8TXmyo=
+=33YO
+-----END PGP SIGNATURE-----
+
+--svvw56udockwuh7v--
