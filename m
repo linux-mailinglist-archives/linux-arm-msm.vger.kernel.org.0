@@ -2,226 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5456251538
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 11:21:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A2A9251559
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 11:29:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728814AbgHYJVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 05:21:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726015AbgHYJVN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 05:21:13 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4A4C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 02:21:13 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id y206so6831683pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 02:21:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=CabenADhkeDmn9ATtQd7NLLVZBNFWUdF1srj48ypUAI=;
-        b=kSjlVWgouzQuBvJvV62xPzMHc4Vj3H4P2jq5sEj88IFUueTeSlgbZJQQNE3NPTOaIv
-         AUFfCzVN60vZgbqISgmmC4fDhSRw0k+/pe+jV/GUy7I2Czq2iQctt613YQmZPS5WbSj/
-         7Z92ZI2S3kDbhgkMw9zM0X/7FiWzayW+Uocbo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=CabenADhkeDmn9ATtQd7NLLVZBNFWUdF1srj48ypUAI=;
-        b=poJTxRMMDG0JANGJ870iAXxHTCZq8qEFLnGi37/Wqif7FxsIc2NKsQwzG45RrIon72
-         l0pMaiBnCAvvUS7v9Nh0Cel0LwvlrUc3ncnpMyzTd0HJ3fq4/M9Yp4VVbvHYIRqsvhdn
-         uSVoLNJjtOEFPoBWQeCNBNqMqy63B4hK20vJAERnlqFf3HLsxC+zssIoDxpJA5XJukkK
-         XgzeslEfnPDLMeE8iTeHlBVBuOgiugWmMNh6/ohJDPn8dox4Us9BJDRPcycbpOp9z4Sy
-         XssAQOVYwhYz9jh9ZVpR5mqk4BTpMf/PR7oS0gog16UooulZWYoKUQqvJkV7UaZnSkyR
-         G0Jw==
-X-Gm-Message-State: AOAM532nLtKI2karZ4YrFQ1T1KHzVN5imlySE3BX8AXNv2EoQ1acxQTr
-        AYRt7lEA5BMC0mmIJHGuaWuORQ==
-X-Google-Smtp-Source: ABdhPJxdwZWXCwKiihvkw3GaI/1XdPFEcf/CzYv8zUyN/gMdBfFcd2+g74fujhZp9Fj7e9zwfmwJng==
-X-Received: by 2002:a17:902:b681:: with SMTP id c1mr7154572pls.10.1598347272513;
-        Tue, 25 Aug 2020 02:21:12 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id s125sm14294117pfb.125.2020.08.25.02.21.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 02:21:11 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200825003341.1797322-1-robdclark@gmail.com>
-References: <20200825003341.1797322-1-robdclark@gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Atul Dhudase <adhudase@codeaurora.org>,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Evan Green <evgreen@chromium.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Ajit Pandey <ajitp@codeaurora.org>,
-        Alexandru Stan <amstan@chromium.org>,
-        Sujit Kautkar <sujitka@chromium.org>,
+        id S1728901AbgHYJ3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 05:29:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59734 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726149AbgHYJ3S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Aug 2020 05:29:18 -0400
+Received: from coco.lan (ip5f5ad5a4.dynamic.kabel-deutschland.de [95.90.213.164])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A4DDB2068F;
+        Tue, 25 Aug 2020 09:29:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1598347757;
+        bh=giUh8kfdw+J36IN0Ge8r43Cgn1ew0GISv68WF0PHD6c=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=OKFVKlDTuVbtfdKMEfHQBUFSi6MOoM/ICBdx2oNDMshzM1tuFmSkFC0ODT1FPGhDr
+         b7AS2aRWF8NI00LIOrrbKPdWaBa0Gjyn1+ysZ6fqrQbtNQrvTE1vPu95P57J0bncnn
+         Gq9NmF0ow7xDJkWWG20g38ccq9mUWJW5xrahMJrU=
+Date:   Tue, 25 Aug 2020 11:29:12 +0200
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        John Stultz <john.stultz@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Josh Cartwright <joshc@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-To:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org
-Date:   Tue, 25 Aug 2020 02:21:10 -0700
-Message-ID: <159834727050.334488.84544239322533805@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Subject: Re: [PATCH] dt-bindings: convert spmi.txt to spmi.yaml
+Message-ID: <20200825112912.4fca31ad@coco.lan>
+In-Reply-To: <20200819230812.GB2090217@bogus>
+References: <94b055687143c9593cd4311f8bcda99a743a619f.1597850327.git.mchehab+huawei@kernel.org>
+        <20200819230812.GB2090217@bogus>
+X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2020-08-24 17:33:39)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/bo=
-ot/dts/qcom/sc7180-trogdor.dtsi
-> new file mode 100644
-> index 000000000000..b04987ab6c22
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -0,0 +1,1364 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-[...]
-> +
-> +       gpio_keys: gpio-keys {
-> +               compatible =3D "gpio-keys";
-> +               status =3D "disabled";
-> +               pinctrl-names =3D "default";
-> +               pinctrl-0 =3D <&pen_pdct_l>;
-> +
-> +               pen-insert {
-> +                       label =3D "Pen Insert";
-> +
-> +                       /* Insert =3D low, eject =3D high */
-> +                       gpios =3D <&tlmm 52 GPIO_ACTIVE_LOW>;
-> +                       linux,code =3D <SW_PEN_INSERTED>;
-> +                       linux,input-type =3D <EV_SW>;
-> +                       wakeup-source;
-> +               };
-> +       };
-> +
-> +       max98357a: max98357a {
+Em Wed, 19 Aug 2020 17:08:12 -0600
+Rob Herring <robh@kernel.org> escreveu:
 
-Maybe node name should be 'audio-codec' or 'dac' or 'amp' or 'speaker'
-or 'codec'?
+> On Wed, Aug 19, 2020 at 05:20:06PM +0200, Mauro Carvalho Chehab wrote:
+> > Convert the SPMI bus documentation to JSON/yaml.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> > 
+> > Rob,
+> > 
+> > As promissed, this patch converts the spmi.txt generic bus bindings to
+> > html.  
+> 
+> Thanks!
+> 
+> > 
+> >  .../bindings/mfd/qcom,spmi-pmic.txt           |  2 +-
+> >  .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  4 +-
+> >  .../devicetree/bindings/spmi/spmi.txt         | 41 ------------
+> >  .../devicetree/bindings/spmi/spmi.yaml        | 62 +++++++++++++++++++
+> >  4 files changed, 65 insertions(+), 44 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/spmi/spmi.txt
+> >  create mode 100644 Documentation/devicetree/bindings/spmi/spmi.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> > index fffc8fde3302..79367a43b27d 100644
+> > --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> > +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> > @@ -37,7 +37,7 @@ Required properties:
+> >                     or generalized "qcom,spmi-pmic".
+> >  - reg:             Specifies the SPMI USID slave address for this device.
+> >                     For more information see:
+> > -                   Documentation/devicetree/bindings/spmi/spmi.txt
+> > +                   Documentation/devicetree/bindings/spmi/spmi.yaml
+> >  
+> >  Required properties for peripheral child nodes:
+> >  - compatible:      Should contain "qcom,xxx", where "xxx" is a peripheral name.
+> > diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+> > index e16b9b5afc70..ca645e21fe47 100644
+> > --- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+> > +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+> > @@ -7,8 +7,8 @@ devices to control a single SPMI master.
+> >  The PMIC Arbiter can also act as an interrupt controller, providing interrupts
+> >  to slave devices.
+> >  
+> > -See spmi.txt for the generic SPMI controller binding requirements for child
+> > -nodes.
+> > +See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
+> > +controller binding requirements for child nodes.
+> >  
+> >  See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
+> >  generic interrupt controller binding documentation.
+> > diff --git a/Documentation/devicetree/bindings/spmi/spmi.txt b/Documentation/devicetree/bindings/spmi/spmi.txt
+> > deleted file mode 100644
+> > index 4bb10d161a27..000000000000
+> > --- a/Documentation/devicetree/bindings/spmi/spmi.txt
+> > +++ /dev/null
+> > @@ -1,41 +0,0 @@
+> > -System Power Management Interface (SPMI) Controller
+> > -
+> > -This document defines a generic set of bindings for use by SPMI controllers.  A
+> > -controller is modelled in device tree as a node with zero or more child nodes,
+> > -each representing a unique slave on the bus.
+> > -
+> > -Required properties:
+> > -- #address-cells : must be set to 2
+> > -- #size-cells : must be set to 0
+> > -
+> > -Child nodes:
+> > -
+> > -An SPMI controller node can contain zero or more child nodes representing slave
+> > -devices on the bus.  Child 'reg' properties are specified as an address, type
+> > -pair.  The address must be in the range 0-15 (4 bits).  The type must be one of
+> > -SPMI_USID (0) or SPMI_GSID (1) for Unique Slave ID or Group Slave ID respectively.
+> > -These are the identifiers "statically assigned by the system integrator", as
+> > -per the SPMI spec.
+> > -
+> > -Each child node must have one and only one 'reg' entry of type SPMI_USID.
+> > -
+> > -#include <dt-bindings/spmi/spmi.h>
+> > -
+> > -	spmi@.. {
+> > -		compatible = "...";
+> > -		reg = <...>;
+> > -
+> > -		#address-cells = <2>;
+> > -		#size-cells = <0>;
+> > -
+> > -		child@0 {
+> > -			compatible = "...";
+> > -			reg = <0 SPMI_USID>;
+> > -		};
+> > -
+> > -		child@7 {
+> > -			compatible = "...";
+> > -			reg = <7 SPMI_USID
+> > -			       3 SPMI_GSID>;
+> > -		};
+> > -	};
+> > diff --git a/Documentation/devicetree/bindings/spmi/spmi.yaml b/Documentation/devicetree/bindings/spmi/spmi.yaml
+> > new file mode 100644
+> > index 000000000000..8d72796b9bec
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/spmi/spmi.yaml
+> > @@ -0,0 +1,62 @@
+> > +# SPDX-License-Identifier: GPL-2.0
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/spmi/spmi.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: System Power Management Interface (SPMI) Controller
+> > +
+> > +maintainers:
+> > +  - Josh Cartwright <joshc@codeaurora.org>
+> > +
+> > +description: |
+> > +  The System Power Management (SPMI) controller is a 2-wire bus defined
+> > +  by the MIPI Alliance for power management control to be used on SoC designs.
+> > +
+> > +  SPMI controllers are modelled in device tree using a generic set of
+> > +  bindings defined here, plus any bus controller specific properties, if
+> > +  needed.
+> > +
+> > +  Each SPMI controller has zero or more child nodes (up to 16 ones), each
+> > +  one representing an unique slave at the bus.
+> > +
+> > +properties:
+> > +  $nodename:
+> > +    pattern: "spmi@[0-9a-f]+"  
+> 
+> Just "spmi@.*" as we shouldn't assume unit-address details of the parent 
+> bus.
 
-> +               compatible =3D "maxim,max98357a";
-> +               pinctrl-names =3D "default";
-> +               pinctrl-0 =3D <&amp_en>;
-> +               sdmode-gpios =3D <&tlmm 23 GPIO_ACTIVE_HIGH>;
-> +               #sound-dai-cells =3D <0>;
-> +       };
-> +
-> +       pwmleds {
-> +               compatible =3D "pwm-leds";
-> +               keyboard_backlight: keyboard-backlight {
-> +                       status =3D "disabled";
-> +                       label =3D "cros_ec::kbd_backlight";
-> +                       pwms =3D <&cros_ec_pwm 0>;
-> +                       max-brightness =3D <1023>;
-> +               };
-> +       };
-> +};
-> +
-> +&qfprom {
-> +       vcc-supply =3D <&pp1800_l11a>;
-> +};
-> +
-> +
+Ok.
 
-Drop double newline?
+> 
+> > +
+> > +  compatible:
+> > +    description: filled by the SPMI bus controller
+> > +
+> > +  reg:
+> > +    maxItems: 1  
+> 
+> No need for 'reg' and 'compatible' here. Those will be covered by 
+> specific SPMI controller schemas.
 
-> +&qspi {
-> +       status =3D "okay";
-> +       pinctrl-names =3D "default";
-> +       pinctrl-0 =3D <&qspi_clk>, <&qspi_cs0>, <&qspi_data01>;
-> +
-> +       flash@0 {
-> +               compatible =3D "jedec,spi-nor";
-> +               reg =3D <0>;
-> +
-> +               /* TODO: Increase frequency after testing */
+Ok. I was in doubt about those, as the original .txt file had it with
+a <...>.
 
-Maybe drop this TODO? I don't see it being too meaningful.
+> But you do need:
+> 
+> "#address-cells":
+>   const: 2
+> 
+> "#size-cells":
+>   const: 0
 
-> +               spi-max-frequency =3D <25000000>;
-> +               spi-tx-bus-width =3D <2>;
-> +               spi-rx-bus-width =3D <2>;
-> +       };
-> +};
-> +
-> +
+Ok. 
 
-Drop double newline?
+> 
+> > +
+> > +patternProperties:
+> > +  "@([0-9]|1[0-5])$":  
+> 
+> While buses define their own unit-address format, unit addresses are 
+> normally hex.
 
-> +&apps_rsc {
-> +       pm6150-rpmh-regulators {
-> +               compatible =3D "qcom,pm6150-rpmh-regulators";
-> +
-> +&wifi {
-> +       status =3D "okay";
-> +       vdd-0.8-cx-mx-supply =3D <&vdd_cx_wlan>;
-> +       vdd-1.8-xo-supply =3D <&pp1800_l1c>;
-> +       vdd-1.3-rfa-supply =3D <&pp1300_l2c>;
-> +
-> +       /*
-> +        * TODO: Put ch1 supply in its rightful place, rather than in ch0=
-'s
-> +        * spot. Channel 0 is held open by bluetooth for now.
-> +        */
-> +       vdd-3.3-ch0-supply =3D <&pp3300_l11c>;
-> +       wifi-firmware {
-> +               iommus =3D <&apps_smmu 0xc2 0x1>;
-> +       };
-> +};
-> +
-> +/* PINCTRL - additions to nodes defined in sdm845.dtsi */
+I don't have a strong preference here. Yet, as this bus can have only up 
+to 16 child (starting from 0), I guess decimal would make more sense.
 
-Oops, that should be sc7180.dtsi
+> 
+> > +    description: up to 16 child PMIC nodes  
+> 
+>        type: object
+> 
+> Need to also define 'reg' constraints as defined by the bus:
+> 
+> properties:
+>   reg:
+>     minItems: 1
+>     maxItems: 2  #??? Not sure about this. Is it 1 SPMI_USID and 1 \
+> SPMI_GSID entry at most?
 
-> +
-> +&qspi_cs0 {
-> +       pinconf {
-> +               pins =3D "gpio68";
-> +               bias-disable;
-> +       };
-[...]
-> +/* PINCTRL - board-specific pinctrl */
-> +
-> +&pm6150_gpio {
-> +       status =3D "disabled"; /* No GPIOs are connected */
-> +};
-> +
-> +&pm6150l_gpio {
-> +       gpio-line-names =3D "AP_SUSPEND",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "",
-> +                         "";
-> +};
-> +
-> +&tlmm {
-[...]
-> +
-> +&venus {
-> +       video-firmware {
-> +               iommus =3D <&apps_smmu 0x0c42 0x0>;
-> +       };
-> +};
 
-I believe this node should come before the PINCTRL comment above and be
-sorted alphabetically by node name.
+I guess so. Currently, no devices use SPMI_GSID. I guess that we
+can place maxItems: 2. If later needed, this could be changed in
+the future.
 
- +/* PINCTRL - additions to nodes defined in sdm845.dtsi */
+>     items:
+>       items:
+>         - minimum: 0
+>           maximum: 0xf
+>         - enum: [ 0, 1 ]
+> 
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/spmi/spmi.h>
+> > +
+> > +    spmi@.. {
+> > +      compatible = "...";
+> > +      reg = <...>;  
+> 
+> Example has to build now. Just drop these 2 properties.
+
+OK.
+
+> 
+> > +
+> > +      #address-cells = <2>;
+> > +      #size-cells = <0>;
+> > +
+> > +      child@0 {
+> > +        compatible = "...";
+> > +        reg = <0 SPMI_USID>;
+> > +      };
+> > +
+> > +      child@7 {
+> > +        compatible = "...";
+> > +        reg = <7 SPMI_USID
+> > +               3 SPMI_GSID>;
+> > +      };
+> > +    };
+> > -- 
+> > 2.26.2
+> > 
+> >   
+
+
+
+Thanks,
+Mauro
