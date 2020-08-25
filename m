@@ -2,207 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A93C2512AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 09:10:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 125102512F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 09:20:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729329AbgHYHKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 03:10:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37976 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729276AbgHYHK2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 03:10:28 -0400
-Received: from localhost (unknown [122.171.38.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 61839207FB;
-        Tue, 25 Aug 2020 07:10:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598339427;
-        bh=pQeWltEcxvf6xblO4Zb7iBrXXzII7g6ooH3nnM5Con4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=HlbfwRIhKHwI1y2UfxPiiQRFZXwPOHcB6//DIy2uD++z6SUYwv/8SPqV4pIkaxsI8
-         CYtrbWIoJGTI3133l6BYjcT6Fs7s3BTfU3s5p4oXT7Hupxmxw+V4zueQBab35arMVE
-         Mt+dDAmNs4MbMGqc0qzVym6Z4/c0bGBG6sf4/g6g=
-Date:   Tue, 25 Aug 2020 12:40:23 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
-Cc:     dmaengine@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 2/3] dmaengine: add peripheral configuration
-Message-ID: <20200825071023.GB2639@vkoul-mobl>
-References: <20200824084712.2526079-1-vkoul@kernel.org>
- <20200824084712.2526079-3-vkoul@kernel.org>
- <50ed780f-4c1a-2da2-71e4-423f3b224e25@ti.com>
+        id S1729343AbgHYHUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 03:20:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50200 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729301AbgHYHUU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Aug 2020 03:20:20 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7BE1C0613ED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 00:20:19 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id 17so6607347pfw.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 00:20:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=vg5jAvVQXxT9NoQtlYydmDlexL/3ZUaKgzWx4DPbqMc=;
+        b=PtcLxUsUsen/kCOn1Qu+UpVo4UmeYVlFBp/3mrHIwuuvQGD4Tb+Wu5PLYRRFP/gc1s
+         y4Pq+CTtelzAq6PBaRYVbXnk+EoRMmI80F/FoEz8CXXTU10OOK5yHzXYNo66W7fVQq8U
+         vNLP0+0ENzRz8UG37xRLcwyjrlH/h7tMlBywU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=vg5jAvVQXxT9NoQtlYydmDlexL/3ZUaKgzWx4DPbqMc=;
+        b=dFEYClsUXjoYQOE/jDoQOKhjwUT5NOtHl8Tv1YK04m29hiO++oBDUvK7cLmMj9cbmz
+         GvZw+RDg93VXEyehZXxjVBD6zKPNx9+Wtu4Qo0xmUk0/nCFunzkH8tE8+LXCmqLfwXX7
+         6su6O/n9adMV/apbiaTz9ZlF44jDGUbVK1LbwMyGuR7ryRHtcdKly6sRjVoYllDSZqK4
+         IiCmIU+dK2WG8c4fQnzNad60VRoq1Gfptu0d7iMn98pVAKqjH6wERpBc3IPrzrPxg5+b
+         RDiYm7p5YqQ/p2/wtJfbFQyNU88Nw8+h130RTorIRxWoJW4SGHleIOUjGSy0Rurw9fcD
+         sWbg==
+X-Gm-Message-State: AOAM530CeV4Ht2T+ptcp1FZLDr5W0ICGqEBBF7q74sGlOq5n/E5CFAAs
+        VwMoZDm/UP5gfB+N8RCg12W+vQ==
+X-Google-Smtp-Source: ABdhPJyzNUCbdnBjGxXGVwGQwQsAzmGrWhlHRrFkyhNvHPB0nHjuj4tILIjEYc9j4vEy2nHcmu4W8g==
+X-Received: by 2002:a62:2704:: with SMTP id n4mr7083175pfn.246.1598340019012;
+        Tue, 25 Aug 2020 00:20:19 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id x136sm13701355pfc.28.2020.08.25.00.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2020 00:20:18 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <50ed780f-4c1a-2da2-71e4-423f3b224e25@ti.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200824164212.GA3715@yoga>
+References: <20200821204921.32536-1-sibis@codeaurora.org> <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com> <20200824164212.GA3715@yoga>
+Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME flags
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, khilman@kernel.org,
+        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, gregkh@linuxfoundation.org, pavel@ucw.cz,
+        len.brown@intel.com, rnayak@codeaurora.org, dianders@chromium.org,
+        mka@chromium.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Tue, 25 Aug 2020 00:20:17 -0700
+Message-ID: <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Peter,
+Quoting Bjorn Andersson (2020-08-24 09:42:12)
+> On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
+>=20
+> > Quoting Sibi Sankar (2020-08-21 13:49:20)
+> > > Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
+> > > status of the PM domain unaltered during suspend/resume respectively.
+> > > The flags are aimed at power domains coupled to co-processors which
+> > > enter low-power modes independent to that of the application processo=
+r.
+> > >=20
+> > > Specifically the flags are to be used by the power domains exposed
+> > > by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
+> > > power domains are used to notify the Always on Subsystem (AOSS) that
+> > > a particular co-processor is up. AOSS uses this information to wait
+> > > for the co-processors to suspend before starting its sleep sequence.
+> > > The application processor powers off these power domains only if the
+> > > co-processor has crashed or powered off and remains unaltered during
+> > > system suspend/resume.
+> >=20
+> > Why are these power domains instead of some QMP message sent during
+> > remote proc power up?
+>=20
+> The understanding I gained as I researched this, was that with this
+> property enabled resources related to the particular subsystem will be
+> kept enabled when the apss enters some power save mode. So my
+> interpretation was that it does "keep something powered".
 
-On 25-08-20, 09:52, Peter Ujfalusi wrote:
-> Hi Vinod,
-> 
-> On 24/08/2020 11.47, Vinod Koul wrote:
-> > Some complex dmaengine controllers have capability to program the
-> > peripheral device, so pass on the peripheral configuration as part of
-> > dma_slave_config
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  include/linux/dmaengine.h | 75 +++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 75 insertions(+)
-> > 
-> > diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> > index 6fbd5c99e30c..264643ca9209 100644
-> > --- a/include/linux/dmaengine.h
-> > +++ b/include/linux/dmaengine.h
-> > @@ -380,6 +380,73 @@ enum dma_slave_buswidth {
-> >  	DMA_SLAVE_BUSWIDTH_64_BYTES = 64,
-> >  };
-> >  
-> > +/**
-> > + * enum spi_transfer_cmd - spi transfer commands
-> > + */
-> > +enum spi_transfer_cmd {
-> > +	SPI_TX = 1,
-> > +	SPI_RX,
-> > +	SPI_DUPLEX,
-> > +};
-> > +
-> > +/**
-> > + * struct dmaengine_spi_config - spi config for peripheral
-> > + *
-> > + * @loopback_en: spi loopback enable when set
-> > + * @clock_pol: clock polarity
-> > + * @data_pol: data polarity
-> > + * @pack_en: process tx/rx buffers as packed
-> > + * @word_len: spi word length
-> > + * @clk_div: source clock divider
-> > + * @clk_src: serial clock
-> > + * @cmd: spi cmd
-> > + * @cs: chip select toggle
-> > + * @rx_len: receive length for spi buffer
-> > + */
-> > +struct dmaengine_spi_config {
-> > +	u8 loopback_en;
-> > +	u8 clock_pol;
-> > +	u8 data_pol;
-> > +	u8 pack_en;
-> > +	u8 word_len;
-> > +	u32 clk_div;
-> > +	u32 clk_src;
-> > +	u8 fragmentation;
-> > +	enum spi_transfer_cmd cmd;
-> > +	u8 cs;
-> > +	u32 rx_len;
-> > +};
-> > +
-> > +/**
-> > + * struct dmaengine_i2c_config - i2c config for peripheral
-> > + *
-> > + * @pack_enable: process tx/rx buffers as packed
-> > + * @cycle_count: clock cycles to be sent
-> > + * @high_count: high period of clock
-> > + * @low_count: low period of clock
-> > + * @clk_div: source clock divider
-> > + * @addr: i2c bus address
-> > + * @strech: strech the clock at eot
-> > + * @op: i2c cmd
-> > + */
-> > +struct dmaengine_i2c_config {
-> > +	u8 pack_enable;
-> > +	u8 cycle_count;
-> > +	u8 high_count;
-> > +	u8 low_count;
-> > +	u16 clk_div;
-> > +	u8 addr;
-> > +	u8 strech;
-> > +	u8 op;
-> > +};
-> > +
-> > +enum dmaengine_peripheral {
-> > +	DMAENGINE_PERIPHERAL_SPI,
-> > +	DMAENGINE_PERIPHERAL_I2C,
-> > +	DMAENGINE_PERIPHERAL_UART,
-> > +	DMAENGINE_PERIPHERAL_LAST = DMAENGINE_PERIPHERAL_UART,
-> > +};
-> > +
-> >  /**
-> >   * struct dma_slave_config - dma slave channel runtime config
-> >   * @direction: whether the data shall go in or out on this slave
-> > @@ -418,6 +485,10 @@ enum dma_slave_buswidth {
-> >   * @slave_id: Slave requester id. Only valid for slave channels. The dma
-> >   * slave peripheral will have unique id as dma requester which need to be
-> >   * pass as slave config.
-> > + * @peripheral: type of peripheral to DMA to/from
-> > + * @set_config: set peripheral config
-> > + * @spi: peripheral config for spi
-> > + * @:i2c peripheral config for i2c
-> >   *
-> >   * This struct is passed in as configuration data to a DMA engine
-> >   * in order to set up a certain channel for DMA transport at runtime.
-> > @@ -443,6 +514,10 @@ struct dma_slave_config {
-> >  	u32 dst_port_window_size;
-> >  	bool device_fc;
-> >  	unsigned int slave_id;
-> > +	enum dmaengine_peripheral peripheral;
-> > +	u8 set_config;
-> > +	struct dmaengine_spi_config spi;
-> > +	struct dmaengine_i2c_config i2c;
-> 
-> Would it be possible to reuse one of the existing feature already
-> supported by DMAengine?
-> We have DMA_PREP_CMD to give a command instead of a real transfer:
-> dmaengine_prep_slave_single(tx_chan, config_data, config_len,
-> 			    DMA_MEM_TO_DEV, DMA_PREP_CMD);
-> dmaengine_prep_slave_single(tx_chan, tx_buff, tx_len, DMA_MEM_TO_DEV,
-> 			    DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
-> dma_async_issue_pending(tx_chan);
-> 
-> or the metadata support:
-> tx = dmaengine_prep_slave_single(tx_chan, tx_buff, tx_len,
-> 				 DMA_MEM_TO_DEV,
-> 				 DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
-> dmaengine_desc_attach_metadata(tx, config_data, config_len);
-> dma_async_issue_pending(tx_chan);
-> 
-> By reading the driver itself, it is not clear if you always need to send
-> the config for TX, or only when the config is changing and what happens
-> if the first transfer (for SPI, since that is the only implemented one)
-> is RX, when you don't send config at all...
+It looks like it tells AOSS that the processor is booted and to start
+considering these processors in the SoC wide system suspend sequence.
+Otherwise I guess the RPMh buckets associated with these remoteprocs
+don't count in the aggregation and sleep/wake sequences that AOSS runs
+through when putting the SoC into low power mode. I'm not sure it
+actually "keeps something powered" so much as it lets something be
+powered off. Sibi?
 
-So this config is sent to driver everytime before the prep call (can be
-optimized to once if we have similar transfers in queue).
+Another question, why can't the processors tell AOSS themselves about
+their boot state? I guess because they may crash or be powered down and
+then AOSS wouldn't know? Fair enough I guess, but I don't think this is
+mentioned anywhere.
 
-This config is used to create the configuration passed to dmaengine
-which is used to actually program both dmaengine as well as peripheral
-registers (i2c/spi/etc), so we need a way to pass the spi/i2c config.
+>=20
+> > If this has been discussed before feel free to
+> > disregard and please link to prior mailing list discussions.
+> >=20
+>=20
+> There where some discussions related to the "QDSS clk" in that series,
+> but I don't remember getting any feedback on modelling these things as
+> power-domains.
+>=20
+> > I find it odd that this is modeled as a power domain instead of some
+> > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
+> > there some sort of benefit the driver gets from using the power domain
+> > APIs for this vs. using a custom API?
+>=20
+> We need to send "up" and "down" notifications and this needs to happen
+> at the same time as other standard resources are enabled/disabled.
+>=20
+> Further more, at the time the all resources handled by the downstream
+> driver was either power-domains (per above understanding) or clocks, so
+> it made sense to me not to spin up a custom API.
+>=20
+=20
+So the benefit is not spinning up a custom API? I'm not Ulf, but it
+looks like this is hard to rationalize about as a power domain. It
+doesn't have any benefit to model it this way besides to make it
+possible to turn on with other power domains.
 
-I think prep cmd can be used to send this data, I do not see any issues
-with that, it would work if we want to go that route.
-
-I did have a prototype with metadata but didnt work very well, the
-problem is it assumes metadata for tx/rx but here i send the data
-everytime from client data.
-
-> I'm concerned about the size increase of dma_slave_config (it grows by
-> >30 bytes) and for DMAs with hundreds of channels (UDMA) it will add up
-> to a sizeable amount.
-
-I agree that is indeed a valid concern, that is the reason I tagged this
-as a RFC patch ;-)
-
-I see the prep_cmd is a better approach for this, anyone else has better
-suggestions?
-
-Thanks for looking in.
-
--- 
-~Vinod
+This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
+SMEM APIs, so standing up another small qmp_remoteproc_booted() and
+qmp_remoteproc_shutdown() API would avoid adding a genpd flag here that
+probably will never be used outside of this corner-case. There is also
+some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
+would be possible to do this outside of power domains, and that seems
+better given that this isn't really a power domain to start with.
