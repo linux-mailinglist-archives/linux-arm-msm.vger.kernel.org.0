@@ -2,178 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B91E250E56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 03:43:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7948F250E91
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 04:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726413AbgHYBny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Aug 2020 21:43:54 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:60373 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725946AbgHYBnw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Aug 2020 21:43:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598319832; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MhOn/FuuO1NIeV+HcgL78Gl6N1WTliqDO0oEmRfGfgo=;
- b=DTpPP4yRInp4edsIqA093FdlyOjVbo2QjM9ZkVRVvxjH7LZZTb5tv7Ilb+5V4JRPSjYcxgV9
- KFZVTgcMJWp7Pxt7moNs0gag6i6JPhLx7tLY75XEUQVjHmBchVf4kjeZ4hwZ8IackYc3sg+3
- 1uTEVYyPPqbUkpsnKNMbqdc5jfI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f446cc476c283d04f5420d4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 Aug 2020 01:43:32
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 04113C43387; Tue, 25 Aug 2020 01:43:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mansur)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4428BC433CA;
-        Tue, 25 Aug 2020 01:43:31 +0000 (UTC)
+        id S1726882AbgHYCEt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Aug 2020 22:04:49 -0400
+Received: from Mailgw01.mediatek.com ([1.203.163.78]:56765 "EHLO
+        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726104AbgHYCEp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Aug 2020 22:04:45 -0400
+X-UUID: 023dae983f774649bc5811a5769503ad-20200825
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=g1Itluz73PRMbaOGBVSexglNqPqxFWB0xKgwYbBMPYg=;
+        b=nb+J7c7jcc1lPyFVO/xmQxH966HEPlQ/UojToYCuQIpgn2RX+2WBkMs+bB6sqoEn4g/+uH90XZeM8doyBpgLmYRKLtixDRgVW2EhuW3vXGuJs7TkJoVzOdRHjnmpFDsccNadD0xbViD9ElCDvZ988aYSqx1y51aI164O+vvVWgo=;
+X-UUID: 023dae983f774649bc5811a5769503ad-20200825
+Received: from mtkcas34.mediatek.inc [(172.27.4.253)] by mailgw01.mediatek.com
+        (envelope-from <chunfeng.yun@mediatek.com>)
+        (mailgw01.mediatek.com ESMTP with TLS)
+        with ESMTP id 1799060717; Tue, 25 Aug 2020 10:04:40 +0800
+Received: from mtkcas07.mediatek.inc (172.21.101.84) by
+ MTKMBS31DR.mediatek.inc (172.27.6.102) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Tue, 25 Aug 2020 10:04:31 +0800
+Received: from localhost.localdomain (10.17.3.153) by mtkcas07.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Tue, 25 Aug 2020 10:04:33 +0800
+From:   Chunfeng Yun <chunfeng.yun@mediatek.com>
+To:     Kishon Vijay Abraham I <kishon@ti.com>
+CC:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Chunfeng Yun <chunfeng.yun@mediatek.com>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Bharat Gooty <bharat.gooty@broadcom.com>,
+        Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>
+Subject: [PATCH 1/6] phy: phy-bcm-ns-usb3: convert to readl_poll_timeout_atomic()
+Date:   Tue, 25 Aug 2020 10:03:02 +0800
+Message-ID: <1598320987-25518-1-git-send-email-chunfeng.yun@mediatek.com>
+X-Mailer: git-send-email 1.8.1.1.dirty
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 25 Aug 2020 07:13:31 +0530
-From:   mansur@codeaurora.org
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
-Subject: Re: [RESEND 1/3] venus: core: handle race condititon for core ops
-In-Reply-To: <ef0d6eb2-1834-f4de-7eb2-aad665fc69e4@linaro.org>
-References: <1596781478-12216-1-git-send-email-mansur@codeaurora.org>
- <1596781478-12216-2-git-send-email-mansur@codeaurora.org>
- <dc1f37ed-3786-5bb2-3763-368b0165478b@linaro.org>
- <ef0d6eb2-1834-f4de-7eb2-aad665fc69e4@linaro.org>
-Message-ID: <688d0983201d7426fa4c9409914b7e0b@codeaurora.org>
-X-Sender: mansur@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain
+X-TM-SNTS-SMTP: 3EA5F72587F0E7679915674B6362ACC1B90384DA174A992330AA4FB1FA65C9752000:8
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-21 16:29, Stanimir Varbanov wrote:
-> Hi Mansur,
-> 
-> On 8/10/20 12:50 PM, Stanimir Varbanov wrote:
->> Hi Mansur,
->> 
->> Thanks for the patches!
->> 
->> On 8/7/20 9:24 AM, Mansur Alisha Shaik wrote:
->>> For core ops we are having only write protect but there
->>> is no read protect, because of this in multthreading
->>> and concurrency, one CPU core is reading without wait
->>> which is causing the NULL pointer dereferece crash.
->>> 
->>> one such scenario is as show below, where in one
->>> core core->ops becoming NULL and in another core
->>> calling core->ops->session_init().
->>> 
->>> CPU: core-7:
->>> Call trace:
->>>  hfi_session_init+0x180/0x1dc [venus_core]
->>>  vdec_queue_setup+0x9c/0x364 [venus_dec]
->>>  vb2_core_reqbufs+0x1e4/0x368 [videobuf2_common]
->>>  vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
->>>  v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
->>>  v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
->>>  v4l_reqbufs+0x4c/0x5c
->>> __video_do_ioctl+0x2b0/0x39c
->>> 
->>> CPU: core-0:
->>> Call trace:
->>>  venus_shutdown+0x98/0xfc [venus_core]
->>>  venus_sys_error_handler+0x64/0x148 [venus_core]
->>>  process_one_work+0x210/0x3d0
->>>  worker_thread+0x248/0x3f4
->>>  kthread+0x11c/0x12c
->>> 
->>> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
->>> ---
->>>  drivers/media/platform/qcom/venus/core.c | 2 +-
->>>  drivers/media/platform/qcom/venus/hfi.c  | 5 ++++-
->>>  2 files changed, 5 insertions(+), 2 deletions(-)
-> 
-> See below comment, otherwise:
-> 
-> Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> 
->>> 
->>> diff --git a/drivers/media/platform/qcom/venus/core.c 
->>> b/drivers/media/platform/qcom/venus/core.c
->>> index 203c653..fe99c83 100644
->>> --- a/drivers/media/platform/qcom/venus/core.c
->>> +++ b/drivers/media/platform/qcom/venus/core.c
->>> @@ -64,8 +64,8 @@ static void venus_sys_error_handler(struct 
->>> work_struct *work)
->>>  	pm_runtime_get_sync(core->dev);
->>> 
->>>  	hfi_core_deinit(core, true);
->>> -	hfi_destroy(core);
->>>  	mutex_lock(&core->lock);
->>> +	hfi_destroy(core);
->> 
->> As my recovery fixes [1] touches this part also, could you please 
->> apply
->> them on top of yours and re-test?
-> 
-> I'll drop above chunk from the patch because it is already taken into
-> account in my recovery fixes series and queue up the patch for v5.10.
-> 
-yes, you can drop. I have validated these patches on top of your 
-recovery patch
-series. I will push V2 with dependency on "venus - recovery from 
-frimware crash"
-series 
-(https://lore.kernel.org/patchwork/project/lkml/list/?series=455962)
+VXNlIHJlYWRsX3BvbGxfdGltZW91dF9hdG9taWMoKSB0byBzaW1wbGlmeSBjb2RlDQoNClNpZ25l
+ZC1vZmYtYnk6IENodW5mZW5nIFl1biA8Y2h1bmZlbmcueXVuQG1lZGlhdGVrLmNvbT4NCi0tLQ0K
+IGRyaXZlcnMvcGh5L2Jyb2FkY29tL3BoeS1iY20tbnMtdXNiMy5jIHwgMjIgKysrKysrKysrLS0t
+LS0tLS0tLS0tLQ0KIDEgZmlsZSBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDEzIGRlbGV0aW9u
+cygtKQ0KDQpkaWZmIC0tZ2l0IGEvZHJpdmVycy9waHkvYnJvYWRjb20vcGh5LWJjbS1ucy11c2Iz
+LmMgYi9kcml2ZXJzL3BoeS9icm9hZGNvbS9waHktYmNtLW5zLXVzYjMuYw0KaW5kZXggMTRmNDVi
+Yy4uNDdiMDI5ZiAxMDA2NDQNCi0tLSBhL2RyaXZlcnMvcGh5L2Jyb2FkY29tL3BoeS1iY20tbnMt
+dXNiMy5jDQorKysgYi9kcml2ZXJzL3BoeS9icm9hZGNvbS9waHktYmNtLW5zLXVzYjMuYw0KQEAg
+LTEzLDYgKzEzLDcgQEANCiAjaW5jbHVkZSA8bGludXgvYmNtYS9iY21hLmg+DQogI2luY2x1ZGUg
+PGxpbnV4L2RlbGF5Lmg+DQogI2luY2x1ZGUgPGxpbnV4L2Vyci5oPg0KKyNpbmNsdWRlIDxsaW51
+eC9pb3BvbGwuaD4NCiAjaW5jbHVkZSA8bGludXgvbWRpby5oPg0KICNpbmNsdWRlIDxsaW51eC9t
+b2R1bGUuaD4NCiAjaW5jbHVkZSA8bGludXgvb2ZfYWRkcmVzcy5oPg0KQEAgLTI1OCwyOSArMjU5
+LDI0IEBAIHN0YXRpYyBpbnQgYmNtX25zX3VzYjNfbWRpb19wcm9iZShzdHJ1Y3QgbWRpb19kZXZp
+Y2UgKm1kaW9kZXYpDQogICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqLw0KIA0KIHN0YXRpYyBpbnQgYmNtX25zX3VzYjNfd2FpdF9yZWcoc3RydWN0IGJj
+bV9uc191c2IzICp1c2IzLCB2b2lkIF9faW9tZW0gKmFkZHIsDQotCQkJCXUzMiBtYXNrLCB1MzIg
+dmFsdWUsIHVuc2lnbmVkIGxvbmcgdGltZW91dCkNCisJCQkJdTMyIG1hc2ssIHUzMiB2YWx1ZSwg
+aW50IHVzZWMpDQogew0KLQl1bnNpZ25lZCBsb25nIGRlYWRsaW5lID0gamlmZmllcyArIHRpbWVv
+dXQ7DQogCXUzMiB2YWw7DQorCWludCByZXQ7DQogDQotCWRvIHsNCi0JCXZhbCA9IHJlYWRsKGFk
+ZHIpOw0KLQkJaWYgKCh2YWwgJiBtYXNrKSA9PSB2YWx1ZSkNCi0JCQlyZXR1cm4gMDsNCi0JCWNw
+dV9yZWxheCgpOw0KLQkJdWRlbGF5KDEwKTsNCi0JfSB3aGlsZSAoIXRpbWVfYWZ0ZXJfZXEoamlm
+ZmllcywgZGVhZGxpbmUpKTsNCisJcmV0ID0gcmVhZGxfcG9sbF90aW1lb3V0X2F0b21pYyhhZGRy
+LCB2YWwsICgodmFsICYgbWFzaykgPT0gdmFsdWUpLA0KKwkJCQkJMTAsIHVzZWMpOw0KKwlpZiAo
+cmV0KQ0KKwkJZGV2X2Vycih1c2IzLT5kZXYsICJUaW1lb3V0IHdhaXRpbmcgZm9yIHJlZ2lzdGVy
+ICVwXG4iLCBhZGRyKTsNCiANCi0JZGV2X2Vycih1c2IzLT5kZXYsICJUaW1lb3V0IHdhaXRpbmcg
+Zm9yIHJlZ2lzdGVyICVwXG4iLCBhZGRyKTsNCi0NCi0JcmV0dXJuIC1FQlVTWTsNCisJcmV0dXJu
+IHJldDsNCiB9DQogDQogc3RhdGljIGlubGluZSBpbnQgYmNtX25zX3VzYjNfbWlpX21uZ193YWl0
+X2lkbGUoc3RydWN0IGJjbV9uc191c2IzICp1c2IzKQ0KIHsNCiAJcmV0dXJuIGJjbV9uc191c2Iz
+X3dhaXRfcmVnKHVzYjMsIHVzYjMtPmNjYl9taWkgKyBCQ01BX0NDQl9NSUlfTU5HX0NUTCwNCiAJ
+CQkJICAgIDB4MDEwMCwgMHgwMDAwLA0KLQkJCQkgICAgdXNlY3NfdG9famlmZmllcyhCQ01fTlNf
+VVNCM19NSUlfTU5HX1RJTUVPVVRfVVMpKTsNCisJCQkJICAgIEJDTV9OU19VU0IzX01JSV9NTkdf
+VElNRU9VVF9VUyk7DQogfQ0KIA0KIHN0YXRpYyBpbnQgYmNtX25zX3VzYjNfcGxhdGZvcm1fcGh5
+X3dyaXRlKHN0cnVjdCBiY21fbnNfdXNiMyAqdXNiMywgdTE2IHJlZywNCi0tIA0KMS45LjENCg==
 
->> 
->> Otherwise this patch looks good to me.
->> 
->> [1] https://www.spinics.net/lists/linux-arm-msm/msg70092.html
->> 
->>>  	venus_shutdown(core);
->>> 
->>>  	pm_runtime_put_sync(core->dev);
->>> diff --git a/drivers/media/platform/qcom/venus/hfi.c 
->>> b/drivers/media/platform/qcom/venus/hfi.c
->>> index a211eb9..2eeb31f 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi.c
->>> @@ -195,7 +195,7 @@ EXPORT_SYMBOL_GPL(hfi_session_create);
->>>  int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
->>>  {
->>>  	struct venus_core *core = inst->core;
->>> -	const struct hfi_ops *ops = core->ops;
->>> +	const struct hfi_ops *ops;
->>>  	int ret;
->>> 
->>>  	if (inst->state != INST_UNINIT)
->>> @@ -204,10 +204,13 @@ int hfi_session_init(struct venus_inst *inst, 
->>> u32 pixfmt)
->>>  	inst->hfi_codec = to_codec_type(pixfmt);
->>>  	reinit_completion(&inst->done);
->>> 
->>> +	mutex_lock(&core->lock);
->>> +	ops = core->ops;
->>>  	ret = ops->session_init(inst, inst->session_type, inst->hfi_codec);
->>>  	if (ret)
->>>  		return ret;
->>> 
->>> +	mutex_unlock(&core->lock);
->>>  	ret = wait_session_msg(inst);
->>>  	if (ret)
->>>  		return ret;
->>> 
->> 
