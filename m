@@ -2,142 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87331252327
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 23:53:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C572B25236F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 00:15:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbgHYVxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 17:53:01 -0400
-Received: from mail-il1-f195.google.com ([209.85.166.195]:43739 "EHLO
-        mail-il1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726303AbgHYVw7 (ORCPT
+        id S1726542AbgHYWP0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 18:15:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49466 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726303AbgHYWP0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 17:52:59 -0400
-Received: by mail-il1-f195.google.com with SMTP id e11so55619ils.10;
-        Tue, 25 Aug 2020 14:52:58 -0700 (PDT)
+        Tue, 25 Aug 2020 18:15:26 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA96C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 15:15:25 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id q200so105688vke.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 15:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ROZvaej7i4MvUNguJxNCsU5mPZczXdg0qLUtT7tzMtY=;
+        b=niL1Qg0UelJ7RrXdjiGrDGw1ga0r/nvZoNg0HANhhLMAqFq5G8e1yrpriO8yO7RZZ+
+         u+hZ+PG7tm3GCWUuSddvjokyYIg074YXM6mxnd8infxxRXLDI4dPUrv9BcVcLI/oviG5
+         QSmznmeKp9VlA53Tqqd8NUOh0KAMmpv43WmkY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=z862RBqRInU1jmo+k1WEqk2fp00qEJO4pngR/l2zG04=;
-        b=IJOk15H2QDh0m5biEKrvgWBAqGzxW39Iq6BRxw7dfl6mvwjiPLxeiAb1YtSUQCQQpm
-         gzCAGSsY5liF3CCXc2JXtTKuidG0Zli5zHcu3Qw4S+fA42mUpVvT7Q5ymP5hc6Dk3WMO
-         k8Cf/6LB3NxDmPFZ8WtvgDPRTH5MxF4WlBzIZJV1z2cU9UU0+g3mNXR3LeLjbqDWmU7C
-         XCCCH445M1ehDGRZG+6GmaTqwC22QaqLsqveKqEhUqVXXmCGIAOvF5wEn93q8J0F2g28
-         n/B5w5Q8WrphW2pFFs+uJs0rALPDzNH4fnTlY5KMFyfEp2DdpkAcb3unb+zgzXr7/Nhv
-         pGDw==
-X-Gm-Message-State: AOAM5339O6xfv58cH5Su4LdleJvvb0LI7rPCSQ41aP9xLcGbrhL0zf6A
-        l6DheIbN8tMTD3TdPZrL3w==
-X-Google-Smtp-Source: ABdhPJx3VbGqokXyWzIiTWH+YZW0T23M3rLSC5vTwacOnJTPXEiL3A51zhWfOq6sV0mmYmWUyNoC2Q==
-X-Received: by 2002:a92:5bd5:: with SMTP id c82mr11194112ilg.166.1598392378364;
-        Tue, 25 Aug 2020 14:52:58 -0700 (PDT)
-Received: from xps15 ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id k18sm174461ils.42.2020.08.25.14.52.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 14:52:57 -0700 (PDT)
-Received: (nullmailer pid 1403055 invoked by uid 1000);
-        Tue, 25 Aug 2020 21:52:53 -0000
-Date:   Tue, 25 Aug 2020 15:52:53 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom: Document "aux-devs" property
-Message-ID: <20200825215253.GA1397515@bogus>
-References: <20200819091533.2334-1-stephan@gerhold.net>
- <20200819091533.2334-2-stephan@gerhold.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ROZvaej7i4MvUNguJxNCsU5mPZczXdg0qLUtT7tzMtY=;
+        b=VQiFlLXWsjsURu8sVISJMZJQ39GXd3Q7bsRjvwe5Ui9FVLCBPWr7izNWQHqOUOxW6q
+         OT/iCE5bbN/ZEstcLYJPi/UDtZKmz3WSipJ/VH7TQD5pjWpOTpTZXBGNX6lzLekYw8s8
+         keX134xBfBLKtUFT1IfCk/bI/OIbIf4byuY1TUOyW0vWLbEVlTghHXbdLz2+cFYeJ5ff
+         /QRbyZ3/8mqRtob90uQss8tW/C4fgFkbVnHRIdkCcI+A7AlTXN0PWyHdS11IJF9vRrGG
+         aljJAo7tacU+Fyu6tObTkMFrm/slkUFBX+a3qxUOodmZMHrXcuwhmIZb8zfYniOQS5FC
+         jQHw==
+X-Gm-Message-State: AOAM532KybACucWEhlt6rBo2KZHWiZntPxLjTGXDUsGLbk2MLDhj9Bj+
+        +8QwiBqErYJc3iVv3Spsy9feo8B4PbPUnA==
+X-Google-Smtp-Source: ABdhPJzCS09OftQVh61PkS9OvDX0JerKon95IGE1nwOe5jiw0z9y8KitHZFrNqhQv54INqC49sWSWw==
+X-Received: by 2002:a1f:320b:: with SMTP id y11mr7180569vky.57.1598393723912;
+        Tue, 25 Aug 2020 15:15:23 -0700 (PDT)
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com. [209.85.221.174])
+        by smtp.gmail.com with ESMTPSA id s15sm55060vsp.16.2020.08.25.15.15.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2020 15:15:22 -0700 (PDT)
+Received: by mail-vk1-f174.google.com with SMTP id m12so106998vko.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 15:15:22 -0700 (PDT)
+X-Received: by 2002:a1f:c10b:: with SMTP id r11mr7125248vkf.70.1598393722180;
+ Tue, 25 Aug 2020 15:15:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200819091533.2334-2-stephan@gerhold.net>
+References: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
+ <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com> <3df7edd53ebca00be288e69b92b8d4b9@codeaurora.org>
+In-Reply-To: <3df7edd53ebca00be288e69b92b8d4b9@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 25 Aug 2020 15:15:10 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X=3Jae7_gXN_05EsmZjrM1bN=TMZ0qoGKz=UaNrthzAg@mail.gmail.com>
+Message-ID: <CAD=FV=X=3Jae7_gXN_05EsmZjrM1bN=TMZ0qoGKz=UaNrthzAg@mail.gmail.com>
+Subject: Re: [PATCH] iommu: Add support to filter non-strict/lazy mode based
+ on device names
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 19, 2020 at 11:15:32AM +0200, Stephan Gerhold wrote:
-> In some cases we need to probe additional audio components that do
-> not appear as part of the DAI links specified in the device tree.
-> Examples for this are auxiliary devices such as analog amplifiers
-> or codecs.
-> 
-> To make them work they need to be added as part of "aux-devs"
-> and connected to some other audio component using the audio routes
-> configurable using "(qcom,)audio-routing".
-> 
-> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
->  .../devicetree/bindings/sound/qcom,apq8016-sbc.txt        | 7 +++++++
->  Documentation/devicetree/bindings/sound/qcom,apq8096.txt  | 8 ++++++++
->  Documentation/devicetree/bindings/sound/qcom,sdm845.txt   | 8 ++++++++
->  3 files changed, 23 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc.txt b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc.txt
-> index 84b28dbe9f15..23998262a0a7 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc.txt
-> +++ b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc.txt
-> @@ -34,6 +34,13 @@ Required properties:
->  			  * DMIC
->  			  * Ext Spk
->  
-> +Optional properties:
-> +
-> +- aux-devs		: A list of phandles for auxiliary devices (e.g. analog
-> +			  amplifiers) that do not appear directly within the DAI
-> +			  links. Should be connected to another audio component
-> +			  using "qcom,audio-routing".
-> +
->  Dai-link subnode properties and subnodes:
->  
->  Required dai-link subnodes:
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8096.txt b/Documentation/devicetree/bindings/sound/qcom,apq8096.txt
-> index c814e867850f..248df5056fec 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,apq8096.txt
-> +++ b/Documentation/devicetree/bindings/sound/qcom,apq8096.txt
-> @@ -55,6 +55,14 @@ This binding describes the APQ8096 sound card, which uses qdsp for audio.
->  	Value type: <stringlist>
->  	Definition: The user-visible name of this sound card.
->  
-> +- aux-devs
-> +	Usage: optional
-> +	Value type: <phandles with arguments>
+Hi,
 
-How do you know how many arguments? It either has to be fixed or needs a 
-#.*cells in the phandles. For the latter, you'd need to come up with a 
-common binding.
+On Tue, Aug 25, 2020 at 12:01 PM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> Hi,
+>
+> On 2020-08-25 21:40, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Tue, Aug 25, 2020 at 8:43 AM Sai Prakash Ranjan
+> > <saiprakash.ranjan@codeaurora.org> wrote:
+> >>
+> >> Currently the non-strict or lazy mode of TLB invalidation can only be
+> >> set
+> >> for all or no domains. This works well for development platforms where
+> >> setting to non-strict/lazy mode is fine for performance reasons but on
+> >> production devices, we need a more fine grained control to allow only
+> >> certain peripherals to support this mode where we can be sure that it
+> >> is
+> >> safe. So add support to filter non-strict/lazy mode based on the
+> >> device
+> >> names that are passed via cmdline parameter "iommu.nonstrict_device".
+> >>
+> >> Example:
+> >> iommu.nonstrict_device="7c4000.sdhci,a600000.dwc3,6048000.etr"
 
-> +	Definition: A list of phandles for auxiliary devices (e.g. analog
-> +		    amplifiers) that do not appear directly within the DAI
-> +		    links. Should be connected to another audio component
-> +		    using "audio-routing".
-> +
->  = dailinks
->  Each subnode of sndcard represents either a dailink, and subnodes of each
->  dailinks would be cpu/codec/platform dais.
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt b/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-> index ca8c89e88bfa..3d5cbe953cf7 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-> +++ b/Documentation/devicetree/bindings/sound/qcom,sdm845.txt
-> @@ -24,6 +24,14 @@ This binding describes the SDM845 sound card, which uses qdsp for audio.
->  	Value type: <stringlist>
->  	Definition: The user-visible name of this sound card.
->  
-> +- aux-devs
-> +	Usage: optional
-> +	Value type: <phandles with arguments>
-> +	Definition: A list of phandles for auxiliary devices (e.g. analog
-> +		    amplifiers) that do not appear directly within the DAI
-> +		    links. Should be connected to another audio component
-> +		    using "audio-routing".
-> +
->  = dailinks
->  Each subnode of sndcard represents either a dailink, and subnodes of each
->  dailinks would be cpu/codec/platform dais.
-> -- 
-> 2.28.0
-> 
+Just curious: are device names like this really guaranteed to be
+stable across versions?
+
+
+> > I have an inherent dislike of jamming things like this onto the
+> > command line.  IMHO the command line is the last resort for specifying
+> > configuration and generally should be limited to some specialized
+> > debug options and cases where the person running the kernel needs to
+> > override a config that was set by the person (or company) compiling
+> > the kernel.  Specifically, having a long/unwieldy command line makes
+> > it harder to use for the case when an end user actually wants to use
+> > it to override something.  It's also just another place to look for
+> > config.
+> >
+>
+> Good thing about command line parameters are that they are optional,
+> they do
+> not specify any default behaviour (I mean they are not mandatory to be
+> set
+> for the system to be functional), so I would like to view it as an
+> optional
+> config. And this command line parameter (nonstrict_device) is strictly
+> optional
+> with default being strict already set in the driver.
+>
+> They can be passed from the bootloader via chosen node for DT platforms
+> or choose
+> a new *bootconfig* as a way to pass the cmdline but finally it does boil
+> down to
+> just another config.
+
+Never looked at bootconfig.  Unfortunately it seems to require
+initramfs so that pretty much means it's out for my usage.  :(
+
+
+> I agree with general boolean or single value command line parameters
+> being just
+> more messy which could just be Kconfigs instead but for multiple value
+> parameters
+> like these do not fit in Kconfig.
+>
+> As you might already know, command line also gives an advantage to the
+> end user
+> to configure system without building kernel, for this specific command
+> line its
+> very useful because the performance bump is quite noticeable when the
+> iommu.strict
+> is off. Now for end user who would not be interested in building entire
+> kernel(majority)
+> and just cares about good speeds or throughput can find this very
+> beneficial.
+> I am not talking about one specific OS usecase here but more in general
+> term.
+>
+> > The other problem is that this doesn't necessarily scale very well.
+> > While it works OK for embedded cases it doesn't work terribly well for
+> > distributions.  I know that in an out-of-band thread you indicated
+> > that it doesn't break anything that's not already broken (AKA this
+> > doesn't fix the distro case but it doesn't make it worse), it would be
+> > better to come up with a more universal solution.
+> >
+>
+> Is the universal solution here referring to fix all the command line
+> parameters
+> in the kernel or this specific command line? Are we going to remove any
+> more
+> addition to the cmdline ;)
+
+There are very few cases where a kernel command line parameter is the
+only way to configure something.  Most of the time it's just there to
+override a config.  I wouldn't suggest removing those.  I just don't
+want a kernel command line parameter to be the primary way to enable
+something.
+
+
+> So possible other solution is the *bootconfig* which is again just
+> another place
+> to look for a config. So thing is that this universal solution would
+> result in
+> just more new fancy ways of passing configs or adding such configs to
+> the drivers
+> or subsystems in kernel which is pretty much similar to implementing
+> policy in
+> kernel which I think is frowned upon and mentioned in the other thread.
+>
+> > Ideally it feels like we should figure out how to tag devices in a
+> > generic manner automatically (hardcode at the driver or in the device
+> > tree).  I think the out-of-band discussions talked about "external
+> > facing" and the like.  We could also, perhaps, tag devices that have
+> > "binary blob" firmware if we wanted.  Then we'd have a policy (set by
+> > Kconfig, perhaps overridable via commandline) that indicated the
+> > strictness level for the various classes of devices.  So policy would
+> > be decided by KConfig and/or command line.
+> >
+>
+> How is tagging in driver or device tree better than the simple command
+> line
+> approach to pass the same list of devices which otherwise you would
+> hardcode
+> in the corresponding drivers and device tree all over the kernel other
+> than
+> the scalability part for command line? IMHO it is too much churn.
+
+It's better because it doesn't require keeping track and updating
+these per-board (or per machine) arguments for each and every
+board/machine you maintain.  If, for instance, we start out by
+allowing HW video decoder to use non-strict.  So:
+
+On one board, we add in "aa00000.video-codec" to the command line.
+On some other board, maybe we add in "1d00000.video-codec" to the command line.
+On some other board, maybe we add in "90400000.video-codec" to the command line.
+
+Now we realize that there's some problem and we have to remove it, so
+we need to go through and remove this from our command line
+everywhere.  Worse is that we have to proactively notice it and remove
+it.
+
+Instead, let's imagine that we set a policy at a bit of a higher
+level.  Different ideas:
+
+a) We could have a CONFIG_ option for the video codec that's something
+like "CONFIG_VIDEOCODEC_DEFAULT_NONSTRICT".  If this was set then if
+there is no "iommu.strict" command line argument then this device
+would be mapped as non-strict.  If "iommu.strict=0" or
+"iommu.strict=1" is on the command line then it would override all of
+these defaults.  Probably the existence (or maybe the default value)
+of this CONFIG option implies that there are no known/expected
+exploits related to it.
+
+b) We could find some way to tag the video codec and then set
+non-strictness on certain classes of devices, then we could have a
+policy to disable strictness on certain classes of devices.
+
+The nice thing about the above is that you could imagine someone
+pushing a change to the stable trees that would fix everyone affected.
+Nobody would need to go around and adjust command line options, they'd
+just get the newest stable and it could cause devices to move into
+strict mode if there was a known exploit.  I suppose with your
+proposal stable trees could have a "blacklist" where the commandline
+is ignored for exploited devices, but that seems ugly.
+
+
+> Device tree could be used but then we have a problem with it being for
+> only
+> describing hardware and it doesn't work for ACPI based systems.
+>
+> Command line approach works for all systems (both DT and ACPI) without
+> having
+> to add too much churn to drivers. Lastly, I think we can have both
+> options, it
+> doesn't hurt to add command line parameter since it is optional.
+
+I'm not opposed to something existing that lets you override this on
+the command line, but I'm just not a fan of it being the primary way.
+
+-Doug
