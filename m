@@ -2,131 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BE292522BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 23:25:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EC3E2522F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 23:38:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726337AbgHYVZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 17:25:27 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:42928 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726158AbgHYVZ1 (ORCPT
+        id S1726336AbgHYVih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 17:38:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43666 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726222AbgHYVig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 17:25:27 -0400
-Received: by mail-io1-f68.google.com with SMTP id g13so253100ioo.9;
-        Tue, 25 Aug 2020 14:25:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lg+hqZTHAe/BLEKS5GJeE0Rlebpak0rX9eme2hF12Uo=;
-        b=pt8OKLrQxekaTUmYFH9DNinNZAFtaaqhRfmB+7WMVgluxvcJBcD/JE9qqiXryxc85T
-         u97gXtLOAWKcPHNaIsShJS0iR3VsFR2dSXb7HFAJKer+Ka9KGydIgvCin4QRRs6gKEHr
-         /42yNHB/j/EHPXuWBQdYf28rJyMSNWDN8fZpildrM0jSAUmpiEqmr6oZSEjqSoiWhzsY
-         zcHZSDqGdndKMhs4CS//R0mYK9xFnIuP93wEnfELFXLB1eoLhIyUZzsxqj5Fwr29yGni
-         wQny6JPJ8DaX4g12ogovcLr+m/PFH22suTI6+f5y2YnQgdZ5jpd6PPiY2B9HD1u+0hBQ
-         Lpwg==
-X-Gm-Message-State: AOAM532BJ6kKPybOSKiV7NrBKG9KrFG+1cJ/hYd0woP/6UQFTYcgyV+g
-        wXm7r6BIjBd1VgN3fmtGxA==
-X-Google-Smtp-Source: ABdhPJx4FI3lgeilzIN4tG2HvKODEoeqep4y4IVVx4DDUmrw72padF0yehfdQVg1boNW+VeEFuytVA==
-X-Received: by 2002:a05:6638:24cf:: with SMTP id y15mr12384197jat.137.1598390725844;
-        Tue, 25 Aug 2020 14:25:25 -0700 (PDT)
-Received: from xps15 ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id p18sm123644ils.82.2020.08.25.14.25.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 14:25:25 -0700 (PDT)
-Received: (nullmailer pid 1359816 invoked by uid 1000);
-        Tue, 25 Aug 2020 21:25:21 -0000
-Date:   Tue, 25 Aug 2020 15:25:21 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Elliot Berman <eberman@codeaurora.org>
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: Re: [RESEND PATCH v1 2/4] dt-bindings: power: reset: Add alternate
- reboot mode format
-Message-ID: <20200825212521.GA1346433@bogus>
-References: <1597776856-12014-1-git-send-email-eberman@codeaurora.org>
- <1597776856-12014-3-git-send-email-eberman@codeaurora.org>
+        Tue, 25 Aug 2020 17:38:36 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89125C061574;
+        Tue, 25 Aug 2020 14:38:36 -0700 (PDT)
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1598391515;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Bzrluaqlq3krRM30SsNwVNRIRZVbuCOAOPYCtGzqAAI=;
+        b=J9oc+MDLMdReE5k69O6GhTmcW1kbRigczO+p80fP9tL2V05Y6kHJDM8DW04APAucV5gWlC
+        1TwOZNHF1XGdntATDmI7j+t3jZgkiWV5uBL+Iy8BiL9Dt6quUYyqkRT6N0ovhdd3EZAyQO
+        ogIFvMiqCL35QGNFp3uXoaKpl8p95O3plq+1hVInOFw/B7sYC4XkF7K3at0pQN/qMnfVm1
+        WbL7jgL6LrW6nt9NmHl36iC+km/gChilKRZz+LchETQTwOChFLMjt3TIUDqr2nIQxl5nnZ
+        E+yWGXbTD/11EeX/2Y1PmqUM9gBCVxNPeTJM/su45mjJh5k0J2JefY9ojMHrsg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1598391515;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Bzrluaqlq3krRM30SsNwVNRIRZVbuCOAOPYCtGzqAAI=;
+        b=y4jw2WD7k5ZcqN2mnAhVVjasNzleQUESsZxjn10jpa64PgF9Rsh8A38qKu0+8EveS4+jOQ
+        29ANfqxmomGx24Aw==
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        bjorn.andersson@linaro.org, evgreen@chromium.org,
+        linus.walleij@linaro.org, maz@kernel.org, mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+In-Reply-To: <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com>
+References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com>
+Date:   Tue, 25 Aug 2020 23:38:34 +0200
+Message-ID: <874koqxv6t.fsf@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1597776856-12014-3-git-send-email-eberman@codeaurora.org>
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 18, 2020 at 11:54:14AM -0700, Elliot Berman wrote:
-> Current reboot-mode device tree schema does not support reboot commands
-> with spaces in them [1]. Add an optional new node "reboot-mode-names"
-> and "reboot-mode-magic" which add an array of strings and u32s,
-> respectively which would permit any string in this framework.
+On Tue, Aug 25 2020 at 03:12, Stephen Boyd wrote:
+> Quoting Maulik Shah (2020-08-22 09:16:58)
+>> diff --git a/kernel/irq/pm.c b/kernel/irq/pm.c
+>> index c6c7e18..2cc800b 100644
+>> --- a/kernel/irq/pm.c
+>> +++ b/kernel/irq/pm.c
+>> @@ -69,12 +69,17 @@ void irq_pm_remove_action(struct irq_desc *desc, struct irqaction *action)
+>>  
+>>  static bool suspend_device_irq(struct irq_desc *desc)
+>>  {
+>> +       unsigned long chipflags = irq_desc_get_chip(desc)->flags;
+>> +
+>>         if (!desc->action || irq_desc_is_chained(desc) ||
+>>             desc->no_suspend_depth)
+>>                 return false;
+>>  
+>>         if (irqd_is_wakeup_set(&desc->irq_data)) {
+>>                 irqd_set(&desc->irq_data, IRQD_WAKEUP_ARMED);
+>> +
+>> +               if (chipflags & IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND)
+>> +                       irq_enable(desc);
+>
+> Where is the corresponding change to resume_irq()? Don't we need to
+> disable an irq if it was disabled on suspend and forcibly enabled here?
 
-Kind of a weak justification. The intent was for the names to be a key, 
-not a multi word description which your example seems to be. Is 
-"dm-verity device corrupted" something Android has already standardized 
-on?
+That part was below the POC code I provided in the fine print:
 
-> 
-> [1]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/md/dm-verity-target.c?h=v5.5#n255
-> 
-> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
-> ---
->  .../devicetree/bindings/power/reset/reboot-mode.yaml    | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
-> index a6c9102..4ea6b33 100644
-> --- a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
-> +++ b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
-> @@ -19,6 +19,9 @@ description: |
->    the bootloader what to do when the system reboots, and should be named
->    as mode-xxx = <magic> (xxx is mode name, magic should be a non-zero value).
->  
-> +  reboot-mode-magic and reboot-mode-names may be used in addition/instead of
-> +  mode-xxx style.
+ "plus the counterpart in the resume path. This also ensures that state is
+  consistent."
 
-It should be either/or in my opinion, not both.
-
-> +
->    For example, modes common Android platform are:
->      - normal: Normal reboot mode, system reboot with command "reboot".
->      - recovery: Android Recovery mode, it is a mode to format the device or update a new image.
-> @@ -32,6 +35,14 @@ properties:
->        description: |
->          Default value to set on a reboot if no command was provided.
->  
-> +  reboot-mode-names:
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-> +    description: List of reboot commands, paired with reboot-mode-magic by index
-> +
-> +  reboot-mode-magic:
-
-'reboot-modes' would align with normal patterns.
-
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    description: List of reboot magic, paired with reboot-mode-names by index
-> +
->  patternProperties:
->    "^mode-.*$":
->      $ref: /schemas/types.yaml#/definitions/uint32
-> @@ -44,4 +55,10 @@ examples:
->        mode-bootloader = <2>;
->        mode-loader = <3>;
->      };
-> +
-> +  - |
-> +    reboot-mode {
-> +      reboot-mode-names = "normal", "bootloader", "dm-verity device corrupted";
-> +      reboot-mode-magic = <0x0>, <0x1>, <0xf>;
-> +    };
->  ...
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Who reads the fine print? :)
