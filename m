@@ -2,119 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32EED251DB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 19:02:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A5D3251E03
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 19:17:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbgHYRCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 13:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726471AbgHYRCB (ORCPT
+        id S1726551AbgHYRQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 13:16:57 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:23617 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726471AbgHYRQz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 13:02:01 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2B0C061795
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 10:01:59 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id x9so2796385wmi.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 10:01:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QV/ePTGwly0PbuCxUdBYC9fwASHXwx8pOAXdY4hkxSk=;
-        b=w6fLWxnzdnmnnXwVZMk3NMnzMDQI/s5/Sd0s5QnL7uZt4yk9BbTM0UauO2iHQMPchX
-         j1YQGKFqB72CTy7+YBK1ukBydPhtP2nsnOAR61T8QnnqTC2PFdJQKXmLRU+LkNx09bgM
-         fwxpVU5bekWJsrlGboysgLFzprUsXKUw8aibKC/p2qghW8jgZvjdXojcD78t1FbKyn2B
-         7rDSkydZejaaedVnlDmp4sSrZL15YRLFdRu6KuEs2w4kXU4THMAkZIxtiX2P3mA1f1GL
-         /Ka64J+Ytz1TY5wY9IXLKCm0b92iKlQCZtyMCQnH1rl77Ce7foZ12BaRClKuQq+5zPhg
-         29yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QV/ePTGwly0PbuCxUdBYC9fwASHXwx8pOAXdY4hkxSk=;
-        b=nMpphe2+ArYGLwnMDBknJa1bFXHx1j8xPxXI/uPe3yfejZarmPMVZJBrMRUjD4fdyd
-         w4CSqkRO+Qmf2mgXjrqf3C0GLKBaLwjt6gIoq7IOjQoe5IcBf/vxgGdQyhIhxNqP/U15
-         OcDZUWDaY+b90lfp08c+HuXp29J+z+AweHM6xwq5cfuHpmWenkB7M3G001Ko0gew1Zty
-         UMmTS1wabSDygSZ7m36Kp2G1/116YwC4eaJTwQhvlS+egBGnopT/fqtT3053XUYxT1qN
-         +7ilbbfIDZjsGb2X0bjQJxj4uTQfA7OvgqMLLwpQA6KOr0x2/11S6H/RM0m1HWH5CQsa
-         1aHA==
-X-Gm-Message-State: AOAM5300uj+3U4DHl03tixsjO75P/KFhfHRsFUGDmi0N9B/Mky+i+t9y
-        tblHk7nHlJd9o/uiSuzqr5KPwA==
-X-Google-Smtp-Source: ABdhPJz6SGQKUWpezGmwk3pInh4KEjtCXIoaZSTSgkQZZ9UzMSysDbUPGFWDWLXvfkWmLwVT/oXtDA==
-X-Received: by 2002:a1c:f70a:: with SMTP id v10mr2926290wmh.39.1598374917760;
-        Tue, 25 Aug 2020 10:01:57 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id y17sm6669008wma.17.2020.08.25.10.01.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2020 10:01:57 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org
-Cc:     saravanak@google.com, mdtipton@codeaurora.org,
-        okukatla@codeaurora.org, bjorn.andersson@linaro.org,
-        vincent.guittot@linaro.org, akashast@codeaurora.org,
-        georgi.djakov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3 3/3] interconnect: qcom: Use icc_sync_state
-Date:   Tue, 25 Aug 2020 20:01:52 +0300
-Message-Id: <20200825170152.6434-4-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200825170152.6434-1-georgi.djakov@linaro.org>
-References: <20200825170152.6434-1-georgi.djakov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 25 Aug 2020 13:16:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598375814; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=KLK4RTTuf3ksuy/5zrVG85yqJucbVICT8rtcZnGayM0=; b=tE2luUpLcW81GEoNjkugNl+8CKkXqVLDAtFTT8uxskHrnsNtpvJ8cBdh2MUFJi79ZTZX4bX9
+ D54FRrZOwOuNt+1IKLwEIWNXYPDtVTk2vqm27H+m9J8H8RtPPHHuyZhdmP8K8ufOf+5/oKwt
+ aLqCTW9UxfSN2uyfPNiNPvtlNAs=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f454785f558dbf280451a78 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 Aug 2020 17:16:53
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EEA04C43387; Tue, 25 Aug 2020 17:16:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C939FC433C6;
+        Tue, 25 Aug 2020 17:16:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C939FC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Srinivasa Rao <srivasam@codeaurora.org>
+Subject: [PATCH 0/5]: Qualcomm's lpass-hdmi ASoC driver to support audio over dp port
+Date:   Tue, 25 Aug 2020 22:46:23 +0530
+Message-Id: <1598375788-1882-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lowering the bandwidth on the bus might have negative consequences if
-it's done before all consumers had a chance to cast their vote. Now by
-default the framework sets the bandwidth to maximum during boot. We need
-to use the icc_sync_state callback to notify the framework when all
-consumers are probed and there is no need to keep the bandwidth set to
-maximum anymore.
+These patches are to support audio over DP port on Qualcomm's SC7180 LPASS Asoc.
+It includes machine driver, cpu driver, platform driver updates for HDMI path support, 
+device tree documention, lpass variant structure optimization and configuration changes.
+These patches depends on the DP patch series 
+https://patchwork.kernel.org/project/dri-devel/list/?series=332029
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- drivers/interconnect/qcom/osm-l3.c | 1 +
- drivers/interconnect/qcom/sc7180.c | 1 +
- drivers/interconnect/qcom/sdm845.c | 1 +
- 3 files changed, 3 insertions(+)
+vsujithk (5):
+  dt-bindings: Add sc7180-lpass HDMI header define
+  dt-bindings: Add dts entry for lpass-hdmi dp audio
+  ASoC: qcom: add support for lpass hdmi driver
+  ASoC: qcom: Add support for audio over DP
+  Optimise lpass variant structure
 
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index 96fb9ff5ff2e..ae955f164442 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -268,6 +268,7 @@ static struct platform_driver osm_l3_driver = {
- 	.driver = {
- 		.name = "osm-l3",
- 		.of_match_table = osm_l3_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(osm_l3_driver);
-diff --git a/drivers/interconnect/qcom/sc7180.c b/drivers/interconnect/qcom/sc7180.c
-index dcf493d07928..4c5d38649220 100644
---- a/drivers/interconnect/qcom/sc7180.c
-+++ b/drivers/interconnect/qcom/sc7180.c
-@@ -633,6 +633,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sc7180",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
-index f6c7b969520d..6aa39aad2555 100644
---- a/drivers/interconnect/qcom/sdm845.c
-+++ b/drivers/interconnect/qcom/sdm845.c
-@@ -559,6 +559,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sdm845",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  42 ++
+ include/dt-bindings/sound/sc7180-lpass.h           |   1 +
+ sound/soc/qcom/Kconfig                             |   5 +
+ sound/soc/qcom/Makefile                            |   2 +
+ sound/soc/qcom/lpass-apq8016.c                     |  25 +-
+ sound/soc/qcom/lpass-cpu.c                         |  92 ++-
+ sound/soc/qcom/lpass-hdmi.c                        | 685 +++++++++++++++++++++
+ sound/soc/qcom/lpass-hdmi.h                        | 129 ++++
+ sound/soc/qcom/lpass-ipq806x.c                     |  25 +-
+ sound/soc/qcom/lpass-lpaif-reg.h                   |  51 +-
+ sound/soc/qcom/lpass-platform.c                    | 287 +++++++--
+ sound/soc/qcom/lpass-sc7180.c                      | 147 ++++-
+ sound/soc/qcom/lpass.h                             | 123 +++-
+ 13 files changed, 1467 insertions(+), 147 deletions(-)
+ create mode 100644 sound/soc/qcom/lpass-hdmi.c
+ create mode 100644 sound/soc/qcom/lpass-hdmi.h
+
+-- 
+2.7.4
+
