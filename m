@@ -2,80 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E448B251667
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 12:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA9142516FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 13:02:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729725AbgHYKOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 06:14:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729253AbgHYKOu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 06:14:50 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F7DC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 03:14:50 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id 31so4244591pgy.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 03:14:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=7rwFpGB0jqzG4o75dmr4EB0rdrd4ZLlpij1Rdr6z7sQ=;
-        b=M/PtUB4KjjTHuTdSYpItjttdYYbS28ynKSnqFUSozz3H8OCLStD3jgywui+4gm+wu6
-         8tyfb0/nyW04muJVNiqXLIVBNZpSeQIo5xX5zQ3HzHXqO0Ms00OzVOAAq0lz57jI7VNS
-         vjUxHHG2zreutCgU9mn1cn7AJFZ26YUixAxo8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=7rwFpGB0jqzG4o75dmr4EB0rdrd4ZLlpij1Rdr6z7sQ=;
-        b=gqsSasw1BPz6rhMjLKVPvs4raEY/gyOFzok42LbAcWQNMCk8jfAa2heWN8Lj4rYKaQ
-         pMTWBb/gqGnaR1MEz6mTfGJUqGJYRy2TjQciTh1TxYTTJaSXvxTXA4aLnIA2wNUzvDxW
-         y6oVd6G05GIPr7S+MIg4UZQkkj2zXsNbQRoJvBrsq75KQ0rFnxbIlybi+7DesQU1MULt
-         zbbJI5AZBh2RCMwhpb85D/AzXysKNE+Otg9ylM20OVLIZV4RLHG6E3GLl0xE2EeilcHy
-         /FC+9QRniBdnr58PJlhPRjNRnS4yR4cX7Ri8PNwBxkIbepTQG3RMMzHoZT6PZ8UNokfX
-         HyOQ==
-X-Gm-Message-State: AOAM531gxmJla4Cl0+N80VW5UroNM2O0GRV8zROZu2HEsDSwQegk0JSI
-        QEiss13tTJjOrOxfc9UHKAZgAA==
-X-Google-Smtp-Source: ABdhPJz9AmR1krMoLgXTaINdzVk9Mmj7SkBUNtvH3DTsMz4galYrk+aWROWLBoUMdxiQdSEgiZiRGA==
-X-Received: by 2002:a17:902:b087:: with SMTP id p7mr7119096plr.28.1598350489931;
-        Tue, 25 Aug 2020 03:14:49 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id 37sm2385284pjo.8.2020.08.25.03.14.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 03:14:49 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1729869AbgHYLCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 07:02:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54822 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726149AbgHYLCH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Aug 2020 07:02:07 -0400
+Received: from localhost (unknown [122.171.38.130])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0B0882068F;
+        Tue, 25 Aug 2020 11:02:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1598353327;
+        bh=DDDyE6Ys+xQWaczzVFR7SIZBLM50Ajr7dystNrxus6k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aJjsMQqVzQlJTIEQaPsBbeT67Ju0Pae1zf9e3uNcjkgL8z+GzELp0qeyVLgrqiZdp
+         rDab101C0LinA9Y5EGWQZegix5KVXq+GdvWvcNK2qwP2ngPHhKjgnMv3+ruVjnQK2a
+         WLItnGBX/9BKO3qkaTFXa1wzTqEfgsjn67rKrX14=
+Date:   Tue, 25 Aug 2020 16:32:02 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     dmaengine@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 2/3] dmaengine: add peripheral configuration
+Message-ID: <20200825110202.GF2639@vkoul-mobl>
+References: <20200824084712.2526079-1-vkoul@kernel.org>
+ <20200824084712.2526079-3-vkoul@kernel.org>
+ <50ed780f-4c1a-2da2-71e4-423f3b224e25@ti.com>
+ <20200825071023.GB2639@vkoul-mobl>
+ <38bc6986-6d1d-7c35-b2df-967326fc5ca7@ti.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1598113021-4149-5-git-send-email-mkshah@codeaurora.org>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-5-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v5 4/6] pinctrl: qcom: Set IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Date:   Tue, 25 Aug 2020 03:14:48 -0700
-Message-ID: <159835048820.334488.6676713863169872150@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <38bc6986-6d1d-7c35-b2df-967326fc5ca7@ti.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-08-22 09:16:59)
-> Set IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag to enable/unmask the
-> wakeirqs during suspend entry.
->=20
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
+Hi Peter,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On 25-08-20, 11:00, Peter Ujfalusi wrote:
+> Hi Vinod,
+> 
+> On 25/08/2020 10.10, Vinod Koul wrote:
+> >>>  /**
+> >>>   * struct dma_slave_config - dma slave channel runtime config
+> >>>   * @direction: whether the data shall go in or out on this slave
+> >>> @@ -418,6 +485,10 @@ enum dma_slave_buswidth {
+> >>>   * @slave_id: Slave requester id. Only valid for slave channels. The dma
+> >>>   * slave peripheral will have unique id as dma requester which need to be
+> >>>   * pass as slave config.
+> >>> + * @peripheral: type of peripheral to DMA to/from
+> >>> + * @set_config: set peripheral config
+> >>> + * @spi: peripheral config for spi
+> >>> + * @:i2c peripheral config for i2c
+> >>>   *
+> >>>   * This struct is passed in as configuration data to a DMA engine
+> >>>   * in order to set up a certain channel for DMA transport at runtime.
+> >>> @@ -443,6 +514,10 @@ struct dma_slave_config {
+> >>>  	u32 dst_port_window_size;
+> >>>  	bool device_fc;
+> >>>  	unsigned int slave_id;
+> >>> +	enum dmaengine_peripheral peripheral;
+> >>> +	u8 set_config;
+> >>> +	struct dmaengine_spi_config spi;
+> >>> +	struct dmaengine_i2c_config i2c;
+> >>
+> >> Would it be possible to reuse one of the existing feature already
+> >> supported by DMAengine?
+> >> We have DMA_PREP_CMD to give a command instead of a real transfer:
+> >> dmaengine_prep_slave_single(tx_chan, config_data, config_len,
+> >> 			    DMA_MEM_TO_DEV, DMA_PREP_CMD);
+> >> dmaengine_prep_slave_single(tx_chan, tx_buff, tx_len, DMA_MEM_TO_DEV,
+> >> 			    DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+> >> dma_async_issue_pending(tx_chan);
+> >>
+> >> or the metadata support:
+> >> tx = dmaengine_prep_slave_single(tx_chan, tx_buff, tx_len,
+> >> 				 DMA_MEM_TO_DEV,
+> >> 				 DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+> >> dmaengine_desc_attach_metadata(tx, config_data, config_len);
+> >> dma_async_issue_pending(tx_chan);
+> >>
+> >> By reading the driver itself, it is not clear if you always need to send
+> >> the config for TX, or only when the config is changing and what happens
+> >> if the first transfer (for SPI, since that is the only implemented one)
+> >> is RX, when you don't send config at all...
+> > 
+> > So this config is sent to driver everytime before the prep call (can be
+> > optimized to once if we have similar transfers in queue).
+> 
+> I see that you queue the TREs in the prep callback.
 
-maybe just squash this with the other patch in this area?
+Yes
+
+> > This config is used to create the configuration passed to dmaengine
+> > which is used to actually program both dmaengine as well as peripheral
+> > registers (i2c/spi/etc), so we need a way to pass the spi/i2c config.
+> 
+> But do you need to send it with each DMA_MEM_TO_DEV or only once?
+> DMA_DEV_TO_MEM does not set the config, so I assume you must have one TX
+> to initialize the peripheral as the first transfer.
+
+Correct and we do transfers on same without sending configuration again.
+
+> > I think prep cmd can be used to send this data, I do not see any issues
+> > with that, it would work if we want to go that route.
+> 
+> The only thing which might be an issue is that with the DMA_PREP_CMD the
+> config_data is dma_addr_t (via dmaengine_prep_slave_single).
+
+Yes I came to same conclusion
+
+> > I did have a prototype with metadata but didnt work very well, the
+> > problem is it assumes metadata for tx/rx but here i send the data
+> > everytime from client data.
+> 
+> Yes, the intended use case for metadata (per descriptor!) is for
+> channels where each transfer might have different metadata needed for
+> the given transfer (tx/rx).
+> 
+> In your case you have semi static peripheral configuration data, which
+> is not really changing between transfers.
+> 
+> A compromise would be to add:
+> void *peripheral_config;
+> to the dma_slave_config, move the set_config inside of the device
+> specific struct you are passing from a client to the core?
+
+That sounds more saner to me and uses existing interfaces cleanly. I
+think I like this option ;-)
+
+> >> I'm concerned about the size increase of dma_slave_config (it grows by
+> >>> 30 bytes) and for DMAs with hundreds of channels (UDMA) it will add up
+> >> to a sizeable amount.
+> > 
+> > I agree that is indeed a valid concern, that is the reason I tagged this
+> > as a RFC patch ;-)
+> > 
+> > I see the prep_cmd is a better approach for this, anyone else has better
+> > suggestions?
+> > 
+> > Thanks for looking in.
+> > 
+> 
+> - Péter
+> 
+> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+
+-- 
+~Vinod
