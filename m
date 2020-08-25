@@ -2,143 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 125102512F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 09:20:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F8C251325
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 09:27:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729343AbgHYHUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 03:20:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50200 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729301AbgHYHUU (ORCPT
+        id S1729462AbgHYH1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 03:27:51 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:44823 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729209AbgHYH1u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 03:20:20 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7BE1C0613ED
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 00:20:19 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id 17so6607347pfw.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 00:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=vg5jAvVQXxT9NoQtlYydmDlexL/3ZUaKgzWx4DPbqMc=;
-        b=PtcLxUsUsen/kCOn1Qu+UpVo4UmeYVlFBp/3mrHIwuuvQGD4Tb+Wu5PLYRRFP/gc1s
-         y4Pq+CTtelzAq6PBaRYVbXnk+EoRMmI80F/FoEz8CXXTU10OOK5yHzXYNo66W7fVQq8U
-         vNLP0+0ENzRz8UG37xRLcwyjrlH/h7tMlBywU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=vg5jAvVQXxT9NoQtlYydmDlexL/3ZUaKgzWx4DPbqMc=;
-        b=dFEYClsUXjoYQOE/jDoQOKhjwUT5NOtHl8Tv1YK04m29hiO++oBDUvK7cLmMj9cbmz
-         GvZw+RDg93VXEyehZXxjVBD6zKPNx9+Wtu4Qo0xmUk0/nCFunzkH8tE8+LXCmqLfwXX7
-         6su6O/n9adMV/apbiaTz9ZlF44jDGUbVK1LbwMyGuR7ryRHtcdKly6sRjVoYllDSZqK4
-         IiCmIU+dK2WG8c4fQnzNad60VRoq1Gfptu0d7iMn98pVAKqjH6wERpBc3IPrzrPxg5+b
-         RDiYm7p5YqQ/p2/wtJfbFQyNU88Nw8+h130RTorIRxWoJW4SGHleIOUjGSy0Rurw9fcD
-         sWbg==
-X-Gm-Message-State: AOAM530CeV4Ht2T+ptcp1FZLDr5W0ICGqEBBF7q74sGlOq5n/E5CFAAs
-        VwMoZDm/UP5gfB+N8RCg12W+vQ==
-X-Google-Smtp-Source: ABdhPJyzNUCbdnBjGxXGVwGQwQsAzmGrWhlHRrFkyhNvHPB0nHjuj4tILIjEYc9j4vEy2nHcmu4W8g==
-X-Received: by 2002:a62:2704:: with SMTP id n4mr7083175pfn.246.1598340019012;
-        Tue, 25 Aug 2020 00:20:19 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id x136sm13701355pfc.28.2020.08.25.00.20.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 00:20:18 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 25 Aug 2020 03:27:50 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598340469; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=nNXetVg3KEE34vdvnS3apACl8DjxRrs1XckEjwwmuAU=;
+ b=Jkb/Ya3rUxLLBWGSbE6Twbrgq6klm9IiscR2nkKE3/SZLNFzNREI/MmxNdbuj11Dy8YNHilo
+ rVxWAoD/dXO3Nyh7YOHLKFBF52fengKOFIOXkc41xeehQQAAoQBaM8DyQHWIjGdpiFQ7XWVm
+ BKvXobvROKtGURL3YclcNswuwqk=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f44bd75e20f098d46c5ee41 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 Aug 2020 07:27:49
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0063DC43395; Tue, 25 Aug 2020 07:27:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53881C433CA;
+        Tue, 25 Aug 2020 07:27:47 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200824164212.GA3715@yoga>
-References: <20200821204921.32536-1-sibis@codeaurora.org> <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com> <20200824164212.GA3715@yoga>
-Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME flags
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>, khilman@kernel.org,
-        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, gregkh@linuxfoundation.org, pavel@ucw.cz,
-        len.brown@intel.com, rnayak@codeaurora.org, dianders@chromium.org,
-        mka@chromium.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Tue, 25 Aug 2020 00:20:17 -0700
-Message-ID: <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 25 Aug 2020 12:57:47 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     trix@redhat.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: initialize local variable
+In-Reply-To: <20200819184637.15648-1-trix@redhat.com>
+References: <20200819184637.15648-1-trix@redhat.com>
+Message-ID: <6cfe9537e007bb74a481a4caba2a4123@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2020-08-24 09:42:12)
-> On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
->=20
-> > Quoting Sibi Sankar (2020-08-21 13:49:20)
-> > > Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
-> > > status of the PM domain unaltered during suspend/resume respectively.
-> > > The flags are aimed at power domains coupled to co-processors which
-> > > enter low-power modes independent to that of the application processo=
-r.
-> > >=20
-> > > Specifically the flags are to be used by the power domains exposed
-> > > by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
-> > > power domains are used to notify the Always on Subsystem (AOSS) that
-> > > a particular co-processor is up. AOSS uses this information to wait
-> > > for the co-processors to suspend before starting its sleep sequence.
-> > > The application processor powers off these power domains only if the
-> > > co-processor has crashed or powered off and remains unaltered during
-> > > system suspend/resume.
-> >=20
-> > Why are these power domains instead of some QMP message sent during
-> > remote proc power up?
->=20
-> The understanding I gained as I researched this, was that with this
-> property enabled resources related to the particular subsystem will be
-> kept enabled when the apss enters some power save mode. So my
-> interpretation was that it does "keep something powered".
+On 2020-08-20 00:16, trix@redhat.com wrote:
+> From: Tom Rix <trix@redhat.com>
+> 
+> clang static analysis reports this problem
+> 
+> pdr_interface.c:596:6: warning: Branch condition evaluates
+>   to a garbage value
+>         if (!req.service_path[0])
+>             ^~~~~~~~~~~~~~~~~~~~
+> 
+> This check that req.service_path was set in an earlier loop.
+> However req is a stack variable and its initial value
+> is undefined.
+> 
+> So initialize req to 0.
+> 
+> Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart 
+> helpers")
+> 
 
-It looks like it tells AOSS that the processor is booted and to start
-considering these processors in the SoC wide system suspend sequence.
-Otherwise I guess the RPMh buckets associated with these remoteprocs
-don't count in the aggregation and sleep/wake sequences that AOSS runs
-through when putting the SoC into low power mode. I'm not sure it
-actually "keeps something powered" so much as it lets something be
-powered off. Sibi?
+Tom,
+Thanks for the patch.
 
-Another question, why can't the processors tell AOSS themselves about
-their boot state? I guess because they may crash or be powered down and
-then AOSS wouldn't know? Fair enough I guess, but I don't think this is
-mentioned anywhere.
+Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
 
->=20
-> > If this has been discussed before feel free to
-> > disregard and please link to prior mailing list discussions.
-> >=20
->=20
-> There where some discussions related to the "QDSS clk" in that series,
-> but I don't remember getting any feedback on modelling these things as
-> power-domains.
->=20
-> > I find it odd that this is modeled as a power domain instead of some
-> > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
-> > there some sort of benefit the driver gets from using the power domain
-> > APIs for this vs. using a custom API?
->=20
-> We need to send "up" and "down" notifications and this needs to happen
-> at the same time as other standard resources are enabled/disabled.
->=20
-> Further more, at the time the all resources handled by the downstream
-> driver was either power-domains (per above understanding) or clocks, so
-> it made sense to me not to spin up a custom API.
->=20
-=20
-So the benefit is not spinning up a custom API? I'm not Ulf, but it
-looks like this is hard to rationalize about as a power domain. It
-doesn't have any benefit to model it this way besides to make it
-possible to turn on with other power domains.
+> Signed-off-by: Tom Rix <trix@redhat.com>
+> ---
+>  drivers/soc/qcom/pdr_interface.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/pdr_interface.c 
+> b/drivers/soc/qcom/pdr_interface.c
+> index 088dc99f77f3..f63135c09667 100644
+> --- a/drivers/soc/qcom/pdr_interface.c
+> +++ b/drivers/soc/qcom/pdr_interface.c
+> @@ -569,7 +569,7 @@ EXPORT_SYMBOL(pdr_add_lookup);
+>  int pdr_restart_pd(struct pdr_handle *pdr, struct pdr_service *pds)
+>  {
+>  	struct servreg_restart_pd_resp resp;
+> -	struct servreg_restart_pd_req req;
+> +	struct servreg_restart_pd_req req = { 0 };
+>  	struct sockaddr_qrtr addr;
+>  	struct pdr_service *tmp;
+>  	struct qmi_txn txn;
 
-This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
-SMEM APIs, so standing up another small qmp_remoteproc_booted() and
-qmp_remoteproc_shutdown() API would avoid adding a genpd flag here that
-probably will never be used outside of this corner-case. There is also
-some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
-would be possible to do this outside of power domains, and that seems
-better given that this isn't really a power domain to start with.
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
