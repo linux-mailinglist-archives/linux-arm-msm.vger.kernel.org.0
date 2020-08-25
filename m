@@ -2,118 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0388D251EA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 19:53:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18804251F6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Aug 2020 21:01:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726374AbgHYRxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 13:53:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726158AbgHYRxt (ORCPT
+        id S1726444AbgHYTBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 15:01:40 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:56988 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726066AbgHYTBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 13:53:49 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F6CC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 10:53:49 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id r8so1615097ota.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 10:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=C1x1jyjBhFzCQy8a0EbMsi3qjsuzPMNqfqLhlXLSl7A=;
-        b=k3t5RucNoAwMD2XGqRLYQNKFhfSn1C0q4rGtp52+V7O6X/6WeDPvz2lk7ykbKchVOJ
-         kPCDzRJEovZZRaWBYKOZ/dGYhQ3tvXlh4IelW4WQAJEgZo4RP12M8sTKFFGxEQuMoxFQ
-         80sJYM2wFiGa55KienyTFIuZkrOZn2IPbVq5bd1X4wviQrMZmvMrrYpGp/GrXocAJYyN
-         wK27QECJDk71rlAOvF9ZNCkCTD2Tp3+Eypex5mWXwf/lOH+LZQ1gT1T3JCyYq1rjf0Oy
-         g3Uu6LEGQzfu0o/h01UYs6YqslQvZqhW4AqNXUPIoKn98U1VHlUsuLpR/2g7Mx1YMC7F
-         BpVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=C1x1jyjBhFzCQy8a0EbMsi3qjsuzPMNqfqLhlXLSl7A=;
-        b=ZvDApcSY1UopBXfmw1pIdJpblUiviJD5cvDwVpUnVJLHqqZF/Rqg7aKb46jxjDLOD2
-         W5LvHOy87/8Y6xk+yG8mgeVnm+mW4S9rUmll3yzSwae18T6W3fv8y7QxilWL1cVW8ujf
-         bkfhlhmsfga2REMdiKn7Ymf4D7qHfRUzyPd86qbXLg7G9C5v3RLxFMlNVQ7S77Z8Bppy
-         tp08wCBDuzsUbnBiqWZZ25f8LIZA+/IqGmmqcsTrg/RcJfVsCIw9xBdMpseGUydIQ2+r
-         dRp53j/rRYbjaeDKk9loqbIse3GwoFI6j3xmg6qyhbuZ8q0LhnJcSEi7X1Az+mKx/b8j
-         SK0g==
-X-Gm-Message-State: AOAM530yRte3FnXnHJnPp5v0T/6uOXS+/UjSTRo9GXDEmamYnLA59aEt
-        5UqbcGg7thBYSjAaxzs7iE0Zew==
-X-Google-Smtp-Source: ABdhPJz82wuG/Ujs87c1fACgiNfpycutLB/WbcCGDf6CJAe7OGmHiti1fhnkkMUkGutRcWom15/OCA==
-X-Received: by 2002:a9d:27e7:: with SMTP id c94mr1043336otb.360.1598378028593;
-        Tue, 25 Aug 2020 10:53:48 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id b10sm418053oiy.7.2020.08.25.10.53.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 10:53:47 -0700 (PDT)
-Date:   Tue, 25 Aug 2020 12:53:45 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>, khilman@kernel.org,
-        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, gregkh@linuxfoundation.org, pavel@ucw.cz,
-        len.brown@intel.com, rnayak@codeaurora.org, dianders@chromium.org,
-        mka@chromium.org
-Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME
- flags
-Message-ID: <20200825175345.GC3715@yoga>
-References: <20200821204921.32536-1-sibis@codeaurora.org>
- <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
- <20200824164212.GA3715@yoga>
- <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
+        Tue, 25 Aug 2020 15:01:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598382097; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=TRQuySeZQtx9Xu8p/LTvIapZAq6d9k1oOwhDjvqNYBE=;
+ b=skO2IyniIr6pkKjNCJNSZd8fQTkHDM1PULLDjqe2qjkmNJ2LPo4TD/6XZeGdFYtyKXvLftBT
+ wu72U2wTEQSrWi1qgaKKWNwq7p4Z3QvPjxCd+ipyjA5xqa5fJm9e3AdVcQgMGqTtK9J4SKiz
+ Fc60uZmuBAhVseKO33KIA1F+gQQ=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f455fd776c283d04f167cf4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 25 Aug 2020 19:00:39
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3B1BDC433CB; Tue, 25 Aug 2020 19:00:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 142A3C433CB;
+        Tue, 25 Aug 2020 19:00:38 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 26 Aug 2020 00:30:38 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        iommu@lists.linux-foundation.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] iommu: Add support to filter non-strict/lazy mode based
+ on device names
+In-Reply-To: <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
+References: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
+ <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
+Message-ID: <3df7edd53ebca00be288e69b92b8d4b9@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 25 Aug 02:20 CDT 2020, Stephen Boyd wrote:
-> Quoting Bjorn Andersson (2020-08-24 09:42:12)
-> > On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
-[..]
-> > > I find it odd that this is modeled as a power domain instead of some
-> > > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
-> > > there some sort of benefit the driver gets from using the power domain
-> > > APIs for this vs. using a custom API?
-> > 
-> > We need to send "up" and "down" notifications and this needs to happen
-> > at the same time as other standard resources are enabled/disabled.
-> > 
-> > Further more, at the time the all resources handled by the downstream
-> > driver was either power-domains (per above understanding) or clocks, so
-> > it made sense to me not to spin up a custom API.
-> > 
->  
-> So the benefit is not spinning up a custom API? I'm not Ulf, but it
-> looks like this is hard to rationalize about as a power domain. It
-> doesn't have any benefit to model it this way besides to make it
-> possible to turn on with other power domains.
+Hi,
+
+On 2020-08-25 21:40, Doug Anderson wrote:
+> Hi,
 > 
-> This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
-> SMEM APIs, so standing up another small qmp_remoteproc_booted() and
-> qmp_remoteproc_shutdown() API would avoid adding a genpd flag here that
-> probably will never be used outside of this corner-case. There is also
-> some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
-> would be possible to do this outside of power domains, and that seems
-> better given that this isn't really a power domain to start with.
+> On Tue, Aug 25, 2020 at 8:43 AM Sai Prakash Ranjan
+> <saiprakash.ranjan@codeaurora.org> wrote:
+>> 
+>> Currently the non-strict or lazy mode of TLB invalidation can only be 
+>> set
+>> for all or no domains. This works well for development platforms where
+>> setting to non-strict/lazy mode is fine for performance reasons but on
+>> production devices, we need a more fine grained control to allow only
+>> certain peripherals to support this mode where we can be sure that it 
+>> is
+>> safe. So add support to filter non-strict/lazy mode based on the 
+>> device
+>> names that are passed via cmdline parameter "iommu.nonstrict_device".
+>> 
+>> Example: 
+>> iommu.nonstrict_device="7c4000.sdhci,a600000.dwc3,6048000.etr"
+> 
+> I have an inherent dislike of jamming things like this onto the
+> command line.  IMHO the command line is the last resort for specifying
+> configuration and generally should be limited to some specialized
+> debug options and cases where the person running the kernel needs to
+> override a config that was set by the person (or company) compiling
+> the kernel.  Specifically, having a long/unwieldy command line makes
+> it harder to use for the case when an end user actually wants to use
+> it to override something.  It's also just another place to look for
+> config.
+> 
 
-In later platforms a few new users of the AOSS communication interface
-is introduced that certainly doesn't fit any existing API/framework in
-the kernel. So the plan was to pretty much expose qmp_send() to these
-drivers.
+Good thing about command line parameters are that they are optional, 
+they do
+not specify any default behaviour (I mean they are not mandatory to be 
+set
+for the system to be functional), so I would like to view it as an 
+optional
+config. And this command line parameter (nonstrict_device) is strictly 
+optional
+with default being strict already set in the driver.
 
-My worry with using this interface is that we'll probably have to come
-up with some DT binding pieces and probably we'll end up adding yet
-another piece of hard coded information in the remoteproc drivers.
+They can be passed from the bootloader via chosen node for DT platforms 
+or choose
+a new *bootconfig* as a way to pass the cmdline but finally it does boil 
+down to
+just another config.
 
-But I'm not against us doing this work in favor of not having to
-introduce a one-off for this corner case.
+I agree with general boolean or single value command line parameters 
+being just
+more messy which could just be Kconfigs instead but for multiple value 
+parameters
+like these do not fit in Kconfig.
 
-Regards,
-Bjorn
+As you might already know, command line also gives an advantage to the 
+end user
+to configure system without building kernel, for this specific command 
+line its
+very useful because the performance bump is quite noticeable when the 
+iommu.strict
+is off. Now for end user who would not be interested in building entire 
+kernel(majority)
+and just cares about good speeds or throughput can find this very 
+beneficial.
+I am not talking about one specific OS usecase here but more in general 
+term.
+
+> The other problem is that this doesn't necessarily scale very well.
+> While it works OK for embedded cases it doesn't work terribly well for
+> distributions.  I know that in an out-of-band thread you indicated
+> that it doesn't break anything that's not already broken (AKA this
+> doesn't fix the distro case but it doesn't make it worse), it would be
+> better to come up with a more universal solution.
+> 
+
+Is the universal solution here referring to fix all the command line 
+parameters
+in the kernel or this specific command line? Are we going to remove any 
+more
+addition to the cmdline ;)
+
+So possible other solution is the *bootconfig* which is again just 
+another place
+to look for a config. So thing is that this universal solution would 
+result in
+just more new fancy ways of passing configs or adding such configs to 
+the drivers
+or subsystems in kernel which is pretty much similar to implementing 
+policy in
+kernel which I think is frowned upon and mentioned in the other thread.
+
+> Ideally it feels like we should figure out how to tag devices in a
+> generic manner automatically (hardcode at the driver or in the device
+> tree).  I think the out-of-band discussions talked about "external
+> facing" and the like.  We could also, perhaps, tag devices that have
+> "binary blob" firmware if we wanted.  Then we'd have a policy (set by
+> Kconfig, perhaps overridable via commandline) that indicated the
+> strictness level for the various classes of devices.  So policy would
+> be decided by KConfig and/or command line.
+> 
+
+How is tagging in driver or device tree better than the simple command 
+line
+approach to pass the same list of devices which otherwise you would 
+hardcode
+in the corresponding drivers and device tree all over the kernel other 
+than
+the scalability part for command line? IMHO it is too much churn.
+
+Device tree could be used but then we have a problem with it being for 
+only
+describing hardware and it doesn't work for ACPI based systems.
+
+Command line approach works for all systems (both DT and ACPI) without 
+having
+to add too much churn to drivers. Lastly, I think we can have both 
+options, it
+doesn't hurt to add command line parameter since it is optional.
+
+Thanks,
+Sai
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
