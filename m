@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49F94252C1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 13:05:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 959F1252C1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 13:05:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728852AbgHZLFP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 07:05:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54938 "EHLO
+        id S1728723AbgHZLFX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 07:05:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728813AbgHZLFL (ORCPT
+        with ESMTP id S1728902AbgHZLFU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 07:05:11 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D857C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 04:05:11 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id 2so713497pjx.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 04:05:11 -0700 (PDT)
+        Wed, 26 Aug 2020 07:05:20 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658B5C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 04:05:20 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id d19so850712pgl.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 04:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=57ATY6rlaZ9eWDcltcMWl9pjLEa9gziieo3Id6n6Wg8=;
-        b=SODSLjCJPxJuz8GNvtiwPEG9mbBU6waV9kB51eDienSbClMJV7QUxvAjRWVOjIjT1x
-         gG2LhvG30xscwrLxUrCcfJVFDeKX5Epw91nWxx3ikTQLnnzCPF6o3sFfrgwsBGnZ6jm6
-         g/puoak4Ejacz/UATbtTw739rS7Jl33YuIdsI=
+        bh=pvrVbHE+oViaEur7C2TJKs4p+DVpiKgNTbF6ULcQd3A=;
+        b=Eah69NXacA2KT2fbzOZ+K1O6eJLLXzCjVHyKpo4XaHyZc2owdit5oORjGfOAFJQ/Ed
+         V3PgssbXuUF2SxFQZtW7VJ7iOAV0zqUc4SaVuZpz04o/cVuyIFC2L2OzXXwWR1Pjfpo7
+         pBtME/sZIPg9o7xhA4UxSZoBycUIHwHe7jgeQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=57ATY6rlaZ9eWDcltcMWl9pjLEa9gziieo3Id6n6Wg8=;
-        b=Qzg/vnAGJ9G6eHevgI4VLv8/as+9nbnNvqy2EZ/ZT7O9VqDD1vupG7OWQhqC4L7lq9
-         UKmfTHKvpFRnrZ46qVMObXt8JrcBrKDhisruj6r+EQCGNniWdXuuZvVMw7VLhR/k6D1c
-         JS2j7UwvtkEijlbAymXB/0ukmsCei+I3V3S8QVbvqK3viJpZZ7LUKuAFL1vfXSGhcxwr
-         dQnvxddWf4bPAys1yNzyylrioRyVLHEZl9258h+qv8wha3MVeGH4JC9lnKRIdPAnzNDb
-         w1V6w0WLPwmRn4NBlBccOPQ3QXJrocNkoliH0tXd0xssntjE2U6hdKDMNbR6GVJqgTAC
-         fgqw==
-X-Gm-Message-State: AOAM531L2a7BdJuK1mn3DVR8c0qHH035fA1vWDm0EzCiZVsqxtK351CA
-        /m7k6UkRIC0R6lNXaC5ZOd6fUg==
-X-Google-Smtp-Source: ABdhPJzYRhsn/wYXuVMOpPBm4M674M05q8cS5wEqqc7VfH+Jxwmu3FKrFuPJeVxUpfirXrS2ykg3rQ==
-X-Received: by 2002:a17:902:bb87:: with SMTP id m7mr11409065pls.61.1598439909717;
-        Wed, 26 Aug 2020 04:05:09 -0700 (PDT)
+        bh=pvrVbHE+oViaEur7C2TJKs4p+DVpiKgNTbF6ULcQd3A=;
+        b=UmM6R29iwloa7fW1CwvEjgu5wK1h8bKRtmI19WMbTKEWz3LnlJQRKjqpMkwKKy7c6d
+         mlQQTpCiIW3Ln2zJLUybLnCwlJrnW0MEQuSdMr0mxiXGbMM85SXSuMkglyOWQuImpc2T
+         8yxQQFpLPPrZ7aiPRlIDBCnkTtfC95nU4pMRquRjB8MZlPqsq8sgff+y6wRHFLve86TE
+         acgHjZ0zFE5vHVWhflXUFOo9YIG55YGtIohNPohLRMew1IOdmpvHNP14O091F2CmvsTl
+         zRKvTNeC00Xmr25qC0lT9ZgYtluTK8LSWIEcKE1gf/d/dGXERErtnhhNPHbO53Oaw7Y3
+         jDXA==
+X-Gm-Message-State: AOAM531+D8ZoS76loe0wERDzPJX0S3rZEE7hQt9JKNg/EfKT16w3Cnbx
+        eaqsLLY6Jo3DeXRfGQoUoiiGrA==
+X-Google-Smtp-Source: ABdhPJx8jHXqkcdr4ZiixQj5PbX9vk9xK9P1APab3JqWhqwpULRp/sh0Zx4DhnhCD4eeDuqbC64MEw==
+X-Received: by 2002:a63:5552:: with SMTP id f18mr9542482pgm.298.1598439916347;
+        Wed, 26 Aug 2020 04:05:16 -0700 (PDT)
 Received: from localhost ([2401:fa00:1:10:de4a:3eff:fe7d:d39c])
-        by smtp.gmail.com with ESMTPSA id o65sm2578660pfg.105.2020.08.26.04.05.05
+        by smtp.gmail.com with ESMTPSA id x28sm431184pfq.62.2020.08.26.04.05.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Aug 2020 04:05:09 -0700 (PDT)
+        Wed, 26 Aug 2020 04:05:15 -0700 (PDT)
 From:   Cheng-Yi Chiang <cychiang@chromium.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
@@ -62,11 +62,12 @@ Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
         dgreid@chromium.org, tzungbi@chromium.org,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Cheng-Yi Chiang <cychiang@chromium.org>
-Subject: [PATCH v6 1/2] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
-Date:   Wed, 26 Aug 2020 19:04:53 +0800
-Message-Id: <20200826110454.1811352-2-cychiang@chromium.org>
+        alsa-devel@alsa-project.org, Ajit Pandey <ajitp@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Tzung-Bi Shih <tzungbi@google.com>
+Subject: [PATCH v6 2/2] ASoC: qcom: sc7180: Add machine driver for sound card registration
+Date:   Wed, 26 Aug 2020 19:04:54 +0800
+Message-Id: <20200826110454.1811352-3-cychiang@chromium.org>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
 In-Reply-To: <20200826110454.1811352-1-cychiang@chromium.org>
 References: <20200826110454.1811352-1-cychiang@chromium.org>
@@ -77,144 +78,312 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add devicetree bindings documentation file for sc7180 sound card.
+From: Ajit Pandey <ajitp@codeaurora.org>
 
+Add new driver to register sound card on sc7180 trogdor board and
+do the required configuration for lpass cpu dai and external codecs
+connected over MI2S interfaces.
+
+Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
 Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+Reviewed-by: Tzung-Bi Shih <tzungbi@google.com>
 ---
- .../bindings/sound/qcom,sc7180.yaml           | 124 ++++++++++++++++++
- 1 file changed, 124 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+ sound/soc/qcom/Kconfig  |  12 ++
+ sound/soc/qcom/Makefile |   2 +
+ sound/soc/qcom/sc7180.c | 244 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 258 insertions(+)
+ create mode 100644 sound/soc/qcom/sc7180.c
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+index a607ace8b089..63678b746299 100644
+--- a/sound/soc/qcom/Kconfig
++++ b/sound/soc/qcom/Kconfig
+@@ -116,4 +116,16 @@ config SND_SOC_SDM845
+ 	  SDM845 SoC-based systems.
+ 	  Say Y if you want to use audio device on this SoCs.
+ 
++config SND_SOC_SC7180
++	tristate "SoC Machine driver for SC7180 boards"
++	depends on SND_SOC_QCOM
++	select SND_SOC_QCOM_COMMON
++	select SND_SOC_LPASS_SC7180
++	select SND_SOC_MAX98357A
++	select SND_SOC_RT5682
++	help
++	  To add support for audio on Qualcomm Technologies Inc.
++	  SC7180 SoC-based systems.
++	  Say Y if you want to use audio device on this SoCs.
++
+ endif #SND_SOC_QCOM
+diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
+index 7972c9479ab0..0cdcbf367ef1 100644
+--- a/sound/soc/qcom/Makefile
++++ b/sound/soc/qcom/Makefile
+@@ -17,12 +17,14 @@ snd-soc-storm-objs := storm.o
+ snd-soc-apq8016-sbc-objs := apq8016_sbc.o
+ snd-soc-apq8096-objs := apq8096.o
+ snd-soc-sdm845-objs := sdm845.o
++snd-soc-sc7180-objs := sc7180.o
+ snd-soc-qcom-common-objs := common.o
+ 
+ obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
+ obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
+ obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
+ obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
++obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
+ obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
+ 
+ #DSP lib
+diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
 new file mode 100644
-index 000000000000..a85375974a4c
+index 000000000000..7849376f63ba
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-@@ -0,0 +1,124 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/sound/soc/qcom/sc7180.c
+@@ -0,0 +1,244 @@
++// SPDX-License-Identifier: GPL-2.0-only
++//
++// Copyright (c) 2020, The Linux Foundation. All rights reserved.
++//
++// sc7180.c -- ALSA SoC Machine driver for SC7180
 +
-+title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
++#include <dt-bindings/sound/sc7180-lpass.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/platform_device.h>
++#include <sound/core.h>
++#include <sound/jack.h>
++#include <sound/pcm.h>
++#include <sound/pcm_params.h>
++#include <sound/soc.h>
++#include <uapi/linux/input-event-codes.h>
 +
-+maintainers:
-+  - Rohit kumar <rohitkr@codeaurora.org>
-+  - Cheng-Yi Chiang <cychiang@chromium.org>
++#include "../codecs/rt5682.h"
++#include "common.h"
++#include "lpass.h"
 +
-+description:
-+  This binding describes the SC7180 sound card which uses LPASS for audio.
++#define DEFAULT_SAMPLE_RATE_48K		48000
++#define DEFAULT_MCLK_RATE		19200000
++#define RT5682_PLL1_FREQ (48000 * 512)
 +
-+properties:
-+  compatible:
-+    const: qcom,sc7180-sndcard
++struct sc7180_snd_data {
++	struct snd_soc_jack jack;
++	u32 pri_mi2s_clk_count;
++};
 +
-+  audio-routing:
-+    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-+    description:
-+      A list of the connections between audio components. Each entry is a
-+      pair of strings, the first being the connection's sink, the second
-+      being the connection's source.
++static void sc7180_jack_free(struct snd_jack *jack)
++{
++	struct snd_soc_component *component = jack->private_data;
 +
-+  model:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: User specified audio sound card name
++	snd_soc_component_set_jack(component, NULL, NULL);
++}
 +
-+  aux-dev:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: phandle of the codec for headset detection
++static int sc7180_headset_init(struct snd_soc_component *component)
++{
++	struct snd_soc_card *card = component->card;
++	struct sc7180_snd_data *pdata = snd_soc_card_get_drvdata(card);
++	struct snd_jack *jack;
++	int rval;
 +
-+  "#address-cells":
-+    const: 1
++	rval = snd_soc_card_jack_new(
++			card, "Headset Jack",
++			SND_JACK_HEADSET |
++			SND_JACK_HEADPHONE |
++			SND_JACK_BTN_0 | SND_JACK_BTN_1 |
++			SND_JACK_BTN_2 | SND_JACK_BTN_3,
++			&pdata->jack, NULL, 0);
 +
-+  "#size-cells":
-+    const: 0
++	if (rval < 0) {
++		dev_err(card->dev, "Unable to add Headset Jack\n");
++		return rval;
++	}
 +
-+patternProperties:
-+  "^dai-link(@[0-9])?$":
-+    description:
-+      Each subnode represents a dai link. Subnodes of each dai links would be
-+      cpu/codec dais.
++	jack = pdata->jack.jack;
 +
-+    type: object
++	snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
++	snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
++	snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
++	snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
 +
-+    properties:
-+      link-name:
-+        description: Indicates dai-link name and PCM stream name.
-+        $ref: /schemas/types.yaml#/definitions/string
-+        maxItems: 1
++	jack->private_data = component;
++	jack->private_free = sc7180_jack_free;
 +
-+      reg:
-+        description: dai link address.
++	rval = snd_soc_component_set_jack(component,
++					  &pdata->jack, NULL);
++	if (rval != 0 && rval != -EOPNOTSUPP) {
++		dev_warn(card->dev, "Failed to set jack: %d\n", rval);
++		return rval;
++	}
 +
-+      cpu:
-+        description: Holds subnode which indicates cpu dai.
-+        type: object
-+        properties:
-+          sound-dai: true
++	return 0;
++}
 +
-+      codec:
-+        description: Holds subnode which indicates codec dai.
-+        type: object
-+        properties:
-+          sound-dai: true
++static struct snd_soc_aux_dev sc7180_headset_dev = {
++	.dlc = COMP_EMPTY(),
++	.init = sc7180_headset_init,
++};
 +
-+    required:
-+      - link-name
-+      - cpu
-+      - codec
++static int sc7180_snd_startup(struct snd_pcm_substream *substream)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_card *card = rtd->card;
++	struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
++	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
++	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
++	int ret;
 +
-+    additionalProperties: false
++	switch (cpu_dai->id) {
++	case MI2S_PRIMARY:
++		if (++data->pri_mi2s_clk_count == 1) {
++			snd_soc_dai_set_sysclk(cpu_dai,
++					       LPASS_MCLK0,
++					       DEFAULT_MCLK_RATE,
++					       SNDRV_PCM_STREAM_PLAYBACK);
++		}
 +
-+required:
-+  - compatible
-+  - model
-+  - "#address-cells"
-+  - "#size-cells"
++		snd_soc_dai_set_fmt(codec_dai,
++				    SND_SOC_DAIFMT_CBS_CFS |
++				    SND_SOC_DAIFMT_NB_NF |
++				    SND_SOC_DAIFMT_I2S);
 +
-+additionalProperties: false
++		/* Configure PLL1 for codec */
++		ret = snd_soc_dai_set_pll(codec_dai, 0, RT5682_PLL1_S_MCLK,
++					  DEFAULT_MCLK_RATE, RT5682_PLL1_FREQ);
++		if (ret) {
++			dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
++			return ret;
++		}
 +
-+examples:
++		/* Configure sysclk for codec */
++		ret = snd_soc_dai_set_sysclk(codec_dai, RT5682_SCLK_S_PLL1,
++					     RT5682_PLL1_FREQ,
++					     SND_SOC_CLOCK_IN);
++		if (ret)
++			dev_err(rtd->dev, "snd_soc_dai_set_sysclk err = %d\n",
++				ret);
 +
-+  - |
-+    sound {
-+        compatible = "qcom,sc7180-sndcard";
-+        model = "sc7180-snd-card";
++		break;
++	case MI2S_SECONDARY:
++		break;
++	default:
++		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
++			cpu_dai->id);
++		return -EINVAL;
++	}
++	return 0;
++}
 +
-+        audio-routing =
-+                    "Headphone Jack", "HPOL",
-+                    "Headphone Jack", "HPOR";
++static void sc7180_snd_shutdown(struct snd_pcm_substream *substream)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_card *card = rtd->card;
++	struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
++	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
 +
-+        aux-dev = <&alc5682>;
++	switch (cpu_dai->id) {
++	case MI2S_PRIMARY:
++		if (--data->pri_mi2s_clk_count == 0) {
++			snd_soc_dai_set_sysclk(cpu_dai,
++					       LPASS_MCLK0,
++					       0,
++					       SNDRV_PCM_STREAM_PLAYBACK);
++		}
++		break;
++	case MI2S_SECONDARY:
++		break;
++	default:
++		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
++			cpu_dai->id);
++		break;
++	}
++}
 +
-+        #address-cells = <1>;
-+        #size-cells = <0>;
++static const struct snd_soc_ops sc7180_ops = {
++	.startup = sc7180_snd_startup,
++	.shutdown = sc7180_snd_shutdown,
++};
 +
-+        dai-link@0 {
-+            link-name = "MultiMedia0";
-+            reg = <0>;
-+            cpu {
-+                sound-dai = <&lpass_cpu 0>;
-+            };
++static const struct snd_soc_dapm_widget sc7180_snd_widgets[] = {
++	SND_SOC_DAPM_HP("Headphone Jack", NULL),
++	SND_SOC_DAPM_MIC("Headset Mic", NULL),
++};
 +
-+            codec {
-+                sound-dai = <&alc5682 0>;
-+            };
-+        };
++static struct snd_soc_card sc7180_card = {
++	.owner = THIS_MODULE,
++	.aux_dev = &sc7180_headset_dev,
++	.num_aux_devs = 1,
++	.dapm_widgets = sc7180_snd_widgets,
++	.num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets),
++};
 +
-+        dai-link@1 {
-+            link-name = "MultiMedia1";
-+            reg = <1>;
-+            cpu {
-+                sound-dai = <&lpass_cpu 1>;
-+            };
++static int sc7180_parse_aux_of(struct device *dev)
++{
++	sc7180_headset_dev.dlc.of_node = of_parse_phandle(
++			dev->of_node, "aux-dev", 0);
 +
-+            codec {
-+                sound-dai = <&max98357a>;
-+            };
-+        };
-+    };
++	if (!sc7180_headset_dev.dlc.of_node)
++		return -EINVAL;
++	return 0;
++}
++
++static void sc7180_add_ops(struct snd_soc_card *card)
++{
++	struct snd_soc_dai_link *link;
++	int i;
++
++	for_each_card_prelinks(card, i, link)
++		link->ops = &sc7180_ops;
++}
++
++static int sc7180_snd_platform_probe(struct platform_device *pdev)
++{
++	struct snd_soc_card *card = &sc7180_card;
++	struct sc7180_snd_data *data;
++	struct device *dev = &pdev->dev;
++	int ret;
++
++	/* Allocate the private data */
++	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	card->dev = dev;
++
++	ret = qcom_snd_parse_of(card);
++	if (ret) {
++		dev_err(dev, "Error parsing OF data\n");
++		return ret;
++	}
++
++	snd_soc_card_set_drvdata(card, data);
++
++	sc7180_add_ops(card);
++
++	ret = sc7180_parse_aux_of(dev);
++	if (ret) {
++		dev_err(dev, "Failed to parse OF for jack device\n");
++		return ret;
++	}
++
++	return devm_snd_soc_register_card(dev, card);
++}
++
++static const struct of_device_id sc7180_snd_device_id[]  = {
++	{ .compatible = "qcom,sc7180-sndcard" },
++	{},
++};
++MODULE_DEVICE_TABLE(of, sc7180_snd_device_id);
++
++static struct platform_driver sc7180_snd_driver = {
++	.probe = sc7180_snd_platform_probe,
++	.driver = {
++		.name = "msm-snd-sc7180",
++		.of_match_table = sc7180_snd_device_id,
++	},
++};
++module_platform_driver(sc7180_snd_driver);
++
++MODULE_DESCRIPTION("sc7180 ASoC Machine Driver");
++MODULE_LICENSE("GPL v2");
 -- 
 2.28.0.297.g1956fa8f8d-goog
 
