@@ -2,149 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B43B4252829
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 09:05:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5A0E2528AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 09:53:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726698AbgHZHFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 03:05:53 -0400
-Received: from lelv0143.ext.ti.com ([198.47.23.248]:54390 "EHLO
-        lelv0143.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726707AbgHZHFv (ORCPT
+        id S1726125AbgHZHxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 03:53:10 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:27605 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726442AbgHZHxI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 03:05:51 -0400
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 07Q75noN064369;
-        Wed, 26 Aug 2020 02:05:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1598425549;
-        bh=6E81PBhhTm2Fd9GLC0elzJej9ab66NBkRVDF3kvJ2Ho=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=G9o+O+AR0hH78Q8eHr9AIslSwHaOq33L0puZqtoxJ/TEtjKaGPYfWBDQntfqcAc/x
-         xdNC8A1YH+eFixgP5T0nA3n1uZBanvPsEjEMnui97qwcm1mfLn0Z778hgRi/14JJIh
-         39H93UIcj7SK/MfnJHfMKg6GLG4IDrfq6+N2ZByI=
-Received: from DFLE104.ent.ti.com (dfle104.ent.ti.com [10.64.6.25])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07Q75nJe124795;
-        Wed, 26 Aug 2020 02:05:49 -0500
-Received: from DFLE113.ent.ti.com (10.64.6.34) by DFLE104.ent.ti.com
- (10.64.6.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 26
- Aug 2020 02:05:49 -0500
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DFLE113.ent.ti.com
- (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 26 Aug 2020 02:05:49 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 07Q75lh7066890;
-        Wed, 26 Aug 2020 02:05:47 -0500
-Subject: Re: [RFC PATCH 2/3] dmaengine: add peripheral configuration
-To:     Vinod Koul <vkoul@kernel.org>
-CC:     <dmaengine@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20200824084712.2526079-1-vkoul@kernel.org>
- <20200824084712.2526079-3-vkoul@kernel.org>
- <50ed780f-4c1a-2da2-71e4-423f3b224e25@ti.com>
- <20200825071023.GB2639@vkoul-mobl>
- <38bc6986-6d1d-7c35-b2df-967326fc5ca7@ti.com>
- <20200825110202.GF2639@vkoul-mobl>
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-X-Pep-Version: 2.0
-Message-ID: <5d55965f-bb3d-4f3c-803c-e90493f8c197@ti.com>
-Date:   Wed, 26 Aug 2020 10:07:26 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Wed, 26 Aug 2020 03:53:08 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598428387; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=K8hws+Wc56ot1KHmF6pUD/aHPtRYJTckBNu4n1VnB3Y=;
+ b=xRfoE711j3rS9d4nMsiRuVCH26wWPZNKIfrjdFlNNXZrhMYcH5zEWHPlVottw04MHgqvALvc
+ bWBGpNIkAdIUv2zqkZHHjtqOHk8z6gHP+FGiBe2pJDhniHiQhZoR2SzqlyKUGmq80/UGeieo
+ nL6QtNARs2JgG9/MWmqfQfzGFnY=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f4614d23525716afdb5389f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 26 Aug 2020 07:52:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 38BAFC43391; Wed, 26 Aug 2020 07:52:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkrishn)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 32128C433CA;
+        Wed, 26 Aug 2020 07:52:48 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200825110202.GF2639@vkoul-mobl>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 26 Aug 2020 13:22:48 +0530
+From:   mkrishn@codeaurora.org
+To:     Rob Herring <robh@kernel.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, nganji@codeaurora.org
+Subject: Re: [PATCH 1/2] dt-bindings: msm: disp: add yaml schemas for DPU and
+ DSI bindings
+In-Reply-To: <20200824225702.GA3460018@bogus>
+References: <1597066683-6044-1-git-send-email-mkrishn@codeaurora.org>
+ <20200824225702.GA3460018@bogus>
+Message-ID: <3016838fedcdd9f34515a74438ea8154@codeaurora.org>
+X-Sender: mkrishn@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+On 2020-08-25 04:27, Rob Herring wrote:
+> On Mon, Aug 10, 2020 at 07:08:02PM +0530, Krishna Manikandan wrote:
+>> MSM Mobile Display Subsytem (MDSS) encapsulates sub-blocks
+>> like DPU display controller, DSI etc. Add YAML schema
+>> for the device tree bindings for the same.
+>> 
+>> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+>> 
+>> Changes in v2:
+>>     - Changed dpu to DPU (Sam Ravnborg)
+>>     - Fixed indentation issues (Sam Ravnborg)
+>>     - Added empty line between different properties (Sam Ravnborg)
+>>     - Replaced reference txt files with  their corresponding
+>>       yaml files (Sam Ravnborg)
+>>     - Modified the file to use "|" only when it is
+>>       necessary (Sam Ravnborg)
+>> 
+>> Changes in v3:
+>>     - Corrected the license used (Rob Herring)
+>>     - Added maxItems for properties (Rob Herring)
+>>     - Dropped generic descriptions (Rob Herring)
+>>     - Added ranges property (Rob Herring)
+>>     - Corrected the indendation (Rob Herring)
+>>     - Added additionalProperties (Rob Herring)
+>>     - Split dsi file into two, one for dsi controller
+>>       and another one for dsi phy per target (Rob Herring)
+>>     - Corrected description for pinctrl-names (Rob Herring)
+>>     - Corrected the examples used in yaml file (Rob Herring)
+>>     - Delete dsi.txt and dpu.txt (Rob Herring)
+>> 
+>> Changes in v4:
+>>     - Move schema up by one level (Rob Herring)
+>>     - Add patternProperties for mdp node (Rob Herring)
+>>     - Corrected description of some properties (Rob Herring)
+>> 
+>> Changes in v5:
+>>     - Correct the indentation (Rob Herring)
+>>     - Remove unnecessary description from properties (Rob Herring)
+>>     - Correct the number of interconnect entries (Rob Herring)
+>>     - Add interconnect names for sc7180 (Rob Herring)
+>>     - Add description for ports (Rob Herring)
+>>     - Remove common properties (Rob Herring)
+>>     - Add unevalutatedProperties (Rob Herring)
+>>     - Reference existing dsi controller yaml in the common
+>>       dsi controller file (Rob Herring)
+>>     - Correct the description of clock names to include only the
+>>       clocks that are required (Rob Herring)
+>>     - Remove properties which are already covered under the common
+>>       binding (Rob Herring)
+>>     - Add dsi phy supply nodes which are required for sc7180 and
+>>       sdm845 targets (Rob Herring)
+>>     - Add type ref for syscon-sfpb (Rob Herring)
+>> 
+>> Changes in v6:
+>>     - Fixed errors during dt_binding_check (Rob Herring)
+>>     - Add maxItems for phys and phys-names (Rob Herring)
+>>     - Use unevaluatedProperties wherever required (Rob Herring)
+>>     - Removed interrupt controller from required properties for
+>>       dsi controller (Rob Herring)
+>>     - Add constraints for dsi-phy reg-names based on the compatible
+>>       phy version (Rob Herring)
+>>     - Add constraints for dsi-phy supply nodes based on the
+>>       compatible phy version (Rob Herring)
+>> 
+>> Changes in v7:
+>>     - Add default value for qcom,mdss-mdp-transfer-time-us (Rob 
+>> Herring)
+>>     - Modify the schema for data-lanes (Rob Herring)
+>>     - Split the phy schema into separate schemas based on
+>>       the phy version (Rob Herring)
+>> 
+>> Changes in v8:
+>>     - Resolve merge conflicts with latest dsi.txt file
+>>     - Include dp yaml change also in the same series
+> 
+> I'm done reviewing this because I'm tired of repeating myself and 
+> you're
+> just throwing crap at the wall and seeing what sticks. Get someone else
+> working on QCom stuff to review because I'm done until someone I know
+> and trust reviews it.
+> 
+>> ---
+>>  .../bindings/display/msm/dpu-sc7180.yaml           | 236 
+>> +++++++++++++++++++
+>>  .../bindings/display/msm/dpu-sdm845.yaml           | 216 
+>> ++++++++++++++++++
+>>  .../devicetree/bindings/display/msm/dpu.txt        | 141 ------------
+>>  .../display/msm/dsi-common-controller.yaml         | 249 
+>> +++++++++++++++++++++
+>>  .../display/msm/dsi-controller-sc7180.yaml         | 120 ++++++++++
+>>  .../display/msm/dsi-controller-sdm845.yaml         | 120 ++++++++++
+> 
+> Once again, what's the difference between dsi-controller-sc7180.yaml 
+> and
+> dsi-controller-sdm845.yaml? I don't see one. If there's not a
+> difference, why do we have msm/dsi-common-controller.yaml? If there is 
+> a
+> difference dsi-controller-sc7180.yaml and dsi-controller-sdm845.yaml
+> should *only* have what's different because
+> msm/dsi-common-controller.yaml should have everything that is the same.
 
-On 25/08/2020 14.02, Vinod Koul wrote:
->> The only thing which might be an issue is that with the DMA_PREP_CMD t=
-he
->> config_data is dma_addr_t (via dmaengine_prep_slave_single).
->=20
-> Yes I came to same conclusion
->=20
->>> I did have a prototype with metadata but didnt work very well, the
->>> problem is it assumes metadata for tx/rx but here i send the data
->>> everytime from client data.
->>
->> Yes, the intended use case for metadata (per descriptor!) is for
->> channels where each transfer might have different metadata needed for
->> the given transfer (tx/rx).
->>
->> In your case you have semi static peripheral configuration data, which=
+Rob, The dsi yaml files were split into dsi controller and dsi phy based 
+on your comments on patch v2.
+As per the comments, I added one common yaml file for controller with 
+all the mandatory and optional properties along with their constraints 
+and only the required properties for each target is mentioned in the 
+target specific dsi-controller yaml file.
 
->> is not really changing between transfers.
->>
->> A compromise would be to add:
->> void *peripheral_config;
->> to the dma_slave_config, move the set_config inside of the device
->> specific struct you are passing from a client to the core?
->=20
-> That sounds more saner to me and uses existing interfaces cleanly. I
-> think I like this option ;-)
+Thanks,
+Krishna
 
-The other option would be to use the descriptor metadata support and
-that might be even cleaner.
-
-In gpi_create_tre() via gpi_prep_slave_sg() you would set up the
-desc->tre[1] and desc->tre[2] for TX
-desc->tre[2] for RX
-in the desc, you add a new variable, let's say first_tre and
-set it to 1 for TX, 2 for RX.
-
-If you need to send a config, you attach it via either way metadata
-support allows you (get the pointer to desc->tre[0] or give a config
-struct to the DMA driver.
-
-In the metadata handler, you check if the transfer is TX, if it is, then
-you update desc->tre[0] (or give the pointer to the client) and update
-the first_tre to 0.
-
-In issue_pending, or a small helper which can be used to start the
-transfer you would do the queuing instead of prepare time:
-for (i =3D gpi_desc->first_tre; i < MAX_TRE; i++)
-	gpi_queue_xfer(gpii, gpii_chan,  &gpi_desc->tre[i], &wp);
-
-With this change it should work neatly without any change to
-dma_slave_config.
-
->=20
->>>> I'm concerned about the size increase of dma_slave_config (it grows =
-by
->>>>> 30 bytes) and for DMAs with hundreds of channels (UDMA) it will add=
- up
->>>> to a sizeable amount.
->>>
->>> I agree that is indeed a valid concern, that is the reason I tagged t=
-his
->>> as a RFC patch ;-)
->>>
->>> I see the prep_cmd is a better approach for this, anyone else has bet=
-ter
->>> suggestions?
->>>
->>> Thanks for looking in.
->>>
->>
->> - P=C3=A9ter
->>
->> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
->> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
->=20
-
-- P=C3=A9ter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
+>>  .../bindings/display/msm/dsi-phy-10nm.yaml         |  62 +++++
+>>  .../bindings/display/msm/dsi-phy-14nm.yaml         |  62 +++++
+>>  .../bindings/display/msm/dsi-phy-20nm.yaml         |  66 ++++++
+>>  .../bindings/display/msm/dsi-phy-28nm.yaml         |  62 +++++
+>>  .../bindings/display/msm/dsi-phy-sc7180.yaml       |  80 +++++++
+>>  .../bindings/display/msm/dsi-phy-sdm845.yaml       |  82 +++++++
+>>  .../devicetree/bindings/display/msm/dsi.txt        | 247 
+>> --------------------
+>>  13 files changed, 1355 insertions(+), 388 deletions(-)
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dpu.txt
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-common-controller.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-controller-sc7180.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-controller-sdm845.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-sc7180.yaml
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi-phy-sdm845.yaml
+>>  delete mode 100644 
+>> Documentation/devicetree/bindings/display/msm/dsi.txt
