@@ -2,162 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8711253191
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 16:40:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB7202531DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 16:49:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726750AbgHZOkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 10:40:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50464 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726125AbgHZOkU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 10:40:20 -0400
-Received: from earth.universe (unknown [95.33.152.255])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3565E214F1;
-        Wed, 26 Aug 2020 14:40:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598452819;
-        bh=kSOZjgsKoINzoi95AcLDM3iSpV9pQwpFhCwaD8Qr76Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hbMrgJPOgg7sIpnTXuip5BVUq4csu3DUDLz1ft+2iiUovoI5VVxYGzGZN3CRgzF91
-         wlKVf4VboPu7tE6QZBD6JdoEhOUiGX5QU15irvJwd8wgYLubiwDKokxysFyi9kmkAy
-         HwqtnBbdp2+00Q9Kdl+DdgYHwInQmfyIm5bJLS+w=
-Received: by earth.universe (Postfix, from userid 1000)
-        id 96D353C0C82; Wed, 26 Aug 2020 16:40:17 +0200 (CEST)
-Date:   Wed, 26 Aug 2020 16:40:17 +0200
-From:   Sebastian Reichel <sre@kernel.org>
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S1727124AbgHZOtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 10:49:20 -0400
+Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.80]:28191 "EHLO
+        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726845AbgHZOtL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Aug 2020 10:49:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1598453348;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=WtPyyCfNYRDGNlRLhnTbAOZUqz018Ne4S7uPqstOy3k=;
+        b=ZKF7HKI63jLWVLrusi6lW0rDx12aW26hCGhQUqpCuj8/t2eqlep86sAzuXgB59nfeH
+        mYYR7tcfWNxOogMqPUzBBIR6+Map0GZ2Jc5YNsjrZPBWAEsHwMGjCY2kYlGpC13jGPbO
+        ySXRBCZ3i5hcQGlLV2XcFexH3yxiIHwCKvKrMzToV3QXnEgynMIDB8rasLBZfUFN4gdg
+        lgOQtyWaWEJ3gvYgyBE0GbbP604wh/ercxpyJ2wefv2KSon2xUc2JaV9ofb4yI48pDSZ
+        iUxT2pCitRbQHiqd7Cez087tqFkLeaP22mcKQF6vzwWz/6xj+/eLNutqcLjVsLk+8pum
+        Cacw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7Ic/Fboo="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
+        with ESMTPSA id g0b6c1w7QElPnl9
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Wed, 26 Aug 2020 16:47:25 +0200 (CEST)
+Date:   Wed, 26 Aug 2020 16:47:18 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Cheng-Yi Chiang <cychiang@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Heidelberg <david@ixit.cz>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        "Bruce E . Robertson" <bruce.e.robertson@intel.com>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jonghwa Lee <jonghwa3.lee@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Vinay Simha BN <simhavcs@gmail.com>,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v3 00/10] Summit SMB3xx driver & device-tree
-Message-ID: <20200826144017.nolqvzu2exchmdn2@earth.universe>
-References: <20200813213409.24222-1-digetx@gmail.com>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, dgreid@chromium.org, tzungbi@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org, Ajit Pandey <ajitp@codeaurora.org>,
+        Tzung-Bi Shih <tzungbi@google.com>
+Subject: Re: [PATCH v6 2/2] ASoC: qcom: sc7180: Add machine driver for sound
+ card registration
+Message-ID: <20200826144718.GA854@gerhold.net>
+References: <20200826110454.1811352-1-cychiang@chromium.org>
+ <20200826110454.1811352-3-cychiang@chromium.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nrlaoi7slsg5rmx7"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200813213409.24222-1-digetx@gmail.com>
+In-Reply-To: <20200826110454.1811352-3-cychiang@chromium.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Aug 26, 2020 at 07:04:54PM +0800, Cheng-Yi Chiang wrote:
+> From: Ajit Pandey <ajitp@codeaurora.org>
+> 
+> Add new driver to register sound card on sc7180 trogdor board and
+> do the required configuration for lpass cpu dai and external codecs
+> connected over MI2S interfaces.
+> 
+> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> Reviewed-by: Tzung-Bi Shih <tzungbi@google.com>
+> ---
+>  sound/soc/qcom/Kconfig  |  12 ++
+>  sound/soc/qcom/Makefile |   2 +
+>  sound/soc/qcom/sc7180.c | 244 ++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 258 insertions(+)
+>  create mode 100644 sound/soc/qcom/sc7180.c
+> 
+> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+> index a607ace8b089..63678b746299 100644
+> --- a/sound/soc/qcom/Kconfig
+> +++ b/sound/soc/qcom/Kconfig
+> @@ -116,4 +116,16 @@ config SND_SOC_SDM845
+>  	  SDM845 SoC-based systems.
+>  	  Say Y if you want to use audio device on this SoCs.
+>  
+> +config SND_SOC_SC7180
+> +	tristate "SoC Machine driver for SC7180 boards"
+> +	depends on SND_SOC_QCOM
+> +	select SND_SOC_QCOM_COMMON
+> +	select SND_SOC_LPASS_SC7180
+> +	select SND_SOC_MAX98357A
+> +	select SND_SOC_RT5682
+> +	help
+> +	  To add support for audio on Qualcomm Technologies Inc.
+> +	  SC7180 SoC-based systems.
+> +	  Say Y if you want to use audio device on this SoCs.
+> +
+>  endif #SND_SOC_QCOM
+> diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
+> index 7972c9479ab0..0cdcbf367ef1 100644
+> --- a/sound/soc/qcom/Makefile
+> +++ b/sound/soc/qcom/Makefile
+> @@ -17,12 +17,14 @@ snd-soc-storm-objs := storm.o
+>  snd-soc-apq8016-sbc-objs := apq8016_sbc.o
+>  snd-soc-apq8096-objs := apq8096.o
+>  snd-soc-sdm845-objs := sdm845.o
+> +snd-soc-sc7180-objs := sc7180.o
+>  snd-soc-qcom-common-objs := common.o
+>  
+>  obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
+>  obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
+>  obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
+>  obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
+> +obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
+>  obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
+>  
+>  #DSP lib
+> diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
+> new file mode 100644
+> index 000000000000..7849376f63ba
+> --- /dev/null
+> +++ b/sound/soc/qcom/sc7180.c
+> @@ -0,0 +1,244 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +//
+> +// Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> +//
+> +// sc7180.c -- ALSA SoC Machine driver for SC7180
+> +
+> +#include <dt-bindings/sound/sc7180-lpass.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <sound/core.h>
+> +#include <sound/jack.h>
+> +#include <sound/pcm.h>
+> +#include <sound/pcm_params.h>
+> +#include <sound/soc.h>
+> +#include <uapi/linux/input-event-codes.h>
+> +
+> +#include "../codecs/rt5682.h"
+> +#include "common.h"
+> +#include "lpass.h"
+> +
+> +#define DEFAULT_SAMPLE_RATE_48K		48000
+> +#define DEFAULT_MCLK_RATE		19200000
+> +#define RT5682_PLL1_FREQ (48000 * 512)
+> +
+> +struct sc7180_snd_data {
+> +	struct snd_soc_jack jack;
+> +	u32 pri_mi2s_clk_count;
+> +};
+> +
+> +static void sc7180_jack_free(struct snd_jack *jack)
+> +{
+> +	struct snd_soc_component *component = jack->private_data;
+> +
+> +	snd_soc_component_set_jack(component, NULL, NULL);
+> +}
+> +
+> +static int sc7180_headset_init(struct snd_soc_component *component)
+> +{
+> +	struct snd_soc_card *card = component->card;
+> +	struct sc7180_snd_data *pdata = snd_soc_card_get_drvdata(card);
+> +	struct snd_jack *jack;
+> +	int rval;
+> +
+> +	rval = snd_soc_card_jack_new(
+> +			card, "Headset Jack",
+> +			SND_JACK_HEADSET |
+> +			SND_JACK_HEADPHONE |
+> +			SND_JACK_BTN_0 | SND_JACK_BTN_1 |
+> +			SND_JACK_BTN_2 | SND_JACK_BTN_3,
+> +			&pdata->jack, NULL, 0);
+> +
+> +	if (rval < 0) {
+> +		dev_err(card->dev, "Unable to add Headset Jack\n");
+> +		return rval;
+> +	}
+> +
+> +	jack = pdata->jack.jack;
+> +
+> +	snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+> +	snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
+> +	snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+> +	snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
+> +
+> +	jack->private_data = component;
+> +	jack->private_free = sc7180_jack_free;
+> +
+> +	rval = snd_soc_component_set_jack(component,
+> +					  &pdata->jack, NULL);
+> +	if (rval != 0 && rval != -EOPNOTSUPP) {
+> +		dev_warn(card->dev, "Failed to set jack: %d\n", rval);
+> +		return rval;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static struct snd_soc_aux_dev sc7180_headset_dev = {
+> +	.dlc = COMP_EMPTY(),
+> +	.init = sc7180_headset_init,
+> +};
+> +
 
---nrlaoi7slsg5rmx7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[...]
 
-Hi,
+> +static struct snd_soc_card sc7180_card = {
+> +	.owner = THIS_MODULE,
+> +	.aux_dev = &sc7180_headset_dev,
+> +	.num_aux_devs = 1,
+> +	.dapm_widgets = sc7180_snd_widgets,
+> +	.num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets),
+> +};
+> +
+> +static int sc7180_parse_aux_of(struct device *dev)
+> +{
+> +	sc7180_headset_dev.dlc.of_node = of_parse_phandle(
+> +			dev->of_node, "aux-dev", 0);
+> +
+> +	if (!sc7180_headset_dev.dlc.of_node)
+> +		return -EINVAL;
+> +	return 0;
+> +}
+> +
 
-I queued patches 1-8 (so everything besides the DTS changes). I
-would like to see some more cleanups and will send a separate
-patchset for them in a jiffy. Please test them, since I do not
-have the hardware.
+Thanks for noting that this conflicts with my patch set that adds the
+"aux-devs" property for the device tree [1], I didn't see this before.
 
--- Sebastian
+The use of aux-dev in this patch looks a bit weird to me...
 
-On Fri, Aug 14, 2020 at 12:33:59AM +0300, Dmitry Osipenko wrote:
-> We gathered existing patches, fixed and improved what we could and
-> final result is an working charging driver with device-tree support
-> for Nexus 7.
->=20
-> At this moment charging works with:
->  - Nexus 7 2012 (grouper and tilapia)
->  - Nexus 7 2013 (flo and deb)
->  - ... and there are more devices equipped with these chargers.
->=20
-> Changelog:
->=20
-> v3: - The uint32 type now isn't specified for standard units in the SMB
->       DT binding because standard units already have a type.
->       Thanks to Rob Herring for the suggestion!
->=20
->     - The battery binding changes are rebased on top of the new battery.y=
-aml
->=20
->     - The new battery temperature DT properties now have shorter names
->       and use <min max> format. Thanks to Rob Herring for the suggestion!
->=20
->     - Added new patch that adds SMB charger node to the new Nexus 7 2012
->       device-tree which has been merged into v5.9 kernel.
->=20
-> v2: - Addressed v1 review comments from Rob Herring and Sebastian Reichel
->       by moving out common battery properties from the charger node into =
-the
->       battery-cell node.
->=20
->     - power_supply_register() of the SMB driver converted to resource-man=
-aged
->       API variant.
->=20
->     - Improved DT property names of the SMB binding by making them to fol=
-low
->       the generic power-supply naming scheme (-microvolts at the end, etc=
-).
->=20
-> David Heidelberg (7):
->   dt-bindings: power: supply: Add device-tree binding for Summit SMB3xx
->   power: supply: smb347-charger: Use resource-managed API
->   power: supply: smb347-charger: Implement device-tree support
->   power: supply: smb347-charger: Support SMB345 and SMB358
->   power: supply: smb347-charger: Remove virtual smb347-battery
->   ARM: dts: qcom: apq8064-nexus7: Add SMB345 battery charger
->   ARM: tegra: nexus7: Add SMB347 battery charger
->=20
-> Dmitry Osipenko (3):
->   dt-bindings: battery: Add temperature properties
->   power: supply: Support battery temperature device-tree properties
->   power: supply: smb347-charger: Replace mutex with IRQ disable/enable
->=20
->  .../bindings/power/supply/battery.yaml        |  24 +
->  .../power/supply/summit,smb347-charger.yaml   | 152 +++++
->  .../boot/dts/qcom-apq8064-asus-nexus7-flo.dts |  24 +
->  .../tegra30-asus-nexus7-grouper-common.dtsi   |  24 +-
->  drivers/power/supply/Kconfig                  |   6 +-
->  drivers/power/supply/power_supply_core.c      |  19 +
->  drivers/power/supply/smb347-charger.c         | 565 +++++++++---------
->  .../dt-bindings/power/summit,smb347-charger.h |  19 +
->  include/linux/power_supply.h                  |   6 +
->  9 files changed, 568 insertions(+), 271 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/power/supply/summit=
-,smb347-charger.yaml
->  create mode 100644 include/dt-bindings/power/summit,smb347-charger.h
->=20
-> --=20
-> 2.27.0
->=20
+As I understand, the "auxiliary devices" of a sound card are intended to
+be used for components that should be probed even though they don't
+appear within one of the DAI links. Examples for that are especially
+analog amplifiers and other components that do not have digital audio
+input/output.
 
---nrlaoi7slsg5rmx7
-Content-Type: application/pgp-signature; name="signature.asc"
+On the other hand, in this patch it seems to be just a way to mark the
+DAI component that will provide the headphone jack detection. In your
+example, the component that provides the headphone jack then appears
+both as DAI component and as auxiliary device:
 
------BEGIN PGP SIGNATURE-----
+	aux-dev = <&alc5682>;
 
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAl9GdEIACgkQ2O7X88g7
-+ppOHhAApWb5+TGOBlDwodu7HLrx3L067TxMJB7uIWhYAdsxn5X1d6O7CWViJTz4
-itwiGPD1DjDngpQvk5KPttLBjk1z8zcvg3obV2Z1GX9ekyBR19eOyDGfuTDt7c0k
-BfcaQ3fsefLcfZxad016XavYVbMeOHoRYEK+ett6U4KypUdCr7cxiGF537vfzmqz
-D5tCvx5URgD7+hklWjV50MOA3W+V9hr51p+0ERVqSHWUZOBB+pB+F48U+3pX9Tjw
-dcs5Yo54+KDRS5G0ZfRGoq++h4c+ypn+jkGt6rgEBaUTQbzRQAfXUVSVHhDi3Stw
-h8gg8t0IG8r4CHZlDkcmOGNLFz/6tXyfktc5OSWJf7+Prof+UVlnhR/116ixEYHw
-krkSaGCGz2U/+4DzsZpaVmihm8ysgY1qkP0Ey6/tvWuTNGQTCmipNDWD+MMTWBHN
-NZEV4PfT71H1Ko4+fiOHTMC8iKy83FLgsgfZAs2qtlpCuw3aFjYRU+uBSCZuP2aF
-kv1AqJ27tInH4nzxkHhgciCxZ96zoCP4vDch2Mdd1kDhJjBVCDeQZuMxzfjNh8RE
-sz1LGmqfaLDCMo6sPlroLtuhG+Jh5e3nCrgKC4Z4E7DbBnpv2yoh3fvqFPiZjg0c
-C7eVJa6RcNymMMity+VsrnfafBx+HPDg5W/FHBh4N5nSQecMdd4=
-=iD6g
------END PGP SIGNATURE-----
+	dai-link@0 {
+		link-name = "MultiMedia0";
+		reg = <0>;
+		cpu {
+			sound-dai = <&lpass_cpu 0>;
+		};
+		codec {
+			sound-dai = <&alc5682 0>;
+		};
+	};
 
---nrlaoi7slsg5rmx7--
+Adding &alc5682 to snd_soc_card->aux_dev is kind of pointless in this
+case because it will already be probed as part of the DAI link.
+
+The only thing you gain is that you have the init() callback which gives
+you the component that provides the headphone jack. But if someone wants
+to add an actual auxiliary device later (e.g. an analog amplifier),
+they would run into trouble...
+
+I wonder if it would be better to just have some sort of phandle, e.g.
+
+	audio-jack = <&alc5682>;
+
+but instead of creating an auxiliary device for this you would e.g.
+iterate over the list of components to find the one the phandle refers to.
+
+Or maybe someone else can comment if using an auxiliary device for this
+does really make sense?
+
+Thanks,
+Stephan
+
+[1]: https://lore.kernel.org/alsa-devel/20200826095141.94017-1-stephan@gerhold.net/
