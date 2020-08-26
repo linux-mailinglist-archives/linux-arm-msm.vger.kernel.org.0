@@ -2,97 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D8E0252B35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 12:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1EBB252C17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 13:05:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728282AbgHZKPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 06:15:41 -0400
-Received: from Galois.linutronix.de ([193.142.43.55]:56494 "EHLO
-        galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728191AbgHZKPk (ORCPT
+        id S1728659AbgHZLFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 07:05:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728701AbgHZLFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 06:15:40 -0400
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1598436938;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=rMxf05Zh5rg5fiuN4Y5ZaPXwW3Mlg4s5ZeNNHexJaj4=;
-        b=CHzqWuIQH5JHUjI0kmpjxllDQTFu2MfaeG4HSUFmw6DiNvaZVgeOuzogrvmMdUGpIdZ71X
-        Im4rQxXlBwO7QKb+Vp8thpbPPIvcH5cNPbpCXwf3342/4QjPVvDD5gCPS0CAwHblqVreTA
-        iwBhmBXxtD1MMH10wRAlaAEfXMK1dHD0OrP31zwvGGEFe24P7lJ3Ei5BJCmfOCYZ8vygyi
-        1K8SSsRYbDLIUdlhO2XYuVSsRwYNN6dvzuHuOxP5H8sll527qkTW+WDEujumA+jvpfpLnG
-        eiIHsCPT3tM3cUbU9otpdyTx0Ed1vgkufiRFG95YvpWxMg8Iq/hPkgPMTnV6KQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1598436938;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=rMxf05Zh5rg5fiuN4Y5ZaPXwW3Mlg4s5ZeNNHexJaj4=;
-        b=Klejnk9mTGP+PDaLOLuyNlPzRoehYgLlmsRSMQ7iaxGUpPi8n2jJsgYQ5F98S21EG6IpU7
-        GuYrJMYy6mM+xyDQ==
-To:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, linus.walleij@linaro.org, maz@kernel.org,
-        mka@chromium.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-In-Reply-To: <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org>
-Date:   Wed, 26 Aug 2020 12:15:37 +0200
-Message-ID: <87y2m1vhkm.fsf@nanos.tec.linutronix.de>
+        Wed, 26 Aug 2020 07:05:03 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B649C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 04:05:02 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id b11so723231pld.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 04:05:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mqlq1PfT56HOoFMV6L94hJv96dlmh01C5Xs6bahtBkI=;
+        b=UeOWj1bLiRwpjx0xxo7VgpqGSSWO0JgJ1jDlPJnXdrM6c/bGEfxHVRjO52822EdGos
+         hMjeRcRFC8MnALlN0EL5KFiJ7OeDjlvlw/2zKk58tdxtxb/emtza+ibHAB+OxblK09Lb
+         CEPrqLjTKx3bpE5zD7EXrW2cyycWVsGx+84oc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mqlq1PfT56HOoFMV6L94hJv96dlmh01C5Xs6bahtBkI=;
+        b=U/wAM66UIwpkaPxAbD7iKa7+SUGIqNCWR4Rr1NbF+U5nkTxbRjS4guV0HvgMQrh4fw
+         elXcqLy/FR7DFEhduZtOiEOVxs4EGh89rZ233zT75s07J95BZEM76rYg55qrJDI4uvr7
+         W8EF5gpf/pFQ50iVIE/KVLAfd7wJCp213JpxTDmIV4HJiKovo/wxU9jRPzHe3qgWh8IN
+         E1nTbpoesL4Pi06+/r5kNLPwCsZvCNGa0qxo21hqOkidEiw0amt98lOAoeR+Cu/0+kT1
+         hFH1jzRnX5ds4RZpzFIeqTP8gpWkA48Zx7Xp2DO8JEl1znwcU9TXptjxuh5pFbjTes/o
+         JymA==
+X-Gm-Message-State: AOAM533W/pb9FiZiQ/P5xNR8yq+zuvflSDtiNF9IFsQozT6RgA+h9gsk
+        zjncNZXRg1GLbos1a2i3e5FQaw==
+X-Google-Smtp-Source: ABdhPJzkWckbe2f7/EY4eUKIYZ4JNt+7W4ArRJA9yhosyjN47O+337w2fSQAeHRBzXhqgEJos8I9Lw==
+X-Received: by 2002:a17:902:9309:: with SMTP id bc9mr11228131plb.51.1598439901835;
+        Wed, 26 Aug 2020 04:05:01 -0700 (PDT)
+Received: from localhost ([2401:fa00:1:10:de4a:3eff:fe7d:d39c])
+        by smtp.gmail.com with ESMTPSA id x5sm1888539pgf.65.2020.08.26.04.04.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Aug 2020 04:05:00 -0700 (PDT)
+From:   Cheng-Yi Chiang <cychiang@chromium.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Cheng-Yi Chiang <cychiang@chromium.org>
+Subject: [PATCH v6 0/2] Add documentation and machine driver for SC7180 sound card
+Date:   Wed, 26 Aug 2020 19:04:52 +0800
+Message-Id: <20200826110454.1811352-1-cychiang@chromium.org>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 26 2020 at 15:22, Maulik Shah wrote:
-> On 8/26/2020 3:08 AM, Thomas Gleixner wrote:
->>> Where is the corresponding change to resume_irq()? Don't we need to
->>> disable an irq if it was disabled on suspend and forcibly enabled here?
->>>
-> I should have added comment explaining why i did not added.
-> I thought of having corresponding change to resume_irq() but i did not 
-> kept intentionally since i didn't
-> observe any issue in my testing.
+Note:
+- The machine driver patch is made by the collaboration of
+  Cheng-Yi Chiang <cychiang@chromium.org>
+  Rohit kumar <rohitkr@codeaurora.org>
+  Ajit Pandey <ajitp@codeaurora.org>
+  But Ajit has left codeaurora.
 
-That makes it correct in which way? Did not explode in my face is hardly
-proof of anything.
+Changes from v1 to v2:
+- Ducumentation: Addressed all suggestions from Doug.
+- Machine driver:
+  - Fix comment style for license.
+  - Sort includes.
+  - Remove sc7180_snd_hw_params.
+  - Remove sc7180_dai_init and use aux device instead for headset jack registration.
+  - Statically define format for Primary MI2S.
+  - Atomic is not a concern because there is mutex in card to make sure
+    startup and shutdown happen sequentially.
+  - Fix missing return -EINVAL in startup.
+  - Use static sound card.
+  - Use devm_kzalloc to avoid kfree.
 
-> Actually the drivers which called (disable_irq() + enable_irq_wake()), 
-> are invoking enable_irq()
-> in the resume path everytime. With the driver's call to enable_irq() 
-> things are restoring back already.
+Changes from v2 to v3:
+- Ducumentation: Addressed suggestions from Srini.
+- Machine driver:
+  - Reuse qcom_snd_parse_of to parse properties.
+  - Remove playback-only and capture-only.
+  - Misc fixes to address comments.
 
-No, that's just wrong because you again create inconsistent state.
+Changes from v3 to v4:
+- Ducumentation: Addressed suggestions from Rob.
+ - Remove definition of dai.
+ - Use 'sound-dai: true' for sound-dai schema.
+ - Add reg property to pass 'make dt_binding_check' check although reg is not used in the driver.
+- Machine driver:
+ - Add Reviewed-by: Tzung-Bi Shih <tzungbi@google.com>
 
-> If above is not true in some corner case, then the IRQ handler of
-> driver won't get invoked, in such case, why even to wake up with such
-> IRQs in the first place, right?
+Changes from v4 to v5:
+- Documentation: Addressed suggestions from Rob.
+ - Add definition for "#address-cells" and "#size-cells".
+ - Add additionalProperties: false
+ - Add required properties.
 
-I don't care about the corner case. If the driver misses to do it is
-buggy in the first place. Silently papering over it is just mindless
-hackery.
+Changes from v5 to v6:
+- Documentation: Addressed suggestions from Rob.
+ - Drop contains in compatible strings.
+ - Only allow dai-link@[0-9]
+ - Remove reg ref since it has a type definition already.
+Ajit Pandey (1):
+  ASoC: qcom: sc7180: Add machine driver for sound card registration
 
-There are two reasonable choices here:
+Cheng-Yi Chiang (1):
+  ASoC: qcom: dt-bindings: Add sc7180 machine bindings
 
-1) Do the symmetric thing
+ .../bindings/sound/qcom,sc7180.yaml           | 124 +++++++++
+ sound/soc/qcom/Kconfig                        |  12 +
+ sound/soc/qcom/Makefile                       |   2 +
+ sound/soc/qcom/sc7180.c                       | 244 ++++++++++++++++++
+ 4 files changed, 382 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+ create mode 100644 sound/soc/qcom/sc7180.c
 
-2) Let the drivers call a new function disable_wakeup_irq_for_suspend()
-   which marks the interrupt to be enabled from the core on suspend and
-   remove the enable call on the resume callback of the driver.
+-- 
+2.28.0.297.g1956fa8f8d-goog
 
-   Then you don't need the resume part in the core and state still is
-   consistent.
-
-I'm leaning towards #2 because that makes a lot of sense.
-
-Thanks,
-
-        tglx
