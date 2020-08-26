@@ -2,271 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4552524F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 03:16:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8848925259D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 04:48:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726611AbgHZBQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 21:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49070 "EHLO
+        id S1726765AbgHZCsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 22:48:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726593AbgHZBQV (ORCPT
+        with ESMTP id S1726759AbgHZCrT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 21:16:21 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE71C061574;
-        Tue, 25 Aug 2020 18:16:20 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id o21so163804wmc.0;
-        Tue, 25 Aug 2020 18:16:20 -0700 (PDT)
+        Tue, 25 Aug 2020 22:47:19 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEA6C061756
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 19:47:19 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id m8so206947pfh.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 19:47:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X+ZwMGLa5HX2rHpL0aTFFHipz/FU+LJc9s7WOeWT7w8=;
-        b=hektBrpBcD7QhPXMq5pUowKVu/YPWU4R7SnLon7v1RZkrOVCQPZapEBhRq3h9sAyPN
-         n8sXwxzbh3NP/hJ2vAjZS5fOUElwmmdeBIZUNHZRKoA0vtvCST/nCyF6kaay8yJlNm97
-         4IV3ETrot/sn8iB4fhwWfNW3/AjFB3MDXIh8BawTi72rCsnA2CYLEFbwFJJAGAKE84wj
-         3otw+WH+ksSR6CEIJYSUyTyzHOa67AuwzjTF54+5VDzDiZ3SQN0z6qY6KxepnrL9+DXK
-         lyugoxugaBxtnl91jaiVdeVIs9MnjysTfl3GvYgCmP6HrbM30hMWMIj9S7Urgzos1xUV
-         jAYQ==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=86P25dc8M78uQGYbOQ5ml86T4VEo9bys5i/SwJ/LbYw=;
+        b=LF7uD0YyINCvnZ5gc8It2mRUwkRYtaiNOxNYHb+KBxbZrHd6JN6fRR84dLvrMJV8yL
+         X6JGIL8i5XL0IuCQ2+bg9J22/ynNl42KiTz/GosZh6Bs2d3X90r59iD2YdZHQys13Au0
+         xnkaHNFHpU6nhtk3ZJpyRFBw0yjhF98Geekdc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X+ZwMGLa5HX2rHpL0aTFFHipz/FU+LJc9s7WOeWT7w8=;
-        b=UnsHsFJYJl6h6zRRrEawBOm5GjKj8VG8xNb1cxAW3+tRH6QaslwwKFQ/7TcZNSJR51
-         CvnjLIqxAQKdlcnUiF1Ki/Vc82DreGmsZfUIa5NKqAjVn7OQrozxh32l62TE0ZutT3wL
-         E3ouZ7qMIG0VnHGzjz/JQDrPqMjHVJBGsCrJ1bzms78r1W3BcH/86SNbPHYHZ6cXavpm
-         UZT6wN3c7/TDzYJi65ysgf3jbJjQn7vHhZpRQrQas8A1zJ4mMmLQWYzKb/tB9MCilG0b
-         dg3wWhYbBOa267fJPTi1AAqB3KTzkrOFV3/09In+/2bIzQH+VRXCliRgSL+/G2yoBe48
-         TJlQ==
-X-Gm-Message-State: AOAM530uHzE2IpWW9Zxk/9GF1NUwjA8+E7Cd1V++KCEJgI1F0n7TD9cX
-        I6bkf0nAaxE3B1Cts2Hy4EpICavz+5NTwXYdEzo=
-X-Google-Smtp-Source: ABdhPJwSXT7uPXFPlAgMLVdVe72hd+C75D5H+acfo8xCECdQs+4Wbt0E15qBrw1Hdr3K+0LyEa8fxEJ8668pJAIZZ5U=
-X-Received: by 2002:a1c:e919:: with SMTP id q25mr4325964wmc.123.1598404578787;
- Tue, 25 Aug 2020 18:16:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=86P25dc8M78uQGYbOQ5ml86T4VEo9bys5i/SwJ/LbYw=;
+        b=PzhMea6e0zNoX7xovLEnyaUTr9wv/iW/WmxPHtOqJO+yjqyvTEXmDMnhFobv/QOrJ1
+         7ituH31tzfEz0lByq90inE9xTF6U23BPzl9AqdJyGupTH5m7gNwI+M/UTW7qIaU0CX9Z
+         gLb2idoT9UOjx/xwqtQ4RQ4pMo4oIOWrVdYuzdijukxe55evzrnYi2510vGRgMCKxTZC
+         PXkPTZXvcwS0kMRFxXEQyR88gzNv8R/upi8thNIrlV35hw9slIPqqFD/ktdu3TPaM51o
+         iFtjcs1YIAlRwWNPdMNUDB0VzXe9Qz4uAPwNzj09HxJEyQBRviv0O69g8Rm2zd7NIWaJ
+         4ajg==
+X-Gm-Message-State: AOAM530hAtqJYph+doXdqjv1p8K4jFF5ZO1aMri5OizGowtpOmZRRXcO
+        np3NmbUovUIl0aQv9su5JGNvvA==
+X-Google-Smtp-Source: ABdhPJxxubdCAWSJc6KDf0OvM1irs6Nwgg0uICeVlTgRnBzhdpe7kDBBzkegmuVYmScyZxCpS/yy2Q==
+X-Received: by 2002:a62:1b0e:: with SMTP id b14mr10493740pfb.281.1598410033606;
+        Tue, 25 Aug 2020 19:47:13 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id u65sm684381pfb.102.2020.08.25.19.47.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2020 19:47:12 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: [PATCH v1 0/9]  Support qcom USB3+DP combo phy (or type-c phy)
+Date:   Tue, 25 Aug 2020 19:47:02 -0700
+Message-Id: <20200826024711.220080-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
 MIME-Version: 1.0
-References: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
- <CAD=FV=XK3Xa3rRWvuSA_jA+5_1XYBmHEX2B2XSb8h3oOe1PHLw@mail.gmail.com>
- <3df7edd53ebca00be288e69b92b8d4b9@codeaurora.org> <CAD=FV=X=3Jae7_gXN_05EsmZjrM1bN=TMZ0qoGKz=UaNrthzAg@mail.gmail.com>
- <CAF6AEGsuusnGaN-H9geFa+jwX_hkvMHGZCWvwk5-MDGQ7cBsbQ@mail.gmail.com> <CAD=FV=WyL3ttE_F3YJJxOWAJANeNueqH0gO3phu8q5F4NP809g@mail.gmail.com>
-In-Reply-To: <CAD=FV=WyL3ttE_F3YJJxOWAJANeNueqH0gO3phu8q5F4NP809g@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 25 Aug 2020 18:16:07 -0700
-Message-ID: <CAF6AEGvvi5AKShsCk9GT8osF3kQmMJ69HzF1AbgM+Q46GN+dEA@mail.gmail.com>
-Subject: Re: [PATCH] iommu: Add support to filter non-strict/lazy mode based
- on device names
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 25, 2020 at 5:24 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Tue, Aug 25, 2020 at 3:54 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Tue, Aug 25, 2020 at 3:23 PM Doug Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Tue, Aug 25, 2020 at 12:01 PM Sai Prakash Ranjan
-> > > <saiprakash.ranjan@codeaurora.org> wrote:
-> > > >
-> > > > Hi,
-> > > >
-> > > > On 2020-08-25 21:40, Doug Anderson wrote:
-> > > > > Hi,
-> > > > >
-> > > > > On Tue, Aug 25, 2020 at 8:43 AM Sai Prakash Ranjan
-> > > > > <saiprakash.ranjan@codeaurora.org> wrote:
-> > > > >>
-> > > > >> Currently the non-strict or lazy mode of TLB invalidation can only be
-> > > > >> set
-> > > > >> for all or no domains. This works well for development platforms where
-> > > > >> setting to non-strict/lazy mode is fine for performance reasons but on
-> > > > >> production devices, we need a more fine grained control to allow only
-> > > > >> certain peripherals to support this mode where we can be sure that it
-> > > > >> is
-> > > > >> safe. So add support to filter non-strict/lazy mode based on the
-> > > > >> device
-> > > > >> names that are passed via cmdline parameter "iommu.nonstrict_device".
-> > > > >>
-> > > > >> Example:
-> > > > >> iommu.nonstrict_device="7c4000.sdhci,a600000.dwc3,6048000.etr"
-> > >
-> > > Just curious: are device names like this really guaranteed to be
-> > > stable across versions?
-> > >
-> > >
-> > > > > I have an inherent dislike of jamming things like this onto the
-> > > > > command line.  IMHO the command line is the last resort for specifying
-> > > > > configuration and generally should be limited to some specialized
-> > > > > debug options and cases where the person running the kernel needs to
-> > > > > override a config that was set by the person (or company) compiling
-> > > > > the kernel.  Specifically, having a long/unwieldy command line makes
-> > > > > it harder to use for the case when an end user actually wants to use
-> > > > > it to override something.  It's also just another place to look for
-> > > > > config.
-> > > > >
-> > > >
-> > > > Good thing about command line parameters are that they are optional,
-> > > > they do
-> > > > not specify any default behaviour (I mean they are not mandatory to be
-> > > > set
-> > > > for the system to be functional), so I would like to view it as an
-> > > > optional
-> > > > config. And this command line parameter (nonstrict_device) is strictly
-> > > > optional
-> > > > with default being strict already set in the driver.
-> > > >
-> > > > They can be passed from the bootloader via chosen node for DT platforms
-> > > > or choose
-> > > > a new *bootconfig* as a way to pass the cmdline but finally it does boil
-> > > > down to
-> > > > just another config.
-> > >
-> > > Never looked at bootconfig.  Unfortunately it seems to require
-> > > initramfs so that pretty much means it's out for my usage.  :(
-> > >
-> > >
-> > > > I agree with general boolean or single value command line parameters
-> > > > being just
-> > > > more messy which could just be Kconfigs instead but for multiple value
-> > > > parameters
-> > > > like these do not fit in Kconfig.
-> > > >
-> > > > As you might already know, command line also gives an advantage to the
-> > > > end user
-> > > > to configure system without building kernel, for this specific command
-> > > > line its
-> > > > very useful because the performance bump is quite noticeable when the
-> > > > iommu.strict
-> > > > is off. Now for end user who would not be interested in building entire
-> > > > kernel(majority)
-> > > > and just cares about good speeds or throughput can find this very
-> > > > beneficial.
-> > > > I am not talking about one specific OS usecase here but more in general
-> > > > term.
-> > > >
-> > > > > The other problem is that this doesn't necessarily scale very well.
-> > > > > While it works OK for embedded cases it doesn't work terribly well for
-> > > > > distributions.  I know that in an out-of-band thread you indicated
-> > > > > that it doesn't break anything that's not already broken (AKA this
-> > > > > doesn't fix the distro case but it doesn't make it worse), it would be
-> > > > > better to come up with a more universal solution.
-> > > > >
-> > > >
-> > > > Is the universal solution here referring to fix all the command line
-> > > > parameters
-> > > > in the kernel or this specific command line? Are we going to remove any
-> > > > more
-> > > > addition to the cmdline ;)
-> > >
-> > > There are very few cases where a kernel command line parameter is the
-> > > only way to configure something.  Most of the time it's just there to
-> > > override a config.  I wouldn't suggest removing those.  I just don't
-> > > want a kernel command line parameter to be the primary way to enable
-> > > something.
-> > >
-> > >
-> > > > So possible other solution is the *bootconfig* which is again just
-> > > > another place
-> > > > to look for a config. So thing is that this universal solution would
-> > > > result in
-> > > > just more new fancy ways of passing configs or adding such configs to
-> > > > the drivers
-> > > > or subsystems in kernel which is pretty much similar to implementing
-> > > > policy in
-> > > > kernel which I think is frowned upon and mentioned in the other thread.
-> > > >
-> > > > > Ideally it feels like we should figure out how to tag devices in a
-> > > > > generic manner automatically (hardcode at the driver or in the device
-> > > > > tree).  I think the out-of-band discussions talked about "external
-> > > > > facing" and the like.  We could also, perhaps, tag devices that have
-> > > > > "binary blob" firmware if we wanted.  Then we'd have a policy (set by
-> > > > > Kconfig, perhaps overridable via commandline) that indicated the
-> > > > > strictness level for the various classes of devices.  So policy would
-> > > > > be decided by KConfig and/or command line.
-> > > > >
-> > > >
-> > > > How is tagging in driver or device tree better than the simple command
-> > > > line
-> > > > approach to pass the same list of devices which otherwise you would
-> > > > hardcode
-> > > > in the corresponding drivers and device tree all over the kernel other
-> > > > than
-> > > > the scalability part for command line? IMHO it is too much churn.
-> > >
-> > > It's better because it doesn't require keeping track and updating
-> > > these per-board (or per machine) arguments for each and every
-> > > board/machine you maintain.  If, for instance, we start out by
-> > > allowing HW video decoder to use non-strict.  So:
-> > >
-> > > On one board, we add in "aa00000.video-codec" to the command line.
-> > > On some other board, maybe we add in "1d00000.video-codec" to the command line.
-> > > On some other board, maybe we add in "90400000.video-codec" to the command line.
-> > >
-> > > Now we realize that there's some problem and we have to remove it, so
-> > > we need to go through and remove this from our command line
-> > > everywhere.  Worse is that we have to proactively notice it and remove
-> > > it.
-> > >
-> > > Instead, let's imagine that we set a policy at a bit of a higher
-> > > level.  Different ideas:
-> > >
-> > > a) We could have a CONFIG_ option for the video codec that's something
-> > > like "CONFIG_VIDEOCODEC_DEFAULT_NONSTRICT".  If this was set then if
-> > > there is no "iommu.strict" command line argument then this device
-> > > would be mapped as non-strict.  If "iommu.strict=0" or
-> > > "iommu.strict=1" is on the command line then it would override all of
-> > > these defaults.  Probably the existence (or maybe the default value)
-> > > of this CONFIG option implies that there are no known/expected
-> > > exploits related to it.
-> >
-> > jumping in a bit late so might have missed some of the background, but
-> > shouldn't the driver decide strict vs non-strict?  It should be the
-> > one that knows if non-strict is safe or not?
->
-> Part of the problem is that we need some way for the driver to know if
-> the connected device is external or not.  A soldered-down storage
-> device connected via an internal PCIe bus is probably OK to use w/
-> non-strict.  An exposed PCIe port that anyone could plug anything into
-> is probably not OK to use with non-strict.  Right now the kernel
-> doesn't have this info.
+This patch series is based on v11 of the msm DP driver submission[1]
+plus a compliance patch[2]. In the v5 patch series review I suggested
+that the DP PHY and PLL be split out of the drm driver and moved to the
+qmp phy driver. This patch series does that, but it is still marked as
+an RFC because there are a couple more things to do, mostly updating the
+DT binding and getting agreement on how to structure the code.
 
-hmm, ok, so sounds like it is a combination of what the driver thinks,
-and what the bus thinks then?  Ie. the bus should be able to overrule
-the driver when it comes to being non-strict.
+Eventually I believe the qmp phy driver will need to listen for type-c
+notifiers or somehow know the type-c pinout being used so this driver
+can program things slightly differently. Right now, I don't have any way
+to test it though, so I've left it as future work. For some more
+details, the DP phy and the USB3 phy share the same physical pins on the
+SoC and those pins pretty much line up with a type-c pinout modulo some
+CC pins for cable orientation detection logic that lives on the PMIC. So
+the DP phy can use all four lanes or it can use two lanes and the USB3
+phy can use two lanes. In the hardware designs that I have access to it
+is always two lanes for USB3 and two lanes for DP going through what
+looks like a type-c pinout so this just hard codes that configuration in
+the driver.
 
-> Part of the problem is also trying to describe the risk level that
-> you're OK with and/or which risks you're willing to take and which
-> ones you're not willing to take.  Right now there's a binary: "accept
-> all the risk so I can get the best performance" and "accept none of
-> the risk".  ...but what if you want to accept some risks and not
-> others?  Maybe you're compiling the firmware for the video decoder
-> yourself and you're very convinced that it really sanitizes all input
-> and can't be compromised (or, if it is, you can quickly patch the
-> compromise).  You might be willing to run this video codec in "non
-> strict mode".  ...but if you give the video decoder firmware to
-> someone else as a binary blob they might not be willing to trust you
-> and might want to run the same firmware as "non-strict".
+Here's the example node that I'm using on sc7180:
 
-I'm not sure this sways me one way or another.. even if I compile the
-fw myself, I should assume there are bugs.. when it comes to fw, I'm
-more interested in how the hw operates and what it has access to and
-what the fw can influence.
+	usb_1_qmpphy: phy-wrapper@88e9000 {
+		compatible = "qcom,sc7180-qmp-usb3-dp-phy";
+		reg = <0 0x088e9000 0 0x18c>, // usb pll (or serdes)
+		      <0 0x088e8000 0 0x38>, // dp com
+		      <0 0x088ea000 0 0x40>;  // dp pll (or serdes)
+		status = "disabled";
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
 
-BR,
--R
+		clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+			 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
+			 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+			 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+		clock-names = "aux", "cfg_ahb", "ref", "com_aux";
+
+		resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
+			 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
+		reset-names = "phy", "common";
+
+		usb_1_ssphy: usb3-phy@88e9200 {
+			reg = <0 0x088e9200 0 0x128>, // tx0
+			      <0 0x088e9400 0 0x200>, // rx0
+			      <0 0x088e9c00 0 0x218>, // pcs
+			      <0 0x088e9600 0 0x128>, // tx1
+			      <0 0x088e9800 0 0x200>, // rx1
+			      <0 0x088e9a00 0 0x18>;  // pcs misc
+			#clock-cells = <0>;
+			#phy-cells = <0>;
+			clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+			clock-names = "pipe0";
+			clock-output-names = "usb3_phy_pipe_clk_src";
+		};
+
+		dp_phy: dp-phy@88ea200 {
+			reg = <0 0x088ea200 0 0x200>, // tx0
+			      <0 0x088ea400 0 0x200>, // rx0
+			      <0 0x088eaa00 0 0x200>, // dp phy
+			      <0 0x088ea600 0 0x200>, // tx1
+			      <0 0x088ea800 0 0x200>; // rx1
+			#clock-cells = <1>;
+			#phy-cells = <0>;
+		};
+	};
+
+I had to put the serdes register region in the wrapper node and jam the
+common area (dp_com) in the middle. Sort of a mess but it was the best I
+could do to make the driver changes minimially invasive. I also had to
+change the node names to 'usb3-phy' and 'dp-phy' from 'phy' so that I
+could differentiate the different phys in the driver. Otherwise the qmp
+driver was already mostly prepared for two different phys to sit next to
+each other inside the phy wrapper so it was mostly just a chore of
+moving code from one place to another.
+
+I'll also point out that I found out the DP controller driver is
+resetting the aux phy settings right after it configures it. The last
+patch in this series rips out the DP PHY and PLL code from the drm
+driver and wires in the phy API calls instead. In that same patch I also
+fixed this aux reset behavior by removing the bit that resets the aux
+phy. I believe that the aux configuration is broken in the DP driver
+but I fixed it now I think.
+
+Changes from RFC (https://lore.kernel.org/r/20200611091919.108018-1-swboyd@chromium.org)
+ * New patch for DT binding
+ * Rebased onto latest DP patch series
+
+TODO:
+ * Clean up phy power on sequence a bit so that it is done in one place
+   instead of two
+ * Allow link rate to change after phy is powered on?
+ * Make the runtime PM logic detect combo phy and power down both?
+
+
+Stephen Boyd (9):
+  dt-bindings: phy: qcom,qmp-usb3-dp: Add DP phy information
+  phy: qcom-qmp: Move phy mode into struct qmp_phy
+  phy: qcom-qmp: Remove 'initialized' in favor of 'init_count'
+  phy: qcom-qmp: Move 'serdes' and 'cfg' into 'struct qcom_phy'
+  phy: qcom-qmp: Get dp_com I/O resource by index
+  phy: qcom-qmp: Add support for DP in USB3+DP combo phy
+  phy: qcom-qmp: Add support for sc7180 DP phy
+  clk: qcom: dispcc: Update DP clk ops for phy design
+  drm/msm/dp: Use qmp phy for DP PLL and PHY
+
+ .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    |   91 +-
+ drivers/clk/qcom/clk-rcg2.c                   |   19 +-
+ drivers/clk/qcom/dispcc-sc7180.c              |    3 -
+ drivers/gpu/drm/msm/Makefile                  |    4 +-
+ drivers/gpu/drm/msm/dp/dp_aux.c               |    7 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c           |  253 +---
+ drivers/gpu/drm/msm/dp/dp_catalog.h           |    7 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |   47 +-
+ drivers/gpu/drm/msm/dp/dp_display.c           |   17 -
+ drivers/gpu/drm/msm/dp/dp_display.h           |    3 -
+ drivers/gpu/drm/msm/dp/dp_link.c              |    2 +
+ drivers/gpu/drm/msm/dp/dp_panel.c             |    1 +
+ drivers/gpu/drm/msm/dp/dp_parser.c            |   12 +-
+ drivers/gpu/drm/msm/dp/dp_parser.h            |   12 +-
+ drivers/gpu/drm/msm/dp/dp_pll.c               |   99 --
+ drivers/gpu/drm/msm/dp/dp_pll.h               |   61 -
+ drivers/gpu/drm/msm/dp/dp_pll_10nm.c          |  930 --------------
+ drivers/gpu/drm/msm/dp/dp_pll_private.h       |   89 --
+ drivers/gpu/drm/msm/dp/dp_power.c             |   39 +-
+ drivers/gpu/drm/msm/dp/dp_power.h             |    9 -
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 1114 ++++++++++++++---
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |   80 ++
+ 22 files changed, 1207 insertions(+), 1692 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/dp/dp_pll.c
+ delete mode 100644 drivers/gpu/drm/msm/dp/dp_pll.h
+ delete mode 100644 drivers/gpu/drm/msm/dp/dp_pll_10nm.c
+ delete mode 100644 drivers/gpu/drm/msm/dp/dp_pll_private.h
+
+Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+Cc: Vara Reddy <varar@codeaurora.org>
+Cc: Tanmay Shah <tanmay@codeaurora.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Manu Gautam <mgautam@codeaurora.org>
+Cc: Sandeep Maheswaram <sanm@codeaurora.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Rob Clark <robdclark@chromium.org>
+
+[1] https://lore.kernel.org/r/20200818051137.21478-1-tanmay@codeaurora.org
+[2] https://lore.kernel.org/r/20200818230900.29294-1-khsieh@codeaurora.org
+
+base-commit: 9123e3a74ec7b934a4a099e98af6a61c2f80bbf5
+prerequisite-patch-id: aa650e8353e003be0075deea0dee92a82e321432
+prerequisite-patch-id: aa08019ebd00b502b4b76337dcef12939b5ed27d
+prerequisite-patch-id: 87e6b1a10063ca350cacd64408024714599a14f4
+prerequisite-patch-id: ac467cb99ea60ee186ab9bbe47a3e4d9c13a1313
+prerequisite-patch-id: 48e1faa902cf53f64914f5a18e7a4296fa6a7bdd
+prerequisite-patch-id: 6b2fb441138a10db425c5302638ea99ca00bf81d
+-- 
+Sent by a computer, using git, on the internet
+
