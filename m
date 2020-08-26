@@ -2,176 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A1E525375E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 20:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACC0D2539CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 23:32:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727008AbgHZSj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 14:39:28 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17323 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726798AbgHZSj1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 14:39:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598467166; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
- Subject: From: Sender; bh=q+XvvfuKUIwhEAgsca/TePOG2B1+EPWz6HL4VPktJps=;
- b=T8E4InEQoubjHATLjMTvXw1xI3jze9V5Z1lsH8CuuA42EcsPd8Np/TP8VzLvSnOQrAXLuPlb
- tqQJ7jDXzskEfsf+CJzOZ7gk3Wlp/HyALmgKf+66A9C25CvOYYBPy/JUOaTCNSNOeLDXFF8R
- 8GXUdwVFALM0zaSwgrBou/EBglg=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f46ac5137ae730e33e75cc1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 26 Aug 2020 18:39:13
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4CE93C43391; Wed, 26 Aug 2020 18:39:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.134] (unknown [172.98.141.4])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: eberman)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ACF60C433CA;
-        Wed, 26 Aug 2020 18:39:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ACF60C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=eberman@codeaurora.org
-From:   Elliot Berman <eberman@codeaurora.org>
-Subject: Re: [RESEND PATCH v1 2/4] dt-bindings: power: reset: Add alternate
- reboot mode format
-To:     Rob Herring <robh@kernel.org>, ebiggers@google.com,
-        samitolvanen@google.com
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Trilok Soni <tsoni@codeaurora.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-References: <1597776856-12014-1-git-send-email-eberman@codeaurora.org>
- <1597776856-12014-3-git-send-email-eberman@codeaurora.org>
- <20200825212521.GA1346433@bogus>
-Message-ID: <a77491b3-3917-8380-cf94-a4e3ccbbf22c@codeaurora.org>
-Date:   Wed, 26 Aug 2020 14:39:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.1.1
+        id S1726809AbgHZVcm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 17:32:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbgHZVck (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Aug 2020 17:32:40 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A87C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 14:32:39 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id g29so796988pgl.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 14:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=rkzp89VoreQ7eX4za8vZnmEXUlZ/cYLkTpUfs73UjoU=;
+        b=Z8UOpPzBnC2c8OmrazqsmRXFlhv8HP/90v6LNuP3tQE1gAaLXwgaslidJi89qgdWM+
+         ruqDUD5YPR9PFsRpBkGVD4JtjPHy5rOnyq32Ts0d4TLpbyLc26ntSl+7yE9R78oikNrA
+         BHg4sjVmiHlVxrsRSnSYgHXDYwVF9cSgOd5b0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=rkzp89VoreQ7eX4za8vZnmEXUlZ/cYLkTpUfs73UjoU=;
+        b=CIuQKn/x/a0PqBoabT9+ByyetX/FPJmIFam3YoBGVEKr2MiPqpzayIhbbNWycn7NpU
+         tcD7Q8fxb7mbPKB0Pl1GAVE6ppECD7VSJpaNGTdhh52TFaTwBQEGFlSaeUM5rmeRB7RL
+         jQbTwzxs7kP3Y70la9yau8og+creQsVWxSnU8joufMWE81jOXKTsZnIhvAO/K7jnvzSA
+         Uevl8Lk4SHCDVDrg9cTydGkJmGsbP3GlWnKOHduvKMnu/1ZExWMyLQ2KKtxobq036MWU
+         NLlVwR6myYnxXjfXe9GOCJcrQNhNeVg0jQYDFjIOL+HpVGOFbFACO9gTNVsOmuP/5mDL
+         l5Hw==
+X-Gm-Message-State: AOAM530p41c1EJP15vVmUIM4ICdBEHs6mArXzMcn1VLRt9QjGXcy0Gct
+        ozGSEI2DGM+6XlP+QHHcQqLlmw==
+X-Google-Smtp-Source: ABdhPJx4a16Orr6CneM5HujT4O58wtmFJ2JxoTu12gg6RVZKdauSqY00wUhdCy7pKPx8KrI9RhEi6g==
+X-Received: by 2002:a62:5cc4:: with SMTP id q187mr13657946pfb.95.1598477559338;
+        Wed, 26 Aug 2020 14:32:39 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id e62sm119583pfh.144.2020.08.26.14.32.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Aug 2020 14:32:38 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20200825212521.GA1346433@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200826043616.GF3715@yoga>
+References: <20200826024711.220080-1-swboyd@chromium.org> <20200826024711.220080-6-swboyd@chromium.org> <20200826043616.GF3715@yoga>
+Subject: Re: [PATCH v1 5/9] phy: qcom-qmp: Get dp_com I/O resource by index
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Wed, 26 Aug 2020 14:32:37 -0700
+Message-ID: <159847755731.334488.13614233203912102191@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/25/2020 5:25 PM, Rob Herring wrote:
-> On Tue, Aug 18, 2020 at 11:54:14AM -0700, Elliot Berman wrote:
->> Current reboot-mode device tree schema does not support reboot commands
->> with spaces in them [1]. Add an optional new node "reboot-mode-names"
->> and "reboot-mode-magic" which add an array of strings and u32s,
->> respectively which would permit any string in this framework.
-> 
-> Kind of a weak justification. The intent was for the names to be a key,
-> not a multi word description which your example seems to be. Is
-> "dm-verity device corrupted" something Android has already standardized
-> on?
+Quoting Bjorn Andersson (2020-08-25 21:36:16)
+> On Tue 25 Aug 21:47 CDT 2020, Stephen Boyd wrote:
+>=20
+> > The dp_com resource is always at index 1 according to the dts files in
+> > the kernel. Get this resource by index so that we don't need to make
+> > future additions to the DT binding use 'reg-names'.
+> >=20
+>=20
+> Afaict the DT binding for the USB/DP phy defines that there should be a
+> reg name of "dp_com" and the current dts files all specifies this. Am I
+> missing something?
 
-+Eric/Sami to comment further
+Yes the binding enforces this but this patch is removing that
+enforcement and instead mandating that dp_com is always at index 1 (i.e.
+the second one) so that we can add the DP serdes region directly after
+and avoid adding yet another reg-names property. I changed the binding
+for this usb3-dp phy compatible to make reg-names optional as well. I
+don't see any gain from using reg-names.
 
-I wonder if you're thinking it's better to change the kernel_restart in 
-dm-verity-target.c?
+>=20
+> PS. Why isn't this a devm_platform_ioremap_resource{,_byname}()?
 
-Alternatively, I could respin so that spaces in the reboot cmd is 
-replaced with "-" in reboot_mode_notify(). This way, there is no need to 
-change dm-verity driver or change devicetree schema. i.e.:
-
-@@ -44,9 +44,13 @@ static int reboot_mode_notify(struct notifier_block 
-*this,
-  {
-         struct reboot_mode_driver *reboot;
-         unsigned int magic;
-+       char *reboot_cmd;
-+
-+       reboot_cmd = kstrdup(cmd, GFP_KERNEL);
-+       strreplace(reboot_cmd, ' ', '-');
-
-         reboot = container_of(this, struct reboot_mode_driver, 
-reboot_notifier);
--       magic = get_reboot_mode_magic(reboot, cmd);
-+       magic = get_reboot_mode_magic(reboot, reboot_cmd);
-         if (magic)
-                 reboot->write(reboot, magic);
-
-> 
->>
->> [1]:
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/md/dm-verity-target.c?h=v5.5#n255
->>
->> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
->> ---
->>   .../devicetree/bindings/power/reset/reboot-mode.yaml    | 17 +++++++++++++++++
->>   1 file changed, 17 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
->> index a6c9102..4ea6b33 100644
->> --- a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
->> +++ b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
->> @@ -19,6 +19,9 @@ description: |
->>     the bootloader what to do when the system reboots, and should be named
->>     as mode-xxx = <magic> (xxx is mode name, magic should be a non-zero value).
->>   
->> +  reboot-mode-magic and reboot-mode-names may be used in addition/instead of
->> +  mode-xxx style.
-> 
-> It should be either/or in my opinion, not both.
-
-OK, I can fix in the next patch.
-
-> 
->> +
->>     For example, modes common Android platform are:
->>       - normal: Normal reboot mode, system reboot with command "reboot".
->>       - recovery: Android Recovery mode, it is a mode to format the device or update a new image.
->> @@ -32,6 +35,14 @@ properties:
->>         description: |
->>           Default value to set on a reboot if no command was provided.
->>   
->> +  reboot-mode-names:
->> +    $ref: /schemas/types.yaml#/definitions/string-array
->> +    description: List of reboot commands, paired with reboot-mode-magic by index
->> +
->> +  reboot-mode-magic:
-> 
-> 'reboot-modes' would align with normal patterns.
-
-Ditto
-
-> 
->> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->> +    description: List of reboot magic, paired with reboot-mode-names by index
->> +
->>   patternProperties:
->>     "^mode-.*$":
->>       $ref: /schemas/types.yaml#/definitions/uint32
->> @@ -44,4 +55,10 @@ examples:
->>         mode-bootloader = <2>;
->>         mode-loader = <3>;
->>       };
->> +
->> +  - |
->> +    reboot-mode {
->> +      reboot-mode-names = "normal", "bootloader", "dm-verity device corrupted";
->> +      reboot-mode-magic = <0x0>, <0x1>, <0xf>;
->> +    };
->>   ...
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
+Sure. I'll roll that into this patch.
