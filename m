@@ -2,131 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9F232532AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 17:00:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 286BC2532B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 17:01:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbgHZPAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 11:00:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35092 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727946AbgHZPAI (ORCPT
+        id S1727029AbgHZPB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 11:01:28 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:39729 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726843AbgHZPBY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 11:00:08 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BDC2C061756
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 08:00:08 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id x187so499055vkc.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 08:00:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5cIrV1+eukb/f7OdTc7tq6XgEUP4mZGFJru/50URUMY=;
-        b=YHyQ/xBUhtFHvOrFF3UrWSkOcu/b+WObqZLusFpr+CAy9aLKPqx2nl3/R1G55PM5rM
-         Ut5WswiLQokx9h9jrbq3Ek908ApWEOUrVxg/RQb9Yp5moKaOCMirA5eND+GlAGyDqj0c
-         4NlIbZzFtrOxh9pAwhk/GLNjPCbwB6FvBpQGM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5cIrV1+eukb/f7OdTc7tq6XgEUP4mZGFJru/50URUMY=;
-        b=uKcpzPt/Fp6RF1YIwvj+ww/sDIM1yFvt573g6wCeGU4OKpg39Bswap7ww/PGFi8O6p
-         YZDncoGRUcckLLHdn89j9TVmYu3a2L2l2xIPpWC/1XNJWEQwejfFiZMJK6UHKlESSc+o
-         npfYyyQeiIVkSowA2/mQRHDFKjmyWD2rBzWLuYT8f3Zja0ut035LgFoG2QUEas0y2nV3
-         /TyxRz7wwB08oXHaWTgyT1AOvVg7Job6UMKZ6JZVzeHI9RBNQ3gRlP5NhuDdfLN1aEjc
-         FnnC/Gw7tglCzLC4YDQEisUO2+gWwSlj6ryMWIjV5RgWrRDAYqHaZqIxrsiv9CoXWEkn
-         93Eg==
-X-Gm-Message-State: AOAM531TLtzPYX8Yk7fhqclaglEQ82QcazbukMI5A3yGEpTuTo+25hJx
-        Q45jKSwJtH5qjm5yP/l67AvhSPWNmg5LgA==
-X-Google-Smtp-Source: ABdhPJzlMXy66Z8zxXs7JUwu5DoWSlaXYG3SBlBPM210dhixziF2YQA5Ds3NBy9ZBjw74i2JQennxQ==
-X-Received: by 2002:a1f:f848:: with SMTP id w69mr9409098vkh.86.1598454006766;
-        Wed, 26 Aug 2020 08:00:06 -0700 (PDT)
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com. [209.85.221.180])
-        by smtp.gmail.com with ESMTPSA id v141sm428429vkv.10.2020.08.26.08.00.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Aug 2020 08:00:06 -0700 (PDT)
-Received: by mail-vk1-f180.google.com with SMTP id g125so381251vkg.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 08:00:05 -0700 (PDT)
-X-Received: by 2002:a1f:fc02:: with SMTP id a2mr9424339vki.65.1598454005234;
- Wed, 26 Aug 2020 08:00:05 -0700 (PDT)
+        Wed, 26 Aug 2020 11:01:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598454084; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Es/0pFaKnR2kzEaSjZ72M+ID+T80ab88lrWvsjkbJzY=;
+ b=fffb76nut89n9XFIiTqmKD7Cy7nvpF+ywTit9IgippUouwr7WyJnLFA3NicIGVWene51u+/9
+ fvuF8DcVYoV+F9hhE2xFS5v60iOBDsHqEUlQ2fRFF1Ecbo2szKn+WNhlu0kOLw/Is/QfiCSg
+ dsI7auyngje3SzRgGcRRF7uK9Nk=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f46793138ba93790fc76c4e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 26 Aug 2020 15:01:05
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E7010C4339C; Wed, 26 Aug 2020 15:01:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73DB9C433A1;
+        Wed, 26 Aug 2020 15:01:03 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
- <20200826145011.C4E48C43387@smtp.codeaurora.org>
-In-Reply-To: <20200826145011.C4E48C43387@smtp.codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 26 Aug 2020 07:59:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Uu4dnzeTB+DfecO5uZSJWjq4qbi4=Uwgy-QwPphLApBw@mail.gmail.com>
-Message-ID: <CAD=FV=Uu4dnzeTB+DfecO5uZSJWjq4qbi4=Uwgy-QwPphLApBw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] ath10k: Keep track of which interrupts fired,
- don't poll them
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     ath10k <ath10k@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Brian Norris <briannorris@chromium.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        Rakesh Pillai <pillair@codeaurora.org>,
-        Abhishek Kumar <kuabhs@google.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 26 Aug 2020 20:31:03 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] iommu: Add support to filter non-strict/lazy mode based
+ on device names
+In-Reply-To: <a03ce8f0-cab5-2782-ac50-930cf94b7dcd@arm.com>
+References: <20200825154249.20011-1-saiprakash.ranjan@codeaurora.org>
+ <e3e4da33-a44f-0a07-9e2e-0f806875ab0b@arm.com>
+ <d9b1f1b614057d87279c26e13cbbb1f5@codeaurora.org>
+ <a03ce8f0-cab5-2782-ac50-930cf94b7dcd@arm.com>
+Message-ID: <f8ac8f57bcf10b2218b4795197efb854@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2020-08-26 19:21, Robin Murphy wrote:
+> On 2020-08-26 13:17, Sai Prakash Ranjan wrote:
+>> On 2020-08-26 17:07, Robin Murphy wrote:
+>>> On 2020-08-25 16:42, Sai Prakash Ranjan wrote:
+>>>> Currently the non-strict or lazy mode of TLB invalidation can only 
+>>>> be set
+>>>> for all or no domains. This works well for development platforms 
+>>>> where
+>>>> setting to non-strict/lazy mode is fine for performance reasons but 
+>>>> on
+>>>> production devices, we need a more fine grained control to allow 
+>>>> only
+>>>> certain peripherals to support this mode where we can be sure that 
+>>>> it is
+>>>> safe. So add support to filter non-strict/lazy mode based on the 
+>>>> device
+>>>> names that are passed via cmdline parameter 
+>>>> "iommu.nonstrict_device".
+>>> 
+>>> There seems to be considerable overlap here with both the existing
+>>> patches for per-device default domain control [1], and the broader
+>>> ongoing development on how to define, evaluate and handle "trusted"
+>>> vs. "untrusted" devices (e.g. [2],[3]). I'd rather see work done to
+>>> make sure those integrate properly together and work well for
+>>> everyone's purposes, than add more disjoint mechanisms that only
+>>> address small pieces of the overall issue.
+>>> 
+>>> Robin.
+>>> 
+>>> [1]
+>>> https://lore.kernel.org/linux-iommu/20200824051726.7xaJRTTszJuzdFWGJ8YNsshCtfNR0BNeMrlILAyqt_0@z/ 
+>>> [2]
+>>> https://lore.kernel.org/linux-iommu/20200630044943.3425049-1-rajatja@google.com/ 
+>>> [3]
+>>> https://lore.kernel.org/linux-iommu/20200626002710.110200-2-rajatja@google.com/
+>> 
+>> Thanks for the links, [1] definitely sounds interesting, I was under 
+>> the impression
+>> that changing such via sysfs is late, but seems like other Sai has got 
+>> it working
+>> for the default domain type. So we can extend that and add a strict 
+>> attribute as well,
+>> we should be definitely OK with system booting with default strict 
+>> mode for all
+>> peripherals as long as we have an option to change that later, Doug?
+> 
+> Right, IIRC there was initially a proposal of a command line option
+> there too, and it faced the same criticism around not being very
+> generic or scalable. I believe sysfs works as a reasonable compromise
+> since in many cases it can be tweaked relatively early from an initrd,
+> and non-essential devices can effectively be switched at any time by
+> removing and reprobing their driver.
+> 
 
-On Wed, Aug 26, 2020 at 7:51 AM Kalle Valo <kvalo@codeaurora.org> wrote:
->
-> Douglas Anderson <dianders@chromium.org> wrote:
->
-> > If we have a per CE (Copy Engine) IRQ then we have no summary
-> > register.  Right now the code generates a summary register by
-> > iterating over all copy engines and seeing if they have an interrupt
-> > pending.
-> >
-> > This has a problem.  Specifically if _none_ if the Copy Engines have
-> > an interrupt pending then they might go into low power mode and
-> > reading from their address space will cause a full system crash.  This
-> > was seen to happen when two interrupts went off at nearly the same
-> > time.  Both were handled by a single call of ath10k_snoc_napi_poll()
-> > but, because there were two interrupts handled and thus two calls to
-> > napi_schedule() there was still a second call to
-> > ath10k_snoc_napi_poll() which ran with no interrupts pending.
-> >
-> > Instead of iterating over all the copy engines, let's just keep track
-> > of the IRQs that fire.  Then we can effectively generate our own
-> > summary without ever needing to read the Copy Engines.
-> >
-> > Tested-on: WCN3990 SNOC WLAN.HL.3.2.2-00490-QCAHLSWMTPL-1
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > Reviewed-by: Rakesh Pillai <pillair@codeaurora.org>
-> > Reviewed-by: Brian Norris <briannorris@chromium.org>
-> > Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
->
-> My main concern of this patch is that there's no info how it works on other
-> hardware families. For example, QCA9984 is very different from WCN3990. The
-> best would be if someone can provide a Tested-on tags for other hardware (even
-> some of them).
+Ah I see, so the catch is that device must not be bound to the driver
+and won't work for the internal devices or builtin drivers probed early.
 
-I simply don't have access to any other Atheros hardware.  Hopefully
-others on this thread do, though?  ...but, if nothing else, I believe
-code inspection shows that the only places that are affected by the
-changes here are:
+-Sai
 
-* Wifi devices that use "snoc.c".  The only compatible string listed
-in "snoc.c" is wcn3990.
+> As for a general approach for internal devices where you do believe
+> the hardware is honest but don't necessarily trust whatever firmware
+> it happens to be running, I'm pretty sure that's come up already, but
+> I'll be sure to mention it at Rajat's imminent LPC talk if nobody else
+> does.
+> 
+> Robin.
 
-* Wifi devices that set "per_ce_irq" to true.  The only place in the
-table where this is set to true is wcn3990.
 
-While it is certainly possible that I messed up and somehow affected
-other WiFi devices, the common bits of code in "ce.c" and "ce.h" are
-fairly easy to validate so hopefully they look OK?
-
--Doug
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
