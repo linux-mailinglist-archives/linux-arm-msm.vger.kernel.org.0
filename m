@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D80AC2525CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 05:37:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CDC82525D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Aug 2020 05:44:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgHZDhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Aug 2020 23:37:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42520 "EHLO
+        id S1726713AbgHZDox (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Aug 2020 23:44:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726666AbgHZDhd (ORCPT
+        with ESMTP id S1726700AbgHZDov (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Aug 2020 23:37:33 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C31C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 20:37:32 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id k20so430652otr.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 20:37:32 -0700 (PDT)
+        Tue, 25 Aug 2020 23:44:51 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A4CC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 20:44:50 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id j18so354315oig.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Aug 2020 20:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=vxm806OK1qT4rz/cJFxTxFe4mzMGtSheZzPPycHL8Oc=;
-        b=YWU68lJ0LeeD2IDp1keXs5IJvZq4mBhvlKcuX95taXgL5v13MCHGTcmxxET3P9+dsF
-         /jkV2fNGrRTfQ/dgJvZHBVJHmJslLeEXfRp5TeQV/gNTE8RlLGfTVKCJOsgB13zI0B6K
-         VrTMF7dT0N8omzprUP5JvKnUeQSFtjnA8u0C6patm8PMEheo0BpKBcfYMOvajozP6JFN
-         5f9tfSfsjnT6YIvXZp1IQ9Zm2xGz4Nx9VussciSWm27SpxAaeLQgETJxskNt5A8wx0zi
-         FUptsSA/F6ROxIz2BkQEHLn3643K820RPDGN5VqXYy6gKWC2RtHZ+dWKuv6xmRXh4F6L
-         iXcg==
+        bh=vj9jHV3Nh5KlI/aHeO4Vw72Jl2llbstQbIn89ZgeTF8=;
+        b=OvXEmpgA9rzoCBGMIr3Z/Y0sZa6QDHXNlqji2Lq8CTzC+GG8HIK6vYiQ9BLOXEHAhe
+         cB8T1ocWUcH5iXddnTVdrYkF1mN8woDXJRGqeP8Y/HBY4YGibDA304UOUV+CZTl2wiTD
+         WJ8qspN4pZD0UID2fs7LcNRuvgOn7T1NCaRE1p5wlpDAxmyYLOqZfjUzjqi6QBcDwuho
+         cvoLzqFH+LSf43lQ9olZg/t54BfBCFz+zwmCAuCiuiDhcLjRTc5Skx21zLTWrU7RrJm6
+         +dnjrHs79Gv1s1mFCV4xEr7VO7N7S0VOIlK/XIjfiUHkievJZQ8VkhAMjVaJDsqsGOzr
+         r9Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vxm806OK1qT4rz/cJFxTxFe4mzMGtSheZzPPycHL8Oc=;
-        b=ouAL9FMTRszAysRZ+O0yFkmzB5DRgJRB139cJWMoOaxDUOQ8U8ydPfVWb+CR2Jmblp
-         scn6MV9E+0znEpaXcM0EkUpkEtqKoGy0pquzBXC5z5ZKVgFWjnviznZMjxUoa8J6moO/
-         TpJuGnJj2u2hkbq7iBkoL8wdvUR49MkhHuGMQHpx49Ky7xLpctSjc4AKVaKxYcL79wXT
-         tbVGf+PNZynXLWIuZhkoYTVlOjRTlgWM4sz8qPqV+FuugLBI4wsVVQ+qXNquBP/QWHLn
-         SugNQUpAbYmuKAVLt73S4Y3cbnHwH1FR3ay+Wpt0cFc3+Xdk/qi2W0v0XeVirI+TKauB
-         e/wA==
-X-Gm-Message-State: AOAM531BjlmlbjMkmgtKKCk8n3Pxaltj19q82E3cR19iiUOXzrlbMvY9
-        OQnIn382wVVmbOjmXJP9Iw8xqA==
-X-Google-Smtp-Source: ABdhPJwMIR0mvWjiDK7RvpESanSt0/D2qNDzWyXZClrSwaog6P0tT2m2biZgHNJRYNj/fv1eZoF22A==
-X-Received: by 2002:a05:6830:1259:: with SMTP id s25mr9399554otp.203.1598413051473;
-        Tue, 25 Aug 2020 20:37:31 -0700 (PDT)
+        bh=vj9jHV3Nh5KlI/aHeO4Vw72Jl2llbstQbIn89ZgeTF8=;
+        b=qwqqO/lreU1MVzOl+SO/7a28Zr0RJ2Ase12j/2HAH0As3MVZwsle23wLolJGz8bjS9
+         0cRDe8zNv6eW/rDAM+SnIGExUYIQJ1GlhcWaagyYmoft3ltJG6BShBl/xn/UqE/rO9pt
+         5dl/ruXNUg5AjmvdoDtGBxW+KCuXSi8EBonUI2wLQa61+kqnkB1RZDQQtZEAkqzkZHrm
+         ipAEMwe1EvwJuiTz0C3Exmop+VpSZyD6mEvku0hsnB9H6P4HWjrDC267FvOgvHcH8EmP
+         615y6cYwocBhqC8O4VML/nTtMgmBVLJt48W1mXTJHQWRU651SLLhIkOKIXG9knuFBnpY
+         Q2cw==
+X-Gm-Message-State: AOAM531a53RdaywLP9QE9AB1KPqdRJTwlDjBnYgVeTlWsGK2RgHBELM8
+        51CNLKirYKWjZ09AzNTBHEUZpg==
+X-Google-Smtp-Source: ABdhPJy3j8LJQFL8ybKeyBKKFeKk3XfOnAsGrQXI2jYprxc20qp9LlCi/15hLZePkPyAMba6XtIBRQ==
+X-Received: by 2002:aca:a9d0:: with SMTP id s199mr2680456oie.154.1598413489568;
+        Tue, 25 Aug 2020 20:44:49 -0700 (PDT)
 Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id p189sm236625oia.18.2020.08.25.20.37.29
+        by smtp.gmail.com with ESMTPSA id y3sm83744ooc.48.2020.08.25.20.44.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 20:37:30 -0700 (PDT)
-Date:   Tue, 25 Aug 2020 22:37:28 -0500
+        Tue, 25 Aug 2020 20:44:48 -0700 (PDT)
+Date:   Tue, 25 Aug 2020 22:44:46 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
@@ -65,14 +65,15 @@ Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         Jonathan Marek <jonathan@marek.ca>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH v1 2/9] phy: qcom-qmp: Move phy mode into struct qmp_phy
-Message-ID: <20200826033728.GD3715@yoga>
+Subject: Re: [PATCH v1 3/9] phy: qcom-qmp: Remove 'initialized' in favor of
+ 'init_count'
+Message-ID: <20200826034446.GE3715@yoga>
 References: <20200826024711.220080-1-swboyd@chromium.org>
- <20200826024711.220080-3-swboyd@chromium.org>
+ <20200826024711.220080-4-swboyd@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200826024711.220080-3-swboyd@chromium.org>
+In-Reply-To: <20200826024711.220080-4-swboyd@chromium.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -80,11 +81,9 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 25 Aug 21:47 CDT 2020, Stephen Boyd wrote:
 
-> The phy mode pertains to the phy itself, i.e. 'struct qmp_phy', not the
-> wrapper, i.e. 'struct qcom_qmp'. Move the phy mode into the phy
-> structure to more accurately reflect what is going on. This also cleans
-> up 'struct qcom_qmp' so that it can eventually be the place where qmp
-> wrapper wide data is located, paving the way for the USB3+DP combo phy.
+> We already track if any phy inside the qmp wrapper has been initialized
+> by means of the struct qcom_qmp::init_count member. Let's drop the
+> duplicate 'initialized' member to simplify the code a bit.
 > 
 > Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
 > Cc: Chandan Uddaraju <chandanu@codeaurora.org>
@@ -106,85 +105,64 @@ Bjorn
 > Cc: Rob Clark <robdclark@chromium.org>
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
 > 
 > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index 562053ce9455..7ee9e966dc6d 100644
+> index 7ee9e966dc6d..4a23ba9361b3 100644
 > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
 > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -1812,6 +1812,7 @@ struct qmp_phy_cfg {
->   * @index: lane index
->   * @qmp: QMP phy to which this lane belongs
->   * @lane_rst: lane's reset controller
-> + * @mode: current PHY mode
->   */
->  struct qmp_phy {
->  	struct phy *phy;
-> @@ -1825,6 +1826,7 @@ struct qmp_phy {
->  	unsigned int index;
->  	struct qcom_qmp *qmp;
->  	struct reset_control *lane_rst;
-> +	enum phy_mode mode;
->  };
->  
->  /**
-> @@ -1843,7 +1845,6 @@ struct qmp_phy {
+> @@ -1844,7 +1844,6 @@ struct qmp_phy {
+>   * @phys: array of per-lane phy descriptors
 >   * @phy_mutex: mutex lock for PHY common block initialization
 >   * @init_count: phy common block initialization count
->   * @phy_initialized: indicate if PHY has been initialized
-> - * @mode: current PHY mode
+> - * @phy_initialized: indicate if PHY has been initialized
 >   * @ufs_reset: optional UFS PHY reset handle
 >   */
 >  struct qcom_qmp {
-> @@ -1861,7 +1862,6 @@ struct qcom_qmp {
+> @@ -1861,7 +1860,6 @@ struct qcom_qmp {
+>  
 >  	struct mutex phy_mutex;
 >  	int init_count;
->  	bool phy_initialized;
-> -	enum phy_mode mode;
+> -	bool phy_initialized;
 >  
 >  	struct reset_control *ufs_reset;
 >  };
-> @@ -2801,9 +2801,8 @@ static int qcom_qmp_phy_set_mode(struct phy *phy,
->  				 enum phy_mode mode, int submode)
->  {
->  	struct qmp_phy *qphy = phy_get_drvdata(phy);
-> -	struct qcom_qmp *qmp = qphy->qmp;
+> @@ -2748,7 +2746,6 @@ static int qcom_qmp_phy_enable(struct phy *phy)
+>  		dev_err(qmp->dev, "phy initialization timed-out\n");
+>  		goto err_pcs_ready;
+>  	}
+> -	qmp->phy_initialized = true;
+>  	return 0;
 >  
-> -	qmp->mode = mode;
-> +	qphy->mode = mode;
+>  err_pcs_ready:
+> @@ -2792,8 +2789,6 @@ static int qcom_qmp_phy_disable(struct phy *phy)
 >  
+>  	qcom_qmp_phy_com_exit(qmp);
+>  
+> -	qmp->phy_initialized = false;
+> -
 >  	return 0;
 >  }
-> @@ -2816,8 +2815,8 @@ static void qcom_qmp_phy_enable_autonomous_mode(struct qmp_phy *qphy)
->  	void __iomem *pcs_misc = qphy->pcs_misc;
->  	u32 intr_mask;
 >  
-> -	if (qmp->mode == PHY_MODE_USB_HOST_SS ||
-> -	    qmp->mode == PHY_MODE_USB_DEVICE_SS)
-> +	if (qphy->mode == PHY_MODE_USB_HOST_SS ||
-> +	    qphy->mode == PHY_MODE_USB_DEVICE_SS)
->  		intr_mask = ARCVR_DTCT_EN | ALFPS_DTCT_EN;
->  	else
->  		intr_mask = ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL;
-> @@ -2863,7 +2862,7 @@ static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
->  	struct qmp_phy *qphy = qmp->phys[0];
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  
-> -	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
-> +	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
->  
->  	/* Supported only for USB3 PHY */
+> @@ -2868,7 +2863,7 @@ static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
 >  	if (cfg->type != PHY_TYPE_USB3)
-> @@ -2889,7 +2888,7 @@ static int __maybe_unused qcom_qmp_phy_runtime_resume(struct device *dev)
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	int ret = 0;
+>  		return 0;
 >  
-> -	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
-> +	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
->  
->  	/* Supported only for USB3 PHY */
+> -	if (!qmp->phy_initialized) {
+> +	if (!qmp->init_count) {
+>  		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+>  		return 0;
+>  	}
+> @@ -2894,7 +2889,7 @@ static int __maybe_unused qcom_qmp_phy_runtime_resume(struct device *dev)
 >  	if (cfg->type != PHY_TYPE_USB3)
+>  		return 0;
+>  
+> -	if (!qmp->phy_initialized) {
+> +	if (!qmp->init_count) {
+>  		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+>  		return 0;
+>  	}
 > -- 
 > Sent by a computer, using git, on the internet
 > 
