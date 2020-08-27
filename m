@@ -2,110 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE04A253CE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 06:50:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82DB4253E73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 08:59:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726929AbgH0Eu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 00:50:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53292 "EHLO mail.kernel.org"
+        id S1726803AbgH0G71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Aug 2020 02:59:27 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:45931 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725909AbgH0Eu6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 00:50:58 -0400
-Received: from localhost (unknown [122.171.38.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726157AbgH0G7Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Aug 2020 02:59:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598511564; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=TqJw7zVx0yYmXZ8LApzC4RLV+IwHsqsHzaga/yqDV+g=;
+ b=cAkT8r9PI/4MLZDoRnfxhDMUKhPOJqLdqgB/ejNxx7g3BWNQoeWxZC5j11wkOY0cDkUHLEwe
+ YjT4gu0o+SXsJazaEDZsQFCRo6pDCX6ERF8lCKUKF8+UBwH3qsrCsMZelxBQwKbbfgQXNBXc
+ aAipuo01QQ6RLnHw8MCAlkpPYTo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f4759bff4c0f8ce20e4f8bd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 27 Aug 2020 06:59:10
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 44C4FC433CB; Thu, 27 Aug 2020 06:59:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 83FFD2078A;
-        Thu, 27 Aug 2020 04:50:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598503857;
-        bh=+cpPEpRHrWea3EaXA37NXtLOxUHiIVISGIFqHu9YHYw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ogmDvo7BcJBBKkhGnmqRFROqzQy/a8OAbIU8Iwychd6fiwTamTOOyJ5pOmAz9VL1d
-         PHwNdUTwTLuxlEeq7iry4xV7gpWBBxdiOdkqhPv6lSekSwSkiOuQzcuJZ0eNpSCW2X
-         3A6FtZqYGw5wuC2xzTv6uBJ5/DgOUPY3laT9jRSs=
-Date:   Thu, 27 Aug 2020 10:20:53 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
-        <dmaengine@vger.kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: dmaengine: Document qcom,gpi dma binding
-Message-ID: <20200827045053.GG2639@vkoul-mobl>
-References: <20200824084712.2526079-1-vkoul@kernel.org>
- <20200824084712.2526079-2-vkoul@kernel.org>
- <20200824174009.GA2948650@bogus>
- <20200825145131.GS2639@vkoul-mobl>
- <20200826063246.GW2639@vkoul-mobl>
- <CAL_JsqKwwirYhrQxCkoUCVnZa_7yNsBDaqgc5TWbLLpeGv17Zw@mail.gmail.com>
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 194D3C433CA;
+        Thu, 27 Aug 2020 06:59:09 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqKwwirYhrQxCkoUCVnZa_7yNsBDaqgc5TWbLLpeGv17Zw@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 27 Aug 2020 12:29:09 +0530
+From:   dikshita@codeaurora.org
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mchehab@kernel.org,
+        nicolas@ndufresne.ca, majja@codeaurora.org,
+        stanimir.varbanov@linaro.org, vgarodia@codeaurora.org
+Subject: Re: [PATCH v2] media: v4l2-ctrl: add control for long term reference.
+In-Reply-To: <506c9e88-e54b-2534-0df9-f7855456dcd8@xs4all.nl>
+References: <1597382967-32729-1-git-send-email-dikshita@codeaurora.org>
+ <506c9e88-e54b-2534-0df9-f7855456dcd8@xs4all.nl>
+Message-ID: <b6c14a61a5a63b68a07a539f39b88477@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26-08-20, 08:35, Rob Herring wrote:
-> On Wed, Aug 26, 2020 at 12:32 AM Vinod Koul <vkoul@kernel.org> wrote:
-> >
-> > On 25-08-20, 20:21, Vinod Koul wrote:
-> > > Hey Rob,
-> > >
-> > > On 24-08-20, 11:40, Rob Herring wrote:
-> > > > On Mon, 24 Aug 2020 14:17:10 +0530, Vinod Koul wrote:
-> > > > > Add devicetree binding documentation for GPI DMA controller
-> > > > > implemented on Qualcomm SoCs
-> > > > >
-> > > > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > > > ---
-> > > > >  .../devicetree/bindings/dma/qcom-gpi.yaml     | 87 +++++++++++++++++++
-> > > > >  1 file changed, 87 insertions(+)
-> > > > >  create mode 100644 Documentation/devicetree/bindings/dma/qcom-gpi.yaml
-> > > > >
-> > > >
-> > > >
-> > > > My bot found errors running 'make dt_binding_check' on your patch:
-> > > >
-> > > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dma/qcom-gpi.yaml: properties:qcom,ev-factor: {'description': 'Event ring transfer size compare to channel transfer ring. Event ring length = ev-factor * transfer ring size', 'maxItems': 1} is not valid under any of the given schemas (Possible causes of the failure):
-> > > >     /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dma/qcom-gpi.yaml: properties:qcom,ev-factor: 'not' is a required property
-> > >
-> > > Okay updating dt-schema I do see this, now the question is what is this
-> > > and what does it mean ;-) I am not sure I comprehend the error message.
-> > > I see this for all the new properties I added as required for this
-> > > device node
-> >
-> > Okay I think I have figured it out, I need to provide ref to
-> > /schemas/types.yaml#definitions/uint32 for this to work, which does
-> > makes sense to me.
-> >
-> >   qcom,max-num-gpii:
-> >     $ref: /schemas/types.yaml#definitions/uint32
-> >     maxItems: 1
+Hi Hans,
+
+Thanks for your comments.
+
+On 2020-08-25 15:34, Hans Verkuil wrote:
+> On 14/08/2020 07:29, Dikshita Agarwal wrote:
+>> LTR (Long Term Reference) frames are the frames that are encoded
+>> sometime in the past and stored in the DPB buffer list to be used
+>> as reference to encode future frames.
+>> This change adds controls to enable this feature.
+>> 
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> ---
+>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 23 
+>> ++++++++++++++++++++++
+>>  drivers/media/v4l2-core/v4l2-ctrls.c               |  6 ++++++
+>>  include/uapi/linux/v4l2-controls.h                 |  4 ++++
+>>  3 files changed, 33 insertions(+)
+>> 
+>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
+>> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> index d0d506a..6d1b005 100644
+>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> @@ -4272,3 +4272,26 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
+>> -
+>>        - Selecting this value specifies that HEVC slices are expected
+>>          to be prefixed by Annex B start codes. According to 
+>> :ref:`hevc`
+>>          valid start codes can be 3-bytes 0x000001 or 4-bytes 
+>> 0x00000001.
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_LTRCOUNT (enum)``
 > 
-> uint32 is always 1 item, so drop. Is there a max value you can define?
+> I prefer _LTR_COUNT (same for the other control defines).
+> 
+> I assume 'enum' is a mistake? This should be 'integer', right?
+Right, I will correct it at all the places.
+> 
+>> +	Specifies the number of Long Term Reference frames encoder needs to
+>> +	generate or keep.
+>> +	This control is used to query or configure the number of Long Term
+>> +	Reference frames.
+> 
+> Add something like: "Applicable to the H264 and HEVC encoder."
+Sure.
+> 
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_MARKLTRFRAME (enum)``
+>> +	This control is used to mark current frame as Long Term Reference
+>> +	frame.
+> 
+> enum -> integer
+> _MARK_LTR_FRAME
+> 
+> How about renaming this to: "_FRAME_LTR_INDEX"?
+You are suggesting to rename it to V4L2_CID_MPEG_VIDEO_MARK_LTR_FRAME or 
+V4L2_CID_MPEG_VIDEO_MARK_FRAME_LTR_INDEX ?
+> 
+> I would also suggest having the range as 0..LTR_COUNT where 0 means 
+> that
+> this is not a LTR frame. An alternative is to have two controls: one 
+> boolean
+> that determines if the frame is a LTR frame or not, and one control 
+> containing
+> the LTR index.
+> 
+> Is the LTR index 0 or 1 based according to the standard? I think that 
+> if it is
+> 1 based you can use 0 to mean 'not an LTR frame'. If it is 0 based in
+> the standard,
+> then having two controls might be better.
+> 
+> A third alternative might be to use -1 as the value to indicate that it 
+> is not
+> an LTR frame, but it feels hackish. I'm not sure yet.
+> 
+Could you please help me to understand how this info will be helpful?
+This control won't be set by client for every frame. So a frame for 
+which this control is not set
+is not a LTR frame and a frame for which this control is set is a LTR 
+frame and will be marked with
+LTR index ranging from 0 to LTR_COUNT-1 (range is according to standard)
+>> +	this provides a Long Term Reference index that ranges from 0
+>> +	to LTR count-1 and then the particular frame will be marked with 
+>> that
+>> +	Long Term Reference index.
+> 
+> Add something like: "Applicable to the H264 and HEVC encoder."
+sure, will add.
+> 
+> This only makes sense when used with requests, right? Otherwise you 
+> cannot
+> reliably associate this control with a frame. That should be mentioned 
+> here.
+Sure, will add.
+> 
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_USELTRFRAME (enum)``
+> 
+> enum -> bitmask
+> _USE_LTR_FRAMES
+Will correct this in next patch.
+> 
+>> +	Specifies the Long Term Reference frame(s) to be used for encoding
+>> +	the current frame.
+>> +	This provides a bitmask which consists of bits [0, 15]. A total of N
+>> +	LSB bits of this field are valid, where N is the maximum number of
+>> +	Long Term Reference frames supported.
+>> +	All the other bits are invalid and should be rejected.
+>> +	The LSB corresponds to the Long Term Reference index 0. Bit N-1 from
+>> +	the LSB corresponds to the Long Term Reference index max LTR 
+>> count-1.
+> 
+> Add something like: "Applicable to the H264 and HEVC encoder."
+> 
+> This too only makes sense when using requests, correct? That should be 
+> mentioned
+> here.
+Sure, will do.
+> 
+> I assume that this must be set to 0 for LTR frames? Or at least this
+> control will
+> be ignored for LTR frames.
+Yes, frames marked as LTR frames will not be encoded by using any other 
+LTR frame as a reference.
+So this control won't be set for LTR frames.
+This will be set only for the frames which needs to be encoded by using 
+an LTR frame as a reference.
+> 
+>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
+>> b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> index 3f3fbcd..3138c72 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> @@ -991,6 +991,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:		return "HEVC Slice 
+>> Parameters";
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode 
+>> Mode";
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
+>> +	case V4L2_CID_MPEG_VIDEO_LTRCOUNT:		return "LTR Count";
+>> +	case V4L2_CID_MPEG_VIDEO_MARKLTRFRAME:		return "Mark LTR";
+>> +	case V4L2_CID_MPEG_VIDEO_USELTRFRAME:		return "Use LTR";
+> 
+> "Use LTR Frames"
+> 
+>> 
+>>  	/* CAMERA controls */
+>>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
+>> @@ -1224,6 +1227,9 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
+>> enum v4l2_ctrl_type *type,
+>>  		break;
+>>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
+>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+>> +	case V4L2_CID_MPEG_VIDEO_LTRCOUNT:
+>> +	case V4L2_CID_MPEG_VIDEO_MARKLTRFRAME:
+>> +	case V4L2_CID_MPEG_VIDEO_USELTRFRAME:
+>>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>>  		break;
+>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+>> diff --git a/include/uapi/linux/v4l2-controls.h 
+>> b/include/uapi/linux/v4l2-controls.h
+>> index 6227141..f2daa86 100644
+>> --- a/include/uapi/linux/v4l2-controls.h
+>> +++ b/include/uapi/linux/v4l2-controls.h
+>> @@ -742,6 +742,10 @@ enum 
+>> v4l2_cid_mpeg_video_hevc_size_of_length_field {
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L6_BR	(V4L2_CID_MPEG_BASE + 642)
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_REF_NUMBER_FOR_PFRAMES	(V4L2_CID_MPEG_BASE + 643)
+>>  #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE 
+>> + 644)
+>> +#define V4L2_CID_MPEG_VIDEO_LTRCOUNT	(V4L2_CID_MPEG_BASE + 645)
+>> +#define V4L2_CID_MPEG_VIDEO_MARKLTRFRAME	(V4L2_CID_MPEG_BASE + 646)
+>> +#define V4L2_CID_MPEG_VIDEO_USELTRFRAME		(V4L2_CID_MPEG_BASE + 647)
+>> +
+>> 
+>>  /*  MPEG-class control IDs specific to the CX2341x driver as defined 
+>> by V4L2 */
+>>  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
+>> 
+> 
+> Regards,
+> 
+> 	Hans
 
-Sorry not sure I follow, to clarify you mean drop uint32, if so which
-type to use u8? I can use u8 as max wont be beyond 255.
-
-Yes I will define min as well max values too.
-
-> Otherwise, up to 2^32 - 1 is valid.
-
-I see one more warning given by your bot which I am able to reproduce as
-well:
-Documentation/devicetree/bindings/dma/qcom,gpi.example.dt.yaml: example-0: dma-controller@800000:reg:0: [0, 8388608, 0, 393216] is too long
-
-So to fix this I added the #address-cells and #size-cells
-
-        #address-cells = <2>;
-        #size-cells = <2>;
-        reg = <0x0 0x00800000 0x0 0x60000>;
-
-But I am getting the warning, what am I doing incorrect
-
--- 
-~Vinod
+Thanks,
+Dikshita
