@@ -2,100 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0B54253A4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 00:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C347253B9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 03:53:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbgHZWgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Aug 2020 18:36:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50154 "EHLO
+        id S1726838AbgH0Bxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Aug 2020 21:53:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbgHZWgp (ORCPT
+        with ESMTP id S1726802AbgH0Bxo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Aug 2020 18:36:45 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E54C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 15:36:45 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id 17so1895221pfw.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 15:36:45 -0700 (PDT)
+        Wed, 26 Aug 2020 21:53:44 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A825C06135D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 18:53:44 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id r8so3177389ota.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Aug 2020 18:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=gB8oYD4Pt7SucchxU+DTOwvZHtGiH0OIq9M1B9Glelo=;
-        b=BAjSdUDhLhzv3a5zudU06ZPo6k5P9FUQEHaW1HDzkIUz/bJUmhH2l2l7kBO6nsu9uA
-         vGyLlE9+D5QMs6YgHoengrtlsj8wnSzDhW9cvhsb2FVPFl5J0ojeNC2SPsWnWm6rzP11
-         3c2eLNCSfNOO6mxK8YQditkEwvvwCpcS+b0cE=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RdiGNBR/8z5xpwMCADnLtCh6bNy5eovU3k77J+KywCo=;
+        b=zpdN6bcBFFVol272Lv8V+Eh6X/QETawk4wb+c9PC07QIRMgLm7Z+EueBpUKKtGOI4r
+         KoYoQX9DHfB8FQDEnFq3OIaiR15facyT1Z4BrLWVaPKXf1miIoUO43N8I2yRx97uKj0a
+         rmCkvhdbGmgy4LpDKgmsk/Vs+Dr2ue5v+8bAeSY/PJwEalR1AiresH+TkaZuJ5W32Fan
+         jaVHzuLAgnBX8S0mJO3raCGWc2FgpM9HYp3S/H7boaozvhPRIr9cMfUR0YI/QGZcJcA/
+         1tZj0RCiXWfd8uuZB5WiwJypTrauhBSsoSp2DSzYZCEMvysfTCC7P1QlF1N6ZjfkgCVN
+         lM7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=gB8oYD4Pt7SucchxU+DTOwvZHtGiH0OIq9M1B9Glelo=;
-        b=p8eFSX3akcUhXesHZFNHAoz7FOQdZNgZHPbQvnrwt7fYNCRjCqyAwLpCKeAN5/SAfm
-         84njo1rlD0DxUkyrEoWusP1e/v4wDirdbM/TEhKUjifEVvmlhKiYIFBZMvQqeHPch7gR
-         n8ZnSi7DLdWC3pQjitLi5YbNuCDw97hT8bW8Hxo+L680iBq6a1t3V7YFwy5Ohc+2Ctax
-         LqQ+tImc7kpjqq3vGOq51y74G8beWNw7otJMuaHOtS9UNAxxet32Uwp1I+TITPdicEfw
-         kg6cZAPXXLYdTszt0TnGxiYxTDzxXedpTutOgw/8/rbMrQ5P2mipGiTPWLX+y+J6LkmK
-         w1tA==
-X-Gm-Message-State: AOAM532X5r0B3ywgWuO4eK47Q72/Kl+sQcN16YLp2I/I3wXiXxHzoGsf
-        l6as6Ev7FsdId1Fn+DXqYx6OKA==
-X-Google-Smtp-Source: ABdhPJzdiI/nHqh7JYW+Vz8f9/GsJbJTcwPvfi3VNEzB8dWcmy2EETtbtqW62ezuMpYK1btN59jjjQ==
-X-Received: by 2002:a17:902:7481:: with SMTP id h1mr13480687pll.139.1598481405002;
-        Wed, 26 Aug 2020 15:36:45 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id t33sm52987pga.72.2020.08.26.15.36.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RdiGNBR/8z5xpwMCADnLtCh6bNy5eovU3k77J+KywCo=;
+        b=NRjSe+mhfCMlYlZ6Nokoyis6a7jp59ZAMNedv1HVmrEf8Vum2Bd/RxcLlYm5W48U1/
+         7qhajuIEmCmPZbPRyDEM0ydR9mMir9Kt7NXKIjGedcn/O2yIhnjdcfWcemuMGHKHUAYf
+         i7UaGqQIVjMaE0hhMCtB33YvD65D4U60ygBSjWhWaeU6+4NyGMyNwhNZFb3BCCR3Bgwl
+         PHqRMvXrOIovGi5NIIDL97J4bp3krysL5VTiFV0uLfpEgX5OoBngy2yo6U6Mlkc/kQ4p
+         2j6YQ8CYiovsc6N34yMW6UrTh42aeln0otf3/6dFN1ndBqZypS3cDL14Vlc/0nTF7IMb
+         NahQ==
+X-Gm-Message-State: AOAM532cB5doQNN9wxiJwPwQJNouX8thsYQYJN2J3BUvIqrOXp2enpWt
+        VsZfL0RDW0uZ/RWPJthweQ5wiA==
+X-Google-Smtp-Source: ABdhPJz6EIUh03cmq18qoY0qsjYMI8alrYY8vvs8oWqlzFXUYEbjoiwXmytxm7wnApukujzRZv0yBg==
+X-Received: by 2002:a9d:77d4:: with SMTP id w20mr11204840otl.182.1598493223853;
+        Wed, 26 Aug 2020 18:53:43 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
+        by smtp.gmail.com with ESMTPSA id y18sm175096ool.16.2020.08.26.18.53.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2020 15:36:44 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1598354482-15491-3-git-send-email-mkshah@codeaurora.org>
-References: <1598354482-15491-1-git-send-email-mkshah@codeaurora.org> <1598354482-15491-3-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v2 2/2] soc: qcom: rpmh: Allow RPMH driver to be loaded as a module
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ulf.hansson@linaro.org, dianders@chromium.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
+        Wed, 26 Aug 2020 18:53:43 -0700 (PDT)
+Date:   Wed, 26 Aug 2020 20:53:36 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     andy.gross@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, ulf.hansson@linaro.org,
+        swboyd@chromium.org, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         John Stultz <john.stultz@linaro.org>,
-        Todd Kjos <tkjos@google.com>,
-        Saravana Kannan <saravanak@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>, andy.gross@linaro.org,
-        bjorn.andersson@linaro.org
-Date:   Wed, 26 Aug 2020 15:36:42 -0700
-Message-ID: <159848140288.334488.4195649089371689022@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: [PATCH v2 1/2] Revert "drivers: qcom: rpmh-rsc: Use rcuidle
+ tracepoints for rpmh"
+Message-ID: <20200827015336.GG3715@yoga>
+References: <1598354482-15491-1-git-send-email-mkshah@codeaurora.org>
+ <1598354482-15491-2-git-send-email-mkshah@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1598354482-15491-2-git-send-email-mkshah@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Maulik Shah (2020-08-25 04:21:22)
-> From: John Stultz <john.stultz@linaro.org>
->=20
-> This patch allow the rpmh driver to be loaded as a permenent
-> module. Meaning it can be loaded from a module, but then cannot
-> be unloaded.
->=20
-> Ideally, it would include a remove hook and related logic, but
-> the rpmh driver is fairly core to the system, so once its loaded
-> with almost anything else to get the system to go, the dependencies
-> are not likely to ever also be removed.
->=20
-> So making it a permanent module at least improves things slightly
-> over requiring it to be a built in driver.
->=20
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> [mkshah: Fix typos in commit message, send after removing _rcuidle trace]
+On Tue 25 Aug 06:21 CDT 2020, Maulik Shah wrote:
+
+> Commit efde2659b0fe ("drivers: qcom: rpmh-rsc: Use rcuidle tracepoints
+> for rpmh") was written to fix a bug seen in an unmerged series that
+> implemented a struct generic_pm_domain::power_off() callback calling
+> rpmh_flush(). See stack trace below.
+> 
+>      Call trace:
+>       dump_backtrace+0x0/0x174
+>       show_stack+0x20/0x2c
+>       dump_stack+0xc8/0x124
+>       lockdep_rcu_suspicious+0xe4/0x104
+>       __tcs_buffer_write+0x230/0x2d0
+>       rpmh_rsc_write_ctrl_data+0x210/0x270
+>       rpmh_flush+0x84/0x24c
+>       rpmh_domain_power_off+0x78/0x98
+>       _genpd_power_off+0x40/0xc0
+>       genpd_power_off+0x168/0x208
+> 
+> Later the final merged solution is to use CPU PM notification to invoke
+> rpmh_flush() and power_off() callback of genpd is not implemented in the
+> driver.
+> 
+> CPU PM notifiers are run with RCU enabled/watching (see cpu_pm_notify()
+> and how it calls rcu_irq_enter_irqson() before calling the notifiers).
+> 
+> Remove this change since RCU will not be idle during CPU PM notifications
+> hence not required to use _rcuidle tracepoint. Using _rcuidle tracepoint
+> prevented rpmh driver to be loadable module as these are not exported
+> symbols.
+> 
+> This reverts commit efde2659b0fe835732047357b2902cca14f054d9.
+> 
+> Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Cc: John Stultz <john.stultz@linaro.org>
+> Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 > ---
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>  drivers/soc/qcom/rpmh-rsc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index ae66757..fabe390d 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -495,7 +495,7 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+>  		write_tcs_cmd(drv, RSC_DRV_CMD_MSGID, tcs_id, j, msgid);
+>  		write_tcs_cmd(drv, RSC_DRV_CMD_ADDR, tcs_id, j, cmd->addr);
+>  		write_tcs_cmd(drv, RSC_DRV_CMD_DATA, tcs_id, j, cmd->data);
+> -		trace_rpmh_send_msg_rcuidle(drv, tcs_id, j, msgid, cmd);
+> +		trace_rpmh_send_msg(drv, tcs_id, j, msgid, cmd);
+>  	}
+>  
+>  	write_tcs_reg(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, cmd_complete);
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
