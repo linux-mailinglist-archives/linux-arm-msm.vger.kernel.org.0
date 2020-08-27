@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21C73255068
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 23:17:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF89255069
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 23:17:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726706AbgH0VRU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 17:17:20 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:18950 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726120AbgH0VRT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 17:17:19 -0400
+        id S1726073AbgH0VRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Aug 2020 17:17:22 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:59606 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726798AbgH0VRV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Aug 2020 17:17:21 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598563037; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=DsmXnN/MuGNri8lOWzauI1ZvsawKQMh8iP5bdecIJRc=; b=CjaNdl1OrGnRg4D5zaKIBcIEN6+7Qo2djCnrG0m7TT2yphnqKj0ErahCG3L7zdQWrzPz/1F7
- AOhSS47AcnAm2fKnRAIPkG5pjQAZDADZ/sCzh17j2gkyq6UH+9gosdzA8SbE8bWZYgG6dFva
- sSGN8hhWvp0Ec1vF5yXqL3LvrJs=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1598563040; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zgK2ctNuPAFHLiqOhSsrVju3LuGfn76WfACVh6WfTfY=; b=qlbY2nsbg1NZ9Ie+2TsCBUMYgbt0dOU6LdjjI65oCh+7+YFewiy620hEZa8nimirjOd8zh05
+ JLtLDfFZMrtDDxF7eHVMfQ34DJUndqHW/x6AJhtvLwwmKXrW57eY/1Qa9nCtGdprarXXY8sX
+ lSw5GX7kgB+5PBFCNT1t1CtSfRQ=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f4822dd2fd6d21f0a1e52b9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 27 Aug 2020 21:17:17
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f4822e0db22b129dfaed574 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 27 Aug 2020 21:17:20
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AD671C433CA; Thu, 27 Aug 2020 21:17:16 +0000 (UTC)
+        id 16885C433C6; Thu, 27 Aug 2020 21:17:19 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +37,9 @@ Received: from linuxdisplay-lab-04.qualcomm.com (i-global254.qualcomm.com [199.1
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tanmay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2D168C433CA;
-        Thu, 27 Aug 2020 21:17:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2D168C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7AD5C433CA;
+        Thu, 27 Aug 2020 21:17:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7AD5C433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=tanmay@codeaurora.org
 From:   Tanmay Shah <tanmay@codeaurora.org>
@@ -47,11 +48,16 @@ Cc:     swboyd@chromium.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, seanpaul@chromium.org,
         robdclark@gmail.com, daniel@ffwll.ch, airlied@linux.ie,
         aravindh@codeaurora.org, abhinavk@codeaurora.org,
-        khsieh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>
-Subject: [PATCH v12 0/5] Add support for DisplayPort driver on SnapDragon
-Date:   Thu, 27 Aug 2020 14:16:53 -0700
-Message-Id: <20200827211658.27479-1-tanmay@codeaurora.org>
+        khsieh@codeaurora.org, Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH v12 1/5] drm: add constant N value in helper file
+Date:   Thu, 27 Aug 2020 14:16:54 -0700
+Message-Id: <20200827211658.27479-2-tanmay@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20200827211658.27479-1-tanmay@codeaurora.org>
+References: <20200827211658.27479-1-tanmay@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -59,128 +65,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These patches add Display-Port driver on SnapDragon/msm hardware.
-This series also contains device-tree bindings for msm DP driver.
-It also contains Makefile and Kconfig changes to compile msm DP driver.
+From: Chandan Uddaraju <chandanu@codeaurora.org>
 
-The block diagram of DP driver is shown below:
+The constant N value (0x8000) is used by i915 DP
+driver. Define this value in dp helper header file
+to use in multiple Display Port drivers. Change
+i915 driver accordingly.
 
+Change in v6: Change commit message
 
-                 +-------------+
-                 |DRM FRAMEWORK|
-                 +------+------+
-                        |
-                   +----v----+
-                   | DP DRM  |
-                   +----+----+
-                        |
-                   +----v----+
-     +------------+|   DP    +----------++------+
-     +        +---+| DISPLAY |+---+      |      |
-     |        +    +-+-----+-+    |      |      |
-     |        |      |     |      |      |      |
-     |        |      |     |      |      |      |
-     |        |      |     |      |      |      |
-     v        v      v     v      v      v      v
- +------+ +------+ +---+ +----+ +----+ +---+ +-----+
- |  DP  | |  DP  | |DP | | DP | | DP | |DP | | DP  |
- |PARSER| | HPD  | |AUX| |LINK| |CTRL| |PHY| |POWER|
- +--+---+ +---+--+ +---+ +----+ +--+-+ +-+-+ +-----+
-    |                              |     |
- +--v---+                         +v-----v+
- |DEVICE|                         |  DP   |
- | TREE |                         |CATALOG|
- +------+                         +---+---+
-                                      |
-                                  +---v----+
-                                  |CTRL/PHY|
-                                  |   HW   |
-                                  +--------+
+Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
+Signed-off-by: Vara Reddy <varar@codeaurora.org>
+Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+---
+ drivers/gpu/drm/i915/display/intel_display.c | 2 +-
+ include/drm/drm_dp_helper.h                  | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Changes in v12:
-
--- Add support of pm ops in display port driver
--- Clear bpp depth bits before writing to MISC register
--- Fix edid read
-
-Previous change log:
-https://lkml.kernel.org/lkml/20200818051137.21478-1-tanmay@codeaurora.org/
-
-Chandan Uddaraju (4):
-  dt-bindings: msm/dp: add bindings of DP/DP-PLL driver for Snapdragon
-  drm: add constant N value in helper file
-  drm/msm/dp: add displayPort driver support
-  drm/msm/dp: add support for DP PLL driver
-
-Jeykumar Sankaran (1):
-  drm/msm/dpu: add display port support in DPU
-
-Tanmay Shah (1):
-  drm/msm/dp: Add Display Port HPD feature
-
- drivers/gpu/drm/i915/display/intel_display.c  |    2 +-
- drivers/gpu/drm/msm/Kconfig                   |    9 +
- drivers/gpu/drm/msm/Makefile                  |   14 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |   27 +-
- .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |    8 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   83 +-
- drivers/gpu/drm/msm/dp/dp_aux.c               |  535 ++++++
- drivers/gpu/drm/msm/dp/dp_aux.h               |   30 +
- drivers/gpu/drm/msm/dp/dp_catalog.c           | 1045 ++++++++++
- drivers/gpu/drm/msm/dp/dp_catalog.h           |  105 +
- drivers/gpu/drm/msm/dp/dp_ctrl.c              | 1693 +++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_ctrl.h              |   35 +
- drivers/gpu/drm/msm/dp/dp_display.c           | 1046 ++++++++++
- drivers/gpu/drm/msm/dp/dp_display.h           |   31 +
- drivers/gpu/drm/msm/dp/dp_drm.c               |  168 ++
- drivers/gpu/drm/msm/dp/dp_drm.h               |   18 +
- drivers/gpu/drm/msm/dp/dp_hpd.c               |   69 +
- drivers/gpu/drm/msm/dp/dp_hpd.h               |   79 +
- drivers/gpu/drm/msm/dp/dp_link.c              | 1214 ++++++++++++
- drivers/gpu/drm/msm/dp/dp_link.h              |  132 ++
- drivers/gpu/drm/msm/dp/dp_panel.c             |  486 +++++
- drivers/gpu/drm/msm/dp/dp_panel.h             |   95 +
- drivers/gpu/drm/msm/dp/dp_parser.c            |  267 +++
- drivers/gpu/drm/msm/dp/dp_parser.h            |  138 ++
- drivers/gpu/drm/msm/dp/dp_pll.c               |   99 +
- drivers/gpu/drm/msm/dp/dp_pll.h               |   61 +
- drivers/gpu/drm/msm/dp/dp_pll_10nm.c          |  930 +++++++++
- drivers/gpu/drm/msm/dp/dp_pll_private.h       |   89 +
- drivers/gpu/drm/msm/dp/dp_power.c             |  373 ++++
- drivers/gpu/drm/msm/dp/dp_power.h             |  103 +
- drivers/gpu/drm/msm/dp/dp_reg.h               |  518 +++++
- drivers/gpu/drm/msm/msm_drv.c                 |    2 +
- drivers/gpu/drm/msm/msm_drv.h                 |   59 +-
- include/drm/drm_dp_helper.h                   |    1 +
- 34 files changed, 9545 insertions(+), 19 deletions(-)
- create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_display.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_display.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_link.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_link.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_pll.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_pll.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_pll_10nm.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_pll_private.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_power.c
- create mode 100644 drivers/gpu/drm/msm/dp/dp_power.h
- create mode 100644 drivers/gpu/drm/msm/dp/dp_reg.h
-
-
-base-commit: d012a7190fc1fd72ed48911e77ca97ba4521bccd
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index b2ec3a5141cc..db959d9f8ebc 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -8114,7 +8114,7 @@ static void compute_m_n(unsigned int m, unsigned int n,
+ 	 * which the devices expect also in synchronous clock mode.
+ 	 */
+ 	if (constant_n)
+-		*ret_n = 0x8000;
++		*ret_n = DP_LINK_CONSTANT_N_VALUE;
+ 	else
+ 		*ret_n = min_t(unsigned int, roundup_pow_of_two(n), DATA_LINK_N_MAX);
+ 
+diff --git a/include/drm/drm_dp_helper.h b/include/drm/drm_dp_helper.h
+index e47dc22ebf50..a31d7aebb8b8 100644
+--- a/include/drm/drm_dp_helper.h
++++ b/include/drm/drm_dp_helper.h
+@@ -1134,6 +1134,7 @@
+ #define DP_MST_PHYSICAL_PORT_0 0
+ #define DP_MST_LOGICAL_PORT_0 8
+ 
++#define DP_LINK_CONSTANT_N_VALUE 0x8000
+ #define DP_LINK_STATUS_SIZE	   6
+ bool drm_dp_channel_eq_ok(const u8 link_status[DP_LINK_STATUS_SIZE],
+ 			  int lane_count);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
