@@ -2,166 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76FF225421B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 11:25:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B274725424D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 11:28:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728590AbgH0JZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 05:25:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38610 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728622AbgH0JZY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 05:25:24 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B8CC06123A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 02:25:24 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id h15so4639702wrt.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 02:25:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IFNMyaH4C8tyb/mJTWrzTTwDqXVQt+oIKxEwk0xfFcs=;
-        b=dolX/Oj/ruvZXAdY9Awn2EFLCyhybVa7noGABscD4AETJE40yPNweFzjsbch+7oNWD
-         E9nAAOpcJUgp9Zeqgha+dssMpvo6RwBkMdKQr1/shKrQb0Y4cHWz0ezv+I0u83obAvvs
-         bxIIDWcO3SxyVq+9yL4RT0eclQmQCeE61H2Le1JzT6LZEjHn8FIOK2vXK5RGTu9VzPcR
-         WlhWpzHcuySlhhcZMMW1BJw56yMBEgmOpH8MrD85+vdLpTWukcT7HwdGUEZDK9qEuGzE
-         EEvUN3FdcV2SjAR3UvcnQyjrQkSL1X9pwPfyfVrHiU1yoYtiTJg8HyGXsdwT/G9xnbHr
-         KRwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=IFNMyaH4C8tyb/mJTWrzTTwDqXVQt+oIKxEwk0xfFcs=;
-        b=S1Dsz67g+rhwJ5PJQEjHBVLwdmW90C5LRURItKQYXIgKW8s44ReDJmw9gDP8feoweo
-         J5Tim23b+NBM2J4qUFr7Eog60jBv604d14a3GNNN3JRgXRixQR5m0tJF6PBWgoMLP0lQ
-         gTnYO9cWmiQvP+mTg4/UHslurzhBAUWBFsvMCd90B521gI8iPazCcbIrn5fdzEcPHDu2
-         N2MXamtMIcWiSF/J1kj4ze5IQ6zl2RyJ7RFbIttTPcHmL2Ra76PkSNkUm6zkg0RZiKFK
-         el3YBzgkhiLvbouw6mys6IZ91aWsy0Kc8BlnIasXbFPeVOjMTuUv48Xa/xcIrD98fbs+
-         +vNg==
-X-Gm-Message-State: AOAM533fTQxM9r75Xi+tkItvhm0mwkf+bKi/vsVusCRdG1TxZtKWwJ8S
-        EpoxMgS/iLm0ucUxCRZholSREQ==
-X-Google-Smtp-Source: ABdhPJwT8tpl+fd43qiB4cxkLEEDXd73CQlEGtZK4m11dQ+acs5TwfsJbOHxWMvs/63SDdvUq4pcBA==
-X-Received: by 2002:a5d:6505:: with SMTP id x5mr18875316wru.336.1598520322734;
-        Thu, 27 Aug 2020 02:25:22 -0700 (PDT)
-Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id z203sm4357330wmc.31.2020.08.27.02.25.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2020 02:25:22 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 13/13] venus: helpers: Wire up hfi platform buffer requirements
-Date:   Thu, 27 Aug 2020 12:24:17 +0300
-Message-Id: <20200827092417.16040-14-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200827092417.16040-1-stanimir.varbanov@linaro.org>
-References: <20200827092417.16040-1-stanimir.varbanov@linaro.org>
+        id S1728531AbgH0J2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Aug 2020 05:28:35 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38150 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728292AbgH0J2f (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Aug 2020 05:28:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598520514; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zVYq2PzZHW22lNU+KVi4IO8QWzdS+OdIZj/XtAHJAlQ=; b=LrlfVkCDTJL7PDkCGiAr3rdNfD3/JSFJB3ucma7iqOazU0Cjus0bZCeEqL6b01aqeSOaCRwl
+ yEH2NhqUlzo4u3F3HiLDOW3yZPLYR6U+CmVoJrtEcya/jqIvM85ZfwUPh+0SFuYN5d+XphJL
+ J/gz70vNJBcKQO9Y4KBJjbYXopc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f477cc27ea9bd2909359d38 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 27 Aug 2020 09:28:34
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A69FCC433B1; Thu, 27 Aug 2020 09:28:33 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3539CC43395;
+        Thu, 27 Aug 2020 09:28:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3539CC43395
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao <srivasam@codeaurora.org>
+Subject: [PATCH v2 1/5] ASoC: Add sc7180-lpass binding header hdmi define
+Date:   Thu, 27 Aug 2020 14:58:11 +0530
+Message-Id: <1598520495-21741-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now when everything is in place wire up buffer requirements
-from hfi platform buffers to the buffer requirements helper.
+From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Add header defining hdmi dai-id for SC7180 lpass soc
+in dt bindings.
+
+Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c   | 50 +++++++++++++++++++
- .../media/platform/qcom/venus/hfi_parser.h    |  5 ++
- 2 files changed, 55 insertions(+)
+ include/dt-bindings/sound/sc7180-lpass.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index cd06a6998f52..a3e59b3791eb 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -15,6 +15,7 @@
- #include "hfi_helper.h"
- #include "pm_helpers.h"
- #include "hfi_platform.h"
-+#include "hfi_parser.h"
+diff --git a/include/dt-bindings/sound/sc7180-lpass.h b/include/dt-bindings/sound/sc7180-lpass.h
+index 7d988f6..0b4991e 100644
+--- a/include/dt-bindings/sound/sc7180-lpass.h
++++ b/include/dt-bindings/sound/sc7180-lpass.h
+@@ -4,6 +4,7 @@
  
- struct intbuf {
- 	struct list_head list;
-@@ -552,6 +553,51 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
- 	return 0;
- }
+ #define MI2S_PRIMARY	0
+ #define MI2S_SECONDARY	1
++#define HDMI	2
  
-+static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
-+			       struct hfi_buffer_requirements *req)
-+{
-+	enum hfi_version version = inst->core->res->hfi_version;
-+	const struct hfi_platform *hfi_plat;
-+	struct hfi_plat_buffers_params params;
-+	bool is_dec = inst->session_type == VIDC_SESSION_TYPE_DEC;
-+	struct venc_controls *enc_ctr = &inst->controls.enc;
-+
-+	hfi_plat = hfi_platform_get(version);
-+
-+	if (!hfi_plat || !hfi_plat->bufreq)
-+		return -EINVAL;
-+
-+	params.version = version;
-+	params.num_vpp_pipes = hfi_platform_num_vpp_pipes(version);
-+
-+	if (is_dec) {
-+		params.width = inst->width;
-+		params.height = inst->height;
-+		params.codec = inst->fmt_out->pixfmt;
-+		params.hfi_color_fmt = to_hfi_raw_fmt(inst->fmt_cap->pixfmt);
-+		params.dec.max_mbs_per_frame = mbs_per_frame_max(inst);
-+		params.dec.buffer_size_limit = 0;
-+		params.dec.is_secondary_output =
-+			inst->opb_buftype == HFI_BUFFER_OUTPUT2;
-+		params.dec.is_interlaced =
-+			inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ?
-+				true : false;
-+	} else {
-+		params.width = inst->out_width;
-+		params.height = inst->out_height;
-+		params.codec = inst->fmt_cap->pixfmt;
-+		params.hfi_color_fmt = to_hfi_raw_fmt(inst->fmt_out->pixfmt);
-+		params.enc.work_mode = VIDC_WORK_MODE_2;
-+		params.enc.rc_type = HFI_RATE_CONTROL_OFF;
-+		if (enc_ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)
-+			params.enc.rc_type = HFI_RATE_CONTROL_CQ;
-+		params.enc.num_b_frames = enc_ctr->num_b_frames;
-+		params.enc.is_tenbit = inst->bit_depth == VIDC_BITDEPTH_10;
-+	}
-+
-+	return hfi_plat->bufreq(&params, inst->session_type, buftype, req);
-+}
-+
- int venus_helper_get_bufreq(struct venus_inst *inst, u32 type,
- 			    struct hfi_buffer_requirements *req)
- {
-@@ -563,6 +609,10 @@ int venus_helper_get_bufreq(struct venus_inst *inst, u32 type,
- 	if (req)
- 		memset(req, 0, sizeof(*req));
+ #define LPASS_MCLK0	0
  
-+	ret = platform_get_bufreq(inst, type, req);
-+	if (!ret)
-+		return 0;
-+
- 	ret = hfi_session_get_property(inst, ptype, &hprop);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/media/platform/qcom/venus/hfi_parser.h b/drivers/media/platform/qcom/venus/hfi_parser.h
-index 7f59d82110f9..5751d0140700 100644
---- a/drivers/media/platform/qcom/venus/hfi_parser.h
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.h
-@@ -112,4 +112,9 @@ static inline u32 core_num_max(struct venus_inst *inst)
- 	return cap_max(inst, HFI_CAPABILITY_MAX_VIDEOCORES);
- }
- 
-+static inline u32 mbs_per_frame_max(struct venus_inst *inst)
-+{
-+	return cap_max(inst, HFI_CAPABILITY_MBS_PER_FRAME);
-+}
-+
- #endif
 -- 
-2.17.1
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
