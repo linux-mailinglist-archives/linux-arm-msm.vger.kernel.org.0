@@ -2,92 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD5992542F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 11:59:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5537925450E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 14:37:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728671AbgH0J75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 05:59:57 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:15506 "EHLO m43-7.mailgun.net"
+        id S1729018AbgH0MhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Aug 2020 08:37:14 -0400
+Received: from mout.gmx.net ([212.227.17.22]:37021 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728668AbgH0J74 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 05:59:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598522396; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=+B5wb6/5W73FKeRbPz+9O5/FmXiWurQF800ttHrQ3mQ=; b=YKc23FJKRlds+At4T6qsyTpPofkGERpnnUpQWimWbgHPuUwGQsiAvwdM3m2Phs219xcyYxRi
- 9knV2Jk4oEN79XEn8a4BF/1AYrx9WULcQUeML5Tp+VmmjWe9WFgFsGZMwGMA/G+FsfT5ejDU
- e9BhXvebhejLoUpSBhf5I2zzlN4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f47841b7ea9bd29093d5131 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 27 Aug 2020 09:59:55
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 30CA3C4339C; Thu, 27 Aug 2020 09:59:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3AF61C433C6;
-        Thu, 27 Aug 2020 09:59:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3AF61C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH 0/5] Qualcomm's lpass-hdmi ASoC driver to support audio over dp port
-Date:   Thu, 27 Aug 2020 15:29:38 +0530
-Message-Id: <1598522378-28963-1-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1729064AbgH0MeH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Aug 2020 08:34:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1598531519;
+        bh=92IISck0Hh+QcjDct9i6ju3E7DbMlpwjZF7zW6G46Sc=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=KGLhb4lQ48yAcFw8dyYZZ4x3abl5+wHNWFde6rh76yn9TPOcDV2dbkia1bYvTngcK
+         7dd3CUH7vIzWvLAdPDqQQvSbIGjz+6C3cK0LESwWWnNOYWDreQs6J7TFzngFQN5veX
+         SkpUre3ZxsKqNnQ1AiFgZ92OsNfUIQ3UCQ6X9UmI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [217.61.146.7] ([217.61.146.7]) by web-mail.gmx.net
+ (3c-app-gmx-bap26.server.lan [172.19.172.96]) (via HTTP); Thu, 27 Aug 2020
+ 14:31:59 +0200
+MIME-Version: 1.0
+Message-ID: <trinity-d6be65d8-9086-42bc-b993-238b731cdf60-1598531519064@3c-app-gmx-bap26>
+From:   Frank Wunderlich <frank-w@public-files.de>
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>
+Cc:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk,
+        geert+renesas@glider.be, dri-devel@lists.freedesktop.org,
+        bjorn.andersson@linaro.org, thierry.reding@gmail.com,
+        laurent.pinchart@ideasonboard.com, digetx@gmail.com, s-anna@ti.com,
+        will@kernel.org, m.szyprowski@samsung.com,
+        linux-samsung-soc@vger.kernel.org, magnus.damm@gmail.com,
+        kyungmin.park@samsung.com, jonathanh@nvidia.com, agross@kernel.org,
+        yong.wu@mediatek.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, inki.dae@samsung.com,
+        vdumpa@nvidia.com, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        sw0312.kim@samsung.com, linux-kernel@vger.kernel.org,
+        t-kristo@ti.com, iommu@lists.linux-foundation.org
+Subject: Aw: [PATCH 00/18] Convert arch/arm to use iommu-dma
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 27 Aug 2020 14:31:59 +0200
+Importance: normal
+Sensitivity: Normal
+In-Reply-To: <cover.1597931875.git.robin.murphy@arm.com>
+References: <cover.1597931875.git.robin.murphy@arm.com>
+X-UI-Message-Type: mail
+X-Priority: 3
+X-Provags-ID: V03:K1:s+a4a7dJl6sfE8qr3afXfh3rFMEB0yoGDcQKLuHS4QzYWvUvvC45GFgO8lF9qXw9R52Wk
+ DtakmHS+HD6cGoa1Zil3uW/U+yFS9kxTAT+z6AMI2xcYorqC2HXtzYuOCqJCgtLpQ+XE0cJjSFZx
+ jxGxAyxNxltq5fYSEegUZWLgP9jut/anC9MQ4QvGWdC7Fx2DqQGzPbELk6qKjHDVZ/m5suQOG5WX
+ iSa5xQ1TVnlfnQDl3zDcjq+ZYocRCeCF/YEHBWcp/6xTs4r2KnkcTO/1Z2Mnufc+NBr+EgqeLN3I
+ Vw=
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FxwUSbP1mjI=:ttSQgY8yWxDnU00gqYZD9w
+ Z/qDxX2NghmiDYfDQ5KlK2CvVPv511mt50baxcV9OWViPRqrVksHRa4Q70leW/35miqZsjM4V
+ IO6h92zZspcakoDMbQBjPkuMoyi+5LQ/QFBqRCLiWwjAvFd059HIdZ3wIqx4Ym54NMmsqjccz
+ GSjwDTLDSlPZZ31m1rM3TpUiUEHmvR2WgipwWqz1AAq7WXhaIEH9QsZ2JnZLEEbOhxXoPsI/Z
+ TRcWMQZ1A9GV15KtQDIO2i/Dq3pFNOn6hQhy7q9DtWpXhyRvveQF9KRDJYqc0qTjBpvzvMKr7
+ cwEg2rxqBaJWgiTbO8eTHZQs26rh5cUZDyt0F7+vYHaCPFuefMRRBB057XIJ51LSUel/IEcBx
+ jKL0kBgE2bzG14g6AuFmvgYvmWEVN4O/y2NQMUrsTNo+oCPAkE4kNJZRWZcUmma+gyoOQcDkF
+ PF2HL5TN/+tF8l4QCRCJegf1NBi1AFsXmHuAdCOMo4mEr8RGOKC4Z9Q1zFeTTDPSLLcCl+zEE
+ Ii91uM5UaMUTvml0hGGBCxEsqbJsfJ8v3jTJ9teKmcwELpC6kt7ciWfOUlIPV4vD2eQdFtfwk
+ 1oipkVsSHlw6p58a4q/xNJukuLHryikdXoZi+l8M+576WxE3K6Ngz4VHUmx0HOrdPsQ3RuO6H
+ UQHfIQ/HTJp3cXIfVqtRO2Xhoda3GGGLYRUb8PYIOqNcBnvhX6Jze8vfjXKlOuNpMwLk=
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These patches are to support audio over DP port on Qualcomm's SC7180 LPASS Asoc.
-It includes machine driver, cpu driver, platform driver updates for HDMI path support, 
-device tree documention, lpass variant structure optimization and configuration changes.
-These patches depends on the DP patch series 
-https://patchwork.kernel.org/project/dri-devel/list/?series=332029
+Tested full series on bananapi r2 (mt7623/mt2701, 5.9-rc1 + hdmi-patches), works so far fbcon+x without issues
 
-V Sujith Kumar Reddy (5):
-  ASoC: Add sc7180-lpass binding header hdmi define
-  ASoC: dt-bindings: Add dt binding for lpass hdmi
-  ASoC: qcom: Add support for lpass hdmi driver
-  ASoC: qcom: Add support for audio over DP
-  ASoC: qcom: Optimise lpass variant structure
+Tested-by: Frank Wunderlich <frank-w@public-files.de>
 
- .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  51 +-
- include/dt-bindings/sound/sc7180-lpass.h           |   1 +
- sound/soc/qcom/Kconfig                             |   5 +
- sound/soc/qcom/Makefile                            |   2 +
- sound/soc/qcom/lpass-apq8016.c                     |  25 +-
- sound/soc/qcom/lpass-cpu.c                         |  92 ++-
- sound/soc/qcom/lpass-hdmi.c                        | 685 +++++++++++++++++++++
- sound/soc/qcom/lpass-hdmi.h                        | 129 ++++
- sound/soc/qcom/lpass-ipq806x.c                     |  25 +-
- sound/soc/qcom/lpass-lpaif-reg.h                   |  51 +-
- sound/soc/qcom/lpass-platform.c                    | 287 +++++++--
- sound/soc/qcom/lpass-sc7180.c                      | 147 ++++-
- sound/soc/qcom/lpass.h                             | 123 +++-
- 13 files changed, 1472 insertions(+), 151 deletions(-)
- create mode 100644 sound/soc/qcom/lpass-hdmi.c
- create mode 100644 sound/soc/qcom/lpass-hdmi.h
-
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+regards Frank
