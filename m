@@ -2,31 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5537925450E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 14:37:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 468D5254575
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 14:55:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729018AbgH0MhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 08:37:14 -0400
-Received: from mout.gmx.net ([212.227.17.22]:37021 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729064AbgH0MeH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 08:34:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1598531519;
-        bh=92IISck0Hh+QcjDct9i6ju3E7DbMlpwjZF7zW6G46Sc=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=KGLhb4lQ48yAcFw8dyYZZ4x3abl5+wHNWFde6rh76yn9TPOcDV2dbkia1bYvTngcK
-         7dd3CUH7vIzWvLAdPDqQQvSbIGjz+6C3cK0LESwWWnNOYWDreQs6J7TFzngFQN5veX
-         SkpUre3ZxsKqNnQ1AiFgZ92OsNfUIQ3UCQ6X9UmI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [217.61.146.7] ([217.61.146.7]) by web-mail.gmx.net
- (3c-app-gmx-bap26.server.lan [172.19.172.96]) (via HTTP); Thu, 27 Aug 2020
- 14:31:59 +0200
-MIME-Version: 1.0
-Message-ID: <trinity-d6be65d8-9086-42bc-b993-238b731cdf60-1598531519064@3c-app-gmx-bap26>
-From:   Frank Wunderlich <frank-w@public-files.de>
-To:     Robin Murphy <robin.murphy@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>
+        id S1729172AbgH0Myr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Aug 2020 08:54:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43104 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728973AbgH0Mym (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Aug 2020 08:54:42 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09A0C061264;
+        Thu, 27 Aug 2020 05:54:41 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id a65so5064001wme.5;
+        Thu, 27 Aug 2020 05:54:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=a5lpHFvSWQoGrjybaXmlV69Axq+442tGTTEhKXzXB/M=;
+        b=FGT1CbGRN8nWIZimQQJFHaFlgGbXUWXcohmF6aYnzTMEIdoXLV8ASHcjH/rftf8dPu
+         05h7ynqky+tK0sVnESIUNMOkwDJXKaIKOOjfk8ZzK2aS6ItFzfPK1RiS8Sgq9gCPkksa
+         s87z1TYPj+YUb/w6uaLEL+ETfgmlzhXCU10ucGJlzNXsBINUdbYoCrfyflOTHYw+cbz4
+         RAdiDof8rxMnyZ5hwply2FrDERb1PY3A2wl1RdJOsOW1zwqi8pXPitwO0zzOFjipVey5
+         oUPQnIgnx+nqlo3zwpUr7dRtVO/mC+2RV5+VHT1jDZZ+PWuU7gSvtmMNjL2CWO/kpKhp
+         IGew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=a5lpHFvSWQoGrjybaXmlV69Axq+442tGTTEhKXzXB/M=;
+        b=MJE0yRwoQzsnxhBdyQfT/5MJsLRMJJNbLzi6l5vW6qxHl5bqRp/XIPtRcshfhf1MXi
+         ylS/yD4UhWjMvhOPZHiOUs34DMwd3ylguODBJMUWyPTfH/BopgBdvZoWr6ulu4PuP+qe
+         PSJg+eQXemuAwlNiNq9hCnsrI3g41k+OsE+klK1Dq0pCO7n6T2gONMN+jQtgwl/Awrag
+         s0leS9JW4OhpgpJev6w9NZUvE1UHPaNEfgwgrXhRRJKJo219VmJNPxwKHorUR+4ardYd
+         5TGqVnuDjEDAObVVoAoW+NexE/QJex7LwaKZbSR5fiz0RZIIYEuHf8Wt4YHYadvfqj/3
+         rNTg==
+X-Gm-Message-State: AOAM530XMfU3U+EJgb0wemg2LzY3pj35cT57QRmYtFb/CbltHCsXBKw3
+        rzSZ80YqV2s8TTs0/YOtSp/HI5Ab9ROw9zwo
+X-Google-Smtp-Source: ABdhPJwqZV7pk1FvOSkguIjKJvFkFK+Tun3miq523wTMnXd9BGquVzYW29lvsrXbzl2PtJrmqLojuA==
+X-Received: by 2002:a1c:7d55:: with SMTP id y82mr3074513wmc.100.1598532878977;
+        Thu, 27 Aug 2020 05:54:38 -0700 (PDT)
+Received: from ziggy.stardust ([213.195.119.187])
+        by smtp.gmail.com with ESMTPSA id m11sm5436719wrn.11.2020.08.27.05.54.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Aug 2020 05:54:38 -0700 (PDT)
+Subject: Re: Aw: [PATCH 00/18] Convert arch/arm to use iommu-dma
+To:     Frank Wunderlich <frank-w@public-files.de>,
+        Robin Murphy <robin.murphy@arm.com>
 Cc:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk,
         geert+renesas@glider.be, dri-devel@lists.freedesktop.org,
         bjorn.andersson@linaro.org, thierry.reding@gmail.com,
@@ -40,39 +65,35 @@ Cc:     hch@lst.de, joro@8bytes.org, linux@armlinux.org.uk,
         linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         sw0312.kim@samsung.com, linux-kernel@vger.kernel.org,
         t-kristo@ti.com, iommu@lists.linux-foundation.org
-Subject: Aw: [PATCH 00/18] Convert arch/arm to use iommu-dma
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 27 Aug 2020 14:31:59 +0200
-Importance: normal
-Sensitivity: Normal
-In-Reply-To: <cover.1597931875.git.robin.murphy@arm.com>
 References: <cover.1597931875.git.robin.murphy@arm.com>
-X-UI-Message-Type: mail
-X-Priority: 3
-X-Provags-ID: V03:K1:s+a4a7dJl6sfE8qr3afXfh3rFMEB0yoGDcQKLuHS4QzYWvUvvC45GFgO8lF9qXw9R52Wk
- DtakmHS+HD6cGoa1Zil3uW/U+yFS9kxTAT+z6AMI2xcYorqC2HXtzYuOCqJCgtLpQ+XE0cJjSFZx
- jxGxAyxNxltq5fYSEegUZWLgP9jut/anC9MQ4QvGWdC7Fx2DqQGzPbELk6qKjHDVZ/m5suQOG5WX
- iSa5xQ1TVnlfnQDl3zDcjq+ZYocRCeCF/YEHBWcp/6xTs4r2KnkcTO/1Z2Mnufc+NBr+EgqeLN3I
- Vw=
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FxwUSbP1mjI=:ttSQgY8yWxDnU00gqYZD9w
- Z/qDxX2NghmiDYfDQ5KlK2CvVPv511mt50baxcV9OWViPRqrVksHRa4Q70leW/35miqZsjM4V
- IO6h92zZspcakoDMbQBjPkuMoyi+5LQ/QFBqRCLiWwjAvFd059HIdZ3wIqx4Ym54NMmsqjccz
- GSjwDTLDSlPZZ31m1rM3TpUiUEHmvR2WgipwWqz1AAq7WXhaIEH9QsZ2JnZLEEbOhxXoPsI/Z
- TRcWMQZ1A9GV15KtQDIO2i/Dq3pFNOn6hQhy7q9DtWpXhyRvveQF9KRDJYqc0qTjBpvzvMKr7
- cwEg2rxqBaJWgiTbO8eTHZQs26rh5cUZDyt0F7+vYHaCPFuefMRRBB057XIJ51LSUel/IEcBx
- jKL0kBgE2bzG14g6AuFmvgYvmWEVN4O/y2NQMUrsTNo+oCPAkE4kNJZRWZcUmma+gyoOQcDkF
- PF2HL5TN/+tF8l4QCRCJegf1NBi1AFsXmHuAdCOMo4mEr8RGOKC4Z9Q1zFeTTDPSLLcCl+zEE
- Ii91uM5UaMUTvml0hGGBCxEsqbJsfJ8v3jTJ9teKmcwELpC6kt7ciWfOUlIPV4vD2eQdFtfwk
- 1oipkVsSHlw6p58a4q/xNJukuLHryikdXoZi+l8M+576WxE3K6Ngz4VHUmx0HOrdPsQ3RuO6H
- UQHfIQ/HTJp3cXIfVqtRO2Xhoda3GGGLYRUb8PYIOqNcBnvhX6Jze8vfjXKlOuNpMwLk=
+ <trinity-d6be65d8-9086-42bc-b993-238b731cdf60-1598531519064@3c-app-gmx-bap26>
+From:   Matthias Brugger <matthias.bgg@gmail.com>
+Message-ID: <d54f5d47-63aa-d07e-3875-6acce69073f3@gmail.com>
+Date:   Thu, 27 Aug 2020 14:54:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
+MIME-Version: 1.0
+In-Reply-To: <trinity-d6be65d8-9086-42bc-b993-238b731cdf60-1598531519064@3c-app-gmx-bap26>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tested full series on bananapi r2 (mt7623/mt2701, 5.9-rc1 + hdmi-patches), works so far fbcon+x without issues
 
-Tested-by: Frank Wunderlich <frank-w@public-files.de>
 
-regards Frank
+On 27/08/2020 14:31, Frank Wunderlich wrote:
+> Tested full series on bananapi r2 (mt7623/mt2701, 5.9-rc1 + hdmi-patches), works so far fbcon+x without issues
+> 
+> Tested-by: Frank Wunderlich <frank-w@public-files.de>
+> 
+
+Thanks for testing.
+
+Robin this is especially relevant for:
+[PATCH 09/18] iommu/mediatek-v1: Add IOMMU_DOMAIN_DMA support
+
+Regards,
+Matthias
