@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80B9C25422D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 11:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA7A3254217
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Aug 2020 11:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728284AbgH0J0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 05:26:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38594 "EHLO
+        id S1728605AbgH0JZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Aug 2020 05:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728584AbgH0JZP (ORCPT
+        with ESMTP id S1728238AbgH0JZT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 05:25:15 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CBCC06121B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 02:25:14 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id z9so4469753wmk.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 02:25:14 -0700 (PDT)
+        Thu, 27 Aug 2020 05:25:19 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C03FEC061234
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 02:25:15 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id o21so4473948wmc.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 02:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WuGQ7x3HV2UIS0keqFLnckrhb9rx8hQfucm7+tXVecY=;
-        b=Uv80lNirYdYtow/WgPULTxu46GIn8sRko00tIPzFQNeg2+7EkZsorymB2+0K+xbD+6
-         a7HaEnxeZeg1EsD1txk+d//8tYERRq4c3iVnR8N22hOkv+id/Y+VtKHG/k5cfwrERGji
-         TGGgnt+qp2jzj5cKWIFoMCs2CIDZWrSXUv7zF2sVDRgBAODxno8P6h+qIjFjXCwOVpTL
-         QHJDM1dqzzZPNW9trbJAS4oa2y2qNl7znR1P7rmx6TE7c6W6c8FPEAJH9glXBrnLB49z
-         CbzmEfztI4Jr0RJihCbQfZJdBz3AMqoeVj4DaSlYOftZa9uIh6tHgwAfMK2lZulGEA3L
-         S9AA==
+        bh=OGj1U+RHEgRBo72Z19HJA/GgC9Z8W3lKprGNOAt6O6Y=;
+        b=cv41kRwcoHdV3sWpRs7mbvUjJRVliv/pz4A/l0BMxj2coUR0fsCcb99/qXgJ1rLRfc
+         spDcdNghukbbUcGVCIS+FWZbMgLtoe3bfOjJMkgH/1X94cXUiqqBXYG6wx/sVf8SGs0G
+         AxLPdokqciOf2YJguunK9y4a6EovAvpAIMJZVjL29IvjCICbsNngK10o37zVqvuXpDMh
+         TCHocPyVEJn21Po4p9Yo3JJrtE8Mqe04O4P4vBZaSIUTpdsCOopVvwmGLlxNjkC9PiTP
+         iGZWmJs1ecDRV4FV4+Pyr21lKPRZYOGvwAAsoAgxnuJ/VItPqBj1o1B6OIqqyntRoULi
+         dhaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WuGQ7x3HV2UIS0keqFLnckrhb9rx8hQfucm7+tXVecY=;
-        b=oEZo3N273wQ2K1w7BNHRpcpkDFSfRz498GolMXjoYFfECvC4tRJmuI91jg3x0coGFs
-         yVtub35nkg+Pt2m+lh959XI98ZV2FKRuYPC+rtURog7GYvUd8Ee9YhKo2cfhiMQz2r/l
-         8D1NVyxKGLQHTs55IpFwov9mv5Z8as4Y5X0ule2EGN0Ei5vvxzovI9IM2veInUE2xGjD
-         3k4x3a7tDV9gJQ4IQE2XycWqkR63cfrKWcMumINTAh5MGWrQISTkZ2ALLPiTl9aKf3Ai
-         gMaDBJMlyU2mRvbYK1yy3o9R1jm63A5WA+AQyORm+rPKTVIIs/ybF2ryYmGzRFjOVfPs
-         vQog==
-X-Gm-Message-State: AOAM530nbKBf7kI9xZU8FSAd04i0czD20GRc9au9U8sGZ47/+m6Cm06Y
-        vsdlgGlaqegF2izaH9Ja9iAEZA==
-X-Google-Smtp-Source: ABdhPJwV8Cd18RjbvLfbtnRqHESJsPzZ60KvqrOmN1b+LtxA8lit8wOuHqgDtwZsvsdo5AWebu17yw==
-X-Received: by 2002:a05:600c:22c8:: with SMTP id 8mr10182323wmg.143.1598520312867;
-        Thu, 27 Aug 2020 02:25:12 -0700 (PDT)
+        bh=OGj1U+RHEgRBo72Z19HJA/GgC9Z8W3lKprGNOAt6O6Y=;
+        b=CtnWBJh/kSUAvc6mw9/Vf5+kI5y/VP8+FuPT0THqvdQ5cgScwWUp7MQ5s5i+plmhXN
+         CjDluBSW8jd3fhvAMgYuHuUOyz6ngSEtk7wcCqshHqb0WbUoGc9jBxv/KCvLK3oN89vX
+         kee34U/4Qgi1J3H+vWmWK8fyd+ayGjLTVt3KCozRmEfdJbybXNh4/saIfi2RDZaSRNqJ
+         9AToArbgy1hVoXIQ18m3LfrftQ0fPd8KAJ1ug6nCD6yn3uqbHm2ptZ/InoOOs7mj4448
+         hIn3DeuCwg4uF/32+VqoYtyFIdGvTD+v7J9h/vp8FYZ/7H+L9VkxxWVUxEuozLggogoG
+         5e1A==
+X-Gm-Message-State: AOAM533c8QXYY7hNZqfutsJ3fYi3assdlu7rFJdv9xZ3TUnFIgKY5fnQ
+        VyRrnVOQm8z3GMN4d//0wkYIcjKm99JeiH9i
+X-Google-Smtp-Source: ABdhPJw2zK/hE/ZHif/IfxVKntH0dfkmFqbVbtqhH2TIXKyoVR3Cs0kqEMJ/xYzP3kFX7ZE0+heEtQ==
+X-Received: by 2002:a05:600c:21d6:: with SMTP id x22mr10386181wmj.112.1598520314503;
+        Thu, 27 Aug 2020 02:25:14 -0700 (PDT)
 Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id z203sm4357330wmc.31.2020.08.27.02.25.10
+        by smtp.gmail.com with ESMTPSA id z203sm4357330wmc.31.2020.08.27.02.25.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2020 02:25:12 -0700 (PDT)
+        Thu, 27 Aug 2020 02:25:14 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
         Vikash Garodia <vgarodia@codeaurora.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 08/13] venus: hfi_plat_v6: Populate capabilities for v6
-Date:   Thu, 27 Aug 2020 12:24:12 +0300
-Message-Id: <20200827092417.16040-9-stanimir.varbanov@linaro.org>
+Subject: [PATCH 09/13] venus: hfi_plat: Add hfi platform buffers ops
+Date:   Thu, 27 Aug 2020 12:24:13 +0300
+Message-Id: <20200827092417.16040-10-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200827092417.16040-1-stanimir.varbanov@linaro.org>
 References: <20200827092417.16040-1-stanimir.varbanov@linaro.org>
@@ -64,385 +64,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new hfi platform file with capabilities of hfi v6.
+From Venus v6 and beyond the buffer size and count have to be
+calculated in the v4l2 driver instead of getting them from
+firmware.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/Makefile    |   1 +
- .../media/platform/qcom/venus/hfi_platform.c  |   2 +
- .../media/platform/qcom/venus/hfi_platform.h  |   1 +
- .../platform/qcom/venus/hfi_platform_v6.c     | 325 ++++++++++++++++++
- 4 files changed, 329 insertions(+)
- create mode 100644 drivers/media/platform/qcom/venus/hfi_platform_v6.c
+ .../media/platform/qcom/venus/hfi_plat_bufs.h | 35 +++++++++++++++++++
+ .../media/platform/qcom/venus/hfi_platform.h  |  3 ++
+ 2 files changed, 38 insertions(+)
+ create mode 100644 drivers/media/platform/qcom/venus/hfi_plat_bufs.h
 
-diff --git a/drivers/media/platform/qcom/venus/Makefile b/drivers/media/platform/qcom/venus/Makefile
-index 09ebf4671692..a5d2da537c51 100644
---- a/drivers/media/platform/qcom/venus/Makefile
-+++ b/drivers/media/platform/qcom/venus/Makefile
-@@ -5,6 +5,7 @@ venus-core-objs += core.o helpers.o firmware.o \
- 		   hfi_venus.o hfi_msgs.o hfi_cmds.o hfi.o \
- 		   hfi_parser.o pm_helpers.o dbgfs.o \
- 		   hfi_platform.o hfi_platform_v4.o \
-+		   hfi_platform_v6.o \
- 
- venus-dec-objs += vdec.o vdec_ctrls.o
- venus-enc-objs += venc.o venc_ctrls.o
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-index 06f46900cae8..8f47804e973f 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-@@ -9,6 +9,8 @@ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
- 	switch (version) {
- 	case HFI_VERSION_4XX:
- 		return &hfi_plat_v4;
-+	case HFI_VERSION_6XX:
-+		return &hfi_plat_v6;
- 	default:
- 		break;
- 	}
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-index f2a6512b3950..f5f019282eab 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.h
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-@@ -52,6 +52,7 @@ struct hfi_platform {
- };
- 
- extern const struct hfi_platform hfi_plat_v4;
-+extern const struct hfi_platform hfi_plat_v6;
- 
- const struct hfi_platform *hfi_platform_get(enum hfi_version version);
- unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec,
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
+diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs.h b/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
 new file mode 100644
-index 000000000000..e76d69a66b6f
+index 000000000000..6dfecaf5b0bd
 --- /dev/null
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-@@ -0,0 +1,325 @@
-+// SPDX-License-Identifier: GPL-2.0-only
++++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
 + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
 + */
-+#include "hfi_platform.h"
 +
-+static const struct hfi_plat_caps caps[] = {
-+{
-+	.codec = HFI_VIDEO_CODEC_H264,
-+	.domain = VIDC_SESSION_TYPE_DEC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 5760, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 5760, 1},
-+	/* ((5760 * 2880) / 256) */
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 36, 64800, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 200000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 65536, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 65536, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 36, 1958400, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-+	.num_caps = 9,
-+	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_52},
-+	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_52},
-+	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_52},
-+	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_52},
-+	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_52},
-+	.num_pl = 5,
-+	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-+	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-+	.num_fmts = 4,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_HEVC,
-+	.domain = VIDC_SESSION_TYPE_DEC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 2073600, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
-+	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 3, 1},
-+	.num_caps = 10,
-+	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-+	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-+	.num_pl = 2,
-+	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[1] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-+	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-+	.fmts[4] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-+	.fmts[5] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_P010},
-+	.fmts[6] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_YUV420_TP10},
-+	.num_fmts = 7,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_VP8,
-+	.domain = VIDC_SESSION_TYPE_DEC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 2073600, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
-+	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 3, 1},
-+	.num_caps = 10,
-+	.pl[0] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_0},
-+	.pl[1] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_1},
-+	.pl[2] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_2},
-+	.pl[3] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_3},
-+	.num_pl = 4,
-+	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-+	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-+	.num_fmts = 4,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_VP9,
-+	.domain = VIDC_SESSION_TYPE_DEC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 2073600, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
-+	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 3, 1},
-+	.num_caps = 10,
-+	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
-+	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
-+	.num_pl = 2,
-+	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[1] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-+	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-+	.fmts[4] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-+	.fmts[5] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_P010},
-+	.fmts[6] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_YUV420_TP10},
-+	.num_fmts = 7,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_MPEG2,
-+	.domain = VIDC_SESSION_TYPE_DEC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 1920, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 1920, 1},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 8160, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 40000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 4096, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 4096, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 244800, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 30, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 2, 1},
-+	.caps[9] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 1, 1},
-+	.num_caps = 10,
-+	.pl[0] = {HFI_MPEG2_PROFILE_SIMPLE, HFI_MPEG2_LEVEL_H14},
-+	.pl[1] = {HFI_MPEG2_PROFILE_MAIN, HFI_MPEG2_LEVEL_H14},
-+	.num_pl = 2,
-+	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-+	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-+	.num_fmts = 4,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_H264,
-+	.domain = VIDC_SESSION_TYPE_ENC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 8192, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 1036800, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 3, 1},
-+	.caps[9] = {HFI_CAPABILITY_PEAKBITRATE, 32000, 160000000, 1},
-+	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 5, 1},
-+	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-+	.caps[12] = {HFI_CAPABILITY_LCU_SIZE, 16, 16, 1},
-+	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 1, 1},
-+	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 5, 1},
-+	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 51, 1},
-+	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 51, 1},
-+	.caps[17] = {HFI_CAPABILITY_B_FRAME_QP, 0, 51, 1},
-+	.caps[18] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
-+	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
-+	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
-+	.num_caps = 21,
-+	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_52},
-+	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_52},
-+	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_52},
-+	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_52},
-+	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_52},
-+	.num_pl = 5,
-+	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-+	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-+	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
-+	.num_fmts = 4,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_HEVC,
-+	.domain = VIDC_SESSION_TYPE_ENC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 8192, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 1036800, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 480, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 3, 1},
-+	.caps[9] = {HFI_CAPABILITY_PEAKBITRATE, 32000, 160000000, 1},
-+	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 5, 1},
-+	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 4, 1},
-+	.caps[12] = {HFI_CAPABILITY_LCU_SIZE, 32, 32, 1},
-+	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 1, 1},
-+	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 5, 1},
-+	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 63, 1},
-+	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 63, 1},
-+	.caps[17] = {HFI_CAPABILITY_B_FRAME_QP, 0, 63, 1},
-+	.caps[18] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
-+	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
-+	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
-+	.caps[21] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
-+	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
-+	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.num_caps = 24,
-+	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-+	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-+	.num_pl = 2,
-+	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-+	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-+	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
-+	.num_fmts = 4,
-+}, {
-+	.codec = HFI_VIDEO_CODEC_VP8,
-+	.domain = VIDC_SESSION_TYPE_ENC,
-+	.cap_bufs_mode_dynamic = true,
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
-+	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
-+	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-+	.caps[5] = {HFI_CAPABILITY_SCALE_Y, 8192, 65536, 1},
-+	.caps[6] = {HFI_CAPABILITY_MBS_PER_SECOND, 1, 1036800, 1},
-+	.caps[7] = {HFI_CAPABILITY_FRAMERATE, 1, 240, 1},
-+	.caps[8] = {HFI_CAPABILITY_MAX_VIDEOCORES, 1, 3, 1},
-+	.caps[9] = {HFI_CAPABILITY_PEAKBITRATE, 32000, 160000000, 1},
-+	.caps[10] = {HFI_CAPABILITY_HIER_P_NUM_ENH_LAYERS, 0, 3, 1},
-+	.caps[11] = {HFI_CAPABILITY_ENC_LTR_COUNT, 0, 2, 1},
-+	.caps[12] = {HFI_CAPABILITY_LCU_SIZE, 16, 16, 1},
-+	.caps[13] = {HFI_CAPABILITY_BFRAME, 0, 1, 1},
-+	.caps[14] = {HFI_CAPABILITY_HIER_P_HYBRID_NUM_ENH_LAYERS, 0, 5, 1},
-+	.caps[15] = {HFI_CAPABILITY_I_FRAME_QP, 0, 127, 1},
-+	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
-+	.caps[17] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
-+	.caps[18] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
-+	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
-+	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[21] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
-+	.caps[22] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
-+	.num_caps = 23,
-+	.pl[0] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_0},
-+	.pl[1] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_1},
-+	.pl[2] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_2},
-+	.pl[3] = {HFI_VPX_PROFILE_MAIN, HFI_VPX_LEVEL_VERSION_3},
-+	.num_pl = 4,
-+	.fmts[0] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12},
-+	.fmts[1] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-+	.fmts[2] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_YUV420_TP10_UBWC},
-+	.fmts[3] = {HFI_BUFFER_INPUT, HFI_COLOR_FORMAT_P010},
-+	.num_fmts = 4,
-+} };
++#ifndef __HFI_PLATFORM_BUFFERS_H__
++#define __HFI_PLATFORM_BUFFERS_H__
 +
-+static const struct hfi_plat_caps *get_capabilities(unsigned int *entries)
-+{
-+	*entries = ARRAY_SIZE(caps);
-+	return caps;
-+}
++#include <linux/types.h>
++#include "hfi_helper.h"
 +
-+static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-+{
-+	*enc_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-+		      HFI_VIDEO_CODEC_VP8;
-+	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-+		      HFI_VIDEO_CODEC_VP8 | HFI_VIDEO_CODEC_VP9 |
-+		      HFI_VIDEO_CODEC_MPEG2;
-+	*count = 8;
-+}
-+
-+static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
-+	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_ENC, 675, 25 },
-+	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_ENC, 675, 25 },
-+	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_ENC, 675, 60 },
-+	{ V4L2_PIX_FMT_MPEG2, VIDC_SESSION_TYPE_DEC, 200, 25 },
-+	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 200, 25 },
-+	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 200, 25 },
-+	{ V4L2_PIX_FMT_VP8, VIDC_SESSION_TYPE_DEC, 200, 60 },
-+	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 200, 60 },
++struct hfi_plat_buffers_params {
++	u32 width;
++	u32 height;
++	u32 codec;
++	u32 hfi_color_fmt;
++	enum hfi_version version;
++	u32 num_vpp_pipes;
++	union {
++		struct {
++			u32 max_mbs_per_frame;
++			u32 buffer_size_limit;
++			bool is_secondary_output;
++			bool is_interlaced;
++		} dec;
++		struct {
++			u32 work_mode;
++			u32 rc_type;
++			u32 num_b_frames;
++			bool is_tenbit;
++		} enc;
++	};
 +};
 +
-+static const struct hfi_platform_codec_freq_data *
-+get_codec_freq_data(u32 session_type, u32 pixfmt)
-+{
-+	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
-+	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
-+	const struct hfi_platform_codec_freq_data *found = NULL;
-+
-+	for (i = 0; i < data_size; i++) {
-+		if (data[i].pixfmt == pixfmt && data[i].session_type == session_type) {
-+			found = &data[i];
-+			break;
-+		}
-+	}
-+
-+	return found;
-+}
-+
-+static unsigned long codec_vpp_freq(u32 session_type, u32 codec)
-+{
-+	const struct hfi_platform_codec_freq_data *data;
-+
-+	data = get_codec_freq_data(session_type, codec);
-+	if (data)
-+		return data->vpp_freq;
-+
-+	return 0;
-+}
-+
-+static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
-+{
-+	const struct hfi_platform_codec_freq_data *data;
-+
-+	data = get_codec_freq_data(session_type, codec);
-+	if (data)
-+		return data->vsp_freq;
-+
-+	return 0;
-+}
-+
-+static u8 num_vpp_pipes(void)
-+{
-+	return 4;
-+}
-+
-+const struct hfi_platform hfi_plat_v6 = {
-+	.codec_vpp_freq = codec_vpp_freq,
-+	.codec_vsp_freq = codec_vsp_freq,
-+	.codecs = get_codecs,
-+	.capabilities = get_capabilities,
-+	.num_vpp_pipes = num_vpp_pipes,
-+};
++#endif
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
+index f5f019282eab..692152f2075d 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform.h
++++ b/drivers/media/platform/qcom/venus/hfi_platform.h
+@@ -10,6 +10,7 @@
+ #include <linux/videodev2.h>
+ 
+ #include "hfi.h"
++#include "hfi_plat_bufs.h"
+ #include "hfi_helper.h"
+ 
+ #define MAX_PLANES		4
+@@ -49,6 +50,8 @@ struct hfi_platform {
+ 	void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
+ 	const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
+ 	u8 (*num_vpp_pipes)(void);
++	int (*bufreq)(struct hfi_plat_buffers_params *params, u32 session_type,
++		      u32 buftype, struct hfi_buffer_requirements *bufreq);
+ };
+ 
+ extern const struct hfi_platform hfi_plat_v4;
 -- 
 2.17.1
 
