@@ -2,108 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97ED3256355
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 01:11:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D90F25638E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 01:57:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726550AbgH1XLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Aug 2020 19:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52380 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726536AbgH1XLc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Aug 2020 19:11:32 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B1AC061264
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Aug 2020 16:11:31 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id d22so1391120pfn.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Aug 2020 16:11:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eTKdXiRCKS6tUmMOhEk7xSRiz3K0QjMIqXKfgOUTwVI=;
-        b=DTx98g6eHjR9eWZ8L8pNZvzNzyyoyGJGoCSVzxnwe383QCEf6CiPXBYd7KGVxtcyWM
-         imHYSMTzYzDKbP9GdybbwuCc5YWmZJB/nMyEkOnXnO1PMF4GDNLmCJ3JJQnnthHL+c6q
-         B4VizqndaVWBqtihAlgf8low/9/yvPUV9bIiU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eTKdXiRCKS6tUmMOhEk7xSRiz3K0QjMIqXKfgOUTwVI=;
-        b=a1rTzYNKl44t/d2chInvtGMuJ2LXDLS4nKgrQ6hUwVaXrklAqqJyptjFUgHxkzfKF4
-         W9VVDcSBLCI+NBpvBg7gQk0HqNEGmOpBOKv3+5zdNFqyBS6gDEZlITuaw6+mlkr5z3ju
-         YZocsjQWimaDXbsy1KyUAOUUKyd26A9cJD95oYjdKDyhth0tvi8jak1lGwzodduCb4mA
-         o67M4TuZvd7JLhreIuqdFKzUk36obOD3FEmNMfeTf3usNl0mXs+Kkv/nXmcD9sxD5M5I
-         PkGWwzfNJ9sxufn75rG7INoTzJb76l3sjjW+BNIjLzFcXybgcqHV41CEUZbByYJhtYJ1
-         AQQg==
-X-Gm-Message-State: AOAM533EQuMXFp6MT1yMXmB08PjHmsFExDDlFdADWokB93klvbgcUJPq
-        /V1C0bBZUeU1LfxRVRKoQipK6UdCl2c6sA==
-X-Google-Smtp-Source: ABdhPJwBL+23VHA5eA7FtXGXUHHP1RmkGEhE/23xKhy3XDIjL6gpkyky1pcz4t/1fQhFenETRFPsfQ==
-X-Received: by 2002:a63:1a66:: with SMTP id a38mr718626pgm.253.1598656291123;
-        Fri, 28 Aug 2020 16:11:31 -0700 (PDT)
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com. [209.85.215.172])
-        by smtp.gmail.com with ESMTPSA id e65sm334036pjk.45.2020.08.28.16.11.30
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Aug 2020 16:11:30 -0700 (PDT)
-Received: by mail-pg1-f172.google.com with SMTP id g29so1140617pgl.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Aug 2020 16:11:30 -0700 (PDT)
-X-Received: by 2002:a1f:d6c4:: with SMTP id n187mr874772vkg.65.1598655985575;
- Fri, 28 Aug 2020 16:06:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200826110454.1811352-1-cychiang@chromium.org> <20200826110454.1811352-3-cychiang@chromium.org>
-In-Reply-To: <20200826110454.1811352-3-cychiang@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 28 Aug 2020 16:06:14 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XaCt6V+VXfk8T+2mS4d5sKQzMC12AcH9a=MNkgguvmjQ@mail.gmail.com>
-Message-ID: <CAD=FV=XaCt6V+VXfk8T+2mS4d5sKQzMC12AcH9a=MNkgguvmjQ@mail.gmail.com>
-Subject: Re: [PATCH v6 2/2] ASoC: qcom: sc7180: Add machine driver for sound
- card registration
-To:     Cheng-Yi Chiang <cychiang@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Dylan Reid <dgreid@chromium.org>, tzungbi@chromium.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        Ajit Pandey <ajitp@codeaurora.org>,
-        Tzung-Bi Shih <tzungbi@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726821AbgH1X5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Aug 2020 19:57:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:27248 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726800AbgH1X5H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 Aug 2020 19:57:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598659026; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rM/B9BakHyUJZNVQSwabD9JaPVxM+jNpDiVkIVk/tQk=; b=pehB+AZUoUyTIp6h0h5Lai01JTNYvKfbG8zWYxiTaHvq9/YpIFrD4MB02gaXYbjGzfmxwyGM
+ kBLCWiNPP1Fl+6DyYYpiQ5+ceZiJa2010LcIQSKnb8DixPense8AzGy8Qr7gaYunsH8DC2V+
+ t3Or7d4ItpZtexP7osk/G+7lelI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f4999cbae54fd8e987d49d6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 28 Aug 2020 23:56:59
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7D4A9C43387; Fri, 28 Aug 2020 23:56:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: collinsd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C7A40C433CA;
+        Fri, 28 Aug 2020 23:56:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C7A40C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=collinsd@codeaurora.org
+From:   David Collins <collinsd@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     David Collins <collinsd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] spmi: prefix spmi bus device names with "spmi"
+Date:   Fri, 28 Aug 2020 16:55:59 -0700
+Message-Id: <1598658959-31307-1-git-send-email-collinsd@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Change the format of spmi bus device names from:
+  <spmi_bus_number>-<spmi_device_sid>
+  Example: 0-01
+to this:
+  spmi<spmi_bus_number>-<spmi_device_sid>
+  Example: spmi0-01
 
-On Wed, Aug 26, 2020 at 4:05 AM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
->
-> +config SND_SOC_SC7180
-> +       tristate "SoC Machine driver for SC7180 boards"
-> +       depends on SND_SOC_QCOM
-> +       select SND_SOC_QCOM_COMMON
-> +       select SND_SOC_LPASS_SC7180
-> +       select SND_SOC_MAX98357A
-> +       select SND_SOC_RT5682
+This helps to disambiguate SPMI device regmaps from I2C ones
+at /sys/kernel/debug/regmap since I2C devices use a very
+similar naming scheme: 0-0000.
 
-I haven't done any significant testing / review of your patch (I'm
-mostly sound-clueless), but I believe that the above needs to be
-"select SND_SOC_RT5682_I2C" atop the current top of the sound tree.
-When I fix that I can confirm that I see the rt5682 probe on
-sc7180-trogdor with Rob Clark's dts patch.
+Signed-off-by: David Collins <collinsd@codeaurora.org>
+---
+ drivers/spmi/spmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
--Doug
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index c16b60f..ec94439 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2012-2015, 2020, The Linux Foundation. All rights reserved.
+  */
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+@@ -62,7 +62,7 @@ int spmi_device_add(struct spmi_device *sdev)
+ 	struct spmi_controller *ctrl = sdev->ctrl;
+ 	int err;
+ 
+-	dev_set_name(&sdev->dev, "%d-%02x", ctrl->nr, sdev->usid);
++	dev_set_name(&sdev->dev, "spmi%d-%02x", ctrl->nr, sdev->usid);
+ 
+ 	err = device_add(&sdev->dev);
+ 	if (err < 0) {
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
