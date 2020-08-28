@@ -2,158 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E13E32551A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Aug 2020 01:35:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 038802553F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Aug 2020 07:09:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728046AbgH0Xe5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Aug 2020 19:34:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58604 "EHLO
+        id S1726566AbgH1FJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Aug 2020 01:09:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727910AbgH0Xey (ORCPT
+        with ESMTP id S1726344AbgH1FJk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Aug 2020 19:34:54 -0400
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D42C061233
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 16:34:54 -0700 (PDT)
-Received: by mail-il1-x143.google.com with SMTP id j9so6380757ilc.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 16:34:54 -0700 (PDT)
+        Fri, 28 Aug 2020 01:09:40 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2932C061232
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 22:09:40 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id g6so1461pjl.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Aug 2020 22:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WedloSq7WEmmdLIoMis0OnTbQ3vwipQyHuMeYXqSrtc=;
-        b=z5afeT1uAO8r4nUnyvdyA9XOFk/fx4rNEV7OzYIxSzIyRPXSSuP0kLR0uFLb5b32/u
-         2F9MWfvV9WNZ+AXIi+QLZ8p0NAvNTBNro8XHBAkvaJyY3ufO9Q62GJ4oCd3Mw0z1agKr
-         qFAx/HdJ+EmG1djyMZ9CSGcKQmWFu/zVKz5vJDxg6Nx++SMMng1dGMX9Fmd/wZDTKzHU
-         hK7p1r057Z3QOjx4Tgjjmk5k/beu18E/9gkjDnfpmsN6+7UO8xqzHsjZBJhd37zZ1RdM
-         prBipf1AI2muUbFcyfU3La5FJDcrT8wuyB+danzKbVnftQC2AzrWmBaIjshroZB9Cb96
-         Llhg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=M4xpwJ3VfAAdK51sDF+C1DZUS1S/ZC/8+tu65yMzW6Q=;
+        b=K2gzEaccXAzpM1PQKdX7+cdYjofnz8Ui+aHuJMoA3db3qIRpYO7uXsRRS2oeRd1+Kg
+         tyDH5wJu5u4A79RbPTcSy7CaDVTjECOl6uhJUMAfizV8VWLo56q3Bq7RpYLRWrNh9Vu6
+         k+/CVMNXc0GddYXwBt3TybTzrKC2/i8rzDXyn5SS5VnXbShluYzlb5nm+obLPEKGpRly
+         kne1v0GyDwyIen+xVKM1xW5Savv5e/jTs99enzM9JIoY/jtBEIK4U4YMAyR24sDrdk4O
+         0TRxYJ84UcYwYsShEdMcbphU+/6shloh+B05VrYkfgdJURWwli/5ZQYnq87LI5HTnSgf
+         J1Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WedloSq7WEmmdLIoMis0OnTbQ3vwipQyHuMeYXqSrtc=;
-        b=lAkAys4vRvgZD13nn56FwcdKb+NAEhVxOvPzrrtPSW7UWPl6CrDVokBxzHXL/KQk4Y
-         FUqDRkoa2WVYot+eLJxgUgPW1+RPHHs4DXqP3e3pptqW72sSRtS8s+BTGqCo7giWDSPY
-         QNrEH+1xd1NhbtxoWTHxwi0yXjJsn9aYdYMy8qjAv4TUEiQMbyL1ePYMVhTbl3gIvyXP
-         aGXl/miSe9ZDWMqFZaf/kEReaXNUIoYFWrOVOlzsj+ujONuSrQ/XAco+VX839/yz0pdx
-         ahV+gHYon6eXeNcQ8U2MDOi1kNN5Vh8m0d/Gp/vCGPXyx0E5jZ6W6eSrOeDVEdOXsi0g
-         NLug==
-X-Gm-Message-State: AOAM533uoBo1LwDeQsVB13cRxhkVHOF5aWJ+u1e865ave+Rz9XQd8Bh6
-        YjOifGKLoOFq0nsudKAiTGdXPnR9yqIqt4LvxAh6Eg==
-X-Google-Smtp-Source: ABdhPJw0W2KNMSiVDCp6qP+D3bxqQi5szrf3hiteZz0kvkkYuvF0+Qn7lDLtjb0Ko+kJMcKtvMnZ3YU+iAfoJmlGVTk=
-X-Received: by 2002:a92:4f:: with SMTP id 76mr18588367ila.11.1598571293162;
- Thu, 27 Aug 2020 16:34:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20191221150402.13868-1-murphyt7@tcd.ie> <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
- <20200529124523.GA11817@infradead.org> <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
- <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com> <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
- <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com> <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
- <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
-In-Reply-To: <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
-From:   Tom Murphy <murphyt7@tcd.ie>
-Date:   Fri, 28 Aug 2020 00:34:41 +0100
-Message-ID: <CALQxJuuS8KKUX_eWWSE81gsq5ePAETB-FoqRUSWFfqgr+B13gg@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Convert the intel iommu driver to the dma-iommu api
-To:     Logan Gunthorpe <logang@deltatee.com>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        iommu@lists.linux-foundation.org, kvm@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=M4xpwJ3VfAAdK51sDF+C1DZUS1S/ZC/8+tu65yMzW6Q=;
+        b=qYqgkV1yvmcfi+gXp0eyV4bsFlxJewjMlOp6hKkezUqrL3WgGO+Jcw00QC68bjP+rm
+         9jcqaT0l6uwcmW8pZTiUZ9iP1z/hLIptJ74NXneo4ZKTnAfb/sPlgHPJkHCQcaHqC8x7
+         J70z+yhHW9MYAUY+E0IGVywtpqATMjIbsZ3F/6NIzarqAB3X4PVW/zu92glK2GfKjkeE
+         HilnC4+JvjlT7ufuFP9poyYLq2uhwTlkuu+sA5ka6T8YdvlWw4cHqZpfVOvaDVpc7RWW
+         E2gjq1Gr7ZmzMZAUvVmf/xAjMq4TzBtlzwL+UrA0ECLGTrTYb7SHhvgTaFXrh+/j00m2
+         ZgKA==
+X-Gm-Message-State: AOAM532TzqhIlTDs68R+2IxXtRJ2UnqYJr39hm6nyFvR9SFHKzT7MNIu
+        yN+XOPkEwx7ejC9zODnpBpxk4w==
+X-Google-Smtp-Source: ABdhPJzXqVArIpytkRgvLkDrGcAXVpRBlXTIjtihwJUwu3AipIuRUMld0qG+k2M8oycHe8nx80H3jQ==
+X-Received: by 2002:a17:90a:4314:: with SMTP id q20mr131480pjg.49.1598591378247;
+        Thu, 27 Aug 2020 22:09:38 -0700 (PDT)
+Received: from localhost ([122.167.135.199])
+        by smtp.gmail.com with ESMTPSA id n17sm101436pgg.6.2020.08.27.22.09.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Aug 2020 22:09:37 -0700 (PDT)
+Date:   Fri, 28 Aug 2020 10:39:35 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>, arnd@arndb.de,
+        naresh.kamboju@linaro.org, vbadigan@codeaurora.org,
+        rnayak@codeaurora.org, Adrian Hunter <adrian.hunter@intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Julien Grall <julien.grall@arm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Will Deacon <will@kernel.org>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org,
-        Alex Williamson <alex.williamson@redhat.com>,
-        linux-mediatek@lists.infradead.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+Subject: Re: [PATCH] mmc: sdhci-msm: When dev_pm_opp_of_add_table() returns 0
+ it's not an error
+Message-ID: <20200828050935.m32njmxdrgbudw4r@vireshk-i7>
+References: <20200827083330.1.I669bb4dc3d92bd04e9a695f97904797dc8241b79@changeid>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200827083330.1.I669bb4dc3d92bd04e9a695f97904797dc8241b79@changeid>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Aug 2020 at 22:36, Logan Gunthorpe <logang@deltatee.com> wrote:
->
->
->
-> On 2020-08-23 6:04 p.m., Tom Murphy wrote:
-> > I have added a check for the sg_dma_len == 0 :
-> > """
-> >  } __sgt_iter(struct scatterlist *sgl, bool dma) {
-> >         struct sgt_iter s = { .sgp = sgl };
-> >
-> > +       if (sgl && sg_dma_len(sgl) == 0)
-> > +           s.sgp = NULL;
-> >
-> >         if (s.sgp) {
-> >             .....
-> > """
-> > at location [1].
-> > but it doens't fix the problem.
->
-> Based on my read of the code, it looks like we also need to change usage
-> of sgl->length... Something like the rough patch below, maybe?
->
-> Also, Tom, do you have an updated version of the patchset to convert the
-> Intel IOMMU to dma-iommu available? The last one I've found doesn't
-> apply cleanly (I'm assuming parts of it have been merged in slightly
-> modified forms).
->
+On 27-08-20, 08:33, Douglas Anderson wrote:
+> The commit d05a7238fe1c ("mmc: sdhci-msm: Unconditionally call
+> dev_pm_opp_of_remove_table()") works fine in the case where there is
+> no OPP table.  However, if there is an OPP table then
+> dev_pm_opp_of_add_table() will return 0.  Since 0 != -ENODEV then the
+> "if (ret != -ENODEV)" will evaluate to true and we'll fall into the
+> error case.  Oops.
+> 
+> Let's fix this.
+> 
+> Fixes: d05a7238fe1c ("mmc: sdhci-msm: Unconditionally call dev_pm_opp_of_remove_table()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+>  drivers/mmc/host/sdhci-msm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index b7e47107a31a..55101dba42bd 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2284,7 +2284,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  
+>  	/* OPP table is optional */
+>  	ret = dev_pm_opp_of_add_table(&pdev->dev);
+> -	if (ret != -ENODEV) {
+> +	if (ret && ret != -ENODEV) {
+>  		dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
+>  		goto opp_cleanup;
+>  	}
 
-I'll try and post one in the next 24hours
+Wow!
 
-> Thanks,
->
-> Logan
->
-> --
->
-> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
-> b/drivers/gpu/drm/i915/i915
-> index b7b59328cb76..9367ac801f0c 100644
-> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
-> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
-> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
->  } __sgt_iter(struct scatterlist *sgl, bool dma) {
->         struct sgt_iter s = { .sgp = sgl };
->
-> +       if (sgl && !sg_dma_len(s.sgp))
-> +               s.sgp = NULL;
-> +
->         if (s.sgp) {
->                 s.max = s.curr = s.sgp->offset;
-> -               s.max += s.sgp->length;
-> -               if (dma)
-> +
-> +               if (dma) {
-> +                       s.max += sg_dma_len(s.sgp);
->                         s.dma = sg_dma_address(s.sgp);
-> -               else
-> +               } else {
-> +                       s.max += s.sgp->length;
->                         s.pfn = page_to_pfn(sg_page(s.sgp));
-> +               }
->         }
->
->         return s;
+How many bugs did I introduce with a simple patch :(
+
+@Ulf, since this is material for 5.10 I was planning to resend the
+original patch itself with all the things fixed. Will you be able to
+rebase your tree? Or do you want to apply fixes separately ?
+
+-- 
+viresh
