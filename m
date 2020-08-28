@@ -2,81 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B138C255D55
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Aug 2020 17:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D0D8255E28
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Aug 2020 17:49:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726400AbgH1PGq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Aug 2020 11:06:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56914 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726321AbgH1PGp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Aug 2020 11:06:45 -0400
-Received: from localhost (unknown [122.171.38.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 634F32075B;
-        Fri, 28 Aug 2020 15:06:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598627205;
-        bh=Nr0kxkFZWse9WtVRoe34d4YlUnG8tQeAyhzLDFCwgCU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=yW2UZm+o4bnsSSNVxHlN4kqZfwWtrtVzR/9cee/m73r+xbWmTs6SZI9tN+9tQfKyE
-         4fHXSLUXvPOLj31wSOTjrimqLj/HombWrJWSsash4S1CAYHB1nT34VR0B52fQ4BhqB
-         aW1njn+YOPS97vku7as5eiY0HjzQf3LIIL5MpT8Q=
-Date:   Fri, 28 Aug 2020 20:36:41 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        id S1728219AbgH1PtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Aug 2020 11:49:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40096 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725894AbgH1PtP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 Aug 2020 11:49:15 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD42C061264
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Aug 2020 08:49:14 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id h19so1799550ljg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Aug 2020 08:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DATJ7eGMNLZCyNQeCZmAD8QoZWEBPYduaVIGDRd+5bc=;
+        b=nzknUlPzMEIXFNOmpAbizHT3DoDelUgK0gNjKN4NA28tF+mhCDf/obNn2844u6eUGX
+         aNot7EshiEXSmo5UIm6ANs5Mh9g4rDHT6KoDEtILrgIGcRrZrhPsFD1v+jIpvWbzwjlK
+         G4QakOu0thp0ddFdr+8CIXpkSqq3vYMvhqTTZLIKHm8sefuqUo9Na31PN2VilvVS/z2c
+         PalifO5pdSm9IEnmr440qwaNW/A4hRIX1zpJqBF8culOIruNvswChUt7qD6DuL+hZZNr
+         jxSkus74eluryEUOW6H2F5hrVi8xx0gJyrnKoImGkTJ64CwlWlQ5mnue74BSoqkeRVAc
+         /DEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DATJ7eGMNLZCyNQeCZmAD8QoZWEBPYduaVIGDRd+5bc=;
+        b=ELcw8A16vrpvQqI6Hu1XMkuOJLHMMYG1PBzyUZiZwMieE4t7wihsKQh24gfjl8kSUR
+         p5Yvv02z1ptseZGPFQxXh0aizSfUxQPBA5AS/yLhSZN/nT3encZXtrNDyd7gfLNaRCbY
+         TGD0HXhS0AaSmoAlyI2ZhxH0R589GLPrSKL3OF+RfD7qffmLklmoZLk3X02iHareuPlv
+         /FYlQX86VwhMqujm/kEt2jKiaC6jArFvTrnULrhe6aDV8LT2sROIWXhJ2XOuM+M3dW5u
+         HG+vbprwR+DmmXqLSd9MnG76A4v02she7XdPhAvnuRW2EkaYODseWVyU2GVHLcUlYWQA
+         WpnA==
+X-Gm-Message-State: AOAM533k6dt7g2paf6RFrKn4tfq6hzkSk294QcKjfifIWkfRcQjUATjN
+        KOjsKOqMTyk/3pMvCk0OCCcIng==
+X-Google-Smtp-Source: ABdhPJziUwmaraoePdxpXH3+GScZIfhka4CTJabY988lQZeK6M/194Z8ps7rwFVxsT6VoII+kzN8kA==
+X-Received: by 2002:a2e:9c96:: with SMTP id x22mr1228969lji.337.1598629753199;
+        Fri, 28 Aug 2020 08:49:13 -0700 (PDT)
+Received: from eriador.lan ([188.162.64.62])
+        by smtp.gmail.com with ESMTPSA id r16sm270215ljd.71.2020.08.28.08.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Aug 2020 08:49:12 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
         Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>
-Subject: Re: [PATCH v1 2/2] drm: bridge: add support for lontium LT9611UXC
- bridge
-Message-ID: <20200828150641.GZ2639@vkoul-mobl>
-References: <20200828120431.1636402-1-dmitry.baryshkov@linaro.org>
- <20200828120431.1636402-3-dmitry.baryshkov@linaro.org>
- <20200828141848.GX2639@vkoul-mobl>
- <d2afbd86-eb53-e273-6de6-dfae64624b37@linaro.org>
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Vinod Koul <vkoul@kernel.org>, Sam Ravnborg <sam@ravnborg.org>
+Subject: [PATCH v2 2/3] Add LT9611UXC DSI to HDMI bridge support
+Date:   Fri, 28 Aug 2020 18:49:03 +0300
+Message-Id: <20200828154906.1662611-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d2afbd86-eb53-e273-6de6-dfae64624b37@linaro.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28-08-20, 18:01, Dmitry Baryshkov wrote:
-> On 28/08/2020 17:18, Vinod Koul wrote:
-> > On 28-08-20, 15:04, Dmitry Baryshkov wrote:
-> > > +static int lt9611uxc_bridge_attach(struct drm_bridge *bridge,
-> > > +				enum drm_bridge_attach_flags flags)
-> > > +{
-> > > +	struct lt9611uxc *lt9611uxc = bridge_to_lt9611uxc(bridge);
-> > > +	int ret;
-> > > +
-> > > +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
-> > > +		dev_err(lt9611uxc->dev, "Fix bridge driver to make connector optional!");
-> > 
-> > Can we support both modes as I have done in lt9611, that way once the
-> > conversion is done we can drop the init part and support conversion.
-> > 
-> > I have patch for msm driver to set DRM_BRIDGE_ATTACH_NO_CONNECTOR, you
-> > can use that to test
-> 
-> Probably the message text is misleading. The driver as is does not work w/o
-> DRM_BRIDGE_ATTACH_NO_CONNECTOR. Do you plan to push that patch into upstream
-> tree?
+Hi,
 
-It causes regression in laptop so have removed it ;( I need to fix that
-first
-The patch is here though and works on rb3 and db410c.
-git.linaro.org/people/vinod.koul/kernel.git drm/no_connector
+This series adds support for Lontium LT9611UXC bridge chip which takes
+MIPI DSI as input and provides HDMI signal as output.
 
--- 
-~Vinod
+The chip can be found in Qualcomm RB5 platform [1], [2].
+
+[1] https://www.qualcomm.com/products/qualcomm-robotics-rb5-platform
+[2] https://www.thundercomm.com/app_en/product/1590131656070623
+
+Changes since v1:
+ - Fix whitespaces/indentation
+ - Support working without DRM_BRIDGE_ATTACH_NO_CONNECTOR
+
+
+
