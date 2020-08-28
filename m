@@ -2,45 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1E6F25557D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Aug 2020 09:43:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AD78255583
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Aug 2020 09:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbgH1HnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Aug 2020 03:43:05 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40076 "EHLO mail.kernel.org"
+        id S1728269AbgH1HoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Aug 2020 03:44:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40340 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726566AbgH1HnE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Aug 2020 03:43:04 -0400
+        id S1726566AbgH1HoB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 Aug 2020 03:44:01 -0400
 Received: from localhost.localdomain (unknown [122.171.38.130])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7EBA620776;
-        Fri, 28 Aug 2020 07:42:58 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3868820776;
+        Fri, 28 Aug 2020 07:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598600583;
-        bh=hwP7Z1Qw6TB+HuWMynMqgGLHide/4Ajq/hNm8rqV4M8=;
+        s=default; t=1598600640;
+        bh=v9mWH7zlHRqcHIGa1924zsThVWJeNyD5f15ay8z5SrA=;
         h=From:To:Cc:Subject:Date:From;
-        b=OlhVIskDIZNItaSs02q3XH8z3VGMmLh/fO8UGAfQdFl19Mx+30v3O2wvJOlp7Jbke
-         MSvZCRLWiTlIA+YT1VRrGbNK81UNEF1rf/RsYJbnpS5nQlwC+ojb1JUzSp5V3nk17P
-         vMkqbXiRtTVjFwZ6ofvhObQ/ha92Sq8TL7c89GiI=
+        b=LL2aSIH6DgkNiVVSR+8x/62AO6u1WvctR5jlLT3RFhStipeSneP3vua7mU/tWDBxx
+         oFaEaYQCKyL9Pz6RjdxVVNNaHhFS0tkdwIkh3eeLcdBljsOiB7B19L0wvxVT9lsFgq
+         04+kLlX+3tkz2pLfRcYkViv0qIIRPzEEewNEMB6s=
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH] drm/bridge: Fix the dsi remote end-points
-Date:   Fri, 28 Aug 2020 13:12:50 +0530
-Message-Id: <20200828074251.3788165-1-vkoul@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sdm845-db845c: Fix hdmi nodes
+Date:   Fri, 28 Aug 2020 13:13:47 +0530
+Message-Id: <20200828074347.3788518-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -49,36 +42,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DSI end-points are supposed to be at node 0 and node 1 as per binding.
-So fix this and use node 0 and node 1 for dsi.
+As per binding documentation, we should have dsi as node 0 and hdmi
+audio as node 1, so fix it
 
 Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
+Fixes: aef9a119dfb9 ("arm64: dts: qcom: sdm845-db845c: Add hdmi bridge nodes")
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 1009fc4ed4ed..d734d9402c35 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -960,13 +960,13 @@ static const struct drm_bridge_funcs lt9611_bridge_funcs = {
- static int lt9611_parse_dt(struct device *dev,
- 			   struct lt9611 *lt9611)
- {
--	lt9611->dsi0_node = of_graph_get_remote_node(dev->of_node, 1, -1);
-+	lt9611->dsi0_node = of_graph_get_remote_node(dev->of_node, 0, -1);
- 	if (!lt9611->dsi0_node) {
- 		dev_err(lt9611->dev, "failed to get remote node for primary dsi\n");
- 		return -ENODEV;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index a2a98680ccf5..99d33955270e 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -451,16 +451,16 @@ ports {
+ 			port@0 {
+ 				reg = <0>;
  
--	lt9611->dsi1_node = of_graph_get_remote_node(dev->of_node, 2, -1);
-+	lt9611->dsi1_node = of_graph_get_remote_node(dev->of_node, 1, -1);
+-				lt9611_out: endpoint {
+-					remote-endpoint = <&hdmi_con>;
++				lt9611_a: endpoint {
++					remote-endpoint = <&dsi0_out>;
+ 				};
+ 			};
  
- 	lt9611->ac_mode = of_property_read_bool(dev->of_node, "lt,ac-mode");
+-			port@1 {
+-				reg = <1>;
++			port@2 {
++				reg = <2>;
  
+-				lt9611_a: endpoint {
+-					remote-endpoint = <&dsi0_out>;
++				lt9611_out: endpoint {
++					remote-endpoint = <&hdmi_con>;
+ 				};
+ 			};
+ 		};
 -- 
 2.26.2
 
