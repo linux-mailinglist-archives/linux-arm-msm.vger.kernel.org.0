@@ -2,151 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2665F2564F1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 07:59:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 720952565A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 09:34:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbgH2F71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Aug 2020 01:59:27 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:55929 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726797AbgH2F70 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Aug 2020 01:59:26 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598680765; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=zbtKWEe/ycA4XfAazELEies/9m6qkiUjWQM6OfnRcUs=; b=OGCHXUT+0Oo4uD//F6L9FIllkiqNNy4qGFZ8ZYd6UFtUfxG1UmHfQIBAx7N7czScN28X88IS
- dRiWXoC22/mb9TpUgB1u6psQiz3b1w8OYqGnuz1ApDY3TIKl2bRukms1DfV0ybGOI48w1d/2
- PpxDPXNTmaS/6c3EdMzCc1EXBq4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5f49eea0d70e1f492d204326 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 29 Aug 2020 05:58:56
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6FA3EC433C6; Sat, 29 Aug 2020 05:58:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20BE8C43391;
-        Sat, 29 Aug 2020 05:58:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 20BE8C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-From:   Wesley Cheng <wcheng@codeaurora.org>
-To:     robh+dt@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, agross@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-        jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
-Subject: [RFC v5 6/6] usb: dwc3: gadget: Ensure enough TXFIFO space for USB configuration
-Date:   Fri, 28 Aug 2020 22:58:46 -0700
-Message-Id: <20200829055846.19034-7-wcheng@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200829055846.19034-1-wcheng@codeaurora.org>
-References: <20200829055846.19034-1-wcheng@codeaurora.org>
+        id S1726876AbgH2HcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Aug 2020 03:32:13 -0400
+Received: from esa3.hgst.iphmx.com ([216.71.153.141]:4371 "EHLO
+        esa3.hgst.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726056AbgH2HcL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 29 Aug 2020 03:32:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+  t=1598686331; x=1630222331;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=SMfWT8t8Ye/STTHMxxumJ7xfGDzJOeasYwnCTcVmnHY=;
+  b=AgqIy+rvFxhb+WzTZlAoSBPjMEQf+nu1orGzZ51PUdUyMu5RnlsZRNod
+   1I2Jmt5XVxDQ3BnNEEQnr3DM5w2d0nPnqTtSqy/3nh0rM75EgT9pgnQJL
+   BnJ6SY1nLQpbynuHRlV8Ci7HCNVrpLIeryanbMiyubtxwGxJycEn6tiMD
+   g04BDj0c6GSQFLpGvgP5lGmxFezz82o8juvDaLLckIW32Q7/0DNltmoTz
+   vFFYX5i5C1K7dWXJbYxo/WHrTFrt5JOj/eq/4OeEXYWI0FtzFFI2+jWlH
+   NlV2Ljvx/uVk9gGoEh3vS60d9d5MeiwguZRxghtjBm4ovSZEoyc47Ln/r
+   Q==;
+IronPort-SDR: YjeE12eBj8qKE23jUYjKh9quf4Rpyi7dghDKCi5jmaQHx7sL9MbCVyxbEvkn9G7PVwjOJ9WGJg
+ 1oDXSCtXLmepNxTiCOKGFjV0XqdKkTWEqpic8weoUo1uRXrYs3ywbJzVium80omX4exflDQuKQ
+ wrho5oNnbdo54UDGZVUt+dk17PjHGU/K7Ye2r+X4Mqm+hoadVehCLGe6bAUXVlwBuJF3q2hQqs
+ 4wIQs+J6BwdlgeDlANol1JKK6jyjx6Eg9uNW7UjQzsx6RBB10oPUGK/7lsvft5AO/szZQJ1qg+
+ iL4=
+X-IronPort-AV: E=Sophos;i="5.76,366,1592841600"; 
+   d="scan'208";a="150455914"
+Received: from mail-bn8nam12lp2177.outbound.protection.outlook.com (HELO NAM12-BN8-obe.outbound.protection.outlook.com) ([104.47.55.177])
+  by ob1.hgst.iphmx.com with ESMTP; 29 Aug 2020 15:32:09 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ePtgQ6RnK77fcuPl1574PzGGLHrvFlrbMO8L29eiT3/c8zc914VnIjQFlo8ek/zmNja/VNHrbsJzs2402B+qDnmmTwIvhLoPO2vxRbn2U3DHC3iE7oRFwKEWLk9vbG4dBUr/0Hy2jH/SH2brKP6PNP7T8lovCS+AM3t9d17/IEwYJHslhw1SZ0mKufhQ3lADUcunBlIRvd9/jxRwGtXTBANYrJbzCqh4+WrDmjJ9VY3CXgiHNtNyJYmPeut8W/gv0ApWu52y/bImyOvZPH6uGkewuKFj4uctE7uB0sayNrKY5tSWTw7FgX2S6fht8A34YyybkC6/lA+AGkC7+/4xkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SMfWT8t8Ye/STTHMxxumJ7xfGDzJOeasYwnCTcVmnHY=;
+ b=FINxorYjYmaVjjUrxnfj7z+H85oaBovdrIhQjbw6f1cGkatkX0afjLqBpm7Dx10QLHuwpsxcOiw9TVY2NqC01JD0IdSuQToKxETGvDxtFqD+aRsYV6So9fv26JSREqXFgwess8ndQC4YtouVUnfCTTc0caA4/8SVQaU0S/GLEk2krUbhQFXPwqKj1TQ3lK4UIl2a22yF8w6nJjfU+8SuNtYGer2s0324meOj4eoxSXq8rB4YXt3mK9D50a/3Il3HI9ApSOmz2z8vYkq8TAcQrwY75uT1rJ7HcmOsjfcdqvVZm3rPLS52CFgdTrK7AFCw86Bn5ByBcVgrJ6rUf3gnug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SMfWT8t8Ye/STTHMxxumJ7xfGDzJOeasYwnCTcVmnHY=;
+ b=IpEGE/K5gF1Krz99tHdri00jQowIjOyv0a/yjoRW0l8qTF+VFAJKUh8nuB+WBrzO/0V0GpRtQdux1NvGibv+flKqBSjKhb0exir6Ydh7ivGeuF0sX7Tyyp12JborHe9UZiSUPilHniGx1qZylU3DK31Xtjf3XUSCwLUuZyvEwVg=
+Received: from BY5PR04MB6705.namprd04.prod.outlook.com (2603:10b6:a03:220::8)
+ by BYAPR04MB4711.namprd04.prod.outlook.com (2603:10b6:a03:14::30) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24; Sat, 29 Aug
+ 2020 07:32:05 +0000
+Received: from BY5PR04MB6705.namprd04.prod.outlook.com
+ ([fe80::1083:4093:49fa:a3fd]) by BY5PR04MB6705.namprd04.prod.outlook.com
+ ([fe80::1083:4093:49fa:a3fd%2]) with mapi id 15.20.3326.023; Sat, 29 Aug 2020
+ 07:32:05 +0000
+From:   Avri Altman <Avri.Altman@wdc.com>
+To:     "Bao D. Nguyen" <nguyenb@codeaurora.org>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "asutoshd@codeaurora.org" <asutoshd@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Nitin Rawat <nitirawa@codeaurora.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v1 1/1] scsi: ufshcd: Allow zero value setting to
+ Auto-Hibernate Timer
+Thread-Topic: [PATCH v1 1/1] scsi: ufshcd: Allow zero value setting to
+ Auto-Hibernate Timer
+Thread-Index: AQHWfaC3kd0c1Nm+d0KoEDt9jyytd6lOsAkw
+Date:   Sat, 29 Aug 2020 07:32:05 +0000
+Message-ID: <BY5PR04MB6705177184FC1A0E5F7710FDFC530@BY5PR04MB6705.namprd04.prod.outlook.com>
+References: <b141cfcd7998b8933635828b56fbb64f8ad4d175.1598661071.git.nguyenb@codeaurora.org>
+In-Reply-To: <b141cfcd7998b8933635828b56fbb64f8ad4d175.1598661071.git.nguyenb@codeaurora.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: codeaurora.org; dkim=none (message not signed)
+ header.d=none;codeaurora.org; dmarc=none action=none header.from=wdc.com;
+x-originating-ip: [77.138.4.172]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 88308c96-14eb-41cb-eeec-08d84beda125
+x-ms-traffictypediagnostic: BYAPR04MB4711:
+x-microsoft-antispam-prvs: <BYAPR04MB4711B8F6BBF6A302EE1FA0E6FC530@BYAPR04MB4711.namprd04.prod.outlook.com>
+wdcipoutbound: EOP-TRUE
+x-ms-oob-tlc-oobclassifiers: OLM:3968;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: pUY5iEuY79n/z8Wpt2y2Wn8gWz1LIpWol8GLHuIRECSvOvqfEFoM9Hwmq6pQAe/FrERi78Lq/zUZsvonsvOB/aYRibEsqMo+fIoYLLtsf5VjdZku6yoKqpDbeFn3L3I0UAscCf1+cxS0ej9+qMFqSsbRXck3U8Bn7woTwfn4QH5fDQBlvshyZuwLZPnqGVMvaPWDfhXptulc6FWWPXoJRhx0887G1MygV9wwWxebVhUfBBo3Aj0hqDQUp5weNe1lVb+TJvojw5sfiY/WrmsqKehrcxnVQ3D7jhFeBm+g4UNtnmzTJjBXO7aS0fsHizjJ
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR04MB6705.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(376002)(366004)(39860400002)(396003)(136003)(2906002)(316002)(86362001)(7416002)(7696005)(6506007)(54906003)(4744005)(71200400001)(110136005)(4326008)(66476007)(186003)(55016002)(8936002)(26005)(33656002)(478600001)(66446008)(66946007)(64756008)(66556008)(52536014)(83380400001)(76116006)(8676002)(5660300002)(9686003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: O1b4C1RIPSUwB86UDbF/YWm63BWjwJoLShpz0bUFPm3pDzgHEZr2Fg/f80ErgzVyyyCfN6izZfhdsa7pCsPA8lp/+p5X65s0nnhSdHFjmrNZ8YzI7DxadqZuXFYETuYSzj0x8M1Q3BsA0RR6cTUpFpxZ7SVfYFERyNaALyETyoYMeqFQPGlHX8Xeyu2lgfuAZQgTUcQej/sNRjpqu6i4cd78XLCW+XsFuPDKWyuZklv1aTlQE7lyijmHFgaMtGU9zvc0Q4eGVRyilevMJmr4dZZ8VZRfqu8cXmWTmSMe+UXeJDrzMkxh98O5qfbW+5cEsbHC5HvtKE+P4Sg458zlh4DKVao5H0EoeADv03klNvIBD+PkHFV4lX87yc234ncw+0nPbW7pKthZvKvc1PVqSTcvYDRt5NeC0nGpRxLhu0rWNBkRsuz2FujcTyETaRWgWEwF+Cdf0lCfwkACRfF0mPtLD96JefYmjj47lz4+3tZbOjGa5TrkaS85OWFUrWfeOg7T/D2mCiplwiY+0oB/LC5Jwg3AwrPJ7cPnbU78SEFdytCjk8mX2znUKEQZ4r2epzPEEsqR8IjTIvAMHZiI5zeysWvh4+y2yWjZS8zsSMa0TT8saGk+VO8pH6yuBdOInSLzr2g4rUZLB12My+f5xw==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR04MB6705.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88308c96-14eb-41cb-eeec-08d84beda125
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Aug 2020 07:32:05.4282
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: gnd5piqZyUH14hTGgCm8Cb2hS9jknGsM1RAo3jGR9lNgyONWHHz/l5lVmtOSgUILc2mIUnc9XRZCR16sbmFMEg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR04MB4711
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If TXFIFO resizing is enabled, then based on if endpoint bursting is
-required or not, a larger amount of FIFO space is benefical.  Sometimes
-a particular interface can take all the available FIFO space, leading
-to other interfaces not functioning properly.  This callback ensures that
-the minimum fifo requirements, a single fifo per endpoint, can be met,
-otherwise the configuration binding will fail.  This will be based on the
-maximum number of eps existing in all configurations.
+=20
+>=20
+> The zero value Auto-Hibernate Timer is a valid setting, and it
+> indicates the Auto-Hibernate feature being disabled. Correctly
+Right. So " ufshcd_auto_hibern8_enable" is no longer an appropriate name.
+Maybe ufshcd_auto_hibern8_set instead?
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
----
- drivers/usb/dwc3/core.h   |  1 +
- drivers/usb/dwc3/gadget.c | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+Also, did you verified that no other platform relies on its non-zero value?
 
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index e85c1ec70cc3..0559b0a82c4d 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1249,6 +1249,7 @@ struct dwc3 {
- 	u16			imod_interval;
- 	int			last_fifo_depth;
- 	int			num_ep_resized;
-+	int			max_cfg_eps;
- };
- 
- #define INCRX_BURST_MODE 0
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 53e5220f9893..e8f7ea560920 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2411,6 +2411,7 @@ static int dwc3_gadget_stop(struct usb_gadget *g)
- 
- out:
- 	dwc->gadget_driver	= NULL;
-+	dwc->max_cfg_eps = 0;
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
- 	free_irq(dwc->irq_gadget, dwc->ev_buf);
-@@ -2518,6 +2519,39 @@ static void dwc3_gadget_set_speed(struct usb_gadget *g,
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- }
- 
-+static int dwc3_gadget_check_config(struct usb_gadget *g, unsigned long ep_map)
-+{
-+	struct dwc3 *dwc = gadget_to_dwc(g);
-+	unsigned long in_ep_map;
-+	int fifo_size = 0;
-+	int ram1_depth;
-+	int ep_num;
-+
-+	if (!dwc->needs_fifo_resize)
-+		return 0;
-+
-+	/* Only interested in the IN endpoints */
-+	in_ep_map = ep_map >> 16;
-+	ep_num = hweight_long(in_ep_map);
-+
-+	if (ep_num <= dwc->max_cfg_eps)
-+		return 0;
-+
-+	/* Update the max number of eps in the composition */
-+	dwc->max_cfg_eps = ep_num;
-+
-+	fifo_size = dwc3_gadget_calc_tx_fifo_size(dwc, dwc->max_cfg_eps);
-+	/* Based on the equation, increment by one for every ep */
-+	fifo_size += dwc->max_cfg_eps;
-+
-+	/* Check if we can fit a single fifo per endpoint */
-+	ram1_depth = DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
-+	if (fifo_size > ram1_depth)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
- static const struct usb_gadget_ops dwc3_gadget_ops = {
- 	.get_frame		= dwc3_gadget_get_frame,
- 	.wakeup			= dwc3_gadget_wakeup,
-@@ -2527,6 +2561,7 @@ static const struct usb_gadget_ops dwc3_gadget_ops = {
- 	.udc_stop		= dwc3_gadget_stop,
- 	.udc_set_speed		= dwc3_gadget_set_speed,
- 	.get_config_params	= dwc3_gadget_config_params,
-+	.check_config		= dwc3_gadget_check_config,
- };
- 
- /* -------------------------------------------------------------------------- */
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Thanks,
+Avri
