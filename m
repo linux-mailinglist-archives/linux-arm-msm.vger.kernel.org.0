@@ -2,92 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 515E825639F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 02:12:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 266C42563E0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 03:07:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726797AbgH2AM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Aug 2020 20:12:57 -0400
-Received: from mga18.intel.com ([134.134.136.126]:24037 "EHLO mga18.intel.com"
+        id S1726321AbgH2BHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Aug 2020 21:07:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20811 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726584AbgH2AM4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Aug 2020 20:12:56 -0400
-IronPort-SDR: SlUZ12gOD/aVhSZ9C7qk9jQyBgNINfY/t+G1287Q5kZkl6/uIqYjnG+u+HmCtHBrJfbDAh32H1
- RsPfmveC3cqQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9727"; a="144440466"
-X-IronPort-AV: E=Sophos;i="5.76,365,1592895600"; 
-   d="scan'208";a="144440466"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2020 17:11:54 -0700
-IronPort-SDR: h4/orcg6Gn8nZ9ohrRYk+lZSm+43zkLVdgDI4N9Y2stHaHJZBEYbeRpB1m00xdjqKyRt5YQyWb
- VxfQI2pIm4Eg==
-X-IronPort-AV: E=Sophos;i="5.76,365,1592895600"; 
-   d="scan'208";a="340050304"
-Received: from fvera1-mobl.amr.corp.intel.com (HELO [10.212.55.68]) ([10.212.55.68])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2020 17:11:52 -0700
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Subject: Re: [PATCH v6 2/2] ASoC: qcom: sc7180: Add machine driver for sound
- card registration
-To:     Doug Anderson <dianders@chromium.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>
-Cc:     Taniya Das <tdas@codeaurora.org>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Takashi Iwai <tiwai@suse.com>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Ajit Pandey <ajitp@codeaurora.org>,
-        Tzung-Bi Shih <tzungbi@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, tzungbi@chromium.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20200826110454.1811352-1-cychiang@chromium.org>
- <20200826110454.1811352-3-cychiang@chromium.org>
- <CAD=FV=XaCt6V+VXfk8T+2mS4d5sKQzMC12AcH9a=MNkgguvmjQ@mail.gmail.com>
-Message-ID: <7b3bb666-c53e-e385-e153-1383f2831c2e@linux.intel.com>
-Date:   Fri, 28 Aug 2020 19:11:51 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <CAD=FV=XaCt6V+VXfk8T+2mS4d5sKQzMC12AcH9a=MNkgguvmjQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1726219AbgH2BHH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 Aug 2020 21:07:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598663226; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=KBz/Mp2HjpitrTKMvGZcXdH9StIjUwyVyyPgbCHUO7s=; b=otZGJbxY5ZxHfFmjj3rNMIaz/aAXPUDwzbHcmBLraTJVwTvCKaDiBwjLOAuzyxLPPh6GP9bO
+ ZCZEFOPGtXGzxtkDobeTs3tgVCRedR/TxTjSi3lNnf8D5BnMLi5163glCJc/CyKICESUxMhG
+ g1oQVJ7iZIPfaykZRR84+XP0Ssc=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f49aa386a801be9b23bcb83 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 29 Aug 2020 01:07:04
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BD451C43387; Sat, 29 Aug 2020 01:07:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: nguyenb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54F7AC433C6;
+        Sat, 29 Aug 2020 01:07:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54F7AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=nguyenb@codeaurora.org
+From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
+To:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     "Bao D. Nguyen" <nguyenb@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Nitin Rawat <nitirawa@codeaurora.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v1 1/1] scsi: ufshcd: Allow zero value setting to Auto-Hibernate Timer
+Date:   Fri, 28 Aug 2020 18:05:13 -0700
+Message-Id: <b141cfcd7998b8933635828b56fbb64f8ad4d175.1598661071.git.nguyenb@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The zero value Auto-Hibernate Timer is a valid setting, and it
+indicates the Auto-Hibernate feature being disabled. Correctly
+support this setting. In addition, when this value is queried
+from sysfs, read from the host controller's register and return
+that value instead of using the RAM value.
 
->> +config SND_SOC_SC7180
->> +       tristate "SoC Machine driver for SC7180 boards"
->> +       depends on SND_SOC_QCOM
+Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Signed-off-by: Can Guo <cang@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-sysfs.c | 9 ++++++++-
+ drivers/scsi/ufs/ufshcd.c    | 2 +-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-this depends is probably not necessary, the code is already in an if case.
+diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
+index 02d379f00..bdcd27f 100644
+--- a/drivers/scsi/ufs/ufs-sysfs.c
++++ b/drivers/scsi/ufs/ufs-sysfs.c
+@@ -146,12 +146,19 @@ static u32 ufshcd_us_to_ahit(unsigned int timer)
+ static ssize_t auto_hibern8_show(struct device *dev,
+ 				 struct device_attribute *attr, char *buf)
+ {
++	u32 ahit;
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+ 
+ 	if (!ufshcd_is_auto_hibern8_supported(hba))
+ 		return -EOPNOTSUPP;
+ 
+-	return snprintf(buf, PAGE_SIZE, "%d\n", ufshcd_ahit_to_us(hba->ahit));
++	pm_runtime_get_sync(hba->dev);
++	ufshcd_hold(hba, false);
++	ahit = ufshcd_readl(hba, REG_AUTO_HIBERNATE_IDLE_TIMER);
++	ufshcd_release(hba);
++	pm_runtime_put_sync(hba->dev);
++
++	return scnprintf(buf, PAGE_SIZE, "%d\n", ufshcd_ahit_to_us(ahit));
+ }
+ 
+ static ssize_t auto_hibern8_store(struct device *dev,
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index 06e2439..ea5cc33 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -3975,7 +3975,7 @@ void ufshcd_auto_hibern8_enable(struct ufs_hba *hba)
+ {
+ 	unsigned long flags;
+ 
+-	if (!ufshcd_is_auto_hibern8_supported(hba) || !hba->ahit)
++	if (!ufshcd_is_auto_hibern8_supported(hba))
+ 		return;
+ 
+ 	spin_lock_irqsave(hba->host->host_lock, flags);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
->> +       select SND_SOC_QCOM_COMMON
->> +       select SND_SOC_LPASS_SC7180
->> +       select SND_SOC_MAX98357A
->> +       select SND_SOC_RT5682
-> 
-> I haven't done any significant testing / review of your patch (I'm
-> mostly sound-clueless), but I believe that the above needs to be
-> "select SND_SOC_RT5682_I2C" atop the current top of the sound tree.
-> When I fix that I can confirm that I see the rt5682 probe on
-> sc7180-trogdor with Rob Clark's dts patch.
-
-Ack, no one should select SND_SOC_RT5682 directly in machine drivers. 
-now that the code is split between I2C and SoundWire parts.
-
-There should probably be a depends on I2C as well?
