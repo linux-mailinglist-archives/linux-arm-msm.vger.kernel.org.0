@@ -2,223 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DCFD2566B9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 11:57:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABA9D256705
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Aug 2020 13:12:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727022AbgH2J53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Aug 2020 05:57:29 -0400
-Received: from mailgw02.mediatek.com ([1.203.163.81]:24605 "EHLO
-        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726869AbgH2J52 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Aug 2020 05:57:28 -0400
-X-UUID: 06a97a601b30491ab643e29003ee3d10-20200829
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=YQ4nWNJaU2/84I56GfA7izeF71Nu7GxMGRIJ/4QLhhI=;
-        b=iJqgYe2INoU7y5RbgeFWvqv7yXDT7wXXuH6QVWH8MwimigaAtcURtEZCqOdT81bfUhVmsmSMN0cgKkkduDX0H0CGIdSOMIeqyALhmkFm3cZq6FZ8b5Y573JvKeY6fGwQjf1MnghwP2HLQpe0YZOO0SZ+7z8XJSjwGZQ7GXZNHEA=;
-X-UUID: 06a97a601b30491ab643e29003ee3d10-20200829
-Received: from mtkcas35.mediatek.inc [(172.27.4.253)] by mailgw02.mediatek.com
-        (envelope-from <yong.wu@mediatek.com>)
-        (mailgw01.mediatek.com ESMTP with TLS)
-        with ESMTP id 818620872; Sat, 29 Aug 2020 17:56:23 +0800
-Received: from MTKCAS36.mediatek.inc (172.27.4.186) by MTKMBS31N1.mediatek.inc
- (172.27.4.69) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Sat, 29 Aug
- 2020 17:56:20 +0800
-Received: from [10.17.3.153] (10.17.3.153) by MTKCAS36.mediatek.inc
- (172.27.4.170) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Sat, 29 Aug 2020 17:56:20 +0800
-Message-ID: <1598694891.19851.12.camel@mhfsdcap03>
-Subject: Re: [PATCH 09/18] iommu/mediatek-v1: Add IOMMU_DOMAIN_DMA support
-From:   Yong Wu <yong.wu@mediatek.com>
-To:     Robin Murphy <robin.murphy@arm.com>
-CC:     <hch@lst.de>, <joro@8bytes.org>, <linux@armlinux.org.uk>,
-        <will@kernel.org>, <inki.dae@samsung.com>,
-        <sw0312.kim@samsung.com>, <kyungmin.park@samsung.com>,
-        <m.szyprowski@samsung.com>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <thierry.reding@gmail.com>,
-        <jonathanh@nvidia.com>, <vdumpa@nvidia.com>, <digetx@gmail.com>,
-        <matthias.bgg@gmail.com>, <geert+renesas@glider.be>,
-        <magnus.damm@gmail.com>, <t-kristo@ti.com>, <s-anna@ti.com>,
-        <laurent.pinchart@ideasonboard.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux-foundation.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-media@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Date:   Sat, 29 Aug 2020 17:54:51 +0800
-In-Reply-To: <a259b248ffb14273b56f8473c20b0381e8d74c7a.1597931876.git.robin.murphy@arm.com>
-References: <cover.1597931875.git.robin.murphy@arm.com>
-         <a259b248ffb14273b56f8473c20b0381e8d74c7a.1597931876.git.robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-MIME-Version: 1.0
-X-TM-SNTS-SMTP: AA63C797C93CBD61B254A639A39F87490728FF8037E9BB375825F26FABF9D7122000:8
-X-MTK:  N
-Content-Transfer-Encoding: base64
+        id S1727930AbgH2LMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Aug 2020 07:12:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38582 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726876AbgH2LMR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 29 Aug 2020 07:12:17 -0400
+Received: from localhost.localdomain (unknown [194.230.155.216])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 960DF207DF;
+        Sat, 29 Aug 2020 11:12:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1598699537;
+        bh=1rZZTHYv2srzGJyq4r3KsvCUUvcAAp36hZsvCxBAaik=;
+        h=From:To:Cc:Subject:Date:From;
+        b=Y5+2Zu9+0ji/9k7BPULSt0zGyr8h/eAh8E6Swaxpm1Snyc4wseqJl0n/17yvNiJak
+         ZiC6vJQliFizVeC36aSg879gIi/bDZPpaGOOlYWqGPxv2yOauRnmIkyVqL4GMqeYTu
+         ivcUCAn/nuyYsJpXnalLThSyDN9oipFTs8FJEp1M=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: msm8992: Fix UART interrupt property
+Date:   Sat, 29 Aug 2020 13:12:09 +0200
+Message-Id: <20200829111209.32685-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gVGh1LCAyMDIwLTA4LTIwIGF0IDE2OjA4ICswMTAwLCBSb2JpbiBNdXJwaHkgd3JvdGU6DQo+
-IE5vdyB0aGF0IGFyY2gvYXJtIGlzIHdpcmVkIHVwIGZvciBkZWZhdWx0IGRvbWFpbnMgYW5kIGlv
-bW11LWRtYSwNCj4gaW1wbGVtZW50IHRoZSBjb3JyZXNwb25kaW5nIGRyaXZlci1zaWRlIHN1cHBv
-cnQgZm9yIGdyb3VwcyBhbmQgRE1BDQo+IGRvbWFpbnMgdG8gcmVwbGFjZSB0aGUgc2hhcmVkIG1h
-cHBpbmcgd29ya2Fyb3VuZC4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFJvYmluIE11cnBoeSA8cm9i
-aW4ubXVycGh5QGFybS5jb20+DQo+IC0tLQ0KPiAgZHJpdmVycy9pb21tdS9tdGtfaW9tbXUuaCAg
-ICB8ICAgMiAtDQo+ICBkcml2ZXJzL2lvbW11L210a19pb21tdV92MS5jIHwgMTUzICsrKysrKysr
-KysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+ICAyIGZpbGVzIGNoYW5nZWQsIDQ4IGluc2Vy
-dGlvbnMoKyksIDEwNyBkZWxldGlvbnMoLSkNCg0KSGkgUm9iaW4sDQoNClRoYW5rcyB2ZXJ5IG11
-Y2ggZm9yIHRoaXMgcGF0Y2gsIEl0IG1ha2VzIHRoZSBjb2RlIG11Y2ggY2xlYW5lci4NCg0KUGxl
-YXNlIGhlbHAgc3F1YXNoIHRoZSBsaXR0bGUgY2hhbmdlIGluIHRoaXMgcGF0Y2gsDQoNCi0tLSBh
-L2RyaXZlcnMvaW9tbXUvbXRrX2lvbW11X3YxLmMNCisrKyBiL2RyaXZlcnMvaW9tbXUvbXRrX2lv
-bW11X3YxLmMNCkBAIC01NTUsNiArNTU1LDcgQEAgc3RhdGljIGludCBtdGtfaW9tbXVfcHJvYmUo
-c3RydWN0IHBsYXRmb3JtX2RldmljZQ0KKnBkZXYpDQogCQlyZXR1cm4gcmV0Ow0KIA0KIAlpb21t
-dV9kZXZpY2Vfc2V0X29wcygmZGF0YS0+aW9tbXUsICZtdGtfaW9tbXVfb3BzKTsNCisJaW9tbXVf
-ZGV2aWNlX3NldF9md25vZGUoJmRhdGEtPmlvbW11LCAmZGV2LT5vZl9ub2RlLT5md25vZGUpOw0K
-IA0KIAlyZXQgPSBpb21tdV9kZXZpY2VfcmVnaXN0ZXIoJmRhdGEtPmlvbW11KTsNCiAJaWYgKHJl
-dCkNCg0KDQpUaGVuLA0KVGVzdGVkLWJ5OiBZb25nIFd1IDx5b25nLnd1QG1lZGlhdGVrLmNvbT4N
-Cg0KPiANCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaW9tbXUvbXRrX2lvbW11LmggYi9kcml2ZXJz
-L2lvbW11L210a19pb21tdS5oDQo+IGluZGV4IDEyMjkyNWRiZTU0Ny4uNjI1M2U5OGQ4MTBjIDEw
-MDY0NA0KPiAtLS0gYS9kcml2ZXJzL2lvbW11L210a19pb21tdS5oDQo+ICsrKyBiL2RyaXZlcnMv
-aW9tbXUvbXRrX2lvbW11LmgNCj4gQEAgLTY3LDggKzY3LDYgQEAgc3RydWN0IG10a19pb21tdV9k
-YXRhIHsNCj4gIAlzdHJ1Y3QgaW9tbXVfZGV2aWNlCQlpb21tdTsNCj4gIAljb25zdCBzdHJ1Y3Qg
-bXRrX2lvbW11X3BsYXRfZGF0YSAqcGxhdF9kYXRhOw0KPiAgDQo+IC0Jc3RydWN0IGRtYV9pb21t
-dV9tYXBwaW5nCSptYXBwaW5nOyAvKiBGb3IgbXRrX2lvbW11X3YxLmMgKi8NCj4gLQ0KPiAgCXN0
-cnVjdCBsaXN0X2hlYWQJCWxpc3Q7DQo+ICAJc3RydWN0IG10a19zbWlfbGFyYl9pb21tdQlsYXJi
-X2ltdVtNVEtfTEFSQl9OUl9NQVhdOw0KPiAgfTsNCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaW9t
-bXUvbXRrX2lvbW11X3YxLmMgYi9kcml2ZXJzL2lvbW11L210a19pb21tdV92MS5jDQo+IGluZGV4
-IDgyZGRmZTkxNzBkNC4uNDBjODliOGQzYWM0IDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJzL2lvbW11
-L210a19pb21tdV92MS5jDQo+ICsrKyBiL2RyaXZlcnMvaW9tbXUvbXRrX2lvbW11X3YxLmMNCj4g
-QEAgLTI4LDcgKzI4LDYgQEANCj4gICNpbmNsdWRlIDxsaW51eC9zbGFiLmg+DQo+ICAjaW5jbHVk
-ZSA8bGludXgvc3BpbmxvY2suaD4NCj4gICNpbmNsdWRlIDxhc20vYmFycmllci5oPg0KPiAtI2lu
-Y2x1ZGUgPGFzbS9kbWEtaW9tbXUuaD4NCj4gICNpbmNsdWRlIDxsaW51eC9pbml0Lmg+DQo+ICAj
-aW5jbHVkZSA8ZHQtYmluZGluZ3MvbWVtb3J5L210MjcwMS1sYXJiLXBvcnQuaD4NCj4gICNpbmNs
-dWRlIDxzb2MvbWVkaWF0ZWsvc21pLmg+DQo+IEBAIC0yNDAsMTMgKzIzOSwxOCBAQCBzdGF0aWMg
-c3RydWN0IGlvbW11X2RvbWFpbiAqbXRrX2lvbW11X2RvbWFpbl9hbGxvYyh1bnNpZ25lZCB0eXBl
-KQ0KPiAgew0KPiAgCXN0cnVjdCBtdGtfaW9tbXVfZG9tYWluICpkb207DQo+ICANCj4gLQlpZiAo
-dHlwZSAhPSBJT01NVV9ET01BSU5fVU5NQU5BR0VEKQ0KPiArCWlmICh0eXBlICE9IElPTU1VX0RP
-TUFJTl9VTk1BTkFHRUQgJiYgdHlwZSAhPSBJT01NVV9ET01BSU5fRE1BKQ0KPiAgCQlyZXR1cm4g
-TlVMTDsNCj4gIA0KPiAgCWRvbSA9IGt6YWxsb2Moc2l6ZW9mKCpkb20pLCBHRlBfS0VSTkVMKTsN
-Cj4gIAlpZiAoIWRvbSkNCj4gIAkJcmV0dXJuIE5VTEw7DQo+ICANCj4gKwlpZiAodHlwZSA9PSBJ
-T01NVV9ET01BSU5fRE1BICYmIGlvbW11X2dldF9kbWFfY29va2llKCZkb20tPmRvbWFpbikpIHsN
-Cj4gKwkJa2ZyZWUoZG9tKTsNCj4gKwkJcmV0dXJuIE5VTEw7DQo+ICsJfQ0KPiArDQo+ICAJcmV0
-dXJuICZkb20tPmRvbWFpbjsNCj4gIH0NCj4gIA0KPiBAQCAtMjU3LDYgKzI2MSw3IEBAIHN0YXRp
-YyB2b2lkIG10a19pb21tdV9kb21haW5fZnJlZShzdHJ1Y3QgaW9tbXVfZG9tYWluICpkb21haW4p
-DQo+ICANCj4gIAlkbWFfZnJlZV9jb2hlcmVudChkYXRhLT5kZXYsIE0yNzAxX0lPTU1VX1BHVF9T
-SVpFLA0KPiAgCQkJZG9tLT5wZ3RfdmEsIGRvbS0+cGd0X3BhKTsNCj4gKwlpb21tdV9wdXRfZG1h
-X2Nvb2tpZShkb21haW4pOw0KPiAgCWtmcmVlKHRvX210a19kb21haW4oZG9tYWluKSk7DQo+ICB9
-DQo+ICANCj4gQEAgLTI2NSwxNCArMjcwLDggQEAgc3RhdGljIGludCBtdGtfaW9tbXVfYXR0YWNo
-X2RldmljZShzdHJ1Y3QgaW9tbXVfZG9tYWluICpkb21haW4sDQo+ICB7DQo+ICAJc3RydWN0IG10
-a19pb21tdV9kYXRhICpkYXRhID0gZGV2X2lvbW11X3ByaXZfZ2V0KGRldik7DQo+ICAJc3RydWN0
-IG10a19pb21tdV9kb21haW4gKmRvbSA9IHRvX210a19kb21haW4oZG9tYWluKTsNCj4gLQlzdHJ1
-Y3QgZG1hX2lvbW11X21hcHBpbmcgKm10a19tYXBwaW5nOw0KPiAgCWludCByZXQ7DQo+ICANCj4g
-LQkvKiBPbmx5IGFsbG93IHRoZSBkb21haW4gY3JlYXRlZCBpbnRlcm5hbGx5LiAqLw0KPiAtCW10
-a19tYXBwaW5nID0gZGF0YS0+bWFwcGluZzsNCj4gLQlpZiAobXRrX21hcHBpbmctPmRvbWFpbiAh
-PSBkb21haW4pDQo+IC0JCXJldHVybiAwOw0KPiAtDQo+ICAJaWYgKCFkYXRhLT5tNHVfZG9tKSB7
-DQo+ICAJCWRhdGEtPm00dV9kb20gPSBkb207DQo+ICAJCXJldCA9IG10a19pb21tdV9kb21haW5f
-ZmluYWxpc2UoZGF0YSk7DQo+IEBAIC0zNTgsMTggKzM1NywzOSBAQCBzdGF0aWMgcGh5c19hZGRy
-X3QgbXRrX2lvbW11X2lvdmFfdG9fcGh5cyhzdHJ1Y3QgaW9tbXVfZG9tYWluICpkb21haW4sDQo+
-ICANCj4gIHN0YXRpYyBjb25zdCBzdHJ1Y3QgaW9tbXVfb3BzIG10a19pb21tdV9vcHM7DQo+ICAN
-Cj4gLS8qDQo+IC0gKiBNVEsgZ2VuZXJhdGlvbiBvbmUgaW9tbXUgSFcgb25seSBzdXBwb3J0IG9u
-ZSBpb21tdSBkb21haW4sIGFuZCBhbGwgdGhlIGNsaWVudA0KPiAtICogc2hhcmluZyB0aGUgc2Ft
-ZSBpb3ZhIGFkZHJlc3Mgc3BhY2UuDQo+IC0gKi8NCj4gLXN0YXRpYyBpbnQgbXRrX2lvbW11X2Ny
-ZWF0ZV9tYXBwaW5nKHN0cnVjdCBkZXZpY2UgKmRldiwNCj4gLQkJCQkgICAgc3RydWN0IG9mX3Bo
-YW5kbGVfYXJncyAqYXJncykNCj4gK3N0YXRpYyBzdHJ1Y3QgaW9tbXVfZGV2aWNlICptdGtfaW9t
-bXVfcHJvYmVfZGV2aWNlKHN0cnVjdCBkZXZpY2UgKmRldikNCj4gIHsNCj4gIAlzdHJ1Y3QgaW9t
-bXVfZndzcGVjICpmd3NwZWMgPSBkZXZfaW9tbXVfZndzcGVjX2dldChkZXYpOw0KPiAgCXN0cnVj
-dCBtdGtfaW9tbXVfZGF0YSAqZGF0YTsNCj4gKw0KPiArCWlmICghZndzcGVjIHx8IGZ3c3BlYy0+
-b3BzICE9ICZtdGtfaW9tbXVfb3BzKQ0KPiArCQlyZXR1cm4gRVJSX1BUUigtRU5PREVWKTsgLyog
-Tm90IGEgaW9tbXUgY2xpZW50IGRldmljZSAqLw0KPiArDQo+ICsJZGF0YSA9IGRldl9pb21tdV9w
-cml2X2dldChkZXYpOw0KPiArDQo+ICsJcmV0dXJuICZkYXRhLT5pb21tdTsNCj4gK30NCj4gKw0K
-PiArc3RhdGljIHZvaWQgbXRrX2lvbW11X3JlbGVhc2VfZGV2aWNlKHN0cnVjdCBkZXZpY2UgKmRl
-dikNCj4gK3sNCj4gKwlzdHJ1Y3QgaW9tbXVfZndzcGVjICpmd3NwZWMgPSBkZXZfaW9tbXVfZndz
-cGVjX2dldChkZXYpOw0KPiArDQo+ICsJaWYgKCFmd3NwZWMgfHwgZndzcGVjLT5vcHMgIT0gJm10
-a19pb21tdV9vcHMpDQo+ICsJCXJldHVybjsNCj4gKw0KPiArCWlvbW11X2Z3c3BlY19mcmVlKGRl
-dik7DQo+ICt9DQo+ICsNCj4gK3N0YXRpYyBzdHJ1Y3QgaW9tbXVfZ3JvdXAgKm10a19pb21tdV9k
-ZXZpY2VfZ3JvdXAoc3RydWN0IGRldmljZSAqZGV2KQ0KPiArew0KPiArCXN0cnVjdCBtdGtfaW9t
-bXVfZGF0YSAqZGF0YSA9IGRldl9pb21tdV9wcml2X2dldChkZXYpOw0KPiArDQo+ICsJcmV0dXJu
-IGlvbW11X2dyb3VwX3JlZl9nZXQoZGF0YS0+bTR1X2dyb3VwKTsNCj4gK30NCj4gKw0KPiArc3Rh
-dGljIGludCBtdGtfaW9tbXVfb2ZfeGxhdGUoc3RydWN0IGRldmljZSAqZGV2LCBzdHJ1Y3Qgb2Zf
-cGhhbmRsZV9hcmdzICphcmdzKQ0KPiArew0KPiAgCXN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKm00
-dXBkZXY7DQo+IC0Jc3RydWN0IGRtYV9pb21tdV9tYXBwaW5nICptdGtfbWFwcGluZzsNCj4gLQlp
-bnQgcmV0Ow0KPiAgDQo+ICAJaWYgKGFyZ3MtPmFyZ3NfY291bnQgIT0gMSkgew0KPiAgCQlkZXZf
-ZXJyKGRldiwgImludmFsaWQgI2lvbW11LWNlbGxzKCVkKSBwcm9wZXJ0eSBmb3IgSU9NTVVcbiIs
-DQo+IEBAIC0zNzcsMTUgKzM5Nyw2IEBAIHN0YXRpYyBpbnQgbXRrX2lvbW11X2NyZWF0ZV9tYXBw
-aW5nKHN0cnVjdCBkZXZpY2UgKmRldiwNCj4gIAkJcmV0dXJuIC1FSU5WQUw7DQo+ICAJfQ0KPiAg
-DQo+IC0JaWYgKCFmd3NwZWMpIHsNCj4gLQkJcmV0ID0gaW9tbXVfZndzcGVjX2luaXQoZGV2LCAm
-YXJncy0+bnAtPmZ3bm9kZSwgJm10a19pb21tdV9vcHMpOw0KPiAtCQlpZiAocmV0KQ0KPiAtCQkJ
-cmV0dXJuIHJldDsNCj4gLQkJZndzcGVjID0gZGV2X2lvbW11X2Z3c3BlY19nZXQoZGV2KTsNCj4g
-LQl9IGVsc2UgaWYgKGRldl9pb21tdV9md3NwZWNfZ2V0KGRldiktPm9wcyAhPSAmbXRrX2lvbW11
-X29wcykgew0KPiAtCQlyZXR1cm4gLUVJTlZBTDsNCj4gLQl9DQo+IC0NCj4gIAlpZiAoIWRldl9p
-b21tdV9wcml2X2dldChkZXYpKSB7DQo+ICAJCS8qIEdldCB0aGUgbTR1IGRldmljZSAqLw0KPiAg
-CQltNHVwZGV2ID0gb2ZfZmluZF9kZXZpY2VfYnlfbm9kZShhcmdzLT5ucCk7DQo+IEBAIC0zOTUs
-ODMgKzQwNiw3IEBAIHN0YXRpYyBpbnQgbXRrX2lvbW11X2NyZWF0ZV9tYXBwaW5nKHN0cnVjdCBk
-ZXZpY2UgKmRldiwNCj4gIAkJZGV2X2lvbW11X3ByaXZfc2V0KGRldiwgcGxhdGZvcm1fZ2V0X2Ry
-dmRhdGEobTR1cGRldikpOw0KPiAgCX0NCj4gIA0KPiAtCXJldCA9IGlvbW11X2Z3c3BlY19hZGRf
-aWRzKGRldiwgYXJncy0+YXJncywgMSk7DQo+IC0JaWYgKHJldCkNCj4gLQkJcmV0dXJuIHJldDsN
-Cj4gLQ0KPiAtCWRhdGEgPSBkZXZfaW9tbXVfcHJpdl9nZXQoZGV2KTsNCj4gLQltdGtfbWFwcGlu
-ZyA9IGRhdGEtPm1hcHBpbmc7DQo+IC0JaWYgKCFtdGtfbWFwcGluZykgew0KPiAtCQkvKiBNVEsg
-aW9tbXUgc3VwcG9ydCA0R0IgaW92YSBhZGRyZXNzIHNwYWNlLiAqLw0KPiAtCQltdGtfbWFwcGlu
-ZyA9IGFybV9pb21tdV9jcmVhdGVfbWFwcGluZygmcGxhdGZvcm1fYnVzX3R5cGUsDQo+IC0JCQkJ
-CQkwLCAxVUxMIDw8IDMyKTsNCj4gLQkJaWYgKElTX0VSUihtdGtfbWFwcGluZykpDQo+IC0JCQly
-ZXR1cm4gUFRSX0VSUihtdGtfbWFwcGluZyk7DQo+IC0NCj4gLQkJZGF0YS0+bWFwcGluZyA9IG10
-a19tYXBwaW5nOw0KPiAtCX0NCj4gLQ0KPiAtCXJldHVybiAwOw0KPiAtfQ0KPiAtDQo+IC1zdGF0
-aWMgaW50IG10a19pb21tdV9kZWZfZG9tYWluX3R5cGUoc3RydWN0IGRldmljZSAqZGV2KQ0KPiAt
-ew0KPiAtCXJldHVybiBJT01NVV9ET01BSU5fVU5NQU5BR0VEOw0KPiAtfQ0KPiAtDQo+IC1zdGF0
-aWMgc3RydWN0IGlvbW11X2RldmljZSAqbXRrX2lvbW11X3Byb2JlX2RldmljZShzdHJ1Y3QgZGV2
-aWNlICpkZXYpDQo+IC17DQo+IC0Jc3RydWN0IGlvbW11X2Z3c3BlYyAqZndzcGVjID0gZGV2X2lv
-bW11X2Z3c3BlY19nZXQoZGV2KTsNCj4gLQlzdHJ1Y3Qgb2ZfcGhhbmRsZV9hcmdzIGlvbW11X3Nw
-ZWM7DQo+IC0Jc3RydWN0IG9mX3BoYW5kbGVfaXRlcmF0b3IgaXQ7DQo+IC0Jc3RydWN0IG10a19p
-b21tdV9kYXRhICpkYXRhOw0KPiAtCWludCBlcnI7DQo+IC0NCj4gLQlvZl9mb3JfZWFjaF9waGFu
-ZGxlKCZpdCwgZXJyLCBkZXYtPm9mX25vZGUsICJpb21tdXMiLA0KPiAtCQkJIiNpb21tdS1jZWxs
-cyIsIC0xKSB7DQo+IC0JCWludCBjb3VudCA9IG9mX3BoYW5kbGVfaXRlcmF0b3JfYXJncygmaXQs
-IGlvbW11X3NwZWMuYXJncywNCj4gLQkJCQkJTUFYX1BIQU5ETEVfQVJHUyk7DQo+IC0JCWlvbW11
-X3NwZWMubnAgPSBvZl9ub2RlX2dldChpdC5ub2RlKTsNCj4gLQkJaW9tbXVfc3BlYy5hcmdzX2Nv
-dW50ID0gY291bnQ7DQo+IC0NCj4gLQkJbXRrX2lvbW11X2NyZWF0ZV9tYXBwaW5nKGRldiwgJmlv
-bW11X3NwZWMpOw0KPiAtDQo+IC0JCS8qIGRldi0+aW9tbXVfZndzcGVjIG1pZ2h0IGhhdmUgY2hh
-bmdlZCAqLw0KPiAtCQlmd3NwZWMgPSBkZXZfaW9tbXVfZndzcGVjX2dldChkZXYpOw0KPiAtDQo+
-IC0JCW9mX25vZGVfcHV0KGlvbW11X3NwZWMubnApOw0KPiAtCX0NCj4gLQ0KPiAtCWlmICghZndz
-cGVjIHx8IGZ3c3BlYy0+b3BzICE9ICZtdGtfaW9tbXVfb3BzKQ0KPiAtCQlyZXR1cm4gRVJSX1BU
-UigtRU5PREVWKTsgLyogTm90IGEgaW9tbXUgY2xpZW50IGRldmljZSAqLw0KPiAtDQo+IC0JZGF0
-YSA9IGRldl9pb21tdV9wcml2X2dldChkZXYpOw0KPiAtDQo+IC0JcmV0dXJuICZkYXRhLT5pb21t
-dTsNCj4gLX0NCj4gLQ0KPiAtc3RhdGljIHZvaWQgbXRrX2lvbW11X3Byb2JlX2ZpbmFsaXplKHN0
-cnVjdCBkZXZpY2UgKmRldikNCj4gLXsNCj4gLQlzdHJ1Y3QgZG1hX2lvbW11X21hcHBpbmcgKm10
-a19tYXBwaW5nOw0KPiAtCXN0cnVjdCBtdGtfaW9tbXVfZGF0YSAqZGF0YTsNCj4gLQlpbnQgZXJy
-Ow0KPiAtDQo+IC0JZGF0YSAgICAgICAgPSBkZXZfaW9tbXVfcHJpdl9nZXQoZGV2KTsNCj4gLQlt
-dGtfbWFwcGluZyA9IGRhdGEtPm1hcHBpbmc7DQo+IC0NCj4gLQllcnIgPSBhcm1faW9tbXVfYXR0
-YWNoX2RldmljZShkZXYsIG10a19tYXBwaW5nKTsNCj4gLQlpZiAoZXJyKQ0KPiAtCQlkZXZfZXJy
-KGRldiwgIkNhbid0IGNyZWF0ZSBJT01NVSBtYXBwaW5nIC0gRE1BLU9QUyB3aWxsIG5vdCB3b3Jr
-XG4iKTsNCj4gLX0NCj4gLQ0KPiAtc3RhdGljIHZvaWQgbXRrX2lvbW11X3JlbGVhc2VfZGV2aWNl
-KHN0cnVjdCBkZXZpY2UgKmRldikNCj4gLXsNCj4gLQlzdHJ1Y3QgaW9tbXVfZndzcGVjICpmd3Nw
-ZWMgPSBkZXZfaW9tbXVfZndzcGVjX2dldChkZXYpOw0KPiAtDQo+IC0JaWYgKCFmd3NwZWMgfHwg
-ZndzcGVjLT5vcHMgIT0gJm10a19pb21tdV9vcHMpDQo+IC0JCXJldHVybjsNCj4gLQ0KPiAtCWlv
-bW11X2Z3c3BlY19mcmVlKGRldik7DQo+ICsJcmV0dXJuIGlvbW11X2Z3c3BlY19hZGRfaWRzKGRl
-diwgYXJncy0+YXJncywgMSk7DQo+ICB9DQo+ICANCj4gIHN0YXRpYyBpbnQgbXRrX2lvbW11X2h3
-X2luaXQoY29uc3Qgc3RydWN0IG10a19pb21tdV9kYXRhICpkYXRhKQ0KPiBAQCAtNTI0LDEwICs0
-NTksOSBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IGlvbW11X29wcyBtdGtfaW9tbXVfb3BzID0gew0K
-PiAgCS51bm1hcAkJPSBtdGtfaW9tbXVfdW5tYXAsDQo+ICAJLmlvdmFfdG9fcGh5cwk9IG10a19p
-b21tdV9pb3ZhX3RvX3BoeXMsDQo+ICAJLnByb2JlX2RldmljZQk9IG10a19pb21tdV9wcm9iZV9k
-ZXZpY2UsDQo+IC0JLnByb2JlX2ZpbmFsaXplID0gbXRrX2lvbW11X3Byb2JlX2ZpbmFsaXplLA0K
-PiAgCS5yZWxlYXNlX2RldmljZQk9IG10a19pb21tdV9yZWxlYXNlX2RldmljZSwNCj4gLQkuZGVm
-X2RvbWFpbl90eXBlID0gbXRrX2lvbW11X2RlZl9kb21haW5fdHlwZSwNCj4gLQkuZGV2aWNlX2dy
-b3VwCT0gZ2VuZXJpY19kZXZpY2VfZ3JvdXAsDQo+ICsJLmRldmljZV9ncm91cAk9IG10a19pb21t
-dV9kZXZpY2VfZ3JvdXAsDQo+ICsJLm9mX3hsYXRlCT0gbXRrX2lvbW11X29mX3hsYXRlLA0KPiAg
-CS5wZ3NpemVfYml0bWFwCT0gfjBVTCA8PCBNVDI3MDFfSU9NTVVfUEFHRV9TSElGVCwNCj4gIH07
-DQo+ICANCj4gQEAgLTYyNiw2ICs1NjAsMTQgQEAgc3RhdGljIGludCBtdGtfaW9tbXVfcHJvYmUo
-c3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikNCj4gIAlpZiAocmV0KQ0KPiAgCQlyZXR1cm4g
-cmV0Ow0KPiAgDQo+ICsJLyoNCj4gKwkgKiBNVEsgZ2VuZXJhdGlvbiBvbmUgaW9tbXUgSFcgb25s
-eSBzdXBwb3J0IG9uZSBpb21tdSBkb21haW4sDQo+ICsJICogYW5kIGFsbCB0aGUgY2xpZW50IHNo
-YXJpbmcgdGhlIHNhbWUgaW92YSBhZGRyZXNzIHNwYWNlLg0KPiArCSAqLw0KPiArCWRhdGEtPm00
-dV9ncm91cCA9IGlvbW11X2dyb3VwX2FsbG9jKCk7DQo+ICsJaWYgKElTX0VSUihkYXRhLT5tNHVf
-Z3JvdXApKQ0KPiArCQlyZXR1cm4gUFRSX0VSUihkYXRhLT5tNHVfZ3JvdXApOw0KPiArDQo+ICAJ
-aWYgKCFpb21tdV9wcmVzZW50KCZwbGF0Zm9ybV9idXNfdHlwZSkpDQo+ICAJCWJ1c19zZXRfaW9t
-bXUoJnBsYXRmb3JtX2J1c190eXBlLCAgJm10a19pb21tdV9vcHMpOw0KPiAgDQo+IEBAIC02MzYs
-NiArNTc4LDcgQEAgc3RhdGljIGludCBtdGtfaW9tbXVfcmVtb3ZlKHN0cnVjdCBwbGF0Zm9ybV9k
-ZXZpY2UgKnBkZXYpDQo+ICB7DQo+ICAJc3RydWN0IG10a19pb21tdV9kYXRhICpkYXRhID0gcGxh
-dGZvcm1fZ2V0X2RydmRhdGEocGRldik7DQo+ICANCj4gKwlpb21tdV9ncm91cF9wdXQoZGF0YS0+
-bTR1X2dyb3VwKTsNCj4gIAlpb21tdV9kZXZpY2Vfc3lzZnNfcmVtb3ZlKCZkYXRhLT5pb21tdSk7
-DQo+ICAJaW9tbXVfZGV2aWNlX3VucmVnaXN0ZXIoJmRhdGEtPmlvbW11KTsNCj4gIA0KDQo=
+"interrupt" is not a valid property.
+
+Fixes: 7f8bcc0c4cfe ("arm64: dts: qcom: msm8992: Add BLSP2_UART2 and I2C nodes")
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/msm8992.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+index 188fff2095f1..8626b3a50eda 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+@@ -335,7 +335,7 @@
+ 		blsp2_uart2: serial@f995e000 {
+ 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+ 			reg = <0xf995e000 0x1000>;
+-			interrupt = <GIC_SPI 146 IRQ_TYPE_LEVEL_LOW>;
++			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_LOW>;
+ 			clock-names = "core", "iface";
+ 			clocks = <&gcc GCC_BLSP2_UART2_APPS_CLK>,
+ 				<&gcc GCC_BLSP2_AHB_CLK>;
+-- 
+2.17.1
 
