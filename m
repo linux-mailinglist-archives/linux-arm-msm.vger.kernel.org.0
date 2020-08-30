@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 566F6256EA8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Aug 2020 16:40:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18A14256E9E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Aug 2020 16:39:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbgH3Ok0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Aug 2020 10:40:26 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:17737 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726411AbgH3Ojo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Aug 2020 10:39:44 -0400
+        id S1726946AbgH3Oj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Aug 2020 10:39:28 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:47891 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726264AbgH3OjW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 30 Aug 2020 10:39:22 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598798383; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1598798361; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=PSFObMXbhORUF5AdMyNhKvu4kdYQ+ZI6KvZNhNgbpdY=; b=RU/5dtxtUbieDYFn7IHI02VyZBbwv83qXv59Xeyf5pIO9qRorj5Pqs+sH+eYmmpjcxffY4/H
- qGhhnFb5FP9kJ/ImT4fP/xNuRDousO1rJy6gppoIfIqfe3LlEVZlAGQJ14kh04nJVuvlz1Vp
- DreRnoo9gpHrYLJq7Kulz/jKJ70=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ bh=BG5Bli+klgMbg2PSkB4G0lK79qcXpmQXHNwoceerTbI=; b=iQ2lK9V5u9Ekul1ZfLlNwstLftiQoSovAtoqfkT21SkEQMShR5JtmnLqWVoOfTqyCyX4Snsc
+ OLv6xPplRQptEKdp347ngHC7bUzIHs2eE5Cg4vNAkPbtxQewuRAvJIoOF0nnmY4knbEQ7I0p
+ qU/b6zzy3GX7/Eh86UnvOKfZ0Qo=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f4bb9f912acec35e2847a7a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 30 Aug 2020 14:38:49
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f4bb9fe63431d1144a3fb01 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 30 Aug 2020 14:38:54
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9C275C433CB; Sun, 30 Aug 2020 14:38:48 +0000 (UTC)
+        id 65027C43387; Sun, 30 Aug 2020 14:38:53 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +36,9 @@ Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 34CB5C433CA;
-        Sun, 30 Aug 2020 14:38:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 34CB5C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B36ACC433C6;
+        Sun, 30 Aug 2020 14:38:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B36ACC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=deesin@codeaurora.org
 From:   Deepak Kumar Singh <deesin@codeaurora.org>
@@ -52,9 +51,9 @@ Cc:     mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
         Carl Huang <cjhuang@codeaurora.org>,
         Necip Fazil Yildiran <necip@google.com>,
         netdev@vger.kernel.org (open list:NETWORKING [GENERAL])
-Subject: [PATCH V1 2/4] net: qrtr: Add socket mode optimization
-Date:   Sun, 30 Aug 2020 20:08:10 +0530
-Message-Id: <1598798292-5971-3-git-send-email-deesin@codeaurora.org>
+Subject: [PATCH V1 3/4] net: qrtr: Change port allocation to use cyclic idr
+Date:   Sun, 30 Aug 2020 20:08:11 +0530
+Message-Id: <1598798292-5971-4-git-send-email-deesin@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1598798292-5971-1-git-send-email-deesin@codeaurora.org>
 References: <1598798292-5971-1-git-send-email-deesin@codeaurora.org>
@@ -65,164 +64,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Chris Lew <clew@codeaurora.org>
 
-A remote endpoint should not need to know when a client socket is freed
-if the socket never established commnication with the endpoint. Add a
-mode to keep track of which endpoints a socket communicates with.
+There is a race for clients that open sockets before the control port
+is bound. If a client gets an idr that was allocated before the control
+port is bound, there is a chance the previous address owner sent lookup
+packets to the control port. The new address owner will get residual
+responses to this the lookup packets.
 
-There are three modes a socket can be in:
-        INIT   - Socket has not sent anything or only local messages,
-                 only send client close to local services.
-
-        SINGLE - Socket has sent messages to a single ept, send event
-                 to this single ept.
-
-        MULTI  - Socket has sent messages to multiple epts, broadcast
-                 release of this socket.
-
-Server state changes should be broadcast throughout the system. Change
-the ipc state of a port when it sends a NEW SERVER control packet. This
-ensures the DEL CLIENT control packet is propagated correctly for
-servers.
+Change the idr_alloc to idr_alloc_cyclic so new idr's are allocated
+instead of trying to reuse the freed idrs.
 ---
- net/qrtr/qrtr.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 59 insertions(+), 13 deletions(-)
+ net/qrtr/qrtr.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index d9858a1..4496b75 100644
+index 4496b75..e2dd38e 100644
 --- a/net/qrtr/qrtr.c
 +++ b/net/qrtr/qrtr.c
-@@ -21,6 +21,10 @@
- #define QRTR_MIN_EPH_SOCKET 0x4000
- #define QRTR_MAX_EPH_SOCKET 0x7fff
- 
-+/* qrtr socket states */
-+#define QRTR_STATE_MULTI	-2
-+#define QRTR_STATE_INIT		-1
-+
- /**
-  * struct qrtr_hdr_v1 - (I|R)PCrouter packet header version 1
-  * @version: protocol version
-@@ -87,6 +91,8 @@ struct qrtr_sock {
- 	struct sock sk;
- 	struct sockaddr_qrtr us;
- 	struct sockaddr_qrtr peer;
-+
-+	int state;
- };
- 
- static inline struct qrtr_sock *qrtr_sk(struct sock *sk)
-@@ -653,29 +659,59 @@ static void qrtr_port_put(struct qrtr_sock *ipc)
- 	sock_put(&ipc->sk);
- }
- 
--/* Remove port assignment. */
--static void qrtr_port_remove(struct qrtr_sock *ipc)
-+static void qrtr_send_del_client(struct qrtr_sock *ipc)
- {
- 	struct qrtr_ctrl_pkt *pkt;
--	struct sk_buff *skb;
--	int port = ipc->us.sq_port;
- 	struct sockaddr_qrtr to;
-+	struct qrtr_node *node;
-+	struct sk_buff *skbn;
-+	struct sk_buff *skb;
-+	int type = QRTR_TYPE_DEL_CLIENT;
-+
-+	skb = qrtr_alloc_ctrl_packet(&pkt);
-+	if (!skb)
-+		return;
- 
- 	to.sq_family = AF_QIPCRTR;
- 	to.sq_node = QRTR_NODE_BCAST;
- 	to.sq_port = QRTR_PORT_CTRL;
- 
--	skb = qrtr_alloc_ctrl_packet(&pkt);
--	if (skb) {
--		pkt->cmd = cpu_to_le32(QRTR_TYPE_DEL_CLIENT);
--		pkt->client.node = cpu_to_le32(ipc->us.sq_node);
--		pkt->client.port = cpu_to_le32(ipc->us.sq_port);
-+	pkt->cmd = cpu_to_le32(QRTR_TYPE_DEL_CLIENT);
-+	pkt->client.node = cpu_to_le32(ipc->us.sq_node);
-+	pkt->client.port = cpu_to_le32(ipc->us.sq_port);
-+
-+	skb_set_owner_w(skb, &ipc->sk);
- 
--		skb_set_owner_w(skb, &ipc->sk);
--		qrtr_bcast_enqueue(NULL, skb, QRTR_TYPE_DEL_CLIENT, &ipc->us,
--				   &to);
-+	if (ipc->state == QRTR_STATE_MULTI) {
-+		qrtr_bcast_enqueue(NULL, skb, type, &ipc->us, &to);
-+		return;
-+	}
-+
-+	if (ipc->state > QRTR_STATE_INIT) {
-+		node = qrtr_node_lookup(ipc->state);
-+		if (!node)
-+			goto exit;
-+
-+		skbn = skb_clone(skb, GFP_KERNEL);
-+		if (!skbn) {
-+			qrtr_node_release(node);
-+			goto exit;
-+		}
-+
-+		skb_set_owner_w(skbn, &ipc->sk);
-+		qrtr_node_enqueue(node, skbn, type, &ipc->us, &to);
-+		qrtr_node_release(node);
+@@ -744,7 +744,8 @@ static int qrtr_port_assign(struct qrtr_sock *ipc, int *port)
+ 	mutex_lock(&qrtr_port_lock);
+ 	if (!*port) {
+ 		min_port = QRTR_MIN_EPH_SOCKET;
+-		rc = idr_alloc_u32(&qrtr_ports, ipc, &min_port, QRTR_MAX_EPH_SOCKET, GFP_ATOMIC);
++		rc = idr_alloc_cyclic(&qrtr_ports, ipc, &min_port,
++				      QRTR_MAX_EPH_SOCKET, GFP_ATOMIC);
+ 		if (!rc)
+ 			*port = min_port;
+ 	} else if (*port < QRTR_MIN_EPH_SOCKET && !capable(CAP_NET_ADMIN)) {
+@@ -754,7 +755,8 @@ static int qrtr_port_assign(struct qrtr_sock *ipc, int *port)
+ 		rc = idr_alloc_u32(&qrtr_ports, ipc, &min_port, 0, GFP_ATOMIC);
+ 	} else {
+ 		min_port = *port;
+-		rc = idr_alloc_u32(&qrtr_ports, ipc, &min_port, *port, GFP_ATOMIC);
++		rc = idr_alloc_cyclic(&qrtr_ports, ipc, &min_port,
++				      *port, GFP_ATOMIC);
+ 		if (!rc)
+ 			*port = min_port;
  	}
-+exit:
-+	qrtr_local_enqueue(NULL, skb, type, &ipc->us, &to);
-+}
- 
-+/* Remove port assignment. */
-+static void qrtr_port_remove(struct qrtr_sock *ipc)
-+{
-+	int port = ipc->us.sq_port;
-+
-+	qrtr_send_del_client(ipc);
- 	if (port == QRTR_PORT_CTRL)
- 		port = 0;
- 
-@@ -941,6 +977,11 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			return -ECONNRESET;
- 		}
- 		enqueue_fn = qrtr_node_enqueue;
-+
-+		if (ipc->state > QRTR_STATE_INIT && ipc->state != node->nid)
-+			ipc->state = QRTR_STATE_MULTI;
-+		else if (ipc->state == QRTR_STATE_INIT)
-+			ipc->state = node->nid;
- 	}
- 
- 	plen = (len + 3) & ~3;
-@@ -957,7 +998,8 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 		goto out_node;
- 	}
- 
--	if (ipc->us.sq_port == QRTR_PORT_CTRL) {
-+	if (ipc->us.sq_port == QRTR_PORT_CTRL ||
-+	    addr->sq_port == QRTR_PORT_CTRL) {
- 		if (len < 4) {
- 			rc = -EINVAL;
- 			kfree_skb(skb);
-@@ -969,6 +1011,9 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	}
- 
- 	type = le32_to_cpu(qrtr_type);
-+	if (addr->sq_port == QRTR_PORT_CTRL && type == QRTR_TYPE_NEW_SERVER)
-+		ipc->state = QRTR_STATE_MULTI;
-+
- 	rc = enqueue_fn(node, skb, type, &ipc->us, addr);
- 	if (rc >= 0)
- 		rc = len;
-@@ -1256,6 +1301,7 @@ static int qrtr_create(struct net *net, struct socket *sock,
- 	ipc->us.sq_family = AF_QIPCRTR;
- 	ipc->us.sq_node = qrtr_local_nid;
- 	ipc->us.sq_port = 0;
-+	ipc->state = QRTR_STATE_INIT;
- 
- 	return 0;
- }
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
