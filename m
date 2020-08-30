@@ -2,92 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E28256EA5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Aug 2020 16:40:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF97256ED3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Aug 2020 16:59:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726881AbgH3Ojn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Aug 2020 10:39:43 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:47891 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726981AbgH3Oje (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Aug 2020 10:39:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598798373; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=63k57UM9aKfRQtY/EP8nhwKq5dGcYV4cF/NPx0Pmcm0=; b=sdi9d+vUk/dlIzn4y8sRdxdPYwkNiziMnsnWdgv6jnxOV7O7Y4cu5zo5dlRF4C7WNwNLBqfH
- LeqtXwklvOHr5eR39LeoeuVL5nURm04vigo5TYXlUAfSwDYrODLDalNinRBOS7qYYV94wdnH
- MXNoKAcznIBXptxqA6cCvsaoy34=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f4bba03f4f3e646136427d0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 30 Aug 2020 14:38:59
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 076CBC433CA; Sun, 30 Aug 2020 14:38:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8D5FC433C6;
-        Sun, 30 Aug 2020 14:38:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A8D5FC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=deesin@codeaurora.org
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
-Cc:     mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Carl Huang <cjhuang@codeaurora.org>,
-        Necip Fazil Yildiran <necip@google.com>,
-        netdev@vger.kernel.org (open list:NETWORKING [GENERAL])
-Subject: [PATCH V1 4/4] net: qrtr: Check function pointer before calling
-Date:   Sun, 30 Aug 2020 20:08:12 +0530
-Message-Id: <1598798292-5971-5-git-send-email-deesin@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1598798292-5971-1-git-send-email-deesin@codeaurora.org>
-References: <1598798292-5971-1-git-send-email-deesin@codeaurora.org>
+        id S1726565AbgH3O70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Aug 2020 10:59:26 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:40412 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726264AbgH3O70 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 30 Aug 2020 10:59:26 -0400
+Received: by mail-ed1-f66.google.com with SMTP id l21so3201473eds.7;
+        Sun, 30 Aug 2020 07:59:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=95aMteSUqz2UqRupz4OeuFOBpeiq87L2yzxyqFYtQ+8=;
+        b=gLhtK7Djwq5yNMCTtSPk7dkaB+xLzfSvv6aTQs1PDYXPsWHFHDEmndjKyrYurVcP4O
+         o2XoWEpA3f8RU1De8CTzYXIxqSetS62xjFv+SBCCNAB55GF6it4aoci761VOzJHiOX7V
+         myVrZTWYyJIs9oVwr8w3GJYbLZmxwe+gAxr+8EZyQYu4ucSWyrqOhsrXbPdD88zVQM3r
+         8+rl8X2feVAI+ZzSB53ExWFwgvAzrPXmU7f7+lQhdQy/gTwD5DKtUjJzQ6mpnEVKdOVk
+         4+pwTifPU3sgd+hnQNQwC9SP2mbJnIO8pHcknVQgxqWZMmBbKkKN9s8hEV/kErlzUXWK
+         0P5w==
+X-Gm-Message-State: AOAM530XKRT4j3dHxiUDwHnEVpyNlmrM+OeIKM2341wf/887zchcIn1A
+        X4RGQAf3je+L3rtBuWAnyfs=
+X-Google-Smtp-Source: ABdhPJwcVzb4yfI4YklbaQxG3N3ankYfyi4ah8zSRp71BBpRya4zWDYzXjLfRyTH/iphXOiD4gIILw==
+X-Received: by 2002:aa7:d981:: with SMTP id u1mr7471575eds.311.1598799564197;
+        Sun, 30 Aug 2020 07:59:24 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.216])
+        by smtp.googlemail.com with ESMTPSA id f22sm5003578edt.91.2020.08.30.07.59.22
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 30 Aug 2020 07:59:23 -0700 (PDT)
+Date:   Sun, 30 Aug 2020 16:59:21 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Barry Song <baohua@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Mans Rullgard <mans@mansr.com>, Jun Nie <jun.nie@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND PATCH 4/5] ARM: dts: tango: Align L2 cache-controller
+ nodename with dtschema
+Message-ID: <20200830145921.GC31461@kozik-lap>
+References: <20200819175853.21492-1-krzk@kernel.org>
+ <20200819175853.21492-4-krzk@kernel.org>
+ <20200820093118.GC15884@kozik-lap>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200820093118.GC15884@kozik-lap>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arun Kumar Neelakantam <aneela@codeaurora.org>
+On Thu, Aug 20, 2020 at 11:31:18AM +0200, Krzysztof Kozlowski wrote:
+> On Wed, Aug 19, 2020 at 07:58:52PM +0200, Krzysztof Kozlowski wrote:
+> > Fix dtschema validator warnings like:
+> >     l2-cache-controller@20100000: $nodename:0:
+> >         'l2-cache-controller@20100000' does not match '^(cache-controller|cpu)(@[0-9a-f,]+)*$'
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > ---
+> >  arch/arm/boot/dts/tango4-common.dtsi | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> I forgot to add the tag provided on previous submission:
+> Acked-by: Mans Rullgard <mans@mansr.com>
 
-sk_error_report callback function called without validating cause the NULL
-pointer dereference.
+Hi,
 
-Validate function pointer before using for error report.
----
- net/qrtr/qrtr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Ping, any comments here?
 
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index e2dd38e..01cabd3 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -786,7 +786,8 @@ static void qrtr_reset_ports(void)
- 
- 		sock_hold(&ipc->sk);
- 		ipc->sk.sk_err = ENETRESET;
--		ipc->sk.sk_error_report(&ipc->sk);
-+		if (ipc->sk.sk_error_report)
-+			ipc->sk.sk_error_report(&ipc->sk);
- 		sock_put(&ipc->sk);
- 	}
- 	mutex_unlock(&qrtr_port_lock);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Best regards,
+Krzysztof
 
