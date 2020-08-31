@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CE10257CCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 17:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38B16257D10
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 17:35:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728909AbgHaPbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 11:31:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42386 "EHLO mail.kernel.org"
+        id S1728266AbgHaPdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 11:33:37 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42798 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728857AbgHaPb3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 11:31:29 -0400
+        id S1728961AbgHaPbl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 11:31:41 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 46C5921531;
-        Mon, 31 Aug 2020 15:31:28 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3FF66215A4;
+        Mon, 31 Aug 2020 15:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598887889;
-        bh=P2MC/YP6p1guc9B/2z+SRDFbG5v6erQYKBki/Y+23eM=;
+        s=default; t=1598887901;
+        bh=CyQWGRvj67cqowJfDn4vuv/txn4szGizTTVBdxHOyvM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=cKpOEQKmV0bxxyoTr4T/C/3ZZfjlUqJkQNoBQjYdB3CtaGi9R69Km3DwLSmQN3znj
-         vGP/gKv9i0R1IZZsRVQzZnSOvKPNw31lvYmpBA1a8mBj6ptXVkNBRwTrq8mZaWKD3O
-         xHLrDjq+lNIg0p0a8z0h8XBIK8VfiyTYHe+bde4Y=
+        b=ICvfExpuUBGCPMar/Dq+tMnofW5BstnY6VlUJOWXA5d/aF74bHCVseLBwq+XTVu0n
+         kwAr+Gwjv4nitRWfDelDiCYAswpEXXypNT0d30cHsCjwOpF6ySK0vPm5dxaaJHvgIb
+         tcZmv0YzGvF6nx72MubEsgBS1mZKICoz5r7Veu38=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 07/11] drm/msm/a6xx: fix gmu start on newer firmware
-Date:   Mon, 31 Aug 2020 11:31:13 -0400
-Message-Id: <20200831153117.1024537-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 3/9] drm/msm: add shutdown support for display platform_driver
+Date:   Mon, 31 Aug 2020 11:31:30 -0400
+Message-Id: <20200831153136.1024676-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200831153117.1024537-1-sashal@kernel.org>
-References: <20200831153117.1024537-1-sashal@kernel.org>
+In-Reply-To: <20200831153136.1024676-1-sashal@kernel.org>
+References: <20200831153136.1024676-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -44,48 +44,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Krishna Manikandan <mkrishn@codeaurora.org>
 
-[ Upstream commit f5749d6181fa7df5ae741788e5d96f593d3a60b6 ]
+[ Upstream commit 9d5cbf5fe46e350715389d89d0c350d83289a102 ]
 
-New Qualcomm firmware has changed a way it reports back the 'started'
-event. Support new register values.
+Define shutdown callback for display drm driver,
+so as to disable all the CRTCS when shutdown
+notification is received by the driver.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This change will turn off the timing engine so
+that no display transactions are requested
+while mmu translations are getting disabled
+during reboot sequence.
+
+Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+
+Changes in v2:
+	- Remove NULL check from msm_pdev_shutdown (Stephen Boyd)
+	- Change commit text to reflect when this issue
+	  was uncovered (Sai Prakash Ranjan)
+
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 9cde79a7335c8..739ca9c2081a6 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -117,12 +117,22 @@ static int a6xx_gmu_start(struct a6xx_gmu *gmu)
- {
- 	int ret;
- 	u32 val;
-+	u32 mask, reset_val;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index d9c0687435a05..c59240b566d83 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1134,6 +1134,13 @@ static int msm_pdev_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static void msm_pdev_shutdown(struct platform_device *pdev)
++{
++	struct drm_device *drm = platform_get_drvdata(pdev);
 +
-+	val = gmu_read(gmu, REG_A6XX_GMU_CM3_DTCM_START + 0xff8);
-+	if (val <= 0x20010004) {
-+		mask = 0xffffffff;
-+		reset_val = 0xbabeface;
-+	} else {
-+		mask = 0x1ff;
-+		reset_val = 0x100;
-+	}
- 
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 0);
- 
- 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_CM3_FW_INIT_RESULT, val,
--		val == 0xbabeface, 100, 10000);
-+		(val & mask) == reset_val, 100, 10000);
- 
- 	if (ret)
- 		dev_err(gmu->dev, "GMU firmware initialization timed out\n");
++	drm_atomic_helper_shutdown(drm);
++}
++
+ static const struct of_device_id dt_match[] = {
+ 	{ .compatible = "qcom,mdp4", .data = (void *)4 },	/* MDP4 */
+ 	{ .compatible = "qcom,mdss", .data = (void *)5 },	/* MDP5 MDSS */
+@@ -1144,6 +1151,7 @@ MODULE_DEVICE_TABLE(of, dt_match);
+ static struct platform_driver msm_platform_driver = {
+ 	.probe      = msm_pdev_probe,
+ 	.remove     = msm_pdev_remove,
++	.shutdown   = msm_pdev_shutdown,
+ 	.driver     = {
+ 		.name   = "msm",
+ 		.of_match_table = dt_match,
 -- 
 2.25.1
 
