@@ -2,127 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 673A9257823
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 13:20:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F690257A14
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 15:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725964AbgHaLTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 07:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43632 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726528AbgHaLR6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 07:17:58 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2297C0611E0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 04:09:42 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id c142so392056pfb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 04:09:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=E02AUVeFQVT/Yby1TXwpBy6LjVsB+G1ulzMrGLTQLsU=;
-        b=FNd/akIMkL3eaopJcpGVw841qNXHifVpshOPHlo/uuzzMC1uIxR4rpF1cuEx20MJW8
-         zRU3b7IXYtOiWUHE2usegI5lqkz29pQSEe7lc2Zn6kFtFUMZkTsgPTu53uMWFebd0coM
-         iLMT0oFYlNnVymD+VsZPkcbeOQMjtAIsBp7DxOf1eo/wPc9H61/kybyugntRfQEZbv8D
-         gwC6Tj3nw1Cui3GshhMMxUmIqh6mQUDR4d6WK83d4fAnnl0g+V9RF79Hz/YfHby4mlw7
-         mR3PyKcjWV5VnHdjRO8FhwNUz77opdus4HEGeEpTBOw/d8C3bmxPjA6qWJWpAFad6iz7
-         g8gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=E02AUVeFQVT/Yby1TXwpBy6LjVsB+G1ulzMrGLTQLsU=;
-        b=gCSxqCtrXrMWEocQEs7DtpurFBVN3w/dy3RSj8afzEgYUFQdreIYfHLrdc2I3ddDUn
-         5wm/T7tapl/kLKTlU+gOIn9IjKnyb+l4qq00cOfP4GR+2Fw6ZPEV/Vt0tmGFAsjyNhYa
-         WAhfMuYhHFpMaaAOMAWRM1hu9gcHSWLoOPmJHO1K8z57FXT9UJXjqoLGqQeJPFpMvxSF
-         ge8ute1FQWLyCWj6O3vAColF9P+o267+P5GzBXeljfZ/LDdMmSs4tQ3ZquTmcNx4KQkR
-         0TF4SrfcIw1CLYQ99sP5v9KJHWlevj5PsOeXQ3QRImDTcsBqTmHDNwSL7c3UlaumxoeI
-         Rfmw==
-X-Gm-Message-State: AOAM531zNAFtMxp9TVbX8abfX0c+eGjvIWNFZSRVkQpnIH4DV63XsTtq
-        qxDxVLaS93bcjRm2HHlEHtKcAQ==
-X-Google-Smtp-Source: ABdhPJzSBT56cUJvUmQ1jeDl1RjMGJiu46b0HYsbuCGKuS2QrgmD92t81oKVAXJFmHCb4EhXLUuNfg==
-X-Received: by 2002:aa7:9207:: with SMTP id 7mr819876pfo.156.1598872182053;
-        Mon, 31 Aug 2020 04:09:42 -0700 (PDT)
-Received: from localhost ([122.167.135.199])
-        by smtp.gmail.com with ESMTPSA id u16sm7495367pfn.134.2020.08.31.04.09.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 31 Aug 2020 04:09:41 -0700 (PDT)
-Date:   Mon, 31 Aug 2020 16:39:39 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     rnayak@codeaurora.org, Adrian Hunter <adrian.hunter@intel.com>,
+        id S1727042AbgHaNIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 09:08:48 -0400
+Received: from mga18.intel.com ([134.134.136.126]:21885 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726984AbgHaNIn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 09:08:43 -0400
+IronPort-SDR: epgQ2NisbhrzCux6S+AsxqKKo0r2JuYgVrgHJoA52YXrxBLO+RTr2BoGjUcU63+LBM75XG59qL
+ 3rYMPH2nMGzA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9729"; a="144643457"
+X-IronPort-AV: E=Sophos;i="5.76,375,1592895600"; 
+   d="scan'208";a="144643457"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2020 06:08:34 -0700
+IronPort-SDR: EohOby+7M8jiGk+t8vzztTtibrfD4QbKSTQq1hGxL18iqul7w31+Wm23G0lKBK+P+i0d3SJVq3
+ VWCHzD9m0qhg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,375,1592895600"; 
+   d="scan'208";a="501331763"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.73]) ([10.237.72.73])
+  by fmsmga006.fm.intel.com with ESMTP; 31 Aug 2020 06:08:20 -0700
+Subject: Re: [PATCH v1 1/2] mmc: cqhci: add new cqhci_host_ops pre_enable()
+ and post_disable()
+To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>, mirq-linux@rere.qmqm.pl,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        bcm-kernel-feedback-list@broadcom.com,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Fabio Estevam <festevam@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Mao Yong <yong.mao@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>,
+        Kate Stewart <kstewart@linuxfoundation.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Qiang Yu <yuq825@gmail.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Rob Clark <robdclark@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sean Paul <sean@poorly.run>, Shawn Guo <shawnguo@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        lima@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH V2 0/8] opp: Unconditionally call
- dev_pm_opp_of_remove_table()
-Message-ID: <20200831110939.qnyugmhajkg36gzw@vireshk-i7>
-References: <cover.1598594714.git.viresh.kumar@linaro.org>
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Pan Bian <bianpan2016@163.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Allison Randal <allison@lohutok.net>,
+        Mathieu Malaterre <malat@debian.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Kuohong Wang <kuohong.wang@mediatek.com>
+Cc:     kernel-team@android.com, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        devicetree@vger.kernel.org, wsd_upstream@mediatek.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <1598520783-25250-1-git-send-email-chun-hung.wu@mediatek.com>
+ <1598520783-25250-2-git-send-email-chun-hung.wu@mediatek.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <9c0dd5b4-5d9e-e559-81f5-fbf6024b67bb@intel.com>
+Date:   Mon, 31 Aug 2020 16:07:43 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1598594714.git.viresh.kumar@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <1598520783-25250-2-git-send-email-chun-hung.wu@mediatek.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28-08-20, 11:37, Viresh Kumar wrote:
-> Hello,
+On 27/08/20 12:33 pm, Chun-Hung Wu wrote:
+> Add pre_enable() and post_disable() for cqhci_host_ops.
+> Add hook functions before cqhci enable and
+> after cqhci disable for platforms need them.
 > 
-> This cleans up some of the user code around calls to
-> dev_pm_opp_of_remove_table().
+> Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
+
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+
+> ---
+>  drivers/mmc/host/cqhci.c |    6 ++++++
+>  drivers/mmc/host/cqhci.h |    2 ++
+>  2 files changed, 8 insertions(+)
 > 
-> All the patches can be picked by respective maintainers directly except
-> for the last patch, which needs the previous two to get merged first.
+> diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
+> index cfa87df..697fe40 100644
+> --- a/drivers/mmc/host/cqhci.c
+> +++ b/drivers/mmc/host/cqhci.c
+> @@ -376,6 +376,9 @@ static void cqhci_off(struct mmc_host *mmc)
+>  	else
+>  		pr_debug("%s: cqhci: CQE off\n", mmc_hostname(mmc));
+>  
+> +	if (cq_host->ops->post_disable)
+> +		cq_host->ops->post_disable(mmc);
+> +
+>  	mmc->cqe_on = false;
+>  }
+>  
+> @@ -580,6 +583,9 @@ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
+>  		__cqhci_enable(cq_host);
+>  
+>  	if (!mmc->cqe_on) {
+> +		if (cq_host->ops->pre_enable)
+> +			cq_host->ops->pre_enable(mmc);
+> +
+>  		cqhci_writel(cq_host, 0, CQHCI_CTL);
+>  		mmc->cqe_on = true;
+>  		pr_debug("%s: cqhci: CQE on\n", mmc_hostname(mmc));
+> diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
+> index 4377001..89bf6ad 100644
+> --- a/drivers/mmc/host/cqhci.h
+> +++ b/drivers/mmc/host/cqhci.h
+> @@ -206,6 +206,8 @@ struct cqhci_host_ops {
+>  	void (*disable)(struct mmc_host *mmc, bool recovery);
+>  	void (*update_dcmd_desc)(struct mmc_host *mmc, struct mmc_request *mrq,
+>  				 u64 *data);
+> +	void (*pre_enable)(struct mmc_host *mmc);
+> +	void (*post_disable)(struct mmc_host *mmc);
+>  };
+>  
+>  static inline void cqhci_writel(struct cqhci_host *host, u32 val, int reg)
 > 
-> These are based for 5.9-rc1.
- 
-> Viresh Kumar (8):
->   cpufreq: imx6q: Unconditionally call dev_pm_opp_of_remove_table()
->   drm/lima: Unconditionally call dev_pm_opp_of_remove_table()
->   drm/msm: Unconditionally call dev_pm_opp_of_remove_table()
->   mmc: sdhci-msm: Unconditionally call dev_pm_opp_of_remove_table()
->   spi: spi-geni-qcom: Unconditionally call dev_pm_opp_of_remove_table()
->   spi: spi-qcom-qspi: Unconditionally call dev_pm_opp_of_remove_table()
->   tty: serial: qcom_geni_serial: Unconditionally call
->     dev_pm_opp_of_remove_table()
->   qcom-geni-se: remove has_opp_table
 
-During testing by some of the Linaro folks on linux-next, we found out
-that there was a bug in the OPP core (which makes the kernel crash in
-some corner cases with these patches) for which I have sent a fix
-today which should be part of 5.9-rc4:
-
-https://lore.kernel.org/lkml/922ff0759a16299e24cacfc981ac07914d8f1826.1598865786.git.viresh.kumar@linaro.org/
-
-Please apply the patches over rc4 only once it comes out (I will
-confirm by that time once the patch gets merged). Else you guys can
-provide your Ack and I can take the patches through OPP tree.
-
--- 
-viresh
