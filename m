@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F141257DBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 17:40:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29FC3257DB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 17:40:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728464AbgHaP3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 11:29:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38656 "EHLO mail.kernel.org"
+        id S1729225AbgHaPjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 11:39:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38944 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728454AbgHaP3u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 11:29:50 -0400
+        id S1728483AbgHaP34 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 11:29:56 -0400
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 276F220767;
-        Mon, 31 Aug 2020 15:29:49 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 08C5320936;
+        Mon, 31 Aug 2020 15:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598887790;
-        bh=igUA3ysCtvbQZlZxzdgP/arDzUKvL7VVNXaZw/amLFA=;
+        s=default; t=1598887796;
+        bh=8CtIqjoJ1SacnqIRXbMc/xIzgI0xr7BYm3qPaqxHkiQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IcUH9tXPhQYDf7AKDqKwFWhGQywl4yYnEP9UsKnJpS+ClPq64CHQ2I8+MpCr/Hs8F
-         kc8P8vHdY9ACCOHUu+h6MOEBru5cU0FD/2IZAiqW9oNjL5s4bFxHcmg/qS8j3y/Gb/
-         bJCWwyEzkgNYeqwd6Qzb/4WUAJS78PjsZJUJvN28=
+        b=1Vn84u4g4uuKK7vxNtGXaS1V/V/l1k4hJYevQKeTpOz3onfdRxk/8znuOi9ct0vLh
+         wVSgHVPy5H5zNxUbO8uVdMRNzfFiVXeBUazq2J0nL4XClaKDxlvNp4pXOhr4hMcTCb
+         8dxTpuo9rYWkgdZ8Ut74A6kLauuRznSZVv2VTnCg=
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.8 09/42] drm/msm: add shutdown support for display platform_driver
-Date:   Mon, 31 Aug 2020 11:29:01 -0400
-Message-Id: <20200831152934.1023912-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.8 13/42] drm/msm: enable vblank during atomic commits
+Date:   Mon, 31 Aug 2020 11:29:05 -0400
+Message-Id: <20200831152934.1023912-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200831152934.1023912-1-sashal@kernel.org>
 References: <20200831152934.1023912-1-sashal@kernel.org>
@@ -44,58 +44,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Krishna Manikandan <mkrishn@codeaurora.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 9d5cbf5fe46e350715389d89d0c350d83289a102 ]
+[ Upstream commit 43906812eaab06423f56af5cca9a9fcdbb4ac454 ]
 
-Define shutdown callback for display drm driver,
-so as to disable all the CRTCS when shutdown
-notification is received by the driver.
+This has roughly the same effect as drm_atomic_helper_wait_for_vblanks(),
+basically just ensuring that vblank accounting is enabled so that we get
+valid timestamp/seqn on pageflip events.
 
-This change will turn off the timing engine so
-that no display transactions are requested
-while mmu translations are getting disabled
-during reboot sequence.
-
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-
-Changes in v2:
-	- Remove NULL check from msm_pdev_shutdown (Stephen Boyd)
-	- Change commit text to reflect when this issue
-	  was uncovered (Sai Prakash Ranjan)
-
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/msm/msm_atomic.c | 36 ++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index f6ce40bf36998..b4d61af7a104e 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1328,6 +1328,13 @@ static int msm_pdev_remove(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+index 5ccfad794c6a5..561bfa48841c3 100644
+--- a/drivers/gpu/drm/msm/msm_atomic.c
++++ b/drivers/gpu/drm/msm/msm_atomic.c
+@@ -27,6 +27,34 @@ int msm_atomic_prepare_fb(struct drm_plane *plane,
+ 	return msm_framebuffer_prepare(new_state->fb, kms->aspace);
  }
  
-+static void msm_pdev_shutdown(struct platform_device *pdev)
-+{
-+	struct drm_device *drm = platform_get_drvdata(pdev);
++/*
++ * Helpers to control vblanks while we flush.. basically just to ensure
++ * that vblank accounting is switched on, so we get valid seqn/timestamp
++ * on pageflip events (if requested)
++ */
 +
-+	drm_atomic_helper_shutdown(drm);
++static void vblank_get(struct msm_kms *kms, unsigned crtc_mask)
++{
++	struct drm_crtc *crtc;
++
++	for_each_crtc_mask(kms->dev, crtc, crtc_mask) {
++		if (!crtc->state->active)
++			continue;
++		drm_crtc_vblank_get(crtc);
++	}
 +}
 +
- static const struct of_device_id dt_match[] = {
- 	{ .compatible = "qcom,mdp4", .data = (void *)KMS_MDP4 },
- 	{ .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
-@@ -1340,6 +1347,7 @@ MODULE_DEVICE_TABLE(of, dt_match);
- static struct platform_driver msm_platform_driver = {
- 	.probe      = msm_pdev_probe,
- 	.remove     = msm_pdev_remove,
-+	.shutdown   = msm_pdev_shutdown,
- 	.driver     = {
- 		.name   = "msm",
- 		.of_match_table = dt_match,
++static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
++{
++	struct drm_crtc *crtc;
++
++	for_each_crtc_mask(kms->dev, crtc, crtc_mask) {
++		if (!crtc->state->active)
++			continue;
++		drm_crtc_vblank_put(crtc);
++	}
++}
++
+ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ {
+ 	unsigned crtc_mask = BIT(crtc_idx);
+@@ -44,6 +72,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ 
+ 	kms->funcs->enable_commit(kms);
+ 
++	vblank_get(kms, crtc_mask);
++
+ 	/*
+ 	 * Flush hardware updates:
+ 	 */
+@@ -58,6 +88,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ 	kms->funcs->wait_flush(kms, crtc_mask);
+ 	trace_msm_atomic_wait_flush_finish(crtc_mask);
+ 
++	vblank_put(kms, crtc_mask);
++
+ 	mutex_lock(&kms->commit_lock);
+ 	kms->funcs->complete_commit(kms, crtc_mask);
+ 	mutex_unlock(&kms->commit_lock);
+@@ -221,6 +253,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	 */
+ 	kms->pending_crtc_mask &= ~crtc_mask;
+ 
++	vblank_get(kms, crtc_mask);
++
+ 	/*
+ 	 * Flush hardware updates:
+ 	 */
+@@ -235,6 +269,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	kms->funcs->wait_flush(kms, crtc_mask);
+ 	trace_msm_atomic_wait_flush_finish(crtc_mask);
+ 
++	vblank_put(kms, crtc_mask);
++
+ 	mutex_lock(&kms->commit_lock);
+ 	kms->funcs->complete_commit(kms, crtc_mask);
+ 	mutex_unlock(&kms->commit_lock);
 -- 
 2.25.1
 
