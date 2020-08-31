@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61E4A25810B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 20:24:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07F6E258100
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 20:23:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729805AbgHaSYJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 14:24:09 -0400
+        id S1728573AbgHaSXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 14:23:22 -0400
 Received: from m43-7.mailgun.net ([69.72.43.7]:23520 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727864AbgHaSYI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 14:24:08 -0400
+        id S1729877AbgHaSXU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 14:23:20 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598898248; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1598898200; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=hN47zreRegXa3U/xdAlheApjxQc2p0JwkltAjJV1Z/w=; b=mTLiNU/qN/gF1+cfRsR6abOBoVLkZ9Aso7WS3vAy0Fg5SRpVM68gI+c4Cnx9Zf1SoghJtQo2
- iKyrI3l8MZfiE1dB3WCBQBjNWXXUSftdZpH6wEcsX8USREUQVp7+3fPtrZPHM5d3LOqn03+q
- 6e80XHKtkj31hRhXp5XSb9oMvsU=
+ Sender; bh=O0UJKeWD4eqLVFqVMEnZw4Fp2WztDnFI04BKqpHcnkA=; b=fQFXg+9lXZjl7PifYWkqiZY4LGQynHN1MH7HPqoEqYdV4ACgf6aHm56/ENW67+C8JZm6ooW/
+ xQrnpnetOwpMlc1+IUNo+HT1dBJuVEox7uJ2Jnam1kp7OfqP0eDS75wZhDmkWw4oFb1GCuwn
+ waRr1Bco8DHbNEQx3jNt/mJNO0Y=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f4d4017be06707b348cdacc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 Aug 2020 18:23:19
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5f4d401625e1ee758632e4aa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 Aug 2020 18:23:18
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E5BE0C433C6; Mon, 31 Aug 2020 18:23:18 +0000 (UTC)
+        id 7F85AC433B2; Mon, 31 Aug 2020 18:23:18 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -36,9 +36,9 @@ Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.10
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8C67C4339C;
-        Mon, 31 Aug 2020 18:23:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A8C67C4339C
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 09293C43391;
+        Mon, 31 Aug 2020 18:23:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 09293C43391
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
 From:   Abhinav Kumar <abhinavk@codeaurora.org>
@@ -49,9 +49,9 @@ Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
         aravindh@codeaurora.org, tanmay@codeaurora.org,
         cychiang@chromium.org, khsieh@codeaurora.org,
         vsujithk@codeaurora.org, rohitkr@codeaurora.org
-Subject: [PATCH v4 3/5] drm/msm/dp: add hook_plugged_cb hdmi-codec op for MSM DP driver
-Date:   Mon, 31 Aug 2020 11:22:56 -0700
-Message-Id: <20200831182258.16632-4-abhinavk@codeaurora.org>
+Subject: [PATCH v4 4/5] drm/msm/dp: signal the hotplug disconnect in the event handler
+Date:   Mon, 31 Aug 2020 11:22:57 -0700
+Message-Id: <20200831182258.16632-5-abhinavk@codeaurora.org>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20200831182258.16632-1-abhinavk@codeaurora.org>
 References: <20200831182258.16632-1-abhinavk@codeaurora.org>
@@ -62,10 +62,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the hook_plugged_cb op for the MSM DP driver to signal connect
-and disconnect events to the hdmi-codec driver which in-turn shall
-notify the audio subsystem to start a new or teardown an existing
-session.
+Signal the hotplug disconnect event to the audio side in the
+event handler so that they are notified earlier and have more
+time to process the disconnect event.
 
 Changes in v2: none
 Changes in v3: none
@@ -73,66 +72,14 @@ Changes in v4: rebase on top of latest patchset of dependency
 
 Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
 ---
- drivers/gpu/drm/msm/dp/dp_audio.c   | 25 ++++++++++++++++++++++++-
- drivers/gpu/drm/msm/dp/dp_display.c | 23 +++++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_display.h |  7 +++++++
- 3 files changed, 54 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
-index 75556eea1059..11fa5ad7a801 100644
---- a/drivers/gpu/drm/msm/dp/dp_audio.c
-+++ b/drivers/gpu/drm/msm/dp/dp_audio.c
-@@ -10,7 +10,6 @@
- 
- #include <drm/drm_dp_helper.h>
- #include <drm/drm_edid.h>
--#include <sound/hdmi-codec.h>
- 
- #include "dp_catalog.h"
- #include "dp_audio.h"
-@@ -442,6 +441,29 @@ static struct dp_audio_private *dp_audio_get_data(struct platform_device *pdev)
- 	return container_of(dp_audio, struct dp_audio_private, dp_audio);
- }
- 
-+static int dp_audio_hook_plugged_cb(struct device *dev, void *data,
-+		hdmi_codec_plugged_cb fn,
-+		struct device *codec_dev)
-+{
-+
-+	struct platform_device *pdev;
-+	struct msm_dp *dp_display;
-+
-+	pdev = to_platform_device(dev);
-+	if (!pdev) {
-+		pr_err("invalid input\n");
-+		return -ENODEV;
-+	}
-+
-+	dp_display = platform_get_drvdata(pdev);
-+	if (!dp_display) {
-+		pr_err("invalid input\n");
-+		return -ENODEV;
-+	}
-+
-+	return dp_display_set_plugged_cb(dp_display, fn, codec_dev);
-+}
-+
- static int dp_audio_get_eld(struct device *dev,
- 	void *data, uint8_t *buf, size_t len)
- {
-@@ -513,6 +535,7 @@ static const struct hdmi_codec_ops dp_audio_codec_ops = {
- 	.hw_params = dp_audio_hw_params,
- 	.audio_shutdown = dp_audio_shutdown,
- 	.get_eld = dp_audio_get_eld,
-+	.hook_plugged_cb = dp_audio_hook_plugged_cb,
- };
- 
- static struct hdmi_codec_pdata codec_data = {
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 7cf25e151ded..76eb6d765075 100644
+index 76eb6d765075..606f44321b0f 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -768,6 +768,13 @@ static int dp_display_prepare(struct msm_dp *dp)
+@@ -533,6 +533,13 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
  	return 0;
  }
  
@@ -143,76 +90,42 @@ index 7cf25e151ded..76eb6d765075 100644
 +		dp_display->plugged_cb(dp_display->codec_dev, plugged);
 +}
 +
+ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ {
+ 	struct dp_usbpd *hpd = dp->usbpd;
+@@ -578,6 +585,9 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	/* start sanity checking */
+ 	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, 50);
+ 
++	/* signal the disconnect event early to ensure proper teardown */
++	dp_display_handle_plugged_change(g_dp_display, false);
++
+ 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
+ 					DP_DP_IRQ_HPD_INT_MASK, true);
+ 
+@@ -768,13 +778,6 @@ static int dp_display_prepare(struct msm_dp *dp)
+ 	return 0;
+ }
+ 
+-static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
+-		bool plugged)
+-{
+-	if (dp_display->plugged_cb && dp_display->codec_dev)
+-		dp_display->plugged_cb(dp_display->codec_dev, plugged);
+-}
+-
  static int dp_display_enable(struct dp_display_private *dp, u32 data)
  {
  	int rc = 0;
-@@ -798,6 +805,8 @@ static int dp_display_post_enable(struct msm_dp *dp_display)
- 		dp->audio->lane_count = dp->link->link_params.num_lanes;
- 	}
- 
-+	/* signal the connect event late to synchronize video and display */
-+	dp_display_handle_plugged_change(dp_display, true);
- 	return 0;
- }
- 
-@@ -820,6 +829,19 @@ static int dp_display_unprepare(struct msm_dp *dp)
- 	return 0;
- }
- 
-+int dp_display_set_plugged_cb(struct msm_dp *dp_display,
-+		hdmi_codec_plugged_cb fn, struct device *codec_dev)
-+{
-+	bool plugged;
-+
-+	dp_display->plugged_cb = fn;
-+	dp_display->codec_dev = codec_dev;
-+	plugged = dp_display->is_connected;
-+	dp_display_handle_plugged_change(dp_display, plugged);
-+
-+	return 0;
-+}
-+
- int dp_display_validate_mode(struct msm_dp *dp, u32 mode_pclk_khz)
- {
- 	const u32 num_components = 3, default_bpp = 24;
-@@ -1304,6 +1326,7 @@ int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+@@ -1326,8 +1329,6 @@ int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
  
  	dp_ctrl_push_idle(dp_display->ctrl);
  
-+	dp_display_handle_plugged_change(dp, false);
- 
+-	dp_display_handle_plugged_change(dp, false);
+-
  	return 0;
  }
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index 1e0d2b9d9a2a..5020faf360db 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -7,18 +7,25 @@
- #define _DP_DISPLAY_H_
  
- #include "dp_panel.h"
-+#include <sound/hdmi-codec.h>
- 
- struct msm_dp {
- 	struct drm_device *drm_dev;
-+	struct device *codec_dev;
- 	struct drm_connector *connector;
- 	struct drm_encoder *encoder;
- 	bool is_connected;
-+
-+	hdmi_codec_plugged_cb plugged_cb;
-+
- 	u32 max_pclk_khz;
- 
- 	u32 max_dp_lanes;
- 	struct dp_audio *dp_audio;
- };
- 
-+int dp_display_set_plugged_cb(struct msm_dp *dp_display,
-+		hdmi_codec_plugged_cb fn, struct device *codec_dev);
- int dp_display_validate_mode(struct msm_dp *dp_display, u32 mode_pclk_khz);
- int dp_display_get_modes(struct msm_dp *dp_display,
- 		struct dp_display_mode *dp_mode);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
