@@ -2,121 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADE842580CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 20:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB90C2580FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 20:23:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729518AbgHaST3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 14:19:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729535AbgHaSTV (ORCPT
+        id S1729712AbgHaSXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 14:23:20 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:19585 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728573AbgHaSXP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 14:19:21 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47730C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 11:19:21 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id cy2so2356936qvb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 11:19:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=t1/Tbd4L56MeL2p75ATvjZTyO/Tm7hkvDW3bz/swotc=;
-        b=tbpDwtgB2fMMtc4DXh027u/wFKzMbJ5Cc2upysoNYoY31SkshSdvfrxDYT0KcTGXs8
-         SdJi7cdl3ZoRuz1ubGq96Q2TCNMgbhleQUqjnDvd8ssXP9zG4sJ2imOZ4MdfaqZU21n9
-         Nzdy4NYs4tE4HoT/Qh1Z6Q3bT9/C+wOwGwrMoBMa6hmVI3L0EP0/j5jjNTPeD2upOUey
-         GOTXlbG90X/p9ebnC4jR3xIMb1eacEQv8Ablpd1UumiQpwKdi67PuHMMTk8B4eiJ67qt
-         +1nYSFsWkV+Y4G3YZLhcyJHeQrM+1v0U6SPfSwxCbVeysov157C49u18RjgaDTsooHks
-         sSrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t1/Tbd4L56MeL2p75ATvjZTyO/Tm7hkvDW3bz/swotc=;
-        b=WkW80LgNwQSBpLWYO7QUVlooQ+PDRud52e4gvLAchj7ZUb7TVe6bRdeeGP05kqKPw9
-         jQoR5vIzeAlvGpuQ2d3+LlE/MY5lvDwyGPyUaiz8Ozxb8eim0zJ9kaa5ZHT2tWK/hTBV
-         nvB06F0SjFNJ7ZL63Q/JIy9QE0Y1Sse6Idthsklf1l8++313Vjempf5hwwA1hKcLeF7s
-         xOWJHHSq9rG1NaqVqxzkLE2GFcj4DsAjnwdtwqzPRIhvIuESUyUxgKFt7Q/qa88wr2yo
-         qTcLEzkjVPYSshGRWdRVcVsH8pYUhN8ki7m9rEVetrK9ykipPxyoYX59GAKDN/qOuZ8H
-         Kgyg==
-X-Gm-Message-State: AOAM53221xtZAMIG5sPe+SAYxzvL9MFdNf1zkLnvWdtpOyKHbMQwuqqy
-        Df4cPNhhPwvl7w54ySeIiF0QDw==
-X-Google-Smtp-Source: ABdhPJyuyZ+ucI3w1yI15tL5bKSeQjAjW64aQ4RSO5hao4Rhp3pGVjo+MhwR7XDy8TnVcv+62efXEQ==
-X-Received: by 2002:a05:6214:d46:: with SMTP id 6mr2364472qvr.240.1598897960345;
-        Mon, 31 Aug 2020 11:19:20 -0700 (PDT)
-Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id y73sm10600006qkb.23.2020.08.31.11.19.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 11:19:19 -0700 (PDT)
-Date:   Mon, 31 Aug 2020 18:19:18 +0000
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     maz@kernel.org, linus.walleij@linaro.org, swboyd@chromium.org,
-        evgreen@chromium.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, agross@kernel.org, tglx@linutronix.de,
-        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
-        ilina@codeaurora.org, lsrao@codeaurora.org
-Subject: Re: [PATCH v5 2/6] pinctrl: qcom: Use return value from
- irq_set_wake() call
-Message-ID: <20200831181918.GB468@uller>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org>
- <1598113021-4149-3-git-send-email-mkshah@codeaurora.org>
+        Mon, 31 Aug 2020 14:23:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598898195; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=qOLfG/K2aSxnZgBBMiIsxdb+arzei4ocI77Yc/EOfck=; b=j7S7G0oASFce+QjKClsiUb4wFqgRoV/39GA7nsDhTbSzStL37YWEcWe6sSQyq2P/DpPMGzNs
+ 3ww1vptq5pQr+DABDEeHkB8+H7OjrFsW4GkJ5uMl05oZkahp0M/Ld9NnlHGitVxUGs6olTKA
+ p1d1CI1ZYo12eKYvc2EQsUN2fTQ=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f4d400dba408b30ce666edb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 Aug 2020 18:23:09
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 47E1AC4339C; Mon, 31 Aug 2020 18:23:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F3E8C433C6;
+        Mon, 31 Aug 2020 18:23:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F3E8C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, tanmay@codeaurora.org,
+        cychiang@chromium.org, khsieh@codeaurora.org,
+        vsujithk@codeaurora.org, rohitkr@codeaurora.org
+Subject: [PATCH v4 0/5] add audio support for Display Port on MSM
+Date:   Mon, 31 Aug 2020 11:22:53 -0700
+Message-Id: <20200831182258.16632-1-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1598113021-4149-3-git-send-email-mkshah@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 22 Aug 16:16 UTC 2020, Maulik Shah wrote:
+This series adds audio support for DP on MSM chipsets. It leverages
+the hdmi-codec interface [1] to communicate between the Display Port
+driver and the audio subsystem. These changes depend on the series [2]
+which adds Display Port support to MSM chipsets.
 
-> msmgpio irqchip was not using return value of irq_set_irq_wake() callback
-> since previously GIC-v3 irqchip neither had IRQCHIP_SKIP_SET_WAKE flag nor
-> it implemented .irq_set_wake callback. This lead to irq_set_irq_wake()
-> return error -ENXIO.
-> 
-> However from 'commit 4110b5cbb014 ("irqchip/gic-v3: Allow interrupt to be
-> configured as wake-up sources")' GIC irqchip has IRQCHIP_SKIP_SET_WAKE
-> flag.
-> 
-> Use return value from irq_set_irq_wake() and irq_chip_set_wake_parent()
-> instead of always returning success.
-> 
-> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+[1] https://patchwork.kernel.org/patch/11047883/
+[2] https://patchwork.kernel.org/patch/11708677/
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+changes in v2:
+    - fix up a compilation issue on drm-next branch
 
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 1c23f5c..1df2322 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -1077,12 +1077,10 @@ static int msm_gpio_irq_set_wake(struct irq_data *d, unsigned int on)
->  	 * when TLMM is powered on. To allow that, enable the GPIO
->  	 * summary line to be wakeup capable at GIC.
->  	 */
-> -	if (d->parent_data)
-> -		irq_chip_set_wake_parent(d, on);
-> -
-> -	irq_set_irq_wake(pctrl->irq, on);
-> +	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-> +		return irq_chip_set_wake_parent(d, on);
->  
-> -	return 0;
-> +	return irq_set_irq_wake(pctrl->irq, on);
->  }
->  
->  static int msm_gpio_irq_reqres(struct irq_data *d)
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+changes in v3:
+    - add support to synchronize DP driver and audio during shutdown
+
+changes in v4:
+    - rebase on top of latest patchset of dependency
+
+Abhinav Kumar (5):
+  drm/msm/dp: store dp_display in the driver data
+  drm/msm/dp: add audio support for Display Port on MSM
+  drm/msm/dp: add hook_plugged_cb hdmi-codec op for MSM DP driver
+  drm/msm/dp: signal the hotplug disconnect in the event handler
+  drm/msm/dp: wait for audio notification before disabling clocks
+
+ drivers/gpu/drm/msm/Makefile                |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |   7 +
+ drivers/gpu/drm/msm/dp/dp_audio.c           | 638 ++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_audio.h           |  72 +++
+ drivers/gpu/drm/msm/dp/dp_catalog.c         | 192 ++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h         |  29 +
+ drivers/gpu/drm/msm/dp/dp_display.c         | 127 +++-
+ drivers/gpu/drm/msm/dp/dp_display.h         |  11 +
+ 8 files changed, 1067 insertions(+), 12 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.c
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.h
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
