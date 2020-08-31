@@ -2,177 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EF88257461
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 09:35:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BD502574D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 09:58:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728102AbgHaHfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 03:35:04 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:10748 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728103AbgHaHfB (ORCPT
+        id S1726800AbgHaH6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 03:58:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41018 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725829AbgHaH6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 03:35:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598859300; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=jgiqhD6mEWmgkZ8iCooIwuov0Mq1aYTRhNXeEovmpSI=; b=diis3OUmJatmlZ/vRdLxup7ZQ0N3fJVSGpkDnflrzbAS1Omr2JrqfjIp8wEtO01WfbThtNSG
- 7uuV976r/UtsN5DBz5Hh6bEvuAQAtoxWB9XTendI8My84qOezuziZdTQdHLtbefv72W6FiC8
- 6pk9JXcSGa6CGIiKZtACyUqiU/o=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f4ca81ea816b7fb48d07ee4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 Aug 2020 07:34:54
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6A6EEC43395; Mon, 31 Aug 2020 07:34:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.39.192] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F497C433CA;
-        Mon, 31 Aug 2020 07:34:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0F497C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=wcheng@codeaurora.org
-Subject: Re: [RFC v5 4/6] usb: gadget: configfs: Check USB configuration
- before adding
-To:     Peter Chen <peter.chen@nxp.com>
-Cc:     "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "balbi@kernel.org" <balbi@kernel.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "jackp@codeaurora.org" <jackp@codeaurora.org>
-References: <20200829055846.19034-1-wcheng@codeaurora.org>
- <20200829055846.19034-5-wcheng@codeaurora.org>
- <20200831022825.GA15756@b29397-desktop>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <2631cd0b-66d4-aabc-dc41-9ae5e84fa90d@codeaurora.org>
-Date:   Mon, 31 Aug 2020 00:34:51 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        Mon, 31 Aug 2020 03:58:17 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C41CC061573;
+        Mon, 31 Aug 2020 00:58:16 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id l21so4519979eds.7;
+        Mon, 31 Aug 2020 00:58:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=huQdyM+q9reHAMotsMXMrR+uvxt0zB89ISm5NsTKcqY=;
+        b=cj+8D5tQCSmxfAdRNPAPmuTudMTpVoAPeOSrZRptzQ9EhDEPiOuSrmIXydsDMC+IeB
+         KiWnCQxbIr9VmNhmjBuWIJNcYSz0fR7DGnIqjOs89G7ZOSCNSd4uUdBC/+VoIYOCm2Ug
+         bag1Qks2Ap1zSsyUVQwE6/t2STKAtjsFe4VxvfYryowvEC6R/zSSoasSY0gBbLtpdOWI
+         V9V/LvGoRfx9PsVevepeL/OpGnrrSmB8c3+pKeIPMwAQBzJp9EGr45gCIG7Z8rB3mx7a
+         oaJm6l+/FCsoGio3O55Cy9zRlcqCOZ9rzgHzEcMtCww4c7Z8OoLasFoK7bMVvoJi4/0f
+         sRDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=huQdyM+q9reHAMotsMXMrR+uvxt0zB89ISm5NsTKcqY=;
+        b=cUERPBR8WsfrdQpqm04iC4r6PVteMRJojU2nVlbbadms8SRvRcLoVJtSUJwUYmL5OB
+         +XpN6fLWydUSK5vJgHuh1U4XB6e9PDZzkB4iIBu1foLR5TFN8j+lhZCKOk6QxgAYLYKB
+         Q8oEQ+PxH7N8JxmUG3bAS9nFnlwMGKBjiNjAxd6qFSm3H1GeLJLbvNr2Za56s2sLFeO0
+         foqbXMe4O7ofT9RJm64O5o870bYQJ84odtc++k+8Anvn6WeUz9TIgdJyjQiyijPshqBf
+         Df2XkUZ2/B4b3KRjsdcDAxLOpIzGIZS6G66QK4FPjqeANzW80ersPknljGjiENqft6QW
+         xadw==
+X-Gm-Message-State: AOAM5310vQSiTVb/repF31VCITzsAjeJC19+RyRd6jozIzXtVMqt5nSx
+        b2nvjhEPZ9KY/E0jBQMuIAaf3YESi1/EI7eH4NrEVIiA5EM=
+X-Google-Smtp-Source: ABdhPJyYEmEjgTlSTI3u2NEAheWGVf1siQ0TfcnMk8UQJ0LD/ssFBMKoiOcwk2Zx1mkLhm0A/hOUiN2gs3xnvJ0Zz2M=
+X-Received: by 2002:aa7:c4c8:: with SMTP id p8mr59745edr.231.1598860695181;
+ Mon, 31 Aug 2020 00:58:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200831022825.GA15756@b29397-desktop>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1598851448-5493-1-git-send-email-amit.pundir@linaro.org> <CAMi1Hd3n2rfr+k09L8WO1S1Tn1s3xJencmr1q3a6e-FOgXr5Qg@mail.gmail.com>
+In-Reply-To: <CAMi1Hd3n2rfr+k09L8WO1S1Tn1s3xJencmr1q3a6e-FOgXr5Qg@mail.gmail.com>
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Date:   Mon, 31 Aug 2020 09:57:39 +0200
+Message-ID: <CAMS8qEXcANkb-HoTk8zrXQEzkQO4cnFw4hj5tMp82UEVKd+eHQ@mail.gmail.com>
+Subject: Re: [PATCH v6] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+> Hi Konrad,
+>
+> I couldn't find answer to your question around missing
+> (regulatorname)-supply properties. Need help in figuring out that
+> part.
 
+When the phone boots up and RPM(H) kicks in, you should see regulators
+probing like "s1 supplied by foo". Without the *-supply stuff, you
+will likely get "supplied by regulator-dummy". This happens here [1]
+and to my knowledge it is the "eletrical wiring" for Linux, as in it
+makes Linux aware of which regulators are connected electrically to
+the same supply (so that kernel knows when the supply is on and what
+voltage it's at). For qcom platforms, this is common per-pmic (afaik,
+please check if you are able to!), so you can likely just copy-paste
+that part from msm8998-mtp.dtsi, which also uses pm(i)8998.
 
-On 8/30/2020 7:29 PM, Peter Chen wrote:
-> On 20-08-28 22:58:44, Wesley Cheng wrote:
->> Ensure that the USB gadget is able to support the configuration being
->> added based on the number of endpoints required from all interfaces.  This
->> is for accounting for any bandwidth or space limitations.
->>
->> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
->> ---
->>  drivers/usb/gadget/configfs.c | 22 ++++++++++++++++++++++
->>  1 file changed, 22 insertions(+)
->>
->> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
->> index 56051bb97349..7c74c04b1d8c 100644
->> --- a/drivers/usb/gadget/configfs.c
->> +++ b/drivers/usb/gadget/configfs.c
->> @@ -1361,6 +1361,7 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
->>  		struct usb_function *f;
->>  		struct usb_function *tmp;
->>  		struct gadget_config_name *cn;
->> +		unsigned long ep_map = 0;
->>  
->>  		if (gadget_is_otg(gadget))
->>  			c->descriptors = otg_desc;
->> @@ -1390,7 +1391,28 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
->>  				list_add(&f->list, &cfg->func_list);
->>  				goto err_purge_funcs;
->>  			}
->> +			if (f->ss_descriptors) {
->> +				struct usb_descriptor_header **d;
->> +
->> +				d = f->ss_descriptors;
->> +				for (; *d; ++d) {
->> +					struct usb_endpoint_descriptor *ep;
->> +					int addr;
->> +
->> +					if ((*d)->bDescriptorType != USB_DT_ENDPOINT)
->> +						continue;
->> +
->> +					ep = (struct usb_endpoint_descriptor *)*d;
->> +					addr = ((ep->bEndpointAddress & 0x80) >> 3) |
->> +						(ep->bEndpointAddress & 0x0f);
-> 
-> ">> 3" or "<< 3?
-> 
-
-Hi Peter,
-
-Thanks for your comments.  It should be ">> 3" as we want to utilize the
-corresponding USB_DIR_IN bit in the bitmap to set the correct bit.
-(USB_DIR_IN = 0x80)
-
->> +					set_bit(addr, &ep_map);
-> 
-> You want to record all endpoints on ep_map? Considering there are
-> four EP_IN (1-4), and four EP_OUT (1-4), what the value of ep_map
-> would like?
-> 
-
-So for example, if a configuration uses EP8IN and EP9OUT, then the
-ep_map will look like:
-
-EP8-IN:
-addr = ((0x88 & 0x80) >> 3) | (0x88 & 0xf) --> 0x18
-
-EP9-OUT:
-addr = ((0x9 & 0x80) >> 3) | (0x9 & 0xf) --> 0x9
-
-ep_map = ep_map = 0x01000200
-
-The lower 16 bits will carry the OUT endpoints, whereas the upper 16
-bits are the IN endpoints. (ie bit16 = ep0in, bit0 = ep0out)
-
->> +				}
->> +			}
->>  		}
->> +		ret = usb_gadget_check_config(cdev->gadget, ep_map);
->> +		if (ret)
->> +			goto err_purge_funcs;
->> +
-> 
-> You may move this patch after your 4nd patch to avoid "git bisect"
-> issue.
-> 
-
-Sure, thanks for the suggestion, will do that in the next rev.
-
-Thanks
-Wesley
-
->>  		usb_ep_autoconfig_reset(cdev->gadget);
->>  	}
->>  	if (cdev->use_os_string) {
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
-> 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Konrad
