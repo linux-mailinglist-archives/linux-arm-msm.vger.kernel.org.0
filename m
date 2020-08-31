@@ -2,139 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BBFA257A19
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 15:10:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58B29257A62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 15:27:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727103AbgHaNKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 09:10:01 -0400
-Received: from mga12.intel.com ([192.55.52.136]:59593 "EHLO mga12.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726292AbgHaNKA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 09:10:00 -0400
-IronPort-SDR: fWuo1xYGFKCMaCjvr9b4sZIWxDvM3knl6K+vUfHsCYJY0apWLS7v5VWLupU3xhXv7Wm+QjbNPR
- g7Ce9wFsdjTg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9729"; a="136494485"
-X-IronPort-AV: E=Sophos;i="5.76,375,1592895600"; 
-   d="scan'208";a="136494485"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2020 06:10:00 -0700
-IronPort-SDR: qm9FbLBXaIcybQOvam8eKnyKCl+WY/QLxKdVBWNIhQREYbX7phv9e3DVpQHTdb/nA8aLocV435
- qeYEwmqJtKaw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.76,375,1592895600"; 
-   d="scan'208";a="501332255"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.73]) ([10.237.72.73])
-  by fmsmga006.fm.intel.com with ESMTP; 31 Aug 2020 06:09:45 -0700
-Subject: Re: [PATCH v1 2/2] mmc: mediatek: add pre_enable() and post_disable()
- hook function
-To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>, mirq-linux@rere.qmqm.pl,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Al Cooper <alcooperx@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Mao Yong <yong.mao@mediatek.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        Kate Stewart <kstewart@linuxfoundation.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Pan Bian <bianpan2016@163.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Allison Randal <allison@lohutok.net>,
-        Mathieu Malaterre <malat@debian.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Kuohong Wang <kuohong.wang@mediatek.com>
-Cc:     kernel-team@android.com, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        devicetree@vger.kernel.org, wsd_upstream@mediatek.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
-References: <1598520783-25250-1-git-send-email-chun-hung.wu@mediatek.com>
- <1598520783-25250-3-git-send-email-chun-hung.wu@mediatek.com>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <29d14e57-a016-af60-374d-70a6c267833e@intel.com>
-Date:   Mon, 31 Aug 2020 16:09:09 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1726167AbgHaN1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 09:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727061AbgHaN0t (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 09:26:49 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F4AC0619C9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 06:26:22 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id t23so6695173ljc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 06:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
+        bh=o69Nac3LLMj5CDhyPqLcnP7WGq46U4gQb9HzFdG/MvE=;
+        b=HyW5/n2KU8W3FGefd/FUm/bl6fINTQmZ8owzYdBGhP5oyAu9pJQPQCMOdYEDNFegUA
+         if9VN+pra3iBgWNYJjHcBV7T99CY2GFOcHOVU+3vJ7r2Hvzgah2ZCqHTq6bk4iv0uilM
+         xQiEPrdMcYz9cIZL++pevJSb5RdixTZAk95pbnwmQ3/GOLv8xUS1vQ8t141F6N8CgROI
+         mubb31iIEGHTmIRsfQchZCL6N1v85LnpPi/V/jmyUdodp49jy+hBMBGM/QhsUL+AVu8e
+         3Cg9SzlMyigtpwqPqg6kcnc+pElD0XMp/EB9mY9MxbJL6EWXLnnT1YiTj0+V+0DhoQI2
+         wJdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to;
+        bh=o69Nac3LLMj5CDhyPqLcnP7WGq46U4gQb9HzFdG/MvE=;
+        b=Z9KdjkfeC3F6Tc7NUKB3NuPpGk7nGskX7Keq1YHSl2iFik+P1ZWocQsakpeI0RbMgZ
+         2XKZE2gpiqWlBwWONjgVnlHk2OZA5F0A/kvHhMwbgmCQQOBUno8GDcnPYdRBo89G2yJF
+         FndnNEdELDRSqsetDnunS99DyBTGiGBcKOC/sKsVcXVRftCGPV/EULN7aqnHeE5BC5l+
+         eikSO5lIpO1hQI2BDccTjbPNOrBEYrNf3Sdaz6boWlOak3skobELhnTZ70Dzkq+wRwr6
+         C1nBVSRWB+e1pYwqXarDMBiAfTEwB1Vy76hmDk85iP1izu/hnfzSIobSKoKYZu9fpMKJ
+         6u3w==
+X-Gm-Message-State: AOAM530rpIi4wM8nIrpGdmQPre9bPlWn5j6WRkahkgzPU0QslvZ+wHL5
+        HhHEhY5/xrWYmsHedYBWrpToeIfDKL+f3XLJCc0=
+X-Google-Smtp-Source: ABdhPJxEvvXnVfErpjDwHOkyCqRTciyX/SNwRaUYVOHmxIQS6MbFpht1V2v8jY7chkhk3ZxIDw/BvL8uxGOjXPjCGG8=
+X-Received: by 2002:a2e:9c86:: with SMTP id x6mr662832lji.346.1598880379026;
+ Mon, 31 Aug 2020 06:26:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1598520783-25250-3-git-send-email-chun-hung.wu@mediatek.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Reply-To: marie_avis12@yahoo.com
+Received: by 2002:a2e:9817:0:0:0:0:0 with HTTP; Mon, 31 Aug 2020 06:26:18
+ -0700 (PDT)
+From:   Miss Maris Avis <marie.avis11@gmail.com>
+Date:   Mon, 31 Aug 2020 13:26:18 +0000
+X-Google-Sender-Auth: ENkN_TdcXF5NiFOWAHQrklZpWrk
+Message-ID: <CADTVshNj9Ztqm75AkbunLeeRTsk07qB5LsiKLoagvmiH7TvYgQ@mail.gmail.com>
+Subject: Hello
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/08/20 12:33 pm, Chun-Hung Wu wrote:
-> CQHCI_ENABLE bit in CQHCI_CFG should be disabled
-> after msdc_cqe_disable(), and should be enabled before
-> msdc_ceq_enable() for MTK platform.
-> Add hook functions for cqhci_host_ops->pre_enable() and
-> cqhci_host_ops->post_disable().
-> 
-> Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
+My Dear,
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+My name is Miss Marie Avis the only daughter of Mr. Gabriel Avis, my
+Father was dealing in Cocoa and Timber in this country before his
+death,  It is my pleasure to contact you for a business venture which
+I intend to establish in your country. Though I have not met with you
+before but I believe one has to risk confiding before you can succeed
+sometimes in life.
 
-> ---
->  drivers/mmc/host/mtk-sd.c |   22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-> index 4e2583f..f53e11b 100644
-> --- a/drivers/mmc/host/mtk-sd.c
-> +++ b/drivers/mmc/host/mtk-sd.c
-> @@ -2282,6 +2282,26 @@ static void msdc_cqe_disable(struct mmc_host *mmc, bool recovery)
->  	}
->  }
->  
-> +static void msdc_cqe_pre_enable(struct mmc_host *mmc)
-> +{
-> +	struct cqhci_host *cq_host = mmc->cqe_private;
-> +	u32 reg;
-> +
-> +	reg = cqhci_readl(cq_host, CQHCI_CFG);
-> +	reg |= CQHCI_ENABLE;
-> +	cqhci_writel(cq_host, reg, CQHCI_CFG);
-> +}
-> +
-> +static void msdc_cqe_post_disable(struct mmc_host *mmc)
-> +{
-> +	struct cqhci_host *cq_host = mmc->cqe_private;
-> +	u32 reg;
-> +
-> +	reg = cqhci_readl(cq_host, CQHCI_CFG);
-> +	reg &= ~CQHCI_ENABLE;
-> +	cqhci_writel(cq_host, reg, CQHCI_CFG);
-> +}
-> +
->  static const struct mmc_host_ops mt_msdc_ops = {
->  	.post_req = msdc_post_req,
->  	.pre_req = msdc_pre_req,
-> @@ -2301,6 +2321,8 @@ static void msdc_cqe_disable(struct mmc_host *mmc, bool recovery)
->  static const struct cqhci_host_ops msdc_cmdq_ops = {
->  	.enable         = msdc_cqe_enable,
->  	.disable        = msdc_cqe_disable,
-> +	.pre_enable = msdc_cqe_pre_enable,
-> +	.post_disable = msdc_cqe_post_disable,
->  };
->  
->  static void msdc_of_property_parse(struct platform_device *pdev,
-> 
+I can confide in you for my brighter future since you are a human
+being like me. There is this huge amount of Ten Million five hundred
+thousand United States dollars. ($10.500.000.00) which my late Father
+kept for me in a suspense account with one of the bank here in Abidjan
+Cote d'Ivoire before he was assassinated by unknown persons, Now I
+have decided to invest these money in your country or anywhere safe
+enough for me.
 
+I want you to help me claim this fund from the bank and have it
+transfer into your personal account in your country for investment
+purposes in your country in these areas:
+
+1). Telecommunication
+2). The transport Industry
+3). Five Star Hotel
+4). Tourism
+5). Real Estate
+
+If you can be of assistance to me I will be pleased to offer you 20%
+of the total fund.
+
+I await your soonest response.
+
+Respectfully yours,
+Miss Marie Evis
+Tel: +225597438528
