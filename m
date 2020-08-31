@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F690257A14
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 15:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BBFA257A19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 15:10:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727042AbgHaNIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 09:08:48 -0400
-Received: from mga18.intel.com ([134.134.136.126]:21885 "EHLO mga18.intel.com"
+        id S1727103AbgHaNKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 09:10:01 -0400
+Received: from mga12.intel.com ([192.55.52.136]:59593 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726984AbgHaNIn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 09:08:43 -0400
-IronPort-SDR: epgQ2NisbhrzCux6S+AsxqKKo0r2JuYgVrgHJoA52YXrxBLO+RTr2BoGjUcU63+LBM75XG59qL
- 3rYMPH2nMGzA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9729"; a="144643457"
+        id S1726292AbgHaNKA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 09:10:00 -0400
+IronPort-SDR: fWuo1xYGFKCMaCjvr9b4sZIWxDvM3knl6K+vUfHsCYJY0apWLS7v5VWLupU3xhXv7Wm+QjbNPR
+ g7Ce9wFsdjTg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9729"; a="136494485"
 X-IronPort-AV: E=Sophos;i="5.76,375,1592895600"; 
-   d="scan'208";a="144643457"
+   d="scan'208";a="136494485"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2020 06:08:34 -0700
-IronPort-SDR: EohOby+7M8jiGk+t8vzztTtibrfD4QbKSTQq1hGxL18iqul7w31+Wm23G0lKBK+P+i0d3SJVq3
- VWCHzD9m0qhg==
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2020 06:10:00 -0700
+IronPort-SDR: qm9FbLBXaIcybQOvam8eKnyKCl+WY/QLxKdVBWNIhQREYbX7phv9e3DVpQHTdb/nA8aLocV435
+ qeYEwmqJtKaw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.76,375,1592895600"; 
-   d="scan'208";a="501331763"
+   d="scan'208";a="501332255"
 Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.73]) ([10.237.72.73])
-  by fmsmga006.fm.intel.com with ESMTP; 31 Aug 2020 06:08:20 -0700
-Subject: Re: [PATCH v1 1/2] mmc: cqhci: add new cqhci_host_ops pre_enable()
- and post_disable()
+  by fmsmga006.fm.intel.com with ESMTP; 31 Aug 2020 06:09:45 -0700
+Subject: Re: [PATCH v1 2/2] mmc: mediatek: add pre_enable() and post_disable()
+ hook function
 To:     Chun-Hung Wu <chun-hung.wu@mediatek.com>, mirq-linux@rere.qmqm.pl,
         Jonathan Hunter <jonathanh@nvidia.com>,
         Al Cooper <alcooperx@gmail.com>,
@@ -63,16 +63,16 @@ Cc:     kernel-team@android.com, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
 References: <1598520783-25250-1-git-send-email-chun-hung.wu@mediatek.com>
- <1598520783-25250-2-git-send-email-chun-hung.wu@mediatek.com>
+ <1598520783-25250-3-git-send-email-chun-hung.wu@mediatek.com>
 From:   Adrian Hunter <adrian.hunter@intel.com>
 Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
  Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <9c0dd5b4-5d9e-e559-81f5-fbf6024b67bb@intel.com>
-Date:   Mon, 31 Aug 2020 16:07:43 +0300
+Message-ID: <29d14e57-a016-af60-374d-70a6c267833e@intel.com>
+Date:   Mon, 31 Aug 2020 16:09:09 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <1598520783-25250-2-git-send-email-chun-hung.wu@mediatek.com>
+In-Reply-To: <1598520783-25250-3-git-send-email-chun-hung.wu@mediatek.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -82,55 +82,59 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 27/08/20 12:33 pm, Chun-Hung Wu wrote:
-> Add pre_enable() and post_disable() for cqhci_host_ops.
-> Add hook functions before cqhci enable and
-> after cqhci disable for platforms need them.
+> CQHCI_ENABLE bit in CQHCI_CFG should be disabled
+> after msdc_cqe_disable(), and should be enabled before
+> msdc_ceq_enable() for MTK platform.
+> Add hook functions for cqhci_host_ops->pre_enable() and
+> cqhci_host_ops->post_disable().
 > 
 > Signed-off-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
 
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 
 > ---
->  drivers/mmc/host/cqhci.c |    6 ++++++
->  drivers/mmc/host/cqhci.h |    2 ++
->  2 files changed, 8 insertions(+)
+>  drivers/mmc/host/mtk-sd.c |   22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
-> diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
-> index cfa87df..697fe40 100644
-> --- a/drivers/mmc/host/cqhci.c
-> +++ b/drivers/mmc/host/cqhci.c
-> @@ -376,6 +376,9 @@ static void cqhci_off(struct mmc_host *mmc)
->  	else
->  		pr_debug("%s: cqhci: CQE off\n", mmc_hostname(mmc));
->  
-> +	if (cq_host->ops->post_disable)
-> +		cq_host->ops->post_disable(mmc);
-> +
->  	mmc->cqe_on = false;
+> diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+> index 4e2583f..f53e11b 100644
+> --- a/drivers/mmc/host/mtk-sd.c
+> +++ b/drivers/mmc/host/mtk-sd.c
+> @@ -2282,6 +2282,26 @@ static void msdc_cqe_disable(struct mmc_host *mmc, bool recovery)
+>  	}
 >  }
 >  
-> @@ -580,6 +583,9 @@ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
->  		__cqhci_enable(cq_host);
->  
->  	if (!mmc->cqe_on) {
-> +		if (cq_host->ops->pre_enable)
-> +			cq_host->ops->pre_enable(mmc);
+> +static void msdc_cqe_pre_enable(struct mmc_host *mmc)
+> +{
+> +	struct cqhci_host *cq_host = mmc->cqe_private;
+> +	u32 reg;
 > +
->  		cqhci_writel(cq_host, 0, CQHCI_CTL);
->  		mmc->cqe_on = true;
->  		pr_debug("%s: cqhci: CQE on\n", mmc_hostname(mmc));
-> diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
-> index 4377001..89bf6ad 100644
-> --- a/drivers/mmc/host/cqhci.h
-> +++ b/drivers/mmc/host/cqhci.h
-> @@ -206,6 +206,8 @@ struct cqhci_host_ops {
->  	void (*disable)(struct mmc_host *mmc, bool recovery);
->  	void (*update_dcmd_desc)(struct mmc_host *mmc, struct mmc_request *mrq,
->  				 u64 *data);
-> +	void (*pre_enable)(struct mmc_host *mmc);
-> +	void (*post_disable)(struct mmc_host *mmc);
+> +	reg = cqhci_readl(cq_host, CQHCI_CFG);
+> +	reg |= CQHCI_ENABLE;
+> +	cqhci_writel(cq_host, reg, CQHCI_CFG);
+> +}
+> +
+> +static void msdc_cqe_post_disable(struct mmc_host *mmc)
+> +{
+> +	struct cqhci_host *cq_host = mmc->cqe_private;
+> +	u32 reg;
+> +
+> +	reg = cqhci_readl(cq_host, CQHCI_CFG);
+> +	reg &= ~CQHCI_ENABLE;
+> +	cqhci_writel(cq_host, reg, CQHCI_CFG);
+> +}
+> +
+>  static const struct mmc_host_ops mt_msdc_ops = {
+>  	.post_req = msdc_post_req,
+>  	.pre_req = msdc_pre_req,
+> @@ -2301,6 +2321,8 @@ static void msdc_cqe_disable(struct mmc_host *mmc, bool recovery)
+>  static const struct cqhci_host_ops msdc_cmdq_ops = {
+>  	.enable         = msdc_cqe_enable,
+>  	.disable        = msdc_cqe_disable,
+> +	.pre_enable = msdc_cqe_pre_enable,
+> +	.post_disable = msdc_cqe_post_disable,
 >  };
 >  
->  static inline void cqhci_writel(struct cqhci_host *host, u32 val, int reg)
+>  static void msdc_of_property_parse(struct platform_device *pdev,
 > 
 
