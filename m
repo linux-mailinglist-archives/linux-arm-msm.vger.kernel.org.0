@@ -2,95 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 105F7258514
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 03:20:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4CAF2585AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 04:35:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726192AbgIABUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 21:20:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13629 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726112AbgIABUi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 21:20:38 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598923237; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=YVrekhRja53pvOBvjZUkfskwtrhryfC5K7ba/YDLhuo=; b=BzTBKMLTfT8FOJgrW3Cz+Vrlj1/kXbatn1COBkn2h/wxr9y8xx8vYe5dOfvaox5DASGjSL7J
- vRYRtvjQT4JULFvHsLgVjC3aXxhWp0jLUZb90+AGO3woMToXq3Eao8N5ZNOlI+VkMmOgV7Xo
- wPi/TOdotG8NqzoUeTpLAzh6IgE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f4da1de238e1efa379c7320 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 01:20:30
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1DE17C43391; Tue,  1 Sep 2020 01:20:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DAD77C433C6;
-        Tue,  1 Sep 2020 01:20:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DAD77C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=nguyenb@codeaurora.org
-From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
-To:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     "Bao D. Nguyen" <nguyenb@codeaurora.org>,
+        id S1726266AbgIACfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 22:35:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47478 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726107AbgIACfW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 22:35:22 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12816C061366
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 19:35:21 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id p25so8231949qkp.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 19:35:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sAkSksCshNCD0adm0PWVHtppOopUbUnVb4Kv/b5sxpQ=;
+        b=X7VDKvWuVcCm6d71WbRGDBPl2PRAA3caYAsvX9a0iQnhlqUGnVr+3lTD9uiPKrGseV
+         wvPYn+EjmvIw6hkJcskfTKPfWbrPa7yIAcqVY2uT5fcssTxk0ZIs53cKvafxjTE5fNpQ
+         jK16OSHp6Y65G+bHCw/vFEXPKBFsH6Lb1UgMPJaaDUpwVy5tgHc+2vAabhmoMBNYb5NJ
+         b5jDpAsGaWNATCkGPINy9jYFeTjF/zBU9R25CFrPGzRlE+Y75c1hBeJcPbcYDWBu8zvo
+         vt0AzczXlEUBbhTgQp6yM7xku5oqHjQl9CDobdE8t5xv2S3t5FLTki5btvB1VzQiRAiy
+         RkRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sAkSksCshNCD0adm0PWVHtppOopUbUnVb4Kv/b5sxpQ=;
+        b=qg5cb+I0bRl89hCcdSYJav0RsiZLEHAqNu9XY7P+RWaAA+ZZ5TPD6WxDNPbqTDMdIB
+         Jqx0u8ioJctcqLlP7zuGZl13FpMJzDF+a70lfEqkkKMmSsowS9wCQY6lHgM7MQ5uHoS8
+         b3K+gxjLpnanSYAtFYx3uPpp8JxNhgwES3p9Vs/EgSvseGAKblWYeLOUvPS/d0aCS7OF
+         IYsSOrhddck0W/00N5EdFjvgJiuLdFkQGC0xyMucOSCsr76EGxpdbyQ3p1aO0t2CXbPR
+         lLNT97uBfFHj6aQ3FVHf2tCIAQiZEbXl5aDbfyJjLkqb2eqQkO94hNShWJPXj/icAnR6
+         uJJg==
+X-Gm-Message-State: AOAM532A2uLWzlykRdG6TVXTrFmC1mjtvaanCsLUV5jOnf+wwDIWfMHh
+        dFTjHV6hPg+mTxagbPwjQh+NiQ==
+X-Google-Smtp-Source: ABdhPJx7BeaFp2dnidck1oOhhHfYj6kzJNHKwcvWvxlyJU5srYROFYeR2ubg0/k9FzuVLaIx3C+6Xg==
+X-Received: by 2002:a05:620a:567:: with SMTP id p7mr4710228qkp.164.1598927720041;
+        Mon, 31 Aug 2020 19:35:20 -0700 (PDT)
+Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
+        by smtp.gmail.com with ESMTPSA id f22sm3589377qtq.64.2020.08.31.19.35.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2020 19:35:19 -0700 (PDT)
+Date:   Tue, 1 Sep 2020 02:35:17 +0000
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
         linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
-Date:   Mon, 31 Aug 2020 18:19:57 -0700
-Message-Id: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>, freedreno@lists.freedesktop.org,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 01/19] drm/msm: remove dangling submitqueue references
+Message-ID: <20200901023517.GA54956@uller>
+References: <20200810222657.1841322-1-jcrouse@codeaurora.org>
+ <20200814024114.1177553-2-robdclark@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200814024114.1177553-2-robdclark@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-UFS version 3.0 and later devices require Vcc and Vccq power supplies
-with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
-devices, the Vcc and Vccq2 are required with Vccq being optional.
-Check the required power supplies used by the device
-and set the device's supported Icc level properly.
+On Fri 14 Aug 02:40 UTC 2020, Rob Clark wrote:
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
----
- drivers/scsi/ufs/ufshcd.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Currently it doesn't matter, since we free the ctx immediately.  But
+> when we start refcnt'ing the ctx, we don't want old dangling list
+> entries to hang around.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/msm_submitqueue.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
+> index a1d94be7883a..90c9d84e6155 100644
+> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
+> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+> @@ -49,8 +49,10 @@ void msm_submitqueue_close(struct msm_file_private *ctx)
+>  	 * No lock needed in close and there won't
+>  	 * be any more user ioctls coming our way
+>  	 */
+> -	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node)
+> +	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node) {
+> +		list_del(&entry->node);
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 06e2439..fdd1d3e 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -6845,8 +6845,9 @@ static u32 ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
- {
- 	u32 icc_level = 0;
- 
--	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
--						!hba->vreg_info.vccq2) {
-+	if (!hba->vreg_info.vcc ||
-+		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
-+		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
- 		dev_err(hba->dev,
- 			"%s: Regulator capability was not set, actvIccLevel=%d",
- 							__func__, icc_level);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+If you refcount ctx, what does that do for the entries in the submit
+queue?
 
+"entry" here is kref'ed, but you're popping it off the list regardless
+of the put ends up freeing the object or not - which afaict would mean
+leaking the object.
+
+
+On the other hand, with the current implementation an object with higher
+refcount with adjacent objects of single refcount would end up with
+dangling pointers after the put. So in itself this change seems like a
+net gain, but I'm wondering about the plan described in the commit
+message.
+
+Regards,
+Bjorn
+
+>  		msm_submitqueue_put(entry);
+> +	}
+>  }
+>  
+>  int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+> -- 
+> 2.26.2
+> 
