@@ -2,158 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4F3D258168
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Aug 2020 20:55:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D98B62584DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 02:34:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728382AbgHaSzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 14:55:36 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:18397 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727933AbgHaSzf (ORCPT
+        id S1726020AbgIAAeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 20:34:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57084 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725941AbgIAAeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 14:55:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1598900133;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=UnAkkCJ9cjFfZB7GHe+UL/xUWbUVhNHfqyxCIM5xZY8=;
-        b=R1JKrcjvrox9NGFY8Ol4Uz4aCH7if8aBkalLepGwf6UKjRBd97MKNgA7GbZTvHo7o6
-        aXN0Wnw8YKPGG+/RLNChkZgNTUarxx0s6O3Pvc2vkKasFEBuceh+Eg36H9ZFHTMbBMc8
-        b1JJZg5FC+HUClDTTgTTo/TtlMYLiIFb8AyG6Iqp+PI1c8lTJcWAY8Xx5+s5MXNOIQ9U
-        2xhaXtKpSQmxmT/rFgSD8+kCltF6kwbT9H5UhAzwQreuhaG8Ssuv0mH7geoovi+qKOs+
-        gyu93Tmg9/aHED9YweOV6gQmlM2EfxiMtWmKPpVEPUI6y+4ZbkhXSpVJ33IEHFFBV5dJ
-        HFXw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEIdhPgVC7iy9yGr7ESbX"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w7VItXFjC
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 31 Aug 2020 20:55:33 +0200 (CEST)
-Date:   Mon, 31 Aug 2020 20:55:27 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Jun Nie <jun.nie@linaro.org>
-Cc:     shawn.guo@linaro.org, rnayak@codeaurora.org, robh@kernel.org,
-        viresh.kumar@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: rpmpd: Add MSM8939 power-domains
-Message-ID: <20200831185527.GA1510@gerhold.net>
-References: <20200831083452.32261-1-jun.nie@linaro.org>
+        Mon, 31 Aug 2020 20:34:13 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE5AC061573
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:34:13 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id o5so653582qke.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jLafwiC2xQNKUVCHdLUQQvDtsC6khh4yCLYOGaMsDWc=;
+        b=h4hzz+LL2wmWO8VdqfAqx/UHSd1YE5o9wpRi/+hRRkQTNduf7/9zNCMExEk8b+xamH
+         bZ7M0RuVDaXOFnhujxEqPr7ZD8EG5xtzl/rMkN4+dDTj9NVbWTY4ag5ddyL/fwtmFCZM
+         OERDDO7JFtLGWeSx9VPlC+Fw+GrJzDeb5eG4JNPFtTEgPh0U4bBUGkjQBMmR8GctTMrL
+         lbdUAVUQDlQ0xy5SxNeY41orwXKRCy4fRzvXiXV4ggd9t4X8DVIm1LOwtzTdNKv0HPdq
+         QQ9B4CN+uoau2pc5Qpdie8o0F4DpQR8Zx9EwPGQ2+Gr+/h3XT9OiLKod/fc0C2+8mRGm
+         Vmrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jLafwiC2xQNKUVCHdLUQQvDtsC6khh4yCLYOGaMsDWc=;
+        b=kQkk5Q7IraZskyYpb+5lMrPQigRR6PchuB/vWY70/5HAvGAuy+9b4ywfDahhSsVn1o
+         dv6iI3x+64/D7MbOyoXIQZcBYPjjBCanJR/bLqK4U6uDG3kqcknC2G3e7E6UKO0sAQkt
+         HEVhHQzAMUAlOSFe+79uLQLqVabUjVBylMUDA82/bT98QirBlSn+tx5juJ+kes9IbSfn
+         lTmtHZxlq2x2oNWid8ht+OP/m1dMgHs9FavMu8xfMZMdVLIJrtbhHEQ68MQkW6e9sKqE
+         BSIzkCVoQ+ekf65c3VTBk6pEJ+wqGxLxGhpSH4V/dl/tdmDKCThEkO+NJWgoadOjJfab
+         +yjw==
+X-Gm-Message-State: AOAM530nidABS6LhLJkiglY9NKJnAQAQiow1WvjRg9pk3d7Xca1FPTaK
+        231CBXNOFRmv6f5PUmtXIm3MX401TJxr+m0CFTc=
+X-Google-Smtp-Source: ABdhPJw9tUjyIucH5cZED4lzBJee/JgSOGBP0NzmRVA3Y7tmYxKdfrwyxqGClPCje078VfJuMEc6uA==
+X-Received: by 2002:a37:9b8f:: with SMTP id d137mr3922530qke.459.1598920452229;
+        Mon, 31 Aug 2020 17:34:12 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id i14sm12189491qkn.53.2020.08.31.17.34.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2020 17:34:11 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
+Date:   Mon, 31 Aug 2020 20:32:59 -0400
+Message-Id: <20200901003300.11985-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200831083452.32261-1-jun.nie@linaro.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jun,
+Initializing sensors requires attaching to pd 2. Add an ioctl for that.
 
-On Mon, Aug 31, 2020 at 04:34:52PM +0800, Jun Nie wrote:
-> Add the shared modemcx/cx/mx power-domains found on MSM8939.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
->  drivers/soc/qcom/rpmpd.c                      | 27 +++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h        | 10 +++++++
->  3 files changed, 38 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> index 8058955fb3b9..6051d6d3bf0e 100644
-> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> @@ -20,6 +20,7 @@ properties:
->        - qcom,msm8996-rpmpd
->        - qcom,msm8998-rpmpd
->        - qcom,qcs404-rpmpd
-> +      - qcom,msm8939-rpmpd
->        - qcom,sc7180-rpmhpd
->        - qcom,sdm845-rpmhpd
->        - qcom,sm8150-rpmhpd
+This corresponds to FASTRPC_INIT_ATTACH_SENSORS in the downstream driver.
 
-This is sorted alphabetically at the moment.
-We should probably keep it that way. :)
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/misc/fastrpc.c      | 9 ++++++---
+ include/uapi/misc/fastrpc.h | 5 +++--
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
-> diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-> index f2168e4259b2..7ae91df9a5ba 100644
-> --- a/drivers/soc/qcom/rpmpd.c
-> +++ b/drivers/soc/qcom/rpmpd.c
-> @@ -220,11 +220,38 @@ static const struct rpmpd_desc qcs404_desc = {
->  	.max_state = RPM_SMD_LEVEL_BINNING,
->  };
->  
-> +/* msm8939 RPM Power Domains */
-> +DEFINE_RPMPD_PAIR(msm8939, vddmd, vddmd_ao, SMPA, CORNER, 1);
-> +DEFINE_RPMPD_VFC(msm8939, vddmd_vfc, SMPA, 1);
-> +
-> +DEFINE_RPMPD_PAIR(msm8939, vddcx, vddcx_ao, SMPA, CORNER, 2);
-> +DEFINE_RPMPD_VFC(msm8939, vddcx_vfc, SMPA, 2);
-> +
-> +DEFINE_RPMPD_PAIR(msm8939, vddmx, vddmx_ao, LDOA, CORNER, 3);
-> +
-> +static struct rpmpd *msm8939_rpmpds[] = {
-> +	[MSM8939_VDDMDCX] =	&msm8939_vddmd,
-> +	[MSM8939_VDDMDCX_AO] =	&msm8939_vddmd_ao,
-> +	[MSM8939_VDDMDCX_VFC] =	&msm8939_vddmd_vfc,
-> +	[MSM8939_VDDCX] =	&msm8939_vddcx,
-> +	[MSM8939_VDDCX_AO] =	&msm8939_vddcx_ao,
-> +	[MSM8939_VDDCX_VFC] =	&msm8939_vddcx_vfc,
-> +	[MSM8939_VDDMX] =	&msm8939_vddmx,
-> +	[MSM8939_VDDMX_AO] =	&msm8939_vddmx_ao,
-> +};
-> +
-> +static const struct rpmpd_desc msm8939_desc = {
-> +	.rpmpds = msm8939_rpmpds,
-> +	.num_pds = ARRAY_SIZE(msm8939_rpmpds),
-> +	.max_state = RPM_SMD_LEVEL_TURBO_HIGH,
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 7939c55daceb..ea5e9ca0d705 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1276,7 +1276,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
+ 	return 0;
+ }
+ 
+-static int fastrpc_init_attach(struct fastrpc_user *fl)
++static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
+ {
+ 	struct fastrpc_invoke_args args[1];
+ 	int tgid = fl->tgid;
+@@ -1287,7 +1287,7 @@ static int fastrpc_init_attach(struct fastrpc_user *fl)
+ 	args[0].fd = -1;
+ 	args[0].reserved = 0;
+ 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
+-	fl->pd = 0;
++	fl->pd = pd;
+ 
+ 	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+ 				       sc, &args[0]);
+@@ -1477,7 +1477,10 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
+ 		err = fastrpc_invoke(fl, argp);
+ 		break;
+ 	case FASTRPC_IOCTL_INIT_ATTACH:
+-		err = fastrpc_init_attach(fl);
++		err = fastrpc_init_attach(fl, 0);
++		break;
++	case FASTRPC_IOCTL_INIT_ATTACH_SNS:
++		err = fastrpc_init_attach(fl, 2);
+ 		break;
+ 	case FASTRPC_IOCTL_INIT_CREATE:
+ 		err = fastrpc_init_create_process(fl, argp);
+diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
+index 07de2b7aac85..0a89f95463f6 100644
+--- a/include/uapi/misc/fastrpc.h
++++ b/include/uapi/misc/fastrpc.h
+@@ -10,8 +10,9 @@
+ #define FASTRPC_IOCTL_INVOKE		_IOWR('R', 3, struct fastrpc_invoke)
+ #define FASTRPC_IOCTL_INIT_ATTACH	_IO('R', 4)
+ #define FASTRPC_IOCTL_INIT_CREATE	_IOWR('R', 5, struct fastrpc_init_create)
+-#define FASTRPC_IOCTL_MMAP              _IOWR('R', 6, struct fastrpc_req_mmap)
+-#define FASTRPC_IOCTL_MUNMAP            _IOWR('R', 7, struct fastrpc_req_munmap)
++#define FASTRPC_IOCTL_MMAP		_IOWR('R', 6, struct fastrpc_req_mmap)
++#define FASTRPC_IOCTL_MUNMAP		_IOWR('R', 7, struct fastrpc_req_munmap)
++#define FASTRPC_IOCTL_INIT_ATTACH_SNS	_IO('R', 8)
+ 
+ struct fastrpc_invoke_args {
+ 	__u64 ptr;
+-- 
+2.26.1
 
-MSM8939 seems to be still using corners instead of levels,
-so shouldn't you have max state = MAX_8996_RPMPD_STATE (= 6)?
-
-> +};
-> +
->  static const struct of_device_id rpmpd_match_table[] = {
->  	{ .compatible = "qcom,msm8976-rpmpd", .data = &msm8976_desc },
->  	{ .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
->  	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
->  	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
-> +	{ .compatible = "qcom,msm8939-rpmpd", .data = &msm8939_desc },
-
-Would be good to keep this alphabetically ordered as well.
-
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, rpmpd_match_table);
-> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-> index dc146e44228b..4eb5d288e641 100644
-> --- a/include/dt-bindings/power/qcom-rpmpd.h
-> +++ b/include/dt-bindings/power/qcom-rpmpd.h
-> @@ -101,6 +101,16 @@
->  #define QCS404_LPIMX		5
->  #define QCS404_LPIMX_VFL	6
->  
-> +/* MSM8939 Power Domains */
-> +#define MSM8939_VDDMDCX		0
-> +#define MSM8939_VDDMDCX_AO	1
-> +#define MSM8939_VDDMDCX_VFC	2
-> +#define MSM8939_VDDCX		3
-> +#define MSM8939_VDDCX_AO	4
-> +#define MSM8939_VDDCX_VFC	5
-> +#define MSM8939_VDDMX		6
-> +#define MSM8939_VDDMX_AO	7
-> +
-
-... and these defines above MSM8976.
-
-Thanks!
-Stephan
-
->  /* RPM SMD Power Domain performance levels */
->  #define RPM_SMD_LEVEL_RETENTION       16
->  #define RPM_SMD_LEVEL_RETENTION_PLUS  32
-> -- 
-> 2.17.1
-> 
