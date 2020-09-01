@@ -2,120 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CDAFA2587C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 08:01:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9592C258911
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 09:32:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726006AbgIAGB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 02:01:27 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:46766 "EHLO m43-7.mailgun.net"
+        id S1726947AbgIAHcB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 03:32:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:28268 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726293AbgIAGB1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 02:01:27 -0400
+        id S1726044AbgIAHb5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Sep 2020 03:31:57 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598940086; h=References: In-Reply-To: References:
- In-Reply-To: Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=JkB5t793pKcL4ZJ57eDDbDImH896a5Jx/bAmj4NC5Vg=; b=EKSXgTNhpwm1e2+8k3jw63+1jcI2HjygcTus8HL82JKX8us6QEwuHVCD3XaIb4aX50HBC5Pi
- DoXcWRJrMtVKIgO4UoxQY7uanKoy2taqiT7vuzRRMUR13wXKfWZPKXWRQNYIip/VJXVTWMul
- YYH2li51YhI1McSzMQaquDqatg0=
+ s=smtp; t=1598945516; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Zfqd1NY57glLHp+F+Na2YYDd6T8pT12Sz/2at7PsBCY=; b=ScFQuVmvxCMBcYo4GbWLVPhS24/iK6zvL8cOvJJceATx5IGv4JnnSVxUbroc5ixPLlrQDWyC
+ J34qmBtDP3oDU2YEbl6WDMDOaVqlyGslrJo0VJMPUCKFUOJzP2pprWiEKciaD5hbycCiA1Sx
+ 8bMK6E/njy3HMeeXWh7b2z6e1hI=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f4de3a173afa3417e2a8ce4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 06:01:05
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5f4df8ebbe06707b34e4edc8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 07:31:55
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C3F88C433A0; Tue,  1 Sep 2020 06:01:03 +0000 (UTC)
+        id 59E7EC43395; Tue,  1 Sep 2020 07:31:55 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE,URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.16] (unknown [61.1.231.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A11D1C433CA;
-        Tue,  1 Sep 2020 06:01:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A11D1C433CA
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 808A5C433C6;
+        Tue,  1 Sep 2020 07:31:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 808A5C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=nguyenb@codeaurora.org
-From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
-To:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     "Bao D. Nguyen" <nguyenb@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        YueHaibing <yuehaibing@huawei.com>,
-        Bean Huo <beanhuo@micron.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v1 2/2] scsi: ufs: Support reading UFS's Vcc voltage from device tree
-Date:   Mon, 31 Aug 2020 23:00:48 -0700
-Message-Id: <69db325a09d5c3fa7fc260db031b1e498b601c25.1598939393.git.nguyenb@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1598939393.git.nguyenb@codeaurora.org>
-References: <cover.1598939393.git.nguyenb@codeaurora.org>
-In-Reply-To: <cover.1598939393.git.nguyenb@codeaurora.org>
-References: <cover.1598939393.git.nguyenb@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH V2 3/8] drm/msm: Unconditionally call
+ dev_pm_opp_of_remove_table()
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Rafael Wysocki <rjw@rjwysocki.net>,
+        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Naresh Kamboju <naresh.kamboju@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <cover.1598594714.git.viresh.kumar@linaro.org>
+ <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <bc64e031-c42f-9ed2-c597-18a790a4d3bb@codeaurora.org>
+Date:   Tue, 1 Sep 2020 13:01:47 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The UFS specifications supports a range of Vcc operating voltage
-from 2.4-3.6V depending on the device and manufacturers.
-Allows selecting the UFS Vcc voltage level by setting the
-UFS's entry vcc-voltage-level in the device tree. If UFS's
-vcc-voltage-level setting is not found in the device tree,
-use default values provided by the driver.
 
-Signed-off-by: Can Guo <cang@codeaurora.org>
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
----
- drivers/scsi/ufs/ufshcd-pltfrm.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+On 8/28/2020 11:37 AM, Viresh Kumar wrote:
+> dev_pm_opp_of_remove_table() doesn't report any errors when it fails to
+> find the OPP table with error -ENODEV (i.e. OPP table not present for
+> the device). And we can call dev_pm_opp_of_remove_table()
+> unconditionally here.
 
-diff --git a/drivers/scsi/ufs/ufshcd-pltfrm.c b/drivers/scsi/ufs/ufshcd-pltfrm.c
-index 3db0af6..48f429c 100644
---- a/drivers/scsi/ufs/ufshcd-pltfrm.c
-+++ b/drivers/scsi/ufs/ufshcd-pltfrm.c
-@@ -104,10 +104,11 @@ static int ufshcd_parse_clock_info(struct ufs_hba *hba)
- static int ufshcd_populate_vreg(struct device *dev, const char *name,
- 		struct ufs_vreg **out_vreg)
- {
--	int ret = 0;
-+	int len, ret = 0;
- 	char prop_name[MAX_PROP_SIZE];
- 	struct ufs_vreg *vreg = NULL;
- 	struct device_node *np = dev->of_node;
-+	const __be32 *prop;
- 
- 	if (!np) {
- 		dev_err(dev, "%s: non DT initialization\n", __func__);
-@@ -138,8 +139,16 @@ static int ufshcd_populate_vreg(struct device *dev, const char *name,
- 			vreg->min_uV = UFS_VREG_VCC_1P8_MIN_UV;
- 			vreg->max_uV = UFS_VREG_VCC_1P8_MAX_UV;
- 		} else {
--			vreg->min_uV = UFS_VREG_VCC_MIN_UV;
--			vreg->max_uV = UFS_VREG_VCC_MAX_UV;
-+			prop = of_get_property(np, "vcc-voltage-level", &len);
-+			if (!prop || (len != (2 * sizeof(__be32)))) {
-+				dev_warn(dev, "%s vcc-voltage-level property.\n",
-+					prop ? "invalid format" : "no");
-+				vreg->min_uV = UFS_VREG_VCC_MIN_UV;
-+				vreg->max_uV = UFS_VREG_VCC_MAX_UV;
-+			} else {
-+				vreg->min_uV = be32_to_cpup(&prop[0]);
-+				vreg->max_uV = be32_to_cpup(&prop[1]);
-+			}
- 		}
- 	} else if (!strcmp(name, "vccq")) {
- 		vreg->min_uV = UFS_VREG_VCCQ_MIN_UV;
+Its a little tricky to call things unconditionally for this driver, more below.
+
+> 
+> While at it, also create a label to put clkname.
+> 
+> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+> 
+> ---
+> V2:
+> - Compare with -ENODEV only for failures.
+> - Create new label to put clkname.
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 14 +++++---------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 -
+>   drivers/gpu/drm/msm/dsi/dsi_host.c      |  8 ++------
+>   3 files changed, 7 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index c0a4d4e16d82..c8287191951f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1010,12 +1010,9 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>   		return PTR_ERR(dpu_kms->opp_table);
+>   	/* OPP table is optional */
+>   	ret = dev_pm_opp_of_add_table(dev);
+> -	if (!ret) {
+> -		dpu_kms->has_opp_table = true;
+> -	} else if (ret != -ENODEV) {
+> +	if (ret && ret != -ENODEV) {
+>   		dev_err(dev, "invalid OPP table in device tree\n");
+> -		dev_pm_opp_put_clkname(dpu_kms->opp_table);
+> -		return ret;
+> +		goto put_clkname;
+
+So FWIU, dpu_unbind() gets called even when dpu_bind() fails for some reason.
+I tried to address that earlier [1] which I realized did not land. But with these changes
+it will be even more broken unless we identify if we failed dpu_bind() before
+adding the OPP table, while adding it, or all went well with opps and handle things
+accordingly in dpu_unbind.
+
+[1] https://lore.kernel.org/patchwork/patch/1275632/
+
+>   	}
+>   
+>   	mp = &dpu_kms->mp;
+> @@ -1037,8 +1034,8 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>   	priv->kms = &dpu_kms->base;
+>   	return ret;
+>   err:
+> -	if (dpu_kms->has_opp_table)
+> -		dev_pm_opp_of_remove_table(dev);
+> +	dev_pm_opp_of_remove_table(dev);
+> +put_clkname:
+>   	dev_pm_opp_put_clkname(dpu_kms->opp_table);
+>   	return ret;
+>   }
+> @@ -1056,8 +1053,7 @@ static void dpu_unbind(struct device *dev, struct device *master, void *data)
+>   	if (dpu_kms->rpm_enabled)
+>   		pm_runtime_disable(&pdev->dev);
+>   
+> -	if (dpu_kms->has_opp_table)
+> -		dev_pm_opp_of_remove_table(dev);
+> +	dev_pm_opp_of_remove_table(dev);
+>   	dev_pm_opp_put_clkname(dpu_kms->opp_table);
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index e140cd633071..8295979a7165 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -129,7 +129,6 @@ struct dpu_kms {
+>   	bool rpm_enabled;
+>   
+>   	struct opp_table *opp_table;
+> -	bool has_opp_table;
+>   
+>   	struct dss_module_power mp;
+>   
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index b17ac6c27554..4335fe33250c 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -113,7 +113,6 @@ struct msm_dsi_host {
+>   	struct clk *byte_intf_clk;
+>   
+>   	struct opp_table *opp_table;
+> -	bool has_opp_table;
+>   
+>   	u32 byte_clk_rate;
+>   	u32 pixel_clk_rate;
+> @@ -1891,9 +1890,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>   		return PTR_ERR(msm_host->opp_table);
+>   	/* OPP table is optional */
+>   	ret = dev_pm_opp_of_add_table(&pdev->dev);
+> -	if (!ret) {
+> -		msm_host->has_opp_table = true;
+> -	} else if (ret != -ENODEV) {
+> +	if (ret && ret != -ENODEV) {
+>   		dev_err(&pdev->dev, "invalid OPP table in device tree\n");
+>   		dev_pm_opp_put_clkname(msm_host->opp_table);
+>   		return ret;
+> @@ -1934,8 +1931,7 @@ void msm_dsi_host_destroy(struct mipi_dsi_host *host)
+>   	mutex_destroy(&msm_host->cmd_mutex);
+>   	mutex_destroy(&msm_host->dev_mutex);
+>   
+> -	if (msm_host->has_opp_table)
+> -		dev_pm_opp_of_remove_table(&msm_host->pdev->dev);
+> +	dev_pm_opp_of_remove_table(&msm_host->pdev->dev);
+>   	dev_pm_opp_put_clkname(msm_host->opp_table);
+>   	pm_runtime_disable(&msm_host->pdev->dev);
+>   }
+> 
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
