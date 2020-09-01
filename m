@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94326259A1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:46:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A46FB259A51
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:49:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730260AbgIAQql (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 12:46:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37786 "EHLO
+        id S1730251AbgIAQqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 12:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729812AbgIAQqd (ORCPT
+        with ESMTP id S1729171AbgIAQqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 12:46:33 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A163EC061246;
-        Tue,  1 Sep 2020 09:46:32 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id o20so1105540pfp.11;
-        Tue, 01 Sep 2020 09:46:32 -0700 (PDT)
+        Tue, 1 Sep 2020 12:46:36 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D53FC061247;
+        Tue,  1 Sep 2020 09:46:36 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id mm21so901876pjb.4;
+        Tue, 01 Sep 2020 09:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9GY8MTV08PrdHUp+EWWyNucwylbtR4J8MJ49qiKRTr8=;
-        b=diYFxRQBFCAYzBMr1oUdzb90W8KPNy1WuyBKtljKjHAsRM6NJtOgedMjx4M0bbCDQg
-         1NokvIoSeI5QQcdk6vTojUxuiMokN3r33V1FHU8uVaQ14ufEsfsb3Nvx1iVIBAexr9H/
-         283ozm+4h7ZptZESKcLhyBqrLn89MnSBsD9w0mibZJZ7q0oEdNm6nJpnsenZRJHEuHPY
-         Bz+lAcKZMBzXfwiFf0M2NtgabZxm4VoIyDyGNYia6T7GB7gtM49q9T0bxdundFLyn1Iu
-         ouTkPBFotIrezZ9aXt71kBbK+tYVdLk09S967qZQ4Emfr+8HXiXcg5A2UTZMlWa/dxCX
-         hHXg==
+        bh=2liumjG+7/DHabFJ1OVqIZ4d6sswHHCz0LQDjQhDWhY=;
+        b=C20tEzs8cI1H5PWiGg7J6Kjt3dMuz4+iyz56eppjCZaUo+/nLcDmNVBSysjSmXR9MJ
+         O5Dx3v1bteUe0y/A49OPZxOSqu/z0kM9BdIdemL6ZbLMU641IiYVpatlN5HEZGIJHrjf
+         OPumT0M4psa//xyxK4VWjGxkiqHel7QA2TyIZip2qUIjGJoTnL4jXTSGDHJCfwktAoSh
+         6argkZidvJ2KXJV83LigiE/qzq/lfm2JSx8Vj3zF+Yg1RnsmK8bhCs7WWdbWI0HQz1Di
+         HwDJ7f2xiXpVeEoCK62ngnCL7P/LUMJo+H5yZRN7psT57RB0Eoj3v4J6+lKK2g6Df87H
+         YwJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9GY8MTV08PrdHUp+EWWyNucwylbtR4J8MJ49qiKRTr8=;
-        b=EDg5Auwxux1malfetRcByfU4iYE7RGUyXjMD724XdVVReXZVXDDkiEIiRfhG9nbICH
-         Xlq9Of6+USpk3KiRBsL2WLTtsFFL58Sd3LzmU+lcjF81oTbNqlrCu3BeycHTxMNrGswx
-         QinkeUV+6H1tYG8OsTsgrSJXCD4/ITHvQTirsk6i5fHAypeI1N+v3CngeFiGNl/0J6Su
-         q3yre+izOrSeO4LybrbfGapsWRqoo5lwakAKHJJTtwahVard5MSZ2LPbShKe9OslekAa
-         HhSdnZLx1B2hCERB5BDshuZ8DvsZqdjpvmo51nHaG/isQODDrdZDrbtE3YiCMT+SpdCJ
-         dMzw==
-X-Gm-Message-State: AOAM531lzLyu5ouCaUnWTrAbVwqagD2su9PGcwRLXxBYpl5e0aZAMCAL
-        lF2x4cUKz4oBWO6L8QSpkfY=
-X-Google-Smtp-Source: ABdhPJxkErnGII/ajapuRB93tieR8/YaguR9xdhO4M2IHzqSfAfV4/ovlSOHBb+EyThZc7WuL4iTfA==
-X-Received: by 2002:a63:2043:: with SMTP id r3mr2258427pgm.289.1598978792128;
-        Tue, 01 Sep 2020 09:46:32 -0700 (PDT)
+        bh=2liumjG+7/DHabFJ1OVqIZ4d6sswHHCz0LQDjQhDWhY=;
+        b=BrdZUQmMeKw6Z1YX31EYksXXoDzkczRKK3CCxF11V+2BAuq/M9B+CO1LtWA2AnWwt7
+         el1BcJltfsZ3+ODUr4HR22E8qV7jqGBuv1OXN4TmHqcYRxRH4jIfKLZqrANzSrnnXPfq
+         Q5OliQp+VeY5LnniIvCAVcoMopY20dgm1xQ80j87kFiDtMUVolf7HUVK+k2dZxQ3iaXH
+         lm0xFgsVhMiG4DD0Pa+YqYM+MRtrrgMgzCoq10yg/WenJYpOHVz8oFCI1J3x//8Rqc5t
+         5/sD3PHpANfJKVCDr67qHgB/1gxPERE2O/LQY3OCJxeXDFjs8OF4lO4cWdoHF9TGN7QU
+         /Pjg==
+X-Gm-Message-State: AOAM5308quiIymDU+FOAOPsfGdXrW/OQDfLQaMkc8rYr28SLSsnNUrNm
+        sWiO/70dTldoWqGc95m6xFM=
+X-Google-Smtp-Source: ABdhPJxNThLmHXZCNlUm17Utzn//s/mjDY83Fykyc8blnjX/mneV7FWFBAjkw40Nltmm9C5ej2jfZw==
+X-Received: by 2002:a17:902:758d:: with SMTP id j13mr1256122pll.174.1598978795601;
+        Tue, 01 Sep 2020 09:46:35 -0700 (PDT)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id s187sm79986pfc.134.2020.09.01.09.46.30
+        by smtp.gmail.com with ESMTPSA id 9sm2548653pfv.22.2020.09.01.09.46.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 09:46:31 -0700 (PDT)
+        Tue, 01 Sep 2020 09:46:34 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
         linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
@@ -57,20 +57,16 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vivek Gautam <vivek.gautam@codeaurora.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
         Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v16 04/20] drm/msm: Set adreno_smmu as gpu's drvdata
-Date:   Tue,  1 Sep 2020 09:46:21 -0700
-Message-Id: <20200901164707.2645413-5-robdclark@gmail.com>
+Subject: [PATCH v16 05/20] drm/msm: Add a context pointer to the submitqueue
+Date:   Tue,  1 Sep 2020 09:46:22 -0700
+Message-Id: <20200901164707.2645413-6-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200901164707.2645413-1-robdclark@gmail.com>
 References: <20200901164707.2645413-1-robdclark@gmail.com>
@@ -81,77 +77,160 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+From: Jordan Crouse <jcrouse@codeaurora.org>
 
-This will be populated by adreno-smmu, to provide a way for coordinating
-enabling/disabling TTBR0 translation.
+Each submitqueue is attached to a context. Add a pointer to the
+context to the submitqueue at create time and refcount it so
+that it stays around through the life of the queue.
 
+Co-developed-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 2 --
- drivers/gpu/drm/msm/msm_gpu.c              | 2 +-
- drivers/gpu/drm/msm/msm_gpu.h              | 6 +++++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c         |  3 ++-
+ drivers/gpu/drm/msm/msm_drv.h         | 20 ++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_gem.h         |  1 +
+ drivers/gpu/drm/msm/msm_gem_submit.c  |  6 +++---
+ drivers/gpu/drm/msm/msm_gpu.h         |  1 +
+ drivers/gpu/drm/msm/msm_submitqueue.c |  3 +++
+ 6 files changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 26664e1b30c0..58e03b20e1c7 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -417,8 +417,6 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
- 		return PTR_ERR(gpu);
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 79333842f70a..75cd7639f560 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -594,6 +594,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
++	kref_init(&ctx->ref);
+ 	msm_submitqueue_init(dev, ctx);
+ 
+ 	ctx->aspace = priv->gpu ? priv->gpu->aspace : NULL;
+@@ -615,7 +616,7 @@ static int msm_open(struct drm_device *dev, struct drm_file *file)
+ static void context_close(struct msm_file_private *ctx)
+ {
+ 	msm_submitqueue_close(ctx);
+-	kfree(ctx);
++	msm_file_private_put(ctx);
+ }
+ 
+ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index af259b0573ea..4561bfb5e745 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -57,6 +57,7 @@ struct msm_file_private {
+ 	struct list_head submitqueues;
+ 	int queueid;
+ 	struct msm_gem_address_space *aspace;
++	struct kref ref;
+ };
+ 
+ enum msm_mdp_plane_property {
+@@ -428,6 +429,25 @@ void msm_submitqueue_close(struct msm_file_private *ctx);
+ 
+ void msm_submitqueue_destroy(struct kref *kref);
+ 
++static inline void __msm_file_private_destroy(struct kref *kref)
++{
++	struct msm_file_private *ctx = container_of(kref,
++		struct msm_file_private, ref);
++
++	kfree(ctx);
++}
++
++static inline void msm_file_private_put(struct msm_file_private *ctx)
++{
++	kref_put(&ctx->ref, __msm_file_private_destroy);
++}
++
++static inline struct msm_file_private *msm_file_private_get(
++	struct msm_file_private *ctx)
++{
++	kref_get(&ctx->ref);
++	return ctx;
++}
+ 
+ #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+ #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 972490b14ba5..9c573c4269cb 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -142,6 +142,7 @@ struct msm_gem_submit {
+ 	bool valid;         /* true if no cmdstream patching needed */
+ 	bool in_rb;         /* "sudo" mode, copy cmds into RB */
+ 	struct msm_ringbuffer *ring;
++	struct msm_file_private *ctx;
+ 	unsigned int nr_cmds;
+ 	unsigned int nr_bos;
+ 	u32 ident;	   /* A "identifier" for the submit for logging */
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 8cb9aa15ff90..1464b04d25d3 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -27,7 +27,7 @@
+ #define BO_PINNED   0x2000
+ 
+ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+-		struct msm_gpu *gpu, struct msm_gem_address_space *aspace,
++		struct msm_gpu *gpu,
+ 		struct msm_gpu_submitqueue *queue, uint32_t nr_bos,
+ 		uint32_t nr_cmds)
+ {
+@@ -43,7 +43,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+ 		return NULL;
+ 
+ 	submit->dev = dev;
+-	submit->aspace = aspace;
++	submit->aspace = queue->ctx->aspace;
+ 	submit->gpu = gpu;
+ 	submit->fence = NULL;
+ 	submit->cmd = (void *)&submit->bos[nr_bos];
+@@ -677,7 +677,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 		}
  	}
  
--	dev_set_drvdata(dev, gpu);
--
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 6aa9e04e52e7..806eb0957280 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -892,7 +892,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 		gpu->gpu_cx = NULL;
- 
- 	gpu->pdev = pdev;
--	platform_set_drvdata(pdev, gpu);
-+	platform_set_drvdata(pdev, &gpu->adreno_smmu);
- 
- 	msm_devfreq_init(gpu);
- 
+-	submit = submit_create(dev, gpu, ctx->aspace, queue, args->nr_bos,
++	submit = submit_create(dev, gpu, queue, args->nr_bos,
+ 		args->nr_cmds);
+ 	if (!submit) {
+ 		ret = -ENOMEM;
 diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 8bda7beaed4b..f91b141add75 100644
+index f91b141add75..97c527e98391 100644
 --- a/drivers/gpu/drm/msm/msm_gpu.h
 +++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -7,6 +7,7 @@
- #ifndef __MSM_GPU_H__
- #define __MSM_GPU_H__
+@@ -190,6 +190,7 @@ struct msm_gpu_submitqueue {
+ 	u32 flags;
+ 	u32 prio;
+ 	int faults;
++	struct msm_file_private *ctx;
+ 	struct list_head node;
+ 	struct kref ref;
+ };
+diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
+index 90c9d84e6155..c3d206105d28 100644
+--- a/drivers/gpu/drm/msm/msm_submitqueue.c
++++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+@@ -12,6 +12,8 @@ void msm_submitqueue_destroy(struct kref *kref)
+ 	struct msm_gpu_submitqueue *queue = container_of(kref,
+ 		struct msm_gpu_submitqueue, ref);
  
-+#include <linux/adreno-smmu-priv.h>
- #include <linux/clk.h>
- #include <linux/interconnect.h>
- #include <linux/pm_opp.h>
-@@ -73,6 +74,8 @@ struct msm_gpu {
- 	struct platform_device *pdev;
- 	const struct msm_gpu_funcs *funcs;
- 
-+	struct adreno_smmu_priv adreno_smmu;
++	msm_file_private_put(queue->ctx);
 +
- 	/* performance counters (hw & sw): */
- 	spinlock_t perf_lock;
- 	bool perfcntr_active;
-@@ -143,7 +146,8 @@ struct msm_gpu {
- 
- static inline struct msm_gpu *dev_to_gpu(struct device *dev)
- {
--	return dev_get_drvdata(dev);
-+	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(dev);
-+	return container_of(adreno_smmu, struct msm_gpu, adreno_smmu);
+ 	kfree(queue);
  }
  
- /* It turns out that all targets use the same ringbuffer size */
+@@ -83,6 +85,7 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+ 
+ 	write_lock(&ctx->queuelock);
+ 
++	queue->ctx = msm_file_private_get(ctx);
+ 	queue->id = ctx->queueid++;
+ 
+ 	if (id)
 -- 
 2.26.2
 
