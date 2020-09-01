@@ -2,114 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AA2325879F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 07:42:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D1F02587BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 08:01:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726724AbgIAFms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 01:42:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48216 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbgIAFmq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 01:42:46 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE23C0612A4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 22:42:45 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id g72so7910654qke.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 22:42:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TjPySNIpD++R3nIfiDfbAnLHmr0c9i/LGC5Y9ogD0v8=;
-        b=OAbWCK0Yezbsh/mzcgeE7sC/EeQQhZZ8WSfMp/Fmv/B7Lk2xTWpDZL7ez5bf5UDPWK
-         4Tue7VtzfuaCr5qUWiEay3FADaV89uAXqiEQ2f0UU/LKgixPCrQhkFXl83SKtXawRPug
-         3VswzBVU7BhUiPiBt4EI5sghR0SBrIxLZku0fNksghFQsFPBBSKTndX/FfB6TpJMrVJJ
-         TE/FJhQHMSxivxBOC5CwlJvVL2inpaqTLLxgpXo2oLYU/jPdXYGaBWizv/c5P/4Twm4n
-         oUcO4KIExFshItVD3J8hb+p6lpoDxm4JTY8Saz2oGC55/ChiWAPX6WIBTSDYFkqzsCAo
-         81SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TjPySNIpD++R3nIfiDfbAnLHmr0c9i/LGC5Y9ogD0v8=;
-        b=rCEWz/nUuXqwyJpPVhQ72n2SEb5/DzPqa4uyrE5Fc+kO5Yq0sqBkhAJXV0Fhk0HB2F
-         IYe/J0c7lzNRzHH2hpL976VqM1hd/feX5MXpe+YWOSX/EU2EXfoFluJMbJVheZo1TYkV
-         mQvT93EGo+faHPOdXKXPEd8hff8V5wnBf1n7t/g+uo/JBXprqrVaqzvlM3valAcBAEpj
-         Rjt+AYhwiB/IL50V8jSWAO1UnB8jJvOdOr5ixot6v3I1EWqWz5m2j+0yF2zA8sOXfsWQ
-         HDkjwyPx1EnjVs4ODij+3Q495n8nVodYpGsRPe39RhN8sepdqj67mKfvQojOmyKOo7KS
-         HcsA==
-X-Gm-Message-State: AOAM532j+TsR28ece90WpD/qG3rfZwjoBJzHOJ+rPlTS/dwr7s23eWTB
-        FPbcd1c/JSQodjGRRzMTj3VikdlJm+PqqQ==
-X-Google-Smtp-Source: ABdhPJzptDekz3V1QxRTxrgjsN9RM1EoaAMnK6eUWK4D92iBVLom/mgdEqgNNG4GBVYJ/DvH3YX36g==
-X-Received: by 2002:a37:b307:: with SMTP id c7mr270811qkf.33.1598938964675;
-        Mon, 31 Aug 2020 22:42:44 -0700 (PDT)
-Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id s20sm354299qkg.65.2020.08.31.22.42.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 22:42:44 -0700 (PDT)
-Date:   Tue, 1 Sep 2020 05:42:42 +0000
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Will Deacon <will@kernel.org>, freedreno@lists.freedesktop.org,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 01/19] drm/msm: remove dangling submitqueue references
-Message-ID: <20200901054242.GC54956@uller>
-References: <20200810222657.1841322-1-jcrouse@codeaurora.org>
- <20200814024114.1177553-2-robdclark@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200814024114.1177553-2-robdclark@gmail.com>
+        id S1726078AbgIAGBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 02:01:18 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:29941 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726050AbgIAGBR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Sep 2020 02:01:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598940077; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=le+g3EpVzD21W5YW/7mFqX4zFB4SyVrz0QgT9U+v6CE=; b=IITA7Ankmr9Ex7rjvXyKwcvudbZQ68UZuK4y24CqjRhaBnUFedWOgabUEExeluGR1gBiJcFW
+ GPDoMeJ9RoUDVebKjyOLQq0AUvyCEYc0DGFu8v+Xk1VJVnRKMxHYcsVuIbgZcDtovQwklFdP
+ dqCJYZzc18PKTFC/B86skNs0UV0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f4de3999bdf68cc03d04f18 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 06:00:57
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 66BB9C43387; Tue,  1 Sep 2020 06:00:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: nguyenb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DD6CCC433C6;
+        Tue,  1 Sep 2020 06:00:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DD6CCC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=nguyenb@codeaurora.org
+From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
+To:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     "Bao D. Nguyen" <nguyenb@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v1 0/2] Supports Reading UFS's Vcc Voltage Levels from DT
+Date:   Mon, 31 Aug 2020 23:00:46 -0700
+Message-Id: <cover.1598939393.git.nguyenb@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 14 Aug 02:40 UTC 2020, Rob Clark wrote:
+UFS's specification supports a range of Vcc operating voltages.
+Allows selecting the UFS Vcc operating voltage levels by reading
+the UFS's vcc-voltage-level in the device tree.
 
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Currently it doesn't matter, since we free the ctx immediately.  But
-> when we start refcnt'ing the ctx, we don't want old dangling list
-> entries to hang around.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Bao D. Nguyen (2):
+  scsi: dt-bindings: ufs: Add vcc-voltage-level for UFS
+  scsi: ufs: Support reading UFS's Vcc voltage from device tree
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+ Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt |  2 ++
+ drivers/scsi/ufs/ufshcd-pltfrm.c                        | 15 ++++++++++++---
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-> ---
->  drivers/gpu/drm/msm/msm_submitqueue.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-> index a1d94be7883a..90c9d84e6155 100644
-> --- a/drivers/gpu/drm/msm/msm_submitqueue.c
-> +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-> @@ -49,8 +49,10 @@ void msm_submitqueue_close(struct msm_file_private *ctx)
->  	 * No lock needed in close and there won't
->  	 * be any more user ioctls coming our way
->  	 */
-> -	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node)
-> +	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node) {
-> +		list_del(&entry->node);
->  		msm_submitqueue_put(entry);
-> +	}
->  }
->  
->  int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
-> -- 
-> 2.26.2
-> 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
