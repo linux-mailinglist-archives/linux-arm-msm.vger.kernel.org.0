@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D062259A02
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:46:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92E7D259A53
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:49:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731087AbgIAQqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 12:46:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37744 "EHLO
+        id S1732179AbgIAQql (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 12:46:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732042AbgIAQqU (ORCPT
+        with ESMTP id S1730326AbgIAQq0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 12:46:20 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29A36C061244;
-        Tue,  1 Sep 2020 09:46:20 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id ls14so886259pjb.3;
-        Tue, 01 Sep 2020 09:46:20 -0700 (PDT)
+        Tue, 1 Sep 2020 12:46:26 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10570C061244;
+        Tue,  1 Sep 2020 09:46:25 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id x18so816493pll.6;
+        Tue, 01 Sep 2020 09:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7KAgNczSpcXSENE7I7HLjPQLwLd/js6kuYT9gLzGMrc=;
-        b=MeCm/VYIOe9iYCLfeugzAyL6okJVgG4svLLFNAlw6jwgFSHyxPJTfOhTGLcz+3lmt8
-         4Nqb/t7ulGZyBaw+FLZqWnrRTKBHvyy8wk23mtc6mtN1c8ky08w+sHTi6lVuP3a6fRMa
-         z6AU4iKXMyPFlrW+d0VSVrr0seFt//Be6gxXDKFsj9k7weplTuaHXFwZvzNqYacw4zb1
-         MZoK6jiacE9P6k33ODJiryhUWGzVv8aO5rd2g9ZTMVvwrNpOnaIIPLlHwcAo2RlyKhpw
-         d+n7xR/mD2Z78MSBOTKNGKlfBllUivdl7eWaHPAFceBf1i0d+ImM8e50nQfOJw6qsL7c
-         0JaQ==
+        bh=Tk5zPp0nu93VQrlRpBetxr1lff5xE8i/LH2EjPSUXEI=;
+        b=jfADtGc2ZPCjhynKOdCJEaVZwckWuNnvv0bA+wk9rmOjtBW3xWIDyC6ePwcx4A24/i
+         6vn81mR2qNa14TEuW0kfe6glsktawQ1wOLEdACNI/tLpDGFwh8en3sZP3gJeIno6a7eD
+         qo1y7fY8cSKmdS6eK9Tx9pEZ8LYZC9hNnmqMblP6vQt1ZGGTmAY6qFVHOUDQMcUU/YRh
+         X+51rpiAjLJN8TJZhjJGGWh1gSTKuI8vvMP8H0bWvCzGUfPZdLvlZz+aiNDVyKTkBYTX
+         9lm/yEsLeSlOO+JoGVjnYwbwZutIZjR0i2wrCnjW/xo/Ipu7ChHwMkU8FaYvLbHqQYsI
+         k0LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7KAgNczSpcXSENE7I7HLjPQLwLd/js6kuYT9gLzGMrc=;
-        b=Wm/RpGYZfSTAo0LVM6IVmPlOLR65kRuU+8ORxGkai+o5jPPveK9kfjFdXUO5ZQ+qAj
-         7IlfeMlxnWffAqHeonTd1J0LRs3mYkQXkxNyvH5mgIAFh+dvzKuTA9knJTpULnIl1+DN
-         qBzWnPFfTAt7lIWLnEzamCGqjkTCIn0XoXqvWaA+0aHku/MpABPXUE95eWbEr6jxIiT2
-         xZ8AZl3+uR4G/igdwxcIEYJW12w3CXljpa5L1RoSz9yB46gGbm5qSDdcFDJnT4xpjtiw
-         YxPzYtfxjZ8HXQLW2n03G/rw986wFwDV3E+3RxhCCn0dY5aicsn0ZB7VJjyHJ6xnOjll
-         4efw==
-X-Gm-Message-State: AOAM530IY0/7iJKrv67RbLnUyQ+a6WSki+mftdPEcbter/HvDSKOqVpo
-        qNNLL/S5HCX9uLt3o9EOrp4=
-X-Google-Smtp-Source: ABdhPJwjrPAmB1IlUhm3/lAYNFCsGsLfWotZDUGXrh1rk+DjB79F8gK6EHU9pv/Qpy7KR0JW5A12Mg==
-X-Received: by 2002:a17:902:8307:: with SMTP id bd7mr2134655plb.159.1598978779659;
-        Tue, 01 Sep 2020 09:46:19 -0700 (PDT)
+        bh=Tk5zPp0nu93VQrlRpBetxr1lff5xE8i/LH2EjPSUXEI=;
+        b=S+ETN14chclQ4IN5nXFRZDXwEyvTKRItZXDSqO8M12o435XGVpCHoeHOWHL1VqoT6X
+         /SikfqNC+aUctJE5Vpg2FxsAUlZA04/8RyJl5ID+0uLVlHZeWIMw7XAsBSB4Z/TcFlov
+         Qb/cOQfF4FRmIB9apwir0RHMKQFSgZj4TC+P4l3VuGgNgxmKj8vMzyfkkRw5kPRouJi+
+         6HfqkYrf0QxPVZXtaqf3p2HWQapnO4tovtT6Y3+mxHoGRJ+Th3UM2/SVtxBcJ9zT/xJB
+         uxsjMRgGSoVY64ZhqI85MhWQOyEwtW1Z4x41zlukon2duODeWuZzb2z9q6ypzSnIXxyJ
+         /lUw==
+X-Gm-Message-State: AOAM533t34m54Icy7B9GFQtefAin01V6xr6ipZFTN1myDdZKXBnbTxKd
+        TU4TCBIv9OpGjp9D5hEO6to=
+X-Google-Smtp-Source: ABdhPJyTygZSGFX5eIM6/dkAIywFF35ZHmq9xGT/4duvrNw2xgG3rUQmmclMh4zKcn0Nwpq4ubuUiw==
+X-Received: by 2002:a17:90a:dac5:: with SMTP id g5mr2325737pjx.5.1598978784522;
+        Tue, 01 Sep 2020 09:46:24 -0700 (PDT)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id p20sm1967660pjz.49.2020.09.01.09.46.17
+        by smtp.gmail.com with ESMTPSA id u123sm2401020pfb.209.2020.09.01.09.46.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 09:46:18 -0700 (PDT)
+        Tue, 01 Sep 2020 09:46:23 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
         linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
@@ -59,14 +59,10 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v16 01/20] drm/msm: Remove dangling submitqueue references
-Date:   Tue,  1 Sep 2020 09:46:18 -0700
-Message-Id: <20200901164707.2645413-2-robdclark@gmail.com>
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v16 02/20] drm/msm: Add private interface for adreno-smmu
+Date:   Tue,  1 Sep 2020 09:46:19 -0700
+Message-Id: <20200901164707.2645413-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200901164707.2645413-1-robdclark@gmail.com>
 References: <20200901164707.2645413-1-robdclark@gmail.com>
@@ -79,33 +75,70 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Currently it doesn't matter, since we free the ctx immediately.  But
-when we start refcnt'ing the ctx, we don't want old dangling list
-entries to hang around.
+This interface will be used for drm/msm to coordinate with the
+qcom_adreno_smmu_impl to enable/disable TTBR0 translation.
+
+Once TTBR0 translation is enabled, the GPU's CP (Command Processor)
+will directly switch TTBR0 pgtables (and do the necessary TLB inv)
+synchronized to the GPU's operation.  But help from the SMMU driver
+is needed to initially bootstrap TTBR0 translation, which cannot be
+done from the GPU.
+
+Since this is a very special case, a private interface is used to
+avoid adding highly driver specific things to the public iommu
+interface.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/msm_submitqueue.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/adreno-smmu-priv.h | 36 ++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+ create mode 100644 include/linux/adreno-smmu-priv.h
 
-diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-index a1d94be7883a..90c9d84e6155 100644
---- a/drivers/gpu/drm/msm/msm_submitqueue.c
-+++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-@@ -49,8 +49,10 @@ void msm_submitqueue_close(struct msm_file_private *ctx)
- 	 * No lock needed in close and there won't
- 	 * be any more user ioctls coming our way
- 	 */
--	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node)
-+	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node) {
-+		list_del(&entry->node);
- 		msm_submitqueue_put(entry);
-+	}
- }
- 
- int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
+new file mode 100644
+index 000000000000..a889f28afb42
+--- /dev/null
++++ b/include/linux/adreno-smmu-priv.h
+@@ -0,0 +1,36 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (C) 2020 Google, Inc
++ */
++
++#ifndef __ADRENO_SMMU_PRIV_H
++#define __ADRENO_SMMU_PRIV_H
++
++#include <linux/io-pgtable.h>
++
++/**
++ * struct adreno_smmu_priv - private interface between adreno-smmu and GPU
++ *
++ * @cookie:        An opque token provided by adreno-smmu and passed
++ *                 back into the callbacks
++ * @get_ttbr1_cfg: Get the TTBR1 config for the GPUs context-bank
++ * @set_ttbr0_cfg: Set the TTBR0 config for the GPUs context bank.  A
++ *                 NULL config disables TTBR0 translation, otherwise
++ *                 TTBR0 translation is enabled with the specified cfg
++ *
++ * The GPU driver (drm/msm) and adreno-smmu work together for controlling
++ * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
++ * updating the SMMU for context switches, while on the other hand we do
++ * not want to duplicate all of the initial setup logic from arm-smmu.
++ *
++ * This private interface is used for the two drivers to coordinate.  The
++ * cookie and callback functions are populated when the GPU driver attaches
++ * it's domain.
++ */
++struct adreno_smmu_priv {
++    const void *cookie;
++    const struct io_pgtable_cfg *(*get_ttbr1_cfg)(const void *cookie);
++    int (*set_ttbr0_cfg)(const void *cookie, const struct io_pgtable_cfg *cfg);
++};
++
++#endif /* __ADRENO_SMMU_PRIV_H */
+\ No newline at end of file
 -- 
 2.26.2
 
