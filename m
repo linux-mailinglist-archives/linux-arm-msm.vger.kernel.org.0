@@ -2,122 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADF1B258C10
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 11:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C88D1258C15
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 11:51:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgIAJu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 05:50:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58262 "EHLO
+        id S1726064AbgIAJvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 05:51:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbgIAJu6 (ORCPT
+        with ESMTP id S1725848AbgIAJvo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 05:50:58 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361CAC061246
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Sep 2020 02:50:58 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id ls14so352634pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 02:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jAYNBHZDd70TdEjE2DczmYfKG/N2ztUaNH/TxTyh9Cg=;
-        b=k18flmoNxQCq32ObHXfIj4WSLrlVekIVckTqF4jPygCGJxP9XbvDhVJWawCWx8I6TY
-         RHBcxUTRSgu97cg6OPhcMFeZq69mO6ulAZJOXrZKH2w8FL1F3KnZkg5sqd/BihpLns9n
-         D9f4uVDFD+u74wPgAy+6KJP8gBmgnVC5b39nsQ1NDOLjFixXd66a7Xvsu+/FsN7Ek5sU
-         IQY2N34/Il5vnyP7XjKBGwSTrvF3jHsdCZjyT0AxkCENNXrty0919SyaOUwaJOLUYsu+
-         ePFFbXvCObqmBVxeHXy2OMuC/5qkfbVmyDl34AQUq8u04rjxQ2UlkPmG0l8fpZ6r5NJF
-         x2Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jAYNBHZDd70TdEjE2DczmYfKG/N2ztUaNH/TxTyh9Cg=;
-        b=tf1ud+iBwkXC/DBO6N2Xc9XznIrQxb5YN4c1xwU4MIjZLvTxEh4VZ21xj/QMI0ORyx
-         u3Hq/E0kijErLWVCSah3Onoz/bsifBCfhUyb1lq392dXMuqpJCSFMrN+5ZKhtONMcVkJ
-         Op08BPLCSPkPYVVB29NKRfF+6ywarPm+bFTngvwpi4WRxTSazsgOschCJ0L0N3Wtx6So
-         bsen96U0sOxxfx/q8U5Rwn1tjpzrIwORgTzcEebHRT/sllHVs5rkL/I2FeMw10dZulCE
-         GkWFO3OScrTbivq/NyRYt27I+jz0o1eg48dWg/WB+kAusMyn9aTkHFkt6ksAjoNklCQH
-         Awug==
-X-Gm-Message-State: AOAM533UmjciCPnvxMGVXrOTqyG2iQGeHkoNWmxvgOGO4a6B6ktuy/m5
-        8shG489HL8HG4DF4NjBz7xEMQA==
-X-Google-Smtp-Source: ABdhPJxCEhDyYmSPEgTYFdTqAvCxaJppkKdnPO/SXStQluVtRk/f1mAkZEHxXLJ+5RamFIlFffPC8w==
-X-Received: by 2002:a17:902:6b45:: with SMTP id g5mr645391plt.163.1598953857535;
-        Tue, 01 Sep 2020 02:50:57 -0700 (PDT)
-Received: from localhost ([122.167.135.199])
-        by smtp.gmail.com with ESMTPSA id 1sm1137318pfe.70.2020.09.01.02.50.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Sep 2020 02:50:56 -0700 (PDT)
-Date:   Tue, 1 Sep 2020 15:20:54 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH V2 3/8] drm/msm: Unconditionally call
- dev_pm_opp_of_remove_table()
-Message-ID: <20200901095054.pwnkzm5n3ys5r67p@vireshk-i7>
-References: <cover.1598594714.git.viresh.kumar@linaro.org>
- <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
- <bc64e031-c42f-9ed2-c597-18a790a4d3bb@codeaurora.org>
- <20200901083806.a2wz7idmfce2aj3a@vireshk-i7>
- <fceb0b09-30cd-5084-0d0e-e7795cfc5fc9@codeaurora.org>
+        Tue, 1 Sep 2020 05:51:44 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4765DC061244;
+        Tue,  1 Sep 2020 02:51:44 -0700 (PDT)
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1598953902;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=48rUkxjWix//BTZHIilZmp+tSBPVqvbxLdM3hkLdhdY=;
+        b=iZ0wBdNv2fBTQ5zety+Nmwt5egV8jLK6q64HUIBQJsUxl/Mja/Hxnt1RYSTiI+mkJg3u/m
+        Jc9l62x0u+cLaYb2wJUFuYSqWKfYj5g48rSkiB0zT9Izgxss2S1TaXv7/nS0VIekbYeMC+
+        6oyXei1vPQKAejMf3ne1EIAciKv254OAdyA+142Fd15kAPTzoKf53ffXEwCF9Z/sFpc/HK
+        6rSaPKEH+vekaTwMPtzbOtguI3dDUIC5mVlWdAaCeGWbIHta+qVs51X2/ZaZAa7g1pMv5h
+        EU2TV1APGyL5ymsMj/C26b1o/K/sJsols6tf9ZbV46zKrPeaYSZU+XOHLhCmyw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1598953902;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=48rUkxjWix//BTZHIilZmp+tSBPVqvbxLdM3hkLdhdY=;
+        b=NPq5yOVrC9fNkeNzJIQTdtD2aY2lceGpwAP5BVzACVnLvouko33WjhXoAlFKuk0/izQH8B
+        D6YHvY81AJU8bGBw==
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Srinivas Rao L <lsrao@codeaurora.org>
+Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+In-Reply-To: <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com>
+References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org> <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com>
+Date:   Tue, 01 Sep 2020 11:51:41 +0200
+Message-ID: <877dtdj042.fsf@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fceb0b09-30cd-5084-0d0e-e7795cfc5fc9@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-09-20, 15:15, Rajendra Nayak wrote:
-> 
-> On 9/1/2020 2:08 PM, Viresh Kumar wrote:
-> > On 01-09-20, 13:01, Rajendra Nayak wrote:
-> > > So FWIU, dpu_unbind() gets called even when dpu_bind() fails for some reason.
-> > 
-> > Ahh, I see.
-> > 
-> > > I tried to address that earlier [1] which I realized did not land.
-> > 
-> > I don't think that patch was required, as you can call
-> > dev_pm_opp_put_clkname() multiple times and it will return without any
-> > errors/crash.
-> 
-> We did see a crash (Sai had reported it), perhaps with dsi [1] and not this
-> driver. But it was the same scenario that was possible here as well, which is
-> dev_pm_opp_put_clkname() getting called without dev_pm_opp_set_clkname()
-> being done. I think we ended up passing a NULL as opp_table in that case
-> and the function tries de-referencing it.
+On Mon, Aug 31 2020 at 08:12, Doug Anderson wrote:
+> On Wed, Aug 26, 2020 at 3:15 AM Thomas Gleixner <tglx@linutronix.de> wrote:
+>> There are two reasonable choices here:
+>>
+>> 1) Do the symmetric thing
+>>
+>> 2) Let the drivers call a new function disable_wakeup_irq_for_suspend()
+>>    which marks the interrupt to be enabled from the core on suspend and
+>>    remove the enable call on the resume callback of the driver.
+>>
+>>    Then you don't need the resume part in the core and state still is
+>>    consistent.
+>>
+>> I'm leaning towards #2 because that makes a lot of sense.
+>
+> IIUC, #2 requires that we change existing drivers that are currently
+> using disable_irq() + enable_irq_wake(), right?  Presumably, if we're
+> going to do #2, we should declare that what drivers used to do is now
+> considered illegal, right?  Perhaps we could detect that and throw a
+> warning so that they know that they need to change to use the new
+> disable_wakeup_irq_for_suspend() API.  Otherwise these drivers will
+> work fine on some systems (like they always have) but will fail in
+> weird corner cases for systems that are relying on drivers to call
+> disable_wakeup_irq_for_suspend().  That doesn't sound super great to
+> me...
 
-Heh, yeah I did miss that stupid thing :(
+Hmm. With disable_irq() + enable_irq_wake() in the driver suspend path
+the driver already makes an implicit assumption about the underlying irq
+chip functionality, i.e. it expects that even with the interrupt
+disabled the irq chip can wake up the system.
 
-> > 
-> > > But with these changes
-> > > it will be even more broken unless we identify if we failed dpu_bind() before
-> > > adding the OPP table, while adding it, or all went well with opps and handle things
-> > > accordingly in dpu_unbind.
-> > 
-> > Maybe not as dev_pm_opp_of_remove_table() can be called multiple times
-> > as well without any errors or crash.
-> 
-> Can it be called without the driver ever doing a dev_pm_opp_of_add_table()?
+Now with the new flag magic and #1 we are just working around the driver
+assumptions at the interrupt chip level.
 
-Yes, as we will fail to find the OPP device in that case with -ENODEV
-and so won't even print a warning.
+That's inconsistent at best.
 
-Also if the OPP table was previously added as a response to
-dev_pm_opp_set_clkname(), then we won't free it as well. So yes, it
-should work just fine.
+How many drivers are doing that sequence?  And the more important
+question is why are they calling disable_irq() in the first place if
+they want to be woken up by that interrupt.
 
--- 
-viresh
+The point is that the core suspend code disables all interrupts which
+are not marked as wakeup enabled automatically and reenables them after
+resume. So why would any driver invoke disable_irq() in the suspend
+function at all? Historical raisins?
+
+Thanks,
+
+        tglx
