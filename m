@@ -2,96 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC6BD259958
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45C532598C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730471AbgIAQig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 12:38:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57276 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730401AbgIAP2p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 11:28:45 -0400
-Received: from kozik-lap.mshome.net (unknown [194.230.155.106])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 16CD620FC3;
-        Tue,  1 Sep 2020 15:28:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1598974125;
-        bh=/XJaGl06CsjTQv2yh1KyHC+7ktek0ZuAsx836iRegvw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=n2mdRPDrNq2pVxukr4c3iPl+YkyyHJaWmRW5Jvz8KNAR0gjpv3Svn6cs3odcRB3wg
-         aRgXXOz0vV5ybQhyPw+p1EPa2Mq2mUsHfU3DKmGbzsjwiSC4oNC4xZ4tUsD30dQyNo
-         IIgfBbfOVuEEqmw46QROFHdgplBU7IGDhhHrHy7I=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Mark Brown <broonie@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Masahisa Kojima <masahisa.kojima@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 11/11] spi: tegra20: Simplify with dev_err_probe()
-Date:   Tue,  1 Sep 2020 17:27:13 +0200
-Message-Id: <20200901152713.18629-11-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200901152713.18629-1-krzk@kernel.org>
-References: <20200901152713.18629-1-krzk@kernel.org>
+        id S1730303AbgIAQbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 12:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729532AbgIAQba (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Sep 2020 12:31:30 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFEBBC061245
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Sep 2020 09:31:29 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id r64so832326oib.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 09:31:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=S8P/pGRN3+eF1lFG+QbGHNg7RtpFmtMcIoRvyWFIPx8=;
+        b=ILdqXg8HtxwsfiuMxkImnYYE+IfWs8gywZzwY809yURczcri8T3PX9LKoud15Mb+Pm
+         QZ6NU/e7CZMihQ4CtdVdshOsDYSo/v+tKNyVi99GPtwXS6c9D1JsmdHhSghcU/meivv3
+         avcOXCoJ6MZZsPTpLjkr0sSHhtKtRJVXyJ4HeaKIAr+dcthzvyIBY2CwHuoo+earmSvQ
+         R8FP2I0gSejY7GEftzXcJD//6LxbAj8D2KntgymZVM1UEaxC3kGXh7AZ/a4dQRKeOjZl
+         u3CuWvw9g2TQxqux9/m10z842GGL6g4pc9TG3SPFO9k1n2LQf0AC+2lVqbSDDhjthn7N
+         Il6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=S8P/pGRN3+eF1lFG+QbGHNg7RtpFmtMcIoRvyWFIPx8=;
+        b=QIByh5VxkZ+fLKx+FkozrEx0BA53aPfJbvdfq6lGROsuVx1tv+Mp724mjJsdku0tcn
+         L0SlwjiviQ/mklE0TbyLB1D77gYgNgLh3NhPDGSKhJZzUiSw67bP0VoPj2Klw71y4S6a
+         07X5L3/pZ1Z0+IjjhYO0AdtEZAPb9TWHD6D2YM0sMQGSwKXnNYd3A6/+JvDkOqYeyH7i
+         O5ITSimpq6vJkAPgNAeFU541ighvJULSYblUhpRUSZ4BZvaWnA04sATkIKzODONgXa8/
+         FJINZH4XWFJ9s1/AezOYX9Y5EI/Rd2xl3aXliSouVuBY4HVIRAoOlnL3IGLyudMGEz9q
+         /4QQ==
+X-Gm-Message-State: AOAM530wSY/N3NlvnU6rDGV/MHd11Az0T/ryQ0GIJmblOh+eqDJiNW7Q
+        zx/d8HfYCpnM3si+g1+/dJK84J+UV4msYw==
+X-Google-Smtp-Source: ABdhPJxJB3t1uCqybjslyX45+QYVX1nPwHLVX/lB4QEfYvn4uKcE7pyCzD7QE2zKm0pj+pUkVIZUXA==
+X-Received: by 2002:aca:758f:: with SMTP id q137mr1702045oic.170.1598977889030;
+        Tue, 01 Sep 2020 09:31:29 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
+        by smtp.gmail.com with ESMTPSA id j4sm256848otp.75.2020.09.01.09.31.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Sep 2020 09:31:28 -0700 (PDT)
+Date:   Tue, 1 Sep 2020 11:31:25 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Adrian Schmutzler <mail@adrianschmutzler.de>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: replace status value "ok" by "okay"
+Message-ID: <20200901163125.GZ3715@yoga>
+References: <20200817223214.62179-1-freifunk@adrianschmutzler.de>
+ <20200817223214.62179-2-freifunk@adrianschmutzler.de>
+ <20200830173219.GA483@uller>
+ <01aa01d68078$f7f57da0$e7e078e0$@adrianschmutzler.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <01aa01d68078$f7f57da0$e7e078e0$@adrianschmutzler.de>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Common pattern of handling deferred probe can be simplified with
-dev_err_probe().  Less code and the error value gets printed.
+On Tue 01 Sep 11:00 CDT 2020, Adrian Schmutzler wrote:
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- drivers/spi/spi-tegra20-slink.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+> > -----Original Message-----
+> > From: Bjorn Andersson [mailto:bjorn.andersson@linaro.org]
+> > Sent: Sonntag, 30. August 2020 19:32
+> > To: Adrian Schmutzler <freifunk@adrianschmutzler.de>
+> > Cc: linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org
+> > Subject: Re: [PATCH 2/2] arm64: dts: replace status value "ok" by "okay"
+> > 
+> > On Mon 17 Aug 22:32 UTC 2020, Adrian Schmutzler wrote:
+> > 
+> > > While the DT parser recognizes "ok" as a valid value for the "status"
+> > > property, it is actually mentioned nowhere. Use the proper value
+> > > "okay" instead, as done in the majority of files already.
+> > >
+> > > Signed-off-by: Adrian Schmutzler <freifunk@adrianschmutzler.de>
+> > 
+> > The content of this looks good Adrian.
+> > 
+> > But you're lacking most maintainers among the recipients of these patches
+> > and I would expect if applied in the current form we will have merge issues
+> > as the patches travels towards Linus' tree.
+> > 
+> > So please split it per vendor and ensure that the various maintainers are
+> > copied (use ./scripts/get_maintainer.pl)
+> 
+> Thanks for the instructions, I was used to a different submission behavior.
+> 
+> I split stuff up (all of ARM64 and most of ARM changes) and submitted
+> them separately via the recommended way.
+> 
 
-diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
-index a07b72e9c344..a0810765d4e5 100644
---- a/drivers/spi/spi-tegra20-slink.c
-+++ b/drivers/spi/spi-tegra20-slink.c
-@@ -600,13 +600,9 @@ static int tegra_slink_init_dma_param(struct tegra_slink_data *tspi,
- 	struct dma_slave_config dma_sconfig;
- 
- 	dma_chan = dma_request_chan(tspi->dev, dma_to_memory ? "rx" : "tx");
--	if (IS_ERR(dma_chan)) {
--		ret = PTR_ERR(dma_chan);
--		if (ret != -EPROBE_DEFER)
--			dev_err(tspi->dev,
--				"Dma channel is not available: %d\n", ret);
--		return ret;
--	}
-+	if (IS_ERR(dma_chan))
-+		return dev_err_probe(tspi->dev, PTR_ERR(dma_chan),
-+				     "Dma channel is not available\n");
- 
- 	dma_buf = dma_alloc_coherent(tspi->dev, tspi->dma_buf_size,
- 				&dma_phys, GFP_KERNEL);
--- 
-2.17.1
-
+Thank you,
+Bjorn
