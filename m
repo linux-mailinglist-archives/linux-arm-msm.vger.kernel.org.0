@@ -2,100 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3760325A128
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 00:06:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04FA725A19E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 00:46:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729656AbgIAWGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 18:06:22 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:19736 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727946AbgIAWGW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 18:06:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1598997981; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=37vuzzoeSb7NLlot1nvDeIDm5w8vt0B+4whlw60ZvDI=;
- b=u0FnhmtErOtrFLLkddevxmupolzpSYACjhBxPEiEtltt0x9tWjLYPF2V7Hp75+cKLlYL3aSw
- DIpM43SKYWvziLkqpOHq4jt5TPXCMX6KFWgy73bsEfhSoEvwKQiI7D5u/nfmxGagmCnOjTtk
- zQ5VGGXatFRLT16Fod4SkyxuvYY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f4ec5d34f13e63f046f77f0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 22:06:11
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ABC3FC433CB; Tue,  1 Sep 2020 22:06:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6865EC433C6;
-        Tue,  1 Sep 2020 22:06:09 +0000 (UTC)
+        id S1726913AbgIAWqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 18:46:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36886 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbgIAWqI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Sep 2020 18:46:08 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD24C061245
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Sep 2020 15:46:07 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id o184so1571788vsc.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 15:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fDDm7I6FV6Bqqr5usz7Hzdqdt8ambZ3kJcMzathm/Fw=;
+        b=YmFrRabunY+wHuIzrsqFTd6yEBSh0pO/hiai7YfVLPckGRW5hL+SJHblXsstTEqRyo
+         m6+h4ELMAsdKWdhcymJTML16NYn9qW6fVrlI+HNupVUyLWrpxOtYLcqW9v32VQ2wTewU
+         xMa5tEwgA97rk8/MybDfgs/enICL02jbOzOpA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fDDm7I6FV6Bqqr5usz7Hzdqdt8ambZ3kJcMzathm/Fw=;
+        b=iHnU+6ROf+t76sjR8usaCY5yRUlHHuqCdUBdNXX8S7WzTaeq3ukXYMh/MmFxvl+ksD
+         Decr9mFV0OgCYC1mDsb/Uo/9SpzOxAlk6jiNlJCnoEC6X4Nq2lR1mPIUj1CZe/8EmOny
+         jexWAaXKxHEs6z0tsFb5pY9W/Euyct/xbcTOMLlXrMbbTaOhWtxpXSzcavy0wi6ez3Yf
+         spCY+nRtMBUFT6Y7hk2trhFwr/LK5bWqOhRKNgphPkLdH6kAOuXyZRb7bTenGGFPWkEb
+         oUlwnVzjS/t6pCBFaUlOYJ6UocZDwTqt8AulaR4oyzIn8gzNg68D/kRIyqazRPj+X/2U
+         8Upg==
+X-Gm-Message-State: AOAM531miV6d3Notj70U7NiJg7Rrw1az3L0NB+9OuKGEF8tUP6AkT7Uz
+        sNmUQ/cPauhwkOeo3xq0+R59//AT7iahJQ==
+X-Google-Smtp-Source: ABdhPJw7lIIwKo9vhmWJFJFpsUVETBH4pizzSiza/wggmud7sdGJoW74x8Dh40QQJCyrLxSK8mlheA==
+X-Received: by 2002:a67:7d52:: with SMTP id y79mr3501829vsc.34.1599000366198;
+        Tue, 01 Sep 2020 15:46:06 -0700 (PDT)
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
+        by smtp.gmail.com with ESMTPSA id y84sm149127vsc.33.2020.09.01.15.46.05
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Sep 2020 15:46:05 -0700 (PDT)
+Received: by mail-vs1-f48.google.com with SMTP id o184so1571748vsc.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 15:46:05 -0700 (PDT)
+X-Received: by 2002:a05:6102:30a3:: with SMTP id y3mr3765414vsd.201.1599000364461;
+ Tue, 01 Sep 2020 15:46:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 01 Sep 2020 15:06:09 -0700
-From:   abhinavk@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH 2/2] drm/msm: Drop debug print in
- _dpu_crtc_setup_lm_bounds()
-In-Reply-To: <20200901215942.2559119-3-swboyd@chromium.org>
-References: <20200901215942.2559119-1-swboyd@chromium.org>
- <20200901215942.2559119-3-swboyd@chromium.org>
-Message-ID: <b68d6e231b174fb5e2c4adc22bb804d8@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200813113030.1.I89c33c4119eaffb986b1e8c1bc6f0e30267089cd@changeid>
+ <20200901170745.GA3419728@google.com> <CAD=FV=Xv0FLtWWcQcRy7p2LPNdDtSjdarsvNHRHaLkWwABnwJw@mail.gmail.com>
+ <20200901213319.GB3419728@google.com>
+In-Reply-To: <20200901213319.GB3419728@google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 1 Sep 2020 15:45:52 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XDjsg314RGV1e5jRA+qa3s9LQWN8zk-ARZAQEjNeH8Kw@mail.gmail.com>
+Message-ID: <CAD=FV=XDjsg314RGV1e5jRA+qa3s9LQWN8zk-ARZAQEjNeH8Kw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add 'sustainable_power' for CPU
+ thermal zones
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-01 14:59, Stephen Boyd wrote:
-> This function is called quite often if you have a blinking cursor on 
-> the
-> screen, hello page flip. Let's drop this debug print here because it
-> means enabling the print via the module parameter starts to spam the
-> debug console.
-> 
-> Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-> Cc: Jordan Crouse <jcrouse@codeaurora.org>
-> Cc: Sean Paul <seanpaul@chromium.org>
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 74294b5ed93f..2966e488bfd0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -421,8 +421,6 @@ static void _dpu_crtc_setup_lm_bounds(struct 
-> drm_crtc *crtc,
-> 
->  		trace_dpu_crtc_setup_lm_bounds(DRMID(crtc), i, r);
->  	}
-> -
-> -	drm_mode_debug_printmodeline(adj_mode);
->  }
-> 
->  static void _dpu_crtc_get_pcc_coeff(struct drm_crtc_state *state,
+Hi,
+
+On Tue, Sep 1, 2020 at 2:33 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> Hi Doug,
+>
+> On Tue, Sep 01, 2020 at 01:19:10PM -0700, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Tue, Sep 1, 2020 at 10:07 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > >
+> > > On Thu, Aug 13, 2020 at 11:30:33AM -0700, Matthias Kaehlcke wrote:
+> > > > The 'sustainable_power' attribute provides an estimate of the sustained
+> > > > power that can be dissipated at the desired control temperature. One
+> > > > could argue that this value is not necessarily the same for all devices
+> > > > with the same SoC, which may have different form factors or thermal
+> > > > designs. However there are reasons to specify a (default) value at SoC
+> > > > level for SC7180: most importantly, if no value is specified at all the
+> > > > power_allocator thermal governor (aka 'IPA') estimates a value, using the
+> > > > minimum power of all cooling devices of the zone, which can result in
+> > > > overly aggressive thermal throttling. For most devices an approximate
+> > > > conservative value should be more useful than the minimum guesstimate
+> > > > of power_allocator. Devices that need a different value can overwrite
+> > > > it in their <device>.dts. Also the thermal zones for SC7180 have a high
+> > > > level of granularity (essentially one for each function block), which
+> > > > makes it more likely that the default value just works for many devices.
+> > > >
+> > > > The values correspond to 1901 MHz for the big cores, and 1804 MHz for
+> > > > the small cores. The values were determined by limiting the CPU
+> > > > frequencies to different max values and launching a bunch of processes
+> > > > that cause high CPU load ('while true; do true; done &' is simple and
+> > > > does a good job). A frequency is deemed sustainable if the CPU
+> > > > temperatures don't rise (consistently) above the second trip point
+> > > > ('control temperature', 95 degC in this case). Once the highest
+> > > > sustainable frequency is found, the sustainable power can be calculated
+> > > > by multiplying the energy consumption per core at this frequency (which
+> > > > can be found in /sys/kernel/debug/energy_model/) with the number of
+> > > > cores that are specified as cooling devices.
+> > > >
+> > > > The sustainable frequencies were determined at room temperature
+> > > > on a device without heat sink or other passive cooling elements.
+> >
+> > I'm curious: was this a bare board, or a device in a case?  Hrm, I'm
+> > not sure which one would be worse at heat dissipation, but I would
+> > imagine that being inside a plastic case might be worse?
+>
+> This was with a device in a plastic case.
+>
+> > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > > ---
+> > > > If maintainers think 'sustainable_power' should be specified at
+> > > > device level (with which I conceptually agree) I'm fine with
+> > > > doing that, just seemed it could be useful to have a reasonable
+> > > > 'default' at SoC level in this case.
+> > >
+> > > Any comments on this?
+> >
+> > I'm not massively familiar with this area of the code, but I guess I
+> > shouldn't let that stop me from having an opinion!  :-P
+> >
+> > * I would agree that it seems highly unlikely that someone would put
+> > one of these chips in a device that could only dissipate the heat from
+> > the lowest OPP, so having some higher estimate definitely makes sense.
+> >
+> > * In terms of the numbers here, I believe that you're claiming that we
+> > can dissipate 768 mW * 6 + 1202 mW * 2 = ~7 Watts of power.
+>
+> No, I'm claiming it's 768 mW + 1202 mW = ~2 W.
+>
+> SC7180 has a 6 thermal zones for the 6 little cores and 4 zones for the
+> 2 big cores. Each of these thermal zones uses either all little or all big
+> cores as cooling devices, hence the power sustainable power of the
+> individual zones doesn't add up. 768 mW corresponds to 6x 128 mW (aka all
+> little cores at 1.8 GHz), and 1202 mW to 2x 601 mW (both big cores at 1.9 GHz).
+
+Ah!  Thanks for explaining.
+
+
+> > My memory
+> > of how much power we could dissipate in previous laptops I worked on
+> > is a little fuzzy, but that doesn't seem insane for a passively-cooled
+> > laptop.  However, I think someone could conceivably put this chip in a
+> > smaller form factor.  In such a case, it seems like we'd want these
+> > things to sum up to ~2000 (if it would ever make sense for someone to
+> > put this chip in a phone) or ~4000 (if it would ever make sense for
+> > someone to put this chip in a small tablet).
+>
+> See above, the sustainable power with this patch only adds up to ~2000.
+> It is possible though that it would be lower in a smaller form factor
+> device.
+>
+> I'd be ok with posting something lower for SC7180 (it would be a guess
+> though) and use the specific numbers in the device specific DT.
+
+Given the advice in the bindings it seems like 2W should be fine.
+
+
+> > It seems possible that,
+> > to achieve this, we might have to tweak the
+> > "dynamic-power-coefficient".  I don't know how much thought was put
+> > into those numbers, but the fact that the little cores have a super
+> > round 100 for their dynamic-power-coefficient makes me feel like they
+> > might have been more schwags than anything.  Rajendra maybe knows?
+>
+> Yeah, it's possible that that was just an approximation
+>
+> > * I'm curious about the fact that there are two numbers here: one for
+> > littles and one for bigs.  If I had to guess I'd say that since all
+> > the cores are in one package so the contributions kinda need to be
+> > thought of together, right?  If we're sitting there thermally
+> > throttled then we'd want to pick the best perf-per-watt for the
+> > overall package.  This is why your patch says we can sustain the
+> > little cores at max and the big cores get whatever is left over,
+> > right?
+>
+> It's derived from how Qualcomm specified the thermal zones and cooling
+> devices. Any ("cpu") zone is either cooled by (all) big cores or by (all)
+> little cores, but not a mix of them. In my tests I also saw that the big
+> cores seemed to have little impact on the little ones. The little cores
+> are at max because even running at max frequency the temperature in the
+> 'little zones' wouldn't come close to the trip point.
+
+OK, crazy.  I suppose that this makes sense,especially without a
+heatsink and over a short burst of time.  I'd imagine that with a
+heatsink things might look different, but trying to model everything
+is impossible and seems like what't there works OK until someone can
+say why it doesn't.  :-)
+
+
+> > * Should we be leaving some room in here for the GPU?  ...or I guess
+> > once we list it as a cooling device we'll have to decrease the amount
+> > the CPUs can use?
+>
+> I don't know for sure, but judging from the CPU zones I wouldn't be
+> surprised if the GPU was managed exclusively in the dedicated GPU
+> thermal zones (I guess that's what 'gpuss0-thermal' and 'gpuss1-thermal'
+> are). If that's not the case the values in the CPU zones can be
+> adjusted when specific data is available.
+
+Sounds good.
+
+
+> > So I guess the tl; dr is:
+> >
+> > a) We should check "dynamic-power-coefficient" and possibly adjust.
+>
+> ok, lets see if Rajendra can check if there is room for tweaking.
+>
+> > b) I don't think the "conservative" by-default numbers should add up
+> > to 7 Watts.  I could be convinced that this chip is not intended for
+> > phones and thus we could have it add up to 4 Watts, but 7 Watts seems
+> > too much.
+>
+> I suppose this is mostly addressed by my explications above, unless we
+> think that 2 Watts in CPU power might still be too aggressive as a
+> default.
+
+With all your explanations, I'm happy to add:
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+-Doug
