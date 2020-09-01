@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D98B62584DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 02:34:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 948AB2584E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 02:35:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726020AbgIAAeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 20:34:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57084 "EHLO
+        id S1726174AbgIAAfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 20:35:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725941AbgIAAeN (ORCPT
+        with ESMTP id S1726105AbgIAAfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 20:34:13 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE5AC061573
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:34:13 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id o5so653582qke.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:34:13 -0700 (PDT)
+        Mon, 31 Aug 2020 20:35:07 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2367C061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:35:07 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id g72so7462167qke.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=jLafwiC2xQNKUVCHdLUQQvDtsC6khh4yCLYOGaMsDWc=;
-        b=h4hzz+LL2wmWO8VdqfAqx/UHSd1YE5o9wpRi/+hRRkQTNduf7/9zNCMExEk8b+xamH
-         bZ7M0RuVDaXOFnhujxEqPr7ZD8EG5xtzl/rMkN4+dDTj9NVbWTY4ag5ddyL/fwtmFCZM
-         OERDDO7JFtLGWeSx9VPlC+Fw+GrJzDeb5eG4JNPFtTEgPh0U4bBUGkjQBMmR8GctTMrL
-         lbdUAVUQDlQ0xy5SxNeY41orwXKRCy4fRzvXiXV4ggd9t4X8DVIm1LOwtzTdNKv0HPdq
-         QQ9B4CN+uoau2pc5Qpdie8o0F4DpQR8Zx9EwPGQ2+Gr+/h3XT9OiLKod/fc0C2+8mRGm
-         Vmrw==
+        bh=u1h+Z4m7wDNO0C3YgQOk9ULf7HqqBVP3DARz2vlWcqM=;
+        b=0YgfD29KFW61aSUj03zT3rqIuzjSwn2XOBZ1dmV1pogKfTpds/qLyxwjGE9+oq++WR
+         fcSrnLAgNOL3yVIw52uMfN1U9ofohgkfVdOIMPtC/kgkXfZm4ZnvBQuLWU3kifQUcKPu
+         MdBnHdibUg+/Gn9IzNvEHFVnjZ8tgkOLsoF67ZLwOLah2qHkgrTQqBcCrQThfD6ROUtR
+         ZC56KqRtJw0sZiz/aFRpZjeNHYKjMbTZrJ2j+m7EUh/Zqny7XjkNxUMlLyfyh1QoFwJK
+         o5dUPof0R31BnyEvroneXQz/CWnwvXVgeEj4YNb1C4lucR8gMMjWZzENoEiaTEt0BZ01
+         2MSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=jLafwiC2xQNKUVCHdLUQQvDtsC6khh4yCLYOGaMsDWc=;
-        b=kQkk5Q7IraZskyYpb+5lMrPQigRR6PchuB/vWY70/5HAvGAuy+9b4ywfDahhSsVn1o
-         dv6iI3x+64/D7MbOyoXIQZcBYPjjBCanJR/bLqK4U6uDG3kqcknC2G3e7E6UKO0sAQkt
-         HEVhHQzAMUAlOSFe+79uLQLqVabUjVBylMUDA82/bT98QirBlSn+tx5juJ+kes9IbSfn
-         lTmtHZxlq2x2oNWid8ht+OP/m1dMgHs9FavMu8xfMZMdVLIJrtbhHEQ68MQkW6e9sKqE
-         BSIzkCVoQ+ekf65c3VTBk6pEJ+wqGxLxGhpSH4V/dl/tdmDKCThEkO+NJWgoadOjJfab
-         +yjw==
-X-Gm-Message-State: AOAM530nidABS6LhLJkiglY9NKJnAQAQiow1WvjRg9pk3d7Xca1FPTaK
-        231CBXNOFRmv6f5PUmtXIm3MX401TJxr+m0CFTc=
-X-Google-Smtp-Source: ABdhPJw9tUjyIucH5cZED4lzBJee/JgSOGBP0NzmRVA3Y7tmYxKdfrwyxqGClPCje078VfJuMEc6uA==
-X-Received: by 2002:a37:9b8f:: with SMTP id d137mr3922530qke.459.1598920452229;
-        Mon, 31 Aug 2020 17:34:12 -0700 (PDT)
+        bh=u1h+Z4m7wDNO0C3YgQOk9ULf7HqqBVP3DARz2vlWcqM=;
+        b=hsomPKZ9d/XkvZKIB86HO9dfsZFipxC+SsUw+KEMnY58Kt0mCcuSMoRM5tsS/MgS9o
+         YsEBxHIt25WsIJnSK+9CDLYhX/phQIv6D7+FWHMEfcCMlD6tqJpVQE89CGj5vqdl0Izy
+         D55FqH13/KpU72e0HyUzMX2st5Ud9bnJXbLfEye95eUdf6IB4Z2cZvudiq/mr1wKpEGb
+         dhRJ3UGQ6yp7CVmo8l3RUHB/sRxrR0ZU1aKM2we3Q2OA3zP3P3LnPkFpxC2NArJTSlGi
+         antSGG6aUhTBGLRxWS+TBS9Lj8oxMrxciB6lPkSxo2df/bxh1CmpVOfQW9oSbtSOum8Z
+         zueQ==
+X-Gm-Message-State: AOAM5319o5S7tLILrwxjcUbLY3xWqyQDCfMa+cOqxiZXbQCC4CTTX4+S
+        PAGTkFNumM6iWmjOgG63ucCnsNhTYD6r2vlQbPk=
+X-Google-Smtp-Source: ABdhPJzkk38aCbZ8lDflnNZZa3DrorTjRhUVl4b8Gm3wfJppKByyt10onThah9H/JwFhC+CC8K4kXg==
+X-Received: by 2002:a05:620a:16b8:: with SMTP id s24mr4057084qkj.67.1598920506032;
+        Mon, 31 Aug 2020 17:35:06 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id i14sm12189491qkn.53.2020.08.31.17.34.11
+        by smtp.gmail.com with ESMTPSA id q185sm11438597qke.25.2020.08.31.17.35.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 17:34:11 -0700 (PDT)
+        Mon, 31 Aug 2020 17:35:05 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
-Date:   Mon, 31 Aug 2020 20:32:59 -0400
-Message-Id: <20200901003300.11985-1-jonathan@marek.ca>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] arm64: dts: qcom: add sm8250 fastrpc nodes
+Date:   Mon, 31 Aug 2020 20:33:46 -0400
+Message-Id: <20200901003346.12210-1-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -66,66 +66,155 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Initializing sensors requires attaching to pd 2. Add an ioctl for that.
-
-This corresponds to FASTRPC_INIT_ATTACH_SENSORS in the downstream driver.
+Add fastrpc nodes for sDSP, cDSP, and aDSP.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/misc/fastrpc.c      | 9 ++++++---
- include/uapi/misc/fastrpc.h | 5 +++--
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 115 ++++++++++++++++++++++++++-
+ 1 file changed, 113 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 7939c55daceb..ea5e9ca0d705 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1276,7 +1276,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
- 	return 0;
- }
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 345934fbc251..6d13e60ee6a9 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1500,8 +1500,35 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 				mboxes = <&ipcc IPCC_CLIENT_SLPI
+ 						IPCC_MPROC_SIGNAL_GLINK_QMP>;
  
--static int fastrpc_init_attach(struct fastrpc_user *fl)
-+static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- {
- 	struct fastrpc_invoke_args args[1];
- 	int tgid = fl->tgid;
-@@ -1287,7 +1287,7 @@ static int fastrpc_init_attach(struct fastrpc_user *fl)
- 	args[0].fd = -1;
- 	args[0].reserved = 0;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
--	fl->pd = 0;
-+	fl->pd = pd;
+-				label = "lpass";
++				label = "slpi";
+ 				qcom,remote-pid = <3>;
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "dsps";
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&apps_smmu 0x0541 0x0>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&apps_smmu 0x0542 0x0>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x0543 0x0>;
++						/* note: shared-cb = <4> in downstream */
++					};
++				};
+ 			};
+ 		};
  
- 	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
- 				       sc, &args[0]);
-@@ -1477,7 +1477,10 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
- 		err = fastrpc_invoke(fl, argp);
- 		break;
- 	case FASTRPC_IOCTL_INIT_ATTACH:
--		err = fastrpc_init_attach(fl);
-+		err = fastrpc_init_attach(fl, 0);
-+		break;
-+	case FASTRPC_IOCTL_INIT_ATTACH_SNS:
-+		err = fastrpc_init_attach(fl, 2);
- 		break;
- 	case FASTRPC_IOCTL_INIT_CREATE:
- 		err = fastrpc_init_create_process(fl, argp);
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index 07de2b7aac85..0a89f95463f6 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -10,8 +10,9 @@
- #define FASTRPC_IOCTL_INVOKE		_IOWR('R', 3, struct fastrpc_invoke)
- #define FASTRPC_IOCTL_INIT_ATTACH	_IO('R', 4)
- #define FASTRPC_IOCTL_INIT_CREATE	_IOWR('R', 5, struct fastrpc_init_create)
--#define FASTRPC_IOCTL_MMAP              _IOWR('R', 6, struct fastrpc_req_mmap)
--#define FASTRPC_IOCTL_MUNMAP            _IOWR('R', 7, struct fastrpc_req_munmap)
-+#define FASTRPC_IOCTL_MMAP		_IOWR('R', 6, struct fastrpc_req_mmap)
-+#define FASTRPC_IOCTL_MUNMAP		_IOWR('R', 7, struct fastrpc_req_munmap)
-+#define FASTRPC_IOCTL_INIT_ATTACH_SNS	_IO('R', 8)
+@@ -1538,8 +1565,66 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 				mboxes = <&ipcc IPCC_CLIENT_CDSP
+ 						IPCC_MPROC_SIGNAL_GLINK_QMP>;
  
- struct fastrpc_invoke_args {
- 	__u64 ptr;
+-				label = "lpass";
++				label = "cdsp";
+ 				qcom,remote-pid = <5>;
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "cdsp";
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&apps_smmu 0x1001 0x0460>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&apps_smmu 0x1002 0x0460>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x1003 0x0460>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x1004 0x0460>;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x1005 0x0460>;
++					};
++
++					compute-cb@6 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <6>;
++						iommus = <&apps_smmu 0x1006 0x0460>;
++					};
++
++					compute-cb@7 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <7>;
++						iommus = <&apps_smmu 0x1007 0x0460>;
++					};
++
++					compute-cb@8 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <8>;
++						iommus = <&apps_smmu 0x1008 0x0460>;
++					};
++
++					/* note: secure cb9 in downstream */
++				};
+ 			};
+ 		};
+ 
+@@ -3112,6 +3197,32 @@ q6routing: routing {
+ 						};
+ 					};
+ 				};
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "adsp";
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x1803 0x0>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x1804 0x0>;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x1805 0x0>;
++					};
++				};
+ 			};
+ 		};
+ 
 -- 
 2.26.1
 
