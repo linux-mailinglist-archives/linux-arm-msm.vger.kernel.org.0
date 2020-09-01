@@ -2,173 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97B98259F08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 21:14:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF8C7259FE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 22:19:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728130AbgIATOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 15:14:33 -0400
-Received: from foss.arm.com ([217.140.110.172]:48644 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727990AbgIATOc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 15:14:32 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F21C51FB;
-        Tue,  1 Sep 2020 12:14:31 -0700 (PDT)
-Received: from [10.57.40.122] (unknown [10.57.40.122])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DC4A93F71F;
-        Tue,  1 Sep 2020 12:14:29 -0700 (PDT)
-Subject: Re: [PATCH v9 12/32] drm: msm: fix common struct sg_table related
- issues
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        linaro-mm-sig@lists.linaro.org, linux-kernel@vger.kernel.org
-Cc:     Christoph Hellwig <hch@lst.de>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        linux-arm-kernel@lists.infradead.org,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20200826063316.23486-1-m.szyprowski@samsung.com>
- <CGME20200826063535eucas1p10cef37d8364216cf57c97e96d3959dd2@eucas1p1.samsung.com>
- <20200826063316.23486-13-m.szyprowski@samsung.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <fe224152-b621-d96e-b432-bf837d320210@arm.com>
-Date:   Tue, 1 Sep 2020 20:14:24 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1729179AbgIAUT2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 16:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42538 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728889AbgIAUTZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Sep 2020 16:19:25 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7F0C061244
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Sep 2020 13:19:24 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id q13so1339937vsj.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 13:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1VKBcJEVgXpEQSE9Kzd33ZLKO0VljC636ojqCeo9h3I=;
+        b=WrzkXZQzZQCBi4vGkTcaDxbln+mO7AxjXs64AxTU2AjQFV0rCNb9yjm24G3Ycyy6No
+         KwICKhDbCYDvGwDlSr6ExEhUkc4wzaKMzSJSaggEc/r4j3fAWQPmnoJicfyGuQZ3HSme
+         Oh7LP9j6tRCprXEtoEjaK+rWcDifd5VJ5S/NQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1VKBcJEVgXpEQSE9Kzd33ZLKO0VljC636ojqCeo9h3I=;
+        b=H4uQbQrXRkFfjDTOSrcXInZIrUoRJLj580AvDwzyfh8ZufUwTpPKEWYHlZhBOTreiq
+         uX0uJPbGKiLrkRdHhlxKeBlW0nAJYejabWUrWXwHU0afi1B85FHgOzvkGLncHOYPjFs8
+         xYlG/7tlGmKVM++f9hg9E5KMzS9pIjC9lDidoC3v47GeTabB7mmpXNSHVE+byh0oyu6P
+         4vpUqu6Nd9Mmp9od6LryXPR2KMTMjeQSQG++E6VTHly/m3VLJyu/C+iNtotbixaJcaw6
+         EQXfCx6qeLIKcasvkbXOooRqlOUJoPZnaML+bQJBbM+W5t3ed6jGnJhwAUI8LU+VYkay
+         g6JA==
+X-Gm-Message-State: AOAM532y9CjSeZ9qncrkBDVwEx2WBKdkFvqhHoZYilEdk/Ewow/CvzXO
+        D5uxY6VIsxSMbYhX9tv34LISDQfXkPdRqw==
+X-Google-Smtp-Source: ABdhPJyKjSBGm2G9xc1Qc2a9N5iaUDRXBBnB4n7wVaqPv90qFMyP2trJyXRWmKNFD4U8phtQm2IjlA==
+X-Received: by 2002:a67:31c3:: with SMTP id x186mr3196449vsx.139.1598991563722;
+        Tue, 01 Sep 2020 13:19:23 -0700 (PDT)
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com. [209.85.217.43])
+        by smtp.gmail.com with ESMTPSA id j15sm410102vki.8.2020.09.01.13.19.22
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Sep 2020 13:19:22 -0700 (PDT)
+Received: by mail-vs1-f43.google.com with SMTP id b123so1351856vsd.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 13:19:22 -0700 (PDT)
+X-Received: by 2002:a67:ecd4:: with SMTP id i20mr3418843vsp.68.1598991561827;
+ Tue, 01 Sep 2020 13:19:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200826063316.23486-13-m.szyprowski@samsung.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <20200813113030.1.I89c33c4119eaffb986b1e8c1bc6f0e30267089cd@changeid>
+ <20200901170745.GA3419728@google.com>
+In-Reply-To: <20200901170745.GA3419728@google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 1 Sep 2020 13:19:10 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xv0FLtWWcQcRy7p2LPNdDtSjdarsvNHRHaLkWwABnwJw@mail.gmail.com>
+Message-ID: <CAD=FV=Xv0FLtWWcQcRy7p2LPNdDtSjdarsvNHRHaLkWwABnwJw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add 'sustainable_power' for CPU
+ thermal zones
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-26 07:32, Marek Szyprowski wrote:
-> The Documentation/DMA-API-HOWTO.txt states that the dma_map_sg() function
-> returns the number of the created entries in the DMA address space.
-> However the subsequent calls to the dma_sync_sg_for_{device,cpu}() and
-> dma_unmap_sg must be called with the original number of the entries
-> passed to the dma_map_sg().
-> 
-> struct sg_table is a common structure used for describing a non-contiguous
-> memory buffer, used commonly in the DRM and graphics subsystems. It
-> consists of a scatterlist with memory pages and DMA addresses (sgl entry),
-> as well as the number of scatterlist entries: CPU pages (orig_nents entry)
-> and DMA mapped pages (nents entry).
-> 
-> It turned out that it was a common mistake to misuse nents and orig_nents
-> entries, calling DMA-mapping functions with a wrong number of entries or
-> ignoring the number of mapped entries returned by the dma_map_sg()
-> function.
-> 
-> To avoid such issues, lets use a common dma-mapping wrappers operating
-> directly on the struct sg_table objects and use scatterlist page
-> iterators where possible. This, almost always, hides references to the
-> nents and orig_nents entries, making the code robust, easier to follow
-> and copy/paste safe.
-> 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> Acked-by: Rob Clark <robdclark@gmail.com>
-> ---
->   drivers/gpu/drm/msm/msm_gem.c    | 13 +++++--------
->   drivers/gpu/drm/msm/msm_gpummu.c | 14 ++++++--------
->   drivers/gpu/drm/msm/msm_iommu.c  |  2 +-
->   3 files changed, 12 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index b2f49152b4d4..8c7ae812b813 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -53,11 +53,10 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
->   	struct device *dev = msm_obj->base.dev->dev;
->   
->   	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
-> -		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
-> -			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> +		dma_sync_sgtable_for_device(dev, msm_obj->sgt,
-> +					    DMA_BIDIRECTIONAL);
->   	} else {
-> -		dma_map_sg(dev, msm_obj->sgt->sgl,
-> -			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> +		dma_map_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
->   	}
->   }
->   
-> @@ -66,11 +65,9 @@ static void sync_for_cpu(struct msm_gem_object *msm_obj)
->   	struct device *dev = msm_obj->base.dev->dev;
->   
->   	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
-> -		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
-> -			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> +		dma_sync_sgtable_for_cpu(dev, msm_obj->sgt, DMA_BIDIRECTIONAL);
->   	} else {
-> -		dma_unmap_sg(dev, msm_obj->sgt->sgl,
-> -			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> +		dma_unmap_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
->   	}
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
-> index 310a31b05faa..319f06c28235 100644
-> --- a/drivers/gpu/drm/msm/msm_gpummu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpummu.c
-> @@ -30,21 +30,19 @@ static int msm_gpummu_map(struct msm_mmu *mmu, uint64_t iova,
->   {
->   	struct msm_gpummu *gpummu = to_msm_gpummu(mmu);
->   	unsigned idx = (iova - GPUMMU_VA_START) / GPUMMU_PAGE_SIZE;
-> -	struct scatterlist *sg;
-> +	struct sg_dma_page_iter dma_iter;
->   	unsigned prot_bits = 0;
-> -	unsigned i, j;
->   
->   	if (prot & IOMMU_WRITE)
->   		prot_bits |= 1;
->   	if (prot & IOMMU_READ)
->   		prot_bits |= 2;
->   
-> -	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
-> -		dma_addr_t addr = sg->dma_address;
-> -		for (j = 0; j < sg->length / GPUMMU_PAGE_SIZE; j++, idx++) {
-> -			gpummu->table[idx] = addr | prot_bits;
-> -			addr += GPUMMU_PAGE_SIZE;
-> -		}
-> +	for_each_sgtable_dma_page(sgt, &dma_iter, 0) {
-> +		dma_addr_t addr = sg_page_iter_dma_address(&dma_iter);
-> +
-> +		BUILD_BUG_ON(GPUMMU_PAGE_SIZE != PAGE_SIZE);
-> +		gpummu->table[idx++] = addr | prot_bits;
+Hi,
 
-Given that the BUILD_BUG_ON might prevent valid arm64 configs from 
-building, how about a simple tweak like:
+On Tue, Sep 1, 2020 at 10:07 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> On Thu, Aug 13, 2020 at 11:30:33AM -0700, Matthias Kaehlcke wrote:
+> > The 'sustainable_power' attribute provides an estimate of the sustained
+> > power that can be dissipated at the desired control temperature. One
+> > could argue that this value is not necessarily the same for all devices
+> > with the same SoC, which may have different form factors or thermal
+> > designs. However there are reasons to specify a (default) value at SoC
+> > level for SC7180: most importantly, if no value is specified at all the
+> > power_allocator thermal governor (aka 'IPA') estimates a value, using the
+> > minimum power of all cooling devices of the zone, which can result in
+> > overly aggressive thermal throttling. For most devices an approximate
+> > conservative value should be more useful than the minimum guesstimate
+> > of power_allocator. Devices that need a different value can overwrite
+> > it in their <device>.dts. Also the thermal zones for SC7180 have a high
+> > level of granularity (essentially one for each function block), which
+> > makes it more likely that the default value just works for many devices.
+> >
+> > The values correspond to 1901 MHz for the big cores, and 1804 MHz for
+> > the small cores. The values were determined by limiting the CPU
+> > frequencies to different max values and launching a bunch of processes
+> > that cause high CPU load ('while true; do true; done &' is simple and
+> > does a good job). A frequency is deemed sustainable if the CPU
+> > temperatures don't rise (consistently) above the second trip point
+> > ('control temperature', 95 degC in this case). Once the highest
+> > sustainable frequency is found, the sustainable power can be calculated
+> > by multiplying the energy consumption per core at this frequency (which
+> > can be found in /sys/kernel/debug/energy_model/) with the number of
+> > cores that are specified as cooling devices.
+> >
+> > The sustainable frequencies were determined at room temperature
+> > on a device without heat sink or other passive cooling elements.
 
-		for (i = 0; i < PAGE_SIZE; i += GPUMMU_PAGE_SIZE)
-			gpummu->table[idx++] = i + addr | prot_bits;
-?
+I'm curious: was this a bare board, or a device in a case?  Hrm, I'm
+not sure which one would be worse at heat dissipation, but I would
+imagine that being inside a plastic case might be worse?
 
-Or alternatively perhaps some more aggressive #ifdefs or makefile tweaks 
-to prevent the GPUMMU code building for arm64 at all if it's only 
-relevant to 32-bit platforms (which I believe might be the case).
 
-Robin.
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> > If maintainers think 'sustainable_power' should be specified at
+> > device level (with which I conceptually agree) I'm fine with
+> > doing that, just seemed it could be useful to have a reasonable
+> > 'default' at SoC level in this case.
+>
+> Any comments on this?
 
->   	}
->   
->   	/* we can improve by deferring flush for multiple map() */
-> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-> index 3a381a9674c9..6c31e65834c6 100644
-> --- a/drivers/gpu/drm/msm/msm_iommu.c
-> +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> @@ -36,7 +36,7 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
->   	struct msm_iommu *iommu = to_msm_iommu(mmu);
->   	size_t ret;
->   
-> -	ret = iommu_map_sg(iommu->domain, iova, sgt->sgl, sgt->nents, prot);
-> +	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
->   	WARN_ON(!ret);
->   
->   	return (ret == len) ? 0 : -EINVAL;
-> 
+I'm not massively familiar with this area of the code, but I guess I
+shouldn't let that stop me from having an opinion!  :-P
+
+* I would agree that it seems highly unlikely that someone would put
+one of these chips in a device that could only dissipate the heat from
+the lowest OPP, so having some higher estimate definitely makes sense.
+
+* In terms of the numbers here, I believe that you're claiming that we
+can dissipate 768 mW * 6 + 1202 mW * 2 = ~7 Watts of power.  My memory
+of how much power we could dissipate in previous laptops I worked on
+is a little fuzzy, but that doesn't seem insane for a passively-cooled
+laptop.  However, I think someone could conceivably put this chip in a
+smaller form factor.  In such a case, it seems like we'd want these
+things to sum up to ~2000 (if it would ever make sense for someone to
+put this chip in a phone) or ~4000 (if it would ever make sense for
+someone to put this chip in a small tablet).  It seems possible that,
+to achieve this, we might have to tweak the
+"dynamic-power-coefficient".  I don't know how much thought was put
+into those numbers, but the fact that the little cores have a super
+round 100 for their dynamic-power-coefficient makes me feel like they
+might have been more schwags than anything.  Rajendra maybe knows?
+
+* I'm curious about the fact that there are two numbers here: one for
+littles and one for bigs.  If I had to guess I'd say that since all
+the cores are in one package so the contributions kinda need to be
+thought of together, right?  If we're sitting there thermally
+throttled then we'd want to pick the best perf-per-watt for the
+overall package.  This is why your patch says we can sustain the
+little cores at max and the big cores get whatever is left over,
+right?
+
+* Should we be leaving some room in here for the GPU?  ...or I guess
+once we list it as a cooling device we'll have to decrease the amount
+the CPUs can use?
+
+
+So I guess the tl; dr is:
+
+a) We should check "dynamic-power-coefficient" and possibly adjust.
+
+b) I don't think the "conservative" by-default numbers should add up
+to 7 Watts.  I could be convinced that this chip is not intended for
+phones and thus we could have it add up to 4 Watts, but 7 Watts seems
+too much.
+
+
+-Doug
