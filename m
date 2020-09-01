@@ -2,111 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C88D1258C15
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 11:51:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70FF2258DE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 14:06:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726064AbgIAJvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 05:51:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbgIAJvo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 05:51:44 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4765DC061244;
-        Tue,  1 Sep 2020 02:51:44 -0700 (PDT)
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1598953902;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=48rUkxjWix//BTZHIilZmp+tSBPVqvbxLdM3hkLdhdY=;
-        b=iZ0wBdNv2fBTQ5zety+Nmwt5egV8jLK6q64HUIBQJsUxl/Mja/Hxnt1RYSTiI+mkJg3u/m
-        Jc9l62x0u+cLaYb2wJUFuYSqWKfYj5g48rSkiB0zT9Izgxss2S1TaXv7/nS0VIekbYeMC+
-        6oyXei1vPQKAejMf3ne1EIAciKv254OAdyA+142Fd15kAPTzoKf53ffXEwCF9Z/sFpc/HK
-        6rSaPKEH+vekaTwMPtzbOtguI3dDUIC5mVlWdAaCeGWbIHta+qVs51X2/ZaZAa7g1pMv5h
-        EU2TV1APGyL5ymsMj/C26b1o/K/sJsols6tf9ZbV46zKrPeaYSZU+XOHLhCmyw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1598953902;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=48rUkxjWix//BTZHIilZmp+tSBPVqvbxLdM3hkLdhdY=;
-        b=NPq5yOVrC9fNkeNzJIQTdtD2aY2lceGpwAP5BVzACVnLvouko33WjhXoAlFKuk0/izQH8B
-        D6YHvY81AJU8bGBw==
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>
-Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-In-Reply-To: <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org> <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com>
-Date:   Tue, 01 Sep 2020 11:51:41 +0200
-Message-ID: <877dtdj042.fsf@nanos.tec.linutronix.de>
+        id S1728084AbgIAMGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 08:06:49 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:49789 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728078AbgIAMGi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Sep 2020 08:06:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598961998; h=Date: Message-Id: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=ZxeLT4MW4DxY+rjg8qHyVNjzZt9/BxvL8nAh3ydoWAU=;
+ b=NX9yaFTUL66zSVgfh8t0oL5hYfXd+WlIox3naaZw9AYVG32Xqzwv4IXgz7aGMQA9Es4LoqCr
+ FiugQv9BIJd9DlfA/U3FyIay3RnZyu5Xas4TgbcDvEC3Rfipn0r6Zm/B6c3Fp9i2h5hRF4Px
+ ekrc4/upLGdKxmmU7TKCLqDgKBQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f4e392dbe06707b34638bb7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 12:06:05
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EBCDEC433A1; Tue,  1 Sep 2020 12:06:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=0.5 required=2.0 tests=ALL_TRUSTED,MISSING_DATE,
+        MISSING_MID,SPF_NONE autolearn=no autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51E7CC433CA;
+        Tue,  1 Sep 2020 12:06:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 51E7CC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=kvalo@codeaurora.org
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2 1/2] ath10k: Keep track of which interrupts fired,
+ don't poll them
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
+References: <20200709082024.v2.1.I4d2f85ffa06f38532631e864a3125691ef5ffe06@changeid>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     ath10k@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        briannorris@chromium.org, saiprakash.ranjan@codeaurora.org,
+        linux-wireless@vger.kernel.org, pillair@codeaurora.org,
+        kuabhs@google.com, Douglas Anderson <dianders@chromium.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.5.2
+Message-Id: <20200901120604.EBCDEC433A1@smtp.codeaurora.org>
+Date:   Tue,  1 Sep 2020 12:06:04 +0000 (UTC)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 31 2020 at 08:12, Doug Anderson wrote:
-> On Wed, Aug 26, 2020 at 3:15 AM Thomas Gleixner <tglx@linutronix.de> wrote:
->> There are two reasonable choices here:
->>
->> 1) Do the symmetric thing
->>
->> 2) Let the drivers call a new function disable_wakeup_irq_for_suspend()
->>    which marks the interrupt to be enabled from the core on suspend and
->>    remove the enable call on the resume callback of the driver.
->>
->>    Then you don't need the resume part in the core and state still is
->>    consistent.
->>
->> I'm leaning towards #2 because that makes a lot of sense.
->
-> IIUC, #2 requires that we change existing drivers that are currently
-> using disable_irq() + enable_irq_wake(), right?  Presumably, if we're
-> going to do #2, we should declare that what drivers used to do is now
-> considered illegal, right?  Perhaps we could detect that and throw a
-> warning so that they know that they need to change to use the new
-> disable_wakeup_irq_for_suspend() API.  Otherwise these drivers will
-> work fine on some systems (like they always have) but will fail in
-> weird corner cases for systems that are relying on drivers to call
-> disable_wakeup_irq_for_suspend().  That doesn't sound super great to
-> me...
+Douglas Anderson <dianders@chromium.org> wrote:
 
-Hmm. With disable_irq() + enable_irq_wake() in the driver suspend path
-the driver already makes an implicit assumption about the underlying irq
-chip functionality, i.e. it expects that even with the interrupt
-disabled the irq chip can wake up the system.
+> If we have a per CE (Copy Engine) IRQ then we have no summary
+> register.  Right now the code generates a summary register by
+> iterating over all copy engines and seeing if they have an interrupt
+> pending.
+> 
+> This has a problem.  Specifically if _none_ if the Copy Engines have
+> an interrupt pending then they might go into low power mode and
+> reading from their address space will cause a full system crash.  This
+> was seen to happen when two interrupts went off at nearly the same
+> time.  Both were handled by a single call of ath10k_snoc_napi_poll()
+> but, because there were two interrupts handled and thus two calls to
+> napi_schedule() there was still a second call to
+> ath10k_snoc_napi_poll() which ran with no interrupts pending.
+> 
+> Instead of iterating over all the copy engines, let's just keep track
+> of the IRQs that fire.  Then we can effectively generate our own
+> summary without ever needing to read the Copy Engines.
+> 
+> Tested-on: WCN3990 SNOC WLAN.HL.3.2.2-00490-QCAHLSWMTPL-1
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Rakesh Pillai <pillair@codeaurora.org>
+> Reviewed-by: Brian Norris <briannorris@chromium.org>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-Now with the new flag magic and #1 we are just working around the driver
-assumptions at the interrupt chip level.
+2 patches applied to ath-next branch of ath.git, thanks.
 
-That's inconsistent at best.
+d66d24ac300c ath10k: Keep track of which interrupts fired, don't poll them
+7f8655166512 ath10k: Get rid of "per_ce_irq" hw param
 
-How many drivers are doing that sequence?  And the more important
-question is why are they calling disable_irq() in the first place if
-they want to be woken up by that interrupt.
+-- 
+https://patchwork.kernel.org/patch/11654625/
 
-The point is that the core suspend code disables all interrupts which
-are not marked as wakeup enabled automatically and reenables them after
-resume. So why would any driver invoke disable_irq() in the suspend
-function at all? Historical raisins?
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
-Thanks,
-
-        tglx
