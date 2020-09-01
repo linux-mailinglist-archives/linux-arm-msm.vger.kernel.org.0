@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26CC5259A52
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:49:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94326259A1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:46:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730242AbgIAQqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 12:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37774 "EHLO
+        id S1730260AbgIAQql (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 12:46:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732205AbgIAQqa (ORCPT
+        with ESMTP id S1729812AbgIAQqd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 12:46:30 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD06C061245;
-        Tue,  1 Sep 2020 09:46:28 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id m8so1121736pfh.3;
-        Tue, 01 Sep 2020 09:46:28 -0700 (PDT)
+        Tue, 1 Sep 2020 12:46:33 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A163EC061246;
+        Tue,  1 Sep 2020 09:46:32 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id o20so1105540pfp.11;
+        Tue, 01 Sep 2020 09:46:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AtDGpD/XnWP8Ti9WD0z8IqON07o+ejDvu0mVNeo0eqY=;
-        b=pDRujDmQMB6gDhuLxBPcOF0bqXeWWMFz0szkN9aXWpFEKezKSCui310pvCT93vgHXq
-         8/ZHCFpO5WPyaWyPm2bFSt7Q95ASl5BAOFL42UE3rXCnSGV8FdqUQZY5rZ/jcCaijm1M
-         zekB7xMC3/ifpbenHuD3L5i+akVq5Ig8Jrtz1oPI+p+MNKaSG8ORuRRF7zjKCTxYPVj0
-         QuPasa2P+mpXqMjj99DeDNEYXQ9ZydzSTrkZGwZXo4b8b8g0cEN1xWiYVQGYYPMBpxOz
-         7bbhfCo9jzFQhEedMVZG+EvuJdPYItqShLt7oaxbcXpM33nbI4kR3N14rDDoYRlkwrux
-         o9Ug==
+        bh=9GY8MTV08PrdHUp+EWWyNucwylbtR4J8MJ49qiKRTr8=;
+        b=diYFxRQBFCAYzBMr1oUdzb90W8KPNy1WuyBKtljKjHAsRM6NJtOgedMjx4M0bbCDQg
+         1NokvIoSeI5QQcdk6vTojUxuiMokN3r33V1FHU8uVaQ14ufEsfsb3Nvx1iVIBAexr9H/
+         283ozm+4h7ZptZESKcLhyBqrLn89MnSBsD9w0mibZJZ7q0oEdNm6nJpnsenZRJHEuHPY
+         Bz+lAcKZMBzXfwiFf0M2NtgabZxm4VoIyDyGNYia6T7GB7gtM49q9T0bxdundFLyn1Iu
+         ouTkPBFotIrezZ9aXt71kBbK+tYVdLk09S967qZQ4Emfr+8HXiXcg5A2UTZMlWa/dxCX
+         hHXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AtDGpD/XnWP8Ti9WD0z8IqON07o+ejDvu0mVNeo0eqY=;
-        b=O4Y53wJ9ttUDqd9i3TxdQWUfxjpxOsTlnR3cIngvNSubQc4Wj1lI9x3jGLL8+IktYn
-         ZbPmYfHFjWyNSq/h4Agg877gk7CQmEOhHt6YXKwkVMuGXnytqSP64623BLs41IUBKjyy
-         ZBOgfOGMKGKQ6Sv6lHdB+yb6dR2XfFpFACmEYPxb+0XO5ApoVcil2b2QLTX0d/Vf86U/
-         FnO9bFlpjASguxPIiXsp9SUFX0Bab6zQqpCAndemgjKgqfZH+yreBYOY/l3s73kKT8BI
-         PM5pmgRkJbKiz6e5HEzS5EnG9+oeh6tNTF78WlSH7Ec8ZLn3eW+p1eVe1XYO0FCsHbbk
-         eNPQ==
-X-Gm-Message-State: AOAM532wQLgh13UrayEotD5gDUgSxwuc8ApVDPYWXLHf25/czV8D0bQc
-        zPhG75iUVfxl4TllQ9z5aXI=
-X-Google-Smtp-Source: ABdhPJzxYOVAQ+0hKgBUQ8jNvr+9VynWopfDOavq/M6+UsPjxLuEJ2hJDsXynVX9iEvYL2xejHYb+g==
-X-Received: by 2002:a63:1d5c:: with SMTP id d28mr2143045pgm.82.1598978788300;
-        Tue, 01 Sep 2020 09:46:28 -0700 (PDT)
+        bh=9GY8MTV08PrdHUp+EWWyNucwylbtR4J8MJ49qiKRTr8=;
+        b=EDg5Auwxux1malfetRcByfU4iYE7RGUyXjMD724XdVVReXZVXDDkiEIiRfhG9nbICH
+         Xlq9Of6+USpk3KiRBsL2WLTtsFFL58Sd3LzmU+lcjF81oTbNqlrCu3BeycHTxMNrGswx
+         QinkeUV+6H1tYG8OsTsgrSJXCD4/ITHvQTirsk6i5fHAypeI1N+v3CngeFiGNl/0J6Su
+         q3yre+izOrSeO4LybrbfGapsWRqoo5lwakAKHJJTtwahVard5MSZ2LPbShKe9OslekAa
+         HhSdnZLx1B2hCERB5BDshuZ8DvsZqdjpvmo51nHaG/isQODDrdZDrbtE3YiCMT+SpdCJ
+         dMzw==
+X-Gm-Message-State: AOAM531lzLyu5ouCaUnWTrAbVwqagD2su9PGcwRLXxBYpl5e0aZAMCAL
+        lF2x4cUKz4oBWO6L8QSpkfY=
+X-Google-Smtp-Source: ABdhPJxkErnGII/ajapuRB93tieR8/YaguR9xdhO4M2IHzqSfAfV4/ovlSOHBb+EyThZc7WuL4iTfA==
+X-Received: by 2002:a63:2043:: with SMTP id r3mr2258427pgm.289.1598978792128;
+        Tue, 01 Sep 2020 09:46:32 -0700 (PDT)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id md10sm2023391pjb.45.2020.09.01.09.46.26
+        by smtp.gmail.com with ESMTPSA id s187sm79986pfc.134.2020.09.01.09.46.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 09:46:27 -0700 (PDT)
+        Tue, 01 Sep 2020 09:46:31 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
         linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
@@ -68,9 +68,9 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Shawn Guo <shawn.guo@linaro.org>,
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v16 03/20] drm/msm/gpu: Add dev_to_gpu() helper
-Date:   Tue,  1 Sep 2020 09:46:20 -0700
-Message-Id: <20200901164707.2645413-4-robdclark@gmail.com>
+Subject: [PATCH v16 04/20] drm/msm: Set adreno_smmu as gpu's drvdata
+Date:   Tue,  1 Sep 2020 09:46:21 -0700
+Message-Id: <20200901164707.2645413-5-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200901164707.2645413-1-robdclark@gmail.com>
 References: <20200901164707.2645413-1-robdclark@gmail.com>
@@ -83,106 +83,75 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-In a later patch, the drvdata will not directly be 'struct msm_gpu *',
-so add a helper to reduce the churn.
+This will be populated by adreno-smmu, to provide a way for coordinating
+enabling/disabling TTBR0 translation.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 10 ++++------
- drivers/gpu/drm/msm/msm_gpu.c              |  6 +++---
- drivers/gpu/drm/msm/msm_gpu.h              |  5 +++++
- 3 files changed, 12 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 --
+ drivers/gpu/drm/msm/msm_gpu.c              | 2 +-
+ drivers/gpu/drm/msm/msm_gpu.h              | 6 +++++-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 9eeb46bf2a5d..26664e1b30c0 100644
+index 26664e1b30c0..58e03b20e1c7 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -282,7 +282,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
- 	int ret;
+@@ -417,8 +417,6 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+ 		return PTR_ERR(gpu);
+ 	}
  
- 	if (pdev)
--		gpu = platform_get_drvdata(pdev);
-+		gpu = dev_to_gpu(&pdev->dev);
- 
- 	if (!gpu) {
- 		dev_err_once(dev->dev, "no GPU device was found\n");
-@@ -425,7 +425,7 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
- static void adreno_unbind(struct device *dev, struct device *master,
- 		void *data)
- {
--	struct msm_gpu *gpu = dev_get_drvdata(dev);
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
- 
- 	pm_runtime_force_suspend(dev);
- 	gpu->funcs->destroy(gpu);
-@@ -490,16 +490,14 @@ static const struct of_device_id dt_match[] = {
- #ifdef CONFIG_PM
- static int adreno_resume(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_gpu *gpu = platform_get_drvdata(pdev);
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
- 
- 	return gpu->funcs->pm_resume(gpu);
+-	dev_set_drvdata(dev, gpu);
+-
+ 	return 0;
  }
  
- static int adreno_suspend(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_gpu *gpu = platform_get_drvdata(pdev);
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
- 
- 	return gpu->funcs->pm_suspend(gpu);
- }
 diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index d5645472b25d..6aa9e04e52e7 100644
+index 6aa9e04e52e7..806eb0957280 100644
 --- a/drivers/gpu/drm/msm/msm_gpu.c
 +++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -24,7 +24,7 @@
- static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 		u32 flags)
- {
--	struct msm_gpu *gpu = platform_get_drvdata(to_platform_device(dev));
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
- 	struct dev_pm_opp *opp;
+@@ -892,7 +892,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 		gpu->gpu_cx = NULL;
  
- 	opp = devfreq_recommended_opp(dev, freq, flags);
-@@ -45,7 +45,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- static int msm_devfreq_get_dev_status(struct device *dev,
- 		struct devfreq_dev_status *status)
- {
--	struct msm_gpu *gpu = platform_get_drvdata(to_platform_device(dev));
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
- 	ktime_t time;
+ 	gpu->pdev = pdev;
+-	platform_set_drvdata(pdev, gpu);
++	platform_set_drvdata(pdev, &gpu->adreno_smmu);
  
- 	if (gpu->funcs->gpu_get_freq)
-@@ -64,7 +64,7 @@ static int msm_devfreq_get_dev_status(struct device *dev,
+ 	msm_devfreq_init(gpu);
  
- static int msm_devfreq_get_cur_freq(struct device *dev, unsigned long *freq)
- {
--	struct msm_gpu *gpu = platform_get_drvdata(to_platform_device(dev));
-+	struct msm_gpu *gpu = dev_to_gpu(dev);
- 
- 	if (gpu->funcs->gpu_get_freq)
- 		*freq = gpu->funcs->gpu_get_freq(gpu);
 diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 0db117a7339b..8bda7beaed4b 100644
+index 8bda7beaed4b..f91b141add75 100644
 --- a/drivers/gpu/drm/msm/msm_gpu.h
 +++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -141,6 +141,11 @@ struct msm_gpu {
- 	struct msm_gpu_state *crashstate;
- };
+@@ -7,6 +7,7 @@
+ #ifndef __MSM_GPU_H__
+ #define __MSM_GPU_H__
  
-+static inline struct msm_gpu *dev_to_gpu(struct device *dev)
-+{
-+	return dev_get_drvdata(dev);
-+}
++#include <linux/adreno-smmu-priv.h>
+ #include <linux/clk.h>
+ #include <linux/interconnect.h>
+ #include <linux/pm_opp.h>
+@@ -73,6 +74,8 @@ struct msm_gpu {
+ 	struct platform_device *pdev;
+ 	const struct msm_gpu_funcs *funcs;
+ 
++	struct adreno_smmu_priv adreno_smmu;
 +
+ 	/* performance counters (hw & sw): */
+ 	spinlock_t perf_lock;
+ 	bool perfcntr_active;
+@@ -143,7 +146,8 @@ struct msm_gpu {
+ 
+ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+ {
+-	return dev_get_drvdata(dev);
++	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(dev);
++	return container_of(adreno_smmu, struct msm_gpu, adreno_smmu);
+ }
+ 
  /* It turns out that all targets use the same ringbuffer size */
- #define MSM_GPU_RINGBUFFER_SZ SZ_32K
- #define MSM_GPU_RINGBUFFER_BLKSIZE 32
 -- 
 2.26.2
 
