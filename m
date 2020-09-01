@@ -2,219 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 948AB2584E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 02:35:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 105F7258514
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 03:20:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726174AbgIAAfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Aug 2020 20:35:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57222 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbgIAAfH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Aug 2020 20:35:07 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2367C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:35:07 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id g72so7462167qke.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Aug 2020 17:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=u1h+Z4m7wDNO0C3YgQOk9ULf7HqqBVP3DARz2vlWcqM=;
-        b=0YgfD29KFW61aSUj03zT3rqIuzjSwn2XOBZ1dmV1pogKfTpds/qLyxwjGE9+oq++WR
-         fcSrnLAgNOL3yVIw52uMfN1U9ofohgkfVdOIMPtC/kgkXfZm4ZnvBQuLWU3kifQUcKPu
-         MdBnHdibUg+/Gn9IzNvEHFVnjZ8tgkOLsoF67ZLwOLah2qHkgrTQqBcCrQThfD6ROUtR
-         ZC56KqRtJw0sZiz/aFRpZjeNHYKjMbTZrJ2j+m7EUh/Zqny7XjkNxUMlLyfyh1QoFwJK
-         o5dUPof0R31BnyEvroneXQz/CWnwvXVgeEj4YNb1C4lucR8gMMjWZzENoEiaTEt0BZ01
-         2MSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=u1h+Z4m7wDNO0C3YgQOk9ULf7HqqBVP3DARz2vlWcqM=;
-        b=hsomPKZ9d/XkvZKIB86HO9dfsZFipxC+SsUw+KEMnY58Kt0mCcuSMoRM5tsS/MgS9o
-         YsEBxHIt25WsIJnSK+9CDLYhX/phQIv6D7+FWHMEfcCMlD6tqJpVQE89CGj5vqdl0Izy
-         D55FqH13/KpU72e0HyUzMX2st5Ud9bnJXbLfEye95eUdf6IB4Z2cZvudiq/mr1wKpEGb
-         dhRJ3UGQ6yp7CVmo8l3RUHB/sRxrR0ZU1aKM2we3Q2OA3zP3P3LnPkFpxC2NArJTSlGi
-         antSGG6aUhTBGLRxWS+TBS9Lj8oxMrxciB6lPkSxo2df/bxh1CmpVOfQW9oSbtSOum8Z
-         zueQ==
-X-Gm-Message-State: AOAM5319o5S7tLILrwxjcUbLY3xWqyQDCfMa+cOqxiZXbQCC4CTTX4+S
-        PAGTkFNumM6iWmjOgG63ucCnsNhTYD6r2vlQbPk=
-X-Google-Smtp-Source: ABdhPJzkk38aCbZ8lDflnNZZa3DrorTjRhUVl4b8Gm3wfJppKByyt10onThah9H/JwFhC+CC8K4kXg==
-X-Received: by 2002:a05:620a:16b8:: with SMTP id s24mr4057084qkj.67.1598920506032;
-        Mon, 31 Aug 2020 17:35:06 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id q185sm11438597qke.25.2020.08.31.17.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 17:35:05 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] arm64: dts: qcom: add sm8250 fastrpc nodes
-Date:   Mon, 31 Aug 2020 20:33:46 -0400
-Message-Id: <20200901003346.12210-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1726192AbgIABUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Aug 2020 21:20:39 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:13629 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726112AbgIABUi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Aug 2020 21:20:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1598923237; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=YVrekhRja53pvOBvjZUkfskwtrhryfC5K7ba/YDLhuo=; b=BzTBKMLTfT8FOJgrW3Cz+Vrlj1/kXbatn1COBkn2h/wxr9y8xx8vYe5dOfvaox5DASGjSL7J
+ vRYRtvjQT4JULFvHsLgVjC3aXxhWp0jLUZb90+AGO3woMToXq3Eao8N5ZNOlI+VkMmOgV7Xo
+ wPi/TOdotG8NqzoUeTpLAzh6IgE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f4da1de238e1efa379c7320 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Sep 2020 01:20:30
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1DE17C43391; Tue,  1 Sep 2020 01:20:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from pacamara-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: nguyenb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DAD77C433C6;
+        Tue,  1 Sep 2020 01:20:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DAD77C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=nguyenb@codeaurora.org
+From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
+To:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     "Bao D. Nguyen" <nguyenb@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
+Date:   Mon, 31 Aug 2020 18:19:57 -0700
+Message-Id: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add fastrpc nodes for sDSP, cDSP, and aDSP.
+UFS version 3.0 and later devices require Vcc and Vccq power supplies
+with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
+devices, the Vcc and Vccq2 are required with Vccq being optional.
+Check the required power supplies used by the device
+and set the device's supported Icc level properly.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Signed-off-by: Can Guo <cang@codeaurora.org>
+Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 115 ++++++++++++++++++++++++++-
- 1 file changed, 113 insertions(+), 2 deletions(-)
+ drivers/scsi/ufs/ufshcd.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 345934fbc251..6d13e60ee6a9 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1500,8 +1500,35 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 				mboxes = <&ipcc IPCC_CLIENT_SLPI
- 						IPCC_MPROC_SIGNAL_GLINK_QMP>;
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index 06e2439..fdd1d3e 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -6845,8 +6845,9 @@ static u32 ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
+ {
+ 	u32 icc_level = 0;
  
--				label = "lpass";
-+				label = "slpi";
- 				qcom,remote-pid = <3>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "dsps";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+						iommus = <&apps_smmu 0x0541 0x0>;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+						iommus = <&apps_smmu 0x0542 0x0>;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x0543 0x0>;
-+						/* note: shared-cb = <4> in downstream */
-+					};
-+				};
- 			};
- 		};
- 
-@@ -1538,8 +1565,66 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 				mboxes = <&ipcc IPCC_CLIENT_CDSP
- 						IPCC_MPROC_SIGNAL_GLINK_QMP>;
- 
--				label = "lpass";
-+				label = "cdsp";
- 				qcom,remote-pid = <5>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "cdsp";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+						iommus = <&apps_smmu 0x1001 0x0460>;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+						iommus = <&apps_smmu 0x1002 0x0460>;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x1003 0x0460>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x1004 0x0460>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x1005 0x0460>;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+						iommus = <&apps_smmu 0x1006 0x0460>;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+						iommus = <&apps_smmu 0x1007 0x0460>;
-+					};
-+
-+					compute-cb@8 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <8>;
-+						iommus = <&apps_smmu 0x1008 0x0460>;
-+					};
-+
-+					/* note: secure cb9 in downstream */
-+				};
- 			};
- 		};
- 
-@@ -3112,6 +3197,32 @@ q6routing: routing {
- 						};
- 					};
- 				};
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "adsp";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x1803 0x0>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x1804 0x0>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x1805 0x0>;
-+					};
-+				};
- 			};
- 		};
- 
+-	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
+-						!hba->vreg_info.vccq2) {
++	if (!hba->vreg_info.vcc ||
++		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
++		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
+ 		dev_err(hba->dev,
+ 			"%s: Regulator capability was not set, actvIccLevel=%d",
+ 							__func__, icc_level);
 -- 
-2.26.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
