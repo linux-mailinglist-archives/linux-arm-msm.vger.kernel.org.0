@@ -2,102 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6870F259A47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3C38259AF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Sep 2020 18:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732300AbgIAQr4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 12:47:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37992 "EHLO
+        id S1732346AbgIAQzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 12:55:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730268AbgIAQrp (ORCPT
+        with ESMTP id S1729701AbgIAQzl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 12:47:45 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F60C061244;
-        Tue,  1 Sep 2020 09:47:43 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id g29so984280pgl.2;
-        Tue, 01 Sep 2020 09:47:43 -0700 (PDT)
+        Tue, 1 Sep 2020 12:55:41 -0400
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4085AC061245
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Sep 2020 09:55:38 -0700 (PDT)
+Received: by mail-oo1-xc44.google.com with SMTP id y25so460194oog.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 09:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eTzVI35DRVJv330Nqj3ET+6aUZCHukORN2vVqCI+diU=;
-        b=Q9J0siRiCBTUvlTt1kvK7tVe6kE41TN+kIDNXErBGCMEu1mS9WGl+7HnaY7AizAAhM
-         MGgJn5r7Rof/eu1Uou0PMSTw5hFRpugiRYy1Zicok/Tfuyw1H3V1tq3kahNYERz3c8YT
-         bXHl75p+tvjsOILMrKaZDr3cZEd5sXyOpNnNhuqDgkx3L6L6Kb3YuoljJJBZkNLHwbFo
-         soPQIChGhslKZccNHRLkXXS2dp3278kCoXtym2UYyH9+JavhTLC8/CcPIIx8CECq/6fQ
-         wY6/1CctuejLklrAEC2Nb6tplD1fgnMzEIXMROD7R3A/ASkM5gP75Pv1ZPmEFTZQnh5W
-         DuSg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=v9975+hMWELTbAGvjMd+ItUOvowUKdGImeITiNZKzKE=;
+        b=o9lKL0BVvMWm1tgl9Is1duPG5UGxdnIw9uldI8xPl0uGpZA7catKjJrRgBEAZJ0kbq
+         m8OyAcQNAUHJJfw3kqhHlMddaLDwROFECYORDdwHm6W5cfivp+a9zNpn96v3HYUYlGkg
+         jQjw/3QtxH5+nxI9pfta4wg+mkkVdPSzhFJjEhrs3DFHKpKw+3c7PqQ8xR1xnrLkhUzT
+         Iuz5E6sFg7WjtaL9eBPRFLX7jtfdcOVNM83CJV4S2YSX38bqb6sxMse1As3kv26EQBWK
+         KSm3PZHlpGKIRmh/8ovguVfzz4Jfy3bagDaSf/eDiUM+ptjv9PXx88/gXF/jEmk5/7u/
+         W1Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eTzVI35DRVJv330Nqj3ET+6aUZCHukORN2vVqCI+diU=;
-        b=VAWZfuhfSKn0hTqZeWTT7OCeqA+NkxkNVuZJC7sDNZEigCU1Oh6hrA1J6VAljnpX0y
-         hlkbq1nE3XhhTpv28W5Ka6imnTv9Zny0YxH1Rm+91wjiqJ7YAXx/g4PaPLtdcAkHuVvK
-         jvg3iuhOqxhr28dGDMWpiXiLBok5uZ3EuuHLzybOaVEicbwC21FOb8y8kJx7niR3wGvX
-         hgRDk2Usqpniqim89Jn9hG71A0MUXdo87TqePesFKAVk3/sjqB5aaFqZJ0BEn+6FYCT7
-         a21SmhsIoopJQDj7vL/oCkyeHKKQsb/+epuFA7O3ZpcyGB8WaTN/icae22xV96v3IIXy
-         5Tmw==
-X-Gm-Message-State: AOAM531+JUxHrBAQsYVoYEzaQ3m+CXtxwZ6R6mLFcFJzVEu4fweBakpG
-        yyxiYD8VRZbcENOfcoGMHbk=
-X-Google-Smtp-Source: ABdhPJy7payz3Vghp5VrIVR/57rRNtRm4gc2iwL+b/6W66VztvW4dVIOty7fJYRx21hhgXmVGY0cFg==
-X-Received: by 2002:a62:928d:: with SMTP id o135mr2763620pfd.22.1598978863218;
-        Tue, 01 Sep 2020 09:47:43 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id w66sm2622381pfb.126.2020.09.01.09.47.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=v9975+hMWELTbAGvjMd+ItUOvowUKdGImeITiNZKzKE=;
+        b=Nmmqg8NuJl3ieohcsR7tbWP984QqAV2fhohPxk/ZUP9y0zaK99hF0J+ZMLnUNZxhbi
+         eNZRhtR19I2rx7wDS8f83jgpyscPLePXf/PQFZwcsdEDB9nRJ4uSyA6YBz0s3ZhSxJWP
+         GTVxmZbR5MIALJg9xt2K136d+WHSPpGQVXp3bfvylB4+IVIfvpgRUF1toDyVZyLWBrbt
+         hh+D+Wj0XjzGk5LGWjFMegCIJSkRlhJUmNZ65Mc3MtVJAfYMl752hyJ2gjJ05jmjh++D
+         Gn0V4dmZcOEc1ZcqiqiN0lDkXzk6uyYdGnRHZFxm8tEaY9xAgzo2cY0Bp9o5yupodW37
+         F18w==
+X-Gm-Message-State: AOAM5314TP/AeItjTsQiDU3ewDZhSt/B7qJEysWGbrqG4hitBJ5/UEks
+        lWMCvphimauLpYXIOhZ/yTD21zWKYo0PaA==
+X-Google-Smtp-Source: ABdhPJxXRLmSKBcnBlceznNDbZ4sBA5PnARmg8Fs8AUVLHlcApULxzxJqLOenz9NbmlqafxciiOaaw==
+X-Received: by 2002:a05:6820:384:: with SMTP id r4mr2009979ooj.62.1598979338069;
+        Tue, 01 Sep 2020 09:55:38 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
+        by smtp.gmail.com with ESMTPSA id 35sm273166oth.21.2020.09.01.09.55.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 09:47:41 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
+        Tue, 01 Sep 2020 09:55:37 -0700 (PDT)
+Date:   Tue, 1 Sep 2020 11:55:34 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>, stable@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v16 20/20] arm: dts: qcom: sc7180: Set the compatible string for the GPU SMMU
-Date:   Tue,  1 Sep 2020 09:46:37 -0700
-Message-Id: <20200901164707.2645413-21-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200901164707.2645413-1-robdclark@gmail.com>
-References: <20200901164707.2645413-1-robdclark@gmail.com>
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Make sure PCIe is reset before init for rev
+ 2.1.0
+Message-ID: <20200901165534.GA3715@yoga>
+References: <20200901124955.137-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200901124955.137-1-ansuelsmth@gmail.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue 01 Sep 07:49 CDT 2020, Ansuel Smith wrote:
 
-Set the qcom,adreno-smmu compatible string for the GPU SMMU to enable
-split pagetables and per-instance pagetables for drm/msm.
+> Qsdk U-Boot can incorrectly leave the PCIe interface in an undefined
+> state if bootm command is used instead of bootipq. This is caused by the
+> not deinit of PCIe when bootm is called. Reset the PCIe before init
+> anyway to fix this U-Boot bug.
+> 
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Looks sensible.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index d46b3833e52f..f3bef1cad889 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1937,7 +1937,7 @@ opp-180000000 {
- 		};
- 
- 		adreno_smmu: iommu@5040000 {
--			compatible = "qcom,sc7180-smmu-v2", "qcom,smmu-v2";
-+			compatible = "qcom,sc7180-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2";
- 			reg = <0 0x05040000 0 0x10000>;
- 			#iommu-cells = <1>;
- 			#global-interrupts = <2>;
--- 
-2.26.2
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
+> Cc: stable@vger.kernel.org # v4.19+
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 3aac77a295ba..82336bbaf8dc 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -302,6 +302,9 @@ static void qcom_pcie_deinit_2_1_0(struct qcom_pcie *pcie)
+>  	reset_control_assert(res->por_reset);
+>  	reset_control_assert(res->ext_reset);
+>  	reset_control_assert(res->phy_reset);
+> +
+> +	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+>  }
+>  
+> @@ -314,6 +317,16 @@ static int qcom_pcie_init_2_1_0(struct qcom_pcie *pcie)
+>  	u32 val;
+>  	int ret;
+>  
+> +	/* reset the PCIe interface as uboot can leave it undefined state */
+> +	reset_control_assert(res->pci_reset);
+> +	reset_control_assert(res->axi_reset);
+> +	reset_control_assert(res->ahb_reset);
+> +	reset_control_assert(res->por_reset);
+> +	reset_control_assert(res->ext_reset);
+> +	reset_control_assert(res->phy_reset);
+> +
+> +	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+>  	ret = regulator_bulk_enable(ARRAY_SIZE(res->supplies), res->supplies);
+>  	if (ret < 0) {
+>  		dev_err(dev, "cannot enable regulators\n");
+> -- 
+> 2.27.0
+> 
