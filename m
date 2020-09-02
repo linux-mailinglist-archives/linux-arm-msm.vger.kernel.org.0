@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82D1B25AF35
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 17:36:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9092C25AF4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 17:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728337AbgIBPfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 11:35:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41906 "EHLO mail.kernel.org"
+        id S1726936AbgIBPfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 11:35:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42076 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726900AbgIBPEf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 11:04:35 -0400
+        id S1726622AbgIBPEp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Sep 2020 11:04:45 -0400
 Received: from kozik-lap.mshome.net (unknown [194.230.155.106])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7E1BD2087D;
-        Wed,  2 Sep 2020 15:04:30 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4671020C56;
+        Wed,  2 Sep 2020 15:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599059074;
-        bh=uEEbF9O3LOrdRnl2MqtSWAvJvl+wM/QUWvrcJodDPZU=;
+        s=default; t=1599059084;
+        bh=rzLiuiSlLOuxKErOauqJfTN+XyIehXm1NzPwskDBWjM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QBzOJ21aMi6+2TWRrPDyOJ2Hyhsd4uABRvoBrBRJrIaI4sjLi12ulks+GIT2ES0xb
-         7tiDdl9lJipBdQsMJr8sO11mYUbz6ze+903R+iQwc8WogKPHBYTLxMRv5X2jZusshJ
-         TBAKgCaTGVljaZQbXuezcbx7a4CSKNQRCnwR+EM8=
+        b=ykwWEDs6yPvxy55dDnB8JEZyplbILRaN2+rvpu6MelQ/wDaWk6oO042IwEwvSErY6
+         4p91tNKEDaIDfkyuLKdXZiUDF8M52k7J+oJAuJFPqmrjSx5/HmVtNFqW0BDx8UfTVy
+         ySSis45XicQVLxXRyy+uVFZpRpr4xhi69Y5/7s1o=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
@@ -43,9 +43,9 @@ To:     Michael Turquette <mturquette@baylibre.com>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 08/10] clk: qcom: Simplify with dev_err_probe()
-Date:   Wed,  2 Sep 2020 17:03:46 +0200
-Message-Id: <20200902150348.14465-8-krzk@kernel.org>
+Subject: [PATCH 10/10] clk: davinci: Simplify with dev_err_probe()
+Date:   Wed,  2 Sep 2020 17:03:48 +0200
+Message-Id: <20200902150348.14465-10-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200902150348.14465-1-krzk@kernel.org>
 References: <20200902150348.14465-1-krzk@kernel.org>
@@ -59,50 +59,22 @@ dev_err_probe().  Less code and the error value gets printed.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- drivers/clk/qcom/apcs-msm8916.c      |  9 +++------
- drivers/clk/qcom/clk-spmi-pmic-div.c | 10 ++++------
- 2 files changed, 7 insertions(+), 12 deletions(-)
+ drivers/clk/davinci/da8xx-cfgchip.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/apcs-msm8916.c b/drivers/clk/qcom/apcs-msm8916.c
-index cf69a97d0439..5e85625b1d02 100644
---- a/drivers/clk/qcom/apcs-msm8916.c
-+++ b/drivers/clk/qcom/apcs-msm8916.c
-@@ -77,12 +77,9 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
- 	a53cc->parent_map = gpll0_a53cc_map;
+diff --git a/drivers/clk/davinci/da8xx-cfgchip.c b/drivers/clk/davinci/da8xx-cfgchip.c
+index 77d18276bfe8..4103d605e804 100644
+--- a/drivers/clk/davinci/da8xx-cfgchip.c
++++ b/drivers/clk/davinci/da8xx-cfgchip.c
+@@ -510,8 +510,7 @@ da8xx_cfgchip_register_usb0_clk48(struct device *dev,
  
- 	a53cc->pclk = devm_clk_get(parent, NULL);
--	if (IS_ERR(a53cc->pclk)) {
--		ret = PTR_ERR(a53cc->pclk);
--		if (ret != -EPROBE_DEFER)
--			dev_err(dev, "failed to get clk: %d\n", ret);
--		return ret;
--	}
-+	if (IS_ERR(a53cc->pclk))
-+		return dev_err_probe(dev, PTR_ERR(a53cc->pclk),
-+				     "failed to get clk\n");
- 
- 	a53cc->clk_nb.notifier_call = a53cc_notifier_cb;
- 	ret = clk_notifier_register(a53cc->pclk, &a53cc->clk_nb);
-diff --git a/drivers/clk/qcom/clk-spmi-pmic-div.c b/drivers/clk/qcom/clk-spmi-pmic-div.c
-index f2cf55cee2fd..3088050fb016 100644
---- a/drivers/clk/qcom/clk-spmi-pmic-div.c
-+++ b/drivers/clk/qcom/clk-spmi-pmic-div.c
-@@ -237,12 +237,10 @@ static int spmi_pmic_clkdiv_probe(struct platform_device *pdev)
- 	cc->nclks = nclks;
- 
- 	cxo = clk_get(dev, "xo");
--	if (IS_ERR(cxo)) {
--		ret = PTR_ERR(cxo);
--		if (ret != -EPROBE_DEFER)
--			dev_err(dev, "failed to get xo clock\n");
--		return ret;
--	}
-+	if (IS_ERR(cxo))
-+		return dev_err_probe(dev, PTR_ERR(cxo),
-+				     "failed to get xo clock\n");
-+
- 	cxo_hz = clk_get_rate(cxo);
- 	clk_put(cxo);
+ 	fck_clk = devm_clk_get(dev, "fck");
+ 	if (IS_ERR(fck_clk)) {
+-		if (PTR_ERR(fck_clk) != -EPROBE_DEFER)
+-			dev_err(dev, "Missing fck clock\n");
++		dev_err_probe(dev, PTR_ERR(fck_clk), "Missing fck clock\n");
+ 		return ERR_CAST(fck_clk);
+ 	}
  
 -- 
 2.17.1
