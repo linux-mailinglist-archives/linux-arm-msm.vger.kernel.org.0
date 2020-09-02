@@ -2,54 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB33C25B742
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 01:27:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87C3425B767
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 01:43:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbgIBX07 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 19:26:59 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:41827 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726312AbgIBX07 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 19:26:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1599089217; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=34yRl6SFaHTyY3yXT+BcH3cX7lVCd0YuybGYSb/eyPw=; b=pe7gqPA6j4Wyfhxh5f4d8Mu8M5TesVVyD6ZoYsBeKAHNCjC9jCNGrfdLDfaxi+WarMVu/EWF
- b1yFhXWm0Ox72RU/GhHTn7Qt5DKxQ6MiZI0fkvk5fJ/1+NmNmfpxgmVHud8lh08ABEkJJd4/
- O6vtDKi4rEo4XqQpWDKn9aoRwPM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f502a3b73afa3417eb8cc7f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Sep 2020 23:26:51
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 49EC4C433A1; Wed,  2 Sep 2020 23:26:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A748C43391;
-        Wed,  2 Sep 2020 23:26:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5A748C43391
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     rjw@rjwysocki.net, ulf.hansson@linaro.org, linux-pm@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>
-Subject: [RFC PATCH 2/2] PM / Domains: use device's next wakeup to determine domain idle state
-Date:   Wed,  2 Sep 2020 17:25:46 -0600
-Message-Id: <20200902232546.31240-3-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200902232546.31240-1-ilina@codeaurora.org>
-References: <20200902232546.31240-1-ilina@codeaurora.org>
+        id S1726814AbgIBXnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 19:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41362 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726726AbgIBXn1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Sep 2020 19:43:27 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E466C061245
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Sep 2020 16:43:27 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id k15so657976pfc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Sep 2020 16:43:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5PQLZP1Qz8JxBBrCvH3ODAjxLepZmxXcyVpXcrB89bk=;
+        b=Si7LqGmssihn3d3s2I9Mo4GuAzBWNq77GAdmQUcK+JZNwW1IUQBFf3DntrMWGys0DA
+         EJRmR/3bJ6BI5hyFGpR1ebZu6+Bqo+GgQEwf2kPNfGD7RJa+rshcYDBmXSUNL+9W9DX/
+         w05LDlIC+77MlkeTr0iT2NnOzP9cQdv2T2+Ms=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5PQLZP1Qz8JxBBrCvH3ODAjxLepZmxXcyVpXcrB89bk=;
+        b=U1pTtPpQVJD/7FkjqU1jNkJ13SWQnfzb/psXhSfmKFj2r+bcDlKbNKv6NgA4qsIRxZ
+         Hc6Roaadvm74MHQPnOfqV0CLFQQyl4QLY5RaBw8Iu9REVR5dOfirVI/htnSPSsjuE0Xf
+         Wb+Kz3WolaJM+yUYEg8ke2VVKLVxY8JYkdoJz5DZeTAbhUPtaY57FhuQx0HTeLyoB16g
+         9H8recY3QBWMIcskYR5D4BtPOaH+SmbIQdIQ+AZAhMNxhTFx19wczwSZTArm+Ky3MKQx
+         v1dzx8jf9vEOqHR9EYSbLBbWX0vczEJw8VgQAfiSou8qk+9nVn+BZuVmNpBFwbxInYCj
+         Kh6g==
+X-Gm-Message-State: AOAM533YMDmM1oWQRrPh4pj0Gdpj1rWiXh91+EJlyKCcH0Z+5Xe/41/g
+        NkZIO7HLxN3SyuZu6SYwG3UMMw==
+X-Google-Smtp-Source: ABdhPJyB+KmcwqeuAkYJZdNtmNa+iUiP8ezkepEkp25WOfYRYpBfVNpPZLgP0MZ78ERRcgKely0bxQ==
+X-Received: by 2002:a62:cdc2:: with SMTP id o185mr809740pfg.170.1599090205522;
+        Wed, 02 Sep 2020 16:43:25 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id q2sm426284pgh.48.2020.09.02.16.43.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2020 16:43:24 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     vbadigan@codeaurora.org, Douglas Anderson <dianders@chromium.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+Subject: [PATCH] mmc: sdhci-msm: Prefer asynchronous probe
+Date:   Wed,  2 Sep 2020 16:43:15 -0700
+Message-Id: <20200902164303.1.I5e598a25222b4534c0083b61dbfa4e0e76f66171@changeid>
+X-Mailer: git-send-email 2.28.0.402.g5ffc5be6b7-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -57,154 +64,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the device's next event is known, determine if it is worthwhile
-entering a domain idle state. To find the next wakeup, traverse a domain
-for all child devices and find out the earliest wakeup value. A parent
-domain's next wakeup is the earliest of all its child devices and
-domains. The next wakeup is specified by devices in the domains before
-they devices are suspended.
+Turning on initcall debug on one system showed this:
+  initcall sdhci_msm_driver_init+0x0/0x28 returned 0 after 34782 usecs
 
-Update the domain governor logic to determine if it is worthwhile to
-enter an idle state based on the next wakeup for the domain along with
-other existing constraints.
+The lion's share of this time (~33 ms) was in mmc_power_up().  This
+shouldn't be terribly surprising since there are a few calls to delay
+based on "power_delay_ms" and the default delay there is 10 ms.
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+Because we haven't specified that we'd prefer asynchronous probe for
+this driver then we'll wait for this driver to finish before we start
+probes for more drivers.  While 33 ms doesn't sound like tons, every
+little bit counts.
+
+There should be little problem with turning on asynchronous probe for
+this driver.  It's already possible that previous drivers may have
+turned on asynchronous probe so we might already have other things
+(that probed before us) probing at the same time we are anyway.  This
+driver isn't really providing resources (clocks, regulators, etc) that
+other drivers need to probe and even if it was they should be handling
+-EPROBE_DEFER.
+
+Let's turn this on and get a bit of boot speed back.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/base/power/domain_governor.c | 87 ++++++++++++++++++++++++++--
- include/linux/pm_domain.h            |  1 +
- 2 files changed, 82 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
-index 490ed7deb99a..a71d7281e9c1 100644
---- a/drivers/base/power/domain_governor.c
-+++ b/drivers/base/power/domain_governor.c
-@@ -117,6 +117,56 @@ static bool default_suspend_ok(struct device *dev)
- 	return td->cached_suspend_ok;
- }
+ drivers/mmc/host/sdhci-msm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index d4c02884cca8..9dd0dbb65382 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2542,6 +2542,7 @@ static struct platform_driver sdhci_msm_driver = {
+ 		   .name = "sdhci_msm",
+ 		   .of_match_table = sdhci_msm_dt_match,
+ 		   .pm = &sdhci_msm_pm_ops,
++		   .probe_type = PROBE_PREFER_ASYNCHRONOUS,
+ 	},
+ };
  
-+static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
-+{
-+	ktime_t domain_wakeup = KTIME_MAX;
-+	ktime_t next_wakeup;
-+	struct pm_domain_data *pdd;
-+	struct gpd_link *link;
-+
-+	/* Find the earliest wakeup for all devices in the domain */
-+	list_for_each_entry(pdd, &genpd->dev_list, list_node) {
-+		if (pdd->dev->power.next_event != KTIME_MAX &&
-+		    !ktime_before(pdd->dev->power.next_event, now)) {
-+			next_wakeup = READ_ONCE(pdd->dev->power.next_event);
-+			if (ktime_before(next_wakeup, domain_wakeup))
-+				domain_wakeup = next_wakeup;
-+		}
-+	}
-+
-+	/* Then find the earliest wakeup of from all the child domains */
-+	list_for_each_entry(link, &genpd->parent_links, parent_node) {
-+		struct generic_pm_domain *sd = link->child;
-+
-+		next_wakeup = sd->next_wakeup;
-+		if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-+			if (ktime_before(next_wakeup, domain_wakeup))
-+				domain_wakeup = next_wakeup;
-+	}
-+
-+	genpd->next_wakeup = domain_wakeup;
-+}
-+
-+static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
-+				     unsigned int state, ktime_t now)
-+{
-+	s64 idle_time_ns, min_sleep_ns;
-+	ktime_t domain_wakeup = genpd->next_wakeup;
-+
-+	if (domain_wakeup == KTIME_MAX)
-+		return true;
-+
-+	min_sleep_ns = genpd->states[state].power_off_latency_ns +
-+		       genpd->states[state].power_on_latency_ns +
-+		       genpd->states[state].residency_ns;
-+
-+	idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
-+	if (idle_time_ns < min_sleep_ns)
-+		return false;
-+
-+	return true;
-+}
-+
- static bool __default_power_down_ok(struct dev_pm_domain *pd,
- 				     unsigned int state)
- {
-@@ -210,6 +260,29 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
- {
- 	struct generic_pm_domain *genpd = pd_to_genpd(pd);
- 	struct gpd_link *link;
-+	unsigned int state_idx;
-+	ktime_t now = ktime_get();
-+
-+	/*
-+	 * Find the next wakeup from devices that can determine their own wakeup
-+	 * to find when the domain would wakeup and do it for every device down
-+	 * the hierarchy. It is not worth while to sleep if the state's residency
-+	 * cannot be met.
-+	 */
-+	update_domain_next_wakeup(genpd, now);
-+
-+	/* Let's find out what domain idle state, the devices prefer */
-+	genpd->state_idx = state_idx = genpd->state_count - 1;
-+	while (!next_wakeup_allows_state(genpd, state_idx, now)) {
-+		if (!state_idx) {
-+			genpd->cached_power_down_ok = false;
-+			return false;
-+		}
-+		state_idx--;
-+	}
-+
-+	genpd->max_off_time_changed =
-+		(state_idx == genpd->cached_power_down_state_idx);
- 
- 	if (!genpd->max_off_time_changed) {
- 		genpd->state_idx = genpd->cached_power_down_state_idx;
-@@ -228,18 +301,20 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
- 	genpd->max_off_time_ns = -1;
- 	genpd->max_off_time_changed = false;
- 	genpd->cached_power_down_ok = true;
--	genpd->state_idx = genpd->state_count - 1;
- 
--	/* Find a state to power down to, starting from the deepest. */
--	while (!__default_power_down_ok(pd, genpd->state_idx)) {
--		if (genpd->state_idx == 0) {
-+	/* Find a state to power down to, starting from the state
-+	 * determined by the next wakeup.
-+	 */
-+	while (!__default_power_down_ok(pd, state_idx)) {
-+		if (state_idx == 0) {
- 			genpd->cached_power_down_ok = false;
- 			break;
- 		}
--		genpd->state_idx--;
-+		state_idx--;
- 	}
- 
--	genpd->cached_power_down_state_idx = genpd->state_idx;
-+	genpd->state_idx = state_idx;
-+	genpd->cached_power_down_state_idx = state_idx;
- 	return genpd->cached_power_down_ok;
- }
- 
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index ee11502a575b..9ea6f666967b 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -119,6 +119,7 @@ struct generic_pm_domain {
- 				     unsigned int state);
- 	struct gpd_dev_ops dev_ops;
- 	s64 max_off_time_ns;	/* Maximum allowed "suspended" time. */
-+	ktime_t next_wakeup;
- 	bool max_off_time_changed;
- 	bool cached_power_down_ok;
- 	bool cached_power_down_state_idx;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.28.0.402.g5ffc5be6b7-goog
 
