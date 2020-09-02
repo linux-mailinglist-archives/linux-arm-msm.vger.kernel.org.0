@@ -2,131 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 065E225B1E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 18:41:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BEC625B21D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 18:52:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbgIBQlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 12:41:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726526AbgIBQlD (ORCPT
+        id S1726467AbgIBQwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 12:52:54 -0400
+Received: from mout.kundenserver.de ([212.227.126.130]:47729 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726742AbgIBQwv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 12:41:03 -0400
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E392EC061246
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Sep 2020 09:41:02 -0700 (PDT)
-Received: by mail-il1-x144.google.com with SMTP id t16so150625ilf.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Sep 2020 09:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=be0fkBg5ElLxu/a+Oag6Gn7VN7vYuyP2CSyc9Hs838g=;
-        b=VL3BZ24mU/87UGXDz9kWzW56TwM9CS+CdCdgliDLR+ral0B9rJWnX/W4uFdQsKt4or
-         WXvG3BpWVxCctnmZsbfN0hFBVdnT2AO7Gh3etXKcrRz/TgMiJ/ZHC5f+Xr8RbDcO56mH
-         Yr/icsuHXhzLlGcJDLKcDdo4TbyHgl7OQW/nlHRUClEbrYXDKvQQUYakVpsqEQqDQaje
-         rwYVfrdLmyySB7yhYbrV6N2L3hVaj+sp3LHsDxkvMa9tKfv8Ex5HHCBoe1oSQL5b6VAA
-         7OZLz/LrwZByNecckP+KsgcOdVLDLves9GOGDd7psz0/mvzNSr6+XFp0d5Ju4WtrxFhv
-         q9jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=be0fkBg5ElLxu/a+Oag6Gn7VN7vYuyP2CSyc9Hs838g=;
-        b=q+GXUiUehrSAJQNELJimETtM1QutgRI9h5FeTCa4Z9sjFEMTKrsOL2YP2uv0ril9aM
-         2zVJBmK0CTDzpV9MTbZP7CND2Kat7CHQU3PQR2+T2HuLexJ4C1Olh9upHytwpO/P2eux
-         qkubtgEqJfDxJfB/UyX/cRFNCWJ4EA85bvyDqTTADUr8pvliIetKJZ90WwRLz6bjDZBO
-         v7d6iVhTZpj5wIKS7OcEQGF/lctfUbCXvvs/3s6laaW9mYKZ7eMG+qvGfmNsKNawWu1V
-         N/ClXT8v3YGLoobWwOxTx9rACysav8jFk1m6kX/rfhaSy9Y7VYRZVH4vbYD6125kXl9j
-         5vbA==
-X-Gm-Message-State: AOAM530hvasEBU8vnbeGbeiIItj1YVWTvHqp9G6yPJEF2jmHa988Kc5r
-        +6dApt/3Fc8N2Fw8JoQCtFdYsSzLIW/0Ej4PaMlLEg==
-X-Google-Smtp-Source: ABdhPJzZnBL0AuXm1caoH9heuNdH36VGsXc2BZS4cFJzfnTGuYHfq3Ycau4E0vHRm8S5ZWn1z0+9wSnkeA8w9ss1SiA=
-X-Received: by 2002:a92:1597:: with SMTP id 23mr4191081ilv.58.1599064861900;
- Wed, 02 Sep 2020 09:41:01 -0700 (PDT)
+        Wed, 2 Sep 2020 12:52:51 -0400
+Received: from buildfff.adridolf.com ([188.192.134.246]) by
+ mrelayeu.kundenserver.de (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 1N8GhM-1ki9qG2hou-0148ao; Wed, 02 Sep 2020 18:52:44 +0200
+From:   Adrian Schmutzler <freifunk@adrianschmutzler.de>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 1/2] ARM: dts: qcom: add additional DT labels in qcom-ipq8064.dtsi
+Date:   Wed,  2 Sep 2020 18:51:58 +0200
+Message-Id: <20200902165159.7733-1-freifunk@adrianschmutzler.de>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <1593182819-30747-1-git-send-email-deesin@codeaurora.org>
- <20200706180437.GB614737@xps15> <5ce032b8-6b26-d0a7-f92d-f8487d810f0c@codeaurora.org>
-In-Reply-To: <5ce032b8-6b26-d0a7-f92d-f8487d810f0c@codeaurora.org>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Wed, 2 Sep 2020 10:40:51 -0600
-Message-ID: <CANLsYkxMrKdC8BAeskpM=Wqd=SDXc4GK1J=ATf_EUnGpoAdjTw@mail.gmail.com>
-Subject: Re: [PATCH V5 0/4] Signaling api support in glink/rpmsg clients
-To:     Deepak Kumar Singh <deesin@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chris Lew <clew@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-remoteproc <linux-remoteproc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:vS8tUETFjn0IRx8x+XCStfB8ARWiO6kwPhmjzJ4J63GrHhBhPp6
+ Fufc0fRol1yccyKcxDSh6+dCi84gyssTgFenSS9ho2clrRDFy4K3SJeFydhCA2ztVM0EHJf
+ YYSOpASvgA47bqIJ0AEbThXvJMHuBoCs/Ia+DKx70AfPyFQbmZyNnfvDdDDP9FYawAKx1C9
+ rU4AsGjE4gsJlDYNID7ZQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tGraHwQjY2Q=:oYb316oOyU+0XC7vpU23FS
+ 5ZwwuQHslDTB5C1mfzDzv5XOlkYIIQJdce8GKIw5WGTCW4eLv6zl04O/nKNts8X0Ifel4fgAl
+ Q5RSOwgScaLCWzHSk1VQkL3ywh0KCzBhfi3zoBIHa1jCrwj+tEj4wx2XIKXRv9v28/ECOmEs+
+ 5zcluq/unqu/6DLjxna9Et3N7Z9Ii24TzMMrHvs6kHqDByxtenZuZ5Dfto5GKxvXmrmh4cZ9W
+ Ul1CiZN3A34njCaCKBCQWgwgbOI+KFSpPz3B1wyf5FC/wst64JVbOp5q/e4maQq3Y4UwvNGTf
+ vUmnSnAAZYvct3OQQnv/mjg2dGht/RLryA/TfZK5KKkj3cFKJkMxHqdel8i6a5JmqAtLb1+7j
+ qEz6qS8iZ/2r0gBW+yaoEiQqe4r+V2v7TKbYnPTEX4FsmXoLqYjMCHbZUpvFCAKlOW6+gQKiY
+ ArjU3jCGhVjhwvNYfxWOPVPy1yZONMn8MszEbTqI9yceU5gyqcPNBP3KZavYQ3HfkczFKjgrP
+ v7ceQOKBJ2ifEWbYG6mhz69qBboJKVixI2x27EB/6d7XKgckddv4FNYMujAaJxefsfPIJL7Hn
+ JLWsrR4wgzjwQkvHWqtFgPDr/F7y42sRkIIC72Y8R/rVFhvvt/8kpJGTjWA3bKrTu2GmeY2jn
+ wsTkfoKRBLQ/778L589cOXzRfO9b4fpu6zRn53TU10xnkI/hyXlWfkbw+HvPEoBGm2KC/Efci
+ j7BUXNEKIZtXRUyW14YlcyDQefzuZddnDN4r24RMRbJ83cZr9lrHFpFrqWpgxWNiGxYJzGERd
+ LlZNII9DhB7pzc9ZkNiHFVYHMCnNrH9iISFcc1sWpiv1XNzUYJGzqWDh6wjvKpGPWRcq8eksn
+ Qvh+w6rRjqvpVvwAziOw==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Sep 2020 at 10:30, Deepak Kumar Singh <deesin@codeaurora.org> wrote:
->
->
-> On 7/6/2020 11:34 PM, Mathieu Poirier wrote:
-> > Hi Deepak,
-> >
-> > On Fri, Jun 26, 2020 at 08:16:55PM +0530, Deepak Kumar Singh wrote:
-> >> Change from version 5
-> >> [V5,4/4] rpmsg: char: Add signal callback and POLLPRI support
-> >> Updated for sparse warning. Replaced POLLPRI => EPOLLPRI to fix
-> >> warning.
-> >>
-> >> Change from version 4
-> >> I am taking over these patches from aneela@codeaurora.org
-> >> Fixed all the trivial review comments.
-> >>
-> >> Signal conversion to and from native signal as done in patch V4,2/4
-> >> is intentional.
-> >>
-> >> Arun Kumar Neelakantam (3):
-> >>    rpmsg: glink: Add support to handle signals command
-> >>    rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-> >>    rpmsg: char: Add signal callback and POLLPRI support
-> >>
-> >> Deepak Kumar Singh (1):
-> >>    rpmsg: core: Add signal API support
-> > I'm confused here - V5 (or what I think it is) was sent out on June 24th without
-> > a cover letter.  This set has a cover letter but it is labeled V5.  So is this
-> > the cover letter that should have been sent out on the 24th and the content
-> > herein relevent to that set?  Or is it accurate and the label on the cover
-> > letter of this set is wrong and should have been V6?
-> >
-> > I have little confidence in both sets and as such won't be reviewing them.
-> > Please send a new revision that is properly labeled.
-> >
-> > Thanks,
-> > Mathieu
-> >
-> Mistakenly i forgot to update label for cover letter to V6.
->
-> I have uploaded patch set V7 with updated cover letter.
+This adds some additional DT labels which are handy when referring
+to the nodes in derived DTS(I) files. It will also make the
+definitions more consistent, e.g. by adding gsbi2_serial and
+gsbi5_serial where we previously "only" had gsbi4_serial defined.
 
-Thank you for doing that - I have added your set to my list of patches
-to review.  Note that I have a fair amount of patches to go over
-lately and as such getting to yours will take some time.
+While at it, add missing spaces after some DT labels and remove one
+useless empty line.
 
-Regards,
-Mathieu
+Signed-off-by: Adrian Schmutzler <freifunk@adrianschmutzler.de>
+---
+ arch/arm/boot/dts/qcom-ipq8064.dtsi | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
->
-> There is no change in patches.
->
-> >>   drivers/rpmsg/qcom_glink_native.c | 125 ++++++++++++++++++++++++++++++++++++++
-> >>   drivers/rpmsg/rpmsg_char.c        |  76 ++++++++++++++++++++++-
-> >>   drivers/rpmsg/rpmsg_core.c        |  40 ++++++++++++
-> >>   drivers/rpmsg/rpmsg_internal.h    |   5 ++
-> >>   include/linux/rpmsg.h             |  27 ++++++++
-> >>   5 files changed, 270 insertions(+), 3 deletions(-)
-> >>
-> >> --
-> >> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> >> a Linux Foundation Collaborative Project
-> >>
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
->
+diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+index c51481405e7f..c51f9fb4a0eb 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+@@ -20,7 +20,7 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		cpu@0 {
++		cpu0: cpu@0 {
+ 			compatible = "qcom,krait";
+ 			enable-method = "qcom,kpss-acc-v1";
+ 			device_type = "cpu";
+@@ -30,7 +30,7 @@
+ 			qcom,saw = <&saw0>;
+ 		};
+ 
+-		cpu@1 {
++		cpu1: cpu@1 {
+ 			compatible = "qcom,krait";
+ 			enable-method = "qcom,kpss-acc-v1";
+ 			device_type = "cpu";
+@@ -67,7 +67,7 @@
+ 			no-map;
+ 		};
+ 
+-		smem@41000000 {
++		smem: smem@41000000 {
+ 			reg = <0x41000000 0x200000>;
+ 			no-map;
+ 		};
+@@ -251,7 +251,7 @@
+ 
+ 			syscon-tcsr = <&tcsr>;
+ 
+-			serial@12490000 {
++			gsbi2_serial: serial@12490000 {
+ 				compatible = "qcom,msm-uartdm-v1.3", "qcom,msm-uartdm";
+ 				reg = <0x12490000 0x1000>,
+ 				      <0x12480000 0x1000>;
+@@ -273,7 +273,6 @@
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 			};
+-
+ 		};
+ 
+ 		gsbi4: gsbi@16300000 {
+@@ -326,7 +325,7 @@
+ 
+ 			syscon-tcsr = <&tcsr>;
+ 
+-			serial@1a240000 {
++			gsbi5_serial: serial@1a240000 {
+ 				compatible = "qcom,msm-uartdm-v1.3", "qcom,msm-uartdm";
+ 				reg = <0x1a240000 0x1000>,
+ 				      <0x1a200000 0x1000>;
+@@ -397,7 +396,7 @@
+ 			status = "disabled";
+ 		};
+ 
+-		sata@29000000 {
++		sata: sata@29000000 {
+ 			compatible = "qcom,ipq806x-ahci", "generic-ahci";
+ 			reg = <0x29000000 0x180>;
+ 
+@@ -720,7 +719,7 @@
+ 			regulator-always-on;
+ 		};
+ 
+-		sdcc1bam:dma@12402000 {
++		sdcc1bam: dma@12402000 {
+ 			compatible = "qcom,bam-v1.3.0";
+ 			reg = <0x12402000 0x8000>;
+ 			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
+@@ -730,7 +729,7 @@
+ 			qcom,ee = <0>;
+ 		};
+ 
+-		sdcc3bam:dma@12182000 {
++		sdcc3bam: dma@12182000 {
+ 			compatible = "qcom,bam-v1.3.0";
+ 			reg = <0x12182000 0x8000>;
+ 			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
+@@ -740,13 +739,13 @@
+ 			qcom,ee = <0>;
+ 		};
+ 
+-		amba {
++		amba: amba {
+ 			compatible = "simple-bus";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+ 
+-			sdcc@12400000 {
++			sdcc1: sdcc@12400000 {
+ 				status          = "disabled";
+ 				compatible      = "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+@@ -766,7 +765,7 @@
+ 				dma-names = "tx", "rx";
+ 			};
+ 
+-			sdcc@12180000 {
++			sdcc3: sdcc@12180000 {
+ 				compatible      = "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status          = "disabled";
+-- 
+2.20.1
+
