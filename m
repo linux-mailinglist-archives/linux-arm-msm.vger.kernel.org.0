@@ -2,211 +2,351 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9349B25A205
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 01:47:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D296225A27C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 03:01:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726167AbgIAXrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Sep 2020 19:47:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46300 "EHLO
+        id S1726419AbgIBBBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Sep 2020 21:01:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbgIAXrk (ORCPT
+        with ESMTP id S1726298AbgIBBBO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Sep 2020 19:47:40 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30559C061244;
-        Tue,  1 Sep 2020 16:47:39 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id t10so2461991wrv.1;
-        Tue, 01 Sep 2020 16:47:39 -0700 (PDT)
+        Tue, 1 Sep 2020 21:01:14 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2266DC061244
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Sep 2020 18:01:13 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id g29so1661573pgl.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Sep 2020 18:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3jRTuoyd0aXcHbT1FCJs9RFpBaj1SWDBNdxNAjLow6A=;
-        b=n6smDPuHIimNu776vQSUaS1qsggoBq5uOTSwHLd5/IFbSMz5ED44hhXce9aEMpeJru
-         ManD+gIWuESONyAVptU2MIj71LebpM14JXLMctKVe3L7glTMP7lE6BlnTos3LRqxZFJz
-         SkQdY/SFu1A8/Bg2V80/DqvuAzb5I9Yv314kmaQWCQSdgMIJtsL4NnqeHmXR69SPWsWu
-         p1YgYYiUZkPpVuwVgPsRk6EUe0dyUoHKEFpZN84ZR/hvpPcIKVDLW9lokYaoulBwmIe8
-         NfOxsHq5MfAHB2qdlxxb9AEdjh7/kQscnsIEboSN5Nc575xjVgRk3CqpnChZQkrIUX9m
-         yAQA==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=UkJgTeg3xfjSFnYzyJfxJmqcdiGNUGU/6zuk7GQcL+w=;
+        b=RSQpFEpeUTFjUHfqOy3hNsGVuRCN1Br+mW98SqxNyQEBGxySCXth9vsXYTA864H8eW
+         HwpCVrmLIa5NlwaOY4X9YrYGG7Pa8v64judysHn7cii8Cz0ZZxSs0HnYuMcMKaHI1gPt
+         iN+DDROXCuDz2ZRtAcjMpsLadDRSrzde6lC0Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3jRTuoyd0aXcHbT1FCJs9RFpBaj1SWDBNdxNAjLow6A=;
-        b=mKknEWz5y0zKEHTCimn8jvx5pj8F/ShabhwIYfz+XjnF/BOnx45rrKTshajop4OxaY
-         DaQfvbLKW5KZ+u3Hpb2xumUhl8FAFx3HmaB3B+TOmUdrZtb2o0Z+IXt9ITDImqHUSyHm
-         QxRaZYkTyMQjubuyL0i8clWS4l1CTzsHXysk86kNwU+I3BvqsF3PrLNJuhjZ5ZqZJ2Iu
-         mSpakKAtP2vhEQT2gFr6P/pr+DpRACyKWwi7BO8THVEHoXnNYR1bL7ZcEv0KOmp5bvq7
-         suI+FUdgGNB0RUWElf+QTKOOzquPbHfMUtem6AWM40zMEDlrvxZ4JAkglsZhglKEkIyl
-         Eqaw==
-X-Gm-Message-State: AOAM531oXNEHJqfldcBUv3EOEVmvhI3jfb3SD2tww9eOIvhRqxb4B315
-        hR6R3WFg6aaHOTiP6KO/X4M98qGeyPeeRshY67I=
-X-Google-Smtp-Source: ABdhPJyxKRxrKYP38mwrpz7T/Q77cJAyI6CywuVy5qABpdgIdnJCw1QbCXjLLTX9MPIVNAtteXyldSgHtVE6jFLWLVA=
-X-Received: by 2002:a5d:4bc6:: with SMTP id l6mr4572138wrt.132.1599004058403;
- Tue, 01 Sep 2020 16:47:38 -0700 (PDT)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=UkJgTeg3xfjSFnYzyJfxJmqcdiGNUGU/6zuk7GQcL+w=;
+        b=VQg/F1hxSA5VfzMUk0vrDapSNLEkxouFFeoIqvarDJhw2O3RqhaKK7jOI3yV62LKk8
+         XaI8gGB4eF22CkMu1ctCIi2ncVfOI/AS5mAf7+h/j3D0MDAhUFHy1GmGk4pWaXCzcKMg
+         JgSTD/SInxMf6d6vV6KfbOA4dru0re7eSLmLAOctHPNNJFvTdLnYaeaHt5H6FodUXYuY
+         w8DnqV+TkLPFaly40GmdmRo4nxU0dM3/Sjj63EBloBCUYsJWVcNB6P0B6U7da4cTgfgC
+         MLmJIfEOx7y/wFvDO5xs0dZEsKRSedGLVd6Z1k5GoVNpqxV0jicOtIPrwKt6oYmqOc5y
+         m+Zg==
+X-Gm-Message-State: AOAM530ZIYtcwaKPADLXEYZ3aH4iNwUZkcKHID4ihYDuODAxln75m16/
+        sJpTcsKFdH8Ye0ZZcckyHvxVmw==
+X-Google-Smtp-Source: ABdhPJy7coz3C3VkEiPsuD+kMVsbJIuPu6/VEEWYIGA0BWBKTOEU3fATCtPBaO5QrFWvADMduuQPJA==
+X-Received: by 2002:a62:1c4c:: with SMTP id c73mr907547pfc.124.1599008473026;
+        Tue, 01 Sep 2020 18:01:13 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id q34sm3328712pgl.28.2020.09.01.18.01.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Sep 2020 18:01:11 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20200826063316.23486-1-m.szyprowski@samsung.com>
- <CGME20200826063535eucas1p10cef37d8364216cf57c97e96d3959dd2@eucas1p1.samsung.com>
- <20200826063316.23486-13-m.szyprowski@samsung.com> <fe224152-b621-d96e-b432-bf837d320210@arm.com>
-In-Reply-To: <fe224152-b621-d96e-b432-bf837d320210@arm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 1 Sep 2020 16:48:25 -0700
-Message-ID: <CAF6AEGscE4tdzugs75gFD+D43Un1DcKf8_=CwiPG2uHrytzwcQ@mail.gmail.com>
-Subject: Re: [PATCH v9 12/32] drm: msm: fix common struct sg_table related issues
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linaro-mm-sig@lists.linaro.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Christoph Hellwig <hch@lst.de>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <335a0660-40e1-0c1e-3f7d-87f7024de18a@linaro.org>
+References: <20200826024711.220080-1-swboyd@chromium.org> <20200826024711.220080-7-swboyd@chromium.org> <335a0660-40e1-0c1e-3f7d-87f7024de18a@linaro.org>
+Subject: Re: [PATCH v1 6/9] phy: qcom-qmp: Add support for DP in USB3+DP combo phy
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@chromium.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>
+Date:   Tue, 01 Sep 2020 18:01:10 -0700
+Message-ID: <159900847014.334488.14041376759905055412@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 1, 2020 at 12:14 PM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 2020-08-26 07:32, Marek Szyprowski wrote:
-> > The Documentation/DMA-API-HOWTO.txt states that the dma_map_sg() function
-> > returns the number of the created entries in the DMA address space.
-> > However the subsequent calls to the dma_sync_sg_for_{device,cpu}() and
-> > dma_unmap_sg must be called with the original number of the entries
-> > passed to the dma_map_sg().
-> >
-> > struct sg_table is a common structure used for describing a non-contiguous
-> > memory buffer, used commonly in the DRM and graphics subsystems. It
-> > consists of a scatterlist with memory pages and DMA addresses (sgl entry),
-> > as well as the number of scatterlist entries: CPU pages (orig_nents entry)
-> > and DMA mapped pages (nents entry).
-> >
-> > It turned out that it was a common mistake to misuse nents and orig_nents
-> > entries, calling DMA-mapping functions with a wrong number of entries or
-> > ignoring the number of mapped entries returned by the dma_map_sg()
-> > function.
-> >
-> > To avoid such issues, lets use a common dma-mapping wrappers operating
-> > directly on the struct sg_table objects and use scatterlist page
-> > iterators where possible. This, almost always, hides references to the
-> > nents and orig_nents entries, making the code robust, easier to follow
-> > and copy/paste safe.
-> >
-> > Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> > Acked-by: Rob Clark <robdclark@gmail.com>
-> > ---
-> >   drivers/gpu/drm/msm/msm_gem.c    | 13 +++++--------
-> >   drivers/gpu/drm/msm/msm_gpummu.c | 14 ++++++--------
-> >   drivers/gpu/drm/msm/msm_iommu.c  |  2 +-
-> >   3 files changed, 12 insertions(+), 17 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> > index b2f49152b4d4..8c7ae812b813 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> > @@ -53,11 +53,10 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
-> >       struct device *dev = msm_obj->base.dev->dev;
-> >
-> >       if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
-> > -             dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
-> > -                     msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> > +             dma_sync_sgtable_for_device(dev, msm_obj->sgt,
-> > +                                         DMA_BIDIRECTIONAL);
-> >       } else {
-> > -             dma_map_sg(dev, msm_obj->sgt->sgl,
-> > -                     msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> > +             dma_map_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
-> >       }
+Quoting Dmitry Baryshkov (2020-09-01 06:36:34)
+> On 26/08/2020 05:47, Stephen Boyd wrote:
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm=
+/phy-qcom-qmp.c
+> > index 76d7a9e80f04..dd77c7dfa310 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > @@ -947,6 +947,130 @@ static const struct qmp_phy_init_tbl qmp_v3_usb3_=
+tx_tbl[] =3D {
+> >       QMP_PHY_INIT_CFG(QSERDES_V3_TX_RES_CODE_LANE_OFFSET_TX, 0x06),
+> >   };
+> >  =20
+>=20
+> I'd suggest to split common part of the following tables into=20
+> dpphy_cfg->serdes_tbl and add the rest as "addon tables"=20
+> (serdes_tbl_rbr, serdes_rbl_hbr/2/3) into the same dpphy_cfg.
+> It would ease V4 QMP DP PHY support.
+
+Ok. I tried to avoid doing that initially in case something is wrong
+from the copy over from the DP driver. Also it means the sequence of
+writes is different order but I don't think that matters.
+
+>=20
+> > +static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_rbr[] =3D {
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_SVS_MODE_CLK_SEL, 0x01),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_SYSCLK_EN_SEL, 0x37),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_SYS_CLK_CTRL, 0x02),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_ENABLE1, 0x0e),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_SYSCLK_BUF_ENABLE, 0x06),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_SELECT, 0x30),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_CMN_CONFIG, 0x02),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x0c),
+[...]
+> > @@ -2475,6 +2613,329 @@ static void qcom_qmp_phy_configure(void __iomem=
+ *base,
+> >       qcom_qmp_phy_configure_lane(base, regs, tbl, num, 0xff);
 > >   }
-> >
-> > @@ -66,11 +65,9 @@ static void sync_for_cpu(struct msm_gem_object *msm_obj)
-> >       struct device *dev = msm_obj->base.dev->dev;
-> >
-> >       if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
-> > -             dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
-> > -                     msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> > +             dma_sync_sgtable_for_cpu(dev, msm_obj->sgt, DMA_BIDIRECTIONAL);
-> >       } else {
-> > -             dma_unmap_sg(dev, msm_obj->sgt->sgl,
-> > -                     msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
-> > +             dma_unmap_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
-> >       }
-> >   }
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
-> > index 310a31b05faa..319f06c28235 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpummu.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpummu.c
-> > @@ -30,21 +30,19 @@ static int msm_gpummu_map(struct msm_mmu *mmu, uint64_t iova,
-> >   {
-> >       struct msm_gpummu *gpummu = to_msm_gpummu(mmu);
-> >       unsigned idx = (iova - GPUMMU_VA_START) / GPUMMU_PAGE_SIZE;
-> > -     struct scatterlist *sg;
-> > +     struct sg_dma_page_iter dma_iter;
-> >       unsigned prot_bits = 0;
-> > -     unsigned i, j;
-> >
-> >       if (prot & IOMMU_WRITE)
-> >               prot_bits |= 1;
-> >       if (prot & IOMMU_READ)
-> >               prot_bits |= 2;
-> >
-> > -     for_each_sg(sgt->sgl, sg, sgt->nents, i) {
-> > -             dma_addr_t addr = sg->dma_address;
-> > -             for (j = 0; j < sg->length / GPUMMU_PAGE_SIZE; j++, idx++) {
-> > -                     gpummu->table[idx] = addr | prot_bits;
-> > -                     addr += GPUMMU_PAGE_SIZE;
-> > -             }
-> > +     for_each_sgtable_dma_page(sgt, &dma_iter, 0) {
-> > +             dma_addr_t addr = sg_page_iter_dma_address(&dma_iter);
+> >  =20
+> > +static int qcom_qmp_phy_serdes_init(struct qmp_phy *qphy)
+> > +{
+> > +     struct qcom_qmp *qmp =3D qphy->qmp;
+> > +     const struct qmp_phy_cfg *cfg =3D qphy->cfg;
+> > +     void __iomem *serdes =3D qphy->serdes;
+> > +     const struct phy_configure_opts_dp *dp_opts =3D &qphy->dp_opts;
+> > +     const struct qmp_phy_init_tbl *serdes_tbl;
+> > +     int serdes_tbl_num;
+> > +     int ret;
 > > +
-> > +             BUILD_BUG_ON(GPUMMU_PAGE_SIZE != PAGE_SIZE);
-> > +             gpummu->table[idx++] = addr | prot_bits;
->
-> Given that the BUILD_BUG_ON might prevent valid arm64 configs from
-> building, how about a simple tweak like:
->
->                 for (i = 0; i < PAGE_SIZE; i += GPUMMU_PAGE_SIZE)
->                         gpummu->table[idx++] = i + addr | prot_bits;
-> ?
->
-> Or alternatively perhaps some more aggressive #ifdefs or makefile tweaks
-> to prevent the GPUMMU code building for arm64 at all if it's only
-> relevant to 32-bit platforms (which I believe might be the case).
+> > +     if (cfg->type =3D=3D PHY_TYPE_DP) {
+> > +             switch (dp_opts->link_rate) {
+> > +             case 1620:
+> > +                     serdes_tbl =3D qmp_v3_dp_serdes_tbl_rbr;
+> > +                     serdes_tbl_num =3D ARRAY_SIZE(qmp_v3_dp_serdes_tb=
+l_rbr);
+> > +                     break;
+> > +             case 2700:
+> > +                     serdes_tbl =3D qmp_v3_dp_serdes_tbl_hbr;
+> > +                     serdes_tbl_num =3D ARRAY_SIZE(qmp_v3_dp_serdes_tb=
+l_hbr);
+> > +                     break;
+> > +             case 5400:
+> > +                     serdes_tbl =3D qmp_v3_dp_serdes_tbl_hbr2;
+> > +                     serdes_tbl_num =3D ARRAY_SIZE(qmp_v3_dp_serdes_tb=
+l_hbr2);
+> > +                     break;
+> > +             case 8100:
+> > +                     serdes_tbl =3D qmp_v3_dp_serdes_tbl_hbr3;
+> > +                     serdes_tbl_num =3D ARRAY_SIZE(qmp_v3_dp_serdes_tb=
+l_hbr3);
+> > +                     break;
+> > +             default:
+> > +                     /* Other link rates aren't supported */
+> > +                     return -EINVAL;
+> > +             }
+> > +     } else {
+> > +             serdes_tbl =3D cfg->serdes_tbl;
+> > +             serdes_tbl_num =3D cfg->serdes_tbl_num;
+> > +     }
+> > +     qcom_qmp_phy_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_=
+num);
+>=20
+> If we split DP serdes tables, it would look lile:
+>         qcom_qmp_phy_configure(serdes, cfg->regs, cfg->serdes_tbl,=20
+> cfg->serdes_tbl_num);
+>         if (cfg->type =3D=3D PHY_TYPE_DP) {
+>                 switch (dp_opts->link_rate) {
+>                 case 1620:
+>                         qcom_qmp_phy_configure(serdes, cfg->regs, cfg->se=
+rdes_tbl_rbr,=20
+> cfg->serdes_tbl_rbr_num);
+>                         break;
+>                 case 2700:
+>                         qcom_qmp_phy_configure(serdes, cfg->regs, cfg->se=
+rdes_tbl_hbr,=20
+> cfg->serdes_tbl_hbr_num);
+>                         break;
+>                 case 5400:
+>                         qcom_qmp_phy_configure(serdes, cfg->regs, cfg->se=
+rdes_tbl_hbr2,=20
+> cfg->serdes_tbl_hbr2_num);
+>                         break;
+>                 case 8100:
+>                         qcom_qmp_phy_configure(serdes, cfg->regs, cfg->se=
+rdes_tbl_hbr3,=20
+> cfg->serdes_tbl_hbr3_num);
+>                         break;
+>                 default:
+>                         /* Other link rates aren't supported */
+>                         return -EINVAL;
+>                 }
+>         }
 
-yes, the gpummu path is only used on older armv7 snapdragon and imx5
-platforms.. I suppose maybe the easy thing would be to add a stub for
-msm_gpummu_new() and msm_gpummu_params() and then only build it on
-arm64?
+Ok, sure!
 
-BR,
--R
+>=20
+>=20
+>  > +    qcom_qmp_phy_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_=
+num);
+>=20
+>=20
+> > +
+> > +     if (cfg->has_phy_com_ctrl) {
+> > +             void __iomem *status;
+> > +             unsigned int mask, val;
+> > +
+> > +             qphy_clrbits(serdes, cfg->regs[QPHY_COM_SW_RESET], SW_RES=
+ET);
+> > +             qphy_setbits(serdes, cfg->regs[QPHY_COM_START_CONTROL],
+> > +                          SERDES_START | PCS_START);
+> > +
+> > +             status =3D serdes + cfg->regs[QPHY_COM_PCS_READY_STATUS];
+> > +             mask =3D cfg->mask_com_pcs_ready;
+> > +
+> > +             ret =3D readl_poll_timeout(status, val, (val & mask), 10,
+> > +                                      PHY_INIT_COMPLETE_TIMEOUT);
+> > +             if (ret) {
+> > +                     dev_err(qmp->dev,
+> > +                             "phy common block init timed-out\n");
+> > +                     return ret;
+> > +             }
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static void qcom_qmp_phy_dp_aux_init(struct qmp_phy *qphy)
+> > +{
+> > +     writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+> > +            DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
+> > +            qphy->pcs + QSERDES_V3_DP_PHY_PD_CTL);
+> > +
+> > +     /* Turn on BIAS current for PHY/PLL */
+> > +     writel(QSERDES_V3_COM_BIAS_EN | QSERDES_V3_COM_BIAS_EN_MUX |
+> > +            QSERDES_V3_COM_CLKBUF_L_EN | QSERDES_V3_COM_EN_SYSCLK_TX_S=
+EL,
+> > +            qphy->serdes + QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN);
+> > +
+> > +     writel(DP_PHY_PD_CTL_PSR_PWRDN, qphy->pcs + QSERDES_V3_DP_PHY_PD_=
+CTL);
+> > +
+> > +     /* Make sure that hardware is done with  PSR power down */
+> > +     wmb();
+> > +     writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+> > +            DP_PHY_PD_CTL_LANE_0_1_PWRDN |
+> > +            DP_PHY_PD_CTL_LANE_2_3_PWRDN | DP_PHY_PD_CTL_PLL_PWRDN |
+> > +            DP_PHY_PD_CTL_DP_CLAMP_EN,
+> > +            qphy->pcs + QSERDES_V3_DP_PHY_PD_CTL);
+> > +
+> > +     writel(QSERDES_V3_COM_BIAS_EN |
+> > +            QSERDES_V3_COM_BIAS_EN_MUX | QSERDES_V3_COM_CLKBUF_R_EN |
+> > +            QSERDES_V3_COM_CLKBUF_L_EN | QSERDES_V3_COM_EN_SYSCLK_TX_S=
+EL |
+> > +            QSERDES_V3_COM_CLKBUF_RX_DRIVE_L,
+> > +            qphy->serdes + QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN);
+> > +
+> > +     writel(0x00, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG0);
+> > +     writel(0x13, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG1);
+> > +     writel(0x24, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG2);
+> > +     writel(0x00, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG3);
+> > +     writel(0x0a, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG4);
+> > +     writel(0x26, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG5);
+> > +     writel(0x0a, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG6);
+> > +     writel(0x03, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG7);
+> > +     writel(0xbb, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG8);
+> > +     writel(0x03, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG9);
+> > +     qphy->dp_aux_cfg =3D 0;
+> > +
+> > +     writel(PHY_AUX_STOP_ERR_MASK | PHY_AUX_DEC_ERR_MASK |
+> > +            PHY_AUX_SYNC_ERR_MASK | PHY_AUX_ALIGN_ERR_MASK |
+> > +            PHY_AUX_REQ_ERR_MASK,
+> > +            qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
+> > +}
+> > +
+> > +static const u8 vm_pre_emphasis[4][4] =3D {
+>=20
+> Could you please prefix with v3? V4 will use different tables here
 
+Done.
 
-> Robin.
->
-> >       }
-> >
-> >       /* we can improve by deferring flush for multiple map() */
-> > diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-> > index 3a381a9674c9..6c31e65834c6 100644
-> > --- a/drivers/gpu/drm/msm/msm_iommu.c
-> > +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> > @@ -36,7 +36,7 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
-> >       struct msm_iommu *iommu = to_msm_iommu(mmu);
-> >       size_t ret;
-> >
-> > -     ret = iommu_map_sg(iommu->domain, iova, sgt->sgl, sgt->nents, prot);
-> > +     ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
-> >       WARN_ON(!ret);
-> >
-> >       return (ret == len) ? 0 : -EINVAL;
-> >
+>=20
+> > +     { 0x00, 0x0b, 0x12, 0xff },       /* pe0, 0 db */
+> > +     { 0x00, 0x0a, 0x12, 0xff },       /* pe1, 3.5 db */
+> > +     { 0x00, 0x0c, 0xff, 0xff },       /* pe2, 6.0 db */
+> > +     { 0xff, 0xff, 0xff, 0xff }        /* pe3, 9.5 db */
+> > +};
+> > +
+> > +/* voltage swing, 0.2v and 1.0v are not support */
+> > +static const u8 vm_voltage_swing[4][4] =3D {
+> > +     { 0x07, 0x0f, 0x14, 0xff }, /* sw0, 0.4v  */
+> > +     { 0x11, 0x1d, 0x1f, 0xff }, /* sw1, 0.6 v */
+> > +     { 0x18, 0x1f, 0xff, 0xff }, /* sw1, 0.8 v */
+> > +     { 0xff, 0xff, 0xff, 0xff }  /* sw1, 1.2 v, optional */
+> > +};
+> > +
+> > +static const u8 vm_pre_emphasis_hbr3_hbr2[4][4] =3D {
+> > +     { 0x00, 0x0c, 0x15, 0x1a },
+> > +     { 0x02, 0x0e, 0x16, 0xff },
+> > +     { 0x02, 0x11, 0xff, 0xff },
+> > +     { 0x04, 0xff, 0xff, 0xff }
+> > +};
+> > +
+> > +static const u8 vm_voltage_swing_hbr3_hbr2[4][4] =3D {
+> > +     { 0x02, 0x12, 0x16, 0x1a },
+> > +     { 0x09, 0x19, 0x1f, 0xff },
+> > +     { 0x10, 0x1f, 0xff, 0xff },
+> > +     { 0x1f, 0xff, 0xff, 0xff }
+> > +};
+> > +
+> > +static const u8 vm_pre_emphasis_hbr_rbr[4][4] =3D {
+> > +     { 0x00, 0x0c, 0x14, 0x19 },
+> > +     { 0x00, 0x0b, 0x12, 0xff },
+> > +     { 0x00, 0x0b, 0xff, 0xff },
+> > +     { 0x04, 0xff, 0xff, 0xff }
+> > +};
+> > +
+> > +static const u8 vm_voltage_swing_hbr_rbr[4][4] =3D {
+> > +     { 0x08, 0x0f, 0x16, 0x1f },
+> > +     { 0x11, 0x1e, 0x1f, 0xff },
+> > +     { 0x19, 0x1f, 0xff, 0xff },
+> > +     { 0x1f, 0xff, 0xff, 0xff }
+> > +};
+> > +
+> > +static void qcom_qmp_phy_configure_dp_tx(struct qmp_phy *qphy)
+>=20
+> With these functions I'm struggling between introducing=20
+> PHY_TYPE_DP_V3/V4 and introducing callbacks into qmp_phy_cfg. What would =
+
+> you prefer?
+>=20
+> What about the following struct?
+>=20
+> struct qmp_phy_dp_opts {
+>         void (*dp_aux_init)(struct qmp_phy *qphy);
+>         void (*dp_configure_tx)(struct qmp_phy *qphy);
+>         void (*dp_configure_lanes)(struct qmp_phy *qphy);
+> };
+>=20
+> I'm not sure about dp_calibrate().
+>=20
+
+Is there v4 code somewhere that I can see? Another level of indirection
+is always a solution, so it is probably fine. This driver is currently
+written with many conditionals instead of function tables so I'm not
+sure it fits in with the style of how things are done though. The
+alternative is to use an enum and call different functions?
+
+The calibrate call is there to "turn the crank" on the aux settings.  I
+need to cycle through the different values for that aux register so that
+aux can be tuned properly. The AUX channel really has another phy that
+needs tuning so we're sort of combining the aux and DP link phy together
+here by letting the calibrate call tune the AUX phy and the configure
+call tune the DP phy. I don't see any sort of concept of an AUX phy
+though so this seemed ok. Does v4 need to tune more registers?
