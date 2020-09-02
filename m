@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5F8325B3EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 20:41:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4355425B3DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 20:40:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728089AbgIBSlE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 14:41:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
+        id S1728234AbgIBSke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 14:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728180AbgIBSkM (ORCPT
+        with ESMTP id S1728193AbgIBSkP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 14:40:12 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D69C061263
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Sep 2020 11:40:07 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id u3so647065qkd.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Sep 2020 11:40:07 -0700 (PDT)
+        Wed, 2 Sep 2020 14:40:15 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFBC9C061231
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Sep 2020 11:40:08 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id n133so623607qkn.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Sep 2020 11:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3b3qBolN08YGemrK8v4jSiFaYzQaq4OjQQvoyptMIv8=;
-        b=eeubmQvuNrBhi0LAsHT0u1DkZdvfGu8AHwaJDUsV6NjSqz3iqkHR51PnU7cAKaRNSs
-         s/d+YMsaXP47ZL7ZzWEUcsiNYZc6SCLcP5ShcvVuEKZ/6MYw2A1MQyBLbZkgHCoD6xds
-         BPtbKk2q6BGL4+zdezvBUEU3VROeZJ50aMsyHZZW/DHE8elMpILGbtVIQjgpIby5jaZ6
-         l7NSd6Jx/9/R9hZu7CxiRkhWUfDq7DupTiXr4LLB556+LBBwq+GvJA1CTX+L47CPVHCk
-         29pG2tJ1zlqk9ETZNUgFbDT69C6My25p6V5jXvDg7CGf37svmi/wIUnOOnzK01bVGD+e
-         dySA==
+        bh=sLkAJMyvbVghRDtOO8Afw1g+rCDOLVswzkG/FBELZTg=;
+        b=2QH0MNDJf3fa03hLOq+xmUxThMn3+ZlJFARVdr/eun9QY/GqiowsI4/2mzfuOwi4ak
+         ZAnqdts0d5bJpskDBYKdPTGsXE+meaOXReXcj6+M0s5H733ZZCmgxMG56VEWAdnHa3yw
+         qwNiDuHa+wrnHwPa/wo0ncDOvPgcFEgxvBYx2vXtDzs6LpWCOrq35UNB5jqETdQvAfy5
+         WKMN3IJ/99NYjXayvzN+B5E4dnIAWKHxQMXBBkiPdIMMm1igfOdhunZpug2qaxRah5xL
+         B0jL1oOpvoBetUYBw3JDdHIR0jz8MDv0MKGtRr4ZeSOIhUP3w92StWMoauOO9PrsUdQw
+         4rlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3b3qBolN08YGemrK8v4jSiFaYzQaq4OjQQvoyptMIv8=;
-        b=LiQCQZDNKaMnz4bcJz0Tpjsq+lO7YJnyPquHa5TrJjaEcuW8Y2onYGDvEYexFN+cw3
-         xLNQt8tmoCe+PMR2v6gavUaSlp5//23XAE8BAnFPNEdDYA7jKFLGEzkj1bAozstc0pyn
-         0vcjLbzc0gNrQZWbB+Cp8qQNBA5h01TsKCYIwelACW9uCMEpAbk39FwMIg0lR730+JSf
-         U6uFN2VjB44rtv9IETeFvoWGKVl83pl/ppz87i4wFGd1jYUVBhnBu2EigoPQQm0svj0b
-         dKnXFviu73flOYtiOZIzUcbjIJQrx4TwOzjG7lmSyadnH/q+nthbOO+fAy1yAyshVTBe
-         VEEQ==
-X-Gm-Message-State: AOAM532UEvMsI8te6UJqzsEqpiRHKpHpQrUQk41KLsamZR2AonYI7zw4
-        0lsBkpBjBR8cLmMX0EdSVOsZK9HBB8ubWvwnhq4=
-X-Google-Smtp-Source: ABdhPJxK1aKs+fkclzvxnLy3qDF4MMk5uKdJN7S9Li9UaXNmVA9K40dlUSmMvBLeVgIe5QVSajvFvg==
-X-Received: by 2002:a05:620a:a52:: with SMTP id j18mr7761145qka.445.1599072006061;
-        Wed, 02 Sep 2020 11:40:06 -0700 (PDT)
+        bh=sLkAJMyvbVghRDtOO8Afw1g+rCDOLVswzkG/FBELZTg=;
+        b=nGIcsR69eq35FciWymYRqTCDYh0FCDMn7oPrOzvsG1G/LS+ak1VBx78WiwYOSpImEB
+         8Mz8+BhLYPnwkLs2LRO61uxuIuq5f/CNL9gxFSskomKH3ARIDLyhHNGsLqqNoqJrE8h6
+         Dmkyy+BDAbH7KiWAMKbX5aM4DcWMHhI9HIAdtnNRFKV0b2pPCewnSh/8cpCbS0NPQUEJ
+         JNOrI3EG9SgOF4FHXukfnBrEB7boJOQ26AvECD8r+elf5NbYIS9jkeAOHDA+OGzG+s9A
+         9xZT6DJmuUIWPPanXS6bFcxFuLLebB0C+0GRHzK4PKS6La1evmlt+lercYFPJRJHqJ0D
+         OErA==
+X-Gm-Message-State: AOAM533lGlADPFtOc2Cru+LBbiYMMPr0Can4v8lhpSuE8akK7glc4uXN
+        NTI1NDWCRumyIqQKPlCycX1yq4Ikbe9e93klhDU=
+X-Google-Smtp-Source: ABdhPJyLkPKEVmFjLuet4jXKMkVcy4hE9BO3sxuksWjhXeXnkzXCTfLBfugemE0+omiTXKwh174fmw==
+X-Received: by 2002:a05:620a:1381:: with SMTP id k1mr8282425qki.140.1599072007799;
+        Wed, 02 Sep 2020 11:40:07 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id s47sm208004qtb.13.2020.09.02.11.40.05
+        by smtp.gmail.com with ESMTPSA id s47sm208004qtb.13.2020.09.02.11.40.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2020 11:40:05 -0700 (PDT)
+        Wed, 02 Sep 2020 11:40:07 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
@@ -59,9 +59,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
         devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
         DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 4/7] dt-bindings: clock: Introduce QCOM SM8150 display clock bindings
-Date:   Wed,  2 Sep 2020 14:38:44 -0400
-Message-Id: <20200902183852.14510-5-jonathan@marek.ca>
+Subject: [PATCH 5/7] dt-bindings: clock: Introduce QCOM SM8250 display clock bindings
+Date:   Wed,  2 Sep 2020 14:38:45 -0400
+Message-Id: <20200902183852.14510-6-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20200902183852.14510-1-jonathan@marek.ca>
 References: <20200902183852.14510-1-jonathan@marek.ca>
@@ -73,53 +73,55 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Add device tree bindings for display clock controller for
-Qualcomm Technology Inc's SM8150 SoCs.
+Qualcomm Technology Inc's SM8250 SoCs.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
  .../bindings/clock/qcom,dispcc.yaml           |  4 +-
- .../dt-bindings/clock/qcom,dispcc-sm8150.h    | 69 +++++++++++++++++++
- 2 files changed, 72 insertions(+), 1 deletion(-)
- create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8150.h
+ .../dt-bindings/clock/qcom,dispcc-sm8250.h    | 66 +++++++++++++++++++
+ 2 files changed, 69 insertions(+), 1 deletion(-)
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8250.h
 
 diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
-index 7c1c81cdc681..43efd451959a 100644
+index 43efd451959a..216ab7732007 100644
 --- a/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
 +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc.yaml
-@@ -11,17 +11,19 @@ maintainers:
+@@ -11,12 +11,13 @@ maintainers:
  
  description: |
    Qualcomm display clock control module which supports the clocks, resets and
--  power domains on SDM845/SC7180.
-+  power domains on SDM845/SC7180/SM8150.
+-  power domains on SDM845/SC7180/SM8150.
++  power domains on SDM845/SC7180/SM8150/SM8250.
  
    See also:
      dt-bindings/clock/qcom,dispcc-sdm845.h
      dt-bindings/clock/qcom,dispcc-sc7180.h
-+    dt-bindings/clock/qcom,dispcc-sm8150.h
+     dt-bindings/clock/qcom,dispcc-sm8150.h
++    dt-bindings/clock/qcom,dispcc-sm8250.h
  
  properties:
    compatible:
-     enum:
+@@ -24,6 +25,7 @@ properties:
        - qcom,sdm845-dispcc
        - qcom,sc7180-dispcc
-+      - qcom,sm8150-dispcc
+       - qcom,sm8150-dispcc
++      - qcom,sm8250-dispcc
  
    # NOTE: sdm845.dtsi existed for quite some time and specified no clocks.
    # The code had to use hardcoded mechanisms to find the input clocks.
-diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8150.h b/include/dt-bindings/clock/qcom,dispcc-sm8150.h
+diff --git a/include/dt-bindings/clock/qcom,dispcc-sm8250.h b/include/dt-bindings/clock/qcom,dispcc-sm8250.h
 new file mode 100644
-index 000000000000..2b96b0b4fe97
+index 000000000000..fdaca6ad5c85
 --- /dev/null
-+++ b/include/dt-bindings/clock/qcom,dispcc-sm8150.h
-@@ -0,0 +1,69 @@
++++ b/include/dt-bindings/clock/qcom,dispcc-sm8250.h
+@@ -0,0 +1,66 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
-+ * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
 + */
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8150_H
-+#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8150_H
++#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8250_H
++#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM8250_H
 +
 +/* DISP_CC clock registers */
 +#define DISP_CC_MDSS_AHB_CLK			0
@@ -136,47 +138,44 @@ index 000000000000..2b96b0b4fe97
 +#define DISP_CC_MDSS_DP_AUX1_CLK_SRC		11
 +#define DISP_CC_MDSS_DP_AUX_CLK			12
 +#define DISP_CC_MDSS_DP_AUX_CLK_SRC		13
-+#define DISP_CC_MDSS_DP_CRYPTO1_CLK		14
-+#define DISP_CC_MDSS_DP_CRYPTO1_CLK_SRC		15
-+#define DISP_CC_MDSS_DP_CRYPTO_CLK		16
-+#define DISP_CC_MDSS_DP_CRYPTO_CLK_SRC		17
-+#define DISP_CC_MDSS_DP_LINK1_CLK		18
-+#define DISP_CC_MDSS_DP_LINK1_CLK_SRC		19
-+#define DISP_CC_MDSS_DP_LINK1_INTF_CLK		20
-+#define DISP_CC_MDSS_DP_LINK_CLK		21
-+#define DISP_CC_MDSS_DP_LINK_CLK_SRC		22
-+#define DISP_CC_MDSS_DP_LINK_INTF_CLK		23
-+#define DISP_CC_MDSS_DP_PIXEL1_CLK		24
-+#define DISP_CC_MDSS_DP_PIXEL1_CLK_SRC		25
-+#define DISP_CC_MDSS_DP_PIXEL2_CLK		26
-+#define DISP_CC_MDSS_DP_PIXEL2_CLK_SRC		27
-+#define DISP_CC_MDSS_DP_PIXEL_CLK		28
-+#define DISP_CC_MDSS_DP_PIXEL_CLK_SRC		29
-+#define DISP_CC_MDSS_ESC0_CLK			30
-+#define DISP_CC_MDSS_ESC0_CLK_SRC		31
-+#define DISP_CC_MDSS_ESC1_CLK			32
-+#define DISP_CC_MDSS_ESC1_CLK_SRC		33
-+#define DISP_CC_MDSS_MDP_CLK			34
-+#define DISP_CC_MDSS_MDP_CLK_SRC		35
-+#define DISP_CC_MDSS_MDP_LUT_CLK		36
-+#define DISP_CC_MDSS_NON_GDSC_AHB_CLK		37
-+#define DISP_CC_MDSS_PCLK0_CLK			38
-+#define DISP_CC_MDSS_PCLK0_CLK_SRC		39
-+#define DISP_CC_MDSS_PCLK1_CLK			40
-+#define DISP_CC_MDSS_PCLK1_CLK_SRC		41
-+#define DISP_CC_MDSS_ROT_CLK			42
-+#define DISP_CC_MDSS_ROT_CLK_SRC		43
-+#define DISP_CC_MDSS_RSCC_AHB_CLK		44
-+#define DISP_CC_MDSS_RSCC_VSYNC_CLK		45
-+#define DISP_CC_MDSS_VSYNC_CLK			46
-+#define DISP_CC_MDSS_VSYNC_CLK_SRC		47
-+#define DISP_CC_PLL0				48
-+#define DISP_CC_PLL1				49
++#define DISP_CC_MDSS_DP_LINK1_CLK		14
++#define DISP_CC_MDSS_DP_LINK1_CLK_SRC		15
++#define DISP_CC_MDSS_DP_LINK1_DIV_CLK_SRC	16
++#define DISP_CC_MDSS_DP_LINK1_INTF_CLK		17
++#define DISP_CC_MDSS_DP_LINK_CLK		18
++#define DISP_CC_MDSS_DP_LINK_CLK_SRC		19
++#define DISP_CC_MDSS_DP_LINK_DIV_CLK_SRC	20
++#define DISP_CC_MDSS_DP_LINK_INTF_CLK		21
++#define DISP_CC_MDSS_DP_PIXEL1_CLK		22
++#define DISP_CC_MDSS_DP_PIXEL1_CLK_SRC		23
++#define DISP_CC_MDSS_DP_PIXEL2_CLK		24
++#define DISP_CC_MDSS_DP_PIXEL2_CLK_SRC		25
++#define DISP_CC_MDSS_DP_PIXEL_CLK		26
++#define DISP_CC_MDSS_DP_PIXEL_CLK_SRC		27
++#define DISP_CC_MDSS_ESC0_CLK			28
++#define DISP_CC_MDSS_ESC0_CLK_SRC		29
++#define DISP_CC_MDSS_ESC1_CLK			30
++#define DISP_CC_MDSS_ESC1_CLK_SRC		31
++#define DISP_CC_MDSS_MDP_CLK			32
++#define DISP_CC_MDSS_MDP_CLK_SRC		33
++#define DISP_CC_MDSS_MDP_LUT_CLK		34
++#define DISP_CC_MDSS_NON_GDSC_AHB_CLK		35
++#define DISP_CC_MDSS_PCLK0_CLK			36
++#define DISP_CC_MDSS_PCLK0_CLK_SRC		37
++#define DISP_CC_MDSS_PCLK1_CLK			38
++#define DISP_CC_MDSS_PCLK1_CLK_SRC		39
++#define DISP_CC_MDSS_ROT_CLK			40
++#define DISP_CC_MDSS_ROT_CLK_SRC		41
++#define DISP_CC_MDSS_RSCC_AHB_CLK		42
++#define DISP_CC_MDSS_RSCC_VSYNC_CLK		43
++#define DISP_CC_MDSS_VSYNC_CLK			44
++#define DISP_CC_MDSS_VSYNC_CLK_SRC		45
++#define DISP_CC_PLL0				46
++#define DISP_CC_PLL1				47
 +
 +/* DISP_CC Reset */
 +#define DISP_CC_MDSS_CORE_BCR			0
 +#define DISP_CC_MDSS_RSCC_BCR			1
-+#define DISP_CC_MDSS_SPDM_BCR			2
 +
 +/* DISP_CC GDSCR */
 +#define MDSS_GDSC				0
