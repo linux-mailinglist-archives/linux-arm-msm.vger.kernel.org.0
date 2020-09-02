@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD64825AF56
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 17:37:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74EDD25AF4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 17:36:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728180AbgIBPge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 11:36:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41506 "EHLO mail.kernel.org"
+        id S1726733AbgIBPgc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 11:36:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41570 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726979AbgIBPEK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 11:04:10 -0400
+        id S1726937AbgIBPEP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Sep 2020 11:04:15 -0400
 Received: from kozik-lap.mshome.net (unknown [194.230.155.106])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8107C2137B;
-        Wed,  2 Sep 2020 15:04:05 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 94941208DB;
+        Wed,  2 Sep 2020 15:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599059050;
-        bh=CvZl/N6bMSMI88HBcyd5T1/2bkJNYPalt1VI58vbW94=;
+        s=default; t=1599059055;
+        bh=3L9tzl4u2+eRjqvvA0npofzQcIH6WAV2kMNA4WSIx8U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=BSlvK2dLedkxybPvtTPtPYsetOZIwJjk6zGqLrgUjsKzoJwBX+Y974vrDZgNMf/fL
-         og7ZFTaWpdhrgmsKOXlFhO/TU60eSw5LmOWZKRSFc2gwf/1hs7jxhcXiDphxEv4doI
-         IzaCIiKljgWKe0HsH/hGjN5xRV/AWfFWQtqjOUPo=
+        b=gQz17aiDJxWjN5u0gkMVHoT0kOpnx9Aw8d/3hmPayrgvGXvxNoPFYzUx0695et0Un
+         xS6+vVBM76+LXioFjGMJIliKQWU0yIq2JlW9nbOIcyMQWSA0E5CQ45IbU3z8ulp7Fm
+         wQD2L4S/Wtec4RA/wK5mIpvp41++szi2OJq0PUM4=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
@@ -43,9 +43,9 @@ To:     Michael Turquette <mturquette@baylibre.com>,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 03/10] clk: bulk: Simplify with dev_err_probe()
-Date:   Wed,  2 Sep 2020 17:03:41 +0200
-Message-Id: <20200902150348.14465-3-krzk@kernel.org>
+Subject: [PATCH 04/10] clk: gpio: Simplify with dev_err_probe()
+Date:   Wed,  2 Sep 2020 17:03:42 +0200
+Message-Id: <20200902150348.14465-4-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200902150348.14465-1-krzk@kernel.org>
 References: <20200902150348.14465-1-krzk@kernel.org>
@@ -59,25 +59,43 @@ dev_err_probe().  Less code and the error value gets printed.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- drivers/clk/clk-bulk.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/clk-gpio.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/clk/clk-bulk.c b/drivers/clk/clk-bulk.c
-index e9e16425c739..15978d2a1233 100644
---- a/drivers/clk/clk-bulk.c
-+++ b/drivers/clk/clk-bulk.c
-@@ -96,9 +96,8 @@ static int __clk_bulk_get(struct device *dev, int num_clks,
- 			if (ret == -ENOENT && optional)
- 				continue;
+diff --git a/drivers/clk/clk-gpio.c b/drivers/clk/clk-gpio.c
+index 38755a241ab7..a3cc53edcb11 100644
+--- a/drivers/clk/clk-gpio.c
++++ b/drivers/clk/clk-gpio.c
+@@ -199,7 +199,6 @@ static int gpio_clk_driver_probe(struct platform_device *pdev)
+ 	struct gpio_desc *gpiod;
+ 	struct clk_hw *hw;
+ 	bool is_mux;
+-	int ret;
  
--			if (ret != -EPROBE_DEFER)
--				dev_err(dev, "Failed to get clk '%s': %d\n",
--					clks[i].id, ret);
-+			dev_err_probe(dev, ret, "Failed to get clk '%s'\n",
-+				      clks[i].id);
- 			goto err;
- 		}
- 	}
+ 	is_mux = of_device_is_compatible(node, "gpio-mux-clock");
+ 
+@@ -211,17 +210,10 @@ static int gpio_clk_driver_probe(struct platform_device *pdev)
+ 
+ 	gpio_name = is_mux ? "select" : "enable";
+ 	gpiod = devm_gpiod_get(dev, gpio_name, GPIOD_OUT_LOW);
+-	if (IS_ERR(gpiod)) {
+-		ret = PTR_ERR(gpiod);
+-		if (ret == -EPROBE_DEFER)
+-			pr_debug("%pOFn: %s: GPIOs not yet available, retry later\n",
+-					node, __func__);
+-		else
+-			pr_err("%pOFn: %s: Can't get '%s' named GPIO property\n",
+-					node, __func__,
+-					gpio_name);
+-		return ret;
+-	}
++	if (IS_ERR(gpiod))
++		return dev_err_probe(dev, PTR_ERR(gpiod),
++				     "%pOFn: Can't get '%s' named GPIO property\n",
++				     node, gpio_name);
+ 
+ 	if (is_mux)
+ 		hw = clk_hw_register_gpio_mux(dev, gpiod);
 -- 
 2.17.1
 
