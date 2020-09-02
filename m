@@ -2,94 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C91825B13B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 18:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 215CB25B183
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 18:24:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728019AbgIBQKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 12:10:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53500 "EHLO mail.kernel.org"
+        id S1726678AbgIBQYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 12:24:37 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:15046 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726528AbgIBQKq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 12:10:46 -0400
-Received: from mail.kernel.org (ip5f5ad5c3.dynamic.kabel-deutschland.de [95.90.213.195])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726247AbgIBQYg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Sep 2020 12:24:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1599063875; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=9ZiHvRjb2d9MQ1k+GNhy2aEJ5FomGrZtX8cr1c2a++U=; b=Fg71lRHLeAlrppwWqOpqRbwCAxxymtd9HqURlf0pIF6xeay+emtk21sadNxHhQRKRfNxj404
+ v+f0ZXen8YB0Nk7qwMsCwqJ3BblSPiYdA6lshxwt6cI6Q9E1wG5K5YEI6Ia8UV5UUgwoNm5Y
+ zQJUHctwt0Hu+d9pkj4LFDOWcrM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f4fc735be06707b34fed67d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Sep 2020 16:24:21
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 92929C433CB; Wed,  2 Sep 2020 16:24:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D596B2072A;
-        Wed,  2 Sep 2020 16:10:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599063046;
-        bh=iMwur6qM3ZZ6P0L7pVxBdHuvvZDLHp1t0SylHttyE2M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FKIcXRYqTJF0AmXLoClH7H/yXvzpyvcH1uSCsd+ZGN2Tmwb+nCHcZSxsyw7b7zxXn
-         xgM1HqgHX0MmHK6coPjhKYN+E3paH36oxBY0fA6ib2lXONudq/3XVYYGon3/+g1LY4
-         ERBx6hi/mXjQpO5BeNlXb5D70bugk3PiDt0FXq8I=
-Received: from mchehab by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1kDVLP-000t9u-PX; Wed, 02 Sep 2020 18:10:43 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 06/38] media: venus: place extern venus_fw_debug on a header file
-Date:   Wed,  2 Sep 2020 18:10:09 +0200
-Message-Id: <64a99ecb3e7cfae697a16c6b6ca05034f73ad985.1599062230.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <cover.1599062230.git.mchehab+huawei@kernel.org>
-References: <cover.1599062230.git.mchehab+huawei@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 10AD7C433C6;
+        Wed,  2 Sep 2020 16:24:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 10AD7C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=deesin@codeaurora.org
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+To:     bjorn.andersson@linaro.org, clew@codeaurora.org,
+        mathieu.poirier@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+Subject: [PATCH V7 0/4] Signaling api support in glink/rpmsg clients
+Date:   Wed,  2 Sep 2020 21:54:03 +0530
+Message-Id: <1599063847-2347-1-git-send-email-deesin@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sparse warns about this symbol:
+Change from version 6
+In last series(v6) i had put wrong version(v5) for cover note.
+Which led to confusion for patch set series.
 
-	drivers/media/platform/qcom/venus/hfi_venus.c:133:5:  warning: symbol 'venus_fw_debug' was not declared. Should it be static?
+In this series i have updated the label for cover letter(v7).
+There is no change in patches. Only cover note label is updated.
 
-Because hfi_venus.c doesn't include a header file with the
-extern. So, move it to core.h, with is included by both
-hfi_venus.c and dbgfs.c.
+Change from version 5
+[V6,4/4] rpmsg: char: Add signal callback and POLLPRI support
+Updated for sparse warning. Replaced POLLPRI => EPOLLPRI to fix
+warning.
 
-This way, if something changes with it, warnings or errors
-will be produced.
+Change from version 4
+I am taking over these patches from aneela@codeaurora.org
+Fixed all the trivial review comments.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- drivers/media/platform/qcom/venus/core.h  | 2 ++
- drivers/media/platform/qcom/venus/dbgfs.c | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Signal conversion to and from native signal as done in patch V4,2/4
+is intentional.
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 8e75a199f9f7..1a7aee7ee628 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -24,6 +24,8 @@
- #define VIDC_VCODEC_CLKS_NUM_MAX	2
- #define VIDC_PMDOMAINS_NUM_MAX		3
- 
-+extern int venus_fw_debug;
-+
- struct freq_tbl {
- 	unsigned int load;
- 	unsigned long freq;
-diff --git a/drivers/media/platform/qcom/venus/dbgfs.c b/drivers/media/platform/qcom/venus/dbgfs.c
-index 782d54ac1b8f..52de47f2ca88 100644
---- a/drivers/media/platform/qcom/venus/dbgfs.c
-+++ b/drivers/media/platform/qcom/venus/dbgfs.c
-@@ -7,8 +7,6 @@
- 
- #include "core.h"
- 
--extern int venus_fw_debug;
--
- void venus_dbgfs_init(struct venus_core *core)
- {
- 	core->root = debugfs_create_dir("venus", NULL);
+Arun Kumar Neelakantam (3):
+  rpmsg: glink: Add support to handle signals command
+  rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+  rpmsg: char: Add signal callback and POLLPRI support
+
+Deepak Kumar Singh (1):
+  rpmsg: core: Add signal API support
+
+ drivers/rpmsg/qcom_glink_native.c | 125 ++++++++++++++++++++++++++++++++++++++
+ drivers/rpmsg/rpmsg_char.c        |  76 ++++++++++++++++++++++-
+ drivers/rpmsg/rpmsg_core.c        |  40 ++++++++++++
+ drivers/rpmsg/rpmsg_internal.h    |   5 ++
+ include/linux/rpmsg.h             |  27 ++++++++
+ 5 files changed, 270 insertions(+), 3 deletions(-)
+
 -- 
-2.26.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
