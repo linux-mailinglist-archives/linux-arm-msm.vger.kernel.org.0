@@ -2,111 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3F2C25ABD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 15:11:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7BED25AC0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Sep 2020 15:29:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbgIBNKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Sep 2020 09:10:44 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:11126 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726674AbgIBNKF (ORCPT
+        id S1726892AbgIBN2y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Sep 2020 09:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59356 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726493AbgIBN2e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Sep 2020 09:10:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1599052204; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=wBdcPQ/YNiU+WDkJLplCJsZAXQvmVTWpdtx6qvH+ZwA=; b=r+1TZB76naMcm5x8LpPllwShF5nnjFZ8BEwcise1dmCfzrF8IeREVAu7tG1d4WX//7IjY2iC
- HYxV4qxWJ+VAopXlJhwrTaaSIKcQCLJZOQZIs/VuKL0it9gKbo0f3xvZu8QN91X9JiDZ4pXL
- fC+ULSRK4drl9UwvCvNB88wv+DE=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f4f99964f13e63f04e63664 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Sep 2020 13:09:42
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B9C55C43395; Wed,  2 Sep 2020 13:09:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 10DB5C433C9;
-        Wed,  2 Sep 2020 13:09:41 +0000 (UTC)
+        Wed, 2 Sep 2020 09:28:34 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFEFBC061260
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Sep 2020 06:28:26 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id o5so5211505wrn.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Sep 2020 06:28:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uIp6VDRg64f9Y6M9nC/GlDS6MEA5JCUpqgsb4/MPt3o=;
+        b=mgwLkognKuIAKnWCCfSlM7yPbF2hjfW3lrpvsVtLqikNxdc1g8HRBRf+01OXL/0zM+
+         Yc6BzQvEuMQRW7++14zWZOQO4knzah3KyyQ06HqnP1kT26c4eu2HhXDw6xjpsvyOBvJO
+         JV7FxoqgcOsqsOECxm1Ii2GSYqR+rsZjUvyU1qhZutIEaVHRUux09hU8RfDH++383AL9
+         v79u6pcKn27u3TQfCcPbGMlvG6m1i92pkA0/KxauSZpmbTRybKqnRjvFurUDQBZuHkyH
+         7f8onN4/qVEYBJtFbcL/H9HKukRRV/+pArF9jLsJUlb0halFaAvNesLNJTZWkf+PxENN
+         48PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uIp6VDRg64f9Y6M9nC/GlDS6MEA5JCUpqgsb4/MPt3o=;
+        b=Lrvwjb8XjLWFVgs7i8jcYfrb8TalK9r+bXkU21Bk9WVZWIsZehTIyZ6I61jSKgc3ZE
+         3wTxp2uAhc7qoBwIxe0ht6PdN9CKrJpR1+sHtg74Rr49lcZqiy9UouZK37K/wx5NVsII
+         svOUJaTcDF3KboZ8xmSyRv4MN9H5uo7RGJDp1LRUROmbpMF+arIXzW2jQttjp/m0w5/I
+         UCvvUW2pDUz8k07zz0zlssQa44Ov2fVv8QR2SNuHE1xMBDeJ54OuzxFIaGn1I4H2Zvnf
+         h1i3b4JVsB3sYxu//c423gIPc6WRR6l4CrNeaRcX+OP1eZAm0R2muNu4TlpTsNTw4QIg
+         +xbw==
+X-Gm-Message-State: AOAM5327KAU59PK4az+57jDlAhcKNhzdrQh3vHIYOIxmMlFbiff2KIMM
+        VnSTyacgziJBbA0BSMoO+1Pz8lyK8hDMYxXKjRrECYwJ6CE=
+X-Google-Smtp-Source: ABdhPJymK6Binf3WPLODjrgoJ6lBMTNu0Ae96FbxstIYyWCNWxkbX6MBAI5dCNSBkDIrRwTR22Uv4qhDZlkb5G8e5nE=
+X-Received: by 2002:adf:c64d:: with SMTP id u13mr7583312wrg.114.1599053304932;
+ Wed, 02 Sep 2020 06:28:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 02 Sep 2020 18:39:41 +0530
-From:   skakit@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        gregkh@linuxfoundation.org, Andy Gross <agross@kernel.org>,
+References: <1598851448-5493-1-git-send-email-amit.pundir@linaro.org>
+ <CAMi1Hd3n2rfr+k09L8WO1S1Tn1s3xJencmr1q3a6e-FOgXr5Qg@mail.gmail.com> <CAMS8qEXcANkb-HoTk8zrXQEzkQO4cnFw4hj5tMp82UEVKd+eHQ@mail.gmail.com>
+In-Reply-To: <CAMS8qEXcANkb-HoTk8zrXQEzkQO4cnFw4hj5tMp82UEVKd+eHQ@mail.gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Wed, 2 Sep 2020 18:57:48 +0530
+Message-ID: <CAMi1Hd2ZakhXm+qNh-VMF_OndqCaQxxY3CC+UfQ6x2PyL_5sPQ@mail.gmail.com>
+Subject: Re: [PATCH v6] arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
-        rojay@codeaurora.org, msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V3 1/3] arm64: dts: sc7180: Add wakeup support over UART
- RX
-Message-ID: <e073ccd4fe47ab7e1a61fb201c9f5d84@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On Mon, 31 Aug 2020 at 13:28, Konrad Dybcio <konradybcio@gmail.com> wrote:
+>
+> > Hi Konrad,
+> >
+> > I couldn't find answer to your question around missing
+> > (regulatorname)-supply properties. Need help in figuring out that
+> > part.
+>
+> When the phone boots up and RPM(H) kicks in, you should see regulators
+> probing like "s1 supplied by foo". Without the *-supply stuff, you
+> will likely get "supplied by regulator-dummy". This happens here [1]
+> and to my knowledge it is the "eletrical wiring" for Linux, as in it
+> makes Linux aware of which regulators are connected electrically to
+> the same supply (so that kernel knows when the supply is on and what
+> voltage it's at). For qcom platforms, this is common per-pmic (afaik,
+> please check if you are able to!), so you can likely just copy-paste
+> that part from msm8998-mtp.dtsi, which also uses pm(i)8998.
 
-On 2020-08-21 21:56, Matthias Kaehlcke wrote:
-> On Thu, Aug 20, 2020 at 07:21:05PM +0530, satya priya wrote:
->> Add the necessary pinctrl and interrupts to make UART
->> wakeup capable.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->> Changes in V2:
->>  - As per Matthias's comment added wakeup support for all the UARTs
->>    of SC7180.
->> 
->> Changes in V3:
->>  - No change.
->> 
->>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 98 
->> ++++++++++++++++++++++++++++++------
->>  1 file changed, 84 insertions(+), 14 deletions(-)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index d46b383..855b13e 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> 
->> ...
->> 
->> +			qup_uart0_sleep: qup-uart0-sleep {
->> +				pinmux {
->> +					pins = "gpio34", "gpio35",
->> +					       "gpio36", "gpio37";
->> +					function = "gpio";
-> 
-> What is the reason that the GPIO function needs to be selected in sleep 
-> mode
-> to support wakeup?
-> 
-> This should be explained in the commit message unless it is evident.
+Thank you for the pointer. I dug around the vph_pwr fixed-regulator
+node used by fellow sdm845 devices. I assume it is safe to copy it
+from sdm845-mtp but I couldn't verify it in the downstream
+device-tree, so I'm a bit hesitant. My main concern is that I don't
+want to burn down my only device :)
 
-When QUP function is selected in sleep state, RTS/RFR is pulled high as 
-soon as we enter suspend and not receiving wakeup bytes from BT SoC to 
-wakeup device. Whereas in GPIO mode it is staying low and receiving 
-data.
+I did find a few regulator nodes downstream which matches with
+upstream sdm845-mtp but since I'm not using any of them in my
+beryllium dts, I'm going to skip them for now.
 
-Thanks,
-Satya Priya
+As you pointed out, in case of regulator lookup failure Linux will
+fall back to dummy regulators, which is working fine for me so far.
+Also I see that vdd-*-supply properties are optional according to
+Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt,
+so I assume it is safe to skip them?
+
+Regards,
+Amit Pundir
+
+>
+> Konrad
