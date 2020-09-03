@@ -2,206 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6273925CE3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 01:19:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1E4625CE47
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 01:25:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727804AbgICXTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 19:19:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33324 "EHLO
+        id S1728697AbgICXZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 19:25:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbgICXTY (ORCPT
+        with ESMTP id S1729270AbgICXZL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 19:19:24 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C591C061244
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 16:19:24 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id e14so2668639vsa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 16:19:24 -0700 (PDT)
+        Thu, 3 Sep 2020 19:25:11 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A930C061247
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 16:25:11 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id 92so3333076qtb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 16:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=T6WdbDtaJju8Wd5Qfl63dOMmDDWlZ9QBk+0SG3b8nzU=;
-        b=Pp0doULk3CUHBvhNlrPHW0vLZeN++8R52F0gdy12WUhRPV8Y5IL8l3vDkHODpakk9V
-         fI6WTr9tljgfFKRVAYczkefI8icYOwsr8aVIHwk7BY4WtKTWLRfyJjrrFrt5/B5AvJlc
-         vEIJ7FyNxVv35fto2vnpRtxWV0yu8IRo3R/WE=
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CpIM1vivLGzOLkg2coJ9MKu5jBPaDdQiymauIKRU90I=;
+        b=hjMrVcf/HWZjuosu4QG0j6BBgJS51vZoP3ffeIvYP7UxIzFTjjobvv7VJIYz+YDMgf
+         YehgtUxoeLnY6L5a76UvY3QrdjGFjp3iorJxhkmXxrRV9hk8QyLMqSCDahkorhyEfkVz
+         JMRC594IihbkmbpshO7AocOKJco3HWgK9TGPvgc9HV9s62TurLnTaJsk/qDNPOWhTJ/t
+         YNblHOM95DB9wXQnyHHWxyJGw/9S9A7WIdYh5ILo6vf37cTOphuuK9eR3E+vBiZXYQgC
+         3w46PkP+1jkJo8Uwv7NRP2d2ttY0RLAejlkt/7mAVlDeYreoSkK4fIaA+u0A18W1QDNg
+         NpXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=T6WdbDtaJju8Wd5Qfl63dOMmDDWlZ9QBk+0SG3b8nzU=;
-        b=mqZKZl2brXACWTOlHwZagYGYoyStyXOBg5IhM6J7MmxuT4O0XEfX5qOqI8UPN2dvtx
-         /yPVL1vJ8eOGnlphFqHS9aHBGU//ynf95suGS/Xo/vDoG9EH8EnapZNUQ0kMJUAxlH7H
-         ysB4TZ00C3OOe4J+rsVQyzq3X+dCi485Tcpl2HAB4hjkRJOZFlA7SAMMM1La1W/VUaUw
-         NUOF5LoIlPGrjvHxDb+QRpNkRSy8DYgJ0xPVqYm67mBxWiJxxDBmAOKDRwHVvJgP7fPy
-         Nja1sSD2Uqny3egSVDMzEJqXLBq6UEnUY9nFDcbZDIczz1PkqMKl+a/INQQlHuvXLwu9
-         BFHA==
-X-Gm-Message-State: AOAM531q6lsm9PIuBeV92FunHRJfwky6vck/JOIPQgJu0NUwZ/OMd7X6
-        VhaA2O6hrm7SJdlame8oKtYYZcpOgVE9dA==
-X-Google-Smtp-Source: ABdhPJxdmCdq5ZhsJW66sZHzCpoaCKSqfLJCIpohKXdINO1I8fXuqJWMVOV83xJdPvZ4zF8Ogct6SA==
-X-Received: by 2002:a67:ec3:: with SMTP id 186mr3804147vso.163.1599175162607;
-        Thu, 03 Sep 2020 16:19:22 -0700 (PDT)
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com. [209.85.221.180])
-        by smtp.gmail.com with ESMTPSA id n186sm622081vsd.9.2020.09.03.16.19.21
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CpIM1vivLGzOLkg2coJ9MKu5jBPaDdQiymauIKRU90I=;
+        b=OjPgkAO83iZRg2t3Ngg7dk7//M2Q66AAN5ZXMZqNio8S2gwsWvkJ0e82petsmwFxSu
+         01O5jXIJ+SMtCkszSXEll1Gh1YkEqP6tJTtAbQPBVMJNYNF/AYEnHUDgI/idFGYlsA49
+         xrutghW1rFiw5bWs4HTveX6JTwrEmDpmVjoGyMiQMToNv9/Tyx/kQM3mwZLmh4onoq6U
+         s/lbG27U+89HbDhd4ZKoGXq2/wLH4Cl4xpqPCbe0aqZuatwAURttI7RhNrJ4ceWCjFOa
+         fqB48ATBQADQtl9Lgc9AbZz+bkej5xA2KPR8PXlouIE5tsomWP8VKO/alTiTmoPULc0e
+         eVhA==
+X-Gm-Message-State: AOAM532uif4AAsuq6pzt270bFfBMl72h5voiyd077FLWQbTGHIZSbaDF
+        MaWjVzC7sU9Tq4DIQa23eed/uw==
+X-Google-Smtp-Source: ABdhPJyy8QS6W7hRKA79lufueRD9aNPrALoyUJvwiGtauVl1gDdogpQGhbfPM37w2mYIENqhEa69oA==
+X-Received: by 2002:aed:3e2e:: with SMTP id l43mr6217308qtf.392.1599175510429;
+        Thu, 03 Sep 2020 16:25:10 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id v202sm3397009qka.5.2020.09.03.16.25.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2020 16:19:21 -0700 (PDT)
-Received: by mail-vk1-f180.google.com with SMTP id q200so1219042vke.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 16:19:21 -0700 (PDT)
-X-Received: by 2002:ac5:cd88:: with SMTP id i8mr3496396vka.4.1599175160827;
- Thu, 03 Sep 2020 16:19:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org>
- <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com>
- <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org>
- <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com>
- <877dtdj042.fsf@nanos.tec.linutronix.de> <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com>
- <87zh67uife.fsf@nanos.tec.linutronix.de>
-In-Reply-To: <87zh67uife.fsf@nanos.tec.linutronix.de>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 3 Sep 2020 16:19:08 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U8vchyRXOjozYYroq3Mit_gt=XXADLfn0W4N4TyQzyjQ@mail.gmail.com>
-Message-ID: <CAD=FV=U8vchyRXOjozYYroq3Mit_gt=XXADLfn0W4N4TyQzyjQ@mail.gmail.com>
-Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND
- flag
-To:     Thomas Gleixner <tglx@linutronix.de>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Thu, 03 Sep 2020 16:25:10 -0700 (PDT)
+Subject: Re: [PATCH v2 07/10] phy: qcom-qmp: Add support for DP in USB3+DP
+ combo phy
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Wesley Cheng <wcheng@codeaurora.org>
+References: <20200902230215.3452712-1-swboyd@chromium.org>
+ <20200902230215.3452712-8-swboyd@chromium.org>
+ <b6f80242-482d-b778-690b-8aefa4e8f23e@marek.ca>
+ <159917286975.334488.16684252260287652678@swboyd.mtv.corp.google.com>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <7cf46574-569d-c69d-cfed-0fa20057b4d5@marek.ca>
+Date:   Thu, 3 Sep 2020 19:24:26 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <159917286975.334488.16684252260287652678@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 9/3/20 6:41 PM, Stephen Boyd wrote:
+> Quoting Jonathan Marek (2020-09-03 13:43:10)
+>> On 9/2/20 7:02 PM, Stephen Boyd wrote:
+>>>
+>>> This code is based on a submission of this phy and PLL in the drm
+>>> subsystem.
+>>
+>> I updated my upstream-based sm8150/sm8250 displayport stack [1] to use
+>> these patches.
+> 
+> Great!
+> 
+>>
+>> This commit [2] might interest you, so that you can consider what needs
+>> to change between v3 and v4 PHYs. Note some of the V4 registers have the
+>> same address as V3, so the diff could be smaller.
+> 
+> Looks like v4 will need to introduce a register indirection table for
+> the differences. Also need to add a table for the aux initial table
+> values and the calibration values for aux_cfg1. Seems like it won't be
+> too bad.
+> 
+> Does DP work with those patches with v4? You should make yourself the
+> author of commit d3c6da6f87eedb20ea1591aaae1ea4e63d7bd777 ;-)
+> 
 
-On Thu, Sep 3, 2020 at 5:57 AM Thomas Gleixner <tglx@linutronix.de> wrote:
->
-> On Wed, Sep 02 2020 at 13:26, Doug Anderson wrote:
-> > Specifically I think it gets back to the idea that, from a device
-> > driver's point of view, there isn't a separate concept of disabling an
-> > IRQ (turn it off and stop tracking it) and masking an IRQ (keep track
-> > of it but don't call my handler until I unmask).  As I understand it
-> > drivers expect that the disable_irq() call is actually a mask and that
-> > an IRQ is never fully disabled unless released by the driver.  It is a
-> > little unfortunate (IMO) that the function is called disable_irq() but
-> > as far as I understand that's historical.
->
-> Yes, the naming is historical but it always meant:
->
-> Don't invoke an interrupt handler. Whether that's achieved by actually
-> masking it at the interrupt chip level in hardware or by software state
-> in the core does not matter from the driver perspective.
->
-> >> The point is that the core suspend code disables all interrupts which
-> >> are not marked as wakeup enabled automatically and reenables them after
-> >> resume. So why would any driver invoke disable_irq() in the suspend
-> >> function at all? Historical raisins?
-> >
-> > One case I can imagine: pretend that there are two power rails
-> > controlling a device.  One power rail controls the communication
-> > channel between the CPU and the peripheral and the other power rail
-> > controls whether the peripheral is on.  At suspend time we want to
-> > keep the peripheral on but we can shut down the power to the
-> > communication channel.
-> >
-> > One way you could do this is at suspend time:
-> >   disable_irq()
-> >   turn_off_comm_power()
-> >   enable_irq_wake()
-> >
-> > You'd do the disable_irq() (AKA mask your interrupt) because you'd
-> > really want to make sure that your handler isn't called after you
-> > turned off the communication power.  You want to leave the interrupt
-> > pending/masked until you are able to turn the communications channel
-> > back on and then you can query why the wakeup happened.
->
-> Ok.
->
-> > Now, admittedly, you could redesign the above driver to work any
-> > number of different ways.  Maybe you could use the "noirq" suspend to
-> > turn off your comm power or maybe you could come up with another
-> > solution.  However, since the above has always worked and is quite
-> > simple I guess that's what drivers use?
->
-> That comm power case is a reasonable argument for having that
-> sequence. So we need to make sure that the underlying interrupt chips do
-> the right thing.
->
-> We have the following two cases:
->
-> 1) irq chip does not have a irq_disable() callback and does not
->    have IRQ_DISABLE_UNLAZY set
->
->    In that case the interrupt is not masked at the hardware level. It's
->    just software state. If the interrupt fires while disabled it is
->    marked pending and actually masked at the hardware level.
->
->    Actually there is a race condition which is not handled:
->
->    disable_irq()
->    ...
->
->    interrupt fires
->       mask and mark pending
->
->    ....
->    suspend_device_irq()
->       if (wakeup source) {
->          set_state(WAKEUP ARMED);
->          return;
->       }
->
->    That pending interrupt will not prevent the machine from going into
->    suspend and if it's an edge interrupt then an unmask in
->    suspend_device_irq() won't help. Edge interrupts are not resent in
->    hardware. They are fire and forget from the POV of the device
->    hardware.
+Yes, it works, although the PHY is hardcoded to CC2 orientation and 4 
+lanes, SS PHY disabled, and hotplugging/TCPM doesn't work in all cases.
 
-Ah, interesting.  I didn't think about this case exactly.  I might
-have a fix for it anyway.  At some point in time I was thinking that
-the world could be solved by relying on lazily-disabled interrupts and
-I wrote up a patch to make sure that they woke things up.  If you're
-willing to check out our gerrit you can look at:
+>>
+>> Do you have any plan for dealing with the SS PHY and DP PHY conflicting
+>> with each other? For example, PHY_MODE_CTRL needs to be "DP_MODE" for
+>> 4-lane DP, "DP_MODE | USB3_MODE" for 2-lane DP + USB3, and (AFAIK)
+>> "USB3_MODE" for superspeedplus usb (and it seems this gates some clocks,
+>> so you can't read/write dp tx2 registers in 2-lane DP mode for example).
+> 
+> Right. I've seen that behavior as well.
+> 
+>>   From your cover letter it sounds like this isn't relevant to your
+>> hardware, but it looks like both PHYs are writing to the dp_com region
+>> which is still problematic. (in the branch I linked, I disabled the SS
+>> PHY to test the DP PHY)
+> 
+> Right. I mentioned in the cover letter that this needs to hook into the
+> type-c subsystem somehow. I haven't done any of that work because I
+> don't have a configuration that is as dynamic. As long as the type-c
+> stuff can express my static configuration it will be fine. If you have
+> done any work there I'm happy to review the code and test it out on my
+> configuration.
+> 
+> The driver is setup for DP_MODE | USB3_MODE (i.e. concurrent mode) so it
+> is already hardcoded for the 2-lane use case that I have. If I didn't
+> connect two lanes from the phy to a USB hub I could support all the
+> different combinations but that isn't the case. On phones it is
+> basically the only case though because the pins from the usb3+dp phy go
+> straight to the type-c connector.
+> 
+> qcom_qmp_phy_com_init() is the only place I see the driver writing to it
+> and it is refcounted so basically the first phy to get initialized will
+> set things up in the common area. I suppose for supporting various use
+> cases like 4 lanes DP or 2 lanes DP and USB then that refcounting logic
+> will need to be changed. I'm not sure what is supposed to happen though.
+> I guess the USB host controller, i.e. dwc3, will have to know to stop
+> trying to use the phy and then power down and let the DP controller take
+> over the phy? It's a dance of three or four drivers.
+> 
+The solution could be that the DP PHY has priority over the SS PHY. If 
+the DP PHY is enabled with 4 lanes then it should go into DP_MODE, 1-2 
+lanes it goes into concurrent mode, and USB3_MODE if disabled. The 
+problem then is that the SS PHY can't be enabled while the DP PHY is 
+enabled (since it will be clock gated), so enabling the SS PHY needs to 
+be deferred to when the DP PHY is disabled. I think that is reasonable?
 
-https://crrev.com/c/2314693
+Note I have a TCPM (typec + USB PD) driver [1] which is required to 
+negotiate the DP altmode (and provides altmode events to the DP driver 
+so it can enable/disable the PHY). My problem is the qcom PMIC doesn't 
+provide exactly what TCPM wants, and I don't have access to PMIC 
+documentation, so its difficult for me to make a fully working TCPM 
+driver. Also conflicts with [2] since both drivers use the typec PMIC 
+block...
 
-...if not I can post it as a RFC for you.  I'm sure I've solved the
-problem in a completely incorrect and broken way, but hopefully the
-idea makes sense.  In discussion we decided not to go this way because
-it looked like IRQ clients could request an IRQ with
-IRQ_DISABLE_UNLAZY and then that'd break us.  :(  ...but even so I
-think the patch is roughly right and would address your point #1.
+[1] 
+https://github.com/flto/linux/commit/820265ce8535c6396083c5a884870f0f44603a72
+[2] https://patchwork.kernel.org/cover/11710371/
 
-
-> 2) irq chip has a irq_disable() callback or has IRQ_DISABLE_UNLAZY set
+>>
+>> Also some issues I noticed:
+>> - used QSERDES_COM_RESETSM_CNTRL instead of
+>> QSERDES_V3_COM_RESETSM_CNTRL2, which has different value
+>> - in sc7180_dpphy_cfg, .regs is NULL, which results in NULL references
+> 
+> Can you add these as inline review comments? Would help me understand
+> what you're talking about. Thanks for the review!
 >
->    In that case disable_irq() will mask it at the hardware level and it
->    stays that way until enable_irq() is invoked.
->
-> #1 kinda works and the gap is reasonably trivial to fix in
->    suspend_device_irq() by checking the pending state and telling the PM
->    core that there is a wakeup pending.
->
-> #2 Needs an indication from the chip flags that an interrupt which is
->    masked has to be unmasked when it is a enabled wakeup source.
->
-> I assume your problem is #2, right? If it's #1 then UNMASK_IF_WAKEUP is
-> the wrong answer.
-
-Right, the problem is #2.  We're not in the lazy mode.
-
--Doug
