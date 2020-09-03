@@ -2,135 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B38F25C474
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 17:11:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1DF525C430
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 17:05:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729014AbgICPKe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 11:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728985AbgICN5y (ORCPT
+        id S1729022AbgICPEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 11:04:35 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:13316 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728928AbgICN6Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 09:57:54 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 075A3C0611E0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 06:21:32 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id r13so3711902ljm.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 06:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eKxx9jGOwv41qjM0dB2DR64F278mvrQpwsZT854Hceo=;
-        b=w+ydrhIHhZ7wYAaA63bRQsevdR50iFtEsb8N3t9zizNA4ETwHB10nMe+vAU7P/pGV8
-         RLm1BZPCz13ulabvQkJT2zXNnziM7Gbn4CXQQXSUHMyM6WLgX9WBIPJ4RpvARtMVkfYd
-         5G3O9e31Xqj731ZKim63bAAdFY3JLMAUnf9wwUmA80BQSOt9TT+t7eVw1uSO71xh4Te8
-         hIfLIcejfPKclZLi71jYQ9rBZ6ncsPpCXOlsv80gjMOsEl3fm0wf+M+pp4uhzHX5xm4g
-         +Nvjl1x6k5ylV4b4y7YQudDuvRtl9Aoi2b7J0660+t3c0ahgjC6Ll22RzgKYUBkq65uK
-         yb8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eKxx9jGOwv41qjM0dB2DR64F278mvrQpwsZT854Hceo=;
-        b=Mtnw80A2XF705nfzVfIgYkOrr9udbZy2x7AQXEhq//x1rD424EKNF3NNXabV84SBoS
-         hWJGOBsxOMMV6xCzI1+HsDlWSgwCr/uW/6loBP2UmVYfgIs9cazKCdZ+Rc9hfQ2yZX3a
-         wulu4SSbDvNj+IbaM92yIyccdFNSKS/iArv625cqzvtabppN0cvhZ8dJkP92+XQfqWr7
-         up57rwaP16HII+H34bq3OnmfXOYuU3z+EFzu9590zOF1l2GbZcz9QtQ3/RXBXySM1tqr
-         8xT+Zal4G9J50qPeMXUFClHHTvZnVtuPLDjp9dz5d6F5/e1o1X6gl20pf6Sk8BcuCLq3
-         wlzQ==
-X-Gm-Message-State: AOAM533HOhGVO9xlunNHsyPgeiX1MIvIKM0Wwcr8EIiBQdT95OJ7Mx6Q
-        576z+wf44xdbFXAKRaPtLoMWzg==
-X-Google-Smtp-Source: ABdhPJwDYO7VKCBg3p0wQJbtRhpPsjIJzYeR5H8M6AS/TyJXOCUofXXgi4ku6QDgYpgek94sQ53V9w==
-X-Received: by 2002:a2e:a165:: with SMTP id u5mr1211994ljl.393.1599139290520;
-        Thu, 03 Sep 2020 06:21:30 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.138])
-        by smtp.gmail.com with ESMTPSA id e23sm584220lfj.80.2020.09.03.06.21.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 06:21:29 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org
-Subject: [PATCH v2 6/9] iio: adc: qcom-spmi-adc5: use of_device_get_match_data
-Date:   Thu,  3 Sep 2020 16:21:06 +0300
-Message-Id: <20200903132109.1914011-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200903132109.1914011-1-dmitry.baryshkov@linaro.org>
-References: <20200903132109.1914011-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 3 Sep 2020 09:58:16 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 03 Sep 2020 06:33:53 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Sep 2020 06:33:52 -0700
+Received: from gkohli-linux.qualcomm.com ([10.204.78.26])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 03 Sep 2020 19:03:40 +0530
+Received: by gkohli-linux.qualcomm.com (Postfix, from userid 427023)
+        id 78B7B212F2; Thu,  3 Sep 2020 19:03:39 +0530 (IST)
+From:   Gaurav Kohli <gkohli@codeaurora.org>
+To:     tostedt@goodmis.org, mingo@redhat.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Gaurav Kohli <gkohli@codeaurora.org>
+Subject: [PATCH v0] trace: Fix race in trace_open and buffer resize call
+Date:   Thu,  3 Sep 2020 19:03:37 +0530
+Message-Id: <1599140017-12882-1-git-send-email-gkohli@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use of_device_get_match_data() instead of hand-coding it manually.
+Below race can come, if trace_open and resize of
+cpu buffer is running parallely on different cpus
+CPUX                                CPUY
+				    ring_buffer_resize
+				    atomic_read(&buffer->resize_disabled)
+tracing_open
+tracing_reset_online_cpus
+ring_buffer_reset_cpu
+rb_reset_cpu
+				    rb_update_pages
+				    remove/insert pages
+resetting pointer
+This race can cause data abort or some times infinte loop in 
+rb_remove_pages and rb_insert_pages while checking pages 
+for sanity.
+Take ring buffer lock in trace_open to avoid resetting of cpu buffer.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/iio/adc/qcom-spmi-adc5.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
 
-diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-index c2da8f068b87..0ac0b81bab7d 100644
---- a/drivers/iio/adc/qcom-spmi-adc5.c
-+++ b/drivers/iio/adc/qcom-spmi-adc5.c
-@@ -14,6 +14,7 @@
- #include <linux/math64.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
-@@ -807,8 +808,6 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
- 	struct adc5_channel_prop prop, *chan_props;
- 	struct device_node *child;
- 	unsigned int index = 0;
--	const struct of_device_id *id;
--	const struct adc5_data *data;
- 	int ret;
+diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
+index 136ea09..55f9115 100644
+--- a/include/linux/ring_buffer.h
++++ b/include/linux/ring_buffer.h
+@@ -163,6 +163,8 @@ bool ring_buffer_empty_cpu(struct trace_buffer *buffer, int cpu);
  
- 	adc->nchannels = of_get_available_child_count(node);
-@@ -827,24 +826,19 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
+ void ring_buffer_record_disable(struct trace_buffer *buffer);
+ void ring_buffer_record_enable(struct trace_buffer *buffer);
++void ring_buffer_mutex_acquire(struct trace_buffer *buffer);
++void ring_buffer_mutex_release(struct trace_buffer *buffer);
+ void ring_buffer_record_off(struct trace_buffer *buffer);
+ void ring_buffer_record_on(struct trace_buffer *buffer);
+ bool ring_buffer_record_is_on(struct trace_buffer *buffer);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 93ef0ab..638ec8f 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -3632,6 +3632,25 @@ void ring_buffer_record_enable(struct trace_buffer *buffer)
+ EXPORT_SYMBOL_GPL(ring_buffer_record_enable);
  
- 	chan_props = adc->chan_props;
- 	iio_chan = adc->iio_chans;
--	id = of_match_node(adc5_match_table, node);
--	if (id)
--		data = id->data;
--	else
--		data = &adc5_data_pmic;
--	adc->data = data;
-+	adc->data = of_device_get_match_data(adc->dev);
+ /**
++ * ring_buffer_mutex_acquire - prevent resetting of buffer
++ * during resize
++ */
++void ring_buffer_mutex_acquire(struct trace_buffer *buffer)
++{
++	mutex_lock(&buffer->mutex);
++}
++EXPORT_SYMBOL_GPL(ring_buffer_mutex_acquire);
++
++/**
++ * ring_buffer_mutex_release - prevent resetting of buffer
++ * during resize
++ */
++void ring_buffer_mutex_release(struct trace_buffer *buffer)
++{
++	mutex_unlock(&buffer->mutex);
++}
++EXPORT_SYMBOL_GPL(ring_buffer_mutex_release);
++/**
+  * ring_buffer_record_off - stop all writes into the buffer
+  * @buffer: The ring buffer to stop writes to.
+  *
+@@ -4918,6 +4937,8 @@ void ring_buffer_reset(struct trace_buffer *buffer)
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	int cpu;
  
- 	for_each_available_child_of_node(node, child) {
--		ret = adc5_get_dt_channel_data(adc, &prop, child, data);
-+		ret = adc5_get_dt_channel_data(adc, &prop, child, adc->data);
- 		if (ret) {
- 			of_node_put(child);
- 			return ret;
- 		}
++	/* prevent another thread from changing buffer sizes */
++	mutex_lock(&buffer->mutex);
+ 	for_each_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
  
- 		prop.scale_fn_type =
--			data->adc_chans[prop.channel].scale_fn_type;
-+			adc->data->adc_chans[prop.channel].scale_fn_type;
- 		*chan_props = prop;
--		adc_chan = &data->adc_chans[prop.channel];
-+		adc_chan = &adc->data->adc_chans[prop.channel];
+@@ -4936,6 +4957,7 @@ void ring_buffer_reset(struct trace_buffer *buffer)
+ 		atomic_dec(&cpu_buffer->record_disabled);
+ 		atomic_dec(&cpu_buffer->resize_disabled);
+ 	}
++	mutex_unlock(&buffer->mutex);
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_reset);
  
- 		iio_chan->channel = prop.channel;
- 		iio_chan->datasheet_name = prop.datasheet_name;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index f40d850..392e9aa 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -2006,6 +2006,8 @@ void tracing_reset_online_cpus(struct array_buffer *buf)
+ 	if (!buffer)
+ 		return;
+ 
++	ring_buffer_mutex_acquire(buffer);
++
+ 	ring_buffer_record_disable(buffer);
+ 
+ 	/* Make sure all commits have finished */
+@@ -2016,6 +2018,8 @@ void tracing_reset_online_cpus(struct array_buffer *buf)
+ 	ring_buffer_reset_online_cpus(buffer);
+ 
+ 	ring_buffer_record_enable(buffer);
++
++	ring_buffer_mutex_release(buffer);
+ }
+ 
+ /* Must have trace_types_lock held */
 -- 
-2.28.0
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
+Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
