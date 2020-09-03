@@ -2,322 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 875E925C3D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 16:59:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 649DB25C328
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 16:46:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729099AbgICO7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 10:59:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60770 "EHLO
+        id S1729240AbgICOp4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 10:45:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729100AbgICOHH (ORCPT
+        with ESMTP id S1729292AbgICOfR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 10:07:07 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5E3C0619C8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 06:21:39 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id q8so1891215lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 06:21:39 -0700 (PDT)
+        Thu, 3 Sep 2020 10:35:17 -0400
+Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0D65C061246
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 07:35:17 -0700 (PDT)
+Received: by mail-ua1-x941.google.com with SMTP id z12so963421uam.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 07:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V7/RoZUDbSidbaVmS9FeqN+fWeyUR1JKVWNxeicmHMg=;
-        b=zEWstPZ31aBryWxYNemcI3JoczurqsIM+kowklx4XBCk00IVh/93S1NcSLqpa8dESZ
-         iIyASHxbXJswE7RfL5pxrCIFdVShNGxkSCTpYifIDBG9byHWzuDDJwxOuAP25A2x/EZ7
-         yyDic2OOU7DpPvzVjfeEX4wAAhWZfZ/vKO/0xhaI2Wdhx3CAVMUpu3zHPtLe0+SSdQhe
-         ORBQo6jKrVIMZ4Eyk/B/nfD4PaETNV2pEDSIc+XHroBqNiGmxlY82t8PmnxS0E5mmQR3
-         thibgp7bjY7uHBPJ2sM8nBg9kMTRAW3Tfz9tz85nhMbyP4oe2w96+4I8//6+5ECGgKhn
-         zGjw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rXLxFi+fNCyjeqFnfAYDTSiQ62DVLQBxSbiw89atuck=;
+        b=C8FbPyMoOuaDAUAP3f6Tkl0bV7CbwuPoTySJwTJt/01GpE+KCTnWNnGUtKNKPTCaiQ
+         0h840v0TCvEk+7wTUtgVDPJ1KqE9eNc3jxsZYrpi4GMk0FmgnW1ga0OgwW2QJv04wdLp
+         /p3Lhr/5FCpe7NCfyVFe4jL0DICEnJBP5lN2g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V7/RoZUDbSidbaVmS9FeqN+fWeyUR1JKVWNxeicmHMg=;
-        b=j7mNPApnkx9HtJyJCr41gkAPPECecGeO12F6VAkxUEXIOjyoaw+pDX35/7CcPZnk7n
-         3/S5hzc/OAUeTjPOTSC2Rb4lb+o7RbJzX9BCFavG5bRQYrfTNUnldOuXCxSnVgXGJsNI
-         zQv1ryIkWgrFt6hMxr36Jc2KOI/hMHt3OF0HDFYLjQJQs8Kv+wx8N6LTSjxPq72lO9HO
-         ruiqaw99G7rGHyD/ePK2FdaARhMs/C1MSr12LSjlX7DF1UbVu6IjyIxqZzawtcK6FfuT
-         Tk3UwzPZ1y0PTjlkFpDLq0MpoQocAVsrt3WIRiyE4iftPRoudTNVTnbQBIBGiXocNdc4
-         a7NA==
-X-Gm-Message-State: AOAM531vIVpqUKByRNDL9bcmX1Im8GYZaSS57gQin9OFdw1I8k2pgt1/
-        XAw5kb/AXAN0qNy4JvyKu8qzxg==
-X-Google-Smtp-Source: ABdhPJwJHC6RwnosYTlCNIMZruGq97X9zWxdMV8v4PXrUw4KhG99TMUWZdIe92dYoflftgWkWzCLxA==
-X-Received: by 2002:a19:4ad8:: with SMTP id x207mr1273135lfa.73.1599139297531;
-        Thu, 03 Sep 2020 06:21:37 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.138])
-        by smtp.gmail.com with ESMTPSA id e23sm584220lfj.80.2020.09.03.06.21.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 06:21:36 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org
-Subject: [PATCH v2 9/9] arm64: dts: sm8250-mtp: add thermal zones using pmic's adc-tm5
-Date:   Thu,  3 Sep 2020 16:21:09 +0300
-Message-Id: <20200903132109.1914011-10-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200903132109.1914011-1-dmitry.baryshkov@linaro.org>
-References: <20200903132109.1914011-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rXLxFi+fNCyjeqFnfAYDTSiQ62DVLQBxSbiw89atuck=;
+        b=mCiTvuWABp2sv0nyQXLtZRRT/g+h0XmUD4xDby8NF2nEDDin4YwVfA76Ic+3iEgzbp
+         a6n/NkYqkOO/i0Z+jXB2wmID24gpQXQUMg1k/iuMcXNFuCaj5Taide5iaiYlfdOjZZ9r
+         lN8eGCiZEVZed5tBUBzFFhe3vzdiQ7BvC/ZDapE8P5Qu3dswhqwzE4JdLgoZ7mzyvx+I
+         q6s34hT/fxsQV+Eyqtys5PO+I0kWsBqlIdG6x7bdJJRT7o8OO6UswI8OUBKpVvavmmGm
+         7m4j0nIfKN47A7hLmWELu1U9neeRZomF7EGbqc83/I5KbXHgSIUSOdfGk9vGdWsuF707
+         CZ4g==
+X-Gm-Message-State: AOAM5322c6HhzeAUubDZBYshf/PX5ALSdCugIZ7BIjmXRrvXioTyXpYW
+        LevmovzNiNsjGizX9TXSLTrqTyAupwDMQg==
+X-Google-Smtp-Source: ABdhPJwVBXZefaqRvbFHFfO7M2tqqPkAa1/mHSOz/ODwsrDM5lnl818YSPhalb8+Ts77In2mwVFZJw==
+X-Received: by 2002:ab0:14b0:: with SMTP id d45mr1369282uae.139.1599143715273;
+        Thu, 03 Sep 2020 07:35:15 -0700 (PDT)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id b125sm516292vkb.6.2020.09.03.07.35.14
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Sep 2020 07:35:14 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id y194so1861998vsc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 07:35:14 -0700 (PDT)
+X-Received: by 2002:a67:e447:: with SMTP id n7mr2033870vsm.53.1599143714032;
+ Thu, 03 Sep 2020 07:35:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200902164303.1.I5e598a25222b4534c0083b61dbfa4e0e76f66171@changeid>
+ <CAPDyKFoyKjKhwKGtLMtEyDSeSiBU6wasc=jt6c=sHnhN8jqqjg@mail.gmail.com>
+In-Reply-To: <CAPDyKFoyKjKhwKGtLMtEyDSeSiBU6wasc=jt6c=sHnhN8jqqjg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Sep 2020 07:35:02 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WaWwJnquPy+9aB89-1OwKmYKJv2PpfOkgo94Z6J8uRUg@mail.gmail.com>
+Message-ID: <CAD=FV=WaWwJnquPy+9aB89-1OwKmYKJv2PpfOkgo94Z6J8uRUg@mail.gmail.com>
+Subject: Re: [PATCH] mmc: sdhci-msm: Prefer asynchronous probe
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Port thermal zones definitions from msm-4.19 tree. Enable and add
-channel configuration to PMIC's ADC-TM definitions. Declare thermal
-zones and respective trip points.
+Hi,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 217 ++++++++++++++++++++++++
- 1 file changed, 217 insertions(+)
+On Thu, Sep 3, 2020 at 1:10 AM Ulf Hansson <ulf.hansson@linaro.org> wrote:
+>
+> On Thu, 3 Sep 2020 at 01:43, Douglas Anderson <dianders@chromium.org> wrote:
+> >
+> > Turning on initcall debug on one system showed this:
+> >   initcall sdhci_msm_driver_init+0x0/0x28 returned 0 after 34782 usecs
+> >
+> > The lion's share of this time (~33 ms) was in mmc_power_up().  This
+> > shouldn't be terribly surprising since there are a few calls to delay
+> > based on "power_delay_ms" and the default delay there is 10 ms.
+> >
+> > Because we haven't specified that we'd prefer asynchronous probe for
+> > this driver then we'll wait for this driver to finish before we start
+> > probes for more drivers.  While 33 ms doesn't sound like tons, every
+> > little bit counts.
+> >
+> > There should be little problem with turning on asynchronous probe for
+> > this driver.  It's already possible that previous drivers may have
+> > turned on asynchronous probe so we might already have other things
+> > (that probed before us) probing at the same time we are anyway.  This
+> > driver isn't really providing resources (clocks, regulators, etc) that
+> > other drivers need to probe and even if it was they should be handling
+> > -EPROBE_DEFER.
+> >
+> > Let's turn this on and get a bit of boot speed back.
+>
+> Thanks for a very well written commit message!
+>
+> Indeed, I am sure many mmc host drivers could benefit from a similar
+> change. At least regular platform drivers and amba drivers are pretty
+> sure to work, but who knows.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index 6894f8490dae..4db5c1e4269e 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -24,6 +24,104 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	thermal-zones {
-+		xo-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150_adc_tm 0>;
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		skin-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150_adc_tm 1>;
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		mmw-pa1 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150_adc_tm 2>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		conn-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150b_adc_tm 0>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		camera-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150l_adc_tm 0>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		skin-msm-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150l_adc_tm 1>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		mmw-pa2 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150l_adc_tm 2>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -358,6 +456,125 @@ &cdsp {
- 	firmware-name = "qcom/sm8250/cdsp.mbn";
- };
- 
-+&pm8150_adc {
-+	xo-therm@4c {
-+		reg = <ADC5_XO_THERM_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	skin-therm@4d {
-+		reg = <ADC5_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	pa-therm1@4e {
-+		reg = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150b_adc {
-+	conn-therm@4f {
-+		reg = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150l_adc {
-+	camera-flash-therm@4d {
-+		reg = <ADC5_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	skin-msm-therm@4e {
-+		reg = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	pa-therm2@4f {
-+		reg = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150_adc_tm {
-+	status = "okay";
-+	io-channels = <&pm8150_adc ADC5_XO_THERM_100K_PU>,
-+			<&pm8150_adc ADC5_AMUX_THM1_100K_PU>,
-+			<&pm8150_adc ADC5_AMUX_THM2_100K_PU>;
-+	io-channel-names = "xo-therm", "skin-therm", "pa-therm1";
-+
-+	xo-therm@0 {
-+		reg = <0>;
-+		qcom,adc-channel = <ADC5_XO_THERM_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	skin-therm@1 {
-+		reg = <1>;
-+		qcom,adc-channel = <ADC5_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	pa-therm1@2 {
-+		reg = <2>;
-+		qcom,adc-channel = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150b_adc_tm {
-+	status = "okay";
-+	io-channels = <&pm8150b_adc ADC5_AMUX_THM3_100K_PU>;
-+	io-channel-names = "conn-therm";
-+
-+	conn-therm@0 {
-+		reg = <0>;
-+		qcom,adc-channel = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150l_adc_tm {
-+	status = "okay";
-+	io-channels = <&pm8150l_adc ADC5_AMUX_THM1_100K_PU>,
-+			<&pm8150l_adc ADC5_AMUX_THM2_100K_PU>,
-+			<&pm8150l_adc ADC5_AMUX_THM3_100K_PU>;
-+	io-channel-names = "camera-flash-therm", "skin-msm-therm", "pa-therm2";
-+
-+	camera-flash-therm@0 {
-+		reg = <0>;
-+		qcom,adc-channel = <ADC5_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	skin-msm-therm@1 {
-+		reg = <1>;
-+		qcom,adc-channel = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	pa-therm2@2 {
-+		reg = <2>;
-+		qcom,adc-channel = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
- };
--- 
-2.28.0
+Yeah, and many non-mmc drivers can benefit too, which is why I've been
+sending several of these patches recently as I optimize boot perf on
+the device that's sitting in front of me.  ;-)  I think the idea was
+that eventually we'd want the kernel to just turn on async by default
+everywhere, but at the time the flag was introduced there were too
+many subtle bugs everywhere.  It feels like one way to get to the
+point where we'd be confident that this is OK to turn on everywhere is
+to just start turning it on in lots of places.  Once enough places
+have it on then perhaps that will give folks confidence that it's OK
+to turn on by default across the board.
 
+If you'd like, I can post patches to update some other set of MMC host
+drivers, either as one giant patch (hard to backport, but not as
+spammy) or as a large pile of patches.  I've never played with
+coccinelle so I'd probably fall back to doing this by hand.  I could
+probably only test on a small handful (I think I have easy access to
+dw-mmc-rockchip and sdhci-of-arasan besides the msm one I already
+posted), so another option is that I could also just post for those
+devices...  ...or we can just hope others will notice and start
+posting similar patches themselves after testing.  Let me know what
+you'd prefer.  ;-)
+
+-Doug
