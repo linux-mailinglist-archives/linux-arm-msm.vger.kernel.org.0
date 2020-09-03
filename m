@@ -2,53 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3AB325C647
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 18:12:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2D7925C663
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 18:13:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728417AbgICQMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 12:12:15 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:35489 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728785AbgICQMK (ORCPT
+        id S1728885AbgICQNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 12:13:15 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:38969 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728876AbgICQNL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 12:12:10 -0400
-Received: by mail-io1-f66.google.com with SMTP id r9so3463156ioa.2;
-        Thu, 03 Sep 2020 09:12:09 -0700 (PDT)
+        Thu, 3 Sep 2020 12:13:11 -0400
+Received: by mail-io1-f65.google.com with SMTP id b6so3431874iof.6;
+        Thu, 03 Sep 2020 09:13:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=TlpFiepc9Ynwjc6xGAJisewT6pwxS6JuNyL5tQB2plM=;
-        b=cQRCgkYb8FmLo45NAtKfE3aoXX3jt9w0qSVuM0wExpif9/k2JlMUWv3i2ee38S6GWr
-         1/D8xS9wKo4uYnAj5X/DXZS1x29W9+dQnf9zBdZhbNd4CrSyDcVYUoLGVOJCAPsl9uwR
-         qZUifGSrOFw3wsXw4XeMcI1cL2fG3+4TH0veiJsxwMiFZ2IEyRif/K1jiogK25reUHtS
-         61WvXCGwRl4vO1juYN6jhEabsFPAAYu3aHL+XFqkohNKF6Bi2qa7kOjd40Dh4rIFptec
-         2ivTCCf2j5NkV4igXNus6jewwRpXvSX2y+/uLx9EAFEr+NDuX7dwkm/hLE81t6mdqC3v
-         Cb/w==
-X-Gm-Message-State: AOAM531lUvImJ++guuavX/s6gMr2vE8Wiv0QXWho+1BkTMn1dcqN0kiP
-        CGZNse63J4ARU3CJCO3snw==
-X-Google-Smtp-Source: ABdhPJzQ3LNWA9ZflTyEX/1kw9gdOJKdy1KFoCctyMUt3S1Gmlzl1FjHI2/WhdQqsk9kk6VE9qBvlQ==
-X-Received: by 2002:a02:ce8c:: with SMTP id y12mr4081741jaq.53.1599149529183;
-        Thu, 03 Sep 2020 09:12:09 -0700 (PDT)
+        bh=9gvvTNIPw9I6yRji5WhK7wdTzHtDJw07/YZwY1IVSsY=;
+        b=SU6/sECIOlwCOJREGHuvbI4ls1nIxVAU3tXyaQ4mHKKPyNMlE5BubX3MNYPKVeMj+Z
+         MID1s9yM5ojqvDrhmQ3uCi2zY4leoNUShOv1XdWdOKwE9nMBmvSiYbHsXH1h/XyglAYw
+         +xtNwQDEqoNiDMloQsqf6PZmirbYAGOjdlP1sxdhzTfYoKZQ4Sz1nvSZFs7aw2w7gnOv
+         BMEveH9ECyci8TxHWxwaTl1EqTBSdOM+TgY8h1F02o3d6FCBpQgddmoc6GzSqFSfg03U
+         OtrWYOdqIi9b6svf3mjdEi0afxzgqg87l+ZO9esmfvGmDycODCXBFvZepoJlu/sR82OT
+         CXWA==
+X-Gm-Message-State: AOAM5312t2DLN7+MjY6iXWZ036WZk68Nm/zo2zEW723eDTciMgX2H0hz
+        zhg2Y1afgLf/vna+iUYCiuFZv56sTuVh
+X-Google-Smtp-Source: ABdhPJw1y8SasChHSTDfMyS2qjEcudm7/rU4rfBgpZ0EgRlXlwT3bdsqp3mySJSWfKAAvZeflDceyg==
+X-Received: by 2002:a05:6602:2003:: with SMTP id y3mr3664419iod.203.1599149591009;
+        Thu, 03 Sep 2020 09:13:11 -0700 (PDT)
 Received: from xps15 ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id p3sm1651437ilq.59.2020.09.03.09.12.07
+        by smtp.gmail.com with ESMTPSA id f141sm1664938ilh.65.2020.09.03.09.13.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 09:12:08 -0700 (PDT)
-Received: (nullmailer pid 2873323 invoked by uid 1000);
-        Thu, 03 Sep 2020 16:12:07 -0000
-Date:   Thu, 3 Sep 2020 10:12:07 -0600
+        Thu, 03 Sep 2020 09:13:10 -0700 (PDT)
+Received: (nullmailer pid 2874688 invoked by uid 1000);
+        Thu, 03 Sep 2020 16:13:09 -0000
+Date:   Thu, 3 Sep 2020 10:13:09 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH 3/5] dt-bindings: clock: add SM8250 QCOM video clock
  bindings
-Message-ID: <20200903161207.GA2872956@bogus>
+Message-ID: <20200903161309.GB2872956@bogus>
 References: <20200902031359.6703-1-jonathan@marek.ca>
  <20200902031359.6703-4-jonathan@marek.ca>
 MIME-Version: 1.0
@@ -60,8 +62,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 01 Sep 2020 23:13:53 -0400, Jonathan Marek wrote:
+On Tue, Sep 01, 2020 at 11:13:53PM -0400, Jonathan Marek wrote:
 > Add device tree bindings for video clock controller for SM8250 SoCs.
+
+WARNING: please, no space before tabs
+#182: FILE: include/dt-bindings/clock/qcom,videocc-sm8250.h:37:
++#define MVS0C_GDSC ^I^I^I0$
+
+WARNING: please, no space before tabs
+#183: FILE: include/dt-bindings/clock/qcom,videocc-sm8250.h:38:
++#define MVS1C_GDSC ^I^I^I1$
+
+WARNING: please, no space before tabs
+#184: FILE: include/dt-bindings/clock/qcom,videocc-sm8250.h:39:
++#define MVS0_GDSC ^I^I^I2$
+
+WARNING: please, no space before tabs
+#185: FILE: include/dt-bindings/clock/qcom,videocc-sm8250.h:40:
++#define MVS1_GDSC ^I^I^I3$
+
+total: 0 errors, 4 warnings, 73 lines checked
+
+
 > 
 > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
@@ -70,22 +92,91 @@ On Tue, 01 Sep 2020 23:13:53 -0400, Jonathan Marek wrote:
 >  2 files changed, 47 insertions(+), 1 deletion(-)
 >  create mode 100644 include/dt-bindings/clock/qcom,videocc-sm8250.h
 > 
-
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,videocc.example.dt.yaml: clock-controller@ab00000: clocks: [[4294967295, 0]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,videocc.example.dt.yaml: clock-controller@ab00000: clock-names: ['bi_tcxo'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-
-
-See https://patchwork.ozlabs.org/patch/1355500
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
-
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+> index d04f5bd28dde..757837e260a2 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+> @@ -11,12 +11,13 @@ maintainers:
+>  
+>  description: |
+>    Qualcomm video clock control module which supports the clocks, resets and
+> -  power domains on SDM845/SC7180/SM8150.
+> +  power domains on SDM845/SC7180/SM8150/SM8250.
+>  
+>    See also:
+>      dt-bindings/clock/qcom,videocc-sdm845.h
+>      dt-bindings/clock/qcom,videocc-sc7180.h
+>      dt-bindings/clock/qcom,videocc-sm8150.h
+> +    dt-bindings/clock/qcom,videocc-sm8250.h
+>  
+>  properties:
+>    compatible:
+> @@ -24,14 +25,17 @@ properties:
+>        - qcom,sdm845-videocc
+>        - qcom,sc7180-videocc
+>        - qcom,sm8150-videocc
+> +      - qcom,sm8250-videocc
+>  
+>    clocks:
+>      items:
+>        - description: Board XO source
+> +      - description: Board XO source, always-on (required by sm8250 only)
+>  
+>    clock-names:
+>      items:
+>        - const: bi_tcxo
+> +      - const: bi_tcxo_ao
+>  
+>    '#clock-cells':
+>      const: 1
+> diff --git a/include/dt-bindings/clock/qcom,videocc-sm8250.h b/include/dt-bindings/clock/qcom,videocc-sm8250.h
+> new file mode 100644
+> index 000000000000..4c44f9c468db
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,videocc-sm8250.h
+> @@ -0,0 +1,42 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLK_QCOM_VIDEO_CC_SM8250_H
+> +#define _DT_BINDINGS_CLK_QCOM_VIDEO_CC_SM8250_H
+> +
+> +/* VIDEO_CC clocks */
+> +#define VIDEO_CC_AHB_CLK		0
+> +#define VIDEO_CC_AHB_CLK_SRC		1
+> +#define VIDEO_CC_MVS0_CLK		2
+> +#define VIDEO_CC_MVS0_CLK_SRC		3
+> +#define VIDEO_CC_MVS0_DIV_CLK_SRC	4
+> +#define VIDEO_CC_MVS0C_CLK		5
+> +#define VIDEO_CC_MVS0C_DIV2_DIV_CLK_SRC	6
+> +#define VIDEO_CC_MVS1_CLK		7
+> +#define VIDEO_CC_MVS1_CLK_SRC		8
+> +#define VIDEO_CC_MVS1_DIV2_CLK		9
+> +#define VIDEO_CC_MVS1_DIV_CLK_SRC	10
+> +#define VIDEO_CC_MVS1C_CLK		11
+> +#define VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC	12
+> +#define VIDEO_CC_XO_CLK			13
+> +#define VIDEO_CC_XO_CLK_SRC		14
+> +#define VIDEO_CC_PLL0			15
+> +#define VIDEO_CC_PLL1			16
+> +
+> +/* VIDEO_CC resets */
+> +#define VIDEO_CC_CVP_INTERFACE_BCR	0
+> +#define VIDEO_CC_CVP_MVS0_BCR		1
+> +#define VIDEO_CC_MVS0C_CLK_ARES		2
+> +#define VIDEO_CC_CVP_MVS0C_BCR		3
+> +#define VIDEO_CC_CVP_MVS1_BCR		4
+> +#define VIDEO_CC_MVS1C_CLK_ARES		5
+> +#define VIDEO_CC_CVP_MVS1C_BCR		6
+> +
+> +#define MVS0C_GDSC 			0
+> +#define MVS1C_GDSC 			1
+> +#define MVS0_GDSC 			2
+> +#define MVS1_GDSC 			3
+> +
+> +#endif
+> -- 
+> 2.26.1
+> 
