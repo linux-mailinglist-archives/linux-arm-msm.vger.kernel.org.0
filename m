@@ -2,163 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1C9425C16F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 14:59:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1840925C285
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 16:27:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728924AbgICM5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 08:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
+        id S1729350AbgICO1a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 10:27:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728892AbgICM5j (ORCPT
+        with ESMTP id S1729296AbgICO0y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 08:57:39 -0400
-Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794DEC061244;
-        Thu,  3 Sep 2020 05:57:34 -0700 (PDT)
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1599137845;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=vuPo2hCQv8SYu4U0pyiBsvIC6jH3hb6WpU0DtzVJ3ak=;
-        b=XLwOX34MqXvN9SABiyVxcmMFknw7a5CVieo73V8pHM8SvlMKKDW1n3MX+SJRdt3It29oMP
-        BpAi8mH8pWLpe09siGZn6Wg9s7xECjKpDW1silpF8bbvwc8S8F8HmdVJf/PTMWjrr1M+ey
-        2gm6CjMJrBX3he0EyfE1o8zKHdl0WhC3DZ36nArG2JFgRv/4jwZVx1dVi+dfXLSq9pO6nJ
-        1Ah/llGOmjKaGAfsn5sqGTfG7wvZ9DGb4QQ+mvwgWMBCT0PRILm3Y6iE1z6mMtoeA5lcqS
-        mdP4Gcz0uTdD3PIJPXWcuy49In3PKaDLRsSTon1YtCTNeuIJhj6XJMRNnlHLxw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1599137845;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=vuPo2hCQv8SYu4U0pyiBsvIC6jH3hb6WpU0DtzVJ3ak=;
-        b=Jc7Q/jSXOOgAkG6PNMWi0mBFGibHsSx3dFMLGuGjPFT8XDC4nOu3ZiNXHdw2L/ao1y3YnZ
-        uegmYbq2bMhTXKBg==
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Thu, 3 Sep 2020 10:26:54 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6C9C06125C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 06:21:18 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id t7so2954803ljo.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 06:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oYAJCWwmY8cmxpPn4BwEU5jj0ebyOjiSup5bfL+YfQo=;
+        b=OX99CF6KkJNmfc3cah9J0jDtURY5SCXnwcy/sD3QgshXNBW9j1zVf/rkRRGYeSbr7t
+         JeMRA7cw7JvE/MXBwWS+jgVDTy081C0Gt+hp0ZZhOKOioMXr5D10EwLgyTZpbqGod0pn
+         ZkgiDeO+5GKLc0FW3rJjEHeMIul0K6wwhUKfJSHWjBs5hmXzpaHrr20LzrIuLZZzWQrp
+         wv/m0e+TMpXoX3za5IYdS6SchZujltYgvCKWzK7bUUqPIc814EyGkfizhaeSABlG/yAV
+         TvAKgNhs08iJNjhZRDsKtGEVTURIeeTYBarbcRzhZOkJ76SLyGpX9uoNoGI9p/1PM2XH
+         W0Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oYAJCWwmY8cmxpPn4BwEU5jj0ebyOjiSup5bfL+YfQo=;
+        b=fEJSaZrzMlQBAHQPViBjrty+ggXfB94eqmmE6T276Kc154O8pQ4YRUuoB68EgBei5K
+         SwwtMpfHUVVKx75Dx7ZIRp6Z5gDziQuplb+/STE/0o2lzG/OLc/BJY8Oe4KQSoe/75Ft
+         +k0VYSu6gJ5MEZ38cwM//+FiGjuOU7bwMQbNPpqsTs7W0Qz82t7FwhfnEOlsIT/R+uJK
+         eTPsd5fDoVu7w9bdsz6el70JLgImQdV4GIuIeFQYik7Bvft+hcKzsFLiXtCoKux5tlrM
+         glU6a4vNJeAzMvR+AsgiLSjkQAQNnx+EJlxiqEuYF1HowajBJ6k4bfOSUyA2LZQjWJOh
+         oM+Q==
+X-Gm-Message-State: AOAM5300BZBV4swL1PZXglvF8Md/IZmJRLIiR346IMMB4feWT5AJEODo
+        LyAxDxwzl0pnrrqEnw2j55QY2Q==
+X-Google-Smtp-Source: ABdhPJyP5OhNVD/jJ9z1pfq9aQtBj7avCZg/irip+mSpxwrEoQM9Kpl/YIx14MDRVDCA2CSAugQ41w==
+X-Received: by 2002:a2e:7e0b:: with SMTP id z11mr1290883ljc.133.1599139276410;
+        Thu, 03 Sep 2020 06:21:16 -0700 (PDT)
+Received: from eriador.lan ([188.162.64.138])
+        by smtp.gmail.com with ESMTPSA id e23sm584220lfj.80.2020.09.03.06.21.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Sep 2020 06:21:15 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-In-Reply-To: <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org> <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com> <877dtdj042.fsf@nanos.tec.linutronix.de> <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com>
-Date:   Thu, 03 Sep 2020 14:57:25 +0200
-Message-ID: <87zh67uife.fsf@nanos.tec.linutronix.de>
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: [PATCH v2 0/0] qcom: pm8150: add support for thermal monitoring
+Date:   Thu,  3 Sep 2020 16:21:00 +0300
+Message-Id: <20200903132109.1914011-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 02 2020 at 13:26, Doug Anderson wrote:
-> Specifically I think it gets back to the idea that, from a device
-> driver's point of view, there isn't a separate concept of disabling an
-> IRQ (turn it off and stop tracking it) and masking an IRQ (keep track
-> of it but don't call my handler until I unmask).  As I understand it
-> drivers expect that the disable_irq() call is actually a mask and that
-> an IRQ is never fully disabled unless released by the driver.  It is a
-> little unfortunate (IMO) that the function is called disable_irq() but
-> as far as I understand that's historical.
+This patch serie adds support for thermal monitoring block on Qualcomm's
+PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
+to support thermal zones provided by this thermal monitoring block.
+Unlike the rest of PMIC thermal senses, these thermal zones describe
+particular thermistors, which differ between from board to board.
 
-Yes, the naming is historical but it always meant:
+Changes since v1:
+ - Introduce fixp_linear_interpolate() by Craig Tatlor
+ - Lots of syntax/whitespace changes
+ - Cleaned up register definitions per Jonathan's suggestion
+ - Implemented most of the suggestions from Bjorn's and Jonathan's
+   review
 
-Don't invoke an interrupt handler. Whether that's achieved by actually
-masking it at the interrupt chip level in hardware or by software state
-in the core does not matter from the driver perspective.
 
->> The point is that the core suspend code disables all interrupts which
->> are not marked as wakeup enabled automatically and reenables them after
->> resume. So why would any driver invoke disable_irq() in the suspend
->> function at all? Historical raisins?
->
-> One case I can imagine: pretend that there are two power rails
-> controlling a device.  One power rail controls the communication
-> channel between the CPU and the peripheral and the other power rail
-> controls whether the peripheral is on.  At suspend time we want to
-> keep the peripheral on but we can shut down the power to the
-> communication channel.
->
-> One way you could do this is at suspend time:
->   disable_irq()
->   turn_off_comm_power()
->   enable_irq_wake()
->
-> You'd do the disable_irq() (AKA mask your interrupt) because you'd
-> really want to make sure that your handler isn't called after you
-> turned off the communication power.  You want to leave the interrupt
-> pending/masked until you are able to turn the communications channel
-> back on and then you can query why the wakeup happened.
-
-Ok.
-
-> Now, admittedly, you could redesign the above driver to work any
-> number of different ways.  Maybe you could use the "noirq" suspend to
-> turn off your comm power or maybe you could come up with another
-> solution.  However, since the above has always worked and is quite
-> simple I guess that's what drivers use?
-
-That comm power case is a reasonable argument for having that
-sequence. So we need to make sure that the underlying interrupt chips do
-the right thing.
-
-We have the following two cases:
-
-1) irq chip does not have a irq_disable() callback and does not
-   have IRQ_DISABLE_UNLAZY set
-
-   In that case the interrupt is not masked at the hardware level. It's
-   just software state. If the interrupt fires while disabled it is
-   marked pending and actually masked at the hardware level.
-
-   Actually there is a race condition which is not handled:
-
-   disable_irq()
-   ...
-   
-   interrupt fires
-      mask and mark pending
-
-   ....
-   suspend_device_irq()
-      if (wakeup source) {
-         set_state(WAKEUP ARMED);
-         return;
-      }
-
-   That pending interrupt will not prevent the machine from going into
-   suspend and if it's an edge interrupt then an unmask in
-   suspend_device_irq() won't help. Edge interrupts are not resent in
-   hardware. They are fire and forget from the POV of the device
-   hardware.
-
-2) irq chip has a irq_disable() callback or has IRQ_DISABLE_UNLAZY set
-
-   In that case disable_irq() will mask it at the hardware level and it
-   stays that way until enable_irq() is invoked.
-
-#1 kinda works and the gap is reasonably trivial to fix in
-   suspend_device_irq() by checking the pending state and telling the PM
-   core that there is a wakeup pending.
-
-#2 Needs an indication from the chip flags that an interrupt which is
-   masked has to be unmasked when it is a enabled wakeup source.
-
-I assume your problem is #2, right? If it's #1 then UNMASK_IF_WAKEUP is
-the wrong answer.
-
-Thanks,
-
-        tglx
