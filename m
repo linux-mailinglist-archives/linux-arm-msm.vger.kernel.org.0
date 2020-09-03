@@ -2,125 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3652525BC74
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 10:11:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AF4925BE64
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 11:24:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728579AbgICILf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 04:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728392AbgICILG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 04:11:06 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490A0C061251
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 01:10:55 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id q13so1215770vsj.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 01:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2vKxy+BrmTM4erbpnPuK1egVjffH6omXH5GzoO/2vE8=;
-        b=BGahHi6rbzLUYAczxpoLOJeX76V5ePq6YWfzkIwa5saJL7xUSVSICFCjkHep3epSJu
-         rj+jUuLnHYK32M8oSkW8+gX+3ldm76XAHBm8ucUvrdnKGglYNa8HHMNqFlbogIUcaI5C
-         Z6mB9DQo/5HjX8TIrJ2syEftgA4yQiLeMWsrlVPiSP5j/0WyJ8PymoCJ9t4j6+cIPlZa
-         3WUJJDOAAlQlq/jZGMpLJM7nkpB29yPtyG5zqbB9yGNGQp3bHkZbUs9sosiPXKECiMiv
-         qf9fXJiTMt+Pk0ox4OVvfUoSGijk9thIg1ULv6G0vF1x9q5e3mhfcikygDNoODWOpTxC
-         sEHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2vKxy+BrmTM4erbpnPuK1egVjffH6omXH5GzoO/2vE8=;
-        b=JFgi1cmTY+WNvlVG7aw8o7gLBaejD3I67MY1oGv+VzXLa3BsTqaVeI0dSigEUIf6ys
-         cpf2Dxxcvdezj9fEanqRsHYya+A0h0DgZxPEWOJvDn6XUhmWxpcd1mTkLjyNAI2hjV+V
-         Palk00pf6ywSn5O+EjfXEcRNVhE9RP6yYX1Yskr70xvOKEQ9P93Lm3cXV+IaQqZ6Z/mR
-         Pvev9UHUZ5wqN0Od8MRluCeJYhH2bFqiieSLnyKykejepiQaqVhXb+HhJY8s/wlztlYj
-         q//gMoqqRO1VOkoe2QWfdQslXY1epT6YLxn/lyeddDc9LC06sDmU0otzaD5rr0iRUguJ
-         8SQA==
-X-Gm-Message-State: AOAM532/osk30dRanUzOqt6ZgMhC7jLVvs2cRPi4jsbZ0xsVuZjz6l7L
-        au4YMmVDizDSfWlgfmSLN4bTB9mnloHOTDNNBvQXnw==
-X-Google-Smtp-Source: ABdhPJxfYTnSYJGxu7eCAxgLLa9ss8++NvwiXEVkjxbE5o6nKhbHft/MCQxM3aY3B+PhB/1QvL5Twv2LkkutkBBczpQ=
-X-Received: by 2002:a67:f947:: with SMTP id u7mr841916vsq.135.1599120654486;
- Thu, 03 Sep 2020 01:10:54 -0700 (PDT)
+        id S1726268AbgICJYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 05:24:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:64108 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726368AbgICJYJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Sep 2020 05:24:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1599125047; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=vzyvnVN4EUQzE6hJZKmqXAP1pTaiOlGyUPxPgSRWKec=; b=PV2k2pNobRgqAi6V1X8DiPslv3YHA+48qg9S7lFOTtUFfAKPnr8OjLdOSfZegg81bi+iVK8L
+ i66puFpvxhL0u2S0Dmb8iruxZUthN4TCoU5WbcCQn8GhGK9XSjp6ZWn09gntyn4SIgfxhgss
+ JYDiSelF8syD3lPQNyW7zDIK28s=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f50b62dcc683673f9011171 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Sep 2020 09:23:57
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2F7B9C4339C; Thu,  3 Sep 2020 09:23:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.4 required=2.0 tests=ALL_TRUSTED,NICE_REPLY_A,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.131.172.121] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA6F6C433C9;
+        Thu,  3 Sep 2020 09:23:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA6F6C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH v3 4/5] ASoC: qcom: Add support for audio over DP
+To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1598855964-1042-1-git-send-email-srivasam@codeaurora.org>
+ <1598855964-1042-5-git-send-email-srivasam@codeaurora.org>
+ <159894552988.334488.8290895362888910651@swboyd.mtv.corp.google.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited
+Message-ID: <25a8ca32-47f9-fb04-5f76-cc9e27f4e412@codeaurora.org>
+Date:   Thu, 3 Sep 2020 14:53:49 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-References: <20200902164303.1.I5e598a25222b4534c0083b61dbfa4e0e76f66171@changeid>
-In-Reply-To: <20200902164303.1.I5e598a25222b4534c0083b61dbfa4e0e76f66171@changeid>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 3 Sep 2020 10:10:17 +0200
-Message-ID: <CAPDyKFoyKjKhwKGtLMtEyDSeSiBU6wasc=jt6c=sHnhN8jqqjg@mail.gmail.com>
-Subject: Re: [PATCH] mmc: sdhci-msm: Prefer asynchronous probe
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <159894552988.334488.8290895362888910651@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 3 Sep 2020 at 01:43, Douglas Anderson <dianders@chromium.org> wrote:
->
-> Turning on initcall debug on one system showed this:
->   initcall sdhci_msm_driver_init+0x0/0x28 returned 0 after 34782 usecs
->
-> The lion's share of this time (~33 ms) was in mmc_power_up().  This
-> shouldn't be terribly surprising since there are a few calls to delay
-> based on "power_delay_ms" and the default delay there is 10 ms.
->
-> Because we haven't specified that we'd prefer asynchronous probe for
-> this driver then we'll wait for this driver to finish before we start
-> probes for more drivers.  While 33 ms doesn't sound like tons, every
-> little bit counts.
->
-> There should be little problem with turning on asynchronous probe for
-> this driver.  It's already possible that previous drivers may have
-> turned on asynchronous probe so we might already have other things
-> (that probed before us) probing at the same time we are anyway.  This
-> driver isn't really providing resources (clocks, regulators, etc) that
-> other drivers need to probe and even if it was they should be handling
-> -EPROBE_DEFER.
->
-> Let's turn this on and get a bit of boot speed back.
+Thanks Stephen, for your time for review!!!
 
-Thanks for a very well written commit message!
-
-Indeed, I am sure many mmc host drivers could benefit from a similar
-change. At least regular platform drivers and amba drivers are pretty
-sure to work, but who knows.
-
+On 9/1/2020 1:02 PM, Stephen Boyd wrote:
+> Quoting Srinivasa Rao Mandadapu (2020-08-30 23:39:23)
+>> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+>> index 167bf2c..cea7ae7 100644
+>> --- a/sound/soc/qcom/lpass-sc7180.c
+>> +++ b/sound/soc/qcom/lpass-sc7180.c
+>> @@ -190,15 +232,92 @@ static struct lpass_variant sc7180_data = {
+>>                                     "mi2s-bit-clk0",
+>>                                     "mi2s-bit-clk1",
+>>                                  },
+>> +       .id                             = I2S_INTERFACE,
+>>          .init                   = sc7180_lpass_init,
+>>          .exit                   = sc7180_lpass_exit,
+>>          .alloc_dma_channel      = sc7180_lpass_alloc_dma_channel,
+>>          .free_dma_channel       = sc7180_lpass_free_dma_channel,
+>>   };
+>>   
+>> +static struct lpass_variant sc7180_hdmi_data = {
+> Can this be const?
+Yes this can be constant. will change in next patch.
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-
-Applied for next, thanks!
-
-Kind regards
-Uffe
-
-
-> ---
+>> +       .hdmi_tx_ctl_addr       = 0x1000,
+>> +       .hdmi_legacy_addr       = 0x1008,
+>> +       .hdmi_vbit_addr         = 0x610c0,
+>> +       .hdmi_ch_lsb_addr       = 0x61048,
+>> +       .hdmi_ch_msb_addr       = 0x6104c,
+>> +       .ch_stride              = 0x8,
+>> +       .hdmi_parity_addr       = 0x61034,
+>> +       .hdmi_dmactl_addr       = 0x61038,
+>> +       .hdmi_dma_stride        = 0x4,
+>> +       .hdmi_DP_addr           = 0x610c8,
+>> +       .hdmi_sstream_addr      = 0x6101c,
+>> +       .irq_reg_base           = 0x63000,
+>> +       .irq_ports              = 1,
+>> +       .rdma_reg_base          = 0x64000,
+>> +       .rdma_reg_stride        = 0x1000,
+>> +       .rdma_channels          = 4,
+>> +
+>> +       .rdma_dyncclk           = REG_FIELD_ID(0x64000, 14, 14, 4, 0x1000),
+>> +       .rdma_bursten           = REG_FIELD_ID(0x64000, 13, 13, 4, 0x1000),
+>> +       .rdma_burst8            = REG_FIELD_ID(0x64000, 15, 15, 4, 0x1000),
+>> +       .rdma_burst16           = REG_FIELD_ID(0x64000, 16, 16, 4, 0x1000),
+>> +       .rdma_dynburst          = REG_FIELD_ID(0x64000, 18, 18, 4, 0x1000),
+>> +       .rdma_wpscnt            = REG_FIELD_ID(0x64000, 10, 12, 4, 0x1000),
+>> +       .rdma_fifowm            = REG_FIELD_ID(0x64000, 1, 5, 4, 0x1000),
+>> +       .rdma_enable            = REG_FIELD_ID(0x64000, 0, 0, 4, 0x1000),
+>> +
+>> +       .sstream_en             = REG_FIELD(0x6101c, 0, 0),
+>> +       .dma_sel                        = REG_FIELD(0x6101c, 1, 2),
+>> +       .auto_bbit_en   = REG_FIELD(0x6101c, 3, 3),
+>> +       .layout                 = REG_FIELD(0x6101c, 4, 4),
+>> +       .layout_sp              = REG_FIELD(0x6101c, 5, 8),
+>> +       .set_sp_on_en   = REG_FIELD(0x6101c, 10, 10),
+>> +       .dp_audio               = REG_FIELD(0x6101c, 11, 11),
+>> +       .dp_staffing_en = REG_FIELD(0x6101c, 12, 12),
+>> +       .dp_sp_b_hw_en  = REG_FIELD(0x6101c, 13, 13),
+>> +
+>> +       .mute                   = REG_FIELD(0x610c8, 0, 0),
+>> +       .as_sdp_cc              = REG_FIELD(0x610c8, 1, 3),
+>> +       .as_sdp_ct              = REG_FIELD(0x610c8, 4, 7),
+>> +       .aif_db4                        = REG_FIELD(0x610c8, 8, 15),
+>> +       .frequency              = REG_FIELD(0x610c8, 16, 21),
+>> +       .mst_index              = REG_FIELD(0x610c8, 28, 29),
+>> +       .dptx_index             = REG_FIELD(0x610c8, 30, 31),
+>> +
+>> +       .soft_reset             = REG_FIELD(0x1000, 31, 31),
+>> +       .force_reset    = REG_FIELD(0x1000, 30, 30),
+>> +
+>> +       .use_hw_chs             = REG_FIELD(0x61038, 0, 0),
+>> +       .use_hw_usr             = REG_FIELD(0x61038, 1, 1),
+>> +       .hw_chs_sel             = REG_FIELD(0x61038, 2, 4),
+>> +       .hw_usr_sel             = REG_FIELD(0x61038, 5, 6),
+>> +
+>> +       .replace_vbit   = REG_FIELD(0x610c0, 0, 0),
+>> +       .vbit_stream    = REG_FIELD(0x610c0, 1, 1),
+>> +
+>> +       .legacy_en              =  REG_FIELD(0x1008, 0, 0),
+>> +       .calc_en                =  REG_FIELD(0x61034, 0, 0),
+>> +       .lsb_bits               =  REG_FIELD(0x61048, 0, 31),
+>> +       .msb_bits               =  REG_FIELD(0x6104c, 0, 31),
+>> +
+>> +       .clk_name               = (const char*[]) {
+>> +                                       "pcnoc-sway-clk",
+>> +                                       "audio-core",
+>> +                                       "pcnoc-mport-clk",
+>> +                               },
+>> +       .num_clks               = 3,
+>> +       .id                     = HDMI_INTERFACE,
+>> +       .dai_driver             = sc7180_lpass_cpu_hdmi_dai_driver,
+>> +       .num_dai                = ARRAY_SIZE(sc7180_lpass_cpu_hdmi_dai_driver),
+>> +       .init                   = sc7180_lpass_init,
+>> +       .exit                   = sc7180_lpass_exit,
+>> +       .alloc_dma_channel = sc7180_lpass_alloc_hdmi_dma_channel,
+>> +       .free_dma_channel = sc7180_lpass_free_hdmi_dma_channel,
+>> +
+>> +};
+> Add a newline here?
+okay
 >
->  drivers/mmc/host/sdhci-msm.c | 1 +
->  1 file changed, 1 insertion(+)
+>>   static const struct of_device_id sc7180_lpass_cpu_device_id[] = {
+>>          {.compatible = "qcom,sc7180-lpass-cpu", .data = &sc7180_data},
+>> -       {}
+>> +       {.compatible = "qcom,sc7180-lpass-hdmi", .data = &sc7180_hdmi_data}
+> This most likely needs to keep the sentinel around so that a match can
+> be made or stop if nothing is found.
+okay..
 >
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index d4c02884cca8..9dd0dbb65382 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2542,6 +2542,7 @@ static struct platform_driver sdhci_msm_driver = {
->                    .name = "sdhci_msm",
->                    .of_match_table = sdhci_msm_dt_match,
->                    .pm = &sdhci_msm_pm_ops,
-> +                  .probe_type = PROBE_PREFER_ASYNCHRONOUS,
->         },
->  };
->
-> --
-> 2.28.0.402.g5ffc5be6b7-goog
->
+>>   };
+>>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
