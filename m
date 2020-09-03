@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1E4625CE47
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 01:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C066F25CE52
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 01:27:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728697AbgICXZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 19:25:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34222 "EHLO
+        id S1728294AbgICX10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 19:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729270AbgICXZL (ORCPT
+        with ESMTP id S1728134AbgICX10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 19:25:11 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A930C061247
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 16:25:11 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id 92so3333076qtb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 16:25:11 -0700 (PDT)
+        Thu, 3 Sep 2020 19:27:26 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C334DC061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 16:27:24 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id db4so2195726qvb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 16:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CpIM1vivLGzOLkg2coJ9MKu5jBPaDdQiymauIKRU90I=;
-        b=hjMrVcf/HWZjuosu4QG0j6BBgJS51vZoP3ffeIvYP7UxIzFTjjobvv7VJIYz+YDMgf
-         YehgtUxoeLnY6L5a76UvY3QrdjGFjp3iorJxhkmXxrRV9hk8QyLMqSCDahkorhyEfkVz
-         JMRC594IihbkmbpshO7AocOKJco3HWgK9TGPvgc9HV9s62TurLnTaJsk/qDNPOWhTJ/t
-         YNblHOM95DB9wXQnyHHWxyJGw/9S9A7WIdYh5ILo6vf37cTOphuuK9eR3E+vBiZXYQgC
-         3w46PkP+1jkJo8Uwv7NRP2d2ttY0RLAejlkt/7mAVlDeYreoSkK4fIaA+u0A18W1QDNg
-         NpXQ==
+        bh=lG+5k/ucCXHZk2lezM5uaUGaROvX5Yi5cBSwHgAwezI=;
+        b=PQpRbvDvCw6/6duT1k5F2LBbPEblSaAM1LCTUSjl6fYNEkEEfm96DoJjo7MsP7t3wG
+         3gkBIJ8UJdvVLF6atkgTzMh4D+phD7L/BbuvzEQNL2aWCfziXrIBRZjp9z9zhDkq5mlL
+         T8sIlnaSMEplmvaznRvvdEyey4nAnD5xT7Iqm2Reh6nULNq5KuYrx4wB2or6Q6adk2no
+         EuaAdoYHGulrSYWEnpfo32guu/uURVkJYTM4W9E8X5osHi+w7EWCgGTnZJRoRGhDpPn7
+         rytYFjUt+dOX8W9qrwGxnnc4i1DOW1FbxQW7sggvBQ0AjCPo0dfAFyqd9B+D9LrFCio0
+         2X9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=CpIM1vivLGzOLkg2coJ9MKu5jBPaDdQiymauIKRU90I=;
-        b=OjPgkAO83iZRg2t3Ngg7dk7//M2Q66AAN5ZXMZqNio8S2gwsWvkJ0e82petsmwFxSu
-         01O5jXIJ+SMtCkszSXEll1Gh1YkEqP6tJTtAbQPBVMJNYNF/AYEnHUDgI/idFGYlsA49
-         xrutghW1rFiw5bWs4HTveX6JTwrEmDpmVjoGyMiQMToNv9/Tyx/kQM3mwZLmh4onoq6U
-         s/lbG27U+89HbDhd4ZKoGXq2/wLH4Cl4xpqPCbe0aqZuatwAURttI7RhNrJ4ceWCjFOa
-         fqB48ATBQADQtl9Lgc9AbZz+bkej5xA2KPR8PXlouIE5tsomWP8VKO/alTiTmoPULc0e
-         eVhA==
-X-Gm-Message-State: AOAM532uif4AAsuq6pzt270bFfBMl72h5voiyd077FLWQbTGHIZSbaDF
-        MaWjVzC7sU9Tq4DIQa23eed/uw==
-X-Google-Smtp-Source: ABdhPJyy8QS6W7hRKA79lufueRD9aNPrALoyUJvwiGtauVl1gDdogpQGhbfPM37w2mYIENqhEa69oA==
-X-Received: by 2002:aed:3e2e:: with SMTP id l43mr6217308qtf.392.1599175510429;
-        Thu, 03 Sep 2020 16:25:10 -0700 (PDT)
+        bh=lG+5k/ucCXHZk2lezM5uaUGaROvX5Yi5cBSwHgAwezI=;
+        b=jxx76Yys3pf9uQOhs4TMtnAJuyUYMHHjJu0CIDoB20ApSSZQWtbuDa0pyhDm9DZQqj
+         P4hw7GlXzmqV0vBhrX/UmuNAum568CHgThAvEjtcGl1K7/2jq45IpcAbb0ET4F8479/Y
+         ASFyZnV7udoO5zrTgxP+CPLxcB6x+DISRpllFNrJ1BeGxqY1VjeG4gUc5oe2aA1WVj4S
+         /LzF5bSabJfvj+F4vPRZCaoUmSx6f/n4n4+sMyQ7O2LtUQ8WkC7XFFE0A3BUSDc3AEgn
+         Y+2l5YEc2SfWI37DzjLt+rg7nD+4Aa4121pqw57zv86YoFDTxRb3yU+tpIzXxUuJdOUy
+         66Tw==
+X-Gm-Message-State: AOAM533QNLHQW9MI0MJei2d2u7vjz2UB73CIjcUDjeLjkVCzlvsWghQq
+        GdOqzYsIFNSseiwxgAlkwvjr3w==
+X-Google-Smtp-Source: ABdhPJx4mieNykswI5USCngqgasqeKfEZg9G6q2zTdTNHe7oMVbLOb4iFQEmlbQq7ifV6ZNNjvAHDA==
+X-Received: by 2002:a0c:eac5:: with SMTP id y5mr4335692qvp.2.1599175643564;
+        Thu, 03 Sep 2020 16:27:23 -0700 (PDT)
 Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id v202sm3397009qka.5.2020.09.03.16.25.09
+        by smtp.gmail.com with ESMTPSA id j8sm3253090qth.90.2020.09.03.16.27.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2020 16:25:10 -0700 (PDT)
+        Thu, 03 Sep 2020 16:27:23 -0700 (PDT)
 Subject: Re: [PATCH v2 07/10] phy: qcom-qmp: Add support for DP in USB3+DP
  combo phy
 To:     Stephen Boyd <swboyd@chromium.org>,
@@ -66,19 +66,16 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Sean Paul <seanpaul@chromium.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Wesley Cheng <wcheng@codeaurora.org>
+        Rob Clark <robdclark@chromium.org>
 References: <20200902230215.3452712-1-swboyd@chromium.org>
  <20200902230215.3452712-8-swboyd@chromium.org>
- <b6f80242-482d-b778-690b-8aefa4e8f23e@marek.ca>
- <159917286975.334488.16684252260287652678@swboyd.mtv.corp.google.com>
 From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <7cf46574-569d-c69d-cfed-0fa20057b4d5@marek.ca>
-Date:   Thu, 3 Sep 2020 19:24:26 -0400
+Message-ID: <990b9edf-055d-6ecf-ee39-5a252b4c8859@marek.ca>
+Date:   Thu, 3 Sep 2020 19:26:39 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <159917286975.334488.16684252260287652678@swboyd.mtv.corp.google.com>
+In-Reply-To: <20200902230215.3452712-8-swboyd@chromium.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -87,97 +84,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/3/20 6:41 PM, Stephen Boyd wrote:
-> Quoting Jonathan Marek (2020-09-03 13:43:10)
->> On 9/2/20 7:02 PM, Stephen Boyd wrote:
->>>
->>> This code is based on a submission of this phy and PLL in the drm
->>> subsystem.
->>
->> I updated my upstream-based sm8150/sm8250 displayport stack [1] to use
->> these patches.
-> 
-> Great!
-> 
->>
->> This commit [2] might interest you, so that you can consider what needs
->> to change between v3 and v4 PHYs. Note some of the V4 registers have the
->> same address as V3, so the diff could be smaller.
-> 
-> Looks like v4 will need to introduce a register indirection table for
-> the differences. Also need to add a table for the aux initial table
-> values and the calibration values for aux_cfg1. Seems like it won't be
-> too bad.
-> 
-> Does DP work with those patches with v4? You should make yourself the
-> author of commit d3c6da6f87eedb20ea1591aaae1ea4e63d7bd777 ;-)
-> 
+On 9/2/20 7:02 PM, Stephen Boyd wrote:
 
-Yes, it works, although the PHY is hardcoded to CC2 orientation and 4 
-lanes, SS PHY disabled, and hotplugging/TCPM doesn't work in all cases.
+...
 
->>
->> Do you have any plan for dealing with the SS PHY and DP PHY conflicting
->> with each other? For example, PHY_MODE_CTRL needs to be "DP_MODE" for
->> 4-lane DP, "DP_MODE | USB3_MODE" for 2-lane DP + USB3, and (AFAIK)
->> "USB3_MODE" for superspeedplus usb (and it seems this gates some clocks,
->> so you can't read/write dp tx2 registers in 2-lane DP mode for example).
-> 
-> Right. I've seen that behavior as well.
-> 
->>   From your cover letter it sounds like this isn't relevant to your
->> hardware, but it looks like both PHYs are writing to the dp_com region
->> which is still problematic. (in the branch I linked, I disabled the SS
->> PHY to test the DP PHY)
-> 
-> Right. I mentioned in the cover letter that this needs to hook into the
-> type-c subsystem somehow. I haven't done any of that work because I
-> don't have a configuration that is as dynamic. As long as the type-c
-> stuff can express my static configuration it will be fine. If you have
-> done any work there I'm happy to review the code and test it out on my
-> configuration.
-> 
-> The driver is setup for DP_MODE | USB3_MODE (i.e. concurrent mode) so it
-> is already hardcoded for the 2-lane use case that I have. If I didn't
-> connect two lanes from the phy to a USB hub I could support all the
-> different combinations but that isn't the case. On phones it is
-> basically the only case though because the pins from the usb3+dp phy go
-> straight to the type-c connector.
-> 
-> qcom_qmp_phy_com_init() is the only place I see the driver writing to it
-> and it is refcounted so basically the first phy to get initialized will
-> set things up in the common area. I suppose for supporting various use
-> cases like 4 lanes DP or 2 lanes DP and USB then that refcounting logic
-> will need to be changed. I'm not sure what is supposed to happen though.
-> I guess the USB host controller, i.e. dwc3, will have to know to stop
-> trying to use the phy and then power down and let the DP controller take
-> over the phy? It's a dance of three or four drivers.
-> 
-The solution could be that the DP PHY has priority over the SS PHY. If 
-the DP PHY is enabled with 4 lanes then it should go into DP_MODE, 1-2 
-lanes it goes into concurrent mode, and USB3_MODE if disabled. The 
-problem then is that the SS PHY can't be enabled while the DP PHY is 
-enabled (since it will be clock gated), so enabling the SS PHY needs to 
-be deferred to when the DP PHY is disabled. I think that is reasonable?
+> +static int qcom_qmp_phy_configure_dp_phy(struct qmp_phy *qphy)
+> +{
+> +	const struct qmp_phy_dp_clks *dp_clks = qphy->dp_clks;
+> +	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+> +	u32 val, phy_vco_div, status;
+> +	unsigned long pixel_freq;
+> +
+> +	val = DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+> +	      DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN;
+> +
+> +	/*
+> +	if (lane_cnt == 4 || orientation == ORIENTATION_CC2)
+> +		val |= DP_PHY_PD_CTL_LANE_0_1_PWRDN;
+> +	if (lane_cnt == 4 || orientation == ORIENTATION_CC1)
+> +		val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
+> +	*/
+> +	/*
+> +	 * TODO: Assume orientation is CC1 for now and two lanes, need to
+> +	 * use type-c connector to understand orientation and lanes
+> +	 */
+> +	val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
+> +
+> +	writel(val, qphy->pcs + QSERDES_V3_DP_PHY_PD_CTL);
+> +
+> +	/*
+> +	if (orientation == ORIENTATION_CC2)
+> +		writel(0x4c, qphy->pcs + QSERDES_V3_DP_PHY_MODE);
+> +	else
+> +	*/
+> +	/* does this do anything? link_clock_sel_mux isn't set (bit 5) */
+> +	writel(0x5c, qphy->pcs + QSERDES_V3_DP_PHY_MODE);
+> +
+> +	writel(0x05, qphy->pcs + QSERDES_V3_DP_PHY_TX0_TX1_LANE_CTL);
+> +	writel(0x05, qphy->pcs + QSERDES_V3_DP_PHY_TX2_TX3_LANE_CTL);
+> +
+> +	switch (dp_opts->link_rate) {
+> +	case 1620:
+> +		phy_vco_div = 0x1;
+> +		pixel_freq = 1620000000UL / 2;
+> +		break;
+> +	case 2700:
+> +		phy_vco_div = 0x1;
+> +		pixel_freq = 2700000000UL / 2;
+> +		break;
+> +	case 5400:
+> +		phy_vco_div = 0x2;
+> +		pixel_freq = 5400000000UL / 4;
+> +		break;
+> +	case 8100:
+> +		phy_vco_div = 0x0;
+> +		pixel_freq = 8100000000UL / 6;
+> +		break;
+> +	default:
+> +		/* Other link rates aren't supported */
+> +		return -EINVAL;
+> +	}
+> +	writel(phy_vco_div, qphy->pcs + QSERDES_V3_DP_PHY_VCO_DIV);
+> +
+> +	clk_set_rate(dp_clks->dp_link_hw.clk, dp_opts->link_rate * 100000);
+> +	clk_set_rate(dp_clks->dp_pixel_hw.clk, pixel_freq);
+> +
+> +	writel(0x04, qphy->pcs + QSERDES_V3_DP_PHY_AUX_CFG2);
+> +	writel(0x01, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +	writel(0x05, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +	writel(0x01, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +	writel(0x09, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +
+> +	writel(0x20, qphy->serdes + QSERDES_COM_RESETSM_CNTRL);
 
-Note I have a TCPM (typec + USB PD) driver [1] which is required to 
-negotiate the DP altmode (and provides altmode events to the DP driver 
-so it can enable/disable the PHY). My problem is the qcom PMIC doesn't 
-provide exactly what TCPM wants, and I don't have access to PMIC 
-documentation, so its difficult for me to make a fully working TCPM 
-driver. Also conflicts with [2] since both drivers use the typec PMIC 
-block...
+Should be QSERDES_V3_COM_RESETSM_CNTRL and not 
+QSERDES_COM_RESETSM_CNTRL, which is for older PHY versions.
 
-[1] 
-https://github.com/flto/linux/commit/820265ce8535c6396083c5a884870f0f44603a72
-[2] https://patchwork.kernel.org/cover/11710371/
+> +
+> +	if (readl_poll_timeout(qphy->serdes + QSERDES_V3_COM_C_READY_STATUS,
+> +			status,
+> +			((status & BIT(0)) > 0),
+> +			500,
+> +			10000))
+> +		return -ETIMEDOUT;
+> +
+> +	writel(0x19, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +
+> +	if (readl_poll_timeout(qphy->pcs + QSERDES_V3_DP_PHY_STATUS,
+> +			status,
+> +			((status & BIT(1)) > 0),
+> +			500,
+> +			10000))
+> +		return -ETIMEDOUT;
+> +
+> +	writel(0x18, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +	udelay(2000);
+> +	writel(0x19, qphy->pcs + QSERDES_V3_DP_PHY_CFG);
+> +
+> +	return readl_poll_timeout(qphy->pcs + QSERDES_V3_DP_PHY_STATUS,
+> +			status,
+> +			((status & BIT(1)) > 0),
+> +			500,
+> +			10000);
+> +}
 
->>
->> Also some issues I noticed:
->> - used QSERDES_COM_RESETSM_CNTRL instead of
->> QSERDES_V3_COM_RESETSM_CNTRL2, which has different value
->> - in sc7180_dpphy_cfg, .regs is NULL, which results in NULL references
-> 
-> Can you add these as inline review comments? Would help me understand
-> what you're talking about. Thanks for the review!
->
+...
