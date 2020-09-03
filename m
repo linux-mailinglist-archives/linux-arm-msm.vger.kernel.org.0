@@ -2,137 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4996125C132
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 14:43:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1C9425C16F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Sep 2020 14:59:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728778AbgICMnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 08:43:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47548 "EHLO
+        id S1728924AbgICM5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 08:57:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728906AbgICMmR (ORCPT
+        with ESMTP id S1728892AbgICM5j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 08:42:17 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB2BC061244
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 05:42:01 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id k25so783961qtu.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 05:42:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jBJ3+UyiPoqroyu1zjiAGjOZlBSROfuJYS4dUaf28y4=;
-        b=RP2QIgV9av5cfW4E0jEqmA7mDTpzMBwskor1FkPmpDSAFax6n63uP0gHagAKUBoLXo
-         Fb5ct+hksrD6IpdtMufs3DNRrXJocexBW5s+D7hhM320VYplwMb2gIZdEpRcomM/lCth
-         3xQa56eJUsxBsQjTtaLonw7TE+A4uMkw/gduUfRH9Z7vNXQiSdaHQkJhCxDJgb9MZqzU
-         N3AiS1VwOo/Xrbbco3rCcp7li+dxP25ZUK3tEWdlRxjbmKSHpsuP7nIWa9VoIXYg9ifc
-         KmPOt4KLx8zuhtSUs856BF8M2ysnqatk4Gctlv4MSrbnjkbHK9uCK2Q0iHSoE3zcMUfT
-         prAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jBJ3+UyiPoqroyu1zjiAGjOZlBSROfuJYS4dUaf28y4=;
-        b=K3FckKlS10jhQ4JqT14xaVqnSVEsz2+N+z6kACxJ4JrZi4A+bv3L4RPiSVzvprudEj
-         7uL3bru1gXL7Dw4UGsXubdvbtOz2OQejK3+nHRZaGKudvlrznUIS++CcRpvAy+NQiVkl
-         3Ud2vB4wmt0Vq0x2Glm4h3Jqh2tT5o5q+P/8D6a91TwPHhBk1xNoO7oB3EJW3GGwd9Nv
-         7+32FvSGNJnuPXz3dfRYlbTTYtUWP6jLwnM5aXCsGQVSJG7N99wdUq0uIcGbnE4xLyBD
-         u7C8+LnXVro2LZvB1/DXkQT88A072N0Bh/z0hFzaDcQPRRzmECOW55c3gY59i0itBoO7
-         ROtA==
-X-Gm-Message-State: AOAM5334Fh1bTTs9jXgZTITapCm5Gig9QfBh/se/WDsVBbvjk7uA84rW
-        MMPewupM0jC0rXJiDBuTgmqbTw==
-X-Google-Smtp-Source: ABdhPJyrJaxeh5GDMtMW9PrexCisLze+QfvJ8U+Z3y3lDDgeB//UFbLK+IEHeSxO627oS4hC+B38Ow==
-X-Received: by 2002:ac8:4e0b:: with SMTP id c11mr3199200qtw.37.1599136919515;
-        Thu, 03 Sep 2020 05:41:59 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id w59sm1941201qtd.1.2020.09.03.05.41.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2020 05:41:58 -0700 (PDT)
-Subject: Re: [PATCH v1 6/9] phy: qcom-qmp: Add support for DP in USB3+DP combo
- phy
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thu, 3 Sep 2020 08:57:39 -0400
+Received: from galois.linutronix.de (Galois.linutronix.de [IPv6:2a0a:51c0:0:12e:550::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794DEC061244;
+        Thu,  3 Sep 2020 05:57:34 -0700 (PDT)
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1599137845;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=vuPo2hCQv8SYu4U0pyiBsvIC6jH3hb6WpU0DtzVJ3ak=;
+        b=XLwOX34MqXvN9SABiyVxcmMFknw7a5CVieo73V8pHM8SvlMKKDW1n3MX+SJRdt3It29oMP
+        BpAi8mH8pWLpe09siGZn6Wg9s7xECjKpDW1silpF8bbvwc8S8F8HmdVJf/PTMWjrr1M+ey
+        2gm6CjMJrBX3he0EyfE1o8zKHdl0WhC3DZ36nArG2JFgRv/4jwZVx1dVi+dfXLSq9pO6nJ
+        1Ah/llGOmjKaGAfsn5sqGTfG7wvZ9DGb4QQ+mvwgWMBCT0PRILm3Y6iE1z6mMtoeA5lcqS
+        mdP4Gcz0uTdD3PIJPXWcuy49In3PKaDLRsSTon1YtCTNeuIJhj6XJMRNnlHLxw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1599137845;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=vuPo2hCQv8SYu4U0pyiBsvIC6jH3hb6WpU0DtzVJ3ak=;
+        b=Jc7Q/jSXOOgAkG6PNMWi0mBFGibHsSx3dFMLGuGjPFT8XDC4nOu3ZiNXHdw2L/ao1y3YnZ
+        uegmYbq2bMhTXKBg==
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@chromium.org>
-References: <20200826024711.220080-1-swboyd@chromium.org>
- <20200826024711.220080-7-swboyd@chromium.org>
- <335a0660-40e1-0c1e-3f7d-87f7024de18a@linaro.org>
- <159900847014.334488.14041376759905055412@swboyd.mtv.corp.google.com>
- <62bdac87-b886-58c1-f071-095ec9945f68@linaro.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <4165cdc6-dfa6-1ff2-f317-753292a068c2@marek.ca>
-Date:   Thu, 3 Sep 2020 08:41:15 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Evan Green <evgreen@chromium.org>,
+        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Srinivas Rao L <lsrao@codeaurora.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+In-Reply-To: <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com>
+References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org> <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com> <877dtdj042.fsf@nanos.tec.linutronix.de> <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com>
+Date:   Thu, 03 Sep 2020 14:57:25 +0200
+Message-ID: <87zh67uife.fsf@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-In-Reply-To: <62bdac87-b886-58c1-f071-095ec9945f68@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/3/20 8:37 AM, Dmitry Baryshkov wrote:
-> On 02/09/2020 04:01, Stephen Boyd wrote:
->> Quoting Dmitry Baryshkov (2020-09-01 06:36:34)
->>> With these functions I'm struggling between introducing
->>> PHY_TYPE_DP_V3/V4 and introducing callbacks into qmp_phy_cfg. What would
->>> you prefer?
->>>
->>> What about the following struct?
->>>
->>> struct qmp_phy_dp_opts {
->>>          void (*dp_aux_init)(struct qmp_phy *qphy);
->>>          void (*dp_configure_tx)(struct qmp_phy *qphy);
->>>          void (*dp_configure_lanes)(struct qmp_phy *qphy);
->>> };
->>>
->>> I'm not sure about dp_calibrate().
->>>
->>
->> Is there v4 code somewhere that I can see? Another level of indirection
->> is always a solution, so it is probably fine. This driver is currently
->> written with many conditionals instead of function tables so I'm not
->> sure it fits in with the style of how things are done though. The
->> alternative is to use an enum and call different functions?
-> 
-> Downstream DP driver sources can be found here:
-> https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/msm/dp/dp_catalog_v420.c?h=LA.UM.8.12.r1-13900-sm8250.0 
-> 
-> 
-> https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/pll/dp_pll_7nm_util.c?h=LA.UM.8.12.r1-13900-sm8250.0 
-> 
-> 
->>
->> The calibrate call is there to "turn the crank" on the aux settings.  I
->> need to cycle through the different values for that aux register so that
->> aux can be tuned properly. The AUX channel really has another phy that
->> needs tuning so we're sort of combining the aux and DP link phy together
->> here by letting the calibrate call tune the AUX phy and the configure
->> call tune the DP phy. I don't see any sort of concept of an AUX phy
->> though so this seemed ok. Does v4 need to tune more registers?
-> 
-> 
-> It looks like four values are written to AUX_CFG1:
-> 0x20, 0x13, 0x23, 0x1d
-> 
+On Wed, Sep 02 2020 at 13:26, Doug Anderson wrote:
+> Specifically I think it gets back to the idea that, from a device
+> driver's point of view, there isn't a separate concept of disabling an
+> IRQ (turn it off and stop tracking it) and masking an IRQ (keep track
+> of it but don't call my handler until I unmask).  As I understand it
+> drivers expect that the disable_irq() call is actually a mask and that
+> an IRQ is never fully disabled unless released by the driver.  It is a
+> little unfortunate (IMO) that the function is called disable_irq() but
+> as far as I understand that's historical.
 
-AFAICT, it only writes 0x13 to AUX_CFG1, in dp_pll_7nm_util.c, and the 
-qcom,aux-cfg1-settings in dts only has 0x13. Same for all other 
-AUX_CFGn, which only have one value written. Am I missing something?
+Yes, the naming is historical but it always meant:
 
+Don't invoke an interrupt handler. Whether that's achieved by actually
+masking it at the interrupt chip level in hardware or by software state
+in the core does not matter from the driver perspective.
+
+>> The point is that the core suspend code disables all interrupts which
+>> are not marked as wakeup enabled automatically and reenables them after
+>> resume. So why would any driver invoke disable_irq() in the suspend
+>> function at all? Historical raisins?
+>
+> One case I can imagine: pretend that there are two power rails
+> controlling a device.  One power rail controls the communication
+> channel between the CPU and the peripheral and the other power rail
+> controls whether the peripheral is on.  At suspend time we want to
+> keep the peripheral on but we can shut down the power to the
+> communication channel.
+>
+> One way you could do this is at suspend time:
+>   disable_irq()
+>   turn_off_comm_power()
+>   enable_irq_wake()
+>
+> You'd do the disable_irq() (AKA mask your interrupt) because you'd
+> really want to make sure that your handler isn't called after you
+> turned off the communication power.  You want to leave the interrupt
+> pending/masked until you are able to turn the communications channel
+> back on and then you can query why the wakeup happened.
+
+Ok.
+
+> Now, admittedly, you could redesign the above driver to work any
+> number of different ways.  Maybe you could use the "noirq" suspend to
+> turn off your comm power or maybe you could come up with another
+> solution.  However, since the above has always worked and is quite
+> simple I guess that's what drivers use?
+
+That comm power case is a reasonable argument for having that
+sequence. So we need to make sure that the underlying interrupt chips do
+the right thing.
+
+We have the following two cases:
+
+1) irq chip does not have a irq_disable() callback and does not
+   have IRQ_DISABLE_UNLAZY set
+
+   In that case the interrupt is not masked at the hardware level. It's
+   just software state. If the interrupt fires while disabled it is
+   marked pending and actually masked at the hardware level.
+
+   Actually there is a race condition which is not handled:
+
+   disable_irq()
+   ...
+   
+   interrupt fires
+      mask and mark pending
+
+   ....
+   suspend_device_irq()
+      if (wakeup source) {
+         set_state(WAKEUP ARMED);
+         return;
+      }
+
+   That pending interrupt will not prevent the machine from going into
+   suspend and if it's an edge interrupt then an unmask in
+   suspend_device_irq() won't help. Edge interrupts are not resent in
+   hardware. They are fire and forget from the POV of the device
+   hardware.
+
+2) irq chip has a irq_disable() callback or has IRQ_DISABLE_UNLAZY set
+
+   In that case disable_irq() will mask it at the hardware level and it
+   stays that way until enable_irq() is invoked.
+
+#1 kinda works and the gap is reasonably trivial to fix in
+   suspend_device_irq() by checking the pending state and telling the PM
+   core that there is a wakeup pending.
+
+#2 Needs an indication from the chip flags that an interrupt which is
+   masked has to be unmasked when it is a enabled wakeup source.
+
+I assume your problem is #2, right? If it's #1 then UNMASK_IF_WAKEUP is
+the wrong answer.
+
+Thanks,
+
+        tglx
