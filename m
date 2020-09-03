@@ -2,62 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1273C25CD06
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 00:00:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C55A025CD74
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 00:27:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729486AbgICWAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 18:00:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
+        id S1728134AbgICW1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 18:27:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729148AbgICWAN (ORCPT
+        with ESMTP id S1728294AbgICW1N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 18:00:13 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86BA4C061246
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 15:00:13 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id x7so2093030qvi.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 15:00:13 -0700 (PDT)
+        Thu, 3 Sep 2020 18:27:13 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB07C061246
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 15:27:12 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id 92so3231809qtb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 15:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=KPmrddlH7hegcLC7wfZovl1Ciuz3vrrjjRgvVbrEmKs=;
-        b=C2MUXAU6eMzKJe3e0Iq4VREm3N3vBhKNRC4FysrWfxnkom4myeeubdh7G+d46xoGiM
-         hHHhnQDUj8IJqoyc3++Zezg2QO9sqBQWD6kFJ3LWWxm42upicnBn3HfjYjdW2Zyh7zYn
-         WYZqA4O9TooqQNBNzu/AP7mwagq+rGNw3jjhYAJJ46eKBYIVKQbh/FbW76wAjGdJ2htO
-         vBVMnBwrzPnodIOLKz97rdMEZYmVVa9I/xj8cRRDS6CVgBs+hVPsvcRowBja7oLO23Iw
-         HSXV3tumfnofcKE9mIsotEi8M0jh+vPN7tcP1p+hpDJaIXRpiNjyiMWsSorWBHjif7km
-         jeaw==
+        bh=9SpSwMIgy/0uDv9Hc0PvSjCztNMgh+f4IT2tkCaQkW4=;
+        b=PqLGbKMp2gjiffHSrlocu7l+Z3ajwgMd1X3CxsA+yNf4pwuW1nDh2A5P+x5XtNvX1h
+         goUHuIX34yVxPumhBEKDfmhGjy0yCNAqzPU3XzE8c25pUQZE5R3WWiYaTzaE8MayTTwN
+         d+bw8tnnyR7Gu/EeVMxOJW0QzuHADNhxpJuynXH9pod1M04KRFjIgXdO+L6app7bNmPF
+         oQNDI9cQQwz1Xa1kxrpNhmoTnt7kDoavfajq6JcBKsCUx+XOVrmi0gY1PyVd2+gNVtDO
+         IkaY/TD90aNvonnCrlZIeyI4+su8YfM8rG8CWTeF5lgVbdb+hJJlNmvIFmiJQh844a1G
+         EPWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=KPmrddlH7hegcLC7wfZovl1Ciuz3vrrjjRgvVbrEmKs=;
-        b=HP4iYoe8qsGgo47k9j626hD4FH8m60m6scVE+8YQIOIO/iCZumyviAPmPxbdPFS2A4
-         dAPe/XKgtBqNJEUb5Yicsy8lotA2y62lxs4jrx1iGPS5akRNPq+tcLV8IvdaO6BvvnRE
-         31Mk9aB9lXMRo39uI0bggSFoKTbJAVxKmqg4FCkafUu4feOhflLf2ueW+L8ELk4AlpBw
-         OIn1Bkxc3FHNJRQN8lPHQ7tFQwOcCEaPZisV6CQ6+mVQkucHWXl5RgIi2gskQtPmYQjg
-         xLcMKiY1eyPOfWvGsNkcJCLUxHFJHvpdDS+vZmA/3qo5WrmlDS7f08d3r/9sxMUV4xPI
-         GGog==
-X-Gm-Message-State: AOAM533ax+xMkouia/5jPxDDM9FCTeH/O/qMKRGIDiR5qEL5QUvTcQgN
-        GP7XYB8CKUNX2y4O45u+a0hGgi+NFtwieGmZExY=
-X-Google-Smtp-Source: ABdhPJwkEH9XtrK3cNQXeyfFSDGVHrAk+oV922w9fIRrc4E/q/w9BXZ8hFz61MBVZS2pgl5Q9FvkdQ==
-X-Received: by 2002:a0c:9ade:: with SMTP id k30mr4890094qvf.194.1599170412459;
-        Thu, 03 Sep 2020 15:00:12 -0700 (PDT)
+        bh=9SpSwMIgy/0uDv9Hc0PvSjCztNMgh+f4IT2tkCaQkW4=;
+        b=gOGIe0WN1qj0L5felmaEQzePWhQ6600u2TXM9/eZKzunDWfYLXltaeZLFR6wJ3jz1d
+         0BqLLYPuMgljCLvL2pePZN8SMDlVYhqdKpQKqW5Hjz3aLHVjuQhy1wS2UfH+W73j8wLo
+         uyBW6MOpiN6fyO7MRPe4sKmYVNLAbXKhIk4MpkfbrQK2VB5/viFP844aR3T68L+A3IBv
+         inBMnfyimH/N1oE5Fm+xxBqZYz8cNDGZxOIOpuKI3MetvnJopdl3Z21aKQ0LgHKlkum3
+         BRzaQdmLxxoLP/ac4lhQ4UXYame9tjLY0bBhnd0uXR3YU8dVKCByMduKWT5eXEGUSk7d
+         QPLQ==
+X-Gm-Message-State: AOAM53247q7ejtYQCeff5UOSlq31r5yrAwaxYtC+KAyyxrDttJOjq72B
+        jVwkb/EWFZopEtymhtI3mpRnNnlpv7/V1tFPeFI=
+X-Google-Smtp-Source: ABdhPJyX2L6/vlPMY77nburHLozkIx336EIl0ufaIwZ6yu03grC4E5axYN4yguWf2gLAO+aUHM6K/g==
+X-Received: by 2002:ac8:b46:: with SMTP id m6mr5741737qti.72.1599172031736;
+        Thu, 03 Sep 2020 15:27:11 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id t11sm3052293qtp.32.2020.09.03.15.00.11
+        by smtp.gmail.com with ESMTPSA id y30sm3217157qth.7.2020.09.03.15.27.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 15:00:12 -0700 (PDT)
+        Thu, 03 Sep 2020 15:27:11 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] arm64: dts: qcom: sm8250: use the right clock-freqency for sleep-clk
-Date:   Thu,  3 Sep 2020 17:59:23 -0400
-Message-Id: <20200903215923.14314-1-jonathan@marek.ca>
+        DEVICE TREE BINDINGS),
+        linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
+        linux-kernel@vger.kernel.org (open list),
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v2 0/7] SM8150 and SM8250 dispcc drivers
+Date:   Thu,  3 Sep 2020 18:26:08 -0400
+Message-Id: <20200903222620.27448-1-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -66,27 +71,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Downstream has this clock as 32000 rate, but testing shows it is close to
-32768.
+Add display clock drivers required to get DSI and DP displays working on
+SM8150 and SM8250 SoCs.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Derived from downstream drivers. Notable changes compared to downstream:
+ - EDP clks removed (nothing uses these even in downstream it seems)
+ - freq_tbl values for dp_link clk is in Hz and not kHz
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 81aa1f497b13..2cd38053bcd1 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -75,7 +75,7 @@ xo_board: xo-board {
- 
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32000>;
-+			clock-frequency = <32768>;
- 			#clock-cells = <0>;
- 		};
- 	};
+v2:
+ - updated dts example to reflect the change (first patch)
+ - updated config_ctl_hi1_val in sm8250 dispcc to latest downstream
+
+Jonathan Marek (7):
+  dt-bindings: clock: sdm845-dispcc: same name for dp_phy clocks as
+    sc7180
+  arm64: dts: qcom: sdm845-dispcc: same name for dp_phy clocks as sc7180
+  dt-bindings: clock: combine qcom,sdm845-dispcc and qcom,sc7180-dispcc
+  dt-bindings: clock: Introduce QCOM SM8150 display clock bindings
+  dt-bindings: clock: Introduce QCOM SM8250 display clock bindings
+  clk: qcom: Add display clock controller driver for SM8150
+  clk: qcom: Add display clock controller driver for SM8250
+
+ ...om,sdm845-dispcc.yaml => qcom,dispcc.yaml} |   30 +-
+ .../bindings/clock/qcom,sc7180-dispcc.yaml    |   86 --
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |    4 +-
+ drivers/clk/qcom/Kconfig                      |   18 +
+ drivers/clk/qcom/Makefile                     |    2 +
+ drivers/clk/qcom/dispcc-sm8150.c              | 1152 +++++++++++++++++
+ drivers/clk/qcom/dispcc-sm8250.c              | 1100 ++++++++++++++++
+ .../dt-bindings/clock/qcom,dispcc-sm8150.h    |   69 +
+ .../dt-bindings/clock/qcom,dispcc-sm8250.h    |   66 +
+ 9 files changed, 2428 insertions(+), 99 deletions(-)
+ rename Documentation/devicetree/bindings/clock/{qcom,sdm845-dispcc.yaml => qcom,dispcc.yaml} (75%)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-dispcc.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm8150.c
+ create mode 100644 drivers/clk/qcom/dispcc-sm8250.c
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8150.h
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8250.h
+
 -- 
 2.26.1
 
