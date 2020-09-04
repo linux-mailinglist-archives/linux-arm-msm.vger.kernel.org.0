@@ -2,250 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94C1325E00E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 18:44:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 234B325E024
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 18:47:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726623AbgIDQnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 12:43:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36422 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726441AbgIDQnt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 12:43:49 -0400
-Received: from kozik-lap.mshome.net (unknown [194.230.155.106])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 808062074D;
-        Fri,  4 Sep 2020 16:43:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599237828;
-        bh=M0F0NujsJbA6VRAoiFk6VohTncRpdlqvI+V+EXO6eTI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YNhuRd9bPGkZy4dXcqM4wKBiNUbzE9fZg+ZWuG0rftUJ+tr0tNSNpYkBZTA38LTUr
-         C2BCBXN88B/3wM5OaP8T8RT99NAHiaGDVfp8omRAWmcls7cWRlAVAhuHexZ1jV1ODZ
-         D3tvHvz+KgvITSlGuGrAtkaCNFw9z57g2bkJBSCk=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Manuel Lauss <manuel.lauss@gmail.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Prabu Thangamuthu <prabu.t@synopsys.com>,
-        Manjunath M B <manjumb@synopsys.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-aspeed@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@axis.com
-Cc:     =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
-Subject: [PATCH v2 2/2] mmc: host: Enable compile testing of multiple drivers
-Date:   Fri,  4 Sep 2020 18:43:15 +0200
-Message-Id: <20200904164315.24618-2-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200904164315.24618-1-krzk@kernel.org>
-References: <20200904164315.24618-1-krzk@kernel.org>
+        id S1726733AbgIDQrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 12:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53362 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726063AbgIDQq7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Sep 2020 12:46:59 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6D04C061244;
+        Fri,  4 Sep 2020 09:46:59 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id ef16so3308640qvb.8;
+        Fri, 04 Sep 2020 09:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TBpouKohZ4xnNFvQAORhEKmSrdyDNk10oVx1FtC9Bws=;
+        b=EgsDNr8jq4DF077DE8FFLRkR59IU61+j8V/Ka9V7oYrWIFPZmMCFtBwfask+T/m7M7
+         ABkQRjkqmQNhqKh2VT7i4UJ/Wt90Z38MeTrYGvULyHJ82SQ6PsuQNCiKdiLa9nveFUpl
+         R04cMMdDGxXDTRPRVqK11KOxC3g2sVS1/0YvzjlCoZCwTT0+M1Yo/uJWYoNvcaH8IrzS
+         D4wFxN5u+Z5lTv8jIxdDc9Kz7W6pwsymzzpENZP0uaCYmJuezDkqwdXmmIDXl+AlvX5a
+         XlvvIg2z5oM4vk2ffrT0qm6Rw0F7DcmoUiFJgFt2a2LOiExIWcNVg47MKAjj5MqzSRpP
+         R2uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TBpouKohZ4xnNFvQAORhEKmSrdyDNk10oVx1FtC9Bws=;
+        b=g+tYxbV7BsPwjGudb6bg1xkdjgCdRJZ3foys09dQqAsd2x7tRwrDgwAx97+Vl8/mbZ
+         bQynJ/see74USOaLKE0Ox1CTRO70zYkEAxSgDNlAClvFF65S3K75K5L/p03WJWos1hUc
+         UypN5BbFj8wiaNqR1Zt1YBLFwre0Z0C9IJNweflNa/5oXQbEawnvhmseJq8/peFprbGX
+         OmxLHqQJHE0bvhoi4VXJKkpQ9x+pePUl8/0ARupETlmRgKtBuT47Nt11B4pZpBVM2tDr
+         L6eu6MqkCzokc2VcA1i5Mc2055fWBDoO7aKzJOR3NJKauGeyvHWMVwlMn5Jpv7TJMc2Z
+         mRyg==
+X-Gm-Message-State: AOAM532BTdTavX90ZfYt2gBt2cfvLkZ9OYZC04qLvZ/71b3HbTu4E8Bm
+        7DHP9v184aI+Pmc9wbZx6nbxj3oajrhkUs0/SvY=
+X-Google-Smtp-Source: ABdhPJwyy/xhHl+JQi8gUbkrBFV9qdIEd42p3ahcLsVYoc0LxBY3nBUW4K/0j87szLhObsiHhZk2WUEKzePSgoAinVs=
+X-Received: by 2002:ad4:4ae9:: with SMTP id cp9mr8657659qvb.96.1599238018778;
+ Fri, 04 Sep 2020 09:46:58 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200817220238.603465-1-robdclark@gmail.com> <20200904091117.GH6714@8bytes.org>
+In-Reply-To: <20200904091117.GH6714@8bytes.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 4 Sep 2020 09:47:45 -0700
+Message-ID: <CAF6AEGtFoUQZv3HOpjXckExvXGVsqgPVe-rjq+wLXWM9+pjWkA@mail.gmail.com>
+Subject: Re: [PATCH 00/20] iommu/arm-smmu + drm/msm: per-process GPU pgtables
+To:     Joerg Roedel <joro@8bytes.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
+        Brian Masney <masneyb@onstation.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Eric Anholt <eric@anholt.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Hanna Hawa <hannah@marvell.com>,
+        Joerg Roedel <jroedel@suse.de>,
+        John Stultz <john.stultz@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Nicolin Chen <nicoleotsuka@gmail.com>,
+        Pritesh Raithatha <praithatha@nvidia.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>, Takashi Iwai <tiwai@suse.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Wambui Karuga <wambui.karugax@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Multiple MMC host controller driver can be compile tested as they do not
-depend on architecture specific headers.
+On Fri, Sep 4, 2020 at 2:11 AM Joerg Roedel <joro@8bytes.org> wrote:
+>
+> On Mon, Aug 17, 2020 at 03:01:25PM -0700, Rob Clark wrote:
+> > Jordan Crouse (12):
+> >   iommu/arm-smmu: Pass io-pgtable config to implementation specific
+> >     function
+> >   iommu/arm-smmu: Add support for split pagetables
+> >   iommu/arm-smmu: Prepare for the adreno-smmu implementation
+> >   iommu/arm-smmu-qcom: Add implementation for the adreno GPU SMMU
+> >   dt-bindings: arm-smmu: Add compatible string for Adreno GPU SMMU
+> >   drm/msm: Add a context pointer to the submitqueue
+> >   drm/msm: Drop context arg to gpu->submit()
+> >   drm/msm: Set the global virtual address range from the IOMMU domain
+> >   drm/msm: Add support to create a local pagetable
+> >   drm/msm: Add support for private address space instances
+> >   drm/msm/a6xx: Add support for per-instance pagetables
+> >   arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
+> >
+> > Rob Clark (8):
+> >   drm/msm: remove dangling submitqueue references
+> >   iommu: add private interface for adreno-smmu
+> >   drm/msm/gpu: add dev_to_gpu() helper
+> >   drm/msm: set adreno_smmu as gpu's drvdata
+> >   iommu/arm-smmu: constify some helpers
+> >   arm: dts: qcom: sc7180: Set the compatible string for the GPU SMMU
+> >   iommu/arm-smmu: add a way for implementations to influence SCTLR
+> >   drm/msm: show process names in gem_describe
+>
+> Can the DRM parts be merged independently from the IOMMU parts or does
+> this need to be queued together? If it needs to be together I defer the
+> decission to Will through which tree this should go.
+>
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Hi,
 
----
+v16 of this series re-ordered the patches and has some notes at the
+top of the cover letter[1] about a potential way to land it.. tl;dr:
+the drm parts can and adreno-smmu-priv.h can go independently of
+iommu.  And the first four iommu patches can go in independently of
+drm.  But the last two iommu patches have a dependency on the drm
+patches.
 
-Changes since v1:
-1. Add COMMON_CLK dependency to MESON_GX to fix errors like:
-   ERROR: modpost: "devm_clk_register" [drivers/mmc/host/meson-gx-mmc.ko] undefined!
----
- drivers/mmc/host/Kconfig | 41 +++++++++++++++++++++-------------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+Note that I'll send one more revision of the series shortly (I have a
+small fixup for one of the drm patches for an issue found in testing,
+and Bjorn had some suggestions about "iommu/arm-smmu: Prepare for the
+adreno-smmu implementation" that I need to look at.
 
-diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-index eea01fde0591..93db789cf8ec 100644
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -178,7 +178,7 @@ config MMC_SDHCI_OF_AT91
- config MMC_SDHCI_OF_ESDHC
- 	tristate "SDHCI OF support for the Freescale eSDHC controller"
- 	depends on MMC_SDHCI_PLTFM
--	depends on PPC || ARCH_MXC || ARCH_LAYERSCAPE
-+	depends on PPC || ARCH_MXC || ARCH_LAYERSCAPE || COMPILE_TEST
- 	select MMC_SDHCI_IO_ACCESSORS
- 	select FSL_GUTS
- 	help
-@@ -216,7 +216,7 @@ config MMC_SDHCI_OF_DWCMSHC
- config MMC_SDHCI_OF_SPARX5
- 	tristate "SDHCI OF support for the MCHP Sparx5 SoC"
- 	depends on MMC_SDHCI_PLTFM
--	depends on ARCH_SPARX5
-+	depends on ARCH_SPARX5 || COMPILE_TEST
- 	help
- 	  This selects the Secure Digital Host Controller Interface (SDHCI)
- 	  found in the MCHP Sparx5 SoC.
-@@ -238,7 +238,7 @@ config MMC_SDHCI_CADENCE
- 
- config MMC_SDHCI_CNS3XXX
- 	tristate "SDHCI support on the Cavium Networks CNS3xxx SoC"
--	depends on ARCH_CNS3XXX
-+	depends on ARCH_CNS3XXX || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	help
- 	  This selects the SDHCI support for CNS3xxx System-on-Chip devices.
-@@ -262,7 +262,7 @@ config MMC_SDHCI_ESDHC_MCF
- 
- config MMC_SDHCI_ESDHC_IMX
- 	tristate "SDHCI support for the Freescale eSDHC/uSDHC i.MX controller"
--	depends on ARCH_MXC
-+	depends on ARCH_MXC || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	select MMC_SDHCI_IO_ACCESSORS
- 	select MMC_CQHCI
-@@ -276,7 +276,7 @@ config MMC_SDHCI_ESDHC_IMX
- 
- config MMC_SDHCI_DOVE
- 	tristate "SDHCI support on Marvell's Dove SoC"
--	depends on ARCH_DOVE || MACH_DOVE
-+	depends on ARCH_DOVE || MACH_DOVE || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	select MMC_SDHCI_IO_ACCESSORS
- 	help
-@@ -289,7 +289,7 @@ config MMC_SDHCI_DOVE
- 
- config MMC_SDHCI_TEGRA
- 	tristate "SDHCI platform support for the Tegra SD/MMC Controller"
--	depends on ARCH_TEGRA
-+	depends on ARCH_TEGRA || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	select MMC_SDHCI_IO_ACCESSORS
- 	select MMC_CQHCI
-@@ -301,7 +301,8 @@ config MMC_SDHCI_TEGRA
- 
- config MMC_SDHCI_S3C
- 	tristate "SDHCI support on Samsung S3C SoC"
--	depends on MMC_SDHCI && (PLAT_SAMSUNG || ARCH_S5PV210 || ARCH_EXYNOS)
-+	depends on MMC_SDHCI
-+	depends on PLAT_SAMSUNG || ARCH_S5PV210 || ARCH_EXYNOS || COMPILE_TEST
- 	help
- 	  This selects the Secure Digital Host Controller Interface (SDHCI)
- 	  often referrered to as the HSMMC block in some of the Samsung S3C
-@@ -313,7 +314,7 @@ config MMC_SDHCI_S3C
- 
- config MMC_SDHCI_SIRF
- 	tristate "SDHCI support on CSR SiRFprimaII and SiRFmarco SoCs"
--	depends on ARCH_SIRF
-+	depends on ARCH_SIRF || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	select MMC_SDHCI_IO_ACCESSORS
- 	help
-@@ -351,7 +352,8 @@ config MMC_SDHCI_PXAV2
- 
- config MMC_SDHCI_SPEAR
- 	tristate "SDHCI support on ST SPEAr platform"
--	depends on MMC_SDHCI && PLAT_SPEAR
-+	depends on MMC_SDHCI
-+	depends on PLAT_SPEAR || COMPILE_TEST
- 	depends on OF
- 	help
- 	  This selects the Secure Digital Host Controller Interface (SDHCI)
-@@ -374,7 +376,7 @@ config MMC_SDHCI_S3C_DMA
- 
- config MMC_SDHCI_BCM_KONA
- 	tristate "SDHCI support on Broadcom KONA platform"
--	depends on ARCH_BCM_MOBILE
-+	depends on ARCH_BCM_MOBILE || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	help
- 	  This selects the Broadcom Kona Secure Digital Host Controller
-@@ -422,7 +424,8 @@ config MMC_SDHCI_IPROC
- 
- config MMC_MESON_GX
- 	tristate "Amlogic S905/GX*/AXG SD/MMC Host Controller support"
--	depends on ARCH_MESON
-+	depends on ARCH_MESON || COMPILE_TEST
-+	depends on COMMON_CLK
- 	help
- 	  This selects support for the Amlogic SD/MMC Host Controller
- 	  found on the S905/GX*/AXG family of SoCs.  This controller is
-@@ -458,7 +461,7 @@ config MMC_MESON_MX_SDIO
- 
- config MMC_MOXART
- 	tristate "MOXART SD/MMC Host Controller support"
--	depends on ARCH_MOXART
-+	depends on ARCH_MOXART || COMPILE_TEST
- 	help
- 	  This selects support for the MOXART SD/MMC Host Controller.
- 	  MOXA provides one multi-functional card reader which can
-@@ -467,7 +470,7 @@ config MMC_MOXART
- 
- config MMC_SDHCI_ST
- 	tristate "SDHCI support on STMicroelectronics SoC"
--	depends on ARCH_STI || FSP2
-+	depends on ARCH_STI || FSP2 || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	select MMC_SDHCI_IO_ACCESSORS
- 	help
-@@ -587,7 +590,7 @@ config MMC_TIFM_SD
- 
- config MMC_MVSDIO
- 	tristate "Marvell MMC/SD/SDIO host driver"
--	depends on PLAT_ORION
-+	depends on PLAT_ORION || (COMPILE_TEST && ARM)
- 	depends on OF
- 	help
- 	  This selects the Marvell SDIO host driver.
-@@ -599,7 +602,7 @@ config MMC_MVSDIO
- 
- config MMC_DAVINCI
- 	tristate "TI DAVINCI Multimedia Card Interface support"
--	depends on ARCH_DAVINCI
-+	depends on ARCH_DAVINCI || COMPILE_TEST
- 	help
- 	  This selects the TI DAVINCI Multimedia card Interface.
- 	  If you have an DAVINCI board with a Multimedia Card slot,
-@@ -628,7 +631,7 @@ config MMC_SPI
- 
- config MMC_S3C
- 	tristate "Samsung S3C SD/MMC Card Interface support"
--	depends on ARCH_S3C24XX
-+	depends on ARCH_S3C24XX || COMPILE_TEST
- 	depends on S3C24XX_DMAC
- 	help
- 	  This selects a driver for the MCI interface found in
-@@ -681,7 +684,7 @@ config MMC_SDRICOH_CS
- 
- config MMC_SDHCI_SPRD
- 	tristate "Spreadtrum SDIO host Controller"
--	depends on ARCH_SPRD
-+	depends on ARCH_SPRD || COMPILE_TEST
- 	depends on MMC_SDHCI_PLTFM
- 	select MMC_SDHCI_IO_ACCESSORS
- 	select MMC_HSQ
-@@ -698,7 +701,7 @@ config MMC_TMIO_CORE
- 
- config MMC_TMIO
- 	tristate "Toshiba Mobile IO Controller (TMIO) MMC/SD function support"
--	depends on MFD_TMIO || MFD_ASIC3
-+	depends on MFD_TMIO || MFD_ASIC3 || COMPILE_TEST
- 	select MMC_TMIO_CORE
- 	help
- 	  This provides support for the SD/MMC cell found in TC6393XB,
-@@ -971,7 +974,7 @@ config MMC_REALTEK_USB
- 
- config MMC_SUNXI
- 	tristate "Allwinner sunxi SD/MMC Host Controller support"
--	depends on ARCH_SUNXI
-+	depends on ARCH_SUNXI || COMPILE_TEST
- 	help
- 	  This selects support for the SD/MMC Host Controller on
- 	  Allwinner sunxi SoCs.
--- 
-2.17.1
+BR,
+-R
 
+[1] https://lkml.org/lkml/2020/9/1/1469
