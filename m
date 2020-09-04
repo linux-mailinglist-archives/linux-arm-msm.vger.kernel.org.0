@@ -2,178 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F01AD25D573
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 11:54:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E68AD25D690
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 12:41:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729917AbgIDJyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 05:54:05 -0400
-Received: from Galois.linutronix.de ([193.142.43.55]:60128 "EHLO
-        galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729872AbgIDJyE (ORCPT
+        id S1730199AbgIDKlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 06:41:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730185AbgIDKlH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 05:54:04 -0400
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1599213242;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=cugrXnkRn11sd/5TRoS+8LjjADM+0MaDEb+HS6mrI+I=;
-        b=LYzceDkwg25qb0yFidvTH4u2aIFPIFwLqUIU/w3JPWk+/a5mYvTtpDlYloaW93VILAv8VX
-        UImKaw94S8mfPuknMYgJGK7ZPvlEcYLoSoaFTtn8rYyQe+OHnTi7H8vs78bAhGjqfLEitD
-        fKnxTovCaL+7c1ZC+IoWE97T3esDDGqeP2tP2nyi0DT5f35rxe+/Bvivj81np5DK/XmQ2E
-        ZHZg3OOo2Qk7XsQwWw4i/8gPWdbSDWsgIRBPMQv23tcdeDrQ+N47Y2H+6qK2PcLVxZtuPw
-        /QCY/vy5SHUkkSx/A4ljItfBhRpf7lYwoAv4GQVAVCb7v7ZPuS3UP2gacKVO1w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1599213242;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=cugrXnkRn11sd/5TRoS+8LjjADM+0MaDEb+HS6mrI+I=;
-        b=g2abxvX+AFz1a4IoY+hJICUCaj09wZglql9RyaAaFCkdj6GJSbq/GCKqkHLG2CVkQYCiaq
-        CblhKn0oNXhtXXCg==
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-In-Reply-To: <CAD=FV=U8vchyRXOjozYYroq3Mit_gt=XXADLfn0W4N4TyQzyjQ@mail.gmail.com>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org> <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com> <877dtdj042.fsf@nanos.tec.linutronix.de> <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com> <87zh67uife.fsf@nanos.tec.linutronix.de> <CAD=FV=U8vchyRXOjozYYroq3Mit_gt=XXADLfn0W4N4TyQzyjQ@mail.gmail.com>
-Date:   Fri, 04 Sep 2020 11:54:01 +0200
-Message-ID: <87pn7150li.fsf@nanos.tec.linutronix.de>
+        Fri, 4 Sep 2020 06:41:07 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59615C061246
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 03:41:06 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a17so6229922wrn.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 03:41:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AGBcS2K0ImWeFfrWpXAI/Xo9a8mhl/De79Zkj63qpo8=;
+        b=A8RehVNj2xNOT/YL0vidlBxy+xDK9yHRYixalgDgUzpDo0b2eWBf91ky71RbcCgfLI
+         DSUxy5yGwMgvxqu2EHmf6TyyQKvfmM8vyx21XwUgomecbTqPw+Bu7ifHxTDobz3xrrSN
+         Kw6co+OlPpAwUfCQuG9m6IsytM808G+9eMJPWCVrbeEXbf4uIyxfN6l/4SuLfQRK8jAm
+         ZrixQptcS2fmcPcDzTkuA3kiZBb33JUdnadF/BvwS1Tw1e+wM2peYT7wSutrbzLMyiJ3
+         ahIiKveyR3l8fkxoFDO6OV+EMlf5kFbj0OdiL8M+3esTGP23zrwqxWayWnzK3lpPbsP3
+         UAJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AGBcS2K0ImWeFfrWpXAI/Xo9a8mhl/De79Zkj63qpo8=;
+        b=A+nqM/am8uNiQcPb+hBcFBQLtJu3LuVGtUjM6hVm91QEi2zJTxP3jhiDux0NR+98jU
+         R5Tf4MQNr8KuWH6J5VNnI3ABFvP3xOlyn1ES8xJHtzaw1A53TXId7HrqVh7bbuwhq06u
+         mjnXqFhHEeqDD/wXHNCxh2HZ4w78AN4/ObUGAADZVHWgyX8mwG6xP9WO7VtPCVb7S1Le
+         xwNmRC05Y03n71wlez3Rstexg/l9lQArkqwgLBrNC5M1b1ZsuVn0fBQ7KUoQ4zYrY9y1
+         0kBZ1AqLZp2R8tePHQpg4fTWIr2tY35jRUg2BoGoYY80RMuLZjvSuA89OQ8fE4YdtX+Q
+         jP9w==
+X-Gm-Message-State: AOAM530i/F5b7NqI6qg+fKMQtcIbutdxJRowVHmo8sdQN9rwUfLmCoIc
+        FRBk8Igc2qYH0fl2iHZev50xbdkVCcDD5g==
+X-Google-Smtp-Source: ABdhPJyYDoIzAUGsvrlxti84wRUhnYjSfHM11wVKMy+B6EhxhYo/CAqxDEzFb+cyF2MVww28hUddEQ==
+X-Received: by 2002:adf:e4cc:: with SMTP id v12mr6771808wrm.216.1599216063406;
+        Fri, 04 Sep 2020 03:41:03 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id h2sm10621197wrp.69.2020.09.04.03.41.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Sep 2020 03:41:02 -0700 (PDT)
+Subject: Re: [PATCH v3 2/5] ASoC: dt-bindings: Add dt binding for lpass hdmi
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1598855964-1042-1-git-send-email-srivasam@codeaurora.org>
+ <1598855964-1042-3-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <0aa914dd-6a6e-208d-d29f-214a84dfd8a2@linaro.org>
+Date:   Fri, 4 Sep 2020 11:41:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <1598855964-1042-3-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Doug,
 
-On Thu, Sep 03 2020 at 16:19, Doug Anderson wrote:
-> On Thu, Sep 3, 2020 at 5:57 AM Thomas Gleixner <tglx@linutronix.de> wrote:
->>    That pending interrupt will not prevent the machine from going into
->>    suspend and if it's an edge interrupt then an unmask in
->>    suspend_device_irq() won't help. Edge interrupts are not resent in
->>    hardware. They are fire and forget from the POV of the device
->>    hardware.
->
-> Ah, interesting.  I didn't think about this case exactly.  I might
-> have a fix for it anyway.  At some point in time I was thinking that
-> the world could be solved by relying on lazily-disabled interrupts and
-> I wrote up a patch to make sure that they woke things up.  If you're
-> willing to check out our gerrit you can look at:
->
-> https://crrev.com/c/2314693
->
-> ...if not I can post it as a RFC for you.
 
-I actually tried despite my usual aversion against web
-interfaces. Aversion confirmed :)
+On 31/08/2020 07:39, Srinivasa Rao Mandadapu wrote:
+> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> 
+> Adds bindings for lpass hdmi interface
+> which can support audio path over dp.
+> 
+> Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> ---
+>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 51 ++++++++++++++++++++--
+>   1 file changed, 47 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> index 09c9bd2..7c2ac0c 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> @@ -22,6 +22,7 @@ properties:
+>         - qcom,lpass-cpu
+>         - qcom,apq8016-lpass-cpu
+>         - qcom,sc7180-lpass-cpu
+> +      - qcom,sc7180-lpass-hdmi
 
-You could have included the 5 lines of patch into your reply to spare me
-the experience. :)
+Why do we need a new compatible per interface, IMO, you should just use 
+the existing compatible.
+Or please explain the reasons why we need this?
 
-> I'm sure I've solved the problem in a completely incorrect and broken
-> way, but hopefully the idea makes sense.  In discussion we decided not
-> to go this way because it looked like IRQ clients could request an IRQ
-> with IRQ_DISABLE_UNLAZY and then that'd break us.  :( ...but even so I
-> think the patch is roughly right and would address your point #1.
-
-Kinda :) But that's still incomplete because it does not handle the case
-where the interrupt arrives between disable_irq() and enable_irq_wake().
-See below.
-
->> 2) irq chip has a irq_disable() callback or has IRQ_DISABLE_UNLAZY set
->>
->>    In that case disable_irq() will mask it at the hardware level and it
->>    stays that way until enable_irq() is invoked.
->>
->> #1 kinda works and the gap is reasonably trivial to fix in
->>    suspend_device_irq() by checking the pending state and telling the PM
->>    core that there is a wakeup pending.
->>
->> #2 Needs an indication from the chip flags that an interrupt which is
->>    masked has to be unmasked when it is a enabled wakeup source.
->>
->> I assume your problem is #2, right? If it's #1 then UNMASK_IF_WAKEUP is
->> the wrong answer.
->
-> Right, the problem is #2.  We're not in the lazy mode.
-
-Right and that's where we want the new chip flag with the unmask if
-armed.
-
-Thanks,
-
-        tglx
-
-8<------
-
- kernel/irq/pm.c |   27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
-
---- a/kernel/irq/pm.c
-+++ b/kernel/irq/pm.c
-@@ -13,14 +13,19 @@
- 
- #include "internals.h"
- 
-+static void irq_pm_do_wakeup(struct irq_desc *desc)
-+{
-+	irqd_clear(&desc->irq_data, IRQD_WAKEUP_ARMED);
-+	desc->istate |= IRQS_SUSPENDED | IRQS_PENDING;
-+	pm_system_irq_wakeup(irq_desc_get_irq(desc));
-+}
-+
- bool irq_pm_check_wakeup(struct irq_desc *desc)
- {
- 	if (irqd_is_wakeup_armed(&desc->irq_data)) {
--		irqd_clear(&desc->irq_data, IRQD_WAKEUP_ARMED);
--		desc->istate |= IRQS_SUSPENDED | IRQS_PENDING;
- 		desc->depth++;
- 		irq_disable(desc);
--		pm_system_irq_wakeup(irq_desc_get_irq(desc));
-+		irq_pm_do_wakeup(desc);
- 		return true;
- 	}
- 	return false;
-@@ -69,12 +74,24 @@ void irq_pm_remove_action(struct irq_des
- 
- static bool suspend_device_irq(struct irq_desc *desc)
- {
-+	struct irq_data *irqd = &desc->irq_data;
-+
- 	if (!desc->action || irq_desc_is_chained(desc) ||
- 	    desc->no_suspend_depth)
- 		return false;
- 
--	if (irqd_is_wakeup_set(&desc->irq_data)) {
--		irqd_set(&desc->irq_data, IRQD_WAKEUP_ARMED);
-+	if (irqd_is_wakeup_set(irqd)) {
-+		irqd_set(irqd, IRQD_WAKEUP_ARMED);
-+		/*
-+		 * Interrupt might have been disabled in the suspend
-+		 * sequence before the wakeup was enabled. If the interrupt
-+		 * is lazy masked then it might have fired and the pending
-+		 * bit is set. Ignoring this would miss the wakeup.
-+		 */
-+		if (irqd_irq_disabled(irqd) && desc->istate & IRQS_PENDING) {
-+			irq_pm_do_wakeup(desc);
-+			return false;
-+		}
- 		/*
- 		 * We return true here to force the caller to issue
- 		 * synchronize_irq(). We need to make sure that the
+>   
+>     reg:
+>       maxItems: 1
+> @@ -60,10 +61,12 @@ properties:
+>       const: 0
+>   
+>   patternProperties:
+> -  "(^mi2s-[0-9a-f]$|mi2s)":
+> +  "^dai@[0-9a-f]$":
+>       type: object
+> -    description: Required properties for each DAI
+> -
+> +    description: |
+> +      LPASS CPU dai node for each I2S device. Bindings of each node
+> +      depends on the specific driver providing the functionality and
+> +      properties.
+>       properties:
+>         reg:
+>           maxItems: 1
+> @@ -145,6 +148,22 @@ allOf:
+>           - iommus
+>           - power-domains
+>   
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,sc7180-lpass-hdmi
+> +    then:
+> +      properties:
+> +        clock-names:
+> +          items:
+> +            - const: pcnoc-sway-clk
+> +            - const: audio-core
+> +            - const: pcnoc-mport-clk
+> +      required:
+> +        - iommus
+> +        - power-domains
+> +
+>   examples:
+>     - |
+>       #include <dt-bindings/sound/sc7180-lpass.h>
+> @@ -178,12 +197,36 @@ examples:
+>               #address-cells = <1>;
+>               #size-cells = <0>;
+>               /* Optional to set different MI2S SD lines */
+> -            mi2s-primary@0 {
+> +            dai@mi2s-primary {
+>                   reg = <MI2S_PRIMARY>;
+>                   qcom,playback-sd-lines = <1>;
+>                   qcom,capture-sd-lines = <0>;
+>               };
+>           };
+> +
+> +        lpassh@62d87000 {
+> +            compatible = "qcom,sc7180-lpass-hdmi";
+> +
+> +            reg = <0 0x62d87000 0 0x68000>;
+> +
+> +            iommus = <&apps_smmu 0x1032 0>;
+> +
+> +            power-domains = <&lpass_hm 0>;
+> +
+> +            clocks = <&gcc 131>,
+> +                 <&lpasscc 6>,
+> +                 <&lpasscc 10>;
+> +
+> +            clock-names = "pcnoc-sway-clk", "audio-core",
+> +                          "pcnoc-mport-clk";
+> +
+> +            #sound-dai-cells = <1>;
+> +
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            interrupts = <0 268 1>;
+> +        };
+>       };
+>   
+>   ...
+> 
