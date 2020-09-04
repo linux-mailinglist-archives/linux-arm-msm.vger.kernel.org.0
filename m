@@ -2,199 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDDB825D935
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 15:03:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33DBA25DAFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 16:09:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730295AbgIDNDX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 09:03:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46898 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730255AbgIDNDW (ORCPT
+        id S1730564AbgIDOJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 10:09:26 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:44855 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730615AbgIDNp4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 09:03:22 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13CA6C061245
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 06:03:22 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id f2so6190592qkh.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 06:03:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=91R6k3kVp9Mx4ywBsUycmYMziP2Na7QYOzvont9ThTs=;
-        b=f2InfMC3zUv5o08wJbEWIhFbDOLTlZhxw7806mCoDQiE9GUHw+LDUxXVCIJAMMUCSY
-         eQVRB32C2QLctrkgHkrJEQNlJVSgykvTOK9urz+zgj4Yw9qc3zyaOqpdAxs/2m+thLTI
-         0gV5513hPf7Zhj0+P8kktYo0ly0tHRS2jadR9B7WewT6BtEgsntwRXt+Xb4ZdGe0w73n
-         lWElz3EhvBnkY3OSA+gbzdMkfBYpmUp/3u/nGpDrOkoXk3S5Zl0MYPJX2PivmAjpUhJr
-         MbJv419ws20mO2JVw6Gob2cCVrq+BM+4sLaZWvv9lBggPSg7pv9vTVWtZ0dpP3+FSKkh
-         HNYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=91R6k3kVp9Mx4ywBsUycmYMziP2Na7QYOzvont9ThTs=;
-        b=gpb4FJViKxe3m0k94DfpAEuADeuiG9mhtFpcLz5bNzw1aGzKs2yhluf1S8AzZ9DJeM
-         ohMwInLb1rvh3iS6DCP1MAhYsTUn/pzLQyV0EbICZa+T1FItsAUGfmLef79Vf+uzBn7g
-         6Fb2XEQPTyi/vymg8PV4kqoVJvaA6/cFEupUueIp3U9QcbApVH9KyoGxJTUvvWz3LyB2
-         4VgpP8fUbQjk+PcX7mvq1yMMtr2DsP+xCyJmIXfgNQp7ci3FxwTFISBoMVcI28UEDBLs
-         mQ1ldkM7wfkaG2JpSKAIpAyR/cZnKcOFCrZWpSMm2GAYPgDsAp9Cbi5Gwwuyk2Js/KdO
-         rO/Q==
-X-Gm-Message-State: AOAM530MInR+eNP4WZNfWTsMzquui10rpIvUr7hLHE/xAROhYlFf5oiQ
-        wEbjFLjYkpR7Yhdyc6Tf0gTwmA==
-X-Google-Smtp-Source: ABdhPJxgSZH5zAHlN2iY/FzlPALmYu5zSQUPGU/S4gCioz7nDF6E7X/OgFbsHKaqndMAifmBMUmnEw==
-X-Received: by 2002:a05:620a:15a7:: with SMTP id f7mr1367974qkk.3.1599224601190;
-        Fri, 04 Sep 2020 06:03:21 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id q8sm4516772qkq.57.2020.09.04.06.03.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2020 06:03:20 -0700 (PDT)
-Subject: Re: [PATCH v2 07/10] phy: qcom-qmp: Add support for DP in USB3+DP
- combo phy
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@chromium.org>
-References: <20200902230215.3452712-1-swboyd@chromium.org>
- <20200902230215.3452712-8-swboyd@chromium.org>
- <b6f80242-482d-b778-690b-8aefa4e8f23e@marek.ca>
- <9f99cc8b-2cfd-280f-e52a-23d098934a11@linaro.org>
- <4c0f59f8-b7fa-432f-2255-8d253f434a59@marek.ca>
- <c8ca7193-67ae-e1d5-d36a-19655ca67d78@linaro.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <6017ca10-e4c8-4104-df2d-03984da2a655@marek.ca>
-Date:   Fri, 4 Sep 2020 09:02:36 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <c8ca7193-67ae-e1d5-d36a-19655ca67d78@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        Fri, 4 Sep 2020 09:45:56 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200904133502euoutp01c23a07d0678f5558c66c147aaaeaa6c0~xmAfSYkYe0722007220euoutp01h
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 13:35:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200904133502euoutp01c23a07d0678f5558c66c147aaaeaa6c0~xmAfSYkYe0722007220euoutp01h
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1599226502;
+        bh=FFKEnEGLYycFGem4Izu1WZx/1I5qbSi6HYCqSDcVLTQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=RM1NWk0RI2OURqRRGWw7QH+lJ7AkgNr43NsYcbWBSqX87xYu81YU5sOTM67IKGdx+
+         0peKSvHK1gl8SJXz51D3Q3/k/wInVplXY0LjSUo0G5mOfaI44bTgHmlh05xFQ71dms
+         uzbl/JUkPaDDH0EHFa8QC18zdeDE1MmQvJ4ZaFpo=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200904133501eucas1p2529f0bc87c0af4baebd81f9e3a264781~xmAewqEbQ1446814468eucas1p2f;
+        Fri,  4 Sep 2020 13:35:01 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id D7.66.05997.582425F5; Fri,  4
+        Sep 2020 14:35:01 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20200904133501eucas1p2a2bc13658bf8433a10fcb8d5a173d57a~xmAeW9WOJ1447814478eucas1p2k;
+        Fri,  4 Sep 2020 13:35:01 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200904133501eusmtrp2f6963a47e96a1e719bc7222b3c1b5da4~xmAeWIaL40977009770eusmtrp2F;
+        Fri,  4 Sep 2020 13:35:01 +0000 (GMT)
+X-AuditID: cbfec7f4-65dff7000000176d-5d-5f5242850e4c
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id ED.AE.06314.482425F5; Fri,  4
+        Sep 2020 14:35:00 +0100 (BST)
+Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20200904133500eusmtip1774ac3ba3b0b581411835ea2c5a7ac96~xmAduhpK11924719247eusmtip1c;
+        Fri,  4 Sep 2020 13:35:00 +0000 (GMT)
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linaro-mm-sig@lists.linaro.org, linux-kernel@vger.kernel.org
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        linux-arm-kernel@lists.infradead.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v10 12/30] drm: msm: fix common struct sg_table related
+ issues
+Date:   Fri,  4 Sep 2020 15:16:53 +0200
+Message-Id: <20200904131711.12950-13-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200904131711.12950-1-m.szyprowski@samsung.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA0WSWUwTURSGuZ0uQ0NlLBiuiJI0SqJRlsrDJCgqLplEFMQHg0ahygQItJAW
+        EDBR0KCmgmEJ2gAKgoBssu8CUpBKkIoCsg77IhpiDRWFIth2UN/++//fueeek4si/DaWNRoo
+        CSOlElGwgM1l1nSsvD8Q5+bl4/h1ZDueoO5k4OWKUha+UZOE4H0/vrHxjPlugBcUvWHgWS0u
+        uLZvkoFXTH9i4Ukt3Ry8tyGDjZe0Uxx8/tkvBG/VzLBwKqUdHDUnip8WA6JpOYtJ1KdRHKJ2
+        eYJFjD9QMYjK57eIkfVphEgZzAdE41AMm1A1DHOIh1WFgFiq2OVpdpF7yI8MDowgpQ6uvtyA
+        uWENCKUEkc2KGSQGrNnIgSkKMWf4RXWPLQdclI+9ALBsro5tCPiYFsDOeGc6WAKQymliyAFq
+        rEgtsKaZfADfrp6nGT3fT00xDAEbc4LyRbnxIkssTg8lmBkgBEtD4GelzhhYYJ4wZ15jLGBi
+        e2ByeZdR8zBXODb6nUk/zxYWlb1GDNpU71crZliGiyA2xoHpmvRN6AR89aEWobWFfp4qDq1t
+        4EZ9JoMuuAPgpLqEQx/iAey9rQA05QJH1atsw2wItheWNjjQ9jE4UJjHokfeAgcXtxpsRC+T
+        ax4jtM2D9+/yadoOpqle/mvb2vNxEyFg/sQZekFJ+j0Ml3MSgW3a/15ZABQCKzJcJvYnZUIJ
+        ed1eJhLLwiX+9tdCxBVA/7W61lXaOtCwdlUJMBQIzHgmR7x8+CxRhCxKrAQQRQSWPLfurit8
+        np8oKpqUhvhIw4NJmRLsQJkCK97B7IXLfMxfFEYGkWQoKf2bMlBT6xjgGLvTPC+0OcVsQCfs
+        eXeh09k16FxiP2/hrDA5EuROw9nDyGJjBDOxd4nyqtLZKQU6b+9V99FTYBbkru8OGso8bbLf
+        sm1Yx/XomJKkxt5UaG9QZJwW83V31ERfGhfyVx6lHK+uXHriN1jg/TsIocQeOW4/MbXw5Ei2
+        pC1zm4ApCxA57UOkMtEfgA/Lx1YDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGIsWRmVeSWpSXmKPExsVy+t/xu7qtTkHxBhtFLHrPnWSy2DhjPavF
+        /20TmS2ufH3PZjHn+VlGi5WrjzJZLNhvbfHlykMmi02Pr7FaTNx/lt3i8q45bBZrj9xlt3i+
+        8AezxcEPT1gt7k4+wujA77Fm3hpGj73fFrB47Jx1l91j+7cHrB73u48zeWxeUu9x+99jZo/J
+        N5Yzeuy+2cDmcXzXLXaPvi2rGD0+b5IL4InSsynKLy1JVcjILy6xVYo2tDDSM7S00DMysdQz
+        NDaPtTIyVdK3s0lJzcksSy3St0vQy3h26wNjwV2lin0znjA3MP6R6WLk4JAQMJGYulKqi5GL
+        Q0hgKaPEgrs/2bsYOYHiMhInpzWwQtjCEn+udbFBFH1ilNj/4xFYEZuAoUTXW4iEiEAno8S0
+        7o/sIA6zwBJmib6pl9hAqoQF/CQ+HzoBNopFQFVi0sbTTCA2r4CdxL07H1kgVshLrN5wgBnE
+        5gSKb53xBKxeSMBW4sOcxSwTGPkWMDKsYhRJLS3OTc8tNtQrTswtLs1L10vOz93ECIyjbcd+
+        bt7BeGlj8CFGAQ5GJR5eBvugeCHWxLLiytxDjBIczEoivE5nT8cJ8aYkVlalFuXHF5XmpBYf
+        YjQFOmois5Rocj4wxvNK4g1NDc0tLA3Njc2NzSyUxHk7BA7GCAmkJ5akZqemFqQWwfQxcXBK
+        NTDaPevftdRdViYiOkde6ppRfqLLrF4Bu1/n1D06U69u599whKe18IvqhjilvFNVnMd4t7xd
+        7MQqbXm/K7DrB4Pk7X2nRe8s8L+z07Fz/tzED99veK0UcNgsfj01XeykJk/f1O2mcbUWl2NW
+        yT05uKD/SkDYAplPYX8MHr2cdcin8TtfWfek/H4lluKMREMt5qLiRAAN31+euQIAAA==
+X-CMS-MailID: 20200904133501eucas1p2a2bc13658bf8433a10fcb8d5a173d57a
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200904133501eucas1p2a2bc13658bf8433a10fcb8d5a173d57a
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200904133501eucas1p2a2bc13658bf8433a10fcb8d5a173d57a
+References: <20200904131711.12950-1-m.szyprowski@samsung.com>
+        <CGME20200904133501eucas1p2a2bc13658bf8433a10fcb8d5a173d57a@eucas1p2.samsung.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/4/20 8:57 AM, Dmitry Baryshkov wrote:
-> On 04/09/2020 15:44, Jonathan Marek wrote:
->> On 9/4/20 8:29 AM, Dmitry Baryshkov wrote:
->>> On 03/09/2020 23:43, Jonathan Marek wrote:
->>>> On 9/2/20 7:02 PM, Stephen Boyd wrote:
->>>>> Add support for the USB3 + DisplayPort (DP) "combo" phy to the qmp phy
->>>>> driver. We already have support for the USB3 part of the combo phy, so
->>>>> most additions are for the DP phy.
->>>>>
->>>>> Split up the qcom_qmp_phy{enable,disable}() functions into the phy 
->>>>> init,
->>>>> power on, power off, and exit functions that the common phy framework
->>>>> expects so that the DP phy can add even more phy ops like
->>>>> phy_calibrate() and phy_configure(). This allows us to initialize 
->>>>> the DP
->>>>> PHY and configure the AUX channel before powering on the PHY at the 
->>>>> link
->>>>> rate that was negotiated during link training.
->>>>>
->>>>> The general design is as follows:
->>>>>
->>>>>    1) DP controller calls phy_init() to initialize the PHY and 
->>>>> configure
->>>>>    the dp_com register region.
->>>>>
->>>>>    2) DP controller calls phy_configure() to tune the link rate and
->>>>>    voltage swing and pre-emphasis settings.
->>>>>
->>>>>    3) DP controller calls phy_power_on() to enable the PLL and 
->>>>> power on
->>>>>    the phy.
->>>>>
->>>>>    4) DP controller calls phy_configure() again to tune the voltage 
->>>>> swing
->>>>>    and pre-emphasis settings determind during link training.
->>>>>
->>>>>    5) DP controller calls phy_calibrate() some number of times to 
->>>>> change
->>>>>    the aux settings if the aux channel times out during link training.
->>>>>
->>>>>    6) DP controller calls phy_power_off() if the link rate is to be
->>>>>    changed and goes back to step 2 to try again at a different link 
->>>>> rate.
->>>>>
->>>>>    5) DP controller calls phy_power_off() and then phy_exit() to power
->>>>>    down the PHY when it is done.
->>>>>
->>>>> The DP PHY contains a PLL that is different from the one used for the
->>>>> USB3 PHY. Instead of a pipe clk there is a link clk and a pixel clk
->>>>> output from the DP PLL after going through various dividers. Introduce
->>>>> clk ops for these two clks that just tell the child clks what the
->>>>> frequency of the pixel and link are. When the phy link rate is
->>>>> configured we call clk_set_rate() to update the child clks in the
->>>>> display clk controller on what rate is in use. The clk frequencies
->>>>> always differ based on the link rate (i.e. 1.6Gb/s 2.7Gb/s, 
->>>>> 5.4Gb/s, or
->>>>> 8.1Gb/s corresponding to various transmission modes like HBR1, HBR2 or
->>>>> HBR3) so we simply store the link rate and use that to calculate 
->>>>> the clk
->>>>> frequencies.
->>>>>
->>>>> The PLL enable sequence is a little different from other QMP phy 
->>>>> PLLs so
->>>>> we power on the PLL in qcom_qmp_phy_configure_dp_phy() that gets 
->>>>> called
->>>>> from phy_power_on(). This should probably be split out better so that
->>>>> each phy has a way to run the final PLL/PHY enable sequence.
->>>>>
->>>>> This code is based on a submission of this phy and PLL in the drm
->>>>> subsystem.
->>>>
->>>> I updated my upstream-based sm8150/sm8250 displayport stack [1] to 
->>>> use these patches.
->>>
->>> I have tried your branch on my RB5 with two different dongles. Both 
->>> dongles provide the same behaviour:
->>>   - on first plug I see VDM Tx errors,
->>>   - after I unplug and replug the dongle, PD phy seems to be stuck on 
->>> sending capabilities.
->>>
->>> See attached logs.
->>>
->>> Also I had to add typec_unregister_port(port->typec_port); to 
->>> IS_ERR(alt) in your tcpm.c hack.
->>>
->>> I'm currently finishing the driver for the mux/redriver, will retry 
->>> testing afterwards.
->>>
->>
->> As I mentioned the TCPM driver has a lot of issues. The "hard reset" 
->> isn't implemented correctly so going into that mode gets it stuck in a 
->> bad state. Note I am using this dongle [1], and it only works 
->> correctly in sink mode (with the dongle providing power), in source 
->> mode it does negotiate the alt mode, but never gets the HPD event that 
->> DP driver is waiting for.
->>
->> https://www.amazon.ca/Cable-Matters-Multiport-DisplayPort-Ethernet/dp/B06Y5N3YCD 
-> 
-> 
-> I'll take a look for dongles that work in source mode (with RB5 being 
-> the sink). Reset being not fully implemented would answer on questions 
-> about replug. Any idea about VDM Tx errors?
-> 
-> 
+The Documentation/DMA-API-HOWTO.txt states that the dma_map_sg() function
+returns the number of the created entries in the DMA address space.
+However the subsequent calls to the dma_sync_sg_for_{device,cpu}() and
+dma_unmap_sg must be called with the original number of the entries
+passed to the dma_map_sg().
 
-Unfortunately I don't have a good idea. If you want to compare, here is 
-my tcpm log [1] in source mode (HDK providing the power, it doesn't get 
-the HPD event)
+struct sg_table is a common structure used for describing a non-contiguous
+memory buffer, used commonly in the DRM and graphics subsystems. It
+consists of a scatterlist with memory pages and DMA addresses (sgl entry),
+as well as the number of scatterlist entries: CPU pages (orig_nents entry)
+and DMA mapped pages (nents entry).
 
-[1] https://gist.github.com/flto/62f352dbff3601abe05013bfebe7c0ab
+It turned out that it was a common mistake to misuse nents and orig_nents
+entries, calling DMA-mapping functions with a wrong number of entries or
+ignoring the number of mapped entries returned by the dma_map_sg()
+function.
+
+To avoid such issues, lets use a common dma-mapping wrappers operating
+directly on the struct sg_table objects and use scatterlist page
+iterators where possible. This, almost always, hides references to the
+nents and orig_nents entries, making the code robust, easier to follow
+and copy/paste safe.
+
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Rob Clark <robdclark@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_gem.c    | 13 +++++--------
+ drivers/gpu/drm/msm/msm_gpummu.c | 15 +++++++--------
+ drivers/gpu/drm/msm/msm_iommu.c  |  2 +-
+ 3 files changed, 13 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index b2f49152b4d4..8c7ae812b813 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -53,11 +53,10 @@ static void sync_for_device(struct msm_gem_object *msm_obj)
+ 	struct device *dev = msm_obj->base.dev->dev;
+ 
+ 	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
+-		dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_sync_sgtable_for_device(dev, msm_obj->sgt,
++					    DMA_BIDIRECTIONAL);
+ 	} else {
+-		dma_map_sg(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_map_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
+ 	}
+ }
+ 
+@@ -66,11 +65,9 @@ static void sync_for_cpu(struct msm_gem_object *msm_obj)
+ 	struct device *dev = msm_obj->base.dev->dev;
+ 
+ 	if (get_dma_ops(dev) && IS_ENABLED(CONFIG_ARM64)) {
+-		dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_sync_sgtable_for_cpu(dev, msm_obj->sgt, DMA_BIDIRECTIONAL);
+ 	} else {
+-		dma_unmap_sg(dev, msm_obj->sgt->sgl,
+-			msm_obj->sgt->nents, DMA_BIDIRECTIONAL);
++		dma_unmap_sgtable(dev, msm_obj->sgt, DMA_BIDIRECTIONAL, 0);
+ 	}
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpummu.c b/drivers/gpu/drm/msm/msm_gpummu.c
+index 310a31b05faa..53a7348476a1 100644
+--- a/drivers/gpu/drm/msm/msm_gpummu.c
++++ b/drivers/gpu/drm/msm/msm_gpummu.c
+@@ -30,21 +30,20 @@ static int msm_gpummu_map(struct msm_mmu *mmu, uint64_t iova,
+ {
+ 	struct msm_gpummu *gpummu = to_msm_gpummu(mmu);
+ 	unsigned idx = (iova - GPUMMU_VA_START) / GPUMMU_PAGE_SIZE;
+-	struct scatterlist *sg;
++	struct sg_dma_page_iter dma_iter;
+ 	unsigned prot_bits = 0;
+-	unsigned i, j;
+ 
+ 	if (prot & IOMMU_WRITE)
+ 		prot_bits |= 1;
+ 	if (prot & IOMMU_READ)
+ 		prot_bits |= 2;
+ 
+-	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
+-		dma_addr_t addr = sg->dma_address;
+-		for (j = 0; j < sg->length / GPUMMU_PAGE_SIZE; j++, idx++) {
+-			gpummu->table[idx] = addr | prot_bits;
+-			addr += GPUMMU_PAGE_SIZE;
+-		}
++	for_each_sgtable_dma_page(sgt, &dma_iter, 0) {
++		dma_addr_t addr = sg_page_iter_dma_address(&dma_iter);
++		int i;
++
++		for (i = 0; i < PAGE_SIZE; i += GPUMMU_PAGE_SIZE)
++			gpummu->table[idx++] = (addr + i) | prot_bits;
+ 	}
+ 
+ 	/* we can improve by deferring flush for multiple map() */
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index 3a381a9674c9..6c31e65834c6 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -36,7 +36,7 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
+ 	struct msm_iommu *iommu = to_msm_iommu(mmu);
+ 	size_t ret;
+ 
+-	ret = iommu_map_sg(iommu->domain, iova, sgt->sgl, sgt->nents, prot);
++	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
+ 	WARN_ON(!ret);
+ 
+ 	return (ret == len) ? 0 : -EINVAL;
+-- 
+2.17.1
+
