@@ -2,113 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8550325E2B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 22:26:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9A3425E387
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 23:59:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728001AbgIDU0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 16:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
+        id S1727949AbgIDV7v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 17:59:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727951AbgIDU0r (ORCPT
+        with ESMTP id S1727057AbgIDV7u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 16:26:47 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7914AC061245
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 13:26:47 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id i26so10179828ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 13:26:47 -0700 (PDT)
+        Fri, 4 Sep 2020 17:59:50 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2113DC061244
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 14:59:50 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id e17so8059075wme.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 14:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=71QF8U6Pk/SiD85qlDqgpqkUOmuelTg8cgLRGmKd4dg=;
-        b=dWScMilwgzS+jeGX34RxcHODSmT017udhLnTrcdCacIY5qKlib/Ga1PVvLXMJBSV+x
-         h5h9I8waE88HTpZuR8PqVIdBzBgwbh6YS0rrdycZMe3cOD5Y0K9oCXwunA66el91/5Mb
-         Q9/iYkvEhMeTGtBF8BSMOtRbKHD4Pl8roa1XvmslHehpbFctdKTIYqPqugoSDn/ufxP8
-         IhwSeo45OrFgDsZGP7jHhz42AICfLI7mj3mwIdyD3G61H3MaLV/4W0dbnZJiCAacqk2D
-         IEkIJ0W0VmXpwYzgbA4VoVBf74j4xGZqnTA7XWHqLbCfpWPxfCq3kit7o7RZgzLGwO/r
-         8IvQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=U3spfXQmO2BRaJHGudjEyITOjhah8je6NW5iKf3Fh4I=;
+        b=KDlxzvn+rzpjApnqElJuPXhCljKoqyBKG8f9WahNk8FJP53EPszdWs4t0tUp47I5LK
+         h8ZU0d/IJdzanRthbzPkmPvhkv9nKflt7eXoaKINWiv4OECggyf4IxXx6Rw0ir1rycJU
+         ufwzMfgnzZILJP6rQIq0MCEcaWPwySvaUln+Bvou7nflu3Em3fxFHkab9HFc/nCR94dO
+         lQa2XCQylWTs3VYDOsI0PtJJfrIxh5lyceNr7s/psh0FZeEy1LVYpZDFiQdtoGpDDe2M
+         ADvu3ouE4OnQlpB0Cs903L9F++qyXfWOmQN2z4kdHbyOqYStcZubrcJejSSS6pCgSo7m
+         3ABw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=71QF8U6Pk/SiD85qlDqgpqkUOmuelTg8cgLRGmKd4dg=;
-        b=RHmbJsW72jWFkyet7JgEdP7NmrNCJY9sBnEWvs/5vZRVQtJFI3NT8r5eC1YtRZD9VG
-         LbuPZgX5l3SxmyBqicTEg88p9y7I754yBzDgHfZQ6A/Yi5Z3UxBFjXRhPlgsQqxwoGXs
-         b+4oQRLTKLOqtMDxhNCZCoEgClgoTur4WpxUEdx8ISD68nWfar1yKexwivu4/hLZiovj
-         ToQqz/8qbA2LsTdVj8nFeY4dsFw5wbz6PvIigx6oQkPFj3P6NDbJKuhT0jcx3x8irEQa
-         /c4UbkhK631nmI3kXz0JMxFf1qFsVS9jd9qvSZZj9c6YZJL+42PC2Zv8x7aNWfPu5j77
-         zKzg==
-X-Gm-Message-State: AOAM532vohWmJgRNjpbcV1i4398qx5Y2IncNpn10wcFapK+wm9vmz6Xx
-        sdNV1yxOXVSmMp1fOTDSPjGAiwmcBJi5J7zT
-X-Google-Smtp-Source: ABdhPJx30bReT6CTdB48NgVjNdPtv2dzDs6J0R/E4WIddm4nOy7VcNTajmbkx8JjJoGBxw+SAEnSog==
-X-Received: by 2002:a17:906:3755:: with SMTP id e21mr9269680ejc.39.1599251205777;
-        Fri, 04 Sep 2020 13:26:45 -0700 (PDT)
-Received: from [192.168.1.6] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id dm22sm7068399edb.49.2020.09.04.13.26.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2020 13:26:44 -0700 (PDT)
-Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
-To:     Robin Murphy <robin.murphy@arm.com>, stanimir.varbanov@linaro.org,
-        mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <c474d49b-7800-28c6-d73b-20a6d2258e9e@linaro.org>
-Date:   Fri, 4 Sep 2020 23:26:42 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=U3spfXQmO2BRaJHGudjEyITOjhah8je6NW5iKf3Fh4I=;
+        b=F3DsA8DQdXBavNvbKvAHaTRPMsp2dFaRyW1sHPy4WFBmAx2kjep1cjQRKhGHlWqSVs
+         yuRaSNR4iGN68QbK33FaL2ouWGAM2CDwEpU4/w+LHSpv0k8IvCjwGIrSntPUGsipTOfl
+         i3t/WTayLBxf1ggUZH9ITCC+ETQsH0Z2nQvC9s4BrJShP2uJuLMzPbZ/VCrlxZToREBF
+         59NNFqx9v6JHPIm23uL62CVQemo9oX9f9GZaMv04x8qi3tsb6H45BMFiZvGPS4sRrqfT
+         RP1FSxTt58ZpXSXnM9sYCmBVDT9OuSvGbWrZ/7BYMoNMqvSYskdHr2ISMWng/eQticZB
+         /YlQ==
+X-Gm-Message-State: AOAM530CfJENGWdA5cUjaYOVDx9uQtXTtNcic9zbXLJ6JPOEzUJ2NYRR
+        II25Nw6RV353B45/OUeV3VwMDsH5gf7zsoGB5Mo=
+X-Google-Smtp-Source: ABdhPJzQSXMefTwCwfsJ62JIXHVJSF1qjBmc0EIMobb5Rax3AVQbmJefcrTwN92VWnLnNYppDlINyPj2nR+DcvuvCfM=
+X-Received: by 2002:a1c:2dcb:: with SMTP id t194mr9134014wmt.94.1599256788672;
+ Fri, 04 Sep 2020 14:59:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 4 Sep 2020 15:00:44 -0700
+Message-ID: <CAF6AEGvnr6Nhz2J0sjv2G+j7iceVtaDiJDT8T88uW6jiBfOGKQ@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2020-09-04
+To:     Dave Airlie <airlied@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin,
+Hi Dave,
 
-Thanks for the patch!
+A few fixes for a potential RPTR corruption issue.
 
-On 9/4/20 12:14 AM, Robin Murphy wrote:
-> Since commit 9495b7e92f71 ("driver core: platform: Initialize dma_parms
-> for platform devices"), struct platform_device already provides a
-> dma_parms structure, so we can save allocating another one.
-> 
-> Also the DMA segment size is simply a size, not a bitmask.
-> 
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-> ---
->  drivers/media/platform/qcom/venus/core.c | 8 +-------
->  1 file changed, 1 insertion(+), 7 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 203c6538044f..2fa9275d75ff 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -226,13 +226,7 @@ static int venus_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
->  
-> -	if (!dev->dma_parms) {
-> -		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
-> -					      GFP_KERNEL);
-> -		if (!dev->dma_parms)
-> -			return -ENOMEM;
-> -	}
-> -	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
-> +	dma_set_max_seg_size(dev, UINT_MAX);
+The following changes since commit 5e0c22d4a9ddae4e784a3e171b9d3d452b37aeb2:
 
-To be correct we should check for EIO error?
+  drm/msm/a6xx: fix frequency not always being restored on GMU resume
+(2020-08-22 10:56:45 -0700)
 
->  
->  	INIT_LIST_HEAD(&core->instances);
->  	mutex_init(&core->lock);
-> 
+are available in the Git repository at:
 
--- 
-regards,
-Stan
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2020-09-04
+
+for you to fetch changes up to f6828e0c4045f03f9cf2df6c2a768102641183f4:
+
+  drm/msm: Disable the RPTR shadow (2020-09-04 12:14:15 -0700)
+
+----------------------------------------------------------------
+Jordan Crouse (4):
+      drm/msm: Split the a5xx preemption record
+      drm/msm: Enable expanded apriv support for a650
+      drm/msm: Disable preemption on all 5xx targets
+      drm/msm: Disable the RPTR shadow
+
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c     |  5 +++++
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c     | 10 ++++++++++
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c     | 10 ++++++++++
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 14 +++++++++++---
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.h     |  1 +
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 25 ++++++++++++++++++++-----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 13 ++++++++++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c   | 27 ++-------------------------
+ drivers/gpu/drm/msm/msm_gpu.c             |  2 +-
+ drivers/gpu/drm/msm/msm_gpu.h             | 11 +++++++++++
+ drivers/gpu/drm/msm/msm_ringbuffer.c      |  4 ++--
+ 11 files changed, 85 insertions(+), 37 deletions(-)
