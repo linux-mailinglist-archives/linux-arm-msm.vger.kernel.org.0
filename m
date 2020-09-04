@@ -2,111 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B03225DC89
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 16:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 518DA25DEA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 17:55:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730454AbgIDO52 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 10:57:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36248 "EHLO
+        id S1726726AbgIDPza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 11:55:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730220AbgIDO5V (ORCPT
+        with ESMTP id S1726655AbgIDPzR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 10:57:21 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FD41C061246
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 07:57:21 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id i17so6745745oig.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 07:57:21 -0700 (PDT)
+        Fri, 4 Sep 2020 11:55:17 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4611C061247
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 08:55:16 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id g72so6691252qke.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 08:55:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qwFik1VzdKihmwo9cBFiJu4/LHOZM7jcNFKIFxCkxKI=;
-        b=Fztru+AcSdmnH4CC8rxLvREYY+3FnzSn/ADUlvE9QHLdsNufk+8airPBlRopYAXGZi
-         WCWOp+fAniCaCE9hnf4aHgTv4nxT3TalwNn/was1jOdR4nMkqkj7JPDUw2oyjJVvVIZF
-         OWez32qjH0GG49gsNb2e3JfUKu3s5t/t4LYTcdecijZ5TU/gEN/3Sl3LV7QRzlr+vUO6
-         OEQ7lmcX2ZS8UR0zTom9PODEWA5BYGsdR0quvf6xHlRjQeRh0IH8Zv8Da2nW70zXxphz
-         DSAnBe7FBH+aaAIXpSkGvQDzUh8cseeGaUhyo4fm0SkedJjh0eAgLE2XLKp3BTcbqdXW
-         0tkA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4q/8n4d9Oz9Vv/K5aJK8Mp8Y2lRkWj0qSrttp/CroxE=;
+        b=oZadVWzKzjT6kVlQDdSaTMxHoRTYYXuhfeHAqu6JmmOp3XCU0blzfKn1tJhWzX2HeS
+         sK1QUgw4eOALlLrqiIa5mJ5RjG5DDMC/GfAoKvUlju9deCt1Z1cQt3mFi6Jp8dh8eAcL
+         b47lB644qnhBgKdHPTa65f3vcbqa8pR/OGmGhW1uCRNIq0IP9XUGZp7dua1GTQzH7pbj
+         3kOSW84l/lOtcT1dCSPEMna3Qn0g0ssFDfacD5B1snlLor1iC7Zmm6UoHviENlQKr4s3
+         lC89jtyARRDB8fr0n/NnuYQLdQ/YywQuWqkj40BnJg+qClOjhyEKiVWTZ/r3SCq8UT/u
+         +arA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qwFik1VzdKihmwo9cBFiJu4/LHOZM7jcNFKIFxCkxKI=;
-        b=baH1lX79FhDWbulRsHP3a+kXrd6IljXUP2iJcJqw8aMNPwXYW4tcev1pe2w1qZcc5K
-         QC9Bgc+RB69iTZdzf+PmT4Wv89WUtqcfAV7zzEDvoej00UFj60zVKVXs95jglLgia97i
-         hP+Ny9QomyqYmFS7xO/fUJGC5eXcb8DLZcWpMNI+6hiSFPOnqxz8fGjMid0RGBFLAwaQ
-         aUfztpSupVVOb6gBtPJ8m1KGyBCZ6+2p07FdMfCR8a3BG+N7YW8v0ZR4zi7tWd49587e
-         XGyYEg1Fc9x4U7PXbgEkyvKNKSYl5Zb079Olm3bltlEMWadojNxz9lt4hJJKNAKjDWcM
-         foFA==
-X-Gm-Message-State: AOAM530SJ2lv+jr1cr58LCKKqRiBPDti6aaLfCAyiKvrMUEvy+8fyke7
-        mGWV4M5gwxTuZr5q9rSbZD1Eiw==
-X-Google-Smtp-Source: ABdhPJzzr7V6Q+NFlUzi14ObzhGd5ZRKlNLTeyLYhw4G1XLnZ9tYm6XUMbNPBt9t8yqwGyX7v7ttqQ==
-X-Received: by 2002:aca:5e82:: with SMTP id s124mr5266539oib.168.1599231440721;
-        Fri, 04 Sep 2020 07:57:20 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id n61sm1227108otn.34.2020.09.04.07.57.19
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4q/8n4d9Oz9Vv/K5aJK8Mp8Y2lRkWj0qSrttp/CroxE=;
+        b=WGjDZe6xaNnGhMKt39/KJl/0jnYcT5MZUudaQHucdE29Ngw+nmgW2Y9OGHx3TJy8VG
+         bQS9EjEE3TCVnWT8U0FK7knbzDAyV7w19hAxA/O3dnqSYBOHk5HoGhttdWjpzrpAh2KJ
+         Dvx1tv9ONpJ2MrVzqEfg1m0SlLOkEUC6FGtG9dmF2eLE91/SXVdzNfovNh90JOEHVPEH
+         CDadcBlTVi45WyKSP5wyh3XnCOfS5CrgNGbGWDh4NAWR37WHq/3i1iXW4/F2JZ2izs1i
+         NewZjFb9P/2WPvxSvScW/XO64awqw6/FjjDc3eGWEaNlN+bUlATOO6HVuk3fS2Fanr5j
+         mNQA==
+X-Gm-Message-State: AOAM532Fc/kenFiophRmUbTdCuFOHfpQnQk7Gk72hTCg3KRdeU6WNfan
+        jID2DDtaw0EAW0nTvQ5FVYZYj9980YTtrQ==
+X-Google-Smtp-Source: ABdhPJxHXnDF5Yz7KMj3dP1Wot9aBwDE24PK5PObq0P6DKGWMzJC3jbF9SemUpoG0/uTgsf96ikT4Q==
+X-Received: by 2002:a37:314:: with SMTP id 20mr8208333qkd.274.1599234915063;
+        Fri, 04 Sep 2020 08:55:15 -0700 (PDT)
+Received: from localhost.localdomain (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
+        by smtp.gmail.com with ESMTPSA id v18sm4724473qtq.15.2020.09.04.08.55.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2020 07:57:20 -0700 (PDT)
-Date:   Fri, 4 Sep 2020 09:57:17 -0500
+        Fri, 04 Sep 2020 08:55:14 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
         iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/3] iommu: amd: Fix kerneldoc
-Message-ID: <20200904145717.GG3715@yoga>
-References: <20200728170859.28143-1-krzk@kernel.org>
+Subject: [PATCH v3 0/8] iommu/arm-smmu: Support maintaining bootloader mappings
+Date:   Fri,  4 Sep 2020 15:55:05 +0000
+Message-Id: <20200904155513.282067-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200728170859.28143-1-krzk@kernel.org>
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 28 Jul 12:08 CDT 2020, Krzysztof Kozlowski wrote:
+Based on previous attempts and discussions this is the latest attempt at
+inheriting stream mappings set up by the bootloader, for e.g. boot splash or
+efifb.
 
-> Fix W=1 compile warnings (invalid kerneldoc):
-> 
->     drivers/iommu/amd/init.c:1586: warning: Function parameter or member 'ivrs' not described in 'get_highest_supported_ivhd_type'
->     drivers/iommu/amd/init.c:1938: warning: Function parameter or member 'iommu' not described in 'iommu_update_intcapxt'
-> 
+Per Will's request this builds on the work by Jordan and Rob for the Adreno
+SMMU support. It applies cleanly ontop of v16 of their series, which can be
+found at
+https://lore.kernel.org/linux-arm-msm/20200901164707.2645413-1-robdclark@gmail.com/
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Bjorn Andersson (8):
+  iommu/arm-smmu: Refactor context bank allocation
+  iommu/arm-smmu: Delay modifying domain during init
+  iommu/arm-smmu: Consult context bank allocator for identify domains
+  iommu/arm-smmu-qcom: Emulate bypass by using context banks
+  iommu/arm-smmu-qcom: Consistently initialize stream mappings
+  iommu/arm-smmu: Add impl hook for inherit boot mappings
+  iommu/arm-smmu: Provide helper for allocating identity domain
+  iommu/arm-smmu-qcom: Setup identity domain for boot mappings
 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  drivers/iommu/amd/init.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-> index 958050c213f9..4a37169b1b1b 100644
-> --- a/drivers/iommu/amd/init.c
-> +++ b/drivers/iommu/amd/init.c
-> @@ -1578,7 +1578,7 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h)
->  
->  /**
->   * get_highest_supported_ivhd_type - Look up the appropriate IVHD type
-> - * @ivrs          Pointer to the IVRS header
-> + * @ivrs: Pointer to the IVRS header
->   *
->   * This function search through all IVDB of the maximum supported IVHD
->   */
-> @@ -1929,7 +1929,7 @@ static int iommu_setup_msi(struct amd_iommu *iommu)
->  #define XT_INT_VEC(x)		(((x) & 0xFFULL) << 32)
->  #define XT_INT_DEST_HI(x)	((((x) >> 24) & 0xFFULL) << 56)
->  
-> -/**
-> +/*
->   * Setup the IntCapXT registers with interrupt routing information
->   * based on the PCI MSI capability block registers, accessed via
->   * MMIO MSI address low/hi and MSI data registers.
-> -- 
-> 2.17.1
-> 
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 111 ++++++++++++++++++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      | 122 ++++++++++++++-------
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |  14 ++-
+ 3 files changed, 205 insertions(+), 42 deletions(-)
+
+-- 
+2.28.0
+
