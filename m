@@ -2,123 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BB1B25CE59
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 01:30:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AABFC25CF1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 03:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728288AbgICXa3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Sep 2020 19:30:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbgICXa3 (ORCPT
+        id S1729400AbgIDBj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Sep 2020 21:39:26 -0400
+Received: from mailgw02.mediatek.com ([210.61.82.184]:7618 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728271AbgIDBjZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Sep 2020 19:30:29 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13EFC061244
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 16:30:28 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id f2so4823137qkh.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 16:30:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tER5efoKTXhoRI49DGq6kR5MKl16jgpcrniDIS3TWH4=;
-        b=P8Iz+tAMI2G73pmBCBPMKVteWRhgCOG8kZ5NkoW2pKohWNkpkYbaHlAfkCEVU1i2gN
-         EpI9213e0JXvYg81is2Tf8AXYcM5zB3+GMa1m+VTd8CuWnjRbRYk4Q1LOkFOU6eJVT3F
-         /gNZAcSmaqEmyH3DGWNvEQ7BNp0BWGhL6UFdvjy5Da5osKR6IDu1kVuECdiG88Mk8uqZ
-         5ta4+ky/SkoRH0zQKDx6eLfToQTXUvKv7Gn/VAxX4qV8d1MEelj9BKISJfLvW3wlcz2Q
-         gkknVBseAEIHH6qhcjO/fzbJpauwUvoeJrpSX50rQ108IuSpBKsJsZo5bVeHf9De5Kp/
-         n+qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tER5efoKTXhoRI49DGq6kR5MKl16jgpcrniDIS3TWH4=;
-        b=nojVdL84yRuf3tgDn5+7Af5g/zPsgGenUfrl8tZC52gU+VYn/xa1RA95gzGqLmHvYp
-         S3VyhNDXZ7Q+LNJUObc/0xZucCxY6L0j1yVYqPqDbTjMrau7f26v5KJQx8AnzSAUDoqf
-         L4aykeMZDR5A2o7DFVXModZxDuri4Ekd2uIt4qwxu7UD9Go6qEqZb6noLDMbwvuxmf+5
-         tNhNSvJmziGz/LEKB3cWAv6xi2rzwfSWoJubCVOjLkf+aAY2RXg1823SyPxnJ9P3wZ80
-         LhYM3mgG6RkQSlZ1Uo5hZOhUsim04v0NpLQATWK8for9AOPye+idrB44ZBd0r9rWsljN
-         HyzQ==
-X-Gm-Message-State: AOAM531gQuOqxkWE3wg4QnsKXvwZZmIDtoec4EUVddxBlb31bA/1vHOn
-        HUl9GPqJTOvc+n3QBMCb0Gf24A==
-X-Google-Smtp-Source: ABdhPJzGeyHICZQjuWnQYHvAm4kf2dcs+Bx6pEomtDyhHgZ0jZPH7Hh0NrALaByHL5XLSyHLvrHSsw==
-X-Received: by 2002:a37:c404:: with SMTP id d4mr5392815qki.273.1599175827627;
-        Thu, 03 Sep 2020 16:30:27 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id m26sm3209338qtc.83.2020.09.03.16.30.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Sep 2020 16:30:27 -0700 (PDT)
-Subject: Re: [PATCH v2 08/10] phy: qcom-qmp: Add support for sc7180 DP phy
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>
-References: <20200902230215.3452712-1-swboyd@chromium.org>
- <20200902230215.3452712-9-swboyd@chromium.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <c53059ac-dd88-f8fb-5473-ebc6f70f00d4@marek.ca>
-Date:   Thu, 3 Sep 2020 19:29:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        Thu, 3 Sep 2020 21:39:25 -0400
+X-UUID: 2c78e0d0a30c4bd8b18cf8cdcbc393fe-20200904
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=6O1iHbBViAgePOu3OYwhs8x0LzhIsz23f1rpfuw7ynQ=;
+        b=doQnZxUY5fa+9faNqVoxZIQMofTzvUHJ88LX4FngqG1bZRg2lCtZW+m54kzzGj/yMbEqHcMiw+N1UHMsY0xM74/lLcgm5/+kbseOrkyXUQrtzlTI1wQw51kuQF6umYLiSfDAnxbZUMdeO3hfBQeyUh/qkTkxTAb4t4zlN2NK3sw=;
+X-UUID: 2c78e0d0a30c4bd8b18cf8cdcbc393fe-20200904
+Received: from mtkcas10.mediatek.inc [(172.21.101.39)] by mailgw02.mediatek.com
+        (envelope-from <stanley.chu@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 225059213; Fri, 04 Sep 2020 09:39:17 +0800
+Received: from mtkcas07.mediatek.inc (172.21.101.84) by
+ mtkmbs08n1.mediatek.inc (172.21.101.55) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Fri, 4 Sep 2020 09:39:15 +0800
+Received: from [172.21.77.33] (172.21.77.33) by mtkcas07.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Fri, 4 Sep 2020 09:39:14 +0800
+Message-ID: <1599183556.10649.24.camel@mtkswgap22>
+Subject: RE: [PATCH v1 1/1] scsi: ufshcd: Allow zero value setting to
+ Auto-Hibernate Timer
+From:   Stanley Chu <stanley.chu@mediatek.com>
+To:     Avri Altman <Avri.Altman@wdc.com>
+CC:     "nguyenb@codeaurora.org" <nguyenb@codeaurora.org>,
+        "cang@codeaurora.org" <cang@codeaurora.org>,
+        "asutoshd@codeaurora.org" <asutoshd@codeaurora.org>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Alim Akhtar" <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Nitin Rawat <nitirawa@codeaurora.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        open list <linux-kernel@vger.kernel.org>
+Date:   Fri, 4 Sep 2020 09:39:16 +0800
+In-Reply-To: <BY5PR04MB67058266FB01737736CFC978FC2F0@BY5PR04MB6705.namprd04.prod.outlook.com>
+References: <b141cfcd7998b8933635828b56fbb64f8ad4d175.1598661071.git.nguyenb@codeaurora.org>
+         <BY5PR04MB6705177184FC1A0E5F7710FDFC530@BY5PR04MB6705.namprd04.prod.outlook.com>
+         <96e34a8d7d52dfbc47738f04d2a127c2@codeaurora.org>
+         <BY5PR04MB67058266FB01737736CFC978FC2F0@BY5PR04MB6705.namprd04.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 MIME-Version: 1.0
-In-Reply-To: <20200902230215.3452712-9-swboyd@chromium.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/2/20 7:02 PM, Stephen Boyd wrote:
+T24gV2VkLCAyMDIwLTA5LTAyIGF0IDA1OjEwICswMDAwLCBBdnJpIEFsdG1hbiB3cm90ZToNCj4g
+PiANCj4gPiBPbiAyMDIwLTA4LTI5IDAwOjMyLCBBdnJpIEFsdG1hbiB3cm90ZToNCj4gPiA+Pg0K
+PiA+ID4+IFRoZSB6ZXJvIHZhbHVlIEF1dG8tSGliZXJuYXRlIFRpbWVyIGlzIGEgdmFsaWQgc2V0
+dGluZywgYW5kIGl0DQo+ID4gPj4gaW5kaWNhdGVzIHRoZSBBdXRvLUhpYmVybmF0ZSBmZWF0dXJl
+IGJlaW5nIGRpc2FibGVkLiBDb3JyZWN0bHkNCj4gPiA+IFJpZ2h0LiBTbyAiIHVmc2hjZF9hdXRv
+X2hpYmVybjhfZW5hYmxlIiBpcyBubyBsb25nZXIgYW4gYXBwcm9wcmlhdGUNCj4gPiA+IG5hbWUu
+DQo+ID4gPiBNYXliZSB1ZnNoY2RfYXV0b19oaWJlcm44X3NldCBpbnN0ZWFkPw0KPiA+IFRoYW5r
+cyBmb3IgeW91ciBjb21tZW50LiBJIGFtIG9rIHdpdGggdGhlIG5hbWUgY2hhbmdlIHN1Z2dlc3Rp
+b24uDQo+ID4gPg0KPiA+ID4gQWxzbywgZGlkIHlvdSB2ZXJpZmllZCB0aGF0IG5vIG90aGVyIHBs
+YXRmb3JtIHJlbGllcyBvbiBpdHMgbm9uLXplcm8NCj4gPiA+IHZhbHVlPw0KPiA+IEkgb25seSB0
+ZXN0ZWQgdGhlIGNoYW5nZSBvbiBRdWFsY29tbSdzIHBsYXRmb3JtLiBJIGRvIG5vdCBoYXZlIG90
+aGVyDQo+ID4gcGxhdGZvcm1zIHRvIGRvIHRoZSB0ZXN0Lg0KPiA+IFRoZSBVRlMgaG9zdCBjb250
+cm9sbGVyIHNwZWMgSkVTRDIyMEUsIFNlY3Rpb24gNS4yLjUgc2F5cw0KPiA+ICJTb2Z0d2FyZSB3
+cml0ZXMg4oCcMOKAnSB0byBkaXNhYmxlIEF1dG8tSGliZXJuYXRlIElkbGUgVGltZXIiLiBTbyB0
+aGUgc3BlYw0KPiA+IHN1cHBvcnRzIHRoaXMgemVybyB2YWx1ZS4NCj4gPiBTb21lIG9wdGlvbnM6
+DQo+ID4gLSBXZSBjb3VsZCBhZGQgYSBoYmEtPmNhcHMgc28gdGhhdCB3ZSBvbmx5IGFwcGx5IHRo
+ZSBjaGFuZ2UgZm9yDQo+ID4gUXVhbGNvbW0ncyBwbGF0Zm9ybXMuDQo+ID4gVGhpcyBpcyBub3Qg
+cHJlZmVycmVkIGJlY2F1c2UgaXQgaXMgZm9sbG93aW5nIHRoZSBzcGVjIGltcGxlbWVudGF0aW9u
+cy4NCj4gPiAtIE9yIG90aGVyIHBsYXRmb3JtcyB0aGF0IGRvIG5vdCBzdXBwb3J0IHRoZSB6ZXJv
+IHZhbHVlIG5lZWRzIGEgY2Fwcy4NCj4gWWVhaCwgSSBkb24ndCB0aGluayBhbm90aGVyIGNhcHMg
+aXMgcmVxdWlyZWQsDQo+IE1heWJlIGp1c3QgYW4gYWNrIGZyb20gU3RhbmxleS4NCg0KTG9va3Mg
+Z29vZCB0byBtZS4NCg0KQWNrZWQtYnk6IFN0YW5sZXkgQ2h1IDxzdGFubGV5LmNodUBtZWRpYXRl
+ay5jb20+DQoNCj4gDQo+IFRoYW5rcywNCj4gQXZyaQ0KDQo=
 
-...
-
-> +static const struct qmp_phy_cfg sc7180_dpphy_cfg = {
-> +	.type			= PHY_TYPE_DP,
-> +	.nlanes			= 1,
-> +
-> +	.serdes_tbl		= qmp_v3_dp_serdes_tbl,
-> +	.serdes_tbl_num		= ARRAY_SIZE(qmp_v3_dp_serdes_tbl),
-> +	.tx_tbl			= qmp_v3_dp_tx_tbl,
-> +	.tx_tbl_num		= ARRAY_SIZE(qmp_v3_dp_tx_tbl),
-> +
-> +	.serdes_tbl_rbr		= qmp_v3_dp_serdes_tbl_rbr,
-> +	.serdes_tbl_rbr_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_rbr),
-> +	.serdes_tbl_hbr		= qmp_v3_dp_serdes_tbl_hbr,
-> +	.serdes_tbl_hbr_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr),
-> +	.serdes_tbl_hbr2	= qmp_v3_dp_serdes_tbl_hbr2,
-> +	.serdes_tbl_hbr2_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr2),
-> +	.serdes_tbl_hbr3	= qmp_v3_dp_serdes_tbl_hbr3,
-> +	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr3),
-> +
-> +	.clk_list		= qmp_v3_phy_clk_l,
-> +	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
-> +	.reset_list		= sc7180_usb3phy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(sc7180_usb3phy_reset_l),
-> +	.vreg_list		= qmp_phy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-
-You need a ".regs = qmp_v3_usb3phy_regs_layout," here, otherwise phy 
-init functions like qcom_qmp_phy_serdes_init() can crash on a NULL 
-reference.
-
-> +
-> +	.has_phy_dp_com_ctrl	= true,
-> +	.is_dual_lane_phy	= true,
-> +};
-> +
-
-...
