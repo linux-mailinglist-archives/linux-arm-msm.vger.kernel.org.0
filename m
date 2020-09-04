@@ -2,133 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 404C425D186
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 08:37:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4991225D370
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 10:22:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729707AbgIDGhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 02:37:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729677AbgIDGhH (ORCPT
+        id S1729683AbgIDIWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 04:22:53 -0400
+Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:59906
+        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726575AbgIDIWx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 02:37:07 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC41C06125C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Sep 2020 23:37:07 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id u13so3843372pgh.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Sep 2020 23:37:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oQZJoBmmMUGv3gcRM3sLFLuAwsd9ni+yGmgd7QDzGzk=;
-        b=s1FU44aQcy9VujfxiSwv6BFGLpjAORDbRdzx+EOlG3JC2Lh743fYFcUfakH+aUKlzG
-         vh/SwBOLcws5UMxXxHJiaAqaQmX2rJGnzmoqG9L30ERf4/LeW+fS9P4VNJEgqa19vzLS
-         /6OooSwRtmVIE+BI3gsKtNVVdVRzxIQosZSxa2qjAF2AiYIt1b+rmvwTlgACgy+kJILD
-         LJIYRMSSVK+EEo4b+pBkWAYTZaE50oYdyiqfntUxkLd2sQ+7TMnLEQv0G+n1wi/p9tyb
-         UfdQWBKH10k+Oz7ov+qzTyIKMaENoH2ZSyiy6zQkk0ISU53rSS5vMWvhQHoOn6gUI9W7
-         pM5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=oQZJoBmmMUGv3gcRM3sLFLuAwsd9ni+yGmgd7QDzGzk=;
-        b=aaGastRgtbcPxDmbb6O/uxFHp0CpGOwGvcg8T9/7qfvFlcqIpE5KpUvH/YZiE60gao
-         SGwdyCg062S567PIrXrX8oLqo+LIrBA2DMFZQDdhDmDcURK9pNRLdrs78+UDNkTwl+6+
-         q12nY4/he0w8ej70wYsY3M6UDOu92LvLs4a1gp/EL2Op9KXgp6uZweFViO+oKJuVkXFn
-         nVSchuQNijNs2R6M9CizB3qHG2cdFSK4pWGQ6FhWjHh+n7KLbHUtvVBIENj4En1be6qG
-         41IRTx27Ar3+d9gOok62Ivdch6KXIZxfLn5GBawAXpdgUxfCMs7sdB6MBQqXmSrfR+am
-         ch+Q==
-X-Gm-Message-State: AOAM532SXObm0CyYUdsnzNFLUGdOQWJcUUTI5T5408Ha6MI5pP+wzMnn
-        cdEt+jyGEWFJmSnNQuRWZl+w
-X-Google-Smtp-Source: ABdhPJwv8ltLoPCJEp04NdRQ4wvrlJO3Sq81sjGV6vlMdvHUTU0YqDE10wc3BIlH0NuKSppBlRNjnQ==
-X-Received: by 2002:a63:29c6:: with SMTP id p189mr5907174pgp.148.1599201426682;
-        Thu, 03 Sep 2020 23:37:06 -0700 (PDT)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id 143sm5315040pfc.66.2020.09.03.23.37.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 23:37:06 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6/6] arm64: dts: qcom: qrb5165-rb5: Add gpio-line-names for PM8150(B&L)
-Date:   Fri,  4 Sep 2020 12:06:37 +0530
-Message-Id: <20200904063637.28632-7-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200904063637.28632-1-manivannan.sadhasivam@linaro.org>
-References: <20200904063637.28632-1-manivannan.sadhasivam@linaro.org>
+        Fri, 4 Sep 2020 04:22:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599207772;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
+        bh=cGxakaCL3jNr682m7wuEzqoRV1+pDVo5TxIlEQKNg5Q=;
+        b=kn76Vy0wMMJl0dDuntDxrZCS99IE8JwFohSOkW8vXua5/BL0pQVrWrBu/mKu84IB
+        Kog17myFhlYgEwyLAw/gHktDk1I/hkXjQd4aGNxwdkNcT3hMuJpL35emcQarceUw4qi
+        oVxi3esY878No7Ft/ukZLrmqt4Cgww5nfFDXQsy4=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599207772;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=cGxakaCL3jNr682m7wuEzqoRV1+pDVo5TxIlEQKNg5Q=;
+        b=h8KbfenD1v8ukETWbYAPXV2ShUNc3dpgSRxiNYvo8ksn3ytugjik0nCBufdIWNNe
+        TTjU4onvu91F6Q6LSgeZhNtkkMqTbFmMcK+YdnWvJ7FmfrcsPZRzUhbxhl1Bwk9GNTQ
+        y70uL0MvQeM/8O3HdIYucPTmlc4iyrHuDTQO+kxw=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.1 required=2.0 tests=ALL_TRUSTED,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7B1BAC4339C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     sboyd@kernel.org, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        jackp@codeaurora.org, sergei.shtylyov@gmail.com,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v9 0/4] Introduce PMIC based USB type C detection
+Date:   Fri, 4 Sep 2020 08:22:52 +0000
+Message-ID: <0101017458361191-9af95c83-8a0d-4f10-b9ee-c26458c9cc1c-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.04-54.240.27.186
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add gpio-line-names for the GPIO pins exposed by PM8150, PM8150B and
-PM8150L PMIC nodes.
+Changes in v9:
+ - Fixed dt-binding to reference usb-connector from the 'connector' node,
+   removed properties that didn't have further constraints (than specified in
+   usb-connector.yaml), and make 'reg' a required property.
+ - Moved vbus_reg get call into probe(), and will fail if the regulator is not
+   available.
+ - Removed some references from qcom_pmic_typec, as they were not needed after
+   probe().
+ - Moved interrupt registration until after all used variables were initialized.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 47 ++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+Changes in v8:
+ - Simplified some property definitions, and corrected the
+   connector reference in the dt binding.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index cf6dc0ec1640..1528a865f1f8 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -412,6 +412,53 @@
- 	status = "okay";
- };
+Changes in v7:
+ - Fixups in qcom-pmic-typec.c to remove uncesscary includes, printk formatting,
+   and revising some logic operations. 
+
+Changes in v6:
+ - Removed qcom_usb_vbus-regulator.c and qcom,usb-vbus-regulator.yaml from the
+   series as they have been merged on regulator.git
+ - Added separate references to the usb-connector.yaml in qcom,pmic-typec.yaml
+   instead of referencing the entire schema.
+
+Changes in v5:
+ - Fix dt_binding_check warning/error in qcom,pmic-typec.yaml
+
+Changes in v4:
+ - Modified qcom,pmic-typec binding to include the SS mux and the DRD remote
+   endpoint nodes underneath port@1, which is assigned to the SSUSB path
+   according to usb-connector
+ - Added usb-connector reference to the typec dt-binding
+ - Added tags to the usb type c and vbus nodes
+ - Removed "qcom" tags from type c and vbus nodes
+ - Modified Kconfig module name, and removed module alias from the typec driver
  
-+&pm8150_gpios {
-+	gpio-reserved-ranges = <1 1>, <3 2>, <7 1>;
-+	gpio-line-names =
-+		"NC",
-+		"OPTION2",
-+		"PM_GPIO-F",
-+		"PM_SLP_CLK_IN",
-+		"OPTION1",
-+		"VOL_UP_N",
-+		"PM8250_GPIO7", /* Blue LED */
-+		"SP_ARI_PWR_ALARM",
-+		"GPIO_9_P", /* Yellow LED */
-+		"GPIO_10_P"; /* Green LED */
-+};
-+
-+&pm8150b_gpios {
-+	gpio-line-names =
-+		"NC",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"HAP_BOOST_EN", /* SOM */
-+		"SMB_STAT", /* SOM */
-+		"NC",
-+		"NC",
-+		"SDM_FORCE_USB_BOOT",
-+		"NC",
-+		"NC",
-+		"NC";
-+};
-+
-+&pm8150l_gpios {
-+	gpio-line-names =
-+		"NC",
-+		"PM3003A_EN",
-+		"NC",
-+		"NC",
-+		"PM_GPIO5", /* HDMI RST_N */
-+		"PM_GPIO-A", /* PWM */
-+		"PM_GPIO7",
-+		"NC",
-+		"NC",
-+		"PM_GPIO-B",
-+		"NC",
-+		"PM3003A_MODE";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+Changes in v3:
+ - Fix driver reference to match driver name in Kconfig for
+   qcom_usb_vbus-regulator.c
+ - Utilize regulator bitmap helpers for enable, disable and is enabled calls in
+   qcom_usb_vbus-regulator.c
+ - Use of_get_regulator_init_data() to initialize regulator init data, and to
+   set constraints in qcom_usb_vbus-regulator.c
+ - Remove the need for a local device structure in the vbus regulator driver
+ 
+Changes in v2:
+ - Use devm_kzalloc() in qcom_pmic_typec_probe()
+ - Add checks to make sure return value of typec_find_port_power_role() is
+   valid
+ - Added a VBUS output regulator driver, which will be used by the PMIC USB
+   type c driver to enable/disable the source
+ - Added logic to control vbus source from the PMIC type c driver when
+   UFP/DFP is detected
+ - Added dt-binding for this new regulator driver
+ - Fixed Kconfig typec notation to match others
+ - Leave type C block disabled until enabled by a platform DTS
+
+Wesley Cheng (4):
+  usb: typec: Add QCOM PMIC typec detection driver
+  dt-bindings: usb: Add Qualcomm PMIC type C controller dt-binding
+  arm64: boot: dts: qcom: pm8150b: Add node for USB type C block
+  arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
+
+ .../bindings/usb/qcom,pmic-typec.yaml         | 108 ++++++++
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |  13 +
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts       |   4 +
+ drivers/usb/typec/Kconfig                     |  12 +
+ drivers/usb/typec/Makefile                    |   1 +
+ drivers/usb/typec/qcom-pmic-typec.c           | 262 ++++++++++++++++++
+ 6 files changed, 400 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ create mode 100644 drivers/usb/typec/qcom-pmic-typec.c
+
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
