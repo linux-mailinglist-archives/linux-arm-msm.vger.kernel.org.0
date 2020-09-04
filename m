@@ -2,1962 +2,2890 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AA5825E0D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 19:30:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DEB125E23C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Sep 2020 21:55:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgIDRag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Sep 2020 13:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60086 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727957AbgIDRa3 (ORCPT
+        id S1726135AbgIDTzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Sep 2020 15:55:09 -0400
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:53284
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726221AbgIDTzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Sep 2020 13:30:29 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE10CC061244
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Sep 2020 10:30:28 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id g3so5190759qtq.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Sep 2020 10:30:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=orPTiN80DIzVtMLodDzkNxA4r9Q1LTQ4BL8KST3oyYo=;
-        b=SGJBLu6rKUkHInEfTd1L0i1qCZ8+C2iHnrd62jw660DLZ/ak8K1liN3JiqDKFMe9Gd
-         4t9BGnjwB0mxcm4mhmLeQlh5bvZeTeCwRZBEJyCERpVDhaTEZkVR83yxEXs555xDz49o
-         P4lkl0rUhO7V9GJPrWtEp86rLs6OZL+Afhc+5eGtXIHS4JTStWejRZJVa/2AdQRyrdJL
-         1AfM5Ytomz70UvfXviPWTvtjGDzkG4lMQGXs8IO7K5UDpLQ/NSiUj6obNLq1AXvyZC8m
-         0ryFzJXbLeDsu8TnTByi1Ez0HbjBCeuxIS/11uRqlHp+rUSwEqpeNpzaX0tHXR6s7GuA
-         nnvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=orPTiN80DIzVtMLodDzkNxA4r9Q1LTQ4BL8KST3oyYo=;
-        b=rDVoL+87rhEpPkW9zVvTH/ygsL8aB8oUoIw8yfmR6FoalQRbWm03fRZ1S6qpuw++S7
-         YdUCn33tEdAYRtkom9vdtqVU8p2vKZlEPso1ZBPknX4L38Gv/AdkQNwMlmMmg2WTZShY
-         6j7U9fN7VLfyNrs3c+b0PQDR+hhNH2242Ax692biHhGLI50LQiYVhSyoxwVlOGPPlfcX
-         Ex+qV0GlGs4NcwgTkLpzR1E2PDYC5WbpeBZYPM3O5Eemwa7mguNe9EaUnhkEK3+3nMHj
-         Bqssz7hW4QVsABJB8lXXDv8NuEQ63FShh8+QhvrSB5XhINJS+CQRNVZRUarHLkJzgD17
-         ZnIQ==
-X-Gm-Message-State: AOAM5313rOVZEhPykjTUw4ODRqqrDYl1SuddY2Y4DAN6GtA4/AT9CBfc
-        Nfnpa33m4+W7gjJ3Ri1F2MQpPA==
-X-Google-Smtp-Source: ABdhPJxg2WRuoIwkG+qda7vH/KDqTm2SWpBc7eIFaigF3MdUDlC+Qd0ea/Bvc05nm/FgbjJyjiNAzw==
-X-Received: by 2002:aed:2083:: with SMTP id 3mr9360049qtb.233.1599240627677;
-        Fri, 04 Sep 2020 10:30:27 -0700 (PDT)
-Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id i66sm5103330qkc.63.2020.09.04.10.30.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2020 10:30:27 -0700 (PDT)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     freedreno@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        zhengbin <zhengbin13@huawei.com>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/3] drm/msm/dsi: add support for 7nm DSI PHY/PLL
-Date:   Fri,  4 Sep 2020 13:28:38 -0400
-Message-Id: <20200904172859.25633-4-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20200904172859.25633-1-jonathan@marek.ca>
-References: <20200904172859.25633-1-jonathan@marek.ca>
+        Fri, 4 Sep 2020 15:55:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599249302;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
+        bh=RAPuAmyYgjfqnCYhOwPz38fD3vxVPYntxpQmGjEqxUs=;
+        b=bEwc3VTEgFzuhmGOVp6ftbJMt+nokvD5GCiUVLy28b5gfYTKvvnHUiJGvBTMqVPz
+        99lP8MpQ0CRSMIvaBhc2BrdnYS0CJgv1UvN7nXXIsvtjJV1Pt+mwOs2fdqotKqgHrz8
+        oBgU6tvzb9+u2HUuBHd5g1QYfgCzS8XB0MJ5UoGc=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599249302;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=RAPuAmyYgjfqnCYhOwPz38fD3vxVPYntxpQmGjEqxUs=;
+        b=AjIfXHBpFxziL5Rl+dG7NemIuX8q8Hrmdts4tmUkgEwaA+hp1k2VVk1bGC6AaADQ
+        UxFspp6exZFSEQRNt6NWnGhncFCPa7R0jD9WNVGh0hMH7ErZAcXaCSPik04YW3VZsKX
+        7RicXOyFWIekpcYkdFboxxa4vBqZV0Wzh7TC/r/s=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.1 required=2.0 tests=ALL_TRUSTED,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 890E5C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5] drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets
+Date:   Fri, 4 Sep 2020 19:55:02 +0000
+Message-ID: <010101745aafc1da-f7512b88-aeea-4cfd-b7a9-51f2e1e04d06-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.04-54.240.27.10
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds support for the 7nm ("V4") DSI PHY/PLL for sm8150 and sm8250.
+add event thread to execute events serially from event queue. Also
+timeout mode is supported  which allow an event be deferred to be
+executed at later time. Both link and phy compliant tests had been
+done successfully.
 
-Implementation is based on 10nm driver, but updated based on the downstream
-7nm driver.
+Changes in v2:
+- Fix potential deadlock by removing redundant connect_mutex
+- Check and enable link clock during modeset
+- Drop unused code and fix function prototypes.
+- set sink power to normal operation state (D0) before DPCD read
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Changes in v3:
+- push idle pattern at main link before timing generator off
+- add timeout handles for both connect and disconnect
+
+Changes in v4:
+- add ST_SUSPEND_PENDING to handles suspend/modeset test operations
+- clear dp phy aux interrupt status when ERR_DPPHY_AUX error
+- send segment addr during edid read
+- clear bpp depth before MISC register write
+
+Changes in v5:
+- add ST_SUSPENDED to fix crash at resume
+
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+
+This patch depends-on following series:
+https://lore.kernel.org/dri-devel/20200818051137.21478-1-tanmay@codeaurora.org/
 ---
- .../devicetree/bindings/display/msm/dsi.txt   |   6 +-
- drivers/gpu/drm/msm/Kconfig                   |   7 +
- drivers/gpu/drm/msm/Makefile                  |   2 +
- drivers/gpu/drm/msm/dsi/dsi.h                 |   2 +
- drivers/gpu/drm/msm/dsi/dsi.xml.h             | 423 ++++++++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         | 102 ++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |   4 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     | 255 +++++
- drivers/gpu/drm/msm/dsi/pll/dsi_pll.c         |   4 +
- drivers/gpu/drm/msm/dsi/pll/dsi_pll.h         |  10 +
- drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c     | 902 ++++++++++++++++++
- 11 files changed, 1715 insertions(+), 2 deletions(-)
- create mode 100644 drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
- create mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |   6 +
+ drivers/gpu/drm/msm/dp/dp_aux.c             |  41 +-
+ drivers/gpu/drm/msm/dp/dp_aux.h             |   1 +
+ drivers/gpu/drm/msm/dp/dp_catalog.c         |  93 ++-
+ drivers/gpu/drm/msm/dp/dp_catalog.h         |   1 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c            | 370 ++++++---
+ drivers/gpu/drm/msm/dp/dp_ctrl.h            |   3 +-
+ drivers/gpu/drm/msm/dp/dp_display.c         | 833 ++++++++++++++------
+ drivers/gpu/drm/msm/dp/dp_display.h         |   1 -
+ drivers/gpu/drm/msm/dp/dp_drm.c             |   4 -
+ drivers/gpu/drm/msm/dp/dp_hpd.c             |   2 +-
+ drivers/gpu/drm/msm/dp/dp_hpd.h             |   1 +
+ drivers/gpu/drm/msm/dp/dp_link.c            |  22 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c           |  78 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h           |   9 +-
+ drivers/gpu/drm/msm/dp/dp_parser.c          |  42 +-
+ drivers/gpu/drm/msm/dp/dp_parser.h          |   2 +
+ drivers/gpu/drm/msm/dp/dp_power.c           |  46 +-
+ drivers/gpu/drm/msm/dp/dp_power.h           |  13 +
+ drivers/gpu/drm/msm/dp/dp_reg.h             |   2 +
+ drivers/gpu/drm/msm/msm_drv.h               |   1 +
+ 21 files changed, 1105 insertions(+), 466 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi.txt b/Documentation/devicetree/bindings/display/msm/dsi.txt
-index 7884fd7a85c1..b9a64d3ff184 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi.txt
-+++ b/Documentation/devicetree/bindings/display/msm/dsi.txt
-@@ -90,6 +90,8 @@ Required properties:
-   * "qcom,dsi-phy-14nm-660"
-   * "qcom,dsi-phy-10nm"
-   * "qcom,dsi-phy-10nm-8998"
-+  * "qcom,dsi-phy-7nm"
-+  * "qcom,dsi-phy-7nm-8150"
- - reg: Physical base address and length of the registers of PLL, PHY. Some
-   revisions require the PHY regulator base address, whereas others require the
-   PHY lane base address. See below for each PHY revision.
-@@ -98,7 +100,7 @@ Required properties:
-   * "dsi_pll"
-   * "dsi_phy"
-   * "dsi_phy_regulator"
--  For DSI 14nm and 10nm PHYs:
-+  For DSI 14nm, 10nm and 7nm PHYs:
-   * "dsi_pll"
-   * "dsi_phy"
-   * "dsi_phy_lane"
-@@ -116,7 +118,7 @@ Required properties:
- - vcca-supply: phandle to vcca regulator device node
-   For 14nm PHY:
- - vcca-supply: phandle to vcca regulator device node
--  For 10nm PHY:
-+  For 10nm and 7nm PHY:
- - vdds-supply: phandle to vdds regulator device node
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 6a9e257d2fe6..81373bd38f0b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1221,6 +1221,11 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 	/* wait for idle */
+ 	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
  
- Optional properties:
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 6deaa7d01654..82bbc67228fe 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -110,3 +110,10 @@ config DRM_MSM_DSI_10NM_PHY
- 	default y
- 	help
- 	  Choose this option if DSI PHY on SDM845 is used on the platform.
++	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp) {
++		if (msm_dp_display_pre_disable(priv->dp, drm_enc))
++			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
++	}
 +
-+config DRM_MSM_DSI_7NM_PHY
-+	bool "Enable DSI 7nm PHY driver in MSM DRM (used by SM8150)"
-+	depends on DRM_MSM_DSI
-+	default y
-+	help
-+	  Choose this option if DSI PHY on SM8150 is used on the platform.
-diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-index 42f8aae28b31..c65cdd6397a3 100644
---- a/drivers/gpu/drm/msm/Makefile
-+++ b/drivers/gpu/drm/msm/Makefile
-@@ -119,6 +119,7 @@ msm-$(CONFIG_DRM_MSM_DSI_20NM_PHY) += dsi/phy/dsi_phy_20nm.o
- msm-$(CONFIG_DRM_MSM_DSI_28NM_8960_PHY) += dsi/phy/dsi_phy_28nm_8960.o
- msm-$(CONFIG_DRM_MSM_DSI_14NM_PHY) += dsi/phy/dsi_phy_14nm.o
- msm-$(CONFIG_DRM_MSM_DSI_10NM_PHY) += dsi/phy/dsi_phy_10nm.o
-+msm-$(CONFIG_DRM_MSM_DSI_7NM_PHY) += dsi/phy/dsi_phy_7nm.o
+ 	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
  
- ifeq ($(CONFIG_DRM_MSM_DSI_PLL),y)
- msm-y += dsi/pll/dsi_pll.o
-@@ -126,6 +127,7 @@ msm-$(CONFIG_DRM_MSM_DSI_28NM_PHY) += dsi/pll/dsi_pll_28nm.o
- msm-$(CONFIG_DRM_MSM_DSI_28NM_8960_PHY) += dsi/pll/dsi_pll_28nm_8960.o
- msm-$(CONFIG_DRM_MSM_DSI_14NM_PHY) += dsi/pll/dsi_pll_14nm.o
- msm-$(CONFIG_DRM_MSM_DSI_10NM_PHY) += dsi/pll/dsi_pll_10nm.o
-+msm-$(CONFIG_DRM_MSM_DSI_7NM_PHY) += dsi/pll/dsi_pll_7nm.o
- endif
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+@@ -1230,6 +1235,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 			phys->ops.disable(phys);
+ 	}
  
- obj-$(CONFIG_DRM_MSM)	+= msm.o
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 4de771d6f0be..78ef5d4ed922 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -30,6 +30,8 @@ enum msm_dsi_phy_type {
- 	MSM_DSI_PHY_28NM_8960,
- 	MSM_DSI_PHY_14NM,
- 	MSM_DSI_PHY_10NM,
-+	MSM_DSI_PHY_7NM,
-+	MSM_DSI_PHY_7NM_V4_1,
- 	MSM_DSI_PHY_MAX
- };
++
+ 	/* after phys waits for frame-done, should be no more frames pending */
+ 	if (atomic_xchg(&dpu_enc->frame_done_timeout_ms, 0)) {
+ 		DPU_ERROR("enc%d timeout pending\n", drm_enc->base.id);
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+index 582b551f8689..83557c2c7b69 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -94,6 +94,7 @@ static u32 dp_aux_write(struct dp_aux_private *aux,
+ 	}
  
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-index 8e536e060070..50eb4d1b8fdd 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-@@ -1886,5 +1886,428 @@ static inline uint32_t REG_DSI_10nm_PHY_LN_TX_DCTRL(uint32_t i0) { return 0x0000
+ 	dp_catalog_aux_clear_trans(aux->catalog, false);
++	dp_catalog_aux_clear_hw_interrupts(aux->catalog);
  
- #define REG_DSI_10nm_PHY_PLL_COMMON_STATUS_ONE			0x000001a0
+ 	reg = 0; /* Transaction number == 1 */
+ 	if (!aux->native) { /* i2c */
+@@ -189,6 +190,10 @@ static void dp_aux_native_handler(struct dp_aux_private *aux)
+ 		aux->aux_error_num = DP_AUX_ERR_TOUT;
+ 	if (isr & DP_INTR_NACK_DEFER)
+ 		aux->aux_error_num = DP_AUX_ERR_NACK;
++	if (isr & DP_INTR_AUX_ERROR) {
++		aux->aux_error_num = DP_AUX_ERR_DPPHY_AUX;
++		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
++	}
  
-+#define REG_DSI_7nm_PHY_CMN_REVISION_ID0			0x00000000
-+
-+#define REG_DSI_7nm_PHY_CMN_REVISION_ID1			0x00000004
-+
-+#define REG_DSI_7nm_PHY_CMN_REVISION_ID2			0x00000008
-+
-+#define REG_DSI_7nm_PHY_CMN_REVISION_ID3			0x0000000c
-+
-+#define REG_DSI_7nm_PHY_CMN_CLK_CFG0				0x00000010
-+
-+#define REG_DSI_7nm_PHY_CMN_CLK_CFG1				0x00000014
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_CTRL				0x00000018
-+
-+#define REG_DSI_7nm_PHY_CMN_RBUF_CTRL				0x0000001c
-+
-+#define REG_DSI_7nm_PHY_CMN_VREG_CTRL_0				0x00000020
-+
-+#define REG_DSI_7nm_PHY_CMN_CTRL_0				0x00000024
-+
-+#define REG_DSI_7nm_PHY_CMN_CTRL_1				0x00000028
-+
-+#define REG_DSI_7nm_PHY_CMN_CTRL_2				0x0000002c
-+
-+#define REG_DSI_7nm_PHY_CMN_CTRL_3				0x00000030
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CFG0				0x00000034
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CFG1				0x00000038
-+
-+#define REG_DSI_7nm_PHY_CMN_PLL_CNTRL				0x0000003c
-+
-+#define REG_DSI_7nm_PHY_CMN_DPHY_SOT				0x00000040
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CTRL0				0x000000a0
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CTRL1				0x000000a4
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CTRL2				0x000000a8
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CTRL3				0x000000ac
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_CTRL4				0x000000b0
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_0			0x000000b4
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_1			0x000000b8
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_2			0x000000bc
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_3			0x000000c0
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_4			0x000000c4
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_5			0x000000c8
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_6			0x000000cc
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_7			0x000000d0
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_8			0x000000d4
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_9			0x000000d8
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_10			0x000000dc
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_11			0x000000e0
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_12			0x000000e4
-+
-+#define REG_DSI_7nm_PHY_CMN_TIMING_CTRL_13			0x000000e8
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_HSTX_STR_CTRL_0		0x000000ec
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_HSTX_STR_CTRL_1		0x000000f0
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_RESCODE_OFFSET_TOP_CTRL	0x000000f4
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_RESCODE_OFFSET_BOT_CTRL	0x000000f8
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_RESCODE_OFFSET_MID_CTRL	0x000000fc
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_LPTX_STR_CTRL			0x00000100
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_PEMPH_CTRL_0			0x00000104
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_PEMPH_CTRL_1			0x00000108
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_STR_SWI_CAL_SEL_CTRL		0x0000010c
-+
-+#define REG_DSI_7nm_PHY_CMN_VREG_CTRL_1				0x00000110
-+
-+#define REG_DSI_7nm_PHY_CMN_CTRL_4				0x00000114
-+
-+#define REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE4			0x00000128
-+
-+#define REG_DSI_7nm_PHY_CMN_PHY_STATUS				0x00000140
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_STATUS0			0x00000148
-+
-+#define REG_DSI_7nm_PHY_CMN_LANE_STATUS1			0x0000014c
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN(uint32_t i0) { return 0x00000000 + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_CFG0(uint32_t i0) { return 0x00000000 + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_CFG1(uint32_t i0) { return 0x00000004 + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_CFG2(uint32_t i0) { return 0x00000008 + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_TEST_DATAPATH(uint32_t i0) { return 0x0000000c + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_PIN_SWAP(uint32_t i0) { return 0x00000010 + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_LPRX_CTRL(uint32_t i0) { return 0x00000014 + 0x80*i0; }
-+
-+static inline uint32_t REG_DSI_7nm_PHY_LN_TX_DCTRL(uint32_t i0) { return 0x00000018 + 0x80*i0; }
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_ONE			0x00000000
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_TWO			0x00000004
-+
-+#define REG_DSI_7nm_PHY_PLL_INT_LOOP_SETTINGS			0x00000008
-+
-+#define REG_DSI_7nm_PHY_PLL_INT_LOOP_SETTINGS_TWO		0x0000000c
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_THREE		0x00000010
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FOUR		0x00000014
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE		0x00000018
-+
-+#define REG_DSI_7nm_PHY_PLL_INT_LOOP_CONTROLS			0x0000001c
-+
-+#define REG_DSI_7nm_PHY_PLL_DSM_DIVIDER				0x00000020
-+
-+#define REG_DSI_7nm_PHY_PLL_FEEDBACK_DIVIDER			0x00000024
-+
-+#define REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES			0x00000028
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_UPDATE_CONTROL_OVERRIDES	0x0000002c
-+
-+#define REG_DSI_7nm_PHY_PLL_CMODE				0x00000030
-+
-+#define REG_DSI_7nm_PHY_PLL_PSM_CTRL				0x00000034
-+
-+#define REG_DSI_7nm_PHY_PLL_RSM_CTRL				0x00000038
-+
-+#define REG_DSI_7nm_PHY_PLL_VCO_TUNE_MAP			0x0000003c
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_CNTRL				0x00000040
-+
-+#define REG_DSI_7nm_PHY_PLL_CALIBRATION_SETTINGS		0x00000044
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_TIMER_LOW		0x00000048
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_TIMER_HIGH		0x0000004c
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_SETTINGS		0x00000050
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_MIN			0x00000054
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_MAX			0x00000058
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_PFILT			0x0000005c
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_IFILT			0x00000060
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_SETTINGS_TWO		0x00000064
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_SETTINGS_THREE		0x00000068
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_SETTINGS_FOUR		0x0000006c
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_ICODE_HIGH			0x00000070
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_ICODE_LOW			0x00000074
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_DETECT_SETTINGS_ONE		0x00000078
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_DETECT_THRESH			0x0000007c
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_DET_REFCLK_HIGH		0x00000080
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_DET_REFCLK_LOW			0x00000084
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_DET_PLLCLK_HIGH		0x00000088
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_DET_PLLCLK_LOW			0x0000008c
-+
-+#define REG_DSI_7nm_PHY_PLL_PFILT				0x00000090
-+
-+#define REG_DSI_7nm_PHY_PLL_IFILT				0x00000094
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_GAIN				0x00000098
-+
-+#define REG_DSI_7nm_PHY_PLL_ICODE_LOW				0x0000009c
-+
-+#define REG_DSI_7nm_PHY_PLL_ICODE_HIGH				0x000000a0
-+
-+#define REG_DSI_7nm_PHY_PLL_LOCKDET				0x000000a4
-+
-+#define REG_DSI_7nm_PHY_PLL_OUTDIV				0x000000a8
-+
-+#define REG_DSI_7nm_PHY_PLL_FASTLOCK_CONTROL			0x000000ac
-+
-+#define REG_DSI_7nm_PHY_PLL_PASS_OUT_OVERRIDE_ONE		0x000000b0
-+
-+#define REG_DSI_7nm_PHY_PLL_PASS_OUT_OVERRIDE_TWO		0x000000b4
-+
-+#define REG_DSI_7nm_PHY_PLL_CORE_OVERRIDE			0x000000b8
-+
-+#define REG_DSI_7nm_PHY_PLL_CORE_INPUT_OVERRIDE			0x000000bc
-+
-+#define REG_DSI_7nm_PHY_PLL_RATE_CHANGE				0x000000c0
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_DIGITAL_TIMERS			0x000000c4
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_DIGITAL_TIMERS_TWO		0x000000c8
-+
-+#define REG_DSI_7nm_PHY_PLL_DECIMAL_DIV_START			0x000000cc
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_LOW			0x000000d0
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_MID			0x000000d4
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_HIGH			0x000000d8
-+
-+#define REG_DSI_7nm_PHY_PLL_DEC_FRAC_MUXES			0x000000dc
-+
-+#define REG_DSI_7nm_PHY_PLL_DECIMAL_DIV_START_1			0x000000e0
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_LOW_1		0x000000e4
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_MID_1		0x000000e8
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_HIGH_1		0x000000ec
-+
-+#define REG_DSI_7nm_PHY_PLL_DECIMAL_DIV_START_2			0x000000f0
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_LOW_2		0x000000f4
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_MID_2		0x000000f8
-+
-+#define REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_HIGH_2		0x000000fc
-+
-+#define REG_DSI_7nm_PHY_PLL_MASH_CONTROL			0x00000100
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_LOW			0x00000104
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_HIGH			0x00000108
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_LOW			0x0000010c
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_HIGH			0x00000110
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_ADJPER_LOW			0x00000114
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_ADJPER_HIGH			0x00000118
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_MUX_CONTROL			0x0000011c
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_LOW_1			0x00000120
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_HIGH_1			0x00000124
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_LOW_1			0x00000128
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_HIGH_1			0x0000012c
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_ADJPER_LOW_1			0x00000130
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_ADJPER_HIGH_1			0x00000134
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_LOW_2			0x00000138
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_HIGH_2			0x0000013c
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_LOW_2			0x00000140
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_HIGH_2			0x00000144
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_ADJPER_LOW_2			0x00000148
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_ADJPER_HIGH_2			0x0000014c
-+
-+#define REG_DSI_7nm_PHY_PLL_SSC_CONTROL				0x00000150
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE			0x00000154
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_LOCKDET_RATE_1			0x00000158
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_LOCKDET_RATE_2			0x0000015c
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_PROP_GAIN_RATE_1		0x00000160
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_PROP_GAIN_RATE_2		0x00000164
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_BAND_SEL_RATE_1			0x00000168
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_BAND_SEL_RATE_2			0x0000016c
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_INT_GAIN_IFILT_BAND_1		0x00000170
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_INT_GAIN_IFILT_BAND_2		0x00000174
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_FL_INT_GAIN_PFILT_BAND_1	0x00000178
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_FL_INT_GAIN_PFILT_BAND_2	0x0000017c
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_FASTLOCK_EN_BAND		0x00000180
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_TUNE_ACCUM_INIT_MID		0x00000184
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_TUNE_ACCUM_INIT_HIGH		0x00000188
-+
-+#define REG_DSI_7nm_PHY_PLL_FREQ_TUNE_ACCUM_INIT_MUX		0x0000018c
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_LOCK_OVERRIDE			0x00000190
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_LOCK_DELAY			0x00000194
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_LOCK_MIN_DELAY			0x00000198
-+
-+#define REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS			0x0000019c
-+
-+#define REG_DSI_7nm_PHY_PLL_SPARE_AND_JPC_OVERRIDES		0x000001a0
-+
-+#define REG_DSI_7nm_PHY_PLL_BIAS_CONTROL_1			0x000001a4
-+
-+#define REG_DSI_7nm_PHY_PLL_BIAS_CONTROL_2			0x000001a8
-+
-+#define REG_DSI_7nm_PHY_PLL_ALOG_OBSV_BUS_CTRL_1		0x000001ac
-+
-+#define REG_DSI_7nm_PHY_PLL_COMMON_STATUS_ONE			0x000001b0
-+
-+#define REG_DSI_7nm_PHY_PLL_COMMON_STATUS_TWO			0x000001b4
-+
-+#define REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL			0x000001b8
-+
-+#define REG_DSI_7nm_PHY_PLL_ICODE_ACCUM_STATUS_LOW		0x000001bc
-+
-+#define REG_DSI_7nm_PHY_PLL_ICODE_ACCUM_STATUS_HIGH		0x000001c0
-+
-+#define REG_DSI_7nm_PHY_PLL_FD_OUT_LOW				0x000001c4
-+
-+#define REG_DSI_7nm_PHY_PLL_FD_OUT_HIGH				0x000001c8
-+
-+#define REG_DSI_7nm_PHY_PLL_ALOG_OBSV_BUS_STATUS_1		0x000001cc
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_MISC_CONFIG			0x000001d0
-+
-+#define REG_DSI_7nm_PHY_PLL_FLL_CONFIG				0x000001d4
-+
-+#define REG_DSI_7nm_PHY_PLL_FLL_FREQ_ACQ_TIME			0x000001d8
-+
-+#define REG_DSI_7nm_PHY_PLL_FLL_CODE0				0x000001dc
-+
-+#define REG_DSI_7nm_PHY_PLL_FLL_CODE1				0x000001e0
-+
-+#define REG_DSI_7nm_PHY_PLL_FLL_GAIN0				0x000001e4
-+
-+#define REG_DSI_7nm_PHY_PLL_FLL_GAIN1				0x000001e8
-+
-+#define REG_DSI_7nm_PHY_PLL_SW_RESET				0x000001ec
-+
-+#define REG_DSI_7nm_PHY_PLL_FAST_PWRUP				0x000001f0
-+
-+#define REG_DSI_7nm_PHY_PLL_LOCKTIME0				0x000001f4
-+
-+#define REG_DSI_7nm_PHY_PLL_LOCKTIME1				0x000001f8
-+
-+#define REG_DSI_7nm_PHY_PLL_DEBUG_BUS_SEL			0x000001fc
-+
-+#define REG_DSI_7nm_PHY_PLL_DEBUG_BUS0				0x00000200
-+
-+#define REG_DSI_7nm_PHY_PLL_DEBUG_BUS1				0x00000204
-+
-+#define REG_DSI_7nm_PHY_PLL_DEBUG_BUS2				0x00000208
-+
-+#define REG_DSI_7nm_PHY_PLL_DEBUG_BUS3				0x0000020c
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_FLL_CONTROL_OVERRIDES	0x00000210
-+
-+#define REG_DSI_7nm_PHY_PLL_VCO_CONFIG				0x00000214
-+
-+#define REG_DSI_7nm_PHY_PLL_VCO_CAL_CODE1_MODE0_STATUS		0x00000218
-+
-+#define REG_DSI_7nm_PHY_PLL_VCO_CAL_CODE1_MODE1_STATUS		0x0000021c
-+
-+#define REG_DSI_7nm_PHY_PLL_RESET_SM_STATUS			0x00000220
-+
-+#define REG_DSI_7nm_PHY_PLL_TDC_OFFSET				0x00000224
-+
-+#define REG_DSI_7nm_PHY_PLL_PS3_PWRDOWN_CONTROLS		0x00000228
-+
-+#define REG_DSI_7nm_PHY_PLL_PS4_PWRDOWN_CONTROLS		0x0000022c
-+
-+#define REG_DSI_7nm_PHY_PLL_PLL_RST_CONTROLS			0x00000230
-+
-+#define REG_DSI_7nm_PHY_PLL_GEAR_BAND_SELECT_CONTROLS		0x00000234
-+
-+#define REG_DSI_7nm_PHY_PLL_PSM_CLK_CONTROLS			0x00000238
-+
-+#define REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES_2			0x0000023c
-+
-+#define REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1			0x00000240
-+
-+#define REG_DSI_7nm_PHY_PLL_VCO_CONFIG_2			0x00000244
-+
-+#define REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS_1			0x00000248
-+
-+#define REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS_2			0x0000024c
-+
-+#define REG_DSI_7nm_PHY_PLL_CMODE_1				0x00000250
-+
-+#define REG_DSI_7nm_PHY_PLL_CMODE_2				0x00000254
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1		0x00000258
-+
-+#define REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_2		0x0000025c
-+
-+#define REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE			0x00000260
+ 	complete(&aux->comp);
+ }
+@@ -213,6 +218,10 @@ static void dp_aux_i2c_handler(struct dp_aux_private *aux)
+ 			aux->aux_error_num = DP_AUX_ERR_NACK;
+ 		if (isr & DP_INTR_I2C_DEFER)
+ 			aux->aux_error_num = DP_AUX_ERR_DEFER;
++		if (isr & DP_INTR_AUX_ERROR) {
++			aux->aux_error_num = DP_AUX_ERR_DPPHY_AUX;
++			dp_catalog_aux_clear_hw_interrupts(aux->catalog);
++		}
+ 	}
  
- #endif /* DSI_XML */
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 009f5b843dd1..e8c1a727179c 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -364,6 +364,102 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
+ 	complete(&aux->comp);
+@@ -251,11 +260,13 @@ static void dp_aux_update_offset_and_segment(struct dp_aux_private *aux,
+  * sinks that do not handle the i2c middle-of-transaction flag correctly.
+  */
+ static void dp_aux_transfer_helper(struct dp_aux_private *aux,
+-				   struct drm_dp_aux_msg *input_msg)
++				struct drm_dp_aux_msg *input_msg,
++				bool send_seg)
+ {
+ 	struct drm_dp_aux_msg helper_msg;
+ 	u32 message_size = 0x10;
+ 	u32 segment_address = 0x30;
++	u32 const edid_block_length = 0x80;
+ 	bool i2c_mot = input_msg->request & DP_AUX_I2C_MOT;
+ 	bool i2c_read = input_msg->request &
+ 		(DP_AUX_I2C_READ & DP_AUX_NATIVE_READ);
+@@ -263,6 +274,15 @@ static void dp_aux_transfer_helper(struct dp_aux_private *aux,
+ 	if (!i2c_mot || !i2c_read || (input_msg->size == 0))
+ 		return;
+ 
++	/*
++	 * Sending the segment value and EDID offset will be performed
++	 * from the DRM upstream EDID driver for each block. Avoid
++	 * duplicate AUX transactions related to this while reading the
++	 * first 16 bytes of each block.
++	 */
++	if (!(aux->offset % edid_block_length) || !send_seg)
++		goto end;
++
+ 	aux->read = false;
+ 	aux->cmd_busy = true;
+ 	aux->no_send_addr = true;
+@@ -275,11 +295,14 @@ static void dp_aux_transfer_helper(struct dp_aux_private *aux,
+ 	 * since we are overriding the middle-of-transaction flag for read
+ 	 * transactions.
+ 	 */
+-	memset(&helper_msg, 0, sizeof(helper_msg));
+-	helper_msg.address = segment_address;
+-	helper_msg.buffer = &aux->segment;
+-	helper_msg.size = 1;
+-	dp_aux_cmd_fifo_tx(aux, &helper_msg);
++
++	if (aux->segment) {
++		memset(&helper_msg, 0, sizeof(helper_msg));
++		helper_msg.address = segment_address;
++		helper_msg.buffer = &aux->segment;
++		helper_msg.size = 1;
++		dp_aux_cmd_fifo_tx(aux, &helper_msg);
++	}
+ 
+ 	/*
+ 	 * Send the offset address for every i2c read in which the
+@@ -293,8 +316,9 @@ static void dp_aux_transfer_helper(struct dp_aux_private *aux,
+ 	helper_msg.buffer = &aux->offset;
+ 	helper_msg.size = 1;
+ 	dp_aux_cmd_fifo_tx(aux, &helper_msg);
+-	aux->offset += message_size;
+ 
++end:
++	aux->offset += message_size;
+ 	if (aux->offset == 0x80 || aux->offset == 0x100)
+ 		aux->segment = 0x0; /* reset segment at end of block */
+ }
+@@ -336,7 +360,7 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+ 	}
+ 
+ 	dp_aux_update_offset_and_segment(aux, msg);
+-	dp_aux_transfer_helper(aux, msg);
++	dp_aux_transfer_helper(aux, msg, true);
+ 
+ 	aux->read = msg->request & (DP_AUX_I2C_READ & DP_AUX_NATIVE_READ);
+ 	aux->cmd_busy = true;
+@@ -359,6 +383,7 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+ 					PHY_AUX_CFG1);
+ 			dp_catalog_aux_reset(aux->catalog);
+ 		}
++		usleep_range(400, 500); /* at least 400us to next try */
+ 		goto unlock_exit;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
+index 2de11021d84a..1fbdfc9aa62e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.h
++++ b/drivers/gpu/drm/msm/dp/dp_aux.h
+@@ -15,6 +15,7 @@
+ #define DP_AUX_ERR_NACK		-3
+ #define DP_AUX_ERR_DEFER	-4
+ #define DP_AUX_ERR_NACK_DEFER	-5
++#define DP_AUX_ERR_DPPHY_AUX	-6
+ 
+ int dp_aux_register(struct drm_dp_aux *dp_aux);
+ void dp_aux_unregister(struct drm_dp_aux *dp_aux);
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index d186424044b1..efbfac742aef 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -287,6 +287,20 @@ int dp_catalog_aux_clear_trans(struct dp_catalog *dp_catalog, bool read)
  	return 0;
  }
  
-+int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
-+	struct msm_dsi_phy_clk_request *clk_req)
++int dp_catalog_aux_clear_hw_interrupts(struct dp_catalog *dp_catalog)
 +{
-+	const unsigned long bit_rate = clk_req->bitclk_rate;
-+	const unsigned long esc_rate = clk_req->escclk_rate;
-+	s32 ui, ui_x8;
-+	s32 tmax, tmin;
-+	s32 pcnt_clk_prep = 50;
-+	s32 pcnt_clk_zero = 2;
-+	s32 pcnt_clk_trail = 30;
-+	s32 pcnt_hs_prep = 50;
-+	s32 pcnt_hs_zero = 10;
-+	s32 pcnt_hs_trail = 30;
-+	s32 pcnt_hs_exit = 10;
-+	s32 coeff = 1000; /* Precision, should avoid overflow */
-+	s32 hb_en;
-+	s32 temp;
-+
-+	if (!bit_rate || !esc_rate)
-+		return -EINVAL;
-+
-+	hb_en = 0;
-+
-+	ui = mult_frac(NSEC_PER_MSEC, coeff, bit_rate / 1000);
-+	ui_x8 = ui << 3;
-+
-+	/* TODO: verify these calculations against latest downstream driver
-+	 * everything except clk_post/clk_pre uses calculations from v3 based
-+	 * on the downstream driver having the same calculations for v3 and v4
-+	 */
-+
-+	temp = S_DIV_ROUND_UP(38 * coeff, ui_x8);
-+	tmin = max_t(s32, temp, 0);
-+	temp = (95 * coeff) / ui_x8;
-+	tmax = max_t(s32, temp, 0);
-+	timing->clk_prepare = linear_inter(tmax, tmin, pcnt_clk_prep, 0, false);
-+
-+	temp = 300 * coeff - (timing->clk_prepare << 3) * ui;
-+	tmin = S_DIV_ROUND_UP(temp, ui_x8) - 1;
-+	tmax = (tmin > 255) ? 511 : 255;
-+	timing->clk_zero = linear_inter(tmax, tmin, pcnt_clk_zero, 0, false);
-+
-+	tmin = DIV_ROUND_UP(60 * coeff + 3 * ui, ui_x8);
-+	temp = 105 * coeff + 12 * ui - 20 * coeff;
-+	tmax = (temp + 3 * ui) / ui_x8;
-+	timing->clk_trail = linear_inter(tmax, tmin, pcnt_clk_trail, 0, false);
-+
-+	temp = S_DIV_ROUND_UP(40 * coeff + 4 * ui, ui_x8);
-+	tmin = max_t(s32, temp, 0);
-+	temp = (85 * coeff + 6 * ui) / ui_x8;
-+	tmax = max_t(s32, temp, 0);
-+	timing->hs_prepare = linear_inter(tmax, tmin, pcnt_hs_prep, 0, false);
-+
-+	temp = 145 * coeff + 10 * ui - (timing->hs_prepare << 3) * ui;
-+	tmin = S_DIV_ROUND_UP(temp, ui_x8) - 1;
-+	tmax = 255;
-+	timing->hs_zero = linear_inter(tmax, tmin, pcnt_hs_zero, 0, false);
-+
-+	tmin = DIV_ROUND_UP(60 * coeff + 4 * ui, ui_x8) - 1;
-+	temp = 105 * coeff + 12 * ui - 20 * coeff;
-+	tmax = (temp / ui_x8) - 1;
-+	timing->hs_trail = linear_inter(tmax, tmin, pcnt_hs_trail, 0, false);
-+
-+	temp = 50 * coeff + ((hb_en << 2) - 8) * ui;
-+	timing->hs_rqst = S_DIV_ROUND_UP(temp, ui_x8);
-+
-+	tmin = DIV_ROUND_UP(100 * coeff, ui_x8) - 1;
-+	tmax = 255;
-+	timing->hs_exit = linear_inter(tmax, tmin, pcnt_hs_exit, 0, false);
-+
-+	/* recommended min
-+	 * = roundup((mipi_min_ns + t_hs_trail_ns)/(16*bit_clk_ns), 0) - 1
-+	 */
-+	temp = 60 * coeff + 52 * ui + + (timing->hs_trail + 1) * ui_x8;
-+	tmin = DIV_ROUND_UP(temp, 16 * ui) - 1;
-+	tmax = 255;
-+	timing->shared_timings.clk_post = linear_inter(tmax, tmin, 5, 0, false);
-+
-+	/* recommended min
-+	 * val1 = (tlpx_ns + clk_prepare_ns + clk_zero_ns + hs_rqst_ns)
-+	 * val2 = (16 * bit_clk_ns)
-+	 * final = roundup(val1/val2, 0) - 1
-+	 */
-+	temp = 52 * coeff + (timing->clk_prepare + timing->clk_zero + 1) * ui_x8 + 54 * coeff;
-+	tmin = DIV_ROUND_UP(temp, 16 * ui) - 1;
-+	tmax = 255;
-+	timing->shared_timings.clk_pre = DIV_ROUND_UP((tmax - tmin) * 125, 10000) + tmin;
-+
-+	DBG("%d, %d, %d, %d, %d, %d, %d, %d, %d, %d",
-+		timing->shared_timings.clk_pre, timing->shared_timings.clk_post,
-+		timing->clk_zero, timing->clk_trail, timing->clk_prepare, timing->hs_exit,
-+		timing->hs_zero, timing->hs_prepare, timing->hs_trail, timing->hs_rqst);
-+
-+	return 0;
-+}
-+
- void msm_dsi_phy_set_src_pll(struct msm_dsi_phy *phy, int pll_id, u32 reg,
- 				u32 bit_mask)
- {
-@@ -507,6 +603,12 @@ static const struct of_device_id dsi_phy_dt_match[] = {
- 	  .data = &dsi_phy_10nm_cfgs },
- 	{ .compatible = "qcom,dsi-phy-10nm-8998",
- 	  .data = &dsi_phy_10nm_8998_cfgs },
-+#endif
-+#ifdef CONFIG_DRM_MSM_DSI_7NM_PHY
-+	{ .compatible = "qcom,dsi-phy-7nm",
-+	  .data = &dsi_phy_7nm_cfgs },
-+	{ .compatible = "qcom,dsi-phy-7nm-8150",
-+	  .data = &dsi_phy_7nm_8150_cfgs },
- #endif
- 	{}
- };
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 886a9e3b44b5..d2bd74b6f357 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -48,6 +48,8 @@ extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
-+extern const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs;
-+extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
- 
- struct msm_dsi_dphy_timing {
- 	u32 clk_zero;
-@@ -100,6 +102,8 @@ int msm_dsi_dphy_timing_calc_v2(struct msm_dsi_dphy_timing *timing,
- 				struct msm_dsi_phy_clk_request *clk_req);
- int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
- 				struct msm_dsi_phy_clk_request *clk_req);
-+int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
-+				struct msm_dsi_phy_clk_request *clk_req);
- void msm_dsi_phy_set_src_pll(struct msm_dsi_phy *phy, int pll_id, u32 reg,
- 				u32 bit_mask);
- int msm_dsi_phy_init_common(struct msm_dsi_phy *phy);
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-new file mode 100644
-index 000000000000..255b5f5ab2ce
---- /dev/null
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -0,0 +1,255 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0
-+ * Copyright (c) 2018, The Linux Foundation
-+ */
-+
-+#include <linux/iopoll.h>
-+
-+#include "dsi_phy.h"
-+#include "dsi.xml.h"
-+
-+static int dsi_phy_hw_v4_0_is_pll_on(struct msm_dsi_phy *phy)
-+{
-+	void __iomem *base = phy->base;
-+	u32 data = 0;
-+
-+	data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_PLL_CNTRL);
-+	mb(); /* make sure read happened */
-+
-+	return (data & BIT(0));
-+}
-+
-+static void dsi_phy_hw_v4_0_config_lpcdrx(struct msm_dsi_phy *phy, bool enable)
-+{
-+	void __iomem *lane_base = phy->lane_base;
-+	int phy_lane_0 = 0;	/* TODO: Support all lane swap configs */
-+
-+	/*
-+	 * LPRX and CDRX need to enabled only for physical data lane
-+	 * corresponding to the logical data lane 0
-+	 */
-+	if (enable)
-+		dsi_phy_write(lane_base +
-+			      REG_DSI_7nm_PHY_LN_LPRX_CTRL(phy_lane_0), 0x3);
-+	else
-+		dsi_phy_write(lane_base +
-+			      REG_DSI_7nm_PHY_LN_LPRX_CTRL(phy_lane_0), 0);
-+}
-+
-+static void dsi_phy_hw_v4_0_lane_settings(struct msm_dsi_phy *phy)
-+{
-+	int i;
-+	const u8 tx_dctrl_0[] = { 0x00, 0x00, 0x00, 0x04, 0x01 };
-+	const u8 tx_dctrl_1[] = { 0x40, 0x40, 0x40, 0x46, 0x41 };
-+	const u8 *tx_dctrl = tx_dctrl_0;
-+	void __iomem *lane_base = phy->lane_base;
-+
-+	if (phy->cfg->type == MSM_DSI_PHY_7NM_V4_1)
-+		tx_dctrl = tx_dctrl_1;
-+
-+	/* Strength ctrl settings */
-+	for (i = 0; i < 5; i++) {
-+		/*
-+		 * Disable LPRX and CDRX for all lanes. And later on, it will
-+		 * be only enabled for the physical data lane corresponding
-+		 * to the logical data lane 0
-+		 */
-+		dsi_phy_write(lane_base + REG_DSI_7nm_PHY_LN_LPRX_CTRL(i), 0);
-+		dsi_phy_write(lane_base + REG_DSI_7nm_PHY_LN_PIN_SWAP(i), 0x0);
-+	}
-+
-+	dsi_phy_hw_v4_0_config_lpcdrx(phy, true);
-+
-+	/* other settings */
-+	for (i = 0; i < 5; i++) {
-+		dsi_phy_write(lane_base + REG_DSI_7nm_PHY_LN_CFG0(i), 0x0);
-+		dsi_phy_write(lane_base + REG_DSI_7nm_PHY_LN_CFG1(i), 0x0);
-+		dsi_phy_write(lane_base + REG_DSI_7nm_PHY_LN_CFG2(i), i == 4 ? 0x8a : 0xa);
-+		dsi_phy_write(lane_base + REG_DSI_7nm_PHY_LN_TX_DCTRL(i), tx_dctrl[i]);
-+	}
-+}
-+
-+static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
-+			      struct msm_dsi_phy_clk_request *clk_req)
-+{
-+	int ret;
-+	u32 status;
-+	u32 const delay_us = 5;
-+	u32 const timeout_us = 1000;
-+	struct msm_dsi_dphy_timing *timing = &phy->timing;
-+	void __iomem *base = phy->base;
-+	bool less_than_1500_mhz;
-+	u32 vreg_ctrl_0, glbl_str_swi_cal_sel_ctrl, glbl_hstx_str_ctrl_0;
-+	u32 glbl_rescode_top_ctrl, glbl_rescode_bot_ctrl;
++	struct dp_catalog_private *catalog = container_of(dp_catalog,
++				struct dp_catalog_private, dp_catalog);
 +	u32 data;
 +
-+	DBG("");
-+
-+	if (msm_dsi_dphy_timing_calc_v4(timing, clk_req)) {
-+		DRM_DEV_ERROR(&phy->pdev->dev,
-+			"%s: D-PHY timing calculation failed\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	if (dsi_phy_hw_v4_0_is_pll_on(phy))
-+		pr_warn("PLL turned on before configuring PHY\n");
-+
-+	/* wait for REFGEN READY */
-+	ret = readl_poll_timeout_atomic(base + REG_DSI_7nm_PHY_CMN_PHY_STATUS,
-+					status, (status & BIT(0)),
-+					delay_us, timeout_us);
-+	if (ret) {
-+		pr_err("Ref gen not ready. Aborting\n");
-+		return -EINVAL;
-+	}
-+
-+	/* TODO: CPHY enable path (this is for DPHY only) */
-+
-+	/* Alter PHY configurations if data rate less than 1.5GHZ*/
-+	less_than_1500_mhz = (clk_req->bitclk_rate <= 1500000000);
-+
-+	if (phy->cfg->type == MSM_DSI_PHY_7NM_V4_1) {
-+		vreg_ctrl_0 = less_than_1500_mhz ? 0x53 : 0x52;
-+		glbl_rescode_top_ctrl = less_than_1500_mhz ? 0x3d :  0x00;
-+		glbl_rescode_bot_ctrl = less_than_1500_mhz ? 0x39 :  0x3c;
-+		glbl_str_swi_cal_sel_ctrl = 0x00;
-+		glbl_hstx_str_ctrl_0 = 0x88;
-+	} else {
-+		vreg_ctrl_0 = less_than_1500_mhz ? 0x5B : 0x59;
-+		glbl_str_swi_cal_sel_ctrl = less_than_1500_mhz ? 0x03 : 0x00;
-+		glbl_hstx_str_ctrl_0 = less_than_1500_mhz ? 0x66 : 0x88;
-+		glbl_rescode_top_ctrl = 0x03;
-+		glbl_rescode_bot_ctrl = 0x3c;
-+	}
-+
-+	/* de-assert digital and pll power down */
-+	data = BIT(6) | BIT(5);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_0, data);
-+
-+	/* Assert PLL core reset */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_PLL_CNTRL, 0x00);
-+
-+	/* turn off resync FIFO */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL, 0x00);
-+
-+	/* program CMN_CTRL_4 for minor_ver 2 chipsets*/
-+	data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_REVISION_ID0);
-+	data = data & (0xf0);
-+	if (data == 0x20)
-+		dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_4, 0x04);
-+
-+	/* Configure PHY lane swap (TODO: we need to calculate this) */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_LANE_CFG0, 0x21);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_LANE_CFG1, 0x84);
-+
-+	/* Enable LDO */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_VREG_CTRL_0, vreg_ctrl_0);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_VREG_CTRL_1, 0x5c);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_3, 0x00);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_STR_SWI_CAL_SEL_CTRL,
-+		      glbl_str_swi_cal_sel_ctrl);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_HSTX_STR_CTRL_0,
-+		      glbl_hstx_str_ctrl_0);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_PEMPH_CTRL_0, 0x00);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_RESCODE_OFFSET_TOP_CTRL,
-+		      glbl_rescode_top_ctrl);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_RESCODE_OFFSET_BOT_CTRL,
-+		      glbl_rescode_bot_ctrl);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_GLBL_LPTX_STR_CTRL, 0x55);
-+
-+	/* Remove power down from all blocks */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_0, 0x7f);
-+
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_LANE_CTRL0, 0x1f);
-+
-+	/* Select full-rate mode */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_CTRL_2, 0x40);
-+
-+	ret = msm_dsi_pll_set_usecase(phy->pll, phy->usecase);
-+	if (ret) {
-+		DRM_DEV_ERROR(&phy->pdev->dev, "%s: set pll usecase failed, %d\n",
-+			__func__, ret);
-+		return ret;
-+	}
-+
-+	/* DSI PHY timings */
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_0, 0x00);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_1, timing->clk_zero);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_2, timing->clk_prepare);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_3, timing->clk_trail);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_4, timing->hs_exit);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_5, timing->hs_zero);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_6, timing->hs_prepare);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_7, timing->hs_trail);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_8, timing->hs_rqst);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_9, 0x02);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_10, 0x04);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_11, 0x00);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_12,
-+		      timing->shared_timings.clk_pre);
-+	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_TIMING_CTRL_13,
-+		      timing->shared_timings.clk_post);
-+
-+	/* DSI lane settings */
-+	dsi_phy_hw_v4_0_lane_settings(phy);
-+
-+	DBG("DSI%d PHY enabled", phy->id);
-+
++	data = dp_read_aux(catalog, REG_DP_PHY_AUX_INTERRUPT_STATUS);
++	dp_write_aux(catalog, REG_DP_PHY_AUX_INTERRUPT_CLEAR, 0x1f);
++	dp_write_aux(catalog, REG_DP_PHY_AUX_INTERRUPT_CLEAR, 0x9f);
++	dp_write_aux(catalog, REG_DP_PHY_AUX_INTERRUPT_CLEAR, 0);
 +	return 0;
 +}
 +
-+static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
-+{
-+	/* TODO */
-+}
 +
-+static int dsi_7nm_phy_init(struct msm_dsi_phy *phy)
-+{
-+	struct platform_device *pdev = phy->pdev;
+ void dp_catalog_aux_reset(struct dp_catalog *dp_catalog)
+ {
+ 	u32 aux_ctrl;
+@@ -524,16 +538,21 @@ void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog,
+ 		 * To make sure link reg writes happens before other operation,
+ 		 * dp_write_link() function uses writel()
+ 		 */
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
+-				DP_MAINLINK_FB_BOUNDARY_SEL);
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
+-					DP_MAINLINK_FB_BOUNDARY_SEL |
+-					DP_MAINLINK_CTRL_RESET);
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
++		mainlink_ctrl = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
 +
-+	phy->lane_base = msm_ioremap(pdev, "dsi_phy_lane",
-+				     "DSI_PHY_LANE");
-+	if (IS_ERR(phy->lane_base)) {
-+		DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy lane base\n",
-+			__func__);
-+		return -ENOMEM;
-+	}
++		mainlink_ctrl &= ~(DP_MAINLINK_CTRL_RESET |
++						DP_MAINLINK_CTRL_ENABLE);
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
 +
-+	return 0;
-+}
++		mainlink_ctrl |= DP_MAINLINK_CTRL_RESET;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
 +
-+const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
-+	.type = MSM_DSI_PHY_7NM_V4_1,
-+	.src_pll_truthtable = { {false, false}, {true, false} },
-+	.reg_cfg = {
-+		.num = 1,
-+		.regs = {
-+			{"vdds", 36000, 32},
-+		},
-+	},
-+	.ops = {
-+		.enable = dsi_7nm_phy_enable,
-+		.disable = dsi_7nm_phy_disable,
-+		.init = dsi_7nm_phy_init,
-+	},
-+	.io_start = { 0xae94400, 0xae96400 },
-+	.num_dsi_phy = 2,
-+};
++		mainlink_ctrl &= ~DP_MAINLINK_CTRL_RESET;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
 +
-+const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs = {
-+	.type = MSM_DSI_PHY_7NM,
-+	.src_pll_truthtable = { {false, false}, {true, false} },
-+	.reg_cfg = {
-+		.num = 1,
-+		.regs = {
-+			{"vdds", 36000, 32},
-+		},
-+	},
-+	.ops = {
-+		.enable = dsi_7nm_phy_enable,
-+		.disable = dsi_7nm_phy_disable,
-+		.init = dsi_7nm_phy_init,
-+	},
-+	.io_start = { 0xae94400, 0xae96400 },
-+	.num_dsi_phy = 2,
-+};
-diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll.c
-index 4a4aa3c61d71..a45fe95aff49 100644
---- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll.c
-+++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll.c
-@@ -161,6 +161,10 @@ struct msm_dsi_pll *msm_dsi_pll_init(struct platform_device *pdev,
- 	case MSM_DSI_PHY_10NM:
- 		pll = msm_dsi_pll_10nm_init(pdev, id);
- 		break;
-+	case MSM_DSI_PHY_7NM:
-+	case MSM_DSI_PHY_7NM_V4_1:
-+		pll = msm_dsi_pll_7nm_init(pdev, id);
++		mainlink_ctrl |= (DP_MAINLINK_CTRL_ENABLE |
+ 					DP_MAINLINK_FB_BOUNDARY_SEL);
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
+-					DP_MAINLINK_FB_BOUNDARY_SEL |
+-					DP_MAINLINK_CTRL_ENABLE);
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
+ 	} else {
+ 		mainlink_ctrl = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
+ 		mainlink_ctrl &= ~DP_MAINLINK_CTRL_ENABLE;
+@@ -550,6 +569,8 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog,
+ 				struct dp_catalog_private, dp_catalog);
+ 
+ 	misc_val = dp_read_link(catalog, REG_DP_MISC1_MISC0);
++	/* clear bpp depth */
++	misc_val &= ~(0x7 << DP_MISC0_TEST_BITS_DEPTH_SHIFT);
+ 	misc_val |= colorimetry_cfg << DP_MISC0_COLORIMETRY_CFG_SHIFT;
+ 	misc_val |= test_bits_depth << DP_MISC0_TEST_BITS_DEPTH_SHIFT;
+ 	/* Configure clock to synchronous mode */
+@@ -629,7 +650,7 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
+ 
+ 	bit = BIT(pattern - 1);
+ 	DRM_DEBUG_DP("hw: bit=%d train=%d\n", bit, pattern);
+-	dp_write_link(catalog, REG_DP_STATE_CTRL, bit);
++	dp_catalog_ctrl_state_ctrl(dp_catalog, bit);
+ 
+ 	bit = BIT(pattern - 1) << DP_MAINLINK_READY_LINK_TRAINING_SHIFT;
+ 
+@@ -754,7 +775,7 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
+ 	/* enable HPD interrupts */
+ 	dp_catalog_hpd_config_intr(dp_catalog,
+ 		DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
+-		| DP_DP_HPD_UNPLUG_INT_MASK, true);
++		| DP_DP_HPD_UNPLUG_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
+ 
+ 	/* Configure REFTIMER and enable it */
+ 	reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
+@@ -866,15 +887,27 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 	dp_write_link(catalog, REG_DP_STATE_CTRL, 0x0);
+ 
+ 	switch (pattern) {
+-	case DP_LINK_QUAL_PATTERN_D10_2:
++	case DP_PHY_TEST_PATTERN_D10_2:
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 				DP_STATE_CTRL_LINK_TRAINING_PATTERN1);
+-		return;
+-	case DP_LINK_QUAL_PATTERN_PRBS7:
++		break;
++	case DP_PHY_TEST_PATTERN_ERROR_COUNT:
++		value &= ~(1 << 16);
++		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
++					value);
++		value |= SCRAMBLER_RESET_COUNT_VALUE;
++		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
++					value);
++		dp_write_link(catalog, REG_DP_MAINLINK_LEVELS,
++					DP_MAINLINK_SAFE_TO_EXIT_LEVEL_2);
++		dp_write_link(catalog, REG_DP_STATE_CTRL,
++					DP_STATE_CTRL_LINK_SYMBOL_ERR_MEASURE);
++		break;
++	case DP_PHY_TEST_PATTERN_PRBS7:
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 				DP_STATE_CTRL_LINK_PRBS7);
+-		return;
+-	case DP_LINK_QUAL_PATTERN_80BIT_CUSTOM:
++		break;
++	case DP_PHY_TEST_PATTERN_80BIT_CUSTOM:
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 				DP_STATE_CTRL_LINK_TEST_CUSTOM_PATTERN);
+ 		/* 00111110000011111000001111100000 */
+@@ -886,14 +919,15 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 		/* 1111100000111110 */
+ 		dp_write_link(catalog, REG_DP_TEST_80BIT_CUSTOM_PATTERN_REG2,
+ 				0x0000F83E);
+-		return;
+-	case DP_LINK_QUAL_PATTERN_HBR2_EYE:
+-	case DP_LINK_QUAL_PATTERN_ERROR_RATE:
+-		value &= ~DP_HBR2_ERM_PATTERN;
+-		if (pattern == DP_LINK_QUAL_PATTERN_HBR2_EYE)
+-			value = DP_HBR2_ERM_PATTERN;
++		break;
++	case DP_PHY_TEST_PATTERN_CP2520:
++		value = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
++		value &= ~DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, value);
++
++		value = DP_HBR2_ERM_PATTERN;
+ 		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
+-					value);
++				value);
+ 		value |= SCRAMBLER_RESET_COUNT_VALUE;
+ 		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
+ 					value);
+@@ -901,10 +935,19 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 					DP_MAINLINK_SAFE_TO_EXIT_LEVEL_2);
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 					DP_STATE_CTRL_LINK_SYMBOL_ERR_MEASURE);
+-		return;
++		value = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
++		value |= DP_MAINLINK_CTRL_ENABLE;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, value);
++		break;
++	case DP_PHY_TEST_PATTERN_SEL_MASK:
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
++				DP_MAINLINK_CTRL_ENABLE);
++		dp_write_link(catalog, REG_DP_STATE_CTRL,
++				DP_STATE_CTRL_LINK_TRAINING_PATTERN4);
 +		break;
  	default:
- 		pll = ERR_PTR(-ENXIO);
- 		break;
-diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h b/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
-index c6a3623f905d..3405982a092c 100644
---- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
-+++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll.h
-@@ -116,5 +116,15 @@ msm_dsi_pll_10nm_init(struct platform_device *pdev, int id)
- 	return ERR_PTR(-ENODEV);
+ 		DRM_DEBUG_DP("No valid test pattern requested:0x%x\n", pattern);
+-		return;
++		break;
+ 	}
  }
- #endif
-+#ifdef CONFIG_DRM_MSM_DSI_7NM_PHY
-+struct msm_dsi_pll *msm_dsi_pll_7nm_init(struct platform_device *pdev, int id);
-+#else
-+static inline struct msm_dsi_pll *
-+msm_dsi_pll_7nm_init(struct platform_device *pdev, int id)
-+{
-+	return ERR_PTR(-ENODEV);
-+}
-+#endif
-+
- #endif /* __DSI_PLL_H__ */
  
-diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
-new file mode 100644
-index 000000000000..a3b09514bee2
---- /dev/null
-+++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
-@@ -0,0 +1,902 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0
-+ * Copyright (c) 2018, The Linux Foundation
-+ */
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+index bcd381bfc9cd..35c90b248b5d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.h
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+@@ -55,6 +55,7 @@ u32 dp_catalog_aux_read_data(struct dp_catalog *dp_catalog);
+ int dp_catalog_aux_write_data(struct dp_catalog *dp_catalog);
+ int dp_catalog_aux_write_trans(struct dp_catalog *dp_catalog);
+ int dp_catalog_aux_clear_trans(struct dp_catalog *dp_catalog, bool read);
++int dp_catalog_aux_clear_hw_interrupts(struct dp_catalog *dp_catalog);
+ void dp_catalog_aux_reset(struct dp_catalog *dp_catalog);
+ void dp_catalog_aux_enable(struct dp_catalog *dp_catalog, bool enable);
+ void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog,
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index ae07e43b541b..70b0e06953f6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -26,6 +26,13 @@
+ #define MR_LINK_SYMBOL_ERM 0x80
+ #define MR_LINK_PRBS7 0x100
+ #define MR_LINK_CUSTOM80 0x200
++#define MR_LINK_TRAINING4  0x40
 +
-+#include <linux/clk.h>
-+#include <linux/clk-provider.h>
-+#include <linux/iopoll.h>
-+
-+#include "dsi_pll.h"
-+#include "dsi.xml.h"
-+
-+/*
-+ * DSI PLL 7nm - clock diagram (eg: DSI0): TODO: updated CPHY diagram
-+ *
-+ *           dsi0_pll_out_div_clk  dsi0_pll_bit_clk
-+ *                              |                |
-+ *                              |                |
-+ *                 +---------+  |  +----------+  |  +----+
-+ *  dsi0vco_clk ---| out_div |--o--| divl_3_0 |--o--| /8 |-- dsi0_phy_pll_out_byteclk
-+ *                 +---------+  |  +----------+  |  +----+
-+ *                              |                |
-+ *                              |                |         dsi0_pll_by_2_bit_clk
-+ *                              |                |          |
-+ *                              |                |  +----+  |  |\  dsi0_pclk_mux
-+ *                              |                |--| /2 |--o--| \   |
-+ *                              |                |  +----+     |  \  |  +---------+
-+ *                              |                --------------|  |--o--| div_7_4 |-- dsi0_phy_pll_out_dsiclk
-+ *                              |------------------------------|  /     +---------+
-+ *                              |          +-----+             | /
-+ *                              -----------| /4? |--o----------|/
-+ *                                         +-----+  |           |
-+ *                                                  |           |dsiclk_sel
-+ *                                                  |
-+ *                                                  dsi0_pll_post_out_div_clk
-+ */
-+
-+#define DSI_BYTE_PLL_CLK		0
-+#define DSI_PIXEL_PLL_CLK		1
-+#define NUM_PROVIDED_CLKS		2
-+
-+#define VCO_REF_CLK_RATE		19200000
-+
-+struct dsi_pll_regs {
-+	u32 pll_prop_gain_rate;
-+	u32 pll_lockdet_rate;
-+	u32 decimal_div_start;
-+	u32 frac_div_start_low;
-+	u32 frac_div_start_mid;
-+	u32 frac_div_start_high;
-+	u32 pll_clock_inverters;
-+	u32 ssc_stepsize_low;
-+	u32 ssc_stepsize_high;
-+	u32 ssc_div_per_low;
-+	u32 ssc_div_per_high;
-+	u32 ssc_adjper_low;
-+	u32 ssc_adjper_high;
-+	u32 ssc_control;
++enum {
++	DP_TRAINING_NONE,
++	DP_TRAINING_1,
++	DP_TRAINING_2,
++};
+ 
+ struct dp_tu_calc_input {
+ 	u64 lclk;        /* 162, 270, 540 and 810 */
+@@ -58,7 +65,6 @@ struct dp_vc_tu_mapping_table {
+ 
+ struct dp_ctrl_private {
+ 	struct dp_ctrl dp_ctrl;
+-
+ 	struct device *dev;
+ 	struct drm_dp_aux *aux;
+ 	struct dp_panel *panel;
+@@ -68,10 +74,16 @@ struct dp_ctrl_private {
+ 	struct dp_catalog *catalog;
+ 
+ 	struct completion idle_comp;
+-	struct mutex push_idle_mutex;
+ 	struct completion video_comp;
+ };
+ 
++struct dp_cr_status {
++	u8 lane_0_1;
++	u8 lane_2_3;
 +};
 +
-+struct dsi_pll_config {
-+	u32 ref_freq;
-+	bool div_override;
-+	u32 output_div;
-+	bool ignore_frac;
-+	bool disable_prescaler;
-+	bool enable_ssc;
-+	bool ssc_center;
-+	u32 dec_bits;
-+	u32 frac_bits;
-+	u32 lock_timer;
-+	u32 ssc_freq;
-+	u32 ssc_offset;
-+	u32 ssc_adj_per;
-+	u32 thresh_cycles;
-+	u32 refclk_cycles;
-+};
-+
-+struct pll_7nm_cached_state {
-+	unsigned long vco_rate;
-+	u8 bit_clk_div;
-+	u8 pix_clk_div;
-+	u8 pll_out_div;
-+	u8 pll_mux;
-+};
-+
-+struct dsi_pll_7nm {
-+	struct msm_dsi_pll base;
-+
-+	int id;
-+	struct platform_device *pdev;
-+
-+	void __iomem *phy_cmn_mmio;
-+	void __iomem *mmio;
-+
-+	u64 vco_ref_clk_rate;
-+	u64 vco_current_rate;
-+
-+	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG0 register */
-+	spinlock_t postdiv_lock;
-+
-+	int vco_delay;
-+	struct dsi_pll_config pll_configuration;
-+	struct dsi_pll_regs reg_setup;
-+
-+	/* private clocks: */
-+	struct clk_hw *out_div_clk_hw;
-+	struct clk_hw *bit_clk_hw;
-+	struct clk_hw *byte_clk_hw;
-+	struct clk_hw *by_2_bit_clk_hw;
-+	struct clk_hw *post_out_div_clk_hw;
-+	struct clk_hw *pclk_mux_hw;
-+	struct clk_hw *out_dsiclk_hw;
-+
-+	/* clock-provider: */
-+	struct clk_hw_onecell_data *hw_data;
-+
-+	struct pll_7nm_cached_state cached_state;
-+
-+	enum msm_dsi_phy_usecase uc;
-+	struct dsi_pll_7nm *slave;
-+};
-+
-+#define to_pll_7nm(x)	container_of(x, struct dsi_pll_7nm, base)
-+
-+/*
-+ * Global list of private DSI PLL struct pointers. We need this for Dual DSI
-+ * mode, where the master PLL's clk_ops needs access the slave's private data
-+ */
-+static struct dsi_pll_7nm *pll_7nm_list[DSI_MAX];
-+
-+static void dsi_pll_setup_config(struct dsi_pll_7nm *pll)
-+{
-+	struct dsi_pll_config *config = &pll->pll_configuration;
-+
-+	config->ref_freq = pll->vco_ref_clk_rate;
-+	config->output_div = 1;
-+	config->dec_bits = 8;
-+	config->frac_bits = 18;
-+	config->lock_timer = 64;
-+	config->ssc_freq = 31500;
-+	config->ssc_offset = 4800;
-+	config->ssc_adj_per = 2;
-+	config->thresh_cycles = 32;
-+	config->refclk_cycles = 256;
-+
-+	config->div_override = false;
-+	config->ignore_frac = false;
-+	config->disable_prescaler = false;
-+
-+	/* TODO: ssc enable */
-+	config->enable_ssc = false;
-+	config->ssc_center = 0;
-+}
-+
-+static void dsi_pll_calc_dec_frac(struct dsi_pll_7nm *pll)
-+{
-+	struct dsi_pll_config *config = &pll->pll_configuration;
-+	struct dsi_pll_regs *regs = &pll->reg_setup;
-+	u64 fref = pll->vco_ref_clk_rate;
-+	u64 pll_freq;
-+	u64 divider;
-+	u64 dec, dec_multiple;
-+	u32 frac;
-+	u64 multiplier;
-+
-+	pll_freq = pll->vco_current_rate;
-+
-+	if (config->disable_prescaler)
-+		divider = fref;
-+	else
-+		divider = fref * 2;
-+
-+	multiplier = 1 << config->frac_bits;
-+	dec_multiple = div_u64(pll_freq * multiplier, divider);
-+	div_u64_rem(dec_multiple, multiplier, &frac);
-+
-+	dec = div_u64(dec_multiple, multiplier);
-+
-+	if (pll->base.type != MSM_DSI_PHY_7NM_V4_1)
-+		regs->pll_clock_inverters = 0x28;
-+	else if (pll_freq <= 1000000000ULL)
-+		regs->pll_clock_inverters = 0xa0;
-+	else if (pll_freq <= 2500000000ULL)
-+		regs->pll_clock_inverters = 0x20;
-+	else if (pll_freq <= 3020000000ULL)
-+		regs->pll_clock_inverters = 0x00;
-+	else
-+		regs->pll_clock_inverters = 0x40;
-+
-+	regs->pll_lockdet_rate = config->lock_timer;
-+	regs->decimal_div_start = dec;
-+	regs->frac_div_start_low = (frac & 0xff);
-+	regs->frac_div_start_mid = (frac & 0xff00) >> 8;
-+	regs->frac_div_start_high = (frac & 0x30000) >> 16;
-+}
-+
-+#define SSC_CENTER		BIT(0)
-+#define SSC_EN			BIT(1)
-+
-+static void dsi_pll_calc_ssc(struct dsi_pll_7nm *pll)
-+{
-+	struct dsi_pll_config *config = &pll->pll_configuration;
-+	struct dsi_pll_regs *regs = &pll->reg_setup;
-+	u32 ssc_per;
-+	u32 ssc_mod;
-+	u64 ssc_step_size;
-+	u64 frac;
-+
-+	if (!config->enable_ssc) {
-+		DBG("SSC not enabled\n");
-+		return;
-+	}
-+
-+	ssc_per = DIV_ROUND_CLOSEST(config->ref_freq, config->ssc_freq) / 2 - 1;
-+	ssc_mod = (ssc_per + 1) % (config->ssc_adj_per + 1);
-+	ssc_per -= ssc_mod;
-+
-+	frac = regs->frac_div_start_low |
-+			(regs->frac_div_start_mid << 8) |
-+			(regs->frac_div_start_high << 16);
-+	ssc_step_size = regs->decimal_div_start;
-+	ssc_step_size *= (1 << config->frac_bits);
-+	ssc_step_size += frac;
-+	ssc_step_size *= config->ssc_offset;
-+	ssc_step_size *= (config->ssc_adj_per + 1);
-+	ssc_step_size = div_u64(ssc_step_size, (ssc_per + 1));
-+	ssc_step_size = DIV_ROUND_CLOSEST_ULL(ssc_step_size, 1000000);
-+
-+	regs->ssc_div_per_low = ssc_per & 0xFF;
-+	regs->ssc_div_per_high = (ssc_per & 0xFF00) >> 8;
-+	regs->ssc_stepsize_low = (u32)(ssc_step_size & 0xFF);
-+	regs->ssc_stepsize_high = (u32)((ssc_step_size & 0xFF00) >> 8);
-+	regs->ssc_adjper_low = config->ssc_adj_per & 0xFF;
-+	regs->ssc_adjper_high = (config->ssc_adj_per & 0xFF00) >> 8;
-+
-+	regs->ssc_control = config->ssc_center ? SSC_CENTER : 0;
-+
-+	pr_debug("SCC: Dec:%d, frac:%llu, frac_bits:%d\n",
-+		 regs->decimal_div_start, frac, config->frac_bits);
-+	pr_debug("SSC: div_per:0x%X, stepsize:0x%X, adjper:0x%X\n",
-+		 ssc_per, (u32)ssc_step_size, config->ssc_adj_per);
-+}
-+
-+static void dsi_pll_ssc_commit(struct dsi_pll_7nm *pll)
-+{
-+	void __iomem *base = pll->mmio;
-+	struct dsi_pll_regs *regs = &pll->reg_setup;
-+
-+	if (pll->pll_configuration.enable_ssc) {
-+		pr_debug("SSC is enabled\n");
-+
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_LOW_1,
-+			  regs->ssc_stepsize_low);
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_STEPSIZE_HIGH_1,
-+			  regs->ssc_stepsize_high);
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_LOW_1,
-+			  regs->ssc_div_per_low);
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_DIV_PER_HIGH_1,
-+			  regs->ssc_div_per_high);
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_ADJPER_LOW_1,
-+			  regs->ssc_adjper_low);
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_ADJPER_HIGH_1,
-+			  regs->ssc_adjper_high);
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_SSC_CONTROL,
-+			  SSC_EN | regs->ssc_control);
-+	}
-+}
-+
-+static void dsi_pll_config_hzindep_reg(struct dsi_pll_7nm *pll)
-+{
-+	void __iomem *base = pll->mmio;
-+	u8 analog_controls_five_1 = 0x01, vco_config_1 = 0x00;
-+
-+	if (pll->base.type == MSM_DSI_PHY_7NM_V4_1) {
-+		if (pll->vco_current_rate >= 3100000000ULL)
-+			analog_controls_five_1 = 0x03;
-+
-+		if (pll->vco_current_rate < 1520000000ULL)
-+			vco_config_1 = 0x08;
-+		else if (pll->vco_current_rate < 2990000000ULL)
-+			vco_config_1 = 0x01;
-+	}
-+
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE_1,
-+		  analog_controls_five_1);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_VCO_CONFIG_1, vco_config_1);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_FIVE, 0x01);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_TWO, 0x03);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_ANALOG_CONTROLS_THREE, 0x00);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_DSM_DIVIDER, 0x00);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_FEEDBACK_DIVIDER, 0x4e);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_CALIBRATION_SETTINGS, 0x40);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_BAND_SEL_CAL_SETTINGS_THREE, 0xba);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_FREQ_DETECT_SETTINGS_ONE, 0x0c);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_OUTDIV, 0x00);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_CORE_OVERRIDE, 0x00);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_DIGITAL_TIMERS_TWO, 0x08);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_PROP_GAIN_RATE_1, 0x0a);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_BAND_SEL_RATE_1, 0xc0);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_INT_GAIN_IFILT_BAND_1, 0x84);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_INT_GAIN_IFILT_BAND_1, 0x82);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_FL_INT_GAIN_PFILT_BAND_1, 0x4c);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_LOCK_OVERRIDE, 0x80);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PFILT, 0x29);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PFILT, 0x2f);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_IFILT, 0x2a);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_IFILT,
-+		  pll->base.type == MSM_DSI_PHY_7NM_V4_1 ? 0x3f : 0x22);
-+
-+	if (pll->base.type == MSM_DSI_PHY_7NM_V4_1) {
-+		pll_write(base + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
-+		if (pll->slave)
-+			pll_write(pll->slave->mmio + REG_DSI_7nm_PHY_PLL_PERF_OPTIMIZE, 0x22);
-+	}
-+}
-+
-+static void dsi_pll_commit(struct dsi_pll_7nm *pll)
-+{
-+	void __iomem *base = pll->mmio;
-+	struct dsi_pll_regs *reg = &pll->reg_setup;
-+
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_CORE_INPUT_OVERRIDE, 0x12);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_DECIMAL_DIV_START_1, reg->decimal_div_start);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_LOW_1, reg->frac_div_start_low);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_MID_1, reg->frac_div_start_mid);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_HIGH_1, reg->frac_div_start_high);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_LOCKDET_RATE_1, 0x40);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_PLL_LOCK_DELAY, 0x06);
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_CMODE_1, 0x10); /* TODO: 0x00 for CPHY */
-+	pll_write(base + REG_DSI_7nm_PHY_PLL_CLOCK_INVERTERS, reg->pll_clock_inverters);
-+}
-+
-+static int dsi_pll_7nm_vco_set_rate(struct clk_hw *hw, unsigned long rate,
-+				     unsigned long parent_rate)
-+{
-+	struct msm_dsi_pll *pll = hw_clk_to_pll(hw);
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+
-+	DBG("DSI PLL%d rate=%lu, parent's=%lu", pll_7nm->id, rate,
-+	    parent_rate);
-+
-+	pll_7nm->vco_current_rate = rate;
-+	pll_7nm->vco_ref_clk_rate = VCO_REF_CLK_RATE;
-+
-+	dsi_pll_setup_config(pll_7nm);
-+
-+	dsi_pll_calc_dec_frac(pll_7nm);
-+
-+	dsi_pll_calc_ssc(pll_7nm);
-+
-+	dsi_pll_commit(pll_7nm);
-+
-+	dsi_pll_config_hzindep_reg(pll_7nm);
-+
-+	dsi_pll_ssc_commit(pll_7nm);
-+
-+	/* flush, ensure all register writes are done*/
-+	wmb();
-+
-+	return 0;
-+}
-+
-+static int dsi_pll_7nm_lock_status(struct dsi_pll_7nm *pll)
-+{
-+	int rc;
-+	u32 status = 0;
-+	u32 const delay_us = 100;
-+	u32 const timeout_us = 5000;
-+
-+	rc = readl_poll_timeout_atomic(pll->mmio +
-+				       REG_DSI_7nm_PHY_PLL_COMMON_STATUS_ONE,
-+				       status,
-+				       ((status & BIT(0)) > 0),
-+				       delay_us,
-+				       timeout_us);
-+	if (rc)
-+		pr_err("DSI PLL(%d) lock failed, status=0x%08x\n",
-+		       pll->id, status);
-+
-+	return rc;
-+}
-+
-+static void dsi_pll_disable_pll_bias(struct dsi_pll_7nm *pll)
-+{
-+	u32 data = pll_read(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CTRL_0);
-+
-+	pll_write(pll->mmio + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES, 0);
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CTRL_0, data & ~BIT(5));
-+	ndelay(250);
-+}
-+
-+static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
-+{
-+	u32 data = pll_read(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CTRL_0);
-+
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CTRL_0, data | BIT(5));
-+	pll_write(pll->mmio + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES, 0xc0);
-+	ndelay(250);
-+}
-+
-+static void dsi_pll_disable_global_clk(struct dsi_pll_7nm *pll)
-+{
-+	u32 data;
-+
-+	data = pll_read(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CLK_CFG1, data & ~BIT(5));
-+}
-+
-+static void dsi_pll_enable_global_clk(struct dsi_pll_7nm *pll)
-+{
-+	u32 data;
-+
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CTRL_3, 0x04);
-+
-+	data = pll_read(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_CLK_CFG1,
-+		  data | BIT(5) | BIT(4));
-+}
-+
-+static void dsi_pll_phy_dig_reset(struct dsi_pll_7nm *pll)
-+{
-+	/*
-+	 * Reset the PHY digital domain. This would be needed when
-+	 * coming out of a CX or analog rail power collapse while
-+	 * ensuring that the pads maintain LP00 or LP11 state
-+	 */
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE4, BIT(0));
-+	wmb(); /* Ensure that the reset is deasserted */
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_GLBL_DIGTOP_SPARE4, 0x0);
-+	wmb(); /* Ensure that the reset is deasserted */
-+}
-+
-+static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
-+{
-+	struct msm_dsi_pll *pll = hw_clk_to_pll(hw);
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	int rc;
-+
-+	dsi_pll_enable_pll_bias(pll_7nm);
-+	if (pll_7nm->slave)
-+		dsi_pll_enable_pll_bias(pll_7nm->slave);
-+
-+	/* Start PLL */
-+	pll_write(pll_7nm->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_PLL_CNTRL, 0x01);
-+
-+	/*
-+	 * ensure all PLL configurations are written prior to checking
-+	 * for PLL lock.
-+	 */
-+	wmb();
-+
-+	/* Check for PLL lock */
-+	rc = dsi_pll_7nm_lock_status(pll_7nm);
-+	if (rc) {
-+		pr_err("PLL(%d) lock failed\n", pll_7nm->id);
-+		goto error;
-+	}
-+
-+	pll->pll_on = true;
-+
-+	/*
-+	 * assert power on reset for PHY digital in case the PLL is
-+	 * enabled after CX of analog domain power collapse. This needs
-+	 * to be done before enabling the global clk.
-+	 */
-+	dsi_pll_phy_dig_reset(pll_7nm);
-+	if (pll_7nm->slave)
-+		dsi_pll_phy_dig_reset(pll_7nm->slave);
-+
-+	dsi_pll_enable_global_clk(pll_7nm);
-+	if (pll_7nm->slave)
-+		dsi_pll_enable_global_clk(pll_7nm->slave);
-+
-+error:
-+	return rc;
-+}
-+
-+static void dsi_pll_disable_sub(struct dsi_pll_7nm *pll)
-+{
-+	pll_write(pll->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_RBUF_CTRL, 0);
-+	dsi_pll_disable_pll_bias(pll);
-+}
-+
-+static void dsi_pll_7nm_vco_unprepare(struct clk_hw *hw)
-+{
-+	struct msm_dsi_pll *pll = hw_clk_to_pll(hw);
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+
-+	/*
-+	 * To avoid any stray glitches while abruptly powering down the PLL
-+	 * make sure to gate the clock using the clock enable bit before
-+	 * powering down the PLL
-+	 */
-+	dsi_pll_disable_global_clk(pll_7nm);
-+	pll_write(pll_7nm->phy_cmn_mmio + REG_DSI_7nm_PHY_CMN_PLL_CNTRL, 0);
-+	dsi_pll_disable_sub(pll_7nm);
-+	if (pll_7nm->slave) {
-+		dsi_pll_disable_global_clk(pll_7nm->slave);
-+		dsi_pll_disable_sub(pll_7nm->slave);
-+	}
-+	/* flush, ensure all register writes are done */
-+	wmb();
-+	pll->pll_on = false;
-+}
-+
-+static unsigned long dsi_pll_7nm_vco_recalc_rate(struct clk_hw *hw,
-+						  unsigned long parent_rate)
-+{
-+	struct msm_dsi_pll *pll = hw_clk_to_pll(hw);
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	void __iomem *base = pll_7nm->mmio;
-+	u64 ref_clk = pll_7nm->vco_ref_clk_rate;
-+	u64 vco_rate = 0x0;
-+	u64 multiplier;
-+	u32 frac;
-+	u32 dec;
-+	u64 pll_freq, tmp64;
-+
-+	dec = pll_read(base + REG_DSI_7nm_PHY_PLL_DECIMAL_DIV_START_1);
-+	dec &= 0xff;
-+
-+	frac = pll_read(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_LOW_1);
-+	frac |= ((pll_read(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_MID_1) &
-+		  0xff) << 8);
-+	frac |= ((pll_read(base + REG_DSI_7nm_PHY_PLL_FRAC_DIV_START_HIGH_1) &
-+		  0x3) << 16);
-+
-+	/*
-+	 * TODO:
-+	 *	1. Assumes prescaler is disabled
-+	 *	2. Multiplier is 2^18. it should be 2^(num_of_frac_bits)
-+	 */
-+	multiplier = 1 << 18;
-+	pll_freq = dec * (ref_clk * 2);
-+	tmp64 = (ref_clk * 2 * frac);
-+	pll_freq += div_u64(tmp64, multiplier);
-+
-+	vco_rate = pll_freq;
-+
-+	DBG("DSI PLL%d returning vco rate = %lu, dec = %x, frac = %x",
-+	    pll_7nm->id, (unsigned long)vco_rate, dec, frac);
-+
-+	return (unsigned long)vco_rate;
-+}
-+
-+static const struct clk_ops clk_ops_dsi_pll_7nm_vco = {
-+	.round_rate = msm_dsi_pll_helper_clk_round_rate,
-+	.set_rate = dsi_pll_7nm_vco_set_rate,
-+	.recalc_rate = dsi_pll_7nm_vco_recalc_rate,
-+	.prepare = dsi_pll_7nm_vco_prepare,
-+	.unprepare = dsi_pll_7nm_vco_unprepare,
-+};
-+
-+/*
-+ * PLL Callbacks
-+ */
-+
-+static void dsi_pll_7nm_save_state(struct msm_dsi_pll *pll)
-+{
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	struct pll_7nm_cached_state *cached = &pll_7nm->cached_state;
-+	void __iomem *phy_base = pll_7nm->phy_cmn_mmio;
-+	u32 cmn_clk_cfg0, cmn_clk_cfg1;
-+
-+	cached->pll_out_div = pll_read(pll_7nm->mmio +
-+				       REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
-+	cached->pll_out_div &= 0x3;
-+
-+	cmn_clk_cfg0 = pll_read(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0);
-+	cached->bit_clk_div = cmn_clk_cfg0 & 0xf;
-+	cached->pix_clk_div = (cmn_clk_cfg0 & 0xf0) >> 4;
-+
-+	cmn_clk_cfg1 = pll_read(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	cached->pll_mux = cmn_clk_cfg1 & 0x3;
-+
-+	DBG("DSI PLL%d outdiv %x bit_clk_div %x pix_clk_div %x pll_mux %x",
-+	    pll_7nm->id, cached->pll_out_div, cached->bit_clk_div,
-+	    cached->pix_clk_div, cached->pll_mux);
-+}
-+
-+static int dsi_pll_7nm_restore_state(struct msm_dsi_pll *pll)
-+{
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	struct pll_7nm_cached_state *cached = &pll_7nm->cached_state;
-+	void __iomem *phy_base = pll_7nm->phy_cmn_mmio;
-+	u32 val;
-+
-+	val = pll_read(pll_7nm->mmio + REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
-+	val &= ~0x3;
-+	val |= cached->pll_out_div;
-+	pll_write(pll_7nm->mmio + REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE, val);
-+
-+	pll_write(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG0,
-+		  cached->bit_clk_div | (cached->pix_clk_div << 4));
-+
-+	val = pll_read(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	val &= ~0x3;
-+	val |= cached->pll_mux;
-+	pll_write(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1, val);
-+
-+	DBG("DSI PLL%d", pll_7nm->id);
-+
-+	return 0;
-+}
-+
-+static int dsi_pll_7nm_set_usecase(struct msm_dsi_pll *pll,
-+				    enum msm_dsi_phy_usecase uc)
-+{
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	void __iomem *base = pll_7nm->phy_cmn_mmio;
-+	u32 data = 0x0;	/* internal PLL */
-+
-+	DBG("DSI PLL%d", pll_7nm->id);
-+
-+	switch (uc) {
-+	case MSM_DSI_PHY_STANDALONE:
++#define DP_LANE0_1_CR_DONE	0x11
++
+ static int dp_aux_link_configure(struct drm_dp_aux *aux,
+ 					struct dp_link_info *link)
+ {
+@@ -97,8 +109,6 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
+ 
+ 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+ 
+-	mutex_lock(&ctrl->push_idle_mutex);
+-
+ 	reinit_completion(&ctrl->idle_comp);
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_PUSH_IDLE);
+ 
+@@ -106,7 +116,6 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
+ 			IDLE_PATTERN_COMPLETION_TIMEOUT_JIFFIES))
+ 		pr_warn("PUSH_IDLE pattern timedout\n");
+ 
+-	mutex_unlock(&ctrl->push_idle_mutex);
+ 	pr_debug("mainlink off done\n");
+ }
+ 
+@@ -979,7 +988,7 @@ static int dp_ctrl_wait4video_ready(struct dp_ctrl_private *ctrl)
+ 
+ 	if (!wait_for_completion_timeout(&ctrl->video_comp,
+ 				WAIT_FOR_VIDEO_READY_TIMEOUT_JIFFIES)) {
+-		DRM_ERROR("Link Train timedout\n");
++		DRM_ERROR("wait4video timedout\n");
+ 		ret = -ETIMEDOUT;
+ 	}
+ 	return ret;
+@@ -1000,13 +1009,13 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (voltage_swing_level > DP_TRAIN_VOLTAGE_SWING_MAX) {
++	if (voltage_swing_level >= DP_TRAIN_VOLTAGE_SWING_MAX) {
+ 		DRM_DEBUG_DP("max. voltage swing level reached %d\n",
+ 				voltage_swing_level);
+ 		max_level_reached |= DP_TRAIN_MAX_SWING_REACHED;
+ 	}
+ 
+-	if (pre_emphasis_level == DP_TRAIN_PRE_EMPHASIS_MAX) {
++	if (pre_emphasis_level >= DP_TRAIN_PRE_EMPHASIS_MAX) {
+ 		DRM_DEBUG_DP("max. pre-emphasis level reached %d\n",
+ 				pre_emphasis_level);
+ 		max_level_reached  |= DP_TRAIN_MAX_PRE_EMPHASIS_REACHED;
+@@ -1038,8 +1047,11 @@ static bool dp_ctrl_train_pattern_set(struct dp_ctrl_private *ctrl,
+ 	DRM_DEBUG_DP("sink: pattern=%x\n", pattern);
+ 
+ 	buf = pattern;
+-	ret = drm_dp_dpcd_writeb(ctrl->aux,
+-					DP_TRAINING_PATTERN_SET, buf);
++
++	if (pattern && pattern != DP_TRAINING_PATTERN_4)
++		buf |= DP_LINK_SCRAMBLING_DISABLE;
++
++	ret = drm_dp_dpcd_writeb(ctrl->aux, DP_TRAINING_PATTERN_SET, buf);
+ 	return ret == 1;
+ }
+ 
+@@ -1065,19 +1077,23 @@ static int dp_ctrl_read_link_status(struct dp_ctrl_private *ctrl,
+ 	return -ETIMEDOUT;
+ }
+ 
+-static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+ 	int tries, old_v_level, ret = 0;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+-	int const maximum_retries = 5;
++	int const maximum_retries = 4;
+ 
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
++	*training_step = DP_TRAINING_1;
++
+ 	ret = dp_catalog_ctrl_set_pattern(ctrl->catalog, DP_TRAINING_PATTERN_1);
+ 	if (ret)
+ 		return ret;
+ 	dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
+ 		DP_LINK_SCRAMBLING_DISABLE);
++
+ 	ret = dp_ctrl_update_vx_px(ctrl);
+ 	if (ret)
+ 		return ret;
+@@ -1091,12 +1107,15 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl)
+ 		if (ret)
+ 			return ret;
+ 
++		cr->lane_0_1 = link_status[0];
++		cr->lane_2_3 = link_status[1];
++
+ 		if (drm_dp_clock_recovery_ok(link_status,
+ 			ctrl->link->link_params.num_lanes)) {
+-			return ret;
++			return 0;
+ 		}
+ 
+-		if (ctrl->link->phy_params.v_level >
++		if (ctrl->link->phy_params.v_level >=
+ 			DP_TRAIN_VOLTAGE_SWING_MAX) {
+ 			DRM_ERROR_RATELIMITED("max v_level reached\n");
+ 			return -EAGAIN;
+@@ -1119,8 +1138,10 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl)
+ 	return -ETIMEDOUT;
+ }
+ 
+-static void dp_ctrl_link_rate_down_shift(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_link_rate_down_shift(struct dp_ctrl_private *ctrl)
+ {
++	int ret = 0;
++
+ 	switch (ctrl->link->link_params.rate) {
+ 	case 810000:
+ 		ctrl->link->link_params.rate = 540000;
+@@ -1129,13 +1150,33 @@ static void dp_ctrl_link_rate_down_shift(struct dp_ctrl_private *ctrl)
+ 		ctrl->link->link_params.rate = 270000;
+ 		break;
+ 	case 270000:
++		ctrl->link->link_params.rate = 162000;
 +		break;
-+	case MSM_DSI_PHY_MASTER:
-+		pll_7nm->slave = pll_7nm_list[(pll_7nm->id + 1) % DSI_MAX];
-+		break;
-+	case MSM_DSI_PHY_SLAVE:
-+		data = 0x1; /* external PLL */
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	/* set PLL src */
-+	pll_write(base + REG_DSI_7nm_PHY_CMN_CLK_CFG1, (data << 2));
-+
-+	pll_7nm->uc = uc;
-+
-+	return 0;
-+}
-+
-+static int dsi_pll_7nm_get_provider(struct msm_dsi_pll *pll,
-+				     struct clk **byte_clk_provider,
-+				     struct clk **pixel_clk_provider)
-+{
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	struct clk_hw_onecell_data *hw_data = pll_7nm->hw_data;
-+
-+	DBG("DSI PLL%d", pll_7nm->id);
-+
-+	if (byte_clk_provider)
-+		*byte_clk_provider = hw_data->hws[DSI_BYTE_PLL_CLK]->clk;
-+	if (pixel_clk_provider)
-+		*pixel_clk_provider = hw_data->hws[DSI_PIXEL_PLL_CLK]->clk;
-+
-+	return 0;
-+}
-+
-+static void dsi_pll_7nm_destroy(struct msm_dsi_pll *pll)
-+{
-+	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(pll);
-+	struct device *dev = &pll_7nm->pdev->dev;
-+
-+	DBG("DSI PLL%d", pll_7nm->id);
-+	of_clk_del_provider(dev->of_node);
-+
-+	clk_hw_unregister_divider(pll_7nm->out_dsiclk_hw);
-+	clk_hw_unregister_mux(pll_7nm->pclk_mux_hw);
-+	clk_hw_unregister_fixed_factor(pll_7nm->post_out_div_clk_hw);
-+	clk_hw_unregister_fixed_factor(pll_7nm->by_2_bit_clk_hw);
-+	clk_hw_unregister_fixed_factor(pll_7nm->byte_clk_hw);
-+	clk_hw_unregister_divider(pll_7nm->bit_clk_hw);
-+	clk_hw_unregister_divider(pll_7nm->out_div_clk_hw);
-+	clk_hw_unregister(&pll_7nm->base.clk_hw);
-+}
-+
-+/*
-+ * The post dividers and mux clocks are created using the standard divider and
-+ * mux API. Unlike the 14nm PHY, the slave PLL doesn't need its dividers/mux
-+ * state to follow the master PLL's divider/mux state. Therefore, we don't
-+ * require special clock ops that also configure the slave PLL registers
-+ */
-+static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm)
-+{
-+	char clk_name[32], parent[32], vco_name[32];
-+	char parent2[32], parent3[32], parent4[32];
-+	struct clk_init_data vco_init = {
-+		.parent_names = (const char *[]){ "bi_tcxo" },
-+		.num_parents = 1,
-+		.name = vco_name,
-+		.flags = CLK_IGNORE_UNUSED,
-+		.ops = &clk_ops_dsi_pll_7nm_vco,
-+	};
-+	struct device *dev = &pll_7nm->pdev->dev;
-+	struct clk_hw_onecell_data *hw_data;
-+	struct clk_hw *hw;
-+	int ret;
-+
-+	DBG("DSI%d", pll_7nm->id);
-+
-+	hw_data = devm_kzalloc(dev, sizeof(*hw_data) +
-+			       NUM_PROVIDED_CLKS * sizeof(struct clk_hw *),
-+			       GFP_KERNEL);
-+	if (!hw_data)
-+		return -ENOMEM;
-+
-+	snprintf(vco_name, 32, "dsi%dvco_clk", pll_7nm->id);
-+	pll_7nm->base.clk_hw.init = &vco_init;
-+
-+	ret = clk_hw_register(dev, &pll_7nm->base.clk_hw);
-+	if (ret)
-+		return ret;
-+
-+	snprintf(clk_name, 32, "dsi%d_pll_out_div_clk", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%dvco_clk", pll_7nm->id);
-+
-+	hw = clk_hw_register_divider(dev, clk_name,
-+				     parent, CLK_SET_RATE_PARENT,
-+				     pll_7nm->mmio +
-+				     REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE,
-+				     0, 2, CLK_DIVIDER_POWER_OF_TWO, NULL);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_base_clk_hw;
-+	}
-+
-+	pll_7nm->out_div_clk_hw = hw;
-+
-+	snprintf(clk_name, 32, "dsi%d_pll_bit_clk", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%d_pll_out_div_clk", pll_7nm->id);
-+
-+	/* BIT CLK: DIV_CTRL_3_0 */
-+	hw = clk_hw_register_divider(dev, clk_name, parent,
-+				     CLK_SET_RATE_PARENT,
-+				     pll_7nm->phy_cmn_mmio +
-+				     REG_DSI_7nm_PHY_CMN_CLK_CFG0,
-+				     0, 4, CLK_DIVIDER_ONE_BASED,
-+				     &pll_7nm->postdiv_lock);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_out_div_clk_hw;
-+	}
-+
-+	pll_7nm->bit_clk_hw = hw;
-+
-+	snprintf(clk_name, 32, "dsi%d_phy_pll_out_byteclk", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->id);
-+
-+	/* DSI Byte clock = VCO_CLK / OUT_DIV / BIT_DIV / 8 */
-+	hw = clk_hw_register_fixed_factor(dev, clk_name, parent,
-+					  CLK_SET_RATE_PARENT, 1, 8);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_bit_clk_hw;
-+	}
-+
-+	pll_7nm->byte_clk_hw = hw;
-+	hw_data->hws[DSI_BYTE_PLL_CLK] = hw;
-+
-+	snprintf(clk_name, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->id);
-+
-+	hw = clk_hw_register_fixed_factor(dev, clk_name, parent,
-+					  0, 1, 2);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_byte_clk_hw;
-+	}
-+
-+	pll_7nm->by_2_bit_clk_hw = hw;
-+
-+	snprintf(clk_name, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%d_pll_out_div_clk", pll_7nm->id);
-+
-+	hw = clk_hw_register_fixed_factor(dev, clk_name, parent,
-+					  0, 1, 4);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_by_2_bit_clk_hw;
-+	}
-+
-+	pll_7nm->post_out_div_clk_hw = hw;
-+
-+	snprintf(clk_name, 32, "dsi%d_pclk_mux", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%d_pll_bit_clk", pll_7nm->id);
-+	snprintf(parent2, 32, "dsi%d_pll_by_2_bit_clk", pll_7nm->id);
-+	snprintf(parent3, 32, "dsi%d_pll_out_div_clk", pll_7nm->id);
-+	snprintf(parent4, 32, "dsi%d_pll_post_out_div_clk", pll_7nm->id);
-+
-+	hw = clk_hw_register_mux(dev, clk_name,
-+				 ((const char *[]){
-+				 parent, parent2, parent3, parent4
-+				 }), 4, 0, pll_7nm->phy_cmn_mmio +
-+				 REG_DSI_7nm_PHY_CMN_CLK_CFG1,
-+				 0, 2, 0, NULL);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_post_out_div_clk_hw;
-+	}
-+
-+	pll_7nm->pclk_mux_hw = hw;
-+
-+	snprintf(clk_name, 32, "dsi%d_phy_pll_out_dsiclk", pll_7nm->id);
-+	snprintf(parent, 32, "dsi%d_pclk_mux", pll_7nm->id);
-+
-+	/* PIX CLK DIV : DIV_CTRL_7_4*/
-+	hw = clk_hw_register_divider(dev, clk_name, parent,
-+				     0, pll_7nm->phy_cmn_mmio +
-+					REG_DSI_7nm_PHY_CMN_CLK_CFG0,
-+				     4, 4, CLK_DIVIDER_ONE_BASED,
-+				     &pll_7nm->postdiv_lock);
-+	if (IS_ERR(hw)) {
-+		ret = PTR_ERR(hw);
-+		goto err_pclk_mux_hw;
-+	}
-+
-+	pll_7nm->out_dsiclk_hw = hw;
-+	hw_data->hws[DSI_PIXEL_PLL_CLK] = hw;
-+
-+	hw_data->num = NUM_PROVIDED_CLKS;
-+	pll_7nm->hw_data = hw_data;
-+
-+	ret = of_clk_add_hw_provider(dev->of_node, of_clk_hw_onecell_get,
-+				     pll_7nm->hw_data);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to register clk provider: %d\n", ret);
-+		goto err_dsiclk_hw;
-+	}
-+
-+	return 0;
-+
-+err_dsiclk_hw:
-+	clk_hw_unregister_divider(pll_7nm->out_dsiclk_hw);
-+err_pclk_mux_hw:
-+	clk_hw_unregister_mux(pll_7nm->pclk_mux_hw);
-+err_post_out_div_clk_hw:
-+	clk_hw_unregister_fixed_factor(pll_7nm->post_out_div_clk_hw);
-+err_by_2_bit_clk_hw:
-+	clk_hw_unregister_fixed_factor(pll_7nm->by_2_bit_clk_hw);
-+err_byte_clk_hw:
-+	clk_hw_unregister_fixed_factor(pll_7nm->byte_clk_hw);
-+err_bit_clk_hw:
-+	clk_hw_unregister_divider(pll_7nm->bit_clk_hw);
-+err_out_div_clk_hw:
-+	clk_hw_unregister_divider(pll_7nm->out_div_clk_hw);
-+err_base_clk_hw:
-+	clk_hw_unregister(&pll_7nm->base.clk_hw);
+ 	case 162000:
+ 	default:
+-		ctrl->link->link_params.rate = 162000;
++		ret = -EINVAL;
+ 		break;
+ 	};
+ 
+-	DRM_DEBUG_DP("new rate=0x%x\n", ctrl->link->link_params.rate);
++	if (!ret)
++		DRM_DEBUG_DP("new rate=0x%x\n", ctrl->link->link_params.rate);
 +
 +	return ret;
 +}
 +
-+struct msm_dsi_pll *msm_dsi_pll_7nm_init(struct platform_device *pdev, int id)
++static int dp_ctrl_link_lane_down_shift(struct dp_ctrl_private *ctrl)
 +{
-+	struct dsi_pll_7nm *pll_7nm;
-+	struct msm_dsi_pll *pll;
++
++	if (ctrl->link->link_params.num_lanes == 1)
++		return -1;
++
++	ctrl->link->link_params.num_lanes /= 2;
++	ctrl->link->link_params.rate = ctrl->panel->link_info.rate;
++
++	ctrl->link->phy_params.p_level = 0;
++	ctrl->link->phy_params.v_level = 0;
++
++	return 0;
+ }
+ 
+ static void dp_ctrl_clear_training_pattern(struct dp_ctrl_private *ctrl)
+@@ -1144,7 +1185,8 @@ static void dp_ctrl_clear_training_pattern(struct dp_ctrl_private *ctrl)
+ 	drm_dp_link_train_channel_eq_delay(ctrl->panel->dpcd);
+ }
+ 
+-static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+ 	int tries = 0, ret = 0;
+ 	char pattern;
+@@ -1153,6 +1195,8 @@ static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
+ 
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
++	*training_step = DP_TRAINING_2;
++
+ 	if (drm_dp_tps3_supported(ctrl->panel->dpcd))
+ 		pattern = DP_TRAINING_PATTERN_3;
+ 	else
+@@ -1174,10 +1218,13 @@ static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
+ 		ret = dp_ctrl_read_link_status(ctrl, link_status);
+ 		if (ret)
+ 			return ret;
++		cr->lane_0_1 = link_status[0];
++		cr->lane_2_3 = link_status[1];
+ 
+ 		if (drm_dp_channel_eq_ok(link_status,
+-			ctrl->link->link_params.num_lanes))
+-			return ret;
++			ctrl->link->link_params.num_lanes)) {
++			return 0;
++		}
+ 
+ 		dp_link_adjust_levels(ctrl->link, link_status);
+ 		ret = dp_ctrl_update_vx_px(ctrl);
+@@ -1189,15 +1236,15 @@ static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
+ 	return -ETIMEDOUT;
+ }
+ 
+-static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl);
++
++static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+ 	int ret = 0;
+ 	u8 encoding = DP_SET_ANSI_8B10B;
+ 	struct dp_link_info link_info = {0};
+ 
+-	ctrl->link->phy_params.p_level = 0;
+-	ctrl->link->phy_params.v_level = 0;
+-
+ 	dp_ctrl_config_ctrl(ctrl);
+ 
+ 	link_info.num_lanes = ctrl->link->link_params.num_lanes;
+@@ -1208,7 +1255,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
+ 	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
+ 				&encoding, 1);
+ 
+-	ret = dp_ctrl_link_train_1(ctrl);
++	ret = dp_ctrl_link_train_1(ctrl, cr, training_step);
+ 	if (ret) {
+ 		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
+ 		goto end;
+@@ -1217,7 +1264,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
+ 	/* print success info as this is a result of user initiated action */
+ 	DRM_DEBUG_DP("link training #1 successful\n");
+ 
+-	ret = dp_ctrl_link_training_2(ctrl);
++	ret = dp_ctrl_link_train_2(ctrl, cr, training_step);
+ 	if (ret) {
+ 		DRM_ERROR("link training #2 failed. ret=%d\n", ret);
+ 		goto end;
+@@ -1229,58 +1276,36 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
+ end:
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
+-	dp_ctrl_clear_training_pattern(ctrl);
+ 	return ret;
+ }
+ 
+-static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl, bool train)
++static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+-	bool mainlink_ready = false;
+ 	int ret = 0;
+ 
+ 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, true);
+ 
+-	ret = dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, false);
+-	if (ret)
+-		return ret;
+-
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+ 		return ret;
+ 
+-	if (train) {
+-		/*
+-		 * As part of previous calls, DP controller state might have
+-		 * transitioned to PUSH_IDLE. In order to start transmitting
+-		 * a link training pattern, we have to first do soft reset.
+-		 */
+-		dp_catalog_ctrl_reset(ctrl->catalog);
+-
+-		ret = dp_ctrl_link_train(ctrl);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	/*
+-	 * Set up transfer unit values and set controller state to send
+-	 * video.
++	 * As part of previous calls, DP controller state might have
++	 * transitioned to PUSH_IDLE. In order to start transmitting
++	 * a link training pattern, we have to first do soft reset.
+ 	 */
+-	dp_ctrl_setup_tr_unit(ctrl);
+-	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
++	dp_catalog_ctrl_reset(ctrl->catalog);
+ 
+-	ret = dp_ctrl_wait4video_ready(ctrl);
+-	if (ret)
+-		return ret;
++	ret = dp_ctrl_link_train(ctrl, cr, training_step);
+ 
+-	mainlink_ready = dp_catalog_ctrl_mainlink_ready(ctrl->catalog);
+-	DRM_DEBUG_DP("mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
+ 	return ret;
+ }
+ 
+ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
+-				   char *name, u32 rate)
++			enum dp_pm_type module, char *name, u32 rate)
+ {
+-	u32 num = ctrl->parser->mp[DP_CTRL_PM].num_clk;
+-	struct dss_clk *cfg = ctrl->parser->mp[DP_CTRL_PM].clk_config;
++	u32 num = ctrl->parser->mp[module].num_clk;
++	struct dss_clk *cfg = ctrl->parser->mp[module].clk_config;
+ 
+ 	while (num && strcmp(cfg->clk_name, name)) {
+ 		num--;
+@@ -1302,16 +1327,33 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+ 
+ 	dp_power_set_link_clk_parent(ctrl->power);
+ 
+-	dp_ctrl_set_clock_rate(ctrl, "ctrl_link",
++	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
+ 					ctrl->link->link_params.rate);
+ 
+-	dp_ctrl_set_clock_rate(ctrl, "stream_pixel",
+-					ctrl->dp_ctrl.pixel_rate);
+-
+ 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, true);
+ 	if (ret)
+ 		DRM_ERROR("Unable to start link clocks. ret=%d\n", ret);
+ 
++	DRM_DEBUG_DP("link rate=%d pixel_clk=%d\n",
++		ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
++
++	return ret;
++}
++
++static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
++{
++	int ret = 0;
++
++	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
++					ctrl->dp_ctrl.pixel_rate);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
++	if (ret)
++		DRM_ERROR("Unabled to start pixel clocks. ret=%d\n", ret);
++
++	DRM_DEBUG_DP("link rate=%d pixel_clk=%d\n",
++			ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
++
+ 	return ret;
+ }
+ 
+@@ -1401,37 +1443,30 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
+ 		return ret;
+ 	}
+ 
+-	dp_ctrl_configure_source_params(ctrl);
+-	dp_catalog_ctrl_config_msa(ctrl->catalog,
+-		ctrl->link->link_params.rate,
+-		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
+-	reinit_completion(&ctrl->idle_comp);
+-
+ 	return ret;
+ }
+ 
+ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
+ {
+ 	int ret = 0;
+-	int tries;
++	struct dp_cr_status cr;
++	int training_step = DP_TRAINING_NONE;
+ 
+ 	dp_ctrl_push_idle(&ctrl->dp_ctrl);
+ 	dp_catalog_ctrl_reset(ctrl->catalog);
+ 
+ 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+ 
+-	for (tries = 0; tries < 10; tries++) {
+-		ret = dp_ctrl_reinitialize_mainlink(ctrl);
+-		if (ret) {
+-			DRM_ERROR("Failed to reinitialize mainlink. ret=%d\n",
+-					ret);
+-			break;
+-		}
++	ret = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
++	if (ret)
++		goto end;
+ 
+-		ret = dp_ctrl_setup_main_link(ctrl, true);
+-		if (ret == -EAGAIN) /* try with lower link rate */
+-			dp_ctrl_link_rate_down_shift(ctrl);
+-	}
++	dp_ctrl_clear_training_pattern(ctrl);
++
++	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
++
++	ret = dp_ctrl_wait4video_ready(ctrl);
++end:
+ 	return ret;
+ }
+ 
+@@ -1444,22 +1479,22 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+ 		return ret;
+ 	}
+ 
+-	dp_ctrl_push_idle(&ctrl->dp_ctrl);
+ 	/*
+ 	 * The global reset will need DP link related clocks to be
+ 	 * running. Add the global reset just before disabling the
+ 	 * link clocks and core clocks.
+ 	 */
+-	dp_catalog_ctrl_reset(ctrl->catalog);
+ 	ret = dp_ctrl_off(&ctrl->dp_ctrl);
+ 	if (ret) {
+ 		DRM_ERROR("failed to disable DP controller\n");
+ 		return ret;
+ 	}
+ 
+-	ret = dp_ctrl_on(&ctrl->dp_ctrl);
+-	if (ret)
+-		DRM_ERROR("failed to enable DP controller\n");
++	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
++	if (!ret)
++		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
++	else
++		DRM_ERROR("failed to enable DP link controller\n");
+ 
+ 	return ret;
+ }
+@@ -1479,27 +1514,33 @@ static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
+ 		return false;
+ 	}
+ 	dp_catalog_ctrl_send_phy_pattern(ctrl->catalog, pattern_requested);
++	dp_ctrl_update_vx_px(ctrl);
+ 	dp_link_send_test_response(ctrl->link);
+ 
+ 	pattern_sent = dp_catalog_ctrl_read_phy_pattern(ctrl->catalog);
+ 
+ 	switch (pattern_sent) {
+ 	case MR_LINK_TRAINING1:
+-		success = pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_D10_2;
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_D10_2);
+ 		break;
+ 	case MR_LINK_SYMBOL_ERM:
+-		success = (pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_ERROR_RATE)
+-			|| (pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_HBR2_EYE);
++		success = ((pattern_requested ==
++			DP_PHY_TEST_PATTERN_ERROR_COUNT) ||
++				(pattern_requested ==
++				DP_PHY_TEST_PATTERN_CP2520));
+ 		break;
+ 	case MR_LINK_PRBS7:
+-		success = pattern_requested == DP_LINK_QUAL_PATTERN_PRBS7;
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_PRBS7);
+ 		break;
+ 	case MR_LINK_CUSTOM80:
+-		success = pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_80BIT_CUSTOM;
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_80BIT_CUSTOM);
++		break;
++	case MR_LINK_TRAINING4:
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_SEL_MASK);
+ 		break;
+ 	default:
+ 		success = false;
+@@ -1531,12 +1572,12 @@ void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
+ 		}
+ 	}
+ 
+-	if (sink_request & DP_LINK_STATUS_UPDATED)
++	if (sink_request & DP_LINK_STATUS_UPDATED) {
+ 		if (dp_ctrl_link_maintenance(ctrl)) {
+-			DRM_ERROR("LM failed: STATUS_UPDATED\n");
++			DRM_ERROR("LM failed: TEST_LINK_TRAINING\n");
+ 			return;
+ 		}
+-
++	}
+ 
+ 	if (sink_request & DP_TEST_LINK_TRAINING) {
+ 		dp_link_send_test_response(ctrl->link);
+@@ -1547,13 +1588,15 @@ void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
+ 	}
+ }
+ 
+-int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
++int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ {
+ 	int rc = 0;
+ 	struct dp_ctrl_private *ctrl;
+ 	u32 rate = 0;
+-	u32 link_train_max_retries = 10;
++	int link_train_max_retries = 5;
+ 	u32 const phy_cts_pixel_clk_khz = 148500;
++	struct dp_cr_status cr;
++	unsigned int training_step;
+ 
+ 	if (!dp_ctrl)
+ 		return -EINVAL;
+@@ -1587,6 +1630,9 @@ int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
+ 	if (rc)
+ 		return rc;
+ 
++	ctrl->link->phy_params.p_level = 0;
++	ctrl->link->phy_params.v_level = 0;
++
+ 	while (--link_train_max_retries &&
+ 		!atomic_read(&ctrl->dp_ctrl.aborted)) {
+ 		rc = dp_ctrl_reinitialize_mainlink(ctrl);
+@@ -1595,19 +1641,125 @@ int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
+ 					rc);
+ 			break;
+ 		}
+-		rc = dp_ctrl_setup_main_link(ctrl, true);
+-		if (!rc)
++
++		training_step = DP_TRAINING_NONE;
++		rc = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
++		if (rc == 0) {
++			/* training completed successfully */
+ 			break;
+-		/* try with lower link rate */
+-		dp_ctrl_link_rate_down_shift(ctrl);
++		} else if (training_step == DP_TRAINING_1) {
++			/* link train_1 failed */
++			rc = dp_ctrl_link_rate_down_shift(ctrl);
++			if (rc < 0) { /* already in RBR = 1.6G */
++				if (cr.lane_0_1 & DP_LANE0_1_CR_DONE) {
++					/*
++					 * some lanes are ready,
++					 * reduce lane number
++					 */
++					rc = dp_ctrl_link_lane_down_shift(ctrl);
++					if (rc < 0) { /* lane == 1 already */
++						/* end with failure */
++						break;
++					}
++				} else {
++					/* end with failure */
++					break; /* lane == 1 already */
++				}
++			}
++		} else if (training_step == DP_TRAINING_2) {
++			/* link train_2 failed, lower lane rate */
++			rc = dp_ctrl_link_lane_down_shift(ctrl);
++			if (rc < 0) {
++				/* end with failure */
++				break; /* lane == 1 already */
++			}
++		}
+ 	}
+ 
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+-		dp_ctrl_send_phy_test_pattern(ctrl);
++		return rc;
++
++	/* stop txing train pattern */
++	dp_ctrl_clear_training_pattern(ctrl);
++
++	/*
++	 * keep transmitting idle pattern until video ready
++	 * to avoid main link from loss of sync
++	 */
++	if (rc == 0)  /* link train successfully */
++		dp_ctrl_push_idle(dp_ctrl);
+ 
+ 	return rc;
+ }
+ 
++int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
++{
++	u32 rate = 0;
++	int ret = 0;
++	bool mainlink_ready = false;
++	struct dp_ctrl_private *ctrl;
++
++	if (!dp_ctrl)
++		return -EINVAL;
++
++	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
++
++	rate = ctrl->panel->link_info.rate;
++
++	ctrl->link->link_params.rate = rate;
++	ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
++	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
++
++	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
++		ctrl->link->link_params.rate,
++		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
++
++	if (!dp_power_clk_status(ctrl->power, DP_CTRL_PM)) { /* link clk is off */
++		ret = dp_ctrl_enable_mainlink_clocks(ctrl);
++		if (ret) {
++			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
++			goto end;
++		}
++	}
++
++	ret = dp_ctrl_enable_stream_clocks(ctrl);
++	if (ret) {
++		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
++		goto end;
++	}
++
++	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
++		dp_ctrl_send_phy_test_pattern(ctrl);
++		return 0;
++	}
++
++	/*
++	 * Set up transfer unit values and set controller state to send
++	 * video.
++	 */
++	dp_ctrl_configure_source_params(ctrl);
++
++	dp_catalog_ctrl_config_msa(ctrl->catalog,
++		ctrl->link->link_params.rate,
++		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
++
++	reinit_completion(&ctrl->video_comp);
++
++	dp_ctrl_setup_tr_unit(ctrl);
++
++	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
++
++	ret = dp_ctrl_wait4video_ready(ctrl);
++	if (ret)
++		return ret;
++
++	mainlink_ready = dp_catalog_ctrl_mainlink_ready(ctrl->catalog);
++	DRM_DEBUG_DP("mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
++
++end:
++	return ret;
++}
++
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ {
+ 	struct dp_ctrl_private *ctrl;
+@@ -1619,11 +1771,16 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+ 
+ 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
++
+ 	dp_catalog_ctrl_reset(ctrl->catalog);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
++	if (ret)
++		DRM_ERROR("Failed to disable pixel clocks. ret=%d\n", ret);
++
+ 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
+ 	if (ret) {
+-		DRM_ERROR("Failed to disable clocks. ret=%d\n", ret);
+-		return ret;
++		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
+ 	}
+ 
+ 	DRM_DEBUG_DP("DP off done\n");
+@@ -1674,7 +1831,6 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
+ 
+ 	init_completion(&ctrl->idle_comp);
+ 	init_completion(&ctrl->video_comp);
+-	mutex_init(&ctrl->push_idle_mutex);
+ 
+ 	/* in parameters */
+ 	ctrl->parser   = parser;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+index 94713a0daff0..f60ba93c8678 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+@@ -21,7 +21,8 @@ struct dp_ctrl {
+ 
+ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip);
+ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
+-int dp_ctrl_on(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 36b6ee4131bb..f7e28dd8c39b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -9,6 +9,7 @@
+ #include <linux/debugfs.h>
+ #include <linux/component.h>
+ #include <linux/of_irq.h>
++#include <linux/delay.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+@@ -28,6 +29,50 @@
+ static struct msm_dp *g_dp_display;
+ #define HPD_STRING_SIZE 30
+ 
++enum {
++	ISR_DISCONNECTED,
++	ISR_CONNECT_PENDING,
++	ISR_CONNECTED,
++	ISR_HPD_REPLUG_COUNT,
++	ISR_IRQ_HPD_PULSE_COUNT,
++	ISR_HPD_LO_GLITH_COUNT,
++};
++
++/* event thread connection state */
++enum {
++	ST_DISCONNECTED,
++	ST_CONNECT_PENDING,
++	ST_CONNECTED,
++	ST_DISCONNECT_PENDING,
++	ST_SUSPEND_PENDING,
++	ST_SUSPENDED,
++};
++
++enum {
++	EV_NO_EVENT,
++	/* hpd events */
++	EV_HPD_INIT_SETUP,
++	EV_HPD_PLUG_INT,
++	EV_IRQ_HPD_INT,
++	EV_HPD_REPLUG_INT,
++	EV_HPD_UNPLUG_INT,
++	EV_USER_NOTIFICATION,
++	EV_CONNECT_PENDING_TIMEOUT,
++	EV_DISCONNECT_PENDING_TIMEOUT,
++};
++
++#define EVENT_TIMEOUT	(HZ/10)	/* 100ms */
++#define DP_EVENT_Q_MAX	8
++
++#define DP_TIMEOUT_5_SECOND	(5000/EVENT_TIMEOUT)
++#define DP_TIMEOUT_1_SECOND	(1000/EVENT_TIMEOUT)
++
++struct dp_event {
++	u32 event_id;
++	u32 data;
++	u32 delay;
++};
++
+ struct dp_display_private {
+ 	char *name;
+ 	int irq;
+@@ -37,11 +82,9 @@ struct dp_display_private {
+ 	bool power_on;
+ 	bool hpd_irq_on;
+ 	bool audio_supported;
+-	atomic_t hpd_isr_status;
+ 
+ 	struct platform_device *pdev;
+ 	struct dentry *root;
+-	struct completion notification_comp;
+ 
+ 	struct dp_usbpd   *usbpd;
+ 	struct dp_parser  *parser;
+@@ -52,12 +95,20 @@ struct dp_display_private {
+ 	struct dp_link    *link;
+ 	struct dp_panel   *panel;
+ 	struct dp_ctrl    *ctrl;
++	struct dp_debug   *debug;
+ 
+ 	struct dp_usbpd_cb usbpd_cb;
+ 	struct dp_display_mode dp_mode;
+ 	struct msm_dp dp_display;
+ 
+-	struct delayed_work config_hpd_work;
++	/* event related only access by event thread */
++	struct mutex event_mutex;
++	wait_queue_head_t event_q;
++	atomic_t hpd_state;
++	u32 event_pndx;
++	u32 event_gndx;
++	struct dp_event event_list[DP_EVENT_Q_MAX];
++	spinlock_t event_lock;
+ };
+ 
+ static const struct of_device_id dp_dt_match[] = {
+@@ -65,79 +116,58 @@ static const struct of_device_id dp_dt_match[] = {
+ 	{}
+ };
+ 
+-static irqreturn_t dp_display_irq(int irq, void *dev_id)
++static int dp_add_event(struct dp_display_private *dp_priv, u32 event,
++						u32 data, u32 delay)
+ {
+-	struct dp_display_private *dp = dev_id;
+-	irqreturn_t ret = IRQ_HANDLED;
+-	u32 hpd_isr_status;
+-
+-	if (!dp) {
+-		DRM_ERROR("invalid data\n");
+-		return IRQ_NONE;
+-	}
+-
+-	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
+-
+-	if (hpd_isr_status & DP_DP_HPD_INT_MASK) {
+-		atomic_set(&dp->hpd_isr_status, hpd_isr_status);
+-		ret = IRQ_WAKE_THREAD;
++	unsigned long flag;
++	struct dp_event *todo;
++	int pndx;
++
++	spin_lock_irqsave(&dp_priv->event_lock, flag);
++	pndx = dp_priv->event_pndx + 1;
++	pndx %= DP_EVENT_Q_MAX;
++	if (pndx == dp_priv->event_gndx) {
++		pr_err("event_q is full: pndx=%d gndx=%d\n",
++			dp_priv->event_pndx, dp_priv->event_gndx);
++		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++		return -EPERM;
+ 	}
++	todo = &dp_priv->event_list[dp_priv->event_pndx++];
++	dp_priv->event_pndx %= DP_EVENT_Q_MAX;
++	todo->event_id = event;
++	todo->data = data;
++	todo->delay = delay;
++	wake_up(&dp_priv->event_q);
++	spin_unlock_irqrestore(&dp_priv->event_lock, flag);
+ 
+-	/* DP controller isr */
+-	dp_ctrl_isr(dp->ctrl);
+-
+-	/* DP aux isr */
+-	dp_aux_isr(dp->aux);
+-
+-	return ret;
++	return 0;
+ }
+ 
+-static irqreturn_t dp_display_hpd_isr_work(int irq, void *data)
++static int dp_del_event(struct dp_display_private *dp_priv, u32 event)
+ {
+-	struct dp_display_private *dp;
+-	struct dp_usbpd *hpd;
+-	u32 isr = 0;
+-
+-	dp = (struct dp_display_private *)data;
+-	if (!dp)
+-		return IRQ_NONE;
+-
+-	isr = atomic_read(&dp->hpd_isr_status);
+-
+-	/* reset to default */
+-	atomic_set(&dp->hpd_isr_status, 0);
+-
+-	hpd = dp->usbpd;
+-	if (!hpd)
+-		return IRQ_NONE;
+-
+-	if (isr & DP_DP_HPD_PLUG_INT_MASK &&
+-		isr & DP_DP_HPD_STATE_STATUS_CONNECTED) {
+-		hpd->hpd_high = 1;
+-		dp->usbpd_cb.configure(&dp->pdev->dev);
+-	} else if (isr & DP_DP_HPD_UNPLUG_INT_MASK &&
+-		(isr & DP_DP_HPD_STATE_STATUS_MASK) ==
+-			 DP_DP_HPD_STATE_STATUS_DISCONNECTED) {
+-
+-		/* disable HPD plug interrupt until disconnect is done
+-		 */
+-		dp_catalog_hpd_config_intr(dp->catalog,
+-			DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK,
+-			false);
+-
+-		hpd->hpd_high = 0;
+-
+-		/* We don't need separate work for disconnect as
+-		 * connect/attention interrupts are disabled
+-		 */
+-		dp->usbpd_cb.disconnect(&dp->pdev->dev);
++	unsigned long flag;
++	struct dp_event *todo;
++	u32	gndx;
++
++	spin_lock_irqsave(&dp_priv->event_lock, flag);
++	if (dp_priv->event_pndx == dp_priv->event_gndx) {
++		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++		return -ENOENT;
++	}
+ 
+-		dp_catalog_hpd_config_intr(dp->catalog,
+-			DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK,
+-			true);
++	gndx = dp_priv->event_gndx;
++	while (dp_priv->event_pndx != gndx) {
++		todo = &dp_priv->event_list[gndx];
++		if (todo->event_id == event) {
++			todo->event_id = EV_NO_EVENT;	/* deleted */
++			todo->delay = 0;
++		}
++		gndx++;
++		gndx %= DP_EVENT_Q_MAX;
+ 	}
++	spin_unlock_irqrestore(&dp_priv->event_lock, flag);
+ 
+-	return IRQ_HANDLED;
++	return 0;
+ }
+ 
+ static int dp_display_bind(struct device *dev, struct device *master,
+@@ -178,7 +208,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
+ 		DRM_ERROR("Power client create failed\n");
+ 		goto end;
+ 	}
+-
+ end:
+ 	return rc;
+ }
+@@ -237,11 +266,9 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 	struct msm_drm_private *priv = dp->dp_display.drm_dev->dev_private;
+ 	struct msm_kms *kms = priv->kms;
+ 
+-	mutex_lock(&dp->dp_display.connect_mutex);
+ 	if ((hpd && dp->dp_display.is_connected) ||
+ 			(!hpd && !dp->dp_display.is_connected)) {
+ 		DRM_DEBUG_DP("HPD already %s\n", (hpd ? "on" : "off"));
+-		mutex_unlock(&dp->dp_display.connect_mutex);
+ 		return 0;
+ 	}
+ 
+@@ -250,7 +277,6 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 		dp->panel->video_test = false;
+ 
+ 	dp->dp_display.is_connected = hpd;
+-	reinit_completion(&dp->notification_comp);
+ 
+ 	if (dp->dp_display.is_connected && dp->dp_display.encoder
+ 				&& !encoder_mode_set
+@@ -263,13 +289,6 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 
+ 	dp_display_send_hpd_event(&dp->dp_display);
+ 
+-	if (!wait_for_completion_timeout(&dp->notification_comp, HZ * 2)) {
+-		pr_warn("%s timeout\n", hpd ? "connect" : "disconnect");
+-		mutex_unlock(&dp->dp_display.connect_mutex);
+-		return -EINVAL;
+-	}
+-
+-	mutex_unlock(&dp->dp_display.connect_mutex);
+ 	return 0;
+ }
+ 
+@@ -278,23 +297,14 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+ 	int rc = 0;
+ 	struct edid *edid;
+ 
+-	if (dp->link->psm_enabled)
+-		goto notify;
+-
+ 	dp->panel->max_dp_lanes = dp->parser->max_dp_lanes;
+ 
+ 	rc = dp_panel_read_sink_caps(dp->panel, dp->dp_display.connector);
+ 	if (rc)
+-		goto notify;
++		goto end;
+ 
+ 	dp_link_process_request(dp->link);
+ 
+-	if (dp_display_is_sink_count_zero(dp)) {
+-		DRM_DEBUG_DP("no downstream devices connected\n");
+-		rc = -EINVAL;
+-		goto end;
+-	}
+-
+ 	edid = dp->panel->edid;
+ 
+ 	dp->audio_supported = drm_detect_monitor_audio(edid);
+@@ -302,8 +312,15 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+ 
+ 	dp->dp_display.max_pclk_khz = DP_MAX_PIXEL_CLK_KHZ;
+ 	dp->dp_display.max_dp_lanes = dp->parser->max_dp_lanes;
+-notify:
+-	dp_display_send_hpd_notification(dp, true);
++
++	rc = dp_ctrl_on_link(dp->ctrl);
++	if (rc) {
++		DRM_ERROR("failed to complete DP link training\n");
++		goto end;
++	}
++
++	dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
++
+ 
+ end:
+ 	return rc;
+@@ -327,23 +344,6 @@ static void dp_display_host_init(struct dp_display_private *dp)
+ 	dp->core_initialized = true;
+ }
+ 
+-static void dp_display_host_deinit(struct dp_display_private *dp)
+-{
+-	if (!dp->core_initialized) {
+-		DRM_DEBUG_DP("DP core already off\n");
+-		return;
+-	}
+-
+-	dp->core_initialized = false;
+-}
+-
+-static void dp_display_process_hpd_low(struct dp_display_private *dp)
+-{
+-	dp_display_send_hpd_notification(dp, false);
+-
+-	dp_aux_deinit(dp->aux);
+-}
+-
+ static int dp_display_usbpd_configure_cb(struct device *dev)
+ {
+ 	int rc = 0;
+@@ -364,18 +364,16 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 
+ 	dp_display_host_init(dp);
+ 
+-	if (dp->usbpd->hpd_high)
+-		dp_display_process_hpd_high(dp);
++	/*
++	 * set sink to normal operation mode -- D0
++	 * before dpcd read
++	 */
++	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
++	rc = dp_display_process_hpd_high(dp);
+ end:
+ 	return rc;
+ }
+ 
+-static void dp_display_clean(struct dp_display_private *dp)
+-{
+-	dp_ctrl_push_idle(dp->ctrl);
+-	dp_ctrl_off(dp->ctrl);
+-}
+-
+ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ {
+ 	int rc = 0;
+@@ -383,16 +381,8 @@ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ 
+ 	dp = dev_get_drvdata(dev);
+ 
+-	rc = dp_display_send_hpd_notification(dp, false);
+-
+-	/* if cable is disconnected, reset psm_enabled flag */
+-	if (!dp->usbpd->alt_mode_cfg_done)
+-		dp->link->psm_enabled = false;
++	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+ 
+-	if ((rc < 0) && dp->power_on)
+-		dp_display_clean(dp);
+-
+-	dp_display_host_deinit(dp);
+ 	return rc;
+ }
+ 
+@@ -407,11 +397,14 @@ static void dp_display_handle_video_request(struct dp_display_private *dp)
+ 	}
+ }
+ 
+-static int dp_display_handle_hpd_irq(struct dp_display_private *dp)
++static int dp_display_handle_irq_hpd(struct dp_display_private *dp)
+ {
+-	if (dp->link->sink_request & DS_PORT_STATUS_CHANGED) {
+-		dp_display_send_hpd_notification(dp, false);
++	u32 sink_request;
++
++	sink_request = dp->link->sink_request;
+ 
++	if (sink_request & DS_PORT_STATUS_CHANGED) {
++		dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+ 		if (dp_display_is_sink_count_zero(dp)) {
+ 			DRM_DEBUG_DP("sink count is zero, nothing to do\n");
+ 			return 0;
+@@ -422,7 +415,8 @@ static int dp_display_handle_hpd_irq(struct dp_display_private *dp)
+ 
+ 	dp_ctrl_handle_sink_request(dp->ctrl);
+ 
+-	dp_display_handle_video_request(dp);
++	if (dp->link->sink_request & DP_TEST_LINK_VIDEO_PATTERN)
++		dp_display_handle_video_request(dp);
+ 
+ 	return 0;
+ }
+@@ -443,27 +437,174 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+ 		return -ENODEV;
+ 	}
+ 
+-	if (dp->usbpd->hpd_irq) {
+-		dp->hpd_irq_on = true;
++	/* check for any test request issued by sink */
++	rc = dp_link_process_request(dp->link);
++	if (!rc)
++		dp_display_handle_irq_hpd(dp);
+ 
+-		rc = dp_link_process_request(dp->link);
+-		/* check for any test request issued by sink */
+-		if (!rc)
+-			dp_display_handle_hpd_irq(dp);
++	return rc;
++}
+ 
+-		dp->hpd_irq_on = false;
+-		goto end;
++static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
++{
++	struct dp_usbpd *hpd = dp->usbpd;
++	u32 state;
++	u32 tout = DP_TIMEOUT_5_SECOND;
 +	int ret;
 +
-+	pll_7nm = devm_kzalloc(&pdev->dev, sizeof(*pll_7nm), GFP_KERNEL);
-+	if (!pll_7nm)
-+		return ERR_PTR(-ENOMEM);
++	if (!hpd)
++		return 0;
 +
-+	DBG("DSI PLL%d", id);
++	mutex_lock(&dp->event_mutex);
 +
-+	pll_7nm->pdev = pdev;
-+	pll_7nm->id = id;
-+	pll_7nm_list[id] = pll_7nm;
-+
-+	pll_7nm->phy_cmn_mmio = msm_ioremap(pdev, "dsi_phy", "DSI_PHY");
-+	if (IS_ERR_OR_NULL(pll_7nm->phy_cmn_mmio)) {
-+		DRM_DEV_ERROR(&pdev->dev, "failed to map CMN PHY base\n");
-+		return ERR_PTR(-ENOMEM);
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_SUSPEND_PENDING) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
+ 	}
+ 
+-	if (!dp->usbpd->hpd_high) {
+-		dp_display_process_hpd_low(dp);
+-		goto end;
++	if (state == ST_CONNECT_PENDING || state == ST_CONNECTED) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
+ 	}
+ 
+-	if (dp->usbpd->alt_mode_cfg_done)
+-		dp_display_process_hpd_high(dp);
+-end:
+-	return rc;
++	if (state == ST_DISCONNECT_PENDING) {
++		/* wait until ST_DISCONNECTED */
++		dp_add_event(dp, EV_HPD_PLUG_INT, 0, 1); /* delay = 1 */
++		mutex_unlock(&dp->event_mutex);
++		return 0;
 +	}
 +
-+	pll_7nm->mmio = msm_ioremap(pdev, "dsi_pll", "DSI_PLL");
-+	if (IS_ERR_OR_NULL(pll_7nm->mmio)) {
-+		DRM_DEV_ERROR(&pdev->dev, "failed to map PLL base\n");
-+		return ERR_PTR(-ENOMEM);
++	if (state == ST_SUSPENDED)
++		tout = DP_TIMEOUT_1_SECOND;
++
++	atomic_set(&dp->hpd_state, ST_CONNECT_PENDING);
++
++	hpd->hpd_high = 1;
++
++	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
++	if (ret) {	/* failed */
++		hpd->hpd_high = 0;
++		atomic_set(&dp->hpd_state, ST_DISCONNECTED);
 +	}
 +
-+	spin_lock_init(&pll_7nm->postdiv_lock);
++	/* start sanity checking */
++	dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
 +
-+	pll = &pll_7nm->base;
-+	pll->min_rate = 1000000000UL;
-+	pll->max_rate = 3500000000UL;
-+	if (pll->type == MSM_DSI_PHY_7NM_V4_1) {
-+		pll->min_rate = 600000000UL;
-+		pll->max_rate = 5000000000UL;
++	mutex_unlock(&dp->event_mutex);
++
++	/* uevent will complete connection part */
++	return 0;
++};
++
++static int dp_display_enable(struct dp_display_private *dp, u32 data);
++static int dp_display_disable(struct dp_display_private *dp, u32 data);
++
++static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
++{
++	u32 state;
++
++	mutex_lock(&dp->event_mutex);
++
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_CONNECT_PENDING) {
++		dp_display_enable(dp, 0);
++		atomic_set(&dp->hpd_state, ST_CONNECTED);
 +	}
-+	pll->get_provider = dsi_pll_7nm_get_provider;
-+	pll->destroy = dsi_pll_7nm_destroy;
-+	pll->save_state = dsi_pll_7nm_save_state;
-+	pll->restore_state = dsi_pll_7nm_restore_state;
-+	pll->set_usecase = dsi_pll_7nm_set_usecase;
 +
-+	pll_7nm->vco_delay = 1;
++	mutex_unlock(&dp->event_mutex);
 +
-+	ret = pll_7nm_register(pll_7nm);
-+	if (ret) {
-+		DRM_DEV_ERROR(&pdev->dev, "failed to register PLL: %d\n", ret);
-+		return ERR_PTR(ret);
-+	}
-+
-+	/* TODO: Remove this when we have proper display handover support */
-+	msm_dsi_pll_save_state(pll);
-+
-+	return pll;
++	return 0;
 +}
++
++static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
++{
++	struct dp_usbpd *hpd = dp->usbpd;
++	u32 state;
++
++	if (!hpd)
++		return 0;
++
++	mutex_lock(&dp->event_mutex);
++
++	state = atomic_read(&dp->hpd_state);
++	if (state == ST_SUSPEND_PENDING) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	if (state == ST_DISCONNECT_PENDING || state == ST_DISCONNECTED) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	if (state == ST_CONNECT_PENDING) {
++		/* wait until CONNECTED */
++		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 1); /* delay = 1 */
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	atomic_set(&dp->hpd_state, ST_DISCONNECT_PENDING);
++
++	/* disable HPD plug interrupt until disconnect is done */
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK
++				| DP_DP_IRQ_HPD_INT_MASK, false);
++
++	hpd->hpd_high = 0;
++
++	/*
++	 * We don't need separate work for disconnect as
++	 * connect/attention interrupts are disabled
++	 */
++	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
++
++	/* start sanity checking */
++	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
++
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
++					DP_DP_IRQ_HPD_INT_MASK, true);
++
++	/* uevent will complete disconnection part */
++	mutex_unlock(&dp->event_mutex);
++	return 0;
++}
++
++static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data)
++{
++	u32 state;
++
++	mutex_lock(&dp->event_mutex);
++
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_DISCONNECT_PENDING) {
++		dp_display_disable(dp, 0);
++		atomic_set(&dp->hpd_state, ST_DISCONNECTED);
++	}
++
++	mutex_unlock(&dp->event_mutex);
++
++	return 0;
++}
++
++static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
++{
++	u32 state;
++
++	mutex_lock(&dp->event_mutex);
++
++	/* irq_hpd can happen at either connected or disconnected state */
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_SUSPEND_PENDING) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	dp_display_usbpd_attention_cb(&dp->pdev->dev);
++
++	mutex_unlock(&dp->event_mutex);
++
++	return 0;
+ }
+ 
+ static void dp_display_deinit_sub_modules(struct dp_display_private *dp)
+@@ -599,106 +740,37 @@ static int dp_display_prepare(struct msm_dp *dp)
+ 	return 0;
+ }
+ 
+-static void dp_display_dump(struct msm_dp *dp_display)
+-{
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	dp_panel_dump_regs(dp->panel);
+-}
+-
+-static int dp_display_enable(struct msm_dp *dp_display)
++static int dp_display_enable(struct dp_display_private *dp, u32 data)
+ {
+ 	int rc = 0;
+-	struct dp_display_private *dp;
+-	bool dump_dp = false;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+ 	if (dp->power_on) {
+ 		DRM_DEBUG_DP("Link already setup, return\n");
+ 		return 0;
+ 	}
+ 
+-	rc = dp_ctrl_on(dp->ctrl);
++	rc = dp_ctrl_on_stream(dp->ctrl);
+ 	if (!rc)
+ 		dp->power_on = true;
+ 
+-	if (dump_dp != false)
+-		dp_display_dump(dp_display);
+-
+ 	return rc;
+ }
+ 
+ static int dp_display_post_enable(struct msm_dp *dp_display)
+ {
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	complete_all(&dp->notification_comp);
+-	return 0;
+-}
+-
+-static int dp_display_pre_disable(struct msm_dp *dp_display)
+-{
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	if (dp->usbpd->alt_mode_cfg_done)
+-		dp_link_psm_config(dp->link, &dp->panel->link_info, true);
+-
+-	dp_ctrl_push_idle(dp->ctrl);
+ 	return 0;
+ }
+ 
+-static int dp_display_disable(struct msm_dp *dp_display)
++static int dp_display_disable(struct dp_display_private *dp, u32 data)
+ {
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	if (!dp->power_on || !dp->core_initialized)
++	if (!dp->power_on)
+ 		return -EINVAL;
+ 
+ 	dp_ctrl_off(dp->ctrl);
+ 
+-	dp->power_on = false;
+-
+-	complete_all(&dp->notification_comp);
+-	return 0;
+-}
+-
+-int dp_display_request_irq(struct msm_dp *dp_display)
+-{
+-	int rc = 0;
+-	struct dp_display_private *dp;
+-
+-	if (!dp_display) {
+-		DRM_ERROR("invalid input\n");
+-		return -EINVAL;
+-	}
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+-	if (dp->irq < 0) {
+-		rc = dp->irq;
+-		DRM_ERROR("failed to get irq: %d\n", rc);
+-		return rc;
+-	}
++	dp->core_initialized = false;
+ 
+-	rc = devm_request_threaded_irq(&dp->pdev->dev, dp->irq,
+-		dp_display_irq, dp_display_hpd_isr_work,
+-		IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+-	if (rc < 0) {
+-		DRM_ERROR("failed to request IRQ%u: %d\n",
+-				dp->irq, rc);
+-		return rc;
+-	}
+-	disable_irq(dp->irq);
++	dp->power_on = false;
+ 
+ 	return 0;
+ }
+@@ -783,6 +855,192 @@ int dp_display_get_test_bpp(struct msm_dp *dp)
+ 		dp_display->link->test_video.test_bit_depth);
+ }
+ 
++static void dp_display_config_hpd(struct dp_display_private *dp)
++{
++
++	dp_display_host_init(dp);
++	dp_catalog_ctrl_hpd_config(dp->catalog);
++
++	/* Enable interrupt first time
++	 * we are leaving dp clocks on during disconnect
++	 * and never disable interrupt
++	 */
++	enable_irq(dp->irq);
++}
++
++static int hpd_event_thread(void *data)
++{
++	struct dp_display_private *dp_priv;
++	unsigned long flag;
++	struct dp_event *todo;
++	int timeout_mode = 0;
++
++	dp_priv = (struct dp_display_private *)data;
++
++	while (1) {
++		if (timeout_mode) {
++			wait_event_timeout(dp_priv->event_q,
++				(dp_priv->event_pndx == dp_priv->event_gndx),
++						EVENT_TIMEOUT);
++		} else {
++			wait_event_timeout(dp_priv->event_q,
++				(dp_priv->event_pndx != dp_priv->event_gndx),
++						EVENT_TIMEOUT);
++		}
++		spin_lock_irqsave(&dp_priv->event_lock, flag);
++		todo = &dp_priv->event_list[dp_priv->event_gndx];
++		if (todo->delay) {
++			struct dp_event *todo_next;
++
++			dp_priv->event_gndx++;
++			dp_priv->event_gndx %= DP_EVENT_Q_MAX;
++
++			/* re enter delay event into q */
++			todo_next = &dp_priv->event_list[dp_priv->event_pndx++];
++			dp_priv->event_pndx %= DP_EVENT_Q_MAX;
++			todo_next->event_id = todo->event_id;
++			todo_next->data = todo->data;
++			todo_next->delay = todo->delay - 1;
++
++			/* clean up older event */
++			todo->event_id = EV_NO_EVENT;
++			todo->delay = 0;
++
++			/* switch to timeout mode */
++			timeout_mode = 1;
++			spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++			continue;
++		}
++
++		/* timeout with no events in q */
++		if (dp_priv->event_pndx == dp_priv->event_gndx) {
++			spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++			continue;
++		}
++
++		dp_priv->event_gndx++;
++		dp_priv->event_gndx %= DP_EVENT_Q_MAX;
++		timeout_mode = 0;
++		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++
++		switch (todo->event_id) {
++		case EV_HPD_INIT_SETUP:
++			dp_display_config_hpd(dp_priv);
++			break;
++		case EV_HPD_PLUG_INT:
++			dp_hpd_plug_handle(dp_priv, todo->data);
++			break;
++		case EV_HPD_UNPLUG_INT:
++			dp_hpd_unplug_handle(dp_priv, todo->data);
++			break;
++		case EV_IRQ_HPD_INT:
++			dp_irq_hpd_handle(dp_priv, todo->data);
++			break;
++		case EV_HPD_REPLUG_INT:
++			/* do nothing */
++			break;
++		case EV_USER_NOTIFICATION:
++			dp_display_send_hpd_notification(dp_priv,
++						todo->data);
++			break;
++		case EV_CONNECT_PENDING_TIMEOUT:
++			dp_connect_pending_timeout(dp_priv,
++						todo->data);
++			break;
++		case EV_DISCONNECT_PENDING_TIMEOUT:
++			dp_disconnect_pending_timeout(dp_priv,
++						todo->data);
++			break;
++		default:
++			break;
++		}
++	}
++
++	return 0;
++}
++
++static void dp_hpd_event_setup(struct dp_display_private *dp_priv)
++{
++	init_waitqueue_head(&dp_priv->event_q);
++	spin_lock_init(&dp_priv->event_lock);
++
++	kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
++}
++
++static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
++{
++	struct dp_display_private *dp = dev_id;
++	irqreturn_t ret = IRQ_HANDLED;
++	u32 hpd_isr_status;
++
++	if (!dp) {
++		DRM_ERROR("invalid data\n");
++		return IRQ_NONE;
++	}
++
++	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
++
++	if (hpd_isr_status & 0x0F) {
++		/* hpd related interrupts */
++		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK ||
++			hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
++			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
++		}
++
++		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
++			/* delete connect pending event first */
++			dp_del_event(dp, EV_CONNECT_PENDING_TIMEOUT);
++			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
++		}
++
++		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK)
++			dp_add_event(dp, EV_HPD_REPLUG_INT, 0, 0);
++
++		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
++			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
++	}
++
++	/* DP controller isr */
++	dp_ctrl_isr(dp->ctrl);
++
++	/* DP aux isr */
++	dp_aux_isr(dp->aux);
++
++	return ret;
++}
++
++int dp_display_request_irq(struct msm_dp *dp_display)
++{
++	int rc = 0;
++	struct dp_display_private *dp;
++
++	if (!dp_display) {
++		DRM_ERROR("invalid input\n");
++		return -EINVAL;
++	}
++
++	dp = container_of(dp_display, struct dp_display_private, dp_display);
++
++	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
++	if (dp->irq < 0) {
++		rc = dp->irq;
++		DRM_ERROR("failed to get irq: %d\n", rc);
++		return rc;
++	}
++
++	rc = devm_request_irq(&dp->pdev->dev, dp->irq,
++			dp_display_irq_handler,
++			IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
++	if (rc < 0) {
++		DRM_ERROR("failed to request IRQ%u: %d\n",
++				dp->irq, rc);
++		return rc;
++	}
++	disable_irq(dp->irq);
++
++	return 0;
++}
++
+ static int dp_display_probe(struct platform_device *pdev)
+ {
+ 	int rc = 0;
+@@ -797,8 +1055,6 @@ static int dp_display_probe(struct platform_device *pdev)
+ 	if (!dp)
+ 		return -ENOMEM;
+ 
+-	init_completion(&dp->notification_comp);
+-
+ 	dp->pdev = pdev;
+ 	dp->name = "drm_dp";
+ 
+@@ -810,7 +1066,7 @@ static int dp_display_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, dp);
+ 
+-	mutex_init(&dp->dp_display.connect_mutex);
++	mutex_init(&dp->event_mutex);
+ 	g_dp_display = &dp->dp_display;
+ 
+ 	rc = component_add(&pdev->dev, &dp_display_comp_ops);
+@@ -836,12 +1092,51 @@ static int dp_display_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static int dp_pm_resume(struct device *dev)
++{
++	return 0;
++}
++
++static int dp_pm_suspend(struct device *dev)
++{
++	struct platform_device *pdev = to_platform_device(dev);
++	struct dp_display_private *dp = platform_get_drvdata(pdev);
++
++	if (!dp) {
++		DRM_ERROR("DP driver bind failed. Invalid driver data\n");
++		return -EINVAL;
++	}
++
++	atomic_set(&dp->hpd_state, ST_SUSPENDED);
++
++	return 0;
++}
++
++static int dp_pm_prepare(struct device *dev)
++{
++	return 0;
++}
++
++static void dp_pm_complete(struct device *dev)
++{
++
++}
++
++static const struct dev_pm_ops dp_pm_ops = {
++	.suspend = dp_pm_suspend,
++	.resume =  dp_pm_resume,
++	.prepare = dp_pm_prepare,
++	.complete = dp_pm_complete,
++};
++
+ static struct platform_driver dp_display_driver = {
+ 	.probe  = dp_display_probe,
+ 	.remove = dp_display_remove,
+ 	.driver = {
+ 		.name = "msm-dp-display",
+ 		.of_match_table = dp_dt_match,
++		.suppress_bind_attrs = true,
++		.pm = &dp_pm_ops,
+ 	},
+ };
+ 
+@@ -861,26 +1156,6 @@ void __exit msm_dp_unregister(void)
+ 	platform_driver_unregister(&dp_display_driver);
+ }
+ 
+-static void dp_display_config_hpd_work(struct work_struct *work)
+-{
+-	struct dp_display_private *dp;
+-	struct delayed_work *dw = to_delayed_work(work);
+-
+-	dp = container_of(dw, struct dp_display_private, config_hpd_work);
+-
+-	dp_display_host_init(dp);
+-	dp_catalog_ctrl_hpd_config(dp->catalog);
+-
+-	/* set default to 0 */
+-	atomic_set(&dp->hpd_isr_status, 0);
+-
+-	/* Enable interrupt first time
+-	 * we are leaving dp clocks on during disconnect
+-	 * and never disable interrupt
+-	 */
+-	enable_irq(dp->irq);
+-}
+-
+ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ {
+ 	struct dp_display_private *dp;
+@@ -890,8 +1165,9 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	INIT_DELAYED_WORK(&dp->config_hpd_work, dp_display_config_hpd_work);
+-	queue_delayed_work(system_wq, &dp->config_hpd_work, HZ * 10);
++	dp_hpd_event_setup(dp);
++
++	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
+ }
+ 
+ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+@@ -931,6 +1207,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	int rc = 0;
+ 	struct dp_display_private *dp_display;
++	u32 state;
+ 
+ 	dp_display = container_of(dp, struct dp_display_private, dp_display);
+ 	if (!dp_display->dp_mode.drm_mode.clock) {
+@@ -938,54 +1215,90 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 		return -EINVAL;
+ 	}
+ 
++	mutex_lock(&dp_display->event_mutex);
++
++	state =  atomic_read(&dp_display->hpd_state);
++	if (state == ST_SUSPENDED) {
++		/* start link re training */
++		dp_add_event(dp_display, EV_HPD_PLUG_INT, 0, 0);
++		mutex_unlock(&dp_display->event_mutex);
++		return rc;
++	}
++
+ 	rc = dp_display_set_mode(dp, &dp_display->dp_mode);
+ 	if (rc) {
+ 		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
++		mutex_unlock(&dp_display->event_mutex);
+ 		return rc;
+ 	}
+ 
+ 	rc = dp_display_prepare(dp);
+ 	if (rc) {
+ 		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
++		mutex_unlock(&dp_display->event_mutex);
+ 		return rc;
+ 	}
+ 
+-	rc = dp_display_enable(dp);
+-	if (rc) {
+-		DRM_ERROR("DP display enable failed, rc=%d\n", rc);
+-		dp_display_unprepare(dp);
+-		return rc;
+-	}
++	dp_display_enable(dp_display, 0);
+ 
+ 	rc = dp_display_post_enable(dp);
+ 	if (rc) {
+ 		DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
+-		dp_display_disable(dp);
++		dp_display_disable(dp_display, 0);
+ 		dp_display_unprepare(dp);
+ 	}
++
++	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
++
++	if (state == ST_SUSPEND_PENDING)
++		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
++
++	/* completed connection */
++	atomic_set(&dp_display->hpd_state, ST_CONNECTED);
++
++	mutex_unlock(&dp_display->event_mutex);
++
+ 	return rc;
+ }
+ 
++int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
++{
++	struct dp_display_private *dp_display;
++
++	dp_display = container_of(dp, struct dp_display_private, dp_display);
++
++	dp_ctrl_push_idle(dp_display->ctrl);
++
++	return 0;
++}
++
+ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	int rc = 0;
++	u32 state;
++	struct dp_display_private *dp_display;
+ 
+-	rc = dp_display_pre_disable(dp);
+-	if (rc) {
+-		DRM_ERROR("DP display pre disable failed, rc=%d\n", rc);
+-		return rc;
+-	}
++	dp_display = container_of(dp, struct dp_display_private, dp_display);
+ 
+-	rc = dp_display_disable(dp);
+-	if (rc) {
+-		DRM_ERROR("DP display disable failed, rc=%d\n", rc);
+-		return rc;
+-	}
++	mutex_lock(&dp_display->event_mutex);
++
++	dp_display_disable(dp_display, 0);
+ 
+ 	rc = dp_display_unprepare(dp);
+ 	if (rc)
+ 		DRM_ERROR("DP display unprepare failed, rc=%d\n", rc);
+ 
++	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
++
++	state =  atomic_read(&dp_display->hpd_state);
++	if (state == ST_DISCONNECT_PENDING) {
++		/* completed disconnection */
++		atomic_set(&dp_display->hpd_state, ST_DISCONNECTED);
++	} else {
++		atomic_set(&dp_display->hpd_state, ST_SUSPEND_PENDING);
++	}
++
++	mutex_unlock(&dp_display->event_mutex);
+ 	return rc;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 4c53ed55d1cc..2f2d1279dfc6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -13,7 +13,6 @@ struct msm_dp {
+ 	struct drm_connector *connector;
+ 	struct drm_encoder *encoder;
+ 	bool is_connected;
+-	struct mutex connect_mutex;
+ 	u32 max_pclk_khz;
+ 	u32 max_dp_lanes;
+ };
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index e58906f4ae1e..764f4b81017e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -58,7 +58,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 	if (!dp_mode)
+ 		return 0;
+ 
+-	mutex_lock(&dp->connect_mutex);
+ 	/* pluggable case assumes EDID is read when HPD */
+ 	if (dp->is_connected) {
+ 		/*
+@@ -71,7 +70,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 		if (rc <= 0) {
+ 			DRM_ERROR("failed to get DP sink modes, rc=%d\n", rc);
+ 			kfree(dp_mode);
+-			mutex_unlock(&dp->connect_mutex);
+ 			return rc;
+ 		}
+ 		if (dp_mode->drm_mode.clock) { /* valid DP mode */
+@@ -83,7 +81,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 				       drm_mode.hdisplay,
+ 				       drm_mode.vdisplay);
+ 				kfree(dp_mode);
+-				mutex_unlock(&dp->connect_mutex);
+ 				return 0;
+ 			}
+ 			drm_mode_probed_add(connector, m);
+@@ -91,7 +88,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 	} else {
+ 		DRM_DEBUG_DP("No sink connected\n");
+ 	}
+-	mutex_unlock(&dp->connect_mutex);
+ 	kfree(dp_mode);
+ 	return rc;
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
+index 5b08ce580702..5b8fe32022b5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.c
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.c
+@@ -24,7 +24,7 @@ struct dp_hpd_private {
+ 	struct dp_usbpd dp_usbpd;
+ };
+ 
+-static int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
++int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
+ {
+ 	int rc = 0;
+ 	struct dp_hpd_private *hpd_priv;
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.h b/drivers/gpu/drm/msm/dp/dp_hpd.h
+index c0178524bec7..5bc5bb64680f 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.h
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.h
+@@ -75,5 +75,6 @@ struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb);
+ 
+ int dp_hpd_register(struct dp_usbpd *dp_usbpd);
+ void dp_hpd_unregister(struct dp_usbpd *dp_usbpd);
++int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd);
+ 
+ #endif /* _DP_HPD_H_ */
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index 7400a7ba45f8..5110fc8ccfae 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -38,7 +38,6 @@ struct dp_link_private {
+ 	struct dp_link dp_link;
+ 
+ 	struct dp_link_request request;
+-	struct mutex test_response_mutex;
+ 	struct mutex psm_mutex;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+ };
+@@ -580,17 +579,18 @@ static int dp_link_parse_phy_test_params(struct dp_link_private *link)
+ 		return rlen;
+ 	}
+ 
+-	link->dp_link.phy_params.phy_test_pattern_sel = data;
++	link->dp_link.phy_params.phy_test_pattern_sel = data & 0x07;
+ 
+ 	DRM_DEBUG_DP("phy_test_pattern_sel = 0x%x\n", data);
+ 
+ 	switch (data) {
+-	case DP_LINK_QUAL_PATTERN_DISABLE:
+-	case DP_LINK_QUAL_PATTERN_D10_2:
+-	case DP_LINK_QUAL_PATTERN_ERROR_RATE:
+-	case DP_LINK_QUAL_PATTERN_PRBS7:
+-	case DP_LINK_QUAL_PATTERN_80BIT_CUSTOM:
+-	case DP_LINK_QUAL_PATTERN_HBR2_EYE:
++	case DP_PHY_TEST_PATTERN_SEL_MASK:
++	case DP_PHY_TEST_PATTERN_NONE:
++	case DP_PHY_TEST_PATTERN_D10_2:
++	case DP_PHY_TEST_PATTERN_ERROR_COUNT:
++	case DP_PHY_TEST_PATTERN_PRBS7:
++	case DP_PHY_TEST_PATTERN_80BIT_CUSTOM:
++	case DP_PHY_TEST_PATTERN_CP2520:
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
+@@ -661,7 +661,6 @@ static int dp_link_parse_request(struct dp_link_private *link)
+ 
+ 	DRM_DEBUG_DP("Test:(0x%x) requested\n", data);
+ 	link->request.test_requested = data;
+-
+ 	if (link->request.test_requested == DP_TEST_LINK_PHY_TEST_PATTERN) {
+ 		ret = dp_link_parse_phy_test_params(link);
+ 		if (ret)
+@@ -789,10 +788,8 @@ bool dp_link_send_test_response(struct dp_link *dp_link)
+ 
+ 	link = container_of(dp_link, struct dp_link_private, dp_link);
+ 
+-	mutex_lock(&link->test_response_mutex);
+ 	ret = drm_dp_dpcd_writeb(link->aux, DP_TEST_RESPONSE,
+ 			dp_link->test_response);
+-	mutex_unlock(&link->test_response_mutex);
+ 
+ 	return ret == 1;
+ }
+@@ -1028,11 +1025,9 @@ int dp_link_process_request(struct dp_link *dp_link)
+ 
+ 	link = container_of(dp_link, struct dp_link_private, dp_link);
+ 
+-	mutex_lock(&link->test_response_mutex);
+ 	dp_link_reset_data(link);
+ 
+ 	dp_link_parse_sink_status_field(link);
+-	mutex_unlock(&link->test_response_mutex);
+ 
+ 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
+ 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
+@@ -1206,7 +1201,6 @@ struct dp_link *dp_link_get(struct device *dev, struct drm_dp_aux *aux)
+ 	link->dev   = dev;
+ 	link->aux   = aux;
+ 
+-	mutex_init(&link->test_response_mutex);
+ 	mutex_init(&link->psm_mutex);
+ 	dp_link = &link->dp_link;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 5ac4b017da8f..7cdf37c525d8 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -8,8 +8,6 @@
+ #include <drm/drm_connector.h>
+ #include <drm/drm_edid.h>
+ 
+-#define DP_MAX_DS_PORT_COUNT 1
+-
+ struct dp_panel_private {
+ 	struct device *dev;
+ 	struct dp_panel dp_panel;
+@@ -23,26 +21,32 @@ struct dp_panel_private {
+ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ {
+ 	int rc = 0;
+-	size_t rlen;
++	size_t len;
++	ssize_t rlen;
+ 	struct dp_panel_private *panel;
+ 	struct dp_link_info *link_info;
+ 	u8 *dpcd, major = 0, minor = 0, temp;
+-	u32 dfp_count = 0, offset = DP_DPCD_REV;
++	u32 offset = DP_DPCD_REV;
+ 
+ 	dpcd = dp_panel->dpcd;
+ 
+ 	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+ 	link_info = &dp_panel->link_info;
+ 
+-	rlen = drm_dp_dpcd_read(panel->aux,
+-				DP_TRAINING_AUX_RD_INTERVAL, &temp, 1);
+-	if (rlen < 0) {
+-		DRM_ERROR("err reading DP_TRAINING_AUX_RD_INTERVAL,rlen=%zd\n",
+-				rlen);
+-		rc = -EINVAL;
++	rlen = drm_dp_dpcd_read(panel->aux, offset,
++			dpcd, (DP_RECEIVER_CAP_SIZE + 1));
++	if (rlen < (DP_RECEIVER_CAP_SIZE + 1)) {
++		DRM_ERROR("dpcd read failed, rlen=%zd\n", rlen);
++		if (rlen == -ETIMEDOUT)
++			rc = rlen;
++		else
++			rc = -EINVAL;
++
+ 		goto end;
+ 	}
+ 
++	temp = dpcd[DP_TRAINING_AUX_RD_INTERVAL];
++
+ 	/* check for EXTENDED_RECEIVER_CAPABILITY_FIELD_PRESENT */
+ 	if (temp & BIT(7)) {
+ 		DRM_DEBUG_DP("using EXTENDED_RECEIVER_CAPABILITY_FIELD\n");
+@@ -61,9 +65,6 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ 		goto end;
+ 	}
+ 
+-	print_hex_dump(KERN_DEBUG, "[drm-dp] SINK DPCD: ",
+-		DUMP_PREFIX_NONE, 8, 1, dp_panel->dpcd, rlen, false);
+-
+ 	link_info->revision = dpcd[DP_DPCD_REV];
+ 	major = (link_info->revision >> 4) & 0x0f;
+ 	minor = link_info->revision & 0x0f;
+@@ -85,14 +86,23 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ 	if (drm_dp_enhanced_frame_cap(dpcd))
+ 		link_info->capabilities |= DP_LINK_CAP_ENHANCED_FRAMING;
+ 
+-	dfp_count = dpcd[DP_DOWN_STREAM_PORT_COUNT] &
+-						DP_DOWN_STREAM_PORT_COUNT;
++	dp_panel->dfp_present = dpcd[DP_DOWNSTREAMPORT_PRESENT];
++	dp_panel->dfp_present &= DP_DWN_STRM_PORT_PRESENT;
+ 
+-	if (dfp_count > DP_MAX_DS_PORT_COUNT) {
+-		DRM_ERROR("DS port count %d greater that max (%d) supported\n",
+-			dfp_count, DP_MAX_DS_PORT_COUNT);
+-		return -EINVAL;
++	if (dp_panel->dfp_present && (dpcd[DP_DPCD_REV] > 0x10)) {
++		dp_panel->ds_port_cnt = dpcd[DP_DOWN_STREAM_PORT_COUNT];
++		dp_panel->ds_port_cnt &= DP_PORT_COUNT_MASK;
++		len = DP_DOWNSTREAM_PORTS * DP_DOWNSTREAM_CAP_SIZE;
++
++		rlen = drm_dp_dpcd_read(panel->aux,
++			DP_DOWNSTREAM_PORT_0, dp_panel->ds_cap_info, len);
++		if (rlen < len) {
++			DRM_ERROR("ds port status failed, rlen=%zd\n", rlen);
++			rc = -EINVAL;
++			goto end;
++		}
+ 	}
++
+ end:
+ 	return rc;
+ }
+@@ -185,6 +195,7 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 	struct drm_connector *connector)
+ {
+ 	int rc = 0, bw_code;
++	int rlen, count;
+ 	struct dp_panel_private *panel;
+ 
+ 	if (!dp_panel || !connector) {
+@@ -202,11 +213,19 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 		DRM_ERROR("read dpcd failed %d\n", rc);
+ 		return rc;
+ 	}
+-	rc = drm_dp_read_desc(panel->aux, &dp_panel->desc,
+-			      drm_dp_is_branch(dp_panel->dpcd));
+-	if (rc) {
+-		DRM_ERROR("read sink/branch descriptor failed %d\n", rc);
+-		return rc;
++
++	if (dp_panel->dfp_present) {
++		rlen = drm_dp_dpcd_read(panel->aux, DP_SINK_COUNT,
++				&count, 1);
++		if (rlen == 1) {
++			count = DP_GET_SINK_COUNT(count);
++			if (!count) {
++				DRM_ERROR("no downstream ports connected\n");
++				panel->link->sink_count = 0;
++				rc = -ENOTCONN;
++				goto end;
++			}
++		}
+ 	}
+ 
+ 	kfree(dp_panel->edid);
+@@ -216,7 +235,12 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 					      &panel->aux->ddc);
+ 	if (!dp_panel->edid) {
+ 		DRM_ERROR("panel edid read failed\n");
+-		return -EINVAL;
++
++		/* fail safe edid */
++		mutex_lock(&connector->dev->mode_config.mutex);
++		if (drm_add_modes_noedid(connector, 640, 480))
++			drm_set_preferred_mode(connector, 640, 480);
++		mutex_unlock(&connector->dev->mode_config.mutex);
+ 	}
+ 
+ 	if (panel->aux_cfg_update_done) {
+@@ -231,8 +255,8 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 		}
+ 		panel->aux_cfg_update_done = false;
+ 	}
+-
+-	return 0;
++end:
++	return rc;
+ }
+ 
+ u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel,
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index f6f417eef2e9..9023e5bb4b8b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -14,8 +14,10 @@
+ 
+ struct edid;
+ 
+-#define DP_MAX_DOWNSTREAM_PORTS 0x10
+-#define DPRX_EXTENDED_DPCD_FIELD 0x2200
++#define DPRX_EXTENDED_DPCD_FIELD	0x2200
++
++#define DP_DOWNSTREAM_PORTS		4
++#define DP_DOWNSTREAM_CAP_SIZE		4
+ 
+ struct dp_display_mode {
+ 	struct drm_display_mode drm_mode;
+@@ -35,6 +37,9 @@ struct dp_panel_in {
+ struct dp_panel {
+ 	/* dpcd raw data */
+ 	u8 dpcd[DP_RECEIVER_CAP_SIZE + 1];
++	u8 ds_cap_info[DP_DOWNSTREAM_PORTS * DP_DOWNSTREAM_CAP_SIZE];
++	u32 ds_port_cnt;
++	u32 dfp_present;
+ 
+ 	struct dp_link_info link_info;
+ 	struct drm_dp_desc desc;
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+index 1e480d01ddbb..255a800535d5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.c
++++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+@@ -103,11 +103,12 @@ static inline bool dp_parser_check_prefix(const char *clk_prefix,
+ static int dp_parser_init_clk_data(struct dp_parser *parser)
+ {
+ 	int num_clk, i, rc;
+-	int core_clk_count = 0, ctrl_clk_count = 0;
++	int core_clk_count = 0, ctrl_clk_count = 0, stream_clk_count = 0;
+ 	const char *clk_name;
+ 	struct device *dev = &parser->pdev->dev;
+ 	struct dss_module_power *core_power = &parser->mp[DP_CORE_PM];
+ 	struct dss_module_power *ctrl_power = &parser->mp[DP_CTRL_PM];
++	struct dss_module_power *stream_power = &parser->mp[DP_STREAM_PM];
+ 
+ 	num_clk = of_property_count_strings(dev->of_node, "clock-names");
+ 	if (num_clk <= 0) {
+@@ -128,7 +129,7 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
+ 			ctrl_clk_count++;
+ 
+ 		if (dp_parser_check_prefix("stream", clk_name))
+-			ctrl_clk_count++;
++			stream_clk_count++;
+ 	}
+ 
+ 	/* Initialize the CORE power module */
+@@ -159,6 +160,21 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
+ 		return -EINVAL;
+ 	}
+ 
++	/* Initialize the STREAM power module */
++	if (stream_clk_count == 0) {
++		DRM_ERROR("no stream (pixel) clocks are defined\n");
++		return -EINVAL;
++	}
++
++	stream_power->num_clk = stream_clk_count;
++	stream_power->clk_config = devm_kzalloc(dev,
++			sizeof(struct dss_clk) * stream_power->num_clk,
++			GFP_KERNEL);
++	if (!stream_power->clk_config) {
++		stream_power->num_clk = 0;
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -166,15 +182,13 @@ static int dp_parser_clock(struct dp_parser *parser)
+ {
+ 	int rc = 0, i = 0;
+ 	int num_clk = 0;
+-	int core_clk_index = 0, ctrl_clk_index = 0;
+-	int core_clk_count = 0, ctrl_clk_count = 0;
++	int core_clk_index = 0, ctrl_clk_index = 0, stream_clk_index = 0;
++	int core_clk_count = 0, ctrl_clk_count = 0, stream_clk_count = 0;
+ 	const char *clk_name;
+ 	struct device *dev = &parser->pdev->dev;
+ 	struct dss_module_power *core_power = &parser->mp[DP_CORE_PM];
+ 	struct dss_module_power *ctrl_power = &parser->mp[DP_CTRL_PM];
+-
+-	core_power = &parser->mp[DP_CORE_PM];
+-	ctrl_power = &parser->mp[DP_CTRL_PM];
++	struct dss_module_power *stream_power = &parser->mp[DP_STREAM_PM];
+ 
+ 	rc =  dp_parser_init_clk_data(parser);
+ 	if (rc) {
+@@ -184,8 +198,9 @@ static int dp_parser_clock(struct dp_parser *parser)
+ 
+ 	core_clk_count = core_power->num_clk;
+ 	ctrl_clk_count = ctrl_power->num_clk;
++	stream_clk_count = stream_power->num_clk;
+ 
+-	num_clk = core_clk_count + ctrl_clk_count;
++	num_clk = core_clk_count + ctrl_clk_count + stream_clk_count;
+ 
+ 	for (i = 0; i < num_clk; i++) {
+ 		rc = of_property_read_string_index(dev->of_node, "clock-names",
+@@ -201,14 +216,19 @@ static int dp_parser_clock(struct dp_parser *parser)
+ 			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
+ 			clk->type = DSS_CLK_AHB;
+ 			core_clk_index++;
+-		} else if ((dp_parser_check_prefix("ctrl", clk_name) ||
+-			   dp_parser_check_prefix("stream", clk_name))  &&
++		} else if (dp_parser_check_prefix("stream", clk_name) &&
++				stream_clk_index < stream_clk_count) {
++			struct dss_clk *clk =
++				&stream_power->clk_config[stream_clk_index];
++			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
++			clk->type = DSS_CLK_PCLK;
++			stream_clk_index++;
++		} else if (dp_parser_check_prefix("ctrl", clk_name) &&
+ 			   ctrl_clk_index < ctrl_clk_count) {
+ 			struct dss_clk *clk =
+ 				&ctrl_power->clk_config[ctrl_clk_index];
+ 			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
+ 			ctrl_clk_index++;
+-
+ 			if (dp_parser_check_prefix("ctrl_link", clk_name) ||
+ 			    dp_parser_check_prefix("stream_pixel", clk_name))
+ 				clk->type = DSS_CLK_PCLK;
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+index aa0380b6a280..841e776124c4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.h
++++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+@@ -19,6 +19,7 @@
+ enum dp_pm_type {
+ 	DP_CORE_PM,
+ 	DP_CTRL_PM,
++	DP_STREAM_PM,
+ 	DP_PHY_PM,
+ 	DP_MAX_PM
+ };
+@@ -33,6 +34,7 @@ static inline const char *dp_parser_pm_name(enum dp_pm_type module)
+ 	switch (module) {
+ 	case DP_CORE_PM:	return "DP_CORE_PM";
+ 	case DP_CTRL_PM:	return "DP_CTRL_PM";
++	case DP_STREAM_PM:	return "DP_STREAM_PM";
+ 	case DP_PHY_PM:		return "DP_PHY_PM";
+ 	default:		return "???";
+ 	}
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+index 8b0a276d34a4..34fdb2e5d644 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.c
++++ b/drivers/gpu/drm/msm/dp/dp_power.c
+@@ -95,11 +95,12 @@ static int dp_power_regulator_init(struct dp_power_private *power)
+ static int dp_power_clk_init(struct dp_power_private *power)
+ {
+ 	int rc = 0;
+-	struct dss_module_power *core, *ctrl;
++	struct dss_module_power *core, *ctrl, *stream;
+ 	struct device *dev = &power->pdev->dev;
+ 
+ 	core = &power->parser->mp[DP_CORE_PM];
+ 	ctrl = &power->parser->mp[DP_CTRL_PM];
++	stream = &power->parser->mp[DP_STREAM_PM];
+ 
+ 	if (power->parser->pll && power->parser->pll->get_provider) {
+ 		rc = power->parser->pll->get_provider(power->parser->pll,
+@@ -126,21 +127,33 @@ static int dp_power_clk_init(struct dp_power_private *power)
+ 		return -ENODEV;
+ 	}
+ 
++	rc = msm_dss_get_clk(dev, stream->clk_config, stream->num_clk);
++	if (rc) {
++		DRM_ERROR("failed to get %s clk. err=%d\n",
++			dp_parser_pm_name(DP_CTRL_PM), rc);
++		msm_dss_put_clk(core->clk_config, core->num_clk);
++		return -ENODEV;
++	}
++
+ 	return 0;
+ }
+ 
+ static int dp_power_clk_deinit(struct dp_power_private *power)
+ {
+-	struct dss_module_power *core, *ctrl;
++	struct dss_module_power *core, *ctrl, *stream;
+ 
+ 	core = &power->parser->mp[DP_CORE_PM];
+ 	ctrl = &power->parser->mp[DP_CTRL_PM];
++	stream = &power->parser->mp[DP_STREAM_PM];
+ 
+-	if (!core || !ctrl)
++	if (!core || !ctrl || !stream) {
++		DRM_ERROR("invalid power_data\n");
+ 		return -EINVAL;
++	}
+ 
+ 	msm_dss_put_clk(ctrl->clk_config, ctrl->num_clk);
+ 	msm_dss_put_clk(core->clk_config, core->num_clk);
++	msm_dss_put_clk(stream->clk_config, stream->num_clk);
+ 	return 0;
+ }
+ 
+@@ -167,6 +180,20 @@ static int dp_power_clk_set_rate(struct dp_power_private *power,
+ 	return 0;
+ }
+ 
++int dp_power_clk_status(struct dp_power *dp_power, enum dp_pm_type pm_type)
++{
++	if (pm_type == DP_CORE_PM)
++		return dp_power->core_clks_on;
++
++	if (pm_type == DP_CTRL_PM)
++		return dp_power->link_clks_on;
++
++	if (pm_type == DP_STREAM_PM)
++		return dp_power->stream_clks_on;
++
++	return 0;
++}
++
+ int dp_power_clk_enable(struct dp_power *dp_power,
+ 		enum dp_pm_type pm_type, bool enable)
+ {
+@@ -175,7 +202,8 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 
+ 	power = container_of(dp_power, struct dp_power_private, dp_power);
+ 
+-	if (pm_type != DP_CORE_PM && pm_type != DP_CTRL_PM) {
++	if (pm_type != DP_CORE_PM && pm_type != DP_CTRL_PM &&
++			pm_type != DP_STREAM_PM) {
+ 		DRM_ERROR("unsupported power module: %s\n",
+ 				dp_parser_pm_name(pm_type));
+ 		return -EINVAL;
+@@ -192,6 +220,11 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 			return 0;
+ 		}
+ 
++		if (pm_type == DP_STREAM_PM && dp_power->stream_clks_on) {
++			DRM_DEBUG_DP("pixel clks already enabled\n");
++			return 0;
++		}
++
+ 		if ((pm_type == DP_CTRL_PM) && (!dp_power->core_clks_on)) {
+ 			DRM_DEBUG_DP("Enable core clks before link clks\n");
+ 
+@@ -215,13 +248,16 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 
+ 	if (pm_type == DP_CORE_PM)
+ 		dp_power->core_clks_on = enable;
++	else if (pm_type == DP_STREAM_PM)
++		dp_power->stream_clks_on = enable;
+ 	else
+ 		dp_power->link_clks_on = enable;
+ 
+ 	DRM_DEBUG_DP("%s clocks for %s\n",
+ 			enable ? "enable" : "disable",
+ 			dp_parser_pm_name(pm_type));
+-	DRM_DEBUG_DP("link_clks:%s core_clks:%s\n",
++	DRM_DEBUG_DP("strem_clks:%s link_clks:%s core_clks:%s\n",
++		dp_power->stream_clks_on ? "on" : "off",
+ 		dp_power->link_clks_on ? "on" : "off",
+ 		dp_power->core_clks_on ? "on" : "off");
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.h b/drivers/gpu/drm/msm/dp/dp_power.h
+index 756341e290ed..5333a97d5c35 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.h
++++ b/drivers/gpu/drm/msm/dp/dp_power.h
+@@ -19,6 +19,7 @@
+ struct dp_power {
+ 	bool core_clks_on;
+ 	bool link_clks_on;
++	bool stream_clks_on;
+ };
+ 
+ /**
+@@ -43,6 +44,18 @@ int dp_power_init(struct dp_power *power, bool flip);
+  */
+ int dp_power_deinit(struct dp_power *power);
+ 
++/**
++ * dp_power_clk_status() - display controller clocks status
++ *
++ * @power: instance of power module
++ * @pm_type: type of pm, core/ctrl/phy
++ * return: status of power clocks
++ *
++ * This API return status of DP clocks
++ */
++
++int dp_power_clk_status(struct dp_power *dp_power, enum dp_pm_type pm_type);
++
+ /**
+  * dp_power_clk_enable() - enable display controller clocks
+  *
+diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+index 6b3e297e4e04..de32f6204a50 100644
+--- a/drivers/gpu/drm/msm/dp/dp_reg.h
++++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+@@ -101,6 +101,7 @@
+ #define REG_DP_MAINLINK_CTRL			(0x00000000)
+ #define DP_MAINLINK_CTRL_ENABLE			(0x00000001)
+ #define DP_MAINLINK_CTRL_RESET			(0x00000002)
++#define DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER	(0x00000010)
+ #define DP_MAINLINK_FB_BOUNDARY_SEL		(0x02000000)
+ 
+ #define REG_DP_STATE_CTRL			(0x00000004)
+@@ -329,6 +330,7 @@
+ 
+ #define REG_DP_PHY_AUX_INTERRUPT_CLEAR          (0x0000004C)
+ #define REG_DP_PHY_AUX_BIST_CFG			(0x00000050)
++#define REG_DP_PHY_AUX_INTERRUPT_STATUS         (0x000000BC)
+ 
+ #define REG_DP_PHY_VCO_DIV			0x0064
+ #define REG_DP_PHY_TX0_TX1_LANE_CTL		0x006C
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index b4b213e57f99..a0e3c0b8bd4e 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -387,6 +387,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			 struct drm_encoder *encoder);
+ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
++int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+ 				struct drm_display_mode *mode,
+ 				struct drm_display_mode *adjusted_mode);
 -- 
-2.26.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
