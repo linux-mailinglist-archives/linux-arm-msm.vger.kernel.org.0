@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF20C25E97C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Sep 2020 19:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F19DB25E983
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Sep 2020 19:40:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727875AbgIERkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Sep 2020 13:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55948 "EHLO
+        id S1728585AbgIERkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Sep 2020 13:40:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728434AbgIERkM (ORCPT
+        with ESMTP id S1728405AbgIERkJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Sep 2020 13:40:12 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4D9C06124F
+        Sat, 5 Sep 2020 13:40:09 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114CFC061249
         for <linux-arm-msm@vger.kernel.org>; Sat,  5 Sep 2020 10:40:08 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id v54so7181674qtj.7
+Received: by mail-qt1-x843.google.com with SMTP id 92so7170540qtb.6
         for <linux-arm-msm@vger.kernel.org>; Sat, 05 Sep 2020 10:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0O2sDN9MRUJx80UJH/oPfzt4dGApmPFTm8Og0trLMlM=;
-        b=PQI3pEBu3s9c3wGVmIuNH334mS4Xc4eJzP8j71PrrLcxVfR5EeZBMcR+Auusaw6/Ff
-         1Fw+D1h5tmrw410p9aWH+jF5Z6dnxjbIEeE8J+In0S47NcWyOr0vBighN1vBS3/I+N8t
-         n9VYeGfCxt7F4CbUBDAUk9DlIoEz+kJfWhdIGY/EY2XPGAsDrKhZQlUhDEf/ez9cb9Z0
-         +hIc9YK3pnmY/ms0/Uo1h0c7mEiEpKJx0wPTUtky8whMSvqzRf3vJ0tXk2/adb+V0Xkl
-         nyEaTca83iCgVUT5X2KZzNhHyEgCmexoxmyxXY5r6kPXh9lsiSd/W+eN1IAo++f2Wkiy
-         iW9w==
+        bh=gCuchGSyeN1SA4c28kpGChZYxpEctYzHgQAHlgn61ZY=;
+        b=jAX0shsQRBi8WwQiwWenimkMPM+JLgv8FYxLya1CKoQSuwc6jUwz9RwHz+pEnoIL2q
+         9kGXSYgaDZrH0Wkkx+Ufc79W0ByqnBlqByqTcz+KZARiExXjzW4FhNK6Zvm/EvjZLf6+
+         l2bti/wH7Uu64/ak9oJ288mcso3jkdCGH3b2IMyTPUj70J0LHTctw85xs82V0eiJRcKb
+         E87tkV6eDeM/aTQOvzZ7+7SRkqIFqPX54w7qcAWsd44l+XyywcK48wgQh85prip1qOl0
+         1K4ztZFzkJEXPRPHwpGzLUi2LMS2z8O3nh+gaG+uO1YmkxYvnHC4CZAnLNd5kCxuEsYo
+         I4Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0O2sDN9MRUJx80UJH/oPfzt4dGApmPFTm8Og0trLMlM=;
-        b=HtsGcvzxClTzfH/Jzpxxc2fFpfkVlEe8Hdpk3e4qDokgcKT69XFECvAVZhnqjJ4uab
-         0mrlNVPcvnICw4PNvyw8Xarl+0Bhe2gDTghE55Y5QWmw8I/x/ubTj/IkBoNkooXQ72Ha
-         wXl9yDBzVwIEIIuEsBOdDOPmJ9HDlli6G7eOgrII4Tfu3VoQtm4u9TvWqrzbnuJ94k7i
-         4HX7vbik6HT9e2X1CH+Rw3WAlq7zj8i0wQlAeIvacdQyFTx1R9MSYthgj5AfUJmUMtBw
-         MMUDDsHt3UHfV2C5gfwuNF+N3M7QoRcgFQFMK6nNvSlracugFAgJsDExcvkscco3R9rU
-         4w5w==
-X-Gm-Message-State: AOAM533ovIs40qwJ49+GLb/A86C5UgsaBhu8DbNSbo3nv18nEngfheF0
-        UqIfWbOsaxl5VGGne5qpYOuU6sp1ZoQ/t3uNksw=
-X-Google-Smtp-Source: ABdhPJxvu7IqOsyVda774F6SOjLfLez3tafKaihOLf6twPF1uFQYTPqcfzR9nDz531vmBmKxjwOt6w==
-X-Received: by 2002:aed:2d06:: with SMTP id h6mr14027558qtd.301.1599327605930;
-        Sat, 05 Sep 2020 10:40:05 -0700 (PDT)
+        bh=gCuchGSyeN1SA4c28kpGChZYxpEctYzHgQAHlgn61ZY=;
+        b=iFljJkAQfuBi/zff1LgJJBeQTwQ/sRYDaf7qZLkCnwZsMgG9VsnBagfdej+hzyh1Ff
+         Q5oHrWnpgHRrBVUp3GQ1dhpS6/1aoAGx5l3CratzCRH3lXVAVbCEjJHFCohYWHGeL0EC
+         CSd3KELwSkoKsxDb1yhemodRXOn8j8GB4rf8nBM1Zox5vQc37HoD/GPRZkD0ZiPiReyr
+         9Mgf/9bFe3JNI9nEimUyI9NCEjiUj9OET9eIFXyAa7VKOZ85hxUBZtYluWMxHgB4D/Od
+         Y8KxDrC+tGyhtoAH9v8fMylFSYJNw+hdj+cTfIi72jHkjJj95I4thjcYd6uhQDgn9dHq
+         +WOA==
+X-Gm-Message-State: AOAM530vKWg6tLm3k/7EOIqgUpBanvdudh+YcnFf49fX2bTRNrZlCUgU
+        Upc7AsMNHawFannnGCIeJce/6yDSnCegZoIAto8=
+X-Google-Smtp-Source: ABdhPJwuhACwry7xvRE2wBQ9naoMrPAAX6O0+ahqxxrxKUd9wiHRK3QwKSBHcf43LGWu25mqzk01FA==
+X-Received: by 2002:ac8:4906:: with SMTP id e6mr7514712qtq.360.1599327607134;
+        Sat, 05 Sep 2020 10:40:07 -0700 (PDT)
 Received: from localhost.localdomain ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id k22sm4612076qkk.13.2020.09.05.10.40.05
+        by smtp.gmail.com with ESMTPSA id k22sm4612076qkk.13.2020.09.05.10.40.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Sep 2020 10:40:05 -0700 (PDT)
+        Sat, 05 Sep 2020 10:40:06 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Bard Liao <yung-chuan.liao@linux.intel.com>,
         Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
         Sanyog Kale <sanyog.r.kale@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         alsa-devel@alsa-project.org (moderated list:SOUNDWIRE SUBSYSTEM),
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 1/4] soundwire: qcom: fix abh/ahb typo
-Date:   Sat,  5 Sep 2020 13:39:02 -0400
-Message-Id: <20200905173905.16541-2-jonathan@marek.ca>
+Subject: [PATCH v2 2/4] soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
+Date:   Sat,  5 Sep 2020 13:39:03 -0400
+Message-Id: <20200905173905.16541-3-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20200905173905.16541-1-jonathan@marek.ca>
 References: <20200905173905.16541-1-jonathan@marek.ca>
@@ -72,36 +71,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function name qcom_swrm_abh_reg_read should say ahb, fix that.
+The driver may be used without slimbus, so don't depend on slimbus.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- drivers/soundwire/qcom.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soundwire/Kconfig | 2 +-
+ drivers/soundwire/qcom.c  | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/soundwire/Kconfig b/drivers/soundwire/Kconfig
+index fa2b4ab92ed9..f83d02c9c60a 100644
+--- a/drivers/soundwire/Kconfig
++++ b/drivers/soundwire/Kconfig
+@@ -33,7 +33,7 @@ config SOUNDWIRE_INTEL
+ 
+ config SOUNDWIRE_QCOM
+ 	tristate "Qualcomm SoundWire Master driver"
+-	depends on SLIMBUS
++	imply SLIMBUS
+ 	depends on SND_SOC
+ 	help
+ 	  SoundWire Qualcomm Master driver.
 diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 915c2cf0c274..d1e33ef1afac 100644
+index d1e33ef1afac..6401ad451eee 100644
 --- a/drivers/soundwire/qcom.c
 +++ b/drivers/soundwire/qcom.c
-@@ -114,7 +114,7 @@ struct qcom_swrm_ctrl {
- 
- #define to_qcom_sdw(b)	container_of(b, struct qcom_swrm_ctrl, bus)
- 
--static int qcom_swrm_abh_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
-+static int qcom_swrm_ahb_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
- 				  u32 *val)
- {
- 	struct regmap *wcd_regmap = ctrl->regmap;
-@@ -754,7 +754,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+@@ -753,7 +753,11 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+ 	if (!ctrl)
  		return -ENOMEM;
  
++#if IS_ENABLED(CONFIG_SLIBMUS)
  	if (dev->parent->bus == &slimbus_bus) {
--		ctrl->reg_read = qcom_swrm_abh_reg_read;
-+		ctrl->reg_read = qcom_swrm_ahb_reg_read;
++#else
++	if (false) {
++#endif
+ 		ctrl->reg_read = qcom_swrm_ahb_reg_read;
  		ctrl->reg_write = qcom_swrm_ahb_reg_write;
  		ctrl->regmap = dev_get_regmap(dev->parent, NULL);
- 		if (!ctrl->regmap)
 -- 
 2.26.1
 
