@@ -2,113 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 748BF25EC49
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Sep 2020 05:16:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE28A25EE31
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Sep 2020 16:30:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728681AbgIFDQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Sep 2020 23:16:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54448 "EHLO mail.kernel.org"
+        id S1728905AbgIFOaR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Sep 2020 10:30:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58328 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728491AbgIFDQL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Sep 2020 23:16:11 -0400
-Received: from localhost (unknown [70.37.104.77])
+        id S1728945AbgIFOZ3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 6 Sep 2020 10:25:29 -0400
+Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BECF62137B;
-        Sun,  6 Sep 2020 03:16:10 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 31DCB20714;
+        Sun,  6 Sep 2020 14:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599362170;
-        bh=YGVlrMA1Ai8Gybc+0vWgFweTUB1UYvieny0REuWIywE=;
-        h=Date:From:To:To:To:Cc:Cc:Cc:Subject:In-Reply-To:References:From;
-        b=IFStoF9Hv0TnAnT6Kyc4oDVh1UUOIKc/ugYNsRODmhRzYJ8HDKV/KvXlBD/XGHMhR
-         bMAqBQwrh0NNosBUin7pL/M+SGV39S458ikmVcF0ZBxsXVwu+mMsDrD1S+Z/mtfEoH
-         +O66HCthvJr3CXQM84lV5KP615ym9UA8ePc3ajRg=
-Date:   Sun, 06 Sep 2020 03:16:10 +0000
-From:   Sasha Levin <sashal@kernel.org>
-To:     Sasha Levin <sashal@kernel.org>
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     stable@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>
-Cc:     stable@vger.kernel.org
-Cc:     stable@vger.kernel.org
-Subject: Re: [PATCH 1/4] drm/msm: Split the a5xx preemption record
-In-Reply-To: <20200904020313.1810988-2-jcrouse@codeaurora.org>
-References: <20200904020313.1810988-2-jcrouse@codeaurora.org>
-Message-Id: <20200906031610.BECF62137B@mail.kernel.org>
+        s=default; t=1599401652;
+        bh=RARGd5sTlXJsH1PMNVa4z6Dg9tpvxraIKMfswKQWg/0=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=0bhGrkolg90PzA/+bx+YFG7ClPcbM6yDhMsuJRjN8zQO389wakB6CkgHDeKBF9o03
+         2hZvNHzoEwfeGIlZxBnlkUZwWhh0n419gXCYh3tn5XjHP95sRsfpBlPQmW6Tg4SDs6
+         IVRinTCl9K9sQyDobtV6m8oHNCHLV8UzoQiYa/t8=
+Date:   Sun, 6 Sep 2020 15:14:07 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: Re: [PATCH v2 1/9] dt-bindings: thermal: qcom: add adc-thermal
+ monitor bindings
+Message-ID: <20200906151407.71ac5fde@archlinux>
+In-Reply-To: <20200903132109.1914011-2-dmitry.baryshkov@linaro.org>
+References: <20200903132109.1914011-1-dmitry.baryshkov@linaro.org>
+        <20200903132109.1914011-2-dmitry.baryshkov@linaro.org>
+X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On Thu,  3 Sep 2020 16:21:01 +0300
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 
-[This is an automated email]
+> Add bindings for thermal monitor, part of Qualcomm PMIC5 chips. It is a
+> close counterpart of VADC part of those PMICs.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   | 142 ++++++++++++++++++
+>  1 file changed, 142 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> new file mode 100644
+> index 000000000000..94aaf3720b9f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> @@ -0,0 +1,142 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/thermal/qcom-spmi-adc-tm5.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm's SPMI PMIC ADC-TM
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,spmi-adc-tm5
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  "#thermal-sensor-cells":
+> +    const: 1
+> +    description:
+> +      Number of cells required to uniquely identify the thermal sensors. Since
+> +      we have multiple sensors this is set to 1
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  io-channels:
+> +    description:
+> +      From common IIO binding. Used to pipe PMIC ADC channel to thermal monitor
+> +
+> +  io-channel-names:
+> +    description:
+> +      From common IIO binding. Names each of IIO channels. The name should
+> +      be equal to the sensor's subnode name.
+> +
+> +  qcom,avg-samples:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: Number of samples to be used for measurement.
+> +    enum:
+> +      - 1
+> +      - 2
+> +      - 4
+> +      - 8
+> +      - 16
+> +    default: 1
+> +
+> +  qcom,decimation:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: This parameter is used to decrease ADC sampling rate.
 
-This commit has been processed because it contains a -stable tag.
-The stable tag indicates that it's relevant for the following trees: all
+Just curious, but how is it used?  What do 250, 420 etc actually refer to?
 
-The bot has tested the following trees: v5.8.6, v5.4.62, v4.19.143, v4.14.196, v4.9.235, v4.4.235.
+> +    enum:
+> +      - 250
+> +      - 420
+> +      - 840
+> +    default: 840
+> +
+> +patternProperties:
+> +  "^([-a-z0-9]*)@[0-9]+$":
+> +    type: object
+> +    description:
+> +      Represent one thermal sensor.
+> +
+> +    properties:
+> +      reg:
+> +        description: Specify the sensor channel.
+> +        maxItems: 1
+> +
+> +      qcom,adc-channel:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: Corresponding ADC channel ID.
 
-v5.8.6: Build OK!
-v5.4.62: Build failed! Errors:
-    drivers/gpu/drm/msm/adreno/a5xx_preempt.c:235:21: error: 'MSM_BO_MAP_PRIV' undeclared (first use in this function); did you mean 'MSM_BO_CACHED'?
+Comment down at the example.
 
-v4.19.143: Failed to apply! Possible dependencies:
-    0815d7749a68 ("drm/msm: Add a name field for gem objects")
-    1e29dff00400 ("drm/msm: Add a common function to free kernel buffer objects")
-    64686886bbff ("drm/msm: Replace drm_gem_object_{un/reference} with put, get functions")
-    6a41da17e87d ("drm: msm: Use DRM_DEV_* instead of dev_*")
-    c97ea6a61b5e ("drm: msm: adreno: Use PTR_ERR_OR_ZERO rather than if(IS_ERR(...)) +PTR_ERR")
-    df0dff132905 ("drm/msm/a6xx: Poll for HFI responses")
-    f384d7d514d1 ("drm: Convert to using %pOFn instead of device_node.name")
-    feb085ec8a3d ("drm/msm: dsi: Return errors whan dt parsing fails")
+> +
+> +      qcom,ratiometric:
+> +        $ref: /schemas/types.yaml#/definitions/flag
+> +        description:
+> +          Channel calibration type.
+> +          If this property is specified VADC will use the VDD reference
+> +          (1.875V) and GND for channel calibration. If property is not found,
+> +          channel will be calibrated with 0V and 1.25V reference channels,
+> +          also known as absolute calibration.
+> +
+> +      qcom,hw-settle-time:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: Time between AMUX getting configured and the ADC starting conversion.
+> +
+> +      qcom,pre-scaling:
+> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> +        description: Used for scaling the channel input signal before the signal is fed to VADC. See qcom,spi-vadc specification for the list of possible values.
 
-v4.14.196: Failed to apply! Possible dependencies:
-    b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-    cd414f3d9316 ("drm/msm: Move memptrs to msm_gpu")
-    e8f3de96a9d3 ("drm/msm/adreno: split out helper to load fw")
-    eec874ce5ff1 ("drm/msm/adreno: load gpu at probe/bind time")
-    f7de15450e90 ("drm/msm: Add per-instance submit queues")
-    f97decac5f4c ("drm/msm: Support multiple ringbuffers")
+Very long line.
 
-v4.9.235: Failed to apply! Possible dependencies:
-    1cec20f0ea0e ("dma-buf: Restart reservation_object_wait_timeout_rcu() after writes")
-    667ce33e57d0 ("drm/msm: support multiple address spaces")
-    78010cd9736e ("dma-buf/fence: add an lockdep_assert_held()")
-    89d777a57245 ("drm/msm: Remove 'src_clk' from adreno configuration")
-    b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-    b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
-    f54d1867005c ("dma-buf: Rename struct fence to dma_fence")
-    fb0399819239 ("drm/msm: Add adreno_gpu_write64()")
-    fedf54132d24 ("dma-buf: Restart reservation_object_get_fences_rcu() after writes")
+> +        minItems: 2
+> +        maxItems: 2
+> +
+> +    required:
+> +      - reg
+> +      - qcom,adc-channel
+> +
+> +    additionalProperties:
+> +      false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - "#thermal-sensor-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        pm8150b_adc: adc@3100 {
+> +            compatible = "qcom,spmi-adc5";
+> +            /* Other propreties are omitted */
+> +            conn-therm@4f {
+> +                reg = <ADC5_AMUX_THM3_100K_PU>;
+> +                qcom,ratiometric;
+> +                qcom,hw-settle-time = <200>;
+> +            };
+> +        };
+> +
+> +        pm8150b_adc_tm: adc-tm@3500 {
+> +            compatible = "qcom,spmi-adc-tm5";
+> +            reg = <0x3500>;
+> +            interrupts = <0x2 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
+> +            #thermal-sensor-cells = <1>;
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +            io-channels = <&pm8150b_adc ADC5_AMUX_THM3_100K_PU>;
+> +            io-channel-names = "conn-therm";
+> +
+> +            conn-therm@0 {
+> +                reg = <0>;
+> +                qcom,adc-channel = <ADC5_AMUX_THM3_100K_PU>;
 
-v4.4.235: Failed to apply! Possible dependencies:
-    01c8f1c44b83 ("mm, dax, gpu: convert vm_insert_mixed to pfn_t")
-    0caeef63e6d2 ("libnvdimm: Add a poison list and export badblocks")
-    0e749e54244e ("dax: increase granularity of dax_clear_blocks() operations")
-    34c0fd540e79 ("mm, dax, pmem: introduce pfn_t")
-    357ff00b08d6 ("drm/msm/adreno: support for adreno 430.")
-    52db400fcd50 ("pmem, dax: clean up clear_pmem()")
-    667ce33e57d0 ("drm/msm: support multiple address spaces")
-    68209390f116 ("drm/msm: shrinker support")
-    7d0c5ee9f077 ("drm/msm/adreno: get CP_RPTR from register instead of shadow memory")
-    87ba05dff351 ("libnvdimm: don't fail init for full badblocks list")
-    89d777a57245 ("drm/msm: Remove 'src_clk' from adreno configuration")
-    a5725ab0497a ("drm/msm/adreno: move function declarations to header file")
-    b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-    b2e0d1625e19 ("dax: fix lifetime of in-kernel dax mappings with dax_map_atomic()")
-    b5f103ab98c7 ("drm/msm: gpu: Add A5XX target support")
-    b95f5f4391fa ("libnvdimm: convert to statically allocated badblocks")
-    edcd60ce243d ("drm/msm: move debugfs code to it's own file")
-    fb0399819239 ("drm/msm: Add adreno_gpu_write64()")
-    fde5de6cb461 ("drm/msm: move fence code to it's own file")
-    fe683adabfe6 ("dax: guarantee page aligned results from bdev_direct_access()")
+Would we be better off putting the io-channels entry directly in the child
+and lose the indirection? Would make the driver a bit more fiddly perhaps
+but give a more elegant binding by dropping one level of indirection
+/repetition.
 
+> +                qcom,ratiometric;
+> +                qcom,hw-settle-time = <200>;
+> +            };
+> +        };
+> +...
 
-NOTE: The patch will not be queued to stable trees until it is upstream.
-
-How should we proceed with this patch?
-
--- 
-Thanks
-Sasha
