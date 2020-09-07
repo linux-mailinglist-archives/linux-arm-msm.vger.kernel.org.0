@@ -2,73 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9313F25FF5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 18:31:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C22F260212
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 19:18:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729887AbgIGQae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 12:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42586 "EHLO
+        id S1729757AbgIGODX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 10:03:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729843AbgIGOZu (ORCPT
+        with ESMTP id S1729750AbgIGOCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 10:25:50 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE38C061786
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 07:25:49 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id k25so3775683ljk.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 07:25:49 -0700 (PDT)
+        Mon, 7 Sep 2020 10:02:37 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 529FCC061573
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 06:52:02 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id g72so12646367qke.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 06:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hVM3Bwa+7CBJ1tm/Y8nBpr8saRwPz4svplyjBBrsC0U=;
-        b=uOj4oOeWuxxaOC3HiEmLRokBFD2dg7nD1Pl4YXtz7g4VAxKf1FMy8miJkKwkZe9LAT
-         xzxye6K/Bk5OHtZ98rqpxm/YaCQhrhfulRoJoealMpHCYsSDKPrIjL782JpI792BfNJH
-         Z1bxAJ9YP/+aZEbgwAV2/NM2D0sewEHFqEn1d5hL15DZyck5+AH5kuNPqDFtqobndW4q
-         kqcRMHkAMintNj6zTEb+qQKL1supzKdRvXIYPA64AJL+dKfCvgfdARuLodImftyU/JcB
-         d+u9lJqZiw8hXMILJNLkpJ/kAPeTFBR37LGdQA16PFdzc6KrD5Rft9Z6D8+Oj6Ja/5uS
-         TIgA==
+        bh=PTkTouL2czWP8WE5qgUgm7cqaQuyE0I/QNRM6mgOP0c=;
+        b=RkYJt/sowuPk660AeGi8k0TKGfw7R8fezICrpHulamrnjeDus1mMTpxsIWFd8D4dC7
+         7lpGSv7sikZ6Q9BvxsmwJzFL0vuxJhFNqNLJVncpFdsrRYrYwD1hSxKVQYA8DfJOvbSa
+         RwJkUSNO7j4lUTwm76z0W/0OWjMpHbgy/rExIclghVSTBLYxw4R1J27T6uvav7WQXBPT
+         L1G0L0X95cOws5jWWbfsTaaI6m1M6QmGci7OQXviSo4Bj+8P1W35vQs2GohffQ3k9k3F
+         slWb2a47njZDem0eevasth1IaIjJcaHo/5XCxgS68BuXLU3OyxQKzrTTStG59SpxKbNU
+         L3sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=hVM3Bwa+7CBJ1tm/Y8nBpr8saRwPz4svplyjBBrsC0U=;
-        b=hOaAmwtSO0RV/SAvhVxLLpFxkoXAcOYTy1exZKQ4gKAQ3Hy6JyK7CC6ziT3fixMqlZ
-         0iQ5tFFm6n+Hp62RJEwzjtSELZ7xFmaiX+KH+7jvV/hY6XuzXG12QUwDo+4NICFGnHzp
-         hnQ98v8vxXPkZIywDoWT4hgSq3XWZZXlC6WElIc8GAp9ogsohwzGuuin09a0EVh2NvLz
-         mpAYgWTwqOfNKZ4yNAoHTQVroYqAiy9tN+KfYvSHhSebmyykudDWqE/OnSq667O2yM6x
-         lYMmd2UCJ2MuzNfqcA1047W0rQUpzGn5cU8G9kIjsITYxc2xaL1hMxTechHC1Ci6paNN
-         mAWA==
-X-Gm-Message-State: AOAM530JzAsSI888ebL2e/+ERwDOmTdMJ1ChgBvWhUsNUyG8Rw+amus1
-        9riXJbSygYw1CCjGB3jWxgwkRw==
-X-Google-Smtp-Source: ABdhPJygP+SYAnnRaMnSoWu4qiJ84OSHZbWcft2WovB1SA5iKRJc85ubCtTQ2w1xI5K+uszGHMBeCg==
-X-Received: by 2002:a2e:7e12:: with SMTP id z18mr9706298ljc.388.1599488748047;
-        Mon, 07 Sep 2020 07:25:48 -0700 (PDT)
-Received: from [192.168.1.211] ([188.162.64.144])
-        by smtp.gmail.com with ESMTPSA id f25sm5577940ljn.29.2020.09.07.07.25.46
+        bh=PTkTouL2czWP8WE5qgUgm7cqaQuyE0I/QNRM6mgOP0c=;
+        b=PZ7C96hirb/9zuQgpG8n4OPGD6E+Wu95px0YgbIXDqSKE4sTRFsQVSv5AmHS5UcK34
+         9w132qRMnTgOruO/w0Vm1NibUMjdbG3Y5UFjRvXJWkYjmGLJIoYkb3jj/TWhMzq0NBSr
+         mi2RY6kNYrXbxrV9dQTls5pzQv/gHFHAFpu4yqQp0SK0C/mNHnxvvYHM3EPV0lXA8zeS
+         13MjyaQGq1EIgrNTvibnxbjUv6NSdS60eXpUW9BErkr0W1Tz9CQw1xQa9cumccJu1VmS
+         YQkmzoGFY9GO+bf14zzxCNYy/qGfTiJ4HZVQXAZpozdCKK8OiwKk+TRIeBWaqcSDxSOM
+         H/PQ==
+X-Gm-Message-State: AOAM533SAaEfjXotJVskMuW0EovzDSUDhi93Vtb4QFr3M240LAtknMYK
+        SyDrPXYvv3Q6918S20saEbERwA==
+X-Google-Smtp-Source: ABdhPJwb/Iojc+yPbKGCE2w/zaWNEX18Z9XHEn4djmHHQz8vqGV9Ili06wfYjq3cq27keqH4oiq1LQ==
+X-Received: by 2002:a05:620a:141a:: with SMTP id d26mr18900840qkj.217.1599486721448;
+        Mon, 07 Sep 2020 06:52:01 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id u66sm10541652qka.136.2020.09.07.06.52.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Sep 2020 07:25:47 -0700 (PDT)
-Subject: Re: [PATCH v2 0/7] SM8150 and SM8250 dispcc drivers
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>
-References: <20200903222620.27448-1-jonathan@marek.ca>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <fd5fbe73-e2a5-d877-743c-ad7cc6110483@linaro.org>
-Date:   Mon, 7 Sep 2020 17:25:45 +0300
+        Mon, 07 Sep 2020 06:52:01 -0700 (PDT)
+Subject: Re: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200901003300.11985-1-jonathan@marek.ca>
+ <20200907123344.GA2371705@kroah.com>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <a9d142c9-8a61-ee59-d849-393af1b3eaec@marek.ca>
+Date:   Mon, 7 Sep 2020 09:51:13 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <20200903222620.27448-1-jonathan@marek.ca>
+In-Reply-To: <20200907123344.GA2371705@kroah.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -77,52 +72,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/09/2020 01:26, Jonathan Marek wrote:
-> Add display clock drivers required to get DSI and DP displays working on
-> SM8150 and SM8250 SoCs.
+On 9/7/20 8:33 AM, Greg Kroah-Hartman wrote:
+> On Mon, Aug 31, 2020 at 08:32:59PM -0400, Jonathan Marek wrote:
+>> Initializing sensors requires attaching to pd 2. Add an ioctl for that.
+>>
+>> This corresponds to FASTRPC_INIT_ATTACH_SENSORS in the downstream driver.
+>>
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>>   drivers/misc/fastrpc.c      | 9 ++++++---
+>>   include/uapi/misc/fastrpc.h | 5 +++--
+>>   2 files changed, 9 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 7939c55daceb..ea5e9ca0d705 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -1276,7 +1276,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
+>>   	return 0;
+>>   }
+>>   
+>> -static int fastrpc_init_attach(struct fastrpc_user *fl)
+>> +static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
+>>   {
+>>   	struct fastrpc_invoke_args args[1];
+>>   	int tgid = fl->tgid;
+>> @@ -1287,7 +1287,7 @@ static int fastrpc_init_attach(struct fastrpc_user *fl)
+>>   	args[0].fd = -1;
+>>   	args[0].reserved = 0;
+>>   	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
+>> -	fl->pd = 0;
+>> +	fl->pd = pd;
+>>   
+>>   	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+>>   				       sc, &args[0]);
+>> @@ -1477,7 +1477,10 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
+>>   		err = fastrpc_invoke(fl, argp);
+>>   		break;
+>>   	case FASTRPC_IOCTL_INIT_ATTACH:
+>> -		err = fastrpc_init_attach(fl);
+>> +		err = fastrpc_init_attach(fl, 0);
+>> +		break;
+>> +	case FASTRPC_IOCTL_INIT_ATTACH_SNS:
+>> +		err = fastrpc_init_attach(fl, 2);
 > 
-> Derived from downstream drivers. Notable changes compared to downstream:
->   - EDP clks removed (nothing uses these even in downstream it seems)
->   - freq_tbl values for dp_link clk is in Hz and not kHz
-
-
-On SM8250:
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> 
-> v2:
->   - updated dts example to reflect the change (first patch)
->   - updated config_ctl_hi1_val in sm8250 dispcc to latest downstream
-> 
-> Jonathan Marek (7):
->    dt-bindings: clock: sdm845-dispcc: same name for dp_phy clocks as
->      sc7180
->    arm64: dts: qcom: sdm845-dispcc: same name for dp_phy clocks as sc7180
->    dt-bindings: clock: combine qcom,sdm845-dispcc and qcom,sc7180-dispcc
->    dt-bindings: clock: Introduce QCOM SM8150 display clock bindings
->    dt-bindings: clock: Introduce QCOM SM8250 display clock bindings
->    clk: qcom: Add display clock controller driver for SM8150
->    clk: qcom: Add display clock controller driver for SM8250
-> 
->   ...om,sdm845-dispcc.yaml => qcom,dispcc.yaml} |   30 +-
->   .../bindings/clock/qcom,sc7180-dispcc.yaml    |   86 --
->   arch/arm64/boot/dts/qcom/sdm845.dtsi          |    4 +-
->   drivers/clk/qcom/Kconfig                      |   18 +
->   drivers/clk/qcom/Makefile                     |    2 +
->   drivers/clk/qcom/dispcc-sm8150.c              | 1152 +++++++++++++++++
->   drivers/clk/qcom/dispcc-sm8250.c              | 1100 ++++++++++++++++
->   .../dt-bindings/clock/qcom,dispcc-sm8150.h    |   69 +
->   .../dt-bindings/clock/qcom,dispcc-sm8250.h    |   66 +
->   9 files changed, 2428 insertions(+), 99 deletions(-)
->   rename Documentation/devicetree/bindings/clock/{qcom,sdm845-dispcc.yaml => qcom,dispcc.yaml} (75%)
->   delete mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-dispcc.yaml
->   create mode 100644 drivers/clk/qcom/dispcc-sm8150.c
->   create mode 100644 drivers/clk/qcom/dispcc-sm8250.c
->   create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8150.h
->   create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm8250.h
+> Shouldn't you have #defines for those magic numbers somewhere?  What
+> does 0 and 2 mean?
 > 
 
+This is based off a downstream driver which also uses magic numbers, 
+although I can make an educated guess about the meaning.
 
--- 
-With best wishes
-Dmitry
+Srini do you have any suggestions for how to name these values?
+
+> thanks,
+> 
+> greg k-h
+> 
