@@ -2,92 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C990025FA8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 14:33:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A49E325FABC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 14:52:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729169AbgIGMde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 08:33:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45932 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728792AbgIGMdb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 08:33:31 -0400
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DFD56206E6;
-        Mon,  7 Sep 2020 12:33:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599482010;
-        bh=kDHQv3XCIPb67Uc5kjThYASF43s8jQiU+rU4a6we73I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vutxjeTK+c84QOcfrmiQZoAi3MNhUbkZMzAVZmEnKl5xXrZQEmSlf1zS7Xgi3ZePG
-         Kq2LM/1sU1DPH/RLJRbJoSq+gDNSSX/2E59CxSiQy0JhaWF2Ume6S88ru0CV/ry47x
-         bcA5p9/yYPLlnsQpMe147ImA3SQHie1kywQFTOTs=
-Date:   Mon, 7 Sep 2020 14:33:44 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
-Message-ID: <20200907123344.GA2371705@kroah.com>
-References: <20200901003300.11985-1-jonathan@marek.ca>
+        id S1729348AbgIGMvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 08:51:37 -0400
+Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:59036
+        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729339AbgIGMvX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Sep 2020 08:51:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599483067;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=ui1fKpiCptH0S6+EMGetZQ1ytRLWPuhfc4/2yA0rrYU=;
+        b=dqIBHsA1fMmANHggaNieBuPOabNMb5Vd90KOYGbyLIEG860dLSt03Im9Dba7s834
+        qP4SaKB0dw8Aoj5vpwr5RP1+9HkbstPYiXsGJFBuHf5ZnEZBEu0+sfDF49d1uqZJNgg
+        pOQ1T2zobv3KVhPkmZaGpYzxL08gkBqLPRIPRc7I=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599483067;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=ui1fKpiCptH0S6+EMGetZQ1ytRLWPuhfc4/2yA0rrYU=;
+        b=XlrHe4x7RwAo0o2Dk8TJCfkWKSexEGx/MZpL8yFcyYK7mk4jwi/o4B1LOYy9u+IY
+        iHoxX3a4DEPRSJsyIZyYgtWbof/jTqoBoaaNCzz8+CYJ6mi+gA4GT0kik/sW0iw2eQ6
+        SY6pNJCGPWVXZVFnnCCPNcIKbIStbYVuDK5vap60=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200901003300.11985-1-jonathan@marek.ca>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 7 Sep 2020 12:51:07 +0000
+From:   rojay@codeaurora.org
+To:     Akash Asthana <akashast@codeaurora.org>
+Cc:     wsa@kernel.org, swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH V2 1/2] i2c: i2c-qcom-geni: Store DMA mapping data in
+ geni_i2c_dev struct
+In-Reply-To: <c09a6bb3-6a7d-bcf8-42ad-cc8dc971c705@codeaurora.org>
+References: <20200820103522.26242-1-rojay@codeaurora.org>
+ <20200820103522.26242-2-rojay@codeaurora.org>
+ <c09a6bb3-6a7d-bcf8-42ad-cc8dc971c705@codeaurora.org>
+Message-ID: <01010174689ebbd5-8447b255-ce45-49e0-a6ef-ee35e183953d-000000@us-west-2.amazonses.com>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2020.09.07-54.240.27.18
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 31, 2020 at 08:32:59PM -0400, Jonathan Marek wrote:
-> Initializing sensors requires attaching to pd 2. Add an ioctl for that.
+On 2020-08-26 17:25, Akash Asthana wrote:
+> Hi Roja,
 > 
-> This corresponds to FASTRPC_INIT_ATTACH_SENSORS in the downstream driver.
+> On 8/20/2020 4:05 PM, Roja Rani Yarubandi wrote:
+>> Store DMA mapping data in geni_i2c_dev struct to enhance DMA mapping
+>> data scope. For example during shutdown callback to unmap DMA mapping,
+>> this stored DMA mapping data can be used to call geni_se_tx_dma_unprep
+>> and geni_se_rx_dma_unprep functions.
+>> 
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> ---
+>> Changes in V2:
+>>   - As per Stephen's comments, changed commit text, fixed minor 
+>> nitpicks.
+>> 
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>> 
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+>> b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index 7f130829bf01..1fda5c7c2cfc 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -86,6 +86,9 @@ struct geni_i2c_dev {
+>>   	u32 clk_freq_out;
+>>   	const struct geni_i2c_clk_fld *clk_fld;
+>>   	int suspended;
+>> +	dma_addr_t tx_dma;
+>> +	dma_addr_t rx_dma;
+>> +	size_t xfer_len;
+>>   };
+>>     struct geni_i2c_err_log {
+>> @@ -358,6 +361,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg *msg,
+>>   	struct geni_se *se = &gi2c->se;
+>>   	size_t len = msg->len;
+>>   +	gi2c->xfer_len = msg->len;
 > 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/misc/fastrpc.c      | 9 ++++++---
->  include/uapi/misc/fastrpc.h | 5 +++--
->  2 files changed, 9 insertions(+), 5 deletions(-)
+> nit: gi2c->xfer = len, for tx_one_msg as well.
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 7939c55daceb..ea5e9ca0d705 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1276,7 +1276,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
->  	return 0;
->  }
->  
-> -static int fastrpc_init_attach(struct fastrpc_user *fl)
-> +static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
->  {
->  	struct fastrpc_invoke_args args[1];
->  	int tgid = fl->tgid;
-> @@ -1287,7 +1287,7 @@ static int fastrpc_init_attach(struct fastrpc_user *fl)
->  	args[0].fd = -1;
->  	args[0].reserved = 0;
->  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
-> -	fl->pd = 0;
-> +	fl->pd = pd;
->  
->  	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
->  				       sc, &args[0]);
-> @@ -1477,7 +1477,10 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
->  		err = fastrpc_invoke(fl, argp);
->  		break;
->  	case FASTRPC_IOCTL_INIT_ATTACH:
-> -		err = fastrpc_init_attach(fl);
-> +		err = fastrpc_init_attach(fl, 0);
-> +		break;
-> +	case FASTRPC_IOCTL_INIT_ATTACH_SNS:
-> +		err = fastrpc_init_attach(fl, 2);
+> Regards,
+> 
+> Akash
+> 
 
-Shouldn't you have #defines for those magic numbers somewhere?  What
-does 0 and 2 mean?
+Okay
 
-thanks,
-
-greg k-h
+>>   	if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>>   		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+>>   @@ -384,6 +388,7 @@ static int geni_i2c_rx_one_msg(struct 
+>> geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>>   	if (dma_buf) {
+>>   		if (gi2c->err)
+>>   			geni_i2c_rx_fsm_rst(gi2c);
+>> +		gi2c->rx_dma = rx_dma;
+>>   		geni_se_rx_dma_unprep(se, rx_dma, len);
+>>   		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+>>   	}
+>> @@ -400,6 +405,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg *msg,
+>>   	struct geni_se *se = &gi2c->se;
+>>   	size_t len = msg->len;
+>>   +	gi2c->xfer_len = msg->len;
+>>   	if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>>   		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+>>   @@ -429,6 +435,7 @@ static int geni_i2c_tx_one_msg(struct 
+>> geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>>   	if (dma_buf) {
+>>   		if (gi2c->err)
+>>   			geni_i2c_tx_fsm_rst(gi2c);
+>> +		gi2c->tx_dma = tx_dma;
+>>   		geni_se_tx_dma_unprep(se, tx_dma, len);
+>>   		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+>>   	}
