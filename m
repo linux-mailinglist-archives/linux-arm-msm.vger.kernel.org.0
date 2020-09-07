@@ -2,72 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 400B6260436
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 20:06:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1397E2604D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 20:49:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731414AbgIGSGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 14:06:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33110 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731351AbgIGSGo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 14:06:44 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4BF8420738;
-        Mon,  7 Sep 2020 18:06:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599502003;
-        bh=CSGLZgC7TEScaQRoN9rKXOxHIB1UVechuf/uXlfBqqk=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=ULzVERjsYSef99QHRBtWac2dbhoKGwuPBCWSJfbmr2eXCT6igcvgPMopNGGVw5r5J
-         k77HUm3lRWWBi3LnGppw+X21pzCZngyEIVBk1TL7NxycgN5dFBAPS6keLgmw2rGex6
-         AF7rzAqU5zpAj45PdY/h07pZcUQl2toMlDZoowms=
-Date:   Mon, 07 Sep 2020 19:06:00 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Alex Dewar <alex.dewar90@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>, linux-spi@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20200904163709.110975-1-alex.dewar90@gmail.com>
-References: <20200904163709.110975-1-alex.dewar90@gmail.com>
-Subject: Re: [PATCH] spi: qup: Allow for compile-testing on !ARM
-Message-Id: <159950195998.52926.7999875606949643050.b4-ty@kernel.org>
+        id S1729231AbgIGStf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 14:49:35 -0400
+Received: from mail1.protonmail.ch ([185.70.40.18]:15922 "EHLO
+        mail1.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726458AbgIGSte (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Sep 2020 14:49:34 -0400
+Date:   Mon, 07 Sep 2020 18:49:21 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1599504570;
+        bh=ZMHD4pb6eLStL6z+QcCKhBat0AGNJTHtmNZKUYPW0hY=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=LsH3Ubg/tM9MN5ir7XnQ3WLf4Kqa4Ok1LVbdc5dOfguhK0D8iWntPUNb2AniTkGTr
+         t6yGWMWn/awny7KYCVDQBarjP4Vi8tM8RXu67wPoDYP+mLUrqSnec1IuJEjL6LF5B4
+         4xqRBsAXkGGnM0YxTvto9ec9z8+VlwPh1j+w36W4=
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH v3 0/8] iommu/arm-smmu: Support maintaining bootloader mappings
+Message-ID: <c1cce546-0c49-05e2-8c54-5f343db273c8@connolly.tech>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 4 Sep 2020 17:37:10 +0100, Alex Dewar wrote:
-> There seems no reason to restrict testing to ARM, so remove this
-> constraint to improve test coverage.
-> 
-> Build-tested with allyesconfig on x86.
+On 2020-09-04 16:55, Bjorn Andersson wrote:
+> Based on previous attempts and discussions this is the latest attempt at
+> inheriting stream mappings set up by the bootloader, for e.g. boot splash=
+ or
+> efifb.
+>
+> Per Will's request this builds on the work by Jordan and Rob for the Adre=
+no
+> SMMU support. It applies cleanly ontop of v16 of their series, which can =
+be
+> found at
+> https://lore.kernel.org/linux-arm-msm/20200901164707.2645413-1-robdclark@=
+gmail.com/
+>
+> Bjorn Andersson (8):
+>    iommu/arm-smmu: Refactor context bank allocation
+>    iommu/arm-smmu: Delay modifying domain during init
+>    iommu/arm-smmu: Consult context bank allocator for identify domains
+>    iommu/arm-smmu-qcom: Emulate bypass by using context banks
+>    iommu/arm-smmu-qcom: Consistently initialize stream mappings
+>    iommu/arm-smmu: Add impl hook for inherit boot mappings
+>    iommu/arm-smmu: Provide helper for allocating identity domain
+>    iommu/arm-smmu-qcom: Setup identity domain for boot mappings
+>
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 111 ++++++++++++++++++-
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c      | 122 ++++++++++++++-------
+>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  14 ++-
+>   3 files changed, 205 insertions(+), 42 deletions(-)
+>
 
-Applied to
+Tested on the OnePlus 6 (SDM845), allows booting with display enabled.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-Thanks!
 
-[1/1] spi: qup: Allow for compile-testing on !ARM
-      commit: 2abaad678575acd54e9939e1174becd82ecc884b
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
