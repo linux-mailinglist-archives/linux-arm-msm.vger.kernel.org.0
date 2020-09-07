@@ -2,89 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED8A426036A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 19:49:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 400B6260436
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 20:06:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729395AbgIGRtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 13:49:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53984 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729207AbgIGMgx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 08:36:53 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6B3C061573
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 05:36:52 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id c15so15608026wrs.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 05:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cqFMV15+ncKbqbkS4rVaONwxjHJHpxU0h6ADgIa+Z0A=;
-        b=Ytdkogj/FxZPspswI944ZPcLbsutNDXJrlYzv30IZRXro+wphhZ7PvwcYfnJRJzjIx
-         s75ETcQTuUJ8NNe2sic0iOG3MMMnBSqgF13pBu4txpvZFjikm6UA5tLJLLk+Y8svAkjK
-         Z4X/f15mhhpq+73D3DFlce9xxFWpwjW4n7yRPEY3bwEEZeUzDpkPbO4kFFXx0SNzouLC
-         kjFo1P0XR8lmeCJnUGGu9Z6Vy5eZl4Mdl6ErHR2gA0m9LDTSuU1zVTowmjnTp8MnJ8vA
-         Gg5xzBuDnxiDAPSSl28ZKMla3iXO+DznonLNjF9EF7pCJsG9fh2w9zcNUGySnCHQzMY7
-         LtqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cqFMV15+ncKbqbkS4rVaONwxjHJHpxU0h6ADgIa+Z0A=;
-        b=HX5fKUBKSvB696A+IeJK/loW3FuCFk1G4kwOt5PEyjjLUoJdyEQrROzIP9CS4J3aYN
-         wcm+RMslxlEEgSjHfU9Uye7TdUHs1MpSpHn2TaeDou5YsCKoxkaEzrcDw8NnwdNnvgTF
-         bof0LfCrPvw3u31gPcODgkAQWyL/7URt9D42+IGD2Hghx202LVQlFinlEPUk4HvIMorQ
-         G2iJ57QgAeZz/pDS876SH6g3rauUGBTtJfGwh0ZnS3im9yKBxwtf7lUyhnxmztwxZhbX
-         0D8kGi4/G/HC407GGlM657dkkMJZOsiP/gZfaqcdVzJ4eEz6H/Duq7ECasHvMBOiTo0H
-         zzTQ==
-X-Gm-Message-State: AOAM533KvY6dd+TAfRhC01xxycQjLbOP2cFuTVS165oB+okYMrxh+ZXL
-        qnRe1gSxNpONkGQAncFloTvA5w==
-X-Google-Smtp-Source: ABdhPJzQe5EfAU2q9xGZLtiNTjwaCpqPJTnKV5+qPIuoluAHp8SC/Sa/9E3K2d5sr2tXrTy0rFiyKA==
-X-Received: by 2002:adf:e583:: with SMTP id l3mr21112729wrm.72.1599482211454;
-        Mon, 07 Sep 2020 05:36:51 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id z13sm28535545wro.97.2020.09.07.05.36.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Sep 2020 05:36:50 -0700 (PDT)
-Subject: Re: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20200901003300.11985-1-jonathan@marek.ca>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <fa436d55-b986-944f-e90f-b81cb32eeb0e@linaro.org>
-Date:   Mon, 7 Sep 2020 13:36:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20200901003300.11985-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1731414AbgIGSGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 14:06:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33110 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731351AbgIGSGo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Sep 2020 14:06:44 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4BF8420738;
+        Mon,  7 Sep 2020 18:06:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599502003;
+        bh=CSGLZgC7TEScaQRoN9rKXOxHIB1UVechuf/uXlfBqqk=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=ULzVERjsYSef99QHRBtWac2dbhoKGwuPBCWSJfbmr2eXCT6igcvgPMopNGGVw5r5J
+         k77HUm3lRWWBi3LnGppw+X21pzCZngyEIVBk1TL7NxycgN5dFBAPS6keLgmw2rGex6
+         AF7rzAqU5zpAj45PdY/h07pZcUQl2toMlDZoowms=
+Date:   Mon, 07 Sep 2020 19:06:00 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Alex Dewar <alex.dewar90@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>, linux-spi@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20200904163709.110975-1-alex.dewar90@gmail.com>
+References: <20200904163709.110975-1-alex.dewar90@gmail.com>
+Subject: Re: [PATCH] spi: qup: Allow for compile-testing on !ARM
+Message-Id: <159950195998.52926.7999875606949643050.b4-ty@kernel.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 4 Sep 2020 17:37:10 +0100, Alex Dewar wrote:
+> There seems no reason to restrict testing to ARM, so remove this
+> constraint to improve test coverage.
+> 
+> Build-tested with allyesconfig on x86.
 
+Applied to
 
-On 01/09/2020 01:32, Jonathan Marek wrote:
-> -#define FASTRPC_IOCTL_MMAP              _IOWR('R', 6, struct fastrpc_req_mmap)
-> -#define FASTRPC_IOCTL_MUNMAP            _IOWR('R', 7, struct fastrpc_req_munmap)
-> +#define FASTRPC_IOCTL_MMAP		_IOWR('R', 6, struct fastrpc_req_mmap)
-> +#define FASTRPC_IOCTL_MUNMAP		_IOWR('R', 7, struct fastrpc_req_munmap)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-Looks like changes that do not belong to this patch!
+Thanks!
 
-I wanted to try this patch on SM8250.
-How do you test attaching fastrpc to sensor core?, I mean which 
-userspace lib/tool do you use?
+[1/1] spi: qup: Allow for compile-testing on !ARM
+      commit: 2abaad678575acd54e9939e1174becd82ecc884b
 
---srini
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-> +#define FASTRPC_IOCTL_INIT_ATTACH_SNS	_IO('R', 8)
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
