@@ -2,286 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C228D25F74F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 12:08:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F346525F7BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 12:19:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728480AbgIGKIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 06:08:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728555AbgIGKII (ORCPT
+        id S1728701AbgIGKTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 06:19:05 -0400
+Received: from lb3-smtp-cloud8.xs4all.net ([194.109.24.29]:53327 "EHLO
+        lb3-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728819AbgIGKRk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 06:08:08 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294D8C061573
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 03:08:08 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id q13so7062753vsj.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 03:08:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dZ0cXtIu18O1k22F/ZDQa/bXyptLZb81gkafcnjYNcM=;
-        b=O2L0eLGdR+6+ZhRzQIz42SKnDGT0lu7O6LKXrLLcRyWaY3A4BOwdgSFgeWg0bN/Efh
-         Fak+f85L/g4Qpl1UXC9ta/tPAic75s2ru0IsLhvDD2XT0lreXQnG2ksFAt+N7DJC4PPi
-         wFXZ9JNFr9qbD8MbzUBRhihO6wvFInG8xlAksZhYEBTIuKx37atFH1d1LsgK4GPU86nj
-         ntwGoA9ZTlttMtr4Shq+5qxC2Je3wJUNjtyK4S35317lToJbFRdKk5QfAkZfAFYxeGNP
-         dLMfjTTk1zo1FLQYxPqUOg6XydIgz4lUKW6utGB7GnMK2FNEU3y6QkiZCiXYZSJ4NHbq
-         cTkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dZ0cXtIu18O1k22F/ZDQa/bXyptLZb81gkafcnjYNcM=;
-        b=mWKLfBMVN7F2EVVVo7jlsc/D7zkfgele59PSHYvbgPBIcenjJeN0IjrJjILx2UFQ2z
-         qIYbK8pnkKOq6Jzr+dU+Nmz6W5loigPnk5A9mTXIZeXY+sz8YQ07+E15J7klyhO1SVIF
-         JhoSvMFL39LEA/tHn0spZLj2ahMM1lqTC3P8VRn3E3OREVuUSBM5GzCm5pQJkxZOegYa
-         cptxfWHpaJEuKLvCkfmpfpmg0kqn5Ho4g9azFeqGwkRCwMUEm6sw3SjxV7nzcFZt5Mlj
-         h/ZGJJobQHo0SZ/sA8giS3Dbo9HTf3WBvd8HHwlJ3xzLbj6kh3M8dx7JRvfjr/ZgWOKQ
-         f6FA==
-X-Gm-Message-State: AOAM531q9ukP8K/PYQGQR5/FaYutpTWm5+BgT/cmRmAjR2WQHh6ryYwh
-        4FI6AVNcdnZvJTq/rP7rQDfCqZC6jPQQRyDDcDnMxQ==
-X-Google-Smtp-Source: ABdhPJzK8imxVzFICBf5slUvnoT+nIGcFmxhDDZ+N5lgeyXxY/MWgnT4W+c7RvwPtr/PAV7TEjJg1KFBqInVadg+qOY=
-X-Received: by 2002:a67:308c:: with SMTP id w134mr10855802vsw.8.1599473287226;
- Mon, 07 Sep 2020 03:08:07 -0700 (PDT)
+        Mon, 7 Sep 2020 06:17:40 -0400
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id FEDLktozZgJnQFEDMkcAgg; Mon, 07 Sep 2020 12:17:34 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1599473854; bh=HgbncFYAzk/LirXAJ2xU3kPm9hShrC3K8k0R1FKZBag=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=OIZC81IMuhwqFKUNoBTQKdWY+UP4jp8/nZPMcg1TbTvkPRBkNKpPVjQdEDsILM/1U
+         N5vlSp5f2+jBagHguCCl8ygvXW1G5C/r7jqkmJQMyyd+IC6R0qbIcGTC6qVPvqYNAR
+         gPfBVkRL/QmI4c1IIjIuCRvuUCx7bFs0ITqrYLkoMdYO6RyGQNdzCD3rW6hkA0m4Lx
+         pqOBkjlbeK4i0rTyk0xnFGUYqCW8PaygVm7wvgq9XfAOYoV+ErPfwf1ssWs3P4BVZ1
+         S0l3704zui3deYbXCWGEv66L+Sa3UKTI4Mpy+auBZBWzlo8v+6RynmwWmjYRC1G3vF
+         kkrrEwRN9UGvg==
+Subject: Re: [PATCH 00/38] media sparse/smatch warn fixes
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Sean Young <sean@mess.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        =?UTF-8?Q?Niklas_S=c3=b6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>,
+        Nicolas Boichat <drinkcat@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mike Rapoport <rppt@kernel.org>,
+        Michel Lespinasse <walken@google.com>,
+        linux-media@vger.kernel.org, Allen Pais <allen.lkml@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        Forest Crossman <cyrozap@gmail.com>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Colin Ian King <colin.king@canonical.com>,
+        Antti Palosaari <crope@iki.fi>,
+        Romain Perier <romain.perier@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Vandana BN <bnvandana@gmail.com>, devel@driverdev.osuosl.org,
+        Takashi Iwai <tiwai@suse.de>,
+        John Hubbard <jhubbard@nvidia.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+References: <cover.1599062230.git.mchehab+huawei@kernel.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <5ced9e99-c3d9-e81f-db17-e13f33ed70e5@xs4all.nl>
+Date:   Mon, 7 Sep 2020 12:17:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20200904164315.24618-1-krzk@kernel.org> <20200904164315.24618-2-krzk@kernel.org>
-In-Reply-To: <20200904164315.24618-2-krzk@kernel.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 7 Sep 2020 12:07:30 +0200
-Message-ID: <CAPDyKFo2Kqcpjb7QmsNgyD_kji2vXt3G2SqdDp9DUnvotKyojA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] mmc: host: Enable compile testing of multiple drivers
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Manuel Lauss <manuel.lauss@gmail.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Prabu Thangamuthu <prabu.t@synopsys.com>,
-        Manjunath M B <manjumb@synopsys.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        linux-aspeed <linux-aspeed@lists.ozlabs.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-arm-kernel@axis.com,
-        =?UTF-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <cover.1599062230.git.mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOc6uePBCSHhyIyCiqDkng0D9SBU74ntHiDAyiBpwbwiPXns6jguVb2g4Yt6hvx4lTRj4RgBM4IbW6MyVr6PembmE5RwzGsuGoc7cTCRDZb6V8gMooxA
+ EZlGkIsmIqfeIxltkTPpGt390a/cyTC4DCt/FC1zzFb+uFR8T7zdiaR9P1+pQ9d/r0NYKYirzqDYRlCRjZdprBEtIgiEO9pCkTTEZd5M4S2+jew7iQU5KuGP
+ p755uCKj7M4THjQkj4Aq2kmBPsL6EhnfkLbJMSJ6mnMpx2Dha0u4BFjDYZzC2PPcducBWrhScvuDKHrlX5GfmEb/MwbMa38M0bz4za5A1vQxUTb6/n5lMNkE
+ nbbbMygQw37lKUXlShZGbu0DR9viqI9z+9E9qbKUTPM375eWTE3sctetTr96Dp11wnHOhyHjyYgZZmih4DoPlHjsgLvfSd/8szDYRldVZzVjumql0EPaWf0z
+ JHP9zbJulruaA72Q3dD9TAXAR1YwMK4UhP6EAiPa/M1Sfrl7OZZQMySnmk+Ka71w6FjDDvXoO7xtgzNvEfEDE4zxzpTzXUNLEO6N4zm82GN/g2+2jDPcObLo
+ TMCbV7bgA5eUQQf1h4kRLGScaoVp22A+7y/sBLcRha0VAu7okgpZYfaQmJBeRN75gOu69VV4qZRBkR/MIzGUxnNM2xMD77FeW3iqQnPCNGfxq/rw/rWNzGea
+ u2/cYPnOyfQVl2Dh+HUs9WxN+g6b1dS6o8r3/xb41Osk+qasE8UlLLDo1815ogLizDJEy1HRC57yAmlkPqo8E12wFBdmAKxBQHkKP/BznwYYkX2xe49RhTDi
+ bMUceJa98gLo1iYayGEdfaD2ITQ1V88vfi3EoTsqA8vYkSseWmd5jgcCV/7FS4QRsEthYkAnK1BSFSSncPpZ746DGVt40KDmT15eWzCdQxlGV8Soo6L5arh7
+ xfzH32ilsgG1c2KKRSRhelR9L+EWyBcIMPtltmyaGhRzoZlnAZtAMCuQ3qeEct2LW0z5Im5oQBm2NWGKLlDy/RUj4c8cfsmSo8IIWTq/1gwyrfEAwyEGW3JF
+ WrslmCQiEgQAS0wR67beYHCv0jVibzB0pVr5raa3ob1SUklcVfUTachqVLuRG6kqaMxbTI9rmGiKrRy91glOINh7ETdWacM0I+1KQxVb9Fdv27lRKGTMFnpA
+ P+rjPo66gFubD63ljV9FhJupctUq4mwSMRfODM8Pkhgsa0yNV07fis4+tPICUTLwVYHFCC59axC3eoM0CvN1Yw==
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 4 Sep 2020 at 18:43, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> Multiple MMC host controller driver can be compile tested as they do not
-> depend on architecture specific headers.
->
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+On 02/09/2020 18:10, Mauro Carvalho Chehab wrote:
+> While I was lately relying on Jenkins to report smatch/sparse issues,
+> I discovered this week that the reports were missing such warnings
+> 
+> I got it fixed already at builder.linuxtv.org, but there are several new
+> warnings that got added over time.
+> 
+> This series is meant to solve the ones that are reported on x86_64
+> without pre-building the smatch database.
+> 
+> It should allow receiving cleaner error reports.
+> 
+> While most of the patches are meant to shut up the static analizers,
+> some contain real bug fixes.
+> 
+> Mauro Carvalho Chehab (38):
+>   media: tda10086: cleanup symbol_rate setting logic
+>   media: v4l2-ioctl: avoid memory leaks on some time32 compat functions
+>   media: qt1010: fix usage of unititialized value
+>   media: av7110_v4l: avoid a typecast
+>   media: wl128x: get rid of a potential spectre issue
+>   media: venus: place extern venus_fw_debug on a header file
+>   media: tda10021: avoid casts when using symbol_rate
+>   media: serial_ir: use the right type for a dma address
+>   media: vivid: move the detection part out of vivid_create_instance
+>   media: vivid: place the logic which disables ioctl on a separate
+>     function
+>   media: vivid: move set_capabilities logic to a separate function
+>   media: vivid: place dt timings init code on a separate function
+>   media: vivid: move the create queues to a separate function
+>   media: vivid: move the devnode creation logic to a separate function
+>   media: vivid: fix error path
 
-I tried to apply this, but there was a conflict around the SDHCI_S3C.
-Can you please rebase.
+For these vivid patches and after fixing the "unused variable 'i'" warning
+as reported by the kernel test robot:
 
-Kind regards
-Uffe
+Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
+Thank you for working on this!
 
->
-> ---
->
-> Changes since v1:
-> 1. Add COMMON_CLK dependency to MESON_GX to fix errors like:
->    ERROR: modpost: "devm_clk_register" [drivers/mmc/host/meson-gx-mmc.ko] undefined!
-> ---
->  drivers/mmc/host/Kconfig | 41 +++++++++++++++++++++-------------------
->  1 file changed, 22 insertions(+), 19 deletions(-)
->
-> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> index eea01fde0591..93db789cf8ec 100644
-> --- a/drivers/mmc/host/Kconfig
-> +++ b/drivers/mmc/host/Kconfig
-> @@ -178,7 +178,7 @@ config MMC_SDHCI_OF_AT91
->  config MMC_SDHCI_OF_ESDHC
->         tristate "SDHCI OF support for the Freescale eSDHC controller"
->         depends on MMC_SDHCI_PLTFM
-> -       depends on PPC || ARCH_MXC || ARCH_LAYERSCAPE
-> +       depends on PPC || ARCH_MXC || ARCH_LAYERSCAPE || COMPILE_TEST
->         select MMC_SDHCI_IO_ACCESSORS
->         select FSL_GUTS
->         help
-> @@ -216,7 +216,7 @@ config MMC_SDHCI_OF_DWCMSHC
->  config MMC_SDHCI_OF_SPARX5
->         tristate "SDHCI OF support for the MCHP Sparx5 SoC"
->         depends on MMC_SDHCI_PLTFM
-> -       depends on ARCH_SPARX5
-> +       depends on ARCH_SPARX5 || COMPILE_TEST
->         help
->           This selects the Secure Digital Host Controller Interface (SDHCI)
->           found in the MCHP Sparx5 SoC.
-> @@ -238,7 +238,7 @@ config MMC_SDHCI_CADENCE
->
->  config MMC_SDHCI_CNS3XXX
->         tristate "SDHCI support on the Cavium Networks CNS3xxx SoC"
-> -       depends on ARCH_CNS3XXX
-> +       depends on ARCH_CNS3XXX || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         help
->           This selects the SDHCI support for CNS3xxx System-on-Chip devices.
-> @@ -262,7 +262,7 @@ config MMC_SDHCI_ESDHC_MCF
->
->  config MMC_SDHCI_ESDHC_IMX
->         tristate "SDHCI support for the Freescale eSDHC/uSDHC i.MX controller"
-> -       depends on ARCH_MXC
-> +       depends on ARCH_MXC || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         select MMC_SDHCI_IO_ACCESSORS
->         select MMC_CQHCI
-> @@ -276,7 +276,7 @@ config MMC_SDHCI_ESDHC_IMX
->
->  config MMC_SDHCI_DOVE
->         tristate "SDHCI support on Marvell's Dove SoC"
-> -       depends on ARCH_DOVE || MACH_DOVE
-> +       depends on ARCH_DOVE || MACH_DOVE || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         select MMC_SDHCI_IO_ACCESSORS
->         help
-> @@ -289,7 +289,7 @@ config MMC_SDHCI_DOVE
->
->  config MMC_SDHCI_TEGRA
->         tristate "SDHCI platform support for the Tegra SD/MMC Controller"
-> -       depends on ARCH_TEGRA
-> +       depends on ARCH_TEGRA || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         select MMC_SDHCI_IO_ACCESSORS
->         select MMC_CQHCI
-> @@ -301,7 +301,8 @@ config MMC_SDHCI_TEGRA
->
->  config MMC_SDHCI_S3C
->         tristate "SDHCI support on Samsung S3C SoC"
-> -       depends on MMC_SDHCI && (PLAT_SAMSUNG || ARCH_S5PV210 || ARCH_EXYNOS)
-> +       depends on MMC_SDHCI
-> +       depends on PLAT_SAMSUNG || ARCH_S5PV210 || ARCH_EXYNOS || COMPILE_TEST
->         help
->           This selects the Secure Digital Host Controller Interface (SDHCI)
->           often referrered to as the HSMMC block in some of the Samsung S3C
-> @@ -313,7 +314,7 @@ config MMC_SDHCI_S3C
->
->  config MMC_SDHCI_SIRF
->         tristate "SDHCI support on CSR SiRFprimaII and SiRFmarco SoCs"
-> -       depends on ARCH_SIRF
-> +       depends on ARCH_SIRF || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         select MMC_SDHCI_IO_ACCESSORS
->         help
-> @@ -351,7 +352,8 @@ config MMC_SDHCI_PXAV2
->
->  config MMC_SDHCI_SPEAR
->         tristate "SDHCI support on ST SPEAr platform"
-> -       depends on MMC_SDHCI && PLAT_SPEAR
-> +       depends on MMC_SDHCI
-> +       depends on PLAT_SPEAR || COMPILE_TEST
->         depends on OF
->         help
->           This selects the Secure Digital Host Controller Interface (SDHCI)
-> @@ -374,7 +376,7 @@ config MMC_SDHCI_S3C_DMA
->
->  config MMC_SDHCI_BCM_KONA
->         tristate "SDHCI support on Broadcom KONA platform"
-> -       depends on ARCH_BCM_MOBILE
-> +       depends on ARCH_BCM_MOBILE || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         help
->           This selects the Broadcom Kona Secure Digital Host Controller
-> @@ -422,7 +424,8 @@ config MMC_SDHCI_IPROC
->
->  config MMC_MESON_GX
->         tristate "Amlogic S905/GX*/AXG SD/MMC Host Controller support"
-> -       depends on ARCH_MESON
-> +       depends on ARCH_MESON || COMPILE_TEST
-> +       depends on COMMON_CLK
->         help
->           This selects support for the Amlogic SD/MMC Host Controller
->           found on the S905/GX*/AXG family of SoCs.  This controller is
-> @@ -458,7 +461,7 @@ config MMC_MESON_MX_SDIO
->
->  config MMC_MOXART
->         tristate "MOXART SD/MMC Host Controller support"
-> -       depends on ARCH_MOXART
-> +       depends on ARCH_MOXART || COMPILE_TEST
->         help
->           This selects support for the MOXART SD/MMC Host Controller.
->           MOXA provides one multi-functional card reader which can
-> @@ -467,7 +470,7 @@ config MMC_MOXART
->
->  config MMC_SDHCI_ST
->         tristate "SDHCI support on STMicroelectronics SoC"
-> -       depends on ARCH_STI || FSP2
-> +       depends on ARCH_STI || FSP2 || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         select MMC_SDHCI_IO_ACCESSORS
->         help
-> @@ -587,7 +590,7 @@ config MMC_TIFM_SD
->
->  config MMC_MVSDIO
->         tristate "Marvell MMC/SD/SDIO host driver"
-> -       depends on PLAT_ORION
-> +       depends on PLAT_ORION || (COMPILE_TEST && ARM)
->         depends on OF
->         help
->           This selects the Marvell SDIO host driver.
-> @@ -599,7 +602,7 @@ config MMC_MVSDIO
->
->  config MMC_DAVINCI
->         tristate "TI DAVINCI Multimedia Card Interface support"
-> -       depends on ARCH_DAVINCI
-> +       depends on ARCH_DAVINCI || COMPILE_TEST
->         help
->           This selects the TI DAVINCI Multimedia card Interface.
->           If you have an DAVINCI board with a Multimedia Card slot,
-> @@ -628,7 +631,7 @@ config MMC_SPI
->
->  config MMC_S3C
->         tristate "Samsung S3C SD/MMC Card Interface support"
-> -       depends on ARCH_S3C24XX
-> +       depends on ARCH_S3C24XX || COMPILE_TEST
->         depends on S3C24XX_DMAC
->         help
->           This selects a driver for the MCI interface found in
-> @@ -681,7 +684,7 @@ config MMC_SDRICOH_CS
->
->  config MMC_SDHCI_SPRD
->         tristate "Spreadtrum SDIO host Controller"
-> -       depends on ARCH_SPRD
-> +       depends on ARCH_SPRD || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         select MMC_SDHCI_IO_ACCESSORS
->         select MMC_HSQ
-> @@ -698,7 +701,7 @@ config MMC_TMIO_CORE
->
->  config MMC_TMIO
->         tristate "Toshiba Mobile IO Controller (TMIO) MMC/SD function support"
-> -       depends on MFD_TMIO || MFD_ASIC3
-> +       depends on MFD_TMIO || MFD_ASIC3 || COMPILE_TEST
->         select MMC_TMIO_CORE
->         help
->           This provides support for the SD/MMC cell found in TC6393XB,
-> @@ -971,7 +974,7 @@ config MMC_REALTEK_USB
->
->  config MMC_SUNXI
->         tristate "Allwinner sunxi SD/MMC Host Controller support"
-> -       depends on ARCH_SUNXI
-> +       depends on ARCH_SUNXI || COMPILE_TEST
->         help
->           This selects support for the SD/MMC Host Controller on
->           Allwinner sunxi SoCs.
-> --
-> 2.17.1
->
+Regards,
+
+	Hans
+
+>   media: videobuf-dma-sg: number of pages should be unsigned long
+>   media: cx25821-alsa: number of pages should be unsigned long
+>   media: cx23885-alsa: number of pages should be unsigned long
+>   media: cx88-alsa: number of pages should be unsigned long
+>   media: saa7134-alsa.c: number of pages should be unsigned long
+>   media: dvb-ttusb-budget: don't use stack for USB transfers
+>   media: dvb-ttusb-budget: cleanup printk logic
+>   media: saa7134: avoid a shift overflow
+>   media: atomisp: fix casts at atomisp_compat_ioctl32.c
+>   media: atomisp: get rid of some unused code
+>   media: atomisp: cleanup ifdefs from ia_css_debug.c
+>   media: atomisp: get rid of version-dependent globals
+>   media: atomisp: get rid of isys_dma.h and isys_dma_local.h
+>   media: atomisp: get rid of ibuf_ctrl abstraction
+>   media: atomisp: don't check for ISP version for includes
+>   media: atomisp: unify INPUT error return type
+>   media: atomisp: de-duplicate names at *_input_system_global.h
+>   media: atomisp: reorder functions at pixelgen_private.h
+>   media: atomisp: remove compile-time tests from input_system_global.h
+>   media: atomisp: fix some bad indents
+>   media: atomisp: csi_rx.c: add a missing includes
+>   media: atomisp: atomisp_gmin_platform: check before use
+>   media: atomisp: cleanup isys_irq headers
+> 
+>  drivers/media/dvb-frontends/tda10021.c        |  38 +-
+>  drivers/media/dvb-frontends/tda10086.c        |  22 +-
+>  drivers/media/pci/cx23885/cx23885-alsa.c      |   7 +-
+>  drivers/media/pci/cx23885/cx23885.h           |   4 +-
+>  drivers/media/pci/cx25821/cx25821-alsa.c      |  11 +-
+>  drivers/media/pci/cx88/cx88-alsa.c            |  13 +-
+>  drivers/media/pci/saa7134/saa7134-alsa.c      |   7 +-
+>  drivers/media/pci/saa7134/saa7134-tvaudio.c   |   3 +-
+>  drivers/media/pci/saa7134/saa7134.h           |   2 +-
+>  drivers/media/pci/ttpci/av7110_v4l.c          |   4 +-
+>  drivers/media/platform/qcom/venus/core.h      |   2 +
+>  drivers/media/platform/qcom/venus/dbgfs.c     |   2 -
+>  drivers/media/radio/wl128x/fmdrv_common.c     |  16 +-
+>  drivers/media/rc/serial_ir.c                  |   2 +-
+>  drivers/media/test-drivers/vivid/vivid-core.c | 645 ++++++------
+>  drivers/media/tuners/qt1010.c                 |  25 +-
+>  .../media/usb/ttusb-budget/dvb-ttusb-budget.c | 197 ++--
+>  drivers/media/v4l2-core/v4l2-ioctl.c          |  48 +-
+>  drivers/media/v4l2-core/videobuf-dma-sg.c     |  22 +-
+>  drivers/staging/media/atomisp/Makefile        |  12 +-
+>  .../atomisp/pci/atomisp_compat_ioctl32.c      |  84 +-
+>  .../media/atomisp/pci/atomisp_gmin_platform.c |   5 +-
+>  .../atomisp/pci/css_2401_system/host/csi_rx.c |   1 +
+>  .../pci/css_2401_system/host/ibuf_ctrl.c      |   1 +
+>  .../css_2401_system/host/ibuf_ctrl_local.h    |   1 +
+>  .../css_2401_system/host/ibuf_ctrl_private.h  | 268 -----
+>  .../pci/css_2401_system/host/isys_dma.c       |  10 +-
+>  .../pci/css_2401_system/host/isys_dma_local.h |  21 -
+>  .../css_2401_system/host/isys_dma_private.h   |  12 +-
+>  .../pci/css_2401_system/host/isys_irq.c       |   3 +-
+>  .../pci/css_2401_system/host/isys_irq_local.h |   4 +-
+>  .../css_2401_system/host/isys_irq_private.h   |  12 +-
+>  .../css_2401_system/host/pixelgen_private.h   |  73 +-
+>  .../pci/css_2401_system/ibuf_ctrl_global.h    |   6 +-
+>  .../pci/css_2401_system/isys_irq_global.h     |   4 +-
+>  .../pci/css_2401_system/pixelgen_global.h     |   8 +-
+>  .../host/input_formatter.c                    |   2 +-
+>  .../hive_isp_css_common/host/input_system.c   |  70 +-
+>  .../hive_isp_css_include/host/csi_rx_public.h |   4 +-
+>  .../host/ibuf_ctrl_public.h                   |  94 --
+>  .../host/isys_dma_public.h                    |   8 +-
+>  .../host/isys_irq_public.h                    |  29 +-
+>  .../hive_isp_css_include/host/isys_public.h   |   4 +-
+>  .../host/pixelgen_public.h                    |   4 +-
+>  .../pci/hive_isp_css_include/ibuf_ctrl.h      |  47 -
+>  .../pci/hive_isp_css_include/isys_dma.h       |  47 -
+>  .../pci/hive_isp_css_include/isys_irq.h       |  16 +-
+>  drivers/staging/media/atomisp/pci/hmm/hmm.c   |   6 +-
+>  .../staging/media/atomisp/pci/ia_css_mipi.h   |   2 -
+>  .../staging/media/atomisp/pci/ia_css_stream.h |   4 +-
+>  .../media/atomisp/pci/input_system_global.h   |  29 +-
+>  .../kernels/ctc/ctc_1.0/ia_css_ctc_param.h    |   7 -
+>  .../ctc/ctc_1.0/ia_css_ctc_table.host.c       | 145 ---
+>  .../kernels/gc/gc_1.0/ia_css_gc_table.host.c  | 144 ---
+>  .../kernels/gc/gc_2/ia_css_gc2_table.host.c   |  53 -
+>  .../isp/kernels/raw/raw_1.0/ia_css_raw.host.c |   4 +-
+>  .../kernels/xnr/xnr_1.0/ia_css_xnr_param.h    |   7 -
+>  .../xnr/xnr_1.0/ia_css_xnr_table.host.c       |  31 -
+>  .../atomisp/pci/isp2400_input_system_global.h |  21 +-
+>  .../atomisp/pci/isp2400_input_system_local.h  |  17 +-
+>  .../atomisp/pci/isp2400_input_system_public.h |  26 +-
+>  .../media/atomisp/pci/isp2400_system_global.h |  16 -
+>  .../atomisp/pci/isp2401_input_system_global.h |  30 +-
+>  .../atomisp/pci/isp2401_input_system_local.h  |   3 -
+>  .../pci/isp2401_input_system_private.h        | 224 ++++-
+>  .../media/atomisp/pci/isp2401_system_global.h |  19 -
+>  .../atomisp/pci/runtime/binary/src/binary.c   | 919 +++++++++---------
+>  .../runtime/bufq/interface/ia_css_bufq_comm.h |  10 -
+>  .../media/atomisp/pci/runtime/bufq/src/bufq.c |  26 +-
+>  .../runtime/debug/interface/ia_css_debug.h    |   6 -
+>  .../pci/runtime/debug/src/ia_css_debug.c      | 193 +---
+>  .../atomisp/pci/runtime/ifmtr/src/ifmtr.c     |   2 +-
+>  .../pci/runtime/inputfifo/src/inputfifo.c     |  10 -
+>  .../pci/runtime/isys/interface/ia_css_isys.h  |  18 +-
+>  .../runtime/isys/interface/ia_css_isys_comm.h |   4 +-
+>  .../pci/runtime/isys/src/csi_rx_rmgr.c        |   2 +-
+>  .../pci/runtime/isys/src/isys_dma_rmgr.c      |   2 +-
+>  .../atomisp/pci/runtime/isys/src/isys_init.c  |  20 +-
+>  .../runtime/isys/src/isys_stream2mmio_rmgr.c  |   2 +-
+>  .../media/atomisp/pci/runtime/isys/src/rx.c   |  24 +-
+>  .../pci/runtime/isys/src/virtual_isys.c       |  58 +-
+>  .../pipeline/interface/ia_css_pipeline.h      |   2 +-
+>  .../pci/runtime/pipeline/src/pipeline.c       |   4 +-
+>  drivers/staging/media/atomisp/pci/sh_css.c    | 296 ++----
+>  .../staging/media/atomisp/pci/sh_css_defs.h   |   4 -
+>  .../staging/media/atomisp/pci/sh_css_hrt.c    |   4 -
+>  .../media/atomisp/pci/sh_css_internal.h       |  36 +-
+>  .../staging/media/atomisp/pci/sh_css_mipi.c   |  34 +-
+>  .../media/atomisp/pci/sh_css_param_shading.c  |   2 +-
+>  .../staging/media/atomisp/pci/sh_css_params.c | 538 ----------
+>  .../media/atomisp/pci/sh_css_properties.c     |  10 -
+>  drivers/staging/media/atomisp/pci/sh_css_sp.c |  39 +-
+>  drivers/staging/media/atomisp/pci/sh_css_sp.h |   8 +-
+>  .../staging/media/atomisp/pci/sh_css_struct.h |   2 -
+>  .../staging/media/atomisp/pci/system_global.h |  23 -
+>  include/media/videobuf-dma-sg.h               |   2 +-
+>  96 files changed, 1708 insertions(+), 3300 deletions(-)
+>  delete mode 100644 drivers/staging/media/atomisp/pci/css_2401_system/host/ibuf_ctrl_private.h
+>  delete mode 100644 drivers/staging/media/atomisp/pci/css_2401_system/host/isys_dma_local.h
+>  delete mode 100644 drivers/staging/media/atomisp/pci/hive_isp_css_include/host/ibuf_ctrl_public.h
+>  delete mode 100644 drivers/staging/media/atomisp/pci/hive_isp_css_include/ibuf_ctrl.h
+>  delete mode 100644 drivers/staging/media/atomisp/pci/hive_isp_css_include/isys_dma.h
+>  delete mode 100644 drivers/staging/media/atomisp/pci/isp2400_system_global.h
+>  delete mode 100644 drivers/staging/media/atomisp/pci/isp2401_system_global.h
+> 
+
