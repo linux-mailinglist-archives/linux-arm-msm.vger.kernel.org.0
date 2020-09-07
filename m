@@ -2,117 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A295925F4CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 10:17:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58B5925F53A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 10:30:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbgIGIRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 04:17:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42070 "EHLO
+        id S1728130AbgIGIas (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 04:30:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726978AbgIGIRZ (ORCPT
+        with ESMTP id S1726741AbgIGIaq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 04:17:25 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8228C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 01:17:24 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id q9so13481277wmj.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 01:17:24 -0700 (PDT)
+        Mon, 7 Sep 2020 04:30:46 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2730C061573
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 01:30:44 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id t10so14880050wrv.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 01:30:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=e3Ta+K0mK8PpGvlCwRAXKhWKCtC3zo1Ck8yWJNQiAbc=;
-        b=N60YE/qv46tYYNcmpPR8FroUI42HP4mXIwHEKFuWaGPimLjJ9X3TifejU9aqxqqk8B
-         aE2FD/IljOK8O1Py57X18zSa7Q5k211I0qCnq7Urb7sSDcd8kX4aPn6DY1luVHtH4eHD
-         FAw4gW7HXAtpTkTtBGw/V3hgmAypm+uug7M1ttHV6PbBictZ/TGCrnAjHm6QCAKIrnNc
-         YMMVxDv5HKOtnlgM/RUdgkfSEnwOdBR1bOozmHY9Zhu3cpQ+uxZh5/Owv+Im8bBCJs0P
-         CRhUs+rjqD+24Cxv7SEUdOnAcSz9GbvwH0Sz85YrrMl/O21+QjRNM2D9LTm+AfdpDxz/
-         nHxw==
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+        h=references:user-agent:from:to:subject:in-reply-to:date:message-id
+         :mime-version;
+        bh=nxwjXtCfzhbJphkRoaZPGRX8lSLuG3IRQbDMiVfMlTw=;
+        b=hDYe3/X1Fp/nkA8cq5LKQEuabNxEiXDOUvZ6woI5zrDtV/o7pIJt3+dMMm+9HY2TUp
+         cJLd1Ak+4UWRcYyvT80mTkYj6NBmFbmk6wB+qnPxWUc1KaSG9Qn2t56LtE+VGh2qiVzv
+         9JuYo9Vx8HM3XBkFaq+ij9ZViBAHur8hlIbyrkyKrJ7qClw66Dqhb2jwIu0SC9QJzrdf
+         gUGdUHALqoOY+mnDt2IsTPU1QvekYjKaGug1Vdp44Er/RQqCawCgaUylXU1NoaEZKpVP
+         zru4e1SdyZCGOVqvjSWFeF95bi3nh2JfDYBl6ExDbqti5ZIjKFPpjuuV0LG1Bi9HubrM
+         sD+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=e3Ta+K0mK8PpGvlCwRAXKhWKCtC3zo1Ck8yWJNQiAbc=;
-        b=VfjnSxL/NsUvk1xaJb302TZQPR7HxMn8Rz/CUfpySJnM2IGRWyLYrqTtI5IqJjAKXl
-         cvgwK9bbBfnqtlc4v2XqVtyKdvPHo9LfHsPEO29BZqiD8/B1sxaQ1beeyYlB75OuuKhx
-         97QOWSf8+CqYUzndd62Iq6V3cGil+O3EqnpTsEUW2qkpjtgsrAfoPUTHpvyFNHDTLwuA
-         bXKxv4MDuPh0aS/ehEJm9Sh1O+n9ajPHHVCGY1A3zB7Xft/nbofy4FdFl7UIFxJ9Dazx
-         7Rs1GNs5R3LFFV4OQGQMJ9wGr4uSer/WRnvejY0naD9Gxp/lPdx8xPuUJ5tq/04mgy2w
-         WfVw==
-X-Gm-Message-State: AOAM532simSSU2TeuESH7kPmj1Ct1R6VtNLcVy6mXGAllUXjPt+/o361
-        YzyzWcjJ2pXvMS0bWAFjQGzu9w==
-X-Google-Smtp-Source: ABdhPJzqlqQ/xXSxZ0lbww5TZ6AZTnF7NA2XnTh1An/jnwbvuMzqoK0s9KMICLsQ2iJA4xPkNvSEbg==
-X-Received: by 2002:a1c:3bd7:: with SMTP id i206mr19701901wma.162.1599466643283;
-        Mon, 07 Sep 2020 01:17:23 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id u17sm25259954wmm.4.2020.09.07.01.17.21
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Sep 2020 01:17:22 -0700 (PDT)
-Subject: Re: [PATCH v2 0/4] soundwire: qcom: add support for mmio soundwire
- master
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc:     "moderated list:SOUNDWIRE SUBSYSTEM" <alsa-devel@alsa-project.org>,
+        h=x-gm-message-state:references:user-agent:from:to:subject
+         :in-reply-to:date:message-id:mime-version;
+        bh=nxwjXtCfzhbJphkRoaZPGRX8lSLuG3IRQbDMiVfMlTw=;
+        b=jnL4zL2Lhr9Q80++ZgNqQ6vzEFKdiBUiJ00SSIyVxugcUUWBg01McjEnDuSWuWVXey
+         HCO54QZQnOtfkNXJMolWUW8dTQP09mPfebieYH0M5St3+gdGCox1V5TgYE9FJPYhc7PJ
+         Q8pAHuRp+qp8vd7f4QLctyB5ocxehB0YNI5p3VHbthhWFe0rleqkOpx4NBxgk9swTlSY
+         LcV4aIEvye+J2YxSr/lGexawgc8GUpSdGLAC3Dkf1xJtFfgfPFEP59RHgLsEmDujEZUr
+         zgFA8vKtcAnuEeuR9jA4pVcSvopmyn5lMXrXJpqZ9rw1AcNEtPNCq1TIhsl/oUIjKAhn
+         AeZg==
+X-Gm-Message-State: AOAM533WZ1Dkpzilrk9EUNNcoBW1GSdy5R30O5kayzA4VPJy/q7P5Kon
+        Ev+r4sBiubOVV4XM5Lf2yfo0lg==
+X-Google-Smtp-Source: ABdhPJzSdXOEuAZoMyzc+6+YubqhNb8xreJ4au8coroTpf3gvY2rMuV8IzBk2Sy9KwE1J2Tz416CKA==
+X-Received: by 2002:a5d:4591:: with SMTP id p17mr20049982wrq.408.1599467443488;
+        Mon, 07 Sep 2020 01:30:43 -0700 (PDT)
+Received: from localhost (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
+        by smtp.gmail.com with ESMTPSA id q18sm27461214wre.78.2020.09.07.01.30.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Sep 2020 01:30:42 -0700 (PDT)
+References: <20200902150348.14465-1-krzk@kernel.org> <20200902150348.14465-7-krzk@kernel.org>
+User-agent: mu4e 1.3.3; emacs 26.3
+From:   Jerome Brunet <jbrunet@baylibre.com>
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        David Lechner <david@lechnology.com>,
+        Sekhar Nori <nsekhar@ti.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
         Andy Gross <agross@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Vinod Koul <vkoul@kernel.org>
-References: <20200905173905.16541-1-jonathan@marek.ca>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <ec241abf-c1e1-8b2d-a0bb-93a60241330c@linaro.org>
-Date:   Mon, 7 Sep 2020 09:17:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 07/10] clk: meson: Simplify with dev_err_probe()
+In-reply-to: <20200902150348.14465-7-krzk@kernel.org>
+Date:   Mon, 07 Sep 2020 10:30:42 +0200
+Message-ID: <1jsgbuaszx.fsf@starbuckisacylon.baylibre.com>
 MIME-Version: 1.0
-In-Reply-To: <20200905173905.16541-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Wed 02 Sep 2020 at 17:03, Krzysztof Kozlowski <krzk@kernel.org> wrote:
 
-On 05/09/2020 18:39, Jonathan Marek wrote:
-> This adds initial support for soundwire device on sm8250.
-> 
-> Tested with the "wsa" sdw device, which is simpler than the others.
-> 
-> v2 addresses some feedback, but I kept this series as simple as possible.
-> In particular, I didn't implement CMD_NACKED from FIFO_STATUS, because
-> the downstream driver doesn't define this bit, so I can't implement it.
-> Soundwire works without it and It shouldn't be difficult to implement later.
-> 
-> Jonathan Marek (4):
->    soundwire: qcom: fix abh/ahb typo
->    soundwire: qcom: avoid dependency on CONFIG_SLIMBUS
->    soundwire: qcom: add support for mmio soundwire master devices
->    soundwire: qcom: add v1.5.1 compatible
-> 
-Hi Jonathan,
-I have tested these patches on RB5 with WSA8810 and they work fine.
+> Common pattern of handling deferred probe can be simplified with
+> dev_err_probe().  Less code and the error value gets printed.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-I can try to add support to command ignored in future, but for now these 
-look good to me!
+Acked-by: Jerome Brunet <jbrunet@baylibre.com>
 
+> ---
+>  drivers/clk/meson/axg-audio.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/clk/meson/axg-audio.c b/drivers/clk/meson/axg-audio.c
+> index 53715e36326c..dc22b0c45743 100644
+> --- a/drivers/clk/meson/axg-audio.c
+> +++ b/drivers/clk/meson/axg-audio.c
+> @@ -1509,12 +1509,8 @@ static int devm_clk_get_enable(struct device *dev, char *id)
+>  	int ret;
+>  
+>  	clk = devm_clk_get(dev, id);
+> -	if (IS_ERR(clk)) {
+> -		ret = PTR_ERR(clk);
+> -		if (ret != -EPROBE_DEFER)
+> -			dev_err(dev, "failed to get %s", id);
+> -		return ret;
+> -	}
+> +	if (IS_ERR(clk))
+> +		return dev_err_probe(dev, PTR_ERR(clk), "failed to get %s", id);
+>  
+>  	ret = clk_prepare_enable(clk);
+>  	if (ret) {
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-
-Thanks,
-srini
-
->   .../bindings/soundwire/qcom,sdw.txt           |  1 +
->   drivers/soundwire/Kconfig                     |  2 +-
->   drivers/soundwire/qcom.c                      | 38 +++++++++++++++++--
->   3 files changed, 36 insertions(+), 5 deletions(-)
-> 
