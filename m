@@ -2,255 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39B7A25FB00
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 15:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E69225FBA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Sep 2020 15:49:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729377AbgIGNIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 09:08:50 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:41689 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729418AbgIGNIj (ORCPT
+        id S1729427AbgIGNtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Sep 2020 09:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36722 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729693AbgIGNsD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 09:08:39 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 07 Sep 2020 06:08:15 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Sep 2020 06:08:13 -0700
-Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 07 Sep 2020 18:37:35 +0530
-Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
-        id C17E920F7; Mon,  7 Sep 2020 18:37:33 +0530 (IST)
-From:   Roja Rani Yarubandi <rojay@codeaurora.org>
-To:     wsa@kernel.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: [PATCH V3] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-Date:   Mon,  7 Sep 2020 18:37:31 +0530
-Message-Id: <20200907130731.2607-1-rojay@codeaurora.org>
-X-Mailer: git-send-email 2.26.2
+        Mon, 7 Sep 2020 09:48:03 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E396C061573
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Sep 2020 06:48:02 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id k25so8861760qtu.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Sep 2020 06:48:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RpRB6iljb2M31wwzZybgy6AB4+l8J65CnWPoS2cjpPY=;
+        b=Z4pE4+0zsGUqaenaa9Sotx3GjcxpCYEKHj5+k2JcptyuVQQuV4lpcx9TiwEJjrDsuu
+         wFVJKo4XIWj01ZJfOQNxvUYP5rPBkQJZIgIdWkznFKvhYMNihLKn/LHPZ4SgUpAno2fA
+         Uv0HZNF0qpkPRjerw+6nwTPRDLba7k+jViBz+ERSCn5hfvfGMkWsHdmLrEt2nqE+Sb9H
+         vbCHqrrABx3w3RziRDbF2r3dIosDXjRSbR1JdXhb1TOEULn1+kobjk/xXQbYLcyd+yxt
+         3aOjDrbwMv7qkcZEoz8KMnvHyGWS2dVsKwnzAdyoHuZobi0D7ShbOzEyQDI/STgCpSiU
+         yakg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RpRB6iljb2M31wwzZybgy6AB4+l8J65CnWPoS2cjpPY=;
+        b=Xc3aAmAt2Abf80LN6MQzt8Vg2TdVDUhEG0kTSEdo5KoQCWR9y3r1n7LHTL5zqJuN1a
+         Ph1lcWY+53DtWktmkcY7ukOmjY7NWKjw3piOtad9G4JCVB8kSTFqqjJylekbBtyL00to
+         zXUHWPYsu8yTT+zpctkBDO7Wn5rcU8ehucoO/vAKXhJIqGWEB28ClkZdy7Qovqisfiy4
+         fZmrmlvqz+rKSpntLjlYEHogbR0CbaFMSUuJdlEzlYXe3S5ySqarub48C+wf153aHOpf
+         cCVh1seTXEPmMN9TTbVxW2KyJcWvdOK2P/ZmwYZ/x1FPzznN/4wv9SZgyQWK8YeK+5N0
+         HoEw==
+X-Gm-Message-State: AOAM531b5q4wcNJZI4/ZfWzYYD6m55ai27LwMor5vH2uR4KqwGNAJue+
+        19iHQmoLbbEPYPtcTTWTa0hr0Q==
+X-Google-Smtp-Source: ABdhPJyxkTrirT9I13DtZi1g3rHs4BUopE1qzFqaeXf+do879hoQZ6UGYPDN/a/4a8gotkwuRtVB/Q==
+X-Received: by 2002:ac8:1c43:: with SMTP id j3mr20742825qtk.302.1599486481577;
+        Mon, 07 Sep 2020 06:48:01 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id r34sm12164513qtr.18.2020.09.07.06.48.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Sep 2020 06:48:01 -0700 (PDT)
+Subject: Re: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200901003300.11985-1-jonathan@marek.ca>
+ <fa436d55-b986-944f-e90f-b81cb32eeb0e@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <3f1f8ff1-cf23-ae2c-4cff-cdcce0b11e2e@marek.ca>
+Date:   Mon, 7 Sep 2020 09:47:13 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
+In-Reply-To: <fa436d55-b986-944f-e90f-b81cb32eeb0e@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the hardware is still accessing memory after SMMU translation
-is disabled (as part of smmu shutdown callback), then the
-IOVAs (I/O virtual address) which it was using will go on the bus
-as the physical addresses which will result in unknown crashes
-like NoC/interconnect errors.
+On 9/7/20 8:36 AM, Srinivas Kandagatla wrote:
+> 
+> 
+> On 01/09/2020 01:32, Jonathan Marek wrote:
+>> -#define FASTRPC_IOCTL_MMAP              _IOWR('R', 6, struct 
+>> fastrpc_req_mmap)
+>> -#define FASTRPC_IOCTL_MUNMAP            _IOWR('R', 7, struct 
+>> fastrpc_req_munmap)
+>> +#define FASTRPC_IOCTL_MMAP        _IOWR('R', 6, struct fastrpc_req_mmap)
+>> +#define FASTRPC_IOCTL_MUNMAP        _IOWR('R', 7, struct 
+>> fastrpc_req_munmap)
+> 
+> Looks like changes that do not belong to this patch!
+> 
+> I wanted to try this patch on SM8250.
+> How do you test attaching fastrpc to sensor core?, I mean which 
+> userspace lib/tool do you use?
+> 
+> --srini
+> 
 
-So, implement shutdown callback to i2c driver to stop on-going transfer
-and unmap DMA mappings during system "reboot" or "shutdown".
+I pushed my sdsprpcd implementation to github, which is responsible for 
+initializing the sensors, and uses this ioctl:
 
-Store DMA mapping data in geni_i2c_dev struct to enhance DMA mapping
-data scope. For example during shutdown callback to unmap DMA mapping,
-this stored DMA mapping data can be used to call geni_se_tx_dma_unprep
-and geni_se_rx_dma_unprep functions.
+https://github.com/flto/fastrpc
 
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
----
-Changes in V2:
- - As per Stephen's comments added seperate function for stop transfer,
-   fixed minor nitpicks.
- - As per Stephen's comments, changed commit text.
+Note: it uses my own WIP fastrpc "library" instead of the one from 
+linaro, I also have other related code, like a sensor client, and 
+cDSP/aDSP compute examples, but need to confirm that I can share them
 
-Changes in V3:
- - As per Stephen's comments, squashed patch 1 into patch 2, added Fixes tag.
- - As per Akash's comments, included FIFO case in stop_xfer, fixed minor nitpicks.
+Also, the corresponding dts patch I sent has a problem, the label = 
+"dsps"; should be label = "sdsp"; (copied the "dsps" from downstream, 
+but upstream expects "sdsp"), will send a v2 later today.
 
- drivers/i2c/busses/i2c-qcom-geni.c | 70 +++++++++++++++++++++++++++---
- include/linux/qcom-geni-se.h       |  5 +++
- 2 files changed, 69 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index dead5db3315a..b3609760909f 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -86,6 +86,9 @@ struct geni_i2c_dev {
- 	u32 clk_freq_out;
- 	const struct geni_i2c_clk_fld *clk_fld;
- 	int suspended;
-+	dma_addr_t tx_dma;
-+	dma_addr_t rx_dma;
-+	size_t xfer_len;
- };
- 
- struct geni_i2c_err_log {
-@@ -352,12 +355,12 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
- static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 				u32 m_param)
- {
--	dma_addr_t rx_dma;
- 	unsigned long time_left;
- 	void *dma_buf = NULL;
- 	struct geni_se *se = &gi2c->se;
- 	size_t len = msg->len;
- 
-+	gi2c->xfer_len = len;
- 	if (!of_machine_is_compatible("lenovo,yoga-c630"))
- 		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
- 
-@@ -368,7 +371,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 
- 	writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
- 
--	if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
-+	if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &gi2c->rx_dma)) {
- 		geni_se_select_mode(se, GENI_SE_FIFO);
- 		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
- 		dma_buf = NULL;
-@@ -384,7 +387,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	if (dma_buf) {
- 		if (gi2c->err)
- 			geni_i2c_rx_fsm_rst(gi2c);
--		geni_se_rx_dma_unprep(se, rx_dma, len);
-+		geni_se_rx_dma_unprep(se, gi2c->rx_dma, len);
-+		gi2c->rx_dma = (dma_addr_t)NULL;
- 		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
- 	}
- 
-@@ -394,12 +398,12 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 				u32 m_param)
- {
--	dma_addr_t tx_dma;
- 	unsigned long time_left;
- 	void *dma_buf = NULL;
- 	struct geni_se *se = &gi2c->se;
- 	size_t len = msg->len;
- 
-+	gi2c->xfer_len = len;
- 	if (!of_machine_is_compatible("lenovo,yoga-c630"))
- 		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
- 
-@@ -410,7 +414,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 
- 	writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
- 
--	if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
-+	if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &gi2c->tx_dma)) {
- 		geni_se_select_mode(se, GENI_SE_FIFO);
- 		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
- 		dma_buf = NULL;
-@@ -429,7 +433,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	if (dma_buf) {
- 		if (gi2c->err)
- 			geni_i2c_tx_fsm_rst(gi2c);
--		geni_se_tx_dma_unprep(se, tx_dma, len);
-+		geni_se_tx_dma_unprep(se, gi2c->tx_dma, len);
-+		gi2c->tx_dma = (dma_addr_t)NULL;
- 		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
- 	}
- 
-@@ -479,6 +484,51 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 	return ret;
- }
- 
-+static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
-+{
-+	int ret;
-+	u32 dma;
-+	u32 val;
-+	u32 geni_status;
-+	struct geni_se *se = &gi2c->se;
-+
-+	ret = pm_runtime_get_sync(gi2c->se.dev);
-+	if (ret < 0) {
-+		dev_err(gi2c->se.dev, "Failed to resume device: %d\n", ret);
-+		return;
-+	}
-+
-+	geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
-+	if (geni_status & M_GENI_CMD_ACTIVE) {
-+		geni_i2c_abort_xfer(gi2c);
-+		dma = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
-+		if (dma) {
-+			val = readl_relaxed(gi2c->se.base + SE_DMA_DEBUG_REG0);
-+			if (val & DMA_TX_ACTIVE) {
-+				gi2c->cur_wr = 0;
-+				if (gi2c->err)
-+					geni_i2c_tx_fsm_rst(gi2c);
-+				if (gi2c->tx_dma) {
-+					geni_se_tx_dma_unprep(se,
-+						 gi2c->tx_dma, gi2c->xfer_len);
-+					gi2c->tx_dma = (dma_addr_t)NULL;
-+				}
-+			} else if (val & DMA_RX_ACTIVE) {
-+				gi2c->cur_rd = 0;
-+				if (gi2c->err)
-+					geni_i2c_rx_fsm_rst(gi2c);
-+				if (gi2c->rx_dma) {
-+					geni_se_rx_dma_unprep(se,
-+						gi2c->rx_dma, gi2c->xfer_len);
-+					gi2c->rx_dma = (dma_addr_t)NULL;
-+				}
-+			}
-+		}
-+	}
-+
-+	pm_runtime_put_sync_suspend(gi2c->se.dev);
-+}
-+
- static u32 geni_i2c_func(struct i2c_adapter *adap)
- {
- 	return I2C_FUNC_I2C | (I2C_FUNC_SMBUS_EMUL & ~I2C_FUNC_SMBUS_QUICK);
-@@ -630,6 +680,13 @@ static int geni_i2c_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static void geni_i2c_shutdown(struct platform_device *pdev)
-+{
-+	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
-+
-+	geni_i2c_stop_xfer(gi2c);
-+}
-+
- static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- {
- 	int ret;
-@@ -694,6 +751,7 @@ MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
- static struct platform_driver geni_i2c_driver = {
- 	.probe  = geni_i2c_probe,
- 	.remove = geni_i2c_remove,
-+	.shutdown = geni_i2c_shutdown,
- 	.driver = {
- 		.name = "geni_i2c",
- 		.pm = &geni_i2c_pm_ops,
-diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
-index 8f385fbe5a0e..7279d8b3b04c 100644
---- a/include/linux/qcom-geni-se.h
-+++ b/include/linux/qcom-geni-se.h
-@@ -96,6 +96,7 @@ struct geni_se {
- #define SE_DMA_RX_FSM_RST		0xd58
- #define SE_HW_PARAM_0			0xe24
- #define SE_HW_PARAM_1			0xe28
-+#define SE_DMA_DEBUG_REG0		0xe40
- 
- /* GENI_FORCE_DEFAULT_REG fields */
- #define FORCE_DEFAULT	BIT(0)
-@@ -226,6 +227,10 @@ struct geni_se {
- #define RX_GENI_CANCEL_IRQ		BIT(11)
- #define RX_GENI_GP_IRQ_EXT		GENMASK(13, 12)
- 
-+/* SE_DMA_DEBUG_REG0 Register fields */
-+#define DMA_TX_ACTIVE			BIT(0)
-+#define DMA_RX_ACTIVE			BIT(1)
-+
- /* SE_HW_PARAM_0 fields */
- #define TX_FIFO_WIDTH_MSK		GENMASK(29, 24)
- #define TX_FIFO_WIDTH_SHFT		24
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+>> +#define FASTRPC_IOCTL_INIT_ATTACH_SNS    _IO('R', 8)
