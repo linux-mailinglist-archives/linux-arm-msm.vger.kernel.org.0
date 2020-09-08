@@ -2,124 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35BB026120E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 15:36:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CCED261286
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 16:20:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729341AbgIHNg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 09:36:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729700AbgIHLMp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 07:12:45 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D0AEC061796
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 04:12:43 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id m8so4513534pgi.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 04:12:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SB4HWwyn4bEMyk50Az/5LJqEfzNq85tWE+ULvNub66o=;
-        b=QCc21V4RGFZdHlCs8P/JGBESBWGf/qHlsYRngd1C3YHK5KoK7OQm/lnV+12PGiSW3X
-         AkSWCPXmzHmgZfCxXA5OmX2OemXmY0uc5KnhGTqLx9DbnqZWwfpb+3wuqyAbN3zsEhCt
-         oNiUaD8U/61t8r/7eOmgZr/vm/SCEd56nupJb5kIc9rz6/8ZtWRluTYH18Nbq5Pno8+v
-         5uDEbqfzJ7wtVKP3cb0rrqh3+Za4NRfPxSwm/sT4RcIl3rdC+aH/LwKksOpilG7d4amt
-         I0gw5uqOCglSw4UZGgYieTHZ7AFU+wFLCm+2/kAv/BzWo9ayDEGKNx4b6206pA/sZwMd
-         B2EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SB4HWwyn4bEMyk50Az/5LJqEfzNq85tWE+ULvNub66o=;
-        b=Y8lhuLmIgfYX8nskQvvQBScpl2hg+fD9J8kL08Zik2fboVl3bOCRADleSIXIiJg1gT
-         l4V4yadoXOpNwTH2RvXP5ah21AraSthO+HdkHS9oe1d5gRGTQaQbNQ+l1lLUcvudpQRM
-         F7w0JDhIxF49YXG2/C2jXZgxWz+Sku04I2MnR+RJTYy2ZUm/ZGNOgL1B6m1E7wvrkoR5
-         t9Z/NsxNaMtJ6uLqnoFqvItf5iuEutt2hh8jt6B6AxoERIRtcQOTwJrMIX1O7TZW2OMq
-         l+0+tbxMqm6ZIM9GVfX4t8EHIcyBhnbqfST7jfI2BhxxwaX3VK6PBabk4cP35zkCFpp3
-         5F7Q==
-X-Gm-Message-State: AOAM53316hsepDgrQH0w+dr+wbXdPZfuENO0tYH5pUeEM7XSGuFd8eby
-        pGsrg2Fke86UOWieWXN3JkIZ
-X-Google-Smtp-Source: ABdhPJwxZc56N6HdT085RcBdz8AaKL3gzAbetUnDz3ziVZ3GFusju8sGUxiVP/2hMaRkuqODP3g1BQ==
-X-Received: by 2002:a05:6a00:15c1:b029:13e:d13d:a0ff with SMTP id o1-20020a056a0015c1b029013ed13da0ffmr617086pfu.27.1599563562549;
-        Tue, 08 Sep 2020 04:12:42 -0700 (PDT)
-Received: from mani ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id i1sm18258748pfk.21.2020.09.08.04.12.39
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Sep 2020 04:12:41 -0700 (PDT)
-Date:   Tue, 8 Sep 2020 16:42:34 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     rjw@rjwysocki.net, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, amitk@kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, tdas@codeaurora.org
-Subject: Re: [PATCH 7/7] cpufreq: qcom-hw: Use
- devm_platform_ioremap_resource() to simplify code
-Message-ID: <20200908111234.GC23095@mani>
+        id S1729275AbgIHOTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 10:19:02 -0400
+Received: from foss.arm.com ([217.140.110.172]:54056 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730061AbgIHOSi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Sep 2020 10:18:38 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4CA921682;
+        Tue,  8 Sep 2020 07:09:03 -0700 (PDT)
+Received: from bogus (unknown [10.57.10.112])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4059F3F73C;
+        Tue,  8 Sep 2020 07:09:01 -0700 (PDT)
+Date:   Tue, 8 Sep 2020 15:08:51 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Amit Kucheria <amitk@kernel.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH 5/7] cpufreq: qcom-hw: Use regmap for accessing hardware
+ registers
+Message-ID: <20200908140842.GA17621@bogus>
 References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
- <20200908075716.30357-8-manivannan.sadhasivam@linaro.org>
- <20200908103625.swla4uoxxb3hj2w2@vireshk-i7>
+ <20200908075716.30357-6-manivannan.sadhasivam@linaro.org>
+ <20200908103444.5e526uawa45om6lt@vireshk-i7>
+ <20200908111141.GB23095@mani>
+ <20200908111813.bbgfxo5v7qt6ujpc@vireshk-i7>
+ <CAHLCerMndYeEBOxtj8mV7OdOP9pufx+C7n1F9m+CFAneuh8DnA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200908103625.swla4uoxxb3hj2w2@vireshk-i7>
+In-Reply-To: <CAHLCerMndYeEBOxtj8mV7OdOP9pufx+C7n1F9m+CFAneuh8DnA@mail.gmail.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 0908, Viresh Kumar wrote:
-> On 08-09-20, 13:27, Manivannan Sadhasivam wrote:
-> > devm_platform_ioremap_resource() is the combination of
-> > platform_get_resource() and devm_ioremap_resource(). Hence, use it to
-> > simplify the code a bit.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/cpufreq/qcom-cpufreq-hw.c | 11 +++--------
-> >  1 file changed, 3 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > index c3c397cc3dc6..6eeeb2bd4dfa 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > @@ -307,7 +307,6 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
-> >  	struct of_phandle_args args;
-> >  	struct device_node *cpu_np;
-> >  	struct device *cpu_dev;
-> > -	struct resource *res;
-> >  	void __iomem *base;
-> >  	struct qcom_cpufreq_data *data;
-> >  	const struct of_device_id *match;
-> > @@ -333,13 +332,9 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
-> >  
-> >  	index = args.args[0];
-> >  
-> > -	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
-> > -	if (!res)
-> > -		return -ENODEV;
-> > -
-> > -	base = devm_ioremap(dev, res->start, resource_size(res));
-> > -	if (!base)
-> > -		return -ENOMEM;
-> > +	base = devm_platform_ioremap_resource(pdev, index);
-> > +	if (IS_ERR(base))
-> > +		return PTR_ERR(base);
-> >  
-> >  	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> >  	if (!data) {
+On Tue, Sep 08, 2020 at 05:18:35PM +0530, Amit Kucheria wrote:
+> On Tue, Sep 8, 2020 at 4:48 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> >
+> > On 08-09-20, 16:41, Manivannan Sadhasivam wrote:
+> > > On 0908, Viresh Kumar wrote:
+> > > > On 08-09-20, 13:27, Manivannan Sadhasivam wrote:
+> > > > > Use regmap for accessing cpufreq registers in hardware.
+> > > >
+> > > > Why ? Please mention why a change is required in the log.
+> > > >
+> > >
+> > > Only because it is recommended to use regmap for abstracting the hw access.
+> >
+> > Yes it can be very useful in abstracting the hw access in case of
+> > busses like SPI/I2C, others, but in this case there is only one way of
+> > doing it with the exact same registers. I am not sure it is worth it
+> > here. FWIW, I have never played with regmaps personally, and so every
+> > chance I can be wrong here.
 > 
-> Keep such patches at the top, so they could be independently applied.
+> One could handle the reg offsets through a struct initialisation, but
+> then you end up with lots of #defines for bitmasks and bits for each
+> version of the IP. And the core code becomes a bit convoluted IMO,
+> trying to handle the differences.
 > 
+> regmap hides the differences of the bit positions and register offsets
+> between several IP versions.
+> 
+> > > Moreover it handles the proper locking for us in the core (spinlock vs mutex).
+> >
+> > What locking do you need here ?
+> 
+> Right, locking isn't the main reason here.
 
-Okay.
+If that is the case, IMO it is better to set disable_lock or something
+in config especially as this regmap_write is used in qcom_cpufreq_hw_fast_switch
 
-Thanks,
-Mani
-
-> -- 
-> viresh
+-- 
+Regards,
+Sudeep
