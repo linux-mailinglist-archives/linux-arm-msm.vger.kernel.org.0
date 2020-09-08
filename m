@@ -2,287 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF19F26203E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 22:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9DD8262126
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 22:32:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730879AbgIHULE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 16:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38274 "EHLO
+        id S1729622AbgIHUb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 16:31:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730225AbgIHULD (ORCPT
+        with ESMTP id S1728936AbgIHUby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 16:11:03 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0FDC061573;
-        Tue,  8 Sep 2020 13:11:02 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id e11so354047wme.0;
-        Tue, 08 Sep 2020 13:11:02 -0700 (PDT)
+        Tue, 8 Sep 2020 16:31:54 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BE3C061756
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 13:31:53 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id f18so110820pfa.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 13:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yzHMC2S9hw3LivUK+L9xHHI0BFCPx/rS6YcunGqWP+Q=;
-        b=AsuLnoHid63keqb3a3aAiVm40YhHvd24VUZswDdiiAfMYTidoHne/V2fdoapvvIgtt
-         zPREkN98Jc4XFhA9nvH3Wffp1ZhAySVVBUskS8NPIHh+qKpPPL1KuOhuJ6Y1qh2t6S87
-         g+S/rFxDzTlE/ZLz5SZ5Swzj+5EivrHWE191c39OE1DWN739YU7XduuwyHRVuPS9iyak
-         QErFakO41kP+GsHOy5R8XCGx6Y7x3HHptma0RqeAo9Avgl7sH6sUWLWMkAa2hIzGUT2z
-         zV1f2jsoKmb4vTBiNlTQtdIO1lwY4WMk9PaWC3nbm/HXCQftiwMh4bMoiLDU1d/iEv4Q
-         Lalg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GinH/+WlUUwJ7OA+sMknkcAQqYifytKaKvguzz2CVE8=;
+        b=l21Kp+H0v8uAYf7toyEqNp3Cy4s11aUKhZNJtNGZTVsWzEe+4XQnEK6SNIaJHitQmE
+         gu0LHt6kxnMPygob8IiXd9ep45Ga6YVhpp9KCxHz+aHqmSm9f2FmAGW0zjo7cscXts8Q
+         ngeAx0qvGqsdpZhohbQBiqI0ba9dNBOtJO8tY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yzHMC2S9hw3LivUK+L9xHHI0BFCPx/rS6YcunGqWP+Q=;
-        b=SKukoDG12rF0LclSrbp6iIAllJCxyx0Fl3l1I6WNXbfJHRFLFJqYWGlt7OJd7Zt6J6
-         NELVcdyI1X1dWxh2h5EbkMX9PEiie0M3X44BXmtX/+NZLoBIn68amxosjhiM70mlZHjp
-         TDCKhEil9Odls0YJJTDpsSFApnJWH+FlKb88zPT3WF36v7e6wKgGWYr+tXvHbpkyn359
-         EVvNUZIeHuU6FePGeSBtJw5o3iIGLHdPwlOGhQ57l9ym817w9dU4LbOJCKDasbLmmZRW
-         4ETHiHBK8MZWhJlLe6RNoJKyp0wd8pMNpilGGiXcz4z2sP9gMdoQBYgSgYaDOdnSSG+S
-         Kz2w==
-X-Gm-Message-State: AOAM530NPjQxNMxM1NpIBvNiNH1+CyvQyYfabymZCPUgVZryMaNxhs3F
-        VKBB37wMKmWX7aG2LY3DtxDYyOsle2fC27Wf808=
-X-Google-Smtp-Source: ABdhPJyS31lmD0DlhCHYxY2dbCD2oBLGMebc9qboBKCALDZlzN9qcXDpegy/Dq/ciwr/yp7T7nYsBF6XxhchLVOVS7Q=
-X-Received: by 2002:a1c:105:: with SMTP id 5mr87698wmb.175.1599595860788; Tue,
- 08 Sep 2020 13:11:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GinH/+WlUUwJ7OA+sMknkcAQqYifytKaKvguzz2CVE8=;
+        b=AwcBJUT7PqQvHNEVARhSsx6cDskQl8NhTlDcaWetWSZ53z5scZ6V3CPYukql5dJIve
+         c8JTYqz5uXh+79FUWbMhcKYLjb+x2Y0Dl0qATM4s6FZGKuNBp7VgCqbfADeW2FRUvCzc
+         ZU4YmB6T+gmMxOJhVpwj8VKcZrQX6qhkGCifgRLqs+if0jv+4MvO64Qp4phWX27LosAC
+         41iXJW7sNDqK/s8wxqs2wPhAAIV7JuGPtfqXvnPv8iOMc799mLsLAnBmQnVK2mpWjMmi
+         icpCmdgww1QequwIyIY0RhnTRJavIWVI7kXwSHTB8zClGTumpohqr0JQ0KVpXQqIg0lH
+         2msQ==
+X-Gm-Message-State: AOAM5303YQ7EHNY1WUIPCj8WjCclgO9LDQUBIKOKCDSQkZoeED8+sJ3R
+        DnkDIm3tNSIWVhPiio6vWvsiAg==
+X-Google-Smtp-Source: ABdhPJxR1cfQbHMi4YHouw7fFkCUEVsDqRPvLhAz8c9yVtVO2T5nIYTRtwU1uGRh8JQFx6b5KMCvSg==
+X-Received: by 2002:a17:902:d206:b029:d0:cbe1:e711 with SMTP id t6-20020a170902d206b02900d0cbe1e711mr793068ply.31.1599597113155;
+        Tue, 08 Sep 2020 13:31:53 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id y7sm113620pjn.54.2020.09.08.13.31.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2020 13:31:52 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mka@chromium.org, swboyd@chromium.org,
+        Philip Chen <philipchen@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: Add sc7180-lazor sku2
+Date:   Tue,  8 Sep 2020 13:31:17 -0700
+Message-Id: <20200908133037.1.Ia98a6b938453254e360c4a9fa253d2d6807dff3f@changeid>
+X-Mailer: git-send-email 2.28.0.526.ge36021eeef-goog
 MIME-Version: 1.0
-References: <20200907170450.370122-1-robdclark@gmail.com> <20200907170450.370122-2-robdclark@gmail.com>
- <010101746f3f7667-5ee2e9e4-9b10-41e0-8bbc-65219583cb86-000000@us-west-2.amazonses.com>
-In-Reply-To: <010101746f3f7667-5ee2e9e4-9b10-41e0-8bbc-65219583cb86-000000@us-west-2.amazonses.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 8 Sep 2020 13:11:56 -0700
-Message-ID: <CAF6AEGsETZxbPEneBycbNBjGD7_OU7V=T8J0TByC_ZTv40q-Og@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm/dpu: clean up some impossibilities
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Hongbo Yao <yaohongbo@huawei.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 8, 2020 at 12:44 PM <abhinavk@codeaurora.org> wrote:
->
-> On 2020-09-07 10:04, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 81 ++++--------------------
-> >  1 file changed, 12 insertions(+), 69 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > index 89c0245b5de5..ad49b0e17fcb 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > @@ -265,11 +265,6 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct
-> > drm_crtc *crtc)
-> >  {
-> >       struct drm_encoder *encoder;
-> >
-> > -     if (!crtc) {
-> > -             DPU_ERROR("invalid crtc\n");
-> > -             return INTF_MODE_NONE;
-> > -     }
-> > -
-> >       /*
-> >        * TODO: This function is called from dpu debugfs and as part of
-> > atomic
-> >        * check. When called from debugfs, the crtc->mutex must be held to
-> > @@ -500,12 +495,6 @@ static void dpu_crtc_atomic_begin(struct drm_crtc
-> > *crtc,
-> >       struct dpu_crtc_state *cstate;
-> >       struct drm_encoder *encoder;
-> >       struct drm_device *dev;
-> > -     unsigned long flags;
-> > -
-> > -     if (!crtc) {
-> > -             DPU_ERROR("invalid crtc\n");
-> > -             return;
-> > -     }
-> >
-> >       if (!crtc->state->enable) {
-> >               DPU_DEBUG("crtc%d -> enable %d, skip atomic_begin\n",
-> > @@ -521,15 +510,6 @@ static void dpu_crtc_atomic_begin(struct drm_crtc
-> > *crtc,
-> >
-> >       _dpu_crtc_setup_lm_bounds(crtc, crtc->state);
-> >
-> > -     if (dpu_crtc->event) {
-> > -             WARN_ON(dpu_crtc->event);
-> > -     } else {
-> > -             spin_lock_irqsave(&dev->event_lock, flags);
-> > -             dpu_crtc->event = crtc->state->event;
-> > -             crtc->state->event = NULL;
-> > -             spin_unlock_irqrestore(&dev->event_lock, flags);
-> > -     }
-> > -
-> >       /* encoder will trigger pending mask now */
-> >       drm_for_each_encoder_mask(encoder, crtc->dev,
-> > crtc->state->encoder_mask)
-> >               dpu_encoder_trigger_kickoff_pending(encoder);
-> > @@ -583,14 +563,11 @@ static void dpu_crtc_atomic_flush(struct drm_crtc
-> > *crtc,
-> >               return;
-> >       }
-> >
-> > -     if (dpu_crtc->event) {
-> > -             DPU_DEBUG("already received dpu_crtc->event\n");
-> > -     } else {
-> > -             spin_lock_irqsave(&dev->event_lock, flags);
-> > -             dpu_crtc->event = crtc->state->event;
-> > -             crtc->state->event = NULL;
-> > -             spin_unlock_irqrestore(&dev->event_lock, flags);
-> > -     }
-> > +     WARN_ON(dpu_crtc->event);
-> before the patch "move vblank events to complete_commit()", the dpu_crtc
-> events
-> were consumed in the _dpu_crtc_complete_flip(). So there was a chance
-> that if the vblank event
-> did not come in time before the next commit, dpu_crtc->event will not be
-> consumed.
->
-> But after the patch, _dpu_crtc_complete_flip() is being signaled in
-> dpu_crtc_complete_commit()
-> which will always happen, so is there any case where we will hit this
-> warning at all or will this
-> catch some other condition?
+Add a new SKU variant.  This is a pick from the downstream tree that
+is the current source of truth for this platform.
 
-The core drm-atomic bits will reject an incoming atomic update if the
-previous one has not completed, so other than a coding bug, this
-WARN_ON() should not be hit..  it's only purpose is to make it very
-obvious if someone breaks something :-)
+Link: https://crrev.com/c/2386997
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-BR,
--R
+ arch/arm64/boot/dts/qcom/Makefile               |  1 +
+ .../dts/qcom/sc7180-trogdor-lazor-r1-kb.dts     | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
 
->
-> > +     spin_lock_irqsave(&dev->event_lock, flags);
-> > +     dpu_crtc->event = crtc->state->event;
-> > +     crtc->state->event = NULL;
-> > +     spin_unlock_irqrestore(&dev->event_lock, flags);
-> >
-> >       /*
-> >        * If no mixers has been allocated in dpu_crtc_atomic_check(),
-> > @@ -635,14 +612,7 @@ static void dpu_crtc_atomic_flush(struct drm_crtc
-> > *crtc,
-> >  static void dpu_crtc_destroy_state(struct drm_crtc *crtc,
-> >               struct drm_crtc_state *state)
-> >  {
-> > -     struct dpu_crtc_state *cstate;
-> > -
-> > -     if (!crtc || !state) {
-> > -             DPU_ERROR("invalid argument(s)\n");
-> > -             return;
-> > -     }
-> > -
-> > -     cstate = to_dpu_crtc_state(state);
-> > +     struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
-> >
-> >       DPU_DEBUG("crtc%d\n", crtc->base.id);
-> >
-> > @@ -731,14 +701,8 @@ static void dpu_crtc_reset(struct drm_crtc *crtc)
-> >   */
-> >  static struct drm_crtc_state *dpu_crtc_duplicate_state(struct drm_crtc
-> > *crtc)
-> >  {
-> > -     struct dpu_crtc_state *cstate, *old_cstate;
-> > -
-> > -     if (!crtc || !crtc->state) {
-> > -             DPU_ERROR("invalid argument(s)\n");
-> > -             return NULL;
-> > -     }
-> > +     struct dpu_crtc_state *cstate, *old_cstate =
-> > to_dpu_crtc_state(crtc->state);
-> >
-> > -     old_cstate = to_dpu_crtc_state(crtc->state);
-> >       cstate = kmemdup(old_cstate, sizeof(*old_cstate), GFP_KERNEL);
-> >       if (!cstate) {
-> >               DPU_ERROR("failed to allocate state\n");
-> > @@ -754,19 +718,12 @@ static struct drm_crtc_state
-> > *dpu_crtc_duplicate_state(struct drm_crtc *crtc)
-> >  static void dpu_crtc_disable(struct drm_crtc *crtc,
-> >                            struct drm_crtc_state *old_crtc_state)
-> >  {
-> > -     struct dpu_crtc *dpu_crtc;
-> > -     struct dpu_crtc_state *cstate;
-> > +     struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> > +     struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
-> >       struct drm_encoder *encoder;
-> >       unsigned long flags;
-> >       bool release_bandwidth = false;
-> >
-> > -     if (!crtc || !crtc->state) {
-> > -             DPU_ERROR("invalid crtc\n");
-> > -             return;
-> > -     }
-> > -     dpu_crtc = to_dpu_crtc(crtc);
-> > -     cstate = to_dpu_crtc_state(crtc->state);
-> > -
-> >       DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
-> >
-> >       /* Disable/save vblank irq handling */
-> > @@ -825,19 +782,13 @@ static void dpu_crtc_disable(struct drm_crtc
-> > *crtc,
-> >  static void dpu_crtc_enable(struct drm_crtc *crtc,
-> >               struct drm_crtc_state *old_crtc_state)
-> >  {
-> > -     struct dpu_crtc *dpu_crtc;
-> > +     struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> >       struct drm_encoder *encoder;
-> >       bool request_bandwidth = false;
-> >
-> > -     if (!crtc) {
-> > -             DPU_ERROR("invalid crtc\n");
-> > -             return;
-> > -     }
-> > -
-> >       pm_runtime_get_sync(crtc->dev->dev);
-> >
-> >       DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
-> > -     dpu_crtc = to_dpu_crtc(crtc);
-> >
-> >       drm_for_each_encoder_mask(encoder, crtc->dev,
-> > crtc->state->encoder_mask) {
-> >               /* in video mode, we hold an extra bandwidth reference
-> > @@ -873,9 +824,9 @@ struct plane_state {
-> >  static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
-> >               struct drm_crtc_state *state)
-> >  {
-> > -     struct dpu_crtc *dpu_crtc;
-> > +     struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> > +     struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
-> >       struct plane_state *pstates;
-> > -     struct dpu_crtc_state *cstate;
-> >
-> >       const struct drm_plane_state *pstate;
-> >       struct drm_plane *plane;
-> > @@ -889,16 +840,8 @@ static int dpu_crtc_atomic_check(struct drm_crtc
-> > *crtc,
-> >       int left_zpos_cnt = 0, right_zpos_cnt = 0;
-> >       struct drm_rect crtc_rect = { 0 };
-> >
-> > -     if (!crtc) {
-> > -             DPU_ERROR("invalid crtc\n");
-> > -             return -EINVAL;
-> > -     }
-> > -
-> >       pstates = kzalloc(sizeof(*pstates) * DPU_STAGE_MAX * 4, GFP_KERNEL);
-> >
-> > -     dpu_crtc = to_dpu_crtc(crtc);
-> > -     cstate = to_dpu_crtc_state(state);
-> > -
-> >       if (!state->enable || !state->active) {
-> >               DPU_DEBUG("crtc%d -> enable %d, active %d, skip atomic_check\n",
-> >                               crtc->base.id, state->enable, state->active);
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 5899101526a7..af5ff84889cb 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-lte.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
+new file mode 100644
+index 000000000000..c3f426c3c30a
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
+@@ -0,0 +1,17 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2020 Google LLC.
++ */
++
++#include "sc7180-trogdor-lazor-r1.dts"
++
++/ {
++	model = "Google Lazor (rev1+) with KB Backlight";
++	compatible = "google,lazor-sku2", "qcom,sc7180";
++};
++
++&keyboard_backlight {
++	status = "okay";
++};
+-- 
+2.28.0.526.ge36021eeef-goog
+
