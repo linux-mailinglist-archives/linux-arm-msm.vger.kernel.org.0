@@ -2,190 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1478260A2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 07:36:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 641B2260A4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 07:49:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725903AbgIHFgx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 01:36:53 -0400
-Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:51030
-        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725938AbgIHFgs (ORCPT
+        id S1728726AbgIHFtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 01:49:11 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:43726 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728680AbgIHFtL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 01:36:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599543408;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
-        bh=A6Xgkj5tRedzTXTr+PtsbaW7vc2IQ8D/TM5K5CiUam8=;
-        b=H0qo4CTAFkMqIGb9LTC/pCsSRulBD+w2P7tWhj7CIZNcbgyUPHZfEZLEzXUfHE0n
-        eC2R9vVBjkPvqU02uzUS9yo7Z19dmRDYPEtp2/bKRSBPR5AqVGGHH5UAtPovGlLygyV
-        t1OGnGOnlXFoPuB/qU8VDSlLkagUrr03939U6/Nc=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599543408;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
-        bh=A6Xgkj5tRedzTXTr+PtsbaW7vc2IQ8D/TM5K5CiUam8=;
-        b=F/OdUYS3Ud0fdErUdlPHkGDonjS7xnP2clsvhX2Bapr3gzRLywehebszY4GScDCn
-        NdtP6bdyHHsQCmJ9kSWKaFIlr5yFcPa1eqNfbEgY6SL/uyIv8uSY6nzY2LHHcPNHtah
-        Tjg7mniT2VVq87mNEuUS2jPW6s6OHaWRNxb6DbIE=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 44C81C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv3] soc: qcom: llcc: Support chipsets that can write to llcc registers
-Date:   Tue, 8 Sep 2020 05:36:48 +0000
-Message-ID: <010101746c377537-ce93e925-598b-4dce-bb16-4cda020f4d6f-000000@us-west-2.amazonses.com>
-X-Mailer: git-send-email 2.27.0
+        Tue, 8 Sep 2020 01:49:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1599544149;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=eQK1NPwmSWOx8INcFCnwK3inQ46y12Ng6QHkYnvGe3I=;
+        b=K5jnIZcbgBCswBM5Fdd5FtrMiMEg/VerD9ZD4DWMNYqA5ejn5jeY/+wDJDUuE0oajH2aq8
+        NHfGwkMvaFAKXnlbkHdtIezAkuC+wRarmFLqGdDMIMOjVEKJVGGiOIll/IZ/NUGakIqaxw
+        qj3v/eVSBuD20qhE4LCraDX2Mx/VYSo=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-45-r-VulFGYMA-fjnnBfjljEg-1; Tue, 08 Sep 2020 01:49:07 -0400
+X-MC-Unique: r-VulFGYMA-fjnnBfjljEg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.15])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id E448D425D1;
+        Tue,  8 Sep 2020 05:49:02 +0000 (UTC)
+Received: from sirius.home.kraxel.org (ovpn-112-56.ams2.redhat.com [10.36.112.56])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 2C936811BE;
+        Tue,  8 Sep 2020 05:48:58 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+        id 0FDF617538; Tue,  8 Sep 2020 07:48:58 +0200 (CEST)
+Date:   Tue, 8 Sep 2020 07:48:58 +0200
+From:   Gerd Hoffmann <kraxel@redhat.com>
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR VIVANTE GPU IP" 
+        <etnaviv@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
+        <nouveau@lists.freedesktop.org>,
+        "moderated list:ARM/Rockchip SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/Rockchip SoC support" 
+        <linux-rockchip@lists.infradead.org>,
+        "open list:DRM DRIVERS FOR NVIDIA TEGRA" 
+        <linux-tegra@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR XEN" <xen-devel@lists.xenproject.org>
+Subject: Re: [PATCH v4 1/1] drm: allow limiting the scatter list size.
+Message-ID: <20200908054858.um34wojjv6uhi7d3@sirius.home.kraxel.org>
+References: <20200907112425.15610-1-kraxel@redhat.com>
+ <20200907112425.15610-2-kraxel@redhat.com>
+ <CAKMK7uGjT73rh=9iuCKAXvC_CaOuygm8PgOQgofkTgH7wRysFw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SES-Outgoing: 2020.09.08-54.240.27.10
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKMK7uGjT73rh=9iuCKAXvC_CaOuygm8PgOQgofkTgH7wRysFw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
+On Mon, Sep 07, 2020 at 03:53:02PM +0200, Daniel Vetter wrote:
+> On Mon, Sep 7, 2020 at 1:24 PM Gerd Hoffmann <kraxel@redhat.com> wrote:
+> >
+> > Add drm_device argument to drm_prime_pages_to_sg(), so we can
+> > call dma_max_mapping_size() to figure the segment size limit
+> > and call into __sg_alloc_table_from_pages() with the correct
+> > limit.
+> >
+> > This fixes virtio-gpu with sev.  Possibly it'll fix other bugs
+> > too given that drm seems to totaly ignore segment size limits
+> > so far ...
+> >
+> > v2: place max_segment in drm driver not gem object.
+> > v3: move max_segment next to the other gem fields.
+> > v4: just use dma_max_mapping_size().
+> >
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> 
+> Uh, are you sure this works in all cases for virtio?
 
-Older chipsets may not be allowed to configure certain LLCC registers
-as that is handled by the secure side software. However, this is not
-the case for newer chipsets and they must configure these registers
-according to the contents of the SCT table, while keeping in mind that
-older targets may not have these capabilities. So add support to allow
-such configuration of registers to enable capacity based allocation
-and power collapse retention for capable chipsets.
+Sure, I've tested it ;)
 
-Reason for choosing capacity based allocation rather than the default
-way based allocation is because capacity based allocation allows more
-finer grain partition and provides more flexibility in configuration.
-As for the retention through power collapse, it has an advantage where
-the cache hits are more when we wake up from power collapse although
-it does burn more power but the exact power numbers are not known at
-the moment.
+> The comments I've found suggest very much not ... Or is that all very
+> old stuff only that no one cares about anymore?
 
-Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
-(sai: use existing config instead of dt property and commit msg change)
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
+I think these days it is possible to override dma_ops per device, which
+in turn allows virtio to deal with the quirks without the rest of the
+kernel knowing about these details.
 
-Changes in v3:
- * Drop separate table and use existing qcom_llcc_config (Doug)
- * More descriptive commit msg (Doug)
- * Directly set the config instead of '|=' (Doug)
+I also think virtio-gpu can drop the virtio_has_dma_quirk() checks, just
+use the dma api path unconditionally and depend on virtio core having
+setup dma_ops in a way that it JustWorks[tm].  I'll look into that next.
 
-Changes in v2:
- * Fix build errors reported by kernel test robot.
-
----
- drivers/soc/qcom/llcc-qcom.c       | 23 +++++++++++++++++++++++
- include/linux/soc/qcom/llcc-qcom.h |  2 ++
- 2 files changed, 25 insertions(+)
-
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 429b5a60a1ba..b908656ce519 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -45,6 +45,9 @@
- #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
- #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
- 
-+#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21F00
-+#define LLCC_TRP_PCB_ACT              0x21F04
-+
- #define BANK_OFFSET_STRIDE	      0x80000
- 
- /**
-@@ -89,6 +92,7 @@ struct llcc_slice_config {
- struct qcom_llcc_config {
- 	const struct llcc_slice_config *sct_data;
- 	int size;
-+	bool need_llcc_cfg;
- };
- 
- static const struct llcc_slice_config sc7180_data[] =  {
-@@ -122,11 +126,13 @@ static const struct llcc_slice_config sdm845_data[] =  {
- static const struct qcom_llcc_config sc7180_cfg = {
- 	.sct_data	= sc7180_data,
- 	.size		= ARRAY_SIZE(sc7180_data),
-+	.need_llcc_cfg	= true,
- };
- 
- static const struct qcom_llcc_config sdm845_cfg = {
- 	.sct_data	= sdm845_data,
- 	.size		= ARRAY_SIZE(sdm845_data),
-+	.need_llcc_cfg	= false,
- };
- 
- static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-@@ -327,6 +333,7 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
- 	u32 attr0_val;
- 	u32 max_cap_cacheline;
- 	u32 sz;
-+	u32 disable_cap_alloc, retain_pc;
- 	int ret = 0;
- 	const struct llcc_slice_config *llcc_table;
- 	struct llcc_slice_desc desc;
-@@ -369,6 +376,21 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
- 					attr0_val);
- 		if (ret)
- 			return ret;
-+
-+		if (drv_data->need_llcc_config) {
-+			disable_cap_alloc = llcc_table[i].dis_cap_alloc << llcc_table[i].slice_id;
-+			ret = regmap_write(drv_data->bcast_regmap,
-+						LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
-+			if (ret)
-+				return ret;
-+
-+			retain_pc = llcc_table[i].retain_on_pc << llcc_table[i].slice_id;
-+			ret = regmap_write(drv_data->bcast_regmap,
-+						LLCC_TRP_PCB_ACT, retain_pc);
-+			if (ret)
-+				return ret;
-+		}
-+
- 		if (llcc_table[i].activate_on_init) {
- 			desc.slice_id = llcc_table[i].slice_id;
- 			ret = llcc_slice_activate(&desc);
-@@ -474,6 +496,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 
- 	drv_data->cfg = llcc_cfg;
- 	drv_data->cfg_size = sz;
-+	drv_data->need_llcc_config = cfg->need_llcc_cfg;
- 	mutex_init(&drv_data->lock);
- 	platform_set_drvdata(pdev, drv_data);
- 
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 90b864655822..52c780085f61 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -73,6 +73,7 @@ struct llcc_edac_reg_data {
-  * @bitmap: Bit map to track the active slice ids
-  * @offsets: Pointer to the bank offsets array
-  * @ecc_irq: interrupt for llcc cache error detection and reporting
-+ * @need_llcc_config: check if llcc configuration is required
-  */
- struct llcc_drv_data {
- 	struct regmap *regmap;
-@@ -85,6 +86,7 @@ struct llcc_drv_data {
- 	unsigned long *bitmap;
- 	u32 *offsets;
- 	int ecc_irq;
-+	bool need_llcc_config;
- };
- 
- #if IS_ENABLED(CONFIG_QCOM_LLCC)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+take care,
+  Gerd
 
