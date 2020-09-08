@@ -2,96 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D635B2610FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 13:53:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFD5C2611B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 15:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730082AbgIHLwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 07:52:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33016 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729275AbgIHLtt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 07:49:49 -0400
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 8AC1F21D20
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 11:48:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599565727;
-        bh=fpBhZdcFA2nT+LOHlmWJkzA7pUhfRv3Z0z4/r76r8sE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=GxvyckKncdsWAYWdYCyBqzngQ5pJQGCl289UYedohvd+GwMQt9XRY5BeOXHIuWsDV
-         Prg27ExRq9IgNFodmQtcOzZz/0NykeGclT7Ygs5XYJXiGKgVP/33bvTHF0xKyPsn+K
-         TNGsFQ/mF6M8nnw049ryQE3R6u88pLzaBybumWpA=
-Received: by mail-ua1-f48.google.com with SMTP id v20so4962877ual.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 04:48:47 -0700 (PDT)
-X-Gm-Message-State: AOAM533UIqrbVqmLuq8814yxQXh4PTlMOiQd82YIPT+3BBdNSbwwBFM0
-        czEkZ8nfjDh5dGNevyCL9BRbPdXqfbyoPhadi95Rsg==
-X-Google-Smtp-Source: ABdhPJx0wlUX+AQkSiu88mLr5YZA/jqNUjgJG4PaAMfX+zdUKEsVE128TkEJSrqRWaIZi+Bjj2vKcKUmDpZ88sxxaao=
-X-Received: by 2002:ab0:384a:: with SMTP id h10mr5000472uaw.77.1599565726623;
- Tue, 08 Sep 2020 04:48:46 -0700 (PDT)
+        id S1729717AbgIHM56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 08:57:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729954AbgIHLiX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Sep 2020 07:38:23 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82CCC061795
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 04:37:16 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id a17so18721157wrn.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 04:37:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=I/sh0hf7RWpKTkHRG2sXo6X29i3mK1fyatkLVFjwPyY=;
+        b=TRI4o8zL814YHGA/D/zYMJIAaCIYqFZ0mIpUDMLZUZN87cVGkWukeoAQibFqRSdTi0
+         6pbezBxBfFFSAjRUKWB8QJP5CHgs93NHYtFiS1nIDp648nb0kIv2ZVQ/RTs1fTwlNaec
+         GPg0wCc5jkN3j+ma2gtmxo4nY/EYhDvIrUWKQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=I/sh0hf7RWpKTkHRG2sXo6X29i3mK1fyatkLVFjwPyY=;
+        b=DjfVlefRA6bmNDLTfCjYIDLPhSPr14kDQc4DKXy2arVXdWBRel47xabgaGCEWJJ5AD
+         BU53JoT9ChRFjr4k8MR358IzRat4JFTEdEimxvUdLK1DYlW/oMdqEJc7Ovzj+mn6m/Fr
+         y8rbCqSXRF9SOYCmp1w61eCObd3Y88JMN7SF3cZvcaDPdrJP8pKYUJP80adJbsCORrW/
+         gbjRoQ0L/JHs5OLqiMmuaM9EVATLx1erMDsvXmWBeQh/QmCBwLmSDIeI6WxZuJcqOi1G
+         oBfIji1MnR0G9ZtJ+ZZD3Nfga3UIjJUibBMwH4ta0EKAQtDZHV7tQwzfw5Nb83Ch4zRl
+         wuUQ==
+X-Gm-Message-State: AOAM531bJbbfKHzxUVQVxBE4sgJfN3DsgyzeyUWdobHJa0jwsVgHhVSo
+        W8ocPtJRj40Bj6Hj9qR9XDSkGw==
+X-Google-Smtp-Source: ABdhPJyF2qwliIvI/LNW3ilYwO975TKwRXyUs29RK60LvcJNYZwaiKnp5x/7ZaLEGFTKwLjPhYZ/og==
+X-Received: by 2002:adf:fd01:: with SMTP id e1mr24749831wrr.44.1599565035147;
+        Tue, 08 Sep 2020 04:37:15 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id e18sm39103291wra.36.2020.09.08.04.37.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2020 04:37:14 -0700 (PDT)
+Date:   Tue, 8 Sep 2020 13:37:12 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Gerd Hoffmann <kraxel@redhat.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR VIVANTE GPU IP" 
+        <etnaviv@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
+        <nouveau@lists.freedesktop.org>,
+        "moderated list:ARM/Rockchip SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/Rockchip SoC support" 
+        <linux-rockchip@lists.infradead.org>,
+        "open list:DRM DRIVERS FOR NVIDIA TEGRA" 
+        <linux-tegra@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR XEN" <xen-devel@lists.xenproject.org>
+Subject: Re: [PATCH v4 1/1] drm: allow limiting the scatter list size.
+Message-ID: <20200908113712.GL2352366@phenom.ffwll.local>
+Mail-Followup-To: Gerd Hoffmann <kraxel@redhat.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Ben Skeggs <bskeggs@redhat.com>, Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" <amd-gfx@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR VIVANTE GPU IP" <etnaviv@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" <nouveau@lists.freedesktop.org>,
+        "moderated list:ARM/Rockchip SoC support" <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
+        "open list:DRM DRIVERS FOR NVIDIA TEGRA" <linux-tegra@vger.kernel.org>,
+        "moderated list:DRM DRIVERS FOR XEN" <xen-devel@lists.xenproject.org>
+References: <20200907112425.15610-1-kraxel@redhat.com>
+ <20200907112425.15610-2-kraxel@redhat.com>
+ <CAKMK7uGjT73rh=9iuCKAXvC_CaOuygm8PgOQgofkTgH7wRysFw@mail.gmail.com>
+ <20200908054858.um34wojjv6uhi7d3@sirius.home.kraxel.org>
+ <20200908085544.GI2352366@phenom.ffwll.local>
+ <20200908100253.b22sff23737l77bo@sirius.home.kraxel.org>
 MIME-Version: 1.0
-References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
- <20200908075716.30357-6-manivannan.sadhasivam@linaro.org> <20200908103444.5e526uawa45om6lt@vireshk-i7>
- <20200908111141.GB23095@mani> <20200908111813.bbgfxo5v7qt6ujpc@vireshk-i7>
-In-Reply-To: <20200908111813.bbgfxo5v7qt6ujpc@vireshk-i7>
-From:   Amit Kucheria <amitk@kernel.org>
-Date:   Tue, 8 Sep 2020 17:18:35 +0530
-X-Gmail-Original-Message-ID: <CAHLCerMndYeEBOxtj8mV7OdOP9pufx+C7n1F9m+CFAneuh8DnA@mail.gmail.com>
-Message-ID: <CAHLCerMndYeEBOxtj8mV7OdOP9pufx+C7n1F9m+CFAneuh8DnA@mail.gmail.com>
-Subject: Re: [PATCH 5/7] cpufreq: qcom-hw: Use regmap for accessing hardware registers
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200908100253.b22sff23737l77bo@sirius.home.kraxel.org>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 8, 2020 at 4:48 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 08-09-20, 16:41, Manivannan Sadhasivam wrote:
-> > On 0908, Viresh Kumar wrote:
-> > > On 08-09-20, 13:27, Manivannan Sadhasivam wrote:
-> > > > Use regmap for accessing cpufreq registers in hardware.
-> > >
-> > > Why ? Please mention why a change is required in the log.
-> > >
-> >
-> > Only because it is recommended to use regmap for abstracting the hw access.
->
-> Yes it can be very useful in abstracting the hw access in case of
-> busses like SPI/I2C, others, but in this case there is only one way of
-> doing it with the exact same registers. I am not sure it is worth it
-> here. FWIW, I have never played with regmaps personally, and so every
-> chance I can be wrong here.
+On Tue, Sep 08, 2020 at 12:02:53PM +0200, Gerd Hoffmann wrote:
+> > > > The comments I've found suggest very much not ... Or is that all very
+> > > > old stuff only that no one cares about anymore?
+> > > 
+> > > I think these days it is possible to override dma_ops per device, which
+> > > in turn allows virtio to deal with the quirks without the rest of the
+> > > kernel knowing about these details.
+> > > 
+> > > I also think virtio-gpu can drop the virtio_has_dma_quirk() checks, just
+> > > use the dma api path unconditionally and depend on virtio core having
+> > > setup dma_ops in a way that it JustWorks[tm].  I'll look into that next.
+> > 
+> > The comment above vring_use_dma_api() suggests that this has not yet
+> > happened, that's why I'm asking.
+> 
+> Hmm, wading through the code, seems it indeed happen yet, even though my
+> testing didn't show any issues.  Probably pure luck because devices and
+> cpus have the same memory view on x86.  Guess I need to try this on
+> ppc64 to see it actually failing ...
+> 
+> So dropping the virtio_has_dma_quirk() checks isn't going to fly.
+> 
+> Using dma_max_mapping_size() should be fine though.  It might use a
+> lower limit than needed for virtio, but it should not break things.
 
-One could handle the reg offsets through a struct initialisation, but
-then you end up with lots of #defines for bitmasks and bits for each
-version of the IP. And the core code becomes a bit convoluted IMO,
-trying to handle the differences.
+Makes sense. On this patch here:
 
-regmap hides the differences of the bit positions and register offsets
-between several IP versions.
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-> > Moreover it handles the proper locking for us in the core (spinlock vs mutex).
->
-> What locking do you need here ?
+And I guess would be good if virtio pushes a bit more towards using the
+dma api abstraction fully so we can get rid of these hacks. Virtio feels
+like a driver that really should be using dma-api and not dig around
+behind it because "it' makes stuff 0.5% faster" or so, since being
+virtualized it's already not the king of speed anyway :-)
 
-Right, locking isn't the main reason here.
-
->
-> > I've seen many subsystem maintainers prefer regmap over plain readl/writel
-> > calls. I'll add the reason in commit log.
->
-> I am not sure if it is worth it here.
+Cheers, Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
