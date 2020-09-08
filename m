@@ -2,171 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86F72262303
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 00:43:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3C4A262333
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 00:47:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729275AbgIHWnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 18:43:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
+        id S1729622AbgIHWr4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 18:47:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730464AbgIHWnb (ORCPT
+        with ESMTP id S1729014AbgIHWrw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 18:43:31 -0400
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9026C061573
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 15:43:30 -0700 (PDT)
-Received: by mail-il1-x142.google.com with SMTP id p13so518222ils.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 15:43:30 -0700 (PDT)
+        Tue, 8 Sep 2020 18:47:52 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7549DC061756
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 15:47:50 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id c10so697559edk.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 15:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kP3fRBjvfm91Lgym+an8BHFQ2PuoWlJ3si63rQdbN8c=;
-        b=cMCk0lKzNfxAMTO2UkKJ0lXqynPZojKcMVW8pVBD0mlICjkRQgjWFrGN9QLlhQkHwT
-         /1hBT7NZs2Gr3ljH38g6Vgva0RGAIwKBL2lof8SnGTM7KVvDmeSc64CAB5ZYI51ye64A
-         myig/VRQXeaoQ2s/61egtsT7H1YfnYF00beULBHNwfkxORoyxD3tpyeCI6Vv4fXW9aiB
-         GZnJVGUOtP0w4hIktrh22UQPPwcXtPBeUim5uFhP4e860zMBj/sx+nCWMoR6wglWGBae
-         T9aUpzVxoJnsq7orTcIcavPOpRMVeH9o5ow658uO6j6bws7ZRAzwVfQXC+uLjcXt9vgh
-         eYDQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VRxAb4sSeTWgSZoJEmEpicMjsCQqRWVgihxxxfCY+8k=;
+        b=AInFNOYLEiGa8ZYHJ+PrI8RgfzTLqmCerGMHATQhjM8e/J8sMTkvFzyrpxNquoa9Lm
+         BtkcXxcrdo/xq6R7ez41eLN7hF6bOEA6IXaJI0PY3tD/4k2hSOzXqrwpjaYOcD6NiHHz
+         6hVOnNIeALhlI8tW7qUq86krZzamNKA7IZOTAzv6l0j+o/iuApEteq7Je8bQvyZwQQj/
+         xakUoBpSJYS//M5r0zf7kfEh9vXrK2Y2kKDvtXPV3m4zrYClHg7U3/HJJ2ZzNH0i3o13
+         /T1Ptq6FcTT8LLgHI3iMCzBo7HIm9lgRmgwrVZDahwrAJcQ1KYhC8TlVaa1J67Z4kvDJ
+         GgOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kP3fRBjvfm91Lgym+an8BHFQ2PuoWlJ3si63rQdbN8c=;
-        b=ZQOtTlv/svZDUwFBaME03Mhe/E3EE23nNKXXYz0qsfMuAM7dTOZRDPTjYNDO8T3IfI
-         fqISruJ7mRG474MmiMcZrh1x4HtCELtmARj8zNJjzY8d/rh3D8eYPMdXFDgAx9Oyp8Yf
-         z/KDWt94ZQr05j6r1BQOmbCB9Ya6Bo44RcQRh/6EVvWoG8vlAvF+azHS6Hl66IrzSlIk
-         OfmwZLHLzQCRf/8BF/RQwgtz1OAc0I+h3XYBRYcM3Wqyv3xktJhVh5FfsJxHHCo55om8
-         jZ32riOfMUX3MLAwp12va4r7QaEP2Ri3EvKYzx3JIvDnJ8I7sqNp8zOK+q/PnrvwtOt9
-         vRVw==
-X-Gm-Message-State: AOAM533wF0Dqmd/Iw7d29BvHrygTlnpsy9R9Pk9fiDzb214N7Fx3hLiC
-        yMKgW5TboXX7HcV7gMiAOLHY0VfyYF28b9P+Pmfp2w==
-X-Google-Smtp-Source: ABdhPJy2euDOe9gR5D2dH2jq/gUSw+Ds2//IpXgtG+LSuaTtkhuhiIiGtc0UENWkqIWHIiGMHapySfCTPJbwaFtJHWw=
-X-Received: by 2002:a92:9408:: with SMTP id c8mr928626ili.61.1599605010111;
- Tue, 08 Sep 2020 15:43:30 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VRxAb4sSeTWgSZoJEmEpicMjsCQqRWVgihxxxfCY+8k=;
+        b=kv91bLP3CR/pRABulK2afXMNwFTJ/D5lULdjmnPMxgVTOZg5D/k2LT3PSnZyYF+fib
+         bMNLG2amj3gHZ5ejRYe56xqC66TAY7PN7LC2txRYQVheaIDKlFgdsi/bVr1ja6mI06i5
+         kSiCWcJzskoYJKNlDvLILsOfas5NG53f4AyO1SKLGodTlcewhwPTgJduUhLGUPW1VVBf
+         mB1sx81bT+vfU+ORMgIphOU1WGGGoN+2RgTL9T3ivamlaDgTCVDDZ9fbvOKoyMaCFb3B
+         A9HWyHve9w8X03qvAfwwV/ulTTSzMMgzd5l8EVbaTVBWjkAPPDGn9OPtF8te2jb1c51V
+         S6/A==
+X-Gm-Message-State: AOAM5329UWQ6k4GnhUwIhpBscJtKtO2ODdQDNYRX6sxoHW/y1yc079qL
+        kPdBoIV4t5J3/I6/yian16s7ng==
+X-Google-Smtp-Source: ABdhPJyBVcQuoFsZ0wvTWVT1hoz1fMF/ozEdUm0gl1e7OpLSLPkXfxN3ZE8OKYkSifBDes5JCPP8NQ==
+X-Received: by 2002:a05:6402:1d05:: with SMTP id dg5mr1262004edb.67.1599605267971;
+        Tue, 08 Sep 2020 15:47:47 -0700 (PDT)
+Received: from [192.168.1.6] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id lo25sm404818ejb.53.2020.09.08.15.47.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Sep 2020 15:47:47 -0700 (PDT)
+Subject: Re: [PATCH v2 2/2] venus: firmware: Set virtual address ranges
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org,
+        Elliot Berman <eberman@codeaurora.org>,
+        Andy Gross <agross@kernel.org>
+References: <20200817082723.17458-1-stanimir.varbanov@linaro.org>
+ <20200817082723.17458-3-stanimir.varbanov@linaro.org>
+ <20200908143954.GK3715@yoga>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <83573727-3cf1-27bc-f13e-d81657d16327@linaro.org>
+Date:   Wed, 9 Sep 2020 01:47:43 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20191221150402.13868-1-murphyt7@tcd.ie> <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
- <20200529124523.GA11817@infradead.org> <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
- <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com> <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
- <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com> <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
- <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com> <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
- <e598fb31-ef7a-c2ee-8a54-bf62d50c480c@deltatee.com> <b27cae1f-07ff-bef2-f125-a5f0d968016d@linux.intel.com>
-In-Reply-To: <b27cae1f-07ff-bef2-f125-a5f0d968016d@linux.intel.com>
-From:   Tom Murphy <murphyt7@tcd.ie>
-Date:   Tue, 8 Sep 2020 23:43:19 +0100
-Message-ID: <CALQxJut5c=cWdi+SVkN3JnbkhPSYmLkOyRUhduL-UJ9gyKn9Ow@mail.gmail.com>
-Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
- dma-iommu api
-To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc:     Logan Gunthorpe <logang@deltatee.com>, kvm@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        virtualization@lists.linux-foundation.org,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200908143954.GK3715@yoga>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 8 Sep 2020 at 16:56, Tvrtko Ursulin
-<tvrtko.ursulin@linux.intel.com> wrote:
->
->
-> On 08/09/2020 16:44, Logan Gunthorpe wrote:
-> > On 2020-09-08 9:28 a.m., Tvrtko Ursulin wrote:
-> >>>
-> >>> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
-> >>> b/drivers/gpu/drm/i915/i915
-> >>> index b7b59328cb76..9367ac801f0c 100644
-> >>> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
-> >>> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
-> >>> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
-> >>>    } __sgt_iter(struct scatterlist *sgl, bool dma) {
-> >>>           struct sgt_iter s = { .sgp = sgl };
-> >>>
-> >>> +       if (sgl && !sg_dma_len(s.sgp))
-> >>
-> >> I'd extend the condition to be, just to be safe:
-> >>      if (dma && sgl && !sg_dma_len(s.sgp))
-> >>
-> >
-> > Right, good catch, that's definitely necessary.
-> >
-> >>> +               s.sgp = NULL;
-> >>> +
-> >>>           if (s.sgp) {
-> >>>                   s.max = s.curr = s.sgp->offset;
-> >>> -               s.max += s.sgp->length;
-> >>> -               if (dma)
-> >>> +
-> >>> +               if (dma) {
-> >>> +                       s.max += sg_dma_len(s.sgp);
-> >>>                           s.dma = sg_dma_address(s.sgp);
-> >>> -               else
-> >>> +               } else {
-> >>> +                       s.max += s.sgp->length;
-> >>>                           s.pfn = page_to_pfn(sg_page(s.sgp));
-> >>> +               }
-> >>
-> >> Otherwise has this been tested or alternatively how to test it? (How to
-> >> repro the issue.)
-> >
-> > It has not been tested. To test it, you need Tom's patch set without the
-> > last "DO NOT MERGE" patch:
-> >
-> > https://lkml.kernel.org/lkml/20200907070035.GA25114@infradead.org/T/
->
-> Tom, do you have a branch somewhere I could pull from? (Just being lazy
-> about downloading a bunch of messages from the archives.)
-
-I don't unfortunately. I'm working locally with poor internet.
-
->
-> What GPU is in your Lenovo x1 carbon 5th generation and what
-> graphical/desktop setup I need to repro?
 
 
-Is this enough info?:
+On 9/8/20 5:39 PM, Bjorn Andersson wrote:
+> On Mon 17 Aug 03:27 CDT 2020, Stanimir Varbanov wrote:
+> 
+>> In order to boot some of the new Venus firmware versions TZ call to set
+>> virtual address ranges is needed. Add virtual address ranges for CP and
+>> CP_NONPIX in resource structure and use them when loading and booting
+>> the firmware on remote processor.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.c     |  4 ++++
+>>  drivers/media/platform/qcom/venus/core.h     |  4 ++++
+>>  drivers/media/platform/qcom/venus/firmware.c | 18 +++++++++++++++++-
+>>  3 files changed, 25 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>> index 203c6538044f..5f8f7b72731c 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -527,6 +527,10 @@ static const struct venus_resources sdm845_res_v2 = {
+>>  	.vmem_size = 0,
+>>  	.vmem_addr = 0,
+>>  	.dma_mask = 0xe0000000 - 1,
+>> +	.cp_start = 0,
+>> +	.cp_size = 0x70800000,
+>> +	.cp_nonpixel_start = 0x1000000,
+>> +	.cp_nonpixel_size = 0x24800000,
+>>  	.fwname = "qcom/venus-5.2/venus.mdt",
+>>  };
+>>  
+>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>> index 7118612673c9..8c88516e4694 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -68,6 +68,10 @@ struct venus_resources {
+>>  	unsigned int vmem_id;
+>>  	u32 vmem_size;
+>>  	u32 vmem_addr;
+>> +	u32 cp_start;
+>> +	u32 cp_size;
+>> +	u32 cp_nonpixel_start;
+>> +	u32 cp_nonpixel_size;
+>>  	const char *fwname;
+>>  };
+>>  
+>> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+>> index 8801a6a7543d..ac906ffc608f 100644
+>> --- a/drivers/media/platform/qcom/venus/firmware.c
+>> +++ b/drivers/media/platform/qcom/venus/firmware.c
+>> @@ -181,6 +181,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
+>>  int venus_boot(struct venus_core *core)
+>>  {
+>>  	struct device *dev = core->dev;
+>> +	const struct venus_resources *res = core->res;
+>>  	phys_addr_t mem_phys;
+>>  	size_t mem_size;
+>>  	int ret;
+>> @@ -200,7 +201,22 @@ int venus_boot(struct venus_core *core)
+>>  	else
+>>  		ret = venus_boot_no_tz(core, mem_phys, mem_size);
+>>  
+>> -	return ret;
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	if (core->use_tz && res->cp_size) {
+>> +		ret = qcom_scm_mem_protect_video_var(res->cp_start,
+>> +						     res->cp_size,
+>> +						     res->cp_nonpixel_start,
+>> +						     res->cp_nonpixel_size);
+>> +		if (ret) {
+>> +			dev_err(dev, "set virtual address ranges fail (%d)\n",
+>> +				ret);
+>> +			return ret;
+> 
+> Afaict venus_probe() will tear down clocks and power of the now running
+> Venus core when you return an error here. Isn't it necessary to stop the
+> core here as well?
 
-$ lspci -vnn | grep VGA -A 12
-00:02.0 VGA compatible controller [0300]: Intel Corporation HD
-Graphics 620 [8086:5916] (rev 02) (prog-if 00 [VGA controller])
-    Subsystem: Lenovo ThinkPad X1 Carbon 5th Gen [17aa:224f]
-    Flags: bus master, fast devsel, latency 0, IRQ 148
-    Memory at eb000000 (64-bit, non-prefetchable) [size=16M]
-    Memory at 60000000 (64-bit, prefetchable) [size=256M]
-    I/O ports at e000 [size=64]
-    [virtual] Expansion ROM at 000c0000 [disabled] [size=128K]
-    Capabilities: [40] Vendor Specific Information: Len=0c <?>
-    Capabilities: [70] Express Root Complex Integrated Endpoint, MSI 00
-    Capabilities: [ac] MSI: Enable+ Count=1/1 Maskable- 64bit-
-    Capabilities: [d0] Power Management version 2
-    Capabilities: [100] Process Address Space ID (PASID)
-    Capabilities: [200] Address Translation Service (ATS)
+I guess by "stop the core" you mean a call to qcom_scm_pas_shutdown() ?
+If so, I think it makes sense.
 
-
->
-> Regards,
->
-> Tvrtko
+-- 
+regards,
+Stan
