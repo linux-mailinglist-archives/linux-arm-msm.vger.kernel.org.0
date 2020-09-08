@@ -2,107 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9B6D262092
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 22:13:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 003222620DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 22:17:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730104AbgIHUNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 16:13:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46562 "EHLO
+        id S1729993AbgIHUQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 16:16:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728709AbgIHPLL (ORCPT
+        with ESMTP id S1729449AbgIHPKB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 11:11:11 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574EFC0A88B8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 07:58:24 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id c10so15068702otm.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 07:58:24 -0700 (PDT)
+        Tue, 8 Sep 2020 11:10:01 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32662C0076D3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 08:00:17 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id b123so9154484vsd.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 08:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9gggthlY+o0JLKVW4bDabhGMPHFWypt8dqyEIpp5HBQ=;
-        b=YB1FIRYyzS+ivsL/x+45ExVO0WH4Is9QWS50BvdosbbeX3Gi9nCtUp3J82nNmljBY6
-         2JWQ8OutTr8NVlmEj5knAEd5QvGTHBgwJGuOKKBrxGLIqUrSTCfdGuVlSplWSBuVYG50
-         1gRt3j7MlGKO3Vgm/lbDnz/Rr6omJsM1OVD/v0oDJTX71dK7psTcnMmqtUpToxc8zybt
-         4ejNbNqpq110GFV6L5J6HSaFqA/UgkLEzxllqqnoKmQ4UbGu6gRzTXzpmg+clp3rTrUT
-         SlGD+3IhJ/dsetPuwDX0gLdqgHqVCPqxO1fgcGCW6gJcc09yKjpzpaQTKnrRam+Iva7t
-         vlcg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tJRPLo+J0AriJzHTz4tB+cqM6v8af2cuqs5qOTFB1iE=;
+        b=XIEgSW1KV88kuUzhoRuadz6lGFrG4VliZ7auCmMMAlPJEGo9Fv+rD3RcpZVWzKa/jC
+         Hc4MsaNyKgjUL9Gn6+/+FjrCQay1ygjM05S2Fmb4xe4LHoXfPt9CFBa2hoBZZIA4/sCO
+         Um5z7+bxy8muKu9ywGVyDQe/KVjKJh+B916q0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9gggthlY+o0JLKVW4bDabhGMPHFWypt8dqyEIpp5HBQ=;
-        b=CZOTEKhrCcZHkq1KezHuRYplNbNZCDsv24XabE3x2qn01/lbU9HVxdWs6qcrX+/H4Q
-         qEi7Rq+bBg5r2p+0ak/PV6GdXf7OZ/w1evQt9ZDgUg7ynFCfIH4Hb1+C2KImkE3Dhioq
-         U/kBQFsaY9gXhM1QHFXLhV6N2mcvY1yNQSF9I43oVmdjU4Xj7riotA0Q8scUcv21+BCL
-         S61wGhIGKp/m7KPJh8Zw0WFrZUQngfSNJnqCE4NA+2psLd9X5NFF9gwhRz7bj9IdWSGt
-         cqbIyw7QWKNeI+sOcoO8m05x5nluuDbZMVqOU6HlM4zE0suXEt8LGuqyluxzltVnwJRr
-         h1hg==
-X-Gm-Message-State: AOAM532mvxCWW0JiS2oC43tmiqd1uFivctDmhyUgxkG1xhStJKTjG04w
-        p9SP2qM4URcc3TeVtzRGOT9i4g==
-X-Google-Smtp-Source: ABdhPJwzWVepX/rnpXMX9hm2hay4q1Tqm8YqYT8JJBjjmrghpuG4jHcnsb8c87sfS0CmGWklIjZJNw==
-X-Received: by 2002:a9d:7590:: with SMTP id s16mr1860963otk.23.1599577104131;
-        Tue, 08 Sep 2020 07:58:24 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id y24sm3515779ooq.38.2020.09.08.07.58.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2020 07:58:23 -0700 (PDT)
-Date:   Tue, 8 Sep 2020 09:58:19 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, amitk@kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        tdas@codeaurora.org
-Subject: Re: [PATCH 1/7] dt-bindings: cpufreq: cpufreq-qcom-hw: Document
- SM8250 compatible
-Message-ID: <20200908145819.GN3715@yoga>
-References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
- <20200908075716.30357-2-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tJRPLo+J0AriJzHTz4tB+cqM6v8af2cuqs5qOTFB1iE=;
+        b=cctbE27DAkZPctF2VN/2C3+Yh+TkvqwO08xCScUwhP7CvUgJlXTLZksZ00XpMnZg1W
+         mPnNpDcmFX5jq40NyzH19OcO19tGU9Gwv7ZTDK56xISX098cgXkqEvpACxBt6ToGWKza
+         xgHGUuKhSEpUluYqqIuppA5ZElfmXmh/7H0K3ywXUpzxzIU6QMtjSq+U0Xn0iDd2pKHL
+         esB1BZrYKxqedicZgB7Zr4zFI5ZHUIPqjrC5Q0hS4r5K4piQ5wvp6o0ozRfDQxZjBWF+
+         JRXwXOtdfVbliAPgzxVvJYDnQqkd7V64zEF3Nk5gwO8cYyyIw+QwsAKMqV0snQjC/b/g
+         PyJw==
+X-Gm-Message-State: AOAM530HP8YFWqzwGelloTWAW8WELuaDMBMAgVxsfDinImqS4TT0an/i
+        x29US1SbroMvXq66XXm8wI5r5PbgPm8TFg==
+X-Google-Smtp-Source: ABdhPJwjwAFlZHG8D+Stdwih5Tj40pdqNJCiE0Axe4Gu6fJyf0luL2b0DPLfiPerTLbuOGN3Q9jViA==
+X-Received: by 2002:a67:bd19:: with SMTP id y25mr14759969vsq.14.1599577216137;
+        Tue, 08 Sep 2020 08:00:16 -0700 (PDT)
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com. [209.85.221.178])
+        by smtp.gmail.com with ESMTPSA id b17sm1289744vsr.17.2020.09.08.08.00.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Sep 2020 08:00:15 -0700 (PDT)
+Received: by mail-vk1-f178.google.com with SMTP id q200so4123002vke.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 08:00:15 -0700 (PDT)
+X-Received: by 2002:a1f:e641:: with SMTP id d62mr15027301vkh.30.1599577214628;
+ Tue, 08 Sep 2020 08:00:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200908075716.30357-2-manivannan.sadhasivam@linaro.org>
+References: <010101746c377537-ce93e925-598b-4dce-bb16-4cda020f4d6f-000000@us-west-2.amazonses.com>
+In-Reply-To: <010101746c377537-ce93e925-598b-4dce-bb16-4cda020f4d6f-000000@us-west-2.amazonses.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 8 Sep 2020 08:00:02 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WsUopZPHJzHe1+pa=pzKQda0yQKUCtnPrni3Dmx7aV3g@mail.gmail.com>
+Message-ID: <CAD=FV=WsUopZPHJzHe1+pa=pzKQda0yQKUCtnPrni3Dmx7aV3g@mail.gmail.com>
+Subject: Re: [PATCHv3] soc: qcom: llcc: Support chipsets that can write to
+ llcc registers
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 08 Sep 02:57 CDT 2020, Manivannan Sadhasivam wrote:
+Hi,
 
-> Document the SM8250 SoC specific compatible for Qualcomm Cpufreq HW. The
-> hardware block which carries out CPUFreq operations on SM8250 SoC is
-> called EPSS.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Mon, Sep 7, 2020 at 10:36 PM Sai Prakash Ranjan
+<saiprakash.ranjan@codeaurora.org> wrote:
+>
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -73,6 +73,7 @@ struct llcc_edac_reg_data {
+>   * @bitmap: Bit map to track the active slice ids
+>   * @offsets: Pointer to the bank offsets array
+>   * @ecc_irq: interrupt for llcc cache error detection and reporting
+> + * @need_llcc_config: check if llcc configuration is required
+>   */
+>  struct llcc_drv_data {
+>         struct regmap *regmap;
+> @@ -85,6 +86,7 @@ struct llcc_drv_data {
+>         unsigned long *bitmap;
+>         u32 *offsets;
+>         int ecc_irq;
+> +       bool need_llcc_config;
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Do you really need to add this into "struct llcc_drv_data"?  You use
+it once at probe time and you could just pass it in to
+qcom_llcc_cfg_program(), or just pass the "struct qcom_llcc_config" to
+qcom_llcc_cfg_program()?  It's not a huge deal, but it would make your
+patch simpler and keep an extra element out of the include file.
 
-Please follow up, after this has been accepted, with a conversion of
-this binding to yaml.
+In any case:
 
-Regards,
-Bjorn
-
-> ---
->  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
-> index 33856947c561..aea4ddb2b9e8 100644
-> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
-> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
-> @@ -8,7 +8,7 @@ Properties:
->  - compatible
->  	Usage:		required
->  	Value type:	<string>
-> -	Definition:	must be "qcom,cpufreq-hw".
-> +	Definition:	must be "qcom,cpufreq-hw" or "qcom,sm8250-epss".
->  
->  - clocks
->  	Usage:		required
-> -- 
-> 2.17.1
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
