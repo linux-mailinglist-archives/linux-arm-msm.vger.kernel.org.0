@@ -2,267 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B958261DF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 21:44:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DA82261F3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 22:01:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730760AbgIHTog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 15:44:36 -0400
-Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:42522
-        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729791AbgIHTo0 (ORCPT
+        id S1730986AbgIHUBD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 16:01:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730369AbgIHPf0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 15:44:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599594265;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=8WW0GBw5JW+XfqzWOS9BQy4RMnqMxVS+U0EKG5ssuts=;
-        b=V0EtTOmLUISmAvKqj8LnPw1JdslnsO9WEqu9bVZ6h/NSyLkUmTXlSudalbe0JnNd
-        eJxBiHxYmbweJqvHSC8NxytAZEdhuDYpro5/gtItEMCKPeq0RzUrxSdNeGHWUQcSjce
-        dEX/0C6jo87tlXJhQOsiO8lQH9H8jlBvoHHmHmns=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599594265;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=8WW0GBw5JW+XfqzWOS9BQy4RMnqMxVS+U0EKG5ssuts=;
-        b=Muz/MSALldRwagEcsnImKPvqrJmjX2OXkRJwnBtNpPl0npszw4kMxuCK48hrkOR4
-        3YT5xbg7l0BfgVkcdEKFS7CajAsRDt8jJm3OLmkDm9yssriOppuNmYffa023KTsbmab
-        aJowRO2g5DypQnRl98F4qK+6GG/i0PG8NMcNDcdQ=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+        Tue, 8 Sep 2020 11:35:26 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B50C0619EF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 06:58:38 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id f142so15272442qke.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 06:58:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+0VeQsmoLvQuU6aBo8zkUNaslkMwNc2y2ovMYLqi8XU=;
+        b=mCT551VGMZB94T4mxoyukc4bwxgzEzUfWwL2NvOY75ZaeJdpVQG9CBGM1bGuJrJs2d
+         vIOmu8PzXYmtEsQLa/m2JAQSu0eJCPrcPkfvV9Ijc4QajjV3687zmTDPrqeSq1uJuG91
+         dsViQvLDQdy6yiU6PEXgnu4e/No+wesobtdBRKR8F3GKNMVVobwe4Q1QlOXue+A4zk2K
+         aYi1G2PgHsePs/N6bKyI3DvK2mxmNGCtZMk5tgCkOnw4yYsxg/YOAyvDPeqBTNZj0uyF
+         +N6GfQAzFQn/Ey3fK4fQ10k+G/OswU60JOly4rzK2N70fyiOx+Ce+/BJY+P/ccnOv329
+         b9ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+0VeQsmoLvQuU6aBo8zkUNaslkMwNc2y2ovMYLqi8XU=;
+        b=Twe+tM+OuDPrY8v2BwRw0Sq5X/pKWJ2KY6zoWY4fdG6+CYtQmVFbAxGff8y4flecmz
+         RhuZWSYzItZSqV8gVjv1dn6+HBikiHR440zo0/U9hv6IWRLcc1aznWbqxtOmKoHGbn81
+         PXGJaodP3ElJl7a+I3W1rSS86hQJQGFm8s6qarN1hcfSiXyAabhcfHWexl1Cz0X8t0TS
+         ZipC8p5QVRaIMKoJLF6e5NtYS9z+eo+0PXZpJcmDI+CQDmTFM5KWXjuPRd7kvv7RLTRL
+         5kTqyxKdivzIbP2EXGlSW+Ax/jCn9pCSVDU5fbcsYG+Cn2k5A4rph1H0pGjqmSN0wSVw
+         bIdw==
+X-Gm-Message-State: AOAM531nzYiOuYvOkpxS4PPpl2V7DQI5e3e/8v2pJs3jpmeDQr5fLeKe
+        vHApfUJtk4KUP9ro6zuaffkyCw==
+X-Google-Smtp-Source: ABdhPJzENRkC0WQz6clGvHTyG+K0LCw8iXyZ0zOHXituNkpO4M4F4y2QK9X/EX38k0eqbQaYJJPsSw==
+X-Received: by 2002:a37:b201:: with SMTP id b1mr224085qkf.10.1599573517558;
+        Tue, 08 Sep 2020 06:58:37 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id m1sm10014629qkn.89.2020.09.08.06.58.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Sep 2020 06:58:36 -0700 (PDT)
+Subject: Re: [PATCH v2 3/4] soundwire: qcom: add support for mmio soundwire
+ master devices
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     "moderated list:SOUNDWIRE SUBSYSTEM" <alsa-devel@alsa-project.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>
+References: <20200905173905.16541-1-jonathan@marek.ca>
+ <20200905173905.16541-4-jonathan@marek.ca>
+ <ad39f109-bfc9-332e-adc2-355499db1ab7@linux.intel.com>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <4bf165c2-1458-442b-5c85-5cebabda7232@marek.ca>
+Date:   Tue, 8 Sep 2020 09:57:43 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 8 Sep 2020 19:44:25 +0000
-From:   abhinavk@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Hongbo Yao <yaohongbo@huawei.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH 2/2] drm/msm/dpu: clean up some impossibilities
-In-Reply-To: <20200907170450.370122-2-robdclark@gmail.com>
-References: <20200907170450.370122-1-robdclark@gmail.com>
- <20200907170450.370122-2-robdclark@gmail.com>
-Message-ID: <010101746f3f7b59-bd6c1de2-1fae-4733-ba95-a4802b81b892-000000@us-west-2.amazonses.com>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2020.09.08-54.240.27.55
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+In-Reply-To: <ad39f109-bfc9-332e-adc2-355499db1ab7@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-07 10:04, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 81 ++++--------------------
->  1 file changed, 12 insertions(+), 69 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 89c0245b5de5..ad49b0e17fcb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -265,11 +265,6 @@ enum dpu_intf_mode dpu_crtc_get_intf_mode(struct
-> drm_crtc *crtc)
->  {
->  	struct drm_encoder *encoder;
-> 
-> -	if (!crtc) {
-> -		DPU_ERROR("invalid crtc\n");
-> -		return INTF_MODE_NONE;
-> -	}
-> -
->  	/*
->  	 * TODO: This function is called from dpu debugfs and as part of 
-> atomic
->  	 * check. When called from debugfs, the crtc->mutex must be held to
-> @@ -500,12 +495,6 @@ static void dpu_crtc_atomic_begin(struct drm_crtc 
-> *crtc,
->  	struct dpu_crtc_state *cstate;
->  	struct drm_encoder *encoder;
->  	struct drm_device *dev;
-> -	unsigned long flags;
-> -
-> -	if (!crtc) {
-> -		DPU_ERROR("invalid crtc\n");
-> -		return;
-> -	}
-> 
->  	if (!crtc->state->enable) {
->  		DPU_DEBUG("crtc%d -> enable %d, skip atomic_begin\n",
-> @@ -521,15 +510,6 @@ static void dpu_crtc_atomic_begin(struct drm_crtc 
-> *crtc,
-> 
->  	_dpu_crtc_setup_lm_bounds(crtc, crtc->state);
-> 
-> -	if (dpu_crtc->event) {
-> -		WARN_ON(dpu_crtc->event);
-> -	} else {
-> -		spin_lock_irqsave(&dev->event_lock, flags);
-> -		dpu_crtc->event = crtc->state->event;
-> -		crtc->state->event = NULL;
-> -		spin_unlock_irqrestore(&dev->event_lock, flags);
-> -	}
-> -
->  	/* encoder will trigger pending mask now */
->  	drm_for_each_encoder_mask(encoder, crtc->dev, 
-> crtc->state->encoder_mask)
->  		dpu_encoder_trigger_kickoff_pending(encoder);
-> @@ -583,14 +563,11 @@ static void dpu_crtc_atomic_flush(struct drm_crtc 
-> *crtc,
->  		return;
->  	}
-> 
-> -	if (dpu_crtc->event) {
-> -		DPU_DEBUG("already received dpu_crtc->event\n");
-> -	} else {
-> -		spin_lock_irqsave(&dev->event_lock, flags);
-> -		dpu_crtc->event = crtc->state->event;
-> -		crtc->state->event = NULL;
-> -		spin_unlock_irqrestore(&dev->event_lock, flags);
-> -	}
-> +	WARN_ON(dpu_crtc->event);
-before the patch "move vblank events to complete_commit()", the dpu_crtc 
-events
-were consumed in the _dpu_crtc_complete_flip(). So there was a chance 
-that if the vblank event
-did not come in time before the next commit, dpu_crtc->event will not be 
-consumed.
 
-But after the patch, _dpu_crtc_complete_flip() is being signaled in 
-dpu_crtc_complete_commit()
-which will always happen, so is there any case where we will hit this 
-warning at all or will this
-catch some other condition?
 
-> +	spin_lock_irqsave(&dev->event_lock, flags);
-> +	dpu_crtc->event = crtc->state->event;
-> +	crtc->state->event = NULL;
-> +	spin_unlock_irqrestore(&dev->event_lock, flags);
+On 9/8/20 9:56 AM, Pierre-Louis Bossart wrote:
 > 
->  	/*
->  	 * If no mixers has been allocated in dpu_crtc_atomic_check(),
-> @@ -635,14 +612,7 @@ static void dpu_crtc_atomic_flush(struct drm_crtc 
-> *crtc,
->  static void dpu_crtc_destroy_state(struct drm_crtc *crtc,
->  		struct drm_crtc_state *state)
->  {
-> -	struct dpu_crtc_state *cstate;
-> -
-> -	if (!crtc || !state) {
-> -		DPU_ERROR("invalid argument(s)\n");
-> -		return;
-> -	}
-> -
-> -	cstate = to_dpu_crtc_state(state);
-> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
 > 
->  	DPU_DEBUG("crtc%d\n", crtc->base.id);
 > 
-> @@ -731,14 +701,8 @@ static void dpu_crtc_reset(struct drm_crtc *crtc)
->   */
->  static struct drm_crtc_state *dpu_crtc_duplicate_state(struct drm_crtc 
-> *crtc)
->  {
-> -	struct dpu_crtc_state *cstate, *old_cstate;
-> -
-> -	if (!crtc || !crtc->state) {
-> -		DPU_ERROR("invalid argument(s)\n");
-> -		return NULL;
-> -	}
-> +	struct dpu_crtc_state *cstate, *old_cstate = 
-> to_dpu_crtc_state(crtc->state);
+>> @@ -764,8 +786,11 @@ static int qcom_swrm_probe(struct platform_device 
+>> *pdev)
+>>           if (!ctrl->regmap)
+>>               return -EINVAL;
+>>       } else {
+>> -        /* Only WCD based SoundWire controller is supported */
+>> -        return -ENOTSUPP;
+>> +        ctrl->reg_read = qcom_swrm_cpu_reg_read;
+>> +        ctrl->reg_write = qcom_swrm_cpu_reg_write;
+>> +        ctrl->mmio = devm_platform_ioremap_resource(pdev, 0);
+>> +        if (IS_ERR(ctrl->mmio))
+>> +            return PTR_ERR(ctrl->mmio);
 > 
-> -	old_cstate = to_dpu_crtc_state(crtc->state);
->  	cstate = kmemdup(old_cstate, sizeof(*old_cstate), GFP_KERNEL);
->  	if (!cstate) {
->  		DPU_ERROR("failed to allocate state\n");
-> @@ -754,19 +718,12 @@ static struct drm_crtc_state
-> *dpu_crtc_duplicate_state(struct drm_crtc *crtc)
->  static void dpu_crtc_disable(struct drm_crtc *crtc,
->  			     struct drm_crtc_state *old_crtc_state)
->  {
-> -	struct dpu_crtc *dpu_crtc;
-> -	struct dpu_crtc_state *cstate;
-> +	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
->  	struct drm_encoder *encoder;
->  	unsigned long flags;
->  	bool release_bandwidth = false;
+> Shouldn't this be conditional on SLIMBUS being enabled, as done in your 
+> patch2?
 > 
-> -	if (!crtc || !crtc->state) {
-> -		DPU_ERROR("invalid crtc\n");
-> -		return;
-> -	}
-> -	dpu_crtc = to_dpu_crtc(crtc);
-> -	cstate = to_dpu_crtc_state(crtc->state);
-> -
->  	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
-> 
->  	/* Disable/save vblank irq handling */
-> @@ -825,19 +782,13 @@ static void dpu_crtc_disable(struct drm_crtc 
-> *crtc,
->  static void dpu_crtc_enable(struct drm_crtc *crtc,
->  		struct drm_crtc_state *old_crtc_state)
->  {
-> -	struct dpu_crtc *dpu_crtc;
-> +	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
->  	struct drm_encoder *encoder;
->  	bool request_bandwidth = false;
-> 
-> -	if (!crtc) {
-> -		DPU_ERROR("invalid crtc\n");
-> -		return;
-> -	}
-> -
->  	pm_runtime_get_sync(crtc->dev->dev);
-> 
->  	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
-> -	dpu_crtc = to_dpu_crtc(crtc);
-> 
->  	drm_for_each_encoder_mask(encoder, crtc->dev, 
-> crtc->state->encoder_mask) {
->  		/* in video mode, we hold an extra bandwidth reference
-> @@ -873,9 +824,9 @@ struct plane_state {
->  static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
->  		struct drm_crtc_state *state)
->  {
-> -	struct dpu_crtc *dpu_crtc;
-> +	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
->  	struct plane_state *pstates;
-> -	struct dpu_crtc_state *cstate;
-> 
->  	const struct drm_plane_state *pstate;
->  	struct drm_plane *plane;
-> @@ -889,16 +840,8 @@ static int dpu_crtc_atomic_check(struct drm_crtc 
-> *crtc,
->  	int left_zpos_cnt = 0, right_zpos_cnt = 0;
->  	struct drm_rect crtc_rect = { 0 };
-> 
-> -	if (!crtc) {
-> -		DPU_ERROR("invalid crtc\n");
-> -		return -EINVAL;
-> -	}
-> -
->  	pstates = kzalloc(sizeof(*pstates) * DPU_STAGE_MAX * 4, GFP_KERNEL);
-> 
-> -	dpu_crtc = to_dpu_crtc(crtc);
-> -	cstate = to_dpu_crtc_state(state);
-> -
->  	if (!state->enable || !state->active) {
->  		DPU_DEBUG("crtc%d -> enable %d, active %d, skip atomic_check\n",
->  				crtc->base.id, state->enable, state->active);
+
+No, the case above is the SLIMBUS case. This patch is adding support for 
+the non-SLIMBUS case.
+
+>>       }
+>>       ctrl->irq = of_irq_get(dev->of_node, 0);
+>>
