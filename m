@@ -2,209 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31F53261AF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 20:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A282261C73
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 21:21:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbgIHSru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 14:47:50 -0400
-Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:33484
-        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730478AbgIHSqY (ORCPT
+        id S1731127AbgIHTU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 15:20:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731126AbgIHQCR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 14:46:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599590783;
-        h=Date:From:To:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
-        bh=XYPnjA0MRzA0A/fJXn3clO2nfgIwdaUl5HRpG8otbc8=;
-        b=fltf9FX23RUomVujT/dsQcd5EPeyvumpm00VytYz4GIysUBjGoXG6g4Z+jYmBcB7
-        sG7E/PtTfie5S4k1yxObGippzLONUXLS8/wkWyodVQXLa3/v1ezD2dOrTrrKg1sKCYF
-        V+7eIfDHBB3jq5AhGe0yR5UaFyny8kr3LG2AtRHg=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599590783;
-        h=Date:From:To:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Feedback-ID;
-        bh=XYPnjA0MRzA0A/fJXn3clO2nfgIwdaUl5HRpG8otbc8=;
-        b=NDO3RO/D00SJdUm0LHXuiWd8PEuapTw54xnUXbwxRokdKujCBMSevD5vJheSDeOC
-        pQ7rfbDVRnZZbC6ifg3mzogqJ6/4SMaZnWvHOUFSAmJTxr09YnaqeCukYV46/wEYV2t
-        HCsYPUD0pPVxyxBr85kqSXgPnAmTjYifS0i4OGD8=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 12C95C433F0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 8 Sep 2020 18:46:23 +0000
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/8] iommu/arm-smmu: Refactor context bank allocation
-Message-ID: <010101746f0a5971-eef82ec1-214f-4b32-bdb5-c1e1b300f3a3-000000@us-west-2.amazonses.com>
-Mail-Followup-To: Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
- <20200904155513.282067-2-bjorn.andersson@linaro.org>
- <010101746f066ece-dac1eef9-768d-4c90-95fd-56900d13b4c9-000000@us-west-2.amazonses.com>
+        Tue, 8 Sep 2020 12:02:17 -0400
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17620C0612FD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 08:22:21 -0700 (PDT)
+Received: by mail-oo1-xc41.google.com with SMTP id o20so1741368ook.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 08:22:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CprrL+/LROkbBW4cTs+E5TrRYY4E3igZX9G7gYG5Gl4=;
+        b=zG3DKyL6RXgfAjjpoboTVkZIXN5Fo0jl+wEIvuIS6f/wQa5E3MEqXwU0MPBfQTwmpX
+         PIWYFq2rOApmDnAx7ALcajzqFYix5izxCkh8ENVonvfOuRMqvTVgYGwjh6JekmGGsQjQ
+         U+RELVmxHHC2EzfoQsmzEL2LaEKM7MCrPQ/+dk6E8ejBrEwQgvjXUlBHwL1EF2LfkqXo
+         wbycaP/xkSOASRzjaIreLTblzn9I/uCE2UJUBwkhF2y8xwVjv5HBNA+Llcn7Xgbfb7kp
+         tBvpg2fSSsQ7wW0wpsAl6m1n+IkwH8Nvc8158uZrH8SvwjAh9v2CZKAym4Sru/Qx6/X3
+         MpoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CprrL+/LROkbBW4cTs+E5TrRYY4E3igZX9G7gYG5Gl4=;
+        b=qVUz5vnqC4yIRU8dhnh+441mqwNcJUcnZPLalbaWMHxCSxWngYarToWkeuIymh4Ucp
+         gNW9UHcQ+IZDeFHyMTj/wBdsQbdsbPFBZbpRfNlSu+hYHL0BDdSVor4YHEHpPs0BMYQq
+         g/qjSCjwT8WFcm4Sz6v2SLPnTVrY5yUuYkw8yeS0of+gfhmEJ7zhmeJ4sFF5RsVqWR2T
+         m1Nir/+ZoRuOwLlXi3V2zV/PQsplZ2Hj2WhIqvINsAERxsmoCEltmZ/3V7OyiUA0DiiA
+         OAdVgoT9avs/4senwZ7BzmpRQTka51HnVY3qEntvQrJILlWeooFBZbu/trMu+z5qkT+z
+         lbcg==
+X-Gm-Message-State: AOAM531tNkESul/1E8tFTLaUowzMNqkxGiexAJJzhd1ZHBSSMm4ISpOF
+        KR4+RB+T7xllfS7WI30jAO1YpA==
+X-Google-Smtp-Source: ABdhPJyRSWbxWbxc+Nc6O5jfLmJ6bOFuPEVvNRYkmmnnGx3lYrXWkZ5m8xRlhIrwn5wJXri3MKUwzA==
+X-Received: by 2002:a4a:a385:: with SMTP id s5mr18994033ool.8.1599578540364;
+        Tue, 08 Sep 2020 08:22:20 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
+        by smtp.gmail.com with ESMTPSA id y23sm3477818ooj.34.2020.09.08.08.22.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2020 08:22:19 -0700 (PDT)
+Date:   Tue, 8 Sep 2020 10:22:17 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, amitk@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        tdas@codeaurora.org
+Subject: Re: [PATCH 6/7] cpufreq: qcom-hw: Add cpufreq support for SM8250 SoC
+Message-ID: <20200908152217.GO3715@yoga>
+References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
+ <20200908075716.30357-7-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <010101746f066ece-dac1eef9-768d-4c90-95fd-56900d13b4c9-000000@us-west-2.amazonses.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SES-Outgoing: 2020.09.08-54.240.27.11
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+In-Reply-To: <20200908075716.30357-7-manivannan.sadhasivam@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 08, 2020 at 06:42:06PM +0000, Jordan Crouse wrote:
-> On Fri, Sep 04, 2020 at 03:55:06PM +0000, Bjorn Andersson wrote:
-> > Extract the conditional invocation of the platform defined
-> > alloc_context_bank() to a separate function to keep
-> > arm_smmu_init_domain_context() cleaner.
-> > 
-> > Instead pass a reference to the arm_smmu_device as parameter to the
-> > call. Also remove the count parameter, as this can be read from the
-> > newly passed object.
-> > 
-> > This allows us to not assign smmu_domain->smmu before attempting to
-> > allocate the context bank and as such we don't need to roll back this
-> > assignment on failure.
-> 
-> Much nicer.
-> 
-> Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+On Tue 08 Sep 02:57 CDT 2020, Manivannan Sadhasivam wrote:
 
-I didn't notice that Rob had grabbed this one for his stack. That's fine too.
-
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Note that this series applies ontop of:
-> > https://lore.kernel.org/linux-arm-msm/20200901164707.2645413-1-robdclark@gmail.com/
-> > 
-> > This could either go on its own, or be squashed with "[PATCH v16 14/20]
-> > iommu/arm-smmu: Prepare for the adreno-smmu implementation" from Rob's series.
-> > 
-> > Changes since v2:
-> > - New patch
-> > 
-> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |  6 ++++--
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 23 ++++++++++++----------
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.h      |  3 ++-
-> >  3 files changed, 19 insertions(+), 13 deletions(-)
-> > 
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > index 2aa6249050ff..0663d7d26908 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > @@ -91,9 +91,10 @@ static int qcom_adreno_smmu_set_ttbr0_cfg(const void *cookie,
-> >  }
-> >  
-> >  static int qcom_adreno_smmu_alloc_context_bank(struct arm_smmu_domain *smmu_domain,
-> > -		struct device *dev, int start, int count)
-> > +					       struct arm_smmu_device *smmu,
-> > +					       struct device *dev, int start)
-> >  {
-> > -	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> > +	int count;
-> >  
-> >  	/*
-> >  	 * Assign context bank 0 to the GPU device so the GPU hardware can
-> > @@ -104,6 +105,7 @@ static int qcom_adreno_smmu_alloc_context_bank(struct arm_smmu_domain *smmu_doma
-> >  		count = 1;
-> >  	} else {
-> >  		start = 1;
-> > +		count = smmu->num_context_banks;
-> >  	}
-> >  
-> >  	return __arm_smmu_alloc_bitmap(smmu->context_map, start, count);
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > index bbec5793faf8..e19d7bdc7674 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > @@ -623,6 +623,16 @@ void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
-> >  	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
-> >  }
-> >  
-> > +static int arm_smmu_alloc_context_bank(struct arm_smmu_domain *smmu_domain,
-> > +				       struct arm_smmu_device *smmu,
-> > +				       struct device *dev, unsigned int start)
-> > +{
-> > +	if (smmu->impl && smmu->impl->alloc_context_bank)
-> > +		return smmu->impl->alloc_context_bank(smmu_domain, smmu, dev, start);
-> > +
-> > +	return __arm_smmu_alloc_bitmap(smmu->context_map, start, smmu->num_context_banks);
-> > +}
-> > +
-> >  static int arm_smmu_init_domain_context(struct iommu_domain *domain,
-> >  					struct arm_smmu_device *smmu,
-> >  					struct device *dev)
-> > @@ -741,20 +751,13 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
-> >  		goto out_unlock;
-> >  	}
-> >  
-> > -	smmu_domain->smmu = smmu;
-> > -
-> > -	if (smmu->impl && smmu->impl->alloc_context_bank)
-> > -		ret = smmu->impl->alloc_context_bank(smmu_domain, dev,
-> > -				start, smmu->num_context_banks);
-> > -	else
-> > -		ret = __arm_smmu_alloc_bitmap(smmu->context_map, start,
-> > -				      smmu->num_context_banks);
-> > -
-> > +	ret = arm_smmu_alloc_context_bank(smmu_domain, smmu, dev, start);
-> >  	if (ret < 0) {
-> > -		smmu_domain->smmu = NULL;
-> >  		goto out_unlock;
-> >  	}
-> >  
-> > +	smmu_domain->smmu = smmu;
-> > +
-> >  	cfg->cbndx = ret;
-> >  	if (smmu->version < ARM_SMMU_V2) {
-> >  		cfg->irptndx = atomic_inc_return(&smmu->irptndx);
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > index 2df3a70a8a41..ddf2ca4c923d 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > @@ -437,7 +437,8 @@ struct arm_smmu_impl {
-> >  	irqreturn_t (*global_fault)(int irq, void *dev);
-> >  	irqreturn_t (*context_fault)(int irq, void *dev);
-> >  	int (*alloc_context_bank)(struct arm_smmu_domain *smmu_domain,
-> > -			struct device *dev, int start, int max);
-> > +				  struct arm_smmu_device *smmu,
-> > +				  struct device *dev, int start);
-> >  };
-> >  
-> >  #define INVALID_SMENDX			-1
-> > -- 
-> > 2.28.0
-> > 
+> SM8250 SoC uses EPSS block for carrying out the cpufreq duties. Hence, add
+> support for it in the driver with relevant of_match data.
 > 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index de816bcafd33..c3c397cc3dc6 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -285,8 +285,17 @@ static const struct qcom_cpufreq_soc_data qcom_soc_data = {
+>  	.lut_row_size = 32,
+>  };
+>  
+> +static const struct qcom_cpufreq_soc_data sm8250_soc_data = {
+
+Could it be that this is the "epss_soc_data" (i.e. not sm8250 specific)?
+(We should still use/include the platform specific compatible though).
+
+Regards,
+Bjorn
+
+> +	.reg_enable = 0x0,
+> +	.reg_freq_lut = 0x100,
+> +	.reg_volt_lut = 0x200,
+> +	.reg_perf_state = 0x320,
+> +	.lut_row_size = 4,
+> +};
+> +
+>  static const struct of_device_id qcom_cpufreq_hw_match[] = {
+>  	{ .compatible = "qcom,cpufreq-hw", .data = &qcom_soc_data },
+> +	{ .compatible = "qcom,sm8250-epss", .data = &sm8250_soc_data },
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> _______________________________________________
-> iommu mailing list
-> iommu@lists.linux-foundation.org
-> https://lists.linuxfoundation.org/mailman/listinfo/iommu
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> 2.17.1
+> 
