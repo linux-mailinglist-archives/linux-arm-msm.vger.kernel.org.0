@@ -2,225 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F61F261D08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 21:30:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18BA4261D2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 21:33:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731695AbgIHTae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 15:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59282 "EHLO
+        id S1731057AbgIHTda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 15:33:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731962AbgIHTaW (ORCPT
+        with ESMTP id S1730992AbgIHP6F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 15:30:22 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E463BC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 12:30:21 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id t14so248458pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 12:30:21 -0700 (PDT)
+        Tue, 8 Sep 2020 11:58:05 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E189C06138F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 05:33:25 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id q21so15831287edv.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 05:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=SsOjzOVIq97WOAc6WZeXaOq483i3DuOEILRijMKc8+c=;
-        b=I2A6OrWWp9ZhN3tycDzSBFzxFhAVc4uVVlf6QeuGM+05TNovmH2B+uVYHRSjh8Tfa4
-         3rbgHqE43zixo0WWMEH/uPn6zQ+k8rp6mukpfWZWv8M5OQw4plGz5nLDUFU8TKhOG76x
-         kbIHeGgSSQCfV0ICNIztWj0FF4yY6nAq3J+2c=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=CbHAntwE/i/0aOcErfQq5jTQMnZZWtdKrAQxbD+Urlc=;
+        b=J+xmTgpWIz9Bfj8KndmtxBj1SCYkernBnfaLUVEZ1RBJMr2xge19uixrG4oQBxWmxE
+         wlcVcXZsavOQxg4sIEhXmDFiYybKnat/o+TLE5MGXzt663viuveYHsIaoT7VX/+k0Sxb
+         dmsYrI4+WU3ck1uTe4hy+JbTz2wcuufFscmSCxrcRxFst9HEzxpsuMxMuF1wXZpg1jt6
+         FkIqMsDT/Cm2vCccRKFUz7St6nLxmBuWa+u0DPge8QTUdOqNslY518gM4zEem1PYnC7/
+         odBsMsJQMswlXhDy1m+xg3viqA4ZteEcF4gs6E5YhPBg/KlxCGcfN6LbGUP7ncOv15md
+         NX/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=SsOjzOVIq97WOAc6WZeXaOq483i3DuOEILRijMKc8+c=;
-        b=CopWEpqArcrKljCXvejWzKqj6HgUGbx59EYQJWq34GA3CIqbKTwQEuRbyYWUXQ2+6t
-         UXxkJrsf7W/68TpfsNV/nkd7VxxeGZwiCZZZg8k77+2ae2qHiFQTcHFXrSDvHHMbcLFr
-         2R5EOYZG1vI7KmJlx2AJsdxdSFzp8l8qhtZwROOD+VWXnieUraMTp7zG3I6MfYW+lHsi
-         f9o5L7YcYrvyWZQxF3xqe9X1ykapU38Hw6g9PxGzHL+XD46hBcB7H4j2bymnQ8vNyaxy
-         8LixqNzTjA8YKTcN+fOHIJvkxKkICo4IzrBshkHiABH9SzqZO3e4dhFljsU3ERHtGbms
-         UKAQ==
-X-Gm-Message-State: AOAM530BAhG7I4QX2FQf+c3vkD2ZcMUkRc7eJisX//Yd7+bjNhZqEK6C
-        hgGdv4DAvgVKg1wm+ZL/s4LGMg==
-X-Google-Smtp-Source: ABdhPJxHIdKSrBuYxJO9MpvlN9pOkwSjhGrSBHPFd2611Mm9W5IYS0c3yvOL6x5Xbpknc67grJnfiw==
-X-Received: by 2002:a62:6003:: with SMTP id u3mr279604pfb.55.1599593421304;
-        Tue, 08 Sep 2020 12:30:21 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id r3sm208389pfh.88.2020.09.08.12.30.20
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=CbHAntwE/i/0aOcErfQq5jTQMnZZWtdKrAQxbD+Urlc=;
+        b=p+HZ32Yxq02fbWgWHCS9CQnUZ96AGBKp8gC5rLRZe0Os2Cr+ujBBm6qgCmemKmQM+z
+         0qucCpSjueFzcnywT/1qrWItO3PAZBCdsV9AhW1iNJG4eDeQ06tbqe0MhgxuD0SERgFw
+         NMjcbYH0Iu5B9rw/OyayTQuEYSyN/KFiWQaBUhUlCtAqdoWBTDHGmnxmfndkFQr5xnsE
+         P93r3XPcBiyJJa4j/GAEaVi4AMBDsr995z8iCK5NO0n8l+28lKgJo7j9i5RCFJmXj0vg
+         ihotIvNPuSTrOerUI7CJbgSkZ3LhPsAc6vcsKiqZ7FflA9RN+SIkzZbdSCiSGkmBL8Cz
+         l4/A==
+X-Gm-Message-State: AOAM531kzYCw7XzjSM8yU33erHf9JDRqleEUbP4u+2LULGeLLPAEhtjk
+        OQm/r0+YpuhsV9kw78EIpkU7RUzQaHqg0Frq
+X-Google-Smtp-Source: ABdhPJyire6a1xGmOn/Oizs1+bSA9Zj7VgW0Nwa4xh6mFyM9pB0RqkBU2ggzqp6YMpsH7c/DBqKZXg==
+X-Received: by 2002:a50:c182:: with SMTP id m2mr26187244edf.70.1599568403518;
+        Tue, 08 Sep 2020 05:33:23 -0700 (PDT)
+Received: from localhost.localdomain ([195.24.90.54])
+        by smtp.gmail.com with ESMTPSA id y9sm17499744edo.37.2020.09.08.05.33.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2020 12:30:20 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200907130731.2607-1-rojay@codeaurora.org>
-References: <20200907130731.2607-1-rojay@codeaurora.org>
-Subject: Re: [PATCH V3] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
-        gregkh@linuxfoundation.org, mka@chromium.org,
-        akashast@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>, wsa@kernel.org
-Date:   Tue, 08 Sep 2020 12:30:18 -0700
-Message-ID: <159959341894.454335.3250696075143737399@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Tue, 08 Sep 2020 05:33:22 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Cc:     Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        nicolas.dufresne@collabora.com,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 0/6] Add VP9 codec levels
+Date:   Tue,  8 Sep 2020 15:32:15 +0300
+Message-Id: <20200908123221.2793-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Why is dri-devel on here? And linaro-mm-sig?
+Hello,
 
-Quoting Roja Rani Yarubandi (2020-09-07 06:07:31)
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
-qcom-geni.c
-> index dead5db3315a..b3609760909f 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->  struct geni_i2c_err_log {
-> @@ -384,7 +387,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *g=
-i2c, struct i2c_msg *msg,
->         if (dma_buf) {
->                 if (gi2c->err)
->                         geni_i2c_rx_fsm_rst(gi2c);
-> -               geni_se_rx_dma_unprep(se, rx_dma, len);
-> +               geni_se_rx_dma_unprep(se, gi2c->rx_dma, len);
-> +               gi2c->rx_dma =3D (dma_addr_t)NULL;
->                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
->         }
-> =20
-> @@ -394,12 +398,12 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev =
-*gi2c, struct i2c_msg *msg,
->  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg=
- *msg,
->                                 u32 m_param)
->  {
-> -       dma_addr_t tx_dma;
->         unsigned long time_left;
->         void *dma_buf =3D NULL;
->         struct geni_se *se =3D &gi2c->se;
->         size_t len =3D msg->len;
-> =20
-> +       gi2c->xfer_len =3D len;
->         if (!of_machine_is_compatible("lenovo,yoga-c630"))
->                 dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
-> =20
-> @@ -410,7 +414,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *g=
-i2c, struct i2c_msg *msg,
-> =20
->         writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
-> =20
-> -       if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
-> +       if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &gi2c->tx_dm=
-a)) {
->                 geni_se_select_mode(se, GENI_SE_FIFO);
->                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
->                 dma_buf =3D NULL;
-> @@ -429,7 +433,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *g=
-i2c, struct i2c_msg *msg,
->         if (dma_buf) {
->                 if (gi2c->err)
->                         geni_i2c_tx_fsm_rst(gi2c);
-> -               geni_se_tx_dma_unprep(se, tx_dma, len);
-> +               geni_se_tx_dma_unprep(se, gi2c->tx_dma, len);
-> +               gi2c->tx_dma =3D (dma_addr_t)NULL;
->                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
->         }
-> =20
-> @@ -479,6 +484,51 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->         return ret;
->  }
-> =20
-> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
-> +{
-> +       int ret;
-> +       u32 dma;
-> +       u32 val;
-> +       u32 geni_status;
-> +       struct geni_se *se =3D &gi2c->se;
-> +
-> +       ret =3D pm_runtime_get_sync(gi2c->se.dev);
-> +       if (ret < 0) {
-> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", re=
-t);
+This new v3 now contains the implementation for VP9 profile and levels
+in the Venus driver as has been requested by Nicolas at [1].
 
-Is this print really necessary? Doesn't PM core already print this sort
-of information?
+Comments are welcome!
 
-> +               return;
-> +       }
-> +
-> +       geni_status =3D readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
-> +       if (geni_status & M_GENI_CMD_ACTIVE) {
+regards,
+Stan
 
-Please try to de-indent all this.
+[1] https://patchwork.kernel.org/patch/11717307/
 
-	if (!(geni_status & M_GENI_CMD_ACTIVE))
-		goto out;
+Stanimir Varbanov (6):
+  v4l2-ctrl: Add VP9 codec levels
+  venus: hfi_helper: Add VP9 profile and levels
+  venus: helpers: Add a helper to map v4l2 ids to HFI ids
+  venus: vdec: Set/Get VP9 profile/level
+  venus: vdec: Use helper to get profile and level
+  venus: venc: Use helper to set profile and level
 
-> +               geni_i2c_abort_xfer(gi2c);
-> +               dma =3D readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
-> +               if (dma) {
+ .../media/v4l/ext-ctrls-codec.rst             |  43 ++++
+ drivers/media/platform/qcom/venus/core.h      |  13 +-
+ drivers/media/platform/qcom/venus/helpers.c   | 239 ++++++++++++++++++
+ drivers/media/platform/qcom/venus/helpers.h   |   2 +
+ .../media/platform/qcom/venus/hfi_helper.h    |  18 ++
+ .../media/platform/qcom/venus/vdec_ctrls.c    |  31 ++-
+ drivers/media/platform/qcom/venus/venc.c      | 159 +-----------
+ .../media/platform/qcom/venus/venc_ctrls.c    |  14 +-
+ drivers/media/v4l2-core/v4l2-ctrls.c          |  21 ++
+ include/uapi/linux/v4l2-controls.h            |  17 ++
+ 10 files changed, 370 insertions(+), 187 deletions(-)
 
-	if (!dma)
-		goto out;
+-- 
+2.17.1
 
-> +                       val =3D readl_relaxed(gi2c->se.base + SE_DMA_DEBU=
-G_REG0);
-> +                       if (val & DMA_TX_ACTIVE) {
-> +                               gi2c->cur_wr =3D 0;
-> +                               if (gi2c->err)
-> +                                       geni_i2c_tx_fsm_rst(gi2c);
-> +                               if (gi2c->tx_dma) {
-> +                                       geni_se_tx_dma_unprep(se,
-> +                                                gi2c->tx_dma, gi2c->xfer=
-_len);
-> +                                       gi2c->tx_dma =3D (dma_addr_t)NULL;
-
-Almost nobody does this. In fact, grep shows me one hit in the kernel.
-If nobody else is doing it something is probably wrong. When would dma
-mode be active and tx_dma not be set to something that should be
-stopped? If it really is necessary I suppose we should assign this to
-DMA_MAPPING_ERROR instead of casting NULL. Then the check above for
-tx_dma being valid can be dropped because geni_se_tx_dma_unprep()
-already checks for a valid mapping before doing anything. But really, we
-should probably be tracking the dma buffer mapped to the CPU as well as
-the dma address that was used for the mapping. Not storing both is a
-problem, see below.
-
-> +                               }
-> +                       } else if (val & DMA_RX_ACTIVE) {
-> +                               gi2c->cur_rd =3D 0;
-> +                               if (gi2c->err)
-> +                                       geni_i2c_rx_fsm_rst(gi2c);
-> +                               if (gi2c->rx_dma) {
-> +                                       geni_se_rx_dma_unprep(se,
-> +                                               gi2c->rx_dma, gi2c->xfer_=
-len);
-
-Looking closely it seems that the geni dma wrappers shouldn't even be
-checking for an iova being non-zero. Instead they should make sure that
-it just isn't invalid with !dma_mapping_error().
-
-> +                                       gi2c->rx_dma =3D (dma_addr_t)NULL;
-
-If we're stopping some dma transaction doesn't that mean the=20
-
-                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
-
-code needs to run also? I fail to see where we free the buffer that has
-been mapped for DMA.
-
-> +                               }
-> +                       }
-> +               }
-> +       }
-> +
-
-out:
-
-> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
-> +}
-> +
