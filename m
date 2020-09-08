@@ -2,155 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86C1F260BF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 09:28:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51FCE260CB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 09:58:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729313AbgIHH2K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 03:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60004 "EHLO
+        id S1729922AbgIHH55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 03:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728654AbgIHH2I (ORCPT
+        with ESMTP id S1729635AbgIHH5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 03:28:08 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533F0C061573;
-        Tue,  8 Sep 2020 00:28:07 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id w2so16222585wmi.1;
-        Tue, 08 Sep 2020 00:28:07 -0700 (PDT)
+        Tue, 8 Sep 2020 03:57:48 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4653BC06179A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 00:57:43 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id 34so59032pgo.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 00:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9Z6Wg0SnwD/AXrAjVsevt8UVjOEN4t/lHztjh1vqIpc=;
-        b=XS64cDdEhGlawiJh6LVQuM8ykQpy7fKVkJGEf9EAbve3bo1jpw4oCC4GRgsloDDnh6
-         79IovVrRwEZTq0mrnScg98VKa+IjpWfYHULNtY5xWIvmUN3msVhp6bKexlE+JOCKWfZQ
-         OdDDDHqkWDjMPimfhUw1iFLXZvY9XhED6DfnCI3hLP2Gk8NX4pQsuFBvCNOJ40gzF15l
-         NrzkgFpq7tOHaadAH1MMSA5SD34+0jmY3Q+QU5mAYoHM+5M+pOAKwjQUlfGgpd61bXnz
-         U9xQWgk/ISvqizVv/NOPyhFXkcHw+hxFiKuB684hwNJrExcYkAwUCMVVEjFrwMANVigs
-         j3pQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=JGfwbA2hMX/PUVpH89svS+V4Ld5w43WoS4VhDZ1+uvE=;
+        b=pJO2glLcWONMCZxzk++7qzEcyoK2rePLlHNeofmiirHWh9yz0rixKMU4YYLAImgiYp
+         O/Glo7upyvln7QHfW1GLAIWWmw8mENdE4QXXuvlfh/M4KmtzVm0ERJ4YVjDXJnFIrrZE
+         2y3CH5O+NooqYIeggydwNGkxErOu3EKUGYdPX5bj9TFXKKBnHT1MJyrtqk/DYo0FMqu7
+         MK8++Fqvu1MRd0oTlYdTqIOpTh50MiMjcBdKuoqt0EczUr7D8D83tcEDL3zuFI1Vy1GD
+         MM1V4WBh+3eVxrn+najs/OsxLtZoXYWND6kZ1KMfD7FAaXNtUSae3k7FRZpj5hfib2hM
+         9SBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9Z6Wg0SnwD/AXrAjVsevt8UVjOEN4t/lHztjh1vqIpc=;
-        b=I5ZwNHS3eTar69AwfW7H6vuw12neM4JxQM6ygLNMnfILde0ex2+UcHHpztYK3Uzuwo
-         pkHf3hbsDwhtLZEYuokkwctVvuY0q5oWzJs+OT7gtnXg1VJuN+R2lfKfkZACwxmRsaHm
-         NYSqVr+dGXt5gQEs4CYJnC4YrC0dlKPBjBOiRPPcW8P59/fUGrHFYqtYEQopVcmUFK8I
-         zA6ElhmS9+zNqjmhnFnyGWEofCM5PPXOoWSO8/UUefu1aFi8BbN9kZaKBPkxRsUpUfe9
-         cYpxJBvZ0uHDb89HULxAdGDtK0iNQc9T4lXvm9A/2Axcmgz+gRIjR1bqj++u7Qz0fSz+
-         CIuQ==
-X-Gm-Message-State: AOAM5304vi5ZPEjoxREbFtaB+SCz5tc4FB8Ipk9S8jxTTQYHQVZS64YX
-        BiOsxUwiqESSsHRo2QKGwVxwweyV9AF5h6m8498=
-X-Google-Smtp-Source: ABdhPJwjK6sbs60PL5NK/eMKpIpeDVHYFaKbJBQcyNs8eO310GkWIw1SY87k3/I7sILHPffB+UnJxM8R7saP0utO1yc=
-X-Received: by 2002:a7b:c0c5:: with SMTP id s5mr2903235wmh.152.1599550086040;
- Tue, 08 Sep 2020 00:28:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200901152713.18629-1-krzk@kernel.org> <20200901152713.18629-2-krzk@kernel.org>
-In-Reply-To: <20200901152713.18629-2-krzk@kernel.org>
-From:   Chunyan Zhang <zhang.lyra@gmail.com>
-Date:   Tue, 8 Sep 2020 15:27:29 +0800
-Message-ID: <CAAfSe-v4o-9zQZOSgQfAU-C4ruJU7BJdHRe4ikghx7AFgh1qgg@mail.gmail.com>
-Subject: Re: [PATCH 02/11] spi: sprd: Simplify with dev_err_probe()
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Mark Brown <broonie@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Masahisa Kojima <masahisa.kojima@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-spi@vger.kernel.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=JGfwbA2hMX/PUVpH89svS+V4Ld5w43WoS4VhDZ1+uvE=;
+        b=F+SAFfmx/giowhnbo2z5uGdmxaP3YLDtcc3rMVucqG0Ummy3QDYPmWR+i6WazW9ZpX
+         qWsdLMz/CarCxoG0Jq9rU/lBsEQ9gpFhAvTAXeg3q1EYXUzppNusvqlVvhBOS8WZ8dB8
+         hXuy92nFY38moTs8QkzYdz8UoaekId2DUqjkmp6n3sI51VPvVkQpcm1NI4yS2rhuaAKL
+         TWB2ffdHReH1X++T2N2yJUHTZyRW6ayWm9sIR7Q7EX5jRr8AkrzrhwnrPGIVIL7ScLlm
+         PnBOg8+usGVFUnOdUQyyeqe/WaOKtzClBVuQPDgP8xvPVv/aCAJT8zhtRj4w3h3uoZbU
+         VDlw==
+X-Gm-Message-State: AOAM531f0jKApcdOwHA9KTqczCXcmvjKNQgMC/31qT0pd46K27gxRGlh
+        q9tZ2Aqxt11n8FOZ2y4MscH/
+X-Google-Smtp-Source: ABdhPJxnL7Hl8Z71y7U9kzxKmM0X1d5HaMDs6sYG80MtVWkyH65fYgMxHVkXWSSR0aAaS+C/7LmLfA==
+X-Received: by 2002:a17:902:8342:: with SMTP id z2mr21724921pln.3.1599551862494;
+        Tue, 08 Sep 2020 00:57:42 -0700 (PDT)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id m21sm7560154pfo.13.2020.09.08.00.57.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2020 00:57:42 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     amitk@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        tdas@codeaurora.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 3/7] cpufreq: qcom-hw: Make use of cpufreq driver_data for passing pdev
+Date:   Tue,  8 Sep 2020 13:27:12 +0530
+Message-Id: <20200908075716.30357-4-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
+References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 1 Sep 2020 at 23:27, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> Common pattern of handling deferred probe can be simplified with
-> dev_err_probe().  Less code and the error value gets printed.
->
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Get rid of global_pdev pointer and make use of cpufreq driver_data for
+passing the reference of pdev. This aligns with what other cpufreq drivers
+are doing.
 
-Acked-by: Chunyan Zhang <zhang.lyra@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/cpufreq/qcom-cpufreq-hw.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-Thanks,
-Chunyan
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 3fb044b907a8..ccea34f61152 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -30,7 +30,6 @@
+ #define REG_PERF_STATE			0x920
+ 
+ static unsigned long cpu_hw_rate, xo_rate;
+-static struct platform_device *global_pdev;
+ static bool icc_scaling_enabled;
+ 
+ static int qcom_cpufreq_set_bw(struct cpufreq_policy *policy,
+@@ -240,7 +239,8 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
+ 
+ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ {
+-	struct device *dev = &global_pdev->dev;
++	struct platform_device *pdev = cpufreq_get_driver_data();
++	struct device *dev = &pdev->dev;
+ 	struct of_phandle_args args;
+ 	struct device_node *cpu_np;
+ 	struct device *cpu_dev;
+@@ -267,7 +267,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 
+ 	index = args.args[0];
+ 
+-	res = platform_get_resource(global_pdev, IORESOURCE_MEM, index);
++	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
+ 	if (!res)
+ 		return -ENODEV;
+ 
+@@ -316,11 +316,12 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	struct device *cpu_dev = get_cpu_device(policy->cpu);
+ 	void __iomem *base = policy->driver_data - REG_PERF_STATE;
++	struct platform_device *pdev = cpufreq_get_driver_data();
+ 
+ 	dev_pm_opp_remove_all_dynamic(cpu_dev);
+ 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+ 	kfree(policy->freq_table);
+-	devm_iounmap(&global_pdev->dev, base);
++	devm_iounmap(&pdev->dev, base);
+ 
+ 	return 0;
+ }
+@@ -365,7 +366,7 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+ 	cpu_hw_rate = clk_get_rate(clk) / CLK_HW_DIV;
+ 	clk_put(clk);
+ 
+-	global_pdev = pdev;
++	cpufreq_qcom_hw_driver.driver_data = pdev;
+ 
+ 	/* Check for optional interconnect paths on CPU0 */
+ 	cpu_dev = get_cpu_device(0);
+-- 
+2.17.1
 
-> ---
->  drivers/spi/spi-sprd-adi.c |  5 +----
->  drivers/spi/spi-sprd.c     | 17 +++++------------
->  2 files changed, 6 insertions(+), 16 deletions(-)
->
-> diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
-> index 127b8bd25831..392ec5cfa3d6 100644
-> --- a/drivers/spi/spi-sprd-adi.c
-> +++ b/drivers/spi/spi-sprd-adi.c
-> @@ -504,10 +504,7 @@ static int sprd_adi_probe(struct platform_device *pdev)
->                         dev_info(&pdev->dev, "no hardware spinlock supplied\n");
->                         break;
->                 default:
-> -                       dev_err(&pdev->dev,
-> -                               "failed to find hwlock id, %d\n", ret);
-> -                       fallthrough;
-> -               case -EPROBE_DEFER:
-> +                       dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
->                         goto put_ctlr;
->                 }
->         }
-> diff --git a/drivers/spi/spi-sprd.c b/drivers/spi/spi-sprd.c
-> index 0443fec3a6ab..635738f54c73 100644
-> --- a/drivers/spi/spi-sprd.c
-> +++ b/drivers/spi/spi-sprd.c
-> @@ -553,22 +553,15 @@ static int sprd_spi_dma_tx_config(struct sprd_spi *ss, struct spi_transfer *t)
->  static int sprd_spi_dma_request(struct sprd_spi *ss)
->  {
->         ss->dma.dma_chan[SPRD_SPI_RX] = dma_request_chan(ss->dev, "rx_chn");
-> -       if (IS_ERR_OR_NULL(ss->dma.dma_chan[SPRD_SPI_RX])) {
-> -               if (PTR_ERR(ss->dma.dma_chan[SPRD_SPI_RX]) == -EPROBE_DEFER)
-> -                       return PTR_ERR(ss->dma.dma_chan[SPRD_SPI_RX]);
-> -
-> -               dev_err(ss->dev, "request RX DMA channel failed!\n");
-> -               return PTR_ERR(ss->dma.dma_chan[SPRD_SPI_RX]);
-> -       }
-> +       if (IS_ERR_OR_NULL(ss->dma.dma_chan[SPRD_SPI_RX]))
-> +               return dev_err_probe(ss->dev, PTR_ERR(ss->dma.dma_chan[SPRD_SPI_RX]),
-> +                                    "request RX DMA channel failed!\n");
->
->         ss->dma.dma_chan[SPRD_SPI_TX]  = dma_request_chan(ss->dev, "tx_chn");
->         if (IS_ERR_OR_NULL(ss->dma.dma_chan[SPRD_SPI_TX])) {
->                 dma_release_channel(ss->dma.dma_chan[SPRD_SPI_RX]);
-> -               if (PTR_ERR(ss->dma.dma_chan[SPRD_SPI_TX]) == -EPROBE_DEFER)
-> -                       return PTR_ERR(ss->dma.dma_chan[SPRD_SPI_TX]);
-> -
-> -               dev_err(ss->dev, "request TX DMA channel failed!\n");
-> -               return PTR_ERR(ss->dma.dma_chan[SPRD_SPI_TX]);
-> +               return dev_err_probe(ss->dev, PTR_ERR(ss->dma.dma_chan[SPRD_SPI_TX]),
-> +                                    "request TX DMA channel failed!\n");
->         }
->
->         return 0;
-> --
-> 2.17.1
->
