@@ -2,84 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8315426227B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 00:15:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86F72262303
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 00:43:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728463AbgIHWPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 18:15:15 -0400
-Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:43756
-        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726369AbgIHWPO (ORCPT
+        id S1729275AbgIHWnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 18:43:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730464AbgIHWnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 18:15:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599603313;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
-        bh=W604g/+Pc0fmhkoTf73JJ4kvixv5ZQPsQb39D8H0cRQ=;
-        b=KqvbDCeaFW8XJJbmTdOsk9QU7GO8+Z0aq53m2Ol0VVdzSX5TcEhb5lFpOPeIZGqC
-        o/wgsQg+H7zXzADiUv3yofnI157Zh2vN0XCz81tfTolFb6uwyEgScD8b3V9MD9S/fp1
-        R+4lcxhH2v9ies1BVa+kTpmSGgaQOIXOEJl0PRsU=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599603313;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
-        bh=W604g/+Pc0fmhkoTf73JJ4kvixv5ZQPsQb39D8H0cRQ=;
-        b=oGe1m4seHg+mpWCR3tmWSf88zVyJIEZlLxxBYY+OtzgfLAg5btthwC0Qzxx6dzCi
-        3is/dRbV6QuVjaETgXokpoVirL9niTbticCKFeuuj1yn+ha0wB9VlUbdppLOgk94XIX
-        dY13iFsDYjwPSjYj+5xHewfJ7oOUL01zZy9piseM=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E3B35C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     rjw@rjwysocki.net, daniel.lezcano@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH] cpuidle: governor: export cpuidle governor functions
-Date:   Tue, 8 Sep 2020 22:15:13 +0000
-Message-ID: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
-X-Mailer: git-send-email 2.28.0
+        Tue, 8 Sep 2020 18:43:31 -0400
+Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9026C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 15:43:30 -0700 (PDT)
+Received: by mail-il1-x142.google.com with SMTP id p13so518222ils.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 15:43:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tcd-ie.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kP3fRBjvfm91Lgym+an8BHFQ2PuoWlJ3si63rQdbN8c=;
+        b=cMCk0lKzNfxAMTO2UkKJ0lXqynPZojKcMVW8pVBD0mlICjkRQgjWFrGN9QLlhQkHwT
+         /1hBT7NZs2Gr3ljH38g6Vgva0RGAIwKBL2lof8SnGTM7KVvDmeSc64CAB5ZYI51ye64A
+         myig/VRQXeaoQ2s/61egtsT7H1YfnYF00beULBHNwfkxORoyxD3tpyeCI6Vv4fXW9aiB
+         GZnJVGUOtP0w4hIktrh22UQPPwcXtPBeUim5uFhP4e860zMBj/sx+nCWMoR6wglWGBae
+         T9aUpzVxoJnsq7orTcIcavPOpRMVeH9o5ow658uO6j6bws7ZRAzwVfQXC+uLjcXt9vgh
+         eYDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kP3fRBjvfm91Lgym+an8BHFQ2PuoWlJ3si63rQdbN8c=;
+        b=ZQOtTlv/svZDUwFBaME03Mhe/E3EE23nNKXXYz0qsfMuAM7dTOZRDPTjYNDO8T3IfI
+         fqISruJ7mRG474MmiMcZrh1x4HtCELtmARj8zNJjzY8d/rh3D8eYPMdXFDgAx9Oyp8Yf
+         z/KDWt94ZQr05j6r1BQOmbCB9Ya6Bo44RcQRh/6EVvWoG8vlAvF+azHS6Hl66IrzSlIk
+         OfmwZLHLzQCRf/8BF/RQwgtz1OAc0I+h3XYBRYcM3Wqyv3xktJhVh5FfsJxHHCo55om8
+         jZ32riOfMUX3MLAwp12va4r7QaEP2Ri3EvKYzx3JIvDnJ8I7sqNp8zOK+q/PnrvwtOt9
+         vRVw==
+X-Gm-Message-State: AOAM533wF0Dqmd/Iw7d29BvHrygTlnpsy9R9Pk9fiDzb214N7Fx3hLiC
+        yMKgW5TboXX7HcV7gMiAOLHY0VfyYF28b9P+Pmfp2w==
+X-Google-Smtp-Source: ABdhPJy2euDOe9gR5D2dH2jq/gUSw+Ds2//IpXgtG+LSuaTtkhuhiIiGtc0UENWkqIWHIiGMHapySfCTPJbwaFtJHWw=
+X-Received: by 2002:a92:9408:: with SMTP id c8mr928626ili.61.1599605010111;
+ Tue, 08 Sep 2020 15:43:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SES-Outgoing: 2020.09.08-54.240.27.186
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+References: <20191221150402.13868-1-murphyt7@tcd.ie> <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+ <20200529124523.GA11817@infradead.org> <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
+ <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com> <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
+ <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com> <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
+ <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com> <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+ <e598fb31-ef7a-c2ee-8a54-bf62d50c480c@deltatee.com> <b27cae1f-07ff-bef2-f125-a5f0d968016d@linux.intel.com>
+In-Reply-To: <b27cae1f-07ff-bef2-f125-a5f0d968016d@linux.intel.com>
+From:   Tom Murphy <murphyt7@tcd.ie>
+Date:   Tue, 8 Sep 2020 23:43:19 +0100
+Message-ID: <CALQxJut5c=cWdi+SVkN3JnbkhPSYmLkOyRUhduL-UJ9gyKn9Ow@mail.gmail.com>
+Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
+ dma-iommu api
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc:     Logan Gunthorpe <logang@deltatee.com>, kvm@vger.kernel.org,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
-capability of registering cpuidle governors, which was unused at that
-time. By exporting the symbol, let's allow platform specific modules to
-register cpuidle governors and use cpuidle_governor_latency_req() to get
-the QoS for the CPU.
+On Tue, 8 Sep 2020 at 16:56, Tvrtko Ursulin
+<tvrtko.ursulin@linux.intel.com> wrote:
+>
+>
+> On 08/09/2020 16:44, Logan Gunthorpe wrote:
+> > On 2020-09-08 9:28 a.m., Tvrtko Ursulin wrote:
+> >>>
+> >>> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
+> >>> b/drivers/gpu/drm/i915/i915
+> >>> index b7b59328cb76..9367ac801f0c 100644
+> >>> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
+> >>> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
+> >>> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
+> >>>    } __sgt_iter(struct scatterlist *sgl, bool dma) {
+> >>>           struct sgt_iter s = { .sgp = sgl };
+> >>>
+> >>> +       if (sgl && !sg_dma_len(s.sgp))
+> >>
+> >> I'd extend the condition to be, just to be safe:
+> >>      if (dma && sgl && !sg_dma_len(s.sgp))
+> >>
+> >
+> > Right, good catch, that's definitely necessary.
+> >
+> >>> +               s.sgp = NULL;
+> >>> +
+> >>>           if (s.sgp) {
+> >>>                   s.max = s.curr = s.sgp->offset;
+> >>> -               s.max += s.sgp->length;
+> >>> -               if (dma)
+> >>> +
+> >>> +               if (dma) {
+> >>> +                       s.max += sg_dma_len(s.sgp);
+> >>>                           s.dma = sg_dma_address(s.sgp);
+> >>> -               else
+> >>> +               } else {
+> >>> +                       s.max += s.sgp->length;
+> >>>                           s.pfn = page_to_pfn(sg_page(s.sgp));
+> >>> +               }
+> >>
+> >> Otherwise has this been tested or alternatively how to test it? (How to
+> >> repro the issue.)
+> >
+> > It has not been tested. To test it, you need Tom's patch set without the
+> > last "DO NOT MERGE" patch:
+> >
+> > https://lkml.kernel.org/lkml/20200907070035.GA25114@infradead.org/T/
+>
+> Tom, do you have a branch somewhere I could pull from? (Just being lazy
+> about downloading a bunch of messages from the archives.)
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
- drivers/cpuidle/governor.c | 2 ++
- 1 file changed, 2 insertions(+)
+I don't unfortunately. I'm working locally with poor internet.
 
-diff --git a/drivers/cpuidle/governor.c b/drivers/cpuidle/governor.c
-index 29acaf48e575..0e51ed25665e 100644
---- a/drivers/cpuidle/governor.c
-+++ b/drivers/cpuidle/governor.c
-@@ -102,6 +102,7 @@ int cpuidle_register_governor(struct cpuidle_governor *gov)
- 
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(cpuidle_register_governor);
- 
- /**
-  * cpuidle_governor_latency_req - Compute a latency constraint for CPU
-@@ -118,3 +119,4 @@ s64 cpuidle_governor_latency_req(unsigned int cpu)
- 
- 	return (s64)device_req * NSEC_PER_USEC;
- }
-+EXPORT_SYMBOL_GPL(cpuidle_governor_latency_req);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>
+> What GPU is in your Lenovo x1 carbon 5th generation and what
+> graphical/desktop setup I need to repro?
 
+
+Is this enough info?:
+
+$ lspci -vnn | grep VGA -A 12
+00:02.0 VGA compatible controller [0300]: Intel Corporation HD
+Graphics 620 [8086:5916] (rev 02) (prog-if 00 [VGA controller])
+    Subsystem: Lenovo ThinkPad X1 Carbon 5th Gen [17aa:224f]
+    Flags: bus master, fast devsel, latency 0, IRQ 148
+    Memory at eb000000 (64-bit, non-prefetchable) [size=16M]
+    Memory at 60000000 (64-bit, prefetchable) [size=256M]
+    I/O ports at e000 [size=64]
+    [virtual] Expansion ROM at 000c0000 [disabled] [size=128K]
+    Capabilities: [40] Vendor Specific Information: Len=0c <?>
+    Capabilities: [70] Express Root Complex Integrated Endpoint, MSI 00
+    Capabilities: [ac] MSI: Enable+ Count=1/1 Maskable- 64bit-
+    Capabilities: [d0] Power Management version 2
+    Capabilities: [100] Process Address Space ID (PASID)
+    Capabilities: [200] Address Translation Service (ATS)
+
+
+>
+> Regards,
+>
+> Tvrtko
