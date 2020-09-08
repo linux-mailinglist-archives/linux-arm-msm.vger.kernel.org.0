@@ -2,161 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 750ED261EDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 21:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFE78261EB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 21:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731237AbgIHT4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 15:56:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59456 "EHLO mail.kernel.org"
+        id S1730929AbgIHTxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 15:53:49 -0400
+Received: from mga09.intel.com ([134.134.136.24]:45227 "EHLO mga09.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730523AbgIHPgn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 11:36:43 -0400
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2EE7D22473;
-        Tue,  8 Sep 2020 15:34:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599579284;
-        bh=npfcU0pwyfPfRyU05fDUq1Zm5QXoTD0f+8A/EmwT2RA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=j/Cb0j7mwfjlo9yVb4vl8J3B1R8MPSUTloMB+JP8dL1OwR+1emijV3N+vJydC13Dt
-         ism9X5tvRtl0MEZsLIwDmcuxkcGXQAPI8oGTwe1tAsAG2euDvW+t+iCXM5s2JkppZq
-         NPPZ8Q8PRtQkcsdQ5E6wf4L/1ZDNbC6R1mrPJz3E=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        John Stultz <john.stultz@linaro.org>,
+        id S1729935AbgIHPh4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Sep 2020 11:37:56 -0400
+IronPort-SDR: Vk1a8Xp01oHqi3a6rxgficaRMRGr8uTq6Dp/08L+148x0hEhYgnTroXXPB0ja9+tz03LOoCo35
+ xddhQ16YHyvw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9738"; a="159124946"
+X-IronPort-AV: E=Sophos;i="5.76,406,1592895600"; 
+   d="scan'208";a="159124946"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2020 08:28:50 -0700
+IronPort-SDR: OqiPE0Cn/mbaoFglvyhAf2rWnLm6JquwW+AKzi6KXAQYqzMCNSFdbI9D+UGi2vd+sJzRv/8Kvj
+ Oe6qN0U8cxmQ==
+X-IronPort-AV: E=Sophos;i="5.76,406,1592895600"; 
+   d="scan'208";a="480068519"
+Received: from sderix-mobl1.ger.corp.intel.com (HELO [10.214.213.131]) ([10.214.213.131])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2020 08:28:38 -0700
+Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
+ dma-iommu api
+To:     Logan Gunthorpe <logang@deltatee.com>, Tom Murphy <murphyt7@tcd.ie>
+Cc:     kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.8 006/186] tty: serial: qcom_geni_serial: Drop __init from qcom_geni_console_setup
-Date:   Tue,  8 Sep 2020 17:22:28 +0200
-Message-Id: <20200908152241.960585647@linuxfoundation.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200908152241.646390211@linuxfoundation.org>
-References: <20200908152241.646390211@linuxfoundation.org>
-User-Agent: quilt/0.66
+        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+ <20200529124523.GA11817@infradead.org>
+ <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
+ <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com>
+ <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
+ <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
+ <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
+ <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+Message-ID: <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+Date:   Tue, 8 Sep 2020 16:28:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: John Stultz <john.stultz@linaro.org>
 
-[ Upstream commit 975efc66d4e654207c17f939eb737ac591ac38fe ]
+Hi,
 
-When booting with heavily modularized config, the serial console
-may not be able to load until after init when modules that
-satisfy needed dependencies have time to load.
+On 27/08/2020 22:36, Logan Gunthorpe wrote:
+> On 2020-08-23 6:04 p.m., Tom Murphy wrote:
+>> I have added a check for the sg_dma_len == 0 :
+>> """
+>>   } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>>          struct sgt_iter s = { .sgp = sgl };
+>>
+>> +       if (sgl && sg_dma_len(sgl) == 0)
+>> +           s.sgp = NULL;
+>>
+>>          if (s.sgp) {
+>>              .....
+>> """
+>> at location [1].
+>> but it doens't fix the problem.
+> 
+> Based on my read of the code, it looks like we also need to change usage
+> of sgl->length... Something like the rough patch below, maybe?
 
-Unfortunately, as qcom_geni_console_setup is marked as __init,
-the function may have been freed before we get to run it,
-causing boot time crashes such as:
+This thread was brought to my attention and I initially missed this 
+reply. Essentially I came to the same conclusion about the need to use 
+sg_dma_len. One small correction below:
 
-[    6.469057] Unable to handle kernel paging request at virtual address ffffffe645d4e6cc
-[    6.481623] Mem abort info:
-[    6.484466]   ESR = 0x86000007
-[    6.487557]   EC = 0x21: IABT (current EL), IL = 32 bits
-[    6.492929]   SET = 0, FnV = 0g
-[    6.496016]   EA = 0, S1PTW = 0
-[    6.499202] swapper pgtable: 4k pages, 39-bit VAs, pgdp=000000008151e000
-[    6.501286] ufshcd-qcom 1d84000.ufshc: ufshcd_print_pwr_info:[RX, TX]: gear=[3, 3], lane[2, 2], pwr[FAST MODE, FAST MODE], rate = 2
-[    6.505977] [ffffffe645d4e6cc] pgd=000000017df9f003, p4d=000000017df9f003, pud=000000017df9f003, pmd=000000017df9c003, pte=0000000000000000
-[    6.505990] Internal error: Oops: 86000007 [#1] PREEMPT SMP
-[    6.505995] Modules linked in: zl10353 zl10039 zl10036 zd1301_demod xc5000 xc4000 ves1x93 ves1820 tuner_xc2028 tuner_simple tuner_types tua9001 tua6100 1
-[    6.506152]  isl6405
-[    6.518104] ufshcd-qcom 1d84000.ufshc: ufshcd_find_max_sup_active_icc_level: Regulator capability was not set, actvIccLevel=0
-[    6.530549]  horus3a helene fc2580 fc0013 fc0012 fc0011 ec100 e4000 dvb_pll ds3000 drxk drxd drx39xyj dib9000 dib8000 dib7000p dib7000m dib3000mc dibx003
-[    6.624271] CPU: 7 PID: 148 Comm: kworker/7:2 Tainted: G        W       5.8.0-mainline-12021-g6defd37ba1cd #3455
-[    6.624273] Hardware name: Thundercomm Dragonboard 845c (DT)
-[    6.624290] Workqueue: events deferred_probe_work_func
-[    6.624296] pstate: 40c00005 (nZcv daif +PAN +UAO BTYPE=--)
-[    6.624307] pc : qcom_geni_console_setup+0x0/0x110
-[    6.624316] lr : try_enable_new_console+0xa0/0x140
-[    6.624318] sp : ffffffc010843a30
-[    6.624320] x29: ffffffc010843a30 x28: ffffffe645c3e7d0
-[    6.624325] x27: ffffff80f8022180 x26: ffffffc010843b28
-[    6.637937] x25: 0000000000000000 x24: ffffffe6462a2000
-[    6.637941] x23: ffffffe646398000 x22: 0000000000000000
-[    6.637945] x21: 0000000000000000 x20: ffffffe6462a5ce8
-[    6.637952] x19: ffffffe646398e38 x18: ffffffffffffffff
-[    6.680296] x17: 0000000000000000 x16: ffffffe64492b900
-[    6.680300] x15: ffffffe6461e9d08 x14: 69202930203d2064
-[    6.680305] x13: 7561625f65736162 x12: 202c363331203d20
-[    6.696434] x11: 0000000000000030 x10: 0101010101010101
-[    6.696438] x9 : 4d4d20746120304d x8 : 7f7f7f7f7f7f7f7f
-[    6.707249] x7 : feff4c524c787373 x6 : 0000000000008080
-[    6.707253] x5 : 0000000000000000 x4 : 8080000000000000
-[    6.707257] x3 : 0000000000000000 x2 : ffffffe645d4e6cc
-[    6.744223] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate: failed to find OPP for freq 102400000 (-34)
-[    6.744966] x1 : fffffffefe74e174 x0 : ffffffe6462a5ce8
-[    6.753580] qcom_geni_serial 898000.serial: dev_pm_opp_set_rate: failed to find OPP for freq 102400000 (-34)
-[    6.761634] Call trace:
-[    6.761639]  qcom_geni_console_setup+0x0/0x110
-[    6.761645]  register_console+0x29c/0x2f8
-[    6.767981] Bluetooth: hci0: Frame reassembly failed (-84)
-[    6.775252]  uart_add_one_port+0x438/0x500
-[    6.775258]  qcom_geni_serial_probe+0x2c4/0x4a8
-[    6.775266]  platform_drv_probe+0x58/0xa8
-[    6.855359]  really_probe+0xec/0x398
-[    6.855362]  driver_probe_device+0x5c/0xb8
-[    6.855367]  __device_attach_driver+0x98/0xb8
-[    7.184945]  bus_for_each_drv+0x74/0xd8
-[    7.188825]  __device_attach+0xec/0x148
-[    7.192705]  device_initial_probe+0x24/0x30
-[    7.196937]  bus_probe_device+0x9c/0xa8
-[    7.200816]  deferred_probe_work_func+0x7c/0xb8
-[    7.205398]  process_one_work+0x20c/0x4b0
-[    7.209456]  worker_thread+0x48/0x460
-[    7.213157]  kthread+0x14c/0x158
-[    7.216432]  ret_from_fork+0x10/0x18
-[    7.220049] Code: bad PC value
-[    7.223139] ---[ end trace 73f3b21e251d5a70 ]---
+> Also, Tom, do you have an updated version of the patchset to convert the
+> Intel IOMMU to dma-iommu available? The last one I've found doesn't
+> apply cleanly (I'm assuming parts of it have been merged in slightly
+> modified forms).
+> 
+> Thanks,
+> 
+> Logan
+> 
+> --
+> 
+> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
+> b/drivers/gpu/drm/i915/i915
+> index b7b59328cb76..9367ac801f0c 100644
+> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
+> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
+> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
+>   } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>          struct sgt_iter s = { .sgp = sgl };
+> 
+> +       if (sgl && !sg_dma_len(s.sgp))
 
-Thus this patch removes the __init avoiding crash in such
-configs.
+I'd extend the condition to be, just to be safe:
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Amit Pundir <amit.pundir@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-serial@vger.kernel.org
-Suggested-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: John Stultz <john.stultz@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20200811025044.70626-1-john.stultz@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/tty/serial/qcom_geni_serial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+	if (dma && sgl && !sg_dma_len(s.sgp))
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 457c0bf8cbf83..ffdf6da016c21 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1047,7 +1047,7 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *uport)
- }
- 
- #ifdef CONFIG_SERIAL_QCOM_GENI_CONSOLE
--static int __init qcom_geni_console_setup(struct console *co, char *options)
-+static int qcom_geni_console_setup(struct console *co, char *options)
- {
- 	struct uart_port *uport;
- 	struct qcom_geni_serial_port *port;
--- 
-2.25.1
+> +               s.sgp = NULL;
+> +
+>          if (s.sgp) {
+>                  s.max = s.curr = s.sgp->offset;
+> -               s.max += s.sgp->length;
+> -               if (dma)
+> +
+> +               if (dma) {
+> +                       s.max += sg_dma_len(s.sgp);
+>                          s.dma = sg_dma_address(s.sgp);
+> -               else
+> +               } else {
+> +                       s.max += s.sgp->length;
+>                          s.pfn = page_to_pfn(sg_page(s.sgp));
+> +               }
 
+Otherwise has this been tested or alternatively how to test it? (How to 
+repro the issue.)
 
+Regards,
 
+Tvrtko
