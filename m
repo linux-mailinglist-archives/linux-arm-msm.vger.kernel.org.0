@@ -2,103 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCD0826151D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 18:44:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC232614D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 18:38:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732011AbgIHQoi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 12:44:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33874 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732009AbgIHQb1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 12:31:27 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F172723BE5;
-        Tue,  8 Sep 2020 13:23:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599571408;
-        bh=pUEfMpq/UYZC7azZMZ5kSA/t1DHYIvIV/tbSmdkMHt8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=F0S8l6qu0IET3EzvZa3BeHFC0eAm7E2aMFtOGtSg4MVL1uz8Bf2WvkYY7OEOJOI+g
-         zeE2vL5jNPiS75krNhH/BAAmujRDEfwUzgv3ohTAR5HKdwMAWJxGwat9vAFf1wxe4X
-         hSjqMSsMuTCoX1v0XkWWt2kLar5QEeFnSbqv1oqs=
-Date:   Tue, 8 Sep 2020 14:22:44 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Andy Gross <agross@kernel.org>,
+        id S1731645AbgIHQib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 12:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60598 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732079AbgIHQhg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Sep 2020 12:37:36 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE070C061A1B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 07:09:31 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id di5so7817466qvb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 07:09:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kA7YBuYMq9b3mZzCv9QQfgvbcIlMMupkbIGoGou1wKo=;
+        b=DgR0IsQjxrfz3z5ThPdVC/EGBKu1Cil2pH0g/Pfa0AUeKE5hMigysm6ESL863n4gSW
+         ZFelUzvaCcKKt+R+vd3kVgnbR87hZPYasZ9DG1QkrhGu9kBZy1QhQWT1dbmJhLRleTl6
+         0bqm2gKnliloULfvqnwEcNpa2e8VSxe8qQGwMAz1MDJLWFwu6nLPpEiIFrJJyq7wMvdd
+         CMZy7v1PRgsLtziIdbnzOTSWT9OkvrhZsvc03OxKLr7HCwlv1ZNdBnZh8+oQeT8psZ3E
+         Ki7Yaz6n+VL+ZMiMJDEhBz7VDZ0OFChwHRZPHUb+QJ3GeH0h7aZb4l/g3U3b0Ub3y2QV
+         dq4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kA7YBuYMq9b3mZzCv9QQfgvbcIlMMupkbIGoGou1wKo=;
+        b=UCJVKYY/+AnoSEbvsj4vRErjuThI4MnEfx98k+2D5LqvN1ky/jNHLBpi8m0XL8PRnz
+         hIOKDtv73ZABFWbNObXSpvNSNvrPDvmWwHkEJQrcXqbwTXBk5zsu9bavvvD9vnURsn9/
+         RQzBRwvpByG4Ns+oN/5tHpAtJ+hsWQ5eJxQ8T6Yk4si0Fmufn+bst5xTfQ6+lAoDMS4o
+         gWu7mOIIr/VUG5dFoKEplyY1rO1GBMOq0owxIkvf0IZnfOwUg3ZhKB57dfOpMq41JhSB
+         HyVSUXtL/PfAYXfJbmgEnxGhU7UJXq37rAHrSO7Leba1bdW0pA40t03yvwb7szAliTlL
+         zZ1A==
+X-Gm-Message-State: AOAM531/N9hByWIlD/9cqV9OGs9KdkBqqGxYtsMG/7/iUFb8wGb0bbCP
+        g0x2FE6m5WmAthWRSCaty/lE8kDmvkIYJnuHxgE=
+X-Google-Smtp-Source: ABdhPJwDTbXK3AYjXreftxuSFRet1m2rtpDGlXYZDBJkXYObWLBHJ8LTS7P+wSPf/tV6q4xpuTYdsA==
+X-Received: by 2002:ad4:534c:: with SMTP id v12mr270078qvs.14.1599574170698;
+        Tue, 08 Sep 2020 07:09:30 -0700 (PDT)
+Received: from localhost.localdomain ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id r24sm14447276qtm.70.2020.09.08.07.09.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2020 07:09:30 -0700 (PDT)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Masahisa Kojima <masahisa.kojima@linaro.org>,
-        Jassi Brar <jaswinder.singh@linaro.org>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 02/11] spi: sprd: Simplify with dev_err_probe()
-Message-ID: <20200908132244.GA48155@sirena.org.uk>
-References: <20200901152713.18629-1-krzk@kernel.org>
- <20200901152713.18629-2-krzk@kernel.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        alsa-devel@alsa-project.org (moderated list:SOUNDWIRE SUBSYSTEM),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] soundwire: qcom: fix SLIBMUS/SLIMBUS typo
+Date:   Tue,  8 Sep 2020 10:08:17 -0400
+Message-Id: <20200908140818.28373-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uAKRQypu60I7Lcqm"
-Content-Disposition: inline
-In-Reply-To: <20200901152713.18629-2-krzk@kernel.org>
-X-Cookie: Remember the... the... uhh.....
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fix slimbus case being broken thanks to a typo.
 
---uAKRQypu60I7Lcqm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Fixes: 5bd773242f75 ("soundwire: qcom: avoid dependency on CONFIG_SLIMBUS")
 
-On Tue, Sep 01, 2020 at 05:27:04PM +0200, Krzysztof Kozlowski wrote:
-> Common pattern of handling deferred probe can be simplified with
-> dev_err_probe().  Less code and the error value gets printed.
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+This should be squashed into the problematic patch if possible,
+but I'm not sure if that's possible since its already in linux-next?
 
-This doesn't apply against current code, please check and resend.
+ drivers/soundwire/qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Applying: spi: sprd: Simplify with dev_err_probe()
-Using index info to reconstruct a base tree...
-M	drivers/spi/spi-sprd-adi.c
-Falling back to patching base and 3-way merge...
-Auto-merging drivers/spi/spi-sprd-adi.c
-CONFLICT (content): Merge conflict in drivers/spi/spi-sprd-adi.c
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 100af93a5eab..c406a079d237 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -780,7 +780,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+ 	if (!ctrl)
+ 		return -ENOMEM;
+ 
+-#if IS_ENABLED(CONFIG_SLIBMUS)
++#if IS_ENABLED(CONFIG_SLIMBUS)
+ 	if (dev->parent->bus == &slimbus_bus) {
+ #else
+ 	if (false) {
+-- 
+2.26.1
 
---uAKRQypu60I7Lcqm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl9XhaMACgkQJNaLcl1U
-h9BD+Qf/aECmurEbZzuMemn3QkE80q0VxXmiRjrG37cSIuZiDfm3np+BN4O6qef4
-jaozUFazSi1o8PpDSZtZmUuUhXIxs1TnlfIiET/a770NsLAy1CiCZcV7oIY2KWQ8
-5h51M2zOavV16MTiPa3BpaNJig5ZCrrltr+cVzP8GZ8ZlQRQJxS63yHkWPEvJ6jP
-N7nQ1JidLKkucxQveOxuFd8fUEajsGwJboKYBcFWL10Ga6A5aZOwNb8/fsjiu8sx
-KgGKvEZgoTfhhfGX5kg6s7ZWdCRLyyaSekjAXtY6ECQL6j4RHwGcx5sHqRUKR0pS
-TnET69OatkEPU5lbOiMrQS1KC+ycBw==
-=hY0h
------END PGP SIGNATURE-----
-
---uAKRQypu60I7Lcqm--
