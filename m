@@ -2,170 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9CEB261474
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 18:23:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7550C261495
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 18:27:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731816AbgIHQXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 12:23:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58240 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731887AbgIHQWl (ORCPT
+        id S1731709AbgIHQ1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 12:27:42 -0400
+Received: from ale.deltatee.com ([204.191.154.188]:52582 "EHLO
+        ale.deltatee.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731915AbgIHQ1k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 12:22:41 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C72B0C09B043
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 07:40:34 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id c13so178119oiy.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 07:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=gPcieJcPktL1nGtQ3CPYTKBD+Ta7XljCQbXl/MbV5To=;
-        b=JixNYbDmOvp2/Vgm8rdPkpElXATAbUeixoOvrkRTSwCOE607vlcS1SOqEVXv5WI7dP
-         EdJwGSsxWOj0EFurjaxlWrqa8RAGCNQc3Fhrf6wA38N6nKteuVuLkICNNiWJn1VNAxFA
-         xM3WNXezc3a8efPrz9VV+jbriI+FyvLxYjGVBfvYVqMIrAb0KhAefvVyKParNgGbch3w
-         AJqEtn0ig+RiMpls+0t3z+AbjLJkrhgNG1RXIY/BaQ0DgXNMEgbEdKTcH0T/ziCKzcke
-         XzmMbfbe+evCDZd0KXn++tA01B+c9/k6/Fd0OVeuxI3mz/3DnleGbdxuSDdeE7dE+xk+
-         zX5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gPcieJcPktL1nGtQ3CPYTKBD+Ta7XljCQbXl/MbV5To=;
-        b=Mw/FZ77IRjCS2mSw+IjpggMUD6ZgvaEVRS4axZabL4NRZ1irqZ+rQg2W2l5vlDSWxK
-         /65CSU+5SrSR0zUSByGhvEG80BqEb0IwntaGJfBkGKXWWL9t44huL+txMtlj7p0s6PVP
-         E+kvyOjiM4d5rdyu+jgtu3duqoOdVZ83Q8ZykGL1etRr+2wszlNvyNz25/iKKuvzYP/x
-         8XIp2WZMUEDo86DVpAFpBKZ3/LyP1c65quQOH3LSQvhIJga//+bCQ9MHlJMAlCuGqYnq
-         SJp+rnC5pZFwvxi7YKCCHyySpupzzwB/yRWCcM/TO9TfUx8d9ulH00GCW9hzi7E7za+8
-         5Ojw==
-X-Gm-Message-State: AOAM531fZ50hse8UGSgznkVW39VRdJA+MKDV6yPAUwfxy8Rel+IksBYw
-        POLFta5Vll/4dKVJBNm7wMyk3A==
-X-Google-Smtp-Source: ABdhPJwYAeXrfUaRThbJxg8f1ht0zPXpOv6/A90yB5RmZ7nAvvTYVm3A4VMv9KuNRHEZPSmyrLx5Sw==
-X-Received: by 2002:a05:6808:8e5:: with SMTP id d5mr2937201oic.33.1599576034193;
-        Tue, 08 Sep 2020 07:40:34 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id t10sm3422202ooh.4.2020.09.08.07.40.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2020 07:40:33 -0700 (PDT)
-Date:   Tue, 8 Sep 2020 09:40:31 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org,
-        Elliot Berman <eberman@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 1/2] firmware: qcom_scm: Add memory protect virtual
- address ranges
-Message-ID: <20200908144031.GL3715@yoga>
-References: <20200817082723.17458-1-stanimir.varbanov@linaro.org>
- <20200817082723.17458-2-stanimir.varbanov@linaro.org>
+        Tue, 8 Sep 2020 12:27:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=deltatee.com; s=20200525; h=Subject:Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Sender:
+        Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+        :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=DvSiEr2JCy+2h9dy7CIecEenG2gQsa0A5OP2d9PI/p0=; b=dbg0PtMPK+HbvI6GMZzh/J5E8Z
+        Q/TWc7UsDFhg1cOVJt/pysWKo3QQRWraF1mqHM6mdRGQ6y0rj+OXqZUSgbgyS5kW1MF22xpb3bm/M
+        J9Rf7mpjgRlZVOcx1SZJ6EJp7lFy55R6nqk8PsS8AEsD0hf0g4vJC65mDtFEAYzf7cE0mQHAAVUlU
+        S7bbDUQqTHtHsrq5f8RHYZU0yCa5rG3lpeqMLTKlNXStV+C6+vhM0UL/8Wjc5CgLnNZYF3jPybjc/
+        ulyb1L7dumDVfTJQeMlSwf7IyaVvWKGWBe0b9ikUV9lDLMezAf5m+fY9DJk+AU+8aTTS01s/mCgwR
+        I5zJe2Ew==;
+Received: from s01060023bee90a7d.cg.shawcable.net ([24.64.145.4] helo=[192.168.0.10])
+        by ale.deltatee.com with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.92)
+        (envelope-from <logang@deltatee.com>)
+        id 1kFfnI-0008Go-Gj; Tue, 08 Sep 2020 09:44:29 -0600
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Tom Murphy <murphyt7@tcd.ie>
+Cc:     kvm@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+ <20200529124523.GA11817@infradead.org>
+ <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
+ <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com>
+ <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
+ <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
+ <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
+ <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+ <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+From:   Logan Gunthorpe <logang@deltatee.com>
+Message-ID: <e598fb31-ef7a-c2ee-8a54-bf62d50c480c@deltatee.com>
+Date:   Tue, 8 Sep 2020 09:44:24 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200817082723.17458-2-stanimir.varbanov@linaro.org>
+In-Reply-To: <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 24.64.145.4
+X-SA-Exim-Rcpt-To: robin.murphy@arm.com, kgene@kernel.org, iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org, cohuck@redhat.com, dwmw2@infradead.org, gerald.schaefer@de.ibm.com, virtualization@lists.linux-foundation.org, tglx@linutronix.de, matthias.bgg@gmail.com, linux-mediatek@lists.infradead.org, intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, linux-s390@vger.kernel.org, linux-arm-kernel@lists.infradead.org, agross@kernel.org, linux-rockchip@lists.infradead.org, hch@infradead.org, jonathanh@nvidia.com, krzk@kernel.org, maz@kernel.org, linux-samsung-soc@vger.kernel.org, jean-philippe@linaro.org, m.szyprowski@samsung.com, will@kernel.org, julien.grall@arm.com, linux-tegra@vger.kernel.org, bjorn.andersson@linaro.org, dri-devel@lists.freedesktop.org, airlied@linux.ie, kvm@vger.kernel.org, murphyt7@tcd.ie, tvrtko.ursulin@linux.intel.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on ale.deltatee.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-8.5 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A autolearn=ham autolearn_force=no version=3.4.2
+Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
+ dma-iommu api
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 17 Aug 03:27 CDT 2020, Stanimir Varbanov wrote:
 
-> This adds a new SCM memprotect command to set virtual address ranges.
+
+On 2020-09-08 9:28 a.m., Tvrtko Ursulin wrote:
+>>
+>> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
+>> b/drivers/gpu/drm/i915/i915
+>> index b7b59328cb76..9367ac801f0c 100644
+>> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
+>> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
+>> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
+>>   } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>>          struct sgt_iter s = { .sgp = sgl };
+>>
+>> +       if (sgl && !sg_dma_len(s.sgp))
 > 
+> I'd extend the condition to be, just to be safe:
+>     if (dma && sgl && !sg_dma_len(s.sgp))
+>
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Right, good catch, that's definitely necessary.
 
-
-Please feel free to pick this through linux-media.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  drivers/firmware/qcom_scm.c | 24 ++++++++++++++++++++++++
->  drivers/firmware/qcom_scm.h |  1 +
->  include/linux/qcom_scm.h    |  8 +++++++-
->  3 files changed, 32 insertions(+), 1 deletion(-)
+>> +               s.sgp = NULL;
+>> +
+>>          if (s.sgp) {
+>>                  s.max = s.curr = s.sgp->offset;
+>> -               s.max += s.sgp->length;
+>> -               if (dma)
+>> +
+>> +               if (dma) {
+>> +                       s.max += sg_dma_len(s.sgp);
+>>                          s.dma = sg_dma_address(s.sgp);
+>> -               else
+>> +               } else {
+>> +                       s.max += s.sgp->length;
+>>                          s.pfn = page_to_pfn(sg_page(s.sgp));
+>> +               }
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 0e7233a20f34..dec8dc42a6bc 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -757,6 +757,30 @@ int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
->  }
->  EXPORT_SYMBOL(qcom_scm_iommu_secure_ptbl_init);
->  
-> +int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
-> +				   u32 cp_nonpixel_start,
-> +				   u32 cp_nonpixel_size)
-> +{
-> +	int ret;
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_MP,
-> +		.cmd = QCOM_SCM_MP_VIDEO_VAR,
-> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_VAL, QCOM_SCM_VAL,
-> +					 QCOM_SCM_VAL, QCOM_SCM_VAL),
-> +		.args[0] = cp_start,
-> +		.args[1] = cp_size,
-> +		.args[2] = cp_nonpixel_start,
-> +		.args[3] = cp_nonpixel_size,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +	struct qcom_scm_res res;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +
-> +	return ret ? : res.result[0];
-> +}
-> +EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
-> +
->  static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
->  				 size_t mem_sz, phys_addr_t src, size_t src_sz,
->  				 phys_addr_t dest, size_t dest_sz)
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-> index d9ed670da222..14da834ac593 100644
-> --- a/drivers/firmware/qcom_scm.h
-> +++ b/drivers/firmware/qcom_scm.h
-> @@ -97,6 +97,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->  #define QCOM_SCM_MP_RESTORE_SEC_CFG		0x02
->  #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_SIZE	0x03
->  #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_INIT	0x04
-> +#define QCOM_SCM_MP_VIDEO_VAR			0x08
->  #define QCOM_SCM_MP_ASSIGN			0x16
->  
->  #define QCOM_SCM_SVC_OCMEM		0x0f
-> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-> index 3d6a24697761..ba45537f688b 100644
-> --- a/include/linux/qcom_scm.h
-> +++ b/include/linux/qcom_scm.h
-> @@ -77,11 +77,13 @@ extern bool qcom_scm_restore_sec_cfg_available(void);
->  extern int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
->  extern int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size);
->  extern int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare);
-> +extern int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
-> +					  u32 cp_nonpixel_start,
-> +					  u32 cp_nonpixel_size);
->  extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  			       unsigned int *src,
->  			       const struct qcom_scm_vmperm *newvm,
->  			       unsigned int dest_cnt);
-> -
->  extern bool qcom_scm_ocmem_lock_available(void);
->  extern int qcom_scm_ocmem_lock(enum qcom_scm_ocmem_client id, u32 offset,
->  			       u32 size, u32 mode);
-> @@ -128,6 +130,10 @@ static inline int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size)
->  		{ return -ENODEV; }
->  static inline int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
->  		{ return -ENODEV; }
-> +extern inline int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
-> +						 u32 cp_nonpixel_start,
-> +						 u32 cp_nonpixel_size)
-> +		{ return -ENODEV; }
->  static inline int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  		unsigned int *src, const struct qcom_scm_vmperm *newvm,
->  		unsigned int dest_cnt) { return -ENODEV; }
-> -- 
-> 2.17.1
-> 
+> Otherwise has this been tested or alternatively how to test it? (How to
+> repro the issue.)
+
+It has not been tested. To test it, you need Tom's patch set without the
+last "DO NOT MERGE" patch:
+
+https://lkml.kernel.org/lkml/20200907070035.GA25114@infradead.org/T/
+
+Thanks,
+
+Logan
