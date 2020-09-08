@@ -2,215 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DFFF260CFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 10:05:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08677260D64
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 10:19:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728479AbgIHIFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 04:05:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36354 "EHLO
+        id S1729744AbgIHIT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 04:19:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729940AbgIHH5v (ORCPT
+        with ESMTP id S1729554AbgIHITz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 03:57:51 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43BFCC061573
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 00:57:51 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id j34so4089303pgi.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 00:57:51 -0700 (PDT)
+        Tue, 8 Sep 2020 04:19:55 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0185C061573
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 01:19:54 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id k15so18065679wrn.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 01:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cDupOEGD43zOafkeHwpXvRZFRBLRl6C9wgjA2f07/F0=;
-        b=QQYLtPYQds66Aq5sAInDKeb1drvHJt9XVWKwoRjvuCeNkRGx5+rFQiX+dSbfnvmPUQ
-         +EdJT883lIKsSbWKYABvFjZ5eK7DhOsF540AZTY3Lh/sCCiSuQ5sE9f71hfSjND1BrYb
-         /fRUds+4A7kgOKaPGN6xeDdnBeDpzTIyfwwEuN19BFcyhxX492wBYzXnibWeszqb+k/M
-         xNi0n0FYMAm/2j9zF4nudmkX9Ae3RxGQgX62hcWZScGUwk3kY39muYL1NykdmwhEU0cM
-         gPvxnLyYSeo9NrzD5eMpuSoYDDRkruY7GDkUxtEyfX7IthGRRkpmCCbiufQhWithfewm
-         briw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=onJm5JoeC8wX6+ligEVQFIaG2k7uPzPHxbYAuHbpW6s=;
+        b=dzitBvmxxPd0DOKY9vCthE+mkoJQdvLGSUrs45nVY4M2qJIhMIdhBpg+WPNIEgAjwp
+         5UWlLrxf7Ppw74nA3bkqczIe988DdwWh1PM+3HL101h8pJB9EtURdgqnb7ni48A4zE5T
+         UUxGfMrgNOVAtzRNhGwxcue4hF8QcriQCL26kKOANnOTW21JuHdjbn9Q4IQlGBMMu5TY
+         jJkmwnqSskLaP3dH4lSMdhEetwX5bQVtQlMHWU0KFDaax4lvrE4F0OdR1Ofj3KgmC3BN
+         7GHontSjT9d2tK8/GyDr5/MIWOQvrYqBJb2IrFXXIZ+b0P2zbDeYwDIIQcmP7CRAQkh4
+         HCwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=cDupOEGD43zOafkeHwpXvRZFRBLRl6C9wgjA2f07/F0=;
-        b=LZpm8l7UDXzdUVEIuqYzOomD+P6UGbOoNhmOOlHyQnjS2w9WndgZKXRA4CRNDDcpr2
-         xn0Y9hpjehRt2I9V/L32s18z+bUDyJLjtO8BeHQZ3t3VRViQro352KVlSz4f3CXh3g5L
-         goSghdqHbJYHiQzhFfY7QIHdjn2sMvX6/YC1fx8pIblLDmK+IXoL4Znqd0dI21H+5XKN
-         HcrvmmLJ1PKrCga9cik501H2niXT1Jnn1Z8dro/uPwacnSmf6/5s205AqGDO7Gyj4OjE
-         uDURPtq0hLumAZHI4YANHejmGGYzMtsUf8SmFwbLooHAFWDm8R9JK1rDlDzSeP2Gm6Dl
-         Vi/Q==
-X-Gm-Message-State: AOAM532oqvOt0L5mKQU9QadzrPOEigreJD7ekKrNB2aXAUm7PfS2yDa1
-        lcfDPUMAEArPeCxYnuTx5kUD
-X-Google-Smtp-Source: ABdhPJxpx0HbYrcj8hGngV6Luqv87IDIEB9wAwcFjrONlar2oFhO8UsTm9X+3KW73Kg2fmgjpV0GGg==
-X-Received: by 2002:a63:9d82:: with SMTP id i124mr19186323pgd.336.1599551870736;
-        Tue, 08 Sep 2020 00:57:50 -0700 (PDT)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id m21sm7560154pfo.13.2020.09.08.00.57.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2020 00:57:50 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     amitk@kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        tdas@codeaurora.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 5/7] cpufreq: qcom-hw: Use regmap for accessing hardware registers
-Date:   Tue,  8 Sep 2020 13:27:14 +0530
-Message-Id: <20200908075716.30357-6-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
-References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=onJm5JoeC8wX6+ligEVQFIaG2k7uPzPHxbYAuHbpW6s=;
+        b=EZ/ZrgD7xJnIqzOUG1OZYBHKrGvBfjCKxDg4wkoC3/3H4N+XMmSS7K+0IcHB3+9BRG
+         37v8+ozPIhCUrdug74fs1YuL5lrUuD0cORtAb4iV431eWZIL741ifr0GF7rJ3kbs0CFA
+         9Rqlg0UhJgpOfxeBGcK73Im66bL7fcIqsne9PTlV8l8wGb/PmQs+DG8wR2nsVoIT5MfM
+         7j0wlwhFpOFp+IPzxqHvZq7P3CgnAXlrMOgWAivT43YuakWd1QwPCUCMIrQel3+K3Sc6
+         ESriBtyjl0l4uBtOAmE+bGwciv7EQT1pdb+eds7Q6m2+4aEo/R+2Xdbu2kKh5eIKNfnE
+         h5uA==
+X-Gm-Message-State: AOAM531wpJdhfJAO+u8dtKD29mPsqW+wxdom1+qqShWcJD1Gy8h0shnH
+        LNGScOAIbUA5Ngaxo9ia9I+0/Q==
+X-Google-Smtp-Source: ABdhPJxj2bfSNW8Ovib+gu1LoHpS3QT4XJEReAaEIVQ3y4/K/GkrM+u+4MSvbj4y4JreCiUH4teq/Q==
+X-Received: by 2002:adf:ab5a:: with SMTP id r26mr24977054wrc.194.1599553192356;
+        Tue, 08 Sep 2020 01:19:52 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id c205sm31146488wmd.33.2020.09.08.01.19.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Sep 2020 01:19:51 -0700 (PDT)
+Subject: Re: [PATCH] misc: fastrpc: add ioctl for attaching to sensors pd
+To:     Jonathan Marek <jonathan@marek.ca>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20200901003300.11985-1-jonathan@marek.ca>
+ <20200907123344.GA2371705@kroah.com>
+ <a9d142c9-8a61-ee59-d849-393af1b3eaec@marek.ca>
+ <e0db9beb-bbd2-8f20-d7f4-675b62acf782@linaro.org>
+ <4b617c4c-f0f8-3d6b-c726-9dd4bf705fbc@marek.ca>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <ba161732-038e-de38-e357-a36494ad92ab@linaro.org>
+Date:   Tue, 8 Sep 2020 09:19:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <4b617c4c-f0f8-3d6b-c726-9dd4bf705fbc@marek.ca>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use regmap for accessing cpufreq registers in hardware.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 55 ++++++++++++++++++++++++++-----
- 1 file changed, 47 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 41853db7c9b8..de816bcafd33 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -12,6 +12,7 @@
- #include <linux/of_address.h>
- #include <linux/of_platform.h>
- #include <linux/pm_opp.h>
-+#include <linux/regmap.h>
- #include <linux/slab.h>
- 
- #define LUT_MAX_ENTRIES			40U
-@@ -32,6 +33,7 @@ struct qcom_cpufreq_soc_data {
- 
- struct qcom_cpufreq_data {
- 	void __iomem *base;
-+	struct regmap *regmap;
- 	const struct qcom_cpufreq_soc_data *soc_data;
- };
- 
-@@ -85,8 +87,11 @@ static int qcom_cpufreq_hw_target_index(struct cpufreq_policy *policy,
- 	struct qcom_cpufreq_data *data = policy->driver_data;
- 	const struct qcom_cpufreq_soc_data *soc_data = data->soc_data;
- 	unsigned long freq = policy->freq_table[index].frequency;
-+	int ret;
- 
--	writel_relaxed(index, data->base + soc_data->reg_perf_state);
-+	ret = regmap_write(data->regmap, soc_data->reg_perf_state, index);
-+	if (ret)
-+		return ret;
- 
- 	if (icc_scaling_enabled)
- 		qcom_cpufreq_set_bw(policy, freq);
-@@ -102,6 +107,7 @@ static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
- 	const struct qcom_cpufreq_soc_data *soc_data;
- 	struct cpufreq_policy *policy;
- 	unsigned int index;
-+	int ret;
- 
- 	policy = cpufreq_cpu_get_raw(cpu);
- 	if (!policy)
-@@ -110,7 +116,10 @@ static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
- 	data = policy->driver_data;
- 	soc_data = data->soc_data;
- 
--	index = readl_relaxed(data->base + soc_data->reg_perf_state);
-+	ret = regmap_read(data->regmap, soc_data->reg_perf_state, &index);
-+	if (ret)
-+		return 0;
-+
- 	index = min(index, LUT_MAX_ENTRIES - 1);
- 
- 	return policy->freq_table[index].frequency;
-@@ -123,9 +132,12 @@ static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
- 	const struct qcom_cpufreq_soc_data *soc_data = data->soc_data;
- 	unsigned int index;
- 	unsigned long freq;
-+	int ret;
- 
- 	index = policy->cached_resolved_idx;
--	writel_relaxed(index, data->base + soc_data->reg_perf_state);
-+	ret = regmap_write(data->regmap, soc_data->reg_perf_state, index);
-+	if (ret)
-+		return 0;
- 
- 	freq = policy->freq_table[index].frequency;
- 	arch_set_freq_scale(policy->related_cpus, freq,
-@@ -171,14 +183,24 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
- 	}
- 
- 	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
--		data = readl_relaxed(drv_data->base + soc_data->reg_freq_lut +
--				      i * soc_data->lut_row_size);
-+		ret = regmap_read(drv_data->regmap, soc_data->reg_freq_lut +
-+				  i * soc_data->lut_row_size, &data);
-+		if (ret) {
-+			kfree(table);
-+			return ret;
-+		}
-+
- 		src = FIELD_GET(LUT_SRC, data);
- 		lval = FIELD_GET(LUT_L_VAL, data);
- 		core_count = FIELD_GET(LUT_CORE_COUNT, data);
- 
--		data = readl_relaxed(drv_data->base + soc_data->reg_volt_lut +
--				      i * soc_data->lut_row_size);
-+		ret = regmap_read(drv_data->regmap, soc_data->reg_volt_lut +
-+				  i * soc_data->lut_row_size, &data);
-+		if (ret) {
-+			kfree(table);
-+			return ret;
-+		}
-+
- 		volt = FIELD_GET(LUT_VOLT, data) * 1000;
- 
- 		if (src)
-@@ -248,6 +270,13 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
- 	}
- }
- 
-+static struct regmap_config qcom_cpufreq_regmap = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.fast_io = true,
-+};
-+
- static const struct qcom_cpufreq_soc_data qcom_soc_data = {
- 	.reg_enable = 0x0,
- 	.reg_freq_lut = 0x110,
-@@ -274,6 +303,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 	struct qcom_cpufreq_data *data;
- 	const struct of_device_id *match;
- 	int ret, index;
-+	u32 val;
- 
- 	cpu_dev = get_cpu_device(policy->cpu);
- 	if (!cpu_dev) {
-@@ -316,9 +346,18 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 
- 	data->soc_data = match->data;
- 	data->base = base;
-+	data->regmap = devm_regmap_init_mmio(dev, base, &qcom_cpufreq_regmap);
-+	if (IS_ERR(data->regmap)) {
-+		ret = PTR_ERR(data->regmap);
-+		goto error;
-+	}
- 
- 	/* HW should be in enabled state to proceed */
--	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-+	ret = regmap_read(data->regmap, data->soc_data->reg_enable, &val);
-+	if (ret)
-+		goto error;
-+
-+	if (!(val & 0x1)) {
- 		dev_err(dev, "Domain-%d cpufreq hardware not enabled\n", index);
- 		ret = -ENODEV;
- 		goto error;
--- 
-2.17.1
+On 07/09/2020 15:02, Jonathan Marek wrote:
+>>>
+>>> Srini do you have any suggestions for how to name these values?
+>>
+>> These are domain id corresponding to each core.
+>> you can use SDSP_DOMAIN_ID in here!
+>> these are already defined in the file as:
+>>
+>> #define ADSP_DOMAIN_ID (0)
+>> #define MDSP_DOMAIN_ID (1)
+>> #define SDSP_DOMAIN_ID (2)
+>> #define CDSP_DOMAIN_ID (3)
+>>
+> 
+> I don't think this is right:
+> 
+> FASTRPC_IOCTL_INIT_ATTACH uses pd = 0
+> FASTRPC_IOCTL_INIT_CREATE uses pd = 1
+> 
+> And these two ioctl are used with all DSP cores. So it wouldn't make 
+> sense for the pd value to correspond to the domain id.
+> 
+You are right, values are pretty much similar to domain ids but not 
+exactly the same as Protection Domain(PD) ids.
 
+I spoke to qcom guys about this, and this is what I have.
+
+0 is Audio Process PD
+1 is Dynamic User PD, cases like SNPE or CV
+2 is Sensor Process PD.
+
+
+Hope this helps!
+
+--srini
