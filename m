@@ -2,220 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EAC026226F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 00:09:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8315426227B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 00:15:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728633AbgIHWJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 18:09:22 -0400
-Received: from lb1-smtp-cloud8.xs4all.net ([194.109.24.21]:58021 "EHLO
-        lb1-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726369AbgIHWJW (ORCPT
+        id S1728463AbgIHWPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 18:15:15 -0400
+Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:43756
+        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726369AbgIHWPO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 18:09:22 -0400
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud8.xs4all.net with ESMTPA
-        id Flngk7HoMgJnQFlnhktjnR; Wed, 09 Sep 2020 00:09:18 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1599602958; bh=IhI721eaP7+VKo8uClkjaJoSslW4xBDgSR0a8FCRnE4=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=NskNbFgmCYGAFEKUpTba97xohZsyH0EEPSrQpNUFfQ4FYEoEhgYRuCYfFYNgMaDVi
-         rgQMxHUfds+X1tPubWS+9rKPbGoWHNyDSsBgL5si53Tne2wj+f7lTZgAsLyM/xVCzB
-         1E2wXYOEZBS5QGq3YjSP2z3Ll5Cza3ZLWwoChSsOFsEFRgZ2W8iWs6Z2yA0+44duVu
-         hwemU4EwlwKOD+zMTSwTedSIsmoEVvnutElPfCd/pdKGw0HSEHyjQAQ70Z0dnI4VCX
-         bFOS6+LfedI7RhRi4c5n2T3DhoMAUosLPvgOmq8GChvCenHyKAvYHPU8f741FD1/z/
-         FqUu+SjUsPYKA==
-Subject: Re: [PATCH v3 1/6] v4l2-ctrl: Add VP9 codec levels
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-Cc:     Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        nicolas.dufresne@collabora.com
-References: <20200908123221.2793-1-stanimir.varbanov@linaro.org>
- <20200908123221.2793-2-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <7592e482-de3e-9bc8-c08d-a860d4e8dd26@xs4all.nl>
-Date:   Wed, 9 Sep 2020 00:09:16 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Tue, 8 Sep 2020 18:15:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599603313;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
+        bh=W604g/+Pc0fmhkoTf73JJ4kvixv5ZQPsQb39D8H0cRQ=;
+        b=KqvbDCeaFW8XJJbmTdOsk9QU7GO8+Z0aq53m2Ol0VVdzSX5TcEhb5lFpOPeIZGqC
+        o/wgsQg+H7zXzADiUv3yofnI157Zh2vN0XCz81tfTolFb6uwyEgScD8b3V9MD9S/fp1
+        R+4lcxhH2v9ies1BVa+kTpmSGgaQOIXOEJl0PRsU=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599603313;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=W604g/+Pc0fmhkoTf73JJ4kvixv5ZQPsQb39D8H0cRQ=;
+        b=oGe1m4seHg+mpWCR3tmWSf88zVyJIEZlLxxBYY+OtzgfLAg5btthwC0Qzxx6dzCi
+        3is/dRbV6QuVjaETgXokpoVirL9niTbticCKFeuuj1yn+ha0wB9VlUbdppLOgk94XIX
+        dY13iFsDYjwPSjYj+5xHewfJ7oOUL01zZy9piseM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E3B35C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     rjw@rjwysocki.net, daniel.lezcano@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH] cpuidle: governor: export cpuidle governor functions
+Date:   Tue, 8 Sep 2020 22:15:13 +0000
+Message-ID: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20200908123221.2793-2-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfItfcxsl9h2MIrorM3mxfgR6A2KKfuGYEJNE//D1nZHI2IZdad69k+Qd5pq64wodoysevrxk2dHN1B5xbVxjo0SzuIg5HKkQyraWU4uCtvoS5e/NqiIE
- sihNdNJiHcmJx3qTwT9vsPwoDlqvjrRRjHbzEosx+bCP3GovHK1gm7T4HCMtV997J+Nfkxcox+bD+sNEJYY/rDZOQdcD+V8TRTxZ1wnNshGAOJbCgfUXxieZ
- slgtC+ztmLVkgCCZlnpekKTt8/g29Nrs7IKAa46eI16jSRGpFvBoJhJUYHtW9bRl0q0dKdZFdU5ABdQLfEW9rXR+56DtjKJ2AYSLpp625tSvaLd3YFIpz25W
- Q9D3kTCf6+kau+Yc4NXwtjq5nKk77Wd2+jFIubvEMkF1EIKYG6mJgWnVeKCcz1bfBtwbmkb9SSMPCOn2WORWYLKUb/bt5PRflIaIVBtXMsyvIszm+Mr9zVuy
- GFjjU70yNe44CEbKuwO+e2H4rjxcgNXus8oE48LGzL9k4hVh9F+DeJytBZkL/crL/Cjf2u36RzGYwqKzzZW9rlcExkT4uym5vgChjS3YabpQb04p/uPd8zcz
- sq9sykabOoXPKYCXQPQB08l2
+Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.08-54.240.27.186
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2020 14:32, Stanimir Varbanov wrote:
-> Add menu control for VP9 codec levels. A total of 14 levels are
-> defined for Profile 0 (8bit) and Profile 2 (10bit). Each level
-> is a set of constrained bitstreams coded with targeted resolutions,
-> frame rates, and bitrates.
-> 
-> The definitions have been taken from webm project [1].
-> 
-> [1] https://www.webmproject.org/vp9/levels/
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
+capability of registering cpuidle governors, which was unused at that
+time. By exporting the symbol, let's allow platform specific modules to
+register cpuidle governors and use cpuidle_governor_latency_req() to get
+the QoS for the CPU.
 
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+---
+ drivers/cpuidle/governor.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thanks,
-
-	Hans
-
-> ---
->  .../media/v4l/ext-ctrls-codec.rst             | 43 +++++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ctrls.c          | 21 +++++++++
->  include/uapi/linux/v4l2-controls.h            | 17 ++++++++
->  3 files changed, 81 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index 289d380e2cf0..ce728c757eaf 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -3383,6 +3383,49 @@ enum v4l2_mpeg_video_vp9_profile -
->      * - ``V4L2_MPEG_VIDEO_VP9_PROFILE_3``
->        - Profile 3
->  
-> +.. _v4l2-mpeg-video-vp9-level:
-> +
-> +``V4L2_CID_MPEG_VIDEO_VP9_LEVEL (enum)``
-> +
-> +enum v4l2_mpeg_video_vp9_level -
-> +    This control allows selecting the level for VP9 encoder.
-> +    This is also used to enumerate supported levels by VP9 encoder or decoder.
-> +    More information can be found at
-> +    `webmproject <https://www.webmproject.org/vp9/levels/>`__. Possible values are:
-> +
-> +.. flat-table::
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_1_0``
-> +      - Level 1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_1_1``
-> +      - Level 1.1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_2_0``
-> +      - Level 2
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_2_1``
-> +      - Level 2.1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_3_0``
-> +      - Level 3
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_3_1``
-> +      - Level 3.1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_4_0``
-> +      - Level 4
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_4_1``
-> +      - Level 4.1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_5_0``
-> +      - Level 5
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_5_1``
-> +      - Level 5.1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_5_2``
-> +      - Level 5.2
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_6_0``
-> +      - Level 6
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_6_1``
-> +      - Level 6.1
-> +    * - ``V4L2_MPEG_VIDEO_VP9_LEVEL_6_2``
-> +      - Level 6.2
-> +
->  
->  High Efficiency Video Coding (HEVC/H.265) Control Reference
->  ===========================================================
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index 73f3d65957ff..bd7f330c941c 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -475,6 +475,23 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		"3",
->  		NULL,
->  	};
-> +	static const char * const vp9_level[] = {
-> +		"1",
-> +		"1.1",
-> +		"2",
-> +		"2.1",
-> +		"3",
-> +		"3.1",
-> +		"4",
-> +		"4.1",
-> +		"5",
-> +		"5.1",
-> +		"5.2",
-> +		"6",
-> +		"6.1",
-> +		"6.2",
-> +		NULL,
-> +	};
->  
->  	static const char * const flash_led_mode[] = {
->  		"Off",
-> @@ -694,6 +711,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		return vp8_profile;
->  	case V4L2_CID_MPEG_VIDEO_VP9_PROFILE:
->  		return vp9_profile;
-> +	case V4L2_CID_MPEG_VIDEO_VP9_LEVEL:
-> +		return vp9_level;
->  	case V4L2_CID_JPEG_CHROMA_SUBSAMPLING:
->  		return jpeg_chroma_subsampling;
->  	case V4L2_CID_DV_TX_MODE:
-> @@ -950,6 +969,7 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_VPX_P_FRAME_QP:		return "VPX P-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_VP8_PROFILE:			return "VP8 Profile";
->  	case V4L2_CID_MPEG_VIDEO_VP9_PROFILE:			return "VP9 Profile";
-> +	case V4L2_CID_MPEG_VIDEO_VP9_LEVEL:			return "VP9 Level";
->  	case V4L2_CID_MPEG_VIDEO_VP8_FRAME_HEADER:		return "VP8 Frame Header";
->  
->  	/* HEVC controls */
-> @@ -1307,6 +1327,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  	case V4L2_CID_MPEG_VIDEO_VPX_GOLDEN_FRAME_SEL:
->  	case V4L2_CID_MPEG_VIDEO_VP8_PROFILE:
->  	case V4L2_CID_MPEG_VIDEO_VP9_PROFILE:
-> +	case V4L2_CID_MPEG_VIDEO_VP9_LEVEL:
->  	case V4L2_CID_DETECT_MD_MODE:
->  	case V4L2_CID_MPEG_VIDEO_HEVC_PROFILE:
->  	case V4L2_CID_MPEG_VIDEO_HEVC_LEVEL:
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index 053827cda8e6..a184c4939438 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -651,6 +651,23 @@ enum v4l2_mpeg_video_vp9_profile {
->  	V4L2_MPEG_VIDEO_VP9_PROFILE_2				= 2,
->  	V4L2_MPEG_VIDEO_VP9_PROFILE_3				= 3,
->  };
-> +#define V4L2_CID_MPEG_VIDEO_VP9_LEVEL			(V4L2_CID_MPEG_BASE+513)
-> +enum v4l2_mpeg_video_vp9_level {
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_1_0	= 0,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_1_1	= 1,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_2_0	= 2,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_2_1	= 3,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_3_0	= 4,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_3_1	= 5,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_4_0	= 6,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_4_1	= 7,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_5_0	= 8,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_5_1	= 9,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_5_2	= 10,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_6_0	= 11,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_6_1	= 12,
-> +	V4L2_MPEG_VIDEO_VP9_LEVEL_6_2	= 13,
-> +};
->  
->  /* CIDs for HEVC encoding. */
->  
-> 
+diff --git a/drivers/cpuidle/governor.c b/drivers/cpuidle/governor.c
+index 29acaf48e575..0e51ed25665e 100644
+--- a/drivers/cpuidle/governor.c
++++ b/drivers/cpuidle/governor.c
+@@ -102,6 +102,7 @@ int cpuidle_register_governor(struct cpuidle_governor *gov)
+ 
+ 	return ret;
+ }
++EXPORT_SYMBOL_GPL(cpuidle_register_governor);
+ 
+ /**
+  * cpuidle_governor_latency_req - Compute a latency constraint for CPU
+@@ -118,3 +119,4 @@ s64 cpuidle_governor_latency_req(unsigned int cpu)
+ 
+ 	return (s64)device_req * NSEC_PER_USEC;
+ }
++EXPORT_SYMBOL_GPL(cpuidle_governor_latency_req);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
