@@ -2,83 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57D5226090E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 05:44:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A37D2260983
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Sep 2020 06:26:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728579AbgIHDoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Sep 2020 23:44:46 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:59425 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728327AbgIHDop (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Sep 2020 23:44:45 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 07 Sep 2020 20:44:44 -0700
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Sep 2020 20:44:43 -0700
-Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Sep 2020 09:14:41 +0530
-Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id D348521D04; Tue,  8 Sep 2020 09:14:39 +0530 (IST)
-From:   Mansur Alisha Shaik <mansur@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH 2/2] venus: core: vote for video-mem icc path and change avg, peak bw
-Date:   Tue,  8 Sep 2020 09:14:38 +0530
-Message-Id: <1599536678-4666-1-git-send-email-mansur@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1725951AbgIHE0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Sep 2020 00:26:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52868 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725802AbgIHE0d (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Sep 2020 00:26:33 -0400
+Received: from localhost (unknown [122.182.239.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D537D21532;
+        Tue,  8 Sep 2020 04:26:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599539192;
+        bh=CJ6HscSjdMRTk0mmdMvvzqY/BsVYK5YNZEfkv85bDtg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rweWXphm0+FYsHubtLDXVBOwTvFith3tciW0aemjbSoEhxXmeEtQq+7QHAobV2/SP
+         7TXHX/59R+a08eC9pmvrDugcbM99Ovhqk/vk/6FrjbyBLvpOrk5EclsJS9kG41QFgP
+         M9expCjqFci79jPxMDeNX806hwlYts401UaZ+57w=
+Date:   Tue, 8 Sep 2020 09:56:24 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Chunfeng Yun <chunfeng.yun@mediatek.com>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Bharat Gooty <bharat.gooty@broadcom.com>,
+        Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH 1/6] phy: phy-bcm-ns-usb3: convert to
+ readl_poll_timeout_atomic()
+Message-ID: <20200908042624.GA77521@vkoul-mobl>
+References: <1598320987-25518-1-git-send-email-chunfeng.yun@mediatek.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1598320987-25518-1-git-send-email-chunfeng.yun@mediatek.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently we are voting for venus0-ebi path during buffer processing
-with an average bandwidth of all the instances and unvoting during
-session release.
+On 25-08-20, 10:03, Chunfeng Yun wrote:
+> Use readl_poll_timeout_atomic() to simplify code
 
-While video streaming when we try to do XO-SD using the command
-"echo mem > /sys/power/state command" , device is not entering
-to suspend state and from interconnect summary seeing votes for venus0-ebi
+Applied all, thanks
 
-Corrected this by voting for venus0-ebi path in venus_runtime_resume
-and unvote during venus_runtime_suspend.
-
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
----
- drivers/media/platform/qcom/venus/core.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 4857bbd..79d8600 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -373,6 +373,10 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	ret = icc_set_bw(core->video_path, 0, 0);
-+	if (ret)
-+		return ret;
-+
- 	return ret;
- }
- 
-@@ -382,7 +386,11 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
- 	const struct venus_pm_ops *pm_ops = core->pm_ops;
- 	int ret;
- 
--	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
-+	ret = icc_set_bw(core->video_path, kbps_to_icc(20000), 0);
-+	if (ret)
-+		return ret;
-+
-+	ret = icc_set_bw(core->cpucfg_path, kbps_to_icc(1000), 0);
- 	if (ret)
- 		return ret;
- 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+~Vinod
