@@ -2,132 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8866C262662
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 06:35:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D7252627B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 09:04:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725959AbgIIEfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 00:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725840AbgIIEfU (ORCPT
+        id S1725932AbgIIHES (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 03:04:18 -0400
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:54358
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727820AbgIIHEB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 00:35:20 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83743C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 21:35:18 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id t7so706277pjd.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 21:35:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=z/ZqzCBddoOe6cElQsXSPaPa9YScgcb1RA++AVKK45o=;
-        b=S0iEEtWHdVMdH4ZvaQfDsFtl52bOxgDUnqEKCqK13oLiS7xCyycKXwY2VIuvCNRPuU
-         MSMSWLy3KV532CJHWDObBmAImM+Kzyow0iB/WZ3vpgmbaMoVLL821tpO+eFo5FFbgrip
-         H7WtG7PWAs8H4fLvNoMTxm2fnGS9vJwhmTdrbe82kgfVzhvuaFov6fTPRbh0lO5ZKflO
-         Haw9eVq2OgvUPoE2rL6YdKWsv7pYA+ceRcl26RdHS9M9oNwAW+fhUhipZi0KXjCARbKD
-         MqKTbptINtOsGNz24PX9A9eWoXX/U0uIV5kr4VBcKo7COkJ+CR8pJi1GbbmuzpY6+PS2
-         PANg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=z/ZqzCBddoOe6cElQsXSPaPa9YScgcb1RA++AVKK45o=;
-        b=F/WUd6f4su7zc4X7jtorRg7kUcsD/fECKAUg23NjMrKnz8QEBTH1YaoU2XSZJB09dG
-         /b78OUsv5uSHkg+yaM38MpMkxdQV7+BDQEgZct+pAEEpTCgpJJJLaGAeoKOUmiFPofsa
-         ehu3dKbb4zaU0lFz/QGkMBuqGoRdu4c8auDnFV40dogV9CqZrgFRh6traGBfldzPAZgv
-         j4omPWayp1lVmhLzqyubXtaEGdPparNJjbvvCLg7OFSvX4pkIHXbz10JWAV4sdlm4fF6
-         HbHYIG9A0QcRmgOl2wztYu7GmJalGMlnIzcEGq5a2Vi0X5HM63l0zVxxoVvfZg8UyyYD
-         FCJw==
-X-Gm-Message-State: AOAM530nTkSbz0Gh0QFIQaDL/o68X7GXwFE3B+APWLW6Rz55pTlNciW6
-        DSt+8ZWSu0cDkHv/H90yIknsZA==
-X-Google-Smtp-Source: ABdhPJym123jrDQyOmckTomGRhHglYxlPrWudYpouUVfZSewDsr/fa/uKEO4Gqv50DZEE8lcrCB6yw==
-X-Received: by 2002:a17:90b:4a4b:: with SMTP id lb11mr1891666pjb.111.1599626117949;
-        Tue, 08 Sep 2020 21:35:17 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id z1sm355353pfz.70.2020.09.08.21.35.16
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Sep 2020 21:35:16 -0700 (PDT)
-Date:   Wed, 9 Sep 2020 10:05:14 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Amit Kucheria <amitk@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH 5/7] cpufreq: qcom-hw: Use regmap for accessing hardware
- registers
-Message-ID: <20200909043514.kuchag27eb255lgk@vireshk-i7>
-References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
- <20200908075716.30357-6-manivannan.sadhasivam@linaro.org>
- <20200908103444.5e526uawa45om6lt@vireshk-i7>
- <20200908111141.GB23095@mani>
- <20200908111813.bbgfxo5v7qt6ujpc@vireshk-i7>
- <CAHLCerMndYeEBOxtj8mV7OdOP9pufx+C7n1F9m+CFAneuh8DnA@mail.gmail.com>
- <CAHLCerPm6MXr662CaA3zZm4fQ3dJ_StJt3Ehutc3xnc0L9wj3Q@mail.gmail.com>
+        Wed, 9 Sep 2020 03:04:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599635040;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=yyZlFrBbj3mCUI/S6kobHVWb+8g7yss2Z7S57ZfQS00=;
+        b=FZBXLkFz62bMWjcmzghRM/72fIqaZmWBHqWVkVhJGKOOyTZuvRaAeMiblou5a42M
+        r/YqB5+yBK1HmPpuZFjXEobTV6uvNEM1nt2KINwt6dmqdhFx2O6cOKGUyg/5TjjrTU3
+        kkkkaUNnqfmbRr84OgrCBj4ST8G4aHsASUYRiq5U=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599635040;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=yyZlFrBbj3mCUI/S6kobHVWb+8g7yss2Z7S57ZfQS00=;
+        b=AvatYPzMzkeDNEujC9ND7zVJxLrlI3Ma91lGNonPBc09ezlZ/Aj+BebpomnSbxh0
+        9njN6uaw/coI/+48DIqt6gzm2dqrSltJ23HPaU3Ie6mGFyJZgd+WyGc6z+ziDupT/3u
+        /hrcpVPvFlEAykKLDuhBJPcWHO4HNv9UfaULQxwM=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerPm6MXr662CaA3zZm4fQ3dJ_StJt3Ehutc3xnc0L9wj3Q@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 9 Sep 2020 07:04:00 +0000
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>
+Subject: Re: [PATCHv3] soc: qcom: llcc: Support chipsets that can write to
+ llcc registers
+In-Reply-To: <159958993124.450588.14302117254509761157@swboyd.mtv.corp.google.com>
+References: <010101746c377537-ce93e925-598b-4dce-bb16-4cda020f4d6f-000000@us-west-2.amazonses.com>
+ <159958993124.450588.14302117254509761157@swboyd.mtv.corp.google.com>
+Message-ID: <0101017471ada945-235f5256-432a-4354-87f0-8c8b4a681aa7-000000@us-west-2.amazonses.com>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2020.09.09-54.240.27.55
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-09-20, 17:38, Amit Kucheria wrote:
-> On Tue, Sep 8, 2020 at 5:18 PM Amit Kucheria <amitk@kernel.org> wrote:
-> >
-> > On Tue, Sep 8, 2020 at 4:48 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> > >
-> > > On 08-09-20, 16:41, Manivannan Sadhasivam wrote:
-> > > > On 0908, Viresh Kumar wrote:
-> > > > > On 08-09-20, 13:27, Manivannan Sadhasivam wrote:
-> > > > > > Use regmap for accessing cpufreq registers in hardware.
-> > > > >
-> > > > > Why ? Please mention why a change is required in the log.
-> > > > >
-> > > >
-> > > > Only because it is recommended to use regmap for abstracting the hw access.
-> > >
-> > > Yes it can be very useful in abstracting the hw access in case of
-> > > busses like SPI/I2C, others, but in this case there is only one way of
-> > > doing it with the exact same registers. I am not sure it is worth it
-> > > here. FWIW, I have never played with regmaps personally, and so every
-> > > chance I can be wrong here.
-> >
-> > One could handle the reg offsets through a struct initialisation, but
-> > then you end up with lots of #defines for bitmasks and bits for each
-> > version of the IP. And the core code becomes a bit convoluted IMO,
-> > trying to handle the differences.
-> >
-> > regmap hides the differences of the bit positions and register offsets
-> > between several IP versions.
+Hi,
 
-Right and I agree that is another useful aspect of it which I missed
-mentioning.
-
-> > > > Moreover it handles the proper locking for us in the core (spinlock vs mutex).
-> > >
-> > > What locking do you need here ?
-> >
-> > Right, locking isn't the main reason here.
+On 2020-09-09 00:02, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2020-09-07 22:36:48)
+>> From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
+>> 
+>> Older chipsets may not be allowed to configure certain LLCC registers
+>> as that is handled by the secure side software. However, this is not
+>> the case for newer chipsets and they must configure these registers
+>> according to the contents of the SCT table, while keeping in mind that
+>> older targets may not have these capabilities. So add support to allow
+>> such configuration of registers to enable capacity based allocation
+>> and power collapse retention for capable chipsets.
+>> 
+>> Reason for choosing capacity based allocation rather than the default
+>> way based allocation is because capacity based allocation allows more
+>> finer grain partition and provides more flexibility in configuration.
+>> As for the retention through power collapse, it has an advantage where
+>> the cache hits are more when we wake up from power collapse although
+>> it does burn more power but the exact power numbers are not known at
+>> the moment.
+>> 
+>> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
+>> (sai: use existing config instead of dt property and commit msg 
+>> change)
 > 
-> Having said this, perhaps this patch can be held back for now, since
-> we're not yet using some of the features of regmap to abstract away
-> bit fields and such.
+> Should be the following format:
 > 
-> We don't strictly need it for just different register offsets.
+> [saiprakash.ranjan@codeaurora.org: use existing...]
+> 
 
-Right, I just didn't understood why it was required currently as it
-wasn't all that complex at all.
+Hmm, is this documented somewhere because a quick grep shows
+quite a few places where just the first name is added. Plus
+there is already a signed-off-by line below this, so we know
+that it is this 'sai' who made the extra changes.
+
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>> diff --git a/drivers/soc/qcom/llcc-qcom.c 
+>> b/drivers/soc/qcom/llcc-qcom.c
+>> index 429b5a60a1ba..b908656ce519 100644
+>> --- a/drivers/soc/qcom/llcc-qcom.c
+>> +++ b/drivers/soc/qcom/llcc-qcom.c
+>> @@ -45,6 +45,9 @@
+>>  #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
+>>  #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
+>> 
+>> +#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21F00
+>> +#define LLCC_TRP_PCB_ACT              0x21F04
+> 
+> Use lowercase hex please. LLCC_COMMON_STATUS0 is using lowercase.
+> 
+
+Ok
+
+>> +
+>>  #define BANK_OFFSET_STRIDE           0x80000
+>> 
+>>  /**
+>> @@ -89,6 +92,7 @@ struct llcc_slice_config {
+>>  struct qcom_llcc_config {
+>>         const struct llcc_slice_config *sct_data;
+>>         int size;
+>> +       bool need_llcc_cfg;
+>>  };
+>> 
+>>  static const struct llcc_slice_config sc7180_data[] =  {
+>> @@ -122,11 +126,13 @@ static const struct llcc_slice_config 
+>> sdm845_data[] =  {
+>>  static const struct qcom_llcc_config sc7180_cfg = {
+>>         .sct_data       = sc7180_data,
+>>         .size           = ARRAY_SIZE(sc7180_data),
+>> +       .need_llcc_cfg  = true,
+>>  };
+>> 
+>>  static const struct qcom_llcc_config sdm845_cfg = {
+>>         .sct_data       = sdm845_data,
+>>         .size           = ARRAY_SIZE(sdm845_data),
+>> +       .need_llcc_cfg  = false,
+> 
+> false is the default so just leave it out?
+> 
+
+Done on purpose as I wanted to be explicit here so that
+anyone reading it knows that it doesn't support configuring
+in kernel. Yes the default is false but it won't hurt to be
+explicit here to avoid confusion.
+
+>>  };
+>> 
+>>  static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+>> @@ -327,6 +333,7 @@ static int qcom_llcc_cfg_program(struct 
+>> platform_device *pdev)
+>>         u32 attr0_val;
+>>         u32 max_cap_cacheline;
+>>         u32 sz;
+>> +       u32 disable_cap_alloc, retain_pc;
+>>         int ret = 0;
+>>         const struct llcc_slice_config *llcc_table;
+>>         struct llcc_slice_desc desc;
+>> @@ -369,6 +376,21 @@ static int qcom_llcc_cfg_program(struct 
+>> platform_device *pdev)
+>>                                         attr0_val);
+>>                 if (ret)
+>>                         return ret;
+>> +
+>> +               if (drv_data->need_llcc_config) {
+>> +                       disable_cap_alloc = 
+>> llcc_table[i].dis_cap_alloc << llcc_table[i].slice_id;
+> 
+> Can we move u32 disable_cap_alloc, retain_pc here? That would keep it
+> local to this if condition. Or make llc_table[i].slice_id into a local
+> variable so the shift line isn't so long? Or make the body of this 
+> while
+> loop a new function that takes an llcc_table[i] pointer so that lines
+> are easier to read?
+> 
+
+The whole function qcom_llcc_cfg_program() is just a loop so
+adding another function moving that loop wouldn't look good.
+llc_table[i].slice_id is already used elsewhere in this function
+and changing everywhere is not related to this patch. So I will
+go with your suggestion to move disable_cap_alloc and retain_pc
+to if block.
+
+Thanks for the review.
+
+Thanks,
+Sai
 
 -- 
-viresh
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
