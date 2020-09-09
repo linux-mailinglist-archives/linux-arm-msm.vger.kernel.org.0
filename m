@@ -2,810 +2,2690 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F8332635B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 20:18:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BB8A2635C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 20:19:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbgIISSY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 14:18:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35230 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725772AbgIISSY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 14:18:24 -0400
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 44FD62078E;
-        Wed,  9 Sep 2020 18:18:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599675502;
-        bh=PBj1fdNTWcAma9+b/2bmcdLL4gm9fuvW0G2P2U8rCYM=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=eVKhVjvjDXsLmwPJuyHpHYFmZPPk7uuBTjPWAio3U457VacrlzqJInSdHl+MuWpr6
-         grOOVB3OP+0qiJG792WHNowt9YpCe7vf1zHWj7SJ3UnoIV2i9JwjkXTOlH90Bo+F7p
-         GcbCmFSEshhTkHOGcQ0lk0FhMQVW55TZFcCc/nUA=
-Date:   Wed, 9 Sep 2020 19:18:15 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v3 08/10] thermal: qcom: add support for adc-tm5 PMIC
- thermal monitor
-Message-ID: <20200909191815.26521a0f@archlinux>
-In-Reply-To: <20200909144248.54327-9-dmitry.baryshkov@linaro.org>
-References: <20200909144248.54327-1-dmitry.baryshkov@linaro.org>
-        <20200909144248.54327-9-dmitry.baryshkov@linaro.org>
-X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S1726226AbgIIST0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 14:19:26 -0400
+Received: from a27-21.smtp-out.us-west-2.amazonses.com ([54.240.27.21]:50740
+        "EHLO a27-21.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725826AbgIISTK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Sep 2020 14:19:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599675547;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
+        bh=NnQ0tlQDhG+KH8VTp0whKiBB2JsXNOVbY2bXvT8B5vs=;
+        b=ZrBoA0xBeAL3iribThyC5/vfm5kSfVY6MWQ92Bj2Yopt6jHcnpO7O+uaVes/VyLe
+        HFjXg3VHxtSGlxy188Tjf23R06dcvPwMXHYsQut7QmI2AyMJ3bHtT7YN+ruLT7VHSO0
+        K630Lwl9MCiMZjgGDm8iv987k1y+W+vmYfu7gPbI=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599675547;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=NnQ0tlQDhG+KH8VTp0whKiBB2JsXNOVbY2bXvT8B5vs=;
+        b=UNBISoutZ5EkcjCyQuR5pQnzsPjoRM6vfm71f1hr/L25VA43YX4fN0Q2oADftQje
+        vf29R4JdETDqiQQbU6I7FoWp85Jc4LvIS8rfaHEprI/vYdBxQc0MXV/xaA1ig1GFKsI
+        DHevzoHVI78ioN0P/8fP5MJFDw/skn3eRzoqyjmc=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1E559C433F0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5] drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets
+Date:   Wed, 9 Sep 2020 18:19:07 +0000
+Message-ID: <010101747417bf7e-2cbff084-8fac-4d29-931f-031b2be6770a-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.09-54.240.27.21
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed,  9 Sep 2020 17:42:46 +0300
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+add event thread to execute events serially from event queue. Also
+timeout mode is supported  which allow an event be deferred to be
+executed at later time. Both link and phy compliant tests had been
+done successfully.
 
-> Add support for Thermal Monitoring part of PMIC5. This part is closely
-> coupled with ADC, using it's channels directly. ADC-TM support
-> generating interrupts on ADC value crossing low or high voltage bounds,
-> which is used to support thermal trip points.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes in v2:
+- Fix potential deadlock by removing redundant connect_mutex
+- Check and enable link clock during modeset
+- Drop unused code and fix function prototypes.
+- set sink power to normal operation state (D0) before DPCD read
 
-There's some noisy white space changes in here that I'd rather like
-cleared out.  Otherwise look good to me.
-The coupling between the two drivers is tighter than ideal,
-but I guess there is no other way of handling them as the
-two parts don't separate well.
+Changes in v3:
+- push idle pattern at main link before timing generator off
+- add timeout handles for both connect and disconnect
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Changes in v4:
+- add ST_SUSPEND_PENDING to handles suspend/modeset test operations
+- clear dp phy aux interrupt status when ERR_DPPHY_AUX error
+- send segment addr during edid read
+- clear bpp depth before MISC register write
 
-> ---
->  drivers/iio/adc/qcom-vadc-common.c       |  74 ++-
->  drivers/iio/adc/qcom-vadc-common.h       |   3 +
->  drivers/thermal/qcom/Kconfig             |  11 +
->  drivers/thermal/qcom/Makefile            |   1 +
->  drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 567 +++++++++++++++++++++++
->  5 files changed, 650 insertions(+), 6 deletions(-)
->  create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> 
-> diff --git a/drivers/iio/adc/qcom-vadc-common.c b/drivers/iio/adc/qcom-vadc-common.c
-> index 40d77b3af1bb..fbdf501954ed 100644
-> --- a/drivers/iio/adc/qcom-vadc-common.c
-> +++ b/drivers/iio/adc/qcom-vadc-common.c
-> @@ -377,6 +377,42 @@ static int qcom_vadc_map_voltage_temp(const struct vadc_map_pt *pts,
->  	return 0;
->  }
->  
-> +static s32 qcom_vadc_map_temp_voltage(const struct vadc_map_pt *pts,
-> +				      u32 tablesize, int input)
-> +{
-> +	bool descending = 1;
-> +	u32 i = 0;
-> +
-> +	/* Check if table is descending or ascending */
-> +	if (tablesize > 1) {
-> +		if (pts[0].y < pts[1].y)
-> +			descending = 0;
-> +	}
-> +
-> +	while (i < tablesize) {
-> +		if (descending && pts[i].y < input) {
-> +			/* table entry is less than measured*/
-> +			 /* value and table is descending, stop */
-> +			break;
-> +		} else if ((!descending) && pts[i].y > input) {
-> +			/* table entry is greater than measured*/
-> +			/*value and table is ascending, stop */
-> +			break;
-> +		}
-> +		i++;
-> +	}
-> +
-> +	if (i == 0)
-> +		return pts[0].x;
-> +	if (i == tablesize)
-> +		return pts[tablesize - 1].x;
-> +
-> +	/* result is between search_index and search_index-1 */
-> +	/* interpolate linearly */
-> +	return fixp_linear_interpolate(pts[i - 1].y, pts[i - 1].x,
-> +			pts[i].y, pts[i].x, input);
-> +}
-> +
->  static void qcom_vadc_scale_calib(const struct vadc_linear_graph *calib_graph,
->  				  u16 adc_code,
->  				  bool absolute,
-> @@ -474,10 +510,23 @@ static int qcom_vadc_scale_chg_temp(const struct vadc_linear_graph *calib_graph,
->  	return 0;
->  }
->  
-> +static u16 qcom_vadc_scale_voltage_code(int voltage,
-> +					const struct vadc_prescale_ratio *prescale,
-> +					const u32 full_scale_code_volt,
-> +					unsigned int factor)
-> +{
-> +	s64 volt = voltage, adc_vdd_ref_mv = 1875;
-> +
-> +	volt *= prescale->num * factor * full_scale_code_volt;
-> +	volt = div64_s64(volt, (s64)prescale->den * adc_vdd_ref_mv * 1000);
-> +
-> +	return volt;
-> +}
-> +
->  static int qcom_vadc_scale_code_voltage_factor(u16 adc_code,
-> -				const struct vadc_prescale_ratio *prescale,
-> -				const struct adc5_data *data,
-> -				unsigned int factor)
-> +					       const struct vadc_prescale_ratio *prescale,
-> +					       const struct adc5_data *data,
-> +					       unsigned int factor)
->  {
->  	s64 voltage, temp, adc_vdd_ref_mv = 1875;
->  
-> @@ -658,10 +707,23 @@ int qcom_vadc_scale(enum vadc_scale_fn_type scaletype,
->  }
->  EXPORT_SYMBOL(qcom_vadc_scale);
->  
-> +u16 qcom_adc_tm5_temp_volt_scale(unsigned int prescale_ratio,
-> +				 u32 full_scale_code_volt, int temp)
-> +{
-> +	const struct vadc_prescale_ratio *prescale = &adc5_prescale_ratios[prescale_ratio];
-> +	s32 voltage;
-> +
-> +	voltage = qcom_vadc_map_temp_voltage(adcmap_100k_104ef_104fb_1875_vref,
-> +					     ARRAY_SIZE(adcmap_100k_104ef_104fb_1875_vref),
-> +					     temp);
-> +	return qcom_vadc_scale_voltage_code(voltage, prescale, full_scale_code_volt, 1000);
-> +}
-> +EXPORT_SYMBOL(qcom_adc_tm5_temp_volt_scale);
-> +
->  int qcom_adc5_hw_scale(enum vadc_scale_fn_type scaletype,
-> -		    unsigned int prescale_ratio,
-> -		    const struct adc5_data *data,
-> -		    u16 adc_code, int *result)
-> +		       unsigned int prescale_ratio,
-> +		       const struct adc5_data *data,
-> +		       u16 adc_code, int *result)
+Changes in v5:
+- add ST_SUSPENDED to fix crash at resume
 
-Clean that change out.  I have no particular problem with white space
-tidying up, but not in a patch that makes functional changes. I just
-end up staring at them on the assumption something must have changed!
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
 
->  {
->  	const struct vadc_prescale_ratio *prescale = &adc5_prescale_ratios[prescale_ratio];
->  
-> diff --git a/drivers/iio/adc/qcom-vadc-common.h b/drivers/iio/adc/qcom-vadc-common.h
-> index 7e5f6428e311..9af41201ad77 100644
-> --- a/drivers/iio/adc/qcom-vadc-common.h
-> +++ b/drivers/iio/adc/qcom-vadc-common.h
-> @@ -172,6 +172,9 @@ int qcom_adc5_hw_scale(enum vadc_scale_fn_type scaletype,
->  		    const struct adc5_data *data,
->  		    u16 adc_code, int *result_mdec);
->  
-> +u16 qcom_adc_tm5_temp_volt_scale(unsigned int prescale_ratio,
-> +				 u32 full_scale_code_volt, int temp);
-> +
->  int qcom_adc5_prescaling_from_dt(u32 num, u32 den);
->  
->  int qcom_adc5_hw_settle_time_from_dt(u32 value, const unsigned int *hw_settle);
-> diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-> index aa9c1d80fae4..8d5ac2df26dc 100644
-> --- a/drivers/thermal/qcom/Kconfig
-> +++ b/drivers/thermal/qcom/Kconfig
-> @@ -10,6 +10,17 @@ config QCOM_TSENS
->  	  Also able to set threshold temperature for both hot and cold and update
->  	  when a threshold is reached.
->  
-> +config QCOM_SPMI_ADC_TM5
-> +	tristate "Qualcomm SPMI PMIC Thermal Monitor ADC5"
-> +	depends on OF && SPMI && IIO
-> +	select REGMAP_SPMI
-> +	select QCOM_VADC_COMMON
-> +	help
-> +	  This enables the thermal driver for the ADC thermal monitoring
-> +	  device. It shows up as a thermal zone with multiple trip points.
-> +	  Thermal client sets threshold temperature for both warm and cool and
-> +	  gets updated when a threshold is reached.
-> +
->  config QCOM_SPMI_TEMP_ALARM
->  	tristate "Qualcomm SPMI PMIC Temperature Alarm"
->  	depends on OF && SPMI && IIO
-> diff --git a/drivers/thermal/qcom/Makefile b/drivers/thermal/qcom/Makefile
-> index ec86eef7f6a6..252ea7d9da0b 100644
-> --- a/drivers/thermal/qcom/Makefile
-> +++ b/drivers/thermal/qcom/Makefile
-> @@ -3,4 +3,5 @@ obj-$(CONFIG_QCOM_TSENS)	+= qcom_tsens.o
->  
->  qcom_tsens-y			+= tsens.o tsens-v2.o tsens-v1.o tsens-v0_1.o \
->  				   tsens-8960.o
-> +obj-$(CONFIG_QCOM_SPMI_ADC_TM5)	+= qcom-spmi-adc-tm5.o
->  obj-$(CONFIG_QCOM_SPMI_TEMP_ALARM)	+= qcom-spmi-temp-alarm.o
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> new file mode 100644
-> index 000000000000..82eda6e011ab
-> --- /dev/null
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -0,0 +1,567 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020 Linaro Limited
-> + */
-> +
-> +#include <linux/iio/consumer.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/thermal.h>
-> +
-> +#include "../../iio/adc/qcom-vadc-common.h"
-> +
-> +#define ADC5_MAX_CHANNEL                        0xc0
-> +#define ADC_TM5_NUM_CHANNELS		8
-> +
-> +#define ADC_TM5_STATUS_LOW			0x0a
-> +
-> +#define ADC_TM5_STATUS_HIGH			0x0b
-> +
-> +#define ADC_TM5_NUM_BTM				0x0f
-> +
-> +#define ADC_TM5_ADC_DIG_PARAM			0x42
-> +
-> +#define ADC_TM5_FAST_AVG_CTL			(ADC_TM5_ADC_DIG_PARAM + 1)
-> +#define ADC_TM5_FAST_AVG_EN				BIT(7)
-> +
-> +#define ADC_TM5_MEAS_INTERVAL_CTL		(ADC_TM5_ADC_DIG_PARAM + 2)
-> +#define ADC_TM5_TIMER1					3 /* 3.9ms */
-> +
-> +#define ADC_TM5_MEAS_INTERVAL_CTL2		(ADC_TM5_ADC_DIG_PARAM + 3)
-> +#define ADC_TM5_MEAS_INTERVAL_CTL2_MASK			0xf0
-> +#define ADC_TM5_TIMER2					10 /* 1 second */
-> +#define ADC_TM5_MEAS_INTERVAL_CTL3_MASK			0xf
-> +#define ADC_TM5_TIMER3					4 /* 4 second */
-> +
-> +#define ADC_TM5_M_CHAN_BASE			0x60
-> +
-> +#define ADC_TM5_M_ADC_CH_SEL_CTL(n)		(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 0)
-> +#define ADC_TM5_M_LOW_THR0(n)			(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 1)
-> +#define ADC_TM5_M_LOW_THR1(n)			(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 2)
-> +#define ADC_TM5_M_HIGH_THR0(n)			(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 3)
-> +#define ADC_TM5_M_HIGH_THR1(n)			(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 4)
-> +#define ADC_TM5_M_MEAS_INTERVAL_CTL(n)		(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 5)
-> +#define ADC_TM5_M_CTL(n)			(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 6)
-> +#define ADC_TM5_M_CTL_HW_SETTLE_DELAY_MASK		0xf
-> +#define ADC_TM5_M_CTL_CAL_SEL_MASK			0x30
-> +#define ADC_TM5_M_CTL_CAL_VAL				0x40
-> +#define ADC_TM5_M_EN(n)				(ADC_TM5_M_CHAN_BASE + ((n) * 8) + 7)
-> +#define ADC_TM5_M_MEAS_EN				BIT(7)
-> +#define ADC_TM5_M_HIGH_THR_INT_EN			BIT(1)
-> +#define ADC_TM5_M_LOW_THR_INT_EN			BIT(0)
-> +
-> +enum adc5_timer_select {
-> +	ADC5_TIMER_SEL_1 = 0,
-> +	ADC5_TIMER_SEL_2,
-> +	ADC5_TIMER_SEL_3,
-> +	ADC5_TIMER_SEL_NONE,
-> +};
-> +
-> +struct adc_tm5_data {
-> +	const u32	full_scale_code_volt;
-> +	unsigned int	*decimation;
-> +	unsigned int	*hw_settle;
-> +};
-> +
-> +enum adc_tm5_cal_method {
-> +	ADC_TM5_NO_CAL = 0,
-> +	ADC_TM5_RATIOMETRIC_CAL,
-> +	ADC_TM5_ABSOLUTE_CAL
-> +};
-> +
-> +struct adc_tm5_chip;
-> +
-> +struct adc_tm5_channel {
-> +	unsigned int		channel;
-> +	unsigned int		adc_channel;
-> +	enum adc_tm5_cal_method	cal_method;
-> +	unsigned int		prescale;
-> +	unsigned int		hw_settle_time;
-> +	struct iio_channel	*iio;
-> +	struct adc_tm5_chip	*chip;
-> +	struct thermal_zone_device *tzd;
-> +};
-> +
-> +/**
-> + * struct adc_tm5_chip - ADC Thermal Monitoring properties
-> + * @nchannels: amount of channels defined/allocated
-> + * @decimation: sampling rate supported for the channel.
-> + * @avg_samples: ability to provide single result from the ADC
-> + *	that is an average of multiple measurements.
-> + * @base: base address of TM registers.
-> + */
-> +struct adc_tm5_chip {
-> +	struct regmap		*regmap;
-> +	struct device		*dev;
-> +	const struct adc_tm5_data	*data;
-> +	struct adc_tm5_channel	*channels;
-> +	unsigned int		nchannels;
-> +	unsigned int		decimation;
-> +	unsigned int		avg_samples;
-> +	u16			base;
-> +};
-> +
-> +static const struct adc_tm5_data adc_tm5_data_pmic = {
-> +	.full_scale_code_volt = 0x70e4,
-> +	.decimation = (unsigned int []) {250, 420, 840},
-> +	.hw_settle = (unsigned int []) {15, 100, 200, 300, 400, 500, 600, 700,
-> +					1, 2, 4, 8, 16, 32, 64, 128},
-> +};
-> +
-> +static int adc_tm5_read(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
-> +{
-> +	return regmap_bulk_read(adc_tm->regmap, adc_tm->base + offset, data, len);
-> +}
-> +
-> +static int adc_tm5_write(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
-> +{
-> +	return regmap_bulk_write(adc_tm->regmap, adc_tm->base + offset, data, len);
-> +}
-> +
-> +static int adc_tm5_reg_update(struct adc_tm5_chip *adc_tm, u16 offset, u8 mask, u8 val)
-> +{
-> +	return regmap_write_bits(adc_tm->regmap, adc_tm->base + offset, mask, val);
-> +}
-> +
-> +static irqreturn_t adc_tm5_isr(int irq, void *data)
-> +{
-> +	struct adc_tm5_chip *chip = data;
-> +	u8 status_low, status_high, ctl;
-> +	int ret = 0, i = 0;
-> +
-> +	ret = adc_tm5_read(chip, ADC_TM5_STATUS_LOW, &status_low, 1);
-> +	if (ret) {
-> +		dev_err(chip->dev, "read status low failed with %d\n", ret);
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	ret = adc_tm5_read(chip, ADC_TM5_STATUS_HIGH, &status_high, 1);
-> +	if (ret) {
-> +		dev_err(chip->dev, "read status high failed with %d\n", ret);
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	for (i = 0; i < chip->nchannels; i++) {
-> +		bool upper_set = false, lower_set = false;
-> +		unsigned int ch = chip->channels[i].channel;
-> +
-> +		if (!chip->channels[i].tzd) {
-> +			dev_err_once(chip->dev, "thermal device not found\n");
-> +			continue;
-> +		}
-> +
-> +		ret = adc_tm5_read(chip, ADC_TM5_M_EN(ch), &ctl, 1);
-> +
-> +		if (ret) {
-> +			dev_err(chip->dev, "ctl read failed with %d\n", ret);
-> +			continue;
-> +		}
-> +
-> +		lower_set = (status_low & BIT(ch)) &&
-> +			(ctl & ADC_TM5_M_MEAS_EN) &&
-> +			(ctl & ADC_TM5_M_LOW_THR_INT_EN);
-> +
-> +		upper_set = (status_high & BIT(ch)) &&
-> +			(ctl & ADC_TM5_M_MEAS_EN) &&
-> +			(ctl & ADC_TM5_M_HIGH_THR_INT_EN);
-> +
-> +		if (upper_set || lower_set)
-> +			thermal_zone_device_update(chip->channels[i].tzd,
-> +						   THERMAL_EVENT_UNSPECIFIED);
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int adc_tm5_get_temp(void *data, int *temp)
-> +{
-> +	struct adc_tm5_channel *channel = data;
-> +	int ret, milli_celsius;
-> +
-> +	if (!channel || !channel->iio)
-> +		return -EINVAL;
-> +
-> +	ret = iio_read_channel_processed(channel->iio, &milli_celsius);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	*temp = milli_celsius;
-> +
-> +	return 0;
-> +}
-> +
-> +static int adc_tm5_disable_channel(struct adc_tm5_channel *channel)
-> +{
-> +	struct adc_tm5_chip *chip = channel->chip;
-> +	unsigned int reg = ADC_TM5_M_EN(channel->channel);
-> +
-> +	return adc_tm5_reg_update(chip, reg,
-> +			ADC_TM5_M_MEAS_EN | ADC_TM5_M_HIGH_THR_INT_EN | ADC_TM5_M_LOW_THR_INT_EN,
-> +			0);
-> +}
-> +
-> +static int adc_tm5_configure(struct adc_tm5_channel *channel, int low_temp, int high_temp)
-> +{
-> +	struct adc_tm5_chip *chip = channel->chip;
-> +	u8 buf[8];
-> +	u16 reg = ADC_TM5_M_ADC_CH_SEL_CTL(channel->channel);
-> +	int ret = 0;
-> +
-> +	ret = adc_tm5_read(chip, reg, buf, 8);
-> +	if (ret) {
-> +		dev_err(chip->dev, "block read failed with %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/* Update ADC channel select */
-> +	buf[0] = channel->adc_channel;
-> +
-> +	/* Warm temperature corresponds to low voltage threshold */
-> +	if (high_temp != INT_MAX) {
-> +		u16 adc_code = qcom_adc_tm5_temp_volt_scale(channel->prescale,
-> +				chip->data->full_scale_code_volt, high_temp);
-> +
-> +		buf[1] = adc_code & 0xff;
-> +		buf[2] = adc_code >> 8;
-> +		buf[7] |= ADC_TM5_M_LOW_THR_INT_EN;
-> +	}
-> +
-> +	/* Cool temperature corresponds to high voltage threshold */
-> +	if (low_temp != -INT_MAX) {
-> +		u16 adc_code = qcom_adc_tm5_temp_volt_scale(channel->prescale,
-> +				chip->data->full_scale_code_volt, low_temp);
-> +
-> +		buf[3] = adc_code & 0xff;
-> +		buf[4] = adc_code >> 8;
-> +		buf[7] |= ADC_TM5_M_HIGH_THR_INT_EN;
-> +	}
-> +
-> +	/* Update timer select */
-> +	buf[5] = ADC5_TIMER_SEL_2;
-> +
-> +	/* Set calibration select, hw_settle delay */
-> +	buf[6] &= ~ADC_TM5_M_CTL_HW_SETTLE_DELAY_MASK;
-> +	buf[6] |= FIELD_PREP(ADC_TM5_M_CTL_HW_SETTLE_DELAY_MASK, channel->hw_settle_time);
-> +	buf[6] &= ~ADC_TM5_M_CTL_CAL_SEL_MASK;
-> +	buf[6] |= FIELD_PREP(ADC_TM5_M_CTL_CAL_SEL_MASK, channel->cal_method);
-> +
-> +	buf[7] |= ADC_TM5_M_MEAS_EN;
-> +
-> +	ret = adc_tm5_write(chip, reg, buf, 8);
-> +	if (ret)
-> +		dev_err(chip->dev, "buf write failed\n");
-> +
-> +	return ret;
-> +}
-> +
-> +static int adc_tm5_set_trips(void *data, int low_temp, int high_temp)
-> +{
-> +	struct adc_tm5_channel *channel = data;
-> +	struct adc_tm5_chip *chip;
-> +	int ret;
-> +
-> +	if (!channel)
-> +		return -EINVAL;
-> +
-> +	chip = channel->chip;
-> +	dev_dbg(chip->dev, "%d:low_temp(mdegC):%d, high_temp(mdegC):%d\n",
-> +		channel->channel, low_temp, high_temp);
-> +
-> +	if (high_temp == INT_MAX && low_temp <= -INT_MAX)
-> +		ret = adc_tm5_disable_channel(channel);
-> +	else
-> +		ret = adc_tm5_configure(channel, low_temp, high_temp);
-> +
-> +	return ret;
-> +}
-> +
-> +static struct thermal_zone_of_device_ops adc_tm5_ops = {
-> +	.get_temp = adc_tm5_get_temp,
-> +	.set_trips = adc_tm5_set_trips,
-> +};
-> +
-> +static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
-> +{
-> +	unsigned int i;
-> +	struct thermal_zone_device *tzd;
-> +
-> +	for (i = 0; i < adc_tm->nchannels; i++) {
-> +		adc_tm->channels[i].chip = adc_tm;
-> +
-> +		tzd = devm_thermal_zone_of_sensor_register(adc_tm->dev,
-> +							   adc_tm->channels[i].channel,
-> +							   &adc_tm->channels[i],
-> +							   &adc_tm5_ops);
-> +		if (IS_ERR(tzd)) {
-> +			dev_err(adc_tm->dev, "Error registering TZ zone:%ld for channel:%d\n",
-> +				PTR_ERR(tzd), adc_tm->channels[i].channel);
-> +			continue;
-> +		}
-> +		adc_tm->channels[i].tzd = tzd;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int adc_tm5_init(struct adc_tm5_chip *chip)
-> +{
-> +	u8 buf[4], channels_available;
-> +	int ret;
-> +	unsigned int i;
-> +
-> +	ret = adc_tm5_read(chip, ADC_TM5_NUM_BTM, &channels_available, 1);
-> +	if (ret) {
-> +		dev_err(chip->dev, "read failed for BTM channels\n");
-> +		return ret;
-> +	}
-> +
-> +	ret = adc_tm5_read(chip, ADC_TM5_ADC_DIG_PARAM, buf, 4);
-> +	if (ret) {
-> +		dev_err(chip->dev, "block read failed with %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	/* Select decimation */
-> +	buf[0] = chip->decimation;
-> +
-> +	/* Select number of samples in fast average mode */
-> +	buf[1] = chip->avg_samples | ADC_TM5_FAST_AVG_EN;
-> +
-> +	/* Select timer1 */
-> +	buf[2] = ADC_TM5_TIMER1;
-> +
-> +	/* Select timer2 and timer3 */
-> +	buf[3] = FIELD_PREP(ADC_TM5_MEAS_INTERVAL_CTL2_MASK, ADC_TM5_TIMER2) |
-> +		 FIELD_PREP(ADC_TM5_MEAS_INTERVAL_CTL3_MASK, ADC_TM5_TIMER3);
-> +
-> +	ret = adc_tm5_write(chip, ADC_TM5_ADC_DIG_PARAM, buf, 4);
-> +	if (ret)
-> +		dev_err(chip->dev, "block write failed with %d\n", ret);
-> +
-> +	for (i = 0; i < chip->nchannels; i++) {
-> +		if (chip->channels[i].channel >= channels_available) {
-> +			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
-> +			return -EINVAL;
-> +		}
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int adc_tm5_get_dt_channel_data(struct adc_tm5_chip *adc_tm,
-> +				       struct adc_tm5_channel *channel,
-> +				       struct device_node *node)
-> +{
-> +	const char *name = node->name;
-> +	u32 chan, value, varr[2];
-> +	int ret;
-> +	struct device *dev = adc_tm->dev;
-> +
-> +	ret = of_property_read_u32(node, "reg", &chan);
-> +	if (ret) {
-> +		dev_err(dev, "invalid channel number %s\n", name);
-> +		return ret;
-> +	}
-> +
-> +	if (chan >= ADC_TM5_NUM_CHANNELS) {
-> +		dev_err(dev, "%s invalid channel number %d\n", name, chan);
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* the channel has DT description */
-> +	channel->channel = chan;
-> +
-> +	ret = of_property_read_u32(node, "qcom,adc-channel", &chan);
-> +	if (ret) {
-> +		dev_err(dev, "invalid channel number %s\n", name);
-> +		return ret;
-> +	}
-> +	if (chan >= ADC5_MAX_CHANNEL) {
-> +		dev_err(dev, "%s invalid ADC channel number %d\n", name, chan);
-> +		return ret;
-> +	}
-> +	channel->adc_channel = chan;
-> +
-> +	channel->iio = devm_of_iio_channel_get_by_name(adc_tm->dev, node, NULL);
-> +	if (IS_ERR(channel->iio)) {
-> +		ret = PTR_ERR(channel->iio);
+This patch depends-on following series:
+https://lore.kernel.org/dri-devel/20200827211658.27479-1-tanmay@codeaurora.org/
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |   6 +
+ drivers/gpu/drm/msm/dp/dp_aux.c             |   1 +
+ drivers/gpu/drm/msm/dp/dp_catalog.c         |  77 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c            | 370 ++++++---
+ drivers/gpu/drm/msm/dp/dp_ctrl.h            |   3 +-
+ drivers/gpu/drm/msm/dp/dp_display.c         | 804 +++++++++++++-------
+ drivers/gpu/drm/msm/dp/dp_display.h         |   1 -
+ drivers/gpu/drm/msm/dp/dp_drm.c             |   4 -
+ drivers/gpu/drm/msm/dp/dp_hpd.c             |   2 +-
+ drivers/gpu/drm/msm/dp/dp_hpd.h             |   1 +
+ drivers/gpu/drm/msm/dp/dp_link.c            |  22 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c           |  78 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h           |   9 +-
+ drivers/gpu/drm/msm/dp/dp_parser.c          |  42 +-
+ drivers/gpu/drm/msm/dp/dp_parser.h          |   2 +
+ drivers/gpu/drm/msm/dp/dp_power.c           |  46 +-
+ drivers/gpu/drm/msm/dp/dp_power.h           |  13 +
+ drivers/gpu/drm/msm/dp/dp_reg.h             |   1 +
+ drivers/gpu/drm/msm/msm_drv.h               |   1 +
+ 19 files changed, 1025 insertions(+), 458 deletions(-)
 
-Is there any potential that we have a deferred response here?
-
-> +		channel->iio = NULL;
-> +		dev_err(dev, "error getting channel %s: %d\n", name, ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = of_property_read_u32_array(node, "qcom,pre-scaling", varr, 2);
-> +	if (!ret) {
-> +		ret = qcom_adc5_prescaling_from_dt(varr[0], varr[1]);
-> +		if (ret < 0) {
-> +			dev_err(dev, "%02x invalid pre-scaling <%d %d>\n",
-> +				chan, varr[0], varr[1]);
-> +			return ret;
-> +		}
-> +		channel->prescale = ret;
-> +	} else {
-> +		/* 1:1 prescale is index 0 */
-> +		channel->prescale = 0;
-> +	}
-> +
-> +	ret = of_property_read_u32(node, "qcom,hw-settle-time", &value);
-> +	if (!ret) {
-> +		ret = qcom_adc5_hw_settle_time_from_dt(value, adc_tm->data->hw_settle);
-> +		if (ret < 0) {
-> +			dev_err(dev, "%02x invalid hw-settle-time %d us\n",
-> +				chan, value);
-> +			return ret;
-> +		}
-> +		channel->hw_settle_time = ret;
-> +	} else {
-> +		channel->hw_settle_time = VADC_DEF_HW_SETTLE_TIME;
-> +	}
-> +
-> +	if (of_property_read_bool(node, "qcom,ratiometric"))
-> +		channel->cal_method = ADC_TM5_RATIOMETRIC_CAL;
-> +	else
-> +		channel->cal_method = ADC_TM5_ABSOLUTE_CAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static int adc_tm5_get_dt_data(struct adc_tm5_chip *adc_tm, struct device_node *node)
-> +{
-> +	struct adc_tm5_channel *channels;
-> +	struct device_node *child;
-> +	unsigned int index = 0;
-> +	u32 value;
-> +	int ret;
-> +	struct device *dev = adc_tm->dev;
-> +
-> +	adc_tm->nchannels = of_get_available_child_count(node);
-> +	if (!adc_tm->nchannels)
-> +		return -EINVAL;
-> +
-> +	adc_tm->channels = devm_kcalloc(dev, adc_tm->nchannels,
-> +					sizeof(*adc_tm->channels), GFP_KERNEL);
-> +	if (!adc_tm->channels)
-> +		return -ENOMEM;
-> +
-> +	channels = adc_tm->channels;
-> +
-> +	adc_tm->data = of_device_get_match_data(dev);
-> +	if (!adc_tm->data)
-> +		adc_tm->data = &adc_tm5_data_pmic;
-> +
-> +	ret = of_property_read_u32(node, "qcom,decimation", &value);
-> +	if (!ret) {
-> +		ret = qcom_adc5_decimation_from_dt(value, adc_tm->data->decimation);
-> +		if (ret < 0) {
-> +			dev_err(dev, "invalid decimation %d\n", value);
-> +			return ret;
-> +		}
-> +		adc_tm->decimation = ret;
-> +	} else {
-> +		adc_tm->decimation = ADC5_DECIMATION_DEFAULT;
-> +	}
-> +
-> +	ret = of_property_read_u32(node, "qcom,avg-samples", &value);
-> +	if (!ret) {
-> +		ret = qcom_adc5_avg_samples_from_dt(value);
-> +		if (ret < 0) {
-> +			dev_err(dev, "invalid avg-samples %d\n", value);
-> +			return ret;
-> +		}
-> +		adc_tm->avg_samples = ret;
-> +	} else {
-> +		adc_tm->avg_samples = VADC_DEF_AVG_SAMPLES;
-> +	}
-> +
-> +	for_each_available_child_of_node(node, child) {
-> +		ret = adc_tm5_get_dt_channel_data(adc_tm, channels, child);
-> +		if (ret) {
-> +			of_node_put(child);
-> +			return ret;
-> +		}
-> +
-> +		channels++;
-> +		index++;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int adc_tm5_probe(struct platform_device *pdev)
-> +{
-> +	struct device_node *node = pdev->dev.of_node;
-> +	struct device *dev = &pdev->dev;
-> +	struct adc_tm5_chip *adc_tm;
-> +	struct regmap *regmap;
-> +	int ret, irq;
-> +	u32 reg;
-> +
-> +	regmap = dev_get_regmap(dev->parent, NULL);
-> +	if (!regmap)
-> +		return -ENODEV;
-> +
-> +	ret = of_property_read_u32(node, "reg", &reg);
-> +	if (ret)
-> +		return ret;
-> +
-> +	adc_tm = devm_kzalloc(&pdev->dev, sizeof(*adc_tm), GFP_KERNEL);
-> +	if (!adc_tm)
-> +		return -ENOMEM;
-> +
-> +	adc_tm->regmap = regmap;
-> +	adc_tm->dev = dev;
-> +	adc_tm->base = reg;
-> +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq < 0) {
-> +		dev_err(dev, "get_irq failed: %d\n", irq);
-> +		return irq;
-> +	}
-> +
-> +	ret = adc_tm5_get_dt_data(adc_tm, node);
-> +	if (ret) {
-> +		dev_err(dev, "get dt data failed: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = adc_tm5_init(adc_tm);
-> +	if (ret) {
-> +		dev_err(dev, "adc-tm init failed\n");
-> +		return ret;
-> +	}
-> +
-> +	ret = adc_tm5_register_tzd(adc_tm);
-> +	if (ret) {
-> +		dev_err(dev, "tzd register failed\n");
-> +		return ret;
-> +	}
-> +
-> +	return devm_request_irq(dev, irq, adc_tm5_isr, 0,
-> +			       "pm-adc-tm5", adc_tm);
-> +}
-> +
-> +static const struct of_device_id adc_tm5_match_table[] = {
-> +	{
-> +		.compatible = "qcom,spmi-adc-tm5",
-> +		.data = &adc_tm5_data_pmic,
-> +	},
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, adc_tm5_match_table);
-> +
-> +static struct platform_driver adc_tm5_driver = {
-> +	.driver = {
-> +		.name = "qcom-spmi-adc-tm5",
-> +		.of_match_table = adc_tm5_match_table,
-> +	},
-> +	.probe = adc_tm5_probe,
-> +};
-> +module_platform_driver(adc_tm5_driver);
-> +
-> +MODULE_DESCRIPTION("SPMI PMIC Thermal Monitor ADC driver");
-> +MODULE_LICENSE("GPL v2");
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 6a9e257d2fe6..81373bd38f0b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1221,6 +1221,11 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 	/* wait for idle */
+ 	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
+ 
++	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp) {
++		if (msm_dp_display_pre_disable(priv->dp, drm_enc))
++			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
++	}
++
+ 	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
+ 
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+@@ -1230,6 +1235,7 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 			phys->ops.disable(phys);
+ 	}
+ 
++
+ 	/* after phys waits for frame-done, should be no more frames pending */
+ 	if (atomic_xchg(&dpu_enc->frame_done_timeout_ms, 0)) {
+ 		DPU_ERROR("enc%d timeout pending\n", drm_enc->base.id);
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+index 6bf3a5712968..d742b4d870b3 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -384,6 +384,7 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+ 					PHY_AUX_CFG1);
+ 			dp_catalog_aux_reset(aux->catalog);
+ 		}
++		usleep_range(400, 500); /* at least 400us to next try */
+ 		goto unlock_exit;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index c16072630d40..67abb90953e4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -536,16 +536,21 @@ void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog,
+ 		 * To make sure link reg writes happens before other operation,
+ 		 * dp_write_link() function uses writel()
+ 		 */
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
+-				DP_MAINLINK_FB_BOUNDARY_SEL);
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
+-					DP_MAINLINK_FB_BOUNDARY_SEL |
+-					DP_MAINLINK_CTRL_RESET);
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
++		mainlink_ctrl = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
++
++		mainlink_ctrl &= ~(DP_MAINLINK_CTRL_RESET |
++						DP_MAINLINK_CTRL_ENABLE);
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
++
++		mainlink_ctrl |= DP_MAINLINK_CTRL_RESET;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
++
++		mainlink_ctrl &= ~DP_MAINLINK_CTRL_RESET;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
++
++		mainlink_ctrl |= (DP_MAINLINK_CTRL_ENABLE |
+ 					DP_MAINLINK_FB_BOUNDARY_SEL);
+-		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
+-					DP_MAINLINK_FB_BOUNDARY_SEL |
+-					DP_MAINLINK_CTRL_ENABLE);
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
+ 	} else {
+ 		mainlink_ctrl = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
+ 		mainlink_ctrl &= ~DP_MAINLINK_CTRL_ENABLE;
+@@ -644,7 +649,7 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
+ 
+ 	bit = BIT(pattern - 1);
+ 	DRM_DEBUG_DP("hw: bit=%d train=%d\n", bit, pattern);
+-	dp_write_link(catalog, REG_DP_STATE_CTRL, bit);
++	dp_catalog_ctrl_state_ctrl(dp_catalog, bit);
+ 
+ 	bit = BIT(pattern - 1) << DP_MAINLINK_READY_LINK_TRAINING_SHIFT;
+ 
+@@ -769,7 +774,7 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
+ 	/* enable HPD interrupts */
+ 	dp_catalog_hpd_config_intr(dp_catalog,
+ 		DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK
+-		| DP_DP_HPD_UNPLUG_INT_MASK, true);
++		| DP_DP_HPD_UNPLUG_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
+ 
+ 	/* Configure REFTIMER and enable it */
+ 	reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
+@@ -881,15 +886,27 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 	dp_write_link(catalog, REG_DP_STATE_CTRL, 0x0);
+ 
+ 	switch (pattern) {
+-	case DP_LINK_QUAL_PATTERN_D10_2:
++	case DP_PHY_TEST_PATTERN_D10_2:
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 				DP_STATE_CTRL_LINK_TRAINING_PATTERN1);
+-		return;
+-	case DP_LINK_QUAL_PATTERN_PRBS7:
++		break;
++	case DP_PHY_TEST_PATTERN_ERROR_COUNT:
++		value &= ~(1 << 16);
++		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
++					value);
++		value |= SCRAMBLER_RESET_COUNT_VALUE;
++		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
++					value);
++		dp_write_link(catalog, REG_DP_MAINLINK_LEVELS,
++					DP_MAINLINK_SAFE_TO_EXIT_LEVEL_2);
++		dp_write_link(catalog, REG_DP_STATE_CTRL,
++					DP_STATE_CTRL_LINK_SYMBOL_ERR_MEASURE);
++		break;
++	case DP_PHY_TEST_PATTERN_PRBS7:
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 				DP_STATE_CTRL_LINK_PRBS7);
+-		return;
+-	case DP_LINK_QUAL_PATTERN_80BIT_CUSTOM:
++		break;
++	case DP_PHY_TEST_PATTERN_80BIT_CUSTOM:
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 				DP_STATE_CTRL_LINK_TEST_CUSTOM_PATTERN);
+ 		/* 00111110000011111000001111100000 */
+@@ -901,14 +918,15 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 		/* 1111100000111110 */
+ 		dp_write_link(catalog, REG_DP_TEST_80BIT_CUSTOM_PATTERN_REG2,
+ 				0x0000F83E);
+-		return;
+-	case DP_LINK_QUAL_PATTERN_HBR2_EYE:
+-	case DP_LINK_QUAL_PATTERN_ERROR_RATE:
+-		value &= ~DP_HBR2_ERM_PATTERN;
+-		if (pattern == DP_LINK_QUAL_PATTERN_HBR2_EYE)
+-			value = DP_HBR2_ERM_PATTERN;
++		break;
++	case DP_PHY_TEST_PATTERN_CP2520:
++		value = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
++		value &= ~DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, value);
++
++		value = DP_HBR2_ERM_PATTERN;
+ 		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
+-					value);
++				value);
+ 		value |= SCRAMBLER_RESET_COUNT_VALUE;
+ 		dp_write_link(catalog, REG_DP_HBR2_COMPLIANCE_SCRAMBLER_RESET,
+ 					value);
+@@ -916,10 +934,19 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 					DP_MAINLINK_SAFE_TO_EXIT_LEVEL_2);
+ 		dp_write_link(catalog, REG_DP_STATE_CTRL,
+ 					DP_STATE_CTRL_LINK_SYMBOL_ERR_MEASURE);
+-		return;
++		value = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
++		value |= DP_MAINLINK_CTRL_ENABLE;
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL, value);
++		break;
++	case DP_PHY_TEST_PATTERN_SEL_MASK:
++		dp_write_link(catalog, REG_DP_MAINLINK_CTRL,
++				DP_MAINLINK_CTRL_ENABLE);
++		dp_write_link(catalog, REG_DP_STATE_CTRL,
++				DP_STATE_CTRL_LINK_TRAINING_PATTERN4);
++		break;
+ 	default:
+ 		DRM_DEBUG_DP("No valid test pattern requested:0x%x\n", pattern);
+-		return;
++		break;
+ 	}
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index ae07e43b541b..70b0e06953f6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -26,6 +26,13 @@
+ #define MR_LINK_SYMBOL_ERM 0x80
+ #define MR_LINK_PRBS7 0x100
+ #define MR_LINK_CUSTOM80 0x200
++#define MR_LINK_TRAINING4  0x40
++
++enum {
++	DP_TRAINING_NONE,
++	DP_TRAINING_1,
++	DP_TRAINING_2,
++};
+ 
+ struct dp_tu_calc_input {
+ 	u64 lclk;        /* 162, 270, 540 and 810 */
+@@ -58,7 +65,6 @@ struct dp_vc_tu_mapping_table {
+ 
+ struct dp_ctrl_private {
+ 	struct dp_ctrl dp_ctrl;
+-
+ 	struct device *dev;
+ 	struct drm_dp_aux *aux;
+ 	struct dp_panel *panel;
+@@ -68,10 +74,16 @@ struct dp_ctrl_private {
+ 	struct dp_catalog *catalog;
+ 
+ 	struct completion idle_comp;
+-	struct mutex push_idle_mutex;
+ 	struct completion video_comp;
+ };
+ 
++struct dp_cr_status {
++	u8 lane_0_1;
++	u8 lane_2_3;
++};
++
++#define DP_LANE0_1_CR_DONE	0x11
++
+ static int dp_aux_link_configure(struct drm_dp_aux *aux,
+ 					struct dp_link_info *link)
+ {
+@@ -97,8 +109,6 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
+ 
+ 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+ 
+-	mutex_lock(&ctrl->push_idle_mutex);
+-
+ 	reinit_completion(&ctrl->idle_comp);
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_PUSH_IDLE);
+ 
+@@ -106,7 +116,6 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
+ 			IDLE_PATTERN_COMPLETION_TIMEOUT_JIFFIES))
+ 		pr_warn("PUSH_IDLE pattern timedout\n");
+ 
+-	mutex_unlock(&ctrl->push_idle_mutex);
+ 	pr_debug("mainlink off done\n");
+ }
+ 
+@@ -979,7 +988,7 @@ static int dp_ctrl_wait4video_ready(struct dp_ctrl_private *ctrl)
+ 
+ 	if (!wait_for_completion_timeout(&ctrl->video_comp,
+ 				WAIT_FOR_VIDEO_READY_TIMEOUT_JIFFIES)) {
+-		DRM_ERROR("Link Train timedout\n");
++		DRM_ERROR("wait4video timedout\n");
+ 		ret = -ETIMEDOUT;
+ 	}
+ 	return ret;
+@@ -1000,13 +1009,13 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (voltage_swing_level > DP_TRAIN_VOLTAGE_SWING_MAX) {
++	if (voltage_swing_level >= DP_TRAIN_VOLTAGE_SWING_MAX) {
+ 		DRM_DEBUG_DP("max. voltage swing level reached %d\n",
+ 				voltage_swing_level);
+ 		max_level_reached |= DP_TRAIN_MAX_SWING_REACHED;
+ 	}
+ 
+-	if (pre_emphasis_level == DP_TRAIN_PRE_EMPHASIS_MAX) {
++	if (pre_emphasis_level >= DP_TRAIN_PRE_EMPHASIS_MAX) {
+ 		DRM_DEBUG_DP("max. pre-emphasis level reached %d\n",
+ 				pre_emphasis_level);
+ 		max_level_reached  |= DP_TRAIN_MAX_PRE_EMPHASIS_REACHED;
+@@ -1038,8 +1047,11 @@ static bool dp_ctrl_train_pattern_set(struct dp_ctrl_private *ctrl,
+ 	DRM_DEBUG_DP("sink: pattern=%x\n", pattern);
+ 
+ 	buf = pattern;
+-	ret = drm_dp_dpcd_writeb(ctrl->aux,
+-					DP_TRAINING_PATTERN_SET, buf);
++
++	if (pattern && pattern != DP_TRAINING_PATTERN_4)
++		buf |= DP_LINK_SCRAMBLING_DISABLE;
++
++	ret = drm_dp_dpcd_writeb(ctrl->aux, DP_TRAINING_PATTERN_SET, buf);
+ 	return ret == 1;
+ }
+ 
+@@ -1065,19 +1077,23 @@ static int dp_ctrl_read_link_status(struct dp_ctrl_private *ctrl,
+ 	return -ETIMEDOUT;
+ }
+ 
+-static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+ 	int tries, old_v_level, ret = 0;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+-	int const maximum_retries = 5;
++	int const maximum_retries = 4;
+ 
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
++	*training_step = DP_TRAINING_1;
++
+ 	ret = dp_catalog_ctrl_set_pattern(ctrl->catalog, DP_TRAINING_PATTERN_1);
+ 	if (ret)
+ 		return ret;
+ 	dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
+ 		DP_LINK_SCRAMBLING_DISABLE);
++
+ 	ret = dp_ctrl_update_vx_px(ctrl);
+ 	if (ret)
+ 		return ret;
+@@ -1091,12 +1107,15 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl)
+ 		if (ret)
+ 			return ret;
+ 
++		cr->lane_0_1 = link_status[0];
++		cr->lane_2_3 = link_status[1];
++
+ 		if (drm_dp_clock_recovery_ok(link_status,
+ 			ctrl->link->link_params.num_lanes)) {
+-			return ret;
++			return 0;
+ 		}
+ 
+-		if (ctrl->link->phy_params.v_level >
++		if (ctrl->link->phy_params.v_level >=
+ 			DP_TRAIN_VOLTAGE_SWING_MAX) {
+ 			DRM_ERROR_RATELIMITED("max v_level reached\n");
+ 			return -EAGAIN;
+@@ -1119,8 +1138,10 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl)
+ 	return -ETIMEDOUT;
+ }
+ 
+-static void dp_ctrl_link_rate_down_shift(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_link_rate_down_shift(struct dp_ctrl_private *ctrl)
+ {
++	int ret = 0;
++
+ 	switch (ctrl->link->link_params.rate) {
+ 	case 810000:
+ 		ctrl->link->link_params.rate = 540000;
+@@ -1129,13 +1150,33 @@ static void dp_ctrl_link_rate_down_shift(struct dp_ctrl_private *ctrl)
+ 		ctrl->link->link_params.rate = 270000;
+ 		break;
+ 	case 270000:
++		ctrl->link->link_params.rate = 162000;
++		break;
+ 	case 162000:
+ 	default:
+-		ctrl->link->link_params.rate = 162000;
++		ret = -EINVAL;
+ 		break;
+ 	};
+ 
+-	DRM_DEBUG_DP("new rate=0x%x\n", ctrl->link->link_params.rate);
++	if (!ret)
++		DRM_DEBUG_DP("new rate=0x%x\n", ctrl->link->link_params.rate);
++
++	return ret;
++}
++
++static int dp_ctrl_link_lane_down_shift(struct dp_ctrl_private *ctrl)
++{
++
++	if (ctrl->link->link_params.num_lanes == 1)
++		return -1;
++
++	ctrl->link->link_params.num_lanes /= 2;
++	ctrl->link->link_params.rate = ctrl->panel->link_info.rate;
++
++	ctrl->link->phy_params.p_level = 0;
++	ctrl->link->phy_params.v_level = 0;
++
++	return 0;
+ }
+ 
+ static void dp_ctrl_clear_training_pattern(struct dp_ctrl_private *ctrl)
+@@ -1144,7 +1185,8 @@ static void dp_ctrl_clear_training_pattern(struct dp_ctrl_private *ctrl)
+ 	drm_dp_link_train_channel_eq_delay(ctrl->panel->dpcd);
+ }
+ 
+-static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+ 	int tries = 0, ret = 0;
+ 	char pattern;
+@@ -1153,6 +1195,8 @@ static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
+ 
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
++	*training_step = DP_TRAINING_2;
++
+ 	if (drm_dp_tps3_supported(ctrl->panel->dpcd))
+ 		pattern = DP_TRAINING_PATTERN_3;
+ 	else
+@@ -1174,10 +1218,13 @@ static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
+ 		ret = dp_ctrl_read_link_status(ctrl, link_status);
+ 		if (ret)
+ 			return ret;
++		cr->lane_0_1 = link_status[0];
++		cr->lane_2_3 = link_status[1];
+ 
+ 		if (drm_dp_channel_eq_ok(link_status,
+-			ctrl->link->link_params.num_lanes))
+-			return ret;
++			ctrl->link->link_params.num_lanes)) {
++			return 0;
++		}
+ 
+ 		dp_link_adjust_levels(ctrl->link, link_status);
+ 		ret = dp_ctrl_update_vx_px(ctrl);
+@@ -1189,15 +1236,15 @@ static int dp_ctrl_link_training_2(struct dp_ctrl_private *ctrl)
+ 	return -ETIMEDOUT;
+ }
+ 
+-static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
++static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl);
++
++static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+ 	int ret = 0;
+ 	u8 encoding = DP_SET_ANSI_8B10B;
+ 	struct dp_link_info link_info = {0};
+ 
+-	ctrl->link->phy_params.p_level = 0;
+-	ctrl->link->phy_params.v_level = 0;
+-
+ 	dp_ctrl_config_ctrl(ctrl);
+ 
+ 	link_info.num_lanes = ctrl->link->link_params.num_lanes;
+@@ -1208,7 +1255,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
+ 	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
+ 				&encoding, 1);
+ 
+-	ret = dp_ctrl_link_train_1(ctrl);
++	ret = dp_ctrl_link_train_1(ctrl, cr, training_step);
+ 	if (ret) {
+ 		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
+ 		goto end;
+@@ -1217,7 +1264,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
+ 	/* print success info as this is a result of user initiated action */
+ 	DRM_DEBUG_DP("link training #1 successful\n");
+ 
+-	ret = dp_ctrl_link_training_2(ctrl);
++	ret = dp_ctrl_link_train_2(ctrl, cr, training_step);
+ 	if (ret) {
+ 		DRM_ERROR("link training #2 failed. ret=%d\n", ret);
+ 		goto end;
+@@ -1229,58 +1276,36 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl)
+ end:
+ 	dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
+ 
+-	dp_ctrl_clear_training_pattern(ctrl);
+ 	return ret;
+ }
+ 
+-static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl, bool train)
++static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl,
++		struct dp_cr_status *cr, int *training_step)
+ {
+-	bool mainlink_ready = false;
+ 	int ret = 0;
+ 
+ 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, true);
+ 
+-	ret = dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, false);
+-	if (ret)
+-		return ret;
+-
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+ 		return ret;
+ 
+-	if (train) {
+-		/*
+-		 * As part of previous calls, DP controller state might have
+-		 * transitioned to PUSH_IDLE. In order to start transmitting
+-		 * a link training pattern, we have to first do soft reset.
+-		 */
+-		dp_catalog_ctrl_reset(ctrl->catalog);
+-
+-		ret = dp_ctrl_link_train(ctrl);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	/*
+-	 * Set up transfer unit values and set controller state to send
+-	 * video.
++	 * As part of previous calls, DP controller state might have
++	 * transitioned to PUSH_IDLE. In order to start transmitting
++	 * a link training pattern, we have to first do soft reset.
+ 	 */
+-	dp_ctrl_setup_tr_unit(ctrl);
+-	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
++	dp_catalog_ctrl_reset(ctrl->catalog);
+ 
+-	ret = dp_ctrl_wait4video_ready(ctrl);
+-	if (ret)
+-		return ret;
++	ret = dp_ctrl_link_train(ctrl, cr, training_step);
+ 
+-	mainlink_ready = dp_catalog_ctrl_mainlink_ready(ctrl->catalog);
+-	DRM_DEBUG_DP("mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
+ 	return ret;
+ }
+ 
+ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
+-				   char *name, u32 rate)
++			enum dp_pm_type module, char *name, u32 rate)
+ {
+-	u32 num = ctrl->parser->mp[DP_CTRL_PM].num_clk;
+-	struct dss_clk *cfg = ctrl->parser->mp[DP_CTRL_PM].clk_config;
++	u32 num = ctrl->parser->mp[module].num_clk;
++	struct dss_clk *cfg = ctrl->parser->mp[module].clk_config;
+ 
+ 	while (num && strcmp(cfg->clk_name, name)) {
+ 		num--;
+@@ -1302,16 +1327,33 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+ 
+ 	dp_power_set_link_clk_parent(ctrl->power);
+ 
+-	dp_ctrl_set_clock_rate(ctrl, "ctrl_link",
++	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
+ 					ctrl->link->link_params.rate);
+ 
+-	dp_ctrl_set_clock_rate(ctrl, "stream_pixel",
+-					ctrl->dp_ctrl.pixel_rate);
+-
+ 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, true);
+ 	if (ret)
+ 		DRM_ERROR("Unable to start link clocks. ret=%d\n", ret);
+ 
++	DRM_DEBUG_DP("link rate=%d pixel_clk=%d\n",
++		ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
++
++	return ret;
++}
++
++static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
++{
++	int ret = 0;
++
++	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
++					ctrl->dp_ctrl.pixel_rate);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
++	if (ret)
++		DRM_ERROR("Unabled to start pixel clocks. ret=%d\n", ret);
++
++	DRM_DEBUG_DP("link rate=%d pixel_clk=%d\n",
++			ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
++
+ 	return ret;
+ }
+ 
+@@ -1401,37 +1443,30 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
+ 		return ret;
+ 	}
+ 
+-	dp_ctrl_configure_source_params(ctrl);
+-	dp_catalog_ctrl_config_msa(ctrl->catalog,
+-		ctrl->link->link_params.rate,
+-		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
+-	reinit_completion(&ctrl->idle_comp);
+-
+ 	return ret;
+ }
+ 
+ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
+ {
+ 	int ret = 0;
+-	int tries;
++	struct dp_cr_status cr;
++	int training_step = DP_TRAINING_NONE;
+ 
+ 	dp_ctrl_push_idle(&ctrl->dp_ctrl);
+ 	dp_catalog_ctrl_reset(ctrl->catalog);
+ 
+ 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+ 
+-	for (tries = 0; tries < 10; tries++) {
+-		ret = dp_ctrl_reinitialize_mainlink(ctrl);
+-		if (ret) {
+-			DRM_ERROR("Failed to reinitialize mainlink. ret=%d\n",
+-					ret);
+-			break;
+-		}
++	ret = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
++	if (ret)
++		goto end;
+ 
+-		ret = dp_ctrl_setup_main_link(ctrl, true);
+-		if (ret == -EAGAIN) /* try with lower link rate */
+-			dp_ctrl_link_rate_down_shift(ctrl);
+-	}
++	dp_ctrl_clear_training_pattern(ctrl);
++
++	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
++
++	ret = dp_ctrl_wait4video_ready(ctrl);
++end:
+ 	return ret;
+ }
+ 
+@@ -1444,22 +1479,22 @@ static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+ 		return ret;
+ 	}
+ 
+-	dp_ctrl_push_idle(&ctrl->dp_ctrl);
+ 	/*
+ 	 * The global reset will need DP link related clocks to be
+ 	 * running. Add the global reset just before disabling the
+ 	 * link clocks and core clocks.
+ 	 */
+-	dp_catalog_ctrl_reset(ctrl->catalog);
+ 	ret = dp_ctrl_off(&ctrl->dp_ctrl);
+ 	if (ret) {
+ 		DRM_ERROR("failed to disable DP controller\n");
+ 		return ret;
+ 	}
+ 
+-	ret = dp_ctrl_on(&ctrl->dp_ctrl);
+-	if (ret)
+-		DRM_ERROR("failed to enable DP controller\n");
++	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
++	if (!ret)
++		ret = dp_ctrl_on_stream(&ctrl->dp_ctrl);
++	else
++		DRM_ERROR("failed to enable DP link controller\n");
+ 
+ 	return ret;
+ }
+@@ -1479,27 +1514,33 @@ static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
+ 		return false;
+ 	}
+ 	dp_catalog_ctrl_send_phy_pattern(ctrl->catalog, pattern_requested);
++	dp_ctrl_update_vx_px(ctrl);
+ 	dp_link_send_test_response(ctrl->link);
+ 
+ 	pattern_sent = dp_catalog_ctrl_read_phy_pattern(ctrl->catalog);
+ 
+ 	switch (pattern_sent) {
+ 	case MR_LINK_TRAINING1:
+-		success = pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_D10_2;
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_D10_2);
+ 		break;
+ 	case MR_LINK_SYMBOL_ERM:
+-		success = (pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_ERROR_RATE)
+-			|| (pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_HBR2_EYE);
++		success = ((pattern_requested ==
++			DP_PHY_TEST_PATTERN_ERROR_COUNT) ||
++				(pattern_requested ==
++				DP_PHY_TEST_PATTERN_CP2520));
+ 		break;
+ 	case MR_LINK_PRBS7:
+-		success = pattern_requested == DP_LINK_QUAL_PATTERN_PRBS7;
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_PRBS7);
+ 		break;
+ 	case MR_LINK_CUSTOM80:
+-		success = pattern_requested ==
+-				DP_LINK_QUAL_PATTERN_80BIT_CUSTOM;
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_80BIT_CUSTOM);
++		break;
++	case MR_LINK_TRAINING4:
++		success = (pattern_requested ==
++				DP_PHY_TEST_PATTERN_SEL_MASK);
+ 		break;
+ 	default:
+ 		success = false;
+@@ -1531,12 +1572,12 @@ void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
+ 		}
+ 	}
+ 
+-	if (sink_request & DP_LINK_STATUS_UPDATED)
++	if (sink_request & DP_LINK_STATUS_UPDATED) {
+ 		if (dp_ctrl_link_maintenance(ctrl)) {
+-			DRM_ERROR("LM failed: STATUS_UPDATED\n");
++			DRM_ERROR("LM failed: TEST_LINK_TRAINING\n");
+ 			return;
+ 		}
+-
++	}
+ 
+ 	if (sink_request & DP_TEST_LINK_TRAINING) {
+ 		dp_link_send_test_response(ctrl->link);
+@@ -1547,13 +1588,15 @@ void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
+ 	}
+ }
+ 
+-int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
++int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ {
+ 	int rc = 0;
+ 	struct dp_ctrl_private *ctrl;
+ 	u32 rate = 0;
+-	u32 link_train_max_retries = 10;
++	int link_train_max_retries = 5;
+ 	u32 const phy_cts_pixel_clk_khz = 148500;
++	struct dp_cr_status cr;
++	unsigned int training_step;
+ 
+ 	if (!dp_ctrl)
+ 		return -EINVAL;
+@@ -1587,6 +1630,9 @@ int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
+ 	if (rc)
+ 		return rc;
+ 
++	ctrl->link->phy_params.p_level = 0;
++	ctrl->link->phy_params.v_level = 0;
++
+ 	while (--link_train_max_retries &&
+ 		!atomic_read(&ctrl->dp_ctrl.aborted)) {
+ 		rc = dp_ctrl_reinitialize_mainlink(ctrl);
+@@ -1595,19 +1641,125 @@ int dp_ctrl_on(struct dp_ctrl *dp_ctrl)
+ 					rc);
+ 			break;
+ 		}
+-		rc = dp_ctrl_setup_main_link(ctrl, true);
+-		if (!rc)
++
++		training_step = DP_TRAINING_NONE;
++		rc = dp_ctrl_setup_main_link(ctrl, &cr, &training_step);
++		if (rc == 0) {
++			/* training completed successfully */
+ 			break;
+-		/* try with lower link rate */
+-		dp_ctrl_link_rate_down_shift(ctrl);
++		} else if (training_step == DP_TRAINING_1) {
++			/* link train_1 failed */
++			rc = dp_ctrl_link_rate_down_shift(ctrl);
++			if (rc < 0) { /* already in RBR = 1.6G */
++				if (cr.lane_0_1 & DP_LANE0_1_CR_DONE) {
++					/*
++					 * some lanes are ready,
++					 * reduce lane number
++					 */
++					rc = dp_ctrl_link_lane_down_shift(ctrl);
++					if (rc < 0) { /* lane == 1 already */
++						/* end with failure */
++						break;
++					}
++				} else {
++					/* end with failure */
++					break; /* lane == 1 already */
++				}
++			}
++		} else if (training_step == DP_TRAINING_2) {
++			/* link train_2 failed, lower lane rate */
++			rc = dp_ctrl_link_lane_down_shift(ctrl);
++			if (rc < 0) {
++				/* end with failure */
++				break; /* lane == 1 already */
++			}
++		}
+ 	}
+ 
+ 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+-		dp_ctrl_send_phy_test_pattern(ctrl);
++		return rc;
++
++	/* stop txing train pattern */
++	dp_ctrl_clear_training_pattern(ctrl);
++
++	/*
++	 * keep transmitting idle pattern until video ready
++	 * to avoid main link from loss of sync
++	 */
++	if (rc == 0)  /* link train successfully */
++		dp_ctrl_push_idle(dp_ctrl);
+ 
+ 	return rc;
+ }
+ 
++int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
++{
++	u32 rate = 0;
++	int ret = 0;
++	bool mainlink_ready = false;
++	struct dp_ctrl_private *ctrl;
++
++	if (!dp_ctrl)
++		return -EINVAL;
++
++	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
++
++	rate = ctrl->panel->link_info.rate;
++
++	ctrl->link->link_params.rate = rate;
++	ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
++	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
++
++	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
++		ctrl->link->link_params.rate,
++		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
++
++	if (!dp_power_clk_status(ctrl->power, DP_CTRL_PM)) { /* link clk is off */
++		ret = dp_ctrl_enable_mainlink_clocks(ctrl);
++		if (ret) {
++			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
++			goto end;
++		}
++	}
++
++	ret = dp_ctrl_enable_stream_clocks(ctrl);
++	if (ret) {
++		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
++		goto end;
++	}
++
++	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN) {
++		dp_ctrl_send_phy_test_pattern(ctrl);
++		return 0;
++	}
++
++	/*
++	 * Set up transfer unit values and set controller state to send
++	 * video.
++	 */
++	dp_ctrl_configure_source_params(ctrl);
++
++	dp_catalog_ctrl_config_msa(ctrl->catalog,
++		ctrl->link->link_params.rate,
++		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
++
++	reinit_completion(&ctrl->video_comp);
++
++	dp_ctrl_setup_tr_unit(ctrl);
++
++	dp_catalog_ctrl_state_ctrl(ctrl->catalog, DP_STATE_CTRL_SEND_VIDEO);
++
++	ret = dp_ctrl_wait4video_ready(ctrl);
++	if (ret)
++		return ret;
++
++	mainlink_ready = dp_catalog_ctrl_mainlink_ready(ctrl->catalog);
++	DRM_DEBUG_DP("mainlink %s\n", mainlink_ready ? "READY" : "NOT READY");
++
++end:
++	return ret;
++}
++
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ {
+ 	struct dp_ctrl_private *ctrl;
+@@ -1619,11 +1771,16 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+ 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+ 
+ 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
++
+ 	dp_catalog_ctrl_reset(ctrl->catalog);
++
++	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
++	if (ret)
++		DRM_ERROR("Failed to disable pixel clocks. ret=%d\n", ret);
++
+ 	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
+ 	if (ret) {
+-		DRM_ERROR("Failed to disable clocks. ret=%d\n", ret);
+-		return ret;
++		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
+ 	}
+ 
+ 	DRM_DEBUG_DP("DP off done\n");
+@@ -1674,7 +1831,6 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
+ 
+ 	init_completion(&ctrl->idle_comp);
+ 	init_completion(&ctrl->video_comp);
+-	mutex_init(&ctrl->push_idle_mutex);
+ 
+ 	/* in parameters */
+ 	ctrl->parser   = parser;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+index 94713a0daff0..f60ba93c8678 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+@@ -21,7 +21,8 @@ struct dp_ctrl {
+ 
+ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip);
+ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
+-int dp_ctrl_on(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
++int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
+ int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
+ void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 925c89720a16..f7e28dd8c39b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -9,6 +9,7 @@
+ #include <linux/debugfs.h>
+ #include <linux/component.h>
+ #include <linux/of_irq.h>
++#include <linux/delay.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+@@ -28,6 +29,50 @@
+ static struct msm_dp *g_dp_display;
+ #define HPD_STRING_SIZE 30
+ 
++enum {
++	ISR_DISCONNECTED,
++	ISR_CONNECT_PENDING,
++	ISR_CONNECTED,
++	ISR_HPD_REPLUG_COUNT,
++	ISR_IRQ_HPD_PULSE_COUNT,
++	ISR_HPD_LO_GLITH_COUNT,
++};
++
++/* event thread connection state */
++enum {
++	ST_DISCONNECTED,
++	ST_CONNECT_PENDING,
++	ST_CONNECTED,
++	ST_DISCONNECT_PENDING,
++	ST_SUSPEND_PENDING,
++	ST_SUSPENDED,
++};
++
++enum {
++	EV_NO_EVENT,
++	/* hpd events */
++	EV_HPD_INIT_SETUP,
++	EV_HPD_PLUG_INT,
++	EV_IRQ_HPD_INT,
++	EV_HPD_REPLUG_INT,
++	EV_HPD_UNPLUG_INT,
++	EV_USER_NOTIFICATION,
++	EV_CONNECT_PENDING_TIMEOUT,
++	EV_DISCONNECT_PENDING_TIMEOUT,
++};
++
++#define EVENT_TIMEOUT	(HZ/10)	/* 100ms */
++#define DP_EVENT_Q_MAX	8
++
++#define DP_TIMEOUT_5_SECOND	(5000/EVENT_TIMEOUT)
++#define DP_TIMEOUT_1_SECOND	(1000/EVENT_TIMEOUT)
++
++struct dp_event {
++	u32 event_id;
++	u32 data;
++	u32 delay;
++};
++
+ struct dp_display_private {
+ 	char *name;
+ 	int irq;
+@@ -37,11 +82,9 @@ struct dp_display_private {
+ 	bool power_on;
+ 	bool hpd_irq_on;
+ 	bool audio_supported;
+-	atomic_t hpd_isr_status;
+ 
+ 	struct platform_device *pdev;
+ 	struct dentry *root;
+-	struct completion notification_comp;
+ 
+ 	struct dp_usbpd   *usbpd;
+ 	struct dp_parser  *parser;
+@@ -52,12 +95,20 @@ struct dp_display_private {
+ 	struct dp_link    *link;
+ 	struct dp_panel   *panel;
+ 	struct dp_ctrl    *ctrl;
++	struct dp_debug   *debug;
+ 
+ 	struct dp_usbpd_cb usbpd_cb;
+ 	struct dp_display_mode dp_mode;
+ 	struct msm_dp dp_display;
+ 
+-	struct delayed_work config_hpd_work;
++	/* event related only access by event thread */
++	struct mutex event_mutex;
++	wait_queue_head_t event_q;
++	atomic_t hpd_state;
++	u32 event_pndx;
++	u32 event_gndx;
++	struct dp_event event_list[DP_EVENT_Q_MAX];
++	spinlock_t event_lock;
+ };
+ 
+ static const struct of_device_id dp_dt_match[] = {
+@@ -65,79 +116,58 @@ static const struct of_device_id dp_dt_match[] = {
+ 	{}
+ };
+ 
+-static irqreturn_t dp_display_irq(int irq, void *dev_id)
++static int dp_add_event(struct dp_display_private *dp_priv, u32 event,
++						u32 data, u32 delay)
+ {
+-	struct dp_display_private *dp = dev_id;
+-	irqreturn_t ret = IRQ_HANDLED;
+-	u32 hpd_isr_status;
+-
+-	if (!dp) {
+-		DRM_ERROR("invalid data\n");
+-		return IRQ_NONE;
++	unsigned long flag;
++	struct dp_event *todo;
++	int pndx;
++
++	spin_lock_irqsave(&dp_priv->event_lock, flag);
++	pndx = dp_priv->event_pndx + 1;
++	pndx %= DP_EVENT_Q_MAX;
++	if (pndx == dp_priv->event_gndx) {
++		pr_err("event_q is full: pndx=%d gndx=%d\n",
++			dp_priv->event_pndx, dp_priv->event_gndx);
++		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++		return -EPERM;
+ 	}
++	todo = &dp_priv->event_list[dp_priv->event_pndx++];
++	dp_priv->event_pndx %= DP_EVENT_Q_MAX;
++	todo->event_id = event;
++	todo->data = data;
++	todo->delay = delay;
++	wake_up(&dp_priv->event_q);
++	spin_unlock_irqrestore(&dp_priv->event_lock, flag);
+ 
+-	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
+-
+-	if (hpd_isr_status & DP_DP_HPD_INT_MASK) {
+-		atomic_set(&dp->hpd_isr_status, hpd_isr_status);
+-		ret = IRQ_WAKE_THREAD;
+-	}
+-
+-	/* DP controller isr */
+-	dp_ctrl_isr(dp->ctrl);
+-
+-	/* DP aux isr */
+-	dp_aux_isr(dp->aux);
+-
+-	return ret;
++	return 0;
+ }
+ 
+-static irqreturn_t dp_display_hpd_isr_work(int irq, void *data)
++static int dp_del_event(struct dp_display_private *dp_priv, u32 event)
+ {
+-	struct dp_display_private *dp;
+-	struct dp_usbpd *hpd;
+-	u32 isr = 0;
+-
+-	dp = (struct dp_display_private *)data;
+-	if (!dp)
+-		return IRQ_NONE;
+-
+-	isr = atomic_read(&dp->hpd_isr_status);
+-
+-	/* reset to default */
+-	atomic_set(&dp->hpd_isr_status, 0);
+-
+-	hpd = dp->usbpd;
+-	if (!hpd)
+-		return IRQ_NONE;
+-
+-	if (isr & DP_DP_HPD_PLUG_INT_MASK &&
+-		isr & DP_DP_HPD_STATE_STATUS_CONNECTED) {
+-		hpd->hpd_high = 1;
+-		dp->usbpd_cb.configure(&dp->pdev->dev);
+-	} else if (isr & DP_DP_HPD_UNPLUG_INT_MASK &&
+-		(isr & DP_DP_HPD_STATE_STATUS_MASK) ==
+-			 DP_DP_HPD_STATE_STATUS_DISCONNECTED) {
+-
+-		/* disable HPD plug interrupt until disconnect is done
+-		 */
+-		dp_catalog_hpd_config_intr(dp->catalog,
+-			DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK,
+-			false);
+-
+-		hpd->hpd_high = 0;
+-
+-		/* We don't need separate work for disconnect as
+-		 * connect/attention interrupts are disabled
+-		 */
+-		dp->usbpd_cb.disconnect(&dp->pdev->dev);
++	unsigned long flag;
++	struct dp_event *todo;
++	u32	gndx;
++
++	spin_lock_irqsave(&dp_priv->event_lock, flag);
++	if (dp_priv->event_pndx == dp_priv->event_gndx) {
++		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++		return -ENOENT;
++	}
+ 
+-		dp_catalog_hpd_config_intr(dp->catalog,
+-			DP_DP_HPD_PLUG_INT_MASK | DP_DP_IRQ_HPD_INT_MASK,
+-			true);
++	gndx = dp_priv->event_gndx;
++	while (dp_priv->event_pndx != gndx) {
++		todo = &dp_priv->event_list[gndx];
++		if (todo->event_id == event) {
++			todo->event_id = EV_NO_EVENT;	/* deleted */
++			todo->delay = 0;
++		}
++		gndx++;
++		gndx %= DP_EVENT_Q_MAX;
+ 	}
++	spin_unlock_irqrestore(&dp_priv->event_lock, flag);
+ 
+-	return IRQ_HANDLED;
++	return 0;
+ }
+ 
+ static int dp_display_bind(struct device *dev, struct device *master,
+@@ -178,7 +208,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
+ 		DRM_ERROR("Power client create failed\n");
+ 		goto end;
+ 	}
+-
+ end:
+ 	return rc;
+ }
+@@ -237,11 +266,9 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 	struct msm_drm_private *priv = dp->dp_display.drm_dev->dev_private;
+ 	struct msm_kms *kms = priv->kms;
+ 
+-	mutex_lock(&dp->dp_display.connect_mutex);
+ 	if ((hpd && dp->dp_display.is_connected) ||
+ 			(!hpd && !dp->dp_display.is_connected)) {
+ 		DRM_DEBUG_DP("HPD already %s\n", (hpd ? "on" : "off"));
+-		mutex_unlock(&dp->dp_display.connect_mutex);
+ 		return 0;
+ 	}
+ 
+@@ -250,7 +277,6 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 		dp->panel->video_test = false;
+ 
+ 	dp->dp_display.is_connected = hpd;
+-	reinit_completion(&dp->notification_comp);
+ 
+ 	if (dp->dp_display.is_connected && dp->dp_display.encoder
+ 				&& !encoder_mode_set
+@@ -263,13 +289,6 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 
+ 	dp_display_send_hpd_event(&dp->dp_display);
+ 
+-	if (!wait_for_completion_timeout(&dp->notification_comp, HZ * 2)) {
+-		pr_warn("%s timeout\n", hpd ? "connect" : "disconnect");
+-		mutex_unlock(&dp->dp_display.connect_mutex);
+-		return -EINVAL;
+-	}
+-
+-	mutex_unlock(&dp->dp_display.connect_mutex);
+ 	return 0;
+ }
+ 
+@@ -278,23 +297,14 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+ 	int rc = 0;
+ 	struct edid *edid;
+ 
+-	if (dp->link->psm_enabled)
+-		goto notify;
+-
+ 	dp->panel->max_dp_lanes = dp->parser->max_dp_lanes;
+ 
+ 	rc = dp_panel_read_sink_caps(dp->panel, dp->dp_display.connector);
+ 	if (rc)
+-		goto notify;
++		goto end;
+ 
+ 	dp_link_process_request(dp->link);
+ 
+-	if (dp_display_is_sink_count_zero(dp)) {
+-		DRM_DEBUG_DP("no downstream devices connected\n");
+-		rc = -EINVAL;
+-		goto end;
+-	}
+-
+ 	edid = dp->panel->edid;
+ 
+ 	dp->audio_supported = drm_detect_monitor_audio(edid);
+@@ -302,8 +312,15 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+ 
+ 	dp->dp_display.max_pclk_khz = DP_MAX_PIXEL_CLK_KHZ;
+ 	dp->dp_display.max_dp_lanes = dp->parser->max_dp_lanes;
+-notify:
+-	dp_display_send_hpd_notification(dp, true);
++
++	rc = dp_ctrl_on_link(dp->ctrl);
++	if (rc) {
++		DRM_ERROR("failed to complete DP link training\n");
++		goto end;
++	}
++
++	dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
++
+ 
+ end:
+ 	return rc;
+@@ -327,23 +344,6 @@ static void dp_display_host_init(struct dp_display_private *dp)
+ 	dp->core_initialized = true;
+ }
+ 
+-static void dp_display_host_deinit(struct dp_display_private *dp)
+-{
+-	if (!dp->core_initialized) {
+-		DRM_DEBUG_DP("DP core already off\n");
+-		return;
+-	}
+-
+-	dp->core_initialized = false;
+-}
+-
+-static void dp_display_process_hpd_low(struct dp_display_private *dp)
+-{
+-	dp_display_send_hpd_notification(dp, false);
+-
+-	dp_aux_deinit(dp->aux);
+-}
+-
+ static int dp_display_usbpd_configure_cb(struct device *dev)
+ {
+ 	int rc = 0;
+@@ -364,18 +364,16 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 
+ 	dp_display_host_init(dp);
+ 
+-	if (dp->usbpd->hpd_high)
+-		dp_display_process_hpd_high(dp);
++	/*
++	 * set sink to normal operation mode -- D0
++	 * before dpcd read
++	 */
++	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
++	rc = dp_display_process_hpd_high(dp);
+ end:
+ 	return rc;
+ }
+ 
+-static void dp_display_clean(struct dp_display_private *dp)
+-{
+-	dp_ctrl_push_idle(dp->ctrl);
+-	dp_ctrl_off(dp->ctrl);
+-}
+-
+ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ {
+ 	int rc = 0;
+@@ -383,16 +381,8 @@ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ 
+ 	dp = dev_get_drvdata(dev);
+ 
+-	rc = dp_display_send_hpd_notification(dp, false);
++	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+ 
+-	/* if cable is disconnected, reset psm_enabled flag */
+-	if (!dp->usbpd->alt_mode_cfg_done)
+-		dp->link->psm_enabled = false;
+-
+-	if ((rc < 0) && dp->power_on)
+-		dp_display_clean(dp);
+-
+-	dp_display_host_deinit(dp);
+ 	return rc;
+ }
+ 
+@@ -407,11 +397,14 @@ static void dp_display_handle_video_request(struct dp_display_private *dp)
+ 	}
+ }
+ 
+-static int dp_display_handle_hpd_irq(struct dp_display_private *dp)
++static int dp_display_handle_irq_hpd(struct dp_display_private *dp)
+ {
+-	if (dp->link->sink_request & DS_PORT_STATUS_CHANGED) {
+-		dp_display_send_hpd_notification(dp, false);
++	u32 sink_request;
++
++	sink_request = dp->link->sink_request;
+ 
++	if (sink_request & DS_PORT_STATUS_CHANGED) {
++		dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+ 		if (dp_display_is_sink_count_zero(dp)) {
+ 			DRM_DEBUG_DP("sink count is zero, nothing to do\n");
+ 			return 0;
+@@ -422,7 +415,8 @@ static int dp_display_handle_hpd_irq(struct dp_display_private *dp)
+ 
+ 	dp_ctrl_handle_sink_request(dp->ctrl);
+ 
+-	dp_display_handle_video_request(dp);
++	if (dp->link->sink_request & DP_TEST_LINK_VIDEO_PATTERN)
++		dp_display_handle_video_request(dp);
+ 
+ 	return 0;
+ }
+@@ -443,27 +437,174 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+ 		return -ENODEV;
+ 	}
+ 
+-	if (dp->usbpd->hpd_irq) {
+-		dp->hpd_irq_on = true;
++	/* check for any test request issued by sink */
++	rc = dp_link_process_request(dp->link);
++	if (!rc)
++		dp_display_handle_irq_hpd(dp);
+ 
+-		rc = dp_link_process_request(dp->link);
+-		/* check for any test request issued by sink */
+-		if (!rc)
+-			dp_display_handle_hpd_irq(dp);
++	return rc;
++}
+ 
+-		dp->hpd_irq_on = false;
+-		goto end;
++static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
++{
++	struct dp_usbpd *hpd = dp->usbpd;
++	u32 state;
++	u32 tout = DP_TIMEOUT_5_SECOND;
++	int ret;
++
++	if (!hpd)
++		return 0;
++
++	mutex_lock(&dp->event_mutex);
++
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_SUSPEND_PENDING) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
+ 	}
+ 
+-	if (!dp->usbpd->hpd_high) {
+-		dp_display_process_hpd_low(dp);
+-		goto end;
++	if (state == ST_CONNECT_PENDING || state == ST_CONNECTED) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
+ 	}
+ 
+-	if (dp->usbpd->alt_mode_cfg_done)
+-		dp_display_process_hpd_high(dp);
+-end:
+-	return rc;
++	if (state == ST_DISCONNECT_PENDING) {
++		/* wait until ST_DISCONNECTED */
++		dp_add_event(dp, EV_HPD_PLUG_INT, 0, 1); /* delay = 1 */
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	if (state == ST_SUSPENDED)
++		tout = DP_TIMEOUT_1_SECOND;
++
++	atomic_set(&dp->hpd_state, ST_CONNECT_PENDING);
++
++	hpd->hpd_high = 1;
++
++	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
++	if (ret) {	/* failed */
++		hpd->hpd_high = 0;
++		atomic_set(&dp->hpd_state, ST_DISCONNECTED);
++	}
++
++	/* start sanity checking */
++	dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
++
++	mutex_unlock(&dp->event_mutex);
++
++	/* uevent will complete connection part */
++	return 0;
++};
++
++static int dp_display_enable(struct dp_display_private *dp, u32 data);
++static int dp_display_disable(struct dp_display_private *dp, u32 data);
++
++static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
++{
++	u32 state;
++
++	mutex_lock(&dp->event_mutex);
++
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_CONNECT_PENDING) {
++		dp_display_enable(dp, 0);
++		atomic_set(&dp->hpd_state, ST_CONNECTED);
++	}
++
++	mutex_unlock(&dp->event_mutex);
++
++	return 0;
++}
++
++static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
++{
++	struct dp_usbpd *hpd = dp->usbpd;
++	u32 state;
++
++	if (!hpd)
++		return 0;
++
++	mutex_lock(&dp->event_mutex);
++
++	state = atomic_read(&dp->hpd_state);
++	if (state == ST_SUSPEND_PENDING) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	if (state == ST_DISCONNECT_PENDING || state == ST_DISCONNECTED) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	if (state == ST_CONNECT_PENDING) {
++		/* wait until CONNECTED */
++		dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 1); /* delay = 1 */
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	atomic_set(&dp->hpd_state, ST_DISCONNECT_PENDING);
++
++	/* disable HPD plug interrupt until disconnect is done */
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK
++				| DP_DP_IRQ_HPD_INT_MASK, false);
++
++	hpd->hpd_high = 0;
++
++	/*
++	 * We don't need separate work for disconnect as
++	 * connect/attention interrupts are disabled
++	 */
++	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
++
++	/* start sanity checking */
++	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
++
++	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK |
++					DP_DP_IRQ_HPD_INT_MASK, true);
++
++	/* uevent will complete disconnection part */
++	mutex_unlock(&dp->event_mutex);
++	return 0;
++}
++
++static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data)
++{
++	u32 state;
++
++	mutex_lock(&dp->event_mutex);
++
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_DISCONNECT_PENDING) {
++		dp_display_disable(dp, 0);
++		atomic_set(&dp->hpd_state, ST_DISCONNECTED);
++	}
++
++	mutex_unlock(&dp->event_mutex);
++
++	return 0;
++}
++
++static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
++{
++	u32 state;
++
++	mutex_lock(&dp->event_mutex);
++
++	/* irq_hpd can happen at either connected or disconnected state */
++	state =  atomic_read(&dp->hpd_state);
++	if (state == ST_SUSPEND_PENDING) {
++		mutex_unlock(&dp->event_mutex);
++		return 0;
++	}
++
++	dp_display_usbpd_attention_cb(&dp->pdev->dev);
++
++	mutex_unlock(&dp->event_mutex);
++
++	return 0;
+ }
+ 
+ static void dp_display_deinit_sub_modules(struct dp_display_private *dp)
+@@ -599,106 +740,37 @@ static int dp_display_prepare(struct msm_dp *dp)
+ 	return 0;
+ }
+ 
+-static void dp_display_dump(struct msm_dp *dp_display)
+-{
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	dp_panel_dump_regs(dp->panel);
+-}
+-
+-static int dp_display_enable(struct msm_dp *dp_display)
++static int dp_display_enable(struct dp_display_private *dp, u32 data)
+ {
+ 	int rc = 0;
+-	struct dp_display_private *dp;
+-	bool dump_dp = false;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+ 	if (dp->power_on) {
+ 		DRM_DEBUG_DP("Link already setup, return\n");
+ 		return 0;
+ 	}
+ 
+-	rc = dp_ctrl_on(dp->ctrl);
++	rc = dp_ctrl_on_stream(dp->ctrl);
+ 	if (!rc)
+ 		dp->power_on = true;
+ 
+-	if (dump_dp != false)
+-		dp_display_dump(dp_display);
+-
+ 	return rc;
+ }
+ 
+ static int dp_display_post_enable(struct msm_dp *dp_display)
+ {
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	complete_all(&dp->notification_comp);
+ 	return 0;
+ }
+ 
+-static int dp_display_pre_disable(struct msm_dp *dp_display)
++static int dp_display_disable(struct dp_display_private *dp, u32 data)
+ {
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	if (dp->usbpd->alt_mode_cfg_done)
+-		dp_link_psm_config(dp->link, &dp->panel->link_info, true);
+-
+-	dp_ctrl_push_idle(dp->ctrl);
+-	return 0;
+-}
+-
+-static int dp_display_disable(struct msm_dp *dp_display)
+-{
+-	struct dp_display_private *dp;
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	if (!dp->power_on || !dp->core_initialized)
++	if (!dp->power_on)
+ 		return -EINVAL;
+ 
+ 	dp_ctrl_off(dp->ctrl);
+ 
+-	dp->power_on = false;
+-
+-	complete_all(&dp->notification_comp);
+-	return 0;
+-}
+-
+-int dp_display_request_irq(struct msm_dp *dp_display)
+-{
+-	int rc = 0;
+-	struct dp_display_private *dp;
+-
+-	if (!dp_display) {
+-		DRM_ERROR("invalid input\n");
+-		return -EINVAL;
+-	}
+-
+-	dp = container_of(dp_display, struct dp_display_private, dp_display);
+-
+-	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
+-	if (dp->irq < 0) {
+-		rc = dp->irq;
+-		DRM_ERROR("failed to get irq: %d\n", rc);
+-		return rc;
+-	}
++	dp->core_initialized = false;
+ 
+-	rc = devm_request_threaded_irq(&dp->pdev->dev, dp->irq,
+-		dp_display_irq, dp_display_hpd_isr_work,
+-		IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+-	if (rc < 0) {
+-		DRM_ERROR("failed to request IRQ%u: %d\n",
+-				dp->irq, rc);
+-		return rc;
+-	}
+-	disable_irq(dp->irq);
++	dp->power_on = false;
+ 
+ 	return 0;
+ }
+@@ -783,6 +855,192 @@ int dp_display_get_test_bpp(struct msm_dp *dp)
+ 		dp_display->link->test_video.test_bit_depth);
+ }
+ 
++static void dp_display_config_hpd(struct dp_display_private *dp)
++{
++
++	dp_display_host_init(dp);
++	dp_catalog_ctrl_hpd_config(dp->catalog);
++
++	/* Enable interrupt first time
++	 * we are leaving dp clocks on during disconnect
++	 * and never disable interrupt
++	 */
++	enable_irq(dp->irq);
++}
++
++static int hpd_event_thread(void *data)
++{
++	struct dp_display_private *dp_priv;
++	unsigned long flag;
++	struct dp_event *todo;
++	int timeout_mode = 0;
++
++	dp_priv = (struct dp_display_private *)data;
++
++	while (1) {
++		if (timeout_mode) {
++			wait_event_timeout(dp_priv->event_q,
++				(dp_priv->event_pndx == dp_priv->event_gndx),
++						EVENT_TIMEOUT);
++		} else {
++			wait_event_timeout(dp_priv->event_q,
++				(dp_priv->event_pndx != dp_priv->event_gndx),
++						EVENT_TIMEOUT);
++		}
++		spin_lock_irqsave(&dp_priv->event_lock, flag);
++		todo = &dp_priv->event_list[dp_priv->event_gndx];
++		if (todo->delay) {
++			struct dp_event *todo_next;
++
++			dp_priv->event_gndx++;
++			dp_priv->event_gndx %= DP_EVENT_Q_MAX;
++
++			/* re enter delay event into q */
++			todo_next = &dp_priv->event_list[dp_priv->event_pndx++];
++			dp_priv->event_pndx %= DP_EVENT_Q_MAX;
++			todo_next->event_id = todo->event_id;
++			todo_next->data = todo->data;
++			todo_next->delay = todo->delay - 1;
++
++			/* clean up older event */
++			todo->event_id = EV_NO_EVENT;
++			todo->delay = 0;
++
++			/* switch to timeout mode */
++			timeout_mode = 1;
++			spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++			continue;
++		}
++
++		/* timeout with no events in q */
++		if (dp_priv->event_pndx == dp_priv->event_gndx) {
++			spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++			continue;
++		}
++
++		dp_priv->event_gndx++;
++		dp_priv->event_gndx %= DP_EVENT_Q_MAX;
++		timeout_mode = 0;
++		spin_unlock_irqrestore(&dp_priv->event_lock, flag);
++
++		switch (todo->event_id) {
++		case EV_HPD_INIT_SETUP:
++			dp_display_config_hpd(dp_priv);
++			break;
++		case EV_HPD_PLUG_INT:
++			dp_hpd_plug_handle(dp_priv, todo->data);
++			break;
++		case EV_HPD_UNPLUG_INT:
++			dp_hpd_unplug_handle(dp_priv, todo->data);
++			break;
++		case EV_IRQ_HPD_INT:
++			dp_irq_hpd_handle(dp_priv, todo->data);
++			break;
++		case EV_HPD_REPLUG_INT:
++			/* do nothing */
++			break;
++		case EV_USER_NOTIFICATION:
++			dp_display_send_hpd_notification(dp_priv,
++						todo->data);
++			break;
++		case EV_CONNECT_PENDING_TIMEOUT:
++			dp_connect_pending_timeout(dp_priv,
++						todo->data);
++			break;
++		case EV_DISCONNECT_PENDING_TIMEOUT:
++			dp_disconnect_pending_timeout(dp_priv,
++						todo->data);
++			break;
++		default:
++			break;
++		}
++	}
++
++	return 0;
++}
++
++static void dp_hpd_event_setup(struct dp_display_private *dp_priv)
++{
++	init_waitqueue_head(&dp_priv->event_q);
++	spin_lock_init(&dp_priv->event_lock);
++
++	kthread_run(hpd_event_thread, dp_priv, "dp_hpd_handler");
++}
++
++static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
++{
++	struct dp_display_private *dp = dev_id;
++	irqreturn_t ret = IRQ_HANDLED;
++	u32 hpd_isr_status;
++
++	if (!dp) {
++		DRM_ERROR("invalid data\n");
++		return IRQ_NONE;
++	}
++
++	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
++
++	if (hpd_isr_status & 0x0F) {
++		/* hpd related interrupts */
++		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK ||
++			hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
++			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
++		}
++
++		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
++			/* delete connect pending event first */
++			dp_del_event(dp, EV_CONNECT_PENDING_TIMEOUT);
++			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
++		}
++
++		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK)
++			dp_add_event(dp, EV_HPD_REPLUG_INT, 0, 0);
++
++		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
++			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
++	}
++
++	/* DP controller isr */
++	dp_ctrl_isr(dp->ctrl);
++
++	/* DP aux isr */
++	dp_aux_isr(dp->aux);
++
++	return ret;
++}
++
++int dp_display_request_irq(struct msm_dp *dp_display)
++{
++	int rc = 0;
++	struct dp_display_private *dp;
++
++	if (!dp_display) {
++		DRM_ERROR("invalid input\n");
++		return -EINVAL;
++	}
++
++	dp = container_of(dp_display, struct dp_display_private, dp_display);
++
++	dp->irq = irq_of_parse_and_map(dp->pdev->dev.of_node, 0);
++	if (dp->irq < 0) {
++		rc = dp->irq;
++		DRM_ERROR("failed to get irq: %d\n", rc);
++		return rc;
++	}
++
++	rc = devm_request_irq(&dp->pdev->dev, dp->irq,
++			dp_display_irq_handler,
++			IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
++	if (rc < 0) {
++		DRM_ERROR("failed to request IRQ%u: %d\n",
++				dp->irq, rc);
++		return rc;
++	}
++	disable_irq(dp->irq);
++
++	return 0;
++}
++
+ static int dp_display_probe(struct platform_device *pdev)
+ {
+ 	int rc = 0;
+@@ -797,8 +1055,6 @@ static int dp_display_probe(struct platform_device *pdev)
+ 	if (!dp)
+ 		return -ENOMEM;
+ 
+-	init_completion(&dp->notification_comp);
+-
+ 	dp->pdev = pdev;
+ 	dp->name = "drm_dp";
+ 
+@@ -810,7 +1066,7 @@ static int dp_display_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, dp);
+ 
+-	mutex_init(&dp->dp_display.connect_mutex);
++	mutex_init(&dp->event_mutex);
+ 	g_dp_display = &dp->dp_display;
+ 
+ 	rc = component_add(&pdev->dev, &dp_display_comp_ops);
+@@ -843,6 +1099,16 @@ static int dp_pm_resume(struct device *dev)
+ 
+ static int dp_pm_suspend(struct device *dev)
+ {
++	struct platform_device *pdev = to_platform_device(dev);
++	struct dp_display_private *dp = platform_get_drvdata(pdev);
++
++	if (!dp) {
++		DRM_ERROR("DP driver bind failed. Invalid driver data\n");
++		return -EINVAL;
++	}
++
++	atomic_set(&dp->hpd_state, ST_SUSPENDED);
++
+ 	return 0;
+ }
+ 
+@@ -890,26 +1156,6 @@ void __exit msm_dp_unregister(void)
+ 	platform_driver_unregister(&dp_display_driver);
+ }
+ 
+-static void dp_display_config_hpd_work(struct work_struct *work)
+-{
+-	struct dp_display_private *dp;
+-	struct delayed_work *dw = to_delayed_work(work);
+-
+-	dp = container_of(dw, struct dp_display_private, config_hpd_work);
+-
+-	dp_display_host_init(dp);
+-	dp_catalog_ctrl_hpd_config(dp->catalog);
+-
+-	/* set default to 0 */
+-	atomic_set(&dp->hpd_isr_status, 0);
+-
+-	/* Enable interrupt first time
+-	 * we are leaving dp clocks on during disconnect
+-	 * and never disable interrupt
+-	 */
+-	enable_irq(dp->irq);
+-}
+-
+ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ {
+ 	struct dp_display_private *dp;
+@@ -919,8 +1165,9 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	INIT_DELAYED_WORK(&dp->config_hpd_work, dp_display_config_hpd_work);
+-	queue_delayed_work(system_wq, &dp->config_hpd_work, HZ * 10);
++	dp_hpd_event_setup(dp);
++
++	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
+ }
+ 
+ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+@@ -960,6 +1207,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	int rc = 0;
+ 	struct dp_display_private *dp_display;
++	u32 state;
+ 
+ 	dp_display = container_of(dp, struct dp_display_private, dp_display);
+ 	if (!dp_display->dp_mode.drm_mode.clock) {
+@@ -967,54 +1215,90 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 		return -EINVAL;
+ 	}
+ 
++	mutex_lock(&dp_display->event_mutex);
++
++	state =  atomic_read(&dp_display->hpd_state);
++	if (state == ST_SUSPENDED) {
++		/* start link re training */
++		dp_add_event(dp_display, EV_HPD_PLUG_INT, 0, 0);
++		mutex_unlock(&dp_display->event_mutex);
++		return rc;
++	}
++
+ 	rc = dp_display_set_mode(dp, &dp_display->dp_mode);
+ 	if (rc) {
+ 		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
++		mutex_unlock(&dp_display->event_mutex);
+ 		return rc;
+ 	}
+ 
+ 	rc = dp_display_prepare(dp);
+ 	if (rc) {
+ 		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
++		mutex_unlock(&dp_display->event_mutex);
+ 		return rc;
+ 	}
+ 
+-	rc = dp_display_enable(dp);
+-	if (rc) {
+-		DRM_ERROR("DP display enable failed, rc=%d\n", rc);
+-		dp_display_unprepare(dp);
+-		return rc;
+-	}
++	dp_display_enable(dp_display, 0);
+ 
+ 	rc = dp_display_post_enable(dp);
+ 	if (rc) {
+ 		DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
+-		dp_display_disable(dp);
++		dp_display_disable(dp_display, 0);
+ 		dp_display_unprepare(dp);
+ 	}
++
++	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
++
++	if (state == ST_SUSPEND_PENDING)
++		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
++
++	/* completed connection */
++	atomic_set(&dp_display->hpd_state, ST_CONNECTED);
++
++	mutex_unlock(&dp_display->event_mutex);
++
+ 	return rc;
+ }
+ 
++int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
++{
++	struct dp_display_private *dp_display;
++
++	dp_display = container_of(dp, struct dp_display_private, dp_display);
++
++	dp_ctrl_push_idle(dp_display->ctrl);
++
++	return 0;
++}
++
+ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	int rc = 0;
++	u32 state;
++	struct dp_display_private *dp_display;
+ 
+-	rc = dp_display_pre_disable(dp);
+-	if (rc) {
+-		DRM_ERROR("DP display pre disable failed, rc=%d\n", rc);
+-		return rc;
+-	}
++	dp_display = container_of(dp, struct dp_display_private, dp_display);
+ 
+-	rc = dp_display_disable(dp);
+-	if (rc) {
+-		DRM_ERROR("DP display disable failed, rc=%d\n", rc);
+-		return rc;
+-	}
++	mutex_lock(&dp_display->event_mutex);
++
++	dp_display_disable(dp_display, 0);
+ 
+ 	rc = dp_display_unprepare(dp);
+ 	if (rc)
+ 		DRM_ERROR("DP display unprepare failed, rc=%d\n", rc);
+ 
++	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
++
++	state =  atomic_read(&dp_display->hpd_state);
++	if (state == ST_DISCONNECT_PENDING) {
++		/* completed disconnection */
++		atomic_set(&dp_display->hpd_state, ST_DISCONNECTED);
++	} else {
++		atomic_set(&dp_display->hpd_state, ST_SUSPEND_PENDING);
++	}
++
++	mutex_unlock(&dp_display->event_mutex);
+ 	return rc;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 4c53ed55d1cc..2f2d1279dfc6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -13,7 +13,6 @@ struct msm_dp {
+ 	struct drm_connector *connector;
+ 	struct drm_encoder *encoder;
+ 	bool is_connected;
+-	struct mutex connect_mutex;
+ 	u32 max_pclk_khz;
+ 	u32 max_dp_lanes;
+ };
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index e58906f4ae1e..764f4b81017e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -58,7 +58,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 	if (!dp_mode)
+ 		return 0;
+ 
+-	mutex_lock(&dp->connect_mutex);
+ 	/* pluggable case assumes EDID is read when HPD */
+ 	if (dp->is_connected) {
+ 		/*
+@@ -71,7 +70,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 		if (rc <= 0) {
+ 			DRM_ERROR("failed to get DP sink modes, rc=%d\n", rc);
+ 			kfree(dp_mode);
+-			mutex_unlock(&dp->connect_mutex);
+ 			return rc;
+ 		}
+ 		if (dp_mode->drm_mode.clock) { /* valid DP mode */
+@@ -83,7 +81,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 				       drm_mode.hdisplay,
+ 				       drm_mode.vdisplay);
+ 				kfree(dp_mode);
+-				mutex_unlock(&dp->connect_mutex);
+ 				return 0;
+ 			}
+ 			drm_mode_probed_add(connector, m);
+@@ -91,7 +88,6 @@ static int dp_connector_get_modes(struct drm_connector *connector)
+ 	} else {
+ 		DRM_DEBUG_DP("No sink connected\n");
+ 	}
+-	mutex_unlock(&dp->connect_mutex);
+ 	kfree(dp_mode);
+ 	return rc;
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
+index 5b08ce580702..5b8fe32022b5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.c
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.c
+@@ -24,7 +24,7 @@ struct dp_hpd_private {
+ 	struct dp_usbpd dp_usbpd;
+ };
+ 
+-static int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
++int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
+ {
+ 	int rc = 0;
+ 	struct dp_hpd_private *hpd_priv;
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.h b/drivers/gpu/drm/msm/dp/dp_hpd.h
+index c0178524bec7..5bc5bb64680f 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.h
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.h
+@@ -75,5 +75,6 @@ struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb);
+ 
+ int dp_hpd_register(struct dp_usbpd *dp_usbpd);
+ void dp_hpd_unregister(struct dp_usbpd *dp_usbpd);
++int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd);
+ 
+ #endif /* _DP_HPD_H_ */
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index 9156a7f3dbf8..3cbae92deff0 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -38,7 +38,6 @@ struct dp_link_private {
+ 	struct dp_link dp_link;
+ 
+ 	struct dp_link_request request;
+-	struct mutex test_response_mutex;
+ 	struct mutex psm_mutex;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+ };
+@@ -580,17 +579,18 @@ static int dp_link_parse_phy_test_params(struct dp_link_private *link)
+ 		return rlen;
+ 	}
+ 
+-	link->dp_link.phy_params.phy_test_pattern_sel = data;
++	link->dp_link.phy_params.phy_test_pattern_sel = data & 0x07;
+ 
+ 	DRM_DEBUG_DP("phy_test_pattern_sel = 0x%x\n", data);
+ 
+ 	switch (data) {
+-	case DP_LINK_QUAL_PATTERN_DISABLE:
+-	case DP_LINK_QUAL_PATTERN_D10_2:
+-	case DP_LINK_QUAL_PATTERN_ERROR_RATE:
+-	case DP_LINK_QUAL_PATTERN_PRBS7:
+-	case DP_LINK_QUAL_PATTERN_80BIT_CUSTOM:
+-	case DP_LINK_QUAL_PATTERN_HBR2_EYE:
++	case DP_PHY_TEST_PATTERN_SEL_MASK:
++	case DP_PHY_TEST_PATTERN_NONE:
++	case DP_PHY_TEST_PATTERN_D10_2:
++	case DP_PHY_TEST_PATTERN_ERROR_COUNT:
++	case DP_PHY_TEST_PATTERN_PRBS7:
++	case DP_PHY_TEST_PATTERN_80BIT_CUSTOM:
++	case DP_PHY_TEST_PATTERN_CP2520:
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
+@@ -661,7 +661,6 @@ static int dp_link_parse_request(struct dp_link_private *link)
+ 
+ 	DRM_DEBUG_DP("Test:(0x%x) requested\n", data);
+ 	link->request.test_requested = data;
+-
+ 	if (link->request.test_requested == DP_TEST_LINK_PHY_TEST_PATTERN) {
+ 		ret = dp_link_parse_phy_test_params(link);
+ 		if (ret)
+@@ -789,10 +788,8 @@ bool dp_link_send_test_response(struct dp_link *dp_link)
+ 
+ 	link = container_of(dp_link, struct dp_link_private, dp_link);
+ 
+-	mutex_lock(&link->test_response_mutex);
+ 	ret = drm_dp_dpcd_writeb(link->aux, DP_TEST_RESPONSE,
+ 			dp_link->test_response);
+-	mutex_unlock(&link->test_response_mutex);
+ 
+ 	return ret == 1;
+ }
+@@ -1028,11 +1025,9 @@ int dp_link_process_request(struct dp_link *dp_link)
+ 
+ 	link = container_of(dp_link, struct dp_link_private, dp_link);
+ 
+-	mutex_lock(&link->test_response_mutex);
+ 	dp_link_reset_data(link);
+ 
+ 	dp_link_parse_sink_status_field(link);
+-	mutex_unlock(&link->test_response_mutex);
+ 
+ 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
+ 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
+@@ -1206,7 +1201,6 @@ struct dp_link *dp_link_get(struct device *dev, struct drm_dp_aux *aux)
+ 	link->dev   = dev;
+ 	link->aux   = aux;
+ 
+-	mutex_init(&link->test_response_mutex);
+ 	mutex_init(&link->psm_mutex);
+ 	dp_link = &link->dp_link;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 5ac4b017da8f..7cdf37c525d8 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -8,8 +8,6 @@
+ #include <drm/drm_connector.h>
+ #include <drm/drm_edid.h>
+ 
+-#define DP_MAX_DS_PORT_COUNT 1
+-
+ struct dp_panel_private {
+ 	struct device *dev;
+ 	struct dp_panel dp_panel;
+@@ -23,26 +21,32 @@ struct dp_panel_private {
+ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ {
+ 	int rc = 0;
+-	size_t rlen;
++	size_t len;
++	ssize_t rlen;
+ 	struct dp_panel_private *panel;
+ 	struct dp_link_info *link_info;
+ 	u8 *dpcd, major = 0, minor = 0, temp;
+-	u32 dfp_count = 0, offset = DP_DPCD_REV;
++	u32 offset = DP_DPCD_REV;
+ 
+ 	dpcd = dp_panel->dpcd;
+ 
+ 	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+ 	link_info = &dp_panel->link_info;
+ 
+-	rlen = drm_dp_dpcd_read(panel->aux,
+-				DP_TRAINING_AUX_RD_INTERVAL, &temp, 1);
+-	if (rlen < 0) {
+-		DRM_ERROR("err reading DP_TRAINING_AUX_RD_INTERVAL,rlen=%zd\n",
+-				rlen);
+-		rc = -EINVAL;
++	rlen = drm_dp_dpcd_read(panel->aux, offset,
++			dpcd, (DP_RECEIVER_CAP_SIZE + 1));
++	if (rlen < (DP_RECEIVER_CAP_SIZE + 1)) {
++		DRM_ERROR("dpcd read failed, rlen=%zd\n", rlen);
++		if (rlen == -ETIMEDOUT)
++			rc = rlen;
++		else
++			rc = -EINVAL;
++
+ 		goto end;
+ 	}
+ 
++	temp = dpcd[DP_TRAINING_AUX_RD_INTERVAL];
++
+ 	/* check for EXTENDED_RECEIVER_CAPABILITY_FIELD_PRESENT */
+ 	if (temp & BIT(7)) {
+ 		DRM_DEBUG_DP("using EXTENDED_RECEIVER_CAPABILITY_FIELD\n");
+@@ -61,9 +65,6 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ 		goto end;
+ 	}
+ 
+-	print_hex_dump(KERN_DEBUG, "[drm-dp] SINK DPCD: ",
+-		DUMP_PREFIX_NONE, 8, 1, dp_panel->dpcd, rlen, false);
+-
+ 	link_info->revision = dpcd[DP_DPCD_REV];
+ 	major = (link_info->revision >> 4) & 0x0f;
+ 	minor = link_info->revision & 0x0f;
+@@ -85,14 +86,23 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+ 	if (drm_dp_enhanced_frame_cap(dpcd))
+ 		link_info->capabilities |= DP_LINK_CAP_ENHANCED_FRAMING;
+ 
+-	dfp_count = dpcd[DP_DOWN_STREAM_PORT_COUNT] &
+-						DP_DOWN_STREAM_PORT_COUNT;
++	dp_panel->dfp_present = dpcd[DP_DOWNSTREAMPORT_PRESENT];
++	dp_panel->dfp_present &= DP_DWN_STRM_PORT_PRESENT;
+ 
+-	if (dfp_count > DP_MAX_DS_PORT_COUNT) {
+-		DRM_ERROR("DS port count %d greater that max (%d) supported\n",
+-			dfp_count, DP_MAX_DS_PORT_COUNT);
+-		return -EINVAL;
++	if (dp_panel->dfp_present && (dpcd[DP_DPCD_REV] > 0x10)) {
++		dp_panel->ds_port_cnt = dpcd[DP_DOWN_STREAM_PORT_COUNT];
++		dp_panel->ds_port_cnt &= DP_PORT_COUNT_MASK;
++		len = DP_DOWNSTREAM_PORTS * DP_DOWNSTREAM_CAP_SIZE;
++
++		rlen = drm_dp_dpcd_read(panel->aux,
++			DP_DOWNSTREAM_PORT_0, dp_panel->ds_cap_info, len);
++		if (rlen < len) {
++			DRM_ERROR("ds port status failed, rlen=%zd\n", rlen);
++			rc = -EINVAL;
++			goto end;
++		}
+ 	}
++
+ end:
+ 	return rc;
+ }
+@@ -185,6 +195,7 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 	struct drm_connector *connector)
+ {
+ 	int rc = 0, bw_code;
++	int rlen, count;
+ 	struct dp_panel_private *panel;
+ 
+ 	if (!dp_panel || !connector) {
+@@ -202,11 +213,19 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 		DRM_ERROR("read dpcd failed %d\n", rc);
+ 		return rc;
+ 	}
+-	rc = drm_dp_read_desc(panel->aux, &dp_panel->desc,
+-			      drm_dp_is_branch(dp_panel->dpcd));
+-	if (rc) {
+-		DRM_ERROR("read sink/branch descriptor failed %d\n", rc);
+-		return rc;
++
++	if (dp_panel->dfp_present) {
++		rlen = drm_dp_dpcd_read(panel->aux, DP_SINK_COUNT,
++				&count, 1);
++		if (rlen == 1) {
++			count = DP_GET_SINK_COUNT(count);
++			if (!count) {
++				DRM_ERROR("no downstream ports connected\n");
++				panel->link->sink_count = 0;
++				rc = -ENOTCONN;
++				goto end;
++			}
++		}
+ 	}
+ 
+ 	kfree(dp_panel->edid);
+@@ -216,7 +235,12 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 					      &panel->aux->ddc);
+ 	if (!dp_panel->edid) {
+ 		DRM_ERROR("panel edid read failed\n");
+-		return -EINVAL;
++
++		/* fail safe edid */
++		mutex_lock(&connector->dev->mode_config.mutex);
++		if (drm_add_modes_noedid(connector, 640, 480))
++			drm_set_preferred_mode(connector, 640, 480);
++		mutex_unlock(&connector->dev->mode_config.mutex);
+ 	}
+ 
+ 	if (panel->aux_cfg_update_done) {
+@@ -231,8 +255,8 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+ 		}
+ 		panel->aux_cfg_update_done = false;
+ 	}
+-
+-	return 0;
++end:
++	return rc;
+ }
+ 
+ u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel,
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index f6f417eef2e9..9023e5bb4b8b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -14,8 +14,10 @@
+ 
+ struct edid;
+ 
+-#define DP_MAX_DOWNSTREAM_PORTS 0x10
+-#define DPRX_EXTENDED_DPCD_FIELD 0x2200
++#define DPRX_EXTENDED_DPCD_FIELD	0x2200
++
++#define DP_DOWNSTREAM_PORTS		4
++#define DP_DOWNSTREAM_CAP_SIZE		4
+ 
+ struct dp_display_mode {
+ 	struct drm_display_mode drm_mode;
+@@ -35,6 +37,9 @@ struct dp_panel_in {
+ struct dp_panel {
+ 	/* dpcd raw data */
+ 	u8 dpcd[DP_RECEIVER_CAP_SIZE + 1];
++	u8 ds_cap_info[DP_DOWNSTREAM_PORTS * DP_DOWNSTREAM_CAP_SIZE];
++	u32 ds_port_cnt;
++	u32 dfp_present;
+ 
+ 	struct dp_link_info link_info;
+ 	struct drm_dp_desc desc;
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+index 1e480d01ddbb..255a800535d5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.c
++++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+@@ -103,11 +103,12 @@ static inline bool dp_parser_check_prefix(const char *clk_prefix,
+ static int dp_parser_init_clk_data(struct dp_parser *parser)
+ {
+ 	int num_clk, i, rc;
+-	int core_clk_count = 0, ctrl_clk_count = 0;
++	int core_clk_count = 0, ctrl_clk_count = 0, stream_clk_count = 0;
+ 	const char *clk_name;
+ 	struct device *dev = &parser->pdev->dev;
+ 	struct dss_module_power *core_power = &parser->mp[DP_CORE_PM];
+ 	struct dss_module_power *ctrl_power = &parser->mp[DP_CTRL_PM];
++	struct dss_module_power *stream_power = &parser->mp[DP_STREAM_PM];
+ 
+ 	num_clk = of_property_count_strings(dev->of_node, "clock-names");
+ 	if (num_clk <= 0) {
+@@ -128,7 +129,7 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
+ 			ctrl_clk_count++;
+ 
+ 		if (dp_parser_check_prefix("stream", clk_name))
+-			ctrl_clk_count++;
++			stream_clk_count++;
+ 	}
+ 
+ 	/* Initialize the CORE power module */
+@@ -159,6 +160,21 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
+ 		return -EINVAL;
+ 	}
+ 
++	/* Initialize the STREAM power module */
++	if (stream_clk_count == 0) {
++		DRM_ERROR("no stream (pixel) clocks are defined\n");
++		return -EINVAL;
++	}
++
++	stream_power->num_clk = stream_clk_count;
++	stream_power->clk_config = devm_kzalloc(dev,
++			sizeof(struct dss_clk) * stream_power->num_clk,
++			GFP_KERNEL);
++	if (!stream_power->clk_config) {
++		stream_power->num_clk = 0;
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -166,15 +182,13 @@ static int dp_parser_clock(struct dp_parser *parser)
+ {
+ 	int rc = 0, i = 0;
+ 	int num_clk = 0;
+-	int core_clk_index = 0, ctrl_clk_index = 0;
+-	int core_clk_count = 0, ctrl_clk_count = 0;
++	int core_clk_index = 0, ctrl_clk_index = 0, stream_clk_index = 0;
++	int core_clk_count = 0, ctrl_clk_count = 0, stream_clk_count = 0;
+ 	const char *clk_name;
+ 	struct device *dev = &parser->pdev->dev;
+ 	struct dss_module_power *core_power = &parser->mp[DP_CORE_PM];
+ 	struct dss_module_power *ctrl_power = &parser->mp[DP_CTRL_PM];
+-
+-	core_power = &parser->mp[DP_CORE_PM];
+-	ctrl_power = &parser->mp[DP_CTRL_PM];
++	struct dss_module_power *stream_power = &parser->mp[DP_STREAM_PM];
+ 
+ 	rc =  dp_parser_init_clk_data(parser);
+ 	if (rc) {
+@@ -184,8 +198,9 @@ static int dp_parser_clock(struct dp_parser *parser)
+ 
+ 	core_clk_count = core_power->num_clk;
+ 	ctrl_clk_count = ctrl_power->num_clk;
++	stream_clk_count = stream_power->num_clk;
+ 
+-	num_clk = core_clk_count + ctrl_clk_count;
++	num_clk = core_clk_count + ctrl_clk_count + stream_clk_count;
+ 
+ 	for (i = 0; i < num_clk; i++) {
+ 		rc = of_property_read_string_index(dev->of_node, "clock-names",
+@@ -201,14 +216,19 @@ static int dp_parser_clock(struct dp_parser *parser)
+ 			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
+ 			clk->type = DSS_CLK_AHB;
+ 			core_clk_index++;
+-		} else if ((dp_parser_check_prefix("ctrl", clk_name) ||
+-			   dp_parser_check_prefix("stream", clk_name))  &&
++		} else if (dp_parser_check_prefix("stream", clk_name) &&
++				stream_clk_index < stream_clk_count) {
++			struct dss_clk *clk =
++				&stream_power->clk_config[stream_clk_index];
++			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
++			clk->type = DSS_CLK_PCLK;
++			stream_clk_index++;
++		} else if (dp_parser_check_prefix("ctrl", clk_name) &&
+ 			   ctrl_clk_index < ctrl_clk_count) {
+ 			struct dss_clk *clk =
+ 				&ctrl_power->clk_config[ctrl_clk_index];
+ 			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
+ 			ctrl_clk_index++;
+-
+ 			if (dp_parser_check_prefix("ctrl_link", clk_name) ||
+ 			    dp_parser_check_prefix("stream_pixel", clk_name))
+ 				clk->type = DSS_CLK_PCLK;
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+index aa0380b6a280..841e776124c4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.h
++++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+@@ -19,6 +19,7 @@
+ enum dp_pm_type {
+ 	DP_CORE_PM,
+ 	DP_CTRL_PM,
++	DP_STREAM_PM,
+ 	DP_PHY_PM,
+ 	DP_MAX_PM
+ };
+@@ -33,6 +34,7 @@ static inline const char *dp_parser_pm_name(enum dp_pm_type module)
+ 	switch (module) {
+ 	case DP_CORE_PM:	return "DP_CORE_PM";
+ 	case DP_CTRL_PM:	return "DP_CTRL_PM";
++	case DP_STREAM_PM:	return "DP_STREAM_PM";
+ 	case DP_PHY_PM:		return "DP_PHY_PM";
+ 	default:		return "???";
+ 	}
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+index 8b0a276d34a4..34fdb2e5d644 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.c
++++ b/drivers/gpu/drm/msm/dp/dp_power.c
+@@ -95,11 +95,12 @@ static int dp_power_regulator_init(struct dp_power_private *power)
+ static int dp_power_clk_init(struct dp_power_private *power)
+ {
+ 	int rc = 0;
+-	struct dss_module_power *core, *ctrl;
++	struct dss_module_power *core, *ctrl, *stream;
+ 	struct device *dev = &power->pdev->dev;
+ 
+ 	core = &power->parser->mp[DP_CORE_PM];
+ 	ctrl = &power->parser->mp[DP_CTRL_PM];
++	stream = &power->parser->mp[DP_STREAM_PM];
+ 
+ 	if (power->parser->pll && power->parser->pll->get_provider) {
+ 		rc = power->parser->pll->get_provider(power->parser->pll,
+@@ -126,21 +127,33 @@ static int dp_power_clk_init(struct dp_power_private *power)
+ 		return -ENODEV;
+ 	}
+ 
++	rc = msm_dss_get_clk(dev, stream->clk_config, stream->num_clk);
++	if (rc) {
++		DRM_ERROR("failed to get %s clk. err=%d\n",
++			dp_parser_pm_name(DP_CTRL_PM), rc);
++		msm_dss_put_clk(core->clk_config, core->num_clk);
++		return -ENODEV;
++	}
++
+ 	return 0;
+ }
+ 
+ static int dp_power_clk_deinit(struct dp_power_private *power)
+ {
+-	struct dss_module_power *core, *ctrl;
++	struct dss_module_power *core, *ctrl, *stream;
+ 
+ 	core = &power->parser->mp[DP_CORE_PM];
+ 	ctrl = &power->parser->mp[DP_CTRL_PM];
++	stream = &power->parser->mp[DP_STREAM_PM];
+ 
+-	if (!core || !ctrl)
++	if (!core || !ctrl || !stream) {
++		DRM_ERROR("invalid power_data\n");
+ 		return -EINVAL;
++	}
+ 
+ 	msm_dss_put_clk(ctrl->clk_config, ctrl->num_clk);
+ 	msm_dss_put_clk(core->clk_config, core->num_clk);
++	msm_dss_put_clk(stream->clk_config, stream->num_clk);
+ 	return 0;
+ }
+ 
+@@ -167,6 +180,20 @@ static int dp_power_clk_set_rate(struct dp_power_private *power,
+ 	return 0;
+ }
+ 
++int dp_power_clk_status(struct dp_power *dp_power, enum dp_pm_type pm_type)
++{
++	if (pm_type == DP_CORE_PM)
++		return dp_power->core_clks_on;
++
++	if (pm_type == DP_CTRL_PM)
++		return dp_power->link_clks_on;
++
++	if (pm_type == DP_STREAM_PM)
++		return dp_power->stream_clks_on;
++
++	return 0;
++}
++
+ int dp_power_clk_enable(struct dp_power *dp_power,
+ 		enum dp_pm_type pm_type, bool enable)
+ {
+@@ -175,7 +202,8 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 
+ 	power = container_of(dp_power, struct dp_power_private, dp_power);
+ 
+-	if (pm_type != DP_CORE_PM && pm_type != DP_CTRL_PM) {
++	if (pm_type != DP_CORE_PM && pm_type != DP_CTRL_PM &&
++			pm_type != DP_STREAM_PM) {
+ 		DRM_ERROR("unsupported power module: %s\n",
+ 				dp_parser_pm_name(pm_type));
+ 		return -EINVAL;
+@@ -192,6 +220,11 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 			return 0;
+ 		}
+ 
++		if (pm_type == DP_STREAM_PM && dp_power->stream_clks_on) {
++			DRM_DEBUG_DP("pixel clks already enabled\n");
++			return 0;
++		}
++
+ 		if ((pm_type == DP_CTRL_PM) && (!dp_power->core_clks_on)) {
+ 			DRM_DEBUG_DP("Enable core clks before link clks\n");
+ 
+@@ -215,13 +248,16 @@ int dp_power_clk_enable(struct dp_power *dp_power,
+ 
+ 	if (pm_type == DP_CORE_PM)
+ 		dp_power->core_clks_on = enable;
++	else if (pm_type == DP_STREAM_PM)
++		dp_power->stream_clks_on = enable;
+ 	else
+ 		dp_power->link_clks_on = enable;
+ 
+ 	DRM_DEBUG_DP("%s clocks for %s\n",
+ 			enable ? "enable" : "disable",
+ 			dp_parser_pm_name(pm_type));
+-	DRM_DEBUG_DP("link_clks:%s core_clks:%s\n",
++	DRM_DEBUG_DP("strem_clks:%s link_clks:%s core_clks:%s\n",
++		dp_power->stream_clks_on ? "on" : "off",
+ 		dp_power->link_clks_on ? "on" : "off",
+ 		dp_power->core_clks_on ? "on" : "off");
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.h b/drivers/gpu/drm/msm/dp/dp_power.h
+index 756341e290ed..5333a97d5c35 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.h
++++ b/drivers/gpu/drm/msm/dp/dp_power.h
+@@ -19,6 +19,7 @@
+ struct dp_power {
+ 	bool core_clks_on;
+ 	bool link_clks_on;
++	bool stream_clks_on;
+ };
+ 
+ /**
+@@ -43,6 +44,18 @@ int dp_power_init(struct dp_power *power, bool flip);
+  */
+ int dp_power_deinit(struct dp_power *power);
+ 
++/**
++ * dp_power_clk_status() - display controller clocks status
++ *
++ * @power: instance of power module
++ * @pm_type: type of pm, core/ctrl/phy
++ * return: status of power clocks
++ *
++ * This API return status of DP clocks
++ */
++
++int dp_power_clk_status(struct dp_power *dp_power, enum dp_pm_type pm_type);
++
+ /**
+  * dp_power_clk_enable() - enable display controller clocks
+  *
+diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+index 721c0cc69296..de32f6204a50 100644
+--- a/drivers/gpu/drm/msm/dp/dp_reg.h
++++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+@@ -101,6 +101,7 @@
+ #define REG_DP_MAINLINK_CTRL			(0x00000000)
+ #define DP_MAINLINK_CTRL_ENABLE			(0x00000001)
+ #define DP_MAINLINK_CTRL_RESET			(0x00000002)
++#define DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER	(0x00000010)
+ #define DP_MAINLINK_FB_BOUNDARY_SEL		(0x02000000)
+ 
+ #define REG_DP_STATE_CTRL			(0x00000004)
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index b4b213e57f99..a0e3c0b8bd4e 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -387,6 +387,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			 struct drm_encoder *encoder);
+ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
++int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+ 				struct drm_display_mode *mode,
+ 				struct drm_display_mode *adjusted_mode);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
