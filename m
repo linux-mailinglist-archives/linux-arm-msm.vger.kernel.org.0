@@ -2,199 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8064262CF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 12:19:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07429262D4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 12:34:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbgIIKTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 06:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55728 "EHLO
+        id S1727936AbgIIKeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 06:34:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725864AbgIIKTp (ORCPT
+        with ESMTP id S1730174AbgIIKcn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 06:19:45 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71AAC061573
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 03:19:44 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id y15so1797736wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 03:19:44 -0700 (PDT)
+        Wed, 9 Sep 2020 06:32:43 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA822C061573
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 03:32:42 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id n25so2851527ljj.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 03:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MYtyV9sjpexCNQizdjqRW/SdiWDHf0KUeZqsLzbBBXw=;
-        b=nvSB7U1YSQLRXpNDcMP9RUL4PGdEF8Pp4cI2ebpoYmMzEcjiDJLpG6b3HJObeEVAxL
-         cijYVLuZEmfuyeKiiZN8Q6lt2h87SXNCljv8Xm5odSlNFG3IzsWZMaKBsHIF8GcmTvzX
-         tAKWudAP91pOakcxDjcrP8IsABvDDWwVina9w=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KwAqgLDFoiZ8Gp5IMjmzgXFUfM8xNPZ5Nw/2R+ILIJA=;
+        b=gTin0jb26AUzeAWsywkd6d0QDoWLv/cyzhX8QJu7I0DZhOwNb1Nw7GDc9AGAFIpjN5
+         QNQ4J8SmVX8GcQdYOjM8ONoXccnMLm+qyBCeSTmxj6PTm9cxG2gtB7/bOh/DT285rpeF
+         BR6etFI0dNEgX1BiF2sr00FhiZEKwMgeFwNP/gO0iBtdQE6rQg7VJbu71esbf4UYNjYe
+         /HhxYxcK0llieBrQO3vRYdJxgBY+/KtBDnXWiAgFlKVTwWe0tVlPeHa5rNelPqMEyAOf
+         bfuWNjSjb0kUaF3Wj8A0UHGTjU/UZjCGFioYQ0qPMFySYOkNUHtEyifntjjntt0dr2vh
+         8OUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MYtyV9sjpexCNQizdjqRW/SdiWDHf0KUeZqsLzbBBXw=;
-        b=heuqRMGZ1u81zX7hcHX5iOOZzobgT+DZuE/7uSKcCMMRoKwDbls5GVMpXKK1QKkouI
-         soNfm7xytYsEuYtS9Etg7zACdk3e8AGtzR49hd2V9aFAz96maGOt4SQATiELMrbtxG+J
-         Rv5LZkHVDOecj5/w9Ind0PlbKQMozDu73YsMGSsZBPMtkAyze7QzKK9powiGjQabdYk2
-         nPoBOJEXgw0Vhu7tahL5xfD88P6omgXoz2ddQlwXAdMqSOQ9yRSC6omK2FhUPsBQttyI
-         ZWkLVCNJ85jOSvTZPpcmRR1BCmxkvTqHcNpNtfGvl2XufNm3206cuzITWXM/mm08zKeq
-         QsXA==
-X-Gm-Message-State: AOAM530ZYJueuUaRQcPKIxgkf4SSP9tWz1LuMxJO68mFv3B13tGYNp3c
-        uPh6Z0D+jhs+N0eNMTYTU702m5MDowE1u+kWm74LsQ==
-X-Google-Smtp-Source: ABdhPJyiGLD2o5Mp0hKfuqc3sTpSUwV4QU2ftFwRMsUfKEu8ElxuFddp9M1CKV0LCUYsOZUPyqBuF/zKTLMFrnRTRBU=
-X-Received: by 2002:a7b:c3c8:: with SMTP id t8mr2821349wmj.101.1599646782754;
- Wed, 09 Sep 2020 03:19:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KwAqgLDFoiZ8Gp5IMjmzgXFUfM8xNPZ5Nw/2R+ILIJA=;
+        b=Cumk+FbJP16eOTpS9/SFPEKItddkcZCNxcKYL5LPOTJWNWVvJ1Vx67C/vBSV1T4ipZ
+         iwrZXt95ajX9KxuVNCb1xSFJol+5c1Dy/QPyDlaQ9a2L5E6ghD8AFfQtuw5KVMEGvbzt
+         oFk6Bmi4PVyH4u5ci+ssAO9zf5WS3obbbGYaCR2wvLmZC2DhFBOWMEBiaCpuBHhHjfSA
+         2iU0AOArcqqLilaukTYqPElu6EyRAm8/FF/bX9p60bo9wZMO6GP6rAL4gBmj/vGM8xcM
+         lyfF1S6wtQ11pKwIjBwXewpF5XlpR1NKIO4Py0q0cT43pMn9wRie0d+kCrV70BIA8xF0
+         Wo3A==
+X-Gm-Message-State: AOAM531T1OtzxC7n3i3v1AYVTo2H4K+kJ45I0m913RdfOiSnU46LqMLT
+        Oh+2Z9efu7IY5f8r+UmvuaVqzA==
+X-Google-Smtp-Source: ABdhPJwk6u/U6YI6i2LZQ48LWeVQEqDnJzdW1ezgNdCybVQQsv/sirCteOQjoKm23cV3egOaBs++Bg==
+X-Received: by 2002:a2e:89d6:: with SMTP id c22mr1648832ljk.242.1599647561213;
+        Wed, 09 Sep 2020 03:32:41 -0700 (PDT)
+Received: from eriador.lan ([188.162.64.180])
+        by smtp.gmail.com with ESMTPSA id u22sm632253lji.65.2020.09.09.03.32.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2020 03:32:40 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Subject: [PATCH] arch64: dts: qcom: sm8250: add uart nodes
+Date:   Wed,  9 Sep 2020 13:32:37 +0300
+Message-Id: <20200909103238.149761-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-References: <20200907100039.1731457-1-cychiang@chromium.org>
- <20200907100039.1731457-3-cychiang@chromium.org> <20200908203357.GA861143@bogus>
- <CAFv8NwLMAkFhVT-ML7QHbnSkqmgh=5SrNSik5eSCTHB1=DGQ0A@mail.gmail.com>
-In-Reply-To: <CAFv8NwLMAkFhVT-ML7QHbnSkqmgh=5SrNSik5eSCTHB1=DGQ0A@mail.gmail.com>
-From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Wed, 9 Sep 2020 18:19:16 +0800
-Message-ID: <CAFv8NwJXyzUsCQZu1cU0t7NUJDpS_DyxZM=ZhU+jGoQj97i3Jw@mail.gmail.com>
-Subject: Re: [PATCH v7 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-kernel <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 9, 2020 at 5:23 PM Cheng-yi Chiang <cychiang@chromium.org> wrote:
->
-> On Wed, Sep 9, 2020 at 4:34 AM Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Mon, Sep 07, 2020 at 06:00:38PM +0800, Cheng-Yi Chiang wrote:
-> > > Add devicetree bindings documentation file for sc7180 sound card.
-> > >
-> > > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
-> > > ---
-> > >  .../bindings/sound/qcom,sc7180.yaml           | 143 ++++++++++++++++++
-> > >  1 file changed, 143 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> > > new file mode 100644
-> > > index 000000000000..ae809346ca80
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
-> > > @@ -0,0 +1,143 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
-> > > +
-> > > +maintainers:
-> > > +  - Rohit kumar <rohitkr@codeaurora.org>
-> > > +  - Cheng-Yi Chiang <cychiang@chromium.org>
-> > > +
-> > > +description:
-> > > +  This binding describes the SC7180 sound card which uses LPASS for audio.
-> > > +
-> > > +properties:
-> > > +  compatible:
-> > > +    const: qcom,sc7180-sndcard
-> > > +
-> > > +  audio-routing:
-> > > +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> > > +    description:
-> > > +      A list of the connections between audio components. Each entry is a
-> > > +      pair of strings, the first being the connection's sink, the second
-> > > +      being the connection's source.
-> > > +
-> > > +  model:
-> > > +    $ref: /schemas/types.yaml#/definitions/string
-> > > +    description: User specified audio sound card name
-> > > +
-> > > +  headset-jack:
-> > > +    $ref: /schemas/types.yaml#/definitions/phandle
-> > > +    description: phandle of the codec for headset detection
-> > > +
-> > > +  hdmi-jack:
-> > > +    $ref: /schemas/types.yaml#/definitions/phandle
-> > > +    description: phandle of the codec for hdmi jack detection
-> >
-> > You already have links to these devices. Why duplicate it here?
-> >
-> > What if you had 2 headsets? This doesn't scale.
-> >
-> Hi Rob, thanks for reviewing.
-> There was some discussion in
-> https://patchwork.kernel.org/patch/11737905/#23571643 about how to
-> specify the dailink that has a headset jack.
-> I would like to pass the information of headset jack and hdmi jack to
-> the machine driver so the machine driver can call
-> snd_soc_component_set_jack to set jack when init the corresponding link.
-> Headset jack and hdmi jack will be treated differently for button and
-> event type.
-> Because of this, we can not just set a property "jack" in the link.
->
-> As for the 2 headsets case (I guess you mean hp jack and mic jack), on
-> this board we will not have this use case.
-> If someone really wants to build hp jack and mic jack on the board
-> based on this machine driver, we can add two more property hp-jack and
-> mic-jack to specify that,
-> as the machine driver will need to know the different jack types
-> anyway. What do you think ?
->
-> Or could you please suggest a proper way to pass such information ?
->
-> Thanks!
-> >
-Alternatively we can probably do
+Currently sm8250.dtsi only defines default debug uart. Port rest uart
+nodes from the downstream dtsi file.
 
-                dai-link@0 {
-                        link-name = "MultiMedia0";
-                        reg = <0>;
-                        cpu {
-                                sound-dai = <&lpass_cpu 0>;
-                        };
-                        headset_jack;
-                        codec {
-                                sound-dai = <&alc5682 0>;
-                        };
-                };
-                dai-link@2 {
-                        link-name = "MultiMedia2";
-                        reg = <2>;
-                        cpu {
-                                sound-dai = <&lpass_hdmi 0>;
-                        };
-                        hdmi_jack;
-                        codec {
-                                sound-dai = <&msm_dp>;
-                        };
-                };
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 74 ++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
 
-Or even put the flag into codec {}.
-Please let me know if you feel this is a better way.
-I think it will make the driver code a little more complicated, but
-the interface on dts might looks cleaner.
-Thanks!
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index e5525df69946..552fa3df9e4f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -551,6 +551,17 @@ spi17: spi@88c000 {
+ 				status = "disabled";
+ 			};
+ 
++			uart17: serial@88c000 {
++				compatible = "qcom,geni-uart";
++				reg = <0 0x0088c000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP2_S3_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_uart17_default>;
++				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
+ 			i2c18: i2c@890000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0 0x00890000 0 0x4000>;
+@@ -577,6 +588,17 @@ spi18: spi@890000 {
+ 				status = "disabled";
+ 			};
+ 
++			uart18: serial@890000 {
++				compatible = "qcom,geni-uart";
++				reg = <0 0x00890000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_uart18_default>;
++				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
+ 			i2c19: i2c@894000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0 0x00894000 0 0x4000>;
+@@ -693,6 +715,17 @@ spi2: spi@988000 {
+ 				status = "disabled";
+ 			};
+ 
++			uart2: serial@988000 {
++				compatible = "qcom,geni-debug-uart";
++				reg = <0 0x00988000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_uart2_default>;
++				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
+ 			i2c3: i2c@98c000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0 0x0098c000 0 0x4000>;
+@@ -797,6 +830,17 @@ spi6: spi@998000 {
+ 				status = "disabled";
+ 			};
+ 
++			uart6: serial@998000 {
++				compatible = "qcom,geni-uart";
++				reg = <0 0x00998000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_uart6_default>;
++				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
+ 			i2c7: i2c@99c000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0 0x0099c000 0 0x4000>;
+@@ -2410,6 +2454,21 @@ config {
+ 				};
+ 			};
+ 
++			qup_uart2_default: qup-uart2-default {
++				mux {
++					pins = "gpio117", "gpio118";
++					function = "qup2";
++				};
++			};
++
++			qup_uart6_default: qup-uart6-default {
++				mux {
++					pins = "gpio16", "gpio17",
++						"gpio18", "gpio19";
++					function = "qup6";
++				};
++			};
++
+ 			qup_uart12_default: qup-uart12-default {
+ 				mux {
+ 					pins = "gpio34", "gpio35";
+@@ -2417,6 +2476,21 @@ mux {
+ 				};
+ 			};
+ 
++			qup_uart17_default: qup-uart17-default {
++				mux {
++					pins = "gpio52", "gpio53",
++						"gpio54", "gpio55";
++					function = "qup17";
++				};
++			};
++
++			qup_uart18_default: qup-uart18-default {
++				mux {
++					pins = "gpio58", "gpio59";
++					function = "qup18";
++				};
++			};
++
+ 			pri_mi2s_sck_active: pri-mi2s-sck-active {
+ 				mux {
+ 					pins = "gpio138";
+-- 
+2.28.0
 
-> > Rob
