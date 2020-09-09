@@ -2,61 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07429262D4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 12:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B98A2262D4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 12:35:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727936AbgIIKeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 06:34:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57778 "EHLO
+        id S1726708AbgIIKey (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 06:34:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730174AbgIIKcn (ORCPT
+        with ESMTP id S1728363AbgIIKcr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 06:32:43 -0400
+        Wed, 9 Sep 2020 06:32:47 -0400
 Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA822C061573
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 03:32:42 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id n25so2851527ljj.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 03:32:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7859C061755
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 03:32:44 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id k25so2871614ljk.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 03:32:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
         bh=KwAqgLDFoiZ8Gp5IMjmzgXFUfM8xNPZ5Nw/2R+ILIJA=;
-        b=gTin0jb26AUzeAWsywkd6d0QDoWLv/cyzhX8QJu7I0DZhOwNb1Nw7GDc9AGAFIpjN5
-         QNQ4J8SmVX8GcQdYOjM8ONoXccnMLm+qyBCeSTmxj6PTm9cxG2gtB7/bOh/DT285rpeF
-         BR6etFI0dNEgX1BiF2sr00FhiZEKwMgeFwNP/gO0iBtdQE6rQg7VJbu71esbf4UYNjYe
-         /HhxYxcK0llieBrQO3vRYdJxgBY+/KtBDnXWiAgFlKVTwWe0tVlPeHa5rNelPqMEyAOf
-         bfuWNjSjb0kUaF3Wj8A0UHGTjU/UZjCGFioYQ0qPMFySYOkNUHtEyifntjjntt0dr2vh
-         8OUg==
+        b=qfme2p06TfuSBtf1N7DNKoxc2NtFuAc0gLskY9VPHEmM3n6bHOhI8f3BIOiUhiQrqt
+         1XAf2DtqIcal+OpjqFmqkVlSNIrqi2H2g3ekVHVNs3G0iy7k5SbupPcmimHp7oD2jjcx
+         oyfPtkBAZ+tdn6HTteaDOLjnbNwM6Rn1ijz5Jwtz3cZu74LlbOOP8SMFDLJhxK080u8u
+         5IgoOdkNi3y1tgxAb/LUHbM/vxDmkUNCKzv0iGtCLVCZAJ0FG6DVNvzWQTXL8j6TJuNC
+         J8iO0jKRuOwjqxnJaYG9fZeRxi5IiWGXsmN05vbMVTVHA8dQwkAN4/ZSl/8W0SvBKMH4
+         hzvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
         bh=KwAqgLDFoiZ8Gp5IMjmzgXFUfM8xNPZ5Nw/2R+ILIJA=;
-        b=Cumk+FbJP16eOTpS9/SFPEKItddkcZCNxcKYL5LPOTJWNWVvJ1Vx67C/vBSV1T4ipZ
-         iwrZXt95ajX9KxuVNCb1xSFJol+5c1Dy/QPyDlaQ9a2L5E6ghD8AFfQtuw5KVMEGvbzt
-         oFk6Bmi4PVyH4u5ci+ssAO9zf5WS3obbbGYaCR2wvLmZC2DhFBOWMEBiaCpuBHhHjfSA
-         2iU0AOArcqqLilaukTYqPElu6EyRAm8/FF/bX9p60bo9wZMO6GP6rAL4gBmj/vGM8xcM
-         lyfF1S6wtQ11pKwIjBwXewpF5XlpR1NKIO4Py0q0cT43pMn9wRie0d+kCrV70BIA8xF0
-         Wo3A==
-X-Gm-Message-State: AOAM531T1OtzxC7n3i3v1AYVTo2H4K+kJ45I0m913RdfOiSnU46LqMLT
-        Oh+2Z9efu7IY5f8r+UmvuaVqzA==
-X-Google-Smtp-Source: ABdhPJwk6u/U6YI6i2LZQ48LWeVQEqDnJzdW1ezgNdCybVQQsv/sirCteOQjoKm23cV3egOaBs++Bg==
-X-Received: by 2002:a2e:89d6:: with SMTP id c22mr1648832ljk.242.1599647561213;
-        Wed, 09 Sep 2020 03:32:41 -0700 (PDT)
+        b=l5kYeCDA+rLlmJPjSZflQysyDfvTISnmLX92q6LfscIdntkGYrXdIE8e/cAuzJyzVD
+         jjaYX7C/uustHgn4uh2FBVLqY0g+A1stLUaj82ryXcRSW2WRNuS6eynaFaBr2nEwvsPU
+         0J947AqYSuZQNoKs/OtFW4N9diQ2HE56gbTLm96PP6X+D+nwgPw6ypeS3roUUl9VBgxn
+         RCWI+l/9YAhLjV4LEAXJDgcGE1tmdiq7Pcd5aH8sLuxoJLGGR4FGmBxM+BoZLcs5gr76
+         KmqLtQt7yXkoEoeODJaQytrXMUPAc8LownJQZrUWH4jqVZf1VFcpuJaUidKRjgidL6oq
+         eQKA==
+X-Gm-Message-State: AOAM5314waY8JMV8WzZ6V8DhgOOaSf6RgBj6DtWllFnoEp2APjv19ZdG
+        fdRoERbxNlSYgOrX+PQc7q8Idw==
+X-Google-Smtp-Source: ABdhPJylMKg5r2SiHubOTIUgzqEPZBZk1jp41GB03FgHWD6P7Q8OrGRvdqaiOtc40LL4TxPV7mTLow==
+X-Received: by 2002:a2e:6819:: with SMTP id c25mr1634957lja.187.1599647562635;
+        Wed, 09 Sep 2020 03:32:42 -0700 (PDT)
 Received: from eriador.lan ([188.162.64.180])
-        by smtp.gmail.com with ESMTPSA id u22sm632253lji.65.2020.09.09.03.32.39
+        by smtp.gmail.com with ESMTPSA id u22sm632253lji.65.2020.09.09.03.32.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2020 03:32:40 -0700 (PDT)
+        Wed, 09 Sep 2020 03:32:42 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
 Subject: [PATCH] arch64: dts: qcom: sm8250: add uart nodes
-Date:   Wed,  9 Sep 2020 13:32:37 +0300
-Message-Id: <20200909103238.149761-1-dmitry.baryshkov@linaro.org>
+Date:   Wed,  9 Sep 2020 13:32:38 +0300
+Message-Id: <20200909103238.149761-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200909103238.149761-1-dmitry.baryshkov@linaro.org>
+References: <20200909103238.149761-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
