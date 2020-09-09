@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D56FB263481
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 19:21:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 710B8263478
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 19:21:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730991AbgIIRVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 13:21:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45962 "EHLO
+        id S1730615AbgIIRUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 13:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730030AbgIIPXP (ORCPT
+        with ESMTP id S1725772AbgIIPZN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 11:23:15 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856EAC061240
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 07:43:14 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id r24so3922321ljm.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 07:43:14 -0700 (PDT)
+        Wed, 9 Sep 2020 11:25:13 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32CE1C061246
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 07:43:21 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id r24so3922630ljm.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 07:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SyrNRlrzgocwFtm4m1D+vgyjZWlJZcz7p/Dz+/oWD3I=;
-        b=sOj1ib2kl2SlVlUTM5hhtz7BMqvh2WSXwUCwvheygvKndh2ngHXDqcKNoc7mj8tYZk
-         01QtqZ0bxAWLEZ4WudeP6XKfC77xSfbEuYiJKkkb4u5AvEE7P6POu5pYSNWs8+yKaxd1
-         GfGyBAa6JywuElKfh3ASexqtPzVXubBXKO+KNhas2UbpFdGmVoNm16aURJLVm5M40p/p
-         BUwT0qHygUiWcMVE03rPHC0/8QyZe2jyWehhW1WILAYmQFQcKv8Xc9MnhBNz5ok+ftQh
-         T4K9KDD0uYhSoIAa0AcWpgL+oOXEklu53fwye3Tdx6FLAYax0gpgboJMl6zeIT2h2WF0
-         fIDQ==
+        bh=d9XrjFGnoRqCSCs6cVjFrMjJIwNqM5369XpR4oYmLeI=;
+        b=H1EFJNoINXeMhsVKKzpJRq7znAYFNKIgq0IhqKPYBXMSmX4BKAV0/pJ/cNeTJywuXt
+         NDYEppk2e18cu6HBoBdQpC3rBGWGm30QKY9OjONC+KeVdm74HBDnDq0q3r/m2PezLICV
+         sNDq5incZhdjcAsTHZewqdAB2zN0WRFcb82CrjSonqm7+q35GI+JDMxULqMR9+zoNBVa
+         7Pk8kV8pA6Q/LRnRA+tMcHqiWES9LxCNxxlIX2IvIvfc7dYEOTssPOG4vkrsQQXeDeIO
+         EqUPADOa/BoBjbq3euBr48pST7ecsicXJUAdDxJ4LmR3oMezgJ5eTC9o0zWhq0cos67z
+         WYng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SyrNRlrzgocwFtm4m1D+vgyjZWlJZcz7p/Dz+/oWD3I=;
-        b=KpXD45qgQlSIYDNqwyfHvphyYksdl9PMNCyURqN1hUDAlke4Yh1Wx82Kw+5vZ8Th7P
-         OPlmMjENF5O8EWhYw0oQq72uHDA2iUSBqgEiJpJAES5SizumMZYlYV4k0c/mKmF4MTSV
-         ck/UOkyO0Vzz+IGyR3Px85zkD2zXnkJFZpK9dJeizyEoSJf4pXG8EaNsf7RdpV4zdBuA
-         VaCrmrRKAyXFdfqi0UWkQeDk7CHSS8S6jawskYtBwlfLCaDmew8PXH0T54tlZH5wyjgY
-         emZuyaHjxxd107ee+Z0d22Q8wGGN4yspXK3x2f2QkE4bRPxN5cWSKQNoVo1lwGDtlHa2
-         AagQ==
-X-Gm-Message-State: AOAM531BRZivZTWOwp38iQq7yMbbeS8/FRIoGy4QzRYpsiwWBbmlhLsJ
-        RAyLcGAdigRAbq6iTkTg1aRQbQ==
-X-Google-Smtp-Source: ABdhPJw8HdhOumlwdp8/MgSIGzxjxCxBSs2n81KNfPpTNEZiW+9kSOqYfdiVoXJpyEyBoqTxdNCL4g==
-X-Received: by 2002:a2e:8798:: with SMTP id n24mr1956427lji.373.1599662592137;
-        Wed, 09 Sep 2020 07:43:12 -0700 (PDT)
+        bh=d9XrjFGnoRqCSCs6cVjFrMjJIwNqM5369XpR4oYmLeI=;
+        b=XUvec38frqlKib3KsCK51/Ufa9qP9p5LNIjXT8Ho5sr5aTcFYChA8OO4FzywPewQQb
+         z6e9PXnWi9bquLLWrp8TUsJ20k66DjjcyqPACc/WZJ6uFmmmDE1JBEwcUpHBMBlwWN9B
+         fO8tpwzihasWLAuXONpl2qUlPxc24W4wprUNVNBXlKynLwQfwcvHWXOsB3oGf6WZduLO
+         Vs1QxEpM1ym6V6013zQuNE0jnNG1u/UNfx9fp28CEPdm779HdDFS9fYqshp/GvvQDZRj
+         mVaIsXBgAjS7odS+d7tvqGcp+m8mOPYNnDr1/FYmYuAkkIVblhfwdHf7HIbs5RLn6KIX
+         skOQ==
+X-Gm-Message-State: AOAM530Pn3la/ZgIyo+vdWxrU75HcYTsz9f8jC/+Gvbb5LzVAkZgevx8
+        0Zg4vHaHX2y0a2PBJ6HT9X15xA==
+X-Google-Smtp-Source: ABdhPJy9V5KQ5/i9QrXxhIvtTTtWeMz1irShOM5AJKlbXC6Dg30DG1DFFQLgJnhMH5QcB7xDaY5HZg==
+X-Received: by 2002:a2e:9690:: with SMTP id q16mr1939107lji.401.1599662596623;
+        Wed, 09 Sep 2020 07:43:16 -0700 (PDT)
 Received: from eriador.lan ([188.162.64.155])
-        by smtp.gmail.com with ESMTPSA id t12sm621665lfk.26.2020.09.09.07.43.08
+        by smtp.gmail.com with ESMTPSA id t12sm621665lfk.26.2020.09.09.07.43.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2020 07:43:11 -0700 (PDT)
+        Wed, 09 Sep 2020 07:43:16 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -61,11 +61,10 @@ To:     Andy Gross <agross@kernel.org>,
         Peter Meerwald-Stadler <pmeerw@pmeerw.net>
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v3 05/10] iio: adc: qcom-vadc-common: use fixp_linear_interpolate
-Date:   Wed,  9 Sep 2020 17:42:43 +0300
-Message-Id: <20200909144248.54327-6-dmitry.baryshkov@linaro.org>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 06/10] iio: adc: qcom-spmi-adc5: use of_device_get_match_data
+Date:   Wed,  9 Sep 2020 17:42:44 +0300
+Message-Id: <20200909144248.54327-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200909144248.54327-1-dmitry.baryshkov@linaro.org>
 References: <20200909144248.54327-1-dmitry.baryshkov@linaro.org>
@@ -76,41 +75,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use new function fixp_linear_interpolate() instead of hand-coding the
-linear interpolation.
+Use of_device_get_match_data() instead of hand-coding it manually.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- drivers/iio/adc/qcom-vadc-common.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/adc/qcom-spmi-adc5.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/iio/adc/qcom-vadc-common.c b/drivers/iio/adc/qcom-vadc-common.c
-index d11f3343ad52..40d77b3af1bb 100644
---- a/drivers/iio/adc/qcom-vadc-common.c
-+++ b/drivers/iio/adc/qcom-vadc-common.c
-@@ -2,6 +2,7 @@
- #include <linux/bug.h>
- #include <linux/kernel.h>
- #include <linux/bitops.h>
-+#include <linux/fixp-arith.h>
+diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+index c2da8f068b87..ae27ed7a26ff 100644
+--- a/drivers/iio/adc/qcom-spmi-adc5.c
++++ b/drivers/iio/adc/qcom-spmi-adc5.c
+@@ -14,6 +14,7 @@
  #include <linux/math64.h>
- #include <linux/log2.h>
- #include <linux/err.h>
-@@ -368,10 +369,9 @@ static int qcom_vadc_map_voltage_temp(const struct vadc_map_pt *pts,
- 	} else {
- 		/* result is between search_index and search_index-1 */
- 		/* interpolate linearly */
--		*output = (((s32)((pts[i].y - pts[i - 1].y) *
--			(input - pts[i - 1].x)) /
--			(pts[i].x - pts[i - 1].x)) +
--			pts[i - 1].y);
-+		*output = fixp_linear_interpolate(pts[i - 1].x, pts[i - 1].y,
-+						  pts[i].x, pts[i].y,
-+						  input);
- 	}
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+@@ -807,8 +808,6 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
+ 	struct adc5_channel_prop prop, *chan_props;
+ 	struct device_node *child;
+ 	unsigned int index = 0;
+-	const struct of_device_id *id;
+-	const struct adc5_data *data;
+ 	int ret;
  
- 	return 0;
+ 	adc->nchannels = of_get_available_child_count(node);
+@@ -827,24 +826,21 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
+ 
+ 	chan_props = adc->chan_props;
+ 	iio_chan = adc->iio_chans;
+-	id = of_match_node(adc5_match_table, node);
+-	if (id)
+-		data = id->data;
+-	else
+-		data = &adc5_data_pmic;
+-	adc->data = data;
++	adc->data = of_device_get_match_data(adc->dev);
++	if (!adc->data)
++		adc->data = &adc5_data_pmic;
+ 
+ 	for_each_available_child_of_node(node, child) {
+-		ret = adc5_get_dt_channel_data(adc, &prop, child, data);
++		ret = adc5_get_dt_channel_data(adc, &prop, child, adc->data);
+ 		if (ret) {
+ 			of_node_put(child);
+ 			return ret;
+ 		}
+ 
+ 		prop.scale_fn_type =
+-			data->adc_chans[prop.channel].scale_fn_type;
++			adc->data->adc_chans[prop.channel].scale_fn_type;
+ 		*chan_props = prop;
+-		adc_chan = &data->adc_chans[prop.channel];
++		adc_chan = &adc->data->adc_chans[prop.channel];
+ 
+ 		iio_chan->channel = prop.channel;
+ 		iio_chan->datasheet_name = prop.datasheet_name;
 -- 
 2.28.0
 
