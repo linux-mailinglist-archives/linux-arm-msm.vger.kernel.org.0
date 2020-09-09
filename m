@@ -2,181 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C9E262B93
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 11:17:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94240262BB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 11:24:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726060AbgIIJRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 05:17:10 -0400
-Received: from mga18.intel.com ([134.134.136.126]:62578 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725826AbgIIJRI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 05:17:08 -0400
-IronPort-SDR: 4UfoviER+163ZOfzvllxRS/M+W5Ldi8Ryv0yri+p+qHvLJVmuHgWLSYY5x76tEdwZa0KKFqs3/
- diG40ofYg8CQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9738"; a="146013094"
-X-IronPort-AV: E=Sophos;i="5.76,409,1592895600"; 
-   d="scan'208";a="146013094"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2020 02:16:52 -0700
-IronPort-SDR: Eu5LFEF7mQvPvjaKgHiNi+EAI6twzANJVXLRWHJjqt2BIA4DKeAAOOzWigLRgh7pJRkcZk2JZB
- paZ/kvhmY5KQ==
-X-IronPort-AV: E=Sophos;i="5.76,409,1592895600"; 
-   d="scan'208";a="480390735"
-Received: from vdc-station-04.ger.corp.intel.com (HELO [10.251.165.91]) ([10.251.165.91])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2020 02:16:41 -0700
-Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
- dma-iommu api
-To:     Tom Murphy <murphyt7@tcd.ie>
-Cc:     Logan Gunthorpe <logang@deltatee.com>, kvm@vger.kernel.org,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Jean-Philippe Brucker <jean-philippe@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        virtualization@lists.linux-foundation.org,
-        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Cornelia Huck <cohuck@redhat.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-References: <20191221150402.13868-1-murphyt7@tcd.ie>
- <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
- <20200529124523.GA11817@infradead.org>
- <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
- <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com>
- <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
- <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
- <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
- <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
- <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
- <e598fb31-ef7a-c2ee-8a54-bf62d50c480c@deltatee.com>
- <b27cae1f-07ff-bef2-f125-a5f0d968016d@linux.intel.com>
- <CALQxJut5c=cWdi+SVkN3JnbkhPSYmLkOyRUhduL-UJ9gyKn9Ow@mail.gmail.com>
-From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Organization: Intel Corporation UK Plc
-Message-ID: <7106602a-9964-851e-9c4e-d8acf4033b89@linux.intel.com>
-Date:   Wed, 9 Sep 2020 10:16:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1729507AbgIIJYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 05:24:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47138 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726489AbgIIJYN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Sep 2020 05:24:13 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B442C061755
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 02:24:11 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id x23so1569343wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 02:24:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AmAjr6xvyauDkIBPHoJreMuavbYPMqoWr9WPQMiNPkg=;
+        b=lgk3l2QheCZRIdB/DXYePwXEoUJvYOIpV83Gh1pRZ2BYhkcAj5c3ogzbaLtFuFI9ts
+         jpGHnH6HqqegvOnM9Uqug7F1IJiuwk+eek3yWSn2ufF9Y+cYzVYdiFc0zs3ZtTMRf5cM
+         XT5LclUiUzG/7eZUxr9lBGgyThOWt8HJEhlvI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AmAjr6xvyauDkIBPHoJreMuavbYPMqoWr9WPQMiNPkg=;
+        b=s1wMXrVfZOmnYBOrBldj3I9eT7cNU1cFMwzzQaqHTVCd+xY0niI9uNGXKmlPgJCAde
+         I3mVZwVTBVesDYXJ5eOb3ffBKrl/y6arM035v7SsqInR5JMcu3AYl0iBZqVZJR5PBnhV
+         P/IS4L2MsJJPgZt6H6EUQc/WbwXenhVTXIENycMtapHyxv9n95zFK/85em5uoRHMgMZP
+         oBTY0xwdHbNmHqAljOMGj42ZYJK6rqDk5VR5C74Ax7GBMw3dmsEAH5CFhUhxHVWXD/Ax
+         9Zpx0xsg7Xr+pScTi1jpOTgpDjhxElwxXSM08cggsKF2maskIq7FuqiGS/aBWFMko65C
+         j4FQ==
+X-Gm-Message-State: AOAM533ptnldx5iu2wo84wsqmDhGs1v6vgCrE/ltXD57Y/8paoiE5hgF
+        NQXam6Ay7HMk7nayR2p0lCXRxcKgl0/q0SP40keVyA==
+X-Google-Smtp-Source: ABdhPJyCFk+9azkQozj50ygO4Fld+/Ww0XhKIzoSM/wUVfsy/tdWyDVDQ6WSJk0DhWTK8YoZzQXF1zAmuO+KS+gPPFU=
+X-Received: by 2002:a7b:c3c8:: with SMTP id t8mr2599038wmj.101.1599643450162;
+ Wed, 09 Sep 2020 02:24:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CALQxJut5c=cWdi+SVkN3JnbkhPSYmLkOyRUhduL-UJ9gyKn9Ow@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200907100039.1731457-1-cychiang@chromium.org>
+ <20200907100039.1731457-3-cychiang@chromium.org> <20200908203357.GA861143@bogus>
+In-Reply-To: <20200908203357.GA861143@bogus>
+From:   Cheng-yi Chiang <cychiang@chromium.org>
+Date:   Wed, 9 Sep 2020 17:23:43 +0800
+Message-ID: <CAFv8NwLMAkFhVT-ML7QHbnSkqmgh=5SrNSik5eSCTHB1=DGQ0A@mail.gmail.com>
+Subject: Re: [PATCH v7 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux-kernel <linux-kernel@vger.kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Doug Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
+        <alsa-devel@alsa-project.org>, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Sep 9, 2020 at 4:34 AM Rob Herring <robh@kernel.org> wrote:
+>
+> On Mon, Sep 07, 2020 at 06:00:38PM +0800, Cheng-Yi Chiang wrote:
+> > Add devicetree bindings documentation file for sc7180 sound card.
+> >
+> > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> > ---
+> >  .../bindings/sound/qcom,sc7180.yaml           | 143 ++++++++++++++++++
+> >  1 file changed, 143 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> > new file mode 100644
+> > index 000000000000..ae809346ca80
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/sound/qcom,sc7180.yaml
+> > @@ -0,0 +1,143 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
+> > +
+> > +maintainers:
+> > +  - Rohit kumar <rohitkr@codeaurora.org>
+> > +  - Cheng-Yi Chiang <cychiang@chromium.org>
+> > +
+> > +description:
+> > +  This binding describes the SC7180 sound card which uses LPASS for audio.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,sc7180-sndcard
+> > +
+> > +  audio-routing:
+> > +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> > +    description:
+> > +      A list of the connections between audio components. Each entry is a
+> > +      pair of strings, the first being the connection's sink, the second
+> > +      being the connection's source.
+> > +
+> > +  model:
+> > +    $ref: /schemas/types.yaml#/definitions/string
+> > +    description: User specified audio sound card name
+> > +
+> > +  headset-jack:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description: phandle of the codec for headset detection
+> > +
+> > +  hdmi-jack:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description: phandle of the codec for hdmi jack detection
+>
+> You already have links to these devices. Why duplicate it here?
+>
+> What if you had 2 headsets? This doesn't scale.
+>
+Hi Rob, thanks for reviewing.
+There was some discussion in
+https://patchwork.kernel.org/patch/11737905/#23571643 about how to
+specify the dailink that has a headset jack.
+I would like to pass the information of headset jack and hdmi jack to
+the machine driver so the machine driver can call
+snd_soc_component_set_jack to set jack when init the corresponding link.
+Headset jack and hdmi jack will be treated differently for button and
+event type.
+Because of this, we can not just set a property "jack" in the link.
 
-On 08/09/2020 23:43, Tom Murphy wrote:
-> On Tue, 8 Sep 2020 at 16:56, Tvrtko Ursulin
-> <tvrtko.ursulin@linux.intel.com> wrote:
->>
->>
->> On 08/09/2020 16:44, Logan Gunthorpe wrote:
->>> On 2020-09-08 9:28 a.m., Tvrtko Ursulin wrote:
->>>>>
->>>>> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
->>>>> b/drivers/gpu/drm/i915/i915
->>>>> index b7b59328cb76..9367ac801f0c 100644
->>>>> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
->>>>> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
->>>>> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
->>>>>     } __sgt_iter(struct scatterlist *sgl, bool dma) {
->>>>>            struct sgt_iter s = { .sgp = sgl };
->>>>>
->>>>> +       if (sgl && !sg_dma_len(s.sgp))
->>>>
->>>> I'd extend the condition to be, just to be safe:
->>>>       if (dma && sgl && !sg_dma_len(s.sgp))
->>>>
->>>
->>> Right, good catch, that's definitely necessary.
->>>
->>>>> +               s.sgp = NULL;
->>>>> +
->>>>>            if (s.sgp) {
->>>>>                    s.max = s.curr = s.sgp->offset;
->>>>> -               s.max += s.sgp->length;
->>>>> -               if (dma)
->>>>> +
->>>>> +               if (dma) {
->>>>> +                       s.max += sg_dma_len(s.sgp);
->>>>>                            s.dma = sg_dma_address(s.sgp);
->>>>> -               else
->>>>> +               } else {
->>>>> +                       s.max += s.sgp->length;
->>>>>                            s.pfn = page_to_pfn(sg_page(s.sgp));
->>>>> +               }
->>>>
->>>> Otherwise has this been tested or alternatively how to test it? (How to
->>>> repro the issue.)
->>>
->>> It has not been tested. To test it, you need Tom's patch set without the
->>> last "DO NOT MERGE" patch:
->>>
->>> https://lkml.kernel.org/lkml/20200907070035.GA25114@infradead.org/T/
->>
->> Tom, do you have a branch somewhere I could pull from? (Just being lazy
->> about downloading a bunch of messages from the archives.)
-> 
-> I don't unfortunately. I'm working locally with poor internet.
-> 
->>
->> What GPU is in your Lenovo x1 carbon 5th generation and what
->> graphical/desktop setup I need to repro?
-> 
-> 
-> Is this enough info?:
-> 
-> $ lspci -vnn | grep VGA -A 12
-> 00:02.0 VGA compatible controller [0300]: Intel Corporation HD
-> Graphics 620 [8086:5916] (rev 02) (prog-if 00 [VGA controller])
->      Subsystem: Lenovo ThinkPad X1 Carbon 5th Gen [17aa:224f]
->      Flags: bus master, fast devsel, latency 0, IRQ 148
->      Memory at eb000000 (64-bit, non-prefetchable) [size=16M]
->      Memory at 60000000 (64-bit, prefetchable) [size=256M]
->      I/O ports at e000 [size=64]
->      [virtual] Expansion ROM at 000c0000 [disabled] [size=128K]
->      Capabilities: [40] Vendor Specific Information: Len=0c <?>
->      Capabilities: [70] Express Root Complex Integrated Endpoint, MSI 00
->      Capabilities: [ac] MSI: Enable+ Count=1/1 Maskable- 64bit-
->      Capabilities: [d0] Power Management version 2
->      Capabilities: [100] Process Address Space ID (PASID)
->      Capabilities: [200] Address Translation Service (ATS)
+As for the 2 headsets case (I guess you mean hp jack and mic jack), on
+this board we will not have this use case.
+If someone really wants to build hp jack and mic jack on the board
+based on this machine driver, we can add two more property hp-jack and
+mic-jack to specify that,
+as the machine driver will need to know the different jack types
+anyway. What do you think ?
 
-Works for a start. What about the steps to repro? Any desktop 
-environment and it is just visual corruption, no hangs/stalls or such?
+Or could you please suggest a proper way to pass such information ?
 
-I've submitted a series consisting of what I understood are the patches 
-needed to repro the issue to our automated CI here:
-
-https://patchwork.freedesktop.org/series/81489/
-
-So will see if it will catch something, or more targeted testing will be 
-required. Hopefully it does trip over in which case I can add the patch 
-suggested by Logan on top and see if that fixes it. Or I'll need to 
-write a new test case.
-
-If you could glance over my series to check I identified the patches 
-correctly it would be appreciated.
-
-Regards,
-
-Tvrtko
+Thanks!
+>
+> Rob
