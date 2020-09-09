@@ -2,111 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C32AE26298C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 10:06:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78C9E262B93
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 11:17:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730085AbgIIIGe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 04:06:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730205AbgIIIFO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 04:05:14 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D0FC061756
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 01:05:07 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id g4so1870139wrs.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 01:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GnsN9VJxY2tWMcKN+d2gl2RPXIURHKHn7BhArmMdOJI=;
-        b=lfKOkywn+OMumynjOSboeiWzYwjpSrRwiZF0r8UPdpuS3uS3zpTW59Pt/PBoW5QHFa
-         DJER2fIQFOyE9wzQN6aA+/Els4t3WcyQUyHvDU9+/uQ7ZloBA3Z9/JirgD6vL+RYkWZz
-         LSjSpwSGgColoMJ86ms2+elDXr8clJTOUSaD/7RdQ1KIqC8VpoVExaQnjjgct1c6XH9t
-         XQ60Hym3Tvj4BHL2FFmSxIZov18XfaMpS/KyQFLj+M+FqRRTeNhT6WOQDGKJI/m3sv2U
-         yjbKRXLiNhEjKFKk8bqWNQw9O7hjQi9AVHuovVIUw9pX/NkPGAMLYJv6PsHGMjswCxFG
-         Zqqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GnsN9VJxY2tWMcKN+d2gl2RPXIURHKHn7BhArmMdOJI=;
-        b=XxT4C5Xwr3zehKdiPenRW3Z65bb1+wjZ1FNXIRI1CamCKaPzmD0QJjn8lN/eDund8V
-         hNfu9+OgilDhkVRW19a67ncffp1empGTd6S/racM0GFjzd7URLxGxlLX2LxtenBSthcZ
-         jiHSLmFIaz4GxjYDk1fI5kY9+O6vqe8kJOUNt9yUpT/3qRLgHYqJAOxgzfs8YomL2TwA
-         DWnvFfsICEyqtP+a3YXSp6ZJHuAzJDqOhRrntqjGYYMZr5j+O9f6K9xtHL0yo0kVaMkJ
-         nUF0oXtir1eilfY+ZOcyMRMps0QOwybDDvfPfPhxbcq9HKSdm+rDrpTY22hE4QAI3zLn
-         CCLA==
-X-Gm-Message-State: AOAM533qXwocP0CSGgCxONdszBe0agyRsyvKOLecv2QYnBkdj+8NfxUJ
-        qm/Z6bX9g5ILvpUgl9dhBwjJNA==
-X-Google-Smtp-Source: ABdhPJw506zvow+7wjAknSFSUGWBL7dX5e7fDsg4nFHoFvxq0CUMBc0bPk4o5X9Jg0/wogGwq5TZgA==
-X-Received: by 2002:a5d:4e02:: with SMTP id p2mr2913549wrt.276.1599638706440;
-        Wed, 09 Sep 2020 01:05:06 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id g143sm2695680wme.0.2020.09.09.01.05.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2020 01:05:05 -0700 (PDT)
-Subject: Re: [PATCH 6/7] arm64: dts: qcom: sm8150: Add OSM L3 interconnect
- provider
-To:     bjorn.andersson@linaro.org
-Cc:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jonathan@marek.ca, linux-pm@vger.kernel.org
-References: <20200801123049.32398-1-sibis@codeaurora.org>
- <20200801123049.32398-7-sibis@codeaurora.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <a60ab579-baaf-06bd-02c7-ac584aeac3e4@linaro.org>
-Date:   Wed, 9 Sep 2020 11:05:03 +0300
+        id S1726060AbgIIJRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 05:17:10 -0400
+Received: from mga18.intel.com ([134.134.136.126]:62578 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725826AbgIIJRI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Sep 2020 05:17:08 -0400
+IronPort-SDR: 4UfoviER+163ZOfzvllxRS/M+W5Ldi8Ryv0yri+p+qHvLJVmuHgWLSYY5x76tEdwZa0KKFqs3/
+ diG40ofYg8CQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9738"; a="146013094"
+X-IronPort-AV: E=Sophos;i="5.76,409,1592895600"; 
+   d="scan'208";a="146013094"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2020 02:16:52 -0700
+IronPort-SDR: Eu5LFEF7mQvPvjaKgHiNi+EAI6twzANJVXLRWHJjqt2BIA4DKeAAOOzWigLRgh7pJRkcZk2JZB
+ paZ/kvhmY5KQ==
+X-IronPort-AV: E=Sophos;i="5.76,409,1592895600"; 
+   d="scan'208";a="480390735"
+Received: from vdc-station-04.ger.corp.intel.com (HELO [10.251.165.91]) ([10.251.165.91])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2020 02:16:41 -0700
+Subject: Re: [Intel-gfx] [PATCH 0/8] Convert the intel iommu driver to the
+ dma-iommu api
+To:     Tom Murphy <murphyt7@tcd.ie>
+Cc:     Logan Gunthorpe <logang@deltatee.com>, kvm@vger.kernel.org,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra@vger.kernel.org, Julien Grall <julien.grall@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Christoph Hellwig <hch@infradead.org>,
+        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        virtualization@lists.linux-foundation.org,
+        Gerald Schaefer <gerald.schaefer@de.ibm.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        iommu@lists.linux-foundation.org, Kukjin Kim <kgene@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+References: <20191221150402.13868-1-murphyt7@tcd.ie>
+ <465815ae-9292-f37a-59b9-03949cb68460@deltatee.com>
+ <20200529124523.GA11817@infradead.org>
+ <CGME20200529190523eucas1p2c086133e707257c0cdc002f502d4f51d@eucas1p2.samsung.com>
+ <33137cfb-603c-86e8-1091-f36117ecfaf3@deltatee.com>
+ <ef2150d5-7b6a-df25-c10d-e43316fe7812@samsung.com>
+ <b9140772-0370-a858-578c-af503a06d8e9@deltatee.com>
+ <CALQxJuutRaeX89k2o4ffTKYRMizmMu0XbRnzpFuSSrkQR02jKg@mail.gmail.com>
+ <766525c3-4da9-6db7-cd90-fb4b82cd8083@deltatee.com>
+ <60a82319-cbee-4cd1-0d5e-3c407cc51330@linux.intel.com>
+ <e598fb31-ef7a-c2ee-8a54-bf62d50c480c@deltatee.com>
+ <b27cae1f-07ff-bef2-f125-a5f0d968016d@linux.intel.com>
+ <CALQxJut5c=cWdi+SVkN3JnbkhPSYmLkOyRUhduL-UJ9gyKn9Ow@mail.gmail.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+Message-ID: <7106602a-9964-851e-9c4e-d8acf4033b89@linux.intel.com>
+Date:   Wed, 9 Sep 2020 10:16:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20200801123049.32398-7-sibis@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CALQxJut5c=cWdi+SVkN3JnbkhPSYmLkOyRUhduL-UJ9gyKn9Ow@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -114,45 +83,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/1/20 15:30, Sibi Sankar wrote:
-> Add Operation State Manager (OSM) L3 interconnect provider node on
-> SM8150 SoCs.
-> 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 
-Acked-by: Georgi Djakov <georgi.djakov@linaro.org>
+On 08/09/2020 23:43, Tom Murphy wrote:
+> On Tue, 8 Sep 2020 at 16:56, Tvrtko Ursulin
+> <tvrtko.ursulin@linux.intel.com> wrote:
+>>
+>>
+>> On 08/09/2020 16:44, Logan Gunthorpe wrote:
+>>> On 2020-09-08 9:28 a.m., Tvrtko Ursulin wrote:
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/i915/i915_scatterlist.h
+>>>>> b/drivers/gpu/drm/i915/i915
+>>>>> index b7b59328cb76..9367ac801f0c 100644
+>>>>> --- a/drivers/gpu/drm/i915/i915_scatterlist.h
+>>>>> +++ b/drivers/gpu/drm/i915/i915_scatterlist.h
+>>>>> @@ -27,13 +27,19 @@ static __always_inline struct sgt_iter {
+>>>>>     } __sgt_iter(struct scatterlist *sgl, bool dma) {
+>>>>>            struct sgt_iter s = { .sgp = sgl };
+>>>>>
+>>>>> +       if (sgl && !sg_dma_len(s.sgp))
+>>>>
+>>>> I'd extend the condition to be, just to be safe:
+>>>>       if (dma && sgl && !sg_dma_len(s.sgp))
+>>>>
+>>>
+>>> Right, good catch, that's definitely necessary.
+>>>
+>>>>> +               s.sgp = NULL;
+>>>>> +
+>>>>>            if (s.sgp) {
+>>>>>                    s.max = s.curr = s.sgp->offset;
+>>>>> -               s.max += s.sgp->length;
+>>>>> -               if (dma)
+>>>>> +
+>>>>> +               if (dma) {
+>>>>> +                       s.max += sg_dma_len(s.sgp);
+>>>>>                            s.dma = sg_dma_address(s.sgp);
+>>>>> -               else
+>>>>> +               } else {
+>>>>> +                       s.max += s.sgp->length;
+>>>>>                            s.pfn = page_to_pfn(sg_page(s.sgp));
+>>>>> +               }
+>>>>
+>>>> Otherwise has this been tested or alternatively how to test it? (How to
+>>>> repro the issue.)
+>>>
+>>> It has not been tested. To test it, you need Tom's patch set without the
+>>> last "DO NOT MERGE" patch:
+>>>
+>>> https://lkml.kernel.org/lkml/20200907070035.GA25114@infradead.org/T/
+>>
+>> Tom, do you have a branch somewhere I could pull from? (Just being lazy
+>> about downloading a bunch of messages from the archives.)
+> 
+> I don't unfortunately. I'm working locally with poor internet.
+> 
+>>
+>> What GPU is in your Lenovo x1 carbon 5th generation and what
+>> graphical/desktop setup I need to repro?
+> 
+> 
+> Is this enough info?:
+> 
+> $ lspci -vnn | grep VGA -A 12
+> 00:02.0 VGA compatible controller [0300]: Intel Corporation HD
+> Graphics 620 [8086:5916] (rev 02) (prog-if 00 [VGA controller])
+>      Subsystem: Lenovo ThinkPad X1 Carbon 5th Gen [17aa:224f]
+>      Flags: bus master, fast devsel, latency 0, IRQ 148
+>      Memory at eb000000 (64-bit, non-prefetchable) [size=16M]
+>      Memory at 60000000 (64-bit, prefetchable) [size=256M]
+>      I/O ports at e000 [size=64]
+>      [virtual] Expansion ROM at 000c0000 [disabled] [size=128K]
+>      Capabilities: [40] Vendor Specific Information: Len=0c <?>
+>      Capabilities: [70] Express Root Complex Integrated Endpoint, MSI 00
+>      Capabilities: [ac] MSI: Enable+ Count=1/1 Maskable- 64bit-
+>      Capabilities: [d0] Power Management version 2
+>      Capabilities: [100] Process Address Space ID (PASID)
+>      Capabilities: [200] Address Translation Service (ATS)
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 0f6d84e8fd299..8563afd205ee9 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -10,6 +10,7 @@
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/clock/qcom,gcc-sm8150.h>
-> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
->  #include <dt-bindings/interconnect/qcom,sm8150.h>
->  #include <dt-bindings/thermal/thermal.h>
->  
-> @@ -1184,6 +1185,16 @@ apps_bcm_voter: bcm_voter {
->  			};
->  		};
->  
-> +		osm_l3: interconnect@18321000 {
-> +			compatible = "qcom,sm8150-osm-l3";
-> +			reg = <0 0x18321000 0 0x1400>;
-> +
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
-> +			clock-names = "xo", "alternate";
-> +
-> +			#interconnect-cells = <1>;
-> +		};
-> +
->  		cpufreq_hw: cpufreq@18323000 {
->  			compatible = "qcom,cpufreq-hw";
->  			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>,
-> 
+Works for a start. What about the steps to repro? Any desktop 
+environment and it is just visual corruption, no hangs/stalls or such?
+
+I've submitted a series consisting of what I understood are the patches 
+needed to repro the issue to our automated CI here:
+
+https://patchwork.freedesktop.org/series/81489/
+
+So will see if it will catch something, or more targeted testing will be 
+required. Hopefully it does trip over in which case I can add the patch 
+suggested by Logan on top and see if that fixes it. Or I'll need to 
+write a new test case.
+
+If you could glance over my series to check I identified the patches 
+correctly it would be appreciated.
+
+Regards,
+
+Tvrtko
