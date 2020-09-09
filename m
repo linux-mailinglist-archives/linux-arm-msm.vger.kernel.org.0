@@ -2,67 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A623B262557
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 04:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8866C262662
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Sep 2020 06:35:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728911AbgIICoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Sep 2020 22:44:55 -0400
-Received: from mailgw02.mediatek.com ([210.61.82.184]:20870 "EHLO
-        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1728584AbgIICot (ORCPT
+        id S1725959AbgIIEfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 00:35:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59124 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbgIIEfU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Sep 2020 22:44:49 -0400
-X-UUID: ccbc6fc3f2734fae9e1af17c079dd564-20200909
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=KnlunEIZPJSAevHwEXlWcgiUgHwh3n6Mc+pcg4rLANE=;
-        b=cBquiHz0epDUS0Vkcb2xmaLJMoow8PRtHX0wa0rC2s+uCZSiWBdbDY+hgE+nnZCfvhCrPdBuzTIOItUwCSp8gd+dP5f/ZuATOGsaBXRvk/b95U8Tl0M+r9s0PGPtfnct7v2XHeZeWSRoXWm7dHvYQ910fSFXl599yuNMAW0AOPI=;
-X-UUID: ccbc6fc3f2734fae9e1af17c079dd564-20200909
-Received: from mtkcas08.mediatek.inc [(172.21.101.126)] by mailgw02.mediatek.com
-        (envelope-from <hsin-hsiung.wang@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 1341309525; Wed, 09 Sep 2020 10:44:46 +0800
-Received: from mtkcas07.mediatek.inc (172.21.101.84) by
- mtkmbs07n2.mediatek.inc (172.21.101.141) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Wed, 9 Sep 2020 10:44:45 +0800
-Received: from [172.21.77.4] (172.21.77.4) by mtkcas07.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Wed, 9 Sep 2020 10:44:45 +0800
-Message-ID: <1599619486.8380.0.camel@mtksdaap41>
-Subject: Re: [PATCH v2 1/2] dt-bindings: spmi: document binding for the
- Mediatek SPMI controller
-From:   Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-To:     Rob Herring <robh@kernel.org>
-CC:     Stephen Boyd <sboyd@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <srv_heupstream@mediatek.com>
-Date:   Wed, 9 Sep 2020 10:44:46 +0800
-In-Reply-To: <20200908204950.GA893759@bogus>
-References: <1598006677-7953-1-git-send-email-hsin-hsiung.wang@mediatek.com>
-         <1598006677-7953-2-git-send-email-hsin-hsiung.wang@mediatek.com>
-         <20200908204950.GA893759@bogus>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+        Wed, 9 Sep 2020 00:35:20 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83743C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Sep 2020 21:35:18 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id t7so706277pjd.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Sep 2020 21:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=z/ZqzCBddoOe6cElQsXSPaPa9YScgcb1RA++AVKK45o=;
+        b=S0iEEtWHdVMdH4ZvaQfDsFtl52bOxgDUnqEKCqK13oLiS7xCyycKXwY2VIuvCNRPuU
+         MSMSWLy3KV532CJHWDObBmAImM+Kzyow0iB/WZ3vpgmbaMoVLL821tpO+eFo5FFbgrip
+         H7WtG7PWAs8H4fLvNoMTxm2fnGS9vJwhmTdrbe82kgfVzhvuaFov6fTPRbh0lO5ZKflO
+         Haw9eVq2OgvUPoE2rL6YdKWsv7pYA+ceRcl26RdHS9M9oNwAW+fhUhipZi0KXjCARbKD
+         MqKTbptINtOsGNz24PX9A9eWoXX/U0uIV5kr4VBcKo7COkJ+CR8pJi1GbbmuzpY6+PS2
+         PANg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=z/ZqzCBddoOe6cElQsXSPaPa9YScgcb1RA++AVKK45o=;
+        b=F/WUd6f4su7zc4X7jtorRg7kUcsD/fECKAUg23NjMrKnz8QEBTH1YaoU2XSZJB09dG
+         /b78OUsv5uSHkg+yaM38MpMkxdQV7+BDQEgZct+pAEEpTCgpJJJLaGAeoKOUmiFPofsa
+         ehu3dKbb4zaU0lFz/QGkMBuqGoRdu4c8auDnFV40dogV9CqZrgFRh6traGBfldzPAZgv
+         j4omPWayp1lVmhLzqyubXtaEGdPparNJjbvvCLg7OFSvX4pkIHXbz10JWAV4sdlm4fF6
+         HbHYIG9A0QcRmgOl2wztYu7GmJalGMlnIzcEGq5a2Vi0X5HM63l0zVxxoVvfZg8UyyYD
+         FCJw==
+X-Gm-Message-State: AOAM530nTkSbz0Gh0QFIQaDL/o68X7GXwFE3B+APWLW6Rz55pTlNciW6
+        DSt+8ZWSu0cDkHv/H90yIknsZA==
+X-Google-Smtp-Source: ABdhPJym123jrDQyOmckTomGRhHglYxlPrWudYpouUVfZSewDsr/fa/uKEO4Gqv50DZEE8lcrCB6yw==
+X-Received: by 2002:a17:90b:4a4b:: with SMTP id lb11mr1891666pjb.111.1599626117949;
+        Tue, 08 Sep 2020 21:35:17 -0700 (PDT)
+Received: from localhost ([122.181.54.133])
+        by smtp.gmail.com with ESMTPSA id z1sm355353pfz.70.2020.09.08.21.35.16
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Sep 2020 21:35:16 -0700 (PDT)
+Date:   Wed, 9 Sep 2020 10:05:14 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Amit Kucheria <amitk@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH 5/7] cpufreq: qcom-hw: Use regmap for accessing hardware
+ registers
+Message-ID: <20200909043514.kuchag27eb255lgk@vireshk-i7>
+References: <20200908075716.30357-1-manivannan.sadhasivam@linaro.org>
+ <20200908075716.30357-6-manivannan.sadhasivam@linaro.org>
+ <20200908103444.5e526uawa45om6lt@vireshk-i7>
+ <20200908111141.GB23095@mani>
+ <20200908111813.bbgfxo5v7qt6ujpc@vireshk-i7>
+ <CAHLCerMndYeEBOxtj8mV7OdOP9pufx+C7n1F9m+CFAneuh8DnA@mail.gmail.com>
+ <CAHLCerPm6MXr662CaA3zZm4fQ3dJ_StJt3Ehutc3xnc0L9wj3Q@mail.gmail.com>
 MIME-Version: 1.0
-X-MTK:  N
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHLCerPm6MXr662CaA3zZm4fQ3dJ_StJt3Ehutc3xnc0L9wj3Q@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGksDQoNCk9uIFR1ZSwgMjAyMC0wOS0wOCBhdCAxNDo0OSAtMDYwMCwgUm9iIEhlcnJpbmcgd3Jv
-dGU6DQo+IE9uIEZyaSwgQXVnIDIxLCAyMDIwIGF0IDA2OjQ0OjM2UE0gKzA4MDAsIEhzaW4tSHNp
-dW5nIFdhbmcgd3JvdGU6DQo+ID4gVGhpcyBhZGRzIGRvY3VtZW50YXRpb24gZm9yIHRoZSBTUE1J
-IGNvbnRyb2xsZXIgZm91bmQgb24gTWVkaWF0ZWsgU29Dcy4NCj4gPiANCj4gPiBTaWduZWQtb2Zm
-LWJ5OiBIc2luLUhzaXVuZyBXYW5nIDxoc2luLWhzaXVuZy53YW5nQG1lZGlhdGVrLmNvbT4NCj4g
-PiAtLS0NCj4gPiAgLi4uL2RldmljZXRyZWUvYmluZGluZ3Mvc3BtaS9zcG1pLW10ay1wbWlmLnR4
-dCAgICAgfCAzMyArKysrKysrKysrKysrKysrKysrKysrDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCAz
-MyBpbnNlcnRpb25zKCspDQo+ID4gIGNyZWF0ZSBtb2RlIDEwMDY0NCBEb2N1bWVudGF0aW9uL2Rl
-dmljZXRyZWUvYmluZGluZ3Mvc3BtaS9zcG1pLW10ay1wbWlmLnR4dA0KPiANCj4gQmluZGluZ3Mg
-YXJlIGluIERUIHNjaGVtYSBmb3JtYXQgbm93LiBQbGVhc2UgY29udmVydCB0aGlzLg0KPiANCj4g
-Um9iDQoNClRoYW5rcywgSSB3aWxsIHVwZGF0ZSBpdCB3aXRoIGNvcnJlY3QgZm9ybWF0IGluIG5l
-eHQgcGF0Y2guDQo=
+On 08-09-20, 17:38, Amit Kucheria wrote:
+> On Tue, Sep 8, 2020 at 5:18 PM Amit Kucheria <amitk@kernel.org> wrote:
+> >
+> > On Tue, Sep 8, 2020 at 4:48 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> > >
+> > > On 08-09-20, 16:41, Manivannan Sadhasivam wrote:
+> > > > On 0908, Viresh Kumar wrote:
+> > > > > On 08-09-20, 13:27, Manivannan Sadhasivam wrote:
+> > > > > > Use regmap for accessing cpufreq registers in hardware.
+> > > > >
+> > > > > Why ? Please mention why a change is required in the log.
+> > > > >
+> > > >
+> > > > Only because it is recommended to use regmap for abstracting the hw access.
+> > >
+> > > Yes it can be very useful in abstracting the hw access in case of
+> > > busses like SPI/I2C, others, but in this case there is only one way of
+> > > doing it with the exact same registers. I am not sure it is worth it
+> > > here. FWIW, I have never played with regmaps personally, and so every
+> > > chance I can be wrong here.
+> >
+> > One could handle the reg offsets through a struct initialisation, but
+> > then you end up with lots of #defines for bitmasks and bits for each
+> > version of the IP. And the core code becomes a bit convoluted IMO,
+> > trying to handle the differences.
+> >
+> > regmap hides the differences of the bit positions and register offsets
+> > between several IP versions.
 
+Right and I agree that is another useful aspect of it which I missed
+mentioning.
+
+> > > > Moreover it handles the proper locking for us in the core (spinlock vs mutex).
+> > >
+> > > What locking do you need here ?
+> >
+> > Right, locking isn't the main reason here.
+> 
+> Having said this, perhaps this patch can be held back for now, since
+> we're not yet using some of the features of regmap to abstract away
+> bit fields and such.
+> 
+> We don't strictly need it for just different register offsets.
+
+Right, I just didn't understood why it was required currently as it
+wasn't all that complex at all.
+
+-- 
+viresh
