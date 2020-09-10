@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D042A2651E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:04:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD735265240
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:12:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727887AbgIJVEI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 17:04:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57186 "EHLO
+        id S1726919AbgIJVMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 17:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730716AbgIJOhg (ORCPT
+        with ESMTP id S1730354AbgIJO2b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 10:37:36 -0400
+        Thu, 10 Sep 2020 10:28:31 -0400
 Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E81FAC0617BD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:00:16 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id n25so8321573ljj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:00:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3B6C06138D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:00:22 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id c2so8282671ljj.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wcVYXgQ5pttw1IKCDgQFlSKYdGXdwjbBjMlIEbUjqiQ=;
-        b=WcGgdaRRvCVMPOMrzk8F0zJKKmXYDnx/T+2PstZPMVXOPjqh8utA+6+vILfHsug244
-         UlvTF+Cv7GA993X7lv/AnHiWokjLhHCdY/o/MAk/lHwbyu0dMRyCZIjZlZo1x5Mj3v3e
-         j5B78FNoLh0JLl6S4aIr4wYfyAwpqAqX1E9RVHyrZlTjH/NSufy6X1HFlExrh+i7NTMI
-         4u16BTA6G+MhSDCVH/h07hI04tVXg4+T8S5BPo5F/PfZ8kYtuz3S5wWEK2/OFJWxvMHJ
-         jjfiehwrYb1S+Pv9uTyiFpLE+BssJdGiBHGnGElC4KiOFrNr6tp6EXQIFi5enObhytNB
-         lSGQ==
+        bh=9ykRgAbS1+NNh7dx3qxwh0Qb3QTBtyJsrNZlzRunA0I=;
+        b=KKvbZN1SFa/gjwNr/RrbT87qA0xOk8yWGIRo8uaPv3RAMYNwYyc6lHZ2S5kNqtifAx
+         4MnF4TwMDO7PwIeJODUbDfSWkBr11wDPGVPOBf/5S0W/i7wL50qD64gg7Waxhfhn0Ucv
+         5bcSEM1yryJ5kfDnXKagqbM5ycL2xwC7Q7dLqLzi+41gBEbR+CH5IxksCG6Bx8dmkBrH
+         20tluDoLGAH0vvXv4B1rwxvHMMlDC+nufQ6ZePa/veSX9uxFE/T08amnSKVUlwaFM4VF
+         T8qzWTLFryfPfjElQljBlKBnGCw03jyhisH+lhFIzkyt6PlICMMk7YJ0rY+igM71c/vI
+         zmXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wcVYXgQ5pttw1IKCDgQFlSKYdGXdwjbBjMlIEbUjqiQ=;
-        b=VKllACYmZodxn78c1Ehaluip6M7juD8uLtGZwls115k74B99zKDj2PC1FAZIKIRgue
-         t6WIL/4V6OLFllp3aNfV+IzshxYphHcTEHMfCH92dz7uPBF8bLyZ6kvKm36awWz6xMGx
-         FYnybUWyMrQyyUCJXVP1mgQU7gy61LFwwmXxfR/twkVZTqCZGh6nwuQSOrQuGpw2lYxY
-         CGNEfmK58PXcEIqJvnt2IBjxRkV8DiVUNHRvZO+UyEsuX7GyUAGvNth6ooHDVVLVP6OL
-         mBZo5BFxQ2XvqR4TOj7m5fD4BfgxTex/BG+/QRa2GSeoXqrxVSgfSLI8oR7sKiDT9A8u
-         /cAA==
-X-Gm-Message-State: AOAM532PAhOeYKa6FblTrqm4zJ8iFfpOT6BLmjPCURNykgtHPfzdNYaH
-        KZLVmuGm0xJj7Wles233V+lmEA==
-X-Google-Smtp-Source: ABdhPJxBUWMazHhh0NVRcv5in/kVk015eZcEEP/gzP/tFVbk7+tflyjNHMBiyncgOgFctGYV3Bn5zg==
-X-Received: by 2002:a2e:8506:: with SMTP id j6mr4109652lji.176.1599746415305;
-        Thu, 10 Sep 2020 07:00:15 -0700 (PDT)
+        bh=9ykRgAbS1+NNh7dx3qxwh0Qb3QTBtyJsrNZlzRunA0I=;
+        b=qWmFW9WdALzdYS2PQtjXcyPyg++EV8rWfRGIysscrQTCxhzLfbmGgLxDhsm1Us9TQN
+         LQDMe1w/1v8V0jrvT0BGylNsYKgAIYZSYoyyn5oBavqzJIe6XzaC9y4RtZxbtkE4hcfM
+         AHeL8EHbNH1aXMZexqwDyt6jIAPXkiJnaCILOyqdZ+AQHwWttQRl1q3HRCOYo8j3VnpD
+         kxKclwFsXfVfrfa9kJPDFkCwKqLXoUY2nUh2NXFGJdUZ9kxiFpo002S/EzV7pzVr+qDr
+         OIyjDCFDhwFGW33wOc7l5rxEsROcQQw/g35DkIS93vnzlYlxobg9RbttpsBxPjqWxJ4L
+         +7xA==
+X-Gm-Message-State: AOAM532+WfzhCy+4eppwQdDUNQR4SftvSJ5bmHqvsEWpvkgw6tmHQGp7
+        Q3QjvwoyFeEi4gNCnxbpdsJomw==
+X-Google-Smtp-Source: ABdhPJwRV5S3T/UDuAz7QQFMs8pIuYr3gM1oUEqk1kSQQUsDjQVsox7dUCn0RDBy0bgdNyVLSyhGwA==
+X-Received: by 2002:a2e:b615:: with SMTP id r21mr4203124ljn.341.1599746421274;
+        Thu, 10 Sep 2020 07:00:21 -0700 (PDT)
 Received: from eriador.lan ([188.162.64.156])
-        by smtp.gmail.com with ESMTPSA id t82sm1367646lff.43.2020.09.10.07.00.13
+        by smtp.gmail.com with ESMTPSA id t82sm1367646lff.43.2020.09.10.07.00.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2020 07:00:14 -0700 (PDT)
+        Thu, 10 Sep 2020 07:00:20 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -62,10 +62,10 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Craig Tatlor <ctatlor97@gmail.com>
-Subject: [PATCH v4 03/10] fixp-arith: add a linear interpolation function
-Date:   Thu, 10 Sep 2020 16:59:53 +0300
-Message-Id: <20200910140000.324091-4-dmitry.baryshkov@linaro.org>
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH v4 06/10] iio: adc: qcom-spmi-adc5: use of_device_get_match_data
+Date:   Thu, 10 Sep 2020 16:59:56 +0300
+Message-Id: <20200910140000.324091-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200910140000.324091-1-dmitry.baryshkov@linaro.org>
 References: <20200910140000.324091-1-dmitry.baryshkov@linaro.org>
@@ -76,45 +76,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Craig Tatlor <ctatlor97@gmail.com>
+Use of_device_get_match_data() instead of hand-coding it manually.
 
-Adds a function to interpolate against two points,
-this is carried arount as a helper function by tons of drivers.
-
-Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- include/linux/fixp-arith.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/iio/adc/qcom-spmi-adc5.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/fixp-arith.h b/include/linux/fixp-arith.h
-index 8396013785ef..281cb4f83dbe 100644
---- a/include/linux/fixp-arith.h
-+++ b/include/linux/fixp-arith.h
-@@ -141,4 +141,23 @@ static inline s32 fixp_sin32_rad(u32 radians, u32 twopi)
- #define fixp_cos32_rad(rad, twopi)	\
- 	fixp_sin32_rad(rad + twopi / 4, twopi)
+diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+index c2da8f068b87..ae27ed7a26ff 100644
+--- a/drivers/iio/adc/qcom-spmi-adc5.c
++++ b/drivers/iio/adc/qcom-spmi-adc5.c
+@@ -14,6 +14,7 @@
+ #include <linux/math64.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+@@ -807,8 +808,6 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
+ 	struct adc5_channel_prop prop, *chan_props;
+ 	struct device_node *child;
+ 	unsigned int index = 0;
+-	const struct of_device_id *id;
+-	const struct adc5_data *data;
+ 	int ret;
  
-+/**
-+ * fixp_linear_interpolate() - interpolates a value from two known points
-+ *
-+ * @x0: x value of point 0
-+ * @y0: y value of point 0
-+ * @x1: x value of point 1
-+ * @y1: y value of point 1
-+ * @x: the linear interpolant
-+ */
-+static inline int fixp_linear_interpolate(int x0, int y0, int x1, int y1, int x)
-+{
-+	if (y0 == y1 || x == x0)
-+		return y0;
-+	if (x1 == x0 || x == x1)
-+		return y1;
-+
-+	return y0 + ((y1 - y0) * (x - x0) / (x1 - x0));
-+}
-+
- #endif
+ 	adc->nchannels = of_get_available_child_count(node);
+@@ -827,24 +826,21 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
+ 
+ 	chan_props = adc->chan_props;
+ 	iio_chan = adc->iio_chans;
+-	id = of_match_node(adc5_match_table, node);
+-	if (id)
+-		data = id->data;
+-	else
+-		data = &adc5_data_pmic;
+-	adc->data = data;
++	adc->data = of_device_get_match_data(adc->dev);
++	if (!adc->data)
++		adc->data = &adc5_data_pmic;
+ 
+ 	for_each_available_child_of_node(node, child) {
+-		ret = adc5_get_dt_channel_data(adc, &prop, child, data);
++		ret = adc5_get_dt_channel_data(adc, &prop, child, adc->data);
+ 		if (ret) {
+ 			of_node_put(child);
+ 			return ret;
+ 		}
+ 
+ 		prop.scale_fn_type =
+-			data->adc_chans[prop.channel].scale_fn_type;
++			adc->data->adc_chans[prop.channel].scale_fn_type;
+ 		*chan_props = prop;
+-		adc_chan = &data->adc_chans[prop.channel];
++		adc_chan = &adc->data->adc_chans[prop.channel];
+ 
+ 		iio_chan->channel = prop.channel;
+ 		iio_chan->datasheet_name = prop.datasheet_name;
 -- 
 2.28.0
 
