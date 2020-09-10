@@ -2,16 +2,16 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B419D263B1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 04:58:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24F8A263AD9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 04:47:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730128AbgIJC6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 22:58:43 -0400
-Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:38070
-        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726426AbgIJC5o (ORCPT
+        id S1730279AbgIJCAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 22:00:08 -0400
+Received: from a27-188.smtp-out.us-west-2.amazonses.com ([54.240.27.188]:58830
+        "EHLO a27-188.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729298AbgIJBkh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 22:57:44 -0400
+        Wed, 9 Sep 2020 21:40:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599696160;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
@@ -48,7 +48,7 @@ Message-ID: <01010174755245f4-aebf6d48-64ce-4144-88ae-aefbb437370b-000000@us-wes
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1599696147-30585-1-git-send-email-sidgup@codeaurora.org>
 References: <1599696147-30585-1-git-send-email-sidgup@codeaurora.org>
-X-SES-Outgoing: 2020.09.10-54.240.27.185
+X-SES-Outgoing: 2020.09.10-54.240.27.188
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
