@@ -2,147 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 921D0263F0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 09:53:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D2CF264013
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 10:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726846AbgIJHxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 03:53:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50608 "EHLO
+        id S1728405AbgIJIeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 04:34:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730150AbgIJHxK (ORCPT
+        with ESMTP id S1730269AbgIJIUU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 03:53:10 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D5C061799
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:53:00 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id gr14so7362419ejb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:53:00 -0700 (PDT)
+        Thu, 10 Sep 2020 04:20:20 -0400
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DC7C061796
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 01:19:16 -0700 (PDT)
+Received: by mail-vk1-xa43.google.com with SMTP id k1so1359756vkb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 01:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QM0o+rVzX3uPzdClaXq4cvOE98Cu7/fWdyVNqeP9dm8=;
-        b=utjF/eg5YPe5nbhcIOF5tQlQtWPCjtGTK8ZA6cyO9peRb1+AsJ9ABldRh7kaDScqAD
-         Jrq6+arYgOeJ5ykRuBsdYrW9VMbCnuHkMuXgSn7EzRzlG5vDidkh9+EuchObnU6qplQR
-         KKXdgISb6vhsH2U3YI04TBqA58ASzbiurG0BdgcMpSxFcWZ9nQX7H6zgXlzfKqyyFzd9
-         dO31+ZF6G99eJLEzefX3/Z6nSFswMWOIv2P4yrvZSCwpFstQEAGHWSY0OAvv/AF7QCm5
-         BntVnDhCKM8uuRUvXPHKvoFPfJ2AMwI8LAnIoPKqiguBFkVtxJWenUusx+wldxWAYoTo
-         pstw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Uk61sTaccx0/hQSlwACkFUhiMOK87nMWadgiJgRmzUw=;
+        b=Yq+j8D+Zda0smKuiw3v7rNXhIDyeTuPUck5pyNh+qPN84bKkTZfDzP+H/gRRv2m4HS
+         6MWItL/yY2SrGp6RbOYgC9y93bfZqjXynvVA0V379DvvQR6SrL/WIt+PRnWlEBx0sV4/
+         Go6Ly6CmM4x2XRnO5jPB8hlnWJyK2HnLylRmr4prouwyrAn17s+fVchnH3il+Mgl223a
+         HovqDK05j7yg/prJUSWxLkZM74MXg+ylGZiLaZYLLDN99vLE0GPpPdYEHbho/R84JjVf
+         GG7pGEyGrh4X/dg7sinQqugc9FzN25uG01lOmxt7jWSH6XLfhYoirBLTpZpHlyldpsyA
+         +EWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=QM0o+rVzX3uPzdClaXq4cvOE98Cu7/fWdyVNqeP9dm8=;
-        b=Vjn0mEyoxsQsSxAclo4AvvoGLYJs3YGMTyqLkH4UBWXc4ZbM785MJjWmb29faSlHlY
-         /6+hykG/qC/2zVZmk26ArppnqDn6NA0J8vN5zCJ2I1WRxJ29z9VBFvCdTycWnIiTngT0
-         TP/tNAEtovT3tTEpe49LCd8GKyxSOw/+Gi2wmL35MAVcp1CPJUrqqrH6IhwkLjlzSMLw
-         pkYIPUJgahU5yMZsScbTXapr9m8yMBF2KCvtH9qAMeTfj9l63R+vBAfbSXUjnf7EAZHn
-         ZCvgFFbNq/jyKfzF0XBZYGPCB51TogjED6F3cA+8C1tjlSvb8ZPNwUFHeBkvn7eQgpMw
-         lPyQ==
-X-Gm-Message-State: AOAM531p6w327GP2FuyaZm9+7SukfkIiNpnEecaYdNCo/DjO0RLEMoZ2
-        rvKO+WJbZhVBzW6ZJ4GpsX9dBj+3JqQfzaWr
-X-Google-Smtp-Source: ABdhPJwFgl91HQI5KPYNpoHEEW6Ht3uLFBFfrWNK9m0dn0oQ/6u16x/WKIp7+5p5drchm/+2Az3+qg==
-X-Received: by 2002:a17:906:cb92:: with SMTP id mf18mr7839719ejb.485.1599724378737;
-        Thu, 10 Sep 2020 00:52:58 -0700 (PDT)
-Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id q26sm5742838ejr.97.2020.09.10.00.52.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2020 00:52:58 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Uk61sTaccx0/hQSlwACkFUhiMOK87nMWadgiJgRmzUw=;
+        b=kcvbondcVbz2Ed1hSxW8pWWkP5c/GObY2D2D+3w6anKkFQI0Ewfch5HKTuGp44aJ4N
+         SL5ueU+m5z6yiI0nn3yJ1IxlEDmoQaHt8z940Ew7wbih9e4QUk/HK362XgzRrZpt11op
+         Q8/6mbT4GTtinchns7Oe1LQNChu8L3xfklIPOhbvSNjcwWqza/jlO/i3r62InXsuT983
+         /S7j7nLnCmzzjkmgVzIhpP7nWCWsagAxuVAUxogACCDp3R2ayhhq3U+k9xTKBzHf97fo
+         AvvAyqiosKJB/J08pvJ8nDgWKfbtHpbEJYCmNU2Lwp95SHJqP9UoDoSfftjL+4pKyo7q
+         eyRA==
+X-Gm-Message-State: AOAM533KPrdMPJi7DonFJQV5KTNsO3wGx2kBpacC+VfUu/onKwZk6gN7
+        W8SCMK9Zqq3mM4QW30sTRSOvA3i4AfrxcsmVBhaE2w==
+X-Google-Smtp-Source: ABdhPJw3pZq9C5u57EnFxdNKPbvGPfqyEXBvz2ddeMDd27lufyfFe3J53FBP0DF2Cnb7F2JBXZFxeAbzyA1ZbcAMB6Q=
+X-Received: by 2002:a1f:141:: with SMTP id 62mr3232992vkb.2.1599725954938;
+ Thu, 10 Sep 2020 01:19:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200821204921.32536-1-sibis@codeaurora.org> <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
+ <20200824164212.GA3715@yoga> <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
+ <20200825175345.GC3715@yoga> <0101017476da3906-412a2e35-dc56-43ee-8644-83a998279c2d-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101017476da3906-412a2e35-dc56-43ee-8644-83a998279c2d-000000@us-west-2.amazonses.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 10 Sep 2020 10:18:38 +0200
+Message-ID: <CAPDyKFq=R9_4r+T8V7Fn2PvLr5HicKOTQMAGh4Lg3-Q=KaOiDg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME flags
+To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v3 2/2] venus: firmware: Set virtual address ranges
-Date:   Thu, 10 Sep 2020 10:52:27 +0300
-Message-Id: <20200910075227.950-3-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200910075227.950-1-stanimir.varbanov@linaro.org>
-References: <20200910075227.950-1-stanimir.varbanov@linaro.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel-owner@vger.kernel.org, clew@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to boot some of the new Venus firmware versions TZ call to set
-virtual address ranges is needed. Add virtual address ranges for CP and
-CP_NONPIX in resource structure and use them when loading and booting
-the firmware on remote processor.
+On Thu, 10 Sep 2020 at 09:23, Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> On 2020-08-25 23:23, Bjorn Andersson wrote:
+> > On Tue 25 Aug 02:20 CDT 2020, Stephen Boyd wrote:
+> >> Quoting Bjorn Andersson (2020-08-24 09:42:12)
+> >> > On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
+> > [..]
+> >> > > I find it odd that this is modeled as a power domain instead of some
+> >> > > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
+> >> > > there some sort of benefit the driver gets from using the power domain
+> >> > > APIs for this vs. using a custom API?
+> >> >
+> >> > We need to send "up" and "down" notifications and this needs to happen
+> >> > at the same time as other standard resources are enabled/disabled.
+> >> >
+> >> > Further more, at the time the all resources handled by the downstream
+> >> > driver was either power-domains (per above understanding) or clocks, so
+> >> > it made sense to me not to spin up a custom API.
+> >> >
+> >>
+> >> So the benefit is not spinning up a custom API? I'm not Ulf, but it
+> >> looks like this is hard to rationalize about as a power domain. It
+> >> doesn't have any benefit to model it this way besides to make it
+> >> possible to turn on with other power domains.
+> >>
+> >> This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
+> >> SMEM APIs, so standing up another small qmp_remoteproc_booted() and
+> >> qmp_remoteproc_shutdown() API would avoid adding a genpd flag here
+> >> that
+> >> probably will never be used outside of this corner-case. There is also
+> >> some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
+> >> would be possible to do this outside of power domains, and that seems
+> >> better given that this isn't really a power domain to start with.
+> >
+> > In later platforms a few new users of the AOSS communication interface
+> > is introduced that certainly doesn't fit any existing API/framework in
+> > the kernel. So the plan was to pretty much expose qmp_send() to these
+> > drivers.
+> >
+> > My worry with using this interface is that we'll probably have to come
+> > up with some DT binding pieces and probably we'll end up adding yet
+> > another piece of hard coded information in the remoteproc drivers.
+> >
+> > But I'm not against us doing this work in favor of not having to
+> > introduce a one-off for this corner case.
+>
+> Bjorn/Stephen,
+>
+> So the consensus is to stop modelling
+> aoss load_state as pds and expose qmp_send
+> to drivers?
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c     |  4 ++++
- drivers/media/platform/qcom/venus/core.h     |  4 ++++
- drivers/media/platform/qcom/venus/firmware.c | 19 ++++++++++++++++++-
- 3 files changed, 26 insertions(+), 1 deletion(-)
+Would that mean qmp_send would have to be called from generic drivers?
+Then, please no. We want to keep drivers portable.
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index c5af42873aed..3549a094e860 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -540,6 +540,10 @@ static const struct venus_resources sdm845_res_v2 = {
- 	.vmem_size = 0,
- 	.vmem_addr = 0,
- 	.dma_mask = 0xe0000000 - 1,
-+	.cp_start = 0,
-+	.cp_size = 0x70800000,
-+	.cp_nonpixel_start = 0x1000000,
-+	.cp_nonpixel_size = 0x24800000,
- 	.fwname = "qcom/venus-5.2/venus.mdt",
- };
- 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 1a7aee7ee628..3e3f0138e3c3 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -77,6 +77,10 @@ struct venus_resources {
- 	unsigned int vmem_id;
- 	u32 vmem_size;
- 	u32 vmem_addr;
-+	u32 cp_start;
-+	u32 cp_size;
-+	u32 cp_nonpixel_start;
-+	u32 cp_nonpixel_size;
- 	const char *fwname;
- };
- 
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index 8801a6a7543d..1db64a854b88 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -181,6 +181,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
- int venus_boot(struct venus_core *core)
- {
- 	struct device *dev = core->dev;
-+	const struct venus_resources *res = core->res;
- 	phys_addr_t mem_phys;
- 	size_t mem_size;
- 	int ret;
-@@ -200,7 +201,23 @@ int venus_boot(struct venus_core *core)
- 	else
- 		ret = venus_boot_no_tz(core, mem_phys, mem_size);
- 
--	return ret;
-+	if (ret)
-+		return ret;
-+
-+	if (core->use_tz && res->cp_size) {
-+		ret = qcom_scm_mem_protect_video_var(res->cp_start,
-+						     res->cp_size,
-+						     res->cp_nonpixel_start,
-+						     res->cp_nonpixel_size);
-+		if (ret) {
-+			qcom_scm_pas_shutdown(VENUS_PAS_ID);
-+			dev_err(dev, "set virtual address ranges fail (%d)\n",
-+				ret);
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
- }
- 
- int venus_shutdown(struct venus_core *core)
--- 
-2.17.1
-
+Kind regards
+Uffe
