@@ -2,107 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BD602651C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:01:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E27A26530E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:28:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727996AbgIJVBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 17:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731216AbgIJOkP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 10:40:15 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25526C061796
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:40:15 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id w23so1931241uam.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JlHSJzzDMd2cH/FNwWRua8Mp268amVy5W9EWLGVmUPc=;
-        b=oD1xRjIlRnK44AUoNaWNO/km7pvdC4CuwaFjutnksJPfr5b6oJmdEgdZ9yNz7Xk2Gm
-         bpWVhEtYTCTfJtAz6L1JEx6u/7KKahQo8ztrJBFbVTUqiD5g0ViXtUYWrkuVf7U4IKSh
-         OltoiL9sRb/sIZiVWKa1ZI4bJymSa/9pkerP0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JlHSJzzDMd2cH/FNwWRua8Mp268amVy5W9EWLGVmUPc=;
-        b=hbiGKEJMWWuJ8qEdpeEG/33nKaDvUNLW7XycFQqFogo2KP9NsIVJDjEZMqrGSy1sp4
-         Yylm9QiOg7Pxh9E1+IyAxzbSXKZxso+eLaQj5+DBurM2x0Fj05G3BCWA4UHmPn+J8+Wo
-         CyKmAzmcQIpt4HY2dBZpnQ8KwrONHgc33k3zbZHXA9N5RRhjuXHZ2BiAxWeSZ8DKp5e6
-         bBtLqawBNEaTifXbVb4I8cCtzkxX5qe34v6VuafxsaSexrmL9bP5/GTPFVmSx2jQuQpg
-         hszXOuxvfpr5kuHUDvIqVz9e1sgYRotPNsub+eZ237+EcAbee/u7T2PKpiVoEk5Fe3sb
-         xA0A==
-X-Gm-Message-State: AOAM5332wkPaxn6t5i6AYL7u6P9+FxSvZMhTwA6n6NcrIBP9nvLrs05n
-        lZBOD00P4jC10so8Q1xmWUEvnhnEx1nK1A==
-X-Google-Smtp-Source: ABdhPJxliirliuva8brS3dy/WpW5HwtuK5f4+p8NOpluKtB+nY1CuGtApqMEZc0LjnskCh9zF6jUZw==
-X-Received: by 2002:ab0:29d7:: with SMTP id i23mr4003606uaq.121.1599748813076;
-        Thu, 10 Sep 2020 07:40:13 -0700 (PDT)
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
-        by smtp.gmail.com with ESMTPSA id t15sm840912vso.27.2020.09.10.07.40.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Sep 2020 07:40:12 -0700 (PDT)
-Received: by mail-vs1-f51.google.com with SMTP id c127so3541108vsc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:40:11 -0700 (PDT)
-X-Received: by 2002:a67:d907:: with SMTP id t7mr4542751vsj.8.1599748811523;
- Thu, 10 Sep 2020 07:40:11 -0700 (PDT)
+        id S1726769AbgIJV2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 17:28:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49390 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725828AbgIJV2E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Sep 2020 17:28:04 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 391E121D92;
+        Thu, 10 Sep 2020 21:28:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599773283;
+        bh=rxvS6AwOCqkTF8dpA59A+IKXNYafSMKsYQi6sF6t5cY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=D8bMlInaMbzmreh8AWVaj6VOCmrieNuNvtw24IhlqGgE3O5WPH1Aay4HThqIRkplf
+         CwO54HfYwM892eVqkcQlyBaWP0JggqtjersZ8bFOzIjOYct8/7WQw/FMmdLzp33a4d
+         wOGyFEl57OAHhuuI1kjZr+/5nQdqrBK9XJpiXNRM=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org> <1599742438-16811-2-git-send-email-skakit@codeaurora.org>
-In-Reply-To: <1599742438-16811-2-git-send-email-skakit@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 10 Sep 2020 07:40:00 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XYqiGk3QEPxVKCgnYA0FVrizyarSW52HPRGVyAUSugrQ@mail.gmail.com>
-Message-ID: <CAD=FV=XYqiGk3QEPxVKCgnYA0FVrizyarSW52HPRGVyAUSugrQ@mail.gmail.com>
-Subject: Re: [PATCH V5 1/4] arm64: dts: qcom: sc7180: Improve the pin config
- settings for CTS and TX
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        msavaliy@qti.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200910162610.GA7008@gerhold.net>
+References: <20200910162610.GA7008@gerhold.net>
+Subject: Re: Qcom clock performance votes on mainline
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+To:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Date:   Thu, 10 Sep 2020 14:28:01 -0700
+Message-ID: <159977328190.2295844.1029544710226353839@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Quoting Stephan Gerhold (2020-09-10 09:26:10)
+> Hi Stephen, Hi Rajendra,
+>=20
+> while working on some MSM8916 things I've been staring at the downstream
+> clock-gcc-8916.c [1] driver a bit. One thing that confuses me are the
+> voltage/performance state votes that are made for certain clocks within
+> the driver. Specifically lines like
+>=20
+>     VDD_DIG_FMAX_MAP2(LOW, 32000000, NOMINAL, 64000000),
+>=20
+> on certain clocks like UART, I2C or SPI. There does not seem to be
+> anything equivalent in the mainline clock driver at the moment.
+>=20
+> As far as I understand from related discussions on mailing lists [2],
+> these performance votes are not supposed to be added to the clock
+> driver(s), but rather as required-opps within OPP tables of all the
+> consumers. Is that correct?
 
-On Thu, Sep 10, 2020 at 5:55 AM satya priya <skakit@codeaurora.org> wrote:
->
-> Remove output-high from CTS and TX as this is not really required. During
-> bringup to fix transfer failures this was added to match with console uart
-> settings. Probably some boot loader config was missing then. As it is
-> working fine now, remove it.
->
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> Changes in V4:
->  - This is newly added in V4 to separate the improvements in pin settings
->    and wakeup related changes.
->
-> Changes in V5:
->  - As per Doug's comment configured pull-down for CTS pin as earlier.
->
->  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
+Yes.
 
-Looks fine to me.  Slight nit that this only applies to the IDP board
-but ${SUBJECT} makes it sound as if this applies to all sc7180.  I
-wouldn't spin just for that, though.  If Bjorn agrees, he can always
-adjust the subject when applying.
+>=20
+> As a second question, I'm wondering about one particular case:
+> I've been trying to get CPR / all the CPU frequencies working on MSM8916.
+> For that, I already added performance state votes for VDDMX and CPR as
+> required-opps to the CPU OPP table.
+>=20
+> After a recent discussion [3] with Viresh about where to enable power
+> domains managed by the OPP core, I've been looking at all the
+> performance state votes made in the downstream kernel again.
+>=20
+> Actually, the A53 PLL used for the higher CPU frequencies also has such
+> voltage/performance state votes. The downstream driver declares the
+> clock like [4]:
+>=20
+>                 .vdd_class =3D &vdd_sr2_pll,
+>                 .fmax =3D (unsigned long [VDD_SR2_PLL_NUM]) {
+>                         [VDD_SR2_PLL_SVS] =3D 1000000000,
+>                         [VDD_SR2_PLL_NOM] =3D 1900000000,
+>                 },
+>                 .num_fmax =3D VDD_SR2_PLL_NUM,
+>=20
+> which ends up as votes for the VDDCX power domain.
+>=20
+> Now I'm wondering: Where should I make these votes on mainline?
+> Should I add it as yet another required-opps to the CPU OPP table?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Sounds like the right approach.
+
+>=20
+> It would be a bit of a special case because these votes are only done
+> for the A53 PLL (which is only used for the higher CPU frequencies, not
+> the lower ones)...
+
+Can that be put into the OPP table somehow for only the high
+frequencies? The OPP tables for CPUs sometimes cover the CPU PLL voltage
+requirements too so it doesn't seem like a totally bad idea.
