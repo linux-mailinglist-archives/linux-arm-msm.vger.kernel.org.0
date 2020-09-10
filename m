@@ -2,89 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F4AD265203
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:06:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BD602651C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:01:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727970AbgIJVGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 17:06:17 -0400
-Received: from foss.arm.com ([217.140.110.172]:37582 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731060AbgIJOgK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 10:36:10 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E1CB8113E;
-        Thu, 10 Sep 2020 07:36:09 -0700 (PDT)
-Received: from [10.57.40.122] (unknown [10.57.40.122])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 314173F66E;
-        Thu, 10 Sep 2020 07:36:09 -0700 (PDT)
-Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
- <c474d49b-7800-28c6-d73b-20a6d2258e9e@linaro.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <8781a8eb-e472-0201-b773-e8b82325675c@arm.com>
-Date:   Thu, 10 Sep 2020 15:36:08 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1727996AbgIJVBi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 17:01:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731216AbgIJOkP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Sep 2020 10:40:15 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25526C061796
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:40:15 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id w23so1931241uam.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:40:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JlHSJzzDMd2cH/FNwWRua8Mp268amVy5W9EWLGVmUPc=;
+        b=oD1xRjIlRnK44AUoNaWNO/km7pvdC4CuwaFjutnksJPfr5b6oJmdEgdZ9yNz7Xk2Gm
+         bpWVhEtYTCTfJtAz6L1JEx6u/7KKahQo8ztrJBFbVTUqiD5g0ViXtUYWrkuVf7U4IKSh
+         OltoiL9sRb/sIZiVWKa1ZI4bJymSa/9pkerP0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JlHSJzzDMd2cH/FNwWRua8Mp268amVy5W9EWLGVmUPc=;
+        b=hbiGKEJMWWuJ8qEdpeEG/33nKaDvUNLW7XycFQqFogo2KP9NsIVJDjEZMqrGSy1sp4
+         Yylm9QiOg7Pxh9E1+IyAxzbSXKZxso+eLaQj5+DBurM2x0Fj05G3BCWA4UHmPn+J8+Wo
+         CyKmAzmcQIpt4HY2dBZpnQ8KwrONHgc33k3zbZHXA9N5RRhjuXHZ2BiAxWeSZ8DKp5e6
+         bBtLqawBNEaTifXbVb4I8cCtzkxX5qe34v6VuafxsaSexrmL9bP5/GTPFVmSx2jQuQpg
+         hszXOuxvfpr5kuHUDvIqVz9e1sgYRotPNsub+eZ237+EcAbee/u7T2PKpiVoEk5Fe3sb
+         xA0A==
+X-Gm-Message-State: AOAM5332wkPaxn6t5i6AYL7u6P9+FxSvZMhTwA6n6NcrIBP9nvLrs05n
+        lZBOD00P4jC10so8Q1xmWUEvnhnEx1nK1A==
+X-Google-Smtp-Source: ABdhPJxliirliuva8brS3dy/WpW5HwtuK5f4+p8NOpluKtB+nY1CuGtApqMEZc0LjnskCh9zF6jUZw==
+X-Received: by 2002:ab0:29d7:: with SMTP id i23mr4003606uaq.121.1599748813076;
+        Thu, 10 Sep 2020 07:40:13 -0700 (PDT)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id t15sm840912vso.27.2020.09.10.07.40.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Sep 2020 07:40:12 -0700 (PDT)
+Received: by mail-vs1-f51.google.com with SMTP id c127so3541108vsc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 07:40:11 -0700 (PDT)
+X-Received: by 2002:a67:d907:: with SMTP id t7mr4542751vsj.8.1599748811523;
+ Thu, 10 Sep 2020 07:40:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <c474d49b-7800-28c6-d73b-20a6d2258e9e@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org> <1599742438-16811-2-git-send-email-skakit@codeaurora.org>
+In-Reply-To: <1599742438-16811-2-git-send-email-skakit@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 10 Sep 2020 07:40:00 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XYqiGk3QEPxVKCgnYA0FVrizyarSW52HPRGVyAUSugrQ@mail.gmail.com>
+Message-ID: <CAD=FV=XYqiGk3QEPxVKCgnYA0FVrizyarSW52HPRGVyAUSugrQ@mail.gmail.com>
+Subject: Re: [PATCH V5 1/4] arm64: dts: qcom: sc7180: Improve the pin config
+ settings for CTS and TX
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        msavaliy@qti.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-04 21:26, Stanimir Varbanov wrote:
-> Hi Robin,
-> 
-> Thanks for the patch!
-> 
-> On 9/4/20 12:14 AM, Robin Murphy wrote:
->> Since commit 9495b7e92f71 ("driver core: platform: Initialize dma_parms
->> for platform devices"), struct platform_device already provides a
->> dma_parms structure, so we can save allocating another one.
->>
->> Also the DMA segment size is simply a size, not a bitmask.
->>
->> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
->> ---
->>   drivers/media/platform/qcom/venus/core.c | 8 +-------
->>   1 file changed, 1 insertion(+), 7 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index 203c6538044f..2fa9275d75ff 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -226,13 +226,7 @@ static int venus_probe(struct platform_device *pdev)
->>   	if (ret)
->>   		return ret;
->>   
->> -	if (!dev->dma_parms) {
->> -		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
->> -					      GFP_KERNEL);
->> -		if (!dev->dma_parms)
->> -			return -ENOMEM;
->> -	}
->> -	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
->> +	dma_set_max_seg_size(dev, UINT_MAX);
-> 
-> To be correct we should check for EIO error?
+Hi,
 
-Well, half the point of 9495b7e92f71 was to make sure that 
-dma_set_max_seg_size() cannot fail for platform drivers. Thus if we're 
-taking advantage of that change to make the assumption that we never 
-need to allocate dma_parms here, then an error check would be redundant 
-by definition ;)
+On Thu, Sep 10, 2020 at 5:55 AM satya priya <skakit@codeaurora.org> wrote:
+>
+> Remove output-high from CTS and TX as this is not really required. During
+> bringup to fix transfer failures this was added to match with console uart
+> settings. Probably some boot loader config was missing then. As it is
+> working fine now, remove it.
+>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> Changes in V4:
+>  - This is newly added in V4 to separate the improvements in pin settings
+>    and wakeup related changes.
+>
+> Changes in V5:
+>  - As per Doug's comment configured pull-down for CTS pin as earlier.
+>
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
 
-Robin.
+Looks fine to me.  Slight nit that this only applies to the IDP board
+but ${SUBJECT} makes it sound as if this applies to all sc7180.  I
+wouldn't spin just for that, though.  If Bjorn agrees, he can always
+adjust the subject when applying.
 
-> 
->>   
->>   	INIT_LIST_HEAD(&core->instances);
->>   	mutex_init(&core->lock);
->>
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
