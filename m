@@ -2,102 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E27A26530E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:28:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B0BE2653C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 23:40:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726769AbgIJV2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 17:28:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49390 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725828AbgIJV2E (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 17:28:04 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 391E121D92;
-        Thu, 10 Sep 2020 21:28:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599773283;
-        bh=rxvS6AwOCqkTF8dpA59A+IKXNYafSMKsYQi6sF6t5cY=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=D8bMlInaMbzmreh8AWVaj6VOCmrieNuNvtw24IhlqGgE3O5WPH1Aay4HThqIRkplf
-         CwO54HfYwM892eVqkcQlyBaWP0JggqtjersZ8bFOzIjOYct8/7WQw/FMmdLzp33a4d
-         wOGyFEl57OAHhuuI1kjZr+/5nQdqrBK9XJpiXNRM=
-Content-Type: text/plain; charset="utf-8"
+        id S1728247AbgIJVj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 17:39:57 -0400
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:50286
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727055AbgIJNHI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Sep 2020 09:07:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599742198;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=s775L7iCYKpGMncC/fTv63fok23Pnh/vNT1134dXG/I=;
+        b=Elr96xnzsEBEUVxFkM7+mD6XMQzh9xlVq4Brz8bIKJnMDvSi1h14zCUFkejWeOfW
+        R5SACiNIuAObBH2Pb82/9UAy99TS7GDOfNucN4Z2Euqhv8MST+nzqQBcb1yZ5s9Cieu
+        yzLU6A6PeyNu1POswfM/bDdYqidogQwTXneVxHkg=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599742198;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=s775L7iCYKpGMncC/fTv63fok23Pnh/vNT1134dXG/I=;
+        b=Wv3iIPZmLaD1mQJyPljMTQiUJ40ELe5fJ5rkE7TTk/pyGEVNsuHRr8997X2cDNW3
+        VxFwSm8ikScENv1tYJJ/UnEWPM0hQKxyOcXAtARDo5ZF+H+hdqvKqSRm4Kxulje5q5w
+        rxYqdhdLfUrgb/QP2LSW18r/xKRCcV+uXTapIEdE=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200910162610.GA7008@gerhold.net>
-References: <20200910162610.GA7008@gerhold.net>
-Subject: Re: Qcom clock performance votes on mainline
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-To:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 10 Sep 2020 14:28:01 -0700
-Message-ID: <159977328190.2295844.1029544710226353839@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 10 Sep 2020 12:49:58 +0000
+From:   skakit@codeaurora.org
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V4 2/4] arm64: dts: qcom: sc7180: Improve the pin config
+ settings for CTS and TX
+In-Reply-To: <CAD=FV=XZgmQXCzVx3CdeOkAWC6zz8bNW+f6Qt1=O9ZSaGUr75g@mail.gmail.com>
+References: <1599145498-20707-1-git-send-email-skakit@codeaurora.org>
+ <1599145498-20707-3-git-send-email-skakit@codeaurora.org>
+ <CAD=FV=XZgmQXCzVx3CdeOkAWC6zz8bNW+f6Qt1=O9ZSaGUr75g@mail.gmail.com>
+Message-ID: <010101747810c24f-a169785b-0866-4932-a24e-80ff53393de2-000000@us-west-2.amazonses.com>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2020.09.10-54.240.27.10
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Stephan Gerhold (2020-09-10 09:26:10)
-> Hi Stephen, Hi Rajendra,
->=20
-> while working on some MSM8916 things I've been staring at the downstream
-> clock-gcc-8916.c [1] driver a bit. One thing that confuses me are the
-> voltage/performance state votes that are made for certain clocks within
-> the driver. Specifically lines like
->=20
->     VDD_DIG_FMAX_MAP2(LOW, 32000000, NOMINAL, 64000000),
->=20
-> on certain clocks like UART, I2C or SPI. There does not seem to be
-> anything equivalent in the mainline clock driver at the moment.
->=20
-> As far as I understand from related discussions on mailing lists [2],
-> these performance votes are not supposed to be added to the clock
-> driver(s), but rather as required-opps within OPP tables of all the
-> consumers. Is that correct?
+Hi Doug,
 
-Yes.
+On 2020-09-10 02:58, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Sep 3, 2020 at 8:07 AM satya priya <skakit@codeaurora.org> 
+> wrote:
+>> 
+>> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+>> @@ -474,32 +474,30 @@
+>>  &qup_uart3_default {
+>>         pinconf-cts {
+>>                 /*
+>> -                * Configure a pull-down on 38 (CTS) to match the pull 
+>> of
+>> -                * the Bluetooth module.
+>> +                * Configure no-pull on CTS. As this is driven by BT, 
+>> do not
+>> +                * specify any pull in order to not conflict with BT 
+>> pulls.
+>>                  */
+>>                 pins = "gpio38";
+>> -               bias-pull-down;
+>> -               output-high;
+> 
+> Weird, how did that output-high sneak in there?  Glad it's going away.
+> 
+> 
+>> +               bias-disable;
+> 
+> I'm not convinced that the removal of the pul is the correct thing
+> here.  Specifically for the rx line the comment makes the argument
+> that if we power off the Bluetooth module then it will stop driving
+> this pin.  In that case if we remove the pull here then the line will
+> be floating and that can cause some extra power consumption as the
+> line floats between different logic levels.  Do you really need to
+> remove this pull?
+> 
 
->=20
-> As a second question, I'm wondering about one particular case:
-> I've been trying to get CPR / all the CPU frequencies working on MSM8916.
-> For that, I already added performance state votes for VDDMX and CPR as
-> required-opps to the CPU OPP table.
->=20
-> After a recent discussion [3] with Viresh about where to enable power
-> domains managed by the OPP core, I've been looking at all the
-> performance state votes made in the downstream kernel again.
->=20
-> Actually, the A53 PLL used for the higher CPU frequencies also has such
-> voltage/performance state votes. The downstream driver declares the
-> clock like [4]:
->=20
->                 .vdd_class =3D &vdd_sr2_pll,
->                 .fmax =3D (unsigned long [VDD_SR2_PLL_NUM]) {
->                         [VDD_SR2_PLL_SVS] =3D 1000000000,
->                         [VDD_SR2_PLL_NOM] =3D 1900000000,
->                 },
->                 .num_fmax =3D VDD_SR2_PLL_NUM,
->=20
-> which ends up as votes for the VDDCX power domain.
->=20
-> Now I'm wondering: Where should I make these votes on mainline?
-> Should I add it as yet another required-opps to the CPU OPP table?
+Okay, will keep the pull-down back for CTS.
 
-Sounds like the right approach.
-
->=20
-> It would be a bit of a special case because these votes are only done
-> for the A53 PLL (which is only used for the higher CPU frequencies, not
-> the lower ones)...
-
-Can that be put into the OPP table somehow for only the high
-frequencies? The OPP tables for CPUs sometimes cover the CPU PLL voltage
-requirements too so it doesn't seem like a totally bad idea.
+> Same comment for the next patch where you add the sleep settings.
+> 
+> 
+> -Doug
