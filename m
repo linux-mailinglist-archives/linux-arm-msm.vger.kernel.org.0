@@ -2,72 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A64F263AC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 04:44:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC530263B3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 05:13:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730586AbgIJCnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 22:43:50 -0400
-Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:54834
-        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729986AbgIJCG6 (ORCPT
+        id S1729296AbgIJDMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Sep 2020 23:12:53 -0400
+Received: from a27-56.smtp-out.us-west-2.amazonses.com ([54.240.27.56]:54082
+        "EHLO a27-56.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728442AbgIJDMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 22:06:58 -0400
+        Wed, 9 Sep 2020 23:12:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599701398;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=bUHJtAVwy1m2g9Edc5VcIqVaaUJ6RKEBA+YnhRba2CU=;
-        b=C0VTPRon/XEWhUmwS8uG4rEEHnY6KNjExkolfJoHjhXRn53O7oksRp7XdEjOkuyT
-        zdPQMsDkmvnbDCwVlmIxmq7dvoJr7APXmmBzEn+FkAxZU/mAlSfi4+7fJ9/CZxaa+jY
-        PC9sjp/vrsamk0EsL7qz/eTOb6ARJ0JvbPzR9uVI=
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599696160;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        bh=RXbn1DWMYAZ/35A4Quy1kciFUeBroO2XMUKTixP81u8=;
+        b=SSdf49bXNSkyITUrNrsFYmvJdow5ybQbUcmAXzzOKBVA7wRlk2NKVKHN39OSn+YW
+        Kpt4dB+fPzoDIWxBEyKCn2ZkJ6uw7NFWAJpuG6A3R3Pk5/3geNV7YZmIQrjbJb/WEiU
+        wHByHE/nGw2a2v4iPcYgVINt5FZK57J+YJ+4DF9g=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599701398;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=bUHJtAVwy1m2g9Edc5VcIqVaaUJ6RKEBA+YnhRba2CU=;
-        b=h8ya8Gox3JnCq2DUQlaMHq9XYhxIr7znRyLVEs5mUK4PHZPTklyVIQljSpeLrJUI
-        lqr8F+MT6rZ+mTW9akmr+QoRZuaaAXr53cQUEgQfyDWjVtGDCLAB5t/b6aHBZzLHrVs
-        2nbzhQ+NVwhT2fYuNfkF5E49JWJhVcWUxl2KSot8=
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599696160;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
+        bh=RXbn1DWMYAZ/35A4Quy1kciFUeBroO2XMUKTixP81u8=;
+        b=IXvcYt7lm3IylKhmQTwjJsufMpraLy+JMyJRn4MiqAdvfiVGTcnWkZBqKS8uNtlW
+        tbAqIgtDzq80ed4TM7Cq19DZHiDZFkdGjKqKmkZ0VvNHiTrKOlMtnCAkYj5wvs46Yop
+        Q7Ut62RYHBIi6ilUFkdPyTJoJ5ini5u2sqt3PTdA=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 10 Sep 2020 01:29:58 +0000
-From:   nguyenb@codeaurora.org
-To:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v1 0/2] Supports Reading UFS's Vcc Voltage Levels from DT
-In-Reply-To: <cover.1598939393.git.nguyenb@codeaurora.org>
-References: <cover.1598939393.git.nguyenb@codeaurora.org>
-Message-ID: <0101017475a232b3-44f95537-e287-4e5c-b956-c0f8c56c1a3c-000000@us-west-2.amazonses.com>
-X-Sender: nguyenb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2020.09.10-54.240.27.18
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5D416C433F0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com
+Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org,
+        linux-doc@vger.kernel.org, Gurbir Arora <gurbaror@codeaurora.org>
+Subject: [PATCH v3 3/3] remoteproc: qcom: Add minidump id for sm8150 modem remoteproc
+Date:   Thu, 10 Sep 2020 00:02:39 +0000
+Message-ID: <01010174755244c8-4654df20-f3df-49ae-94ce-eea0af121a99-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1599696147-30585-1-git-send-email-sidgup@codeaurora.org>
+References: <1599696147-30585-1-git-send-email-sidgup@codeaurora.org>
+X-SES-Outgoing: 2020.09.10-54.240.27.56
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-31 23:00, Bao D. Nguyen wrote:
-> UFS's specification supports a range of Vcc operating voltages.
-> Allows selecting the UFS Vcc operating voltage levels by reading
-> the UFS's vcc-voltage-level in the device tree.
-> 
-> Bao D. Nguyen (2):
->   scsi: dt-bindings: ufs: Add vcc-voltage-level for UFS
->   scsi: ufs: Support reading UFS's Vcc voltage from device tree
-> 
->  Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt |  2 ++
->  drivers/scsi/ufs/ufshcd-pltfrm.c                        | 15 
-> ++++++++++++---
->  2 files changed, 14 insertions(+), 3 deletions(-)
+Add minidump id for modem in sm8150 chipset.
 
-Hello, please help review the change and comment if any.
+Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Signed-off-by: Gurbir Arora <gurbaror@codeaurora.org>
+Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks!
-Bao
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 3879921..fa2d077 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -709,6 +709,7 @@ static const struct adsp_data mpss_resource_init = {
+ 	.crash_reason_smem = 421,
+ 	.firmware_name = "modem.mdt",
+ 	.pas_id = 4,
++	.minidump_id = 3,
+ 	.has_aggre2_clk = false,
+ 	.auto_boot = false,
+ 	.active_pd_names = (char*[]){
+-- 
+Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
