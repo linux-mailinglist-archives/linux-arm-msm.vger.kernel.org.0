@@ -2,104 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AC792649CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 18:31:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38EDE264E0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 20:59:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbgIJQby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 12:31:54 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:28205 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbgIJQ0Y (ORCPT
+        id S1727884AbgIJS7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 14:59:38 -0400
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:48664
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726966AbgIJS5c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 12:26:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1599755174;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=Message-ID:Subject:Cc:To:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH:From:
-        Subject:Sender;
-        bh=j4d59Y0kBRiNJToFL0y0NnSJVvNdlrKiKeGoVArTf0s=;
-        b=HIA+ZBYA574Emlou3jF1jYGgRGfLuaARiCzmLG5hEsjNclTbbG+yL9/tpa9RzQticQ
-        HHxlevd93LFFM+gOTsd09oke69aN22+OIk5SAGaircSe+vs8oORzzOc0azFLMXlBnRYr
-        Bk8z6blmF1M5nOKcM6hayOtocGHneO6u4nw5jK+249lgeiMcLI79OR632fAKX2g9NH4a
-        N4oPW04bV96nV66BFfMQ01TiOMwR0qHT0Lre3laEp7pKbDmHf3meEV2utV439zIxTQYy
-        5t2DD2mm9fbWk56pen56iPZfqwe1VeO0/1ZiD6OEoSves6Ubyu2zaYaSMs8UR0s+hBwY
-        NYDg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEIdhPgVC7iy9yGr7ESbX"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w8AGQDJN6
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Thu, 10 Sep 2020 18:26:13 +0200 (CEST)
-Date:   Thu, 10 Sep 2020 18:26:10 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Qcom clock performance votes on mainline
-Message-ID: <20200910162610.GA7008@gerhold.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+        Thu, 10 Sep 2020 14:57:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599764251;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        bh=gZLzm0B4dE7SUvs5JWxAhnR6HTanMjDb5ExqHSVTeGU=;
+        b=dcWvNpnbxFXDwVAqrcogY69CuvrRE3VerIHwLI3ZD0UIT7m72ozeJkXgUj1m13bT
+        hmFmxXUr8fWyMdjUUl4WLKQ/pBI/nuV9ZXiS29Rk36q4AcH5vcz3BVaKzdLoCxPDxyi
+        +AjUWLxlgKi8j9QyUYQH2v2GeyVJUzTK/N4g2SJs=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599764251;
+        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
+        bh=gZLzm0B4dE7SUvs5JWxAhnR6HTanMjDb5ExqHSVTeGU=;
+        b=Ip4z3F/yOUqLwQ2/C1fuBZ3653/ts6yJa4yjQqIy3eiYf8wM4cwbF5RtG04q13IW
+        4XJHW7tS3levmIAxAy4eXAcDGrQxXCoPl4qZ/EYH+G+N1U8tyb7NfOrPBWF0zUrGu/j
+        DvyQy8LhzyDGToBrEFFGoN6UL5Z1RqUV8aR4Kjb4=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C7771C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com
+Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org,
+        linux-doc@vger.kernel.org
+Subject: [PATCH v4 0/3] Introduce mini-dump support for remoteproc
+Date:   Thu, 10 Sep 2020 18:57:31 +0000
+Message-ID: <01010174796142bd-a595147b-833a-48fe-b692-f8b6fe466146-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.7.4
+X-SES-Outgoing: 2020.09.10-54.240.27.55
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen, Hi Rajendra,
+Sometimes firmware sizes can be in ten's of MB's and reading
+all the memory during coredump can consume lot of time and
+memory.
+Introducing support for mini-dumps. Mini-dump contains smallest
+amount of useful information, that could help to debug subsystem
+crashes.
+During bootup memory is allocated in SMEM (Shared memory)
+in the form of a table that contains the physical
+addresses and sizes of the regions that are supposed to be
+collected during coredump. This memory is shared amongst all
+processors in a Qualcomm platform, so all remoteprocs
+fill in their entry in the global table once they are out
+of reset.
+This patch series adds support for parsing the global minidump
+table and uses the current coredump frameork to expose this memory
+to userspace during remoteproc's recovery.
 
-while working on some MSM8916 things I've been staring at the downstream
-clock-gcc-8916.c [1] driver a bit. One thing that confuses me are the
-voltage/performance state votes that are made for certain clocks within
-the driver. Specifically lines like
+This patch series also integrates the patch:
+https://patchwork.kernel.org/patch/11695541/ sent by Siddharth.
 
-    VDD_DIG_FMAX_MAP2(LOW, 32000000, NOMINAL, 64000000),
+Changelog:
+v3 -> v4:
+- Made adsp_priv_cleanup a static function.
 
-on certain clocks like UART, I2C or SPI. There does not seem to be
-anything equivalent in the mainline clock driver at the moment.
+v2 -> v3:
+- Refactored code to remove dependency on Qualcomm configs.
+- Renamed do_rproc_minidump to rproc_minidump and marked as exported
+  symbol.
 
-As far as I understand from related discussions on mailing lists [2],
-these performance votes are not supposed to be added to the clock
-driver(s), but rather as required-opps within OPP tables of all the
-consumers. Is that correct?
+v1 -> v2:
+- 3 kernel test robot warnings have been resolved.
+- Introduced priv_cleanup op in order to making the cleaning of
+  private elements used by the remoteproc more readable.
+- Removed rproc_cleanup_priv as it is no longer needed.
+- Switched to if/else format for rproc_alloc in order to keep 
+  the static const decalaration of adsp_minidump_ops.
 
-As a second question, I'm wondering about one particular case:
-I've been trying to get CPR / all the CPU frequencies working on MSM8916.
-For that, I already added performance state votes for VDDMX and CPR as
-required-opps to the CPU OPP table.
+Siddharth Gupta (3):
+  remoteproc: core: Add ops to enable custom coredump functionality
+  remoteproc: qcom: Add capability to collect minidumps
+  remoteproc: qcom: Add minidump id for sm8150 modem remoteproc
 
-After a recent discussion [3] with Viresh about where to enable power
-domains managed by the OPP core, I've been looking at all the
-performance state votes made in the downstream kernel again.
+ drivers/remoteproc/qcom_minidump.h          |  64 +++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c          | 107 ++++++++++++++++++++-
+ drivers/remoteproc/remoteproc_core.c        |   6 +-
+ drivers/remoteproc/remoteproc_coredump.c    | 138 ++++++++++++++++++++++++++++
+ drivers/remoteproc/remoteproc_elf_helpers.h |  27 ++++++
+ include/linux/remoteproc.h                  |   5 +
+ 6 files changed, 344 insertions(+), 3 deletions(-)
+ create mode 100644 drivers/remoteproc/qcom_minidump.h
 
-Actually, the A53 PLL used for the higher CPU frequencies also has such
-voltage/performance state votes. The downstream driver declares the
-clock like [4]:
+-- 
+Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-		.vdd_class = &vdd_sr2_pll,
-		.fmax = (unsigned long [VDD_SR2_PLL_NUM]) {
-			[VDD_SR2_PLL_SVS] = 1000000000,
-			[VDD_SR2_PLL_NOM] = 1900000000,
-		},
-		.num_fmax = VDD_SR2_PLL_NUM,
-
-which ends up as votes for the VDDCX power domain.
-
-Now I'm wondering: Where should I make these votes on mainline?
-Should I add it as yet another required-opps to the CPU OPP table?
-
-It would be a bit of a special case because these votes are only done
-for the A53 PLL (which is only used for the higher CPU frequencies, not
-the lower ones)...
-
-Thanks in advance!
-Stephan
-
-[1]: https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/drivers/clk/qcom/clock-gcc-8916.c?h=LA.BR.1.2.9.1-02310-8x16.0
-[2]: https://lore.kernel.org/linux-arm-msm/20190129015547.213276-1-swboyd@chromium.org/
-[3]: https://lore.kernel.org/linux-pm/20200826093328.88268-1-stephan@gerhold.net/
-[4]: https://source.codeaurora.org/quic/la/kernel/msm-3.10/tree/drivers/clk/qcom/clock-gcc-8916.c?h=LA.BR.1.2.9.1-02310-8x16.0#n354
