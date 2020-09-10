@@ -2,124 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FD73263D90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 08:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF26263E98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 09:23:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727830AbgIJGsd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 02:48:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40494 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727770AbgIJGsZ (ORCPT
+        id S1730128AbgIJHXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 03:23:03 -0400
+Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:56820
+        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729993AbgIJHWs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 02:48:25 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11897C061799
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 23:48:24 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id gf14so2556565pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 23:48:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=bQnqX/rlzM1UmPvQJGJAQl6NaLfzBoroCNr/nnHi2Ug=;
-        b=JgXSMR43xSUTYNrB/REE6v5K4BfU03eWuedT0fwgerY4m6zCwKHNymlFyaQ0PtLLtU
-         cT2juiYwqeTcP6varaw5+Ofk0kDHEP0pBm2mNq7jzEvovNG/BarKfSdx+exGHz1t87Cx
-         Y7CqyAO+vjm2RZ+OgvTMEAWuC8TNmTv4L7ZeM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=bQnqX/rlzM1UmPvQJGJAQl6NaLfzBoroCNr/nnHi2Ug=;
-        b=YGnacFyYwkM05UeIV320zAMuqCcV6byQB11lYoV13y9ila6Tob7zvRbf+KXEQXWVEY
-         GgrdDY6AKxLAQmkUNGt0/YveHYjy5vMhtSIpDaNtb8qVheAIbOUX8KNPSf3G9Zl8bFpa
-         5GV1mxdsdZHkh6vyGKOeHWWuI4RHOa5O3HT6fiFKjGwmL4aCTg0GrR1h07/GnyaT3R2W
-         /yuOwLh9G8SAfOALzoAFgU1jaudFS1qS70skhZZhRko4l6vX5d/+7zLw+GL+iDgnUspa
-         jMwzWc80ogq6ShisIMMn0Fh4srmTMaCeOSHiGt3djuWQDSdPDF51rKWjjR9lyXbbfyXW
-         eMzQ==
-X-Gm-Message-State: AOAM530znRrm4bJR3ghfkxn8s9Cpz8U/TvIyG/vUH3etk3c1WP2jMIpL
-        sq8gcBvANvUXox1MwFrgGsuSuQ==
-X-Google-Smtp-Source: ABdhPJzrZEV6C1M0RYWREZm1MafBEawU/5OG9WzYmsU1/LeeCa2nEH9z8hIxZZ0ZiyQu7YoUhOT59Q==
-X-Received: by 2002:a17:90a:a081:: with SMTP id r1mr3958987pjp.115.1599720503579;
-        Wed, 09 Sep 2020 23:48:23 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id d77sm4690415pfd.121.2020.09.09.23.48.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2020 23:48:22 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 10 Sep 2020 03:22:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599722567;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=FbfkJJzgGeSFmEA1EYRQ444NqK/AGNGzOuF92HpnCDo=;
+        b=hwTf+FG96AslNxIvJh/+GN8kQcSvUSqgY1PflN9+EfTonVdl9G76hFVlhFGBgvXj
+        JkVMXyAJKAyMbBNFIbm6F3ifVSvG+Druc3q6L/syekGg6PdvDu+gz5N8vn8t18DIJcQ
+        rJwIE6uDIn2RcmCkBMjED7SFlGjtQr6gpyQDqVRA=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599722567;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=FbfkJJzgGeSFmEA1EYRQ444NqK/AGNGzOuF92HpnCDo=;
+        b=PS0LDCRA1i4lIBm0WJJdB2rjR5af8p8zeRky6ZcuwPdnEYwUTQtHBROrUFWE5FLb
+        UePqevIgBRReqw84dTjs5b5hODST/8acMq2wf5zrkbNjbhK7OoZR5mKtLjy2I6wA2Qc
+        j7ZmsI2jRnORgHgcukWFMpfykIJsZ0tdUsP4JFpo=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200910004902.2252694-2-swboyd@chromium.org>
-References: <20200910004902.2252694-1-swboyd@chromium.org> <20200910004902.2252694-2-swboyd@chromium.org>
-Subject: Re: [PATCH v3 01/10] dt-bindings: phy: qcom,qmp-usb3-dp: Add DP phy information
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@chromium.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>
-Date:   Wed, 09 Sep 2020 23:48:21 -0700
-Message-ID: <159972050159.2295844.14715100754744266014@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 10 Sep 2020 07:10:47 +0000
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     khilman@kernel.org, ulf.hansson@linaro.org, rjw@rjwysocki.net,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        gregkh@linuxfoundation.org, pavel@ucw.cz, len.brown@intel.com,
+        rnayak@codeaurora.org, dianders@chromium.org, mka@chromium.org,
+        linux-kernel-owner@vger.kernel.org, clew@codeaurora.org
+Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME
+ flags
+In-Reply-To: <20200825175345.GC3715@yoga>
+References: <20200821204921.32536-1-sibis@codeaurora.org>
+ <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
+ <20200824164212.GA3715@yoga>
+ <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
+ <20200825175345.GC3715@yoga>
+Message-ID: <0101017476da3906-412a2e35-dc56-43ee-8644-83a998279c2d-000000@us-west-2.amazonses.com>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2020.09.10-54.240.27.11
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Stephen Boyd (2020-09-09 17:48:53)
-> This binding only describes the USB phy inside the USB3 + DP "combo"
-> phy. Add information for the DP phy and describe the sub-nodes that
-> represent the DP and USB3 phys that exist inside the combo wrapper.
-> Remove reg-names from required properties because it isn't required nor
-> used by the kernel driver.
->=20
-> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-> Cc: Chandan Uddaraju <chandanu@codeaurora.org>
-> Cc: Vara Reddy <varar@codeaurora.org>
-> Cc: Tanmay Shah <tanmay@codeaurora.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Manu Gautam <mgautam@codeaurora.org>
-> Cc: Sandeep Maheswaram <sanm@codeaurora.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Sean Paul <seanpaul@chromium.org>
-> Cc: Jonathan Marek <jonathan@marek.ca>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Rob Clark <robdclark@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    | 91 +++++++++++++++++--
->  1 file changed, 81 insertions(+), 10 deletions(-)
+On 2020-08-25 23:23, Bjorn Andersson wrote:
+> On Tue 25 Aug 02:20 CDT 2020, Stephen Boyd wrote:
+>> Quoting Bjorn Andersson (2020-08-24 09:42:12)
+>> > On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
+> [..]
+>> > > I find it odd that this is modeled as a power domain instead of some
+>> > > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
+>> > > there some sort of benefit the driver gets from using the power domain
+>> > > APIs for this vs. using a custom API?
+>> >
+>> > We need to send "up" and "down" notifications and this needs to happen
+>> > at the same time as other standard resources are enabled/disabled.
+>> >
+>> > Further more, at the time the all resources handled by the downstream
+>> > driver was either power-domains (per above understanding) or clocks, so
+>> > it made sense to me not to spin up a custom API.
+>> >
+>> 
+>> So the benefit is not spinning up a custom API? I'm not Ulf, but it
+>> looks like this is hard to rationalize about as a power domain. It
+>> doesn't have any benefit to model it this way besides to make it
+>> possible to turn on with other power domains.
+>> 
+>> This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
+>> SMEM APIs, so standing up another small qmp_remoteproc_booted() and
+>> qmp_remoteproc_shutdown() API would avoid adding a genpd flag here 
+>> that
+>> probably will never be used outside of this corner-case. There is also
+>> some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
+>> would be possible to do this outside of power domains, and that seems
+>> better given that this isn't really a power domain to start with.
+> 
+> In later platforms a few new users of the AOSS communication interface
+> is introduced that certainly doesn't fit any existing API/framework in
+> the kernel. So the plan was to pretty much expose qmp_send() to these
+> drivers.
+> 
+> My worry with using this interface is that we'll probably have to come
+> up with some DT binding pieces and probably we'll end up adding yet
+> another piece of hard coded information in the remoteproc drivers.
+> 
+> But I'm not against us doing this work in favor of not having to
+> introduce a one-off for this corner case.
 
-I noticed that I didn't document the new compatible string I'm using,
-qcom,sc7180-qmp-usb3-dp-phy, ugh.
+Bjorn/Stephen,
 
-Should I copy the whole file over and make a new document for the new
-compatible string? That feels like the better solution vs. making this
-binding have min/max stuff where it fails to enforce the DP part of the
-phy. We can delete this binding once the kernel tree isn't using it,
-right?
+So the consensus is to stop modelling
+aoss load_state as pds and expose qmp_send
+to drivers?
 
-Rob H?
+> 
+> Regards,
+> Bjorn
 
->=20
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.y=
-aml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> index ef8ae9f73092..4154f5748d39 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-> @@ -17,13 +17,15 @@ properties:
->        - qcom,sdm845-qmp-usb3-phy
->    reg:
+
+
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
