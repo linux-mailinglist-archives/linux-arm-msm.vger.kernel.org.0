@@ -2,114 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1A5A263D34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 08:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FD73263D90
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 08:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726433AbgIJGYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 02:24:41 -0400
-Received: from a27-21.smtp-out.us-west-2.amazonses.com ([54.240.27.21]:33474
-        "EHLO a27-21.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726228AbgIJGYd (ORCPT
+        id S1727830AbgIJGsd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 02:48:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40494 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727770AbgIJGsZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 02:24:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599719072;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=sw5/57ZGcdqOaLzApeRTgEINqFme0CmU64O/ouWdLzQ=;
-        b=kwO7rFfPQV8eA+r9XtGKWrUuPxQ5GhAiYGbkCRPqM6+n0HNCBF57+m9yF0ssblTw
-        usspULVUyKIcWQ6II/wi6v6/kxE1IfvISiJ5LE1ST4zSCfGkCg/ztL2bsrcK9Z5YyZD
-        v6JX76SDLQ1tor0C7L/yYdPhBYhQn///1WV3tTpg=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599719072;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=sw5/57ZGcdqOaLzApeRTgEINqFme0CmU64O/ouWdLzQ=;
-        b=bxeCA5GEbpgfh1xQtCEQIE3Tb/gHtffkU15OBfmSb57CCPeAsBJPtGEFqBfE3uwu
-        QfmjI9J3mh/P1xjDSbBl7j3bwH9kWTBqtjltNlGMDIiXLLX5wZwTeHZVCpvHUUJ/HgK
-        gBcFnoPXAacS94jXU6U/ljiZI/pkSFmk9OKxim+o=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+        Thu, 10 Sep 2020 02:48:25 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11897C061799
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Sep 2020 23:48:24 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id gf14so2556565pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Sep 2020 23:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=bQnqX/rlzM1UmPvQJGJAQl6NaLfzBoroCNr/nnHi2Ug=;
+        b=JgXSMR43xSUTYNrB/REE6v5K4BfU03eWuedT0fwgerY4m6zCwKHNymlFyaQ0PtLLtU
+         cT2juiYwqeTcP6varaw5+Ofk0kDHEP0pBm2mNq7jzEvovNG/BarKfSdx+exGHz1t87Cx
+         Y7CqyAO+vjm2RZ+OgvTMEAWuC8TNmTv4L7ZeM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=bQnqX/rlzM1UmPvQJGJAQl6NaLfzBoroCNr/nnHi2Ug=;
+        b=YGnacFyYwkM05UeIV320zAMuqCcV6byQB11lYoV13y9ila6Tob7zvRbf+KXEQXWVEY
+         GgrdDY6AKxLAQmkUNGt0/YveHYjy5vMhtSIpDaNtb8qVheAIbOUX8KNPSf3G9Zl8bFpa
+         5GV1mxdsdZHkh6vyGKOeHWWuI4RHOa5O3HT6fiFKjGwmL4aCTg0GrR1h07/GnyaT3R2W
+         /yuOwLh9G8SAfOALzoAFgU1jaudFS1qS70skhZZhRko4l6vX5d/+7zLw+GL+iDgnUspa
+         jMwzWc80ogq6ShisIMMn0Fh4srmTMaCeOSHiGt3djuWQDSdPDF51rKWjjR9lyXbbfyXW
+         eMzQ==
+X-Gm-Message-State: AOAM530znRrm4bJR3ghfkxn8s9Cpz8U/TvIyG/vUH3etk3c1WP2jMIpL
+        sq8gcBvANvUXox1MwFrgGsuSuQ==
+X-Google-Smtp-Source: ABdhPJzrZEV6C1M0RYWREZm1MafBEawU/5OG9WzYmsU1/LeeCa2nEH9z8hIxZZ0ZiyQu7YoUhOT59Q==
+X-Received: by 2002:a17:90a:a081:: with SMTP id r1mr3958987pjp.115.1599720503579;
+        Wed, 09 Sep 2020 23:48:23 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id d77sm4690415pfd.121.2020.09.09.23.48.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2020 23:48:22 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Thu, 10 Sep 2020 06:24:32 +0000
-From:   parashar@codeaurora.org
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Jiri Slaby <jslaby@suse.com>, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
-        akashast@codeaurora.org
-Subject: Re: [PATCH] serial: qcom_geni_serial: To correct QUP Version
- detection logic
-In-Reply-To: <20200902060435.GA141898@kroah.com>
-References: <1599026211-12800-1-git-send-email-parashar@codeaurora.org>
- <20200902060435.GA141898@kroah.com>
-Message-ID: <0101017476afe173-62ad03fb-2f46-4f50-82f3-6967630a8ee0-000000@us-west-2.amazonses.com>
-X-Sender: parashar@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2020.09.10-54.240.27.21
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200910004902.2252694-2-swboyd@chromium.org>
+References: <20200910004902.2252694-1-swboyd@chromium.org> <20200910004902.2252694-2-swboyd@chromium.org>
+Subject: Re: [PATCH v3 01/10] dt-bindings: phy: qcom,qmp-usb3-dp: Add DP phy information
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Rob Clark <robdclark@chromium.org>
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>
+Date:   Wed, 09 Sep 2020 23:48:21 -0700
+Message-ID: <159972050159.2295844.14715100754744266014@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-02 11:34, Greg Kroah-Hartman wrote:
-> On Wed, Sep 02, 2020 at 11:26:51AM +0530, Paras Sharma wrote:
->> The current implementation reduces the sampling rate by half
->> if qup HW version is  greater is than 2.5 by checking if the
->> geni SE major version is greater than 2 and geni SE minor version
->> is greater than 5.
->> 
->> This implementation fails when the version is 3 or greater.
->> 
->> Hence new implementation checks if version is greater than or equal
->> to 0x20050000 which would work for any future version.
->> 
->> Signed-off-by: Paras Sharma <parashar@codeaurora.org>
->> ---
->>  drivers/tty/serial/qcom_geni_serial.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> Is this a v2 patch?  What changed from the first one?
+Quoting Stephen Boyd (2020-09-09 17:48:53)
+> This binding only describes the USB phy inside the USB3 + DP "combo"
+> phy. Add information for the DP phy and describe the sub-nodes that
+> represent the DP and USB3 phys that exist inside the combo wrapper.
+> Remove reg-names from required properties because it isn't required nor
+> used by the kernel driver.
+>=20
+> Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+> Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+> Cc: Vara Reddy <varar@codeaurora.org>
+> Cc: Tanmay Shah <tanmay@codeaurora.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Manu Gautam <mgautam@codeaurora.org>
+> Cc: Sandeep Maheswaram <sanm@codeaurora.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Sean Paul <seanpaul@chromium.org>
+> Cc: Jonathan Marek <jonathan@marek.ca>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    | 91 +++++++++++++++++--
+>  1 file changed, 81 insertions(+), 10 deletions(-)
 
-This patch is in continuation of 
-https://patchwork.kernel.org/patch/11708805/ .
-It should have been V3 , i will correct it in my next patch .
-In the previous version ,i had added a new condition to separately check 
-if QUP se major version is greater than or equal to 3.
-In this ,i replaced the older logic of separately checking major and 
-minor versions for 2.5 and 3 with value of Qup version 0x20050000 .
-This checks for version greater than 2.5 directly.
-This would reduce the logic and will work for any future versions.
+I noticed that I didn't document the new compatible string I'm using,
+qcom,sc7180-qmp-usb3-dp-phy, ugh.
 
-> 
->> 
->> diff --git a/drivers/tty/serial/qcom_geni_serial.c 
->> b/drivers/tty/serial/qcom_geni_serial.c
->> index f0b1b47..e18b431 100644
->> --- a/drivers/tty/serial/qcom_geni_serial.c
->> +++ b/drivers/tty/serial/qcom_geni_serial.c
->> @@ -1000,7 +1000,7 @@ static void qcom_geni_serial_set_termios(struct 
->> uart_port *uport,
->>  	sampling_rate = UART_OVERSAMPLING;
->>  	/* Sampling rate is halved for IP versions >= 2.5 */
->>  	ver = geni_se_get_qup_hw_version(&port->se);
->> -	if (GENI_SE_VERSION_MAJOR(ver) >= 2 && GENI_SE_VERSION_MINOR(ver) >= 
->> 5)
->> +	if (ver >= 0x20050000)
-> 
-> That's an odd "magic value", can't you use the existing macros to 
-> define
-> this somehow so it makes sense?
+Should I copy the whole file over and make a new document for the new
+compatible string? That feels like the better solution vs. making this
+binding have min/max stuff where it fails to enforce the DP part of the
+phy. We can delete this binding once the kernel tree isn't using it,
+right?
 
-The stable tag is not required because the board supporting version > 
-3 is not in any of the previous kernel versions.
-I will define a separate macro for this value in my next patch.
+Rob H?
 
-> 
-> thanks,
-> 
-> greg k-h
+>=20
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.y=
+aml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+> index ef8ae9f73092..4154f5748d39 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+> @@ -17,13 +17,15 @@ properties:
+>        - qcom,sdm845-qmp-usb3-phy
+>    reg:
