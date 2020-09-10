@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1086326441D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 12:31:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FEC8264425
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 12:31:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730326AbgIJKbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 06:31:17 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:15346 "EHLO
+        id S1730341AbgIJKbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 06:31:35 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:15633 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726600AbgIJKbO (ORCPT
+        with ESMTP id S1729275AbgIJKbP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 06:31:14 -0400
+        Thu, 10 Sep 2020 06:31:15 -0400
 Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 10 Sep 2020 03:31:13 -0700
+  by alexa-out.qualcomm.com with ESMTP; 10 Sep 2020 03:31:15 -0700
 Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Sep 2020 03:31:12 -0700
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Sep 2020 03:31:14 -0700
 Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Sep 2020 16:00:44 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Sep 2020 16:00:45 +0530
 Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id BE530213A1; Thu, 10 Sep 2020 16:00:45 +0530 (IST)
+        id D569721B5F; Thu, 10 Sep 2020 16:00:45 +0530 (IST)
 From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 To:     marcel@holtmann.org, johan.hedberg@gmail.com
 Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
@@ -28,9 +28,9 @@ Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
         rjliao@codeaurora.org, hbandi@codeaurora.org,
         abhishekpandit@chromium.org,
         Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [RESEND v1 1/2] Bluetooth: hci_serdev: Close UART port if NON_PERSISTENT_SETUP is set
-Date:   Thu, 10 Sep 2020 16:00:42 +0530
-Message-Id: <1599733843-20311-2-git-send-email-gubbaven@codeaurora.org>
+Subject: [RESEND v1 2/2] Bluetooth: hci_qca: Remove duplicate power off in proto close
+Date:   Thu, 10 Sep 2020 16:00:43 +0530
+Message-Id: <1599733843-20311-3-git-send-email-gubbaven@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1599733843-20311-1-git-send-email-gubbaven@codeaurora.org>
 References: <1599733843-20311-1-git-send-email-gubbaven@codeaurora.org>
@@ -39,94 +39,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When HCI_QUIRK_NON_PERSISTENT_SETUP is set by drivers,
-it indicates that BT SoC will be completely powered OFF
-during BT OFF. On next BT ON firmware must be downloaded
-again. Holding UART port open during BT OFF is draining
-the battery. Now during BT OFF, UART port is closed if
-qurik HCI_QUIRK_NON_PERSISTENT_SETUP is set by clearing
-HCI_UART_PROTO_READY proto flag. On next BT ON, UART
-port is opened if HCI_UART_PROTO_READY proto flag is cleared.
+During serdev unregister, hdev->shutdown is called before
+proto close. Removing duplicates power OFF call.
 
 Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 ---
- drivers/bluetooth/hci_serdev.c | 36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_serdev.c b/drivers/bluetooth/hci_serdev.c
-index 3977bba..ef96ad0 100644
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -113,8 +113,22 @@ static int hci_uart_flush(struct hci_dev *hdev)
- /* Initialize device */
- static int hci_uart_open(struct hci_dev *hdev)
- {
-+	struct hci_uart *hu = hci_get_drvdata(hdev);
-+	int err;
-+
- 	BT_DBG("%s %p", hdev->name, hdev);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 20e1ded..f0d9ee3 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -693,8 +693,6 @@ static int qca_close(struct hci_uart *hu)
+ 	destroy_workqueue(qca->workqueue);
+ 	qca->hu = NULL;
  
-+	/* When Quirk HCI_QUIRK_NON_PERSISTENT_SETUP is set by
-+	 * driver, BT SoC is completely turned OFF during
-+	 * BT OFF. Upon next BT ON UART port should be opened.
-+	 */
-+	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags)) {
-+		err = serdev_device_open(hu->serdev);
-+		if (err)
-+			return err;
-+		set_bit(HCI_UART_PROTO_READY, &hu->flags);
-+	}
-+
- 	/* Undo clearing this from hci_uart_close() */
- 	hdev->flush = hci_uart_flush;
- 
-@@ -124,11 +138,25 @@ static int hci_uart_open(struct hci_dev *hdev)
- /* Close device */
- static int hci_uart_close(struct hci_dev *hdev)
- {
-+	struct hci_uart *hu = hci_get_drvdata(hdev);
-+
- 	BT_DBG("hdev %p", hdev);
- 
-+	if (!test_bit(HCI_UART_PROTO_READY, &hu->flags))
-+		return 0;
-+
- 	hci_uart_flush(hdev);
- 	hdev->flush = NULL;
- 
-+	/* When QUIRK HCI_QUIRK_NON_PERSISTENT_SETUP is set by driver,
-+	 * BT SOC is completely powered OFF during BT OFF, holding port
-+	 * open may drain the battery.
-+	 */
-+	if (test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
-+		clear_bit(HCI_UART_PROTO_READY, &hu->flags);
-+		serdev_device_close(hu->serdev);
-+	}
-+
- 	return 0;
- }
- 
-@@ -354,8 +382,6 @@ void hci_uart_unregister_device(struct hci_uart *hu)
- {
- 	struct hci_dev *hdev = hu->hdev;
- 
--	clear_bit(HCI_UART_PROTO_READY, &hu->flags);
+-	qca_power_shutdown(hu);
 -
- 	cancel_work_sync(&hu->init_ready);
- 	if (test_bit(HCI_UART_REGISTERED, &hu->flags))
- 		hci_unregister_dev(hdev);
-@@ -364,6 +390,10 @@ void hci_uart_unregister_device(struct hci_uart *hu)
- 	cancel_work_sync(&hu->write_work);
+ 	kfree_skb(qca->rx_skb);
  
- 	hu->proto->close(hu);
--	serdev_device_close(hu->serdev);
-+
-+	if (test_bit(HCI_UART_PROTO_READY, &hu->flags)) {
-+		clear_bit(HCI_UART_PROTO_READY, &hu->flags);
-+		serdev_device_close(hu->serdev);
-+	}
- }
- EXPORT_SYMBOL_GPL(hci_uart_unregister_device);
+ 	hu->priv = NULL;
+@@ -2032,8 +2030,9 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+ static void qca_serdev_remove(struct serdev_device *serdev)
+ {
+ 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
++	struct qca_power *power = qcadev->bt_power;
+ 
+-	if (qca_is_wcn399x(qcadev->btsoc_type))
++	if (qca_is_wcn399x(qcadev->btsoc_type) && power->vregs_on)
+ 		qca_power_shutdown(&qcadev->serdev_hu);
+ 	else if (qcadev->susclk)
+ 		clk_disable_unprepare(qcadev->susclk);
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
