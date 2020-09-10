@@ -2,124 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CAF26263E98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 09:23:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0944E263F10
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 09:53:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730128AbgIJHXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 03:23:03 -0400
-Received: from a27-11.smtp-out.us-west-2.amazonses.com ([54.240.27.11]:56820
-        "EHLO a27-11.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729993AbgIJHWs (ORCPT
+        id S1730193AbgIJHxY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 03:53:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50572 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730064AbgIJHw6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 03:22:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599722567;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=FbfkJJzgGeSFmEA1EYRQ444NqK/AGNGzOuF92HpnCDo=;
-        b=hwTf+FG96AslNxIvJh/+GN8kQcSvUSqgY1PflN9+EfTonVdl9G76hFVlhFGBgvXj
-        JkVMXyAJKAyMbBNFIbm6F3ifVSvG+Druc3q6L/syekGg6PdvDu+gz5N8vn8t18DIJcQ
-        rJwIE6uDIn2RcmCkBMjED7SFlGjtQr6gpyQDqVRA=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599722567;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=FbfkJJzgGeSFmEA1EYRQ444NqK/AGNGzOuF92HpnCDo=;
-        b=PS0LDCRA1i4lIBm0WJJdB2rjR5af8p8zeRky6ZcuwPdnEYwUTQtHBROrUFWE5FLb
-        UePqevIgBRReqw84dTjs5b5hODST/8acMq2wf5zrkbNjbhK7OoZR5mKtLjy2I6wA2Qc
-        j7ZmsI2jRnORgHgcukWFMpfykIJsZ0tdUsP4JFpo=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 10 Sep 2020 07:10:47 +0000
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     khilman@kernel.org, ulf.hansson@linaro.org, rjw@rjwysocki.net,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        gregkh@linuxfoundation.org, pavel@ucw.cz, len.brown@intel.com,
-        rnayak@codeaurora.org, dianders@chromium.org, mka@chromium.org,
-        linux-kernel-owner@vger.kernel.org, clew@codeaurora.org
-Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME
- flags
-In-Reply-To: <20200825175345.GC3715@yoga>
-References: <20200821204921.32536-1-sibis@codeaurora.org>
- <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
- <20200824164212.GA3715@yoga>
- <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
- <20200825175345.GC3715@yoga>
-Message-ID: <0101017476da3906-412a2e35-dc56-43ee-8644-83a998279c2d-000000@us-west-2.amazonses.com>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2020.09.10-54.240.27.11
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
+        Thu, 10 Sep 2020 03:52:58 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8308C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:52:56 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id l17so5274059edq.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:52:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=vN12iXSe93FrYozqq5r2Omm4hmslv0t/kmDHtlJE9ZI=;
+        b=x4eQRdKfg0RY9zTkFU0gUMOdLG/E5FrZKotRF1B3H2YO5zS27dgHrV84H0WuJ52ZJS
+         +z6ydGAnhu0yTEcvHZtnF2EbCAVJXVfLfzn2W3l4lDdG0OBUVq/HJfyhj2Ga12cWsFQq
+         4I/ernKvfYfl4FMqdtg+W49FHlfvKJgUa9l2GR+Hqe13Ay2L9NMrxI9GhXqDk8LWlPz+
+         J1llg1x270YQuSvcevwyIymxn8ml/k8eN0CLNB6vZA1BWvzKvApyA2AU7HCT2mCuBlP3
+         RgBt2+4jav8Ssawga7FuDt1ZiSuVopUjdMx52pbKLhPAKuVTrRPAhmgTTqcNtdsldpiU
+         hEuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vN12iXSe93FrYozqq5r2Omm4hmslv0t/kmDHtlJE9ZI=;
+        b=Ynq4ul/YUDzi2Lv6XxBA/Kzgu3/FNEtnwzzKqx17dSrumcnEhBgRfToNcR5IhzupK9
+         iWTKGqfMBB73ZtK4kyMalC/uS64y57EiO/vhglsIahfEFSfheQ5C/Qq5bbFWs1i/akoZ
+         jX+pyaxTeeGUrsPikuaFOZ99vN1IGyFx9P2NoqSTHAVAa9EYxkRs5eXk5I6pEVbo6fD5
+         m/1abzjGw0IJ2YHfPothgzSWxEtPyoE70kFwlQ1FgU+hjwqh7NZRpvOyQEPV64Cxt8jr
+         wH58KQsQDr1rVpuo7kHSOhSYWvyeoi0kfk/FMHaolSUrjQsHN6+8jeoJM7SB2snfkvGm
+         gOGQ==
+X-Gm-Message-State: AOAM530ByOBJ8AcFYltUFOWxv6uKqtrV+p4rvjfogeX7aqNlWo9OUx40
+        +2erGlGeMD0NQb7MT0h3UGpDc6KTNbrr3Vmj
+X-Google-Smtp-Source: ABdhPJw2BPEh1f8NHoqYvWJpzyvcWuUQF5T3Gq/nELgPfY74+EXJhH7ilI+eTdKH4UxgDRteSzze0Q==
+X-Received: by 2002:a50:84a2:: with SMTP id 31mr8187522edq.138.1599724374085;
+        Thu, 10 Sep 2020 00:52:54 -0700 (PDT)
+Received: from localhost.localdomain ([195.24.90.54])
+        by smtp.gmail.com with ESMTPSA id q26sm5742838ejr.97.2020.09.10.00.52.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2020 00:52:53 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 0/2] Venus - fix firmware load failure
+Date:   Thu, 10 Sep 2020 10:52:25 +0300
+Message-Id: <20200910075227.950-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-08-25 23:23, Bjorn Andersson wrote:
-> On Tue 25 Aug 02:20 CDT 2020, Stephen Boyd wrote:
->> Quoting Bjorn Andersson (2020-08-24 09:42:12)
->> > On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
-> [..]
->> > > I find it odd that this is modeled as a power domain instead of some
->> > > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
->> > > there some sort of benefit the driver gets from using the power domain
->> > > APIs for this vs. using a custom API?
->> >
->> > We need to send "up" and "down" notifications and this needs to happen
->> > at the same time as other standard resources are enabled/disabled.
->> >
->> > Further more, at the time the all resources handled by the downstream
->> > driver was either power-domains (per above understanding) or clocks, so
->> > it made sense to me not to spin up a custom API.
->> >
->> 
->> So the benefit is not spinning up a custom API? I'm not Ulf, but it
->> looks like this is hard to rationalize about as a power domain. It
->> doesn't have any benefit to model it this way besides to make it
->> possible to turn on with other power domains.
->> 
->> This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
->> SMEM APIs, so standing up another small qmp_remoteproc_booted() and
->> qmp_remoteproc_shutdown() API would avoid adding a genpd flag here 
->> that
->> probably will never be used outside of this corner-case. There is also
->> some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
->> would be possible to do this outside of power domains, and that seems
->> better given that this isn't really a power domain to start with.
-> 
-> In later platforms a few new users of the AOSS communication interface
-> is introduced that certainly doesn't fit any existing API/framework in
-> the kernel. So the plan was to pretty much expose qmp_send() to these
-> drivers.
-> 
-> My worry with using this interface is that we'll probably have to come
-> up with some DT binding pieces and probably we'll end up adding yet
-> another piece of hard coded information in the remoteproc drivers.
-> 
-> But I'm not against us doing this work in favor of not having to
-> introduce a one-off for this corner case.
+Hello,
 
-Bjorn/Stephen,
+Two changes since v2:
+ * 1/2 drop pointless line remove.
+ * 2/2 call qcom_scm_pas_shutdown() in error path - spotted by Bjorn.
 
-So the consensus is to stop modelling
-aoss load_state as pds and expose qmp_send
-to drivers?
+v2 can be found at [1].
 
-> 
-> Regards,
-> Bjorn
+Regards,
+Stan
 
+[1] https://lkml.org/lkml/2020/8/17/323
 
+Stanimir Varbanov (2):
+  firmware: qcom_scm: Add memory protect virtual address ranges
+  venus: firmware: Set virtual address ranges
 
+ drivers/firmware/qcom_scm.c                  | 24 ++++++++++++++++++++
+ drivers/firmware/qcom_scm.h                  |  1 +
+ drivers/media/platform/qcom/venus/core.c     |  4 ++++
+ drivers/media/platform/qcom/venus/core.h     |  4 ++++
+ drivers/media/platform/qcom/venus/firmware.c | 19 +++++++++++++++-
+ include/linux/qcom_scm.h                     |  7 ++++++
+ 6 files changed, 58 insertions(+), 1 deletion(-)
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+2.17.1
+
