@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F672263F0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 09:53:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 921D0263F0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 09:53:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726228AbgIJHxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 03:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50598 "EHLO
+        id S1726846AbgIJHxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 03:53:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729455AbgIJHxK (ORCPT
+        with ESMTP id S1730150AbgIJHxK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 10 Sep 2020 03:53:10 -0400
 Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753B0C061795
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:52:58 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id u21so7335242eja.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:52:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D5C061799
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:53:00 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id gr14so7362419ejb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 00:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CHubz0brBEwmMQnBM1waB6q/QSDzur+5k9FicpsHZg0=;
-        b=aHsNrbagatWzrrMT0MBF+MbTsTOmc1ArzI9UDkz88DfgcLqmHf6s7zGTOW5A4C7w2i
-         YnYc4KvQar7G4t+dc6b1b1uLf6Go0zwyYE2foDHddnsQbDcOoYeEZgJJarVuhpd+7vfD
-         2jjQTkLlW7SDX37fyMcwmhDixkAz+dXU61b/ZxX0xaVB31hulBFQBV1FOIgwmGKDRMub
-         ix1gf+9WyZmV8f6PMcrgd57D92Bgf8fHCYLZ0tALl6qbYuc6vqNucmqAifDOvDMHmt1N
-         XpVPBHokDRR86Twufzn9/VcOpMe6qvCSquvHLfLOhsjKYM76lefY/MqQU9BnUH4ULEiV
-         DrDg==
+        bh=QM0o+rVzX3uPzdClaXq4cvOE98Cu7/fWdyVNqeP9dm8=;
+        b=utjF/eg5YPe5nbhcIOF5tQlQtWPCjtGTK8ZA6cyO9peRb1+AsJ9ABldRh7kaDScqAD
+         Jrq6+arYgOeJ5ykRuBsdYrW9VMbCnuHkMuXgSn7EzRzlG5vDidkh9+EuchObnU6qplQR
+         KKXdgISb6vhsH2U3YI04TBqA58ASzbiurG0BdgcMpSxFcWZ9nQX7H6zgXlzfKqyyFzd9
+         dO31+ZF6G99eJLEzefX3/Z6nSFswMWOIv2P4yrvZSCwpFstQEAGHWSY0OAvv/AF7QCm5
+         BntVnDhCKM8uuRUvXPHKvoFPfJ2AMwI8LAnIoPKqiguBFkVtxJWenUusx+wldxWAYoTo
+         pstw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CHubz0brBEwmMQnBM1waB6q/QSDzur+5k9FicpsHZg0=;
-        b=JFtpo1ZoKYAQsG+ITXmk/tMb+mjdGQYXLbL2kvkAZW9I6jOmIB938ygiE3zQw+l2Q+
-         YWWSGDbd0nokaLeWRHER+90Z0JvPYBUkckJQXBxAxB9IpuoCTPbDzscKtkeblIIlW+s2
-         oS5ZViIiKHqu2/nFF8GjPgBHeiGTWO71Fr8uP8BT9jViV3VhKrEAoTUHIOxeDAk8EXNm
-         OjdA4cDqytDAtjUGzyiiFDtIe3Opx9Q24EYotYpgIClW31HrsoUpL5y5gWu3ctCUdJbS
-         zVqTFLJFIUEyIirETe5XwBaxSTJk8TJ4D+LsCPf7fyW4GDOmML8/oa9+1LJVuOubjV47
-         5OoQ==
-X-Gm-Message-State: AOAM53356Rr3tCgbhpRx0z13xdV4JzIDbjsH6b1Ux4l8Y9t63QRjie/2
-        saaBYx7g5/SmSfBKijWcaL7Cv1LG9bpO5tOB
-X-Google-Smtp-Source: ABdhPJyTNGdJmZ+F1nuO7GU6l9mvdr10Ys+qkFxvXMKLWrsqoABTLY1BZXS47xdGrG3pqQvzK49NiA==
-X-Received: by 2002:a17:906:bc98:: with SMTP id lv24mr7812319ejb.411.1599724376600;
-        Thu, 10 Sep 2020 00:52:56 -0700 (PDT)
+        bh=QM0o+rVzX3uPzdClaXq4cvOE98Cu7/fWdyVNqeP9dm8=;
+        b=Vjn0mEyoxsQsSxAclo4AvvoGLYJs3YGMTyqLkH4UBWXc4ZbM785MJjWmb29faSlHlY
+         /6+hykG/qC/2zVZmk26ArppnqDn6NA0J8vN5zCJ2I1WRxJ29z9VBFvCdTycWnIiTngT0
+         TP/tNAEtovT3tTEpe49LCd8GKyxSOw/+Gi2wmL35MAVcp1CPJUrqqrH6IhwkLjlzSMLw
+         pkYIPUJgahU5yMZsScbTXapr9m8yMBF2KCvtH9qAMeTfj9l63R+vBAfbSXUjnf7EAZHn
+         ZCvgFFbNq/jyKfzF0XBZYGPCB51TogjED6F3cA+8C1tjlSvb8ZPNwUFHeBkvn7eQgpMw
+         lPyQ==
+X-Gm-Message-State: AOAM531p6w327GP2FuyaZm9+7SukfkIiNpnEecaYdNCo/DjO0RLEMoZ2
+        rvKO+WJbZhVBzW6ZJ4GpsX9dBj+3JqQfzaWr
+X-Google-Smtp-Source: ABdhPJwFgl91HQI5KPYNpoHEEW6Ht3uLFBFfrWNK9m0dn0oQ/6u16x/WKIp7+5p5drchm/+2Az3+qg==
+X-Received: by 2002:a17:906:cb92:: with SMTP id mf18mr7839719ejb.485.1599724378737;
+        Thu, 10 Sep 2020 00:52:58 -0700 (PDT)
 Received: from localhost.localdomain ([195.24.90.54])
-        by smtp.gmail.com with ESMTPSA id q26sm5742838ejr.97.2020.09.10.00.52.55
+        by smtp.gmail.com with ESMTPSA id q26sm5742838ejr.97.2020.09.10.00.52.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2020 00:52:56 -0700 (PDT)
+        Thu, 10 Sep 2020 00:52:58 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-media@vger.kernel.org
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Elliot Berman <eberman@codeaurora.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v3 1/2] firmware: qcom_scm: Add memory protect virtual address ranges
-Date:   Thu, 10 Sep 2020 10:52:26 +0300
-Message-Id: <20200910075227.950-2-stanimir.varbanov@linaro.org>
+Subject: [PATCH v3 2/2] venus: firmware: Set virtual address ranges
+Date:   Thu, 10 Sep 2020 10:52:27 +0300
+Message-Id: <20200910075227.950-3-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200910075227.950-1-stanimir.varbanov@linaro.org>
 References: <20200910075227.950-1-stanimir.varbanov@linaro.org>
@@ -64,89 +64,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds a new SCM memprotect command to set virtual address ranges.
+In order to boot some of the new Venus firmware versions TZ call to set
+virtual address ranges is needed. Add virtual address ranges for CP and
+CP_NONPIX in resource structure and use them when loading and booting
+the firmware on remote processor.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Reviewed-by: Elliot Berman <eberman@codeaurora.org>
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/firmware/qcom_scm.c | 24 ++++++++++++++++++++++++
- drivers/firmware/qcom_scm.h |  1 +
- include/linux/qcom_scm.h    |  7 +++++++
- 3 files changed, 32 insertions(+)
+ drivers/media/platform/qcom/venus/core.c     |  4 ++++
+ drivers/media/platform/qcom/venus/core.h     |  4 ++++
+ drivers/media/platform/qcom/venus/firmware.c | 19 ++++++++++++++++++-
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index e8bbf2d38ae7..7be48c1bec96 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -756,6 +756,30 @@ int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index c5af42873aed..3549a094e860 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -540,6 +540,10 @@ static const struct venus_resources sdm845_res_v2 = {
+ 	.vmem_size = 0,
+ 	.vmem_addr = 0,
+ 	.dma_mask = 0xe0000000 - 1,
++	.cp_start = 0,
++	.cp_size = 0x70800000,
++	.cp_nonpixel_start = 0x1000000,
++	.cp_nonpixel_size = 0x24800000,
+ 	.fwname = "qcom/venus-5.2/venus.mdt",
+ };
+ 
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 1a7aee7ee628..3e3f0138e3c3 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -77,6 +77,10 @@ struct venus_resources {
+ 	unsigned int vmem_id;
+ 	u32 vmem_size;
+ 	u32 vmem_addr;
++	u32 cp_start;
++	u32 cp_size;
++	u32 cp_nonpixel_start;
++	u32 cp_nonpixel_size;
+ 	const char *fwname;
+ };
+ 
+diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+index 8801a6a7543d..1db64a854b88 100644
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -181,6 +181,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
+ int venus_boot(struct venus_core *core)
+ {
+ 	struct device *dev = core->dev;
++	const struct venus_resources *res = core->res;
+ 	phys_addr_t mem_phys;
+ 	size_t mem_size;
+ 	int ret;
+@@ -200,7 +201,23 @@ int venus_boot(struct venus_core *core)
+ 	else
+ 		ret = venus_boot_no_tz(core, mem_phys, mem_size);
+ 
+-	return ret;
++	if (ret)
++		return ret;
++
++	if (core->use_tz && res->cp_size) {
++		ret = qcom_scm_mem_protect_video_var(res->cp_start,
++						     res->cp_size,
++						     res->cp_nonpixel_start,
++						     res->cp_nonpixel_size);
++		if (ret) {
++			qcom_scm_pas_shutdown(VENUS_PAS_ID);
++			dev_err(dev, "set virtual address ranges fail (%d)\n",
++				ret);
++			return ret;
++		}
++	}
++
++	return 0;
  }
- EXPORT_SYMBOL(qcom_scm_iommu_secure_ptbl_init);
  
-+int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
-+				   u32 cp_nonpixel_start,
-+				   u32 cp_nonpixel_size)
-+{
-+	int ret;
-+	struct qcom_scm_desc desc = {
-+		.svc = QCOM_SCM_SVC_MP,
-+		.cmd = QCOM_SCM_MP_VIDEO_VAR,
-+		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_VAL, QCOM_SCM_VAL,
-+					 QCOM_SCM_VAL, QCOM_SCM_VAL),
-+		.args[0] = cp_start,
-+		.args[1] = cp_size,
-+		.args[2] = cp_nonpixel_start,
-+		.args[3] = cp_nonpixel_size,
-+		.owner = ARM_SMCCC_OWNER_SIP,
-+	};
-+	struct qcom_scm_res res;
-+
-+	ret = qcom_scm_call(__scm->dev, &desc, &res);
-+
-+	return ret ? : res.result[0];
-+}
-+EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
-+
- static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
- 				 size_t mem_sz, phys_addr_t src, size_t src_sz,
- 				 phys_addr_t dest, size_t dest_sz)
-diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-index 38ea614d29fe..95cd1ac30ab0 100644
---- a/drivers/firmware/qcom_scm.h
-+++ b/drivers/firmware/qcom_scm.h
-@@ -97,6 +97,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
- #define QCOM_SCM_MP_RESTORE_SEC_CFG		0x02
- #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_SIZE	0x03
- #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_INIT	0x04
-+#define QCOM_SCM_MP_VIDEO_VAR			0x08
- #define QCOM_SCM_MP_ASSIGN			0x16
- 
- #define QCOM_SCM_SVC_OCMEM		0x0f
-diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-index 2e1193a3fb5f..0165824c5128 100644
---- a/include/linux/qcom_scm.h
-+++ b/include/linux/qcom_scm.h
-@@ -84,6 +84,9 @@ extern bool qcom_scm_restore_sec_cfg_available(void);
- extern int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
- extern int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size);
- extern int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare);
-+extern int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
-+					  u32 cp_nonpixel_start,
-+					  u32 cp_nonpixel_size);
- extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 			       unsigned int *src,
- 			       const struct qcom_scm_vmperm *newvm,
-@@ -141,6 +144,10 @@ static inline int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size)
- 		{ return -ENODEV; }
- static inline int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
- 		{ return -ENODEV; }
-+extern inline int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
-+						 u32 cp_nonpixel_start,
-+						 u32 cp_nonpixel_size)
-+		{ return -ENODEV; }
- static inline int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 		unsigned int *src, const struct qcom_scm_vmperm *newvm,
- 		unsigned int dest_cnt) { return -ENODEV; }
+ int venus_shutdown(struct venus_core *core)
 -- 
 2.17.1
 
