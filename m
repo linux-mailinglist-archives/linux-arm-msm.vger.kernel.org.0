@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4120263B83
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 05:42:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5331263BC7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 06:13:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728286AbgIJDmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Sep 2020 23:42:16 -0400
-Received: from a27-187.smtp-out.us-west-2.amazonses.com ([54.240.27.187]:53292
-        "EHLO a27-187.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725773AbgIJDmP (ORCPT
+        id S1725855AbgIJENo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 00:13:44 -0400
+Received: from a27-21.smtp-out.us-west-2.amazonses.com ([54.240.27.21]:37448
+        "EHLO a27-21.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725773AbgIJENm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Sep 2020 23:42:15 -0400
+        Thu, 10 Sep 2020 00:13:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599696158;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        bh=k0CVrHNZHjKDxCYHpx5Zfcww4H7NJod+HjFj1v8y6r8=;
-        b=OPo6HIRRoh+itG87IiC0xOtfzjIfYwaDz5cUI5+ORDXexmX+4WkcMOW+C1jRdP5/
-        dvbaqsNaMfff0lMTZOkalczdvBO5coX+79NyzjqpHzXUj1ijH8myOM/m5iuwdBa5M2G
-        xrq9MWVsfR5Doa1sJVYjouJM6X9g1zT3HNb1j74Q=
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599696157;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        bh=Rtie8eEmO4OBgzmmJQ8JyZck8s/KP5C8npRs7rdJFBY=;
+        b=b713AXkJypMv8dFwRLrrqQGWZ0CfDHGSJNUBVBnPh6XQ5hhCKxsNi2zHhRNabk9S
+        BR9PDIYzpOyTRPp/xH82YbiJoAtoaZiK1859wwmR5TH60jU9YrQ8BsaS0/dmtzZpfXG
+        v4jk0tRuO0y9jLIl61SyW9Qnkds3IVQYFKVoYuHY=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599696158;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:Feedback-ID;
-        bh=k0CVrHNZHjKDxCYHpx5Zfcww4H7NJod+HjFj1v8y6r8=;
-        b=LThhPK0i3L1gsbZJ1rGSfYvhkH1wz8uhapBdXIUZv7FAXjloJTrahEh405vksW1I
-        5OV2DdbMHR+M7MV69n8vu+V5gUVYf721iZasYaHOxKxfQvrZFPrkxtKiFnQPeF81Byg
-        xtClDm4wbxKKw0Hon6kn0/H60zmHqYRO4okKeHZE=
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599696157;
+        h=From:To:Cc:Subject:Date:Message-Id:Feedback-ID;
+        bh=Rtie8eEmO4OBgzmmJQ8JyZck8s/KP5C8npRs7rdJFBY=;
+        b=VibLV032BrVRD13lPEc5ur1T92X1wpP+TzJuWL5DX4H0vDjPROuWX4krIfR0444p
+        HCfnEZuOxCQpiDDT2aX148ExSOQcpwyGLeGfkY54Rj3NJhmLGAX9C62ol2v8TiZmvZ2
+        ELysLA6FCkMu3ovH8z7/lN8cF/o0md8jeCsZTfOc=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 98448C433C6
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C5B6BC433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
 From:   Siddharth Gupta <sidgup@codeaurora.org>
@@ -41,81 +41,66 @@ Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
         linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
         psodagud@codeaurora.org, rishabhb@codeaurora.org,
-        linux-doc@vger.kernel.org, Gurbir Arora <gurbaror@codeaurora.org>
-Subject: [PATCH v3 1/3] remoteproc: core: Add ops to enable custom coredump functionality
-Date:   Thu, 10 Sep 2020 00:02:38 +0000
-Message-ID: <0101017475523e2d-7bba9c78-bfd2-4c08-854a-cac8f3cc1cf3-000000@us-west-2.amazonses.com>
+        linux-doc@vger.kernel.org
+Subject: [PATCH v3 0/3] Introduce mini-dump support for remoteproc
+Date:   Thu, 10 Sep 2020 00:02:37 +0000
+Message-ID: <01010174755239f4-80e8cfe8-2445-40ac-a36f-b740fd1cdd4a-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1599696147-30585-1-git-send-email-sidgup@codeaurora.org>
-References: <1599696147-30585-1-git-send-email-sidgup@codeaurora.org>
-X-SES-Outgoing: 2020.09.10-54.240.27.187
+X-SES-Outgoing: 2020.09.10-54.240.27.21
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each remoteproc might have different requirements for coredumps and might
-want to choose the type of dumps it wants to collect. This change allows
-remoteproc drivers to specify their own custom dump function to be executed
-in place of rproc_coredump. If the coredump op is not specified by the
-remoteproc driver it will be set to rproc_coredump by default.The
-priv_cleanup op cleans up the private resources used by the remoteproc.
+Sometimes firmware sizes can be in ten's of MB's and reading
+all the memory during coredump can consume lot of time and
+memory.
+Introducing support for mini-dumps. Mini-dump contains smallest
+amount of useful information, that could help to debug subsystem
+crashes.
+During bootup memory is allocated in SMEM (Shared memory)
+in the form of a table that contains the physical
+addresses and sizes of the regions that are supposed to be
+collected during coredump. This memory is shared amongst all
+processors in a Qualcomm platform, so all remoteprocs
+fill in their entry in the global table once they are out
+of reset.
+This patch series adds support for parsing the global minidump
+table and uses the current coredump frameork to expose this memory
+to userspace during remoteproc's recovery.
 
-Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Signed-off-by: Gurbir Arora <gurbaror@codeaurora.org>
-Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
----
- drivers/remoteproc/remoteproc_core.c | 6 +++++-
- include/linux/remoteproc.h           | 4 ++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+This patch series also integrates the patch:
+https://patchwork.kernel.org/patch/11695541/ sent by Siddharth.
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 7f90eee..dcc1341 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1681,7 +1681,7 @@ int rproc_trigger_recovery(struct rproc *rproc)
- 		goto unlock_mutex;
- 
- 	/* generate coredump */
--	rproc_coredump(rproc);
-+	rproc->ops->coredump(rproc);
- 
- 	/* load firmware */
- 	ret = request_firmware(&firmware_p, rproc->firmware, dev);
-@@ -2103,6 +2103,10 @@ static int rproc_alloc_ops(struct rproc *rproc, const struct rproc_ops *ops)
- 	if (!rproc->ops)
- 		return -ENOMEM;
- 
-+	/* Default to rproc_coredump if no coredump function is specified */
-+	if (!rproc->ops->coredump)
-+		rproc->ops->coredump = rproc_coredump;
-+
- 	if (rproc->ops->load)
- 		return 0;
- 
-diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index 2fa68bf..a489aec 100644
---- a/include/linux/remoteproc.h
-+++ b/include/linux/remoteproc.h
-@@ -375,6 +375,8 @@ enum rsc_handling_status {
-  * @get_boot_addr:	get boot address to entry point specified in firmware
-  * @panic:	optional callback to react to system panic, core will delay
-  *		panic at least the returned number of milliseconds
-+ * @coredump:	  collect firmware dump after the subsystem is shutdown
-+ * @priv_cleanup: cleans up the private resources used by the rproc
-  */
- struct rproc_ops {
- 	int (*prepare)(struct rproc *rproc);
-@@ -393,6 +395,8 @@ struct rproc_ops {
- 	int (*sanity_check)(struct rproc *rproc, const struct firmware *fw);
- 	u64 (*get_boot_addr)(struct rproc *rproc, const struct firmware *fw);
- 	unsigned long (*panic)(struct rproc *rproc);
-+	void (*coredump)(struct rproc *rproc);
-+	void (*priv_cleanup)(struct rproc *rproc);
- };
- 
- /**
+Changelog: 
+v2 -> v3:
+- Refactored code to remove dependency on Qualcomm configs.
+- Renamed do_rproc_minidump to rproc_minidump and marked as exported
+  symbol.
+
+v1 -> v2:
+- 3 kernel test robot warnings have been resolved.
+- Introduced priv_cleanup op in order to making the cleaning of
+private elements used by the remoteproc more readable.
+- Removed rproc_cleanup_priv as it is no longer needed.
+- Switched to if/else format for rproc_alloc in order to keep 
+the static const decalaration of adsp_minidump_ops.
+
+Siddharth Gupta (3):
+  remoteproc: core: Add ops to enable custom coredump functionality
+  remoteproc: qcom: Add capability to collect minidumps
+  remoteproc: qcom: Add minidump id for sm8150 modem remoteproc
+
+ drivers/remoteproc/qcom_minidump.h          |  64 +++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c          | 107 ++++++++++++++++++++-
+ drivers/remoteproc/remoteproc_core.c        |   6 +-
+ drivers/remoteproc/remoteproc_coredump.c    | 138 ++++++++++++++++++++++++++++
+ drivers/remoteproc/remoteproc_elf_helpers.h |  27 ++++++
+ include/linux/remoteproc.h                  |   5 +
+ 6 files changed, 344 insertions(+), 3 deletions(-)
+ create mode 100644 drivers/remoteproc/qcom_minidump.h
+
 -- 
 Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
