@@ -2,81 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 609D9264089
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 10:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EE542640DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 11:03:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730116AbgIJIvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 04:51:19 -0400
-Received: from Galois.linutronix.de ([193.142.43.55]:38448 "EHLO
-        galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727820AbgIJIvR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 04:51:17 -0400
-From:   Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020; t=1599727874;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=qepHrW+rdQoQ9vl8ZgAgXzcx8fv7hhN4FIsqOz07Dfg=;
-        b=da9Ha+I/iosLUR9+jA0ZjI5DE4mPz0NwPQnA7utFmvwZtvsqnTZu/rwakjiVkXD3ax0DXG
-        MLAk/hEEbGMSvRHt1oRjndcsduQjOvKST3wIxFzRDqEvKPID7ExkvTL9/CE5bAQ+Frw9FA
-        Y1pmTw42x0qyHH0dA7AM6QZpmkbuxV+7VBUXgxnUUYBkd3StIHYDgWzkSMJJ1/S6cCAVf2
-        8YOjYXHVrPZAPOCNt/eTu8TnFjyQyqlaWu+x/dzuCQfIzpIZGOAwh0l9lmQBKUu2qGq2xH
-        B8695IyEWRpq7kya1xS7kMksJb4LGfY8lC/NiOLGosHJ9WU338uaxOdTRH22aQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-        s=2020e; t=1599727874;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=qepHrW+rdQoQ9vl8ZgAgXzcx8fv7hhN4FIsqOz07Dfg=;
-        b=a1R7LZaRAJtMpLJTIaOSZmXkW6DemWGjMPcnAC8qEe49nc1YVYGUen3pop+3k6BWuS0iZ7
-        f0WCQETCEkxr5NAw==
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        LinusW <linus.walleij@linaro.org>, Marc Zyngier <maz@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list\:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH v5 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-In-Reply-To: <CAD=FV=X0wjOYC9u1y=fhDTVSW+jd5G8ydSYJEE-a8BTfnhRgTA@mail.gmail.com>
-References: <1598113021-4149-1-git-send-email-mkshah@codeaurora.org> <1598113021-4149-4-git-send-email-mkshah@codeaurora.org> <159835036999.334488.14725849347753031927@swboyd.mtv.corp.google.com> <874koqxv6t.fsf@nanos.tec.linutronix.de> <8763521f-b121-877a-1d59-5f969dd75e51@codeaurora.org> <87y2m1vhkm.fsf@nanos.tec.linutronix.de> <CAD=FV=XXf3_tjqK14WdMuKygJptMTS+bKhH_ceiUE3wyYoCnxg@mail.gmail.com> <877dtdj042.fsf@nanos.tec.linutronix.de> <CAD=FV=Ua7fLGw6JiG1rnCKpAdO1nXX4A4x1Why-LE9L_FBFe8Q@mail.gmail.com> <87zh67uife.fsf@nanos.tec.linutronix.de> <CAD=FV=U8vchyRXOjozYYroq3Mit_gt=XXADLfn0W4N4TyQzyjQ@mail.gmail.com> <87pn7150li.fsf@nanos.tec.linutronix.de> <CAD=FV=X0wjOYC9u1y=fhDTVSW+jd5G8ydSYJEE-a8BTfnhRgTA@mail.gmail.com>
-Date:   Thu, 10 Sep 2020 10:51:14 +0200
-Message-ID: <87imcmj9q5.fsf@nanos.tec.linutronix.de>
+        id S1726600AbgIJJDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 05:03:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42074 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725920AbgIJJDv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Sep 2020 05:03:51 -0400
+Received: from kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 06455206A1;
+        Thu, 10 Sep 2020 09:03:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599728631;
+        bh=PXXK58jPCqS6xYVS0F97ACb3SCnVEU4nMHvu1m+Yjww=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=u5/cueTq+S2bdNS+dHMZ3rey0YBx20X/O3idxF7MPKKoBFhB4uB8oNjCldahtEx29
+         gXpFp9cGK6chH8HZamzspUrTZUyCWy7c6pYp8umQlTBTawp8P0wRXER6fvIUcjF3vS
+         oc6q2KtIBUxFLCVYO6B4DrQaVY2hD8J95MCWeWVg=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200827141629.101802-1-jingxiangfeng@huawei.com>
+References: <20200827141629.101802-1-jingxiangfeng@huawei.com>
+Subject: Re: [PATCH] clk: qcom: lpass: Correct goto target in lpass_core_sc7180_probe()
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jingxiangfeng@huawei.com
+To:     Jing Xiangfeng <jingxiangfeng@huawei.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        tdas@codeaurora.org
+Date:   Thu, 10 Sep 2020 02:03:49 -0700
+Message-ID: <159972862952.2295844.10882678924928944990@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 08 2020 at 12:05, Doug Anderson wrote:
-> On Fri, Sep 4, 2020 at 2:54 AM Thomas Gleixner <tglx@linutronix.de> wrote:
->> Right and that's where we want the new chip flag with the unmask if
->> armed.
->
-> OK, so we're back in Maulik's court to spin, right?  I think the last
-> word before our tangent was at:
->
-> http://lore.kernel.org/r/87y2m1vhkm.fsf@nanos.tec.linutronix.de
->
-> There you were leaning towards #2 ("a new function
-> disable_wakeup_irq_for_suspend()").  Presumably you'd now be
-> suggesting #1 ("Do the symmetric thing") since I've pointed out the
-> bunch of drivers that would need to change.
+Quoting Jing Xiangfeng (2020-08-27 07:16:29)
+> lpass_core_sc7180_probe() misses to call pm_clk_destroy() and
+> pm_runtime_disable() in error paths. Correct goto target to fix it.
+> This issue is found by code inspection.
+>=20
+> Signed-off-by: Jing Xiangfeng <jingxiangfeng@huawei.com>
+> ---
 
-Yes #1 is what we need.
+HMm.. presumably
 
-Thanks,
+Fixes: edab812d802d ("clk: qcom: lpass: Add support for LPASS clock control=
+ler for SC7180")
 
-        tglx
+should be added?
