@@ -2,150 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BB752654C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 00:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D44426553F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 00:56:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725616AbgIJWD4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 18:03:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42558 "EHLO
+        id S1725562AbgIJW4x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 18:56:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725294AbgIJWDy (ORCPT
+        with ESMTP id S1725294AbgIJW4u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 18:03:54 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C780CC061573;
-        Thu, 10 Sep 2020 15:03:53 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id x23so2179706wmi.3;
-        Thu, 10 Sep 2020 15:03:53 -0700 (PDT)
+        Thu, 10 Sep 2020 18:56:50 -0400
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA157C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 15:56:49 -0700 (PDT)
+Received: by mail-oi1-x241.google.com with SMTP id m7so6140542oie.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Sep 2020 15:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=XwFesGR4NbCLq0zixfOqhv5ARStJ9CjQZ3o4UAP9K2k=;
-        b=Ryg27q/gAZXbg6huhbkDvo7fSvYgt+GSFoQpCeq1JnM98lYeNn1mU0FPPQjx8+zCR7
-         HO7cWjwGxLY+h/9hS+8lXwfAdzU25b/SOByjCW516cHROFpUlc4E84piriVXDA48SJ/M
-         /AAdslZCcSarc31hmEtZQSGY8Q4GXkfi1BfK/281hA6gGFH62+hTlrfivfTpcxXfECkf
-         b6MATUAd7FQDf1Fer5hJHd61DSrCV/PjwZVnBYKKUMSGFBT0prFUD2qcQ0Lupkp1ye7H
-         uJOdx9f4noBxv6I1KggJpV17U/pj6gg3zA/oppkQKW1iCBL5V1OelDW1gvcGqFZhjCqW
-         SFdg==
+        bh=O2NDnGAYyaiWbTVVt3qIqOBgyLmtaJBXAa8jclQOHEI=;
+        b=PpcMp6z0WjujTy9v6LFo87bHlcmtFD9BhxCTh5vwkEYxcNGtKxm6Le+6WK3M3fyls0
+         YZPjLgOexOb74fEnFQYJNAnFz6n96Q/JpujRhI2K9oHIDHvDJjp0PcPSlRSD36YsVp1K
+         /7NQX3ZNIlu4MOi1k6IKVfZqz0kPsiwMhW2amKWRWjG210ceyHApHTY4DEwT8NyeP5G0
+         B3trw01wLPM6kXTWq8wla2ERqv+Z327xbTglH5a+vxAZ7OPruKtYNAccc/D4U9bPd6rC
+         NVdqL6cT/kntQBXUYJYCbr40reULvNmoS2jBNQex+zSlFSxkOeblLuZk6mmqs2yVMMBo
+         cBkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=XwFesGR4NbCLq0zixfOqhv5ARStJ9CjQZ3o4UAP9K2k=;
-        b=mEygLPC3mXo3buF+1VH688becNg/sJwRSLyNwVa+ssWw2u/2ssuT0+Yjc5mjA/i6Zf
-         fC2r1sx9mb42FPLvLJzx5wX6H7t9/mSjW3Q8Sl207ymTOMvuZDMGJX4cebyAylN9hL6/
-         ksFRsMkG1DJsvh+5bVI63tIEBZMq1D+4dQV8vtuOMZCrYxiBBUA8XnCEy3EnYUXMXMaf
-         5clcH7iErVaJiYH9Pt+oN1m+lR6Z2vzfP0G+nVGTYgn9Na+r2dh+CO1oQz+mmB/R/qwb
-         vFWoJQEhi8aBcTBKk3Ka8wSSOzAzfSFGLHZVyOBepfCm+zo/KODmChpUb7jLIaCWy9Uh
-         dSrg==
-X-Gm-Message-State: AOAM530/HjeSK/ZK1TgL2OrTJ0hp47k/eXAL/9tK4r/h6IfD5chuzV7Y
-        TVUCFlrvnrucMRBp2a8xgOWUga7f8p0Z6P36XWY=
-X-Google-Smtp-Source: ABdhPJzKmH/rmiHX/MqNIlb9eckwnYeH5cxMnEa8h0PE/vcCG2cB5ok8HqYzXdjuavUOrjkKgumjScxKYz3UVx9VSr4=
-X-Received: by 2002:a7b:cf1a:: with SMTP id l26mr2030447wmg.164.1599775431560;
- Thu, 10 Sep 2020 15:03:51 -0700 (PDT)
+        bh=O2NDnGAYyaiWbTVVt3qIqOBgyLmtaJBXAa8jclQOHEI=;
+        b=CpL7gn5WpM2yERLxiRqVHGDXe33nDJe3j5ZfzEiblXRFmYfZG2pzPUbLw8jDBXsyDF
+         +EQncQoSLIBZyZYWgPRaKMVQekpUN0R0iwdUz+m6IX9NNzDFEdMGQcf110KUCGkoiHoQ
+         mkSjPot0qesPOn/7QnV/Im4tb7JRx1i5LAFaEqYF1dWgisNopWsSU0OSz5ijuX8BAYxj
+         gKoJiKhPmQ4LASVsdiMmwPfm5zaHwhTwYhB8VVPdnifpgG6ac87eSVsfLsA5Wpex4u5B
+         CN2l30B4cGFgEStMgWGqt/QskzUSYWesjFqKDKLsxMBi5y2C3x8oqsiUnQ04W4OpsQqh
+         uUbA==
+X-Gm-Message-State: AOAM532Dp1s0IGl+R7byZRH4HB/E3WboLa8A0AOOou7eS1TnP/QgmcAu
+        jijq1YHYzQggrIiEUU2FbaN3820uIeLkg1LytUNrbfFHDV905Q==
+X-Google-Smtp-Source: ABdhPJxnGAvmNMVx3acHPlZF4Rm6WnepSIlFzFBQ06ZpRZx2DZqOEv4RG+mSRfbwXJEELPBvFhkUL1VGumWX5pvvyBM=
+X-Received: by 2002:aca:913:: with SMTP id 19mr1392259oij.169.1599778609267;
+ Thu, 10 Sep 2020 15:56:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <1594899334-19772-1-git-send-email-kalyan_t@codeaurora.org>
- <1594899334-19772-2-git-send-email-kalyan_t@codeaurora.org> <20200910220037.GA472@uller>
-In-Reply-To: <20200910220037.GA472@uller>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 10 Sep 2020 15:04:47 -0700
-Message-ID: <CAF6AEGvriNYkeaBVmK2mEG1OVojun2nQ7c2X6BuE-E-B4DRujA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: dts: sc7180: add bus clock to mdp node for
- sc7180 target
+References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20200904155513.282067-1-bjorn.andersson@linaro.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Thu, 10 Sep 2020 15:56:38 -0700
+Message-ID: <CALAqxLU6pUFZuB=TXA8_Oke0njKHnrJagXkT2nQ4ZB7vAnJXOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/8] iommu/arm-smmu: Support maintaining bootloader mappings
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        nganji@codeaurora.org
+        iommu@lists.linux-foundation.org,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        lkml <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 10, 2020 at 3:00 PM Bjorn Andersson
+On Fri, Sep 4, 2020 at 8:56 AM Bjorn Andersson
 <bjorn.andersson@linaro.org> wrote:
 >
-> On Thu 16 Jul 11:35 UTC 2020, Kalyan Thota wrote:
+> Based on previous attempts and discussions this is the latest attempt at
+> inheriting stream mappings set up by the bootloader, for e.g. boot splash or
+> efifb.
 >
-> > From: Krishna Manikandan <mkrishn@codeaurora.org>
-> >
-> > Move the bus clock to mdp device node,in order
-> > to facilitate bus band width scaling on sc7180
-> > target.
-> >
-> > The parent device MDSS will not vote for bus bw,
-> > instead the vote will be triggered by mdp device
-> > node. Since a minimum vote is required to turn
-> > on bus clock, move the clock node to mdp device
-> > from where the votes are requested.
-> >
-> > This patch has dependency on the below series
-> > https://patchwork.kernel.org/patch/11468783/
-> >
+> Per Will's request this builds on the work by Jordan and Rob for the Adreno
+> SMMU support. It applies cleanly ontop of v16 of their series, which can be
+> found at
+> https://lore.kernel.org/linux-arm-msm/20200901164707.2645413-1-robdclark@gmail.com/
 >
-> Isn't this dependency on an old revision of patch 3/3 in this series?
->
-> Regardless, I don't see either the linked patch or patch 3 merged in
-> linux-next, so I presume I should not merge this?
 
-I guess that would be "drm/msm/dpu: add support for clk and bw scaling
-for display" on msm-next-staging[1] (about to be msm-next)
+Apologies, I just found this today. I've pulled your patches and Rob's
+into my own tree here:
+  https://git.linaro.org/people/john.stultz/android-dev.git/log/?h=dev/db845c-mainline-WIP
 
-[1] https://gitlab.freedesktop.org/drm/msm/-/commits/msm-next-staging
+And they all work fine on the db845c.
 
+So for your whole series:
+Tested-by: John Stultz <john.stultz@linaro.org>
 
-> Regards,
-> Bjorn
->
-> > Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index 4f2c0d1..31fed6d 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -1510,10 +1510,9 @@
-> >                       power-domains = <&dispcc MDSS_GDSC>;
-> >
-> >                       clocks = <&gcc GCC_DISP_AHB_CLK>,
-> > -                              <&gcc GCC_DISP_HF_AXI_CLK>,
-> >                                <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> >                                <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> > -                     clock-names = "iface", "bus", "ahb", "core";
-> > +                     clock-names = "iface", "ahb", "core";
-> >
-> >                       assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> >                       assigned-clock-rates = <300000000>;
-> > @@ -1539,12 +1538,13 @@
-> >                                     <0 0x0aeb0000 0 0x2008>;
-> >                               reg-names = "mdp", "vbif";
-> >
-> > -                             clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> > +                             clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-> > +                                      <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> >                                        <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> >                                        <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-> >                                        <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> >                                        <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> > -                             clock-names = "iface", "rot", "lut", "core",
-> > +                             clock-names = "bus", "iface", "rot", "lut", "core",
-> >                                             "vsync";
-> >                               assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> >                                                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> > --
-> > 1.9.1
-> >
+thanks
+-john
