@@ -2,16 +2,16 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7EF926469C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 15:11:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CA75264727
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Sep 2020 15:43:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726059AbgIJNKV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Sep 2020 09:10:21 -0400
-Received: from a27-188.smtp-out.us-west-2.amazonses.com ([54.240.27.188]:54554
-        "EHLO a27-188.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730368AbgIJNHb (ORCPT
+        id S1730260AbgIJNla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Sep 2020 09:41:30 -0400
+Received: from a27-186.smtp-out.us-west-2.amazonses.com ([54.240.27.186]:60452
+        "EHLO a27-186.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730921AbgIJNgi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Sep 2020 09:07:31 -0400
+        Thu, 10 Sep 2020 09:36:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599742237;
         h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
@@ -58,7 +58,7 @@ References: <1599145498-20707-1-git-send-email-skakit@codeaurora.org>
 Message-ID: <010101747811583e-172b27b5-ea28-4660-a64b-407b13bb6fd1-000000@us-west-2.amazonses.com>
 X-Sender: skakit@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2020.09.10-54.240.27.188
+X-SES-Outgoing: 2020.09.10-54.240.27.186
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
