@@ -2,160 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 100E6265D6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62A36265D7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:14:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725860AbgIKKLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 06:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725780AbgIKKLB (ORCPT
+        id S1725893AbgIKKOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 06:14:42 -0400
+Received: from a27-10.smtp-out.us-west-2.amazonses.com ([54.240.27.10]:57446
+        "EHLO a27-10.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725888AbgIKKOj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 06:11:01 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCFEBC061573
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:11:00 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id a12so9323164eds.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:11:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=34lVXXsxtskqjri1vjJe9bVZAHnv49AB0SP0UfxscAE=;
-        b=Ep6Ra3o7gNv7Sft87tKmodUvRTKK+yEtXMzzNto1Yt1KesamA6xMs/S8zhwDMqRqsy
-         cj3Xa5rWmXFkJEe7xzlnmIgOsD7z66jKkNHSMokMcCKrVVp9+1zmIDltdzx6TwFgDYrq
-         LU+HqA9msWRajaHgwLojKB8QzqVvOB8SEUGs6NiU6ZLnDPpDt6pExPXBwtY15fQilO0P
-         HcvPgWWEQQPtnWxXe2sGuxjoDQI4zzcdIoTfMUlBVsawGUYH41ceY9cjxfJdBeJypwbg
-         8M8O8Kr+y5byUjtX2u5dU92/znvOXk9SWOBv842iUW6A3ys6nEz0JhaKnJ+Bilt7QaOc
-         AaVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=34lVXXsxtskqjri1vjJe9bVZAHnv49AB0SP0UfxscAE=;
-        b=tFVjZpOR+NXq42p2WhvQZ5j3pshbUD/qy1iqErlS33hsolsFP1rofH9fOjV4wVj4rr
-         oZkDUCu6jJ4tB9Aw9jbCcisrtEGfiUX0DXklhMzRsGu7/UZiR2veo/P5jfI5chbedEoI
-         pbepW/r7rDd57muDDTOzBMBpJyBv0CghVGkf29M9MoQra5vod3q7BOZOg9DefYRasube
-         R8DZ3KOsof0Fgpsdl86+rebaeVhOCDD3+zyua9qg8SY4Itu6G9SRJcKVKAPAs5NqMZAv
-         TC8G/D8wEwSRiYN+IqNk1PPjxxEiaNNN/xHU/hmDDBwK+S4ADPEsZaoovq6DNBhxACG7
-         Dc+w==
-X-Gm-Message-State: AOAM531pkjpb+5/psXXp3jEAlztagCLaapWWV11E704HcGQnpL1Iroem
-        LOgK07AWUBdZr1rx59yhaklrMmKd+LQJ44Qo
-X-Google-Smtp-Source: ABdhPJwUlDEUap6H+NlyZak20h496rC1EI12mA9SUu9rpIVPvh2Z9ra+5EHTo2BjIraFgIG9zA+t2Q==
-X-Received: by 2002:a05:6402:1109:: with SMTP id u9mr1212483edv.74.1599819059554;
-        Fri, 11 Sep 2020 03:10:59 -0700 (PDT)
-Received: from [192.168.1.8] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id v2sm1227241ejh.57.2020.09.11.03.10.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2020 03:10:58 -0700 (PDT)
-Subject: Re: [PATCH v2 1/3] venus: core: handle race condititon for core ops
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
-        linux-media@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1599741856-16239-1-git-send-email-mansur@codeaurora.org>
- <1599741856-16239-2-git-send-email-mansur@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <313cf565-f69f-df84-6bff-8c9a77b9f642@linaro.org>
-Date:   Fri, 11 Sep 2020 13:10:57 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Fri, 11 Sep 2020 06:14:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599819279;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
+        bh=ZG38KW7Q8h6I6ub1kZvYjpSGKWWslx5w8FqBo4yAbT4=;
+        b=jB9cLUPSHzRC1AbUCZfAsCTxouAg/FfjWi9IVmaW83fpYulhAZIqqClrXDkLhpOl
+        xWiXXQG00L2Eew0/rIJTs6CqYQIUSpANCN0wfziDNDGE2bW5zlJ2khcvlnnzGbuD7JD
+        UXBmxRcC6XexG+sBxETyK7QAZahPrWXBO3FvW2ds=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599819279;
+        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
+        bh=ZG38KW7Q8h6I6ub1kZvYjpSGKWWslx5w8FqBo4yAbT4=;
+        b=F4XsXr6K5llPCuHsM+p1s4CICY0eZpJ1yChNtAQuml/LSWqAkHt1GSG0FMPoogvh
+        zTL4UDOmgBeNgB3+iE6LFbRnlziziaSQb7/lV+O6o7IQALQoRUw6nqx6nY7kHmUxY3E
+        vYBwXAZgd4f/KfE/b/H8ldC8waRUieJ0MK19R0Vs=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 MIME-Version: 1.0
-In-Reply-To: <1599741856-16239-2-git-send-email-mansur@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Fri, 11 Sep 2020 10:14:39 +0000
+From:   skakit@codeaurora.org
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        msavaliy@qti.qualcomm.com
+Subject: Re: [PATCH V5 1/4] arm64: dts: qcom: sc7180: Improve the pin config
+ settings for CTS and TX
+In-Reply-To: <CAD=FV=XYqiGk3QEPxVKCgnYA0FVrizyarSW52HPRGVyAUSugrQ@mail.gmail.com>
+References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org>
+ <1599742438-16811-2-git-send-email-skakit@codeaurora.org>
+ <CAD=FV=XYqiGk3QEPxVKCgnYA0FVrizyarSW52HPRGVyAUSugrQ@mail.gmail.com>
+Message-ID: <010101747ca8ea89-168fbb95-b789-4294-81dc-82561c314bf4-000000@us-west-2.amazonses.com>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
+X-SES-Outgoing: 2020.09.11-54.240.27.10
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Doug,
 
+On 2020-09-10 20:10, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Sep 10, 2020 at 5:55 AM satya priya <skakit@codeaurora.org> 
+> wrote:
+>> 
+>> Remove output-high from CTS and TX as this is not really required. 
+>> During
+>> bringup to fix transfer failures this was added to match with console 
+>> uart
+>> settings. Probably some boot loader config was missing then. As it is
+>> working fine now, remove it.
+>> 
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> ---
+>> Changes in V4:
+>>  - This is newly added in V4 to separate the improvements in pin 
+>> settings
+>>    and wakeup related changes.
+>> 
+>> Changes in V5:
+>>  - As per Doug's comment configured pull-down for CTS pin as earlier.
+>> 
+>>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 10 ++++------
+>>  1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> Looks fine to me.  Slight nit that this only applies to the IDP board
+> but ${SUBJECT} makes it sound as if this applies to all sc7180.  I
+> wouldn't spin just for that, though.  If Bjorn agrees, he can always
+> adjust the subject when applying.
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-On 9/10/20 3:44 PM, Mansur Alisha Shaik wrote:
-> For core ops we are having only write protect but there
-> is no read protect, because of this in multthreading
-> and concurrency, one CPU core is reading without wait
-> which is causing the NULL pointer dereferece crash.
-> 
-> one such scenario is as show below, where in one CPU
-> core, core->ops becoming NULL and in another CPU core
-> calling core->ops->session_init().
-> 
-> CPU: core-7:
-> Call trace:
->  hfi_session_init+0x180/0x1dc [venus_core]
->  vdec_queue_setup+0x9c/0x364 [venus_dec]
->  vb2_core_reqbufs+0x1e4/0x368 [videobuf2_common]
->  vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
->  v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
->  v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
->  v4l_reqbufs+0x4c/0x5c
-> __video_do_ioctl+0x2b0/0x39c
-> 
-> CPU: core-0:
-> Call trace:
->  venus_shutdown+0x98/0xfc [venus_core]
->  venus_sys_error_handler+0x64/0x148 [venus_core]
->  process_one_work+0x210/0x3d0
->  worker_thread+0x248/0x3f4
->  kthread+0x11c/0x12c
-> 
-> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-> Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
-> Changes in V2:
-> - Addressed review comments by stan by validating on top
-> - of https://lore.kernel.org/patchwork/project/lkml/list/?series=455962
-> 
->  drivers/media/platform/qcom/venus/hfi.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-> index a59022a..3137071 100644
-> --- a/drivers/media/platform/qcom/venus/hfi.c
-> +++ b/drivers/media/platform/qcom/venus/hfi.c
-> @@ -195,7 +195,7 @@ EXPORT_SYMBOL_GPL(hfi_session_create);
->  int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
->  {
->  	struct venus_core *core = inst->core;
-> -	const struct hfi_ops *ops = core->ops;
-> +	const struct hfi_ops *ops;
->  	int ret;
->  
+Thanks for reviewing the patches, i will correct this nit in my next 
+version.
 
-If we are in system error recovery the session_init cannot pass
-successfully, so we exit early in the function.
-
-I'd suggest to make it:
-
-	/* If core shutdown is in progress or we are in system error 	recovery,
-return an error */
-	mutex_lock(&core->lock);
-	if (!core->ops || core->sys_error) {
-		mutex_unclock(&core->lock);
-		return -EIO;
-	}
-	mutex_unclock(&core->lock);
-		
->  	if (inst->state != INST_UNINIT)
-> @@ -204,10 +204,13 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
->  	inst->hfi_codec = to_codec_type(pixfmt);
->  	reinit_completion(&inst->done);
->  
-> +	mutex_lock(&core->lock);
-> +	ops = core->ops;
->  	ret = ops->session_init(inst, inst->session_type, inst->hfi_codec);
->  	if (ret)
->  		return ret;
->  
-> +	mutex_unlock(&core->lock);
->  	ret = wait_session_msg(inst);
->  	if (ret)
->  		return ret;
-> 
-
--- 
-regards,
-Stan
+Thanks,
+Satya Priya
