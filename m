@@ -2,68 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D887D265A27
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 09:11:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8571B265AC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 09:47:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725764AbgIKHLr convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 03:11:47 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:35719 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725468AbgIKHLr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 03:11:47 -0400
-Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 5DF1FCED1A;
-        Fri, 11 Sep 2020 09:18:41 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: [RESEND v1] arm64: dts: qcom: sc7180: Remove clock for bluetooth
- on SC7180 IDP board
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1599734980-22580-1-git-send-email-gubbaven@codeaurora.org>
-Date:   Fri, 11 Sep 2020 09:11:45 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <C8D04890-4F62-4EEB-9113-BAFFF46E32BD@holtmann.org>
-References: <1599734980-22580-1-git-send-email-gubbaven@codeaurora.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+        id S1725767AbgIKHru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 03:47:50 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48016 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725766AbgIKHrr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Sep 2020 03:47:47 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9E1D62076C;
+        Fri, 11 Sep 2020 07:47:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1599810466;
+        bh=I4uLoN15SZgdT8c9PzvgWvYDrFak69CCGmHCBzzkfp0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Bv7hWyU8RZyuN6jfDc5+ORLIBpvhh5aMtRwI2Nh3NJphbVWjwIZrxhoYb+DHeDr8v
+         8qk4qCKaaZ1kRmiPZpBF/Bc5F55Q4LGfaQ6tNdLgu8nG9ZmlvdGXOU0dWfT0N+iUsa
+         vws3sKPZthzoylmn3VIK9R5h3RGV74Mj8e6O9IJw=
+Date:   Fri, 11 Sep 2020 09:47:52 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org
+Subject: Re: [PATCH v5 4/4] bus: mhi: clients: Add userspace client interface
+ driver
+Message-ID: <20200911074752.GB3324216@kroah.com>
+References: <1596696063-17802-1-git-send-email-hemantk@codeaurora.org>
+ <1596696063-17802-5-git-send-email-hemantk@codeaurora.org>
+ <20200907093725.GC1393659@kroah.com>
+ <010101747bd97269-a941d364-78ea-488c-baae-5a1c924d9e43-000000@us-west-2.amazonses.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <010101747bd97269-a941d364-78ea-488c-baae-5a1c924d9e43-000000@us-west-2.amazonses.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Sep 11, 2020 at 06:28:02AM +0000, Hemant Kumar wrote:
+> > > +struct uci_dev {
+> > > +	unsigned int minor;
+> > > +	struct mhi_device *mhi_dev;
+> > > +	const char *chan;
+> > > +
+> > > +	/* protects uci_dev struct members */
+> > > +	struct mutex lock;
+> > > +
+> > > +	struct uci_chan ul_chan;
+> > > +	struct uci_chan dl_chan;
+> > > +	size_t mtu;
+> > > +	size_t actual_mtu;
+> > > +	struct kref ref_count;
+> > > +	struct kref open_count;
+> > 
+> > I'm stopping right here.  A structure can only have ONE reference count
+> > to control its lifespan.  You have 2 here, which guarantees that either
+> > you are using a kref incorrectly, or your code is totally confused and
+> > will break easily.
+> > 
+> > Please fix this as this is not how to do this.
+> > 
+> > Also, why does anyone need to care about the number of times that open()
+> > is called?  The vfs layer should handle all of that for you, right?
+> Reason for using open_count was to allow start MHI channel only when first
+> open() was called and stop the MHI channel when last release() is called.
+> Since uci driver just need to handle one open() from user space
+> other calls to open can simply return -EBUSY. i will get rid of open_count
+> and does not let multiple threads to open same file node.
 
-> Removed voting for RPMH_RF_CLK2 which is not required as it is
-> getting managed by BT SoC through SW_CTRL line.
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
-> arch/arm64/boot/dts/qcom/sc7180-idp.dts | 1 -
-> 1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> index 4e9149d..b295d01 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> @@ -348,7 +348,6 @@
-> 		vddrf-supply = <&vreg_l2c_1p3>;
-> 		vddch0-supply = <&vreg_l10c_3p3>;
-> 		max-speed = <3200000>;
-> -		clocks = <&rpmhcc RPMH_RF_CLK2>;
-> 	};
-> };
+You will fail in trying to attempt only one open on your device node,
+sorry.  You can properly trigger off of the first/last things, but
+having two different reference counts is NOT how to do this, those are
+to control the lifetime of a structure/object.
 
-is anybody picking up this patch or should I take it through the bluetooth-next tree?
-
-Regards
-
-Marcel
-
+greg k-h
