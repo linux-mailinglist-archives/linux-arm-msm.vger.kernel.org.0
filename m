@@ -2,139 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3716B26668B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 19:29:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 669AC2667F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 19:57:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726100AbgIKR3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 13:29:36 -0400
-Received: from foss.arm.com ([217.140.110.172]:40348 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726504AbgIKR3d (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 13:29:33 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F213E106F;
-        Fri, 11 Sep 2020 10:29:32 -0700 (PDT)
-Received: from [10.57.40.122] (unknown [10.57.40.122])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E66493F68F;
-        Fri, 11 Sep 2020 10:29:27 -0700 (PDT)
-Subject: Re: [PATCH v3 8/8] iommu/arm-smmu-qcom: Setup identity domain for
- boot mappings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        id S1725787AbgIKR55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 13:57:57 -0400
+Received: from a27-56.smtp-out.us-west-2.amazonses.com ([54.240.27.56]:34940
+        "EHLO a27-56.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725710AbgIKR54 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Sep 2020 13:57:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gbvhytky6xpx7itkhb67ktsxbiwpnxix; d=codeaurora.org; t=1599834500;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+        bh=hwi/OQiGwyQ//NyTOaTL55rONVhtBqdkXJjR5Q1eVS4=;
+        b=MV+yzgB3Xb1UOxSWPTPVDJ9ESvMM7NOsg+raGTlUuRP2FxEegZejpebvOb6tUW4d
+        S9mAB5zciXKd+LAeuzQ7++ez9Uzsqv9KAPdt0oGcLi7bhv1r1GHfqAJ57I7xjTk7JH9
+        IBmvmDZHmv5DFnS4Y/yeVONK3osB/6d7H59DTQyw=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599834500;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=hwi/OQiGwyQ//NyTOaTL55rONVhtBqdkXJjR5Q1eVS4=;
+        b=hhNU+bMKfhuXGAAlL5TemdE0e3IVzflcJG4WZbW/8Oi1OPmfrCipM8HVFac3pJCc
+        xhO93VCLMW43/4f2bOBDoBDrS9IipNaUbOw8KjYrEQITNCs0JPhi/zIZoSJWfJLZ+ij
+        W8w7ur2w1NbPuYVySL3ar1FyRAY4RIPB3ik4I5sA=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 34028C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
- <20200904155513.282067-9-bjorn.andersson@linaro.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <34b1f9ea-fb16-faac-c288-627b51066968@arm.com>
-Date:   Fri, 11 Sep 2020 18:29:23 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv4 6/6] iommu: arm-smmu-impl: Remove unwanted extra blank lines
+Date:   Fri, 11 Sep 2020 14:28:20 +0000
+Message-ID: <010101747d912de4-ee003b04-f4dd-489c-a7b3-6df2376a140f-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20200904155513.282067-9-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.11-54.240.27.56
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-04 16:55, Bjorn Andersson wrote:
-> With many Qualcomm platforms not having functional S2CR BYPASS a
-> temporary IOMMU domain, without translation, needs to be allocated in
-> order to allow these memory transactions.
-> 
-> Unfortunately the boot loader uses the first few context banks, so
-> rather than overwriting a active bank the last context bank is used and
-> streams are diverted here during initialization.
-> 
-> This also performs the readback of SMR registers for the Qualcomm
-> platform, to trigger the mechanism.
-> 
-> This is based on prior work by Thierry Reding and Laurentiu Tudor.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v2:
-> - Combined from pieces spread between the Qualcomm impl and generic code in v2.
-> - Moved to use the newly introduced inherit_mapping op.
-> 
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 ++++++++++++++++++++++
->   1 file changed, 33 insertions(+)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 70a1eaa52e14..a54302190932 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -12,6 +12,7 @@
->   struct qcom_smmu {
->   	struct arm_smmu_device smmu;
->   	bool bypass_broken;
-> +	struct iommu_domain *identity;
->   };
->   
->   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-> @@ -228,6 +229,37 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
->   	return 0;
->   }
->   
-> +static int qcom_smmu_inherit_mappings(struct arm_smmu_device *smmu)
-> +{
-> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-> +	int cbndx;
-> +	u32 smr;
-> +	int i;
-> +
-> +	qsmmu->identity = arm_smmu_alloc_identity_domain(smmu);
-> +	if (IS_ERR(qsmmu->identity))
-> +		return PTR_ERR(qsmmu->identity);
-> +
-> +	cbndx = to_smmu_domain(qsmmu->identity)->cfg.cbndx;
+There are few places in arm-smmu-impl where there are
+extra blank lines, remove them and while at it fix the
+checkpatch warning for space required before the open
+parenthesis.
 
-I don't really get the point of going through the dance of allocating a 
-whole iommu_domain() just to get a context. If you don't want to simply 
-statically reserve a context at probe time, then just allocate from 
-smmu->context_map here (where AFAICS "here" should be in cfg_probe 
-anyway). This is entirely driver-internal, so there shouldn't be any 
-need for IOMMU-API-level stuff to be involved.
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-Robin.
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+index ce78295cfa78..f5b5218cbe5b 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+@@ -19,7 +19,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+ 
+ static int arm_smmu_gr0_ns(int offset)
+ {
+-	switch(offset) {
++	switch (offset) {
+ 	case ARM_SMMU_GR0_sCR0:
+ 	case ARM_SMMU_GR0_sACR:
+ 	case ARM_SMMU_GR0_sGFSR:
+@@ -54,7 +54,6 @@ static const struct arm_smmu_impl calxeda_impl = {
+ 	.write_reg = arm_smmu_write_ns,
+ };
+ 
+-
+ struct cavium_smmu {
+ 	struct arm_smmu_device smmu;
+ 	u32 id_base;
+@@ -110,7 +109,6 @@ static struct arm_smmu_device *cavium_smmu_impl_init(struct arm_smmu_device *smm
+ 	return &cs->smmu;
+ }
+ 
+-
+ #define ARM_MMU500_ACTLR_CPRE		(1 << 1)
+ 
+ #define ARM_MMU500_ACR_CACHE_LOCK	(1 << 26)
+@@ -197,7 +195,6 @@ static const struct arm_smmu_impl mrvl_mmu500_impl = {
+ 	.reset = arm_mmu500_reset,
+ };
+ 
+-
+ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+ 	const struct device_node *np = smmu->dev->of_node;
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-> +
-> +	for (i = 0; i < smmu->num_mapping_groups; i++) {
-> +		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
-> +
-> +		if (FIELD_GET(ARM_SMMU_SMR_VALID, smr)) {
-> +			smmu->smrs[i].id = FIELD_GET(ARM_SMMU_SMR_ID, smr);
-> +			smmu->smrs[i].mask = FIELD_GET(ARM_SMMU_SMR_MASK, smr);
-> +			smmu->smrs[i].valid = true;
-> +
-> +			smmu->s2crs[i].type = S2CR_TYPE_TRANS;
-> +			smmu->s2crs[i].privcfg = S2CR_PRIVCFG_DEFAULT;
-> +			smmu->s2crs[i].cbndx = cbndx;
-> +			smmu->s2crs[i].count++;
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int qcom_smmu_def_domain_type(struct device *dev)
->   {
->   	const struct of_device_id *match =
-> @@ -270,6 +302,7 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
->   	.cfg_probe = qcom_smmu_cfg_probe,
->   	.def_domain_type = qcom_smmu_def_domain_type,
->   	.reset = qcom_smmu500_reset,
-> +	.inherit_mappings = qcom_smmu_inherit_mappings,
->   };
->   
->   static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
-> 
