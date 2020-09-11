@@ -2,96 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5684F26614A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 16:35:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0188B266219
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 17:27:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726160AbgIKOfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 10:35:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40680 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726232AbgIKNLy (ORCPT
+        id S1726214AbgIKP1T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 11:27:19 -0400
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:56908
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726378AbgIKP1G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 09:11:54 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9A0CC0617A4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:10:05 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id b19so12338976lji.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:10:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JSPHG+gWrol4xtMWqlVawkUp7PUHXa4piQC1yx4WIUQ=;
-        b=sEuCMNpNZYYuAs0LAOewYrhOb/4Ro2IUzL3kV17d/lgV7TVvfrubtNKkZAdRvWopCR
-         Eji5hFzeP6LDqZAVhwLcGoVZOrdveHmVbI+MPe4vI+tGD3TgHQHJ3Utvz/UymyXWuMWU
-         HN3mJ4oMGNRoQWQNOBAnSsTkm2V+lqdJSknF0yt1SqCvhZruKP0Mcem0bPnN3j64tIkV
-         VuPa1w9xzlajgmQNMLKwPq0z8oCVgJgEL+jsnOK05rwpp/s8eFou1NsSQpvSilYsiJm1
-         u15+8CJjnNj1jfCsweCkHWaZqdYgAgyEBuzz+bv3IErK3ObQn0zbpwTHk6LB8DNKNZKP
-         nKrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JSPHG+gWrol4xtMWqlVawkUp7PUHXa4piQC1yx4WIUQ=;
-        b=dcoip7gME7kzq+RRrMAqjSC+XAjHjys4XKfdTtCreSRJE0zv8GGvjm93S5G6R9rh+n
-         pIMkGHfKObM3ziRsdQAU2lHxBGtNkbPqIoTJwwpF1BBqIAudcoqIfwOEjgYt+21deDno
-         89Ofut9d8EnId9+zS+7Z1tUw7GkQzqAfyPc0U2EhTukbGzD/NuuJURklawsLrrs8x5AU
-         puA32hDhOw5BjD295bu2+tSiVLJyGm0dlf5nwWGIXXmiDVmBfQjG3VONyb/U1jHlDmQQ
-         cZ3gMcvYPkRwmvgetTYpI8IvzeQcwDZBe+r4Edz8ub4qG+WT0REjS1co9+D1ROJgz7zb
-         IDPA==
-X-Gm-Message-State: AOAM533vfjYCbVdsRRD87WMt5GMDzxbXXkqTcASdeKP5YT7KeFWVbSoq
-        07bYSB05aP9sEoMWH4sYBhifzQ==
-X-Google-Smtp-Source: ABdhPJweLFzvwR0GykH9HcZst3Q+Y2PFxn41CgZ06JQB1cBkINnhG0UexuZHCND63cR+N8Y6v2gFTQ==
-X-Received: by 2002:a2e:8153:: with SMTP id t19mr851775ljg.334.1599829803419;
-        Fri, 11 Sep 2020 06:10:03 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.141])
-        by smtp.gmail.com with ESMTPSA id 10sm429500lfq.64.2020.09.11.06.10.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2020 06:10:02 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 11 Sep 2020 11:27:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gbvhytky6xpx7itkhb67ktsxbiwpnxix; d=codeaurora.org; t=1599834457;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
+        bh=5tZsB/wJn1cwAYaUlKplKeAwB+VSLVJQXUcWnRzqmpA=;
+        b=kYXBwAYa4zGGomoglLkcXFpNWTvuBi2ptPv+mrkC7sAVSvjziYxITXoCczXtz9es
+        tK2Yvf1lTUOpo65TMbdXEQT03B6QHx59C+zRmumovJ6b4oZPlp3xF1t5c9828/UjHwK
+        vLDObo8ZX3fzEqT25ihpYTC7i9MWDxuqNEvAwxAE=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599834457;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=5tZsB/wJn1cwAYaUlKplKeAwB+VSLVJQXUcWnRzqmpA=;
+        b=YgqZTcpZwcADidyNcNTZrZ4o4YtdOw0ssihG1ddi4kV6jS6ea/f4uonJEyjyGxAS
+        cNEm5cIjtxPEQhXK/rH3wDnP9rNcUYqnuXAoxhouYt1oyPMqK9j3XiOApHYA+/drG11
+        xnHd4M0S6N8s0SJQ6rv01D5cBUriCXq5Q0obXytQ=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1A1F0C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org
-Subject: [RFC 4/4] arm64: dts: qcom: sm8250: pin MMCX to stop the board from crashing
-Date:   Fri, 11 Sep 2020 16:09:50 +0300
-Message-Id: <20200911130950.578483-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200911130950.578483-1-dmitry.baryshkov@linaro.org>
-References: <20200911130950.578483-1-dmitry.baryshkov@linaro.org>
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv4 0/6] System Cache support for GPU and required SMMU support
+Date:   Fri, 11 Sep 2020 14:27:37 +0000
+Message-ID: <010101747d908304-dc01ef4a-72b7-4163-8405-4fa82465ac84-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.11-54.240.27.55
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use MMCX domain to power up MDSS_GDSC.
+Some hardware variants contain a system cache or the last level
+cache(llc). This cache is typically a large block which is shared
+by multiple clients on the SOC. GPU uses the system cache to cache
+both the GPU data buffers(like textures) as well the SMMU pagetables.
+This helps with improved render performance as well as lower power
+consumption by reducing the bus traffic to the system memory.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+The system cache architecture allows the cache to be split into slices
+which then be used by multiple SOC clients. This patch series is an
+effort to enable and use two of those slices perallocated for the GPU,
+one for the GPU data buffers and another for the GPU SMMU hardware
+pagetables.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 5045fe89a494..c42640228ceb 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1732,6 +1732,9 @@ dp_out: endpoint {
- 		dispcc: clock-controller@af00000 {
- 			compatible = "qcom,sm8250-dispcc";
- 			reg = <0 0x0af00000 0 0x10000>;
-+			power-domains = <&rpmhpd SM8250_MMCX>;
-+			power-domain-names = "mmcx";
-+			required-opps = <&rpmhpd_opp_low_svs>;
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&dsi0_phy 0>,
- 				 <&dsi0_phy 1>,
+Patch 1 - Patch 4 adds system cache support in SMMU and GPU driver.
+Patch 5 and 6 are minor cleanups for arm-smmu impl.
+
+The series is based on top of https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
+
+Changes in v4:
+ * Drop IOMMU_SYS_CACHE prot flag
+ * Rebase on top of https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
+
+Changes in v3:
+ * Fix domain attribute setting to before iommu_attach_device()
+ * Fix few code style and checkpatch warnings
+ * Rebase on top of Jordan's latest split pagetables and per-instance
+   pagetables support
+
+Changes in v2:
+ * Addressed review comments and rebased on top of Jordan's split
+   pagetables series
+
+Sai Prakash Ranjan (4):
+  iommu/io-pgtable-arm: Add support to use system cache
+  iommu/arm-smmu: Add domain attribute for system cache
+  iommu: arm-smmu-impl: Use table to list QCOM implementations
+  iommu: arm-smmu-impl: Remove unwanted extra blank lines
+
+Sharat Masetty (2):
+  drm/msm: rearrange the gpu_rmw() function
+  drm/msm/a6xx: Add support for using system cache(LLC)
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 83 ++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |  4 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 21 +++++-
+ drivers/gpu/drm/msm/msm_drv.c              |  8 +++
+ drivers/gpu/drm/msm/msm_drv.h              |  1 +
+ drivers/gpu/drm/msm/msm_gpu.h              |  5 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 17 ++---
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      | 17 +++++
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |  1 +
+ drivers/iommu/io-pgtable-arm.c             |  7 +-
+ include/linux/io-pgtable.h                 |  4 ++
+ include/linux/iommu.h                      |  1 +
+ 12 files changed, 155 insertions(+), 14 deletions(-)
+
+
+base-commit: 11e579ab6a3c2003efa2cfd1f0b3b4395f041618
 -- 
-2.28.0
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
