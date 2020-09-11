@@ -2,93 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D26026623B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 17:35:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A349266253
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 17:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbgIKPfI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 11:35:08 -0400
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:34435 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726537AbgIKPev (ORCPT
+        id S1726260AbgIKPlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 11:41:03 -0400
+Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.82]:26544 "EHLO
+        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726486AbgIKPiK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 11:34:51 -0400
-Received: by mail-ej1-f65.google.com with SMTP id gr14so14415951ejb.1;
-        Fri, 11 Sep 2020 08:34:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Rv8Uq4Yh5DeMvinWPQeAnG3AGmpR0//uZ7bahTCq3MA=;
-        b=fBCXLhQwqrOv0pQfJf1y+MYbej+W1b8afBKPcx+bN33I15Jh/Gd2qOk+/GZixNboSs
-         +wVEG3Eh69m8uObPoxKqPrEhbNhjgjVDpDi9qJs38jCoBMt4V+bYIT+FnEUVN0XffPax
-         W1AlwFSK393PL6XaP8SSAsszefrmJk2Mc3U9THxTiIBDPWLNDlqkJltgCFNN4P+4RyYa
-         Yz7wfClH/SeqfTd5ACzbGI0zEm6utDWrXUREo6KHFOwtpna5TvBF7uPRomrLd1cIwEWd
-         KqnMAmfkGugb3dsrdQfsxYxziW7NBWTDkCr1SKlG2fxGwG8XxS+dDO2q0s9Ywg52CW87
-         wILw==
-X-Gm-Message-State: AOAM530Aubek8yJuqH7N77Ne8TZ8gEkUlohpXXRPyqo78Uj+Z5cmu0XX
-        Vc7On/xZBHUpAIlMnLfDkqM=
-X-Google-Smtp-Source: ABdhPJwqMxehrWj5AIk6bwgWo/6J4nFSeUNA+neqTDckmCySfnip8jOFjrj8I8PS1NPWYbv5f2Tj9w==
-X-Received: by 2002:a17:906:7d0d:: with SMTP id u13mr2745908ejo.448.1599838484902;
-        Fri, 11 Sep 2020 08:34:44 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.174])
-        by smtp.googlemail.com with ESMTPSA id 16sm1970663edx.72.2020.09.11.08.34.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 11 Sep 2020 08:34:43 -0700 (PDT)
-Date:   Fri, 11 Sep 2020 17:34:41 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        David Lechner <david@lechnology.com>,
-        Sekhar Nori <nsekhar@ti.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Fri, 11 Sep 2020 11:38:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1599838679;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=f6y/bT6EnhntnHIR9T0mnloocs8GUCAF0cvCMCuqaqw=;
+        b=TkBtFKeZXwVmoqL8hTRa09ldIz+oBnR8o93riYLNwvKkjB86UWkwOFU6xvhB7xp1ky
+        K9WWSLYBmv2K2/S1tjXwfDI8Lh34doLyUipY3RAqcLKnOlAY4891mo64Jyy8PP3qTWGs
+        1GXcM/syxNGyrmowE8rxY5vkvZhOK9EJEZi6+SwKQFfAHaZvLt314CKDkUwPxkUOo6fo
+        Qayb5YZkSeEFcrrKniwODAmFM1TyuQj0i2wwhgSMVd38+7V/xRSSy/TcXRz3EA0Vovhb
+        uMRXaS3R1ZlI7xUSW1pB2M39jGkKNYkQtcwuYD2cvtFlfIbbR/7QS6t25HvdjjKF1ZyO
+        Op9A==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEIdhPgVC7iy9yGr7ESbX"
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
+        with ESMTPSA id g0b6c1w8BFbuNiG
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Fri, 11 Sep 2020 17:37:56 +0200 (CEST)
+Date:   Fri, 11 Sep 2020 17:37:55 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Niklas Cassel <nks@flawful.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 01/10] clk: at91: Drop unused at91sam9g45_pcr_layout
-Message-ID: <20200911153441.GA18190@kozik-lap>
-References: <20200902150348.14465-1-krzk@kernel.org>
- <20200902163558.GA4137028@piout.net>
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] opp: Power on (virtual) power domains managed by the
+ OPP core
+Message-ID: <20200911153755.GB2352@gerhold.net>
+References: <20200826093328.88268-1-stephan@gerhold.net>
+ <20200827100104.yuf2nzb6qras7zcw@vireshk-i7>
+ <20200827114422.GA1784@gerhold.net>
+ <20200828063511.y47ofywtu5qo57bq@vireshk-i7>
+ <20200828095706.GA1865@gerhold.net>
+ <20200911083455.GA1591@gerhold.net>
+ <20200911092538.jexqm6joww67d4yv@vireshk-i7>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200902163558.GA4137028@piout.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200911092538.jexqm6joww67d4yv@vireshk-i7>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 02, 2020 at 06:35:58PM +0200, Alexandre Belloni wrote:
-> On 02/09/2020 17:03:39+0200, Krzysztof Kozlowski wrote:
-> > The at91sam9g45_pcr_layout is not used so drop it to fix build warning:
+On Fri, Sep 11, 2020 at 02:55:38PM +0530, Viresh Kumar wrote:
+> > As mentioned in my other mail [1] it turns out I actually have such a
+> > use case. I briefly explained it in [2], basically the clock that
+> > provides higher CPU frequencies has some voltage requirements that
+> > should be voted for using a power domain.
 > > 
-> >   drivers/clk/at91/at91sam9g45.c:49:36: warning:
-> >     'at91sam9g45_pcr_layout' defined but not used [-Wunused-const-variable=]
+> > The clock that provides the lower CPU frequencies has no such
+> > requirement, so I need to scale (and power on) a power domain only for
+> > some of the OPPs.
 > > 
-> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> > [1]: https://lore.kernel.org/linux-pm/20200831154938.GA33622@gerhold.net/
+> > [2]: https://lore.kernel.org/linux-arm-msm/20200910162610.GA7008@gerhold.net/
+> > 
+> > So I think it would be good to discuss this use case first before we
+> > decide on this patch (how to enable power domains managed by the OPP
+> > core). I think there are two problems that need to be solved:
+> > 
+> > 1. How can we drop our performance state votes for some of the OPPs?
+> >    I explained that problem earlier already:
+> > 
+> > > 
+> > > I was thinking about something like that, but can you actually drop
+> > > your performance state vote for one of the power domains using
+> > > "required-opps"?
+> > > 
+> > > At the moment it does not seem possible. I tried adding a special OPP
+> > > using opp-level = <0> to reference that from required-opps, but the OPP
+> > > core does not allow this:
+> > > 
+> > > 	vddcx: Not all nodes have performance state set (7: 6)
+> > > 	vddcx: Failed to add OPP table for index 0: -2
 > 
-> > ---
-> >  drivers/clk/at91/at91sam9g45.c | 7 -------
-> >  1 file changed, 7 deletions(-)
-> > 
+> This should fix it.
+> 
+> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+> index 214c1619b445..2483e765318a 100644
+> --- a/drivers/opp/core.c
+> +++ b/drivers/opp/core.c
+> @@ -2117,9 +2117,6 @@ int dev_pm_opp_xlate_performance_state(struct opp_table *src_table,
+>         int dest_pstate = -EINVAL;
+>         int i;
+>  
+> -       if (!pstate)
+> -               return 0;
+> -
+>         /*
+>          * Normally the src_table will have the "required_opps" property set to
+>          * point to one of the OPPs in the dst_table, but in some cases the
+> diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+> index e72753be7dc7..1a9cb96484bb 100644
+> --- a/drivers/opp/of.c
+> +++ b/drivers/opp/of.c
+> @@ -842,7 +842,7 @@ static struct dev_pm_opp *_opp_add_static_v2(struct opp_table *opp_table,
+>  static int _of_add_opp_table_v2(struct device *dev, struct opp_table *opp_table)
+>  {
+>         struct device_node *np;
+> -       int ret, count = 0, pstate_count = 0;
+> +       int ret, count = 0;
+>         struct dev_pm_opp *opp;
+>  
+>         /* OPP table is already initialized for the device */
+> @@ -876,20 +876,13 @@ static int _of_add_opp_table_v2(struct device *dev, struct opp_table *opp_table)
+>                 goto remove_static_opp;
+>         }
+>  
+> -       list_for_each_entry(opp, &opp_table->opp_list, node)
+> -               pstate_count += !!opp->pstate;
+> -
+> -       /* Either all or none of the nodes shall have performance state set */
+> -       if (pstate_count && pstate_count != count) {
+> -               dev_err(dev, "Not all nodes have performance state set (%d: %d)\n",
+> -                       count, pstate_count);
+> -               ret = -ENOENT;
+> -               goto remove_static_opp;
+> +       list_for_each_entry(opp, &opp_table->opp_list, node) {
+> +               if (opp->pstate) {
+> +                       opp_table->genpd_performance_state = true;
+> +                       break;
+> +               }
+>         }
+>  
+> -       if (pstate_count)
+> -               opp_table->genpd_performance_state = true;
+> -
+>         return 0;
+>  
+>  remove_static_opp:
+> 
 
-Hi Stephen,
+Thanks, I will test this early next week!
 
-If the dev_err_probe() waits/skips/goes to /dev/null, then how about the
-fixes in the series? This patch and few other?
+> > 2. Where/when to enable the power domains: I need to enable the power
+> >    domain whenever I have a vote for a performance state. In the example
+> >    above the power domain should get enabled for >= 998 MHz and disabled
+> >    otherwise.
+> 
 
-Best regards,
-Krzysztof
+I will answer your questions for my use case, maybe Ulf or someone else
+who knows more about power domains can chime in and say more about the
+general case:
 
+> - Why do you need to enable these power domains like this ?
+
+At the moment power domains seem to have two independent states:
+they can be powered on/off and they can have a performance state.
+Both seem to be managed independently, e.g. a power domain can have a
+non-zero performance state set but at the same time powered off.
+
+The OPP core only calls dev_pm_genpd_set_performance_state(). No matter
+if the power domain is powered on or not this will end up in the
+set_performance_state() callback of the power domain driver.
+
+And this is where behavior varies depending on the power domain driver.
+Some drivers (e.g. qcom-cpr) will set the performance state even if
+powered off, others (in my case: qcom rpmpd) will ignore the performance
+state until their power_on() callback is called.
+
+In general, I would expect that a power domain should be powered on
+whenever there is at least one performance state vote > 0.
+This does not seem to be the case at the moment, though.
+
+> - What will happen if you don't enable them at all ?
+
+If I add the power domains needed for CPUFreq to the CPU OPP table,
+without further changes, nothing will power on the power domains.
+There is no difference for qcom-cpr, but at least rpmpd will ignore all
+the performance state votes.
+
+> - What will happen if you enable them for ever ?
+> 
+> AFAIU, these are kind of virtual domains which are there just to vote in behalf
+> of the OS. Only if the accumulated vote is greater than zero, the actual power
+> domain will start consuming power. Otherwise it should be disabled.
+> 
+> Or is that wrong ?
+> 
+
+Right, at least in case of rpmpd the actual power domain is managed by
+some "RPM" remote processor which accumulates votes from all the CPUs
+running in the SoC.
+
+I believe the power domains in my case are even always-on in the RPM,
+but still the RPM interface seems to provide a way to vote for
+enabling/disabling the power domains. Sadly it is barely documented,
+so I'm not sure what happens if we keep the power domains permanently
+powered on. Maybe it will block certain low power modes?
+
+The current implementation in drivers/soc/qcom/rpmpd.c does suggest that
+we should vote for "power off" when the power domains are no longer
+needed by Linux.
+
+(+CC Bjorn, Andy and linux-arm-msm, maybe they know more...)
+
+Thanks!
+Stephan
