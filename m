@@ -2,80 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8DB5265F59
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 14:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A26A26601D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 15:21:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725858AbgIKMOh convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 08:14:37 -0400
-Received: from mail.flex.co.jp ([211.8.82.123]:33291 "EHLO www.flex.co.jp"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725876AbgIKMO1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 08:14:27 -0400
-Received: from live.com.mx ([103.89.89.225])
-        (authenticated bits=0)
-        by www.flex.co.jp (MTA) with ESMTP id 0898ndvn009386
-        for <linux-arm-msm@vger.kernel.org>; Wed, 9 Sep 2020 17:49:47 +0900
-Reply-To: powerinthewords@yahoo.co.jp
-From:   piyin.crhe@live.com.mx
-To:     linux-arm-msm@vger.kernel.org
-Subject: =?utf-8?Q?=5BSpam=5D?=
- We are still waiting for your email...
-Date:   09 Sep 2020 01:49:45 -0700
-Message-ID: <20200909014945.79AC71B155EC70F2@live.com.mx>
+        id S1726080AbgIKNUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 09:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726247AbgIKNRk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Sep 2020 09:17:40 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E733C061798
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:09:59 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id b22so2217949lfs.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:09:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gyAVD2/7eQMwmMsDIWtFg83MjKgwXKVIZHVL6P751nE=;
+        b=x3y6A4MAY6n7VWnN3GdxAjqDmcmYgJexmDZOwVXnnSpdupm/6aDsekwfGhsg6/rsVB
+         qMvZYlavwXzNWJK5+cqSopt/Z71zXNFxc7Pra7faj5rp+Z2do/+FG77EsX9Yp/hS3QZY
+         FXUFNfaeKSqjI67hFCrId4ROUuk/EnapEHRk84uqylDApJmmMGHvdoQkCyeIrm3GNa++
+         SRVRMrMyH2R6bPHOkrfArvINFqBVufkuxIVBnjGsKj1KwzadMnbW/hwst/SUt3FD8YGp
+         oARpSPNt9sYjWXgrMz7yjt7Ugbrv/IccBgJdj2v0MtlLWH2j09ZjZg+Cxi+L2uIvghvp
+         vfuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gyAVD2/7eQMwmMsDIWtFg83MjKgwXKVIZHVL6P751nE=;
+        b=FcmnKxc0oxYFypkE6ZnCoj8UU1N5tyoC0V5etZrBbcZmhSXAJfuph/GLcW7A2J3bkb
+         Yj7qv6Wup6uSirrl5GAvfdOgRE291EN83vu5cH2h0lVbBIM1HD5S8z3xOLTo6R4Nx6SQ
+         Rct9m51Peepvcu2xworkzUqv8BOnH4bV+2aC2Iio7d8u9NPMUlYMCBoNu+rhy/JvI88p
+         yxsMHuMYVovaWqbzdjUn6r5/DnPcQRrujQpUAVYyitv7nLeyfof4BB+rx4RTcE2ui1Gi
+         YejCSzf0oKDUHUYDEJbZbrcpQmS7UbgF2HEth5gZJ2HP/f/PlUuGdp4SEQie6WNtNzO0
+         qGqg==
+X-Gm-Message-State: AOAM530dYneEMk0f+/8vUU9DQYJGT8ur5eZ669Nd+h1Phk6bHo/Fdug2
+        xIdspIdwO7ZcRq1EQnQ2swnA3w==
+X-Google-Smtp-Source: ABdhPJz28OVqssUAjaSDyYKCAhMqBA7Wu0lxsEp5PcQc6jWsbUnkPaFtiPZWSvCFhsLjiymRpOGV0Q==
+X-Received: by 2002:a19:df53:: with SMTP id q19mr726587lfj.119.1599829795908;
+        Fri, 11 Sep 2020 06:09:55 -0700 (PDT)
+Received: from eriador.lan ([188.162.64.141])
+        by smtp.gmail.com with ESMTPSA id 10sm429500lfq.64.2020.09.11.06.09.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Sep 2020 06:09:55 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: [RFC 0/4] clk: qcom: handle power domains links for GDSC
+Date:   Fri, 11 Sep 2020 16:09:46 +0300
+Message-Id: <20200911130950.578483-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-SpamInfo: FortiGuard-AntiSpam ip, connection black ip 103.89.89.225
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Beneficiary,
+On SM8250 MDSS_GDSC requires MMCX domain to be powered to access GDSC
+registers. Handle this requirement in the gdsc code by binding the power
+domain via dts file. The example in the schema file demonstrates this
+binding (which is not required for SDM845).
 
-We wish to inform you that a power of attorney was forwarded to 
-our office  by two gentlemen regarding your unclaimed fund of $56 
-Million Dollar. One of them is an American citizen named Mr. 
-Robert Porter and the other is Mr. Wilhelm Berg a Swedish 
-citizen.We have be waiting for you to contact us since last year.
 
-The document claims these gentlemen to be your authorized 
-representatives, and the power of attorney states that you are 
-already deceased.  It further states that your death was due to 
-lung cancer, with your date of death being January 27th, 2020.
-
-They have now submitted a new account to replace the receiving 
-account that was in the original claim of funds. These funds have 
-remained unclaimed for quite some time and the need for 
-resolution is pressing. Below is the new account they have 
-submitted.
-
-Account Name's :  Robert Porter /Wilhelm Berg
-Account: 5007-29 438 66
-IBAN-nr: SE4150000000050072943866
-Bic-kod: ESSESESS
-Skandinaviska Enskilda Banken. (SEB :)
-SWEDEN .
-
-In the event that you are in fact still alive, we ask that you 
-confirm your existence by responding to this email. You are to 
-view this as a matter requiring immediate attention and response. 
-We have 48 hr monitoring of all activities within Federal Reserve 
-Bank.On this regard,you will be directed to any of our office 
-center that you will go in person to sign the final papers,
-because we have our payment center in Europe,Asia,America and 
-Canada.You will go to any of the office that you will be directed 
-to with the copy of the documents of your fund.
-
-We have contacted the bank in the Sweden asking them to wait for 
-further directives from Federal Reserve Bank, prior to 
-authorizing any withdrawals in any form.  Our request is based 
-entirely on our attempt to verify that you are in fact deceased, 
-before money is wrongly disbursed.
-
-Your in Service,
-
-Robert Steven Kaplan
-2200 N Pearl St, Dallas, TX 75201, United States
