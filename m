@@ -2,221 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94EC4265D99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:16:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F5F7265DAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:22:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725818AbgIKKQG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 06:16:06 -0400
-Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:46438
-        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725778AbgIKKQF (ORCPT
+        id S1725836AbgIKKWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 06:22:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbgIKKWQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 06:16:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599819364;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=CUjbIXOPCQTv92I5cHDEF+MyspFa8IsVdUzRKJRQ0X0=;
-        b=PKJRRFtCVn/wAHc8/NZ/NMvw4vN6Vf8bESEFSOwEDN4iUScmiMw0TX7aqRyCGPfL
-        qnrUyUeom180qQPwXGWhT9O1nGp/tWmQgEh9yd1iDrWKoHZuEZnRNr+wCJ47MRl1zJr
-        FCR0yIr8BobzBjF7mYMefzw2K9AJNYbjfsy8cy/o=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599819364;
-        h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=CUjbIXOPCQTv92I5cHDEF+MyspFa8IsVdUzRKJRQ0X0=;
-        b=E28ooXhWN4zjNbefZ1/Ahy3Um1KV/+Gb03Iumq7e2Kt20WfWxdnq0BX+mwch3DqW
-        wsQfrF7jlXVHNIximnKwviKFFLAIn2cx6lO2v9TPKIxwRNX7U+u2zccj9wODXd6okTe
-        PIygBP82/hANfPQxXpI6s5I6GwPb93XqSCz+BL2c=
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+        Fri, 11 Sep 2020 06:22:16 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20FAC061757
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:22:15 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id nw23so13095142ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:22:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Q5TuOzWPBGiSsyb4o4mJQioDjYLBJEgj58DZR6YxrG4=;
+        b=CwKuo4Nv/8JyY5hUXKIT//4rGAkOyaglLunRPd9cqkiDIQSvN4Hn7YH++P7b07mW+e
+         4Uhvd4RCFIipFKanq5M7yMvVWxILaVydW/rM7ITtdJK66/t6yQKvyRL/IzB3NVFS29L9
+         o8b2xmy+weCNV8swpXbeGyhfJQNVb+jbrdtQfFkdTkRy+QAOVrJ9NEh3ucXMtR+ErQIk
+         7Gjfb8J081ZGU2/yo0hc0YEcrymXmkARcYnFl+1uELqwAo7IUB4aptDqM94X6KkSUnm3
+         E7K1/8oWcTgnlZg3hRIvkoa6GouECCG8Hx6eWBTx2iyy05PvbgB7YBKUectCXmJqBhZ8
+         tenQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Q5TuOzWPBGiSsyb4o4mJQioDjYLBJEgj58DZR6YxrG4=;
+        b=rtJZTYjQyFohepEe2kgiIcu/0fqjFGzTuVpZPJznis4RLhpRsIH9zQQ9AxIginJorN
+         eQxoC2tXNhEOQNwrqt1RyvW7otCQh0eK87FxOhEOpsZjT8ybaulP/W4Uw3iYw0tq8gqB
+         OvOpD5EmZgSJI1H1EwBk8FJvwkonLOTkTwYRMwVzNvjBngcIfb03HcR6TGtT9TZ65UsU
+         Ikef25Lc6thH7tjYW2dQSPXgko3l+SL3MOgs3E71mVi3mqLtNe68W06VcCPUQyNHZpr3
+         LCWa0jVjB9zOyBoIq2NQ+QptCD2eehL9y6F3tNS102cy1cEZXfVcVbUm1bpmhLizBXTM
+         rwHg==
+X-Gm-Message-State: AOAM5317d2D+RygD1k4/0/qundx3NsZVqDboHwU3MilLwHwkyMgFZVsY
+        7+MK7DMgXlILRg+A6T9VWfiTMBlc5uxlsr/k
+X-Google-Smtp-Source: ABdhPJxtE2iaRZJ8Rh3wP2kRpbArRAcEM9cx7JbseHSgnktjoKleNKIgHjpLBpcv3pl9XDO1+tFCOw==
+X-Received: by 2002:a17:906:250a:: with SMTP id i10mr1332513ejb.202.1599819734215;
+        Fri, 11 Sep 2020 03:22:14 -0700 (PDT)
+Received: from [192.168.1.8] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id w8sm1289197ejo.117.2020.09.11.03.22.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Sep 2020 03:22:13 -0700 (PDT)
+Subject: Re: [PATCH v2 2/3] venus: core: cancel pending work items in
+ workqueue
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        linux-media@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1599741856-16239-1-git-send-email-mansur@codeaurora.org>
+ <1599741856-16239-3-git-send-email-mansur@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <a96d7cce-2781-e3d6-6238-8fec411511a1@linaro.org>
+Date:   Fri, 11 Sep 2020 13:22:10 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <1599741856-16239-3-git-send-email-mansur@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 11 Sep 2020 10:16:04 +0000
-From:   skakit@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>, gregkh@linuxfoundation.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
-        rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
-        dianders@chromium.org
-Subject: Re: [PATCH V5 2/4] arm64: dts: qcom: sc7180: Add necessary pinctrl
- and interrupt config for BT UART
-In-Reply-To: <20200910234544.GC472@uller>
-References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org>
- <1599742438-16811-3-git-send-email-skakit@codeaurora.org>
- <20200910234544.GC472@uller>
-Message-ID: <010101747caa38c1-6a4c0170-83ec-41d1-8050-b1d5b70469b9-000000@us-west-2.amazonses.com>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
-X-SES-Outgoing: 2020.09.11-54.240.27.18
-Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi,
 
-Thanks for reviewing the patches.
+On 9/10/20 3:44 PM, Mansur Alisha Shaik wrote:
+> In concurrency usecase and reboot scenario we are
+> observing race condition and seeing NULL pointer
+> dereference crash. In shutdown path and system
+> recovery path we are destroying the same mutex
+> hence seeing crash.
+> 
+> This case is handled by mutex protection and
+> cancel delayed work items in work queue.
+> 
+> Below is the call trace for the crash
+> Call trace:
+>  venus_remove+0xdc/0xec [venus_core]
+>  venus_core_shutdown+0x1c/0x34 [venus_core]
+>  platform_drv_shutdown+0x28/0x34
+>  device_shutdown+0x154/0x1fc
+>  kernel_restart_prepare+0x40/0x4c
+>  kernel_restart+0x1c/0x64
+> 
+> Call trace:
+>  mutex_lock+0x34/0x60
+>  venus_hfi_destroy+0x28/0x98 [venus_core]
+>  hfi_destroy+0x1c/0x28 [venus_core]
 
-On 2020-09-11 05:15, Bjorn Andersson wrote:
-> On Thu 10 Sep 12:53 UTC 2020, satya priya wrote:
-> 
->> Add a suitable sleep configuration for uart3 to support Bluetooth 
->> wakeup.
->> 
->> If QUP function is selected in sleep state, UART RTS/RFR is pulled 
->> high
->> during suspend and BT SoC not able to send wakeup bytes. So, configure
->> GPIO mode in sleep state to keep it low during suspend.
->> 
-> 
-> But patch 4 says that you change this behavior, is that patch really
-> needed if we switch the pins to GPIO, or if this patch really needed if
-> we merge patch 4?
-> 
-> Could it be that in lower power states we drop the power to the uart
-> block and rely on the PDC to wait for the BT chip to start sending the
-> wakeup bytes on the rx pin?
-> 
+I queued up [1] and after it this cannot happen anymore because
+hfi_destroy() is not called by venus_sys_error_handler().
 
-As discussed on V4 patch 
-https://patchwork.kernel.org/patch/11753971/#23602723
-The patch 4 is good to have, to make sure the UART_MANUAL_RFR is in 
-ready state to receive the wakeup bytes.
+So I guess this patch is not needed anymore.
 
-> 
-> This commit will become the reference for all other platforms where we
-> enable the same functionality, so better document it properly.
-> 
+[1] https://www.spinics.net/lists/linux-arm-msm/msg70092.html
 
-Okay.
-
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
->> ---
->> Changes in V2:
->>  - This patch adds sleep state for BT UART. Newly added in V2.
->> 
->> Changes in V3:
->>  - Remove "output-high" for TX from both sleep and default states
->>    as it is not required. Configure pull-up for TX in sleep state.
->> 
->> Changes in V4:
->>  - As per Matthias's comment, removed drive-strength for sleep state
->>    and fixed nit-pick.
->> 
->> Changes in V5:
->>  - As per Matthias's comments, moved pinmux change for sleep state,
->>    pinctrl and interrupt config to the board specific file.
->> 
->>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 48 
->> +++++++++++++++++++++++++++++++++
->>  1 file changed, 48 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts 
->> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> index 04888df..e529a41 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> @@ -344,6 +344,10 @@
->>  };
->> 
->>  &uart3 {
->> +	pinctrl-names = "default", "sleep";
->> +	pinctrl-1 = <&qup_uart3_sleep>;
->> +	interrupts-extended = <&intc GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>,
->> +				<&tlmm 41 IRQ_TYPE_EDGE_FALLING>;
->>  	status = "okay";
->> 
->>  	bluetooth: wcn3990-bt {
->> @@ -545,3 +549,47 @@
->>  	};
->>  };
->> 
->> +&tlmm {
->> +	qup_uart3_sleep: qup-uart3-sleep {
->> +		pinmux {
->> +			pins = "gpio38", "gpio39",
->> +			       "gpio40", "gpio41";
->> +			function = "gpio";
->> +		};
->> +
->> +		pinconf-cts {
->> +			/*
->> +			 * Configure a pull-down on CTS to match the pull of
->> +			 * the Bluetooth module.
->> +			 */
->> +			pins = "gpio38";
->> +			bias-pull-down;
->> +		};
->> +
->> +		pinconf-rts {
->> +			/*
->> +			 * Configure pull-down on RTS to make sure that the BT SoC can
->> +			 * wake up the system by sending wakeup bytes during suspend.
+>  venus_sys_error_handler+0x60/0x14c [venus_core]
+>  process_one_work+0x210/0x3d0
+>  worker_thread+0x248/0x3f4
+>  kthread+0x11c/0x12c
+>  ret_from_fork+0x10/0x18
 > 
-> So "request to send" is active low and pulling it low will indicate to
-> the BT chip that it's allowed to wake us up by pulling rx low?
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> I would like this comment to really describe what's actually going on.
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index c5af428..69aa199 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -323,6 +323,8 @@ static int venus_remove(struct platform_device *pdev)
+>  	struct device *dev = core->dev;
+>  	int ret;
+>  
+> +	cancel_delayed_work_sync(&core->work);
+> +
+>  	ret = pm_runtime_get_sync(dev);
+>  	WARN_ON(ret < 0);
+>  
+> @@ -340,7 +342,9 @@ static int venus_remove(struct platform_device *pdev)
+>  	if (pm_ops->core_put)
+>  		pm_ops->core_put(dev);
+>  
+> +	mutex_lock(&core->lock);
+>  	hfi_destroy(core);
+> +	mutex_unlock(&core->lock);
+>  
+>  	icc_put(core->video_path);
+>  	icc_put(core->cpucfg_path);
 > 
 
-Ok, will modify the rationale.
-
->> +			 */
->> +			 pins = "gpio39";
->> +			 bias-pull-down;
->> +		};
->> +
->> +		pinconf-tx {
->> +			/* Configure pull-up on TX when it isn't actively driven */
-> 
-> Sure, but why? Wouldn't that be to prevent the BT chip from receiving
-> garbage while the SoC is asleep?
-> 
-
-yes, this is to prevent the BT chip from receiving garbage, will mention 
-the same.
-
->> +			pins = "gpio40";
->> +			bias-pull-up;
->> +		};
->> +
->> +		pinconf-rx {
->> +			/*
->> +			 * Configure a pull-up on RX. This is needed to avoid
->> +			 * garbage data when the TX pin of the Bluetooth module is
->> +			 * in tri-state (module powered off or not driving the
->> +			 * signal yet).
->> +			 */
-> 
-> It's nice to avoid "garbage data", but isn't the real reason that the
-> floating pin on the other side would cause spurious wakeups?
-> 
-
-yes, we need pull-up on RX to prevent spurious wakeups, will modify this 
-comment to mention it.
-
-> Regards,
-> Bjorn
-> 
->> +			pins = "gpio41";
->> +			bias-pull-up;
->> +		};
->> +	};
->> +};
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
->> member
->> of Code Aurora Forum, hosted by The Linux Foundation
->> 
-
-Thanks,
-Satya Priya
+-- 
+regards,
+Stan
