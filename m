@@ -2,171 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A922F2662C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 18:00:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 738C126624E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 17:40:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbgIKPyT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 11:54:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37790 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726570AbgIKPwl (ORCPT
+        id S1726505AbgIKPjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 11:39:54 -0400
+Received: from a27-18.smtp-out.us-west-2.amazonses.com ([54.240.27.18]:35942
+        "EHLO a27-18.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726409AbgIKPhz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 11:52:41 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7309FC0617A4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:52:42 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id y5so8388912otg.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nzmY8qHBC7Hn4hT/mqduo9xIcqJb48H8H8bYW2+kdKs=;
-        b=BX0LOotVaYOnKN4OT6XmK+cMBT1CxWmFzPpGGk1mY5LWvunLEszBuF8rCp+wK3bbsg
-         JB6Ceqrdxgab2ORWCFl63fFW+c0flSFFwAmetVwEYcIFHW+SKIj+V//cxLKgQnk56png
-         O5njrWf9XoUCdd2ECAo+ygPmlXqPGhghoCHphtBTAIAr4dsAN0hHNtoz3O0BzKx7r3Ap
-         ZPpmNl//tbXnoWHkCx5DeUG6ELFCT7QQAB02gukcUyhFZsdvwO45O08zRsQxlNOVW+uj
-         8O5KFwFX/IwZ+2pHyC4JLncr2Rrh1WnET/yEi+8AYneoUXgSWHS8bVkb+AjK5N1+2Mjx
-         it+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nzmY8qHBC7Hn4hT/mqduo9xIcqJb48H8H8bYW2+kdKs=;
-        b=mAfvI4kvvF9xiuS8Lf4PTiOSirJMnEI/OqP4Fflxhre434udSPjJXJ7N5J514PgbKa
-         gcv4h+xml8oz3WK6xg7kJ5mJu2+NkdSwGaLowPZV8p/KJRmSv+BYVQr6R4QU/o2Qa1f2
-         Eg/V4ZzCYdQPFSlrnpF2f1VSPmpu9DtzF98HvV1QTQ0sPaIIM090VlTNeRomJy4jxbeC
-         xfmMwKVNgUDK085h1F1jKLUy+DwfnJRHabRYVBu2SWuosjV5uV1LicpkobIWbC6kRAxG
-         3Dl51+rIo8VtGy1r8IBZfkc4nK4cMBgmHka6FdzLPnY9u4YGY3uDHRD7FbURFm08iNET
-         /XoA==
-X-Gm-Message-State: AOAM530yM9jfWS+zSxyQHrlDcZkIpDSd1Xlkd/aJk2JMhCi7YlgvXQiX
-        mJezbtOXAGznDV93OGsIByvsnQ==
-X-Google-Smtp-Source: ABdhPJxY+os+5x0DwAanxGsJ38K45dys4bD8AAAM2cMbDKFwfx8nSxclD9cDMJzBOUbOwthuqItxBg==
-X-Received: by 2002:a9d:5a91:: with SMTP id w17mr1295437oth.345.1599832355866;
-        Fri, 11 Sep 2020 06:52:35 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id p20sm411734ook.27.2020.09.11.06.52.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2020 06:52:35 -0700 (PDT)
-Date:   Fri, 11 Sep 2020 08:52:32 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     skakit@codeaurora.org
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V5 2/4] arm64: dts: qcom: sc7180: Add necessary pinctrl
- and interrupt config for BT UART
-Message-ID: <20200911135232.GY3715@yoga>
-References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org>
- <1599742438-16811-3-git-send-email-skakit@codeaurora.org>
- <CAD=FV=ULJqgHutr524wb-wVq4gejqo1p_zqRXP=h4Co6Gvmzew@mail.gmail.com>
- <010101747ca94cce-42d129fa-0374-4f12-aab8-2ccafd02b3c7-000000@us-west-2.amazonses.com>
+        Fri, 11 Sep 2020 11:37:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=gbvhytky6xpx7itkhb67ktsxbiwpnxix; d=codeaurora.org; t=1599834469;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+        bh=yFMtrs6DA/4PteaxfB84Is29woYxDmPL7r74cQrH+mA=;
+        b=DbYnAV7NW9i70vSzykeUm5xsq1pq+BQBOSot4R/sCtDEaAUx8aT4dfIXeWLLEt7U
+        w/Mi4USJnhEIiXPkb/lQR0ZvpDdLNLyNU7HN2hsZGBT2+2hrXZgnQnUHbv7LNCfW+Tn
+        9vXo2F5ELVhlV0fy2I0KjXruvQqTK4mTs+wDxXnI=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599834469;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+        bh=yFMtrs6DA/4PteaxfB84Is29woYxDmPL7r74cQrH+mA=;
+        b=h3dt73dR/h0FWB6t8lUU2Ab7GxYXdWTjBcQj03lXdnkBu/16H4nGnMg5MRufnoDY
+        872TNpc6HaMvW2j3s2QlsszssfO93h2hc/oKwSHmwo+5cpeCsvgbvQNHhNI455dDdln
+        3nM+7nuV8RNYuGp7Ebiv70FLlPwYQotDqLBHyUWc=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EF668C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv4 1/6] iommu/io-pgtable-arm: Add support to use system cache
+Date:   Fri, 11 Sep 2020 14:27:49 +0000
+Message-ID: <010101747d90b329-e0f49675-7651-43f8-bd4d-9f88f6b9f3bb-000000@us-west-2.amazonses.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <010101747ca94cce-42d129fa-0374-4f12-aab8-2ccafd02b3c7-000000@us-west-2.amazonses.com>
+Content-Transfer-Encoding: 8bit
+X-SES-Outgoing: 2020.09.11-54.240.27.18
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 11 Sep 05:15 CDT 2020, skakit@codeaurora.org wrote:
+Add a quirk IO_PGTABLE_QUIRK_SYS_CACHE to override the
+attributes set in TCR for the page table walker when
+using system cache.
 
-> On 2020-09-10 20:10, Doug Anderson wrote:
-> > Hi,
-> > 
-> > On Thu, Sep 10, 2020 at 5:55 AM satya priya <skakit@codeaurora.org>
-> > wrote:
-> > > 
-> > > Add a suitable sleep configuration for uart3 to support Bluetooth
-> > > wakeup.
-> > > 
-> > > If QUP function is selected in sleep state, UART RTS/RFR is pulled
-> > > high
-> > > during suspend and BT SoC not able to send wakeup bytes. So, configure
-> > > GPIO mode in sleep state to keep it low during suspend.
-> > > 
-> > > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > > Reviewed-by: Akash Asthana <akashast@codeaurora.org>
-> > > ---
-> > > Changes in V2:
-> > >  - This patch adds sleep state for BT UART. Newly added in V2.
-> > > 
-> > > Changes in V3:
-> > >  - Remove "output-high" for TX from both sleep and default states
-> > >    as it is not required. Configure pull-up for TX in sleep state.
-> > > 
-> > > Changes in V4:
-> > >  - As per Matthias's comment, removed drive-strength for sleep state
-> > >    and fixed nit-pick.
-> > > 
-> > > Changes in V5:
-> > >  - As per Matthias's comments, moved pinmux change for sleep state,
-> > >    pinctrl and interrupt config to the board specific file.
-> > > 
-> > >  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 48
-> > > +++++++++++++++++++++++++++++++++
-> > >  1 file changed, 48 insertions(+)
-> > 
-> > Similar comment to patch #1 in that this applies only to the IDP board
-> > but that's not obvious from ${SUBJECT}
-> > 
-> 
-> Okay.
-> 
-> > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > index 04888df..e529a41 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > > @@ -344,6 +344,10 @@
-> > >  };
-> > > 
-> > >  &uart3 {
-> > > +       pinctrl-names = "default", "sleep";
-> > > +       pinctrl-1 = <&qup_uart3_sleep>;
-> > > +       interrupts-extended = <&intc GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>,
-> > > +                               <&tlmm 41 IRQ_TYPE_EDGE_FALLING>;
-> > 
-> > You need a:
-> > 
-> > /delete-property/interrupts;
-> > 
-> > ...or, alternatively, a patch before this one that converts all the
-> > UARTs in sc7180 to just use interrupts-extended.
-> > 
-> 
-> Sure, I will add this. But I think when both are added,
-> "interrupts-extended" will get priority as per [1] and there wouldn't be any
-> problem.
-> 
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/iommu/io-pgtable-arm.c | 7 ++++++-
+ include/linux/io-pgtable.h     | 4 ++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-You're indeed correct, please stick with what you have.
+diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+index dc7bcf858b6d..828426c16fa9 100644
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -789,7 +789,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
+ 
+ 	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
+ 			    IO_PGTABLE_QUIRK_NON_STRICT |
+-			    IO_PGTABLE_QUIRK_ARM_TTBR1))
++			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
++			    IO_PGTABLE_QUIRK_SYS_CACHE))
+ 		return NULL;
+ 
+ 	data = arm_lpae_alloc_pgtable(cfg);
+@@ -801,6 +802,10 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
+ 		tcr->sh = ARM_LPAE_TCR_SH_IS;
+ 		tcr->irgn = ARM_LPAE_TCR_RGN_WBWA;
+ 		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
++	} else if (cfg->quirks & IO_PGTABLE_QUIRK_SYS_CACHE) {
++		tcr->sh = ARM_LPAE_TCR_SH_OS;
++		tcr->irgn = ARM_LPAE_TCR_RGN_NC;
++		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
+ 	} else {
+ 		tcr->sh = ARM_LPAE_TCR_SH_OS;
+ 		tcr->irgn = ARM_LPAE_TCR_RGN_NC;
+diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+index 23285ba645db..ecc9d2248b84 100644
+--- a/include/linux/io-pgtable.h
++++ b/include/linux/io-pgtable.h
+@@ -86,6 +86,9 @@ struct io_pgtable_cfg {
+ 	 *
+ 	 * IO_PGTABLE_QUIRK_ARM_TTBR1: (ARM LPAE format) Configure the table
+ 	 *	for use in the upper half of a split address space.
++	 *
++	 * IO_PGTABLE_QUIRK_SYS_CACHE: Override the attributes set in TCR for
++	 *	the page table walker when using system cache.
+ 	 */
+ 	#define IO_PGTABLE_QUIRK_ARM_NS		BIT(0)
+ 	#define IO_PGTABLE_QUIRK_NO_PERMS	BIT(1)
+@@ -93,6 +96,7 @@ struct io_pgtable_cfg {
+ 	#define IO_PGTABLE_QUIRK_ARM_MTK_EXT	BIT(3)
+ 	#define IO_PGTABLE_QUIRK_NON_STRICT	BIT(4)
+ 	#define IO_PGTABLE_QUIRK_ARM_TTBR1	BIT(5)
++	#define IO_PGTABLE_QUIRK_SYS_CACHE	BIT(6)
+ 	unsigned long			quirks;
+ 	unsigned long			pgsize_bitmap;
+ 	unsigned int			ias;
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Regards,
-Bjorn
-
-> [1] https://www.kernel.org/doc/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
-> 
-> > 
-> > >         status = "okay";
-> > 
-> > Slight nit is that usually I see the status line first.  All the other
-> > instances in this file have it that way.  Can you match?
-> > 
-> 
-> Ok, will correct it.
-> 
-> > 
-> > 
-> > 
-> > -Doug
