@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB1D5266145
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 16:34:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5684F26614A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 16:35:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbgIKOel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 10:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40666 "EHLO
+        id S1726160AbgIKOfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 10:35:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726083AbgIKNLy (ORCPT
+        with ESMTP id S1726232AbgIKNLy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 11 Sep 2020 09:11:54 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3E5C06179F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:10:01 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id q8so5792690lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:10:01 -0700 (PDT)
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9A0CC0617A4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:10:05 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id b19so12338976lji.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 06:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=m5KMHGWQDG6Uv1g+cxbh6QspEu1IYdXsFgHaa0ci9nE=;
-        b=aPdnl4LauZp8bormR5gQukpv+hJDKXUphmNidSWY9kfPjQkdMB4mWSA7HZWaX0lI+k
-         g1y2eJ7zY+nlIYJp+KV3M3GI1IAznKCWvMs1ohovMk29bNXBoGD+hOYR3F98lB+dfWLn
-         PCg4l7iDWyhIuLywPcjtDu1K74k0TExDFdxQWi1AeeBwx4y6SoOMXe5oMELIh8w/bRsZ
-         eIML7ydS/78stgJQhQhZum05rooi0I+HjveNUSw8J9HFl6JEMF9QXP3s/CduAnxNoJi8
-         MSGiV1EAnn6GpQfpPmsX1FPD/nLzwdHDisMmo2igRbnh7EZwGg7z6KHGvYBFQ5vH8Xkm
-         Lg7w==
+        bh=JSPHG+gWrol4xtMWqlVawkUp7PUHXa4piQC1yx4WIUQ=;
+        b=sEuCMNpNZYYuAs0LAOewYrhOb/4Ro2IUzL3kV17d/lgV7TVvfrubtNKkZAdRvWopCR
+         Eji5hFzeP6LDqZAVhwLcGoVZOrdveHmVbI+MPe4vI+tGD3TgHQHJ3Utvz/UymyXWuMWU
+         HN3mJ4oMGNRoQWQNOBAnSsTkm2V+lqdJSknF0yt1SqCvhZruKP0Mcem0bPnN3j64tIkV
+         VuPa1w9xzlajgmQNMLKwPq0z8oCVgJgEL+jsnOK05rwpp/s8eFou1NsSQpvSilYsiJm1
+         u15+8CJjnNj1jfCsweCkHWaZqdYgAgyEBuzz+bv3IErK3ObQn0zbpwTHk6LB8DNKNZKP
+         nKrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m5KMHGWQDG6Uv1g+cxbh6QspEu1IYdXsFgHaa0ci9nE=;
-        b=Psp5GaCxnwzSniiqozOCW3dMwTi4n8RMPOp+8jHf0vobzbLMzmhqom9RQpGywgDdiv
-         VXBa4T4p+C8vB2kN8A7nUzQWsbMoscEjYNOQTXxa+LiX9ltaZRLct8As8Q/CMYdi8zOT
-         qmzOM1CywjsyysPZAKUCOHgK9AQ7wD/SYgopUVQjSjcy6R+ejLfmp0qKZ19DjCLHIESW
-         jfTW+FM264TGyvXZZ0b+gwueHIRPt9UVNX/ITXnHvPVsTRLFlfUjrl0OFTZ4xmuZ1yuy
-         yzv6X4oM4JI0NN7YFUWNKbmE64apB7wOAvOwF2dyHuO+7PjyIZtSVVCkgHB7w+7QuupO
-         Qx4g==
-X-Gm-Message-State: AOAM531GEXuXi7zl/9bxCM4DjdlAQC9QjDOByl/kiLjGUkhbGBvVZe7+
-        ZEuJSm51mg3vzX5fKzKwv4uQSg==
-X-Google-Smtp-Source: ABdhPJycYmbMHiM/KF3emp4n9dE8mAR+tqwFUllIlclkXPzN9929dL6HkRJKEGtS3OIB9YkGUcyMWQ==
-X-Received: by 2002:a19:834a:: with SMTP id f71mr780700lfd.59.1599829799561;
-        Fri, 11 Sep 2020 06:09:59 -0700 (PDT)
+        bh=JSPHG+gWrol4xtMWqlVawkUp7PUHXa4piQC1yx4WIUQ=;
+        b=dcoip7gME7kzq+RRrMAqjSC+XAjHjys4XKfdTtCreSRJE0zv8GGvjm93S5G6R9rh+n
+         pIMkGHfKObM3ziRsdQAU2lHxBGtNkbPqIoTJwwpF1BBqIAudcoqIfwOEjgYt+21deDno
+         89Ofut9d8EnId9+zS+7Z1tUw7GkQzqAfyPc0U2EhTukbGzD/NuuJURklawsLrrs8x5AU
+         puA32hDhOw5BjD295bu2+tSiVLJyGm0dlf5nwWGIXXmiDVmBfQjG3VONyb/U1jHlDmQQ
+         cZ3gMcvYPkRwmvgetTYpI8IvzeQcwDZBe+r4Edz8ub4qG+WT0REjS1co9+D1ROJgz7zb
+         IDPA==
+X-Gm-Message-State: AOAM533vfjYCbVdsRRD87WMt5GMDzxbXXkqTcASdeKP5YT7KeFWVbSoq
+        07bYSB05aP9sEoMWH4sYBhifzQ==
+X-Google-Smtp-Source: ABdhPJweLFzvwR0GykH9HcZst3Q+Y2PFxn41CgZ06JQB1cBkINnhG0UexuZHCND63cR+N8Y6v2gFTQ==
+X-Received: by 2002:a2e:8153:: with SMTP id t19mr851775ljg.334.1599829803419;
+        Fri, 11 Sep 2020 06:10:03 -0700 (PDT)
 Received: from eriador.lan ([188.162.64.141])
-        by smtp.gmail.com with ESMTPSA id 10sm429500lfq.64.2020.09.11.06.09.57
+        by smtp.gmail.com with ESMTPSA id 10sm429500lfq.64.2020.09.11.06.10.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2020 06:09:59 -0700 (PDT)
+        Fri, 11 Sep 2020 06:10:02 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         devicetree@vger.kernel.org
-Subject: [RFC 2/4] clk: qcom: gdsc: enable external switchable power domain
-Date:   Fri, 11 Sep 2020 16:09:48 +0300
-Message-Id: <20200911130950.578483-3-dmitry.baryshkov@linaro.org>
+Subject: [RFC 4/4] arm64: dts: qcom: sm8250: pin MMCX to stop the board from crashing
+Date:   Fri, 11 Sep 2020 16:09:50 +0300
+Message-Id: <20200911130950.578483-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200911130950.578483-1-dmitry.baryshkov@linaro.org>
 References: <20200911130950.578483-1-dmitry.baryshkov@linaro.org>
@@ -71,139 +71,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some GDSCs (SM8250's MDSS_GDSC for example) need switchable power domain
-to be on to be able to access hardware registers. Use dev_pm/opp to
-enable corresponding power domain.
+Use MMCX domain to power up MDSS_GDSC.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/gdsc.c | 56 ++++++++++++++++++++++++++++++++++++++---
- drivers/clk/qcom/gdsc.h |  5 ++++
- 2 files changed, 57 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index bfc4ac02f9ea..a522e062a79a 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -11,6 +11,7 @@
- #include <linux/kernel.h>
- #include <linux/ktime.h>
- #include <linux/pm_domain.h>
-+#include <linux/pm_opp.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset-controller.h>
-@@ -110,13 +111,31 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
- 	return -ETIMEDOUT;
- }
- 
-+int gdsc_toggle_on(struct gdsc *sc)
-+{
-+	if (sc->rsupply)
-+		return regulator_enable(sc->rsupply);
-+	if (sc->pd_dev)
-+		return dev_pm_genpd_set_performance_state(sc->pd_dev, sc->pd_opp);
-+	return 0;
-+}
-+
-+int gdsc_toggle_off(struct gdsc *sc)
-+{
-+	if (sc->pd_dev)
-+		return dev_pm_genpd_set_performance_state(sc->pd_dev, 0);
-+	if (sc->rsupply)
-+		return regulator_disable(sc->rsupply);
-+	return 0;
-+}
-+
- static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
- {
- 	int ret;
- 	u32 val = (status == GDSC_ON) ? 0 : SW_COLLAPSE_MASK;
- 
--	if (status == GDSC_ON && sc->rsupply) {
--		ret = regulator_enable(sc->rsupply);
-+	if (status == GDSC_ON) {
-+		ret = gdsc_toggle_on(sc);
- 		if (ret < 0)
- 			return ret;
- 	}
-@@ -153,8 +172,8 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
- 	ret = gdsc_poll_status(sc, status);
- 	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
- 
--	if (!ret && status == GDSC_OFF && sc->rsupply) {
--		ret = regulator_disable(sc->rsupply);
-+	if (!ret && status == GDSC_OFF) {
-+		ret = gdsc_toggle_off(sc);
- 		if (ret < 0)
- 			return ret;
- 	}
-@@ -407,6 +426,27 @@ int gdsc_register(struct gdsc_desc *desc,
- 			return PTR_ERR(scs[i]->rsupply);
- 	}
- 
-+	for (i = 0; i < num; i++) {
-+		if (!scs[i] || !scs[i]->domain)
-+			continue;
-+
-+		scs[i]->pd_opp = of_get_required_opp_performance_state(dev->of_node, scs[i]->perf_idx);
-+		if (scs[i]->pd_opp < 0)
-+			return scs[i]->pd_opp;
-+
-+		scs[i]->pd_dev = dev_pm_domain_attach_by_name(dev, scs[i]->domain);
-+		if (IS_ERR(scs[i]->pd_dev)) {
-+			ret = PTR_ERR(scs[i]->pd_dev);
-+			/* Single domain has been already attached, so reuse dev */
-+			if (ret == -EEXIST) {
-+				scs[i]->pd_dev = dev;
-+			} else {
-+				scs[i]->pd_dev = NULL;
-+				goto pm_detach;
-+			}
-+		}
-+	}
-+
- 	data->num_domains = num;
- 	for (i = 0; i < num; i++) {
- 		if (!scs[i])
-@@ -428,6 +468,12 @@ int gdsc_register(struct gdsc_desc *desc,
- 	}
- 
- 	return of_genpd_add_provider_onecell(dev->of_node, data);
-+
-+pm_detach:
-+	for (i = 0; i < num; i++)
-+		if (scs[i]->pd_dev)
-+			dev_pm_domain_detach(scs[i]->pd_dev, false);
-+	return ret;
- }
- 
- void gdsc_unregister(struct gdsc_desc *desc)
-@@ -443,6 +489,8 @@ void gdsc_unregister(struct gdsc_desc *desc)
- 			continue;
- 		if (scs[i]->parent)
- 			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
-+		if (scs[i]->pd_dev && scs[i]->pd_dev != dev)
-+			dev_pm_domain_detach(scs[i]->pd_dev, true);
- 	}
- 	of_genpd_del_provider(dev->of_node);
- }
-diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-index bd537438c793..d58575f8f25f 100644
---- a/drivers/clk/qcom/gdsc.h
-+++ b/drivers/clk/qcom/gdsc.h
-@@ -57,6 +57,11 @@ struct gdsc {
- 
- 	const char 			*supply;
- 	struct regulator		*rsupply;
-+
-+	const char			*domain;
-+	unsigned int			perf_idx;
-+	struct device			*pd_dev;
-+	int				pd_opp;
- };
- 
- struct gdsc_desc {
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 5045fe89a494..c42640228ceb 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1732,6 +1732,9 @@ dp_out: endpoint {
+ 		dispcc: clock-controller@af00000 {
+ 			compatible = "qcom,sm8250-dispcc";
+ 			reg = <0 0x0af00000 0 0x10000>;
++			power-domains = <&rpmhpd SM8250_MMCX>;
++			power-domain-names = "mmcx";
++			required-opps = <&rpmhpd_opp_low_svs>;
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&dsi0_phy 0>,
+ 				 <&dsi0_phy 1>,
 -- 
 2.28.0
 
