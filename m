@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 028C226623D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 17:35:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B8DF266298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 17:54:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726481AbgIKPfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 11:35:25 -0400
-Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:43672
-        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725851AbgIKPfD (ORCPT
+        id S1726184AbgIKPyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 11:54:18 -0400
+Received: from a27-187.smtp-out.us-west-2.amazonses.com ([54.240.27.187]:57942
+        "EHLO a27-187.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726571AbgIKPwm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 11:35:03 -0400
+        Fri, 11 Sep 2020 11:52:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=gbvhytky6xpx7itkhb67ktsxbiwpnxix; d=codeaurora.org; t=1599834477;
+        s=gbvhytky6xpx7itkhb67ktsxbiwpnxix; d=codeaurora.org; t=1599834495;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-        bh=EncBtUbW+/8e8AetwH5ax0dwE6Vqltzbyo8iHlfy/3Y=;
-        b=gnWF4PbpWfal1tjG7DTqpvc50T57FRyev3Ncu5SPG2btIWBmjAd+acCHcYKKlCAl
-        Cftgor3Xz2Zp2cxuZ90kXuah7quZc7OecCGGx/hhFVFQ+lXC0uv5d0UO39/oxTCSPXC
-        cj+s7tH7lHVTk4FkzAykDVVwENuNhY1S6tp03UvQ=
+        bh=orZJUtk8zuXCuyD9M2bu/OIyXLSAJfTBuYp/toele7o=;
+        b=Mwd4YDDO0nVQnAFD1j9E9Z0o9mh2itzhVoX3F5mvCgek00ae/hdmWebKI+eQFWUy
+        9H6Z47sC5NBSKP5YnQSuWAyFE+9qI0qsYIUNRMYvqna+AtTHvppf+SmJkgCTZiNvX0z
+        eXwoRgrLyfw5E1VseoGQiDZoXCShmTU0+zS3JRCc=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599834477;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599834495;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
-        bh=EncBtUbW+/8e8AetwH5ax0dwE6Vqltzbyo8iHlfy/3Y=;
-        b=eQbBsT7oQGDsJr3LMX95oKjthpWeAZz/sNwlJtCASktb8/NEsWgizCXup9LZ8puL
-        iP5NCNTLwZvfje4gnGVBSA2b/2Pfrf7KAahKjglVDxiEXiNlcaeDuRMc3ViIXEYAUe6
-        AQuMY81GISWwhEV8QDjFl/GU5Idrqh4pNyzDMsQU=
+        bh=orZJUtk8zuXCuyD9M2bu/OIyXLSAJfTBuYp/toele7o=;
+        b=E7At5zbEIjtVMf/kXsG1p2FI1kRVZKjdGQkri83MOn4zi08B7IJTiV60TWaJVUMq
+        vVhhdiQN/nSlg95dLE0bpcMiEsmWcAfpZWFHcPN42pO8ukgVic61qpakWTP3ewb/9Ok
+        jk2ZkMU0OqVP7c6mLXbIvI12g1B2+HGQUgV23dF0=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
         URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 14C21C433CA
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AEE2AC433A0
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -48,98 +48,60 @@ Cc:     iommu@lists.linux-foundation.org,
         "Kristian H . Kristensen" <hoegsberg@google.com>,
         dri-devel@lists.freedesktop.org,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv4 2/6] iommu/arm-smmu: Add domain attribute for system cache
-Date:   Fri, 11 Sep 2020 14:27:56 +0000
-Message-ID: <010101747d90d0c6-abce8565-c3c5-441d-9023-74caee26b223-000000@us-west-2.amazonses.com>
+Subject: [PATCHv4 5/6] iommu: arm-smmu-impl: Use table to list QCOM implementations
+Date:   Fri, 11 Sep 2020 14:28:14 +0000
+Message-ID: <010101747d9117dd-eb187e14-ec3b-49e2-a81e-843093301055-000000@us-west-2.amazonses.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SES-Outgoing: 2020.09.11-54.240.27.185
+X-SES-Outgoing: 2020.09.11-54.240.27.187
 Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add iommu domain attribute for using system cache aka last level
-cache by client drivers like GPU to set right attributes for caching
-the hardware pagetables into the system cache.
+Use table and of_match_node() to match qcom implementation
+instead of multiple of_device_compatible() calls for each
+QCOM SMMU implementation.
 
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c | 17 +++++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu.h |  1 +
- include/linux/iommu.h                 |  1 +
- 3 files changed, 19 insertions(+)
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index 1f06ab219819..d449c895ba16 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -789,6 +789,9 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 	if (smmu_domain->non_strict)
- 		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+index d199b4bff15d..ce78295cfa78 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+@@ -9,6 +9,13 @@
  
-+	if (smmu_domain->sys_cache)
-+		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_SYS_CACHE;
-+
- 	pgtbl_ops = alloc_io_pgtable_ops(fmt, &pgtbl_cfg, smmu_domain);
- 	if (!pgtbl_ops) {
- 		ret = -ENOMEM;
-@@ -1513,6 +1516,9 @@ static int arm_smmu_domain_get_attr(struct iommu_domain *domain,
- 		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
- 			*(int *)data = smmu_domain->non_strict;
- 			return 0;
-+		case DOMAIN_ATTR_SYS_CACHE:
-+			*((int *)data) = smmu_domain->sys_cache;
-+			return 0;
- 		default:
- 			return -ENODEV;
- 		}
-@@ -1544,6 +1550,17 @@ static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
- 			else
- 				smmu_domain->stage = ARM_SMMU_DOMAIN_S1;
- 			break;
-+		case DOMAIN_ATTR_SYS_CACHE:
-+			if (smmu_domain->smmu) {
-+				ret = -EPERM;
-+				goto out_unlock;
-+			}
-+
-+			if (*((int *)data))
-+				smmu_domain->sys_cache = true;
-+			else
-+				smmu_domain->sys_cache = false;
-+			break;
- 		default:
- 			ret = -ENODEV;
- 		}
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index ddf2ca4c923d..93593e164e44 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -373,6 +373,7 @@ struct arm_smmu_domain {
- 	struct mutex			init_mutex; /* Protects smmu pointer */
- 	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
- 	struct iommu_domain		domain;
-+	bool				sys_cache;
- };
+ #include "arm-smmu.h"
  
- struct arm_smmu_master_cfg {
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index fee209efb756..a580dfe9c68d 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -118,6 +118,7 @@ enum iommu_attr {
- 	DOMAIN_ATTR_FSL_PAMUV1,
- 	DOMAIN_ATTR_NESTING,	/* two stages of translation */
- 	DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE,
-+	DOMAIN_ATTR_SYS_CACHE,
- 	DOMAIN_ATTR_MAX,
- };
++static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
++	{ .compatible = "qcom,sc7180-smmu-500" },
++	{ .compatible = "qcom,sdm845-smmu-500" },
++	{ .compatible = "qcom,sm8150-smmu-500" },
++	{ .compatible = "qcom,sm8250-smmu-500" },
++	{ }
++};
  
+ static int arm_smmu_gr0_ns(int offset)
+ {
+@@ -217,10 +224,7 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+ 	if (of_device_is_compatible(np, "nvidia,tegra194-smmu"))
+ 		return nvidia_smmu_impl_init(smmu);
+ 
+-	if (of_device_is_compatible(np, "qcom,sdm845-smmu-500") ||
+-	    of_device_is_compatible(np, "qcom,sc7180-smmu-500") ||
+-	    of_device_is_compatible(np, "qcom,sm8150-smmu-500") ||
+-	    of_device_is_compatible(np, "qcom,sm8250-smmu-500"))
++	if (of_match_node(qcom_smmu_impl_of_match, np))
+ 		return qcom_smmu_impl_init(smmu);
+ 
+ 	if (of_device_is_compatible(smmu->dev->of_node, "qcom,adreno-smmu"))
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
