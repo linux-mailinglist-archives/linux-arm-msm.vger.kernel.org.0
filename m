@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C69C265D8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71164265D91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:15:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725910AbgIKKPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 06:15:18 -0400
+        id S1725929AbgIKKPc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 06:15:32 -0400
 Received: from a27-187.smtp-out.us-west-2.amazonses.com ([54.240.27.187]:34428
         "EHLO a27-187.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725777AbgIKKPF (ORCPT
+        by vger.kernel.org with ESMTP id S1725920AbgIKKPU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 06:15:05 -0400
+        Fri, 11 Sep 2020 06:15:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599819304;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599819320;
         h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID;
-        bh=BPc59itjdfn4S/LEEM1dF+y9OU9b/XO3tELMEjFALsA=;
-        b=GuqzlQpc1x4AU2+Utk5eELnoKOSyjABJhiy3+hdzrmIDqsOjnFeCbJwQ3XBMW6re
-        xthYq1V5zxQYf0AsiA1jCH/qMZ9c60qbFPT/0HekXqbOR6sXFRIPEXwjhGTc8V3pV+m
-        lzJBNAuMF8qMCzAd/GoABqMEZPTELgnIJln4Vi+k=
+        bh=O6bC8bhUhqdxl1zTKzRMTL7CbV2UQz0pgM9sKc7A8p0=;
+        b=Ir/B6+e25Cvr0NEjr0L3kDmCtFqKQ5poswFX45d3p8G4+tpNdkC8e4gEO4snPr9M
+        jV/OkCqIUKAW8A9ljV0xczkAXM+A+OVlhU2ISjeq4L5Yx4bjngDo72bKSWiBUzsZ9aq
+        G5GkcnE3Gd3rln6yInvMpBXRInS5dnDdIIXIsfnM=
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599819304;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599819320;
         h=MIME-Version:Content-Type:Content-Transfer-Encoding:Date:From:To:Cc:Subject:In-Reply-To:References:Message-ID:Feedback-ID;
-        bh=BPc59itjdfn4S/LEEM1dF+y9OU9b/XO3tELMEjFALsA=;
-        b=IATbn8RPJcUqqh8yja6mbIyfeetT6qIMtEOOHawpWnODKPLUZAFC6Auc4TOa53IS
-        5BMsqiR89RnTJT2a6HPecNoWxchxNCUvElD5dQGxHs2UTCVp4E1oSv/qRRgH09B6Vdc
-        EFsb3Q0Q/CkkdKQOQJh9YH8hamzax0lXrIrwWoqo=
+        bh=O6bC8bhUhqdxl1zTKzRMTL7CbV2UQz0pgM9sKc7A8p0=;
+        b=Sv7+iSRxNOYnV28ECHAarsOJhbRSx9hL5r6Hy8Rm7lFUFYm7AjaC6r/uYcn8C7Xp
+        6geqStHpu3uPBdVo8/KRn0s+aUNSfkulaCbw26O06hPQDko3xk/1dWWHzKvgIEfX4RU
+        ZoKQYQ4xNKk4dVNtSPHwhlCiNCrBJ4TIYRU2ddjA=
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -35,7 +35,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 11 Sep 2020 10:15:04 +0000
+Date:   Fri, 11 Sep 2020 10:15:20 +0000
 From:   skakit@codeaurora.org
 To:     Doug Anderson <dianders@chromium.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -49,13 +49,13 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Akash Asthana <akashast@codeaurora.org>,
         Roja Rani Yarubandi <rojay@codeaurora.org>,
         msavaliy@qti.qualcomm.com
-Subject: Re: [PATCH V5 2/4] arm64: dts: qcom: sc7180: Add necessary pinctrl
- and interrupt config for BT UART
-In-Reply-To: <CAD=FV=ULJqgHutr524wb-wVq4gejqo1p_zqRXP=h4Co6Gvmzew@mail.gmail.com>
+Subject: Re: [PATCH V5 3/4] arm64: dts: qcom: sc7180-trogdor: Add pinctrl and
+ interrupt config for BT UART
+In-Reply-To: <CAD=FV=Wxo6ggLN39UMtMNwd6GOQwnEjA1MCxHjB6cmE9RTRMPA@mail.gmail.com>
 References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org>
- <1599742438-16811-3-git-send-email-skakit@codeaurora.org>
- <CAD=FV=ULJqgHutr524wb-wVq4gejqo1p_zqRXP=h4Co6Gvmzew@mail.gmail.com>
-Message-ID: <010101747ca94cce-42d129fa-0374-4f12-aab8-2ccafd02b3c7-000000@us-west-2.amazonses.com>
+ <1599742438-16811-4-git-send-email-skakit@codeaurora.org>
+ <CAD=FV=Wxo6ggLN39UMtMNwd6GOQwnEjA1MCxHjB6cmE9RTRMPA@mail.gmail.com>
+Message-ID: <010101747ca98b3d-4779e154-4358-4b4f-8fe7-1f1840dbd72a-000000@us-west-2.amazonses.com>
 X-Sender: skakit@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 X-SES-Outgoing: 2020.09.11-54.240.27.187
@@ -65,7 +65,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-10 20:10, Doug Anderson wrote:
+On 2020-09-10 20:12, Doug Anderson wrote:
 > Hi,
 > 
 > On Thu, Sep 10, 2020 at 5:55 AM satya priya <skakit@codeaurora.org> 
@@ -80,73 +80,60 @@ On 2020-09-10 20:10, Doug Anderson wrote:
 >> GPIO mode in sleep state to keep it low during suspend.
 >> 
 >> Signed-off-by: satya priya <skakit@codeaurora.org>
->> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 >> ---
->> Changes in V2:
->>  - This patch adds sleep state for BT UART. Newly added in V2.
->> 
->> Changes in V3:
->>  - Remove "output-high" for TX from both sleep and default states
->>    as it is not required. Configure pull-up for TX in sleep state.
->> 
->> Changes in V4:
->>  - As per Matthias's comment, removed drive-strength for sleep state
->>    and fixed nit-pick.
->> 
 >> Changes in V5:
->>  - As per Matthias's comments, moved pinmux change for sleep state,
->>    pinctrl and interrupt config to the board specific file.
+>>  - Newly added in V5. This patch adds wakeup support for trogdor board 
+>> files.
 >> 
->>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 48 
->> +++++++++++++++++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 48 
+>> ++++++++++++++++++++++++++++
 >>  1 file changed, 48 insertions(+)
 > 
-> Similar comment to patch #1 in that this applies only to the IDP board
-> but that's not obvious from ${SUBJECT}
+> Note: I can't find this email on any of the mailing lists.  Can you
+> check your config?  I tried:
+> 
+> http://lore.kernel.org/r/1599742438-16811-4-git-send-email-skakit@codeaurora.org
+> 
+> ...and also checked patchwork servers.  I only see patch 1 and 2.  I
+> think Bjorn usually applies from patchwork so this'll likely be a
+> problem...
 > 
 
-Okay.
+I guess it is updated, now it is showing all the 4 patches
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=346637
 
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts 
->> b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> index 04888df..e529a41 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
->> @@ -344,6 +344,10 @@
->>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> index a6b9beb..96b5331 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> @@ -792,6 +792,11 @@ ap_spi_fp: &spi10 {
+>>  #include <arm/cros-ec-sbs.dtsi>
 >> 
 >>  &uart3 {
 >> +       pinctrl-names = "default", "sleep";
 >> +       pinctrl-1 = <&qup_uart3_sleep>;
 >> +       interrupts-extended = <&intc GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>,
 >> +                               <&tlmm 41 IRQ_TYPE_EDGE_FALLING>;
-> 
-> You need a:
-> 
-> /delete-property/interrupts;
-> 
-> ...or, alternatively, a patch before this one that converts all the
-> UARTs in sc7180 to just use interrupts-extended.
-> 
-
-Sure, I will add this. But I think when both are added, 
-"interrupts-extended" will get priority as per [1] and there wouldn't be 
-any problem.
-
-[1] 
-https://www.kernel.org/doc/Documentation/devicetree/bindings/interrupt-controller/interrupts.txt
-
-> 
+>> +
 >>         status = "okay";
 > 
-> Slight nit is that usually I see the status line first.  All the other
-> instances in this file have it that way.  Can you match?
+> Same comments here as for patch #2.
 > 
 
-Ok, will correct it.
+Ok.
 
 > 
+>>         bluetooth: bluetooth {
+>> @@ -1345,4 +1350,47 @@ ap_spi_fp: &spi10 {
+>>                         drive-strength = <2>;
+>>                 };
+>>         };
+>> +
+>> +       qup_uart3_sleep: qup-uart3-sleep {
 > 
-> 
-> -Doug
+> I believe things in this section are supposed to be sorted
+> alphabetically.  Thus "qup..." should be sorted before "trackpad..."
+
+Ok.
