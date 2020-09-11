@@ -2,132 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D889265952
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 08:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B50B265956
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 08:28:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725792AbgIKG0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 02:26:16 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:27883 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbgIKG0L (ORCPT
+        id S1725616AbgIKG2G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 02:28:06 -0400
+Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:49936
+        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725468AbgIKG2D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 02:26:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1599805566;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=CF/ETIHu0AnzErbledea+ydMrjTVcALretUs6XsCpHk=;
-        b=qw4fiFJnlUxSmQX6PGzgrK6OBukeKh2cfv8LdkDSXgypneKxRsScua4o7NxeReK75F
-        eg//vObzdcN8UFmruC82YgxZxOPdf6mEEBKS8PumpwhlzL5YzW2RS7qPYDh6jL4/L5i4
-        yJ0xl0nQsRacpqUCOOdbyLVKUtTn9DeW4a49g4PpTnM0KUIV+yJLKGn54Snz60Ehuqb4
-        RKV8eRakDWOIQnHckaHoMUhmMGKGYl53130FW09BwvsHW2vvdaiCaPmcIHjmfasPndN+
-        nRR07NlIbJYGaaXAcmEKjw4RVfwnXk/ljJnmL6UIVH8G9kvtcePIY2VXuArMBPjGQ9LT
-        jmfA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEIdhPgVC7iy9yGr7ESbX"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w8B6Q6L29
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Fri, 11 Sep 2020 08:26:06 +0200 (CEST)
-Date:   Fri, 11 Sep 2020 08:26:02 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: Qcom clock performance votes on mainline
-Message-ID: <20200911062602.GA2827@gerhold.net>
-References: <20200910162610.GA7008@gerhold.net>
- <159977328190.2295844.1029544710226353839@swboyd.mtv.corp.google.com>
- <20200911054844.GA1193@gerhold.net>
- <20200911060556.bntj3s74je75orel@vireshk-i7>
+        Fri, 11 Sep 2020 02:28:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=zsmsymrwgfyinv5wlfyidntwsjeeldzt; d=codeaurora.org; t=1599805682;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+        bh=pAeAgsozou67WOAJChdNX/t/bzVhVhOA2kc1P+Z3QgA=;
+        b=MAkWIzxn7bQdDab0KD/fq+B62/zhFAf9pZLBI1PmwoxW+mq8o722Igkq20VVHoOU
+        Ejs/wPnMWamiSDOmeGdpqBLm/OjoRTUbfeDK8vlXXlEnhC8Tp3TfbSSrB4MWeCvYJan
+        mNGcl3NACGTm0ZFkeuMm+iBwRbHwYeK1VdhM3iRY=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1599805682;
+        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
+        bh=pAeAgsozou67WOAJChdNX/t/bzVhVhOA2kc1P+Z3QgA=;
+        b=bPQ+DqR7xSLQYjLFf4sSlxXnfxUyr2WC3EgIDLaYgucvB9w1TH9EMsE4XUZtnNvZ
+        9njIrZxr0nOMUDy+Phu3mLax5O98x2+Eq/jJ1jmuKu1L5hFg3q0U0AMyBD0kEY1uYX4
+        OnAWT2A70cptRTmG9PZoaMwHkMRLBOvx3a0z9jdI=
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 52044C433F0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v5 4/4] bus: mhi: clients: Add userspace client interface
+ driver
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org
+References: <1596696063-17802-1-git-send-email-hemantk@codeaurora.org>
+ <1596696063-17802-5-git-send-email-hemantk@codeaurora.org>
+ <20200907093725.GC1393659@kroah.com>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <010101747bd97299-764fe97e-b047-4729-bd3d-5324002af106-000000@us-west-2.amazonses.com>
+Date:   Fri, 11 Sep 2020 06:28:02 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200911060556.bntj3s74je75orel@vireshk-i7>
+In-Reply-To: <20200907093725.GC1393659@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-SES-Outgoing: 2020.09.11-54.240.27.185
+Feedback-ID: 1.us-west-2.CZuq2qbDmUIuT3qdvXlRHZZCpfZqZ4GtG9v3VKgRyF0=:AmazonSES
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 11, 2020 at 11:35:56AM +0530, Viresh Kumar wrote:
-> On 11-09-20, 07:48, Stephan Gerhold wrote:
-> > On Thu, Sep 10, 2020 at 02:28:01PM -0700, Stephen Boyd wrote:
-> > > Quoting Stephan Gerhold (2020-09-10 09:26:10)
-> > > > Hi Stephen, Hi Rajendra,
-> > > > 
-> > > > while working on some MSM8916 things I've been staring at the downstream
-> > > > clock-gcc-8916.c [1] driver a bit. One thing that confuses me are the
-> > > > voltage/performance state votes that are made for certain clocks within
-> > > > the driver. Specifically lines like
-> > > > 
-> > > >     VDD_DIG_FMAX_MAP2(LOW, 32000000, NOMINAL, 64000000),
-> > > > 
-> > > > on certain clocks like UART, I2C or SPI. There does not seem to be
-> > > > anything equivalent in the mainline clock driver at the moment.
-> > > > 
-> > > > As far as I understand from related discussions on mailing lists [2],
-> > > > these performance votes are not supposed to be added to the clock
-> > > > driver(s), but rather as required-opps within OPP tables of all the
-> > > > consumers. Is that correct?
-> > > 
-> > > Yes.
-> > > 
-> > > > 
-> > > > As a second question, I'm wondering about one particular case:
-> > > > I've been trying to get CPR / all the CPU frequencies working on MSM8916.
-> > > > For that, I already added performance state votes for VDDMX and CPR as
-> > > > required-opps to the CPU OPP table.
-> > > > 
-> > > > After a recent discussion [3] with Viresh about where to enable power
-> > > > domains managed by the OPP core, I've been looking at all the
-> > > > performance state votes made in the downstream kernel again.
-> > > > 
-> > > > Actually, the A53 PLL used for the higher CPU frequencies also has such
-> > > > voltage/performance state votes. The downstream driver declares the
-> > > > clock like [4]:
-> > > > 
-> > > >                 .vdd_class = &vdd_sr2_pll,
-> > > >                 .fmax = (unsigned long [VDD_SR2_PLL_NUM]) {
-> > > >                         [VDD_SR2_PLL_SVS] = 1000000000,
-> > > >                         [VDD_SR2_PLL_NOM] = 1900000000,
-> > > >                 },
-> > > >                 .num_fmax = VDD_SR2_PLL_NUM,
-> > > > 
-> > > > which ends up as votes for the VDDCX power domain.
-> > > > 
-> > > > Now I'm wondering: Where should I make these votes on mainline?
-> > > > Should I add it as yet another required-opps to the CPU OPP table?
-> > > 
-> > > Sounds like the right approach.
-> > > 
-> > 
-> > Thanks for the quick reply!
-> > 
-> > > > 
-> > > > It would be a bit of a special case because these votes are only done
-> > > > for the A53 PLL (which is only used for the higher CPU frequencies, not
-> > > > the lower ones)...
-> > > 
-> > > Can that be put into the OPP table somehow for only the high
-> > > frequencies? The OPP tables for CPUs sometimes cover the CPU PLL voltage
-> > > requirements too so it doesn't seem like a totally bad idea.
+Hi Greg,
+
+On 9/7/20 2:37 AM, Greg KH wrote:
+> On Wed, Aug 05, 2020 at 11:41:03PM -0700, Hemant Kumar wrote:
+>> This MHI client driver allows userspace clients to transfer
+>> raw data between MHI device and host using standard file operations.
+>> Device file node is created with format
+>>
+>> /dev/mhi_<controller_name>_<mhi_device_name>
+>>
+>> Currently it supports LOOPBACK channel.
+>>
+>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>> ---
+>>   drivers/bus/mhi/Kconfig          |   6 +
+>>   drivers/bus/mhi/Makefile         |   1 +
+>>   drivers/bus/mhi/clients/Kconfig  |  15 +
 > 
-> Maybe we can allow the vote value to be 0 somehow ?
+> Why a whole new subdirectory for just one file?
+> 
+> Please keep it in the same directory until you get too many different
+> files.
+Currently MHI core driver files are under bus/mhi/core. Since MHI 
+clients sit on top of core layer of MHI driver, i can move uci.c 
+directly under /bus/mhi/.
+
+> 
+>>   drivers/bus/mhi/clients/Makefile |   3 +
+>>   drivers/bus/mhi/clients/uci.c    | 662 +++++++++++++++++++++++++++++++++++++++
+>>   5 files changed, 687 insertions(+)
+>>   create mode 100644 drivers/bus/mhi/clients/Kconfig
+>>   create mode 100644 drivers/bus/mhi/clients/Makefile
+>>   create mode 100644 drivers/bus/mhi/clients/uci.c
+>>
+>> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+>> index 6a217ff..927c392 100644
+>> --- a/drivers/bus/mhi/Kconfig
+>> +++ b/drivers/bus/mhi/Kconfig
+>> @@ -20,3 +20,9 @@ config MHI_BUS_DEBUG
+>>   	 Enable debugfs support for use with the MHI transport. Allows
+>>   	 reading and/or modifying some values within the MHI controller
+>>   	 for debug and test purposes.
+>> +
+>> +if MHI_BUS
+>> +
+>> +source "drivers/bus/mhi/clients/Kconfig"
+>> +
+>> +endif
+>> diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
+>> index 19e6443..48f6028 100644
+>> --- a/drivers/bus/mhi/Makefile
+>> +++ b/drivers/bus/mhi/Makefile
+>> @@ -1,2 +1,3 @@
+>>   # core layer
+>>   obj-y += core/
+>> +obj-y += clients/
+>> diff --git a/drivers/bus/mhi/clients/Kconfig b/drivers/bus/mhi/clients/Kconfig
+>> new file mode 100644
+>> index 0000000..37aaf51
+>> --- /dev/null
+>> +++ b/drivers/bus/mhi/clients/Kconfig
+>> @@ -0,0 +1,15 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +
+>> +menu "MHI clients support"
+>> +
+>> +config MHI_UCI
+>> +       tristate "MHI UCI"
+>> +       depends on MHI_BUS
+>> +       help
+>> +	 MHI based userspace client interface driver is used for transferring
+>> +	 raw data between host and device using standard file operations from
+>> +	 userspace. Open, read, write, and close operations are supported
+>> +	 by this driver. Please check mhi_uci_match_table for all supported
+>> +	 channels that are exposed to userspace.
+>> +
+> 
+> Module name information?
+Thanks for pointing it out, will add in next patch set.
+> 
+> 
+>> +endmenu
+>> diff --git a/drivers/bus/mhi/clients/Makefile b/drivers/bus/mhi/clients/Makefile
+>> new file mode 100644
+>> index 0000000..cd34282
+>> --- /dev/null
+>> +++ b/drivers/bus/mhi/clients/Makefile
+>> @@ -0,0 +1,3 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only
+>> +
+>> +obj-$(CONFIG_MHI_UCI) += uci.o
+> 
+> Why not mhi_ as a prefix?  This is a very generic module name, right?
+how about adding
+mhi_uci-y		:= uci.o
+obj-$(CONFIG_MHI_UCI)	+= mhi_uci.o
+
+> 
+>> diff --git a/drivers/bus/mhi/clients/uci.c b/drivers/bus/mhi/clients/uci.c
+>> new file mode 100644
+>> index 0000000..a25d5d0
+>> --- /dev/null
+>> +++ b/drivers/bus/mhi/clients/uci.c
+>> @@ -0,0 +1,662 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.*/
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/mhi.h>
+>> +#include <linux/mod_devicetable.h>
+>> +#include <linux/module.h>
+>> +#include <linux/poll.h>
+>> +
+>> +#define DEVICE_NAME "mhi"
+>> +#define MHI_UCI_DRIVER_NAME "mhi_uci"
+>> +#define MAX_UCI_MINORS (128)
+>> +
+>> +static DEFINE_IDR(uci_idr);
+>> +static DEFINE_MUTEX(uci_idr_mutex);
+>> +static struct class *uci_dev_class;
+>> +static int uci_dev_major = -1;
+> 
+> Why init this to -1?
+Idea was to initialize with invalid value, i can leave it zero initialized.
+> 
+>> +
+>> +/**
+>> + * struct uci_chan - MHI channel for a uci device
+>> + * @wq: wait queue for reader/writer
+>> + * @lock: spin lock
+>> + * @pending: list of rx buffers userspace is waiting to read
+>> + * @cur_buf: current buffer userspace is reading
+>> + * @rx_size: size of the current rx buffer userspace is reading
+>> + */
+>> +struct uci_chan {
+>> +	wait_queue_head_t wq;
+>> +
+>> +	/* protects pending and cur_buf members */
+>> +	spinlock_t lock;
+>> +
+>> +	struct list_head pending;
+>> +	struct uci_buf *cur_buf;
+>> +	size_t rx_size;
+>> +};
+>> +
+>> +/**
+>> + * struct uci_buf - uci buffer
+>> + * @data: data buffer
+>> + * @len: length of data buffer
+>> + * @node: list node of the uci buffer
+>> + */
+>> +struct uci_buf {
+>> +	void *data;
+>> +	size_t len;
+>> +	struct list_head node;
+>> +};
+>> +
+>> +/**
+>> + * struct uci_dev - MHI uci device
+>> + * @minor: uci device node minor number
+>> + * @mhi_dev: associated mhi device object
+>> + * @chan: MHI channel name
+>> + * @lock: mutex lock
+>> + * @ul_chan: uplink uci channel object
+>> + * @dl_chan: downlink uci channel object
+>> + * @mtu: max tx buffer length
+>> + * @actual_mtu: maximum size of incoming buffer
+>> + * @ref_count: uci_dev reference count
+>> + * @open_count: device node open count
+>> + * @enabled: uci device probed
+>> + */
+>> +struct uci_dev {
+>> +	unsigned int minor;
+>> +	struct mhi_device *mhi_dev;
+>> +	const char *chan;
+>> +
+>> +	/* protects uci_dev struct members */
+>> +	struct mutex lock;
+>> +
+>> +	struct uci_chan ul_chan;
+>> +	struct uci_chan dl_chan;
+>> +	size_t mtu;
+>> +	size_t actual_mtu;
+>> +	struct kref ref_count;
+>> +	struct kref open_count;
+> 
+> I'm stopping right here.  A structure can only have ONE reference count
+> to control its lifespan.  You have 2 here, which guarantees that either
+> you are using a kref incorrectly, or your code is totally confused and
+> will break easily.
+> 
+> Please fix this as this is not how to do this.
+> 
+> Also, why does anyone need to care about the number of times that open()
+> is called?  The vfs layer should handle all of that for you, right?
+Reason for using open_count was to allow start MHI channel only when 
+first open() was called and stop the MHI channel when last release() is 
+called. Since uci driver just need to handle one open() from user space
+other calls to open can simply return -EBUSY. i will get rid of 
+open_count and does not let multiple threads to open same file node.
+> 
+> No other misc driver has to deal with this multi-layered reference
+> counting, so perhaps you are making this a lot more complex than it
+> really has to be?
+> 
+> thanks,
+> 
+> greg k-h
 > 
 
-Yep, I tried using an extra opp-level = <0> OPP for that in [1].
-It does not work at the moment but maybe we can (somehow) add support
-for that. I have some more thoughts about where/how to enable the power
-domains from the OPP core in this case. The discussion probably fits
-better to the other mail thread so I will reply there later.
-
-Thanks!
-Stephan
-
-[1]: https://lore.kernel.org/linux-pm/20200828095706.GA1865@gerhold.net/
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
