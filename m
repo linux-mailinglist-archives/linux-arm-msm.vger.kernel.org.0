@@ -2,61 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5019C2662E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 18:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AEF9266381
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 18:18:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgIKQHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 12:07:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49158 "EHLO mail.kernel.org"
+        id S1726594AbgIKQSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 12:18:09 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:56162 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726529AbgIKQHM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 12:07:12 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3AFC2206CA;
-        Fri, 11 Sep 2020 16:07:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1599840432;
-        bh=HMkToyAt+R5UW/0fJTeoIckq2g06NAPzV1gQYp89vEI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rW40pgimHDCBZ3vHXEgiusgmWmT7c33pKGm3eMIMIJHF2eAVYvAbQbBax0f1VzpZL
-         7GRrVgdXVhGnr00ED/n/a2itqfP1aYXxYL8QXzDrhFZaI2IUqsJrt9zBMuVKFqYO6z
-         OOd1Jf5FYqf9x4SCl57HVjpIsmhSc5NfoUhTu41w=
-Date:   Fri, 11 Sep 2020 17:07:07 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Joerg Roedel <joro@8bytes.org>,
+        id S1726551AbgIKQSG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Sep 2020 12:18:06 -0400
+X-Greylist: delayed 526 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Sep 2020 12:18:04 EDT
+Received: from localhost.localdomain (80-110-125-173.cgn.dynamic.surfer.at [80.110.125.173])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 26A75C18F3;
+        Fri, 11 Sep 2020 16:09:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1599840553; bh=beYe2pjCl3qn4jz1iKBarKru400MJtZulKL+2GMLrWU=;
+        h=From:To:Cc:Subject:Date;
+        b=Mn92EfctCWcVVDiCUTXOz6gLRQazMvjNTXVmfrrpKkoqyXGVWc7BGWA9BjORnwIJu
+         Smz7pT2mpF6JqgYTBpYRX00fV4N5AkdeFSNa/HhXj7N9bnPCoUQ1wJju8nOpGvKrkG
+         n79/Sq4UohDtR8UFI7hXyuMwjBIF0SA0N8clE4+M=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     freedreno@lists.freedesktop.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCHv4 6/6] iommu: arm-smmu-impl: Remove unwanted extra blank
- lines
-Message-ID: <20200911160706.GA20802@willie-the-truck>
-References: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
- <010101747d912d9f-c8050b8d-1e81-4be0-ac35-b221f657b490-000000@us-west-2.amazonses.com>
- <c26b5317-f12d-8be9-be45-3307ce5efbfc@arm.com>
+        Jonathan Marek <jonathan@marek.ca>,
+        Brian Masney <masneyb@onstation.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/adreno: fix probe without iommu
+Date:   Fri, 11 Sep 2020 18:08:53 +0200
+Message-Id: <20200911160854.484114-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c26b5317-f12d-8be9-be45-3307ce5efbfc@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 11, 2020 at 05:03:06PM +0100, Robin Murphy wrote:
-> BTW am I supposed to have received 3 copies of everything? Because I did...
+The function iommu_domain_alloc returns NULL on platforms without IOMMU
+such as msm8974. This resulted in PTR_ERR(-ENODEV) being assigned to
+gpu->aspace so the correct code path wasn't taken.
 
-Yeah, this seems to be happening for all of Sai's emails :/
+Fixes: ccac7ce373c1 ("drm/msm: Refactor address space initialization")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-Will
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 862dd35b27d3..6e8bef1a9ea2 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -189,10 +189,16 @@ struct msm_gem_address_space *
+ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+ 		struct platform_device *pdev)
+ {
+-	struct iommu_domain *iommu = iommu_domain_alloc(&platform_bus_type);
+-	struct msm_mmu *mmu = msm_iommu_new(&pdev->dev, iommu);
++	struct iommu_domain *iommu;
++	struct msm_mmu *mmu;
+ 	struct msm_gem_address_space *aspace;
+ 
++	iommu = iommu_domain_alloc(&platform_bus_type);
++	if (!iommu)
++		return NULL;
++
++	mmu = msm_iommu_new(&pdev->dev, iommu);
++
+ 	aspace = msm_gem_address_space_create(mmu, "gpu", SZ_16M,
+ 		0xffffffff - SZ_16M);
+ 
+-- 
+2.28.0
+
