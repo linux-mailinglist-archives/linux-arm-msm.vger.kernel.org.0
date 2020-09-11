@@ -2,142 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3204265D54
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:04:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 100E6265D6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Sep 2020 12:11:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbgIKKER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Sep 2020 06:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
+        id S1725860AbgIKKLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Sep 2020 06:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbgIKKEP (ORCPT
+        with ESMTP id S1725780AbgIKKLB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Sep 2020 06:04:15 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12099C061756
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:04:15 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id q13so5053235vsj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:04:15 -0700 (PDT)
+        Fri, 11 Sep 2020 06:11:01 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCFEBC061573
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:11:00 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id a12so9323164eds.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Sep 2020 03:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Lv7DYSegmi05MQ2Or1cVULVSVjTeshwqgQaUDPulOTE=;
-        b=gyQaqmP/9o85fe1LiMX2cY1a7zMENgWNJsst1hDiZSI33Fosd3Qv5rUAPGvomlSiU2
-         aCLS3ARaIRotYG2VnNOxjwzt/FFcgjR9YaN9I56g1wQjxDYE5YeylRG2CapeXI8KF4Uy
-         W3OiNGzsxUBWEBMZqOvabMjSoxBJnqQ42FzVzZyua4B99MamgAo0mgjfcHxdfqZQDXJt
-         v7voKkopP50unQtCJonw4iiYQbfMjnj1uHTECeKNfEzowDdrMypLR/GdZPt+k9Dc4Bha
-         4x7IUuFy06fTbzFttIW36kDpODVIiw0Vy8NfN1RsU0SU3zlFygTIPgl4LYhlBjsk90wO
-         T3gA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=34lVXXsxtskqjri1vjJe9bVZAHnv49AB0SP0UfxscAE=;
+        b=Ep6Ra3o7gNv7Sft87tKmodUvRTKK+yEtXMzzNto1Yt1KesamA6xMs/S8zhwDMqRqsy
+         cj3Xa5rWmXFkJEe7xzlnmIgOsD7z66jKkNHSMokMcCKrVVp9+1zmIDltdzx6TwFgDYrq
+         LU+HqA9msWRajaHgwLojKB8QzqVvOB8SEUGs6NiU6ZLnDPpDt6pExPXBwtY15fQilO0P
+         HcvPgWWEQQPtnWxXe2sGuxjoDQI4zzcdIoTfMUlBVsawGUYH41ceY9cjxfJdBeJypwbg
+         8M8O8Kr+y5byUjtX2u5dU92/znvOXk9SWOBv842iUW6A3ys6nEz0JhaKnJ+Bilt7QaOc
+         AaVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Lv7DYSegmi05MQ2Or1cVULVSVjTeshwqgQaUDPulOTE=;
-        b=eaKCH3jEUfoiOMqy4FyO+RBy72YBDtvC9lQYRNvd8qAHODLFYhhdKGrBLBkrSO4YFI
-         ZdgnPwDF+7C9wSjwl41D1B7QNUCI8uc44H9yT4IGulHWxHeqJIT2H07Edbue92m3L/lU
-         5I2aaMILhpN+6bufxc5OzuCnOkA1jp7qRwB8shQp8XgBCQ3JgCY8A7PK3z1SsCpdIMFw
-         jhkUXaZ+xHbr8O7PyoY+kw0Kn8OMIZfCsyub8h+5C/9Bb2gBWRpr4IST5p4lfhpwwlsa
-         uBrKaloAnxauFeAsQj339KbZ51ttSvHLedaWFjnSeLZBY9YztwZgetqz41chTjDM+qPh
-         aNDg==
-X-Gm-Message-State: AOAM531xRl6tO1Qq5FJkw8q7BrDrt0jDY0t5btI67WIkZ9w2630gaJBN
-        FWUYrRHBhDpgJ5uwPRklJqAhhNbgzL+u2YOZaO3JQQ==
-X-Google-Smtp-Source: ABdhPJzQhkBpSUuU0Ob3GWHfokuWfgA4zmVG5+TujkYG/hWdckyrLWyFYgoTqFxrTETn15q2HAHHdhCozEtVDbO2gls=
-X-Received: by 2002:a67:e355:: with SMTP id s21mr496154vsm.50.1599818652720;
- Fri, 11 Sep 2020 03:04:12 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=34lVXXsxtskqjri1vjJe9bVZAHnv49AB0SP0UfxscAE=;
+        b=tFVjZpOR+NXq42p2WhvQZ5j3pshbUD/qy1iqErlS33hsolsFP1rofH9fOjV4wVj4rr
+         oZkDUCu6jJ4tB9Aw9jbCcisrtEGfiUX0DXklhMzRsGu7/UZiR2veo/P5jfI5chbedEoI
+         pbepW/r7rDd57muDDTOzBMBpJyBv0CghVGkf29M9MoQra5vod3q7BOZOg9DefYRasube
+         R8DZ3KOsof0Fgpsdl86+rebaeVhOCDD3+zyua9qg8SY4Itu6G9SRJcKVKAPAs5NqMZAv
+         TC8G/D8wEwSRiYN+IqNk1PPjxxEiaNNN/xHU/hmDDBwK+S4ADPEsZaoovq6DNBhxACG7
+         Dc+w==
+X-Gm-Message-State: AOAM531pkjpb+5/psXXp3jEAlztagCLaapWWV11E704HcGQnpL1Iroem
+        LOgK07AWUBdZr1rx59yhaklrMmKd+LQJ44Qo
+X-Google-Smtp-Source: ABdhPJwUlDEUap6H+NlyZak20h496rC1EI12mA9SUu9rpIVPvh2Z9ra+5EHTo2BjIraFgIG9zA+t2Q==
+X-Received: by 2002:a05:6402:1109:: with SMTP id u9mr1212483edv.74.1599819059554;
+        Fri, 11 Sep 2020 03:10:59 -0700 (PDT)
+Received: from [192.168.1.8] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id v2sm1227241ejh.57.2020.09.11.03.10.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Sep 2020 03:10:58 -0700 (PDT)
+Subject: Re: [PATCH v2 1/3] venus: core: handle race condititon for core ops
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        linux-media@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1599741856-16239-1-git-send-email-mansur@codeaurora.org>
+ <1599741856-16239-2-git-send-email-mansur@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <313cf565-f69f-df84-6bff-8c9a77b9f642@linaro.org>
+Date:   Fri, 11 Sep 2020 13:10:57 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <890ae5601594fca5de104695a682f4b6efbc631b.1599660554.git.viresh.kumar@linaro.org>
-In-Reply-To: <890ae5601594fca5de104695a682f4b6efbc631b.1599660554.git.viresh.kumar@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 11 Sep 2020 12:03:36 +0200
-Message-ID: <CAPDyKFropJGPHEmczi9rjWEJvgCOz8d9bLUdMmu6K+B+1w8c-w@mail.gmail.com>
-Subject: Re: [PATCH V2 resend] mmc: sdhci-msm: Unconditionally call dev_pm_opp_of_remove_table()
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1599741856-16239-2-git-send-email-mansur@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 9 Sep 2020 at 16:12, Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> dev_pm_opp_of_remove_table() doesn't report any errors when it fails to
-> find the OPP table with error -ENODEV (i.e. OPP table not present for
-> the device). And we can call dev_pm_opp_of_remove_table()
-> unconditionally here.
->
-> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 
-Applied for next, thanks!
 
-Kind regards
-Uffe
-
->
+On 9/10/20 3:44 PM, Mansur Alisha Shaik wrote:
+> For core ops we are having only write protect but there
+> is no read protect, because of this in multthreading
+> and concurrency, one CPU core is reading without wait
+> which is causing the NULL pointer dereferece crash.
+> 
+> one such scenario is as show below, where in one CPU
+> core, core->ops becoming NULL and in another CPU core
+> calling core->ops->session_init().
+> 
+> CPU: core-7:
+> Call trace:
+>  hfi_session_init+0x180/0x1dc [venus_core]
+>  vdec_queue_setup+0x9c/0x364 [venus_dec]
+>  vb2_core_reqbufs+0x1e4/0x368 [videobuf2_common]
+>  vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
+>  v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
+>  v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
+>  v4l_reqbufs+0x4c/0x5c
+> __video_do_ioctl+0x2b0/0x39c
+> 
+> CPU: core-0:
+> Call trace:
+>  venus_shutdown+0x98/0xfc [venus_core]
+>  venus_sys_error_handler+0x64/0x148 [venus_core]
+>  process_one_work+0x210/0x3d0
+>  worker_thread+0x248/0x3f4
+>  kthread+0x11c/0x12c
+> 
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
-> V2:
-> - Compare with -ENODEV only for failures.
-> - Create new label to put clkname.
-> - Based on 5.9-rc4
-> ---
->  drivers/mmc/host/sdhci-msm.c | 14 +++++---------
->  1 file changed, 5 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 5a33389037cd..f7beaec6412e 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -263,7 +263,6 @@ struct sdhci_msm_host {
->         unsigned long clk_rate;
->         struct mmc_host *mmc;
->         struct opp_table *opp_table;
-> -       bool has_opp_table;
->         bool use_14lpp_dll_reset;
->         bool tuning_done;
->         bool calibration_done;
-> @@ -2285,11 +2284,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->
->         /* OPP table is optional */
->         ret = dev_pm_opp_of_add_table(&pdev->dev);
-> -       if (!ret) {
-> -               msm_host->has_opp_table = true;
-> -       } else if (ret != -ENODEV) {
-> +       if (ret && ret != -ENODEV) {
->                 dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
-> -               goto opp_cleanup;
-> +               goto opp_put_clkname;
->         }
->
->         /* Vote for maximum clock rate for maximum performance */
-> @@ -2453,8 +2450,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->         clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
->                                    msm_host->bulk_clks);
->  opp_cleanup:
-> -       if (msm_host->has_opp_table)
-> -               dev_pm_opp_of_remove_table(&pdev->dev);
-> +       dev_pm_opp_of_remove_table(&pdev->dev);
-> +opp_put_clkname:
->         dev_pm_opp_put_clkname(msm_host->opp_table);
->  bus_clk_disable:
->         if (!IS_ERR(msm_host->bus_clk))
-> @@ -2474,8 +2471,7 @@ static int sdhci_msm_remove(struct platform_device *pdev)
->
->         sdhci_remove_host(host, dead);
->
-> -       if (msm_host->has_opp_table)
-> -               dev_pm_opp_of_remove_table(&pdev->dev);
-> +       dev_pm_opp_of_remove_table(&pdev->dev);
->         dev_pm_opp_put_clkname(msm_host->opp_table);
->         pm_runtime_get_sync(&pdev->dev);
->         pm_runtime_disable(&pdev->dev);
-> --
-> 2.25.0.rc1.19.g042ed3e048af
->
+> Changes in V2:
+> - Addressed review comments by stan by validating on top
+> - of https://lore.kernel.org/patchwork/project/lkml/list/?series=455962
+> 
+>  drivers/media/platform/qcom/venus/hfi.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+> index a59022a..3137071 100644
+> --- a/drivers/media/platform/qcom/venus/hfi.c
+> +++ b/drivers/media/platform/qcom/venus/hfi.c
+> @@ -195,7 +195,7 @@ EXPORT_SYMBOL_GPL(hfi_session_create);
+>  int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
+>  {
+>  	struct venus_core *core = inst->core;
+> -	const struct hfi_ops *ops = core->ops;
+> +	const struct hfi_ops *ops;
+>  	int ret;
+>  
+
+If we are in system error recovery the session_init cannot pass
+successfully, so we exit early in the function.
+
+I'd suggest to make it:
+
+	/* If core shutdown is in progress or we are in system error 	recovery,
+return an error */
+	mutex_lock(&core->lock);
+	if (!core->ops || core->sys_error) {
+		mutex_unclock(&core->lock);
+		return -EIO;
+	}
+	mutex_unclock(&core->lock);
+		
+>  	if (inst->state != INST_UNINIT)
+> @@ -204,10 +204,13 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
+>  	inst->hfi_codec = to_codec_type(pixfmt);
+>  	reinit_completion(&inst->done);
+>  
+> +	mutex_lock(&core->lock);
+> +	ops = core->ops;
+>  	ret = ops->session_init(inst, inst->session_type, inst->hfi_codec);
+>  	if (ret)
+>  		return ret;
+>  
+> +	mutex_unlock(&core->lock);
+>  	ret = wait_session_msg(inst);
+>  	if (ret)
+>  		return ret;
+> 
+
+-- 
+regards,
+Stan
