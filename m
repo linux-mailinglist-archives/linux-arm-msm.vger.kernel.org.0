@@ -2,280 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F702267BBA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 20:18:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C368C267BBE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 20:25:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725910AbgILSSY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Sep 2020 14:18:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
+        id S1725873AbgILSZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Sep 2020 14:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725877AbgILSST (ORCPT
+        with ESMTP id S1725872AbgILSZA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Sep 2020 14:18:19 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BCAC061757
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 11:18:18 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id o20so9453450pfp.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 11:18:18 -0700 (PDT)
+        Sat, 12 Sep 2020 14:25:00 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15679C061573;
+        Sat, 12 Sep 2020 11:25:00 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id a17so14526313wrn.6;
+        Sat, 12 Sep 2020 11:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a1GTBXxKUvJxoon/aNt1MN6fmALohNRxcmfcvMYUVuI=;
-        b=cwvhRxfbcTFj4svbdXDZ9jcAEMhYVMR7LZ4P87bq1El3TaxmfOrqur6oTokv//oGuR
-         O6lBjAZZoASK01mJbAZUMKWC8cxKClvwn+gDUrgegq07Rhz3N7cIq0hUCJNbKT3N6xVs
-         DZAooRgvRH8KK96ejVU7xL8oGc/eW70Ngbe6s=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tGJ7MqBZLv0eAFVjI5IdEGfiU4O8rQsPVnooROi6laU=;
+        b=YvrlhxZRmzgDhT6xrPgh7jVcpAHPv91I8p1bnd/Ybyjw2xx04UgOiVehjFNGf/zdTZ
+         gQ0jfYsMN1aXiFy8ncXY7biHgcFJxBNKTva0qEOsfvL8Wferx6Qwexf2brdyU7OrgxxH
+         SiZLYXvlXgmh+qUr+YWjq534h/vUUMwKEHCEUHPq/9hTK1JhyxmgYaHANgJTCLbXPfpL
+         gSmlSA70QICucG4alPltitONxnLqXhXtk9Ajv/rr3h7FQ9XCLRPnOUi9WnHE+hUqJ9ga
+         E9TSVq4k18EzfRW0xnSjlX2NRWcAABlN7ZoNDh2QRMCS4aHx8sUBJ6NGm5VTSqb7bMrP
+         ldvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a1GTBXxKUvJxoon/aNt1MN6fmALohNRxcmfcvMYUVuI=;
-        b=KZ7RmoL5pZDO8EQaXksDyeUn88v+i+PULyIxN5YqfsB25mRf1cxPmZtpTBWFi+rhaQ
-         WL7VaRw8asrQ9UZynMxRRNwKvtbJ2m6j658JQyoUqy1THePmrQCJ/upRZMR7tA6See2+
-         Pw/lRVpmJFuBeRVLsmDl/l9cICXY973W0Uapsq9jFL5rsMhv8wkYCSGlGQuXEJ9qUS8i
-         MFAUfkqmtwTkbSblrWcL1VGP55JLcu4B5r2XgW8kjLGdU4JMnpHARlKdVyJcrofx+gbU
-         ve/X1wJM7cB18e04CQPrxsTOAtWZgGbcAHVoPzhOX2pt7prWkm8LvpPMDBo9b2kip7Pz
-         +AZw==
-X-Gm-Message-State: AOAM533KVoLwikvCsys0ImWMj9tgygJcDX8xmz0hcmSXIGYMHbAkPHHF
-        OZZFjyt+PlzKnOl6GJ6Kn5gDOHf2Q3EMAg==
-X-Google-Smtp-Source: ABdhPJxwX4AccK3tYQzQmCHCIqpQZFNdVItS5jcKZcDzjfHI6EGkPeg1jTKnv2I6CfAhC/+Xma58Vw==
-X-Received: by 2002:aa7:80d3:: with SMTP id a19mr7177026pfn.102.1599934698016;
-        Sat, 12 Sep 2020 11:18:18 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id f6sm5858183pfq.82.2020.09.12.11.18.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2020 11:18:17 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     swboyd@chromium.org, Akash Asthana <akashast@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-Subject: [PATCH] spi: spi-geni-qcom: Don't wait to start 1st transfer if transmitting
-Date:   Sat, 12 Sep 2020 11:17:25 -0700
-Message-Id: <20200912111716.1.Ied5e843fad0d6b733a1fb8bcfb364dd2fa889eb3@changeid>
-X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tGJ7MqBZLv0eAFVjI5IdEGfiU4O8rQsPVnooROi6laU=;
+        b=SQVjbebn+pxnGpimVW0XEs9qkV5VwsDFsRTB3y3XAj3pXAF012VgUtFWrRfIrMvnVV
+         MqfYlw7em3tPj4m3k3ccRWf/4yypKGjktebHBl7fux9/HTKEyHTrLvvCNz24xW3VWI8G
+         jL7ecgy4tR8wqMm0+1/sgYBeU94us+G5KrSNDN44MH+VScUAjCJ72idncKIXT9rIJQfN
+         Wm6eszd9GYbW84yD5Eln9J3QvaeaboC1qr9JEWZtN4dsLwv5o08J/sFkYTVcQl50AQN5
+         t+Oyzojr7wWm6euD01HnAo0Qmw4gi+P0kUgbpIa77FfXNZAKpub9/vurmSmC2h27IGOo
+         jp1A==
+X-Gm-Message-State: AOAM531AcE452+Iu7JeIEpfROjPVvzKyeCuQfM0tbEKUcOr+3qeyPUG6
+        +Y2UganqX7tlmkBUXfEOddFxHTN/IAbsgljDFJc=
+X-Google-Smtp-Source: ABdhPJxnDbMbdSz2hPUfBzuQYfyUTosQbk+FaVCIPdDlwDrvWHXaJSinnkB//3oqC3oIBn+8QNJvFjyBHY+WTCVuogU=
+X-Received: by 2002:a5d:4a0c:: with SMTP id m12mr7873322wrq.83.1599935096172;
+ Sat, 12 Sep 2020 11:24:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200827211658.27479-1-tanmay@codeaurora.org>
+In-Reply-To: <20200827211658.27479-1-tanmay@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 12 Sep 2020 11:25:52 -0700
+Message-ID: <CAF6AEGttutrtxntAeRDtb3Hf_0i4z+9+rWMuShTrPVwTUHKTdg@mail.gmail.com>
+Subject: Re: [PATCH v12 0/5] Add support for DisplayPort driver on SnapDragon
+To:     Tanmay Shah <tanmay@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, aravindh@codeaurora.org,
+        Abhinav Kumar <abhinavk@codeaurora.org>, khsieh@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If we're sending bytes over SPI, we know the FIFO is empty at the
-start of the transfer.  There's no reason to wait for the interrupt
-telling us to start--we can just start right away.  Then if we
-transmit everything in one swell foop we don't even need to bother
-listening for TX interrupts.
+Fyi, I've pushed this series and the dp-compliance bits to msm-next-dp[1]
 
-In a test of "flashrom -p ec -r /tmp/foo.bin" interrupts were reduced
-from ~30560 to ~29730, about a 3% savings.
+I didn't include the dp audio series yet, which seems to need some
+minor rebasing.  (And a small request, when resending, cc
+freedreno@lists.freedesktop.org, so it shows up in the patchwork
+instance[2] I use)
 
-This patch looks bigger than it is because I moved a few functions
-rather than adding a forward declaration.  The only actual change to
-geni_spi_handle_tx() was to make it return a bool indicating if there
-is more to tx.
+You might want to double check that I got the correct versions of the
+series, etc.  And that nothing else (other than audio) is missing.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+BR,
+-R
 
- drivers/spi/spi-geni-qcom.c | 167 +++++++++++++++++++-----------------
- 1 file changed, 86 insertions(+), 81 deletions(-)
+[1] https://gitlab.freedesktop.org/drm/msm/-/commits/msm-next-dp
+[2] https://patchwork.freedesktop.org/project/freedreno
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 0dc3f4c55b0b..49c9eb870755 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -326,6 +326,88 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	return 0;
- }
- 
-+static unsigned int geni_byte_per_fifo_word(struct spi_geni_master *mas)
-+{
-+	/*
-+	 * Calculate how many bytes we'll put in each FIFO word.  If the
-+	 * transfer words don't pack cleanly into a FIFO word we'll just put
-+	 * one transfer word in each FIFO word.  If they do pack we'll pack 'em.
-+	 */
-+	if (mas->fifo_width_bits % mas->cur_bits_per_word)
-+		return roundup_pow_of_two(DIV_ROUND_UP(mas->cur_bits_per_word,
-+						       BITS_PER_BYTE));
-+
-+	return mas->fifo_width_bits / BITS_PER_BYTE;
-+}
-+
-+static bool geni_spi_handle_tx(struct spi_geni_master *mas)
-+{
-+	struct geni_se *se = &mas->se;
-+	unsigned int max_bytes;
-+	const u8 *tx_buf;
-+	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
-+	unsigned int i = 0;
-+
-+	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
-+	if (mas->tx_rem_bytes < max_bytes)
-+		max_bytes = mas->tx_rem_bytes;
-+
-+	tx_buf = mas->cur_xfer->tx_buf + mas->cur_xfer->len - mas->tx_rem_bytes;
-+	while (i < max_bytes) {
-+		unsigned int j;
-+		unsigned int bytes_to_write;
-+		u32 fifo_word = 0;
-+		u8 *fifo_byte = (u8 *)&fifo_word;
-+
-+		bytes_to_write = min(bytes_per_fifo_word, max_bytes - i);
-+		for (j = 0; j < bytes_to_write; j++)
-+			fifo_byte[j] = tx_buf[i++];
-+		iowrite32_rep(se->base + SE_GENI_TX_FIFOn, &fifo_word, 1);
-+	}
-+	mas->tx_rem_bytes -= max_bytes;
-+	if (!mas->tx_rem_bytes) {
-+		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-+		return false;
-+	}
-+	return true;
-+}
-+
-+static void geni_spi_handle_rx(struct spi_geni_master *mas)
-+{
-+	struct geni_se *se = &mas->se;
-+	u32 rx_fifo_status;
-+	unsigned int rx_bytes;
-+	unsigned int rx_last_byte_valid;
-+	u8 *rx_buf;
-+	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
-+	unsigned int i = 0;
-+
-+	rx_fifo_status = readl(se->base + SE_GENI_RX_FIFO_STATUS);
-+	rx_bytes = (rx_fifo_status & RX_FIFO_WC_MSK) * bytes_per_fifo_word;
-+	if (rx_fifo_status & RX_LAST) {
-+		rx_last_byte_valid = rx_fifo_status & RX_LAST_BYTE_VALID_MSK;
-+		rx_last_byte_valid >>= RX_LAST_BYTE_VALID_SHFT;
-+		if (rx_last_byte_valid && rx_last_byte_valid < 4)
-+			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
-+	}
-+	if (mas->rx_rem_bytes < rx_bytes)
-+		rx_bytes = mas->rx_rem_bytes;
-+
-+	rx_buf = mas->cur_xfer->rx_buf + mas->cur_xfer->len - mas->rx_rem_bytes;
-+	while (i < rx_bytes) {
-+		u32 fifo_word = 0;
-+		u8 *fifo_byte = (u8 *)&fifo_word;
-+		unsigned int bytes_to_read;
-+		unsigned int j;
-+
-+		bytes_to_read = min(bytes_per_fifo_word, rx_bytes - i);
-+		ioread32_rep(se->base + SE_GENI_RX_FIFOn, &fifo_word, 1);
-+		for (j = 0; j < bytes_to_read; j++)
-+			rx_buf[i++] = fifo_byte[j];
-+	}
-+	mas->rx_rem_bytes -= rx_bytes;
-+}
-+
- static void setup_fifo_xfer(struct spi_transfer *xfer,
- 				struct spi_geni_master *mas,
- 				u16 mode, struct spi_master *spi)
-@@ -398,8 +480,10 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
- 	 * setting up GENI SE engine, as driver starts data transfer
- 	 * for the watermark interrupt.
- 	 */
--	if (m_cmd & SPI_TX_ONLY)
--		writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
-+	if (m_cmd & SPI_TX_ONLY) {
-+		if (geni_spi_handle_tx(mas))
-+			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
-+	}
- 	spin_unlock_irq(&mas->lock);
- }
- 
-@@ -417,85 +501,6 @@ static int spi_geni_transfer_one(struct spi_master *spi,
- 	return 1;
- }
- 
--static unsigned int geni_byte_per_fifo_word(struct spi_geni_master *mas)
--{
--	/*
--	 * Calculate how many bytes we'll put in each FIFO word.  If the
--	 * transfer words don't pack cleanly into a FIFO word we'll just put
--	 * one transfer word in each FIFO word.  If they do pack we'll pack 'em.
--	 */
--	if (mas->fifo_width_bits % mas->cur_bits_per_word)
--		return roundup_pow_of_two(DIV_ROUND_UP(mas->cur_bits_per_word,
--						       BITS_PER_BYTE));
--
--	return mas->fifo_width_bits / BITS_PER_BYTE;
--}
--
--static void geni_spi_handle_tx(struct spi_geni_master *mas)
--{
--	struct geni_se *se = &mas->se;
--	unsigned int max_bytes;
--	const u8 *tx_buf;
--	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
--	unsigned int i = 0;
--
--	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
--	if (mas->tx_rem_bytes < max_bytes)
--		max_bytes = mas->tx_rem_bytes;
--
--	tx_buf = mas->cur_xfer->tx_buf + mas->cur_xfer->len - mas->tx_rem_bytes;
--	while (i < max_bytes) {
--		unsigned int j;
--		unsigned int bytes_to_write;
--		u32 fifo_word = 0;
--		u8 *fifo_byte = (u8 *)&fifo_word;
--
--		bytes_to_write = min(bytes_per_fifo_word, max_bytes - i);
--		for (j = 0; j < bytes_to_write; j++)
--			fifo_byte[j] = tx_buf[i++];
--		iowrite32_rep(se->base + SE_GENI_TX_FIFOn, &fifo_word, 1);
--	}
--	mas->tx_rem_bytes -= max_bytes;
--	if (!mas->tx_rem_bytes)
--		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
--}
--
--static void geni_spi_handle_rx(struct spi_geni_master *mas)
--{
--	struct geni_se *se = &mas->se;
--	u32 rx_fifo_status;
--	unsigned int rx_bytes;
--	unsigned int rx_last_byte_valid;
--	u8 *rx_buf;
--	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
--	unsigned int i = 0;
--
--	rx_fifo_status = readl(se->base + SE_GENI_RX_FIFO_STATUS);
--	rx_bytes = (rx_fifo_status & RX_FIFO_WC_MSK) * bytes_per_fifo_word;
--	if (rx_fifo_status & RX_LAST) {
--		rx_last_byte_valid = rx_fifo_status & RX_LAST_BYTE_VALID_MSK;
--		rx_last_byte_valid >>= RX_LAST_BYTE_VALID_SHFT;
--		if (rx_last_byte_valid && rx_last_byte_valid < 4)
--			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
--	}
--	if (mas->rx_rem_bytes < rx_bytes)
--		rx_bytes = mas->rx_rem_bytes;
--
--	rx_buf = mas->cur_xfer->rx_buf + mas->cur_xfer->len - mas->rx_rem_bytes;
--	while (i < rx_bytes) {
--		u32 fifo_word = 0;
--		u8 *fifo_byte = (u8 *)&fifo_word;
--		unsigned int bytes_to_read;
--		unsigned int j;
--
--		bytes_to_read = min(bytes_per_fifo_word, rx_bytes - i);
--		ioread32_rep(se->base + SE_GENI_RX_FIFOn, &fifo_word, 1);
--		for (j = 0; j < bytes_to_read; j++)
--			rx_buf[i++] = fifo_byte[j];
--	}
--	mas->rx_rem_bytes -= rx_bytes;
--}
--
- static irqreturn_t geni_spi_isr(int irq, void *data)
- {
- 	struct spi_master *spi = data;
--- 
-2.28.0.618.gf4bc123cb7-goog
-
+On Thu, Aug 27, 2020 at 2:17 PM Tanmay Shah <tanmay@codeaurora.org> wrote:
+>
+> These patches add Display-Port driver on SnapDragon/msm hardware.
+> This series also contains device-tree bindings for msm DP driver.
+> It also contains Makefile and Kconfig changes to compile msm DP driver.
+>
+> The block diagram of DP driver is shown below:
+>
+>
+>                  +-------------+
+>                  |DRM FRAMEWORK|
+>                  +------+------+
+>                         |
+>                    +----v----+
+>                    | DP DRM  |
+>                    +----+----+
+>                         |
+>                    +----v----+
+>      +------------+|   DP    +----------++------+
+>      +        +---+| DISPLAY |+---+      |      |
+>      |        +    +-+-----+-+    |      |      |
+>      |        |      |     |      |      |      |
+>      |        |      |     |      |      |      |
+>      |        |      |     |      |      |      |
+>      v        v      v     v      v      v      v
+>  +------+ +------+ +---+ +----+ +----+ +---+ +-----+
+>  |  DP  | |  DP  | |DP | | DP | | DP | |DP | | DP  |
+>  |PARSER| | HPD  | |AUX| |LINK| |CTRL| |PHY| |POWER|
+>  +--+---+ +---+--+ +---+ +----+ +--+-+ +-+-+ +-----+
+>     |                              |     |
+>  +--v---+                         +v-----v+
+>  |DEVICE|                         |  DP   |
+>  | TREE |                         |CATALOG|
+>  +------+                         +---+---+
+>                                       |
+>                                   +---v----+
+>                                   |CTRL/PHY|
+>                                   |   HW   |
+>                                   +--------+
+>
+> Changes in v12:
+>
+> -- Add support of pm ops in display port driver
+> -- Clear bpp depth bits before writing to MISC register
+> -- Fix edid read
+>
+> Previous change log:
+> https://lkml.kernel.org/lkml/20200818051137.21478-1-tanmay@codeaurora.org/
+>
+> Chandan Uddaraju (4):
+>   dt-bindings: msm/dp: add bindings of DP/DP-PLL driver for Snapdragon
+>   drm: add constant N value in helper file
+>   drm/msm/dp: add displayPort driver support
+>   drm/msm/dp: add support for DP PLL driver
+>
+> Jeykumar Sankaran (1):
+>   drm/msm/dpu: add display port support in DPU
+>
+> Tanmay Shah (1):
+>   drm/msm/dp: Add Display Port HPD feature
+>
+>  drivers/gpu/drm/i915/display/intel_display.c  |    2 +-
+>  drivers/gpu/drm/msm/Kconfig                   |    9 +
+>  drivers/gpu/drm/msm/Makefile                  |   14 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |   27 +-
+>  .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |    8 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   83 +-
+>  drivers/gpu/drm/msm/dp/dp_aux.c               |  535 ++++++
+>  drivers/gpu/drm/msm/dp/dp_aux.h               |   30 +
+>  drivers/gpu/drm/msm/dp/dp_catalog.c           | 1045 ++++++++++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h           |  105 +
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c              | 1693 +++++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h              |   35 +
+>  drivers/gpu/drm/msm/dp/dp_display.c           | 1046 ++++++++++
+>  drivers/gpu/drm/msm/dp/dp_display.h           |   31 +
+>  drivers/gpu/drm/msm/dp/dp_drm.c               |  168 ++
+>  drivers/gpu/drm/msm/dp/dp_drm.h               |   18 +
+>  drivers/gpu/drm/msm/dp/dp_hpd.c               |   69 +
+>  drivers/gpu/drm/msm/dp/dp_hpd.h               |   79 +
+>  drivers/gpu/drm/msm/dp/dp_link.c              | 1214 ++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_link.h              |  132 ++
+>  drivers/gpu/drm/msm/dp/dp_panel.c             |  486 +++++
+>  drivers/gpu/drm/msm/dp/dp_panel.h             |   95 +
+>  drivers/gpu/drm/msm/dp/dp_parser.c            |  267 +++
+>  drivers/gpu/drm/msm/dp/dp_parser.h            |  138 ++
+>  drivers/gpu/drm/msm/dp/dp_pll.c               |   99 +
+>  drivers/gpu/drm/msm/dp/dp_pll.h               |   61 +
+>  drivers/gpu/drm/msm/dp/dp_pll_10nm.c          |  930 +++++++++
+>  drivers/gpu/drm/msm/dp/dp_pll_private.h       |   89 +
+>  drivers/gpu/drm/msm/dp/dp_power.c             |  373 ++++
+>  drivers/gpu/drm/msm/dp/dp_power.h             |  103 +
+>  drivers/gpu/drm/msm/dp/dp_reg.h               |  518 +++++
+>  drivers/gpu/drm/msm/msm_drv.c                 |    2 +
+>  drivers/gpu/drm/msm/msm_drv.h                 |   59 +-
+>  include/drm/drm_dp_helper.h                   |    1 +
+>  34 files changed, 9545 insertions(+), 19 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_display.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_display.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_link.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_link.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll_10nm.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_pll_private.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_power.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_power.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_reg.h
+>
+>
+> base-commit: d012a7190fc1fd72ed48911e77ca97ba4521bccd
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
