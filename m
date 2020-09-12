@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02F80267C6F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 23:08:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 566C3267C84
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 23:08:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725920AbgILVIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Sep 2020 17:08:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53676 "EHLO
+        id S1725925AbgILVIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Sep 2020 17:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725884AbgILVIS (ORCPT
+        with ESMTP id S1725923AbgILVIU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Sep 2020 17:08:18 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37320C061574
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 14:08:17 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id c196so9756271pfc.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 14:08:17 -0700 (PDT)
+        Sat, 12 Sep 2020 17:08:20 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAEDEC061786
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 14:08:18 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id 67so8676530pgd.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 14:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hkdmHZJNcU+7N2ujCFsZPcv/unm2Wh+tx7Rkz6iTuF0=;
-        b=n+aUgG/RdRP686huE3p5uz0c0aoEJ5mJl26a3jq1Q33zTy4H3FB4bwCKZF5u6wdJgO
-         zz7he6IVgc5ADax0REzyDDWXGHQF2QSqLHbsS/vPCNZ+dpOV+5WeTNMXJbt0lS0nWWgE
-         NCFVo40UENKFCM99tOaWb/pynEAIUh28jH3kU=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nT97JuHeIYEYuVntShwpzBJaTAHIXhzgnidrheouJoQ=;
+        b=H7l8JzFpvQ98TLFd8MPo4am/gruKkYODBqBTRy+4TWWz1HuEQ64Y/vb/Of/CJoeV5g
+         /4BtxCx2BpegSKNkdkI6DUiM+tG4vNjzxEod4JGU/TQZm9bBnda8PRUS8JNgor6Yxlxw
+         zvnsl+nxifZtZRCk5kypYL8Cs0T9Xlw0LtuqI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hkdmHZJNcU+7N2ujCFsZPcv/unm2Wh+tx7Rkz6iTuF0=;
-        b=s+ea9jEmXRxOto2MYE8jaMuuSUOsU88yEhfBb8d5/A6rX77peVKiKyL3Gm3zkkYGJt
-         cBFCFcRy5hSfbRflFEns4FY9sJjcfdI92t0oxnPeOTbGFWsZiq6yRGF3453e5zLPwsSY
-         CDWZxD8lw0SBYaBATJKr1YU2EFIvshDitFwmp2nhozkFQAa7ykfx4aLkrP/NKJpnuKnI
-         OLfy+SGGOKj9MrT89Ouo2r8YrWpxGsv3kIkpZ5GfQX2F+g0JUQUO6X8X6R9AbzwKHkCa
-         UEti/y3fnpXfUuwULSyhPDW1qd+9QJPURLnaSvZUC5KLKFQrszvrcLf4Fi4MuzlzQpEa
-         v4lg==
-X-Gm-Message-State: AOAM532k57X3cQCia6vlabIt4dQlBrjxf3PTPxafp+blhGOYLLDgYDpb
-        WFAm8Pe9VHoGubK4Ag6Vumuc0w==
-X-Google-Smtp-Source: ABdhPJz22rwSO4QjmaRCwJE0H6ZOVP9TpnHWSmb2igzOtjxEis+mUFk/egFXQj1mz3ang7qDeLgZ7g==
-X-Received: by 2002:a63:29c7:: with SMTP id p190mr5938653pgp.292.1599944897297;
-        Sat, 12 Sep 2020 14:08:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nT97JuHeIYEYuVntShwpzBJaTAHIXhzgnidrheouJoQ=;
+        b=YzaqCrTVbQ2QoMekCe6URpfxiLr5YbFPd3xgA2ehoJoeL5hCVDSu7uYG/R1JMI3+8s
+         ns+kp2JAch7jx6oV+04qFk4k+8wlLvjBW2zoxv7fEa9D677bNPOv83Po7VORNiPk8QlK
+         LrJq/gD6fi0igNDCJNcafT+eJu5B0OWJyyNxfPMMTyrUvfxI5vyosN4stIwu/CPyOemd
+         +Kvf0nff4dFpK6wHCkbJlIg3ubvYJrNvgeUFnPsrj0ctXDptuCylcJkQKuE7xfx0TT2m
+         qMPBtZELVbEcFWby5zJcXjM+RrHPtMRecoaE2xkbM9SoWEX0RXtDv7iLabUdUHOKZF71
+         bHmQ==
+X-Gm-Message-State: AOAM531q89IPejBOKHwF/lRBV8ELMHqYpUAIf2dtJO8Xkb2mYYmvUONZ
+        Aj4peP6vj8sf8HrrOHcMnGR14A==
+X-Google-Smtp-Source: ABdhPJzxE9TcIeDb6yHHRDq49CWtiiptA89EirhaSk6k7v+xw7TfDzUfpYKHZwjkx+Pxbz/o8kG2oQ==
+X-Received: by 2002:a62:bd0d:: with SMTP id a13mr7570502pff.39.1599944898254;
+        Sat, 12 Sep 2020 14:08:18 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id e10sm3369020pgb.45.2020.09.12.14.08.16
+        by smtp.gmail.com with ESMTPSA id e10sm3369020pgb.45.2020.09.12.14.08.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2020 14:08:16 -0700 (PDT)
+        Sat, 12 Sep 2020 14:08:17 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Mark Brown <broonie@kernel.org>
 Cc:     Akash Asthana <akashast@codeaurora.org>, swboyd@chromium.org,
@@ -53,10 +53,12 @@ Cc:     Akash Asthana <akashast@codeaurora.org>, swboyd@chromium.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-spi@vger.kernel.org
-Subject: [PATCH 1/3] spi: spi-geni-qcom: Use the FIFO even more
-Date:   Sat, 12 Sep 2020 14:07:59 -0700
-Message-Id: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
+Subject: [PATCH 2/3] spi: spi-geni-qcom: Don't program CS_TOGGLE again and again
+Date:   Sat, 12 Sep 2020 14:08:00 -0700
+Message-Id: <20200912140730.2.I33e571179986850b4ec17042e813d0b08fb1b9c1@changeid>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
+In-Reply-To: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
+References: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -64,42 +66,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 902481a78ee4 ("spi: spi-geni-qcom: Actually use our FIFO") I
-explained that the maximum size we could program the FIFO was
-"mas->tx_fifo_depth - 3" but that I chose "mas->tx_fifo_depth()"
-because I was worried about decreased bandwidth.
+We always toggle the chip select manually in spi-geni-qcom so that we
+can properly implement the Linux API.  There's no reason to program
+this to the hardware on every transfer.  Program it once at init and
+be done with it.
 
-Since that time:
-* All the interconnect patches have landed, making things run at the
-  proper speed.
-* I've done more measurements.
-
-This lets me confirm that there's really no downside of using the FIFO
-more.  Specifically I did "flashrom -p ec -r /tmp/foo.bin" on a
-Chromebook and averaged over several runs.
-
-Before: It took 6.66 seconds and 59669 interrupts fired.
-After:  It took 6.66 seconds and 47992 interrupts fired.
+This saves some part of a microsecond of overhead on each transfer.
+While not really noticeable on any real world benchmarks, we might as
+well save the time.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
- drivers/spi/spi-geni-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-geni-qcom.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 0dc3f4c55b0b..7f0bf0dec466 100644
+index 7f0bf0dec466..92d88bf85a90 100644
 --- a/drivers/spi/spi-geni-qcom.c
 +++ b/drivers/spi/spi-geni-qcom.c
-@@ -308,7 +308,7 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	 * Hardware programming guide suggests to configure
- 	 * RX FIFO RFR level to fifo_depth-2.
- 	 */
--	geni_se_init(se, mas->tx_fifo_depth / 2, mas->tx_fifo_depth - 2);
-+	geni_se_init(se, mas->tx_fifo_depth - 3, mas->tx_fifo_depth - 2);
- 	/* Transmit an entire FIFO worth of data per IRQ */
- 	mas->tx_wm = 1;
- 	ver = geni_se_get_qup_hw_version(se);
+@@ -290,6 +290,7 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ {
+ 	struct geni_se *se = &mas->se;
+ 	unsigned int proto, major, minor, ver;
++	u32 spi_tx_cfg;
+ 
+ 	pm_runtime_get_sync(mas->dev);
+ 
+@@ -322,6 +323,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 
+ 	geni_se_select_mode(se, GENI_SE_FIFO);
+ 
++	/* We always control CS manually */
++	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
++	spi_tx_cfg &= ~CS_TOGGLE;
++	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
++
+ 	pm_runtime_put(mas->dev);
+ 	return 0;
+ }
+@@ -331,7 +337,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 				u16 mode, struct spi_master *spi)
+ {
+ 	u32 m_cmd = 0;
+-	u32 spi_tx_cfg, len;
++	u32 len;
+ 	struct geni_se *se = &mas->se;
+ 	int ret;
+ 
+@@ -350,7 +356,6 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	spin_lock_irq(&mas->lock);
+ 	spin_unlock_irq(&mas->lock);
+ 
+-	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+ 	if (xfer->bits_per_word != mas->cur_bits_per_word) {
+ 		spi_setup_word_len(mas, mode, xfer->bits_per_word);
+ 		mas->cur_bits_per_word = xfer->bits_per_word;
+@@ -364,8 +369,6 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	mas->tx_rem_bytes = 0;
+ 	mas->rx_rem_bytes = 0;
+ 
+-	spi_tx_cfg &= ~CS_TOGGLE;
+-
+ 	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
+ 		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
+ 	else
+@@ -384,7 +387,6 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 		writel(len, se->base + SE_SPI_RX_TRANS_LEN);
+ 		mas->rx_rem_bytes = xfer->len;
+ 	}
+-	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+ 
+ 	/*
+ 	 * Lock around right before we start the transfer since our
 -- 
 2.28.0.618.gf4bc123cb7-goog
 
