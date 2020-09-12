@@ -2,64 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC3F6267BDA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 21:03:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A561E267C55
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 22:49:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725878AbgILTDh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Sep 2020 15:03:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbgILTDg (ORCPT
+        id S1725967AbgILUty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Sep 2020 16:49:54 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:63755 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725965AbgILUtx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Sep 2020 15:03:36 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C34C061573;
-        Sat, 12 Sep 2020 12:03:36 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id y17so9233992lfa.8;
-        Sat, 12 Sep 2020 12:03:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=S67JUcIs2dhX6EITOvFKtEd8C5lNSO8UBvbFFL/hUTI=;
-        b=ps8kBjmqgjILz9EHOPbWQGRRuu+zRCqWI1ezXz2kEfng4sxLqvVRI9RVQdRyfRfl6D
-         rKzQpXwWLhzwonA6ZLIpYe7B1dVDYzYQenNIWtLo1ijhtzfkVfKmayqmI4qt74pTWH/h
-         asfqeFkLWbFb5EBzDEISQtuV5eXZZGuumjzYj+/+lIXs2yy88Sj4EhNo932JoX/cRuB+
-         1TunuY9P0cjxh8yXoxSY+k2Th1VL7pJJiAyzGFTw4Fy5ci1RrizV5kyiawUjILcGmv/T
-         Q23nhkwr4aN0yo2MTIHW8sZwnK9Jwxa/KTS57wMRyujDKvLZpChjhVxSrapB9nThBe7D
-         VcXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=S67JUcIs2dhX6EITOvFKtEd8C5lNSO8UBvbFFL/hUTI=;
-        b=svZdw72JXcVY+aiWhnsVo6OGKkD+kCIB1IINsyOx+Pf/z1Oemii9539ClazhcyNSVm
-         c07igo6uka/edzwhf3l5VVqJ13ZujBuhqClZp51I+oypfeFzilkh7V2HxmCvLi+pGYsF
-         RD/Z8kC8TV9+waLHW31A5BtY2h1MaTMg9iQ2wIeoapyR3XFeW6m5Eye9jbIWQRy8LFIg
-         1N2yThUcdXS9dKr7ssq6kvHq3PlaPJjq5btokiopA5OxsNL259rCunmPs8XASUmeEiJo
-         7Z3tM+LKqg9aZNFJ9dZlBU7enbiztLgJLHI+qXtG3M8F43pmureGsj+yUcWhWBdbv0Do
-         PHLg==
-X-Gm-Message-State: AOAM530okbWNSuKl0+FuYEn7H8S7U5TtiJDHb3/a2xx/WfduoavOA3+O
-        fyknAjnHMU6Padb77cEJZ5iWyTilOnyfBw==
-X-Google-Smtp-Source: ABdhPJwQ86NoEJa6w7FhwrSBUjkhaEwtpdIPXrOrTeURJ16n5WBFzhe6/F97F7SiDukSEbkhA1Bz0w==
-X-Received: by 2002:a19:145:: with SMTP id 66mr2397646lfb.61.1599937414525;
-        Sat, 12 Sep 2020 12:03:34 -0700 (PDT)
-Received: from localhost.localdomain (h-82-196-111-59.NA.cust.bahnhof.se. [82.196.111.59])
-        by smtp.gmail.com with ESMTPSA id q22sm1267541lfr.258.2020.09.12.12.03.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2020 12:03:33 -0700 (PDT)
-From:   Rikard Falkeborn <rikard.falkeborn@gmail.com>
-To:     Aniket Masule <amasule@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Subject: [PATCH] media: venus: helpers: Fix ALIGN() of non power of two
-Date:   Sat, 12 Sep 2020 21:03:01 +0200
-Message-Id: <20200912190301.490297-1-rikard.falkeborn@gmail.com>
-X-Mailer: git-send-email 2.28.0
+        Sat, 12 Sep 2020 16:49:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1599943792; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=SJ037dPPCkh2NySgNvYN5vqZDCCm3gZlw6Je2jfTeI4=; b=YUtUNkBWVG6jJAUWFwDWYwICO5G/crn7wvBpvpJYeSStv19YfniqZq1Fy61gpKmr1vhRjV98
+ mn4G35bMopV9qHY4f3j0y6Yi8NC/xDMMGuk8/Gn3JsFu+yF/UUMcFaHjqQNuSTjaurE9ct8a
+ cf57oC7NSlClK/ZfJUscZ6MtBH0=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f5d3466947f606f7e9764c6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 12 Sep 2020 20:49:42
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2F57EC433C6; Sat, 12 Sep 2020 20:49:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7143AC433C6;
+        Sat, 12 Sep 2020 20:49:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7143AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        tanmay@codeaurora.org, cychiang@chromium.org,
+        khsieh@codeaurora.org, vsujithk@codeaurora.org,
+        rohitkr@codeaurora.org
+Subject: [PATCH v6 0/5] Add audio support for MSM DisplayPort driver
+Date:   Sat, 12 Sep 2020 13:49:27 -0700
+Message-Id: <20200912204932.21232-1-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -67,49 +62,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ALIGN() expects its second argument to be a power of 2, otherwise
-incorrect results are produced for some inputs. The output can be
-both larger or smaller than what is expected.
+This series adds audio support for DP on MSM chipsets. It leverages
+the hdmi-codec interface [1] to communicate between the Display Port
+driver and the audio subsystem. These changes depend on the series [2]
+and [3] which add Display Port support to MSM chipsets.
 
-For example, ALIGN(304, 192) equals 320 instead of 384, and
-ALIGN(65, 192) equals 256 instead of 192.
+[1] https://patchwork.kernel.org/patch/11047883/
+[2] https://patchwork.kernel.org/project/dri-devel/list/?series=339847
+[3] https://patchwork.freedesktop.org/patch/390217/?series=79210&rev=8
 
-However, nestling two ALIGN() as is done in this case seem to only
-produce results equal to or bigger than the expected result if ALIGN()
-had handled non powers of two, and that in turn results in framesizes
-that are either the correct size or too large.
 
-Fortunately, since 192 * 4 / 3 equals 256, it turns out that one ALIGN()
-is sufficient.
+changes in v2:
+    - fix up a compilation issue on drm-next branch
 
-Fixes: ab1eda449c6e ("media: venus: vdec: handle 10bit bitstreams")
-Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
----
-I'm fairly certain this patch does the right thing, but I have only
-compile-tested it (I don't have the hardware to test on). The only
-reason I spotted it is that I tried implementing compile-time checking
-of arguments to ALIGN (and some other functions) to check that arguments
-that are supposed to be powers of two really are powers of two, and it
-found this.
+changes in v3:
+    - add support to synchronize DP driver and audio during shutdown
 
- drivers/media/platform/qcom/venus/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+changes in v4:
+    - rebase on top of latest patchset of dependency
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 7147871d9dc1..194c5dd08803 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -678,8 +678,8 @@ static u32 get_framesize_raw_yuv420_tp10_ubwc(u32 width, u32 height)
- 	u32 extradata = SZ_16K;
- 	u32 size;
- 
--	y_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
--	uv_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
-+	y_stride = ALIGN(width * 4 / 3, 256);
-+	uv_stride = ALIGN(width * 4 / 3, 256);
- 	y_sclines = ALIGN(height, 16);
- 	uv_sclines = ALIGN((height + 1) >> 1, 16);
- 
+changes in v5:
+    - rebase on top of latest patchset of dependency
+    - fix crash when trying to play audio in DP suspend state
+
+changes in v6:
+	- rebase on top of latest patchset of dependency
+
+Abhinav Kumar (5):
+  drm/msm/dp: store dp_display in the driver data
+  drm/msm/dp: add audio support for Display Port on MSM
+  drm/msm/dp: add hook_plugged_cb hdmi-codec op for MSM DP driver
+  drm/msm/dp: signal the hotplug disconnect in the event handler
+  drm/msm/dp: wait for audio notification before disabling clocks
+
+ drivers/gpu/drm/msm/Makefile                |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |   7 +
+ drivers/gpu/drm/msm/dp/dp_audio.c           | 638 ++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_audio.h           |  72 +++
+ drivers/gpu/drm/msm/dp/dp_catalog.c         | 192 ++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h         |  29 +
+ drivers/gpu/drm/msm/dp/dp_display.c         | 139 ++++-
+ drivers/gpu/drm/msm/dp/dp_display.h         |  12 +
+ 8 files changed, 1076 insertions(+), 16 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.c
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.h
+
 -- 
-2.28.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
