@@ -2,63 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B839267980
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 12:27:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F702267BBA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Sep 2020 20:18:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725859AbgILK1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Sep 2020 06:27:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
+        id S1725910AbgILSSY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Sep 2020 14:18:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725833AbgILK1U (ORCPT
+        with ESMTP id S1725877AbgILSST (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Sep 2020 06:27:20 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C125CC061573;
-        Sat, 12 Sep 2020 03:27:19 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id m5so8161052pgj.9;
-        Sat, 12 Sep 2020 03:27:19 -0700 (PDT)
+        Sat, 12 Sep 2020 14:18:19 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BCAC061757
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 11:18:18 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id o20so9453450pfp.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 11:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=MDZ5tcssoN7AbeNjNp+bLVbRjIJciCMr92xa5Hx/HY4=;
-        b=nNZi/QPOo0AwKKxuth4gfBStBk+2tlBba7+k/2APtcsgykjdf9wSvxxN3TQLwVmlOz
-         figSwPN80C7NwjRwMaZVyVYCRZyAS0QTEv/r1woDUXTcxGX2NdsLZmL5lXa2pRDQa3K8
-         oIm/XR7pFMYBFziXhzpNimhFax9cD+dqmaq0YVqoGzs9qLigylhsDMJib5J3MA6+q6sU
-         X7mMzbx5NmFWjChZhaoMopScwe5HKKM+2JzAiMeo0KygmJRdKZPlliieCQF7vAzapiGk
-         8MY0vhND/ectdugWWQQFdoiWvbcmisZxkXHLjvxQ7JwE0BRFVilm2ZnYmDTrzbsXKcd1
-         ZLLQ==
+        bh=a1GTBXxKUvJxoon/aNt1MN6fmALohNRxcmfcvMYUVuI=;
+        b=cwvhRxfbcTFj4svbdXDZ9jcAEMhYVMR7LZ4P87bq1El3TaxmfOrqur6oTokv//oGuR
+         O6lBjAZZoASK01mJbAZUMKWC8cxKClvwn+gDUrgegq07Rhz3N7cIq0hUCJNbKT3N6xVs
+         DZAooRgvRH8KK96ejVU7xL8oGc/eW70Ngbe6s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=MDZ5tcssoN7AbeNjNp+bLVbRjIJciCMr92xa5Hx/HY4=;
-        b=H9PaVVgl2LCTeWWy7cg9djcmEhULXNTjg6tRUFJfkHZEpfzxlkrql2Kjkjh+jHUiX+
-         t9u9+zQX1S1zANxAkMksex/ssERSP3enyRkONKvJZd6DOUH/ZJqEyubwhjW6U1ZGEiWN
-         sLlmBZG1TsPczi25TrTYUgE2iy6k2EGCfp7Ib0nKufP+cVv7jsvqTJBSRrgcVaJ/EDNM
-         YIzXOKaKVt7TcJB0arlbrwQU5K2e4uU1+7YEA8RH+gTZ4S3pHCmdNY4vGxqYL2P4XWIZ
-         n65ex+cG0JpKcT5odFOqeSwK6b5PVWAbBKJ7UfHbYvPrW0TxLyPlTwoNvnNvgzHAeFGe
-         aDwg==
-X-Gm-Message-State: AOAM530q8Pi/06g9QTjWCk90rmG/ZsQZr0e34z79Uymyl66EtXqxzm1w
-        8J+wcvxgZxn2fvL53307BmrndjwXkqo=
-X-Google-Smtp-Source: ABdhPJxxWnEKYjAbcCapguCSGmEUGdBpDiFLyNyEkVyiOZddIbZLkp/S9efbYDisB/iwqK5b/ZRk/w==
-X-Received: by 2002:aa7:961b:0:b029:13e:d13d:a140 with SMTP id q27-20020aa7961b0000b029013ed13da140mr5964208pfg.40.1599906438045;
-        Sat, 12 Sep 2020 03:27:18 -0700 (PDT)
-Received: from ZB-PF0YQ8ZU.360buyad.local (f.a4.5177.ip4.static.sl-reverse.com. [119.81.164.15])
-        by smtp.gmail.com with ESMTPSA id g21sm4910276pfh.30.2020.09.12.03.27.14
+        bh=a1GTBXxKUvJxoon/aNt1MN6fmALohNRxcmfcvMYUVuI=;
+        b=KZ7RmoL5pZDO8EQaXksDyeUn88v+i+PULyIxN5YqfsB25mRf1cxPmZtpTBWFi+rhaQ
+         WL7VaRw8asrQ9UZynMxRRNwKvtbJ2m6j658JQyoUqy1THePmrQCJ/upRZMR7tA6See2+
+         Pw/lRVpmJFuBeRVLsmDl/l9cICXY973W0Uapsq9jFL5rsMhv8wkYCSGlGQuXEJ9qUS8i
+         MFAUfkqmtwTkbSblrWcL1VGP55JLcu4B5r2XgW8kjLGdU4JMnpHARlKdVyJcrofx+gbU
+         ve/X1wJM7cB18e04CQPrxsTOAtWZgGbcAHVoPzhOX2pt7prWkm8LvpPMDBo9b2kip7Pz
+         +AZw==
+X-Gm-Message-State: AOAM533KVoLwikvCsys0ImWMj9tgygJcDX8xmz0hcmSXIGYMHbAkPHHF
+        OZZFjyt+PlzKnOl6GJ6Kn5gDOHf2Q3EMAg==
+X-Google-Smtp-Source: ABdhPJxwX4AccK3tYQzQmCHCIqpQZFNdVItS5jcKZcDzjfHI6EGkPeg1jTKnv2I6CfAhC/+Xma58Vw==
+X-Received: by 2002:aa7:80d3:: with SMTP id a19mr7177026pfn.102.1599934698016;
+        Sat, 12 Sep 2020 11:18:18 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id f6sm5858183pfq.82.2020.09.12.11.18.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2020 03:27:17 -0700 (PDT)
-From:   Zhenzhong Duan <zhenzhong.duan@gmail.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, smasetty@codeaurora.org, jcrouse@codeaurora.org,
-        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>
-Subject: [PATCH] drm/msm/a6xx: fix a potential overflow issue
-Date:   Sat, 12 Sep 2020 18:25:58 +0800
-Message-Id: <20200912102558.656-1-zhenzhong.duan@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Sat, 12 Sep 2020 11:18:17 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     swboyd@chromium.org, Akash Asthana <akashast@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: [PATCH] spi: spi-geni-qcom: Don't wait to start 1st transfer if transmitting
+Date:   Sat, 12 Sep 2020 11:17:25 -0700
+Message-Id: <20200912111716.1.Ied5e843fad0d6b733a1fb8bcfb364dd2fa889eb3@changeid>
+X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -66,29 +64,218 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's allocating an array of a6xx_gpu_state_obj structure rathor than
-its pointers.
+If we're sending bytes over SPI, we know the FIFO is empty at the
+start of the transfer.  There's no reason to wait for the interrupt
+telling us to start--we can just start right away.  Then if we
+transmit everything in one swell foop we don't even need to bother
+listening for TX interrupts.
 
-This patch fix it.
+In a test of "flashrom -p ec -r /tmp/foo.bin" interrupts were reduced
+from ~30560 to ~29730, about a 3% savings.
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@gmail.com>
+This patch looks bigger than it is because I moved a few functions
+rather than adding a forward declaration.  The only actual change to
+geni_spi_handle_tx() was to make it return a bool indicating if there
+is more to tx.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index b12f5b4..e9ede19 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -875,7 +875,7 @@ static void a6xx_get_indexed_registers(struct msm_gpu *gpu,
- 	int i;
+ drivers/spi/spi-geni-qcom.c | 167 +++++++++++++++++++-----------------
+ 1 file changed, 86 insertions(+), 81 deletions(-)
+
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 0dc3f4c55b0b..49c9eb870755 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -326,6 +326,88 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 	return 0;
+ }
  
- 	a6xx_state->indexed_regs = state_kcalloc(a6xx_state, count,
--		sizeof(a6xx_state->indexed_regs));
-+		sizeof(*a6xx_state->indexed_regs));
- 	if (!a6xx_state->indexed_regs)
- 		return;
++static unsigned int geni_byte_per_fifo_word(struct spi_geni_master *mas)
++{
++	/*
++	 * Calculate how many bytes we'll put in each FIFO word.  If the
++	 * transfer words don't pack cleanly into a FIFO word we'll just put
++	 * one transfer word in each FIFO word.  If they do pack we'll pack 'em.
++	 */
++	if (mas->fifo_width_bits % mas->cur_bits_per_word)
++		return roundup_pow_of_two(DIV_ROUND_UP(mas->cur_bits_per_word,
++						       BITS_PER_BYTE));
++
++	return mas->fifo_width_bits / BITS_PER_BYTE;
++}
++
++static bool geni_spi_handle_tx(struct spi_geni_master *mas)
++{
++	struct geni_se *se = &mas->se;
++	unsigned int max_bytes;
++	const u8 *tx_buf;
++	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
++	unsigned int i = 0;
++
++	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
++	if (mas->tx_rem_bytes < max_bytes)
++		max_bytes = mas->tx_rem_bytes;
++
++	tx_buf = mas->cur_xfer->tx_buf + mas->cur_xfer->len - mas->tx_rem_bytes;
++	while (i < max_bytes) {
++		unsigned int j;
++		unsigned int bytes_to_write;
++		u32 fifo_word = 0;
++		u8 *fifo_byte = (u8 *)&fifo_word;
++
++		bytes_to_write = min(bytes_per_fifo_word, max_bytes - i);
++		for (j = 0; j < bytes_to_write; j++)
++			fifo_byte[j] = tx_buf[i++];
++		iowrite32_rep(se->base + SE_GENI_TX_FIFOn, &fifo_word, 1);
++	}
++	mas->tx_rem_bytes -= max_bytes;
++	if (!mas->tx_rem_bytes) {
++		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
++		return false;
++	}
++	return true;
++}
++
++static void geni_spi_handle_rx(struct spi_geni_master *mas)
++{
++	struct geni_se *se = &mas->se;
++	u32 rx_fifo_status;
++	unsigned int rx_bytes;
++	unsigned int rx_last_byte_valid;
++	u8 *rx_buf;
++	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
++	unsigned int i = 0;
++
++	rx_fifo_status = readl(se->base + SE_GENI_RX_FIFO_STATUS);
++	rx_bytes = (rx_fifo_status & RX_FIFO_WC_MSK) * bytes_per_fifo_word;
++	if (rx_fifo_status & RX_LAST) {
++		rx_last_byte_valid = rx_fifo_status & RX_LAST_BYTE_VALID_MSK;
++		rx_last_byte_valid >>= RX_LAST_BYTE_VALID_SHFT;
++		if (rx_last_byte_valid && rx_last_byte_valid < 4)
++			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
++	}
++	if (mas->rx_rem_bytes < rx_bytes)
++		rx_bytes = mas->rx_rem_bytes;
++
++	rx_buf = mas->cur_xfer->rx_buf + mas->cur_xfer->len - mas->rx_rem_bytes;
++	while (i < rx_bytes) {
++		u32 fifo_word = 0;
++		u8 *fifo_byte = (u8 *)&fifo_word;
++		unsigned int bytes_to_read;
++		unsigned int j;
++
++		bytes_to_read = min(bytes_per_fifo_word, rx_bytes - i);
++		ioread32_rep(se->base + SE_GENI_RX_FIFOn, &fifo_word, 1);
++		for (j = 0; j < bytes_to_read; j++)
++			rx_buf[i++] = fifo_byte[j];
++	}
++	mas->rx_rem_bytes -= rx_bytes;
++}
++
+ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 				struct spi_geni_master *mas,
+ 				u16 mode, struct spi_master *spi)
+@@ -398,8 +480,10 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	 * setting up GENI SE engine, as driver starts data transfer
+ 	 * for the watermark interrupt.
+ 	 */
+-	if (m_cmd & SPI_TX_ONLY)
+-		writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
++	if (m_cmd & SPI_TX_ONLY) {
++		if (geni_spi_handle_tx(mas))
++			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
++	}
+ 	spin_unlock_irq(&mas->lock);
+ }
  
+@@ -417,85 +501,6 @@ static int spi_geni_transfer_one(struct spi_master *spi,
+ 	return 1;
+ }
+ 
+-static unsigned int geni_byte_per_fifo_word(struct spi_geni_master *mas)
+-{
+-	/*
+-	 * Calculate how many bytes we'll put in each FIFO word.  If the
+-	 * transfer words don't pack cleanly into a FIFO word we'll just put
+-	 * one transfer word in each FIFO word.  If they do pack we'll pack 'em.
+-	 */
+-	if (mas->fifo_width_bits % mas->cur_bits_per_word)
+-		return roundup_pow_of_two(DIV_ROUND_UP(mas->cur_bits_per_word,
+-						       BITS_PER_BYTE));
+-
+-	return mas->fifo_width_bits / BITS_PER_BYTE;
+-}
+-
+-static void geni_spi_handle_tx(struct spi_geni_master *mas)
+-{
+-	struct geni_se *se = &mas->se;
+-	unsigned int max_bytes;
+-	const u8 *tx_buf;
+-	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
+-	unsigned int i = 0;
+-
+-	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
+-	if (mas->tx_rem_bytes < max_bytes)
+-		max_bytes = mas->tx_rem_bytes;
+-
+-	tx_buf = mas->cur_xfer->tx_buf + mas->cur_xfer->len - mas->tx_rem_bytes;
+-	while (i < max_bytes) {
+-		unsigned int j;
+-		unsigned int bytes_to_write;
+-		u32 fifo_word = 0;
+-		u8 *fifo_byte = (u8 *)&fifo_word;
+-
+-		bytes_to_write = min(bytes_per_fifo_word, max_bytes - i);
+-		for (j = 0; j < bytes_to_write; j++)
+-			fifo_byte[j] = tx_buf[i++];
+-		iowrite32_rep(se->base + SE_GENI_TX_FIFOn, &fifo_word, 1);
+-	}
+-	mas->tx_rem_bytes -= max_bytes;
+-	if (!mas->tx_rem_bytes)
+-		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+-}
+-
+-static void geni_spi_handle_rx(struct spi_geni_master *mas)
+-{
+-	struct geni_se *se = &mas->se;
+-	u32 rx_fifo_status;
+-	unsigned int rx_bytes;
+-	unsigned int rx_last_byte_valid;
+-	u8 *rx_buf;
+-	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
+-	unsigned int i = 0;
+-
+-	rx_fifo_status = readl(se->base + SE_GENI_RX_FIFO_STATUS);
+-	rx_bytes = (rx_fifo_status & RX_FIFO_WC_MSK) * bytes_per_fifo_word;
+-	if (rx_fifo_status & RX_LAST) {
+-		rx_last_byte_valid = rx_fifo_status & RX_LAST_BYTE_VALID_MSK;
+-		rx_last_byte_valid >>= RX_LAST_BYTE_VALID_SHFT;
+-		if (rx_last_byte_valid && rx_last_byte_valid < 4)
+-			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
+-	}
+-	if (mas->rx_rem_bytes < rx_bytes)
+-		rx_bytes = mas->rx_rem_bytes;
+-
+-	rx_buf = mas->cur_xfer->rx_buf + mas->cur_xfer->len - mas->rx_rem_bytes;
+-	while (i < rx_bytes) {
+-		u32 fifo_word = 0;
+-		u8 *fifo_byte = (u8 *)&fifo_word;
+-		unsigned int bytes_to_read;
+-		unsigned int j;
+-
+-		bytes_to_read = min(bytes_per_fifo_word, rx_bytes - i);
+-		ioread32_rep(se->base + SE_GENI_RX_FIFOn, &fifo_word, 1);
+-		for (j = 0; j < bytes_to_read; j++)
+-			rx_buf[i++] = fifo_byte[j];
+-	}
+-	mas->rx_rem_bytes -= rx_bytes;
+-}
+-
+ static irqreturn_t geni_spi_isr(int irq, void *data)
+ {
+ 	struct spi_master *spi = data;
 -- 
-1.8.3.1
+2.28.0.618.gf4bc123cb7-goog
 
