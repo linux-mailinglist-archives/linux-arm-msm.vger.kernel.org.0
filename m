@@ -2,106 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4917B2681EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 01:51:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 552CF2681EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 01:52:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725978AbgIMXvY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Sep 2020 19:51:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43882 "EHLO
+        id S1725963AbgIMXw5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Sep 2020 19:52:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725965AbgIMXvW (ORCPT
+        with ESMTP id S1725962AbgIMXw4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Sep 2020 19:51:22 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80CDBC061788
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 16:51:22 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id t138so1239235qka.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 16:51:22 -0700 (PDT)
+        Sun, 13 Sep 2020 19:52:56 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0A3C06174A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 16:52:56 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id m12so13355557otr.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 16:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XLWo34hVmrRnf5YKo6+XZqj/MmF2UL5Q5POaUTSSFD4=;
-        b=Oxb/XftV9EJLx2usmOAADNyqYCAUr9ixeBY4PxTr9dbotHOeaxq7pDy6oMZhPlPqvS
-         JpF7WsxeZ2vlWZsk9CRndihWd0BD6+Xz33ANgiZEfT/0Z4a641vatesd4TM3XcvdbF+U
-         uCVzQY/MYDik5l1IVpOd+wvmUcrM4aVmGcBaVYu6ynXh/Ln4o2ZXMq4Y4HG/2TgiSGqg
-         e7W0xODdKoBsAvbJ+cQmvAOIIs8tm4Io2o3TtfO6EHaKFK6iaXzIpp5hIJ6hhGspBX01
-         WOa4vPHS8jGQRSyGfKaPIUSYvYBlfV5YQ4J+vquXArURpkFQeeiUYOQRh0PnEiYo2sJ+
-         kfJA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cjTC+eAJra0bRI0RrkCBQx4hFPfWWvTFYjqreZqxCXI=;
+        b=KaQJKv1xFYknURe9W6Dh7XU2NUJXgh5zvgZeVFj+Gw8vaNFKj1T9Xn4JhNrb7XpqaW
+         o4Chdb/S/IawfuQzcZZlriYUVHs3RYkm8gfn+0yf14LjaMB0LgVSqnQj8tYTy4EdJTgM
+         OvmnRtk918LDQJrnFr02s/04SGPvvfXJGVssxTWTnJGoun+3W2UHX5IwuWKG6Rc+wjk0
+         6abQvt/3c80RipBQhUSDHGnsit8Hxp79+dZReMtGw0aHvEChdez8Wthd3BWS7nNYyKye
+         E5AiYwsnYWLVuV9S85ciBib1aWf2z7U3jQkueIS9xo12uyR5rmPmpCyZWuiWjFr/mrc0
+         G5xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XLWo34hVmrRnf5YKo6+XZqj/MmF2UL5Q5POaUTSSFD4=;
-        b=AQ1JFYQRw7XWt5yTmAHD5iKcC8LE5k5/WtXdgplpTJ6PfyZsN1dc9MGcV85K4bFe+2
-         l5fGKYhoGO0f7C3u/BWObpwTOEjOcqzlIiIXQh5AhamjtTd3xUtXTdPiP+gX/al+96O0
-         SO4it0DtC9XEOutKmLb7cm2TedfRGeehe1vguYAiywqHUuo4Nx28JwD2tsrFoFUBk1i5
-         BluWwlQhxDItZIPVbqkXlFGioWm5899nuXNPEjzoiITOv8JyHNPZUh/c0brgcpT0Myfe
-         LqXIl2bK3e8O/B/VEFS5Z2b7fz8uVyvC4vSPAPQ6b6j+dWazob/mp5Pb7MHFYs6NhcAh
-         SZLQ==
-X-Gm-Message-State: AOAM532vUzn0qA9Cg+spCB76R8S2POhcjg3AkzITX46oDG1n10EcCKYv
-        mStlsjps7icCiL8CVw/1IgA5O5U31MmXCg==
-X-Google-Smtp-Source: ABdhPJwyMYMBmANq3AG/NorWJ3U6hjr9n5RXkcGdotOIi3gXPMKLWDHHS8TA2LSD1U+xVfHdpE0UvQ==
-X-Received: by 2002:a05:620a:958:: with SMTP id w24mr10923317qkw.65.1600041080727;
-        Sun, 13 Sep 2020 16:51:20 -0700 (PDT)
-Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id u13sm12022354qtv.57.2020.09.13.16.51.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2020 16:51:20 -0700 (PDT)
-Date:   Sun, 13 Sep 2020 23:51:18 +0000
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marcel Holtmann <marcel@holtmann.org>
-Cc:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org
-Subject: Re: [RESEND v1] arm64: dts: qcom: sc7180: Remove clock for bluetooth
- on SC7180 IDP board
-Message-ID: <20200913235118.GD472@uller>
-References: <1599734980-22580-1-git-send-email-gubbaven@codeaurora.org>
- <C8D04890-4F62-4EEB-9113-BAFFF46E32BD@holtmann.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cjTC+eAJra0bRI0RrkCBQx4hFPfWWvTFYjqreZqxCXI=;
+        b=X2oHY8IUfJ2l7raaAu7OoYzg/yfzhJ/56IbTxyLFxvXrTFx9HD/1ZzuG7rIOlHxAh9
+         bEvfYrP+hO/KLWkB2KxHYInHEg0N2EoJi2fbwT2CTsmnEpCliq662COamNJhWLN/WH0m
+         1zH9gfr3I/r823idS4fLKNfoZHbg8xjLw37s+tszOc99z0cbM2TK+W3y84nv8JFKNYIh
+         2kwTLAikXFwa0HzpAnpcJXivlaK496qbmYkPAwmGO0Vd6Onw2fuepctr0gk8XDv+NK3L
+         R7nK/LrU+zois3RjiPbUwRPZGE7P3JB83FLaFW8PeCh5jeEDo/7JJeV7mZE9M4X3kJRF
+         NCzA==
+X-Gm-Message-State: AOAM530hrT5Gw7AMewNkObpzBIyP8u39YIxBbVfBvbm6wjHamffnpONu
+        BVNYVqcVh1PbcaaWjYmXT/z4xDaKXyEhNb/rE/CeKQ==
+X-Google-Smtp-Source: ABdhPJzpwqRbvojg2vTRIJFfZBxWJcdxeZPcUZeBj07YoHaky3SSJXmPPn07SMWVvBg1JGA2cHJo/s21kYtUC9jrS04=
+X-Received: by 2002:a9d:6010:: with SMTP id h16mr7669191otj.262.1600041172616;
+ Sun, 13 Sep 2020 16:52:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <C8D04890-4F62-4EEB-9113-BAFFF46E32BD@holtmann.org>
+References: <20200913225005.30218-1-dmitry.baryshkov@linaro.org> <20200913234452.GX3715@yoga>
+In-Reply-To: <20200913234452.GX3715@yoga>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 14 Sep 2020 02:52:41 +0300
+Message-ID: <CAA8EJpqCm3zF32qeEX3UR-FjXk1-_cgmEnW6h9aG9aDMp3ZXcw@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: sm8250: correct sdc2_clk and ngpios
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 11 Sep 07:11 UTC 2020, Marcel Holtmann wrote:
+Hello,
 
-> Hi,
-> 
-
-Hi Marcel,
-
-> > Removed voting for RPMH_RF_CLK2 which is not required as it is
-> > getting managed by BT SoC through SW_CTRL line.
-> > 
-> > Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+On Mon, 14 Sep 2020 at 02:44, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Sun 13 Sep 17:50 CDT 2020, Dmitry Baryshkov wrote:
+>
+> > Correct sdc2_clk pin definition (register offset) and ngpios (SM8250 has
+> > 180 GPIO pins).
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Fixes: 4e3ec9e407ad5058003309072b37111f7b8c900a
 > > ---
-> > arch/arm64/boot/dts/qcom/sc7180-idp.dts | 1 -
-> > 1 file changed, 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > index 4e9149d..b295d01 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-> > @@ -348,7 +348,6 @@
-> > 		vddrf-supply = <&vreg_l2c_1p3>;
-> > 		vddch0-supply = <&vreg_l10c_3p3>;
-> > 		max-speed = <3200000>;
-> > -		clocks = <&rpmhcc RPMH_RF_CLK2>;
-> > 	};
-> > };
-> 
-> is anybody picking up this patch or should I take it through the bluetooth-next tree?
-> 
+> >  drivers/pinctrl/qcom/pinctrl-sm8250.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> > index a660f1274b66..4f7dae61b089 100644
+> > --- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> > +++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> > @@ -1308,7 +1308,7 @@ static const struct msm_pingroup sm8250_groups[] = {
+> >       [178] = PINGROUP(178, WEST, _, _, _, _, _, _, _, _, _),
+> >       [179] = PINGROUP(179, WEST, _, _, _, _, _, _, _, _, _),
+> >       [180] = UFS_RESET(ufs_reset, 0xb8000),
+> > -     [181] = SDC_PINGROUP(sdc2_clk, 0x7000, 14, 6),
+> > +     [181] = SDC_PINGROUP(sdc2_clk, 0xb7000, 14, 6),
+>
+> You're right.
+>
+> >       [182] = SDC_PINGROUP(sdc2_cmd, 0xb7000, 11, 3),
+> >       [183] = SDC_PINGROUP(sdc2_data, 0xb7000, 9, 0),
+> >  };
+> > @@ -1320,7 +1320,7 @@ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
+> >       .nfunctions = ARRAY_SIZE(sm8250_functions),
+> >       .groups = sm8250_groups,
+> >       .ngroups = ARRAY_SIZE(sm8250_groups),
+> > -     .ngpios = 181,
+> > +     .ngpios = 180,
+>
+> But, while it is correct that SM8250 only has 180 GPIOs, we're exposing
+> UFS_RESET as a gpio as well, so this should therefor be 181. Sorry for
+> the obfuscation here...
 
-I've now picked it through the qcom tree.
+True. Could you please drop the second part of the patch on your own?
+Or would you prefer for me to send v2?
 
-Thanks,
-Bjorn
+
+
+-- 
+With best wishes
+Dmitry
