@@ -2,148 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D10AA267D82
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Sep 2020 05:46:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC5D2267D8B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Sep 2020 06:01:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725926AbgIMDqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Sep 2020 23:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57802 "EHLO
+        id S1725918AbgIMEBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Sep 2020 00:01:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgIMDqJ (ORCPT
+        with ESMTP id S1725919AbgIMEAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Sep 2020 23:46:09 -0400
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A318C061757
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 20:46:08 -0700 (PDT)
-Received: by mail-oo1-xc42.google.com with SMTP id o20so3233926ook.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 20:46:08 -0700 (PDT)
+        Sun, 13 Sep 2020 00:00:53 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A85C061757
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 21:00:52 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id x14so13959161oic.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Sep 2020 21:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=l97SIHYcVviH6hXnJk1EAiHlHPp1GVZuGyZcGgSd9F8=;
-        b=tW7ibLZS/nv3i49oxdNxKOdTe9/Vo2uRr+Oj9DML7mD5y/lkij63Zc7tKgFKKS3WKe
-         lzywt31TUMAPYLHqgSdjZCoSuE5bE7CSqopkCh1pMGN0bgG13jzadBdxr7NcNk7qX1+M
-         Nm8IvYILyzH+S628pBTTfIVS07hhtN6z+IyNPl0f8GTMkR2YuWJUlQofdwimXlEWE2ow
-         OJ+7GXXdsqpzsKs7VjoGk94E877uMaZsO7sPYydEA2/0/toJRPSj/axeMRjTkO1L1UBv
-         BEuc5GO0aDB+qdZkPN7vGZfa3e4EGRYk1CgSegDrsVRmCIZvov6VDOhoCbJSxZTJX5jU
-         rWOA==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Qi5BgYlxZ+ct/MUg8TILEG4D9MjaZLwf9MYNlT0Qzno=;
+        b=r9Aj14+lIdavpJ+NJsWC5vYv24n/3JKlHJXYauYP+KP7wRy0NBwYopDsVwkaJh2/jI
+         4O7ffbUlthukJ/+7JpBwOKJ93Un7onuHbmbYPot5XtgB0Z8Fm4GnsrTPWGZk1EaElfBA
+         uAXX48ChLHVnn9YRpRE7OCCpNmN1ilxu/5apivEkTnrKKoluIxKxKdRDoTRbxHqaXepE
+         8whj2m0loKB+t8CjS/jttbE6Fg/lulMCeHe230kkl/tYy73Yxs/1fYd/pwYzp/nD4OQ+
+         3FuDYHWzIHBGUy3Na5SsTS7EGbuYCoOu+/aokDzh8ENfnyaDNSPne/knkGCwN97gFbwH
+         VtDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=l97SIHYcVviH6hXnJk1EAiHlHPp1GVZuGyZcGgSd9F8=;
-        b=NAhkoshPsxjIHi0wrZCn+z/9jZD/nTswuN2YuArOYuPpvcas3Aam8ap3DlFke1s983
-         h1cFmFX9JbZuI7bVutptsOQFRpauo2xFLQFDLvoAvhfktRV0AJC/ch1JK3poX7YlHogO
-         JyU23ThmwFcXcTW+1x/A9edfFJHr3D0lZAOtYv3kgp51M/ylXX11++XjCMcEJv1YgYGB
-         KYCSdTve22FYAc1UkZEaYUryzYlt3ajNL7VywILpVNjAXwnbpnUvX57mzAp7aFpm+Vut
-         V+MfcB+NKRKHHFqx0+LYJ9tVH/PpMnzzgbATbSOCK0n5HbLjU3hKMVYjGHRWGNG4rtn/
-         c6zA==
-X-Gm-Message-State: AOAM53263tzQF6SYmZW9QnxwfIbG50XKh2/xpUY8H6ougoEw7hiV/iz3
-        4FTExdl3B6v2FFLDX8sRGGv0uQ==
-X-Google-Smtp-Source: ABdhPJxqFt8JItM3PP/MnPVkF9HffiJEM4+BpfKZSqhWRMbyvAsysiGLcjIdD452HRWg5afH3wDQkw==
-X-Received: by 2002:a4a:978a:: with SMTP id w10mr6382019ooi.69.1599968767801;
-        Sat, 12 Sep 2020 20:46:07 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Qi5BgYlxZ+ct/MUg8TILEG4D9MjaZLwf9MYNlT0Qzno=;
+        b=Qwtee2N2UvqsqIS+L2KDbzVfrYIceyCTO7cuTg7r3/0UTJaiXRq3WXyqVp/L2gm9A6
+         wst/RN8GQe3iWgPmMGxYqu+yN8KMthNNqw83cXeYgbMoJbEJsqwRZwgjG25C71B9spzZ
+         C/22Owh9kmsvNSzAkOAx+jGRVs/8EOZ9truPJMDm2fmX72RNSZITo2m5tW6w3SXUpSzm
+         xdQlI/Zp8K/XcFIVx7ThpZ+TQSYwsLm4ZjrPr7gyUfTatbB5xwF0dmuYJn8U5YHSe7fw
+         3LJ5oF/PY4AIMdlqellVgVP4KLdwl0QlesD1EKRQGszFCEdw6kwUulbST7MCXGpa9Cm1
+         vklQ==
+X-Gm-Message-State: AOAM532S2/V0fX/ZhZWFWplHcv20rzMQQ/sMy4MSjL/cHaLYxZOeMUdR
+        vOzOBm2JEzx3aKqvsI2H7AN32A==
+X-Google-Smtp-Source: ABdhPJwNYI3tbmjRhOMPSg1q/E9ENKcpMD3csMUaeIexQSGGM27buobS7pe4XCQ3RS+eggJQ6MS3lg==
+X-Received: by 2002:aca:1a09:: with SMTP id a9mr5074891oia.164.1599969651969;
+        Sat, 12 Sep 2020 21:00:51 -0700 (PDT)
 Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id f11sm1254670oot.4.2020.09.12.20.46.04
+        by smtp.gmail.com with ESMTPSA id o108sm1228694ota.25.2020.09.12.21.00.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2020 20:46:07 -0700 (PDT)
-Date:   Sat, 12 Sep 2020 22:46:03 -0500
+        Sat, 12 Sep 2020 21:00:50 -0700 (PDT)
+Date:   Sat, 12 Sep 2020 23:00:48 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Andy Gross <agross@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-kernel-owner@vger.kernel.org, clew@codeaurora.org
-Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME
- flags
-Message-ID: <20200913034603.GV3715@yoga>
-References: <20200821204921.32536-1-sibis@codeaurora.org>
- <159804608868.334488.2486130699850456264@swboyd.mtv.corp.google.com>
- <20200824164212.GA3715@yoga>
- <159834001729.334488.11862381163144726708@swboyd.mtv.corp.google.com>
- <20200825175345.GC3715@yoga>
- <0101017476da3906-412a2e35-dc56-43ee-8644-83a998279c2d-000000@us-west-2.amazonses.com>
- <CAPDyKFq=R9_4r+T8V7Fn2PvLr5HicKOTQMAGh4Lg3-Q=KaOiDg@mail.gmail.com>
+To:     Jason Yan <yanaijie@huawei.com>
+Cc:     agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Hulk Robot <hulkci@huawei.com>
+Subject: Re: [PATCH] clk: qcom: gcc-msm8939: remove defined but not used
+ variables
+Message-ID: <20200913040048.GW3715@yoga>
+References: <20200911013722.1459387-1-yanaijie@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=windows-1252
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFq=R9_4r+T8V7Fn2PvLr5HicKOTQMAGh4Lg3-Q=KaOiDg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200911013722.1459387-1-yanaijie@huawei.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 10 Sep 03:18 CDT 2020, Ulf Hansson wrote:
+On Thu 10 Sep 20:37 CDT 2020, Jason Yan wrote:
 
-> On Thu, 10 Sep 2020 at 09:23, Sibi Sankar <sibis@codeaurora.org> wrote:
-> >
-> > On 2020-08-25 23:23, Bjorn Andersson wrote:
-> > > On Tue 25 Aug 02:20 CDT 2020, Stephen Boyd wrote:
-> > >> Quoting Bjorn Andersson (2020-08-24 09:42:12)
-> > >> > On Fri 21 Aug 14:41 PDT 2020, Stephen Boyd wrote:
-> > > [..]
-> > >> > > I find it odd that this is modeled as a power domain instead of some
-> > >> > > Qualcomm specific message that the remoteproc driver sends to AOSS. Is
-> > >> > > there some sort of benefit the driver gets from using the power domain
-> > >> > > APIs for this vs. using a custom API?
-> > >> >
-> > >> > We need to send "up" and "down" notifications and this needs to happen
-> > >> > at the same time as other standard resources are enabled/disabled.
-> > >> >
-> > >> > Further more, at the time the all resources handled by the downstream
-> > >> > driver was either power-domains (per above understanding) or clocks, so
-> > >> > it made sense to me not to spin up a custom API.
-> > >> >
-> > >>
-> > >> So the benefit is not spinning up a custom API? I'm not Ulf, but it
-> > >> looks like this is hard to rationalize about as a power domain. It
-> > >> doesn't have any benefit to model it this way besides to make it
-> > >> possible to turn on with other power domains.
-> > >>
-> > >> This modem remoteproc drivers isn't SoC agnostic anyway, it relies on
-> > >> SMEM APIs, so standing up another small qmp_remoteproc_booted() and
-> > >> qmp_remoteproc_shutdown() API would avoid adding a genpd flag here
-> > >> that
-> > >> probably will never be used outside of this corner-case. There is also
-> > >> some get/put EPROBE_DEFER sort of logic to implement, but otherwise it
-> > >> would be possible to do this outside of power domains, and that seems
-> > >> better given that this isn't really a power domain to start with.
-> > >
-> > > In later platforms a few new users of the AOSS communication interface
-> > > is introduced that certainly doesn't fit any existing API/framework in
-> > > the kernel. So the plan was to pretty much expose qmp_send() to these
-> > > drivers.
-> > >
-> > > My worry with using this interface is that we'll probably have to come
-> > > up with some DT binding pieces and probably we'll end up adding yet
-> > > another piece of hard coded information in the remoteproc drivers.
-> > >
-> > > But I'm not against us doing this work in favor of not having to
-> > > introduce a one-off for this corner case.
-> >
-> > Bjorn/Stephen,
-> >
-> > So the consensus is to stop modelling
-> > aoss load_state as pds and expose qmp_send
-> > to drivers?
+> This addresses the following gcc warning with "make W=1":
 > 
-> Would that mean qmp_send would have to be called from generic drivers?
-> Then, please no. We want to keep drivers portable.
+> drivers/clk/qcom/gcc-msm8939.c:610:32: warning:
+> ‘gcc_xo_gpll6_gpll0a_map’ defined but not used
+> [-Wunused-const-variable=]
+>  static const struct parent_map gcc_xo_gpll6_gpll0a_map[] = {
+>                                 ^~~~~~~~~~~~~~~~~~~~~~~
+> drivers/clk/qcom/gcc-msm8939.c:598:32: warning: ‘gcc_xo_gpll6_gpll0_map’
+> defined but not used [-Wunused-const-variable=]
+>  static const struct parent_map gcc_xo_gpll6_gpll0_map[] = {
+>                                 ^~~~~~~~~~~~~~~~~~~~~~
 > 
 
-No, this is only called from Qualcomm specific drivers. So I'm okay with
-that approach.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
-Bjorn
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Jason Yan <yanaijie@huawei.com>
+> ---
+>  drivers/clk/qcom/gcc-msm8939.c | 12 ------------
+>  1 file changed, 12 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-msm8939.c b/drivers/clk/qcom/gcc-msm8939.c
+> index 778354f82b1e..39ebb443ae3d 100644
+> --- a/drivers/clk/qcom/gcc-msm8939.c
+> +++ b/drivers/clk/qcom/gcc-msm8939.c
+> @@ -595,24 +595,12 @@ static const struct clk_parent_data gcc_xo_gpll1_emclk_sleep_parent_data[] = {
+>  	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
+>  };
+>  
+> -static const struct parent_map gcc_xo_gpll6_gpll0_map[] = {
+> -	{ P_XO, 0 },
+> -	{ P_GPLL6, 1 },
+> -	{ P_GPLL0, 2 },
+> -};
+> -
+>  static const struct clk_parent_data gcc_xo_gpll6_gpll0_parent_data[] = {
+>  	{ .fw_name = "xo" },
+>  	{ .hw = &gpll6_vote.hw },
+>  	{ .hw = &gpll0_vote.hw },
+>  };
+>  
+> -static const struct parent_map gcc_xo_gpll6_gpll0a_map[] = {
+> -	{ P_XO, 0 },
+> -	{ P_GPLL6, 1 },
+> -	{ P_GPLL0_AUX, 2 },
+> -};
+> -
+>  static const struct clk_parent_data gcc_xo_gpll6_gpll0a_parent_data[] = {
+>  	{ .fw_name = "xo" },
+>  	{ .hw = &gpll6_vote.hw },
+> -- 
+> 2.25.4
+> 
