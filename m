@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18A942681BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 00:47:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4AA22681C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 00:50:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgIMWrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Sep 2020 18:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34186 "EHLO
+        id S1725962AbgIMWuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Sep 2020 18:50:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbgIMWrp (ORCPT
+        with ESMTP id S1725940AbgIMWuK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Sep 2020 18:47:45 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02FF2C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 15:47:42 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id y11so11380433lfl.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 15:47:42 -0700 (PDT)
+        Sun, 13 Sep 2020 18:50:10 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B62AC06174A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 15:50:10 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id b19so16959292lji.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 15:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=a0CnuPu0K6/WLK/liJFiz6d6XaRPvznS10ttRYxon8k=;
-        b=MGRVfMK52cQ2dQ3Pos6elob2rY4hrc2YuM8Sm2XEbdwkiuO1ku6Ug0PpmH5inWkx9X
-         CItcaMKpSvdYKub6O/kOLoXLmzp2eTJXiQ7y7K/+rG4Ls9GOFBqQAmSYs79YvO4S9ExW
-         mYaPAm0B0G1yPPhSaQJqZIW6C+CMt6+u5u8oZgh05UUAZr0U2/mJFvh9ZnvkhAaG/w4a
-         nH4myF/t3OhoMDhsDEsovxuTJA6nLno3pa8YG8kfa3eIJconIuYpLGxefR5kuEtMYVlK
-         2deygX++ONJh2jfQFnaZEts4/WW8WU2XdFvOiYHSs2a3ghbqbOVKaUu3URakKhbuEROM
-         O/Vg==
+        bh=vxlAyo97wxQgbGRZa/IhWDwvPK81lO+ghbIt/dVSdiY=;
+        b=YsvNQgTecwvMyekXICSf9LTdDnDPBDwT/Zi78Ia4qVNCCsosqmkKCXayWDzPNclvmq
+         QHJ+90ElCr3wmZ8W7bMJk9zZB07szFQnsVKegJR/7CnqSfuj9ypP9qNM2J0eAtN9mPgU
+         isyutLdRrrKFTbrrD8NS6nF5/l27bf6t/X68zqBQuUFAEv7gJOOJ2xwf8v5PssFSVpN/
+         XfczdQH+hkYO8a/YRtSBM0kzij+dUe8ykztU6FPq3+sPxJHOR6awr4MG30lOiTi5C/M9
+         +qtsiHVPY1lnEXSDLRReZ7JekAP9ZujukdELPX+R7vtN15IIs5WzDyQ0JpPKOncehm34
+         B/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=a0CnuPu0K6/WLK/liJFiz6d6XaRPvznS10ttRYxon8k=;
-        b=sczxfoXASM6CxDIFsMnXogUWi/JbY5d3V3nx+woIsSTbgdgSep90g55pqmqqJ+uH6R
-         Pgait7Cbz3Cc/XK8Z/ErtH4+DtHWmtpTLugS8raWOhguGJf+qc/3bgYn2jLEPhMVCrxg
-         7OM9BVa5k/ibEmPxBQKG4Z5+PrYbgsRAPOlXixrBh+pZstPK+6hdjGwh98Qx3+4aasCf
-         3NRgITSoe/PWUAKD82jhjQSM0C5xRtGMA19UN5/gE/M3BI0czbvcqrkH4IzyPI5yzEAs
-         5J+kVR0hc6wySf5iLKbeovkB50fxr2KS5V/uAlkZsV+GIB5aGou1yV9YebXVlyPrXsNe
-         vF/A==
-X-Gm-Message-State: AOAM5300RItyTSiUocLrsuFallnG9NhPTiTPsJJgWAWnleJM8UXsmmqR
-        4h4WsPsV5gI2jdVr3gFDvMZ0UA==
-X-Google-Smtp-Source: ABdhPJyUkHGVyAza0vXgaGprcY3Q65fp/CUCpm8eZLqKTGRfN9RcZeNlbEROqVtVcqIbvfVPgS1tOA==
-X-Received: by 2002:ac2:5327:: with SMTP id f7mr3607124lfh.8.1600037261240;
-        Sun, 13 Sep 2020 15:47:41 -0700 (PDT)
+        bh=vxlAyo97wxQgbGRZa/IhWDwvPK81lO+ghbIt/dVSdiY=;
+        b=P4M8EhrAbIXLcQD78O/aOtbARftcBepU1+V8Z5VELvF39P+KvkEliyRIl1podmmqiG
+         XyUkYDj4yiaJ6DaJM0adl+lJV6ULLEoBzAlq35smqk67PzE7cXLLeuqBTwvyYQbMhNXh
+         3UuzbBs9SiZRY7SdAfUqgQOWLC92dhJ/yXrg/lTCzmLIcVky7z5qaMGsGKE1NWAuSN07
+         7KsCv4xzC3PRulTzxnBhkUPxqr0eTKPqb7BYdjSFLm7AocdtBgLiZ6532Kgt9b/aAcM+
+         xH8ef6DAIYHJ4e/ov2RHOyWv1Gol5yPsB1iM5gQIpLjKP6NjKFVoeF2jGXRVEbpu6N3O
+         6Qcw==
+X-Gm-Message-State: AOAM531Pd7EP35gLFOkULl/Q5kRZ2CqG7nlPVaj4U+N6xRa1987m39O9
+        V4qXPao825vrF8pngUxoGA9Yaw==
+X-Google-Smtp-Source: ABdhPJwWc1T6Zd5iTzCuT7zAKaTPAum8c58ds3N9rXRn6WJqWKA3AY8uuLBbSfEHNYWCjLpP9eAvLA==
+X-Received: by 2002:a2e:965a:: with SMTP id z26mr4276635ljh.88.1600037408497;
+        Sun, 13 Sep 2020 15:50:08 -0700 (PDT)
 Received: from eriador.lan ([188.162.64.187])
-        by smtp.gmail.com with ESMTPSA id c1sm2851900lfh.190.2020.09.13.15.47.39
+        by smtp.gmail.com with ESMTPSA id z141sm2859241lfc.171.2020.09.13.15.50.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2020 15:47:40 -0700 (PDT)
+        Sun, 13 Sep 2020 15:50:07 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8250-mtp: add i2c device tree nodes
-Date:   Mon, 14 Sep 2020 01:47:38 +0300
-Message-Id: <20200913224738.30046-1-dmitry.baryshkov@linaro.org>
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: sm8250: correct sdc2_clk and ngpios
+Date:   Mon, 14 Sep 2020 01:50:05 +0300
+Message-Id: <20200913225005.30218-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,57 +64,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree nodes describing used i2c busses according to the dts
-found in msm-4.19 tree.
+Correct sdc2_clk pin definition (register offset) and ngpios (SM8250 has
+180 GPIO pins).
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 4e3ec9e407ad5058003309072b37111f7b8c900a
 ---
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 28 +++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-sm8250.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index 6e2f7ae1d621..fd194ed7fbc8 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -358,10 +358,38 @@ &cdsp {
- 	firmware-name = "qcom/sm8250/cdsp.mbn";
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+index a660f1274b66..4f7dae61b089 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+@@ -1308,7 +1308,7 @@ static const struct msm_pingroup sm8250_groups[] = {
+ 	[178] = PINGROUP(178, WEST, _, _, _, _, _, _, _, _, _),
+ 	[179] = PINGROUP(179, WEST, _, _, _, _, _, _, _, _, _),
+ 	[180] = UFS_RESET(ufs_reset, 0xb8000),
+-	[181] = SDC_PINGROUP(sdc2_clk, 0x7000, 14, 6),
++	[181] = SDC_PINGROUP(sdc2_clk, 0xb7000, 14, 6),
+ 	[182] = SDC_PINGROUP(sdc2_cmd, 0xb7000, 11, 3),
+ 	[183] = SDC_PINGROUP(sdc2_data, 0xb7000, 9, 0),
  };
- 
-+&i2c1 {
-+	status = "okay";
-+	clock-frequency = <1000000>;
-+
-+	/* NQ NFC chip @28 */
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+
-+	/* st,stmfts @ 49 */
-+};
-+
-+&i2c15 {
-+	status = "okay";
-+
-+	/* smb1390 @ 10 */
-+	/* rtc6226 @ 64 */
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
+@@ -1320,7 +1320,7 @@ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
+ 	.nfunctions = ARRAY_SIZE(sm8250_functions),
+ 	.groups = sm8250_groups,
+ 	.ngroups = ARRAY_SIZE(sm8250_groups),
+-	.ngpios = 181,
++	.ngpios = 180,
+ 	.tiles = sm8250_tiles,
+ 	.ntiles = ARRAY_SIZE(sm8250_tiles),
  };
- 
-+&qupv3_id_2 {
-+	status = "okay";
-+};
-+
- &slpi {
- 	status = "okay";
- 	firmware-name = "qcom/sm8250/slpi.mbn";
 -- 
 2.28.0
 
