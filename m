@@ -2,115 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD15268121
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Sep 2020 22:16:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 847A926812C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Sep 2020 22:35:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725965AbgIMUQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Sep 2020 16:16:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39298 "EHLO
+        id S1725984AbgIMUf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Sep 2020 16:35:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbgIMUQU (ORCPT
+        with ESMTP id S1725938AbgIMUfX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Sep 2020 16:16:20 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D849C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 13:16:18 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id a9so4391368pjg.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 13:16:17 -0700 (PDT)
+        Sun, 13 Sep 2020 16:35:23 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85CEDC06174A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 13:35:23 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id i22so4809572uat.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 13:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=GYBP2JGLGUtUqH27ROonim0LtfWgpWeL3ItWWerhmjU=;
-        b=pu7wiTAm08HRyago4fRRrd4D2Cc94CvxLelosy9RBi4+LLeaS+q2eieDd+SUC6P8tw
-         bPa1ThB4ifU/6Qcy2EUhufFyPHHhaMHqeH5vQhnVkMB1bXkhOjxp44r32wPHrsmfT6SO
-         T4b2NnWJzxgxDFIsJiTquJB6UbMj9E4tUiVyhsmBBW7w91g7S2wUQQzCUkv1XVP9hRN7
-         aNT39f8KUfxXytqTicpvsjksjnnVXLuDTbS4fl3fCeR5EURxEeHy9DmaWWH80Lvngbks
-         eKkvl+V7MLDGMxWUgGOpGJ9H3GIySriN8BJa8OW3B6r87g75q//RKN2SlWlbVhNX+WHE
-         JCaA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7//k4ZnzRlGYM9EKbMfbSQEPgFFjkWDQWTX6iz6Bros=;
+        b=LujPMVooXKT8EwHc0AmnxI0ZCCFHCgR387ccDWQ2vImrPK7nq6FNW7omZqh2xHS5q7
+         ReZy3cnXtFX8glJwNY21b3o/pCV/U6w52PLXZ88ougT3nWKZFs1RTWKLVJm5u/TYDye5
+         iNhGfZce5icXIqJi2H1Vtn3nkYF6WofKz0HRU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=GYBP2JGLGUtUqH27ROonim0LtfWgpWeL3ItWWerhmjU=;
-        b=cSTXssJFb1eULb0DsVm6Ai1axoefSOYYocoDCNQRiN0cYF4MjPJNA2pkQuteDTLe3s
-         +WRfeRZ9uepqC4xAhovTwNIWkI2dy0gcaUkUTDhoUNiJ3dk8JX7YUuF2FZDbE/0USJLR
-         +bBFvq92o0235J7Ntb/y4+MpWc9TVcnbK0FZ4qDlWDxDfN7rXoSF49RR0Mns1miBkg/i
-         mykVZRUVPEPeNkO1Vq/9XF8VkUTXEIhgdPF3vw2Wdv/ZnnaeLkqVMIfFw5RfrcH2X6pg
-         EnESmK7jMxsVv8OKn7a+G/FNlbTvsxrCO3xQSFpSfAfsFemvarxYaEL5ilQxIjCmA4og
-         zAEw==
-X-Gm-Message-State: AOAM531Xnnlc7i1YaYRF1NFz2rzg6wCsnDEmXiP1CjBwHLoOjql/lQmW
-        4fV/f7Oq5FgNpndFm5se+CY=
-X-Google-Smtp-Source: ABdhPJy/rXknAFZ1m9Q03M8SCXA20TLxJKE5LdA2+d0TzMoEWovqOXJZRvcl9ZeSy/NROZOmCNPIAg==
-X-Received: by 2002:a17:90a:ee16:: with SMTP id e22mr10157492pjy.81.1600028172021;
-        Sun, 13 Sep 2020 13:16:12 -0700 (PDT)
-Received: from bDebian ([2601:647:5800:2ac5:9eef:d5ff:fefc:64ae])
-        by smtp.gmail.com with ESMTPSA id r206sm8298764pfr.91.2020.09.13.13.16.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2020 13:16:11 -0700 (PDT)
-Date:   Sun, 13 Sep 2020 13:16:08 -0700
-From:   Brian Norris <computersforpeace@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [RFC] qcom_scm: IPQ4019 firmware does not support atomic API?
-Message-ID: <20200913201608.GA3162100@bDebian>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7//k4ZnzRlGYM9EKbMfbSQEPgFFjkWDQWTX6iz6Bros=;
+        b=NSZOf+KTWdZ129ajiZXvOFHT3X4lltzSf5sEXUCeaP1r2bbBIxt6NYeLM2NrBAfG9u
+         9t981WV2xVam50lUu75001++/N7UtMi4dgWOIjfcyAmvi6j2H9/5GlgjiXZ7zOOUZfd+
+         UBaWs4aXhaDaHVxCXl5NZrKqAtckM3DZGbZ8Zy9dyOWcGukMO/fK1h6wccKrFSi5zL/I
+         jjbIaIey7EILlsjdVhk9mmKzFBIl/j9Sl2pT6xT9pbiz1R/I84ihvb+hwXQqFiy4SbRm
+         gqsjnbY+sCixF2ndFWqVmn6TBoAmdCymh3T2KQV2nFgXVcBncNbE86TVJvBTYJrpg+TT
+         25gg==
+X-Gm-Message-State: AOAM530Kab1oUuxCs8qeZK/rFMIIVcWejNaIxAVtyYuZzluDz7VAOW9L
+        fT/1l2wdEA2WUYpadfLw3y6dtHCn+xa61w==
+X-Google-Smtp-Source: ABdhPJz++76csFBFHKZWWT1nyPxvRmPP6+G/Im6tOJ0SD1onDwy9gcP89cNZQyzrgRvJFWvVLg0XBw==
+X-Received: by 2002:ab0:5e8:: with SMTP id e95mr5499416uae.72.1600029319840;
+        Sun, 13 Sep 2020 13:35:19 -0700 (PDT)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id r14sm1117305uao.14.2020.09.13.13.35.18
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Sep 2020 13:35:18 -0700 (PDT)
+Received: by mail-vs1-f51.google.com with SMTP id j185so8437292vsc.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Sep 2020 13:35:18 -0700 (PDT)
+X-Received: by 2002:a67:ff97:: with SMTP id v23mr5969962vsq.11.1600029318182;
+ Sun, 13 Sep 2020 13:35:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
+ <20200912140730.3.Ided778fb4cd078e36c6b240d1b279cd7a534a313@changeid>
+ <20200912225440.GB3715@yoga> <CAD=FV=V=in+-GL-9p1b6w8g8CJ0jdhGWhsZNAvap=W1MAPMEKQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=V=in+-GL-9p1b6w8g8CJ0jdhGWhsZNAvap=W1MAPMEKQ@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Sun, 13 Sep 2020 13:35:06 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WdxezP_cpuQjLdgOS8geOC=uW5n=TfRoZG7vJc=_aCbQ@mail.gmail.com>
+Message-ID: <CAD=FV=WdxezP_cpuQjLdgOS8geOC=uW5n=TfRoZG7vJc=_aCbQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] spi: spi-geni-qcom: Slightly optimize setup of
+ bidirectional xfters
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[ TL;DR: I have an IPQ4019 firmware that needs to effectively revert
-commit 13e77747800e ("firmware: qcom: scm: Use atomic SCM for cold
-boot"). Am I insane, or is this something that upstream can support
-(pending a patch, of course)? ]
+Hi,
 
-Hi Qualcomm maintainers,
+On Sat, Sep 12, 2020 at 6:09 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Sat, Sep 12, 2020 at 3:54 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Sat 12 Sep 16:08 CDT 2020, Douglas Anderson wrote:
+> >
+> > > When setting up a bidirectional transfer we need to program both the
+> > > TX and RX lengths.  We don't need a memory barrier between those two
+> > > writes.  Factor out the __iowmb() and use writel_relaxed().  This
+> > > saves a fraction of a microsecond of setup overhead on bidirectional
+> > > transfers.
+> > >
+> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > ---
+> > >
+> > >  drivers/spi/spi-geni-qcom.c | 13 ++++++++++---
+> > >  1 file changed, 10 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> > > index 92d88bf85a90..6c7e12b68bf0 100644
+> > > --- a/drivers/spi/spi-geni-qcom.c
+> > > +++ b/drivers/spi/spi-geni-qcom.c
+> > > @@ -376,15 +376,22 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+> > >       len &= TRANS_LEN_MSK;
+> > >
+> > >       mas->cur_xfer = xfer;
+> > > +
+> > > +     /*
+> > > +      * Factor out the __iowmb() so that we can use writel_relaxed() for
+> > > +      * both writes below and thus only incur the overhead once even if
+> > > +      * we execute both of them.
+> > > +      */
+> >
+> > How many passes through this function do we have to take before saving
+> > the amount of time it took me to read this comment?
+> >
+> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+> Thanks for the review!  Yeah, in Chrome OS we do a crazy amount of SPI
+> transfers since our EC and security chip are connected over SPI and we
+> seem to pile a whole lot of stuff into the EC.  This means we keep
+> coming back to the SPI controller again and again when profiling
+> things.  I'm hoping that we'll eventually be able to get DMA enabled
+> here, but until then at least it's nice to make the FIFO transfers
+> better...
 
-I'm bringing up mainline support for an IPQ4019-based system (the
-original Google WiFi, if anyone cares), and I'm trying to avoid having
-to update its bootloader too -- frankly, I'm not even sure I can effect
-any meaningful change on its "secure world" firmware.
+Ugh.  Given the problem that the kernel test robot found, I'm gonna
+say just drop this patch but keep the others I sent.  As per the CL
+description, it's a pretty minor optimization and even though we do a
+lot of SPI transfers it's probably more worth it to work towards DMA
+mode than to try to find a cleaner solution for this one.
 
-Currently, I'm finding that SMP doesn't work, because
-qcom_scm_set_cold_boot_addr() returns -4 (QCOM_SCM_EOPNOTSUPP?). If I
-switch back to the non-atomic SMC variant (and hack up scm_legacy_call()
-a lot, to avoid the DMA API), things work beautifully. Similarly, the
-vendor/BSP kernel only uses the non-atomic API for this function. This
-suggests to me that my firmware does not support the atomic variant at
-all (I see no other such calls being made, besides SMP initialization).
-
-IOW, my current patch looks to effectively revert 13e77747800e
-("firmware: qcom: scm: Use atomic SCM for cold boot"), and bring back
-ARM32-specific portions of commit 16e59467a446 ("firmware: qcom: scm:
-Convert to streaming DMA APIS"). The latter is necessary because the DMA
-API is not available to early SMP init, when there is no "device"
-available.
-
-I would just post a patch, but:
-(a) this looks to be totally opposite of the direction that ARM support
-    is "supposed" to be moving and
-(b) I've tried that before, for a similar problem domain [1], and was
-    met with deafening silence. Considering this patch would be much
-    more invasive, I thought I'd just pose a question first instead.
-
-So, back to the TL;DR, am I insane? Well, I may be insane regardless,
-but is it reasonable to bring back non-atomic support for this case? I
-can try to limit the damage to ARM32 at least (that's the only user of
-qcom_scm_set_cold_boot_addr()), but it still isn't the prettiest, given
-the "unified" nature of the current qcom_scm driver.
-
-Note that I can't find evidence that other IPQ4019 users have the same
-problem (presumably someone (e.g., in the OpenWRT community) would be
-complaining about lack of SMP otherwise?), so I have to assume there are
-endless firmware variants out there, as with everything in the ARM
-world.
-
-Thanks,
-Brian
-
-[1] [RFC PATCH] firmware: qcom_scm: disable SDI at boot
-    https://lore.kernel.org/linux-arm-msm/20200721080054.2803881-1-computersforpeace@gmail.com/
+-Doug
