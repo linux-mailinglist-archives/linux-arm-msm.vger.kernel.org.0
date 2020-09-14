@@ -2,103 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57EE42697A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:23:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B46926985B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:53:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbgINVXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 17:23:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45704 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725997AbgINVXT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 17:23:19 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69955C06178A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:23:19 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id e2so722667vsr.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:23:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=S1iEr7G6wXs1gVmA5M2ldmVwlSdVZgRm+7L2KYQ7HRw=;
-        b=alnS3OCcQ7S+2yaltkJEro5kLzD+B4We6wykhISZjxbRtVRPt+9/3eIPB2RDHXb040
-         K9CaGXcxD/SI1gMz374lRVAsDEgiu3D+VY9c9l4xH6Jn6FfxCNKbosw/SqkSVOwToYQ9
-         nPgKbRkLeoHpMCMP23KEscI0rwdTbtg9xjUjE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=S1iEr7G6wXs1gVmA5M2ldmVwlSdVZgRm+7L2KYQ7HRw=;
-        b=A+gGRVvab/o6dFyjyH+JTGJaXeB8IuETnJPQ/iLHI0mrjKx0MkKVrskuWEJs7dSu14
-         bM0MXIalrXQCt9yWoQNSLSPczuYDPHhJUNFNFj1WR7BAZHV0whIyj1W5aLVvsYDK2BHt
-         fZ/90iZ2WVpVMzMy17/aBiHvDkDo8biV80uEDEtq+WSOsrBLQxaRJMN/sIXC8MuThyNK
-         DjPttYlf4/+kMatS/L0d4zZlZucYHejnEprbgu7NR/LfHcZkEuHahL0zRm6/sE/9jptD
-         NGWuUshpRw+ydAuqsVpYStF7uchT2MJ8yfK1G9F2/k5jHzeYzJcMEnllLF4WwUuGjQ+b
-         AYbw==
-X-Gm-Message-State: AOAM530EzPx/9t0J6M2s8Fj47tkv2B88mgu5NXml2w0GAclL7xCen6Py
-        FHrYiWSpH3Pr0zcy+uyCalG19FWb7V+OGQ==
-X-Google-Smtp-Source: ABdhPJxJ0Jm4LT1tXuMk9vjGuU7+yMzmTqEVAjvMZuCs2yCnw9nXfeWViyZK1G8K4TZfscnilRMXrg==
-X-Received: by 2002:a67:308c:: with SMTP id w134mr8480235vsw.8.1600118598451;
-        Mon, 14 Sep 2020 14:23:18 -0700 (PDT)
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com. [209.85.222.42])
-        by smtp.gmail.com with ESMTPSA id u23sm1940074vsp.31.2020.09.14.14.23.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2020 14:23:17 -0700 (PDT)
-Received: by mail-ua1-f42.google.com with SMTP id e41so335290uad.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:23:16 -0700 (PDT)
-X-Received: by 2002:ab0:29d7:: with SMTP id i23mr8338345uaq.121.1600118596353;
- Mon, 14 Sep 2020 14:23:16 -0700 (PDT)
+        id S1726143AbgINVxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 17:53:03 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:24260 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725986AbgINVw5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 17:52:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600120376; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=McgfBzMTGCjtNIsTYVb4iriu19nAkMDbTGSM3XXPH4A=;
+ b=vyG7iDRemRZFfgW5NReb1MgS+MSLmYqx4dsDfy4Ad28e7BgY22Puo0GybIIe3m9ZOtwmehlM
+ fuHbjHbtFYp4ywUe55nqjMHtUgXI9/9GkcLqaI8CGh9MQKk03zWZA4p3/R3N97CojHe3pt0h
+ HBgIGqJh9f38peRq+HRyIgOoP3M=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f5fe6274ba82a82fd75a33a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 21:52:39
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6F5E6C433F0; Mon, 14 Sep 2020 21:52:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cgoldswo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D68DFC433CA;
+        Mon, 14 Sep 2020 21:52:37 +0000 (UTC)
 MIME-Version: 1.0
-References: <1600091917-7464-1-git-send-email-skakit@codeaurora.org> <1600091917-7464-4-git-send-email-skakit@codeaurora.org>
-In-Reply-To: <1600091917-7464-4-git-send-email-skakit@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 14 Sep 2020 14:23:04 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VLLPjntF9oxF2_=Jd3UssRbbaRm=H5SKO--JFUe+_11w@mail.gmail.com>
-Message-ID: <CAD=FV=VLLPjntF9oxF2_=Jd3UssRbbaRm=H5SKO--JFUe+_11w@mail.gmail.com>
-Subject: Re: [PATCH V6 3/4] arm64: dts: qcom: sc7180-trogdor: Add wakeup
- support for BT UART
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        msavaliy@qti.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 14 Sep 2020 14:52:37 -0700
+From:   Chris Goldsworthy <cgoldswo@codeaurora.org>
+To:     David Hildenbrand <david@redhat.com>
+Cc:     akpm@linux-foundation.org, linux-mm@kvack.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        pratikp@codeaurora.org, pdaly@codeaurora.org,
+        sudaraja@codeaurora.org, iamjoonsoo.kim@lge.com,
+        linux-arm-msm-owner@vger.kernel.org,
+        Vinayak Menon <vinmenon@codeaurora.org>,
+        linux-kernel-owner@vger.kernel.org
+Subject: Re: [PATCH v2] mm: cma: indefinitely retry allocations in cma_alloc
+In-Reply-To: <72ae0f361df527cf70946992e4ab1eb3@codeaurora.org>
+References: <06489716814387e7f147cf53d1b185a8@codeaurora.org>
+ <1599851809-4342-1-git-send-email-cgoldswo@codeaurora.org>
+ <010101747e998731-e49f209f-8232-4496-a9fc-2465334e70d7-000000@us-west-2.amazonses.com>
+ <a4bdda08-9e2a-4862-00a3-72d4c90e82c7@redhat.com>
+ <72ae0f361df527cf70946992e4ab1eb3@codeaurora.org>
+Message-ID: <57119844135c2b3ac5d075d077cd8c8e@codeaurora.org>
+X-Sender: cgoldswo@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2020-09-14 11:33, Chris Goldsworthy wrote:
+> On 2020-09-14 02:31, David Hildenbrand wrote:
+>> What about long-term pinnings? IIRC, that can happen easily e.g., with
+>> vfio (and I remember there is a way via vmsplice).
+>> 
+>> Not convinced trying forever is a sane approach in the general case 
+>> ...
+> 
+> Hi David,
+> 
+> I've botched the threading, so there are discussions with respect to
+> the previous patch-set that is missing on this thread, which I will
+> summarize below:
+> 
+> V1:
+> [1] https://lkml.org/lkml/2020/8/5/1097
+> [2] https://lkml.org/lkml/2020/8/6/1040
+> [3] https://lkml.org/lkml/2020/8/11/893
+> [4] https://lkml.org/lkml/2020/8/21/1490
+> [5] https://lkml.org/lkml/2020/9/11/1072
+> 
+> [1] features version of the patch featured a finite number of retries,
+> which has been stable for our kernels. In [2], Andrew questioned
+> whether we could actually find a way of solving the problem on the
+> grounds that doing a finite number of retries doesn't actually fix the
+> problem (more importantly, in [4] Andrew indicated that he would
+> prefer not to merge the patch as it doesn't solve the issue).  In [3],
+> I suggest one actual fix for this, which is to use
+> preempt_disable/enable() to prevent context switches from occurring
+> during the periods in copy_one_pte() and exit_mmap() (I forgot to
+> mention this case in the commit text) in which _refcount > _mapcount
+> for a page - you would also need to prevent interrupts from occurring
+> to if we were to fully prevent the issue from occurring.  I think this
+> would be acceptable for the copy_one_pte() case, since there _refcount
+> > _mapcount for little time.  For the exit_mmap() case, however, _refcount is greater than _mapcount whilst the page-tables are being torn down for a process - that could be too long for disabling preemption / interrupts.
+> 
+> So, in [4], Andrew asks about two alternatives to see if they're
+> viable: (1) acquiring locks on the exit_mmap path and migration paths,
+> (2) retrying indefinitely.  In [5], I discuss how using locks could
+> increase the time it takes to perform a CMA allocation, such that a
+> retry approach would avoid increased CMA allocation times. I'm also
+> uncertain about how the locking scheme could be implemented
+> effectively without introducing a new per-page lock that will be used
+> specifically to solve this issue, and I'm not sure this would be
+> accepted.
+> 
+> We're fine with doing indefinite retries, on the grounds that if there
+> is some long-term pinning that occurs when alloc_contig_range returns
+> -EBUSY, that it should be debugged and fixed.  Would it be possible to
+> make this infinite-retrying something that could be enabled or
+> disabled by a defconfig option?
+> 
+> Thanks,
+> 
+> Chris.
 
-On Mon, Sep 14, 2020 at 6:59 AM satya priya <skakit@codeaurora.org> wrote:
->
-> Add the necessary pinctrl, interrupt property and a suitable sleep config
-> to support Bluetooth wakeup feature.
->
-> GPIO mode is configured in sleep state to drive the RTS/RFR line low.
-> If QUP function is selected in sleep state, UART RTS/RFR is pulled high
-> during suspend and BT SoC not able to send wakeup bytes.
->
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
-> Changes in V5:
->  - Newly added in V5. This patch adds wakeup support for trogdor board files.
->
-> Changes in V6:
->  - As per Doug's comment deleted interrupts property and sorted the qup sleep
->    state before trackpad.
->  - As per Bjorn's comment canged the commit text, rationale for RTS, TX, RX.
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 54 ++++++++++++++++++++++++++++
->  1 file changed, 54 insertions(+)
+Actually, if we were willing to have a defconfig option for enabling / 
+disabling indefinite retries on the return of -EBUSY, would it be 
+possibly to re-structure the patch to allow either (1) indefinite 
+retrying, or (2) doing a fixed number of retires (as some people might 
+want to tolerate CMA allocation failures in favor of making progress)?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+-- 
+The Qualcomm Innovation Center, Inc.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
