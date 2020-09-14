@@ -2,146 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E9B026987D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 00:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36B5A269916
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 00:41:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726045AbgINWCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 18:02:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51732 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725961AbgINWCN (ORCPT
+        id S1726069AbgINWlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 18:41:17 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:40488 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726043AbgINWlQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 18:02:13 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93DD2C06174A;
-        Mon, 14 Sep 2020 15:02:11 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id o8so2092881ejb.10;
-        Mon, 14 Sep 2020 15:02:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=xGKDB+SeTNUH9+ntXv69tsjlv921V8lJoDxF7UQdwLc=;
-        b=RjH3QJHfbcwVDlI94UAt3J12rjSoccHaoscLj3GjVsl1MDXF756cAuvpcKg0BCldxp
-         up/1FFcsCFip2nZBRCu+A1UmCAXgrIFSX6uTLinhwL1QOf/qtIEV8N1I0Oxsu6w1uKz1
-         Slu3Cgzxofa4175a+I+uLr9MwdD7hb7IqZejwy75LkcBW2br32aZNhXRXPELUziiFk59
-         v7oTmwIWYedKeSRjpmi5uwEZoEgBQwDeIuETJszqsmLh+psch5HWUHuc6XcbXyAsg/3l
-         EL5NSYOtoAtEIVMjdim4qV16snbHmu8TIUiYgLtWUc9gZ1aAkSCnfuxsKQkqBEkRTMg9
-         GoEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=xGKDB+SeTNUH9+ntXv69tsjlv921V8lJoDxF7UQdwLc=;
-        b=CEsuyuOzDSebDRWKkZDg707r0UgABCNvJ6AXLJbDITWl5unp29hR/gQGfkl7qTwDUq
-         hLrJ0FMppzQNJosHNWH5ZHfcqOy4NH+6TDDRmjGUojWpPIdaDPBojBOzHHuqO3NNWfYI
-         gcIjS6/1yXnLhnPVW7xAlHHmJlVImdlWU2KEOV+BRvKoX8Xln0baKwqPIPdLjkCJvCAg
-         Fz4TeM22hY7bd3IQSqNwgKDSgiEkfqRnZPzqptLpXAABkkLZBOpRQlM9S8Dckl+D9SwG
-         VdmFeY4/Fc1KNmvJp93AzeQObljPV9EVSRFYn0ru6xhiBG589CHRjXTSAGPLd+KSnh7w
-         yTyg==
-X-Gm-Message-State: AOAM530TKqgwetsqqcHP54pz/P0uF63Zcolm6FIGRHEn/LH/HL1dxv9o
-        4bA9GJnV8XWvXGXX+wwIHmo=
-X-Google-Smtp-Source: ABdhPJyzrcmyUdk3mhdVJ7z7u1v/jNoFrq6sINS7cTp5D6Flsu5JPb60nhPMfbjtFXkv7cAGEbb8+A==
-X-Received: by 2002:a17:906:cf9d:: with SMTP id um29mr16627895ejb.74.1600120930154;
-        Mon, 14 Sep 2020 15:02:10 -0700 (PDT)
-Received: from AnsuelXPS (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.gmail.com with ESMTPSA id k6sm8640821ejr.104.2020.09.14.15.02.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Sep 2020 15:02:09 -0700 (PDT)
-From:   <ansuelsmth@gmail.com>
-To:     "'Ilia Mirkin'" <imirkin@alum.mit.edu>
-Cc:     <linux-arm-msm@vger.kernel.org>,
-        "'Linux PCI'" <linux-pci@vger.kernel.org>
-References: <20200907011238.3401-1-imirkin@alum.mit.edu> <018401d684b4$d31162c0$79342840$@gmail.com> <CAKb7UvgQcSsm=5wqs3jUNYYxuv1w_DPYpV1trSfz+OkbfK6TCg@mail.gmail.com>
-In-Reply-To: <CAKb7UvgQcSsm=5wqs3jUNYYxuv1w_DPYpV1trSfz+OkbfK6TCg@mail.gmail.com>
-Subject: R: [PATCH] PCI: qcom: don't clear out PHY_REFCLK_USE_PAD
-Date:   Tue, 15 Sep 2020 00:02:00 +0200
-Message-ID: <000001d68ae2$b0ad55c0$12080140$@gmail.com>
+        Mon, 14 Sep 2020 18:41:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600123275; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=3trGlBAsrqKw/gr2Zpkc3eqT35HTCBYAGTjHtSXQM0Q=; b=M0ANmwilfZ1sM/LR6qma0N/nX1wXt0t6wGCnXLHYIJZuPHzFHhwjEz1mOC2UY5T27qOE8W30
+ GbpLRhr/k+q0a2RjKYOgFiNNXolM965s8JWxtLNu5IWQsxmYfG24jUjvbmjIdxgz7B3m7YeO
+ uEM8Fe4j2Bu6ryxKzqMd+o13Rg0=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f5ff160be06707b34dc5b64 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 22:40:32
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 444E8C433FF; Mon, 14 Sep 2020 22:40:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1351FC433CA;
+        Mon, 14 Sep 2020 22:40:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1351FC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Ben Dooks <ben.dooks@codethink.co.uk>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Eric Anholt <eric@anholt.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Wambui Karuga <wambui.karugax@gmail.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] drm/msm: Add support for the WHERE_AM_I opcode
+Date:   Mon, 14 Sep 2020 16:40:20 -0600
+Message-Id: <20200914224023.1495082-1-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHY0SUK+QbXAY/uJVDw58GDK9a3NgHRG3jUAX2gsWypPhCRQA==
-Content-Language: it
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> -----Messaggio originale-----
-> Da: Ilia Mirkin <imirkin@alum.mit.edu>
-> Inviato: luned=C3=AC 7 settembre 2020 05:29
-> A: Ansuel Smith <ansuelsmth@gmail.com>
-> Cc: linux-arm-msm@vger.kernel.org; Linux PCI =
-<linux-pci@vger.kernel.org>
-> Oggetto: Re: [PATCH] PCI: qcom: don't clear out PHY_REFCLK_USE_PAD
->=20
-> On Sun, Sep 6, 2020 at 9:18 PM <ansuelsmth@gmail.com> wrote:
-> >
-> >
-> >
-> > > -----Messaggio originale-----
-> > > Da: Ilia Mirkin <ibmirkin@gmail.com> Per conto di Ilia Mirkin
-> > > Inviato: luned=C3=AC 7 settembre 2020 03:13
-> > > A: ansuelsmth@gmail.com
-> > > Cc: linux-arm-msm@vger.kernel.org; linux-pci@vger.kernel.org; Ilia
-> Mirkin
-> > > <imirkin@alum.mit.edu>
-> > > Oggetto: [PATCH] PCI: qcom: don't clear out PHY_REFCLK_USE_PAD
-> > >
-> > > This makes PCIe links come up again on ifc6410 (apq8064).
-> > >
-> > > Fixes: de3c4bf6489 ("PCI: qcom: Add support for tx term offset for =
-rev
-> > > 2.1.0")
-> > > Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-qcom.c | 1 -
-> > >  1 file changed, 1 deletion(-)
-> > >
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index 3aac77a295ba..985b11cf6481 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -387,7 +387,6 @@ static int qcom_pcie_init_2_1_0(struct
-> qcom_pcie
-> > > *pcie)
-> > >
-> > >       /* enable external reference clock */
-> > >       val =3D readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
-> > > -     val &=3D ~PHY_REFCLK_USE_PAD;
-> >
-> > To make sure this doesn't brake ipq806x, why not limit the &=3D to =
-the
-> ipq806x
-> > compatible like we do up in the code? (or use the use_pad only if
-> apq8064
-> > compatible is not detected, to address ipq8064-v2 added later?)
->=20
-> Do you mean something like
->=20
-> if (!of_device_is_compatible(node, "qcom,pcie-apq8064"))
-> val &=3D ~PHY_REFCLK_USE_PAD;
->=20
-> I'm not sure what's considered acceptable in these cases. It does seem
-> odd that this bit should not be cleared on apq8064 but should be on
-> ipq8064 -- perhaps there's more going on there? Unfortunately I
-> haven't the faintest clue as to what it is...
->=20
->   -ilia
+The microcode in linux-firmware has been updated to 1.87.01 for a5xx
+1.77.01 for a6xx [1]. These microcode versions support a new opcode called
+WHERE_AM_I that takes the place of the hardware RPTR shadow and enables the
+microcode to update the RPTR shadow in privileged memory so it is protected
+against the user.
 
-Ok i did some test... Can confirm that the condition is needed.
-ipq806x needs the USE_PAD or the kernel just hangs.=20
-When the pci interface is init the regs are 1019... For ipq806x this =
-need to
-change to 10019 (external ref clk enabled and something else disabled =
-that
-we don't know without documentation)
-So to sum up... without the condition this patch would cause a =
-regression for
-ipq8064/5.
+This patch series re-enables the RPTR shadow and preemption for a5xx and older
+versions of a6xx if the WHERE_AM_I opcode is available. Newer a6xx targets
+(starting with a650) have automatic privileged protection so the hardware RPTR
+shadow can be renabled for those targets too. If any of the needed dependencies
+aren't met then the RPTR shadow will remain disabled (along with preemption on
+5xx).
+
+This stack is bsed on https://gitlab.freedesktop.org/drm/msm.git msm-next-pgtables
+as there are some minor dependencies on the reorganized code in the pgtable
+stack.
+
+Jordan
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=f48fec44127f88ce83ea1bcaf5824de4146ca2f9
+
+Jordan Crouse (3):
+  drm/msm: Allow a5xx to mark the RPTR shadow as privileged
+  drm/msm: a6xx: Use WHERE_AM_I for eligible targets
+  drm/msm: Get rid of the REG_ADRENO offsets
+
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c       |  65 +++++++++---
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c       |  77 +++++++++++---
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |  82 +++++++++++----
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 108 ++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.h       |  12 +++
+ drivers/gpu/drm/msm/adreno/a5xx_power.c     |   2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |   5 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 100 +++++++++++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h       |   9 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  81 +--------------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  81 +--------------
+ drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h |   1 +
+ drivers/gpu/drm/msm/msm_gpu.h               |   1 +
+ 13 files changed, 377 insertions(+), 247 deletions(-)
+
+-- 
+2.25.1
 
