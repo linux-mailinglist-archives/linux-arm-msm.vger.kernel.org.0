@@ -2,90 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A10D2688B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 11:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DDFA2688EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 12:00:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726303AbgINJp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 05:45:29 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24]:16724 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbgINJp2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 05:45:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1600076722;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=XRFqOPGjL8wggEcBctjIdnImU/A4E36qYOOqx+M8ZNg=;
-        b=VUNLRXGN1tvVc0jadbWcBdG8Q4Xz0URaYLsd3f8lNm5ZhQRwzjJNPjA7PhkZxxUOr1
-        /q3WPEaYrd8crGyMewLnCLBPzYED/bsUPsmsQEllQcPvmeHHBed6FeSoJplxeOH9yWwy
-        9bgh2LbsD0GLc5pOSauVxKNu/YdboNFMyyTbpkPiV8GbeFcZSUn11xzv6JAxX3+AknUA
-        y4kZeeM5iFMeEG4hVTKNJAfzlLzOv0UtLoMnFhrFLopI6FnR2wUzIJSvR9+eNqiBBzlk
-        Pw/CaRwNt9JsUaofTCMFQKRDo1+FRxauweUhD6D6RNSO/yWQiBSOxAmtV8YZx4KhUwwm
-        TUcg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IcfFBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w8E9huht2
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Mon, 14 Sep 2020 11:43:56 +0200 (CEST)
-Date:   Mon, 14 Sep 2020 11:43:41 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 00/10] Convert MSM8916 boards to use labels, reduce
- duplication
-Message-ID: <20200914094341.GA1246@gerhold.net>
-References: <20200720085406.6716-1-stephan@gerhold.net>
+        id S1726239AbgINKAW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 06:00:22 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:36532 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726267AbgINKAU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 06:00:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600077619; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=RMWWi08qE+zVDjsvs5PNkxLphO7CpEmaJmcY8F/dYqE=; b=n8R+JFwBW89/vGrDcgXAxtJJoyqKbVyMcJlIkJZIKUTJSSOkueY8GmBYWk+iqzXg4nLybg9T
+ 1UO2HRmWJE389ZFZ4gJSGPHOPtESSrobnOFx7MTxmmOuRnUSxBVOlJrsFgQ60TrpfJnbJHmS
+ kCd5gvIDAGnqCjUIDs25Ge6WJV8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f5f3f167f21d51b30bc8937 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 09:59:50
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B8173C433FF; Mon, 14 Sep 2020 09:59:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.43.98] (unknown [47.8.187.49])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62A9DC433CA;
+        Mon, 14 Sep 2020 09:59:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62A9DC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH] tty: serial: qcom_geni_serial: 115.2 is a better console
+ default than 9600
+To:     Douglas Anderson <dianders@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Nick Desaulniers <ndesaulniers@google.com>, robdclark@chromium.org,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        jwerner@chromium.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+References: <20200911080054.1.I4c00b921c2f17b6988688046fa7be0f729f8d591@changeid>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <981cfc91-035e-57cb-5972-e2a749adae98@codeaurora.org>
+Date:   Mon, 14 Sep 2020 15:29:25 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200720085406.6716-1-stephan@gerhold.net>
+In-Reply-To: <20200911080054.1.I4c00b921c2f17b6988688046fa7be0f729f8d591@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
 
-On Mon, Jul 20, 2020 at 10:53:56AM +0200, Stephan Gerhold wrote:
-> Board device trees for newer SoCs reference labels to override properties
-> for components of the SoC. This patch series converts all MSM8916 boards to
-> use the same style.
-> 
-> Additionally, in the second part of the series I attempt to reduce duplication
-> within the MSM8916 board device trees a bit. If we keep copying a large number
-> of properties to each and every board of a SoC then (in my opinion)
-> it makes sense to consider if those can be shared in some include.
-> 
-> This will make it easier to add new boards in the future.
-> 
-> Stephan Gerhold (10):
->   arm64: dts: qcom: apq8016-sbc: Remove properties that are already
->     default
->   arm64: dts: qcom: msm8916: Declare sound node in msm8916.dtsi
->   arm64: dts: qcom: apq8016-sbc: Define leds outside of soc node
->   arm64: dts: qcom: msm8916: Add more labels
->   arm64: dts: qcom: msm8916: Use labels in board device trees
->   arm64: dts: qcom: pm8916: Add resin node
->   arm64: dts: qcom: msm8916: Move PM8916-specific parts to
->     msm8916-pm8916.dtsi
->   arm64: dts: qcom: msm8916: Move more supplies to msm8916-pm8916.dtsi
->   arm64: dts: qcom: msm8916: Set default pinctrl for blsp1_uart1/2
->   arm64: dts: qcom: msm8916: Move common USB properties to msm8916.dtsi
-> 
+On 9/11/2020 8:30 PM, Douglas Anderson wrote:
+> Commit c5cbc78acf69 ("tty: serial: qcom_geni_serial: Initialize baud
+> in qcom_geni_console_setup") fixed a bug by initting a variable that
+> was used in some cases without initialization.  However, the "default"
+> baud rate picked by that CL was probably not the best choice.  The
+> chances that anyone out there is trying to run a system with kernel
+> messages piped out over a 9600 baud serial port is just about nil.
+> Console messages are printed in a blocking manner.  At 9600 baud we
+> print about 1 character per millisecond which means that printing a
+> 40-byte message to the console will take ~40 ms.  While it would
+> probably work, it's going to make boot _very_ slow and probably cause
+> the occasional timeout here and there in drivers (heck, even at 115200
+> console delays can wreck havoc).
+>
+> This has already bit at least two people that I'm aware of that tried
+> to enable serial console by just adding "console=ttyMSM0" (instead of
+> "console=ttyMSM0,115200n8") to the command line, so it seems like it'd
+> be nice to fix.
+>
+> Let's switch the default to 115200.
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
-It's been two months since I sent this series - are there any changes
-I should make? Maybe you just overlooked it :)
-
-Would be great to make some progress since I have a few more patch
-series ready to send out that build on top of this one (some more
-cleanup for MSM8916, converting MSM8916 to use rpmpd power domains, ...)
-
-Thanks!
-Stephan
