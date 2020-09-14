@@ -2,101 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B2B1726977C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:13:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A39826979F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:21:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726055AbgINVNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 17:13:49 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:46051 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726057AbgINVNt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 17:13:49 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600118028; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=eP5pSacehjP1wjfJ5o8gJEuMAiQZyIXNv/QS66PVllQ=;
- b=PqFWq9PIfhfmwh9dQ/KVceg3qYwSlYWAzN3xFxm6VIyan5I1yu5XD/LIfqsJ/Z/WDhp6ZZFp
- 6dEy0avV9KWMdj60LbxnZMHJWGJL8tiLGTK0ZIcDTAXx613tryvhkXu0m6oYzWwE6avbCkMl
- MeeW8uo2SMZiTqVNEuCGEV1Pbls=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f5fdd0b9f3347551f59ab98 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 21:13:47
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AD721C433CA; Mon, 14 Sep 2020 21:13:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12EFFC433CA;
-        Mon, 14 Sep 2020 21:13:44 +0000 (UTC)
+        id S1726050AbgINVVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 17:21:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45332 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbgINVVB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 17:21:01 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02207C06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:21:01 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id y190so748320vsy.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:21:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h40Mkmyzjmx1oaGV6NYYOclBhWIiyDBMii4EWAbUUYU=;
+        b=EPnLS1RhlA0wyyP1OC7VacOLKiJxMMjRQpvYSkhipIR0qf9WC8RK564fIcvVVeFKbz
+         fC8LFeojctt1+gVlRo9X5MbmDgK1ToWp8Y9sHgCHcIzjscTuyvmbWS+p1l6qjzJAWhYZ
+         9Qu2jHMXie6FHKJSZDUVVMKxmHVG0KLRa2AC4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h40Mkmyzjmx1oaGV6NYYOclBhWIiyDBMii4EWAbUUYU=;
+        b=U108ovsw+eExeYu31+b53dQ8LKuU4RsxmWauRjIOfWAvWG3z+4hujK9jnJkB8cS5ml
+         tj5R+XHv7FJNdc7rZyJMopIRibxTdg9spVUXD+oLhbW2+NSeMSxIaPcvE738WfgQGPMd
+         LSU7JY4EYBhPrleZJ48faCTEJcaXCPoXcrgAlitchpN4fkiC+FJGER2HdC89q3CaK5DN
+         rgxhaCvEIsPMZ7ohLWaeeakErPWU0c2PkgVj05Zb51a0uKYz1b6alWt60wsrRn0sJugr
+         AyL7JWybllWEkKRjjQnh8xemIvF9i+2O+/JBkUEvSVhegVgja+QnyKxQGmNZpUr0aYO1
+         99GQ==
+X-Gm-Message-State: AOAM530uoAr1ElgxngnM0axY5l5GWbX3FhOxb9+Xwiq6h2JxaQf+EqPu
+        0hZy8Jiz2MjumjPN0H7QZ+J4aUJVFwd6Qw==
+X-Google-Smtp-Source: ABdhPJy5xF6lEF0nbuL0drHC0GoEIc6pNo7AE4vAnH/aks20af/WDhaTwnt1CsM97KpFRSKcil4vyg==
+X-Received: by 2002:a05:6102:82c:: with SMTP id k12mr9040241vsb.24.1600118459848;
+        Mon, 14 Sep 2020 14:20:59 -0700 (PDT)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id d125sm2021884vkd.36.2020.09.14.14.20.58
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Sep 2020 14:20:59 -0700 (PDT)
+Received: by mail-vs1-f51.google.com with SMTP id e2so719426vsr.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:20:58 -0700 (PDT)
+X-Received: by 2002:a67:ff97:: with SMTP id v23mr8916922vsq.11.1600118458295;
+ Mon, 14 Sep 2020 14:20:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 14 Sep 2020 14:13:44 -0700
-From:   rishabhb@codeaurora.org
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sidgup@codeaurora.org, stable@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: pdr: Fixup array type of get_domain_list_resp
- message
-In-Reply-To: <20200914145807.1224-1-sibis@codeaurora.org>
-References: <20200914145807.1224-1-sibis@codeaurora.org>
-Message-ID: <cac99ba16fc3e8f84ea2770e63988770@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1600091917-7464-1-git-send-email-skakit@codeaurora.org> <1600091917-7464-3-git-send-email-skakit@codeaurora.org>
+In-Reply-To: <1600091917-7464-3-git-send-email-skakit@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 14 Sep 2020 14:20:46 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WsU87ZWvhsPAWAnrQmK60SvZoxrefZDdW4y4i1MAEmwg@mail.gmail.com>
+Message-ID: <CAD=FV=WsU87ZWvhsPAWAnrQmK60SvZoxrefZDdW4y4i1MAEmwg@mail.gmail.com>
+Subject: Re: [PATCH V6 2/4] arm64: dts: qcom: sc7180: Add wakeup support for
+ BT UART on sc7180-idp
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        msavaliy@qti.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-14 07:58, Sibi Sankar wrote:
-> The array type of get_domain_list_resp is incorrectly marked as 
-> NO_ARRAY.
-> Due to which the following error was observed when using pdr helpers 
-> with
-> the downstream proprietary pd-mapper. Fix this up by marking it as
-> VAR_LEN_ARRAY instead.
-> 
-> Err logs:
-> qmi_decode_struct_elem: Fault in decoding: dl(2), db(27), tl(160), 
-> i(1), el(1)
-> failed to decode incoming message
-> PDR: tms/servreg get domain list txn wait failed: -14
-> PDR: service lookup for tms/servreg failed: -14
-> 
-> Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart 
-> helpers")
-> Reported-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Hi,
+
+On Mon, Sep 14, 2020 at 6:59 AM satya priya <skakit@codeaurora.org> wrote:
+>
+> Add the necessary pinctrl, interrupt property and a suitable sleep config
+> to support Bluetooth wakeup feature.
+>
+> GPIO mode is configured in sleep state to drive the RTS/RFR line low.
+> If QUP function is selected in sleep state, UART RTS/RFR is pulled high
+> during suspend and BT SoC not able to send wakeup bytes.
+>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 > ---
->  drivers/soc/qcom/pdr_internal.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/pdr_internal.h 
-> b/drivers/soc/qcom/pdr_internal.h
-> index 15b5002e4127b..ab9ae8cdfa54c 100644
-> --- a/drivers/soc/qcom/pdr_internal.h
-> +++ b/drivers/soc/qcom/pdr_internal.h
-> @@ -185,7 +185,7 @@ struct qmi_elem_info 
-> servreg_get_domain_list_resp_ei[] = {
->  		.data_type      = QMI_STRUCT,
->  		.elem_len       = SERVREG_DOMAIN_LIST_LENGTH,
->  		.elem_size      = sizeof(struct servreg_location_entry),
-> -		.array_type	= NO_ARRAY,
-> +		.array_type	= VAR_LEN_ARRAY,
->  		.tlv_type       = 0x12,
->  		.offset         = offsetof(struct servreg_get_domain_list_resp,
->  					   domain_list),
-Tested-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+> Changes in V2:
+>  - This patch adds sleep state for BT UART. Newly added in V2.
+>
+> Changes in V3:
+>  - Remove "output-high" for TX from both sleep and default states
+>    as it is not required. Configure pull-up for TX in sleep state.
+>
+> Changes in V4:
+>  - As per Matthias's comment, removed drive-strength for sleep state
+>    and fixed nit-pick.
+>
+> Changes in V5:
+>  - As per Matthias's comments, moved pinmux change for sleep state,
+>    pinctrl and interrupt config to the board specific file.
+>
+> Changes in V6:
+>  - As per Doug's comments changed subject, deleted interrupts property.
+>  - As per Bjorn's comments changed commit text and rationale for RTS,
+>    TX and RX.
+>
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts | 55 +++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
