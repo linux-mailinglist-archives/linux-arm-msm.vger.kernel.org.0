@@ -2,135 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14E4A269520
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 20:43:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4462269524
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 20:45:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726004AbgINSnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 14:43:50 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:58848 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726025AbgINSns (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 14:43:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600109028; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=IBd2kyb8hWOOqIOXc0Or7ejrYcX2YVrlRG3QUaCL7C8=;
- b=rdovm9iSTo99/GLoJ8Cy3QtBc7eFVZmgbFgEhiH6bC3MT6VutBhXbkhZ8qJ1yqsdvB3fe4iW
- PLotzPd60Cm8MrTLlDB+A6MbuGZ7F51ykMoiyIbrAQUk3Gc/DO+imHCgeZ672ziKXPozCB9g
- 7YvaLG2cwa2ktHJYrQNm9P53kVE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f5fb9c2238e1efa376f0c6f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 18:43:14
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4CBEBC43387; Mon, 14 Sep 2020 18:43:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4935DC433CA;
-        Mon, 14 Sep 2020 18:43:12 +0000 (UTC)
+        id S1725992AbgINSpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 14:45:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725961AbgINSpO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 14:45:14 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 167DBC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 11:44:58 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id s65so560583pgb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 11:44:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=agJZ2GUvodYk8REC64Enu+qBGzQETZONlk2R56cWqGk=;
+        b=NbkqyKdQVeX449Q/lODGRhYt/6bAanlwfoX2gaBL/YVMnECCaAca9R1/6ziUZsdV2a
+         NtDpY1ydF1yzkj8BJOX4fEdOgU7ZMWlnn1EP6hl9qB/gSa9rjOZP0707oYem1H99WBP6
+         YLIZVnML+795E2r+aP3W2mt0CtY/jPV4Fqb70=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=agJZ2GUvodYk8REC64Enu+qBGzQETZONlk2R56cWqGk=;
+        b=nhYHrboRuSBuae453Vt00ySgcj+Dk0BL4REf3s7ETeDHpOouX1bP5hSdnImZCmiY6A
+         dWdZGHJ5W8C9KXtuUcAX0QA00MFMUyLhn8F+bA4NTTMJXryqQCd2A/5Ft/OMc52PNGGH
+         z0hKX1E9MMU+LDLUHTjHhshbtF0DKkgFW3K2TliPrRmpaB7XBYdddrVC13mo1ZwGU61E
+         7OUUbUVjfYcaxlFa1S1yXAmr2xDxsXe7MfbEcZbw0e0smCvOw69Jo8qeKoflTx79tNtZ
+         LPeIslzPeFFtN3uMp03BhePX23bNcQXWi5ll8BYTLXKuldwjvJetFXO/PkdmcyOrXDCI
+         Ybnw==
+X-Gm-Message-State: AOAM530AKRGen3+UPN+pGrbgPl+0ZaalfzYHJW+6mILvuBgibqazEQ9y
+        mtWq+xFiyLSPSfIjTB2zSjU2lslsmMYqUQ==
+X-Google-Smtp-Source: ABdhPJxGUGr21Vkhss+zLD5oiCH5Qy91XpE6K6NDruQN17AdnRpdb4WsIJfIMPntQUGDjwcWpGsrHw==
+X-Received: by 2002:a63:e645:: with SMTP id p5mr11596983pgj.276.1600109097559;
+        Mon, 14 Sep 2020 11:44:57 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id k3sm11289661pfp.41.2020.09.14.11.44.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2020 11:44:57 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 14 Sep 2020 11:43:12 -0700
-From:   nguyenb@codeaurora.org
-To:     Avri Altman <Avri.Altman@wdc.com>
-Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <343db8a7b0e85ae6e29b9e79b68b98c22fcbcdce.1599974998.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1599974998.git.saiprakash.ranjan@codeaurora.org> <343db8a7b0e85ae6e29b9e79b68b98c22fcbcdce.1599974998.git.saiprakash.ranjan@codeaurora.org>
+Subject: Re: [PATCHv4 1/2] soc: qcom: llcc: Move attribute config to its own function
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        YueHaibing <yuehaibing@huawei.com>,
-        Bean Huo <beanhuo@micron.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 2/2] scsi: ufs: Support reading UFS's Vcc voltage from
- device tree
-In-Reply-To: <BY5PR04MB67051C08A73119B554E4F352FC220@BY5PR04MB6705.namprd04.prod.outlook.com>
-References: <cover.1598939393.git.nguyenb@codeaurora.org>
- <69db325a09d5c3fa7fc260db031b1e498b601c25.1598939393.git.nguyenb@codeaurora.org>
- <BY5PR04MB67051C08A73119B554E4F352FC220@BY5PR04MB6705.namprd04.prod.outlook.com>
-Message-ID: <170592eceb26da041f276cf4ca33aaf2@codeaurora.org>
-X-Sender: nguyenb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Date:   Mon, 14 Sep 2020 11:44:55 -0700
+Message-ID: <160010909573.4188128.171199552773965552@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-13 02:37, Avri Altman wrote:
->> 
->> The UFS specifications supports a range of Vcc operating voltage
->> from 2.4-3.6V depending on the device and manufacturers.
->> Allows selecting the UFS Vcc voltage level by setting the
->> UFS's entry vcc-voltage-level in the device tree. If UFS's
->> vcc-voltage-level setting is not found in the device tree,
->> use default values provided by the driver.
->> 
->> Signed-off-by: Can Guo <cang@codeaurora.org>
->> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
->> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
->> ---
->>  drivers/scsi/ufs/ufshcd-pltfrm.c | 15 ++++++++++++---
->>  1 file changed, 12 insertions(+), 3 deletions(-)
->> 
->> diff --git a/drivers/scsi/ufs/ufshcd-pltfrm.c 
->> b/drivers/scsi/ufs/ufshcd-pltfrm.c
->> index 3db0af6..48f429c 100644
->> --- a/drivers/scsi/ufs/ufshcd-pltfrm.c
->> +++ b/drivers/scsi/ufs/ufshcd-pltfrm.c
->> @@ -104,10 +104,11 @@ static int ufshcd_parse_clock_info(struct 
->> ufs_hba
->> *hba)
->>  static int ufshcd_populate_vreg(struct device *dev, const char *name,
->>                 struct ufs_vreg **out_vreg)
->>  {
->> -       int ret = 0;
->> +       int len, ret = 0;
->>         char prop_name[MAX_PROP_SIZE];
->>         struct ufs_vreg *vreg = NULL;
->>         struct device_node *np = dev->of_node;
->> +       const __be32 *prop;
->> 
->>         if (!np) {
->>                 dev_err(dev, "%s: non DT initialization\n", __func__);
->> @@ -138,8 +139,16 @@ static int ufshcd_populate_vreg(struct device 
->> *dev,
->> const char *name,
->>                         vreg->min_uV = UFS_VREG_VCC_1P8_MIN_UV;
->>                         vreg->max_uV = UFS_VREG_VCC_1P8_MAX_UV;
->>                 } else {
->> -                       vreg->min_uV = UFS_VREG_VCC_MIN_UV;
->> -                       vreg->max_uV = UFS_VREG_VCC_MAX_UV;
->> +                       prop = of_get_property(np, 
->> "vcc-voltage-level", &len);
->> +                       if (!prop || (len != (2 * sizeof(__be32)))) {
->> +                               dev_warn(dev, "%s vcc-voltage-level 
->> property.\n",
->> +                                       prop ? "invalid format" : 
->> "no");
->> +                               vreg->min_uV = UFS_VREG_VCC_MIN_UV;
->> +                               vreg->max_uV = UFS_VREG_VCC_MAX_UV;
->> +                       } else {
->> +                               vreg->min_uV = be32_to_cpup(&prop[0]);
->> +                               vreg->max_uV = be32_to_cpup(&prop[1]);
->> +                       }
->>                 }
->>         } else if (!strcmp(name, "vccq")) {
->>                 vreg->min_uV = UFS_VREG_VCCQ_MIN_UV;
->> --
-> Maybe instead call ufshcd_populate_vreg with the new name,
-> To not break the function flow, and just add another else if ?
-Could you please clarify your comments? Are you suggesting to create a 
-new function?
-Thank you.
+Quoting Sai Prakash Ranjan (2020-09-14 04:12:59)
+> Cleanup qcom_llcc_cfg_program() by moving llcc attribute
+> configuration to a separate function of its own. Also
+> correct misspelled 'instance' caught by checkpatch.
+>=20
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  drivers/soc/qcom/llcc-qcom.c | 75 ++++++++++++++++++++----------------
+>  1 file changed, 41 insertions(+), 34 deletions(-)
+>=20
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 429b5a60a1ba..60ee31842dea 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -318,14 +318,50 @@ size_t llcc_get_slice_size(struct llcc_slice_desc *=
+desc)
+>  }
+>  EXPORT_SYMBOL_GPL(llcc_get_slice_size);
+> =20
+> -static int qcom_llcc_cfg_program(struct platform_device *pdev)
+> +static int qcom_llcc_attr_cfg(const struct llcc_slice_config *table)
+
+Call it config? It's certainly not a table.
+
+>  {
+> -       int i;
+>         u32 attr1_cfg;
+>         u32 attr0_cfg;
+>         u32 attr1_val;
+>         u32 attr0_val;
+>         u32 max_cap_cacheline;
+> +       int ret;
+> +
+> +       attr1_cfg =3D LLCC_TRP_ATTR1_CFGn(table->slice_id);
+> +       attr0_cfg =3D LLCC_TRP_ATTR0_CFGn(table->slice_id);
+
+Can this move down to near where it is used?
+
+> +
+> +       attr1_val =3D table->cache_mode;
+> +       attr1_val |=3D table->probe_target_ways << ATTR1_PROBE_TARGET_WAY=
+S_SHIFT;
+> +       attr1_val |=3D table->fixed_size << ATTR1_FIXED_SIZE_SHIFT;
+> +       attr1_val |=3D table->priority << ATTR1_PRIORITY_SHIFT;
+> +
+> +       max_cap_cacheline =3D MAX_CAP_TO_BYTES(table->max_cap);
+> +
+> +       /* LLCC instances can vary for each target.
+
+The /* should be on a line by itself.
+
+> +        * The SW writes to broadcast register which gets propagated
+> +        * to each llcc instance (llcc0,.. llccN).
+> +        * Since the size of the memory is divided equally amongst the
+> +        * llcc instances, we need to configure the max cap accordingly.
+> +        */
+> +       max_cap_cacheline =3D max_cap_cacheline / drv_data->num_banks;
+> +       max_cap_cacheline >>=3D CACHE_LINE_SIZE_SHIFT;
+> +       attr1_val |=3D max_cap_cacheline << ATTR1_MAX_CAP_SHIFT;
+> +
+> +       attr0_val =3D table->res_ways & ATTR0_RES_WAYS_MASK;
+> +       attr0_val |=3D table->bonus_ways << ATTR0_BONUS_WAYS_SHIFT;
+> +
+> +       ret =3D regmap_write(drv_data->bcast_regmap, attr1_cfg, attr1_val=
+);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret =3D regmap_write(drv_data->bcast_regmap, attr0_cfg, attr0_val=
+);
+> +
+> +       return ret;
+
+return regmap_write(...)
+
+> +}
+> +
+> +static int qcom_llcc_cfg_program(struct platform_device *pdev)
+> +{
+> +       int i;
+>         u32 sz;
+>         int ret =3D 0;
+>         const struct llcc_slice_config *llcc_table;
