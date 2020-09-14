@@ -2,136 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B46926985B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8226F26985E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:53:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbgINVxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 17:53:03 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24260 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725986AbgINVw5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 17:52:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600120376; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=McgfBzMTGCjtNIsTYVb4iriu19nAkMDbTGSM3XXPH4A=;
- b=vyG7iDRemRZFfgW5NReb1MgS+MSLmYqx4dsDfy4Ad28e7BgY22Puo0GybIIe3m9ZOtwmehlM
- fuHbjHbtFYp4ywUe55nqjMHtUgXI9/9GkcLqaI8CGh9MQKk03zWZA4p3/R3N97CojHe3pt0h
- HBgIGqJh9f38peRq+HRyIgOoP3M=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f5fe6274ba82a82fd75a33a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 21:52:39
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6F5E6C433F0; Mon, 14 Sep 2020 21:52:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: cgoldswo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D68DFC433CA;
-        Mon, 14 Sep 2020 21:52:37 +0000 (UTC)
+        id S1726119AbgINVx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 17:53:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50332 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726013AbgINVxM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 17:53:12 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F430C061788
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:53:12 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id o6so1312889ota.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:53:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=M0KzjL35Ohrpi1hBTpVC8GSlPU64AFcqfskfaAZgBa8=;
+        b=LLZApjOYT5LOPwoWYD3YxrbeHE/ynPWQVOd7JfPB7whFmDJqwNGuoKrvJso5gpGyaw
+         LGOyVBW1IMXvVatUGckoxvVCfUw6pylZefbVuwwZ5+VkggK/oss0GOiQ/233+1f3TiCR
+         xIopZ4lSiZ8pPQlbiRy2r3bR0qAZVz4r0GzortxzQdX8nm0/EJ+QLjbT+az+ari11bPG
+         lYKEFI/ORlRY8PWI+8BURBUpEv5V1ynse/YiaE/C+rEotSij7tat4Yhr/B9kOFTst1wq
+         QEZbiVcClXmY1QbQuyJP7lCk7vvbUGCDa5CI6OIzqBAoLAGGjv8sDt+sWXkCcvokxv4f
+         ZECg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=M0KzjL35Ohrpi1hBTpVC8GSlPU64AFcqfskfaAZgBa8=;
+        b=Y/+XjiZuZIPOLQphYM3i0EzMbB/fJisFzbq2+K1T7nN14Awb1XJW+qkCKWkFgNm8mb
+         8T5l+nQSuil36Xrr328GzdROYmeoejY6hnA1pJ4D+FlfkhMhnO2HW2iWXd6xKVDNMvle
+         MkjSx0+ChKIGC2KawxjaJrdPzegz6BFNXzv5OOVihbOk1cO5moyojDJpRTfGR1J89AXl
+         1gpkjhpetmSI1qhi7tAwp3fL3xpVtNxMCIhoq1zNNq77/EtmV4qb25iEXCxNHTTi0Xif
+         tm+jbxEZK6lv6ELS8xeynbMH4hrxqw7x1sbbV21KYqb5boT2nLKIEu/BmGfzcZ0CVqFX
+         W0mQ==
+X-Gm-Message-State: AOAM53078CzaY1i5qpRSnrHGuXijAW6Q1dOsIHVqmOxPpQSXPJAaAyjr
+        yKj9mASFHRKSUEulS5kAEXh5KhsRcM6UaVmAuRgLOg==
+X-Google-Smtp-Source: ABdhPJzZPGYpZyuCNJYmdc/Gjs6hHb8CPs+tTvqBT9j22B8LxDuy/ic/fjVVunBaIQ4zJxYyyVsKbQk75yT+SfiISAA=
+X-Received: by 2002:a9d:6d8b:: with SMTP id x11mr10119632otp.221.1600120391780;
+ Mon, 14 Sep 2020 14:53:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 14 Sep 2020 14:52:37 -0700
-From:   Chris Goldsworthy <cgoldswo@codeaurora.org>
-To:     David Hildenbrand <david@redhat.com>
-Cc:     akpm@linux-foundation.org, linux-mm@kvack.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        pratikp@codeaurora.org, pdaly@codeaurora.org,
-        sudaraja@codeaurora.org, iamjoonsoo.kim@lge.com,
-        linux-arm-msm-owner@vger.kernel.org,
-        Vinayak Menon <vinmenon@codeaurora.org>,
-        linux-kernel-owner@vger.kernel.org
-Subject: Re: [PATCH v2] mm: cma: indefinitely retry allocations in cma_alloc
-In-Reply-To: <72ae0f361df527cf70946992e4ab1eb3@codeaurora.org>
-References: <06489716814387e7f147cf53d1b185a8@codeaurora.org>
- <1599851809-4342-1-git-send-email-cgoldswo@codeaurora.org>
- <010101747e998731-e49f209f-8232-4496-a9fc-2465334e70d7-000000@us-west-2.amazonses.com>
- <a4bdda08-9e2a-4862-00a3-72d4c90e82c7@redhat.com>
- <72ae0f361df527cf70946992e4ab1eb3@codeaurora.org>
-Message-ID: <57119844135c2b3ac5d075d077cd8c8e@codeaurora.org>
-X-Sender: cgoldswo@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1597227730-16477-1-git-send-email-rnayak@codeaurora.org>
+ <CALAqxLVQ1uB5Zy1DrFP6K4FgZ0U9rwGterhvzcTws_9O9wWE2g@mail.gmail.com> <CALAqxLUr9ahtxkQSXnBG7k092bXxM7yANM0RX7jyVksYzhi-ZA@mail.gmail.com>
+In-Reply-To: <CALAqxLUr9ahtxkQSXnBG7k092bXxM7yANM0RX7jyVksYzhi-ZA@mail.gmail.com>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Mon, 14 Sep 2020 14:53:00 -0700
+Message-ID: <CALAqxLV4ZiqWZaZV5E6KJQRoqrvWrSWqvVTfkk-P_DDNpdcioA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: sdm845: Fixup OPP table for all qup devices
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, lkml <linux-kernel@vger.kernel.org>,
+        Amit Pundir <amit.pundir@linaro.org>, tdas@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-14 11:33, Chris Goldsworthy wrote:
-> On 2020-09-14 02:31, David Hildenbrand wrote:
->> What about long-term pinnings? IIRC, that can happen easily e.g., with
->> vfio (and I remember there is a way via vmsplice).
->> 
->> Not convinced trying forever is a sane approach in the general case 
->> ...
-> 
-> Hi David,
-> 
-> I've botched the threading, so there are discussions with respect to
-> the previous patch-set that is missing on this thread, which I will
-> summarize below:
-> 
-> V1:
-> [1] https://lkml.org/lkml/2020/8/5/1097
-> [2] https://lkml.org/lkml/2020/8/6/1040
-> [3] https://lkml.org/lkml/2020/8/11/893
-> [4] https://lkml.org/lkml/2020/8/21/1490
-> [5] https://lkml.org/lkml/2020/9/11/1072
-> 
-> [1] features version of the patch featured a finite number of retries,
-> which has been stable for our kernels. In [2], Andrew questioned
-> whether we could actually find a way of solving the problem on the
-> grounds that doing a finite number of retries doesn't actually fix the
-> problem (more importantly, in [4] Andrew indicated that he would
-> prefer not to merge the patch as it doesn't solve the issue).  In [3],
-> I suggest one actual fix for this, which is to use
-> preempt_disable/enable() to prevent context switches from occurring
-> during the periods in copy_one_pte() and exit_mmap() (I forgot to
-> mention this case in the commit text) in which _refcount > _mapcount
-> for a page - you would also need to prevent interrupts from occurring
-> to if we were to fully prevent the issue from occurring.  I think this
-> would be acceptable for the copy_one_pte() case, since there _refcount
-> > _mapcount for little time.  For the exit_mmap() case, however, _refcount is greater than _mapcount whilst the page-tables are being torn down for a process - that could be too long for disabling preemption / interrupts.
-> 
-> So, in [4], Andrew asks about two alternatives to see if they're
-> viable: (1) acquiring locks on the exit_mmap path and migration paths,
-> (2) retrying indefinitely.  In [5], I discuss how using locks could
-> increase the time it takes to perform a CMA allocation, such that a
-> retry approach would avoid increased CMA allocation times. I'm also
-> uncertain about how the locking scheme could be implemented
-> effectively without introducing a new per-page lock that will be used
-> specifically to solve this issue, and I'm not sure this would be
-> accepted.
-> 
-> We're fine with doing indefinite retries, on the grounds that if there
-> is some long-term pinning that occurs when alloc_contig_range returns
-> -EBUSY, that it should be debugged and fixed.  Would it be possible to
-> make this infinite-retrying something that could be enabled or
-> disabled by a defconfig option?
-> 
-> Thanks,
-> 
-> Chris.
+On Mon, Sep 7, 2020 at 1:37 PM John Stultz <john.stultz@linaro.org> wrote:
+>
+> On Mon, Aug 31, 2020 at 9:04 PM John Stultz <john.stultz@linaro.org> wrote:
+> > On Wed, Aug 12, 2020 at 3:23 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> > > This OPP table was based on the clock VDD-FMAX tables seen in
+> > > downstream code, however it turns out the downstream clock
+> > > driver does update these tables based on later/production
+> > > rev of the chip and whats seen in the tables belongs to an
+> > > early engineering rev of the SoC.
+> > > Fix up the OPP tables such that it now matches with the
+> > > production rev of sdm845 SoC.
+> > >
+> > > Fixes: 13cadb34e593 ("arm64: dts: sdm845: Add OPP table for all qup
+> > > devices")
+> > > Reported-by: John Stultz <john.stultz@linaro.org>
+> > > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> > > ---
+> >
+> > Just wanted to follow up on this, as it's still missing from 5.9-rc3
+> > and is needed to fix a bluetooth regression on db845c from 5.9-rc1.
+> >
+> > Amit has already validated it (on PocoF1 as well), but just in case its useful:
+> > Tested-by: John Stultz <john.stultz@linaro.org>
+>
+> Hey Everyone,
+>   Just wanted to nag folks on this again as it is still missing from
+> upstream and resolves a bluetooth regression from 5.9-rc1.
 
-Actually, if we were willing to have a defconfig option for enabling / 
-disabling indefinite retries on the return of -EBUSY, would it be 
-possibly to re-structure the patch to allow either (1) indefinite 
-retrying, or (2) doing a fixed number of retires (as some people might 
-want to tolerate CMA allocation failures in favor of making progress)?
+Hey Everyone,
+ Just your weekly nag on this patch that is still missing upstream.
+This patch fixes bluetooth regressions that started w/ 5.9-rc1. It
+would be great to see it land before 5.9 is finalized.
 
--- 
-The Qualcomm Innovation Center, Inc.
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+thanks
+-john
