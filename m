@@ -2,93 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D3F0268EB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 16:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73EF9268F01
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 17:06:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbgINO7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 10:59:15 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:20394 "EHLO m43-7.mailgun.net"
+        id S1726019AbgINPGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 11:06:12 -0400
+Received: from mx2.suse.de ([195.135.220.15]:36296 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726744AbgINO64 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 10:58:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600095535; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=6B1eHivMPY/Y7JjheulizygZ7FR99YPUY1zmWLJj70I=; b=vx47B0OaeK9QjwmNR3hG87uy517wz+p2nRQTCuRaYphq6Xe5blM8OXQccwyAXL2e/rtGVsXu
- 3LM+fpovYfxpouVdLdgdK7AXBq5CNVK2jPCWCfh+EoHtgbzcZxRiB0WQfd15hxfY7X2I7/Oy
- y5454kv4cq9UzIJ3qA+7/VaDO44=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f5f850c4ba82a82fd76569c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 14:58:20
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AA676C433C8; Mon, 14 Sep 2020 14:58:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8699C433F0;
-        Mon, 14 Sep 2020 14:58:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A8699C433F0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, rishabhb@codeaurora.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sidgup@codeaurora.org,
-        stable@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH] soc: qcom: pdr: Fixup array type of get_domain_list_resp message
-Date:   Mon, 14 Sep 2020 20:28:07 +0530
-Message-Id: <20200914145807.1224-1-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
+        id S1726088AbgINPF6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 11:05:58 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id 36552AFC1;
+        Mon, 14 Sep 2020 15:06:10 +0000 (UTC)
+Subject: Re: [PATCH 01/20] drm/amdgpu: Introduce GEM object functions
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        alexander.deucher@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+        linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, l.stach@pengutronix.de,
+        christian.gmeiner@gmail.com, inki.dae@samsung.com,
+        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+        patrik.r.jakobsson@gmail.com, jani.nikula@linux.intel.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+        chunkuang.hu@kernel.org, p.zabel@pengutronix.de,
+        matthias.bgg@gmail.com, robdclark@gmail.com, sean@poorly.run,
+        bskeggs@redhat.com, tomi.valkeinen@ti.com, eric@anholt.net,
+        hjc@rock-chips.com, heiko@sntech.de, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, rodrigosiqueiramelo@gmail.com,
+        hamohammed.sa@gmail.com, oleksandr_andrushchenko@epam.com,
+        hyun.kwon@xilinx.com, laurent.pinchart@ideasonboard.com,
+        michal.simek@xilinx.com, sumit.semwal@linaro.org,
+        evan.quan@amd.com, Hawking.Zhang@amd.com, tianci.yin@amd.com,
+        marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        abdiel.janulgue@linux.intel.com, tvrtko.ursulin@linux.intel.com,
+        andi.shyti@intel.com, sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-2-tzimmermann@suse.de>
+ <5c1b3cab-1898-46df-2c5c-23ab6cbfbb7a@amd.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Message-ID: <c445493b-9914-63f2-1cf2-c3c1de14e3e5@suse.de>
+Date:   Mon, 14 Sep 2020 17:05:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <5c1b3cab-1898-46df-2c5c-23ab6cbfbb7a@amd.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="MeVdSsKebthdc7DC8hvgqWlLwpjnz0H9f"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The array type of get_domain_list_resp is incorrectly marked as NO_ARRAY.
-Due to which the following error was observed when using pdr helpers with
-the downstream proprietary pd-mapper. Fix this up by marking it as
-VAR_LEN_ARRAY instead.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--MeVdSsKebthdc7DC8hvgqWlLwpjnz0H9f
+Content-Type: multipart/mixed; boundary="zniUnHMaoWytGRm2jwIkKjV0oPt2fa9bx";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+ alexander.deucher@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+ linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+ inki.dae@samsung.com, jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+ patrik.r.jakobsson@gmail.com, jani.nikula@linux.intel.com,
+ joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+ chunkuang.hu@kernel.org, p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+ robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+ tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com, heiko@sntech.de,
+ thierry.reding@gmail.com, jonathanh@nvidia.com,
+ rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+ oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+ laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+ sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+ tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+ andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com, xinhui.pan@amd.com,
+ aaron.liu@amd.com, nirmoy.das@amd.com, chris@chris-wilson.co.uk,
+ matthew.auld@intel.com, abdiel.janulgue@linux.intel.com,
+ tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com, sam@ravnborg.org,
+ miaoqinglang@huawei.com, emil.velikov@collabora.com
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ xen-devel@lists.xenproject.org
+Message-ID: <c445493b-9914-63f2-1cf2-c3c1de14e3e5@suse.de>
+Subject: Re: [PATCH 01/20] drm/amdgpu: Introduce GEM object functions
+References: <20200813083644.31711-1-tzimmermann@suse.de>
+ <20200813083644.31711-2-tzimmermann@suse.de>
+ <5c1b3cab-1898-46df-2c5c-23ab6cbfbb7a@amd.com>
+In-Reply-To: <5c1b3cab-1898-46df-2c5c-23ab6cbfbb7a@amd.com>
 
-Err logs:
-qmi_decode_struct_elem: Fault in decoding: dl(2), db(27), tl(160), i(1), el(1)
-failed to decode incoming message
-PDR: tms/servreg get domain list txn wait failed: -14
-PDR: service lookup for tms/servreg failed: -14
+--zniUnHMaoWytGRm2jwIkKjV0oPt2fa9bx
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-Reported-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/soc/qcom/pdr_internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi
 
-diff --git a/drivers/soc/qcom/pdr_internal.h b/drivers/soc/qcom/pdr_internal.h
-index 15b5002e4127b..ab9ae8cdfa54c 100644
---- a/drivers/soc/qcom/pdr_internal.h
-+++ b/drivers/soc/qcom/pdr_internal.h
-@@ -185,7 +185,7 @@ struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
- 		.data_type      = QMI_STRUCT,
- 		.elem_len       = SERVREG_DOMAIN_LIST_LENGTH,
- 		.elem_size      = sizeof(struct servreg_location_entry),
--		.array_type	= NO_ARRAY,
-+		.array_type	= VAR_LEN_ARRAY,
- 		.tlv_type       = 0x12,
- 		.offset         = offsetof(struct servreg_get_domain_list_resp,
- 					   domain_list),
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Am 13.08.20 um 12:22 schrieb Christian K=C3=B6nig:
+> Am 13.08.20 um 10:36 schrieb Thomas Zimmermann:
+>> GEM object functions deprecate several similar callback interfaces in
+>> struct drm_driver. This patch replaces the per-driver callbacks with
+>> per-instance callbacks in amdgpu. The only exception is gem_prime_mmap=
+,
+>> which is non-trivial to convert.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>> =C2=A0 drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c=C2=A0=C2=A0=C2=A0 |=C2=A0=
+ 6 ------
+>> =C2=A0 drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 12 ++++++++++++
+>> =C2=A0 2 files changed, 12 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> index 81a79760ca61..51525b8774c9 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> @@ -1468,19 +1468,13 @@ static struct drm_driver kms_driver =3D {
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .lastclose =3D amdgpu_driver_lastclose_=
+kms,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .irq_handler =3D amdgpu_irq_handler,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .ioctls =3D amdgpu_ioctls_kms,
+>> -=C2=A0=C2=A0=C2=A0 .gem_free_object_unlocked =3D amdgpu_gem_object_fr=
+ee,
+>> -=C2=A0=C2=A0=C2=A0 .gem_open_object =3D amdgpu_gem_object_open,
+>> -=C2=A0=C2=A0=C2=A0 .gem_close_object =3D amdgpu_gem_object_close,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .dumb_create =3D amdgpu_mode_dumb_creat=
+e,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .dumb_map_offset =3D amdgpu_mode_dumb_m=
+map,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .fops =3D &amdgpu_driver_kms_fops,
+>> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .prime_handle_to_fd =3D drm_gem_=
+prime_handle_to_fd,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .prime_fd_to_handle =3D drm_gem_prime_f=
+d_to_handle,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_export =3D amdgpu_gem_prime_export,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .gem_prime_import =3D amdgpu_gem_prime_=
+import,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_vmap =3D amdgpu_gem_prime_vmap,
+>> -=C2=A0=C2=A0=C2=A0 .gem_prime_vunmap =3D amdgpu_gem_prime_vunmap,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .gem_prime_mmap =3D amdgpu_gem_prime_mm=
+ap,
+>> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .name =3D DRIVER_NAME,
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+>> index 43f4966331dd..ca2b79f94e99 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+>> @@ -36,6 +36,7 @@
+>> =C2=A0 #include <drm/amdgpu_drm.h>
+>> =C2=A0 #include <drm/drm_cache.h>
+>> =C2=A0 #include "amdgpu.h"
+>> +#include "amdgpu_dma_buf.h"
+>> =C2=A0 #include "amdgpu_trace.h"
+>> =C2=A0 #include "amdgpu_amdkfd.h"
+>> =C2=A0 @@ -510,6 +511,15 @@ bool amdgpu_bo_support_uswc(u64 bo_flags)
+>> =C2=A0 #endif
+>> =C2=A0 }
+>> =C2=A0 +static const struct drm_gem_object_funcs amdgpu_gem_object_fun=
+cs =3D {
+>> +=C2=A0=C2=A0=C2=A0 .free =3D amdgpu_gem_object_free,
+>> +=C2=A0=C2=A0=C2=A0 .open =3D amdgpu_gem_object_open,
+>> +=C2=A0=C2=A0=C2=A0 .close =3D amdgpu_gem_object_close,
+>> +=C2=A0=C2=A0=C2=A0 .export =3D amdgpu_gem_prime_export,
+>> +=C2=A0=C2=A0=C2=A0 .vmap =3D amdgpu_gem_prime_vmap,
+>> +=C2=A0=C2=A0=C2=A0 .vunmap =3D amdgpu_gem_prime_vunmap,
+>> +};
+>> +
+>=20
+> Wrong file, this belongs into amdgpu_gem.c
+>=20
+>> =C2=A0 static int amdgpu_bo_do_create(struct amdgpu_device *adev,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct amdgpu_bo_param *=
+bp,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct amdgpu_bo **bo_pt=
+r)
+>> @@ -552,6 +562,8 @@ static int amdgpu_bo_do_create(struct
+>> amdgpu_device *adev,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bo =3D kzalloc(sizeof(struct amdgpu_bo)=
+, GFP_KERNEL);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (bo =3D=3D NULL)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENOMEM;=
 
+>> +
+>> +=C2=A0=C2=A0=C2=A0 bo->tbo.base.funcs =3D &amdgpu_gem_object_funcs;
+>=20
+> And this should probably go into amdgpu_gem_object_create().
+
+I'm trying to understand what amdgpu does.  What about all the places
+where amdgpu calls amdgpu_bo_create() internally? Wouldn't these miss
+the free callback for the GEM object?
+
+Best regards
+Thomas
+
+>=20
+> Apart from that looks like a good idea to me.
+>=20
+> Christian.
+>=20
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_gem_private_object_init(adev->ddev,=
+ &bo->tbo.base, size);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 INIT_LIST_HEAD(&bo->shadow_list);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bo->vm_bo =3D NULL;
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+
+
+--zniUnHMaoWytGRm2jwIkKjV0oPt2fa9bx--
+
+--MeVdSsKebthdc7DC8hvgqWlLwpjnz0H9f
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFIBAEBCAAyFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl9fhs0UHHR6aW1tZXJt
+YW5uQHN1c2UuZGUACgkQaA3BHVMLeiPJNAgAlfJhPTx8SHwyCGcF7SoXCxqFUag5
+/hXG2aWBOQj0PGNIWjEqH/FwrQApUbBmpbBWXncgOJjyevY1bY3RXSi+ibAW263g
+1lb0Cf5fR55oudCzfJIiQhM5nXHpnbDTdEq1kVtVf4mD3cn1eyPWtOgpXIklFs+w
+YSnklFEtZsXQnHs9whrVXf1UPUoecKtVRfIflZBfGttuRdODIknW+9iFA/+QYggh
+4WsKIHEpME3IpnfYOqS6yZ3oqcKeROalr2HZ6EUy/NaixshxCZxnLQVMNWx7saKP
+aygn2TEK3CwcBwiYGlPcx3/VFCRdviSNuxDmkZ5CV3ceT5gUjE0suBVVaA==
+=QxSN
+-----END PGP SIGNATURE-----
+
+--MeVdSsKebthdc7DC8hvgqWlLwpjnz0H9f--
