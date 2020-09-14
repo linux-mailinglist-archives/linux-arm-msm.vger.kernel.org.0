@@ -2,130 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6466C26975D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:04:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2B1726977C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:13:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725994AbgINVEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 17:04:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725926AbgINVEh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 17:04:37 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13C8C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:04:35 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id m15so122087pls.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:04:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B+yZcshbsoNrjw9/GyoZ6sfB8u3DeY+uiG54+fPG2CA=;
-        b=QIZLLxWuhPfcEVva2nJ767qbObasCjM9V8Jb31/dgJYJjdusHNi8YJsv5gLnNFQ7Yc
-         rLHu37Wddk1sIpLHa0uP3I2h9zA71vHPOqj0TBgvBDuJtNcIpUFN3mpmixq4QM8rTCJd
-         5RQ6lPaeIlVGNC4K+e1WheYhHnFTvAshW+15lTv/zvbez9g3zYXzhh8MmXmOP/82L8EE
-         Kf9PqYHd0cb8gb3Y/GDOZ4tGCV6XOqLSlkPmMblYk+Rl4KQkPGqxbCFqXTzaLci5PVLj
-         WJx4XXmmmHz8fepTSyu12BiVF7duEd/kPijfysMl56mAUi9m8XaYBKLjFDMSCx0duFR3
-         9e9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=B+yZcshbsoNrjw9/GyoZ6sfB8u3DeY+uiG54+fPG2CA=;
-        b=ipZDNlj4T0vMZm/3zvhTIdj2us21FEn34jDZLq1yjntitbYboFsyhNi6nysyOiR+Ks
-         Y12r/uh3CkS5zwWsPoJIiKoJDf50FpjhS6Bt/G3tfREinSX+UKZqCQXZUZ5uNw2O3efd
-         LEVBPLVXgzi0nnH5wToq/MYbkf/iOpyDOPN+AkQcs+LnWOlOpszn/+FncxwGFvJCF4EF
-         X0F5eJVKW2MqX57TNV9i6htbgdlgPfzCp3dgSzdZBhQcrP3h2HaHEtsMjmWthPKBfO3n
-         XsDci+tbYSjK7dTbx9efODKf4hZoRndAK5OOfKany8s4co+UdzFhwZ7g2Ni8rd/l0KRA
-         k7nw==
-X-Gm-Message-State: AOAM533CUfyvaCg4dZS5OQfmI5nw/yAvbbLLoAcSmkxPhaqHZZ8vF8XZ
-        XEBol2zJDJb3qiNakXXMNxokjg==
-X-Google-Smtp-Source: ABdhPJw4meDLhT1GWDTqYGlWuh5s5sZygb+syXL21fk3JYEchsaLbg8+bnuLLk7x6vlu2XvHtk24cQ==
-X-Received: by 2002:a17:90a:e513:: with SMTP id t19mr1080297pjy.137.1600117475340;
-        Mon, 14 Sep 2020 14:04:35 -0700 (PDT)
-Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id n9sm11222480pfu.163.2020.09.14.14.04.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 14:04:34 -0700 (PDT)
-From:   John Stultz <john.stultz@linaro.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: [PATCH] irqchip/qcom-pdc: Allow QCOM_PDC to be loadable as a permanent module
-Date:   Mon, 14 Sep 2020 21:04:23 +0000
-Message-Id: <20200914210423.67579-1-john.stultz@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200912125148.1271481-7-maz@kernel.org>
-References: <20200912125148.1271481-7-maz@kernel.org>
+        id S1726055AbgINVNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 17:13:49 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:46051 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726057AbgINVNt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 17:13:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600118028; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=eP5pSacehjP1wjfJ5o8gJEuMAiQZyIXNv/QS66PVllQ=;
+ b=PqFWq9PIfhfmwh9dQ/KVceg3qYwSlYWAzN3xFxm6VIyan5I1yu5XD/LIfqsJ/Z/WDhp6ZZFp
+ 6dEy0avV9KWMdj60LbxnZMHJWGJL8tiLGTK0ZIcDTAXx613tryvhkXu0m6oYzWwE6avbCkMl
+ MeeW8uo2SMZiTqVNEuCGEV1Pbls=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f5fdd0b9f3347551f59ab98 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 21:13:47
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AD721C433CA; Mon, 14 Sep 2020 21:13:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rishabhb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12EFFC433CA;
+        Mon, 14 Sep 2020 21:13:44 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 14 Sep 2020 14:13:44 -0700
+From:   rishabhb@codeaurora.org
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sidgup@codeaurora.org, stable@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: pdr: Fixup array type of get_domain_list_resp
+ message
+In-Reply-To: <20200914145807.1224-1-sibis@codeaurora.org>
+References: <20200914145807.1224-1-sibis@codeaurora.org>
+Message-ID: <cac99ba16fc3e8f84ea2770e63988770@codeaurora.org>
+X-Sender: rishabhb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allows qcom-pdc driver to be loaded as a permanent module.
-
-An earlier version of this patch was merged in a larger patchset
-but was reverted entirely when issues were found with other
-drivers, so now that Marc has provided a better solution in his
-Hybrid probing patch set, I wanted to re-submit this change.
-
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Jason Cooper <jason@lakedaemon.net>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Cc: Lina Iyer <ilina@codeaurora.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: iommu@lists.linux-foundation.org
-Cc: linux-gpio@vger.kernel.org
-Signed-off-by: John Stultz <john.stultz@linaro.org>
----
- drivers/irqchip/Kconfig    | 2 +-
- drivers/irqchip/qcom-pdc.c | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index bfc9719dbcdc..bb70b7177f94 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -425,7 +425,7 @@ config GOLDFISH_PIC
-          for Goldfish based virtual platforms.
- 
- config QCOM_PDC
--	bool "QCOM PDC"
-+	tristate "QCOM PDC"
- 	depends on ARCH_QCOM
- 	select IRQ_DOMAIN_HIERARCHY
- 	help
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 8543fa23da10..59eb3c8473b0 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -433,3 +433,5 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
- IRQCHIP_HYBRID_DRIVER_BEGIN(qcom_pdc)
- IRQCHIP_MATCH("qcom,pdc", qcom_pdc_init)
- IRQCHIP_HYBRID_DRIVER_END(qcom_pdc)
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
-+MODULE_LICENSE("GPL v2");
--- 
-2.17.1
-
+On 2020-09-14 07:58, Sibi Sankar wrote:
+> The array type of get_domain_list_resp is incorrectly marked as 
+> NO_ARRAY.
+> Due to which the following error was observed when using pdr helpers 
+> with
+> the downstream proprietary pd-mapper. Fix this up by marking it as
+> VAR_LEN_ARRAY instead.
+> 
+> Err logs:
+> qmi_decode_struct_elem: Fault in decoding: dl(2), db(27), tl(160), 
+> i(1), el(1)
+> failed to decode incoming message
+> PDR: tms/servreg get domain list txn wait failed: -14
+> PDR: service lookup for tms/servreg failed: -14
+> 
+> Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart 
+> helpers")
+> Reported-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  drivers/soc/qcom/pdr_internal.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/pdr_internal.h 
+> b/drivers/soc/qcom/pdr_internal.h
+> index 15b5002e4127b..ab9ae8cdfa54c 100644
+> --- a/drivers/soc/qcom/pdr_internal.h
+> +++ b/drivers/soc/qcom/pdr_internal.h
+> @@ -185,7 +185,7 @@ struct qmi_elem_info 
+> servreg_get_domain_list_resp_ei[] = {
+>  		.data_type      = QMI_STRUCT,
+>  		.elem_len       = SERVREG_DOMAIN_LIST_LENGTH,
+>  		.elem_size      = sizeof(struct servreg_location_entry),
+> -		.array_type	= NO_ARRAY,
+> +		.array_type	= VAR_LEN_ARRAY,
+>  		.tlv_type       = 0x12,
+>  		.offset         = offsetof(struct servreg_get_domain_list_resp,
+>  					   domain_list),
+Tested-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
