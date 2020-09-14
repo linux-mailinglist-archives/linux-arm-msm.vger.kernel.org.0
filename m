@@ -2,88 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3681B26886F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 11:33:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A10D2688B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 11:45:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726349AbgINJdD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 05:33:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48282 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbgINJdB (ORCPT
+        id S1726303AbgINJp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 05:45:29 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24]:16724 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726239AbgINJp2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 05:33:01 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A1EEC06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 02:33:00 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id q8so12691966lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 02:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1ukXh4E4C9HWubv5WEbFDBlcoGtdgyjZ7+sFn5yMCq0=;
-        b=SX7KaW8Lj2XjbPVBroBk+4l+k/BIq4ET+lb2gLRiGJ7wweeQ1uzStDg10pxMuI/vr0
-         +d2lu4hrI6k63wetkb5drC2w16tcWdDOwF6OiHL+cCwp6CShJM3Q5waXPtcb9em8P2Za
-         TY37mbdNRkssKwzPHNmvIL3v3cjOmxKNfqTznI6dxpuVSby4KfIy5yzrEI3NbafmaLnK
-         yXDsNEhEk4P5y94ItVUmAVhs2P0Q2dH1iFrRgoBqn+QoO9EZ72vpxGhWw+vptUbfmqLi
-         eSlbaW1Zioz9GwXH5f9M8gObyOKuwe3wclj7wuBaUoYknBQvY1iCvcewIw04WHbD8G8P
-         ckDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1ukXh4E4C9HWubv5WEbFDBlcoGtdgyjZ7+sFn5yMCq0=;
-        b=cu7PKdOyY2sUvtHN05z88vHSEOc/h7KIGQtDyt3sREolGxYY4xDomaVMiiUI7gJD7O
-         gOw9ZFkwB8VeNqkhO8CcqAsgqlHs7X1ChkTT1yn4LpJcEr3g49rwEP6S9k3cfY7Zz9cT
-         IymiDWZ0u54lxw04JT8jSzwkRIYwArlXZQr24HBA7R4VTwfwUAhwItNx1+pEvp6NyTJB
-         DgrakGZXBsZyIGpAmy807anNaQojBMN4gk6gY3s6PJKD4Aih7iKQNkV/ZPjpQIlmPJ60
-         8m/q/qDE8VYNTLwHRtHfJuqSVw22JSmw/ITHxSeQuTqv+MwPx3DukqVBNv+XJxlY6pT4
-         sQ3A==
-X-Gm-Message-State: AOAM531sEl7qH/4CJFavvB2q9Lm05CViHsw0LItawXqIzotF15PgMVMI
-        T7NP86ykb3griXQ8+Of3ZlRHiOoH/6SkqA==
-X-Google-Smtp-Source: ABdhPJy30YRlAG1Z12xbc3cBgQHgtGJUXj20vk5WFMRKcxPjteiD2sb0j9ZIOAGSxzT7RcY89NDhlg==
-X-Received: by 2002:ac2:4d2e:: with SMTP id h14mr3810638lfk.541.1600075978627;
-        Mon, 14 Sep 2020 02:32:58 -0700 (PDT)
-Received: from [192.168.1.145] ([188.162.64.187])
-        by smtp.gmail.com with ESMTPSA id z6sm3271811lfq.297.2020.09.14.02.32.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2020 02:32:58 -0700 (PDT)
-Subject: Re: [PATCH] arch64: dts: qcom: sm8250: add uart nodes
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-References: <20200909103238.149761-1-dmitry.baryshkov@linaro.org>
- <20200909103238.149761-2-dmitry.baryshkov@linaro.org>
-Message-ID: <685388a4-e0a3-266f-1ced-0670720d264c@linaro.org>
-Date:   Mon, 14 Sep 2020 12:32:56 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Mon, 14 Sep 2020 05:45:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1600076722;
+        s=strato-dkim-0002; d=gerhold.net;
+        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=XRFqOPGjL8wggEcBctjIdnImU/A4E36qYOOqx+M8ZNg=;
+        b=VUNLRXGN1tvVc0jadbWcBdG8Q4Xz0URaYLsd3f8lNm5ZhQRwzjJNPjA7PhkZxxUOr1
+        /q3WPEaYrd8crGyMewLnCLBPzYED/bsUPsmsQEllQcPvmeHHBed6FeSoJplxeOH9yWwy
+        9bgh2LbsD0GLc5pOSauVxKNu/YdboNFMyyTbpkPiV8GbeFcZSUn11xzv6JAxX3+AknUA
+        y4kZeeM5iFMeEG4hVTKNJAfzlLzOv0UtLoMnFhrFLopI6FnR2wUzIJSvR9+eNqiBBzlk
+        Pw/CaRwNt9JsUaofTCMFQKRDo1+FRxauweUhD6D6RNSO/yWQiBSOxAmtV8YZx4KhUwwm
+        TUcg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j7IcfFBg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
+        with ESMTPSA id g0b6c1w8E9huht2
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Mon, 14 Sep 2020 11:43:56 +0200 (CEST)
+Date:   Mon, 14 Sep 2020 11:43:41 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 00/10] Convert MSM8916 boards to use labels, reduce
+ duplication
+Message-ID: <20200914094341.GA1246@gerhold.net>
+References: <20200720085406.6716-1-stephan@gerhold.net>
 MIME-Version: 1.0
-In-Reply-To: <20200909103238.149761-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200720085406.6716-1-stephan@gerhold.net>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/09/2020 13:32, Dmitry Baryshkov wrote:
-> Currently sm8250.dtsi only defines default debug uart. Port rest uart
-> nodes from the downstream dtsi file.
+Hi Bjorn,
 
-Gracious ping for this patch
-
+On Mon, Jul 20, 2020 at 10:53:56AM +0200, Stephan Gerhold wrote:
+> Board device trees for newer SoCs reference labels to override properties
+> for components of the SoC. This patch series converts all MSM8916 boards to
+> use the same style.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8250.dtsi | 74 ++++++++++++++++++++++++++++
->   1 file changed, 74 insertions(+)
+> Additionally, in the second part of the series I attempt to reduce duplication
+> within the MSM8916 board device trees a bit. If we keep copying a large number
+> of properties to each and every board of a SoC then (in my opinion)
+> it makes sense to consider if those can be shared in some include.
+> 
+> This will make it easier to add new boards in the future.
+> 
+> Stephan Gerhold (10):
+>   arm64: dts: qcom: apq8016-sbc: Remove properties that are already
+>     default
+>   arm64: dts: qcom: msm8916: Declare sound node in msm8916.dtsi
+>   arm64: dts: qcom: apq8016-sbc: Define leds outside of soc node
+>   arm64: dts: qcom: msm8916: Add more labels
+>   arm64: dts: qcom: msm8916: Use labels in board device trees
+>   arm64: dts: qcom: pm8916: Add resin node
+>   arm64: dts: qcom: msm8916: Move PM8916-specific parts to
+>     msm8916-pm8916.dtsi
+>   arm64: dts: qcom: msm8916: Move more supplies to msm8916-pm8916.dtsi
+>   arm64: dts: qcom: msm8916: Set default pinctrl for blsp1_uart1/2
+>   arm64: dts: qcom: msm8916: Move common USB properties to msm8916.dtsi
+> 
 
+It's been two months since I sent this series - are there any changes
+I should make? Maybe you just overlooked it :)
 
--- 
-With best wishes
-Dmitry
+Would be great to make some progress since I have a few more patch
+series ready to send out that build on top of this one (some more
+cleanup for MSM8916, converting MSM8916 to use rpmpd power domains, ...)
+
+Thanks!
+Stephan
