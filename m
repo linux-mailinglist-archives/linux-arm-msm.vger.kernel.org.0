@@ -2,102 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 997282691AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 18:35:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECDE42693C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 19:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbgINQfB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 12:35:01 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:26364 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726119AbgINQew (ORCPT
+        id S1726039AbgINRm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 13:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39666 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbgINRmQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 12:34:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600101291; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ObHJxhWnQ6Id1CMXMXxijV0dvfRIEHq6RwO9EgQfuVY=;
- b=QeTnt/xjEV59/aaVkkVP3tUbUfv/F4/g9q613dc5pKrXz5uJCtnHdY3kmK29sczBIH5ixSoJ
- uKD4ghCWLblZdjSjY6wZGxtAFJMH48xnrgb2QlmkwrcHPwySyVJQdifoBlX577rZJZeTXWsR
- 7orCVZZ5EcBgSoUSgL4m99eiYCY=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f5f9ba44ba82a82fdbafb37 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 16:34:44
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2DA8DC43382; Mon, 14 Sep 2020 16:34:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 613BAC433C8;
-        Mon, 14 Sep 2020 16:34:43 +0000 (UTC)
+        Mon, 14 Sep 2020 13:42:16 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85FE2C06178A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 10:42:13 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id x203so342690vsc.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 10:42:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fb/McKaDkFAZSYX0bopUHJOoejLg0ldN7v4K0XdQEYY=;
+        b=oY2WCrgE4fWxetdc9oq993bEa+Hm8Bv+Ma5CqNoU3n1nD5t4vGohZ6q4lEVmyDaDHr
+         OUDwBDXCHE31NKBvkcZ1AUj3qb5jhy6MdjhBrlTXxKPdgixLgYyQOWrDsyRw6RGSW1FO
+         9TjTj3as5OvTs1ZtpMR+7P7i9mE+o26X9I8qo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fb/McKaDkFAZSYX0bopUHJOoejLg0ldN7v4K0XdQEYY=;
+        b=q7Q7yHDj2IzKI2xBCeZA1beRCk9uiQ4STzZfTsNnB0B2NS/nBarr2haUZhIpu2nnN0
+         me6g/cdRXHtsVJJumuxpx5MCe5v630HnDcpaU7n9CxlAnxjUouXyA/R+LjAH8/NYeda4
+         9klIJN/l3dEKaacR3rC3cXrbCua+Ki0uPpJiZd2GatdQmWQGGYZdi7aXckIIfY/0yqVN
+         zKcnN6m7xxU7bmc5NybTgq9A4wlAzhjZiuvag2UcAD2uXOvKDjyty9xRnVQO6zDq+3S0
+         LVYVRc9qCLyPfACAR5C+MdLWp2CC3IHL3+9BSrNUBZAOZKQd85K3bycvFhca4GXSxMDk
+         v5FA==
+X-Gm-Message-State: AOAM532QLWMR+P5+d45Ff59LyFZj4ZJKJANE3d3Rgu2/fRQZa5OurvVP
+        UXIJHGxUJ5piTVj2UNOSgBfKhyWT/9g5wg==
+X-Google-Smtp-Source: ABdhPJyRY1ynPttXM60gbyk3cy5dGVYHQEmqiAMYb5kuRTokEqvyWlUzFqkDpVuFToce/psHVxEMoA==
+X-Received: by 2002:a67:e190:: with SMTP id e16mr8616144vsl.5.1600105332070;
+        Mon, 14 Sep 2020 10:42:12 -0700 (PDT)
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
+        by smtp.gmail.com with ESMTPSA id k4sm1894575vkk.12.2020.09.14.10.42.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Sep 2020 10:42:11 -0700 (PDT)
+Received: by mail-vs1-f48.google.com with SMTP id e2so356760vsr.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 10:42:11 -0700 (PDT)
+X-Received: by 2002:a05:6102:10c2:: with SMTP id t2mr7966339vsr.10.1600105330813;
+ Mon, 14 Sep 2020 10:42:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 14 Sep 2020 09:34:43 -0700
-From:   nguyenb@codeaurora.org
-To:     Avri Altman <Avri.Altman@wdc.com>
-Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
-In-Reply-To: <BY5PR04MB6705A865E35CDA367249DC4EFC270@BY5PR04MB6705.namprd04.prod.outlook.com>
-References: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
- <0101017475a11d00-6def34a7-db5d-472c-9dcc-215a80510402-000000@us-west-2.amazonses.com>
- <BY5PR04MB6705A865E35CDA367249DC4EFC270@BY5PR04MB6705.namprd04.prod.outlook.com>
-Message-ID: <e1b4e9f5eab891fa6615e7a4b2ed29e6@codeaurora.org>
-X-Sender: nguyenb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1599019441-29308-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1599019441-29308-1-git-send-email-srivasam@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 14 Sep 2020 10:41:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U1k7T6z=dZHYWFpnAw1bTptPjKXd7z9YuOQOsOFrXp-A@mail.gmail.com>
+Message-ID: <CAD=FV=U1k7T6z=dZHYWFpnAw1bTptPjKXd7z9YuOQOsOFrXp-A@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Add lpass cpu node for I2S driver
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Ajit Pandey <ajitp@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-10 03:02, Avri Altman wrote:
->> 
->> On 2020-08-31 18:19, Bao D. Nguyen wrote:
->> > UFS version 3.0 and later devices require Vcc and Vccq power supplies
->> > with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
->> > devices, the Vcc and Vccq2 are required with Vccq being optional.
->> > Check the required power supplies used by the device
->> > and set the device's supported Icc level properly.
-> Practically you are correct - most flash vendors moved in UFS3.1 to
-> 1.2 supply instead of 1.8.
-> However, the host should provide all 3 supplies to the device because -
-> a) A flash vendor might want to still use 1.8 in its UFS3.1 device, and
-> b) We should allow a degenerated configurations, e.g. 3.1 devices,
-> that are degenerated to 2.1 or 2.2
-Thank you for your comment.
-The host can provide all 3 power supplies. However, the change is to 
-ensure
-we do not exit early and fail to properly set the Icc level because the 
-optional power
-supply is not provided.
-> 
-> That said, I think we can entirely remove the check in the beginning
-> of the function,
-> But not because the spec allows it, but because each supply is
-> explicitly checked later on,
-> before reading its applicable max current entry in the power 
-> descriptor.
-We need these checks to prevent NULL pointer access subsequently in this 
-function.
-> Thanks,
-> Avri
+Hi,
 
+On Tue, Sep 1, 2020 at 9:04 PM Srinivasa Rao Mandadapu
+<srivasam@codeaurora.org> wrote:
+>
+> From: Ajit Pandey <ajitp@codeaurora.org>
+>
+> Add the I2S controller node to sc7180 dtsi.
+> Add pinmux for primary and secondary I2S.
+>
+> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 69 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index d46b383..db60ca5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -676,6 +676,36 @@
+>                         };
+>                 };
+>
+> +               lpass_cpu: lpass@62f00000 {
+> +                       compatible = "qcom,sc7180-lpass-cpu";
+> +
+> +                       reg = <0 0x62f00000 0 0x29000>;
+> +                       reg-names = "lpass-lpaif";
+> +
+> +                       iommus = <&apps_smmu 0x1020 0>;
+> +
+> +                       power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +
+> +                       clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
+> +                                <&lpasscc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
+> +
+> +                       clock-names = "pcnoc-sway-clk", "audio-core",
+> +                                       "mclk0", "pcnoc-mport-clk",
+> +                                       "mi2s-bit-clk0", "mi2s-bit-clk1";
+> +
+> +
+> +                       #sound-dai-cells = <1>;
+> +                       #address-cells = <1>;
+> +                       #size-cells = <0>;
+> +
+> +                       interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "lpass-irq-lpaif";
+> +               };
+> +
+>                 sdhc_1: sdhci@7c4000 {
+
+Your node is still sorted incorrectly.  Nodes with unit addresses
+should be sorted numerically.
+
+The number 0x62f00000 is greater than the number 0x7c4000.  Thus your
+node should not be placed above "sdhci@7c4000".  It should be placed
+somewhere further down in the file.
+
+
+>                         compatible = "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+>                         reg = <0 0x7c4000 0 0x1000>,
+> @@ -1721,6 +1751,45 @@
+>                                 };
+>                         };
+>
+> +                       sec_mi2s_active: sec-mi2s-active {
+> +                               pinmux {
+> +                                       pins = "gpio49", "gpio50", "gpio51";
+> +                                       function = "mi2s_1";
+> +                               };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio49", "gpio50", "gpio51";;
+
+nit: double-semi-colon.
