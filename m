@@ -2,179 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76CD52683AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 06:31:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D6D92685A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 09:19:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725973AbgINEbJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 00:31:09 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:54968 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726003AbgINEbG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 00:31:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600057865; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=88UihbQrOz0bvm/bZjwFSbpcpa8STz3Eo/uF7Jfs0XM=; b=J/bU0zaGLaj/whyiqqUf+UmtcmOsOV2hcPTxBvCszZkWwunhlCKkI6u/e1TxhJ6cYQZ21WrX
- w08Kuyt6R8JvGOEUVq99hy+HPmb6M+7KHm1zHHI72Izddp09T8Wbi8bZ1NXku0MFMIAQJms8
- fR2VfhetOxF0TDrEnse+xdvSzmI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f5ef200380a624e4dee7923 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 04:30:56
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7542FC433CA; Mon, 14 Sep 2020 04:30:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.4] (unknown [171.49.233.177])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: gkohli)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 87E1FC433C6;
-        Mon, 14 Sep 2020 04:30:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 87E1FC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=gkohli@codeaurora.org
-Subject: Re: [PATCH] trace: Fix race in trace_open and buffer resize call
-To:     rostedt@goodmis.org, mingo@redhat.com
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <1599199797-25978-1-git-send-email-gkohli@codeaurora.org>
-From:   Gaurav Kohli <gkohli@codeaurora.org>
-Message-ID: <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
-Date:   Mon, 14 Sep 2020 10:00:50 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-In-Reply-To: <1599199797-25978-1-git-send-email-gkohli@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1725980AbgINHTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 03:19:46 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:44463 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725961AbgINHTq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 03:19:46 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 14 Sep 2020 00:19:44 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Sep 2020 00:19:43 -0700
+Received: from parashar-linux.qualcomm.com ([10.206.13.63])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Sep 2020 12:49:28 +0530
+Received: by parashar-linux.qualcomm.com (Postfix, from userid 2363307)
+        id 8AA7D215D8; Mon, 14 Sep 2020 12:49:27 +0530 (IST)
+From:   Paras Sharma <parashar@codeaurora.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Jiri Slaby <jslaby@suse.com>, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+        akashast@codeaurora.org, Paras Sharma <parashar@codeaurora.org>
+Subject: [PATCH V4] serial: qcom_geni_serial: To correct QUP Version detection logic
+Date:   Mon, 14 Sep 2020 12:49:17 +0530
+Message-Id: <1600067957-8216-1-git-send-email-parashar@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steven,
+The current implementation reduces the sampling rate by half
+if qup HW version is  greater is than 2.5 by checking if the
+geni SE major version is greater than 2 and geni SE minor version
+is greater than 5.This implementation fails when the version is
+greater than or equal to 3.
 
-Please let us know, if below change looks good.
-Or let us know some other way to solve this.
+Hence, a new macro QUP_SE_VERSION_2_5 is defined having value
+for major number 2 and minor number 5 as 0x20050000.Hence,if 
+ver is greater than this value,sampling rate is halved. 
+This logic would work for any future qup version.
 
-Thanks,
-Gaurav
+Fixes: ce734600545f ("tty: serial: qcom_geni_serial: Update the oversampling rate")
+Signed-off-by: Paras Sharma <parashar@codeaurora.org>
+---
+Changes in V4:
+Created a new macro QUP_SE_VERSION_2_5 for Qup se version 2.5
 
+ drivers/tty/serial/qcom_geni_serial.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-
-On 9/4/2020 11:39 AM, Gaurav Kohli wrote:
-> Below race can come, if trace_open and resize of
-> cpu buffer is running parallely on different cpus
-> CPUX                                CPUY
-> 				    ring_buffer_resize
-> 				    atomic_read(&buffer->resize_disabled)
-> tracing_open
-> tracing_reset_online_cpus
-> ring_buffer_reset_cpu
-> rb_reset_cpu
-> 				    rb_update_pages
-> 				    remove/insert pages
-> resetting pointer
-> This race can cause data abort or some times infinte loop in
-> rb_remove_pages and rb_insert_pages while checking pages
-> for sanity.
-> Take ring buffer lock in trace_open to avoid resetting of cpu buffer.
-> 
-> Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
-> 
-> diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
-> index 136ea09..55f9115 100644
-> --- a/include/linux/ring_buffer.h
-> +++ b/include/linux/ring_buffer.h
-> @@ -163,6 +163,8 @@ bool ring_buffer_empty_cpu(struct trace_buffer *buffer, int cpu);
->   
->   void ring_buffer_record_disable(struct trace_buffer *buffer);
->   void ring_buffer_record_enable(struct trace_buffer *buffer);
-> +void ring_buffer_mutex_acquire(struct trace_buffer *buffer);
-> +void ring_buffer_mutex_release(struct trace_buffer *buffer);
->   void ring_buffer_record_off(struct trace_buffer *buffer);
->   void ring_buffer_record_on(struct trace_buffer *buffer);
->   bool ring_buffer_record_is_on(struct trace_buffer *buffer);
-> diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-> index 93ef0ab..638ec8f 100644
-> --- a/kernel/trace/ring_buffer.c
-> +++ b/kernel/trace/ring_buffer.c
-> @@ -3632,6 +3632,25 @@ void ring_buffer_record_enable(struct trace_buffer *buffer)
->   EXPORT_SYMBOL_GPL(ring_buffer_record_enable);
->   
->   /**
-> + * ring_buffer_mutex_acquire - prevent resetting of buffer
-> + * during resize
-> + */
-> +void ring_buffer_mutex_acquire(struct trace_buffer *buffer)
-> +{
-> +	mutex_lock(&buffer->mutex);
-> +}
-> +EXPORT_SYMBOL_GPL(ring_buffer_mutex_acquire);
-> +
-> +/**
-> + * ring_buffer_mutex_release - prevent resetting of buffer
-> + * during resize
-> + */
-> +void ring_buffer_mutex_release(struct trace_buffer *buffer)
-> +{
-> +	mutex_unlock(&buffer->mutex);
-> +}
-> +EXPORT_SYMBOL_GPL(ring_buffer_mutex_release);
-> +/**
->    * ring_buffer_record_off - stop all writes into the buffer
->    * @buffer: The ring buffer to stop writes to.
->    *
-> @@ -4918,6 +4937,8 @@ void ring_buffer_reset(struct trace_buffer *buffer)
->   	struct ring_buffer_per_cpu *cpu_buffer;
->   	int cpu;
->   
-> +	/* prevent another thread from changing buffer sizes */
-> +	mutex_lock(&buffer->mutex);
->   	for_each_buffer_cpu(buffer, cpu) {
->   		cpu_buffer = buffer->buffers[cpu];
->   
-> @@ -4936,6 +4957,7 @@ void ring_buffer_reset(struct trace_buffer *buffer)
->   		atomic_dec(&cpu_buffer->record_disabled);
->   		atomic_dec(&cpu_buffer->resize_disabled);
->   	}
-> +	mutex_unlock(&buffer->mutex);
->   }
->   EXPORT_SYMBOL_GPL(ring_buffer_reset);
->   
-> diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-> index f40d850..392e9aa 100644
-> --- a/kernel/trace/trace.c
-> +++ b/kernel/trace/trace.c
-> @@ -2006,6 +2006,8 @@ void tracing_reset_online_cpus(struct array_buffer *buf)
->   	if (!buffer)
->   		return;
->   
-> +	ring_buffer_mutex_acquire(buffer);
-> +
->   	ring_buffer_record_disable(buffer);
->   
->   	/* Make sure all commits have finished */
-> @@ -2016,6 +2018,8 @@ void tracing_reset_online_cpus(struct array_buffer *buf)
->   	ring_buffer_reset_online_cpus(buffer);
->   
->   	ring_buffer_record_enable(buffer);
-> +
-> +	ring_buffer_mutex_release(buffer);
->   }
->   
->   /* Must have trace_types_lock held */
-> 
-
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index f0b1b47..9b74b1e 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -106,6 +106,9 @@
+ /* We always configure 4 bytes per FIFO word */
+ #define BYTES_PER_FIFO_WORD		4
+ 
++/* QUP SE VERSION value for major number 2 and minor number 5 */
++#define QUP_SE_VERSION_2_5                  0x20050000
++
+ struct qcom_geni_private_data {
+ 	/* NOTE: earlycon port will have NULL here */
+ 	struct uart_driver *drv;
+@@ -1000,7 +1003,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	sampling_rate = UART_OVERSAMPLING;
+ 	/* Sampling rate is halved for IP versions >= 2.5 */
+ 	ver = geni_se_get_qup_hw_version(&port->se);
+-	if (GENI_SE_VERSION_MAJOR(ver) >= 2 && GENI_SE_VERSION_MINOR(ver) >= 5)
++	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
+ 
+ 	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
-Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
