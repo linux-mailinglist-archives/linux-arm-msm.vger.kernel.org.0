@@ -2,87 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 460A6269639
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 22:18:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24793269748
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:01:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbgINUSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 16:18:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35444 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726169AbgINUSL (ORCPT
+        id S1726130AbgINVBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 17:01:48 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:42978 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725926AbgINVBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 16:18:11 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E72BCC061788
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 13:18:08 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id q13so282700vkd.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 13:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uRAd4TkY3E5awHOzVDefEmGhmwZQ3nO0bhizEoI0HSk=;
-        b=GAIXLWY1Gkag3cBGyczpELHlw5MF0yNt5vDmgLJoF87oRETi1yDXkgPQkHDRGWqsx4
-         QrQ/dSZ7d4/bQlCV3/8x3foAPwYavqzDw59vRHLTL6mi54R0MfZDMKNuNak3XWqP9ME/
-         3tfFnCHsI5R9ObHlpAsLlAG+CaSJ4SJ8R4wqQ=
+        Mon, 14 Sep 2020 17:01:46 -0400
+Received: by mail-io1-f67.google.com with SMTP id u6so1656495iow.9;
+        Mon, 14 Sep 2020 14:01:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uRAd4TkY3E5awHOzVDefEmGhmwZQ3nO0bhizEoI0HSk=;
-        b=eS+8xoJ5NML/woVeP+GicD07naOIoUAcWEr5J7p6q/Xe+zaF8eh9hS9n/3AbXfQrsE
-         MaSvaf57138+CxfGvH1wJXU6HxH/rmhYaiE5hsdMg7m1nQTcXoQ/M5cvTyPlyGrDu75Y
-         q7JduYyF9WbmjM6POfAZDDkCb2H+rwJyGpj0oLCXxGRNRtPN5hZdZ/z1ctp/MmobtBNT
-         a71qg7DVqixLmKQQTb2QO9XufpZ2YuiDyC5viW+u1maiYvQxmoPgmFktuyrifkkK7MDu
-         5A2CLW7csWOVGmHDjBa+8Q2m1pUxwSgT8GM1XlQpva9f9VCuFUQk0ElqKnUyfdSP9lXo
-         st/g==
-X-Gm-Message-State: AOAM533F0aS+dtF25asU9DZve4WbbilA2s3gcu2n16eZTt6XrpyaDzRc
-        4flp9Xk+oGCGvJ6fZXI9wOX7hOuC1fndyQ==
-X-Google-Smtp-Source: ABdhPJwVgmHZ/KG3aWLT36Ve6L5DQBQ6u0az0D7JoT5khOtbMqPoDDxcHJjA1JiRZ1Bz91u58S7fgQ==
-X-Received: by 2002:a1f:31cc:: with SMTP id x195mr8202414vkx.3.1600114687911;
-        Mon, 14 Sep 2020 13:18:07 -0700 (PDT)
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com. [209.85.221.171])
-        by smtp.gmail.com with ESMTPSA id u1sm1728699vsc.29.2020.09.14.13.18.06
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2020 13:18:07 -0700 (PDT)
-Received: by mail-vk1-f171.google.com with SMTP id d2so260373vkd.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 13:18:06 -0700 (PDT)
-X-Received: by 2002:a1f:bf53:: with SMTP id p80mr8344769vkf.5.1600114686429;
- Mon, 14 Sep 2020 13:18:06 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0yzmhFB8FW6nMWG0lfCfgWZCNL3FFz2PCbZSv4pGk4g=;
+        b=aQ2gbW4zNxkib1xpQ+jfcAqEOeoq4fBMN1G4xZJYUc/nygk5Cs7bbm3QCvZ6h/LC+6
+         aONDPvQnTGpinxwwn/T7ukWIoZwYL1QqYLh6QXgWldzSnE/Z3a2Aefd7Agpqi0DrpCne
+         JEb+KIJRv/LkSJ/BdURAywrJstp2bAfRrUzBX/5A7GwvgOZzsIpe6MbKRPaTXx04sHqc
+         9JGRCigt4n95399yGAZDrRWo3Fn2Oe8ZODBS9abTAtv+HxogYe5Gy5T3+ncUUKlSHmYU
+         /XSHKkEPuhzqwVky0aNZSV9Muc4K9cbE3k1rT9k0Qp7XCfoWkcvY7xiPxbcMHofVcepf
+         0fFA==
+X-Gm-Message-State: AOAM532RMJVIkK/mVgluLINuyLZMZPoVUq+yDd1wwuwXoJQgOph6vfz0
+        tuaPocrCHrzDjoAv49WlVR+764cEnzFZ
+X-Google-Smtp-Source: ABdhPJx/SVVi33qWgcG0lkKvj1W4MyI6CDYwRWghIFPxrYwpOVjpFqKvO1N2LzwP6YSeHxkFhcoxyg==
+X-Received: by 2002:a6b:6413:: with SMTP id t19mr12760136iog.193.1600117304892;
+        Mon, 14 Sep 2020 14:01:44 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id l2sm7451969ilk.19.2020.09.14.14.01.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2020 14:01:44 -0700 (PDT)
+Received: (nullmailer pid 240941 invoked by uid 1000);
+        Mon, 14 Sep 2020 21:01:41 -0000
+Date:   Mon, 14 Sep 2020 15:01:41 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] dt-bindings: clock: combine qcom,sdm845-videocc
+ and qcom,sc7180-videocc
+Message-ID: <20200914210141.GA240886@bogus>
+References: <20200904030958.13325-1-jonathan@marek.ca>
+ <20200904030958.13325-2-jonathan@marek.ca>
 MIME-Version: 1.0
-References: <20200813080345.1.I85bb28f9ea3fa3bf797ecaf0a5218ced4cfaa6e2@changeid>
-In-Reply-To: <20200813080345.1.I85bb28f9ea3fa3bf797ecaf0a5218ced4cfaa6e2@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 14 Sep 2020 13:17:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UQP4bFSEuYMUyDqj4BAB6Kk52FdZQ9r+67jBnJn5uX6A@mail.gmail.com>
-Message-ID: <CAD=FV=UQP4bFSEuYMUyDqj4BAB6Kk52FdZQ9r+67jBnJn5uX6A@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: socinfo: add SC7180 entry to soc_id array
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200904030958.13325-2-jonathan@marek.ca>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-On Thu, Aug 13, 2020 at 8:04 AM Douglas Anderson <dianders@chromium.org> wrote:
->
-> Add an entry for SC7180 SoC.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+On Thu, 03 Sep 2020 23:09:50 -0400, Jonathan Marek wrote:
+> These two bindings are almost identical, so combine them into one. This
+> will make it easier to add the sm8150 and sm8250 videocc bindings.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->
->  drivers/soc/qcom/socinfo.c | 1 +
->  1 file changed, 1 insertion(+)
+>  .../bindings/clock/qcom,sc7180-videocc.yaml   | 65 -------------------
+>  ...,sdm845-videocc.yaml => qcom,videocc.yaml} | 14 ++--
+>  2 files changed, 9 insertions(+), 70 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-videocc.yaml
+>  rename Documentation/devicetree/bindings/clock/{qcom,sdm845-videocc.yaml => qcom,videocc.yaml} (76%)
+> 
 
-Any status update on this patch?  It's tiny but it'd be nice to get
-landed!  :-)  Thanks!
-
--Doug
+Reviewed-by: Rob Herring <robh@kernel.org>
