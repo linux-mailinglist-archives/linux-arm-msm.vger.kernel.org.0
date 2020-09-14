@@ -2,177 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31D9C26914D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 18:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36417269151
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 18:20:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbgINQUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 12:20:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39124 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726349AbgINQT4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 12:19:56 -0400
-Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726475AbgINQUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 12:20:38 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:42890 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726457AbgINQUR (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Sep 2020 12:20:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600100417; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=F5bs4rBvHEZe+ElUCrFGBZzrwjt5Km+YdDRv7em3208=; b=pdkB7rdynndgqVdErxpmhV7y5EUl4DBftcJuxHegCgyFXbPJnglxBs5glPfgIzu/ke/YqAcR
+ HEa78ZaFRFD6dL3lNJllGI8cxk8FWEwsQWNmJgG0vEMe5iq7h4+XO+XDSbFyoFkeBmJ6q7py
+ a8sqD1fSiywc07w75JxKm/ZvE5Y=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5f5f983f9bdf68cc03a98b49 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Sep 2020 16:20:15
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C84C6C43385; Mon, 14 Sep 2020 16:20:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D0F88217BA;
-        Mon, 14 Sep 2020 16:19:30 +0000 (UTC)
-Date:   Mon, 14 Sep 2020 12:19:29 -0400
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Gaurav Kohli <gkohli@codeaurora.org>
-Cc:     mingo@redhat.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] trace: Fix race in trace_open and buffer resize call
-Message-ID: <20200914121929.69a2e6cc@gandalf.local.home>
-In-Reply-To: <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
-References: <1599199797-25978-1-git-send-email-gkohli@codeaurora.org>
-        <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E4875C433F0;
+        Mon, 14 Sep 2020 16:20:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E4875C433F0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 14 Sep 2020 10:20:10 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Zhenzhong Duan <zhenzhong.duan@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com, sean@poorly.run,
+        airlied@linux.ie, daniel@ffwll.ch, smasetty@codeaurora.org,
+        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/a6xx: fix a potential overflow issue
+Message-ID: <20200914162010.GB15060@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Zhenzhong Duan <zhenzhong.duan@gmail.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com, sean@poorly.run,
+        airlied@linux.ie, daniel@ffwll.ch, smasetty@codeaurora.org,
+        jonathan@marek.ca, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20200912102558.656-1-zhenzhong.duan@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200912102558.656-1-zhenzhong.duan@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 14 Sep 2020 10:00:50 +0530
-Gaurav Kohli <gkohli@codeaurora.org> wrote:
-
-> Hi Steven,
+On Sat, Sep 12, 2020 at 06:25:58PM +0800, Zhenzhong Duan wrote:
+> It's allocating an array of a6xx_gpu_state_obj structure rathor than
+> its pointers.
 > 
-> Please let us know, if below change looks good.
-> Or let us know some other way to solve this.
+> This patch fix it.
 > 
-> Thanks,
-> Gaurav
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@gmail.com>
+
+LGTM but should have a Fixes: tag for the stable trees
+
+Fixes: d6852b4b2d01 ("drm/msm/a6xx: Track and manage a6xx state memory")
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-
-Hmm, for some reason, I don't see this in my INBOX, but it shows up in my
-LKML folder. :-/
-
-
-> 
-> On 9/4/2020 11:39 AM, Gaurav Kohli wrote:
-> > Below race can come, if trace_open and resize of
-> > cpu buffer is running parallely on different cpus
-> > CPUX                                CPUY
-> > 				    ring_buffer_resize
-> > 				    atomic_read(&buffer->resize_disabled)
-> > tracing_open
-> > tracing_reset_online_cpus
-> > ring_buffer_reset_cpu
-> > rb_reset_cpu
-> > 				    rb_update_pages
-> > 				    remove/insert pages
-> > resetting pointer
-> > This race can cause data abort or some times infinte loop in
-> > rb_remove_pages and rb_insert_pages while checking pages
-> > for sanity.
-> > Take ring buffer lock in trace_open to avoid resetting of cpu buffer.
-> > 
-> > Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
-> > 
-> > diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
-> > index 136ea09..55f9115 100644
-> > --- a/include/linux/ring_buffer.h
-> > +++ b/include/linux/ring_buffer.h
-> > @@ -163,6 +163,8 @@ bool ring_buffer_empty_cpu(struct trace_buffer *buffer, int cpu);
-> >   
-> >   void ring_buffer_record_disable(struct trace_buffer *buffer);
-> >   void ring_buffer_record_enable(struct trace_buffer *buffer);
-> > +void ring_buffer_mutex_acquire(struct trace_buffer *buffer);
-> > +void ring_buffer_mutex_release(struct trace_buffer *buffer);
-> >   void ring_buffer_record_off(struct trace_buffer *buffer);
-> >   void ring_buffer_record_on(struct trace_buffer *buffer);
-> >   bool ring_buffer_record_is_on(struct trace_buffer *buffer);
-> > diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-> > index 93ef0ab..638ec8f 100644
-> > --- a/kernel/trace/ring_buffer.c
-> > +++ b/kernel/trace/ring_buffer.c
-> > @@ -3632,6 +3632,25 @@ void ring_buffer_record_enable(struct trace_buffer *buffer)
-> >   EXPORT_SYMBOL_GPL(ring_buffer_record_enable);
-> >   
-> >   /**
-> > + * ring_buffer_mutex_acquire - prevent resetting of buffer
-> > + * during resize
-> > + */
-> > +void ring_buffer_mutex_acquire(struct trace_buffer *buffer)
-> > +{
-> > +	mutex_lock(&buffer->mutex);
-> > +}
-> > +EXPORT_SYMBOL_GPL(ring_buffer_mutex_acquire);
-> > +
-> > +/**
-> > + * ring_buffer_mutex_release - prevent resetting of buffer
-> > + * during resize
-> > + */
-> > +void ring_buffer_mutex_release(struct trace_buffer *buffer)
-> > +{
-> > +	mutex_unlock(&buffer->mutex);
-> > +}
-> > +EXPORT_SYMBOL_GPL(ring_buffer_mutex_release);
-
-I really do not like to export these.
-
-> > +/**
-> >    * ring_buffer_record_off - stop all writes into the buffer
-> >    * @buffer: The ring buffer to stop writes to.
-> >    *
-> > @@ -4918,6 +4937,8 @@ void ring_buffer_reset(struct trace_buffer *buffer)
-> >   	struct ring_buffer_per_cpu *cpu_buffer;
-> >   	int cpu;
-> >   
-> > +	/* prevent another thread from changing buffer sizes */
-> > +	mutex_lock(&buffer->mutex);
-> >   	for_each_buffer_cpu(buffer, cpu) {
-> >   		cpu_buffer = buffer->buffers[cpu];
-> >   
-> > @@ -4936,6 +4957,7 @@ void ring_buffer_reset(struct trace_buffer *buffer)
-> >   		atomic_dec(&cpu_buffer->record_disabled);
-> >   		atomic_dec(&cpu_buffer->resize_disabled);
-> >   	}
-> > +	mutex_unlock(&buffer->mutex);
-> >   }
-> >   EXPORT_SYMBOL_GPL(ring_buffer_reset);
-> >   
-> > diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-> > index f40d850..392e9aa 100644
-> > --- a/kernel/trace/trace.c
-> > +++ b/kernel/trace/trace.c
-> > @@ -2006,6 +2006,8 @@ void tracing_reset_online_cpus(struct array_buffer *buf)
-> >   	if (!buffer)
-> >   		return;
-> >   
-> > +	ring_buffer_mutex_acquire(buffer);
-> > +
-> >   	ring_buffer_record_disable(buffer);
-
-Hmm, why do we disable here as it gets disabled again in the call to
-ring_buffer_reset_online_cpus()? Perhaps we don't need to disable the
-buffer here. The only difference is that we have:
-
- buf->time_start = buffer_ftrace_now(buf, buf->cpu);
-
-And that the above disables the entire buffer, whereas the reset only
-resets individual ones.
-
-But I don't think that will make any difference.
-
--- Steve
-
-
-> >   
-> >   	/* Make sure all commits have finished */
-> > @@ -2016,6 +2018,8 @@ void tracing_reset_online_cpus(struct array_buffer *buf)
-> >   	ring_buffer_reset_online_cpus(buffer);
-> >   
-> >   	ring_buffer_record_enable(buffer);
-> > +
-> > +	ring_buffer_mutex_release(buffer);
-> >   }
-> >   
-> >   /* Must have trace_types_lock held */
-> >   
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> index b12f5b4..e9ede19 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+> @@ -875,7 +875,7 @@ static void a6xx_get_indexed_registers(struct msm_gpu *gpu,
+>  	int i;
+>  
+>  	a6xx_state->indexed_regs = state_kcalloc(a6xx_state, count,
+> -		sizeof(a6xx_state->indexed_regs));
+> +		sizeof(*a6xx_state->indexed_regs));
+>  	if (!a6xx_state->indexed_regs)
+>  		return;
+>  
+> -- 
+> 1.8.3.1
 > 
 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
