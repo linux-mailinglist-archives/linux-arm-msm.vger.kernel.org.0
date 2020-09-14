@@ -2,150 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42C9A26986F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:57:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E9B026987D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 00:02:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726028AbgINV5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 17:57:33 -0400
-Received: from mail-il1-f194.google.com ([209.85.166.194]:43025 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725986AbgINV5d (ORCPT
+        id S1726045AbgINWCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 18:02:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725961AbgINWCN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 17:57:33 -0400
-Received: by mail-il1-f194.google.com with SMTP id a19so1037803ilq.10;
-        Mon, 14 Sep 2020 14:57:32 -0700 (PDT)
+        Mon, 14 Sep 2020 18:02:13 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93DD2C06174A;
+        Mon, 14 Sep 2020 15:02:11 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id o8so2092881ejb.10;
+        Mon, 14 Sep 2020 15:02:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=xGKDB+SeTNUH9+ntXv69tsjlv921V8lJoDxF7UQdwLc=;
+        b=RjH3QJHfbcwVDlI94UAt3J12rjSoccHaoscLj3GjVsl1MDXF756cAuvpcKg0BCldxp
+         up/1FFcsCFip2nZBRCu+A1UmCAXgrIFSX6uTLinhwL1QOf/qtIEV8N1I0Oxsu6w1uKz1
+         Slu3Cgzxofa4175a+I+uLr9MwdD7hb7IqZejwy75LkcBW2br32aZNhXRXPELUziiFk59
+         v7oTmwIWYedKeSRjpmi5uwEZoEgBQwDeIuETJszqsmLh+psch5HWUHuc6XcbXyAsg/3l
+         EL5NSYOtoAtEIVMjdim4qV16snbHmu8TIUiYgLtWUc9gZ1aAkSCnfuxsKQkqBEkRTMg9
+         GoEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=N49eBEf0OcBxq3YK+LLNsu/+jh0vCe22KQ35c/vRW6I=;
-        b=mFeF1YP0l9VhbLwT2oBGiAnAwmNrHsyhX1HPF4zke3hy3sMSnz1Iz0ExIKScT1DIbz
-         hbBct22s2nPJh/bQMrVdwGE9X0CdPmmJOJwRUN3TTMYNBn/cfph36gwY1r3DpWb316WC
-         QDO3Za8WZjrKrmF4aM1ubnkORVVmDKkQmG1DU4FpiEgO0hwprrwRcz3k8pBGUx1u1R3f
-         U8mLnDiXQSQJd5fqoGNmwMFI6aoIYsppQxyhJuFvDitzBFCEqcCTtplAJbg4azdNANNQ
-         jAoAbpuQQFC1DIZOlV/l+UBedbsOp/DXx88+42p8mxE4q74AQsBtPLqFMXeAg0fdVzMM
-         XWQw==
-X-Gm-Message-State: AOAM530PbgSlnpSgaftxvzTRJYme0i+12k7hdggAjnhxt7AeH2VXssot
-        JEDyuXZikhP4kuNRb1hnrw==
-X-Google-Smtp-Source: ABdhPJzHimwcweTB6LyvH7oBdWTbwaHmSrJfZexpF0TO7ddG3+ZaHNRwfzMo34YjbqX1u/ueBO53OA==
-X-Received: by 2002:a05:6e02:6d0:: with SMTP id p16mr5106632ils.64.1600120652133;
-        Mon, 14 Sep 2020 14:57:32 -0700 (PDT)
-Received: from xps15 ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id c12sm7429573ilm.17.2020.09.14.14.57.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 14:57:31 -0700 (PDT)
-Received: (nullmailer pid 329540 invoked by uid 1000);
-        Mon, 14 Sep 2020 21:57:28 -0000
-Date:   Mon, 14 Sep 2020 15:57:28 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     sboyd@kernel.org, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, jackp@codeaurora.org,
-        sergei.shtylyov@gmail.com
-Subject: Re: [PATCH v9 2/4] dt-bindings: usb: Add Qualcomm PMIC type C
- controller dt-binding
-Message-ID: <20200914215728.GA258460@bogus>
-References: <20200904082223.25563-1-wcheng@codeaurora.org>
- <0101017458361303-16620b87-c433-4c00-a061-b1e688363539-000000@us-west-2.amazonses.com>
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=xGKDB+SeTNUH9+ntXv69tsjlv921V8lJoDxF7UQdwLc=;
+        b=CEsuyuOzDSebDRWKkZDg707r0UgABCNvJ6AXLJbDITWl5unp29hR/gQGfkl7qTwDUq
+         hLrJ0FMppzQNJosHNWH5ZHfcqOy4NH+6TDDRmjGUojWpPIdaDPBojBOzHHuqO3NNWfYI
+         gcIjS6/1yXnLhnPVW7xAlHHmJlVImdlWU2KEOV+BRvKoX8Xln0baKwqPIPdLjkCJvCAg
+         Fz4TeM22hY7bd3IQSqNwgKDSgiEkfqRnZPzqptLpXAABkkLZBOpRQlM9S8Dckl+D9SwG
+         VdmFeY4/Fc1KNmvJp93AzeQObljPV9EVSRFYn0ru6xhiBG589CHRjXTSAGPLd+KSnh7w
+         yTyg==
+X-Gm-Message-State: AOAM530TKqgwetsqqcHP54pz/P0uF63Zcolm6FIGRHEn/LH/HL1dxv9o
+        4bA9GJnV8XWvXGXX+wwIHmo=
+X-Google-Smtp-Source: ABdhPJyzrcmyUdk3mhdVJ7z7u1v/jNoFrq6sINS7cTp5D6Flsu5JPb60nhPMfbjtFXkv7cAGEbb8+A==
+X-Received: by 2002:a17:906:cf9d:: with SMTP id um29mr16627895ejb.74.1600120930154;
+        Mon, 14 Sep 2020 15:02:10 -0700 (PDT)
+Received: from AnsuelXPS (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
+        by smtp.gmail.com with ESMTPSA id k6sm8640821ejr.104.2020.09.14.15.02.08
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Sep 2020 15:02:09 -0700 (PDT)
+From:   <ansuelsmth@gmail.com>
+To:     "'Ilia Mirkin'" <imirkin@alum.mit.edu>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        "'Linux PCI'" <linux-pci@vger.kernel.org>
+References: <20200907011238.3401-1-imirkin@alum.mit.edu> <018401d684b4$d31162c0$79342840$@gmail.com> <CAKb7UvgQcSsm=5wqs3jUNYYxuv1w_DPYpV1trSfz+OkbfK6TCg@mail.gmail.com>
+In-Reply-To: <CAKb7UvgQcSsm=5wqs3jUNYYxuv1w_DPYpV1trSfz+OkbfK6TCg@mail.gmail.com>
+Subject: R: [PATCH] PCI: qcom: don't clear out PHY_REFCLK_USE_PAD
+Date:   Tue, 15 Sep 2020 00:02:00 +0200
+Message-ID: <000001d68ae2$b0ad55c0$12080140$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0101017458361303-16620b87-c433-4c00-a061-b1e688363539-000000@us-west-2.amazonses.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHY0SUK+QbXAY/uJVDw58GDK9a3NgHRG3jUAX2gsWypPhCRQA==
+Content-Language: it
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 04, 2020 at 08:22:53AM +0000, Wesley Cheng wrote:
-> Introduce the dt-binding for enabling USB type C orientation and role
-> detection using the PM8150B.  The driver will be responsible for receiving
-> the interrupt at a state change on the CC lines, reading the
-> orientation/role, and communicating this information to the remote
-> clients, which can include a role switch node and a type C switch.
-> 
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> ---
->  .../bindings/usb/qcom,pmic-typec.yaml         | 108 ++++++++++++++++++
->  1 file changed, 108 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> -----Messaggio originale-----
+> Da: Ilia Mirkin <imirkin@alum.mit.edu>
+> Inviato: luned=C3=AC 7 settembre 2020 05:29
+> A: Ansuel Smith <ansuelsmth@gmail.com>
+> Cc: linux-arm-msm@vger.kernel.org; Linux PCI =
+<linux-pci@vger.kernel.org>
+> Oggetto: Re: [PATCH] PCI: qcom: don't clear out PHY_REFCLK_USE_PAD
+>=20
+> On Sun, Sep 6, 2020 at 9:18 PM <ansuelsmth@gmail.com> wrote:
+> >
+> >
+> >
+> > > -----Messaggio originale-----
+> > > Da: Ilia Mirkin <ibmirkin@gmail.com> Per conto di Ilia Mirkin
+> > > Inviato: luned=C3=AC 7 settembre 2020 03:13
+> > > A: ansuelsmth@gmail.com
+> > > Cc: linux-arm-msm@vger.kernel.org; linux-pci@vger.kernel.org; Ilia
+> Mirkin
+> > > <imirkin@alum.mit.edu>
+> > > Oggetto: [PATCH] PCI: qcom: don't clear out PHY_REFCLK_USE_PAD
+> > >
+> > > This makes PCIe links come up again on ifc6410 (apq8064).
+> > >
+> > > Fixes: de3c4bf6489 ("PCI: qcom: Add support for tx term offset for =
+rev
+> > > 2.1.0")
+> > > Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-qcom.c | 1 -
+> > >  1 file changed, 1 deletion(-)
+> > >
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 3aac77a295ba..985b11cf6481 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -387,7 +387,6 @@ static int qcom_pcie_init_2_1_0(struct
+> qcom_pcie
+> > > *pcie)
+> > >
+> > >       /* enable external reference clock */
+> > >       val =3D readl(pcie->parf + PCIE20_PARF_PHY_REFCLK);
+> > > -     val &=3D ~PHY_REFCLK_USE_PAD;
+> >
+> > To make sure this doesn't brake ipq806x, why not limit the &=3D to =
+the
+> ipq806x
+> > compatible like we do up in the code? (or use the use_pad only if
+> apq8064
+> > compatible is not detected, to address ipq8064-v2 added later?)
+>=20
+> Do you mean something like
+>=20
+> if (!of_device_is_compatible(node, "qcom,pcie-apq8064"))
+> val &=3D ~PHY_REFCLK_USE_PAD;
+>=20
+> I'm not sure what's considered acceptable in these cases. It does seem
+> odd that this bit should not be cleared on apq8064 but should be on
+> ipq8064 -- perhaps there's more going on there? Unfortunately I
+> haven't the faintest clue as to what it is...
+>=20
+>   -ilia
 
-Please see this thread[1]. Looks like similar functions and hence the 
-bindings should be similar. There's a lot of USB Type C binding changes 
-in flight. I'm just going to reject them all if folks that know the 
-h/w and USB Type C better than me can't work together.
+Ok i did some test... Can confirm that the condition is needed.
+ipq806x needs the USE_PAD or the kernel just hangs.=20
+When the pci interface is init the regs are 1019... For ipq806x this =
+need to
+change to 10019 (external ref clk enabled and something else disabled =
+that
+we don't know without documentation)
+So to sum up... without the condition this patch would cause a =
+regression for
+ipq8064/5.
 
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-> new file mode 100644
-> index 000000000000..8582ab6a3cc4
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-> @@ -0,0 +1,108 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/usb/qcom,pmic-typec.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm PMIC based USB type C Detection Driver
-> +
-> +maintainers:
-> +  - Wesley Cheng <wcheng@codeaurora.org>
-> +
-> +description: |
-> +  Qualcomm PMIC Type C Detect
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pm8150b-usb-typec
-> +
-> +  reg:
-> +    maxItems: 1
-> +    description: Type C base address
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +    description: CC change interrupt from PMIC
-> +
-> +  connector:
-> +    $ref: /connector/usb-connector.yaml#
-> +    description: Connector type for remote endpoints
-> +    type: object
-> +
-> +    properties:
-> +      compatible:
-> +        enum:
-> +          - usb-c-connector
-> +
-> +      power-role: true
-> +      data-role: true
-> +
-> +      ports:
-> +        description: Remote endpoint connections
-> +        type: object
-> +
-> +        properties:
-> +          port@1:
-> +            description: Remote endpoints for the Super Speed path
-> +            type: object
-> +
-> +            properties:
-> +              endpoint@0:
-> +                description: Connection to USB type C mux node
-> +                type: object
-> +
-> +              endpoint@1:
-> +                description: Connection to role switch node
-> +                type: object
-
-Not sure about this. The connector SS signals are routed to a mux and 
-the above are the 2 choices?
-
-Rob
-
-
-[1] https://lore.kernel.org/linux-usb/TYBPR01MB53096D5A92B7AA149E5803D786260@TYBPR01MB5309.jpnprd01.prod.outlook.com/
