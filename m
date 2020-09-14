@@ -2,101 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8226F26985E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:53:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42C9A26986F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 23:57:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726119AbgINVx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 17:53:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50332 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726013AbgINVxM (ORCPT
+        id S1726028AbgINV5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 17:57:33 -0400
+Received: from mail-il1-f194.google.com ([209.85.166.194]:43025 "EHLO
+        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725986AbgINV5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 17:53:12 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F430C061788
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:53:12 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id o6so1312889ota.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 14:53:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=M0KzjL35Ohrpi1hBTpVC8GSlPU64AFcqfskfaAZgBa8=;
-        b=LLZApjOYT5LOPwoWYD3YxrbeHE/ynPWQVOd7JfPB7whFmDJqwNGuoKrvJso5gpGyaw
-         LGOyVBW1IMXvVatUGckoxvVCfUw6pylZefbVuwwZ5+VkggK/oss0GOiQ/233+1f3TiCR
-         xIopZ4lSiZ8pPQlbiRy2r3bR0qAZVz4r0GzortxzQdX8nm0/EJ+QLjbT+az+ari11bPG
-         lYKEFI/ORlRY8PWI+8BURBUpEv5V1ynse/YiaE/C+rEotSij7tat4Yhr/B9kOFTst1wq
-         QEZbiVcClXmY1QbQuyJP7lCk7vvbUGCDa5CI6OIzqBAoLAGGjv8sDt+sWXkCcvokxv4f
-         ZECg==
+        Mon, 14 Sep 2020 17:57:33 -0400
+Received: by mail-il1-f194.google.com with SMTP id a19so1037803ilq.10;
+        Mon, 14 Sep 2020 14:57:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M0KzjL35Ohrpi1hBTpVC8GSlPU64AFcqfskfaAZgBa8=;
-        b=Y/+XjiZuZIPOLQphYM3i0EzMbB/fJisFzbq2+K1T7nN14Awb1XJW+qkCKWkFgNm8mb
-         8T5l+nQSuil36Xrr328GzdROYmeoejY6hnA1pJ4D+FlfkhMhnO2HW2iWXd6xKVDNMvle
-         MkjSx0+ChKIGC2KawxjaJrdPzegz6BFNXzv5OOVihbOk1cO5moyojDJpRTfGR1J89AXl
-         1gpkjhpetmSI1qhi7tAwp3fL3xpVtNxMCIhoq1zNNq77/EtmV4qb25iEXCxNHTTi0Xif
-         tm+jbxEZK6lv6ELS8xeynbMH4hrxqw7x1sbbV21KYqb5boT2nLKIEu/BmGfzcZ0CVqFX
-         W0mQ==
-X-Gm-Message-State: AOAM53078CzaY1i5qpRSnrHGuXijAW6Q1dOsIHVqmOxPpQSXPJAaAyjr
-        yKj9mASFHRKSUEulS5kAEXh5KhsRcM6UaVmAuRgLOg==
-X-Google-Smtp-Source: ABdhPJzZPGYpZyuCNJYmdc/Gjs6hHb8CPs+tTvqBT9j22B8LxDuy/ic/fjVVunBaIQ4zJxYyyVsKbQk75yT+SfiISAA=
-X-Received: by 2002:a9d:6d8b:: with SMTP id x11mr10119632otp.221.1600120391780;
- Mon, 14 Sep 2020 14:53:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=N49eBEf0OcBxq3YK+LLNsu/+jh0vCe22KQ35c/vRW6I=;
+        b=mFeF1YP0l9VhbLwT2oBGiAnAwmNrHsyhX1HPF4zke3hy3sMSnz1Iz0ExIKScT1DIbz
+         hbBct22s2nPJh/bQMrVdwGE9X0CdPmmJOJwRUN3TTMYNBn/cfph36gwY1r3DpWb316WC
+         QDO3Za8WZjrKrmF4aM1ubnkORVVmDKkQmG1DU4FpiEgO0hwprrwRcz3k8pBGUx1u1R3f
+         U8mLnDiXQSQJd5fqoGNmwMFI6aoIYsppQxyhJuFvDitzBFCEqcCTtplAJbg4azdNANNQ
+         jAoAbpuQQFC1DIZOlV/l+UBedbsOp/DXx88+42p8mxE4q74AQsBtPLqFMXeAg0fdVzMM
+         XWQw==
+X-Gm-Message-State: AOAM530PbgSlnpSgaftxvzTRJYme0i+12k7hdggAjnhxt7AeH2VXssot
+        JEDyuXZikhP4kuNRb1hnrw==
+X-Google-Smtp-Source: ABdhPJzHimwcweTB6LyvH7oBdWTbwaHmSrJfZexpF0TO7ddG3+ZaHNRwfzMo34YjbqX1u/ueBO53OA==
+X-Received: by 2002:a05:6e02:6d0:: with SMTP id p16mr5106632ils.64.1600120652133;
+        Mon, 14 Sep 2020 14:57:32 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id c12sm7429573ilm.17.2020.09.14.14.57.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2020 14:57:31 -0700 (PDT)
+Received: (nullmailer pid 329540 invoked by uid 1000);
+        Mon, 14 Sep 2020 21:57:28 -0000
+Date:   Mon, 14 Sep 2020 15:57:28 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     sboyd@kernel.org, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, jackp@codeaurora.org,
+        sergei.shtylyov@gmail.com
+Subject: Re: [PATCH v9 2/4] dt-bindings: usb: Add Qualcomm PMIC type C
+ controller dt-binding
+Message-ID: <20200914215728.GA258460@bogus>
+References: <20200904082223.25563-1-wcheng@codeaurora.org>
+ <0101017458361303-16620b87-c433-4c00-a061-b1e688363539-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
-References: <1597227730-16477-1-git-send-email-rnayak@codeaurora.org>
- <CALAqxLVQ1uB5Zy1DrFP6K4FgZ0U9rwGterhvzcTws_9O9wWE2g@mail.gmail.com> <CALAqxLUr9ahtxkQSXnBG7k092bXxM7yANM0RX7jyVksYzhi-ZA@mail.gmail.com>
-In-Reply-To: <CALAqxLUr9ahtxkQSXnBG7k092bXxM7yANM0RX7jyVksYzhi-ZA@mail.gmail.com>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Mon, 14 Sep 2020 14:53:00 -0700
-Message-ID: <CALAqxLV4ZiqWZaZV5E6KJQRoqrvWrSWqvVTfkk-P_DDNpdcioA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: sdm845: Fixup OPP table for all qup devices
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, lkml <linux-kernel@vger.kernel.org>,
-        Amit Pundir <amit.pundir@linaro.org>, tdas@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0101017458361303-16620b87-c433-4c00-a061-b1e688363539-000000@us-west-2.amazonses.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 7, 2020 at 1:37 PM John Stultz <john.stultz@linaro.org> wrote:
->
-> On Mon, Aug 31, 2020 at 9:04 PM John Stultz <john.stultz@linaro.org> wrote:
-> > On Wed, Aug 12, 2020 at 3:23 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
-> > > This OPP table was based on the clock VDD-FMAX tables seen in
-> > > downstream code, however it turns out the downstream clock
-> > > driver does update these tables based on later/production
-> > > rev of the chip and whats seen in the tables belongs to an
-> > > early engineering rev of the SoC.
-> > > Fix up the OPP tables such that it now matches with the
-> > > production rev of sdm845 SoC.
-> > >
-> > > Fixes: 13cadb34e593 ("arm64: dts: sdm845: Add OPP table for all qup
-> > > devices")
-> > > Reported-by: John Stultz <john.stultz@linaro.org>
-> > > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> > > ---
-> >
-> > Just wanted to follow up on this, as it's still missing from 5.9-rc3
-> > and is needed to fix a bluetooth regression on db845c from 5.9-rc1.
-> >
-> > Amit has already validated it (on PocoF1 as well), but just in case its useful:
-> > Tested-by: John Stultz <john.stultz@linaro.org>
->
-> Hey Everyone,
->   Just wanted to nag folks on this again as it is still missing from
-> upstream and resolves a bluetooth regression from 5.9-rc1.
+On Fri, Sep 04, 2020 at 08:22:53AM +0000, Wesley Cheng wrote:
+> Introduce the dt-binding for enabling USB type C orientation and role
+> detection using the PM8150B.  The driver will be responsible for receiving
+> the interrupt at a state change on the CC lines, reading the
+> orientation/role, and communicating this information to the remote
+> clients, which can include a role switch node and a type C switch.
+> 
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> ---
+>  .../bindings/usb/qcom,pmic-typec.yaml         | 108 ++++++++++++++++++
+>  1 file changed, 108 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
 
-Hey Everyone,
- Just your weekly nag on this patch that is still missing upstream.
-This patch fixes bluetooth regressions that started w/ 5.9-rc1. It
-would be great to see it land before 5.9 is finalized.
+Please see this thread[1]. Looks like similar functions and hence the 
+bindings should be similar. There's a lot of USB Type C binding changes 
+in flight. I'm just going to reject them all if folks that know the 
+h/w and USB Type C better than me can't work together.
 
-thanks
--john
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> new file mode 100644
+> index 000000000000..8582ab6a3cc4
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> @@ -0,0 +1,108 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/usb/qcom,pmic-typec.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm PMIC based USB type C Detection Driver
+> +
+> +maintainers:
+> +  - Wesley Cheng <wcheng@codeaurora.org>
+> +
+> +description: |
+> +  Qualcomm PMIC Type C Detect
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8150b-usb-typec
+> +
+> +  reg:
+> +    maxItems: 1
+> +    description: Type C base address
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +    description: CC change interrupt from PMIC
+> +
+> +  connector:
+> +    $ref: /connector/usb-connector.yaml#
+> +    description: Connector type for remote endpoints
+> +    type: object
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - usb-c-connector
+> +
+> +      power-role: true
+> +      data-role: true
+> +
+> +      ports:
+> +        description: Remote endpoint connections
+> +        type: object
+> +
+> +        properties:
+> +          port@1:
+> +            description: Remote endpoints for the Super Speed path
+> +            type: object
+> +
+> +            properties:
+> +              endpoint@0:
+> +                description: Connection to USB type C mux node
+> +                type: object
+> +
+> +              endpoint@1:
+> +                description: Connection to role switch node
+> +                type: object
+
+Not sure about this. The connector SS signals are routed to a mux and 
+the above are the 2 choices?
+
+Rob
+
+
+[1] https://lore.kernel.org/linux-usb/TYBPR01MB53096D5A92B7AA149E5803D786260@TYBPR01MB5309.jpnprd01.prod.outlook.com/
