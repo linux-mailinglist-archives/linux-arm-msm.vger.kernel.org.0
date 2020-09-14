@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 606CE268CE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 16:07:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1CAF268CCC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Sep 2020 16:05:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726814AbgINOHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 10:07:39 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:26334 "EHLO
+        id S1726827AbgINOFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 10:05:20 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:31994 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726790AbgINN7Z (ORCPT
+        with ESMTP id S1726328AbgINOAq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 09:59:25 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 14 Sep 2020 06:59:25 -0700
+        Mon, 14 Sep 2020 10:00:46 -0400
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 14 Sep 2020 06:59:27 -0700
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Sep 2020 06:59:23 -0700
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 14 Sep 2020 06:59:26 -0700
 Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
   by ironmsg02-blr.qualcomm.com with ESMTP; 14 Sep 2020 19:28:55 +0530
 Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 2054644CE; Mon, 14 Sep 2020 19:28:54 +0530 (IST)
+        id 2EAD144D9; Mon, 14 Sep 2020 19:28:54 +0530 (IST)
 From:   satya priya <skakit@codeaurora.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Matthias Kaehlcke <mka@chromium.org>, gregkh@linuxfoundation.org,
@@ -29,9 +29,9 @@ Cc:     Matthias Kaehlcke <mka@chromium.org>, gregkh@linuxfoundation.org,
         linux-kernel@vger.kernel.org, akashast@codeaurora.org,
         rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
         dianders@chromium.org, satya priya <skakit@codeaurora.org>
-Subject: [PATCH V6 2/4] arm64: dts: qcom: sc7180: Add wakeup support for BT UART on sc7180-idp
-Date:   Mon, 14 Sep 2020 19:28:35 +0530
-Message-Id: <1600091917-7464-3-git-send-email-skakit@codeaurora.org>
+Subject: [PATCH V6 3/4] arm64: dts: qcom: sc7180-trogdor: Add wakeup support for BT UART
+Date:   Mon, 14 Sep 2020 19:28:36 +0530
+Message-Id: <1600091917-7464-4-git-send-email-skakit@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1600091917-7464-1-git-send-email-skakit@codeaurora.org>
 References: <1600091917-7464-1-git-send-email-skakit@codeaurora.org>
@@ -49,34 +49,22 @@ during suspend and BT SoC not able to send wakeup bytes.
 
 Signed-off-by: satya priya <skakit@codeaurora.org>
 ---
-Changes in V2:
- - This patch adds sleep state for BT UART. Newly added in V2.
-
-Changes in V3:
- - Remove "output-high" for TX from both sleep and default states
-   as it is not required. Configure pull-up for TX in sleep state.
-
-Changes in V4:
- - As per Matthias's comment, removed drive-strength for sleep state
-   and fixed nit-pick.
-
 Changes in V5:
- - As per Matthias's comments, moved pinmux change for sleep state,
-   pinctrl and interrupt config to the board specific file.
+ - Newly added in V5. This patch adds wakeup support for trogdor board files.
 
 Changes in V6:
- - As per Doug's comments changed subject, deleted interrupts property.
- - As per Bjorn's comments changed commit text and rationale for RTS,
-   TX and RX.
+ - As per Doug's comment deleted interrupts property and sorted the qup sleep
+   state before trackpad.
+ - As per Bjorn's comment canged the commit text, rationale for RTS, TX, RX.
 
- arch/arm64/boot/dts/qcom/sc7180-idp.dts | 55 +++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 54 ++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index 04888df..e416409 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -346,6 +346,13 @@
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index a6b9beb..6629df9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -794,6 +794,13 @@ ap_spi_fp: &spi10 {
  &uart3 {
  	status = "okay";
  
@@ -87,14 +75,13 @@ index 04888df..e416409 100644
 +	pinctrl-names = "default", "sleep";
 +	pinctrl-1 = <&qup_uart3_sleep>;
 +
- 	bluetooth: wcn3990-bt {
- 		compatible = "qcom,wcn3990-bt";
- 		vddio-supply = <&vreg_l10a_1p8>;
-@@ -545,3 +552,51 @@
+ 	bluetooth: bluetooth {
+ 		compatible = "qcom,wcn3991-bt";
+ 		vddio-supply = <&pp1800_l10a>;
+@@ -1307,6 +1314,53 @@ ap_spi_fp: &spi10 {
+ 		};
  	};
- };
  
-+&tlmm {
 +	qup_uart3_sleep: qup-uart3-sleep {
 +		pinmux {
 +			pins = "gpio38", "gpio39",
@@ -141,7 +128,10 @@ index 04888df..e416409 100644
 +			bias-pull-up;
 +		};
 +	};
-+};
++
+ 	trackpad_int_1v8_odl: trackpad-int-1v8-odl {
+ 		pinmux {
+ 			pins = "gpio58";
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
