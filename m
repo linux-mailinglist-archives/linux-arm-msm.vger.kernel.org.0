@@ -2,117 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F2A7269D9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 06:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA620269DAF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 07:10:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726136AbgIOE4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 00:56:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58706 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbgIOE4K (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 00:56:10 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8C0C061788
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 21:56:10 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id h17so2058987otr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 21:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ENz4xHvD9ug6YlxqNSoJaY/XQYN66A8D8foNqmGC5KA=;
-        b=u93mVuya+d8x86g5PcEQ8jQDGeKy0pXToN3Gf38rOh9RxhkKtQWac/k7HyKfY0vOa7
-         L5U4lhotYK8jBDqlyhP8gnLzLO1wZdC4Lh1PTeonw8rNpcbF6v0oDxW2svAvXpa3Ec9G
-         TD1T1gHpwlsUCSv45z9Qu84lgenwESBMsOKcFL+SsIXmxRvHIcZtQ1zVoZa9kMnvgghZ
-         u7Vlrgdp/vDe4fLoMXqKjMOQJ6ZX6n5IQSoowuHQ7N9vKXwCPb8v1fYNy9LcyColetHS
-         ZEIREZ4n94ozxxnF60bdkdhRO3a+S1ykGDrI9dDB0ZdpNY//qse2cNBtO49wwrJUUUDm
-         9cdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ENz4xHvD9ug6YlxqNSoJaY/XQYN66A8D8foNqmGC5KA=;
-        b=iVfvmHeVVHKrLPAj1NBnGaHhosJMDD6C3CBWei5/Tfe7voMGKJbAlC2GEsJrtQwMBw
-         BmqT+rV0h8azdvxOtODZu25857kNOQ67ohEV5z+FOWuba8j/M0EVec3e3G6ZlWR6aBkk
-         cc0swRfte2Rm4BHuKzD/5jDp7tZbXzYiK6yEbnmkBnLIQUD/zZ/R33GnhPI47jGlsInS
-         zb6l4pQGi7mBBXSAe3PK9zlHsjF3Ct0sFwh8tc165ye+ZSx0i+dVHydRltH1lON+c21R
-         3J9qkSB1pHbUncP5ZwKsyhE1KC6UKqVhsdvy/7BDhwcS49Gd6iIW+8ybVloMAR4ui2gN
-         QLLA==
-X-Gm-Message-State: AOAM532BGbuDyamTzz4Sssaslo/4+GfxOFSJSIJY0ePbnhSkN4m8+iuf
-        VREnHJIRMcQdkRY0BL89asbQHBvO4ORAi4C+
-X-Google-Smtp-Source: ABdhPJzYhhH+j8Sewu8WtxPCdtjCVNeqTeENaaRi2CfPfPAk3Mn7ak211THzf+2/wOvSNI1eTM5/EA==
-X-Received: by 2002:a9d:6f85:: with SMTP id h5mr10512442otq.73.1600145769563;
-        Mon, 14 Sep 2020 21:56:09 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id y23sm6013545ooj.34.2020.09.14.21.56.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 21:56:08 -0700 (PDT)
-Date:   Mon, 14 Sep 2020 23:56:05 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 00/10] Convert MSM8916 boards to use labels, reduce
- duplication
-Message-ID: <20200915045605.GC670377@yoga>
-References: <20200720085406.6716-1-stephan@gerhold.net>
- <20200914094341.GA1246@gerhold.net>
+        id S1726082AbgIOFKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 01:10:02 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42427 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726046AbgIOFKA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 01:10:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600146599; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
+ Subject: Sender; bh=B6VMcUMbely6FiLPgQT06jsV/DKFK3KvFB4W6h9BsJI=; b=XQaP3p8rNkn2KMmjFz4Yg85fO8hrIoM3ZbSUn0n2OTx4qTa9/zUZEvpweHWn/na9jFQHVdDa
+ B4UnmMxNXC6KKqv6Z7I5TNqAqxDSJHrBGu3TDUMSyrzna9TQwvqmnYq/lqiLuPJl8Vp2sOQ0
+ piJjs8mgu+cT4tWGSm3utatIsSU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f604c39885efaea0a119d8a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 05:08:09
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C6618C433CA; Tue, 15 Sep 2020 05:08:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.4] (unknown [171.49.233.177])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: gkohli)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8CD70C433C8;
+        Tue, 15 Sep 2020 05:08:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8CD70C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=gkohli@codeaurora.org
+Subject: Re: [PATCH] trace: Fix race in trace_open and buffer resize call
+From:   Gaurav Kohli <gkohli@codeaurora.org>
+To:     rostedt@goodmis.org, mingo@redhat.com
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1599199797-25978-1-git-send-email-gkohli@codeaurora.org>
+ <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
+Message-ID: <2fe2a843-e2b5-acf8-22e4-7231d24a9382@codeaurora.org>
+Date:   Tue, 15 Sep 2020 10:38:03 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200914094341.GA1246@gerhold.net>
+In-Reply-To: <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 14 Sep 04:43 CDT 2020, Stephan Gerhold wrote:
 
-> Hi Bjorn,
-> 
-> On Mon, Jul 20, 2020 at 10:53:56AM +0200, Stephan Gerhold wrote:
-> > Board device trees for newer SoCs reference labels to override properties
-> > for components of the SoC. This patch series converts all MSM8916 boards to
-> > use the same style.
-> > 
-> > Additionally, in the second part of the series I attempt to reduce duplication
-> > within the MSM8916 board device trees a bit. If we keep copying a large number
-> > of properties to each and every board of a SoC then (in my opinion)
-> > it makes sense to consider if those can be shared in some include.
-> > 
-> > This will make it easier to add new boards in the future.
-> > 
-> > Stephan Gerhold (10):
-> >   arm64: dts: qcom: apq8016-sbc: Remove properties that are already
-> >     default
-> >   arm64: dts: qcom: msm8916: Declare sound node in msm8916.dtsi
-> >   arm64: dts: qcom: apq8016-sbc: Define leds outside of soc node
-> >   arm64: dts: qcom: msm8916: Add more labels
-> >   arm64: dts: qcom: msm8916: Use labels in board device trees
-> >   arm64: dts: qcom: pm8916: Add resin node
-> >   arm64: dts: qcom: msm8916: Move PM8916-specific parts to
-> >     msm8916-pm8916.dtsi
-> >   arm64: dts: qcom: msm8916: Move more supplies to msm8916-pm8916.dtsi
-> >   arm64: dts: qcom: msm8916: Set default pinctrl for blsp1_uart1/2
-> >   arm64: dts: qcom: msm8916: Move common USB properties to msm8916.dtsi
-> > 
-> 
-> It's been two months since I sent this series - are there any changes
-> I should make? Maybe you just overlooked it :)
-> 
 
-It seems to have been overlooked as we approached the v5.9 merge window.
-I don't have any complaints and have merge the series now.
+Hi Steven,
+thanks for reply.
 
-Thanks,
-Bjorn
+On 9/14/2020 9:49 PM, Steven Rostedt wrote:
+ > On Mon, 14 Sep 2020 10:00:50 +0530
+ > Gaurav Kohli <gkohli@codeaurora.org> wrote:
+ >
+ >> Hi Steven,
+ >>
+ >> Please let us know, if below change looks good.
+ >> Or let us know some other way to solve this.
+ >>
+ >> Thanks,
+ >> Gaurav
+ >>
+ >>
+ >
+ > Hmm, for some reason, I don't see this in my INBOX, but it shows up in my
+ > LKML folder. :-/
+ >
+ >
 
-> Would be great to make some progress since I have a few more patch
-> series ready to send out that build on top of this one (some more
-> cleanup for MSM8916, converting MSM8916 to use rpmpd power domains, ...)
-> 
-> Thanks!
-> Stephan
+
+ >>> +void ring_buffer_mutex_release(struct trace_buffer *buffer)
+ >>> +{
+ >>> +    mutex_unlock(&buffer->mutex);
+ >>> +}
+ >>> +EXPORT_SYMBOL_GPL(ring_buffer_mutex_release);
+ >
+ > I really do not like to export these.
+ >
+
+Actually available reader lock is not helping 
+here(&cpu_buffer->reader_lock), So i took ring buffer mutex lock to 
+resolve this(this came on 4.19/5.4), in latest tip it is trace buffer 
+lock. Due to this i have exported api.
+ >>> +/**
+ >>>     * ring_buffer_record_off - stop all writes into the buffer
+ >>>     * @buffer: The ring buffer to stop writes to.
+ >>>     *
+ >>> @@ -4918,6 +4937,8 @@ void ring_buffer_reset(struct trace_buffer 
+*buffer)
+ >>>        struct ring_buffer_per_cpu *cpu_buffer;
+ >>>        int cpu;
+ >>>    +    /* prevent another thread from changing buffer sizes */
+ >>> +    mutex_lock(&buffer->mutex);
+ >>>        for_each_buffer_cpu(buffer, cpu) {
+ >>>            cpu_buffer = buffer->buffers[cpu];
+ >>>    @@ -4936,6 +4957,7 @@ void ring_buffer_reset(struct trace_buffer 
+*buffer)
+ >>>            atomic_dec(&cpu_buffer->record_disabled);
+ >>>            atomic_dec(&cpu_buffer->resize_disabled);
+ >>>        }
+ >>> +    mutex_unlock(&buffer->mutex);
+ >>>    }
+ >>>    EXPORT_SYMBOL_GPL(ring_buffer_reset);
+ >>>    diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+ >>> index f40d850..392e9aa 100644
+ >>> --- a/kernel/trace/trace.c
+ >>> +++ b/kernel/trace/trace.c
+ >>> @@ -2006,6 +2006,8 @@ void tracing_reset_online_cpus(struct 
+array_buffer *buf)
+ >>>        if (!buffer)
+ >>>            return;
+ >>>    +    ring_buffer_mutex_acquire(buffer);
+ >>> +
+ >>>        ring_buffer_record_disable(buffer);
+ >
+ > Hmm, why do we disable here as it gets disabled again in the call to
+ > ring_buffer_reset_online_cpus()? Perhaps we don't need to disable the
+You mean cpu_buffer->reader_lock in reset_disabled_cpu_buffer?
+Actually reader lock is already there but this is not helping if 
+tracing_open and ring_buffer_resize are running parallel on different cpus.
+
+We are seeing below race mainly during removal of extra pages:
+
+                                             ring_buffer_resize
+                                            //Below portion of code
+                                            //not under any lock
+                                             nr_pages_to_update < 0
+                                            init_list_head(new_pages)
+                                            rb_update_pages
+
+
+ring_buffer_resize
+tracing_open
+tracing_reset_online_cpus
+ring_buffer_reset_cpu
+                                           cpu_buffer_reset done
+                                           //now lock started
+
+                                           warning(nr_removed)
+
+We are seeing cases like cpu buffer got reset due to tracing open in 
+other call, and then seeing issue in  rb_remove_pages.
+
+Similar case can come during rb_insert_pages as well:
+
+rb_insert_pages(struct ring_buffer_per_cpu *cpu_buffer)
+{
+         struct list_head *pages = &cpu_buffer->new_pages;
+         int retries, success;
+//before lock cpu buffer may get reset in another cpu, due to which we 
+are seeing infinite loop cases as new_pages pointer got reset in 
+rb_reset_cpu.
+
+         raw_spin_lock_irq(&cpu_buffer->reader_lock);
+
+ > buffer here. The only difference is that we have:
+ >
+ >   buf->time_start = buffer_ftrace_now(buf, buf->cpu);
+ >
+ > And that the above disables the entire buffer, whereas the reset only
+ > resets individual ones.
+ >
+ > But I don't think that will make any difference.
+ >
+ > -- Steve
+ >
+
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
+Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project.
