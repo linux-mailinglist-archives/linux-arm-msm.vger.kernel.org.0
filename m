@@ -2,229 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A93B426B287
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:49:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C13C26B277
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:48:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727305AbgIOWtM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 18:49:12 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:4730 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727479AbgIOPod (ORCPT
+        id S1727545AbgIOWr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 18:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727489AbgIOPpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 11:44:33 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 15 Sep 2020 08:43:54 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Sep 2020 08:43:52 -0700
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 15 Sep 2020 21:13:28 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id 7A68421B97; Tue, 15 Sep 2020 21:13:27 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: Use NVM files based on SoC ID for WCN3991
-Date:   Tue, 15 Sep 2020 21:13:25 +0530
-Message-Id: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 15 Sep 2020 11:45:02 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68FCDC061352
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:45:00 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id w186so4716500qkd.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Jr9FyPebxkKqG5Q+7PXT2kwXR4HeYkXnIjay9uV7M3A=;
+        b=rFHVNAT/L/p+uTassh8kWHyPPmM6zU7jhMji4JUNPpHOH6vp7+SknoNXEUaxITlZJo
+         C47l3vrn5M1foQsDyM7MD13TTYbOSoz+k3xxYu2RBF/1DXBmgX5hCizpgqmu7GxO2Qn7
+         t+UA0UhrW0z+v7akhpkjQXmNzcd1NdyF9egZIXmLbC6cB5UgKlerScIbcv3AVVTn3Fsc
+         SIOsbC7nIY+6OOkvdDsfHVxDKHqeJrx5J2v8OoZnq5BvJ7UDU5nXuKIkPxIn3QTCEXTN
+         jo8hO5NeFIqIKE2GyopxS/cZDkUROZKl0oZCNrBm7aRWQrRt7F4pkll8G1GT259vH8V6
+         gV1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Jr9FyPebxkKqG5Q+7PXT2kwXR4HeYkXnIjay9uV7M3A=;
+        b=r1ptcXJeceBKJyt2PdjBBz8Q3d2MH8VWXq+I15JB3C+xVu5lw2Jk/L511G+uKZgO+z
+         rJ+lBZ+iocnEUiewzDNZGrip8lrtQSQEBLotcyaaDDN8AQjsTF/aVDiGGKlbRr5qayHI
+         VAM7e5+pAKI+gkENeawfY9VnUlfW2MgFOySrYqhWpERlIOXOp9krjtXm2CGHmRkBavAm
+         c1QnxubNka2CKvrFEd+XL5pdqZuJt/fFpoOjjRUMwoCGYYYRWtG/Xron+oyUguJF8L5r
+         GFImGHSPWe6bkqCymx8RMO8cjZ6zxs60TGYrilzDmLNieKbT+vPiY4X4i8l8oEq1J4UN
+         dZ4A==
+X-Gm-Message-State: AOAM532EkXneg5wnwemx7C4z/ZsqgUM+IyssNJqVszpZpvZcKlODSSKo
+        bjxC1kJ8NSlZvZ1zODjbBmhy2A==
+X-Google-Smtp-Source: ABdhPJy/FgcqpjL803/QUt6DpehETtocnf+0DIjdU+tNjllUdMmC353O7wtD73sn2n4/M/TjNpyT2Q==
+X-Received: by 2002:a37:a054:: with SMTP id j81mr17048838qke.23.1600184697935;
+        Tue, 15 Sep 2020 08:44:57 -0700 (PDT)
+Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
+        by smtp.gmail.com with ESMTPSA id n136sm15988518qkn.14.2020.09.15.08.44.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2020 08:44:57 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 15:44:55 +0000
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-gpio@vger.kernel.org
+Subject: Re: [PATCH] irqchip/qcom-pdc: Allow QCOM_PDC to be loadable as a
+ permanent module
+Message-ID: <20200915154455.GG478@uller>
+References: <20200912125148.1271481-7-maz@kernel.org>
+ <20200914210423.67579-1-john.stultz@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200914210423.67579-1-john.stultz@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change will allow to use different NVM file based
-on WCN3991 BT SoC ID.Need to use different NVM file based on
-fab location for WCN3991 BT SoC.
+On Mon 14 Sep 21:04 UTC 2020, John Stultz wrote:
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
----
- drivers/bluetooth/btqca.c   | 41 +++++++++++++++++++++++++----------------
- drivers/bluetooth/btqca.h   | 13 ++++++++-----
- drivers/bluetooth/hci_qca.c | 11 +++++------
- 3 files changed, 38 insertions(+), 27 deletions(-)
+> Allows qcom-pdc driver to be loaded as a permanent module.
+> 
+> An earlier version of this patch was merged in a larger patchset
+> but was reverted entirely when issues were found with other
+> drivers, so now that Marc has provided a better solution in his
+> Hybrid probing patch set, I wanted to re-submit this change.
+> 
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index ce9dcff..a7e72f1 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -14,12 +14,11 @@
- 
- #define VERSION "0.1"
- 
--int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-+int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
- 			 enum qca_btsoc_type soc_type)
- {
- 	struct sk_buff *skb;
- 	struct edl_event_hdr *edl;
--	struct qca_btsoc_version *ver;
- 	char cmd;
- 	int err = 0;
- 	u8 event_type = HCI_EV_VENDOR;
-@@ -70,9 +69,9 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
- 	}
- 
- 	if (soc_type >= QCA_WCN3991)
--		memmove(&edl->data, &edl->data[1], sizeof(*ver));
--
--	ver = (struct qca_btsoc_version *)(edl->data);
-+		memcpy(ver, &edl->data[1], sizeof(*ver));
-+	else
-+		memcpy(ver, &edl->data, sizeof(*ver));
- 
- 	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
- 		    le32_to_cpu(ver->product_id));
-@@ -83,13 +82,7 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
- 	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
- 		    le16_to_cpu(ver->patch_ver));
- 
--	/* QCA chipset version can be decided by patch and SoC
--	 * version, combination with upper 2 bytes from SoC
--	 * and lower 2 bytes from patch will be used.
--	 */
--	*soc_version = (le32_to_cpu(ver->soc_id) << 16) |
--		       (le16_to_cpu(ver->rom_ver) & 0x0000ffff);
--	if (*soc_version == 0)
-+	if (le32_to_cpu(ver->soc_id) == 0 || le16_to_cpu(ver->rom_ver) == 0)
- 		err = -EILSEQ;
- 
- out:
-@@ -446,15 +439,25 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
- 
- int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
--		   enum qca_btsoc_type soc_type, u32 soc_ver,
-+		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
- 		   const char *firmware_name)
- {
- 	struct qca_fw_config config;
- 	int err;
- 	u8 rom_ver = 0;
-+	u32 soc_ver;
- 
- 	bt_dev_dbg(hdev, "QCA setup on UART");
- 
-+	/* QCA chipset version can be decided by patch and SoC
-+	 * version, combination with upper 2 bytes from SoC
-+	 * and lower 2 bytes from patch will be used.
-+	 */
-+	soc_ver = (le32_to_cpu(ver.soc_id) << 16) |
-+		       (le16_to_cpu(ver.rom_ver) & 0x0000ffff);
-+
-+	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
-+
- 	config.user_baud_rate = baudrate;
- 
- 	/* Download rampatch file */
-@@ -491,9 +494,15 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	if (firmware_name)
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/%s", firmware_name);
--	else if (qca_is_wcn399x(soc_type))
--		snprintf(config.fwname, sizeof(config.fwname),
--			 "qca/crnv%02x.bin", rom_ver);
-+	else if (qca_is_wcn399x(soc_type)) {
-+		if (ver.soc_id == QCA_WCN3991_SOC_ID) {
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/crnv%02xu.bin", rom_ver);
-+		} else {
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/crnv%02x.bin", rom_ver);
-+		}
-+	}
- 	else if (soc_type == QCA_QCA6390)
- 		snprintf(config.fwname, sizeof(config.fwname),
- 			 "qca/htnv%02x.bin", rom_ver);
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index d81b74c..d01a9f5 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -34,6 +34,8 @@
- #define QCA_HCI_CC_OPCODE		0xFC00
- #define QCA_HCI_CC_SUCCESS		0x00
- 
-+#define QCA_WCN3991_SOC_ID		(0x40014320)
-+
- enum qca_baudrate {
- 	QCA_BAUDRATE_115200 	= 0,
- 	QCA_BAUDRATE_57600,
-@@ -136,9 +138,9 @@ enum qca_btsoc_type {
- 
- int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr);
- int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
--		   enum qca_btsoc_type soc_type, u32 soc_ver,
-+		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
- 		   const char *firmware_name);
--int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-+int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
- 			 enum qca_btsoc_type);
- int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
- int qca_send_pre_shutdown_cmd(struct hci_dev *hdev);
-@@ -155,13 +157,14 @@ static inline int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdad
- }
- 
- static inline int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
--				 enum qca_btsoc_type soc_type, u32 soc_ver,
--				 const char *firmware_name)
-+		enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
-+				const char *firmware_name)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static inline int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-+static inline int qca_read_soc_version(struct hci_dev *hdev,
-+				       struct qca_btsoc_version *ver,
- 				       enum qca_btsoc_type)
- {
- 	return -EOPNOTSUPP;
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 244b8fe..4c32c60 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1649,7 +1649,7 @@ static int qca_setup(struct hci_uart *hu)
- 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
- 	const char *firmware_name = qca_get_firmware_name(hu);
- 	int ret;
--	int soc_ver = 0;
-+	struct qca_btsoc_version ver;
- 
- 	ret = qca_check_speeds(hu);
- 	if (ret)
-@@ -1678,7 +1678,7 @@ static int qca_setup(struct hci_uart *hu)
- 	if (qca_is_wcn399x(soc_type)) {
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
- 
--		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
-+		ret = qca_read_soc_version(hdev, &ver, soc_type);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -1697,15 +1697,14 @@ static int qca_setup(struct hci_uart *hu)
- 
- 	if (!qca_is_wcn399x(soc_type)) {
- 		/* Get QCA version information */
--		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
-+		ret = qca_read_soc_version(hdev, &ver, soc_type);
- 		if (ret)
- 			return ret;
- 	}
- 
--	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
- 	/* Setup patch / NVM configurations */
--	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, soc_ver,
--			firmware_name);
-+	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, ver,
-+			     firmware_name);
- 	if (!ret) {
- 		set_bit(QCA_IBS_ENABLED, &qca->flags);
- 		qca_debugfs_init(hdev);
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Jason Cooper <jason@lakedaemon.net>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-gpio@vger.kernel.org
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> ---
+>  drivers/irqchip/Kconfig    | 2 +-
+>  drivers/irqchip/qcom-pdc.c | 2 ++
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+> index bfc9719dbcdc..bb70b7177f94 100644
+> --- a/drivers/irqchip/Kconfig
+> +++ b/drivers/irqchip/Kconfig
+> @@ -425,7 +425,7 @@ config GOLDFISH_PIC
+>           for Goldfish based virtual platforms.
+>  
+>  config QCOM_PDC
+> -	bool "QCOM PDC"
+> +	tristate "QCOM PDC"
+>  	depends on ARCH_QCOM
+>  	select IRQ_DOMAIN_HIERARCHY
+>  	help
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index 8543fa23da10..59eb3c8473b0 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -433,3 +433,5 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
+>  IRQCHIP_HYBRID_DRIVER_BEGIN(qcom_pdc)
+>  IRQCHIP_MATCH("qcom,pdc", qcom_pdc_init)
+>  IRQCHIP_HYBRID_DRIVER_END(qcom_pdc)
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> 2.17.1
+> 
