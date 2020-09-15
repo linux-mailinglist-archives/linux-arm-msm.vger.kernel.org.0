@@ -2,85 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11D2A26B2A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:51:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF0F26B2A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:51:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727390AbgIOWuw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 18:50:52 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:20301 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727384AbgIOPmw (ORCPT
+        id S1727259AbgIOWvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 18:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727224AbgIOPms (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 11:42:52 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600184571; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Zz4BNUqKbCHLO8ckozEFnp9zSsg8XUlX5psi9jFrCPQ=; b=qNg1t0QhFZhB8psMM6c3yPceQypwmKnaa1ORj5xgq2kGfEO4scxHctKifd/VmgHpoxXZ9vgr
- crtVzxrl98HFfkajBAUKPK4dBs+XEQJFvYZl8FGmj14lKViHngsO/O9sPxjnnUVY6A5ZESzY
- EOBNHWgJ4nu4DovomnEeW/AAhGE=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f60e0fb73afa3417eb9a214 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 15:42:51
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1EC05C433F1; Tue, 15 Sep 2020 15:42:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 69077C433F0;
-        Tue, 15 Sep 2020 15:42:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 69077C433F0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        stable@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH] soc: qcom: apr: Fixup the error displayed on lookup failure
-Date:   Tue, 15 Sep 2020 21:12:32 +0530
-Message-Id: <20200915154232.27523-1-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
+        Tue, 15 Sep 2020 11:42:48 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61870C061351
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:42:48 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id t20so3493279qtr.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:42:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=B380Z7V1FE6cx7vYcZtAXyvKSK96OREmnb+GB7mPuqM=;
+        b=rW3EWBhi9YvwLfjRJaOZoKNHufKiIBcvv4ygy4GigzbJ7g9kNDs244+sVt6NvwKE6d
+         NsTPWBaFuINGA9pbRATEKVa4dPIm0qUNigkuib1MWNDMeR/WHE2+SH9SRhkg5aEZZP7k
+         2lPCXS2o1IK3qOQ6jEZe5cNx+7O7IwhGaGhb2yfW46FLfHA66qUd7uPHuFA/7ST1Vq1m
+         dxeuiN7gA7eFUcZSw9iOCVVC23t20c0NiRpcQDP2ob2SzSfOLE6yxKsUhXoTvIH9Nk4D
+         oKjoAmlPpVGlEsV1kitu5sCb39lEQnBADo302x+vIvVWvBCQZEpQHvEfvrAJjMw+1tiV
+         GBHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=B380Z7V1FE6cx7vYcZtAXyvKSK96OREmnb+GB7mPuqM=;
+        b=FipByT1ZQSugda95lSbXZ/BjHIZ0m99xt3UXD/ZHFvCUHcV41RTm8uvgY9802xRzEx
+         tsxgqlfICEK/TLd+MkyFW4YB3k4sAWacolkXBgxh5/8iv+Uc0vR63keabeo93YA9NJIy
+         Dc0/85rwW09AtdxmMDh2ZtbChd/bYtlBnjXiOCw9Pi1n+CoIAMpyITEpSim3lvuQmPae
+         rQU8Xdv5vjsdLwvNaxFYjeiPmkBi5lGpSCP77vRtp4AQX4DLkORM6XeY1IFceUGNeE5O
+         FXi2kAUsfYZ7lgnXHgzTMsA9XAahFaTuO+O6t1qJIRY7MmsHmqV4DpCV1DtM7YqtBlS5
+         3eVw==
+X-Gm-Message-State: AOAM533mbfjpI4iZrHoECwQM7rED5/Gb712fKnaUtgdEwzWdrkw5JRKf
+        BMpdu+hFeH0JwUOVQnabwec3RA==
+X-Google-Smtp-Source: ABdhPJwDkWoTEk6q9d47XDpH702OOYetIjiWFsmlAezKbxWWazRMRrVJavPgTTsb7IhxxdKtMo59cA==
+X-Received: by 2002:ac8:5341:: with SMTP id d1mr18926278qto.176.1600184567615;
+        Tue, 15 Sep 2020 08:42:47 -0700 (PDT)
+Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
+        by smtp.gmail.com with ESMTPSA id s18sm16463194qks.44.2020.09.15.08.42.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2020 08:42:47 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 15:42:45 +0000
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 00/14] Cleanup & sort msm8916.dtsi, various minor fixes
+Message-ID: <20200915154245.GF478@uller>
+References: <20200915071221.72895-1-stephan@gerhold.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200915071221.72895-1-stephan@gerhold.net>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-APR client incorrectly prints out "ret" variable on pdr_add_lookup failure,
-it should be printing the error value returned by the lookup instead.
+On Tue 15 Sep 07:12 UTC 2020, Stephan Gerhold wrote:
 
-Fixes: 8347356626028 ("soc: qcom: apr: Add avs/audio tracking functionality")
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- drivers/soc/qcom/apr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> After cleaning up the MSM8916 board device tree files [1], this patch series
+> focuses on various cleanup and minor fixes within the common msm8916.dtsi:
+> 
+>   1. One more conversion to use labels to configure board DSI ports
+>      (I missed that in the last patch series)
+>   2. A few non-critical fixes just to make the device tree more correct
+>   3. A few style fixes (e.g. replacing spaces with tabs)
+>   4. Sort nodes in msm8916.dtsi/pm8916.dtsi and the Makefile
+> 
+> This brings MSM8916 close to the conventions used for newer SoCs,
+> and will make it easier to add new device nodes (e.g. CPR) to it later.
+> 
 
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index 1f35b097c6356..7abfc8c4fdc72 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -328,7 +328,7 @@ static int of_apr_add_pd_lookups(struct device *dev)
- 
- 		pds = pdr_add_lookup(apr->pdr, service_name, service_path);
- 		if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
--			dev_err(dev, "pdr add lookup failed: %d\n", ret);
-+			dev_err(dev, "pdr add lookup failed: %ld\n", PTR_ERR(pds));
- 			return PTR_ERR(pds);
- 		}
- 	}
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Good stuff, I like it! Series applied.
 
+Thanks,
+Bjorn
+
+> [1]: https://lore.kernel.org/linux-arm-msm/20200720085406.6716-1-stephan@gerhold.net/
+> 
+> Stephan Gerhold (14):
+>   arm64: dts: qcom: msm8916: Configure DSI port with labels
+>   arm64: dts: qcom: msm8916: Remove one more thermal trip point unit
+>     name
+>   arm64: dts: qcom: pm8916: Remove invalid reg size from wcd_codec
+>   arm64: dts: qcom: msm8916: Fix MDP/DSI interrupts
+>   arm64: dts: qcom: msm8916: Use IRQ defines, add IRQ types
+>   arm64: dts: qcom: msm8916: Drop qcom,tcsr-mutex syscon
+>   arm64: dts: qcom: msm8916: Minor style fixes
+>   arm64: dts: qcom: msm8916: Add MSM8916-specific compatibles to SCM/MSS
+>   arm64: dts: qcom: msm8916: Use more generic node names
+>   arm64: dts: qcom: msm8916: Rename "x-smp2p" to "smp2p-x"
+>   arm64: dts: qcom: msm8916: Pad addresses
+>   arm64: dts: qcom: msm8916: Sort nodes
+>   arm64: dts: qcom: pm8916: Sort nodes
+>   arm64: dts: qcom: Makefile: Sort lines
+> 
+>  arch/arm64/boot/dts/qcom/Makefile             |   10 +-
+>  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi     |   12 +-
+>  .../qcom/msm8916-samsung-a2015-common.dtsi    |    2 +-
+>  .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts |   12 +-
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi         | 2571 ++++++++---------
+>  arch/arm64/boot/dts/qcom/pm8916.dtsi          |   84 +-
+>  6 files changed, 1339 insertions(+), 1352 deletions(-)
+> 
+> --
+> 2.28.0
