@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F2A2269EE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 08:55:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DD3B269EEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 08:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726092AbgIOGz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 02:55:58 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:14475 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726066AbgIOGzy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 02:55:54 -0400
+        id S1726131AbgIOG4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 02:56:09 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40132 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726087AbgIOG4G (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 02:56:06 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600152953; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1600152965; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=iAG6ZYPnbg49/kiQMOoBFKTXMco1m4zK3AFWpuvLCNQ=; b=gwmKuM9TDtCA2g+U8HhBn0IPJLCj4PQgGuMmbnfByY5RUXhb4C/fvr+41OcMNOS3fZdf2PjK
- c0M/H3LKinKzcveEPmU2N62ZPN+nu/dci8UB6FWWdD/JLlVSqNGmPXtVmtuIWM5Rv4R0nmq+
- yNuCsXNE4U4H2PYeZRDG1eWuxT4=
-X-Mailgun-Sending-Ip: 104.130.122.29
+ Sender; bh=31GvM1X5XrPQR2a24S8gJeyLSwWFdH/nLg2HUCMHilk=; b=NvHWKnDiK30QDPobDuop2EC8cmBYwjyBy3QxSlxgMaTAWgCE6gvC1ZyIyCitB/loxuBlgRmH
+ KiYhiDQMsBOKnudLx82v0QHN+IzSWMAhYcizpyn0HUgE+dm+MvNaBP2zcJEepdOp5Qu8BC9p
+ JveMo2ZEt0Ql+g7Auzv+1TkdJ/w=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f60656c73afa3417eb50e4b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 06:55:40
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5f6065717f21d51b30191141 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 06:55:45
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2CD2EC433F0; Tue, 15 Sep 2020 06:55:40 +0000 (UTC)
+        id 0FE7AC433C8; Tue, 15 Sep 2020 06:55:45 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +36,9 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 52833C433CA;
-        Tue, 15 Sep 2020 06:55:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 52833C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 68322C433C8;
+        Tue, 15 Sep 2020 06:55:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 68322C433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -49,10 +48,11 @@ To:     Andy Gross <agross@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv5 1/2] soc: qcom: llcc: Move llcc configuration to its own function
-Date:   Tue, 15 Sep 2020 12:25:25 +0530
-Message-Id: <51f9ad67333eedf326212dd1b040aade6978e5b1.1600151951.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv5 2/2] soc: qcom: llcc: Support chipsets that can write to llcc
+Date:   Tue, 15 Sep 2020 12:25:26 +0530
+Message-Id: <dac7e11cf654fc6d75a6b5ca062ab87b01547810.1600151951.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <cover.1600151951.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1600151951.git.saiprakash.ranjan@codeaurora.org>
@@ -63,132 +63,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cleanup qcom_llcc_cfg_program() by moving llcc configuration
-to a separate function of its own. Also correct misspelled
-'instance' caught by checkpatch.
+From: "Isaac J. Manjarres" <isaacm@codeaurora.org>
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Older chipsets may not be allowed to configure certain LLCC registers
+as that is handled by the secure side software. However, this is not
+the case for newer chipsets and they must configure these registers
+according to the contents of the SCT table, while keeping in mind that
+older targets may not have these capabilities. So add support to allow
+such configuration of registers to enable capacity based allocation
+and power collapse retention for capable chipsets.
+
+Reason for choosing capacity based allocation rather than the default
+way based allocation is because capacity based allocation allows more
+finer grain partition and provides more flexibility in configuration.
+As for the retention through power collapse, it has an advantage where
+the cache hits are more when we wake up from power collapse although
+it does burn more power but the exact power numbers are not known at
+the moment.
+
+Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+[saiprakash.ranjan@codeaurora.org: use existing config and reword commit msg]
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 89 ++++++++++++++++++++----------------
- 1 file changed, 50 insertions(+), 39 deletions(-)
+ drivers/soc/qcom/llcc-qcom.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 429b5a60a1ba..14311060099d 100644
+index 14311060099d..8b79bbf96f52 100644
 --- a/drivers/soc/qcom/llcc-qcom.c
 +++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -318,62 +318,73 @@ size_t llcc_get_slice_size(struct llcc_slice_desc *desc)
+@@ -45,6 +45,9 @@
+ #define LLCC_TRP_ATTR0_CFGn(n)        (0x21000 + SZ_8 * n)
+ #define LLCC_TRP_ATTR1_CFGn(n)        (0x21004 + SZ_8 * n)
+ 
++#define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
++#define LLCC_TRP_PCB_ACT              0x21f04
++
+ #define BANK_OFFSET_STRIDE	      0x80000
+ 
+ /**
+@@ -89,6 +92,7 @@ struct llcc_slice_config {
+ struct qcom_llcc_config {
+ 	const struct llcc_slice_config *sct_data;
+ 	int size;
++	bool need_llcc_cfg;
+ };
+ 
+ static const struct llcc_slice_config sc7180_data[] =  {
+@@ -122,11 +126,13 @@ static const struct llcc_slice_config sdm845_data[] =  {
+ static const struct qcom_llcc_config sc7180_cfg = {
+ 	.sct_data	= sc7180_data,
+ 	.size		= ARRAY_SIZE(sc7180_data),
++	.need_llcc_cfg	= true,
+ };
+ 
+ static const struct qcom_llcc_config sdm845_cfg = {
+ 	.sct_data	= sdm845_data,
+ 	.size		= ARRAY_SIZE(sdm845_data),
++	.need_llcc_cfg	= false,
+ };
+ 
+ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+@@ -318,7 +324,8 @@ size_t llcc_get_slice_size(struct llcc_slice_desc *desc)
  }
  EXPORT_SYMBOL_GPL(llcc_get_slice_size);
  
--static int qcom_llcc_cfg_program(struct platform_device *pdev)
-+static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config)
+-static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config)
++static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
++				  const struct qcom_llcc_config *cfg)
  {
--	int i;
-+	int ret;
+ 	int ret;
  	u32 attr1_cfg;
- 	u32 attr0_cfg;
- 	u32 attr1_val;
- 	u32 attr0_val;
- 	u32 max_cap_cacheline;
-+	struct llcc_slice_desc desc;
+@@ -361,6 +368,22 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config)
+ 	if (ret)
+ 		return ret;
+ 
++	if (cfg->need_llcc_cfg) {
++		u32 disable_cap_alloc, retain_pc;
 +
-+	attr1_val = config->cache_mode;
-+	attr1_val |= config->probe_target_ways << ATTR1_PROBE_TARGET_WAYS_SHIFT;
-+	attr1_val |= config->fixed_size << ATTR1_FIXED_SIZE_SHIFT;
-+	attr1_val |= config->priority << ATTR1_PRIORITY_SHIFT;
++		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
++		ret = regmap_write(drv_data->bcast_regmap,
++				LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
++		if (ret)
++			return ret;
 +
-+	max_cap_cacheline = MAX_CAP_TO_BYTES(config->max_cap);
-+
-+	/*
-+	 * LLCC instances can vary for each target.
-+	 * The SW writes to broadcast register which gets propagated
-+	 * to each llcc instance (llcc0,.. llccN).
-+	 * Since the size of the memory is divided equally amongst the
-+	 * llcc instances, we need to configure the max cap accordingly.
-+	 */
-+	max_cap_cacheline = max_cap_cacheline / drv_data->num_banks;
-+	max_cap_cacheline >>= CACHE_LINE_SIZE_SHIFT;
-+	attr1_val |= max_cap_cacheline << ATTR1_MAX_CAP_SHIFT;
-+
-+	attr1_cfg = LLCC_TRP_ATTR1_CFGn(config->slice_id);
-+
-+	ret = regmap_write(drv_data->bcast_regmap, attr1_cfg, attr1_val);
-+	if (ret)
-+		return ret;
-+
-+	attr0_val = config->res_ways & ATTR0_RES_WAYS_MASK;
-+	attr0_val |= config->bonus_ways << ATTR0_BONUS_WAYS_SHIFT;
-+
-+	attr0_cfg = LLCC_TRP_ATTR0_CFGn(config->slice_id);
-+
-+	ret = regmap_write(drv_data->bcast_regmap, attr0_cfg, attr0_val);
-+	if (ret)
-+		return ret;
-+
-+	if (config->activate_on_init) {
-+		desc.slice_id = config->slice_id;
-+		ret = llcc_slice_activate(&desc);
++		retain_pc = config->retain_on_pc << config->slice_id;
++		ret = regmap_write(drv_data->bcast_regmap,
++				LLCC_TRP_PCB_ACT, retain_pc);
++		if (ret)
++			return ret;
 +	}
 +
-+	return ret;
-+}
-+
-+static int qcom_llcc_cfg_program(struct platform_device *pdev)
-+{
-+	int i;
- 	u32 sz;
- 	int ret = 0;
- 	const struct llcc_slice_config *llcc_table;
--	struct llcc_slice_desc desc;
+ 	if (config->activate_on_init) {
+ 		desc.slice_id = config->slice_id;
+ 		ret = llcc_slice_activate(&desc);
+@@ -369,7 +392,8 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config)
+ 	return ret;
+ }
  
- 	sz = drv_data->cfg_size;
+-static int qcom_llcc_cfg_program(struct platform_device *pdev)
++static int qcom_llcc_cfg_program(struct platform_device *pdev,
++				 const struct qcom_llcc_config *cfg)
+ {
+ 	int i;
+ 	u32 sz;
+@@ -380,7 +404,7 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev)
  	llcc_table = drv_data->cfg;
  
  	for (i = 0; i < sz; i++) {
--		attr1_cfg = LLCC_TRP_ATTR1_CFGn(llcc_table[i].slice_id);
--		attr0_cfg = LLCC_TRP_ATTR0_CFGn(llcc_table[i].slice_id);
--
--		attr1_val = llcc_table[i].cache_mode;
--		attr1_val |= llcc_table[i].probe_target_ways <<
--				ATTR1_PROBE_TARGET_WAYS_SHIFT;
--		attr1_val |= llcc_table[i].fixed_size <<
--				ATTR1_FIXED_SIZE_SHIFT;
--		attr1_val |= llcc_table[i].priority <<
--				ATTR1_PRIORITY_SHIFT;
--
--		max_cap_cacheline = MAX_CAP_TO_BYTES(llcc_table[i].max_cap);
--
--		/* LLCC instances can vary for each target.
--		 * The SW writes to broadcast register which gets propagated
--		 * to each llcc instace (llcc0,.. llccN).
--		 * Since the size of the memory is divided equally amongst the
--		 * llcc instances, we need to configure the max cap accordingly.
--		 */
--		max_cap_cacheline = max_cap_cacheline / drv_data->num_banks;
--		max_cap_cacheline >>= CACHE_LINE_SIZE_SHIFT;
--		attr1_val |= max_cap_cacheline << ATTR1_MAX_CAP_SHIFT;
--
--		attr0_val = llcc_table[i].res_ways & ATTR0_RES_WAYS_MASK;
--		attr0_val |= llcc_table[i].bonus_ways << ATTR0_BONUS_WAYS_SHIFT;
--
--		ret = regmap_write(drv_data->bcast_regmap, attr1_cfg,
--					attr1_val);
-+		ret = _qcom_llcc_cfg_program(&llcc_table[i]);
+-		ret = _qcom_llcc_cfg_program(&llcc_table[i]);
++		ret = _qcom_llcc_cfg_program(&llcc_table[i], cfg);
  		if (ret)
  			return ret;
--		ret = regmap_write(drv_data->bcast_regmap, attr0_cfg,
--					attr0_val);
--		if (ret)
--			return ret;
--		if (llcc_table[i].activate_on_init) {
--			desc.slice_id = llcc_table[i].slice_id;
--			ret = llcc_slice_activate(&desc);
--		}
  	}
-+
- 	return ret;
- }
+@@ -488,7 +512,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ 	mutex_init(&drv_data->lock);
+ 	platform_set_drvdata(pdev, drv_data);
+ 
+-	ret = qcom_llcc_cfg_program(pdev);
++	ret = qcom_llcc_cfg_program(pdev, cfg);
+ 	if (ret)
+ 		goto err;
  
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
