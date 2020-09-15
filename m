@@ -2,85 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 111CA26A080
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:17:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41FA726A08F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:21:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726353AbgIOIRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 04:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33088 "EHLO
+        id S1726202AbgIOIUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 04:20:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726342AbgIOIRa (ORCPT
+        with ESMTP id S1726214AbgIOITe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 04:17:30 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04D6C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:17:29 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id l191so1589307pgd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:17:29 -0700 (PDT)
+        Tue, 15 Sep 2020 04:19:34 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47BDBC061788
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:19:24 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id mm21so1373306pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Q8hZUxMfC6QzbI94w+e8uygY2k/qOVVeR+DE0efdgOs=;
-        b=qPiRNq+bngOudI4UpUdUn6/w1pG7U/4czZvQWPx9KQodMl7k2hZtQ0AC6YXETHZu6C
-         1wjO9h4a7IQ8K4OwQmNl3/bC4rlvTWk/Cyw7Xo5r9Q1js6W5AHzvPOYGv+h3NrQh0M5b
-         i1rpjucVFvvWlYAYOKv+8DavgpQtSZFTJCgutsTiO3DQF2i+3DS4YVaeZLrxtKVUmQck
-         RSrtxh9eZEAd1ObVDAbtlMuO9tYsCpZB3dmF1sd2ueV3nWFw0mlFRTXGdQMJdtQqkZ4L
-         VulWFm7uUgWD4plJAk22BlisHH2BTWiteBWricBEBg0hRoZtD1UaTkdYHz3hfMsj4E3Y
-         osCA==
+        bh=QP+gA7sgySMAzlQtxJ9wc0X27q/HlusnRQDfASv/Vyw=;
+        b=l4AAgwXNgSYzVZqVsju4Tp5NWDBnThSRqRtlG4Qxgcv99tDe8Dk6a5LgaXWQvCLzqn
+         vrcAY3Kr90gTUZZfQ897H9AEdsVNYUX6EOt7p0WZ8PULsNbrJB0bWEK8ySoyRhE0t7gO
+         Y4Eavhkj0/WNLh3JgsYWIfhSLzdY4VPTyZtKqkaAVc60v5jAsUIJ6QXvqHGSaoYbPCFs
+         /Kc3Yvft/pdNVFH7d4pa+75v/SvFay5h4Tig4iq6PFKlVoB6Q6DyghGMycq9vgFBOaXU
+         7mNvLU+aJwTQy/s5Og3q6QkFCXsuFaFoiBHEaG0Q8bv+Bt9HeOagph58zmxyvenaZPWF
+         pzsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Q8hZUxMfC6QzbI94w+e8uygY2k/qOVVeR+DE0efdgOs=;
-        b=QuxZicaMB+F0o1c7c8cHZBz6TaTsYeg+ygG2uWlgtRZQ/zqd6eMridIV/+9f95UInC
-         AaWHeafseSPXva+NqvzrGEFMImbYInXOoCxwamXeWbMWH42GP2R17PLx8Hl0QCmY/k4h
-         opPmptHR0TJmoVvO1cvn1dddoiofTG+ovMMud/Sx+oIWYgdaBm2QZLw+7maudeYhHIMC
-         1Pz/RhEPKFdRr6TpRxdsrQ+C9CI89peZgcmj8VS2a0mcVrzPaUDvDSJgxkZX5lDBaczZ
-         iKH9bNqXpK6/g26EewcU8HEnMuzw7CKRqd/zNQQE6V3/HYDigxYm/bppKvb7azQ5ObcD
-         NhPg==
-X-Gm-Message-State: AOAM533i0Ca51NYknqwMR2D8vPu9sl2I/K3Zu4CLbHIbPQWJHakOPUxl
-        8z6ViWD3ReT+POY97RqjvIEu
-X-Google-Smtp-Source: ABdhPJxX/3IjHAT8z7LVmRWo0emh5jsnu5tqgwJvLw226xjLGhprD8lfrHeyueDO8KBHKd4csSVRhw==
-X-Received: by 2002:a65:5bcf:: with SMTP id o15mr13609551pgr.126.1600157837672;
-        Tue, 15 Sep 2020 01:17:17 -0700 (PDT)
+        bh=QP+gA7sgySMAzlQtxJ9wc0X27q/HlusnRQDfASv/Vyw=;
+        b=iTOOVLSzmczRF3IEnUXuTWltPZm1aMEwZsMRH0XHs7AwZ30BsQgE2OsM65rhP96SvC
+         235IbUp2dGDtFauoPcX92h2QAhbzy2LR7J0Q7YYJoUjGFrSRopwjU+4jcBV4Q5Nti0+y
+         jK8UJyLkJ3OrLdy7u4ebx49okHzRJWMhquSnmpagSuL+8tHMp2SHRvifC0uRrdhE0Ssl
+         mYh/niBCa11IsI/TxpBZxJY82mJgrRtJyeXlDwB8nzdyukf/KI22g7B7vn5uKy63tYk2
+         vLFKA8KVYkWA0iEC9pnDswA65jTXNWngGtFikOLSaUELWKLvexqvL5eEbi+2nuG1SwIB
+         3FCw==
+X-Gm-Message-State: AOAM531g62h7nyksm+8oAE8VfD8yR4MiXiuJOyKKhTxF2eQ2mz+4mtxs
+        2wCRGqSQGABUnekXrVay1z1Wetzzqe1sgSo=
+X-Google-Smtp-Source: ABdhPJzJeGD54tp+TQ6/pm3xWErPkMups7SYx0cHC02PtVzxGqQG7J7eeDn8F/bMH9M7Wcdtd5cYNg==
+X-Received: by 2002:a17:90a:1903:: with SMTP id 3mr3153766pjg.74.1600157963636;
+        Tue, 15 Sep 2020 01:19:23 -0700 (PDT)
 Received: from mani ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id h14sm13331726pfe.67.2020.09.15.01.17.15
+        by smtp.gmail.com with ESMTPSA id i9sm10348675pgb.37.2020.09.15.01.19.21
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Sep 2020 01:17:17 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 13:47:11 +0530
+        Tue, 15 Sep 2020 01:19:22 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 13:49:17 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Clark Williams <williams@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [PATCH] bus: mhi: Remove include of rwlock_types.h
-Message-ID: <20200915081711.GA12395@mani>
-References: <20200915074816.52zphpywj4zidspk@linutronix.de>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org
+Subject: Re: [PATCH v1] bus: mhi: core: Add const qualifier to MHI config
+ information
+Message-ID: <20200915081917.GB12395@mani>
+References: <1599812017-32680-1-git-send-email-hemantk@codeaurora.org>
+ <010101747c3a6fdd-33efa632-e20c-476d-9e39-01cb1f2d1cea-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200915074816.52zphpywj4zidspk@linutronix.de>
+In-Reply-To: <010101747c3a6fdd-33efa632-e20c-476d-9e39-01cb1f2d1cea-000000@us-west-2.amazonses.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 09:48:16AM +0200, Sebastian Andrzej Siewior wrote:
-> From: Clark Williams <williams@redhat.com>
+On Fri, Sep 11, 2020 at 08:13:58AM +0000, Hemant Kumar wrote:
+> MHI channel, event and controller config data needs to be
+> treated read only information. Add const qualifier to make
+> sure config information passed by MHI controller is not
+> modified by MHI core driver.
 > 
-> rwlock.h should not be included directly. Instead linux/splinlock.h
-> should be included. Including it directly will break the RT build.
-> 
-> Also there is no point in including _types.h headers directly. There is
-> no benefit in including the type without the accessor.
-> 
-> Fixes: 0cbf260820fa7 ("bus: mhi: core: Add support for registering MHI controllers")
-> Signed-off-by: Clark Williams <williams@redhat.com>
-> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+> Suggested-by: Kalle Valo <kvalo@codeaurora.org>
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
@@ -88,25 +83,83 @@ Thanks,
 Mani
 
 > ---
->  include/linux/mhi.h | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  drivers/bus/mhi/core/init.c | 12 ++++++------
+>  include/linux/mhi.h         |  6 +++---
+>  2 files changed, 9 insertions(+), 9 deletions(-)
 > 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index f69a2f3..d232938 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -562,10 +562,10 @@ int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+> -			struct mhi_controller_config *config)
+> +			const struct mhi_controller_config *config)
+>  {
+>  	struct mhi_event *mhi_event;
+> -	struct mhi_event_config *event_cfg;
+> +	const struct mhi_event_config *event_cfg;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	int i, num;
+>  
+> @@ -648,9 +648,9 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+> -			struct mhi_controller_config *config)
+> +			const struct mhi_controller_config *config)
+>  {
+> -	struct mhi_channel_config *ch_cfg;
+> +	const struct mhi_channel_config *ch_cfg;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	int i;
+>  	u32 chan;
+> @@ -766,7 +766,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  static int parse_config(struct mhi_controller *mhi_cntrl,
+> -			struct mhi_controller_config *config)
+> +			const struct mhi_controller_config *config)
+>  {
+>  	int ret;
+>  
+> @@ -803,7 +803,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
+>  }
+>  
+>  int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+> -			    struct mhi_controller_config *config)
+> +			    const struct mhi_controller_config *config)
+>  {
+>  	struct mhi_event *mhi_event;
+>  	struct mhi_chan *mhi_chan;
 > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index c4a940d989121..2b4ed30d47294 100644
+> index 6b987e8..b2c0214 100644
 > --- a/include/linux/mhi.h
 > +++ b/include/linux/mhi.h
-> @@ -9,10 +9,9 @@
->  #include <linux/device.h>
->  #include <linux/dma-direction.h>
->  #include <linux/mutex.h>
-> -#include <linux/rwlock_types.h>
->  #include <linux/skbuff.h>
->  #include <linux/slab.h>
-> -#include <linux/spinlock_types.h>
-> +#include <linux/spinlock.h>
->  #include <linux/wait.h>
->  #include <linux/workqueue.h>
+> @@ -280,9 +280,9 @@ struct mhi_controller_config {
+>  	u32 timeout_ms;
+>  	u32 buf_len;
+>  	u32 num_channels;
+> -	struct mhi_channel_config *ch_cfg;
+> +	const struct mhi_channel_config *ch_cfg;
+>  	u32 num_events;
+> -	struct mhi_event_config *event_cfg;
+> +	const struct mhi_event_config *event_cfg;
+>  	bool use_bounce_buf;
+>  	bool m2_no_db;
+>  };
+> @@ -545,7 +545,7 @@ struct mhi_driver {
+>   * @config: Configuration to use for the controller
+>   */
+>  int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+> -			    struct mhi_controller_config *config);
+> +			const struct mhi_controller_config *config);
 >  
+>  /**
+>   * mhi_unregister_controller - Unregister MHI controller
 > -- 
-> 2.28.0
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
