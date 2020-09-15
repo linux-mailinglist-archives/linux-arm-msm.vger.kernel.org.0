@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E87B626A838
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 17:02:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C046B26A83F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 17:03:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727391AbgIOPBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 11:01:45 -0400
-Received: from mx2.suse.de ([195.135.220.15]:36396 "EHLO mx2.suse.de"
+        id S1727044AbgIOPD2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 11:03:28 -0400
+Received: from mx2.suse.de ([195.135.220.15]:36814 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727317AbgIOPB0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 11:01:26 -0400
+        id S1727386AbgIOPB1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 11:01:27 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 3D4ABAF84;
-        Tue, 15 Sep 2020 15:00:23 +0000 (UTC)
+        by mx2.suse.de (Postfix) with ESMTP id 17198B13F;
+        Tue, 15 Sep 2020 15:00:29 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     alexander.deucher@amd.com, christian.koenig@amd.com,
         airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
@@ -49,9 +49,9 @@ Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         xen-devel@lists.xenproject.org,
         Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 07/21] drm/mediatek: Introduce GEM object functions
-Date:   Tue, 15 Sep 2020 16:59:44 +0200
-Message-Id: <20200915145958.19993-8-tzimmermann@suse.de>
+Subject: [PATCH v2 14/21] drm/tegra: Introduce GEM object functions
+Date:   Tue, 15 Sep 2020 16:59:51 +0200
+Message-Id: <20200915145958.19993-15-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200915145958.19993-1-tzimmermann@suse.de>
 References: <20200915145958.19993-1-tzimmermann@suse.de>
@@ -64,72 +64,57 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 GEM object functions deprecate several similar callback interfaces in
 struct drm_driver. This patch replaces the per-driver callbacks with
-per-instance callbacks in mediatek. The only exception is gem_prime_mmap,
-which is non-trivial to convert.
+per-instance callbacks in tegra.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |  5 -----
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 11 +++++++++++
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/tegra/drm.c | 4 ----
+ drivers/gpu/drm/tegra/gem.c | 8 ++++++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 040a8f393fe2..2f8d0043fca7 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -301,18 +301,13 @@ struct drm_gem_object *mtk_drm_gem_prime_import(struct drm_device *dev,
- static struct drm_driver mtk_drm_driver = {
- 	.driver_features = DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
+diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
+index ba9d1c3e7cac..f0f581cd345e 100644
+--- a/drivers/gpu/drm/tegra/drm.c
++++ b/drivers/gpu/drm/tegra/drm.c
+@@ -858,12 +858,8 @@ static struct drm_driver tegra_drm_driver = {
+ 	.debugfs_init = tegra_debugfs_init,
+ #endif
  
--	.gem_free_object_unlocked = mtk_drm_gem_free_object,
--	.gem_vm_ops = &drm_gem_cma_vm_ops,
- 	.dumb_create = mtk_drm_gem_dumb_create,
- 
+-	.gem_free_object_unlocked = tegra_bo_free_object,
+-	.gem_vm_ops = &tegra_bo_vm_ops,
+-
  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
- 	.gem_prime_import = mtk_drm_gem_prime_import,
--	.gem_prime_get_sg_table = mtk_gem_prime_get_sg_table,
- 	.gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
- 	.gem_prime_mmap = mtk_drm_gem_mmap_buf,
--	.gem_prime_vmap = mtk_drm_gem_prime_vmap,
--	.gem_prime_vunmap = mtk_drm_gem_prime_vunmap,
- 	.fops = &mtk_drm_fops,
+-	.gem_prime_export = tegra_gem_prime_export,
+ 	.gem_prime_import = tegra_gem_prime_import,
  
- 	.name = DRIVER_NAME,
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index 6190cc3b7b0d..591b90410e4a 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -8,11 +8,20 @@
- #include <drm/drm.h>
- #include <drm/drm_device.h>
- #include <drm/drm_gem.h>
-+#include <drm/drm_gem_cma_helper.h>
- #include <drm/drm_prime.h>
+ 	.dumb_create = tegra_bo_dumb_create,
+diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
+index 47e2935b8c68..d481dea4738d 100644
+--- a/drivers/gpu/drm/tegra/gem.c
++++ b/drivers/gpu/drm/tegra/gem.c
+@@ -231,6 +231,12 @@ static int tegra_bo_iommu_unmap(struct tegra_drm *tegra, struct tegra_bo *bo)
+ 	return 0;
+ }
  
- #include "mtk_drm_drv.h"
- #include "mtk_drm_gem.h"
- 
-+static const struct drm_gem_object_funcs mtk_drm_gem_object_funcs = {
-+	.free = mtk_drm_gem_free_object,
-+	.get_sg_table = mtk_gem_prime_get_sg_table,
-+	.vmap = mtk_drm_gem_prime_vmap,
-+	.vunmap = mtk_drm_gem_prime_vunmap,
-+	.vm_ops = &drm_gem_cma_vm_ops,
++static const struct drm_gem_object_funcs tegra_gem_object_funcs = {
++	.free = tegra_bo_free_object,
++	.export = tegra_gem_prime_export,
++	.vm_ops = &tegra_bo_vm_ops,
 +};
 +
- static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
- 						unsigned long size)
+ static struct tegra_bo *tegra_bo_alloc_object(struct drm_device *drm,
+ 					      size_t size)
  {
-@@ -25,6 +34,8 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
- 	if (!mtk_gem_obj)
+@@ -241,6 +247,8 @@ static struct tegra_bo *tegra_bo_alloc_object(struct drm_device *drm,
+ 	if (!bo)
  		return ERR_PTR(-ENOMEM);
  
-+	mtk_gem_obj->base.funcs = &mtk_drm_gem_object_funcs;
++	bo->gem.funcs = &tegra_gem_object_funcs;
 +
- 	ret = drm_gem_object_init(dev, &mtk_gem_obj->base, size);
- 	if (ret < 0) {
- 		DRM_ERROR("failed to initialize gem object\n");
+ 	host1x_bo_init(&bo->base, &tegra_bo_ops);
+ 	size = round_up(size, PAGE_SIZE);
+ 
 -- 
 2.28.0
 
