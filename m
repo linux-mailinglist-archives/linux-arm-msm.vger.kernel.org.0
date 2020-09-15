@@ -2,94 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AF57269FCD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 09:30:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B82F4269FDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 09:35:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726169AbgIOHac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 03:30:32 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:57829 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726155AbgIOHaa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 03:30:30 -0400
+        id S1726161AbgIOHfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 03:35:04 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:33516 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726136AbgIOHe7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 03:34:59 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600155029; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=h9sQQzx9HIHqC/nRkCM3I+PxoenAg9ujW/8S7axP2Z8=; b=bFAAg9PhPekoQsp0I/z1wqfEcttE60SfcziCv/fmyUMTRFPq8n4BM5OHMgUBrZ6FS28mYt32
- f53kT+4XQXnjBCpsQ3Ns/bMxA8wpVC/0OZsbrYFGhZ02DDGmYLGreKb3DisWtIpzOF/alyJs
- OgcdzI2klyQsS0gQ9/ehL+Zviu0=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1600155298; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=zO7YxpF1G5S5zr+mYWbXoKnIjONI35AREKEkXVlkqO0=; b=TCTj9kmHbwCJyo5jHacFVNzjfgh0cFjlwRfWCaPPc3+gNQ8KwZ8QMzXo0VOBBNWnBlwtvIys
+ ZfjFA6hW9f8HNpzKSueH7VkbdAAKyWmMyH6kp8txpe70nqP3pf+I6Lo8zUf2HbVNbdqPkhEu
+ bnwFIErJifGA2OmGAeqdgB3kEwc=
+X-Mailgun-Sending-Ip: 104.130.122.29
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f606d8832925f96e13dc128 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 07:30:16
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f606e8432925f96e13f2b18 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 07:34:28
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 48994C433F1; Tue, 15 Sep 2020 07:30:15 +0000 (UTC)
+        id 79FC5C433FE; Tue, 15 Sep 2020 07:34:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.101] (unknown [47.8.144.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 757BEC433CA;
-        Tue, 15 Sep 2020 07:30:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 757BEC433CA
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2166DC433CA;
+        Tue, 15 Sep 2020 07:34:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2166DC433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH 1/3] spi: spi-geni-qcom: Use the FIFO even more
-To:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     swboyd@chromium.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-References: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <8aa6759a-3db9-97b6-7cad-6bd5d6a1c469@codeaurora.org>
-Date:   Tue, 15 Sep 2020 13:00:00 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, mathieu.poirier@linaro.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ohad@wizery.com, rishabhb@codeaurora.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH] remoteproc: Fixup coredump debugfs disable request
+Date:   Tue, 15 Sep 2020 13:04:16 +0530
+Message-Id: <20200915073416.20864-1-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently the coredump debugfs entry takes in "disable" to set the
+coredump state to "disabled". Let's just accept the expected state
+instead.
 
-On 9/13/2020 2:37 AM, Douglas Anderson wrote:
-> In commit 902481a78ee4 ("spi: spi-geni-qcom: Actually use our FIFO") I
-> explained that the maximum size we could program the FIFO was
-> "mas->tx_fifo_depth - 3" but that I chose "mas->tx_fifo_depth()"
-> because I was worried about decreased bandwidth.
->
-> Since that time:
-> * All the interconnect patches have landed, making things run at the
->    proper speed.
-> * I've done more measurements.
->
-> This lets me confirm that there's really no downside of using the FIFO
-> more.  Specifically I did "flashrom -p ec -r /tmp/foo.bin" on a
-> Chromebook and averaged over several runs.
->
-> Before: It took 6.66 seconds and 59669 interrupts fired.
-> After:  It took 6.66 seconds and 47992 interrupts fired.
+Fixes: 3afdc59e43904 ("remoteproc: Add coredump debugfs entry")
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
+ drivers/remoteproc/remoteproc_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
-
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
->
+diff --git a/drivers/remoteproc/remoteproc_debugfs.c b/drivers/remoteproc/remoteproc_debugfs.c
+index 2e3b3e22e1d01..7ca823f6aa638 100644
+--- a/drivers/remoteproc/remoteproc_debugfs.c
++++ b/drivers/remoteproc/remoteproc_debugfs.c
+@@ -94,7 +94,7 @@ static ssize_t rproc_coredump_write(struct file *filp,
+ 		goto out;
+ 	}
+ 
+-	if (!strncmp(buf, "disable", count)) {
++	if (!strncmp(buf, "disabled", count)) {
+ 		rproc->dump_conf = RPROC_COREDUMP_DISABLED;
+ 	} else if (!strncmp(buf, "inline", count)) {
+ 		rproc->dump_conf = RPROC_COREDUMP_INLINE;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
