@@ -2,140 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36B6B26B032
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:04:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DB1026B318
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 01:00:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728103AbgIOWEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 18:04:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52466 "EHLO mail.kernel.org"
+        id S1727305AbgIOXAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 19:00:31 -0400
+Received: from mx2.suse.de ([195.135.220.15]:36740 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727708AbgIOWDM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 18:03:12 -0400
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B62E121974;
-        Tue, 15 Sep 2020 22:03:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600207391;
-        bh=6zE0t0oBSXBMiJpCVysJvWDi1OuIiOE0z/RDPqK5QEo=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=nNCs3AKsNhyvwcxJiuYiwuCZk8aJhCrWu2hHimpp/80ZVp0COd9LLbRvKE7dYfj9M
-         UORNn/A+ChZMXAgv8WUY92cLPIDrP1OUaIAq8koeKyYALz8L3fH6X5tH8exC0BtO4g
-         z6E2UHuTiI3HCcJiuVDfh+u+2xN/iP4Lh+BzdNkg=
-Received: by mail-ot1-f53.google.com with SMTP id w25so4761987otk.8;
-        Tue, 15 Sep 2020 15:03:11 -0700 (PDT)
-X-Gm-Message-State: AOAM531NQIIxLzhVLM+Klo3Lx2z7QE5n1nnjONnDPwOguca9waIswJfS
-        P05c7x7FHnG6Ool8ckXG//iLxvI+/IWdRMWzFQ==
-X-Google-Smtp-Source: ABdhPJyEQLpI+Is0tXGd/BZAER5EHEJNoezWAKvaE8B6IPjEqoZXnEMY3dBYYK0F9I37uCwuUgkTqRhbfRj/m0u6ldo=
-X-Received: by 2002:a9d:6ada:: with SMTP id m26mr560428otq.192.1600207390980;
- Tue, 15 Sep 2020 15:03:10 -0700 (PDT)
+        id S1727194AbgIOPCN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 11:02:13 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id B38F4B195;
+        Tue, 15 Sep 2020 15:00:31 +0000 (UTC)
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 17/21] drm/virtgpu: Set PRIME export function in struct drm_gem_object_funcs
+Date:   Tue, 15 Sep 2020 16:59:54 +0200
+Message-Id: <20200915145958.19993-18-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200915145958.19993-1-tzimmermann@suse.de>
+References: <20200915145958.19993-1-tzimmermann@suse.de>
 MIME-Version: 1.0
-References: <20200821035420.380495-1-robh@kernel.org> <20200915091218.28737-1-michael@walle.cc>
-In-Reply-To: <20200915091218.28737-1-michael@walle.cc>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 15 Sep 2020 16:02:59 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLHBPduSjs1L3R2vbsLygJNDzajt4XThAkRG0DEu-GnAA@mail.gmail.com>
-Message-ID: <CAL_JsqLHBPduSjs1L3R2vbsLygJNDzajt4XThAkRG0DEu-GnAA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/40] PCI: dwc: Driver clean-ups
-To:     Michael Walle <michael@walle.cc>
-Cc:     "Gross, Andy" <agross@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <eswara.kota@linux.intel.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Sascha Hauer <kernel@pengutronix.de>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
-        linux-arm-kernel@axis.com,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Song Xiaowei <songxiaowei@hisilicon.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Wangbinghui <wangbinghui@hisilicon.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Yue Wang <yue.wang@amlogic.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 3:12 AM Michael Walle <michael@walle.cc> wrote:
->
-> Hi Rob,
->
-> > This is a series of clean-ups for the Designware PCI driver. The series
-> > initially reworks the config space accessors to use the existing pci_ops
-> > struct. Then there's removal of various private data that's also present
-> > in the pci_host_bridge struct. There's also some duplicated common (PCI
-> > and DWC) register defines which I converted to use the common defines.
-> > Finally, the initialization for speed/gen, number of lanes, and N_FTS
-> > are all moved to the common DWC code.
->
-> > This is compile tested only as I don't have any DWC based h/w, so any
-> > testing would be helpful. A branch is here[1].
->
-> I've noticed that with the latest linux-next, my board doesn't boot
-> anymore. I've traced it back to this series. There is a similar
-> board in kernelci [1,2] where you can have a look at the backtrace.
->
-> I've bisected this to the following patch:
->   PCI: dwc: Use generic config accessors
+GEM object functions deprecate several similar callback interfaces in
+struct drm_driver. This patch replaces virtgpu's per-driver PRIME export
+function with a per-object function.
 
-That's helpful.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/gpu/drm/virtio/virtgpu_drv.c    | 1 -
+ drivers/gpu/drm/virtio/virtgpu_object.c | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-> I'm pretty much lost here. It seems that the kernel tries to read from
-> an invalid/unmapped memory address.
->
-> [1] https://kernelci.org/test/plan/id/5f5f4992d1c53777a0a6092d/
-> [2] https://storage.kernelci.org/next/master/next-20200914/arm64/defconfig/gcc-8/lab-nxp/baseline-fsl-ls1028a-rdb.txt
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c b/drivers/gpu/drm/virtio/virtgpu_drv.c
+index b039f493bda9..1f8d6ed11d21 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.c
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+@@ -203,7 +203,6 @@ static struct drm_driver driver = {
+ 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+ 	.gem_prime_mmap = drm_gem_prime_mmap,
+-	.gem_prime_export = virtgpu_gem_prime_export,
+ 	.gem_prime_import = virtgpu_gem_prime_import,
+ 	.gem_prime_import_sg_table = virtgpu_gem_prime_import_sg_table,
+ 
+diff --git a/drivers/gpu/drm/virtio/virtgpu_object.c b/drivers/gpu/drm/virtio/virtgpu_object.c
+index 842f8b61aa89..4f7d7ea8194c 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_object.c
++++ b/drivers/gpu/drm/virtio/virtgpu_object.c
+@@ -108,6 +108,7 @@ static const struct drm_gem_object_funcs virtio_gpu_shmem_funcs = {
+ 	.close = virtio_gpu_gem_object_close,
+ 
+ 	.print_info = drm_gem_shmem_print_info,
++	.export = virtgpu_gem_prime_export,
+ 	.pin = drm_gem_shmem_pin,
+ 	.unpin = drm_gem_shmem_unpin,
+ 	.get_sg_table = drm_gem_shmem_get_sg_table,
+-- 
+2.28.0
 
-Thanks for the pointers. I was wondering if kernelci had any boards with DWC.
-
-Can you try this? The link up check seemed unnecessary as it is racy.
-What happens if the link goes down right after checking? That's the
-only thing in the change that sticks out.
-
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c
-b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 317ff512f8df..afee1a0e8883 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -441,6 +441,9 @@ static void __iomem
-*dw_pcie_other_conf_map_bus(struct pci_bus *bus,
-        struct pcie_port *pp = bus->sysdata;
-        struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-
-+       if (!dw_pcie_link_up(pci))
-+               return NULL;
-+
-        busdev = PCIE_ATU_BUS(bus->number) | PCIE_ATU_DEV(PCI_SLOT(devfn)) |
-                 PCIE_ATU_FUNC(PCI_FUNC(devfn));
