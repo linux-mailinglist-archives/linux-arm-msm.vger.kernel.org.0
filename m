@@ -2,116 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87A3426AC07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 20:34:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4C2626AC09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 20:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728002AbgIOSd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 14:33:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40912 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727970AbgIOSNI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 14:13:08 -0400
-Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D631F20936;
-        Tue, 15 Sep 2020 18:13:05 +0000 (UTC)
-Date:   Tue, 15 Sep 2020 14:13:04 -0400
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Gaurav Kohli <gkohli@codeaurora.org>
-Cc:     mingo@redhat.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] trace: Fix race in trace_open and buffer resize call
-Message-ID: <20200915141304.41fa7c30@gandalf.local.home>
-In-Reply-To: <08d6f338-3be3-c5a2-ba4b-0116de9672c2@codeaurora.org>
-References: <1599199797-25978-1-git-send-email-gkohli@codeaurora.org>
-        <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
-        <2fe2a843-e2b5-acf8-22e4-7231d24a9382@codeaurora.org>
-        <20200915092353.5b805468@gandalf.local.home>
-        <08d6f338-3be3-c5a2-ba4b-0116de9672c2@codeaurora.org>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S1727996AbgIOSeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 14:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44194 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727999AbgIOSdv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 14:33:51 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28B0C06178A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 11:33:50 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id n18so4026750qtw.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 11:33:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+6blGfo45ddZLHqhdwQdwxW8NrcsjKKHRRn1ZBFXZLs=;
+        b=AiloNFxh5Cghl768jry20e5NlAprC5q+qXPjhNzSb/KwOQgDxHmLc9ijue0h3gEQTF
+         MIZnq7foK9H9nRgI2dh8JhQ8zTHaEc32/iGt+J4bdwCjnAMIpfc3xU/b2kN3dLLRqL9Y
+         Zq8Z4wwSsoSTMzRUqX4v+s3yey83bsIAVQwDnPdkff/f5Y7ReN/VcE9wz5HhRgn4T+UH
+         vgGKklp3Og6USdpBP/9SPua7hVtevCOnwf0/QM3PKs1Y1XKppuMRM0/Z2XhJO2wShq7c
+         z1GCh7w+BD7ha7y0v2YLHb/We7eErm7KoVQ0CUzWyLuX2zg9kNxpMx/OpTlaFtgptxsH
+         51Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+6blGfo45ddZLHqhdwQdwxW8NrcsjKKHRRn1ZBFXZLs=;
+        b=a6qfYorcjyXSddHJylta5cnoa5U37SUdqzzf2F4GDMPePKMiITrRsks55vpY2gwotF
+         dzr4p4REbGkBViev8gFTinmSgkJrcvr/ShO68MD5jxyBMd8ztBy8HGLMQKz87nI4K8Zc
+         sx+MDbkIBvUw16aimBQrWEJkIaAeNAZoIUGWltP9fhuSbhDMtE2EQxUMGb8NHSvYh3un
+         IrTjxNu7zf/BqOXQeegymheXY4b3VuQ8lBhy1INrseNX1RncvIgNVZAwm03q4cmJHCnr
+         vN0UU6JZDeJvX1SEURTH/jHeewTHB25WsDpkaB1Pj7GXlkhart6u5w/EpxiwldT/wFT3
+         5bcw==
+X-Gm-Message-State: AOAM5329a/8ED0nJfq2S7K2m1mZgOjCvt6xpZxW9WGLUsJGgbq9I2GPY
+        d37g61M0CLXLhMWnPtKP8U9LJA==
+X-Google-Smtp-Source: ABdhPJz7sRn6Y1bEqWrjwHnF2W6Cm8ePoVdwzD3htSQpX6zknE/6OuWM79mb5tJYrZj8Ag5B/NZBUg==
+X-Received: by 2002:ac8:4f44:: with SMTP id i4mr19663393qtw.189.1600194829229;
+        Tue, 15 Sep 2020 11:33:49 -0700 (PDT)
+Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
+        by smtp.gmail.com with ESMTPSA id 29sm17519013qkr.114.2020.09.15.11.33.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2020 11:33:48 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 18:33:47 +0000
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ohad@wizery.com, evgreen@chromium.org, swboyd@chromium.org
+Subject: Re: [PATCH] remoteproc: qcom_q6v5: Assign mpss region to Q6 before
+ MBA cold boot
+Message-ID: <20200915183347.GJ478@uller>
+References: <20200915173713.28098-1-sibis@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200915173713.28098-1-sibis@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 15 Sep 2020 22:53:32 +0530
-Gaurav Kohli <gkohli@codeaurora.org> wrote:
+On Tue 15 Sep 17:37 UTC 2020, Sibi Sankar wrote:
 
-> On 9/15/2020 6:53 PM, Steven Rostedt wrote:
-> > On Tue, 15 Sep 2020 10:38:03 +0530
-> > Gaurav Kohli <gkohli@codeaurora.org> wrote:
-> >   
-> >>  
-> >>   >>> +void ring_buffer_mutex_release(struct trace_buffer *buffer)
-> >>   >>> +{
-> >>   >>> +    mutex_unlock(&buffer->mutex);
-> >>   >>> +}
-> >>   >>> +EXPORT_SYMBOL_GPL(ring_buffer_mutex_release);  
-> >>   >
-> >>   > I really do not like to export these.
-> >>   >  
-> >>
-> >> Actually available reader lock is not helping
-> >> here(&cpu_buffer->reader_lock), So i took ring buffer mutex lock to
-> >> resolve this(this came on 4.19/5.4), in latest tip it is trace buffer
-> >> lock. Due to this i have exported api.  
-> > 
-> > I'm saying, why don't you take the buffer->mutex in the
-> > ring_buffer_reset_online_cpus() function? And remove all the protection in
-> > tracing_reset_online_cpus()?  
+> On secure devices which support warm reset, the modem subsystem requires
+> access to the mpss region to clear them out. Hence assign the mpss region
+> to Q6 before MBA cold boot. This will be a nop during a modem SSR.
 > 
-> Yes, got your point. then we can avoid export. Actually we are seeing 
-> issue in older kernel like 4.19/4.14/5.4 and there below patch was not 
-> present in stable branches:
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
 > 
-> ommit b23d7a5f4a07 ("ring-buffer: speed up buffer resets by
->  > avoiding synchronize_rcu for each CPU")  
-
-If you mark this patch for stable, you can add:
-
-Depends-on: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")  
-
+> I didn't want to add any new flags for warm reset support because
+> calling xfer for mpss to q6 shouldn't have any side effects on
+> platforms that don't support warm resets.
 > 
-> Actually i have also thought to take mutex lock in ring_buffer_reset_cpu
-> while doing individual cpu reset, but this could cause another problem:
 
-Hmm, I think we should also take the buffer lock in the reset_cpu() call
-too, and modify tracing_reset_cpu() the same way.
+As discussed offline, I don't see a problem with unconditionally handing
+over the ownership of the region during this time frame. So let's just
+generalize the comment below a little bit and I'm happy with this
+change.
 
+Thanks,
+Bjorn
+
+>  drivers/remoteproc/qcom_q6v5_mss.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> Different cpu buffer may have different state, so i have taken lock in 
-> tracing_reset_online_cpus.
-
-Why would different states be an issue in synchronizing?
-
--- Steve
-
-> >
-> > void tracing_reset_online_cpus(struct array_buffer *buf)
-> > {
-> > 	struct trace_buffer *buffer = buf->buffer;
-> > 
-> > 	if (!buffer)
-> > 		return;
-> > 
-> > 	buf->time_start = buffer_ftrace_now(buf, buf->cpu);
-> > 
-> > 	ring_buffer_reset_online_cpus(buffer);
-> > }
-> > 
-> > The reset_online_cpus() is already doing the synchronization, we don't need
-> > to do it twice.
-> > 
-> > I believe commit b23d7a5f4a07 ("ring-buffer: speed up buffer resets by
-> > avoiding synchronize_rcu for each CPU") made the synchronization in
-> > tracing_reset_online_cpus() obsolete.
-> > 
-> > -- Steve
-> >   
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index c401bcc263fa5..cc5b7edc02c73 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -931,6 +931,18 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+>  		goto assert_reset;
+>  	}
+>  
+> +	/**
+> +	 * On secure devices which support warm reboot, the modem subsystem's cold boot is similar
+> +	 * to an SSR sequence i.e the mba requires access to the modem memory to clear it out during
+> +	 * Q6 cold boot. For modem SSR it will be a nop.
+> +	 */
+> +	ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false, true,
+> +				      qproc->mpss_phys, qproc->mpss_size);
+> +	if (ret) {
+> +		dev_err(qproc->dev, "assigning Q6 access to mpss memory failed: %d\n", ret);
+> +		goto disable_active_clks;
+> +	}
+> +
+>  	/* Assign MBA image access in DDR to q6 */
+>  	ret = q6v5_xfer_mem_ownership(qproc, &qproc->mba_perm, false, true,
+>  				      qproc->mba_phys, qproc->mba_size);
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
-> Yes, with above patch no need to take lock in tracing_reset_online_cpus.
-
