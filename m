@@ -2,100 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C34E269A77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 02:34:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1105269C23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 04:54:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725999AbgIOAeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 20:34:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46814 "EHLO
+        id S1726068AbgIOCyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 22:54:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbgIOAeL (ORCPT
+        with ESMTP id S1726046AbgIOCyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 20:34:11 -0400
+        Mon, 14 Sep 2020 22:54:05 -0400
 Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEDF9C06174A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 17:34:09 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id di5so909443qvb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 17:34:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D575C061788
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 19:54:05 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id h1so1062979qvo.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 19:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AMXsdcZMtd3r1FAfIZIVxJFPK/4+jeZlRHiiC+6VWdk=;
-        b=ROVNsuRWiqNko5m4zp2frC9gpRSRjLNxQ2XVgBVyG7ZkgUHlYq2dfKhGAeTtqctAla
-         T568uN4UtbeHz76/tSras7chrithr6p88yF4RpgN3Q5nrJVVsGqiCGWqcm2FHUC4ta7Z
-         174HVWM7lKsoqMexzIvdMIYs2bLddMlpwr/TjHY053jSn83tRqpJfrcUh5/bbmFP5aAQ
-         fk/wzSCnysKVOGZiEo2cgmDUhClOP8PXnQ4QxL8Aw7Wd8WeQW7BES/E0HDW8PEXSQXqI
-         j2BSAzT+lMR+cb1wLOgtTRPNUCLT6+vsI/vQGjWIXmi1B1McVe+p3pbLQwl38nLxu8AC
-         M1Dw==
+        bh=AENtihZFanz7AK6JAQj2iuXl1rr5XpuLAyHhP2fdTxc=;
+        b=g/h4wKVtRzze15q7+YBYa8/BU5+91OBLBnKQ/0b/r2PCfF49nXRZnsElWP3ecnuHzq
+         EM+R+PjHIbUv4pd2JUJas4i+d5pUKdy9OTUdEQV0Jp/NSiPGV+e1D3wEDcIX9ApI4VZX
+         +2hwSCeDbmLrnG73Up5dRLqZUF5RHBnT6IW8iKDIXbMiCbHpDWiltkYTycPejWzqC51j
+         BBZ1YVVBSbAJWyAdGZFgkBnMExUoSyMG1P+uKDzN7nytHu5Ma5cnNSBYbf7sqU0C3gWL
+         X+VYR+LyvNH3CiR5df85wESmzQ3Vr1NkafTjaDAcbBb/ODyyAqY8VmL9u6+dfOwcvlXl
+         hUlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AMXsdcZMtd3r1FAfIZIVxJFPK/4+jeZlRHiiC+6VWdk=;
-        b=Oe559B/mZbktDLsWXHBKe7+ktOlCb/6HXddV1h/QguBcSBFac6iCcc24zORNmOw7Ld
-         8zmt1zlrv9AFMKErNXWL8fhDBjGVX7NDWkmr13/hz8VdMM1jdVjZbN/4fcL4aGOd94Qx
-         wmJwvdJSb6Nvn6RmbMjisstMPN4cOgR2M79WZhxDamWFEn83u7MdFqpZVZAas3orXWFA
-         ML6+42TnYaVXACuBxpHtImFOjRfTf0hfJx9iOa3XNKHO6mU+loy0i4vX5yNSgV1QT6Pj
-         ZfvSsPUXKE2VHenT+YAWeT/+cxNKupU0+ec3qJTOnwRw2xyfxegK+uwdhnFjkvn2tnWG
-         H6SA==
-X-Gm-Message-State: AOAM533Yd6Zv93YQCz9J8+jwz7KmGnSSUJHHANjw1OS/3GqHE4jzOvUL
-        UL0HdrKpbAqjPhL7EXKoQulz1g==
-X-Google-Smtp-Source: ABdhPJx7isSw104HWsxh6GBnxwl7osGdt42xeZrstCu8XtSctGKh5I5nX9suDSQ1TbA7by279WI5JA==
-X-Received: by 2002:a0c:9142:: with SMTP id q60mr16094189qvq.13.1600130049049;
-        Mon, 14 Sep 2020 17:34:09 -0700 (PDT)
+        bh=AENtihZFanz7AK6JAQj2iuXl1rr5XpuLAyHhP2fdTxc=;
+        b=lufIE0EXKd6l2yIufJpRTR7GKsFI4D36ghuKzBxhnFFsnyAvsMIFADA1G9QUgS0B8u
+         FJRGNpR6MxPa80bgiICbTmIerLvp0Gk4h1kdPAPnUYTqcoHjG7C7ephcAakbp/tSLpJH
+         YShEV+UulVQVuE/UnE66YXA4ONexGrfXO8wacKlJshRzCTlj4mk4ymqHYaykL54CPptX
+         4lT0hoqy57m5227cN1m2LK/Widw6r7CrSnP/rzFoordOI1ZAXDKrI4REsr/Y4vTwMVT2
+         LBWMLl4S7fWWDT/VUVENvTDVt3hI2m7v1SC3Y0WzWbRi92/HfeyCAm0nwDYYKO8YRV7V
+         ZiPg==
+X-Gm-Message-State: AOAM533S7J7JxMeOaM1qBoWNdDcU7BCvvBd/6pdQOz41SG89FlEbPTHQ
+        KyDZRC4egBlRcJ4RS+6mLFygog==
+X-Google-Smtp-Source: ABdhPJxHxWeHi97ePv3FCP2DV1zftb/XyH1vIFWezkQmVxts9NiBBIfqccJnCV2mwFphJKlRWsDQuA==
+X-Received: by 2002:a05:6214:12c:: with SMTP id w12mr16299144qvs.18.1600138444488;
+        Mon, 14 Sep 2020 19:54:04 -0700 (PDT)
 Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id c13sm14830849qtq.5.2020.09.14.17.34.08
+        by smtp.gmail.com with ESMTPSA id s47sm16504448qtb.13.2020.09.14.19.54.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 17:34:08 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 00:34:06 +0000
+        Mon, 14 Sep 2020 19:54:03 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 02:54:01 +0000
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Zhenzhong Duan <zhenzhong.duan@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com, sean@poorly.run,
-        airlied@linux.ie, daniel@ffwll.ch, smasetty@codeaurora.org,
-        jcrouse@codeaurora.org, jonathan@marek.ca,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/a6xx: fix a potential overflow issue
-Message-ID: <20200915003406.GC471@uller>
-References: <20200912102558.656-1-zhenzhong.duan@gmail.com>
+To:     "Bao D. Nguyen" <nguyenb@codeaurora.org>
+Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
+Message-ID: <20200915025401.GD471@uller>
+References: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200912102558.656-1-zhenzhong.duan@gmail.com>
+In-Reply-To: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 12 Sep 10:25 UTC 2020, Zhenzhong Duan wrote:
+On Tue 01 Sep 01:19 UTC 2020, Bao D. Nguyen wrote:
 
-> It's allocating an array of a6xx_gpu_state_obj structure rathor than
-> its pointers.
+> UFS version 3.0 and later devices require Vcc and Vccq power supplies
+> with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
+> devices, the Vcc and Vccq2 are required with Vccq being optional.
+> Check the required power supplies used by the device
+> and set the device's supported Icc level properly.
 > 
-> This patch fix it.
-> 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@gmail.com>
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/scsi/ufs/ufshcd.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> index b12f5b4..e9ede19 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> @@ -875,7 +875,7 @@ static void a6xx_get_indexed_registers(struct msm_gpu *gpu,
->  	int i;
+> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+> index 06e2439..fdd1d3e 100644
+> --- a/drivers/scsi/ufs/ufshcd.c
+> +++ b/drivers/scsi/ufs/ufshcd.c
+> @@ -6845,8 +6845,9 @@ static u32 ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
+>  {
+>  	u32 icc_level = 0;
 >  
->  	a6xx_state->indexed_regs = state_kcalloc(a6xx_state, count,
-> -		sizeof(a6xx_state->indexed_regs));
-> +		sizeof(*a6xx_state->indexed_regs));
->  	if (!a6xx_state->indexed_regs)
->  		return;
->  
+> -	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
+> -						!hba->vreg_info.vccq2) {
+> +	if (!hba->vreg_info.vcc ||
+
+How did you test this?
+
+devm_regulator_get() never returns NULL, so afaict this conditional will
+never be taken with either the old or new version of the code.
+
+Regards,
+Bjorn
+
+> +		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
+> +		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
+>  		dev_err(hba->dev,
+>  			"%s: Regulator capability was not set, actvIccLevel=%d",
+>  							__func__, icc_level);
 > -- 
-> 1.8.3.1
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
