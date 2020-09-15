@@ -2,106 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A1B2526A854
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 17:07:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A960226A85C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 17:08:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727396AbgIOPHn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 11:07:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40142 "EHLO
+        id S1727427AbgIOPIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 11:08:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727369AbgIOPHD (ORCPT
+        with ESMTP id S1727391AbgIOPIc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 11:07:03 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E56BDC06178A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:07:01 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id z18so1863998qvp.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:07:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=JuX459iPFiSF2qCYffrxdDG4JgmCWY9w05aQrmrwrn4=;
-        b=XpwQxxGVDx+xrsemy5ScChUBWXTkrBb5ztt0FlDJ3uymeXh/OO/cNp0IM4TEb3Uyfs
-         IUC/AvvzoY6L8QOMZautES1qOTI27M+ibJlW7puRi80nhlnhx4wgybOKNVZEKcQnuidk
-         zgHvauaW7ZMz44TUy5YVxCCYWpPg0nVG8xyPOfYxEetICmdxoVwvQwR8spNBwr8bv7ax
-         qecAUVJwVwjNgloeErbvc19Wr453Acbo3ApTn/3l9FpXeyPrjl9asz5Lce6Fefo9qLvo
-         EZSnX8fsl2ei0DJQqwGVEptmSviBadbGoVy6cYdX3RMWcSCS3lRNx1NHaJsHrLJBCvEo
-         FgOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JuX459iPFiSF2qCYffrxdDG4JgmCWY9w05aQrmrwrn4=;
-        b=UoGRxx2yPZND/n0zjetzo5z4CN+Vf3q5gDOc7b4H2OZ6eILrpG/BXZaaZwt8uX55P1
-         cO59Ubqp9+6VsmWd7lN40L6A45NUb1w9LUmtn2VIXiScEDRGIduVrPgluMtZwR/RiDYk
-         BoMIUaa1iT+vVP0G2EqP/fRj8AVQJL27y+1gGw91QmhsmVJqKWXSl7j0nmL/v4mzMaXY
-         mUMtm3RNTnZVrShJmscdwlCUTopO6g5Lr2GhyQfHJrMGQAEZHCmgqy/49wt1c+fnYxJl
-         W3iSfGB6pSo05M3qjitPh2UQLRYVEPInqf/XopGd6G+9djzKRKO5tRPAM49srjOVt6mC
-         2Z1g==
-X-Gm-Message-State: AOAM53369zYJMa7JMAEFh5zM3N8voPO6caRElUvyN+ptZ01OKYIFAOB+
-        KRaEwsJbHTGlEoI9IUED7FXDAQ==
-X-Google-Smtp-Source: ABdhPJzQNEKsjzjvUXu8OdTjWfm9ukfaozEj2Gwqj3nATSffbkC/gWbqDs4+YaOFn/Dt3gNcgp/7Ng==
-X-Received: by 2002:a05:6214:7a1:: with SMTP id v1mr18903517qvz.19.1600182420944;
-        Tue, 15 Sep 2020 08:07:00 -0700 (PDT)
-Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id s18sm16389547qks.44.2020.09.15.08.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 08:07:00 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 15:06:58 +0000
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: Re: [PATCH v1] arm64: dts: qcom: msm8996: Add VFE1_GDSC power domain
- to camss node
-Message-ID: <20200915150658.GA478@uller>
-References: <20200915142316.147208-1-robert.foss@linaro.org>
+        Tue, 15 Sep 2020 11:08:32 -0400
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 408A1C06174A;
+        Tue, 15 Sep 2020 08:08:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=n0AeAcI3zA0iCIxRdvDpWIpeomoM/Ow+oqCMUrZ8unY=; b=DY/uEfsiICorhg8iHeARjWh0Q
+        cS0EKw/YCxVo9c/DRgV77Gc/fMhw80uqdFD1X3NvNbG8E9/gDU7FOr8XhdiWA4oeGiVT2qR18cF2G
+        rbumEdeKR7VfQDXUwezoo+hIbAR+lkT20j5iUe9RiL8DC97jOljbnlxm0stBllgiNwutxUvFMmjf2
+        nZaK5hytHWAtFXkuU5EYx2JOLZTIRELbYZ15UAAlaZBs+E+zoYjszb6y0j79bc+LUZ0g2Qxuu6Zcq
+        d7bL2K6UkYMroIM/nP+yxcofUcKz/TRZ/3IX2smVFTWH7UaXEb6h6XVwsj25JE3FRBD4+grwHrZEJ
+        9t8rye/uQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:34006)
+        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <linux@armlinux.org.uk>)
+        id 1kICYn-00035d-N0; Tue, 15 Sep 2020 16:07:57 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
+        (envelope-from <linux@shell.armlinux.org.uk>)
+        id 1kICYY-0003lk-6C; Tue, 15 Sep 2020 16:07:42 +0100
+Date:   Tue, 15 Sep 2020 16:07:42 +0100
+From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v2 02/21] drm/armada: Introduce GEM object functions
+Message-ID: <20200915150742.GO1551@shell.armlinux.org.uk>
+References: <20200915145958.19993-1-tzimmermann@suse.de>
+ <20200915145958.19993-3-tzimmermann@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200915142316.147208-1-robert.foss@linaro.org>
+In-Reply-To: <20200915145958.19993-3-tzimmermann@suse.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Sep 14:23 UTC 2020, Robert Foss wrote:
+On Tue, Sep 15, 2020 at 04:59:39PM +0200, Thomas Zimmermann wrote:
+> GEM object functions deprecate several similar callback interfaces in
+> struct drm_driver. This patch replaces the per-driver callbacks with
+> per-instance callbacks in armada.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-> As the MSM8996 has two VFE IP-blocks, and each has a power domain,
-> both of them have to be enabled. Previously only the power domain
-> of VFE0 was enabled, but not the domain for VFE1.
-> 
-> This patch adds the VFE1_GDSC power domain to the camss device tree
-> node of the MSM8996 soc.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Acked-by: Russell King <rmk+kernel@armlinux.org.uk>
+
+Thanks.
+
 > ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/armada/armada_drv.c |  3 ---
+>  drivers/gpu/drm/armada/armada_gem.c | 12 +++++++++++-
+>  drivers/gpu/drm/armada/armada_gem.h |  2 --
+>  3 files changed, 11 insertions(+), 6 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 9951286db775..df6e1b246a19 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -1009,7 +1009,8 @@ camss: camss@a00000 {
->  				"ispif",
->  				"vfe0",
->  				"vfe1";
-> -			power-domains = <&mmcc VFE0_GDSC>;
-> +			power-domains = <&mmcc VFE0_GDSC>,
-> +				<&mmcc VFE1_GDSC>;
-
-Fixed the indentation and applied this.
-
-Thanks,
-Bjorn
-
->  			clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
->  				<&mmcc CAMSS_ISPIF_AHB_CLK>,
->  				<&mmcc CAMSS_CSI0PHYTIMER_CLK>,
+> diff --git a/drivers/gpu/drm/armada/armada_drv.c b/drivers/gpu/drm/armada/armada_drv.c
+> index 980d3f1f8f16..22247cfce80b 100644
+> --- a/drivers/gpu/drm/armada/armada_drv.c
+> +++ b/drivers/gpu/drm/armada/armada_drv.c
+> @@ -37,13 +37,10 @@ DEFINE_DRM_GEM_FOPS(armada_drm_fops);
+>  
+>  static struct drm_driver armada_drm_driver = {
+>  	.lastclose		= drm_fb_helper_lastclose,
+> -	.gem_free_object_unlocked = armada_gem_free_object,
+>  	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
+> -	.gem_prime_export	= armada_gem_prime_export,
+>  	.gem_prime_import	= armada_gem_prime_import,
+>  	.dumb_create		= armada_gem_dumb_create,
+> -	.gem_vm_ops		= &armada_gem_vm_ops,
+>  	.major			= 1,
+>  	.minor			= 0,
+>  	.name			= "armada-drm",
+> diff --git a/drivers/gpu/drm/armada/armada_gem.c b/drivers/gpu/drm/armada/armada_gem.c
+> index ecf8a55e93d9..c343fbefe47c 100644
+> --- a/drivers/gpu/drm/armada/armada_gem.c
+> +++ b/drivers/gpu/drm/armada/armada_gem.c
+> @@ -25,7 +25,7 @@ static vm_fault_t armada_gem_vm_fault(struct vm_fault *vmf)
+>  	return vmf_insert_pfn(vmf->vma, vmf->address, pfn);
+>  }
+>  
+> -const struct vm_operations_struct armada_gem_vm_ops = {
+> +static const struct vm_operations_struct armada_gem_vm_ops = {
+>  	.fault	= armada_gem_vm_fault,
+>  	.open	= drm_gem_vm_open,
+>  	.close	= drm_gem_vm_close,
+> @@ -184,6 +184,12 @@ armada_gem_map_object(struct drm_device *dev, struct armada_gem_object *dobj)
+>  	return dobj->addr;
+>  }
+>  
+> +static const struct drm_gem_object_funcs armada_gem_object_funcs = {
+> +	.free = armada_gem_free_object,
+> +	.export = armada_gem_prime_export,
+> +	.vm_ops = &armada_gem_vm_ops,
+> +};
+> +
+>  struct armada_gem_object *
+>  armada_gem_alloc_private_object(struct drm_device *dev, size_t size)
+>  {
+> @@ -195,6 +201,8 @@ armada_gem_alloc_private_object(struct drm_device *dev, size_t size)
+>  	if (!obj)
+>  		return NULL;
+>  
+> +	obj->obj.funcs = &armada_gem_object_funcs;
+> +
+>  	drm_gem_private_object_init(dev, &obj->obj, size);
+>  
+>  	DRM_DEBUG_DRIVER("alloc private obj %p size %zu\n", obj, size);
+> @@ -214,6 +222,8 @@ static struct armada_gem_object *armada_gem_alloc_object(struct drm_device *dev,
+>  	if (!obj)
+>  		return NULL;
+>  
+> +	obj->obj.funcs = &armada_gem_object_funcs;
+> +
+>  	if (drm_gem_object_init(dev, &obj->obj, size)) {
+>  		kfree(obj);
+>  		return NULL;
+> diff --git a/drivers/gpu/drm/armada/armada_gem.h b/drivers/gpu/drm/armada/armada_gem.h
+> index de04cc2c8f0e..ffcc7e8dd351 100644
+> --- a/drivers/gpu/drm/armada/armada_gem.h
+> +++ b/drivers/gpu/drm/armada/armada_gem.h
+> @@ -21,8 +21,6 @@ struct armada_gem_object {
+>  	void			*update_data;
+>  };
+>  
+> -extern const struct vm_operations_struct armada_gem_vm_ops;
+> -
+>  #define drm_to_armada_gem(o) container_of(o, struct armada_gem_object, obj)
+>  
+>  void armada_gem_free_object(struct drm_gem_object *);
 > -- 
-> 2.25.1
+> 2.28.0
 > 
+> 
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
