@@ -2,140 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFEB126A6BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 16:04:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8AB226A76C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 16:45:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726757AbgIOOEp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 10:04:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56840 "EHLO
+        id S1727182AbgIOOpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 10:45:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726755AbgIONxg (ORCPT
+        with ESMTP id S1726817AbgIOOpC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 09:53:36 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2F99C0611C0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 06:46:42 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id t76so3884522oif.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 06:46:42 -0700 (PDT)
+        Tue, 15 Sep 2020 10:45:02 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE96C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 07:44:46 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id c25so890868vkm.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 07:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7kQUdTgGYoCzTCj4OvU1jcQHb8SMV5JA5QYW5I7lhYw=;
-        b=sJrSnw+PU8y1m737k6muECCwVG5aj4zCJA2nLnV95+Q1NrWEFemy2GnFFwvFp+vosO
-         zyqHSSGRMAINWReGkldACua7QAlbCXoVCFO5WW6rLZsUyG71XPbkg2PyIiLXmz6ImkdN
-         DD8jTHi8r937YTN1Ua0KQiCUwE7QXk8LQspbh6u2CA9fR901gglFSjlGI1vQ5VBr24aY
-         nMuVwV+51LDYhNPbUxGk6/yx+fMQlYaBXXDyz578KMjTlHWbU8I1slivhujHiMvcCixS
-         VQ9auC2zX3qdM5qigSF1QFk5EUv4z9wDVxyVkAKvsCt4Uym7U7oYgJhOYy60K6gLsa68
-         L4OA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=zT4idoY3GXU6AKl9P1KDotBGRD6i9BlOD/Yn8HDxrN8=;
+        b=cZcT/XO2v6Dw0s2Q7AzR/zkwbrn4Ls20hHCTCwjhdEm4E90JV0hcQRXDXeZO0/79hQ
+         aF+uMGX1TJIcuD68ObaYkd9bA7Qdk0HFRWwA/rZBI/5tw6+sCym7qpOxSaA1MKQzKvA+
+         PKT/I2wOPNx697M0Kt0AyARG4MwGHIMriU4Y05nxMvOVLHijn/kzh8bV9Lmyfx5IX6ls
+         rO3tL24NeY+O0sTDx89AZcGI995Ai5XwqYKMrD8Arrvow+1WyE8b+lLmjZzvByom/hw5
+         jE0q04luXWatzViaRyWafy86MVsVozNRTnWLmGTUMkBfAricswHoyVpHKVc9XAVxLIke
+         RGNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7kQUdTgGYoCzTCj4OvU1jcQHb8SMV5JA5QYW5I7lhYw=;
-        b=OVsudGfmEV7WqO5+fxXGeWym3BOM151Gi+QsT0PM/aTzmh3zxLho8Be78TsCsn9pdz
-         7luuoifUSVX9flp6B5qCGJ76dPL5m0WcI/Ckx4jx07TTUxoRH7baNGphR2ofsH8Sd6kq
-         04kOY+Q49Oes75DGY0ZMS5qdHrqoxEzKas7eQXBesJZ1UBN/CoHQnZGctkMYQ2fIhq75
-         Xl2Rf3tCUx3R7lrNvf/pHjhOqjuLHK8QW8mWoMGOw0LNQmSEUqwBILlyLiNJblu9qmzn
-         NL5PrVELonZX0HP1B/5H/JNYDSaJN5ArnDQUubDG2YiLMCCl0JHXX5o97VJfyem4rSx0
-         qybA==
-X-Gm-Message-State: AOAM531jjEvdaWHq/glkUe/xvghryihpj0Wz2qDhK+pSu0+6iC4CS/pV
-        fV1oCSViEvCis7ZU6lLmvrqZVg==
-X-Google-Smtp-Source: ABdhPJw7g1BDuEzE354nYgiFc4YO4/ESWG6hPfxm0Tj+jq7CWgKof2GUPNmm3oo7KeiklL2zo5zgDg==
-X-Received: by 2002:aca:5b45:: with SMTP id p66mr3566531oib.39.1600177602112;
-        Tue, 15 Sep 2020 06:46:42 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
-        by smtp.gmail.com with ESMTPSA id d1sm5588353otb.80.2020.09.15.06.46.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 06:46:41 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 08:46:38 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "Bao D. Nguyen" <nguyenb@codeaurora.org>
-Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        YueHaibing <yuehaibing@huawei.com>,
-        Bean Huo <beanhuo@micron.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 2/2] scsi: ufs: Support reading UFS's Vcc voltage from
- device tree
-Message-ID: <20200915134638.GF670377@yoga>
-References: <cover.1598939393.git.nguyenb@codeaurora.org>
- <69db325a09d5c3fa7fc260db031b1e498b601c25.1598939393.git.nguyenb@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zT4idoY3GXU6AKl9P1KDotBGRD6i9BlOD/Yn8HDxrN8=;
+        b=G6pSiErgR/RXhacEfkt2htLCK0EKQp39xYKZ5oPX52hgn609GAyLPDY3pwhPxdjZJx
+         JXxEklm7nN26rbsvMFYdzCzJPQ7fmNvqwEJRo5BQ1PyAlFCFHu8rdOPrs/+i4YpgxUyg
+         KKhfTpOVPSvoHZjglO4mldukp1mHSKbwvhWRPkwkSlhCqNjvcFqA2kgyyO/WZzEwii4W
+         q4h8cYYRnORIZXz6LbSJrdVPwo5VmXs62lawh9x6OODpWA5b/h5U2Q6rhPF+d0zLxdaC
+         HRw/A2jAO8KS1RmZP0ZcJ/o+G7606EOW4XhNXYQ+RFfJaWaq4jBYDM4ONSI16Mj08yqz
+         4VgA==
+X-Gm-Message-State: AOAM531g1QnQqo5RyM85PZpehclDsL0ja8CgqDLM2WAcIL77VFb9jhZB
+        HYP3QAE1irJKdptYAxek5nqzrxcEMI2Nyt0AaLAV4w==
+X-Google-Smtp-Source: ABdhPJz9V+xdlRF8ie6wyANpoDEf4gTRpkJcbnRPg71Sjm27NaLv4OKg5H8hiYkDipcT92cxG4GzEtlmJZG5SuY43QQ=
+X-Received: by 2002:a1f:7882:: with SMTP id t124mr1612757vkc.22.1600181085580;
+ Tue, 15 Sep 2020 07:44:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <69db325a09d5c3fa7fc260db031b1e498b601c25.1598939393.git.nguyenb@codeaurora.org>
+References: <20200915140644.037604909@linuxfoundation.org>
+In-Reply-To: <20200915140644.037604909@linuxfoundation.org>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Tue, 15 Sep 2020 20:14:34 +0530
+Message-ID: <CA+G9fYv5hvOYNdfX6F40aZPP9Vr6aEsP_-22gX2P+Q95TrfF-A@mail.gmail.com>
+Subject: Re: [PATCH 5.4 000/132] 5.4.66-rc1 review
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     open list <linux-kernel@vger.kernel.org>,
+        Shuah Khan <shuah@kernel.org>, patches@kernelci.org,
+        lkft-triage@lists.linaro.org,
+        Ben Hutchings <ben.hutchings@codethink.co.uk>,
+        linux- stable <stable@vger.kernel.org>, pavel@denx.de,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 01 Sep 01:00 CDT 2020, Bao D. Nguyen wrote:
+On Tue, 15 Sep 2020 at 19:50, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.4.66 release.
+> There are 132 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 17 Sep 2020 14:06:12 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.4.66-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-> The UFS specifications supports a range of Vcc operating voltage
-> from 2.4-3.6V depending on the device and manufacturers.
-> Allows selecting the UFS Vcc voltage level by setting the
-> UFS's entry vcc-voltage-level in the device tree. If UFS's
-> vcc-voltage-level setting is not found in the device tree,
-> use default values provided by the driver.
-> 
+arm and arm64 build breaks on stable rc 5.4.
 
-As stated in the reply to patch 1, this is not the right approach.  As
-long as you have static min/max values requested by the driver you
-should rely on the board's constraints for the regulator levels and
-instead remove the min_uV/max_uV code from the driver.
+make -sk KBUILD_BUILD_USER=3DTuxBuild -C/linux -j16 ARCH=3Darm
+CROSS_COMPILE=3Darm-linux-gnueabihf- HOSTCC=3Dgcc CC=3D"sccache
+arm-linux-gnueabihf-gcc" O=3Dbuild zImage
+#
+../kernel/kprobes.c: In function =E2=80=98kill_kprobe=E2=80=99:
+../kernel/kprobes.c:1081:33: warning: statement with no effect [-Wunused-va=
+lue]
+ 1081 | #define disarm_kprobe_ftrace(p) (-ENODEV)
+      |                                 ^
+../kernel/kprobes.c:2113:3: note: in expansion of macro =E2=80=98disarm_kpr=
+obe_ftrace=E2=80=99
+ 2113 |   disarm_kprobe_ftrace(p);
+      |   ^~~~~~~~~~~~~~~~~~~~
+#
+# make -sk KBUILD_BUILD_USER=3DTuxBuild -C/linux -j16 ARCH=3Darm
+CROSS_COMPILE=3Darm-linux-gnueabihf- HOSTCC=3Dgcc CC=3D"sccache
+arm-linux-gnueabihf-gcc" O=3Dbuild modules
+#
+../drivers/gpu/drm/msm/adreno/a5xx_preempt.c: In function =E2=80=98preempt_=
+init_ring=E2=80=99:
+../drivers/gpu/drm/msm/adreno/a5xx_preempt.c:235:21: error:
+=E2=80=98MSM_BO_MAP_PRIV=E2=80=99 undeclared (first use in this function)
+  235 |   MSM_BO_UNCACHED | MSM_BO_MAP_PRIV, gpu->aspace, &bo, &iova);
+      |                     ^~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/adreno/a5xx_preempt.c:235:21: note: each
+undeclared identifier is reported only once for each function it
+appears in
+make[5]: *** [../scripts/Makefile.build:266:
+drivers/gpu/drm/msm/adreno/a5xx_preempt.o] Error 1
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function =E2=80=98a6xx_hw_init=
+=E2=80=99:
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:414:6: error: implicit
+declaration of function =E2=80=98adreno_is_a640=E2=80=99; did you mean
+=E2=80=98adreno_is_a540=E2=80=99? [-Werror=3Dimplicit-function-declaration]
+  414 |  if (adreno_is_a640(adreno_gpu) || adreno_is_a650(adreno_gpu)) {
+      |      ^~~~~~~~~~~~~~
+      |      adreno_is_a540
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:414:36: error: implicit
+declaration of function =E2=80=98adreno_is_a650=E2=80=99; did you mean
+=E2=80=98adreno_is_a540=E2=80=99? [-Werror=3Dimplicit-function-declaration]
+  414 |  if (adreno_is_a640(adreno_gpu) || adreno_is_a650(adreno_gpu)) {
+      |                                    ^~~~~~~~~~~~~~
+      |                                    adreno_is_a540
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:415:18: error:
+=E2=80=98REG_A6XX_GBIF_QSB_SIDE0=E2=80=99 undeclared (first use in this fun=
+ction)
+  415 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:415:18: note: each undeclared
+identifier is reported only once for each function it appears in
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:416:18: error:
+=E2=80=98REG_A6XX_GBIF_QSB_SIDE1=E2=80=99 undeclared (first use in this fun=
+ction)
+  416 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:417:18: error:
+=E2=80=98REG_A6XX_GBIF_QSB_SIDE2=E2=80=99 undeclared (first use in this fun=
+ction)
+  417 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:418:18: error:
+=E2=80=98REG_A6XX_GBIF_QSB_SIDE3=E2=80=99 undeclared (first use in this fun=
+ction)
+  418 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE3, 0x00071620);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~
+cc1: some warnings being treated as errors
+make[5]: *** [../scripts/Makefile.build:265:
+drivers/gpu/drm/msm/adreno/a6xx_gpu.o] Error 1
+In file included from ../drivers/gpu/drm/msm/msm_gpu.c:7:
+../drivers/gpu/drm/msm/msm_gpu.c: In function =E2=80=98msm_gpu_init=E2=80=
+=99:
+../drivers/gpu/drm/msm/msm_gpu.h:330:22: error: =E2=80=98MSM_BO_MAP_PRIV=E2=
+=80=99
+undeclared (first use in this function)
+  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
+      |                      ^~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/msm_gpu.c:935:3: note: in expansion of macro
+=E2=80=98check_apriv=E2=80=99
+  935 |   check_apriv(gpu, MSM_BO_UNCACHED), gpu->aspace, &gpu->memptrs_bo,
+      |   ^~~~~~~~~~~
+../drivers/gpu/drm/msm/msm_gpu.h:330:22: note: each undeclared
+identifier is reported only once for each function it appears in
+  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
+      |                      ^~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/msm_gpu.c:935:3: note: in expansion of macro
+=E2=80=98check_apriv=E2=80=99
+  935 |   check_apriv(gpu, MSM_BO_UNCACHED), gpu->aspace, &gpu->memptrs_bo,
+      |   ^~~~~~~~~~~
+make[5]: *** [../scripts/Makefile.build:266:
+drivers/gpu/drm/msm/msm_gpu.o] Error 1
+In file included from ../drivers/gpu/drm/msm/msm_ringbuffer.c:8:
+../drivers/gpu/drm/msm/msm_ringbuffer.c: In function =E2=80=98msm_ringbuffe=
+r_new=E2=80=99:
+../drivers/gpu/drm/msm/msm_gpu.h:330:22: error: =E2=80=98MSM_BO_MAP_PRIV=E2=
+=80=99
+undeclared (first use in this function)
+  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
+      |                      ^~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/msm_ringbuffer.c:30:3: note: in expansion of
+macro =E2=80=98check_apriv=E2=80=99
+   30 |   check_apriv(gpu, MSM_BO_WC | MSM_BO_GPU_READONLY),
+      |   ^~~~~~~~~~~
+../drivers/gpu/drm/msm/msm_gpu.h:330:22: note: each undeclared
+identifier is reported only once for each function it appears in
+  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
+      |                      ^~~~~~~~~~~~~~~
+../drivers/gpu/drm/msm/msm_ringbuffer.c:30:3: note: in expansion of
+macro =E2=80=98check_apriv=E2=80=99
+   30 |   check_apriv(gpu, MSM_BO_WC | MSM_BO_GPU_READONLY),
+      |   ^~~~~~~~~~~
+make[5]: *** [../scripts/Makefile.build:265:
+drivers/gpu/drm/msm/msm_ringbuffer.o] Error 1
+make[5]: Target '__build' not remade because of errors.
+make[4]: *** [../scripts/Makefile.build:500: drivers/gpu/drm/msm] Error 2
+make[4]: Target '__build' not remade because of errors.
+make[3]: *** [../scripts/Makefile.build:500: drivers/gpu/drm] Error 2
+make[3]: Target '__build' not remade because of errors.
+make[2]: *** [../scripts/Makefile.build:500: drivers/gpu] Error 2
+make[2]: Target '__build' not remade because of errors.
+make[1]: *** [/linux/Makefile:1729: drivers] Error 2
+make[1]: Target 'modules' not remade because of errors.
+make: *** [Makefile:179: sub-make] Error 2
+make: Target 'modules' not remade because of errors.
 
-Thanks,
-Bjorn
 
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
-> ---
->  drivers/scsi/ufs/ufshcd-pltfrm.c | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/scsi/ufs/ufshcd-pltfrm.c b/drivers/scsi/ufs/ufshcd-pltfrm.c
-> index 3db0af6..48f429c 100644
-> --- a/drivers/scsi/ufs/ufshcd-pltfrm.c
-> +++ b/drivers/scsi/ufs/ufshcd-pltfrm.c
-> @@ -104,10 +104,11 @@ static int ufshcd_parse_clock_info(struct ufs_hba *hba)
->  static int ufshcd_populate_vreg(struct device *dev, const char *name,
->  		struct ufs_vreg **out_vreg)
->  {
-> -	int ret = 0;
-> +	int len, ret = 0;
->  	char prop_name[MAX_PROP_SIZE];
->  	struct ufs_vreg *vreg = NULL;
->  	struct device_node *np = dev->of_node;
-> +	const __be32 *prop;
->  
->  	if (!np) {
->  		dev_err(dev, "%s: non DT initialization\n", __func__);
-> @@ -138,8 +139,16 @@ static int ufshcd_populate_vreg(struct device *dev, const char *name,
->  			vreg->min_uV = UFS_VREG_VCC_1P8_MIN_UV;
->  			vreg->max_uV = UFS_VREG_VCC_1P8_MAX_UV;
->  		} else {
-> -			vreg->min_uV = UFS_VREG_VCC_MIN_UV;
-> -			vreg->max_uV = UFS_VREG_VCC_MAX_UV;
-> +			prop = of_get_property(np, "vcc-voltage-level", &len);
-> +			if (!prop || (len != (2 * sizeof(__be32)))) {
-> +				dev_warn(dev, "%s vcc-voltage-level property.\n",
-> +					prop ? "invalid format" : "no");
-> +				vreg->min_uV = UFS_VREG_VCC_MIN_UV;
-> +				vreg->max_uV = UFS_VREG_VCC_MAX_UV;
-> +			} else {
-> +				vreg->min_uV = be32_to_cpup(&prop[0]);
-> +				vreg->max_uV = be32_to_cpup(&prop[1]);
-> +			}
->  		}
->  	} else if (!strcmp(name, "vccq")) {
->  		vreg->min_uV = UFS_VREG_VCCQ_MIN_UV;
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+--=20
+Linaro LKFT
+https://lkft.linaro.org
