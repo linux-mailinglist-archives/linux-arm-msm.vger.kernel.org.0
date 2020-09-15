@@ -2,102 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02971269FBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 09:27:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AF57269FCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 09:30:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726146AbgIOH1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 03:27:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53232 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726243AbgIOHY5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 03:24:57 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6CDC0612F2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 00:24:57 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id j34so1506549pgi.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 00:24:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oBilyFEf2/Z1J1tQYW2nP7ZczzAuGj9cFol63jX5QX4=;
-        b=c4p1+4NV8NlRzHFAx/uaoR2of/ipTcrRTAY9oJ5/Unn+O8Y3rY9sp4v8IGjx++3I4r
-         SQE/jrzc3GvToZgsexffViU0bU4gxhB4jn8e7r8Wgj6WZONFg9rHG7/EWTiD5LSQL1cN
-         sx7kAdf6ra1WKzU3T+FAT1AIJ/Gvb9jto+75QuGdepiFVzW7cxVS9a/m00DapVflZYfZ
-         pGXwNmTCmgzVEdYWTrQRc9ATICYARqOHfNurbxl7hAMXgD7EXjDO/M1pime+K5lzNEjQ
-         MsU2Whc+HCUIO9vMhpGT+tyPqd1m0tPAr9Jh985YurvzyyIr5rfD426v1/6+jMW+TeXp
-         QSBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=oBilyFEf2/Z1J1tQYW2nP7ZczzAuGj9cFol63jX5QX4=;
-        b=ACya/awBoxcZnnPBKp4gE5BX1X13yVCK5SN2ocbic3HsqED9aJpS2nX3iQr8pUt8mQ
-         f34Ax9ipVXht8rXYn5j0H0hkSyk01YKsFxcS6cBZMNMcg6wJiGyGKExjubV3Q2AYy7Z0
-         o8R57qdkKScnLkHKAAeRkwEGnXyNz/NcrarWrfOz5SzAysjlXv7K9oIy1tPLhtCuV7rL
-         jQcy/V9Y2HNDaDmAUhUrT8OEQOVeEdGMka5XUrQXLyY42AYT9vdb7+wEyzIGj0ygjmdD
-         3mGLwiZjJkPjYPNlUqjTkFClt54gFomIFXJXm/dcDQFDbgQyKZuXCDQdDiIHoT3hJKIw
-         F55w==
-X-Gm-Message-State: AOAM530ZNlUSfyH7zUY7KMiiNQxLgz5CPcaAvt9z7IdBuF2k9Ncvhoqb
-        zWqelmZkpRVuUZMiR+cn0w1m
-X-Google-Smtp-Source: ABdhPJzKMwHn18/aJgA+m+x05Z3G9Ii3hfInh23MjGpnxaaAD9SIavHD2LgB0dnAdxapI9FuMenKoA==
-X-Received: by 2002:a62:4e8a:0:b029:13c:1611:653b with SMTP id c132-20020a624e8a0000b029013c1611653bmr16134936pfb.13.1600154696590;
-        Tue, 15 Sep 2020 00:24:56 -0700 (PDT)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id m24sm10701501pgn.44.2020.09.15.00.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 00:24:56 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     amitk@kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        tdas@codeaurora.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 5/5] cpufreq: qcom-hw: Add cpufreq support for SM8250 SoC
-Date:   Tue, 15 Sep 2020 12:54:23 +0530
-Message-Id: <20200915072423.18437-6-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200915072423.18437-1-manivannan.sadhasivam@linaro.org>
-References: <20200915072423.18437-1-manivannan.sadhasivam@linaro.org>
+        id S1726169AbgIOHac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 03:30:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:57829 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726155AbgIOHaa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 03:30:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600155029; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=h9sQQzx9HIHqC/nRkCM3I+PxoenAg9ujW/8S7axP2Z8=; b=bFAAg9PhPekoQsp0I/z1wqfEcttE60SfcziCv/fmyUMTRFPq8n4BM5OHMgUBrZ6FS28mYt32
+ f53kT+4XQXnjBCpsQ3Ns/bMxA8wpVC/0OZsbrYFGhZ02DDGmYLGreKb3DisWtIpzOF/alyJs
+ OgcdzI2klyQsS0gQ9/ehL+Zviu0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f606d8832925f96e13dc128 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 07:30:16
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 48994C433F1; Tue, 15 Sep 2020 07:30:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.101] (unknown [47.8.144.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 757BEC433CA;
+        Tue, 15 Sep 2020 07:30:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 757BEC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 1/3] spi: spi-geni-qcom: Use the FIFO even more
+To:     Douglas Anderson <dianders@chromium.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     swboyd@chromium.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+References: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <8aa6759a-3db9-97b6-7cad-6bd5d6a1c469@codeaurora.org>
+Date:   Tue, 15 Sep 2020 13:00:00 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <20200912140730.1.Ie67fa32009b94702d56232c064f1d89065ee8836@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8250 SoC uses EPSS block for carrying out the cpufreq duties. Hence, add
-support for it in the driver with relevant dev data.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Amit Kucheria <amitk@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On 9/13/2020 2:37 AM, Douglas Anderson wrote:
+> In commit 902481a78ee4 ("spi: spi-geni-qcom: Actually use our FIFO") I
+> explained that the maximum size we could program the FIFO was
+> "mas->tx_fifo_depth - 3" but that I chose "mas->tx_fifo_depth()"
+> because I was worried about decreased bandwidth.
+>
+> Since that time:
+> * All the interconnect patches have landed, making things run at the
+>    proper speed.
+> * I've done more measurements.
+>
+> This lets me confirm that there's really no downside of using the FIFO
+> more.  Specifically I did "flashrom -p ec -r /tmp/foo.bin" on a
+> Chromebook and averaged over several runs.
+>
+> Before: It took 6.66 seconds and 59669 interrupts fired.
+> After:  It took 6.66 seconds and 47992 interrupts fired.
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index e3c46984a037..c485be839172 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -256,8 +256,17 @@ static const struct qcom_cpufreq_soc_data qcom_soc_data = {
- 	.lut_row_size = 32,
- };
- 
-+static const struct qcom_cpufreq_soc_data epss_soc_data = {
-+	.reg_enable = 0x0,
-+	.reg_freq_lut = 0x100,
-+	.reg_volt_lut = 0x200,
-+	.reg_perf_state = 0x320,
-+	.lut_row_size = 4,
-+};
-+
- static const struct of_device_id qcom_cpufreq_hw_match[] = {
- 	{ .compatible = "qcom,cpufreq-hw", .data = &qcom_soc_data },
-+	{ .compatible = "qcom,cpufreq-epss", .data = &epss_soc_data },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>
 -- 
-2.17.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
