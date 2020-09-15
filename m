@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56C2526B357
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 01:01:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBF9526B325
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 01:01:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727456AbgIOXBg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 19:01:36 -0400
-Received: from mx2.suse.de ([195.135.220.15]:36816 "EHLO mx2.suse.de"
+        id S1727419AbgIOXBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 19:01:10 -0400
+Received: from mx2.suse.de ([195.135.220.15]:37274 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727385AbgIOPB0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 11:01:26 -0400
+        id S1727337AbgIOPCL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 11:02:11 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 3CFA9B299;
-        Tue, 15 Sep 2020 15:00:28 +0000 (UTC)
+        by mx2.suse.de (Postfix) with ESMTP id F0601B229;
+        Tue, 15 Sep 2020 15:00:29 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     alexander.deucher@amd.com, christian.koenig@amd.com,
         airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
@@ -49,9 +49,9 @@ Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         xen-devel@lists.xenproject.org,
         Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 13/21] drm/rockchip: Convert to drm_gem_object_funcs
-Date:   Tue, 15 Sep 2020 16:59:50 +0200
-Message-Id: <20200915145958.19993-14-tzimmermann@suse.de>
+Subject: [PATCH v2 15/21] drm/vc4: Introduce GEM object functions
+Date:   Tue, 15 Sep 2020 16:59:52 +0200
+Message-Id: <20200915145958.19993-16-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200915145958.19993-1-tzimmermann@suse.de>
 References: <20200915145958.19993-1-tzimmermann@suse.de>
@@ -64,63 +64,116 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 GEM object functions deprecate several similar callback interfaces in
 struct drm_driver. This patch replaces the per-driver callbacks with
-per-instance callbacks in rockchip. The only exception is gem_prime_mmap,
+per-instance callbacks in vc4. The only exception is gem_prime_mmap,
 which is non-trivial to convert.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Eric Anholt <eric@anholt.net>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_drv.c |  5 -----
- drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 10 ++++++++++
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vc4/vc4_bo.c  | 21 ++++++++++++++++++++-
+ drivers/gpu/drm/vc4/vc4_drv.c | 12 ------------
+ drivers/gpu/drm/vc4/vc4_drv.h |  1 -
+ 3 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-index 0f3eb392fe39..b7654f5e4225 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-@@ -212,15 +212,10 @@ static const struct file_operations rockchip_drm_driver_fops = {
- static struct drm_driver rockchip_drm_driver = {
- 	.driver_features	= DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
- 	.lastclose		= drm_fb_helper_lastclose,
--	.gem_vm_ops		= &drm_gem_cma_vm_ops,
--	.gem_free_object_unlocked = rockchip_gem_free_object,
- 	.dumb_create		= rockchip_gem_dumb_create,
- 	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
- 	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
--	.gem_prime_get_sg_table	= rockchip_gem_prime_get_sg_table,
- 	.gem_prime_import_sg_table	= rockchip_gem_prime_import_sg_table,
--	.gem_prime_vmap		= rockchip_gem_prime_vmap,
--	.gem_prime_vunmap	= rockchip_gem_prime_vunmap,
- 	.gem_prime_mmap		= rockchip_gem_mmap_buf,
- 	.fops			= &rockchip_drm_driver_fops,
- 	.name	= DRIVER_NAME,
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-index 0055d86576f7..bddc7d99efe3 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-@@ -296,6 +296,14 @@ static void rockchip_gem_release_object(struct rockchip_gem_object *rk_obj)
- 	kfree(rk_obj);
+diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
+index 74ceebd62fbc..f432278173cd 100644
+--- a/drivers/gpu/drm/vc4/vc4_bo.c
++++ b/drivers/gpu/drm/vc4/vc4_bo.c
+@@ -21,6 +21,8 @@
+ #include "vc4_drv.h"
+ #include "uapi/drm/vc4_drm.h"
+ 
++static vm_fault_t vc4_fault(struct vm_fault *vmf);
++
+ static const char * const bo_type_names[] = {
+ 	"kernel",
+ 	"V3D",
+@@ -374,6 +376,21 @@ static struct vc4_bo *vc4_bo_get_from_cache(struct drm_device *dev,
+ 	return bo;
  }
  
-+static const struct drm_gem_object_funcs rockchip_gem_object_funcs = {
-+	.free = rockchip_gem_free_object,
-+	.get_sg_table = rockchip_gem_prime_get_sg_table,
-+	.vmap = rockchip_gem_prime_vmap,
-+	.vunmap	= rockchip_gem_prime_vunmap,
-+	.vm_ops = &drm_gem_cma_vm_ops,
++static const struct vm_operations_struct vc4_vm_ops = {
++	.fault = vc4_fault,
++	.open = drm_gem_vm_open,
++	.close = drm_gem_vm_close,
 +};
 +
- static struct rockchip_gem_object *
- 	rockchip_gem_alloc_object(struct drm_device *drm, unsigned int size)
- {
-@@ -310,6 +318,8 @@ static struct rockchip_gem_object *
- 
- 	obj = &rk_obj->base;
- 
-+	obj->funcs = &rockchip_gem_object_funcs;
++static const struct drm_gem_object_funcs vc4_gem_object_funcs = {
++	.free = vc4_free_object,
++	.export = vc4_prime_export,
++	.get_sg_table = drm_gem_cma_prime_get_sg_table,
++	.vmap = vc4_prime_vmap,
++	.vunmap = drm_gem_cma_prime_vunmap,
++	.vm_ops = &vc4_vm_ops,
++};
 +
- 	drm_gem_object_init(drm, obj, size);
+ /**
+  * vc4_gem_create_object - Implementation of driver->gem_create_object.
+  * @dev: DRM device
+@@ -400,6 +417,8 @@ struct drm_gem_object *vc4_create_object(struct drm_device *dev, size_t size)
+ 	vc4->bo_labels[VC4_BO_TYPE_KERNEL].size_allocated += size;
+ 	mutex_unlock(&vc4->bo_lock);
  
- 	return rk_obj;
++	bo->base.base.funcs = &vc4_gem_object_funcs;
++
+ 	return &bo->base.base;
+ }
+ 
+@@ -684,7 +703,7 @@ struct dma_buf * vc4_prime_export(struct drm_gem_object *obj, int flags)
+ 	return dmabuf;
+ }
+ 
+-vm_fault_t vc4_fault(struct vm_fault *vmf)
++static vm_fault_t vc4_fault(struct vm_fault *vmf)
+ {
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct drm_gem_object *obj = vma->vm_private_data;
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
+index f1a5fd5dab6f..d27eaa2d0cfe 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.c
++++ b/drivers/gpu/drm/vc4/vc4_drv.c
+@@ -140,12 +140,6 @@ static void vc4_close(struct drm_device *dev, struct drm_file *file)
+ 	kfree(vc4file);
+ }
+ 
+-static const struct vm_operations_struct vc4_vm_ops = {
+-	.fault = vc4_fault,
+-	.open = drm_gem_vm_open,
+-	.close = drm_gem_vm_close,
+-};
+-
+ static const struct file_operations vc4_drm_fops = {
+ 	.owner = THIS_MODULE,
+ 	.open = drm_open,
+@@ -195,16 +189,10 @@ static struct drm_driver vc4_drm_driver = {
+ #endif
+ 
+ 	.gem_create_object = vc4_create_object,
+-	.gem_free_object_unlocked = vc4_free_object,
+-	.gem_vm_ops = &vc4_vm_ops,
+ 
+ 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+-	.gem_prime_export = vc4_prime_export,
+-	.gem_prime_get_sg_table	= drm_gem_cma_prime_get_sg_table,
+ 	.gem_prime_import_sg_table = vc4_prime_import_sg_table,
+-	.gem_prime_vmap = vc4_prime_vmap,
+-	.gem_prime_vunmap = drm_gem_cma_prime_vunmap,
+ 	.gem_prime_mmap = vc4_prime_mmap,
+ 
+ 	.dumb_create = vc4_dumb_create,
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.h b/drivers/gpu/drm/vc4/vc4_drv.h
+index 8c8d96b6289f..a22478a35199 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.h
++++ b/drivers/gpu/drm/vc4/vc4_drv.h
+@@ -799,7 +799,6 @@ int vc4_get_hang_state_ioctl(struct drm_device *dev, void *data,
+ 			     struct drm_file *file_priv);
+ int vc4_label_bo_ioctl(struct drm_device *dev, void *data,
+ 		       struct drm_file *file_priv);
+-vm_fault_t vc4_fault(struct vm_fault *vmf);
+ int vc4_mmap(struct file *filp, struct vm_area_struct *vma);
+ int vc4_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
+ struct drm_gem_object *vc4_prime_import_sg_table(struct drm_device *dev,
 -- 
 2.28.0
 
