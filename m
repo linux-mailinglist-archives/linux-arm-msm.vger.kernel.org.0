@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41FA726A08F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:21:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C29926A090
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:21:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726202AbgIOIUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 04:20:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        id S1726341AbgIOIUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 04:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbgIOITe (ORCPT
+        with ESMTP id S1726202AbgIOIUm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 04:19:34 -0400
+        Tue, 15 Sep 2020 04:20:42 -0400
 Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47BDBC061788
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:19:24 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id mm21so1373306pjb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:19:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF34C061788
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:20:42 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id s14so2389438pju.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:20:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=QP+gA7sgySMAzlQtxJ9wc0X27q/HlusnRQDfASv/Vyw=;
-        b=l4AAgwXNgSYzVZqVsju4Tp5NWDBnThSRqRtlG4Qxgcv99tDe8Dk6a5LgaXWQvCLzqn
-         vrcAY3Kr90gTUZZfQ897H9AEdsVNYUX6EOt7p0WZ8PULsNbrJB0bWEK8ySoyRhE0t7gO
-         Y4Eavhkj0/WNLh3JgsYWIfhSLzdY4VPTyZtKqkaAVc60v5jAsUIJ6QXvqHGSaoYbPCFs
-         /Kc3Yvft/pdNVFH7d4pa+75v/SvFay5h4Tig4iq6PFKlVoB6Q6DyghGMycq9vgFBOaXU
-         7mNvLU+aJwTQy/s5Og3q6QkFCXsuFaFoiBHEaG0Q8bv+Bt9HeOagph58zmxyvenaZPWF
-         pzsQ==
+        bh=JXi3eWzHsacG9MiKaF2epjpO9JenzGDAlAFqx0AKKoQ=;
+        b=lMpB1pljYp1umVqCH0/XJPiTF6/6bIG3bYmmiUuO+hfVVvMfXcZzIG2wIzO+aUdune
+         gt7pQRZsiMV9ZINKbXVoN7z96ofijXZ0W+YuxeHNtYr8BbDloBxasvXzhOB11uNt6NFD
+         qAaRznxO7XaqXNWTM4RcyTsZ6ylbAZWLFfp7iP575gSFhoujhfJUvAgMMvwQG09A1sP8
+         p2LWIFXBvyww8HgN2H10NTpPmTWprwnjm5U0RafHklbGvJvSFXJtIZjtVt3MqCkEedr+
+         AGLsRJVID+odElWiNdOnDp02g9vUBZu8TzQBPLO+ILSQru8etSDAd5iDs5HvvHq+9nQR
+         9xlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QP+gA7sgySMAzlQtxJ9wc0X27q/HlusnRQDfASv/Vyw=;
-        b=iTOOVLSzmczRF3IEnUXuTWltPZm1aMEwZsMRH0XHs7AwZ30BsQgE2OsM65rhP96SvC
-         235IbUp2dGDtFauoPcX92h2QAhbzy2LR7J0Q7YYJoUjGFrSRopwjU+4jcBV4Q5Nti0+y
-         jK8UJyLkJ3OrLdy7u4ebx49okHzRJWMhquSnmpagSuL+8tHMp2SHRvifC0uRrdhE0Ssl
-         mYh/niBCa11IsI/TxpBZxJY82mJgrRtJyeXlDwB8nzdyukf/KI22g7B7vn5uKy63tYk2
-         vLFKA8KVYkWA0iEC9pnDswA65jTXNWngGtFikOLSaUELWKLvexqvL5eEbi+2nuG1SwIB
-         3FCw==
-X-Gm-Message-State: AOAM531g62h7nyksm+8oAE8VfD8yR4MiXiuJOyKKhTxF2eQ2mz+4mtxs
-        2wCRGqSQGABUnekXrVay1z1Wetzzqe1sgSo=
-X-Google-Smtp-Source: ABdhPJzJeGD54tp+TQ6/pm3xWErPkMups7SYx0cHC02PtVzxGqQG7J7eeDn8F/bMH9M7Wcdtd5cYNg==
-X-Received: by 2002:a17:90a:1903:: with SMTP id 3mr3153766pjg.74.1600157963636;
-        Tue, 15 Sep 2020 01:19:23 -0700 (PDT)
+        bh=JXi3eWzHsacG9MiKaF2epjpO9JenzGDAlAFqx0AKKoQ=;
+        b=pozvd7jSGWnJyKzbpGdOW0uBYIxCudUiko86t5JzvwOb75WHuRlOxsJuxt5geksHD5
+         J2DfBkIyYSS1TK0axRuguGrYd/Rns97R6dPkByzwkaFrrTVwwjmRRHCsCCY6PwIMRVW8
+         Y1CeTYMECs34VzOVq01+1lYzeULPwL3quzp4ceCNwAZfdFPmxfsXoVfjOZN2B4KGViSA
+         7GnSk4SC4CI3gYxeHkQpT2LDLF1b4KLleH19Nxa99AP5j+FsYD8UMZhk0WZvm4VcwOtU
+         QSjXmYRUWsj3aoY2Bongol7lAZfkoeQMTTFK6wewTwsdhVoEp89no8iSfQxBXFwhCOPv
+         g3UQ==
+X-Gm-Message-State: AOAM532yPKAYDd5SIhpZ2nRbDdpWlObfnZUXD5XsO0Jtuw5jHrPngg5V
+        xEuorQzn5i0mRr6dbG1mda0d
+X-Google-Smtp-Source: ABdhPJziTUpzkuItTYtzGErbjHDEGCPJyaSXVak38t6wpYZcMjlnt3KOFIp//8zvV7ab1gFWMGtt5A==
+X-Received: by 2002:a17:90b:1988:: with SMTP id mv8mr3183054pjb.23.1600158042010;
+        Tue, 15 Sep 2020 01:20:42 -0700 (PDT)
 Received: from mani ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id i9sm10348675pgb.37.2020.09.15.01.19.21
+        by smtp.gmail.com with ESMTPSA id y202sm13045064pfc.179.2020.09.15.01.20.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Sep 2020 01:19:22 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 13:49:17 +0530
+        Tue, 15 Sep 2020 01:20:41 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 13:50:36 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Hemant Kumar <hemantk@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         jhugo@codeaurora.org, bbhatt@codeaurora.org
 Subject: Re: [PATCH v1] bus: mhi: core: Add const qualifier to MHI config
  information
-Message-ID: <20200915081917.GB12395@mani>
+Message-ID: <20200915082036.GC12395@mani>
 References: <1599812017-32680-1-git-send-email-hemantk@codeaurora.org>
  <010101747c3a6fdd-33efa632-e20c-476d-9e39-01cb1f2d1cea-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
@@ -77,7 +77,7 @@ On Fri, Sep 11, 2020 at 08:13:58AM +0000, Hemant Kumar wrote:
 > Suggested-by: Kalle Valo <kvalo@codeaurora.org>
 > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
