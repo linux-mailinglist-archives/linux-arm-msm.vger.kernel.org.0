@@ -2,111 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E91C26A094
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:22:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A89526A144
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:49:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbgIOIV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 04:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33758 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726146AbgIOIVx (ORCPT
+        id S1726216AbgIOIt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 04:49:29 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:37829 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726123AbgIOIt2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 04:21:53 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43977C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:21:51 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bd2so951648plb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 01:21:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YI23JIiAx/yAbJk7ESH/yeS1S6/uWMelgMnCd+huPiA=;
-        b=nGaaSE+9YN6RrZMI8oT/ME/GtyogXfwhZPlnb2Y75Y/Fcpg1oReJ1g+4FFpqaN6qsM
-         sx48aM2795+4DoaFUUtaCQj0cFBpeKcovhCifKHy5NfgSO/K8Wg6jGTEN/55ZootC6uf
-         MGnluWeapywcxF4ZonkGvYxpKLCHKsKRz8SX2xjJZ6sRrWSReaWb8nJ6q8c8AAHxZe+u
-         0oDYaqAsIfR0Hz/9NAulJAfkxmI5iHs6MzJZWNWPnyk5x2ND5NbkiSlghCB+6Rsa8HUu
-         Lq9mihwXYBzj5fte3NNcZt4R5w+o6dgXqaHKspEgowP1BEf3OFvKAVA0HSpCSlfD4o1K
-         9Iwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YI23JIiAx/yAbJk7ESH/yeS1S6/uWMelgMnCd+huPiA=;
-        b=YAPKPTexD2TXKFKmyZdqj7RqjAgHUEBHLJr0YPrnxF7jFD4MREaHHBwkt0bYDRFuYa
-         AAF3pi++COxUf8X1cDjONPWkp2Fja5L0sMvovTCVrMZTGg/XPn4hxaAuFwOE0x2OwSYi
-         2wnAetf+TollHN9nk7fovSLDLfjmSW3j04+ihdPFPaIo9Yhnyi+bMG8xaMfteKgkFvrO
-         Ce9IvQ1ssFbn3lD4NyYu1S/viF5pQ7jZw4Zxvk9OErvYYgd5HyLQ0M4Wqe4M5rLREyyR
-         3Cr0mTI/Xr8/cTjjJxEonNbfNWqEVfTBT4KdEdKL4io0Ux3rdMIME6c1VcBzyVC7kVxH
-         71fw==
-X-Gm-Message-State: AOAM533NchXpM5cTKbrJ1x291qL85QqvA7owM0LW1179NPTugHJtXd6G
-        QNBPHJhqS6H2QJq5hnmo/iys/52zckJht/I=
-X-Google-Smtp-Source: ABdhPJzlAf1vOGk/Wgkl4oQzUiVAKsJpTak466qiI9yV4CsekwJH5n7HkPjUdL1DNk3q1KTh8U8Oew==
-X-Received: by 2002:a17:902:7089:b029:d1:e5e7:be13 with SMTP id z9-20020a1709027089b02900d1e5e7be13mr709240plk.70.1600158110767;
-        Tue, 15 Sep 2020 01:21:50 -0700 (PDT)
-Received: from mani ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id fz23sm11540788pjb.36.2020.09.15.01.21.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Sep 2020 01:21:50 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 13:51:44 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Clark Williams <williams@redhat.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [PATCH] bus: mhi: Remove include of rwlock_types.h
-Message-ID: <20200915082144.GD12395@mani>
-References: <20200915074816.52zphpywj4zidspk@linutronix.de>
+        Tue, 15 Sep 2020 04:49:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600159767; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=lgWaE3f5Tk8GQse/S9qKMVFoUNqqNMGU6pVowPuyQYs=;
+ b=S117pVnlE0PLUfIaJEdrN5lVafuVCO2rP5B6JChgTCfqeRyJ/3EJmWDFLBCYY7W9zVZfXFpT
+ 22JB9dcbcLTGigT9mYLXStOAW5IOtaUfLMtzoj4yzZR5gJQrZfVS4WlM7cop8T20/aPi1nm7
+ MkwV2HXVOGT4sRBRf4uk4LK4MAA=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f608016947f606f7ef1a971 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 08:49:26
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D3C55C43387; Tue, 15 Sep 2020 08:49:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: nguyenb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D4FEEC433C8;
+        Tue, 15 Sep 2020 08:49:24 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200915074816.52zphpywj4zidspk@linutronix.de>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 15 Sep 2020 01:49:24 -0700
+From:   nguyenb@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
+In-Reply-To: <20200915025401.GD471@uller>
+References: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
+ <20200915025401.GD471@uller>
+Message-ID: <a8c851744fcaee205fc7a58db8f747fa@codeaurora.org>
+X-Sender: nguyenb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 09:48:16AM +0200, Sebastian Andrzej Siewior wrote:
-> From: Clark Williams <williams@redhat.com>
+On 2020-09-14 19:54, Bjorn Andersson wrote:
+> On Tue 01 Sep 01:19 UTC 2020, Bao D. Nguyen wrote:
 > 
-> rwlock.h should not be included directly. Instead linux/splinlock.h
-> should be included. Including it directly will break the RT build.
+>> UFS version 3.0 and later devices require Vcc and Vccq power supplies
+>> with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
+>> devices, the Vcc and Vccq2 are required with Vccq being optional.
+>> Check the required power supplies used by the device
+>> and set the device's supported Icc level properly.
+>> 
+>> Signed-off-by: Can Guo <cang@codeaurora.org>
+>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+>> ---
+>>  drivers/scsi/ufs/ufshcd.c | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+>> index 06e2439..fdd1d3e 100644
+>> --- a/drivers/scsi/ufs/ufshcd.c
+>> +++ b/drivers/scsi/ufs/ufshcd.c
+>> @@ -6845,8 +6845,9 @@ static u32 
+>> ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
+>>  {
+>>  	u32 icc_level = 0;
+>> 
+>> -	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
+>> -						!hba->vreg_info.vccq2) {
+>> +	if (!hba->vreg_info.vcc ||
 > 
-> Also there is no point in including _types.h headers directly. There is
-> no benefit in including the type without the accessor.
+> How did you test this?
 > 
-> Fixes: 0cbf260820fa7 ("bus: mhi: core: Add support for registering MHI controllers")
-> Signed-off-by: Clark Williams <williams@redhat.com>
-> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-
-Applied to mhi-next!
-
-Thanks,
-Mani
-
-> ---
->  include/linux/mhi.h | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+> devm_regulator_get() never returns NULL, so afaict this conditional 
+> will
+> never be taken with either the old or new version of the code.
+Thanks for your comment. The call flow is as follows:
+ufshcd_pltfrm_init->ufshcd_parse_regulator_info->ufshcd_populate_vreg
+In the ufshcd_populate_vreg() function, it looks for DT entries 
+"%s-supply"
+For UFS3.0+ devices, "vccq2-supply" is optional, so the vendor may 
+choose not to provide vccq2-supply in the DT.
+As a result, a NULL is returned to hba->vreg_info.vccq2.
+Same for UFS2.0 and UFS2.1 devices, a NULL may be returned to 
+hba->vreg_info.vccq if vccq-supply is not provided in the DT.
+The current code only checks for !hba->vreg_info.vccq OR 
+!hba->vreg_info.vccq2. It will skip the setting for icc_level
+if either vccq or vccq2 is not provided in the DT.
 > 
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index c4a940d989121..2b4ed30d47294 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -9,10 +9,9 @@
->  #include <linux/device.h>
->  #include <linux/dma-direction.h>
->  #include <linux/mutex.h>
-> -#include <linux/rwlock_types.h>
->  #include <linux/skbuff.h>
->  #include <linux/slab.h>
-> -#include <linux/spinlock_types.h>
-> +#include <linux/spinlock.h>
->  #include <linux/wait.h>
->  #include <linux/workqueue.h>
->  
-> -- 
-> 2.28.0
+> Regards,
+> Bjorn
 > 
+>> +		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
+>> +		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
+>>  		dev_err(hba->dev,
+>>  			"%s: Regulator capability was not set, actvIccLevel=%d",
+>>  							__func__, icc_level);
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
