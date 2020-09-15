@@ -2,171 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 745C326AB05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 19:46:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7337A26AB24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 19:52:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727908AbgIORqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 13:46:38 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:39157 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727786AbgIORq3 (ORCPT
+        id S1727916AbgIORwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 13:52:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37174 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727920AbgIORsd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 13:46:29 -0400
-Received: by mail-pg1-f196.google.com with SMTP id d13so2368386pgl.6;
-        Tue, 15 Sep 2020 10:46:28 -0700 (PDT)
+        Tue, 15 Sep 2020 13:48:33 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ED7C06174A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 10:48:23 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id o16so5121087qkj.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 10:48:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PMuG0obES1mSU4p2Bpr9xG7rtnzSIk+zV1FaePqSpAg=;
+        b=Hp9J3dEGpH2Tmiz9hu0LHBSu9dMuxfgzHEHC6EExeypCNaNj4GXYK7uTRowjOfqWTJ
+         6paAY39WTSiWMWBKsQ/MzVdwZDyQbM6Jwx9zVZhY8QTnqMonYJ5u4kg5B3UTHxAJnWbW
+         2t3bHz7zY2M7AOdSWlhKIVVIxkBGNpGtDaZIuv86g+tOyMut4zFas1uLfddUe0ux4Lpc
+         GCdobFHAeTK029mmYVLioLA8QV7OL0zwrjP91ov5EcQvbVif/99cR8VooqMbZRpxxBd2
+         2Zl0dY+YD4haUWXc4hP73sHe0X8cXKlZz+kBGw5lvL03nr073GrKUdq0Y/ZyxD/nnOgR
+         4evQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BFviqgFIWRut0eU0K6H+y+f/pPgiXCv3xoSL8tn8HHs=;
-        b=Tpi/HE9Z0rVc2pzaSxVSR9m8DKWIXlSNoVs+2if3T2O6f3olmhEp0MTdHMWQeIK3Cy
-         f25y04oY/fRqs1ueDK2FvoTogkvqYrk2ofwpCmcylicyfnfcJLZ8AjrluH4CkuonhTmf
-         Y804xiMWnLQx3e2zZPUDha3K3T6k/SV7EpOUeOcexhlBAbIdYD7jzq1hcpp6m/7Y9Zy5
-         9wLOWRfj3OVzeOtKYrZBks7LDX0XVRu6v89SJ8L1YnugJI1UXjnRdy7G+2GXSR4fhNa9
-         yz8my1rD4aJHfLfM1YLGgvV3cQTuLKa0CRsPc6Y51H6d61kguwMb1XpaH8trr5M5oyT+
-         pbZw==
-X-Gm-Message-State: AOAM533rzKw9Txub4x2QNr5S8XGWIPGPM3mtO9wTCX2XQrp1HjmWMw+O
-        TgnVWc1ryndbYUTKFXs4iQgO8miAqlnEQp8=
-X-Google-Smtp-Source: ABdhPJwlOK3415SZU7crEdleYLmA5Xut63SzqKMQt4DXj3NOqdQUDv7Z1Gs9HZKBmjrRx8Wu+CD9eA==
-X-Received: by 2002:a5d:840a:: with SMTP id i10mr15791731ion.4.1600189202340;
-        Tue, 15 Sep 2020 10:00:02 -0700 (PDT)
-Received: from xps15 ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id r5sm9320455ilc.2.2020.09.15.09.59.59
+        bh=PMuG0obES1mSU4p2Bpr9xG7rtnzSIk+zV1FaePqSpAg=;
+        b=H69dTD6cLNLGFRMAbbuv2PJPSNTGBUSp/IdrPAMy+fnT0Z0NDiKTK9BuHSPaaZPSjI
+         mn8qfEb2ZBXs/HKaiDyEazNcktmP3q0blHYLpuYQDPK1U9iuCKAqPbXarzuZZAXnp3A0
+         TTzHJMKrNftaHOAdMZ0Tcwr+4Mr1lxX2BrMAahiQjnKmyVY4Glm4IHkGDKSWWKLCcWfA
+         Jo6lZimR00ESXSZ7N+Uw9P6+Ix0DAsybYVFLk84VBLBC96t19w9gLIIsHvLm9vGIoVGS
+         oFXIHbZ1t00RLMaQRisNYSbwCW6keyn4uXm0gJjzzOJGRKIcuLQ4ltnTdISEIR24AaI9
+         VVIQ==
+X-Gm-Message-State: AOAM531s9+YufVXUiYkUuZIaFtB0f0U8s70b481COLHVPvlevc2yzj4q
+        lYLXmDIYz+RDdfZabdCzOFR1kw==
+X-Google-Smtp-Source: ABdhPJxTTAbFFmxhibWA9gq1WRKxKHcXRLCjzzCKT74WJ3jv9tDtGRFixbfDx/V4RZZsonZeQCirCA==
+X-Received: by 2002:a37:8404:: with SMTP id g4mr7503354qkd.63.1600192103023;
+        Tue, 15 Sep 2020 10:48:23 -0700 (PDT)
+Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
+        by smtp.gmail.com with ESMTPSA id z19sm17735949qtb.37.2020.09.15.10.48.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 10:00:01 -0700 (PDT)
-Received: (nullmailer pid 2122994 invoked by uid 1000);
-        Tue, 15 Sep 2020 16:59:58 -0000
-Date:   Tue, 15 Sep 2020 10:59:58 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Subject: Re: [PATCH v4 2/5] ASoC: dt-bindings: Add dt binding for lpass hdmi
-Message-ID: <20200915165958.GA2118432@bogus>
-References: <1599587037-6742-1-git-send-email-srivasam@codeaurora.org>
- <010101746ed1d41a-5890a534-9c2c-4203-bce5-46075d7827da-000000@us-west-2.amazonses.com>
+        Tue, 15 Sep 2020 10:48:22 -0700 (PDT)
+Date:   Tue, 15 Sep 2020 17:48:20 +0000
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        Vinod Koul <vkoul@kernel.org>, Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: Add documentation
+ for LT9611UXC
+Message-ID: <20200915174820.GI478@uller>
+References: <20200909092823.64810-1-dmitry.baryshkov@linaro.org>
+ <20200909092823.64810-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <010101746ed1d41a-5890a534-9c2c-4203-bce5-46075d7827da-000000@us-west-2.amazonses.com>
+In-Reply-To: <20200909092823.64810-2-dmitry.baryshkov@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 08, 2020 at 05:44:39PM +0000, Srinivasa Rao Mandadapu wrote:
-> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+On Wed 09 Sep 09:28 UTC 2020, Dmitry Baryshkov wrote:
+
+> Lontium LT9611UXC is a DSI to HDMI bridge which supports 2 DSI ports
+> and I2S port as input and one HDMI port as output. The LT9611UXC chip is
+> handled by a separate driver, but the bindings used are fully compatible
+> with the LT9611 chip, so let's reuse the lt9611.yaml schema.
 > 
-> Adds bindings for lpass hdmi interface
-> which can support audio path over dp.
-> 
-> Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Acked-by: Vinod Koul <vkoul@kernel.org>
+> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
 > ---
->  .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 51 ++++++++++++++++++++--
->  1 file changed, 47 insertions(+), 4 deletions(-)
+>  .../devicetree/bindings/display/bridge/lontium,lt9611.yaml   | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> index 09c9bd2..7c2ac0c 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> @@ -22,6 +22,7 @@ properties:
->        - qcom,lpass-cpu
->        - qcom,apq8016-lpass-cpu
->        - qcom,sc7180-lpass-cpu
-> +      - qcom,sc7180-lpass-hdmi
+> diff --git a/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml b/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+> index d60208359234..7a1c89b995e2 100644
+> --- a/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+> +++ b/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+> @@ -4,18 +4,19 @@
+>  $id: http://devicetree.org/schemas/display/bridge/lontium,lt9611.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+> -title: Lontium LT9611 2 Port MIPI to HDMI Bridge
+> +title: Lontium LT9611(UXC) 2 Port MIPI to HDMI Bridge
+>  
+>  maintainers:
+>    - Vinod Koul <vkoul@kernel.org>
+>  
+>  description: |
+> -  The LT9611 is a bridge device which converts DSI to HDMI
+> +  The LT9611 and LT9611UXC are bridge devices which convert DSI to HDMI
+>  
+>  properties:
+>    compatible:
+>      enum:
+>        - lontium,lt9611
+> +      - lontium,lt9611uxc
 >  
 >    reg:
 >      maxItems: 1
-> @@ -60,10 +61,12 @@ properties:
->      const: 0
->  
->  patternProperties:
-> -  "(^mi2s-[0-9a-f]$|mi2s)":
-> +  "^dai@[0-9a-f]$":
->      type: object
-> -    description: Required properties for each DAI
-> -
-> +    description: |
-> +      LPASS CPU dai node for each I2S device. Bindings of each node
-> +      depends on the specific driver providing the functionality and
-> +      properties.
->      properties:
->        reg:
->          maxItems: 1
-> @@ -145,6 +148,22 @@ allOf:
->          - iommus
->          - power-domains
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,sc7180-lpass-hdmi
-> +    then:
-> +      properties:
-> +        clock-names:
-> +          items:
-> +            - const: pcnoc-sway-clk
-> +            - const: audio-core
-> +            - const: pcnoc-mport-clk
-> +      required:
-> +        - iommus
-> +        - power-domains
-> +
->  examples:
->    - |
->      #include <dt-bindings/sound/sc7180-lpass.h>
-> @@ -178,12 +197,36 @@ examples:
->              #address-cells = <1>;
->              #size-cells = <0>;
->              /* Optional to set different MI2S SD lines */
-> -            mi2s-primary@0 {
-> +            dai@mi2s-primary {
-
-The unit address should be a number.
-
-As this is not failing checks, then you are missing an 
-'additionalProperties: false'.
-
->                  reg = <MI2S_PRIMARY>;
->                  qcom,playback-sd-lines = <1>;
->                  qcom,capture-sd-lines = <0>;
->              };
->          };
-> +
-> +        lpassh@62d87000 {
-> +            compatible = "qcom,sc7180-lpass-hdmi";
-> +
-> +            reg = <0 0x62d87000 0 0x68000>;
-> +
-> +            iommus = <&apps_smmu 0x1032 0>;
-> +
-> +            power-domains = <&lpass_hm 0>;
-> +
-> +            clocks = <&gcc 131>,
-> +                 <&lpasscc 6>,
-> +                 <&lpasscc 10>;
-> +
-> +            clock-names = "pcnoc-sway-clk", "audio-core",
-> +                          "pcnoc-mport-clk";
-> +
-> +            #sound-dai-cells = <1>;
-> +
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            interrupts = <0 268 1>;
-> +        };
->      };
->  
->  ...
 > -- 
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+> 2.28.0
 > 
