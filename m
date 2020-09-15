@@ -2,358 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD61B26A158
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 10:56:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC3A726A1D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 11:13:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726155AbgIOI4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 04:56:55 -0400
-Received: from mx2.suse.de ([195.135.220.15]:40602 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726122AbgIOI4y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 04:56:54 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 91A0BB071;
-        Tue, 15 Sep 2020 08:57:07 +0000 (UTC)
-Subject: Re: [PATCH 18/20] drm/xen: Introduce GEM object functions
-To:     Oleksandr Andrushchenko <Oleksandr_Andrushchenko@epam.com>,
-        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-        "christian.koenig@amd.com" <christian.koenig@amd.com>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
-        "maarten.lankhorst@linux.intel.com" 
-        <maarten.lankhorst@linux.intel.com>,
-        "mripard@kernel.org" <mripard@kernel.org>,
-        "l.stach@pengutronix.de" <l.stach@pengutronix.de>,
-        "christian.gmeiner@gmail.com" <christian.gmeiner@gmail.com>,
-        "inki.dae@samsung.com" <inki.dae@samsung.com>,
-        "jy0922.shim@samsung.com" <jy0922.shim@samsung.com>,
-        "sw0312.kim@samsung.com" <sw0312.kim@samsung.com>,
-        "kyungmin.park@samsung.com" <kyungmin.park@samsung.com>,
-        "kgene@kernel.org" <kgene@kernel.org>,
-        "krzk@kernel.org" <krzk@kernel.org>,
-        "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
-        "jani.nikula@linux.intel.com" <jani.nikula@linux.intel.com>,
-        "joonas.lahtinen@linux.intel.com" <joonas.lahtinen@linux.intel.com>,
-        "rodrigo.vivi@intel.com" <rodrigo.vivi@intel.com>,
-        "chunkuang.hu@kernel.org" <chunkuang.hu@kernel.org>,
-        "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
-        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "bskeggs@redhat.com" <bskeggs@redhat.com>,
-        "tomi.valkeinen@ti.com" <tomi.valkeinen@ti.com>,
-        "eric@anholt.net" <eric@anholt.net>,
-        "hjc@rock-chips.com" <hjc@rock-chips.com>,
-        "heiko@sntech.de" <heiko@sntech.de>,
-        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
-        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
-        "rodrigosiqueiramelo@gmail.com" <rodrigosiqueiramelo@gmail.com>,
-        "hamohammed.sa@gmail.com" <hamohammed.sa@gmail.com>,
-        "hyun.kwon@xilinx.com" <hyun.kwon@xilinx.com>,
-        "laurent.pinchart@ideasonboard.com" 
-        <laurent.pinchart@ideasonboard.com>,
-        "michal.simek@xilinx.com" <michal.simek@xilinx.com>,
-        "sumit.semwal@linaro.org" <sumit.semwal@linaro.org>,
-        "evan.quan@amd.com" <evan.quan@amd.com>,
-        "Hawking.Zhang@amd.com" <Hawking.Zhang@amd.com>,
-        "tianci.yin@amd.com" <tianci.yin@amd.com>,
-        "marek.olsak@amd.com" <marek.olsak@amd.com>,
-        "hdegoede@redhat.com" <hdegoede@redhat.com>,
-        "andrey.grodzovsky@amd.com" <andrey.grodzovsky@amd.com>,
-        "Felix.Kuehling@amd.com" <Felix.Kuehling@amd.com>,
-        "xinhui.pan@amd.com" <xinhui.pan@amd.com>,
-        "aaron.liu@amd.com" <aaron.liu@amd.com>,
-        "nirmoy.das@amd.com" <nirmoy.das@amd.com>,
-        "chris@chris-wilson.co.uk" <chris@chris-wilson.co.uk>,
-        "matthew.auld@intel.com" <matthew.auld@intel.com>,
-        "abdiel.janulgue@linux.intel.com" <abdiel.janulgue@linux.intel.com>,
-        "tvrtko.ursulin@linux.intel.com" <tvrtko.ursulin@linux.intel.com>,
-        "andi.shyti@intel.com" <andi.shyti@intel.com>,
-        "sam@ravnborg.org" <sam@ravnborg.org>,
-        "miaoqinglang@huawei.com" <miaoqinglang@huawei.com>,
-        "emil.velikov@collabora.com" <emil.velikov@collabora.com>
-Cc:     "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "etnaviv@lists.freedesktop.org" <etnaviv@lists.freedesktop.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "linux-mediatek@lists.infradead.org" 
-        <linux-mediatek@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>,
-        "linux-rockchip@lists.infradead.org" 
-        <linux-rockchip@lists.infradead.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
-        "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
-References: <20200813083644.31711-1-tzimmermann@suse.de>
- <20200813083644.31711-19-tzimmermann@suse.de>
- <1fe5f918-2445-d2e6-a501-881e70929404@epam.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Message-ID: <ea91877b-6398-a398-4972-9794f7965662@suse.de>
-Date:   Tue, 15 Sep 2020 10:56:46 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726402AbgIOJNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 05:13:18 -0400
+Received: from ssl.serverraum.org ([176.9.125.105]:41977 "EHLO
+        ssl.serverraum.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726243AbgIOJNB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 05:13:01 -0400
+Received: from mwalle01.sab.local. (unknown [213.135.10.150])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ssl.serverraum.org (Postfix) with ESMTPSA id CB43822708;
+        Tue, 15 Sep 2020 11:12:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc; s=mail2016061301;
+        t=1600161175;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=2P5NgU0B9AjWYC5q+V3Ti4erlurb01RNNs/ekO5kyz4=;
+        b=Gmmwa8SaNq1wBjgmtbx23XQ4Aq+GkGLeJlA4UeC3ZaWzH1qGxK9dFUBOmbF1lddi3yip+W
+        4Hv+k+gC8x+sDVQnS5zAzIdZMndJFqFUt7ClVJhvzrUOwTpCo9s/8/hFo9w+Azsq37lK5o
+        ArWMyV0/CqU5KBo6YGZcLMw2FgrRGas=
+From:   Michael Walle <michael@walle.cc>
+To:     robh@kernel.org
+Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
+        eswara.kota@linux.intel.com, festevam@gmail.com,
+        gustavo.pimentel@synopsys.com, hayashi.kunihiko@socionext.com,
+        hongxing.zhu@nxp.com, jbrunet@baylibre.com,
+        jesper.nilsson@axis.com, jingoohan1@gmail.com,
+        jonathanh@nvidia.com, jonnyc@amazon.com, kernel@pengutronix.de,
+        kgene@kernel.org, khilman@baylibre.com, kishon@ti.com,
+        krzk@kernel.org, l.stach@pengutronix.de,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-imx@nxp.com,
+        linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        lorenzo.pieralisi@arm.com, m-karicheri2@ti.com,
+        martin.blumenstingl@googlemail.com, maz@kernel.org,
+        narmstrong@baylibre.com, pratyush.anand@gmail.com,
+        s.hauer@pengutronix.de, shawn.guo@linaro.org, shawnguo@kernel.org,
+        songxiaowei@hisilicon.com, svarbanov@mm-sol.com,
+        thierry.reding@gmail.com, wangbinghui@hisilicon.com,
+        yamada.masahiro@socionext.com, yue.wang@Amlogic.com,
+        Michael Walle <michael@walle.cc>
+Subject: Re: [PATCH v2 00/40] PCI: dwc: Driver clean-ups
+Date:   Tue, 15 Sep 2020 11:12:18 +0200
+Message-Id: <20200915091218.28737-1-michael@walle.cc>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200821035420.380495-1-robh@kernel.org>
+References: <20200821035420.380495-1-robh@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <1fe5f918-2445-d2e6-a501-881e70929404@epam.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="PEKUmr8ZTfzNvLYko4DS4LvqUwNvZCpsP"
+Content-Transfer-Encoding: 8bit
+X-Spam: Yes
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---PEKUmr8ZTfzNvLYko4DS4LvqUwNvZCpsP
-Content-Type: multipart/mixed; boundary="kA0kz2rRnYLjEYgqBQNbqkILRFPajOphI";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Oleksandr Andrushchenko <Oleksandr_Andrushchenko@epam.com>,
- "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
- "christian.koenig@amd.com" <christian.koenig@amd.com>,
- "airlied@linux.ie" <airlied@linux.ie>, "daniel@ffwll.ch" <daniel@ffwll.ch>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
- "mripard@kernel.org" <mripard@kernel.org>,
- "l.stach@pengutronix.de" <l.stach@pengutronix.de>,
- "christian.gmeiner@gmail.com" <christian.gmeiner@gmail.com>,
- "inki.dae@samsung.com" <inki.dae@samsung.com>,
- "jy0922.shim@samsung.com" <jy0922.shim@samsung.com>,
- "sw0312.kim@samsung.com" <sw0312.kim@samsung.com>,
- "kyungmin.park@samsung.com" <kyungmin.park@samsung.com>,
- "kgene@kernel.org" <kgene@kernel.org>, "krzk@kernel.org" <krzk@kernel.org>,
- "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
- "jani.nikula@linux.intel.com" <jani.nikula@linux.intel.com>,
- "joonas.lahtinen@linux.intel.com" <joonas.lahtinen@linux.intel.com>,
- "rodrigo.vivi@intel.com" <rodrigo.vivi@intel.com>,
- "chunkuang.hu@kernel.org" <chunkuang.hu@kernel.org>,
- "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
- "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
- "robdclark@gmail.com" <robdclark@gmail.com>,
- "sean@poorly.run" <sean@poorly.run>, "bskeggs@redhat.com"
- <bskeggs@redhat.com>, "tomi.valkeinen@ti.com" <tomi.valkeinen@ti.com>,
- "eric@anholt.net" <eric@anholt.net>, "hjc@rock-chips.com"
- <hjc@rock-chips.com>, "heiko@sntech.de" <heiko@sntech.de>,
- "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
- "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
- "rodrigosiqueiramelo@gmail.com" <rodrigosiqueiramelo@gmail.com>,
- "hamohammed.sa@gmail.com" <hamohammed.sa@gmail.com>,
- "hyun.kwon@xilinx.com" <hyun.kwon@xilinx.com>,
- "laurent.pinchart@ideasonboard.com" <laurent.pinchart@ideasonboard.com>,
- "michal.simek@xilinx.com" <michal.simek@xilinx.com>,
- "sumit.semwal@linaro.org" <sumit.semwal@linaro.org>,
- "evan.quan@amd.com" <evan.quan@amd.com>,
- "Hawking.Zhang@amd.com" <Hawking.Zhang@amd.com>,
- "tianci.yin@amd.com" <tianci.yin@amd.com>,
- "marek.olsak@amd.com" <marek.olsak@amd.com>,
- "hdegoede@redhat.com" <hdegoede@redhat.com>,
- "andrey.grodzovsky@amd.com" <andrey.grodzovsky@amd.com>,
- "Felix.Kuehling@amd.com" <Felix.Kuehling@amd.com>,
- "xinhui.pan@amd.com" <xinhui.pan@amd.com>,
- "aaron.liu@amd.com" <aaron.liu@amd.com>,
- "nirmoy.das@amd.com" <nirmoy.das@amd.com>,
- "chris@chris-wilson.co.uk" <chris@chris-wilson.co.uk>,
- "matthew.auld@intel.com" <matthew.auld@intel.com>,
- "abdiel.janulgue@linux.intel.com" <abdiel.janulgue@linux.intel.com>,
- "tvrtko.ursulin@linux.intel.com" <tvrtko.ursulin@linux.intel.com>,
- "andi.shyti@intel.com" <andi.shyti@intel.com>,
- "sam@ravnborg.org" <sam@ravnborg.org>,
- "miaoqinglang@huawei.com" <miaoqinglang@huawei.com>,
- "emil.velikov@collabora.com" <emil.velikov@collabora.com>
-Cc: "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
- "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
- "etnaviv@lists.freedesktop.org" <etnaviv@lists.freedesktop.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
- "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
- "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
- "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>,
- "linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
- "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
-Message-ID: <ea91877b-6398-a398-4972-9794f7965662@suse.de>
-Subject: Re: [PATCH 18/20] drm/xen: Introduce GEM object functions
-References: <20200813083644.31711-1-tzimmermann@suse.de>
- <20200813083644.31711-19-tzimmermann@suse.de>
- <1fe5f918-2445-d2e6-a501-881e70929404@epam.com>
-In-Reply-To: <1fe5f918-2445-d2e6-a501-881e70929404@epam.com>
+Hi Rob,
 
---kA0kz2rRnYLjEYgqBQNbqkILRFPajOphI
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+> This is a series of clean-ups for the Designware PCI driver. The series
+> initially reworks the config space accessors to use the existing pci_ops
+> struct. Then there's removal of various private data that's also present
+> in the pci_host_bridge struct. There's also some duplicated common (PCI
+> and DWC) register defines which I converted to use the common defines.
+> Finally, the initialization for speed/gen, number of lanes, and N_FTS
+> are all moved to the common DWC code.
 
-Hi
+> This is compile tested only as I don't have any DWC based h/w, so any
+> testing would be helpful. A branch is here[1].
 
-Am 13.08.20 um 13:19 schrieb Oleksandr Andrushchenko:
-> Hi,
->=20
-> On 8/13/20 11:36 AM, Thomas Zimmermann wrote:
->> GEM object functions deprecate several similar callback interfaces in
->> struct drm_driver. This patch replaces the per-driver callbacks with
->> per-instance callbacks in xen. The only exception is gem_prime_mmap,
->> which is non-trivial to convert.
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> ---
->>   drivers/gpu/drm/xen/xen_drm_front.c     | 12 +-----------
->>   drivers/gpu/drm/xen/xen_drm_front.h     |  2 ++
->>   drivers/gpu/drm/xen/xen_drm_front_gem.c | 15 +++++++++++++++
->>   3 files changed, 18 insertions(+), 11 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/xen/xen_drm_front.c b/drivers/gpu/drm/xen=
-/xen_drm_front.c
->> index 3e660fb111b3..bd9af1875af1 100644
->> --- a/drivers/gpu/drm/xen/xen_drm_front.c
->> +++ b/drivers/gpu/drm/xen/xen_drm_front.c
->> @@ -433,7 +433,7 @@ static int xen_drm_drv_dumb_create(struct drm_file=
- *filp,
->>   	return ret;
->>   }
->>  =20
->> -static void xen_drm_drv_free_object_unlocked(struct drm_gem_object *o=
-bj)
->> +void xen_drm_drv_free_object_unlocked(struct drm_gem_object *obj)
->=20
-> Can we please have naming consistent and name it as
->=20
-> xen_drm_front_drv_free_object_unlocked or any other name if this seems =
-to be too long,
->=20
-> but starting with xen_drm_front_ as the rest of exported functions?
+I've noticed that with the latest linux-next, my board doesn't boot
+anymore. I've traced it back to this series. There is a similar
+board in kernelci [1,2] where you can have a look at the backtrace.
 
-There already is a function with that name in drm_xen_front_gem.c. I'll
-move the callback function next to the object-function structure and
-rename it slightly.
+I've bisected this to the following patch:
+  PCI: dwc: Use generic config accessors
 
-Best regards
-Thomas
+I'm pretty much lost here. It seems that the kernel tries to read from
+an invalid/unmapped memory address.
 
->=20
-> With this,
->=20
-> Acked-by: Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>
->=20
-> Thank you,
->=20
-> Oleksandr
->=20
->>   {
->>   	struct xen_drm_front_drm_info *drm_info =3D obj->dev->dev_private;
->>   	int idx;
->> @@ -481,22 +481,12 @@ static const struct file_operations xen_drm_dev_=
-fops =3D {
->>   	.mmap           =3D xen_drm_front_gem_mmap,
->>   };
->>  =20
->> -static const struct vm_operations_struct xen_drm_drv_vm_ops =3D {
->> -	.open           =3D drm_gem_vm_open,
->> -	.close          =3D drm_gem_vm_close,
->> -};
->> -
->>   static struct drm_driver xen_drm_driver =3D {
->>   	.driver_features           =3D DRIVER_GEM | DRIVER_MODESET | DRIVER=
-_ATOMIC,
->>   	.release                   =3D xen_drm_drv_release,
->> -	.gem_vm_ops                =3D &xen_drm_drv_vm_ops,
->> -	.gem_free_object_unlocked  =3D xen_drm_drv_free_object_unlocked,
->>   	.prime_handle_to_fd        =3D drm_gem_prime_handle_to_fd,
->>   	.prime_fd_to_handle        =3D drm_gem_prime_fd_to_handle,
->>   	.gem_prime_import_sg_table =3D xen_drm_front_gem_import_sg_table,
->> -	.gem_prime_get_sg_table    =3D xen_drm_front_gem_get_sg_table,
->> -	.gem_prime_vmap            =3D xen_drm_front_gem_prime_vmap,
->> -	.gem_prime_vunmap          =3D xen_drm_front_gem_prime_vunmap,
->>   	.gem_prime_mmap            =3D xen_drm_front_gem_prime_mmap,
->>   	.dumb_create               =3D xen_drm_drv_dumb_create,
->>   	.fops                      =3D &xen_drm_dev_fops,
->> diff --git a/drivers/gpu/drm/xen/xen_drm_front.h b/drivers/gpu/drm/xen=
-/xen_drm_front.h
->> index f92c258350ca..93e60c1db550 100644
->> --- a/drivers/gpu/drm/xen/xen_drm_front.h
->> +++ b/drivers/gpu/drm/xen/xen_drm_front.h
->> @@ -160,4 +160,6 @@ int xen_drm_front_page_flip(struct xen_drm_front_i=
-nfo *front_info,
->>   void xen_drm_front_on_frame_done(struct xen_drm_front_info *front_in=
-fo,
->>   				 int conn_idx, u64 fb_cookie);
->>  =20
->> +void xen_drm_drv_free_object_unlocked(struct drm_gem_object *obj);
->> +
->>   #endif /* __XEN_DRM_FRONT_H_ */
->> diff --git a/drivers/gpu/drm/xen/xen_drm_front_gem.c b/drivers/gpu/drm=
-/xen/xen_drm_front_gem.c
->> index f0b85e094111..7b315c08bcfc 100644
->> --- a/drivers/gpu/drm/xen/xen_drm_front_gem.c
->> +++ b/drivers/gpu/drm/xen/xen_drm_front_gem.c
->> @@ -56,6 +56,19 @@ static void gem_free_pages_array(struct xen_gem_obj=
-ect *xen_obj)
->>   	xen_obj->pages =3D NULL;
->>   }
->>  =20
->> +static const struct vm_operations_struct xen_drm_drv_vm_ops =3D {
->> +	.open           =3D drm_gem_vm_open,
->> +	.close          =3D drm_gem_vm_close,
->> +};
->> +
->> +static const struct drm_gem_object_funcs xen_drm_front_gem_object_fun=
-cs =3D {
->> +	.free =3D xen_drm_drv_free_object_unlocked,
->> +	.get_sg_table =3D xen_drm_front_gem_get_sg_table,
->> +	.vmap =3D xen_drm_front_gem_prime_vmap,
->> +	.vunmap =3D xen_drm_front_gem_prime_vunmap,
->> +	.vm_ops =3D &xen_drm_drv_vm_ops,
->> +};
->> +
->>   static struct xen_gem_object *gem_create_obj(struct drm_device *dev,=
+[1] https://kernelci.org/test/plan/id/5f5f4992d1c53777a0a6092d/
+[2] https://storage.kernelci.org/next/master/next-20200914/arm64/defconfig/gcc-8/lab-nxp/baseline-fsl-ls1028a-rdb.txt
 
->>   					     size_t size)
->>   {
->> @@ -66,6 +79,8 @@ static struct xen_gem_object *gem_create_obj(struct =
-drm_device *dev,
->>   	if (!xen_obj)
->>   		return ERR_PTR(-ENOMEM);
->>  =20
->> +	xen_obj->base.funcs =3D &xen_drm_front_gem_object_funcs;
->> +
->>   	ret =3D drm_gem_object_init(dev, &xen_obj->base, size);
->>   	if (ret < 0) {
->>   		kfree(xen_obj);
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---kA0kz2rRnYLjEYgqBQNbqkILRFPajOphI--
-
---PEKUmr8ZTfzNvLYko4DS4LvqUwNvZCpsP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQFIBAEBCAAyFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl9ggdEUHHR6aW1tZXJt
-YW5uQHN1c2UuZGUACgkQaA3BHVMLeiPDBwf/f2Q/YJ8WXCfC3ehLZzwlJXNPSLdV
-RBu8TYn7lfxxUA4dxKgUAU8gtA/RhGAj6nStvS9xB/lBn3Pzea0Zgxyi9muLzrVj
-AAtdCLdz4ykNSJKXeHJFa2/gNzRETQYNok4p3aC2o7qLw1vUdb3U2GY3PzrEX+CR
-cF1iwAbanJ+/6sT1OATWLOSzjyZ4EkRCP6xclKm6wzrrATaBUeneBeDT0TW4OY1i
-0W8WRT7epjcXidinkJnDOtSXDzLRgl5eV5BnsTioD1vJ12ArZwkW0xG/wTTpNgMq
-Rs06mSE5osC1vjmNLl5TUYmtRzgLkOztpo+HyNQH5SwuMdM1wMCL8OkOVA==
-=swh3
------END PGP SIGNATURE-----
-
---PEKUmr8ZTfzNvLYko4DS4LvqUwNvZCpsP--
+-michael
