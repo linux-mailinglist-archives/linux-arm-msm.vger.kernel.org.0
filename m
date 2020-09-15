@@ -2,138 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C13C26B277
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74EA326B248
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 00:44:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727545AbgIOWr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 18:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727489AbgIOPpC (ORCPT
+        id S1727533AbgIOWoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 18:44:22 -0400
+Received: from perceval.ideasonboard.com ([213.167.242.64]:36610 "EHLO
+        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727510AbgIOPyy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 11:45:02 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68FCDC061352
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:45:00 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id w186so4716500qkd.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 08:45:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Jr9FyPebxkKqG5Q+7PXT2kwXR4HeYkXnIjay9uV7M3A=;
-        b=rFHVNAT/L/p+uTassh8kWHyPPmM6zU7jhMji4JUNPpHOH6vp7+SknoNXEUaxITlZJo
-         C47l3vrn5M1foQsDyM7MD13TTYbOSoz+k3xxYu2RBF/1DXBmgX5hCizpgqmu7GxO2Qn7
-         t+UA0UhrW0z+v7akhpkjQXmNzcd1NdyF9egZIXmLbC6cB5UgKlerScIbcv3AVVTn3Fsc
-         SIOsbC7nIY+6OOkvdDsfHVxDKHqeJrx5J2v8OoZnq5BvJ7UDU5nXuKIkPxIn3QTCEXTN
-         jo8hO5NeFIqIKE2GyopxS/cZDkUROZKl0oZCNrBm7aRWQrRt7F4pkll8G1GT259vH8V6
-         gV1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Jr9FyPebxkKqG5Q+7PXT2kwXR4HeYkXnIjay9uV7M3A=;
-        b=r1ptcXJeceBKJyt2PdjBBz8Q3d2MH8VWXq+I15JB3C+xVu5lw2Jk/L511G+uKZgO+z
-         rJ+lBZ+iocnEUiewzDNZGrip8lrtQSQEBLotcyaaDDN8AQjsTF/aVDiGGKlbRr5qayHI
-         VAM7e5+pAKI+gkENeawfY9VnUlfW2MgFOySrYqhWpERlIOXOp9krjtXm2CGHmRkBavAm
-         c1QnxubNka2CKvrFEd+XL5pdqZuJt/fFpoOjjRUMwoCGYYYRWtG/Xron+oyUguJF8L5r
-         GFImGHSPWe6bkqCymx8RMO8cjZ6zxs60TGYrilzDmLNieKbT+vPiY4X4i8l8oEq1J4UN
-         dZ4A==
-X-Gm-Message-State: AOAM532EkXneg5wnwemx7C4z/ZsqgUM+IyssNJqVszpZpvZcKlODSSKo
-        bjxC1kJ8NSlZvZ1zODjbBmhy2A==
-X-Google-Smtp-Source: ABdhPJy/FgcqpjL803/QUt6DpehETtocnf+0DIjdU+tNjllUdMmC353O7wtD73sn2n4/M/TjNpyT2Q==
-X-Received: by 2002:a37:a054:: with SMTP id j81mr17048838qke.23.1600184697935;
-        Tue, 15 Sep 2020 08:44:57 -0700 (PDT)
-Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id n136sm15988518qkn.14.2020.09.15.08.44.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 08:44:57 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 15:44:55 +0000
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: Re: [PATCH] irqchip/qcom-pdc: Allow QCOM_PDC to be loadable as a
- permanent module
-Message-ID: <20200915154455.GG478@uller>
-References: <20200912125148.1271481-7-maz@kernel.org>
- <20200914210423.67579-1-john.stultz@linaro.org>
+        Tue, 15 Sep 2020 11:54:54 -0400
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 0FA56276;
+        Tue, 15 Sep 2020 17:54:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1600185256;
+        bh=XzPEATglwb8mJLD0DYu0V5mnVt9Rmyb4GFF3M0n1BQw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k/TxRWDwAUeEA/mxOqDGy3dXpqZvHw1rgu/hfc6AZ+2kJHV8nY1aZQ1niwJxXM2on
+         uMm8kF40aJQq8Y3LJa+B/xGzPCzryGwMdT5H5oWYJQ48rRZEb8n/CrAkn0VvMZEJAK
+         zd/EMFYW53+dug8ySJGu6EPKXShM0dS8ZH8bQ3S8=
+Date:   Tue, 15 Sep 2020 18:53:46 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        michal.simek@xilinx.com, sumit.semwal@linaro.org,
+        evan.quan@amd.com, Hawking.Zhang@amd.com, tianci.yin@amd.com,
+        marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v2 20/21] drm/xlnx: Initialize DRM driver instance with
+ CMA helper macro
+Message-ID: <20200915155346.GA26029@pendragon.ideasonboard.com>
+References: <20200915145958.19993-1-tzimmermann@suse.de>
+ <20200915145958.19993-21-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200914210423.67579-1-john.stultz@linaro.org>
+In-Reply-To: <20200915145958.19993-21-tzimmermann@suse.de>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 14 Sep 21:04 UTC 2020, John Stultz wrote:
+Hi Thomas,
 
-> Allows qcom-pdc driver to be loaded as a permanent module.
+Thank you for the patch.
+
+On Tue, Sep 15, 2020 at 04:59:57PM +0200, Thomas Zimmermann wrote:
+> The xlnx driver uses CMA helpers with default callback functions.
+> Initialize the driver structure with the rsp CMA helper macro. The
+> driver is being converted to use GEM object functions as part of
+> this change.
 > 
-> An earlier version of this patch was merged in a larger patchset
-> but was reverted entirely when issues were found with other
-> drivers, so now that Marc has provided a better solution in his
-> Hybrid probing patch set, I wanted to re-submit this change.
+> Two callbacks, .dumb_destroy and .gem_prime_import, were initialized
+> to their default implementations, so they are just kept empty now.
 > 
+> v2:
+> 	* initialize with DRM_GEM_CMA_DRIVER_OPS_WITH_DUMB_CREATE (Laurent)
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Joerg Roedel <joro@8bytes.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Jason Cooper <jason@lakedaemon.net>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Maulik Shah <mkshah@codeaurora.org>
-> Cc: Lina Iyer <ilina@codeaurora.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: iommu@lists.linux-foundation.org
-> Cc: linux-gpio@vger.kernel.org
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
 > ---
->  drivers/irqchip/Kconfig    | 2 +-
->  drivers/irqchip/qcom-pdc.c | 2 ++
->  2 files changed, 3 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 14 +-------------
+>  1 file changed, 1 insertion(+), 13 deletions(-)
 > 
-> diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-> index bfc9719dbcdc..bb70b7177f94 100644
-> --- a/drivers/irqchip/Kconfig
-> +++ b/drivers/irqchip/Kconfig
-> @@ -425,7 +425,7 @@ config GOLDFISH_PIC
->           for Goldfish based virtual platforms.
+> diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+> index 8e69303aad3f..f3ffc3703a0e 100644
+> --- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+> +++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+> @@ -80,19 +80,7 @@ static struct drm_driver zynqmp_dpsub_drm_driver = {
+>  	.driver_features		= DRIVER_MODESET | DRIVER_GEM |
+>  					  DRIVER_ATOMIC,
 >  
->  config QCOM_PDC
-> -	bool "QCOM PDC"
-> +	tristate "QCOM PDC"
->  	depends on ARCH_QCOM
->  	select IRQ_DOMAIN_HIERARCHY
->  	help
-> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-> index 8543fa23da10..59eb3c8473b0 100644
-> --- a/drivers/irqchip/qcom-pdc.c
-> +++ b/drivers/irqchip/qcom-pdc.c
-> @@ -433,3 +433,5 @@ static int qcom_pdc_init(struct device_node *node, struct device_node *parent)
->  IRQCHIP_HYBRID_DRIVER_BEGIN(qcom_pdc)
->  IRQCHIP_MATCH("qcom,pdc", qcom_pdc_init)
->  IRQCHIP_HYBRID_DRIVER_END(qcom_pdc)
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Power Domain Controller");
-> +MODULE_LICENSE("GPL v2");
-> -- 
-> 2.17.1
-> 
+> -	.prime_handle_to_fd		= drm_gem_prime_handle_to_fd,
+> -	.prime_fd_to_handle		= drm_gem_prime_fd_to_handle,
+> -	.gem_prime_export		= drm_gem_prime_export,
+> -	.gem_prime_import		= drm_gem_prime_import,
+> -	.gem_prime_get_sg_table		= drm_gem_cma_prime_get_sg_table,
+> -	.gem_prime_import_sg_table	= drm_gem_cma_prime_import_sg_table,
+> -	.gem_prime_vmap			= drm_gem_cma_prime_vmap,
+> -	.gem_prime_vunmap		= drm_gem_cma_prime_vunmap,
+> -	.gem_prime_mmap			= drm_gem_cma_prime_mmap,
+> -	.gem_free_object_unlocked	= drm_gem_cma_free_object,
+> -	.gem_vm_ops			= &drm_gem_cma_vm_ops,
+> -	.dumb_create			= zynqmp_dpsub_dumb_create,
+> -	.dumb_destroy			= drm_gem_dumb_destroy,
+> +	DRM_GEM_CMA_DRIVER_OPS_WITH_DUMB_CREATE(zynqmp_dpsub_dumb_create),
+>  
+>  	.fops				= &zynqmp_dpsub_drm_fops,
+>  
+
+-- 
+Regards,
+
+Laurent Pinchart
