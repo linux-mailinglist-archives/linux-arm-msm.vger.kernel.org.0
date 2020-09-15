@@ -2,95 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4404D26B6EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 02:14:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90BAA26B81F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 02:37:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727076AbgIPAOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 20:14:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33506 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbgIOOYz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 10:24:55 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E820C061353
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 07:24:10 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id z22so5339195ejl.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 07:24:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hdIlY1DMQa6xWQ6TOTopEmK8Mk3bArQLeIZPYRdF+MY=;
-        b=cD2Bs7MX5CaMjdT1RGSQP9QjtU0jyd1+ezIHcOrMzjVXXu9EYL+A4L26g++gbDz+66
-         V7/ikz3zTXW43pA5cStDWuOIrOULlehaNS0tp8qYe9Cx9+YKDAAswfxwo90YUtYlKwDB
-         D4vKWMp0qC7KIf1xo67rwUB0p2TFinGOdfW0rMYd5fg8OTQEYRheaBeOrGekiNZimU1T
-         OwOcoe3kxAygpfHMp6pwqVWnMJDr9U2OaZF/RPB7IKDkvDTk7CJVqGoJu98Sr3pjjjVS
-         7uxvJBBvhLJbH3URKKet+RxrTa4LIwL7GXG/gP3uFguK8+zuMX1W+zIZupBefTXZKf5t
-         pZNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hdIlY1DMQa6xWQ6TOTopEmK8Mk3bArQLeIZPYRdF+MY=;
-        b=O7Z2KKxZOIKYbqNR8y7s1/lNfK7AES8NKl6LGCxheO7Pv1NfckV+rmwG8ruuKymCv2
-         8tFTJnQUxlj2PRH9DRLrtjXe2knTeeOmKeTyKK1U+PnU0X3kOWL6+C4sAemygf5oPvsq
-         40IzejufLKaaK4etKBUqxoRTLillrn8zbqftFpVzTYVLulBFrh87ZeRKiP1JU1dxk0/I
-         T366yLNyq04rhk2+mOn7uu2G9D8kEFlmJl1Bg/qP1voy/AOxVZlnTQKo5BdKV1/m5MTL
-         CuWcqhHPMJPhBqDMsFAN75ECMZGdHtO1zEoNvlTiXknZLcKnnfaHR7E9Ugu+GweB8/AM
-         gGgQ==
-X-Gm-Message-State: AOAM533r0x0S0RMHIa/Hz9TAZM3nQHNsNdN2W6Y1arqBHIrdJ/T+Jim8
-        f/uXtaATbCHEQzNCXt2eNNGmJw==
-X-Google-Smtp-Source: ABdhPJxxPQqo+SY2oLP3bGkJn5qMdGtI+WtpT8UWcDElnzK3m58LblbwEe5kthpZiMZYWa9Lpnk8Yg==
-X-Received: by 2002:a17:906:9416:: with SMTP id q22mr12933333ejx.82.1600179848730;
-        Tue, 15 Sep 2020 07:24:08 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:2450:102f:d6a:d196:1215:6121:1cc7])
-        by smtp.gmail.com with ESMTPSA id n14sm12096001edb.52.2020.09.15.07.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 07:24:07 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v1] arm64: dts: qcom: msm8996: Add VFE1_GDSC power domain to camss node
-Date:   Tue, 15 Sep 2020 16:23:16 +0200
-Message-Id: <20200915142316.147208-1-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        id S1726148AbgIPAgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 20:36:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:40200 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726325AbgIONY7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 09:24:59 -0400
+Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0E37020684;
+        Tue, 15 Sep 2020 13:23:54 +0000 (UTC)
+Date:   Tue, 15 Sep 2020 09:23:53 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Gaurav Kohli <gkohli@codeaurora.org>
+Cc:     mingo@redhat.com, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] trace: Fix race in trace_open and buffer resize call
+Message-ID: <20200915092353.5b805468@gandalf.local.home>
+In-Reply-To: <2fe2a843-e2b5-acf8-22e4-7231d24a9382@codeaurora.org>
+References: <1599199797-25978-1-git-send-email-gkohli@codeaurora.org>
+        <d4691a90-9a47-b946-f2cd-bb1fce3981b0@codeaurora.org>
+        <2fe2a843-e2b5-acf8-22e4-7231d24a9382@codeaurora.org>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As the MSM8996 has two VFE IP-blocks, and each has a power domain,
-both of them have to be enabled. Previously only the power domain
-of VFE0 was enabled, but not the domain for VFE1.
+On Tue, 15 Sep 2020 10:38:03 +0530
+Gaurav Kohli <gkohli@codeaurora.org> wrote:
 
-This patch adds the VFE1_GDSC power domain to the camss device tree
-node of the MSM8996 soc.
+> 
+>  >>> +void ring_buffer_mutex_release(struct trace_buffer *buffer)
+>  >>> +{
+>  >>> +    mutex_unlock(&buffer->mutex);
+>  >>> +}
+>  >>> +EXPORT_SYMBOL_GPL(ring_buffer_mutex_release);  
+>  >
+>  > I really do not like to export these.
+>  >  
+> 
+> Actually available reader lock is not helping 
+> here(&cpu_buffer->reader_lock), So i took ring buffer mutex lock to 
+> resolve this(this came on 4.19/5.4), in latest tip it is trace buffer 
+> lock. Due to this i have exported api.
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I'm saying, why don't you take the buffer->mutex in the
+ring_buffer_reset_online_cpus() function? And remove all the protection in
+tracing_reset_online_cpus()?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 9951286db775..df6e1b246a19 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1009,7 +1009,8 @@ camss: camss@a00000 {
- 				"ispif",
- 				"vfe0",
- 				"vfe1";
--			power-domains = <&mmcc VFE0_GDSC>;
-+			power-domains = <&mmcc VFE0_GDSC>,
-+				<&mmcc VFE1_GDSC>;
- 			clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
- 				<&mmcc CAMSS_ISPIF_AHB_CLK>,
- 				<&mmcc CAMSS_CSI0PHYTIMER_CLK>,
--- 
-2.25.1
+void tracing_reset_online_cpus(struct array_buffer *buf)
+{
+	struct trace_buffer *buffer = buf->buffer;
+
+	if (!buffer)
+		return;
+
+	buf->time_start = buffer_ftrace_now(buf, buf->cpu);
+
+	ring_buffer_reset_online_cpus(buffer);
+}
+
+The reset_online_cpus() is already doing the synchronization, we don't need
+to do it twice.
+
+I believe commit b23d7a5f4a07 ("ring-buffer: speed up buffer resets by
+avoiding synchronize_rcu for each CPU") made the synchronization in
+tracing_reset_online_cpus() obsolete.
+
+-- Steve
 
