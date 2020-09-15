@@ -2,118 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1105269C23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 04:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25D03269C67
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 05:17:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726068AbgIOCyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Sep 2020 22:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40000 "EHLO
+        id S1726082AbgIODRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Sep 2020 23:17:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbgIOCyF (ORCPT
+        with ESMTP id S1726035AbgIODRT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Sep 2020 22:54:05 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D575C061788
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 19:54:05 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id h1so1062979qvo.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 19:54:05 -0700 (PDT)
+        Mon, 14 Sep 2020 23:17:19 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DEAFC06174A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 20:17:17 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id n61so1842546ota.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Sep 2020 20:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AENtihZFanz7AK6JAQj2iuXl1rr5XpuLAyHhP2fdTxc=;
-        b=g/h4wKVtRzze15q7+YBYa8/BU5+91OBLBnKQ/0b/r2PCfF49nXRZnsElWP3ecnuHzq
-         EM+R+PjHIbUv4pd2JUJas4i+d5pUKdy9OTUdEQV0Jp/NSiPGV+e1D3wEDcIX9ApI4VZX
-         +2hwSCeDbmLrnG73Up5dRLqZUF5RHBnT6IW8iKDIXbMiCbHpDWiltkYTycPejWzqC51j
-         BBZ1YVVBSbAJWyAdGZFgkBnMExUoSyMG1P+uKDzN7nytHu5Ma5cnNSBYbf7sqU0C3gWL
-         X+VYR+LyvNH3CiR5df85wESmzQ3Vr1NkafTjaDAcbBb/ODyyAqY8VmL9u6+dfOwcvlXl
-         hUlA==
+        bh=/qWVDCASGrupwV9JyWG9rVOnOXEyxffQY/mwb2teeCs=;
+        b=BkDvLW7nAAL4GOlIYSYdl2x/5Qq28C/sTVEIPMBw26Rrbkvpt/Xb7lX5rpYZbODXBV
+         aU94PH/Fu+cXV91D+Kiz0xT7RXFt5FXn4tVycuXCbyFArNvqP7lahl9DsDXz1cK3ZcFX
+         QuOdnku7vWl4kAaGpxoclI8+BkG12hoyJfQfaEue9veJs+YiJ6nZYXG1I9runEiURDQM
+         F47nnsIZqtvAt/xagjHNybWagPhUaz9tzKrsJTS+TNXk2ZsfZZ8nZo2Bpo2NCJvuN10d
+         ILvdGoJ5MKTbeGGDDk2524IBboHEnvMkQQcAQr6fstWwN7km1oz5JGfce2AOXRYp7YIi
+         9tJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AENtihZFanz7AK6JAQj2iuXl1rr5XpuLAyHhP2fdTxc=;
-        b=lufIE0EXKd6l2yIufJpRTR7GKsFI4D36ghuKzBxhnFFsnyAvsMIFADA1G9QUgS0B8u
-         FJRGNpR6MxPa80bgiICbTmIerLvp0Gk4h1kdPAPnUYTqcoHjG7C7ephcAakbp/tSLpJH
-         YShEV+UulVQVuE/UnE66YXA4ONexGrfXO8wacKlJshRzCTlj4mk4ymqHYaykL54CPptX
-         4lT0hoqy57m5227cN1m2LK/Widw6r7CrSnP/rzFoordOI1ZAXDKrI4REsr/Y4vTwMVT2
-         LBWMLl4S7fWWDT/VUVENvTDVt3hI2m7v1SC3Y0WzWbRi92/HfeyCAm0nwDYYKO8YRV7V
-         ZiPg==
-X-Gm-Message-State: AOAM533S7J7JxMeOaM1qBoWNdDcU7BCvvBd/6pdQOz41SG89FlEbPTHQ
-        KyDZRC4egBlRcJ4RS+6mLFygog==
-X-Google-Smtp-Source: ABdhPJxHxWeHi97ePv3FCP2DV1zftb/XyH1vIFWezkQmVxts9NiBBIfqccJnCV2mwFphJKlRWsDQuA==
-X-Received: by 2002:a05:6214:12c:: with SMTP id w12mr16299144qvs.18.1600138444488;
-        Mon, 14 Sep 2020 19:54:04 -0700 (PDT)
-Received: from uller (ec2-34-197-84-77.compute-1.amazonaws.com. [34.197.84.77])
-        by smtp.gmail.com with ESMTPSA id s47sm16504448qtb.13.2020.09.14.19.54.02
+        bh=/qWVDCASGrupwV9JyWG9rVOnOXEyxffQY/mwb2teeCs=;
+        b=FkpsE1brgU4grcClQNn1UDK3oSYwElAJPEIkViuWDJrYYiFvoj2iztCY0JaMugLAPy
+         FxkRXIyVwRMz1zk+1vpqOBcDPrOR3od216XffYm2nfd7kDh2DRMO4LppCk1hI09UIuoY
+         3IXvKvg54Pskg122nfAsYBfcSfVXQaNiyFpMTNRYEZ/UpQrAncOa8zmJH4eoIB5s/oyC
+         GfSE9gKevn9lJTfjsFsoc5nPxx9HuBjLtaOu3gxu3RYrezbCIXYuOZyEYJfsnfT/7qkw
+         0z/4q+qHR4tq7Dfm1wRnthzvHfN1A8DF/JJyUi/ExuAwzvMxze6rHiu1fXT2SqFxi3q4
+         Jvcw==
+X-Gm-Message-State: AOAM533qc1mYrJTzL4Vio9AjHxiez0VvHzPYFCA8i7bSyZR89Ui98NWA
+        uC/QPAKqJfTdBk3a7dyPtEYWOA==
+X-Google-Smtp-Source: ABdhPJxBKiKJdxNtWNtq+f2bA/z02TwJEliskpuCyFZRXsHFO/Z9F1FHqBPOVxb6uI6t341ojQlFGA==
+X-Received: by 2002:a05:6830:144f:: with SMTP id w15mr10880048otp.62.1600139836899;
+        Mon, 14 Sep 2020 20:17:16 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:8898:14ff:fe6d:34e])
+        by smtp.gmail.com with ESMTPSA id l23sm4525960otk.79.2020.09.14.20.17.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 19:54:03 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 02:54:01 +0000
+        Mon, 14 Sep 2020 20:17:16 -0700 (PDT)
+Date:   Mon, 14 Sep 2020 22:17:14 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "Bao D. Nguyen" <nguyenb@codeaurora.org>
-Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
-Message-ID: <20200915025401.GD471@uller>
-References: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
+To:     Liu Shixin <liushixin2@huawei.com>
+Cc:     Niklas Cassel <nks@flawful.org>, Andy Gross <agross@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Nishanth Menon <nm@ti.com>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] power: avs: qcom-cpr: simplify the return
+ expression of cpr_disable()
+Message-ID: <20200915031714.GA670377@yoga>
+References: <20200915032629.1772569-1-liushixin2@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
+In-Reply-To: <20200915032629.1772569-1-liushixin2@huawei.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 01 Sep 01:19 UTC 2020, Bao D. Nguyen wrote:
+On Mon 14 Sep 22:26 CDT 2020, Liu Shixin wrote:
 
-> UFS version 3.0 and later devices require Vcc and Vccq power supplies
-> with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
-> devices, the Vcc and Vccq2 are required with Vccq being optional.
-> Check the required power supplies used by the device
-> and set the device's supported Icc level properly.
+> Simplify the return expression.
 > 
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+> Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
 > ---
->  drivers/scsi/ufs/ufshcd.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  drivers/power/avs/qcom-cpr.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
 > 
-> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-> index 06e2439..fdd1d3e 100644
-> --- a/drivers/scsi/ufs/ufshcd.c
-> +++ b/drivers/scsi/ufs/ufshcd.c
-> @@ -6845,8 +6845,9 @@ static u32 ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
->  {
->  	u32 icc_level = 0;
+> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/power/avs/qcom-cpr.c
+> index bd7c3e48b386..b24cc77d1889 100644
+> --- a/drivers/power/avs/qcom-cpr.c
+> +++ b/drivers/power/avs/qcom-cpr.c
+> @@ -665,8 +665,6 @@ static int cpr_enable(struct cpr_drv *drv)
 >  
-> -	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
-> -						!hba->vreg_info.vccq2) {
-> +	if (!hba->vreg_info.vcc ||
-
-How did you test this?
-
-devm_regulator_get() never returns NULL, so afaict this conditional will
-never be taken with either the old or new version of the code.
-
-Regards,
-Bjorn
-
-> +		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
-> +		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
->  		dev_err(hba->dev,
->  			"%s: Regulator capability was not set, actvIccLevel=%d",
->  							__func__, icc_level);
+>  static int cpr_disable(struct cpr_drv *drv)
+>  {
+> -	int ret;
+> -
+>  	mutex_lock(&drv->lock);
+>  
+>  	if (cpr_is_allowed(drv)) {
+> @@ -676,11 +674,7 @@ static int cpr_disable(struct cpr_drv *drv)
+>  
+>  	mutex_unlock(&drv->lock);
+>  
+> -	ret = regulator_disable(drv->vdd_apc);
+> -	if (ret)
+> -		return ret;
+> -
+> -	return 0;
+> +	return regulator_disable(drv->vdd_apc);
+>  }
+>  
+>  static int cpr_config(struct cpr_drv *drv)
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.25.1
 > 
