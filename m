@@ -2,226 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8AB226A76C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 16:45:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E87B626A838
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 17:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727182AbgIOOpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 10:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36702 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbgIOOpC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 10:45:02 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE96C06174A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 07:44:46 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id c25so890868vkm.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Sep 2020 07:44:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zT4idoY3GXU6AKl9P1KDotBGRD6i9BlOD/Yn8HDxrN8=;
-        b=cZcT/XO2v6Dw0s2Q7AzR/zkwbrn4Ls20hHCTCwjhdEm4E90JV0hcQRXDXeZO0/79hQ
-         aF+uMGX1TJIcuD68ObaYkd9bA7Qdk0HFRWwA/rZBI/5tw6+sCym7qpOxSaA1MKQzKvA+
-         PKT/I2wOPNx697M0Kt0AyARG4MwGHIMriU4Y05nxMvOVLHijn/kzh8bV9Lmyfx5IX6ls
-         rO3tL24NeY+O0sTDx89AZcGI995Ai5XwqYKMrD8Arrvow+1WyE8b+lLmjZzvByom/hw5
-         jE0q04luXWatzViaRyWafy86MVsVozNRTnWLmGTUMkBfAricswHoyVpHKVc9XAVxLIke
-         RGNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zT4idoY3GXU6AKl9P1KDotBGRD6i9BlOD/Yn8HDxrN8=;
-        b=G6pSiErgR/RXhacEfkt2htLCK0EKQp39xYKZ5oPX52hgn609GAyLPDY3pwhPxdjZJx
-         JXxEklm7nN26rbsvMFYdzCzJPQ7fmNvqwEJRo5BQ1PyAlFCFHu8rdOPrs/+i4YpgxUyg
-         KKhfTpOVPSvoHZjglO4mldukp1mHSKbwvhWRPkwkSlhCqNjvcFqA2kgyyO/WZzEwii4W
-         q4h8cYYRnORIZXz6LbSJrdVPwo5VmXs62lawh9x6OODpWA5b/h5U2Q6rhPF+d0zLxdaC
-         HRw/A2jAO8KS1RmZP0ZcJ/o+G7606EOW4XhNXYQ+RFfJaWaq4jBYDM4ONSI16Mj08yqz
-         4VgA==
-X-Gm-Message-State: AOAM531g1QnQqo5RyM85PZpehclDsL0ja8CgqDLM2WAcIL77VFb9jhZB
-        HYP3QAE1irJKdptYAxek5nqzrxcEMI2Nyt0AaLAV4w==
-X-Google-Smtp-Source: ABdhPJz9V+xdlRF8ie6wyANpoDEf4gTRpkJcbnRPg71Sjm27NaLv4OKg5H8hiYkDipcT92cxG4GzEtlmJZG5SuY43QQ=
-X-Received: by 2002:a1f:7882:: with SMTP id t124mr1612757vkc.22.1600181085580;
- Tue, 15 Sep 2020 07:44:45 -0700 (PDT)
+        id S1727391AbgIOPBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 11:01:45 -0400
+Received: from mx2.suse.de ([195.135.220.15]:36396 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727317AbgIOPB0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 11:01:26 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id 3D4ABAF84;
+        Tue, 15 Sep 2020 15:00:23 +0000 (UTC)
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 07/21] drm/mediatek: Introduce GEM object functions
+Date:   Tue, 15 Sep 2020 16:59:44 +0200
+Message-Id: <20200915145958.19993-8-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200915145958.19993-1-tzimmermann@suse.de>
+References: <20200915145958.19993-1-tzimmermann@suse.de>
 MIME-Version: 1.0
-References: <20200915140644.037604909@linuxfoundation.org>
-In-Reply-To: <20200915140644.037604909@linuxfoundation.org>
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Tue, 15 Sep 2020 20:14:34 +0530
-Message-ID: <CA+G9fYv5hvOYNdfX6F40aZPP9Vr6aEsP_-22gX2P+Q95TrfF-A@mail.gmail.com>
-Subject: Re: [PATCH 5.4 000/132] 5.4.66-rc1 review
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     open list <linux-kernel@vger.kernel.org>,
-        Shuah Khan <shuah@kernel.org>, patches@kernelci.org,
-        lkft-triage@lists.linaro.org,
-        Ben Hutchings <ben.hutchings@codethink.co.uk>,
-        linux- stable <stable@vger.kernel.org>, pavel@denx.de,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 15 Sep 2020 at 19:50, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.4.66 release.
-> There are 132 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 17 Sep 2020 14:06:12 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.4.66-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+GEM object functions deprecate several similar callback interfaces in
+struct drm_driver. This patch replaces the per-driver callbacks with
+per-instance callbacks in mediatek. The only exception is gem_prime_mmap,
+which is non-trivial to convert.
 
-arm and arm64 build breaks on stable rc 5.4.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |  5 -----
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 11 +++++++++++
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-make -sk KBUILD_BUILD_USER=3DTuxBuild -C/linux -j16 ARCH=3Darm
-CROSS_COMPILE=3Darm-linux-gnueabihf- HOSTCC=3Dgcc CC=3D"sccache
-arm-linux-gnueabihf-gcc" O=3Dbuild zImage
-#
-../kernel/kprobes.c: In function =E2=80=98kill_kprobe=E2=80=99:
-../kernel/kprobes.c:1081:33: warning: statement with no effect [-Wunused-va=
-lue]
- 1081 | #define disarm_kprobe_ftrace(p) (-ENODEV)
-      |                                 ^
-../kernel/kprobes.c:2113:3: note: in expansion of macro =E2=80=98disarm_kpr=
-obe_ftrace=E2=80=99
- 2113 |   disarm_kprobe_ftrace(p);
-      |   ^~~~~~~~~~~~~~~~~~~~
-#
-# make -sk KBUILD_BUILD_USER=3DTuxBuild -C/linux -j16 ARCH=3Darm
-CROSS_COMPILE=3Darm-linux-gnueabihf- HOSTCC=3Dgcc CC=3D"sccache
-arm-linux-gnueabihf-gcc" O=3Dbuild modules
-#
-../drivers/gpu/drm/msm/adreno/a5xx_preempt.c: In function =E2=80=98preempt_=
-init_ring=E2=80=99:
-../drivers/gpu/drm/msm/adreno/a5xx_preempt.c:235:21: error:
-=E2=80=98MSM_BO_MAP_PRIV=E2=80=99 undeclared (first use in this function)
-  235 |   MSM_BO_UNCACHED | MSM_BO_MAP_PRIV, gpu->aspace, &bo, &iova);
-      |                     ^~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/adreno/a5xx_preempt.c:235:21: note: each
-undeclared identifier is reported only once for each function it
-appears in
-make[5]: *** [../scripts/Makefile.build:266:
-drivers/gpu/drm/msm/adreno/a5xx_preempt.o] Error 1
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function =E2=80=98a6xx_hw_init=
-=E2=80=99:
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:414:6: error: implicit
-declaration of function =E2=80=98adreno_is_a640=E2=80=99; did you mean
-=E2=80=98adreno_is_a540=E2=80=99? [-Werror=3Dimplicit-function-declaration]
-  414 |  if (adreno_is_a640(adreno_gpu) || adreno_is_a650(adreno_gpu)) {
-      |      ^~~~~~~~~~~~~~
-      |      adreno_is_a540
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:414:36: error: implicit
-declaration of function =E2=80=98adreno_is_a650=E2=80=99; did you mean
-=E2=80=98adreno_is_a540=E2=80=99? [-Werror=3Dimplicit-function-declaration]
-  414 |  if (adreno_is_a640(adreno_gpu) || adreno_is_a650(adreno_gpu)) {
-      |                                    ^~~~~~~~~~~~~~
-      |                                    adreno_is_a540
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:415:18: error:
-=E2=80=98REG_A6XX_GBIF_QSB_SIDE0=E2=80=99 undeclared (first use in this fun=
-ction)
-  415 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:415:18: note: each undeclared
-identifier is reported only once for each function it appears in
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:416:18: error:
-=E2=80=98REG_A6XX_GBIF_QSB_SIDE1=E2=80=99 undeclared (first use in this fun=
-ction)
-  416 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:417:18: error:
-=E2=80=98REG_A6XX_GBIF_QSB_SIDE2=E2=80=99 undeclared (first use in this fun=
-ction)
-  417 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/adreno/a6xx_gpu.c:418:18: error:
-=E2=80=98REG_A6XX_GBIF_QSB_SIDE3=E2=80=99 undeclared (first use in this fun=
-ction)
-  418 |   gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE3, 0x00071620);
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
-make[5]: *** [../scripts/Makefile.build:265:
-drivers/gpu/drm/msm/adreno/a6xx_gpu.o] Error 1
-In file included from ../drivers/gpu/drm/msm/msm_gpu.c:7:
-../drivers/gpu/drm/msm/msm_gpu.c: In function =E2=80=98msm_gpu_init=E2=80=
-=99:
-../drivers/gpu/drm/msm/msm_gpu.h:330:22: error: =E2=80=98MSM_BO_MAP_PRIV=E2=
-=80=99
-undeclared (first use in this function)
-  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
-      |                      ^~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/msm_gpu.c:935:3: note: in expansion of macro
-=E2=80=98check_apriv=E2=80=99
-  935 |   check_apriv(gpu, MSM_BO_UNCACHED), gpu->aspace, &gpu->memptrs_bo,
-      |   ^~~~~~~~~~~
-../drivers/gpu/drm/msm/msm_gpu.h:330:22: note: each undeclared
-identifier is reported only once for each function it appears in
-  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
-      |                      ^~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/msm_gpu.c:935:3: note: in expansion of macro
-=E2=80=98check_apriv=E2=80=99
-  935 |   check_apriv(gpu, MSM_BO_UNCACHED), gpu->aspace, &gpu->memptrs_bo,
-      |   ^~~~~~~~~~~
-make[5]: *** [../scripts/Makefile.build:266:
-drivers/gpu/drm/msm/msm_gpu.o] Error 1
-In file included from ../drivers/gpu/drm/msm/msm_ringbuffer.c:8:
-../drivers/gpu/drm/msm/msm_ringbuffer.c: In function =E2=80=98msm_ringbuffe=
-r_new=E2=80=99:
-../drivers/gpu/drm/msm/msm_gpu.h:330:22: error: =E2=80=98MSM_BO_MAP_PRIV=E2=
-=80=99
-undeclared (first use in this function)
-  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
-      |                      ^~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/msm_ringbuffer.c:30:3: note: in expansion of
-macro =E2=80=98check_apriv=E2=80=99
-   30 |   check_apriv(gpu, MSM_BO_WC | MSM_BO_GPU_READONLY),
-      |   ^~~~~~~~~~~
-../drivers/gpu/drm/msm/msm_gpu.h:330:22: note: each undeclared
-identifier is reported only once for each function it appears in
-  330 |  (((gpu)->hw_apriv ? MSM_BO_MAP_PRIV : 0) | (flags))
-      |                      ^~~~~~~~~~~~~~~
-../drivers/gpu/drm/msm/msm_ringbuffer.c:30:3: note: in expansion of
-macro =E2=80=98check_apriv=E2=80=99
-   30 |   check_apriv(gpu, MSM_BO_WC | MSM_BO_GPU_READONLY),
-      |   ^~~~~~~~~~~
-make[5]: *** [../scripts/Makefile.build:265:
-drivers/gpu/drm/msm/msm_ringbuffer.o] Error 1
-make[5]: Target '__build' not remade because of errors.
-make[4]: *** [../scripts/Makefile.build:500: drivers/gpu/drm/msm] Error 2
-make[4]: Target '__build' not remade because of errors.
-make[3]: *** [../scripts/Makefile.build:500: drivers/gpu/drm] Error 2
-make[3]: Target '__build' not remade because of errors.
-make[2]: *** [../scripts/Makefile.build:500: drivers/gpu] Error 2
-make[2]: Target '__build' not remade because of errors.
-make[1]: *** [/linux/Makefile:1729: drivers] Error 2
-make[1]: Target 'modules' not remade because of errors.
-make: *** [Makefile:179: sub-make] Error 2
-make: Target 'modules' not remade because of errors.
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index 040a8f393fe2..2f8d0043fca7 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -301,18 +301,13 @@ struct drm_gem_object *mtk_drm_gem_prime_import(struct drm_device *dev,
+ static struct drm_driver mtk_drm_driver = {
+ 	.driver_features = DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
+ 
+-	.gem_free_object_unlocked = mtk_drm_gem_free_object,
+-	.gem_vm_ops = &drm_gem_cma_vm_ops,
+ 	.dumb_create = mtk_drm_gem_dumb_create,
+ 
+ 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+ 	.gem_prime_import = mtk_drm_gem_prime_import,
+-	.gem_prime_get_sg_table = mtk_gem_prime_get_sg_table,
+ 	.gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
+ 	.gem_prime_mmap = mtk_drm_gem_mmap_buf,
+-	.gem_prime_vmap = mtk_drm_gem_prime_vmap,
+-	.gem_prime_vunmap = mtk_drm_gem_prime_vunmap,
+ 	.fops = &mtk_drm_fops,
+ 
+ 	.name = DRIVER_NAME,
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 6190cc3b7b0d..591b90410e4a 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -8,11 +8,20 @@
+ #include <drm/drm.h>
+ #include <drm/drm_device.h>
+ #include <drm/drm_gem.h>
++#include <drm/drm_gem_cma_helper.h>
+ #include <drm/drm_prime.h>
+ 
+ #include "mtk_drm_drv.h"
+ #include "mtk_drm_gem.h"
+ 
++static const struct drm_gem_object_funcs mtk_drm_gem_object_funcs = {
++	.free = mtk_drm_gem_free_object,
++	.get_sg_table = mtk_gem_prime_get_sg_table,
++	.vmap = mtk_drm_gem_prime_vmap,
++	.vunmap = mtk_drm_gem_prime_vunmap,
++	.vm_ops = &drm_gem_cma_vm_ops,
++};
++
+ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+ 						unsigned long size)
+ {
+@@ -25,6 +34,8 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+ 	if (!mtk_gem_obj)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	mtk_gem_obj->base.funcs = &mtk_drm_gem_object_funcs;
++
+ 	ret = drm_gem_object_init(dev, &mtk_gem_obj->base, size);
+ 	if (ret < 0) {
+ 		DRM_ERROR("failed to initialize gem object\n");
+-- 
+2.28.0
 
-
---=20
-Linaro LKFT
-https://lkft.linaro.org
