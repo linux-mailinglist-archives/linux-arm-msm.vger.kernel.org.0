@@ -2,113 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AEC526AA38
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 19:06:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC47026AA3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Sep 2020 19:11:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727777AbgIORGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 13:06:16 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:19048 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727757AbgIOQsd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 12:48:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600188468; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Zj8H4MSyOK22ukzy0KaQrrwY/oa0CFBox252XyYOyuw=; b=q6qIda//iJpOCMIs080u+FL15CDoC1p7sIVVm31uvbQnqisbeVnlNhmh9M2iry15gFKtGMn+
- 9pl245VtIVrnBeFlvOWw1bTecrIZpB0YhQE335lmukRJvotSyHqupH2p8FO4UEmRHsDUm0q+
- jVP6WkevoBRKdEv78iAVBH0Lnr8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f60ed6e4ba82a82fd297e63 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Sep 2020 16:35:58
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9FA55C43395; Tue, 15 Sep 2020 16:35:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5E838C433C8;
-        Tue, 15 Sep 2020 16:35:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5E838C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Eric Anholt <eric@anholt.net>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm: Fix the a650 hw_apriv check
-Date:   Tue, 15 Sep 2020 10:35:51 -0600
-Message-Id: <20200915163551.1713571-1-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
+        id S1727854AbgIORLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Sep 2020 13:11:10 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39321 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727749AbgIORH7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Sep 2020 13:07:59 -0400
+Received: by mail-pf1-f194.google.com with SMTP id n14so2309571pff.6;
+        Tue, 15 Sep 2020 10:07:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qgVvip2gid1sMQiuIbXhFpJDtDAimXj33Y+agHxQwcw=;
+        b=oxLpgLLRjOq0MTW3RnT9k4qotszD5ImoHpZOwkfEoVzEeYmoMqZr65Xb+D7Ui8NPyi
+         C6nX5YlNcSUIQ+/8s71JzxK4lH44mDJHBbbVfbPoAso7a4pCHEblDQHSyNKo1OVim70O
+         pDi8pVoO7mLW3pWCaV4NxXr0d3zsj44ywH0/cpQ5eg5XpObY9kRIXRjznRUzmwrFswWA
+         WB0YuKDvylY7KSq/L05gadjF3TB9m1nBXysoOw+45TMbWB+akfnBIwka2hfrvgLr1PyI
+         JsC24Ha82MZYXGfyatGIl5mDMJI1UYOklh3bFfp9zUZgHB8pAB91QcfXAZUFSjZZIER4
+         AKtg==
+X-Gm-Message-State: AOAM5305pJPPmQ6fMXWppVyKam2sTo4IgxR5vY9TNS09mi8opHPo8V1K
+        K9L8RueVpxEx5lMoaKojeiKVwMUp+pbh9yk=
+X-Google-Smtp-Source: ABdhPJyxiIldSduc04usuk5QBvT+wnoYzzAPNrEfmL6fLJS15ymJJogCJh7Iz6y2lwVoZrM6BGoOuA==
+X-Received: by 2002:a92:c702:: with SMTP id a2mr2102118ilp.235.1600189017553;
+        Tue, 15 Sep 2020 09:56:57 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id d71sm9343639ill.52.2020.09.15.09.56.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2020 09:56:56 -0700 (PDT)
+Received: (nullmailer pid 2118248 invoked by uid 1000);
+        Tue, 15 Sep 2020 16:56:54 -0000
+Date:   Tue, 15 Sep 2020 10:56:54 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        robh+dt@kernel.org, lgirdwood@gmail.com, rohitkr@codeaurora.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        plai@codeaurora.org, perex@perex.cz, alsa-devel@alsa-project.org,
+        srinivas.kandagatla@linaro.org, linux-kernel@vger.kernel.org,
+        tiwai@suse.com, broonie@kernel.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, bgoswami@codeaurora.org
+Subject: Re: [PATCH v4 1/5] ASoC: Add sc7180-lpass binding header hdmi define
+Message-ID: <20200915165654.GA2118198@bogus>
+References: <1599587037-6742-1-git-send-email-srivasam@codeaurora.org>
+ <010101746ed1bf90-d7293075-e0a7-494b-80f6-e59569e60fdb-000000@us-west-2.amazonses.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <010101746ed1bf90-d7293075-e0a7-494b-80f6-e59569e60fdb-000000@us-west-2.amazonses.com>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit 604234f33658 ("drm/msm: Enable expanded apriv support for a650")
-was checking the result of adreno_is_a650() before the gpu revision
-got probed in adreno_gpu_init() so it was always coming across as
-false. Snoop into the revision ID ahead of time to correctly set the
-hw_apriv flag so that it can be used by msm_gpu to properly setup
-global buffers.
+On Tue, 08 Sep 2020 17:44:33 +0000, Srinivasa Rao Mandadapu wrote:
+> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> 
+> Add header defining hdmi dai-id for SC7180 lpass soc
+> in dt bindings.
+> 
+> Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> ---
+>  include/dt-bindings/sound/sc7180-lpass.h | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Fixes: 604234f33658 ("drm/msm: Enable expanded apriv support for a650")
-Reported-by: Jonathan Marek <jonathan@marek.ca>
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-Tested-by: Jonathan Marek <jonathan@marek.ca>
----
-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 74bc27eb4203..f3b6d93c207c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1048,6 +1048,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct platform_device *pdev = priv->gpu_pdev;
-+	struct adreno_platform_config *config = pdev->dev.platform_data;
-+	const struct adreno_info *info;
- 	struct device_node *node;
- 	struct a6xx_gpu *a6xx_gpu;
- 	struct adreno_gpu *adreno_gpu;
-@@ -1064,7 +1066,14 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	adreno_gpu->registers = NULL;
- 	adreno_gpu->reg_offsets = a6xx_register_offsets;
- 
--	if (adreno_is_a650(adreno_gpu))
-+	/*
-+	 * We need to know the platform type before calling into adreno_gpu_init
-+	 * so that the hw_apriv flag can be correctly set. Snoop into the info
-+	 * and grab the revision number
-+	 */
-+	info = adreno_info(config->rev);
-+
-+	if (info && info->revn == 650)
- 		adreno_gpu->base.hw_apriv = true;
- 
- 	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
--- 
-2.25.1
-
+Acked-by: Rob Herring <robh@kernel.org>
