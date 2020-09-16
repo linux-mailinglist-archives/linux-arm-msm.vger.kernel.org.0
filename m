@@ -2,90 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 521AD26CE5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 00:08:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4A9826CE44
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 00:05:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbgIPWH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 18:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726189AbgIPWH6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 18:07:58 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B13C0698CE;
-        Wed, 16 Sep 2020 14:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description;
-        bh=WXS+ff+b5bMlOip+NKUbf0Z9b6R6EpWN0difBpMRFZs=; b=P50r4tzkwmXp8h4nAvjTnJw/v7
-        kPbHSxNAst66A4F4n8LTtKjaowXthHcYZkR+2ZXVtua9qRpZPYUjRbYoEQ32DBDizBkJgDy3wEeNm
-        iBdTZAzAJGvbtdHpbLUE3woMTHE9p++LmeCvs9WGlGEBemg+VPLVUeKgriDTarI38RhVSGxw5dKEs
-        YAelkJXRv6tLNIHHPnxwDtTRSI2ypj6uuyecMw8AnHF7AYN5OkbA8/UPAQCFB76XEqk6zxqkeVXjh
-        fPhwCG6Pw1VIDt8npyntlIQKLPgozok5L46mzxqbzl+kjqXKXGfn0G+XmVJMsjM+cSICMv2EQMTxu
-        edQEL8bw==;
-Received: from [2601:1c0:6280:3f0::19c2]
-        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kIfLy-0005SU-Te; Wed, 16 Sep 2020 21:52:39 +0000
-Subject: Re: [PATCH v6 4/4] bus: mhi: Add userspace client interface driver
-To:     Hemant Kumar <hemantk@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org
-References: <1600286167-4432-1-git-send-email-hemantk@codeaurora.org>
- <1600286167-4432-5-git-send-email-hemantk@codeaurora.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <73ab1853-a07d-599f-9d4c-c346376aa6fc@infradead.org>
-Date:   Wed, 16 Sep 2020 14:52:34 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726359AbgIPWFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 18:05:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35660 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725267AbgIPWFC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 18:05:02 -0400
+Received: from localhost (52.sub-72-107-123.myvzw.com [72.107.123.52])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 86F6321D90;
+        Wed, 16 Sep 2020 22:05:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600293900;
+        bh=eUTWzYD9zEfDsAwI4leq47JAEbZSdDfHGOVYQOI3a44=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=U1OrSH7L/TTyKLRDeuVL1jE/Z2ssgGadqyOgxlOPq+Zvozwwd7aiIYTt1CgIveFdL
+         fnnuF6Pr9gmp04OpJqhun8jtw1oUzjE7CMppmtcEVdd6s6SgCqFdwoSvb2YLFJk+fu
+         mxmvQVA28D5fx+IASJ5CnH6mZyd7dXIEIg5/bEXk=
+Date:   Wed, 16 Sep 2020 17:04:59 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        vkoul@kernel.org, robh@kernel.org, svarbanov@mm-sol.com,
+        bhelgaas@google.com, lorenzo.pieralisi@arm.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/5] pci: controller: dwc: qcom: Add PCIe support for
+ SM8250 SoC
+Message-ID: <20200916220459.GA1588618@bjorn-Precision-5520>
 MIME-Version: 1.0
-In-Reply-To: <1600286167-4432-5-git-send-email-hemantk@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200916132000.1850-5-manivannan.sadhasivam@linaro.org>
+Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/16/20 12:56 PM, Hemant Kumar wrote:
-> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-> index 6a217ff..8aebe8b 100644
-> --- a/drivers/bus/mhi/Kconfig
-> +++ b/drivers/bus/mhi/Kconfig
-> @@ -20,3 +20,16 @@ config MHI_BUS_DEBUG
->  	 Enable debugfs support for use with the MHI transport. Allows
->  	 reading and/or modifying some values within the MHI controller
->  	 for debug and test purposes.
+On Wed, Sep 16, 2020 at 06:49:59PM +0530, Manivannan Sadhasivam wrote:
+> The PCIe IP on SM8250 SoC is similar to the one used on SDM845. Hence
+> the support is added reusing the 2.7.0 ops. Only difference is the need
+> of ATU base, which will be fetched opionally if provided by DT/ACPI.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Hi,
-Please indent Kconfig keywords with one tab only, and indent
-help text with one tab + 2 spaces, as documented in
-Documentation/process/coding-style.rst:
+s/opionally/optionally/
 
-"""
-For all of the Kconfig* configuration files throughout the source tree,
-the indentation is somewhat different.  Lines under a ``config`` definition
-are indented with one tab, while help text is indented an additional two
-spaces.
-"""
+  $ git log --oneline drivers/pci/controller/dwc/pcie-qcom.c | head -10
+  824001cb64c0 PCI: qcom: Replace define with standard value
+  51ed2c2b6026 PCI: qcom: Support pci speed set for ipq806x
+  8df093fe2ae1 PCI: qcom: Add ipq8064 rev2 variant
+  de3c4bf64897 PCI: qcom: Add support for tx term offset for rev 2.1.0
+  5149901e9e6d PCI: qcom: Define some PARF params needed for ipq8064 SoC
+  6a114526af46 PCI: qcom: Use bulk clk api and assert on error
+  ee367e2cdd22 PCI: qcom: Add missing reset for ipq806x
+  dd58318c019f PCI: qcom: Change duplicate PCI reset to phy reset
 
-> +
-> +config MHI_UCI
-> +       tristate "MHI UCI"
-> +       depends on MHI_BUS
-> +       help
-> +	 MHI based userspace client interface driver is used for transferring
-> +	 raw data between host and device using standard file operations from
-> +	 userspace. Open, read, write, and close operations are supported
-> +	 by this driver. Please check mhi_uci_match_table for all supported
-> +	 channels that are exposed to userspace.
-> +
-> +	 To compile this driver as a module, choose M here: the module will be
-> +	 called mhi_uci.
+Make yours match, maybe like this:
 
-thanks.
--- 
-~Randy
+  PCI: qcom: Add SM8250 SoC support
 
+That way the important information ("SM8250") isn't way at the end
+where it may get chopped off.
+
+If you're ambitious, do this for the non-PCI patches, too.
