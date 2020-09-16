@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19C1726C83F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 20:44:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 408AF26C7EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 20:36:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728165AbgIPSn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 14:43:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41236 "EHLO
+        id S1728039AbgIPSgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 14:36:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727964AbgIPSW4 (ORCPT
+        with ESMTP id S1728041AbgIPS3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:22:56 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A31C035438
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 05:07:39 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id k15so6632762wrn.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 05:07:39 -0700 (PDT)
+        Wed, 16 Sep 2020 14:29:13 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2362C08E86F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 05:09:55 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z1so6676382wrt.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 05:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ffwll.ch; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=MGCPV3gxMGzqEc3cNJPEYSeaflc+Izh53Gg+hbi1Nhw=;
-        b=D8Cn+LnzRzcwcAFRiK+P1SGw66Mhbu0VayIxxEwp3/Ke3uFcgTtEyg2O2TchfbyaU1
-         /t1Jed/k7t8UhbtyHLBWwi9QGEEtHwtsdBVK0+CssfY95ypMsX9PNDgpg6PAhXIZmBww
-         EM4H0+Gc3gntNd2KUdiNeLGf+3Tz2z1yDgJeU=
+        bh=+3jvoy/bBV/BNfVwVnfU8KcCZN1nPBtEmgjgdo9EwXk=;
+        b=FENeMTOiWrFokQkUzY6vSvMhlCXV7HMJqSDFsMTbLqeNytwJMofYpFGvXfw3GhxJQe
+         D9FUrSX8+Brv74I6kUhpyFb/XZioFwNiGTb+QuFgOQkexhfx/xeg364unF1nN8hvk40W
+         Hh+h3hsu+pBXFmPF/2PAzcQ04fALpK5XDa9tA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=MGCPV3gxMGzqEc3cNJPEYSeaflc+Izh53Gg+hbi1Nhw=;
-        b=BpASlsHKVJu+kh/1gPP9XhJy7yCfBCdI0AcMQpd3v4h+dXz7ytyqywHh34U5SXLPTi
-         Eo4xiglkzsbGWMjVctGwYWM5a+VOOjfNEtbOwi0gclaDyBLg8gifCO3ATksQ2SK7OJs8
-         FRrFqfvlMQmi9TMPwXCN+9lo7S/oeeqTPj0FgsRTRsADSXbv55I4M3C7oKdT2h7YZr32
-         IW5eJhAMvJookyu3cKTTBVk6+fTeTMZfL/DW3AxbtrVRFaEgrDxBkYGp7tue7YwOZKVS
-         +BP1gKkyDPZxz42nZug8xNY9wCzQfd4BzKVCuWm07oaEZfh4GwXSqhp8MOlsroalB6Me
-         UB1g==
-X-Gm-Message-State: AOAM532xm/2sWJ5R+dMme4VPKughpvImLkoeovMsdqc2qC8dz7r0dkfL
-        mham23vo8/XFm5LKu0QLdRC7Sg==
-X-Google-Smtp-Source: ABdhPJwrWIpLSYf41av9bZsrjEfrlf4lf8//RpX+N0WUgXGOZN7ZDB+gPcHHEGIp6RA3wivQd9OHbQ==
-X-Received: by 2002:a05:6000:1152:: with SMTP id d18mr26158129wrx.173.1600258057971;
-        Wed, 16 Sep 2020 05:07:37 -0700 (PDT)
+        bh=+3jvoy/bBV/BNfVwVnfU8KcCZN1nPBtEmgjgdo9EwXk=;
+        b=kNr//K0PbzWMkS2eaJZqZ4Pt1UMHKfydnshZjNVJqX3YUodDK9Etu85DpWg0fBeDA1
+         XoC/r2DnQcvZNIETjjCe6V7DlcV20z4ziuL57xIMb0fUXoQ9Yq428JPtp/DTl4GZfnuV
+         04OTbs8sOm0zaN2VN8UJlfjkAwSKynlp23KtypOHCkoS0cQoADwKh7R+9C9O/birzwOE
+         Bhe3mJiLCGA5NHYG7GDLj8Jsw87b7Bcg1wrd1BnzDf9JTjcuVYnszPpqRKlplDr6lda0
+         f6mzC2Th/TvryHyzVf0MVA31B9rBaqlootI9HDXLmefBfjlcqWNN5yt/evQ38hWZ6rwQ
+         FNog==
+X-Gm-Message-State: AOAM533mmippw/xm5Ir4dIo7Ke3K3kPWVCDfIpGXNMxlOye6IpbQuUz4
+        FULYWv5wlSwNxW2Xy5gl7rtCKQ==
+X-Google-Smtp-Source: ABdhPJwcFrpBowFHXDaGWxAmgGA6UC0qLIIbiwK0yYyfwUChHgh/bXrgr93clOHTT0R4i2flV+cOiA==
+X-Received: by 2002:a5d:4448:: with SMTP id x8mr28185933wrr.207.1600258192468;
+        Wed, 16 Sep 2020 05:09:52 -0700 (PDT)
 Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id y2sm4834552wmg.23.2020.09.16.05.07.34
+        by smtp.gmail.com with ESMTPSA id n11sm32655611wrx.91.2020.09.16.05.09.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 05:07:36 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 14:07:33 +0200
+        Wed, 16 Sep 2020 05:09:51 -0700 (PDT)
+Date:   Wed, 16 Sep 2020 14:09:48 +0200
 From:   Daniel Vetter <daniel@ffwll.ch>
 To:     Thomas Zimmermann <tzimmermann@suse.de>
 Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
@@ -79,82 +79,59 @@ Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
         freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v2 13/21] drm/rockchip: Convert to drm_gem_object_funcs
-Message-ID: <20200916120733.GN438822@phenom.ffwll.local>
+Subject: Re: [PATCH v2 17/21] drm/virtgpu: Set PRIME export function in
+ struct drm_gem_object_funcs
+Message-ID: <20200916120948.GO438822@phenom.ffwll.local>
 References: <20200915145958.19993-1-tzimmermann@suse.de>
- <20200915145958.19993-14-tzimmermann@suse.de>
+ <20200915145958.19993-18-tzimmermann@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200915145958.19993-14-tzimmermann@suse.de>
+In-Reply-To: <20200915145958.19993-18-tzimmermann@suse.de>
 X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 04:59:50PM +0200, Thomas Zimmermann wrote:
+On Tue, Sep 15, 2020 at 04:59:54PM +0200, Thomas Zimmermann wrote:
 > GEM object functions deprecate several similar callback interfaces in
-> struct drm_driver. This patch replaces the per-driver callbacks with
-> per-instance callbacks in rockchip. The only exception is gem_prime_mmap,
-> which is non-trivial to convert.
+> struct drm_driver. This patch replaces virtgpu's per-driver PRIME export
+> function with a per-object function.
 > 
 > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
 Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+
 > ---
->  drivers/gpu/drm/rockchip/rockchip_drm_drv.c |  5 -----
->  drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 10 ++++++++++
->  2 files changed, 10 insertions(+), 5 deletions(-)
+>  drivers/gpu/drm/virtio/virtgpu_drv.c    | 1 -
+>  drivers/gpu/drm/virtio/virtgpu_object.c | 1 +
+>  2 files changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-> index 0f3eb392fe39..b7654f5e4225 100644
-> --- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-> +++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-> @@ -212,15 +212,10 @@ static const struct file_operations rockchip_drm_driver_fops = {
->  static struct drm_driver rockchip_drm_driver = {
->  	.driver_features	= DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
->  	.lastclose		= drm_fb_helper_lastclose,
-> -	.gem_vm_ops		= &drm_gem_cma_vm_ops,
-> -	.gem_free_object_unlocked = rockchip_gem_free_object,
->  	.dumb_create		= rockchip_gem_dumb_create,
->  	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
->  	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
-> -	.gem_prime_get_sg_table	= rockchip_gem_prime_get_sg_table,
->  	.gem_prime_import_sg_table	= rockchip_gem_prime_import_sg_table,
-> -	.gem_prime_vmap		= rockchip_gem_prime_vmap,
-> -	.gem_prime_vunmap	= rockchip_gem_prime_vunmap,
->  	.gem_prime_mmap		= rockchip_gem_mmap_buf,
->  	.fops			= &rockchip_drm_driver_fops,
->  	.name	= DRIVER_NAME,
-> diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-> index 0055d86576f7..bddc7d99efe3 100644
-> --- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-> +++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-> @@ -296,6 +296,14 @@ static void rockchip_gem_release_object(struct rockchip_gem_object *rk_obj)
->  	kfree(rk_obj);
->  }
+> diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c b/drivers/gpu/drm/virtio/virtgpu_drv.c
+> index b039f493bda9..1f8d6ed11d21 100644
+> --- a/drivers/gpu/drm/virtio/virtgpu_drv.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+> @@ -203,7 +203,6 @@ static struct drm_driver driver = {
+>  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>  	.gem_prime_mmap = drm_gem_prime_mmap,
+> -	.gem_prime_export = virtgpu_gem_prime_export,
+>  	.gem_prime_import = virtgpu_gem_prime_import,
+>  	.gem_prime_import_sg_table = virtgpu_gem_prime_import_sg_table,
 >  
-> +static const struct drm_gem_object_funcs rockchip_gem_object_funcs = {
-> +	.free = rockchip_gem_free_object,
-> +	.get_sg_table = rockchip_gem_prime_get_sg_table,
-> +	.vmap = rockchip_gem_prime_vmap,
-> +	.vunmap	= rockchip_gem_prime_vunmap,
-> +	.vm_ops = &drm_gem_cma_vm_ops,
-> +};
-> +
->  static struct rockchip_gem_object *
->  	rockchip_gem_alloc_object(struct drm_device *drm, unsigned int size)
->  {
-> @@ -310,6 +318,8 @@ static struct rockchip_gem_object *
+> diff --git a/drivers/gpu/drm/virtio/virtgpu_object.c b/drivers/gpu/drm/virtio/virtgpu_object.c
+> index 842f8b61aa89..4f7d7ea8194c 100644
+> --- a/drivers/gpu/drm/virtio/virtgpu_object.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_object.c
+> @@ -108,6 +108,7 @@ static const struct drm_gem_object_funcs virtio_gpu_shmem_funcs = {
+>  	.close = virtio_gpu_gem_object_close,
 >  
->  	obj = &rk_obj->base;
->  
-> +	obj->funcs = &rockchip_gem_object_funcs;
-> +
->  	drm_gem_object_init(drm, obj, size);
->  
->  	return rk_obj;
+>  	.print_info = drm_gem_shmem_print_info,
+> +	.export = virtgpu_gem_prime_export,
+>  	.pin = drm_gem_shmem_pin,
+>  	.unpin = drm_gem_shmem_unpin,
+>  	.get_sg_table = drm_gem_shmem_get_sg_table,
 > -- 
 > 2.28.0
 > 
