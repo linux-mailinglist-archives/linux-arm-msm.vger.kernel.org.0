@@ -2,125 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7653826CA0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:44:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47B4126CA66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:58:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727589AbgIPTnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 15:43:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53690 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727958AbgIPTnG (ORCPT
+        id S1727100AbgIPT6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 15:58:47 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:48314 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727864AbgIPT40 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 15:43:06 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582D2C06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 12:42:50 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id r19so3751768pls.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 12:42:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=uI2M1b5CJmiot/6Hd8YrKzzoCzUgOR4d8982RGbGjD8=;
-        b=mdqEeSdYH5tz+BxLF4boEJJhntqAmdYlAI6RJyaLW8zNxInQKWsMvG5jjeXIsjftb0
-         WdtN41v/JR3azTNc97XwywJ+LpJfFCvgdrs0j5Z+ZRkFSW8Y46I7SAcZ7+Ry+1Qi3Sk3
-         vA4gXc8kWMF9jk1hykVzXWlj046Zhvz8rCXbs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=uI2M1b5CJmiot/6Hd8YrKzzoCzUgOR4d8982RGbGjD8=;
-        b=mf/K9ZhRiwhfhzjCVcnEWXMOloHqCLpuR+msTMEJ9GnV29IWcAztFVIpdHsZA2taWQ
-         is5tg9dQAj7QjG3fuch46RdqNI6yHS9foHuhOTTDso9FmarsrUqBXL53PDSBCz8RX1ci
-         JKFi2mfGMtBZ8lLcoeyUwHANKFf8lZnwR2mwqbjK8zRy3i3jbL4yDaNMJwNY4WaiArCM
-         qJbkkX7+9VqKWLCKcxk9YUgs+Qy2EIm2/6rMnvD97j44AsDCA5CPE9WCfuSbGa9/AxBC
-         ku92fFY+MKb5TWRn78KBomFlMkHNFuiLtEHqdImXrnbuQtNB+D0jzRwPAEAkpliT3IJ0
-         WUEA==
-X-Gm-Message-State: AOAM531wcX7qyoLI3+xiBQb31bKWPVJfwgpSJp4u2AnKqpuP8I9/ViyA
-        vXX4PBr0LD79lqMn7Km6C2ussA==
-X-Google-Smtp-Source: ABdhPJykmzdZLk88uv+LmjEE31cyv5pE9gp7ym7Z31sba/goptxv5DmuVBCotn6wnasSvqYZ3LdHQw==
-X-Received: by 2002:a17:90a:bf8c:: with SMTP id d12mr5450291pjs.157.1600285369764;
-        Wed, 16 Sep 2020 12:42:49 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id y6sm3468330pji.1.2020.09.16.12.42.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 12:42:48 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200915202432.GA2435458@bogus>
-References: <20200910004902.2252694-1-swboyd@chromium.org> <20200910004902.2252694-2-swboyd@chromium.org> <159972050159.2295844.14715100754744266014@swboyd.mtv.corp.google.com> <20200915202432.GA2435458@bogus>
-Subject: Re: [PATCH v3 01/10] dt-bindings: phy: qcom,qmp-usb3-dp: Add DP phy information
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, Rob Clark <robdclark@chromium.org>
-To:     Rob Herring <robh@kernel.org>
-Date:   Wed, 16 Sep 2020 12:42:46 -0700
-Message-ID: <160028536666.4188128.14311541474912461984@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Wed, 16 Sep 2020 15:56:26 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600286186; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=/LCfAr6BAH7IdfVVVvfVBFWx6xFSZL9n6uUjXHmeWM8=; b=QRqU/4z7qko7HIRF043oEHHPM6bgF9ejpzE9H8NSa4/a6U+BXB2hhSj2yQyOg/jSkUa4SAZC
+ C2iTN5wm7Dz3ExyABW1xvVQG4VhG632T+t9j35eyyyMgTWVcRDbIuci1HqHAGQxodhPA5sUJ
+ nQDdOswBizaAjp9S6UNDNwj97g0=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f626ddf6b1937bb657535f6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 16 Sep 2020 19:56:15
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C91F8C433FE; Wed, 16 Sep 2020 19:56:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE63FC433CA;
+        Wed, 16 Sep 2020 19:56:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EE63FC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v6 0/4] user space client interface driver
+Date:   Wed, 16 Sep 2020 12:56:03 -0700
+Message-Id: <1600286167-4432-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Herring (2020-09-15 13:24:32)
-> On Wed, Sep 09, 2020 at 11:48:21PM -0700, Stephen Boyd wrote:
-> > Quoting Stephen Boyd (2020-09-09 17:48:53)
-> > > This binding only describes the USB phy inside the USB3 + DP "combo"
-> > > phy. Add information for the DP phy and describe the sub-nodes that
-> > > represent the DP and USB3 phys that exist inside the combo wrapper.
-> > > Remove reg-names from required properties because it isn't required n=
-or
-> > > used by the kernel driver.
-> > >=20
-> > > Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
-> > > Cc: Chandan Uddaraju <chandanu@codeaurora.org>
-> > > Cc: Vara Reddy <varar@codeaurora.org>
-> > > Cc: Tanmay Shah <tanmay@codeaurora.org>
-> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > Cc: Manu Gautam <mgautam@codeaurora.org>
-> > > Cc: Sandeep Maheswaram <sanm@codeaurora.org>
-> > > Cc: Douglas Anderson <dianders@chromium.org>
-> > > Cc: Sean Paul <seanpaul@chromium.org>
-> > > Cc: Jonathan Marek <jonathan@marek.ca>
-> > > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Cc: <devicetree@vger.kernel.org>
-> > > Cc: Rob Herring <robh+dt@kernel.org>
-> > > Cc: Rob Clark <robdclark@chromium.org>
-> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > > ---
-> > >  .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    | 91 +++++++++++++++++=
---
-> > >  1 file changed, 81 insertions(+), 10 deletions(-)
-> >=20
-> > I noticed that I didn't document the new compatible string I'm using,
-> > qcom,sc7180-qmp-usb3-dp-phy, ugh.
-> >=20
-> > Should I copy the whole file over and make a new document for the new
-> > compatible string? That feels like the better solution vs. making this
-> > binding have min/max stuff where it fails to enforce the DP part of the
-> > phy. We can delete this binding once the kernel tree isn't using it,
-> > right?
->=20
-> It generally depends on how much if/then schema you have (or should=20
-> have) vs. how much is common, but it's a judgement call. It looks=20
-> like you are just extending the binding for the most part. If there's=20
-> dtb warnings until the existing stuff gets updated, that's fine.
->=20
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
 
-Ok. I'll just add in the extra compatible and then we can drop the older
-ones at some point.
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
+
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
+
+V3: Added documentation for MHI UCI driver.
+
+V2: Added mutex lock to prevent multiple readers to access same
+mhi buffer which can result into use after free.
+
+Hemant Kumar (4):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  39 +++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   4 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/core/main.c     |  12 +
+ drivers/bus/mhi/uci.c           | 657 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |  12 +
+ 8 files changed, 738 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
