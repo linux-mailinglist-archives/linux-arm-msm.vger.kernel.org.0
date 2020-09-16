@@ -2,108 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E862826C4C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 18:00:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 246F126C56C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 18:57:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726217AbgIPP7r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 11:59:47 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:30989 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726444AbgIPP7p (ORCPT
+        id S1726660AbgIPQ40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 12:56:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55270 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726616AbgIPQy4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 11:59:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600271925; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=dDGHebymEtnWtj+KEzXL3GxkzGbLGkG+sDA+wM+k1Ts=; b=NNiYjlN1avvjYflzkKLxx9kjjeq93A13QuKm506Vi72k/XdIVtIK/SzKA2rtbWPOdsZ4ImAu
- 15TsM0FIPXIW79fEW0D6ED3LifDxCuHTmxUfcCQs91iYwKywM0vq5DqERX5p+xM987SQWwov
- Smv4h8pfvXaXppAEZDJL+sFToGc=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f6226e632925f96e1cef48b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 16 Sep 2020 14:53:26
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D468AC433FE; Wed, 16 Sep 2020 14:53:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C76CC433F0;
-        Wed, 16 Sep 2020 14:53:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C76CC433F0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ohad@wizery.com, evgreen@chromium.org, swboyd@chromium.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v2] remoteproc: qcom_q6v5: Assign mpss region to Q6 before MBA boot
-Date:   Wed, 16 Sep 2020 20:22:52 +0530
-Message-Id: <20200916145252.16024-1-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 16 Sep 2020 12:54:56 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B24AC014B52
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 06:20:44 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x123so3957565pfc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 06:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=SlRt7rB4mW/iayDYnKOqfS2OFUlf7qeJNI2l7CVFG2Q=;
+        b=G1FhARCk63c6iPMnPAWQAM+DtyHV4xw6CAA4tru7QJDWs6+BFxO4IRR9c2+1P/xiQU
+         6GOF588WmUXXT8NSEPNyOYIdCHgWVEJ8lv3BXgTqeyLPrqq3VbkwNIxMb2eVtnRSZgBT
+         AJTPZTBxmJicJM+DeCpKwG9RqQu+ak89sN8Pa2w0K8WC9BpEWN6I0C3vdjxIMgnnl2rY
+         wjs9ZGnJVgVhdRhaPRbgIsvmuE+LI8Mjb2m3qoEDsiVNfE2PxQb42/JapQ1isqcXTcAQ
+         xW1Xbr7bhY1HHbbCU3obFz13vi7AvCJU+eJjAd3QT5sZc27ofHuijp+y4xfp2zVkuAO8
+         8QKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=SlRt7rB4mW/iayDYnKOqfS2OFUlf7qeJNI2l7CVFG2Q=;
+        b=iGkV6EwWjwXfiBKdC1w38OyRN56NlzhhbsZjopoMjS0oFz02qwmZFVmZIH/+FSn7Tr
+         aDtcnhRiLfp3nUHPYgmDNbkUgfbUTORILrglCInkKVA3q//3/Itl1i2JZhQsOnhEmSw9
+         mnP2ZdQfWxxkYtSasRAften35N/t512/RevNLP+8gNFCmXwiW8w7TlISO5IzUeRAKt5Z
+         Cg+/1tnuhqv54rADjgQ8k8usCdWRan3seBhbafa+wEM90sU4hMl9X49su811XC4/M6Qy
+         mKddSLvo+fEYxhubow7FiqQZPgpTbo39Oa7zyAOstbbPOaJdhSzHo7ymbA9UKLSPd/tn
+         8etw==
+X-Gm-Message-State: AOAM532TKrvaATD2jm3h7JqOu3w8oiL7qnred6bOaVOinNXs9QNBNQbz
+        ZbD+d4f2c4B4uTowCyt7l8Wo
+X-Google-Smtp-Source: ABdhPJwsG95VpZSqBcV3Pwm6AuVbbi4NnUSh1kO/w9kUI5DaP3pH2VWt8YQjRdKtkRmlf0M9uAGO7g==
+X-Received: by 2002:a63:d242:: with SMTP id t2mr18945938pgi.47.1600262443656;
+        Wed, 16 Sep 2020 06:20:43 -0700 (PDT)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id e123sm17615726pfh.167.2020.09.16.06.20.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2020 06:20:43 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        vkoul@kernel.org, robh@kernel.org
+Cc:     svarbanov@mm-sol.com, bhelgaas@google.com,
+        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Subject: [PATCH 5/5] pci: controller: dwc: qcom: Harcode PCIe config SID
+Date:   Wed, 16 Sep 2020 18:50:00 +0530
+Message-Id: <20200916132000.1850-6-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200916132000.1850-1-manivannan.sadhasivam@linaro.org>
+References: <20200916132000.1850-1-manivannan.sadhasivam@linaro.org>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On secure devices which support warm reset, the MBA firmware requires
-access to the modem region to clear them out. Hence provide Q6 access
-to this region before MBA boot. This will be a nop during a modem SSR.
+Hardcode the PCIe config SID table value. This is needed to avoid random
+MHI failure observed during reboot on SM8250.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+[mani: stripped out unnecessary settings and ported for upstream]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
+ drivers/pci/controller/dwc/pcie-qcom.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-V2:
- * Fixup comments as suggested by Bjorn. 
-
- drivers/remoteproc/qcom_q6v5_mss.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index c401bcc263fa..f989ca81d374 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -931,6 +931,16 @@ static int q6v5_mba_load(struct q6v5 *qproc)
- 		goto assert_reset;
- 	}
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index ca8ad354e09d..50748016ce96 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -57,6 +57,7 @@
+ #define PCIE20_PARF_SID_OFFSET			0x234
+ #define PCIE20_PARF_BDF_TRANSLATE_CFG		0x24C
+ #define PCIE20_PARF_DEVICE_TYPE			0x1000
++#define PCIE20_PARF_BDF_TO_SID_TABLE_N		0x2000
  
-+	/* Some versions of the MBA firmware will upon boot wipe the MPSS region as well, so provide
-+	 * the Q6 access to this region.
-+	 */
-+	ret = q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, false, true,
-+				      qproc->mpss_phys, qproc->mpss_size);
-+	if (ret) {
-+		dev_err(qproc->dev, "assigning Q6 access to mpss memory failed: %d\n", ret);
-+		goto disable_active_clks;
-+	}
+ #define PCIE20_ELBI_SYS_CTRL			0x04
+ #define PCIE20_ELBI_SYS_CTRL_LT_ENABLE		BIT(0)
+@@ -1290,6 +1291,9 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+ 	if (ret)
+ 		goto err;
+ 
++	writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N);
++	writel(0x01000100, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N + 0x054);
 +
- 	/* Assign MBA image access in DDR to q6 */
- 	ret = q6v5_xfer_mem_ownership(qproc, &qproc->mba_perm, false, true,
- 				      qproc->mba_phys, qproc->mba_size);
-@@ -1137,8 +1147,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
- 
- 	/**
- 	 * In case of a modem subsystem restart on secure devices, the modem
--	 * memory can be reclaimed only after MBA is loaded. For modem cold
--	 * boot this will be a nop
-+	 * memory can be reclaimed only after MBA is loaded.
- 	 */
- 	q6v5_xfer_mem_ownership(qproc, &qproc->mpss_perm, true, false,
- 				qproc->mpss_phys, qproc->mpss_size);
+ 	return 0;
+ err:
+ 	qcom_ep_reset_assert(pcie);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.17.1
 
