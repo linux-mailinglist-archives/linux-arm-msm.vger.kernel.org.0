@@ -2,187 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CB9226C16C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 12:03:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E11726C183
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 12:10:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbgIPKDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 06:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47220 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbgIPKDY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 06:03:24 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79911C061788
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 03:03:23 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id t10so6285224wrv.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 03:03:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e2Znfx8BWkk5aVcx8hHpr3x0pz1zwQZhs1djRV0gcOU=;
-        b=YwQFNnZ46y23ilMPtQ+YA1uU56yQbhOv6Wnxz4ZcYBv/64HXgnQIstoy81UuE+BuFc
-         RbVimusECAo2qKzk8yvrlLUDfal98le+MXG5s9js8pfohQ+Bnhlzr8odUz3778w+kM1b
-         6iP/yC9nMmGqgDJRKWjaW8mpLjM0JRvnAZoXk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e2Znfx8BWkk5aVcx8hHpr3x0pz1zwQZhs1djRV0gcOU=;
-        b=F644U2bQ1CRSV0Znnlu8fKNk2nFYV8zMZ3fXpJ7L02UdLjY0gDSm4UakPxD9u08pMf
-         hWUDyZyzQSkUYMfcybHiq1xK8XBGnxJTJU4S9v9C8N4KxjKODrrE6TExzucZYZXPrOIG
-         n9pxUNCh6NLB1PamE15lrw6I3xMmao897xFRohXMSk0QYBSNVqXhr8/EXR80S8heLWC9
-         +spZobGu4bukCLe4iVSa49Q3FsU/PRAeF9q1I625tBWuF/QD1vYhzU5aBY55s/20pkNv
-         ynTgHbrD3luqg0ydyhurzyWFsXTI66Pn8bx+9oTk5KQKJNPV/S2jjepsjbxYbRvVZV5G
-         LDkw==
-X-Gm-Message-State: AOAM533hTgyPc0QG7MFPv42ZFLLbHhGBlKkI83QJBUmHGcWbKRW5VxRV
-        ePz65RWKq1ytSKlpN/f311uAqg==
-X-Google-Smtp-Source: ABdhPJzeuyJCXxonH76Yve4EPaguLB8swVVrVRKLIRv+fjNVrJReD84NaGvyyVb0RMzIohYAQGFSOA==
-X-Received: by 2002:adf:81e6:: with SMTP id 93mr25703900wra.412.1600250602103;
-        Wed, 16 Sep 2020 03:03:22 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id s26sm4516179wmh.44.2020.09.16.03.03.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 03:03:21 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 12:03:18 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
-        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
-        inki.dae@samsung.com, jy0922.shim@samsung.com,
-        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
-        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
-        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
-        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
-        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
-        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
-        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
-        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
-        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
-        chris@chris-wilson.co.uk, matthew.auld@intel.com,
-        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
-        sam@ravnborg.org, miaoqinglang@huawei.com,
-        emil.velikov@collabora.com, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v2 04/21] drm/exynos: Introduce GEM object functions
-Message-ID: <20200916100318.GF438822@phenom.ffwll.local>
-References: <20200915145958.19993-1-tzimmermann@suse.de>
- <20200915145958.19993-5-tzimmermann@suse.de>
+        id S1726570AbgIPKKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 06:10:45 -0400
+Received: from mail-eopbgr130052.outbound.protection.outlook.com ([40.107.13.52]:8094
+        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726425AbgIPKJz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 06:09:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VJspW/HSxCHOogVquAWZSLUPjY8lfHku0pTNPFRUfc6j8HUvAWoUFiBIKzLwn3fEtZj0sbNGKcrQgagLSUjo+n58PfIx4nWU/01JffQ/Q+W36esMSC7goGl0y13TFuaOrZCcJoxdmOQudpqYjRs3xUarYyp2pe9/vLstbNgC5nh7d+sjWLGo4PeBHO6u6J1n9+B+m9KkC3SbvgkdcLJfjG5dpcRTqbqk+W2fWLwi8e8s2ZW+h4n0Pqs7e8Tle+fZu9kAe6ESaZg5Ri26rF15EKMFzKJfP2y0YOR5L73pA6ngSkttbKG0eBvxPTtydJv5bYd9WpV5ACgX4UvofwPzzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=z9w+pZjUhoYiVwRdiUFslJXMSYsTo1gApXr2IxLrupA=;
+ b=cBQcmr7dgmD4LLqN8QlkxQGVR/ldhJ9S0UQmsFXg9oZWoPN7RBx2H42nFwv5ezsEteHTk/nmBOgYzZU46hoCmiyWU0JANGezfO1Vn1/W0fteUDS4BPjegnpIl849oSu/8yIV+7U5OVSC+gCRQhFx0GbSmRKNalFJoYy75HOXr9Bwtl2jwX/8GOsurcKdWv3taCm1VjG7vaAM8Dn1GKs9IJh068CAjjJPl2q5ycy8zIjK/WRyYsTvAsGR4LCEhNSy/uv5eOI3BEa3Q6AhheLMA7g/nV48dLpCEWPrLu886uW+AgE/kbVzV0h3Y4ncYj6KM7iCRBRkkot6hyz22nrjiQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=z9w+pZjUhoYiVwRdiUFslJXMSYsTo1gApXr2IxLrupA=;
+ b=BSKowub0dlKecrkQ1WwuE03qcho9S3wtI993TGgEQLQHO+Vp/GR2Z1RWKJPt3rNUab91awSZ9mu6pLOlATpWyGbDSokXy8CjHKUgBWsbav4T9m1N2emlPxYqdCVj8ahZH2TnAjYhL+/PUZzD89YsvD7Tl7mFJrp7f3IYA7qVRSY=
+Authentication-Results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=nxp.com;
+Received: from VI1PR0402MB3405.eurprd04.prod.outlook.com (2603:10a6:803:3::26)
+ by VI1PR04MB7117.eurprd04.prod.outlook.com (2603:10a6:800:12f::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.11; Wed, 16 Sep
+ 2020 10:09:48 +0000
+Received: from VI1PR0402MB3405.eurprd04.prod.outlook.com
+ ([fe80::f960:c16d:16a5:6e7b]) by VI1PR0402MB3405.eurprd04.prod.outlook.com
+ ([fe80::f960:c16d:16a5:6e7b%7]) with mapi id 15.20.3370.019; Wed, 16 Sep 2020
+ 10:09:48 +0000
+Subject: Re: [PATCH v3 0/8] iommu/arm-smmu: Support maintaining bootloader
+ mappings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
+From:   Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Message-ID: <1eb59ae2-bec4-aaf7-f07d-bec75979e4f7@nxp.com>
+Date:   Wed, 16 Sep 2020 13:09:44 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.2
+In-Reply-To: <20200904155513.282067-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AM4PR0101CA0077.eurprd01.prod.exchangelabs.com
+ (2603:10a6:200:41::45) To VI1PR0402MB3405.eurprd04.prod.outlook.com
+ (2603:10a6:803:3::26)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200915145958.19993-5-tzimmermann@suse.de>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [192.168.1.102] (86.123.60.218) by AM4PR0101CA0077.eurprd01.prod.exchangelabs.com (2603:10a6:200:41::45) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.11 via Frontend Transport; Wed, 16 Sep 2020 10:09:46 +0000
+X-Originating-IP: [86.123.60.218]
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: f6b47e0b-d3c0-4303-8ed8-08d85a28a4b9
+X-MS-TrafficTypeDiagnostic: VI1PR04MB7117:
+X-Microsoft-Antispam-PRVS: <VI1PR04MB71174BED601556D71F5A567AEC210@VI1PR04MB7117.eurprd04.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:549;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: IlO/YqtAQaMuAYd/7XlcmJS852upwwGHij4gNKUgYOWJ42whr4e6D0CMNaQZhUyBrqILh1AEpKCt4WFQAISa/+2EXYQgR1Scn4jgYI1jp1kYK64x70MKsAhNKoCeROg9QOsYFgLf7x4QkLBnY22QgJCfdjlyUrW/nY22N9bvpejqdfcMsX1yLApBUpDjBL8USGGKJ+lGCt++DUFojAWp8tSu9iL3jLCdD64+p0xek72ufUKEkw3RSQgR1Hqx6EF+unvl5eWCu5vINZnkGpRhvuJPOi5aHpuZhWkfjU0qRSq8SyvWB6BxJ5KSLAzcpu0wv1LvS+40+rS8W9Zd9dV0SmxwyyXJqQXDad4moOBBz6ABEe5WzHJFoPSKTiDQVnib5JC0l5shi7vnSsVvVXKiqL4CHjXOVdRtRs/pXUACFlq4uHP33Lo6/UtLDBJBq/Bms7gQCpvigoNYvM9zZdFQHg==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR0402MB3405.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(136003)(396003)(39850400004)(346002)(376002)(366004)(7416002)(16526019)(8936002)(6486002)(53546011)(478600001)(31686004)(83380400001)(26005)(186003)(2906002)(5660300002)(956004)(36756003)(2616005)(316002)(16576012)(86362001)(44832011)(8676002)(4326008)(66556008)(110136005)(66476007)(52116002)(31696002)(966005)(66946007)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: 9a4pEUDGphRqvgrQN47lxPwhYp6vcfTUVc5lK0zrSagcG4wXKpzLzpXRGkK2jy31J/p6Mbwjrz0k6FUDma83zaxxWKS/FJLn49FPquW+HTYQsIW10nEbMjWz7tH7Bb6MEVC+ngPpLALRPROAr0r9gCCQtUjW8o2i3ZYfrCMGHJ5RmTjzOerG02ySlzF+UsrJqbTqwT+hVRtjAxV+6Gghh8qsaLdT4qEYzo/fIXLz+5s/mWdfFlWHGZ56XDmRiWnqbvtYZhOArPoeN3mGp2OechcvHt12CxLbkbE2W2djqdNRuUBvCyBKiIaIhiuwQdZgVAGTdsYboe7Qhv3CIp9XcWRHrlcY4Hb9Z65gRpYWInPEKHOn5hVWeBlqYoo21N4XehJHImFUHgkznXZlGSuhirJEC4Mg06PtVm+dPc0gfAAmV0hfQrIQVDQCB2RpdPA4BRNYGc+gzI96/kyOKs1CSFkxM7MRfsjr/CPeqBRFxE//oeisEY/SSA6ONUQY8EoDyeoDiaZWw7y33W8dGeyrgINrDU7/8qmQ+P/NUzLwYUAY0jZmFaWyqX+uOL/DP0FEO2K/z99GioUakHySB5OkItVSubknUauJkr2rLNqz3ueoA3b6TIL5akro0tir+RF44iyU5zDwWoGmFpsoT4buYA==
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6b47e0b-d3c0-4303-8ed8-08d85a28a4b9
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR0402MB3405.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2020 10:09:48.7527
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FeWLi+WUXpfFvurrXd6Lwp/LTd0bgnBhCW8jro/aya5SjYFugSQqytfYiBudvMe3ae/Dr4YB8In6VvdQNaC1iw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB7117
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 04:59:41PM +0200, Thomas Zimmermann wrote:
-> GEM object functions deprecate several similar callback interfaces in
-> struct drm_driver. This patch replaces the per-driver callbacks with
-> per-instance callbacks in exynos. The only exception is gem_prime_mmap,
-> which is non-trivial to convert.
+
+On 9/4/2020 6:55 PM, Bjorn Andersson wrote:
+> Based on previous attempts and discussions this is the latest attempt at
+> inheriting stream mappings set up by the bootloader, for e.g. boot splash or
+> efifb.
 > 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/exynos/exynos_drm_drv.c | 10 ----------
->  drivers/gpu/drm/exynos/exynos_drm_gem.c | 15 +++++++++++++++
->  2 files changed, 15 insertions(+), 10 deletions(-)
+> Per Will's request this builds on the work by Jordan and Rob for the Adreno
+> SMMU support. It applies cleanly ontop of v16 of their series, which can be
+> found at
+> https://lore.kernel.org/linux-arm-msm/20200901164707.2645413-1-robdclark@gmail.com/
 > 
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-> index dbd80f1e4c78..fe46680ca208 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
-> @@ -75,11 +75,6 @@ static void exynos_drm_postclose(struct drm_device *dev, struct drm_file *file)
->  	file->driver_priv = NULL;
->  }
->  
-> -static const struct vm_operations_struct exynos_drm_gem_vm_ops = {
-> -	.open = drm_gem_vm_open,
-> -	.close = drm_gem_vm_close,
-> -};
-> -
->  static const struct drm_ioctl_desc exynos_ioctls[] = {
->  	DRM_IOCTL_DEF_DRV(EXYNOS_GEM_CREATE, exynos_drm_gem_create_ioctl,
->  			DRM_RENDER_ALLOW),
-> @@ -124,16 +119,11 @@ static struct drm_driver exynos_drm_driver = {
->  	.open			= exynos_drm_open,
->  	.lastclose		= drm_fb_helper_lastclose,
->  	.postclose		= exynos_drm_postclose,
-> -	.gem_free_object_unlocked = exynos_drm_gem_free_object,
-> -	.gem_vm_ops		= &exynos_drm_gem_vm_ops,
->  	.dumb_create		= exynos_drm_gem_dumb_create,
->  	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
->  	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
->  	.gem_prime_import	= exynos_drm_gem_prime_import,
-> -	.gem_prime_get_sg_table	= exynos_drm_gem_prime_get_sg_table,
->  	.gem_prime_import_sg_table	= exynos_drm_gem_prime_import_sg_table,
-> -	.gem_prime_vmap		= exynos_drm_gem_prime_vmap,
-> -	.gem_prime_vunmap	= exynos_drm_gem_prime_vunmap,
->  	.gem_prime_mmap		= exynos_drm_gem_prime_mmap,
->  	.ioctls			= exynos_ioctls,
->  	.num_ioctls		= ARRAY_SIZE(exynos_ioctls),
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_gem.c b/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> index efa476858db5..69a5cf28b4ae 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> @@ -129,6 +129,19 @@ void exynos_drm_gem_destroy(struct exynos_drm_gem *exynos_gem)
->  	kfree(exynos_gem);
->  }
->  
-> +static const struct vm_operations_struct exynos_drm_gem_vm_ops = {
-> +	.open = drm_gem_vm_open,
-> +	.close = drm_gem_vm_close,
-> +};
-
-Hm moving the drm_gem_cma_vm_ops into drm_gem.h or so and maybe calling
-them drm_gem_simple_ops or so would remove a pile of these. But perhaps a
-quick follow up series.
-
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-
-> +
-> +static const struct drm_gem_object_funcs exynos_drm_gem_object_funcs = {
-> +	.free = exynos_drm_gem_free_object,
-> +	.get_sg_table = exynos_drm_gem_prime_get_sg_table,
-> +	.vmap = exynos_drm_gem_prime_vmap,
-> +	.vunmap	= exynos_drm_gem_prime_vunmap,
-> +	.vm_ops = &exynos_drm_gem_vm_ops,
-> +};
-> +
->  static struct exynos_drm_gem *exynos_drm_gem_init(struct drm_device *dev,
->  						  unsigned long size)
->  {
-> @@ -143,6 +156,8 @@ static struct exynos_drm_gem *exynos_drm_gem_init(struct drm_device *dev,
->  	exynos_gem->size = size;
->  	obj = &exynos_gem->base;
->  
-> +	obj->funcs = &exynos_drm_gem_object_funcs;
-> +
->  	ret = drm_gem_object_init(dev, obj, size);
->  	if (ret < 0) {
->  		DRM_DEV_ERROR(dev->dev, "failed to initialize gem object\n");
-> -- 
-> 2.28.0
+> Bjorn Andersson (8):
+>   iommu/arm-smmu: Refactor context bank allocation
+>   iommu/arm-smmu: Delay modifying domain during init
+>   iommu/arm-smmu: Consult context bank allocator for identify domains
+>   iommu/arm-smmu-qcom: Emulate bypass by using context banks
+>   iommu/arm-smmu-qcom: Consistently initialize stream mappings
+>   iommu/arm-smmu: Add impl hook for inherit boot mappings
+>   iommu/arm-smmu: Provide helper for allocating identity domain
+>   iommu/arm-smmu-qcom: Setup identity domain for boot mappings
+> 
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 111 ++++++++++++++++++-
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 122 ++++++++++++++-------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h      |  14 ++-
+>  3 files changed, 205 insertions(+), 42 deletions(-)
 > 
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Tested on a NXP LX2160A with John's tree [1] and below diff [2], so for
+the whole series:
+
+Tested-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+
+[1]
+https://git.linaro.org/people/john.stultz/android-dev.git/log/?h=dev/db845c-mainline-WIP
+[2]
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+@@ -190,11 +190,43 @@ static const struct arm_smmu_impl mrvl_mmu500_impl = {
+        .reset = arm_mmu500_reset,
+ };
+
++static int nxp_smmu_inherit_mappings(struct arm_smmu_device *smmu)
++{
++       u32 smr;
++       int i, cnt = 0;
++
++       for (i = 0; i < smmu->num_mapping_groups; i++) {
++               smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
++
++               if (FIELD_GET(ARM_SMMU_SMR_VALID, smr)) {
++                       smmu->smrs[i].id = FIELD_GET(ARM_SMMU_SMR_ID, smr);
++                       smmu->smrs[i].mask =
+FIELD_GET(ARM_SMMU_SMR_MASK, smr);
++                       smmu->smrs[i].valid = true;
++
++                       smmu->s2crs[i].type = S2CR_TYPE_BYPASS;
++                       smmu->s2crs[i].privcfg = S2CR_PRIVCFG_DEFAULT;
++                       smmu->s2crs[i].count++;
++
++                       cnt++;
++               }
++       }
++
++       dev_notice(smmu->dev, "\tpreserved %d boot mapping%s\n", cnt,
++                  cnt == 1 ? "" : "s");
++
++       return 0;
++}
++
++static const struct arm_smmu_impl nxp_impl = {
++       .inherit_mappings = nxp_smmu_inherit_mappings,
++};
+
+ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+        const struct device_node *np = smmu->dev->of_node;
+
+        /*
+         * Set the impl for model-specific implementation quirks first,
+         * such that platform integration quirks can pick it up and
+@@ -229,5 +261,12 @@ struct arm_smmu_device *arm_smmu_impl_init(struct
+arm_smmu_device *smmu)
+        if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
+                smmu->impl = &mrvl_mmu500_impl;
+
++       if (of_property_read_bool(np, "nxp,keep-bypass-mappings"))
++               smmu->impl = &nxp_impl;
+
+---
+Best Regards, Laurentiu
