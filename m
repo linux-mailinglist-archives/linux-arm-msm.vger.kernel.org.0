@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DE7E26CB46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 22:25:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF1E426CACE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 22:15:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727120AbgIPUYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 16:24:40 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:30310 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726709AbgIPR1q (ORCPT
+        id S1727189AbgIPUPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 16:15:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728328AbgIPUNL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:27:46 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 16 Sep 2020 10:26:21 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Sep 2020 10:26:19 -0700
-Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Sep 2020 22:56:14 +0530
-Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id 9140521D3D; Wed, 16 Sep 2020 22:56:12 +0530 (IST)
-From:   Mansur Alisha Shaik <mansur@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH v2 4/4] venus: put dummy vote on video-mem path after last session release
-Date:   Wed, 16 Sep 2020 22:55:57 +0530
-Message-Id: <1600277157-24327-5-git-send-email-mansur@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1600277157-24327-1-git-send-email-mansur@codeaurora.org>
-References: <1600277157-24327-1-git-send-email-mansur@codeaurora.org>
+        Wed, 16 Sep 2020 16:13:11 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BFEC061788
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 13:13:10 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id b123so4785469vsd.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 13:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=GcbBDc3F14nB5fItkaCR8bNi/7szL/0DDXdKpHCyoVg=;
+        b=WdOkItQh65coZKHtbLtCry05LIlLS/47JKxIFd5oHs6A7Luo37AFBUWhJGKmiHg2Kc
+         3lhisA2LapqsXclKHkpUt/m0EhzXQla8tSj9wUtUlwkCTqzQmj6zCCqc2V02xvF1Atya
+         2xsQm+aC1YGiYs1zK3BscTTaL7swsr8Vikd1jpxJhT/VOlZqFcjqrENNApxWjziVkfWL
+         HWjDTUBHH4USrOcn4I/vZDaywNTIaBubN2QoaWlhinD4oCycqiP5P7dmIcJCbIlvmvGC
+         Iv+fHlUz+hyH0hE6v2xSvt9SPQnkOYDD4XiXZrrHCvaCPae51rT3DBBjlpFB8dNDM3Nb
+         Ij4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=GcbBDc3F14nB5fItkaCR8bNi/7szL/0DDXdKpHCyoVg=;
+        b=HMnt2NeE7lpepFMdCPYRaV9zScEkjcHKH1rCc7cVn8p3fng8KfK5/kt3wEQvi+1lCv
+         oBerJ/aUeVhW/rv/JM4t6k/q9iwH6u+yvg/l81hUnV0R66jD9mwZZ2kE6UEe6OePXlsz
+         sjH9tMc6VrFdfh9VDriKEHtKy5EAEN3jqzc4WFlp0LEY1Pi87I1HCgWvG73CRaqb9qu+
+         KLgbffr0qpaFPbogMzQhn8iLtslRdJgzIlJdHcZLEFxWIMNkkXRDak8sSj8A5S41eRI9
+         DGPZuRR1zM6Vhae5bH3OxQgqwMrwENzpwRsZoVcNzzHSRmRHWIAsfYRHVISMGcHrav7i
+         p1pA==
+X-Gm-Message-State: AOAM530kA1m1CAqMCXIbm1MJZFHnWAryNAk/BB42QTKzxlz7IsWd/Ubd
+        LXP6Zt1JbtfFBY/jE93sWfoAXPBmjERVldYlWqI=
+X-Google-Smtp-Source: ABdhPJxy1gxkUt72kPzIznZooaLfdaI+EfieVI+ftdsKxLlXkLj8DSbhlQHXpspMiWRODAFl9uCV0L87nI/k2vn4anY=
+X-Received: by 2002:a05:6102:101a:: with SMTP id q26mr6140643vsp.57.1600287189878;
+ Wed, 16 Sep 2020 13:13:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ab0:3412:0:0:0:0:0 with HTTP; Wed, 16 Sep 2020 13:13:09
+ -0700 (PDT)
+Reply-To: aalihelp5@gmail.com
+From:   "Mr.Hui Ka Yan" <jacobmoore.moores41@gmail.com>
+Date:   Wed, 16 Sep 2020 13:13:09 -0700
+Message-ID: <CAEedSLdw9cQpdDgoAQWHTA9VDtMRsPUVn_VFAmSDuzGEiS==Sw@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per current implementation, we are unvoting "videom-mem" path
-for last video session during vdec_session_release().
-While video playback when we try to suspend device, we see video clock
-warnings since votes are already removed during vdec_session_release().
+Bin Herr Hui Ka Yan. Ich spende Ihnen einen Zuschuss von 10.500.000
+USD. Kontaktieren Sie mich (aalihelp5@gmail.com) f=C3=BCr weitere Details.
 
-corrected this by putting dummy vote on "video-mem" after last video
-session release and unvoting it during suspend.
-
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
----
- drivers/media/platform/qcom/venus/pm_helpers.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 57877ea..c0a3524 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -212,6 +212,9 @@ static int load_scale_bw(struct venus_core *core)
- 	}
- 	mutex_unlock(&core->lock);
- 
-+	if (!total_avg && !total_peak)
-+		total_avg = kbps_to_icc(1000);
-+
- 	dev_dbg(core->dev, VDBGL "total: avg_bw: %u, peak_bw: %u\n",
- 		total_avg, total_peak);
- 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Danke und Gott segne dich.
