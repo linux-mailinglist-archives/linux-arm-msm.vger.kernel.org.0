@@ -2,53 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39B9226C930
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ED3226C91D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:03:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728363AbgIPTED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 15:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35646 "EHLO
+        id S1728345AbgIPTD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 15:03:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727466AbgIPRrx (ORCPT
+        with ESMTP id S1727476AbgIPRsR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:47:53 -0400
-Received: from mo6-p03-ob.smtp.rzone.de (mo6-p03-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5303::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C39C061A10;
-        Wed, 16 Sep 2020 04:14:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1600254268;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=zk1JgRCfGN8d0WVKK0yFWGZXo6snBrcRKo+H1BWj0g0=;
-        b=Z8sXD4e/9IrG0cR/8UdHcx/C8kHdCZr0rOT59UoEadsrNNHHkLMlPvtCfRbVxOPQle
-        UOBD/wwAnfXJIQPiG1L2ZSxUuMEU9JwFKmtan08tMPlWYwchXPyC6ObEgyA4L6WNOafi
-        E25fEDrHTaGt1cfYbsyHv6JiwZ294F7xPEabklI/9l2/acd8r2Zo3vrQ8d5CAfHGdWHi
-        oukDc07XKsXqoliFFXUtr97kyOiQzGlYE4nsCiE+hXBasVCsImLtfNBi2mjAs8K/vFMd
-        XEc6eDV3K2JqKRRolboIUDdI6Fiu/ldBFSPKM6UACk02BiA0VeFm880tcDNEI/jOCtZd
-        ECnA==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB4W6Nahc="
-X-RZG-CLASS-ID: mo00
-Received: from localhost.localdomain
-        by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w8GAftzlY
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Wed, 16 Sep 2020 12:41:55 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 10/10] arm64: dts: qcom: msm8916-pm8916: Stop using s1/l3 as regulators
-Date:   Wed, 16 Sep 2020 12:41:35 +0200
-Message-Id: <20200916104135.25085-11-stephan@gerhold.net>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200916104135.25085-1-stephan@gerhold.net>
-References: <20200916104135.25085-1-stephan@gerhold.net>
+        Wed, 16 Sep 2020 13:48:17 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB436C061224
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 04:07:10 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id z1so6467451wrt.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 04:07:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9nu6UrMqV2SVJMMVWIQbvvsBT41Bk/x2/rbQZZMvR5c=;
+        b=RPRtBcCg7Nlj0wORAHGE/VDKI3mlLQS/qXvivUL4M7/JW5ECAKalvw72hjSbxez8Aw
+         lMCZYbPq15i6bIjwQAxfIDpzMfPNPU/WZzWlPgKpy/oc+Y6L6jiGzWLpVMJB08/BtSZT
+         oD2dRBEBNsclb8R+SHrzd4iEmmwYG8+TCQGsqD7GKc1k8aVkk3vybhh7XzdFgXUgO9lI
+         QYDm0ol0pN3tx1rzzGaDqWMGc+wiiGj82UfSpSfbYEgpd1LIf+jsy1e4OB0MSuUMFEro
+         jQSQHm/io9aXGCi5lKWqazsAZMtxawDIHKwA08vwThJ4DSoOkZZBbBDobGS4XE3i1iKb
+         ItAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9nu6UrMqV2SVJMMVWIQbvvsBT41Bk/x2/rbQZZMvR5c=;
+        b=UnkCDMEaC6vlGfDyNLnNw5KrFC0kJ1EtMitWoBZCpeVHQuvDK+h/v1l8ItEKQhfij2
+         N3B52+seT+NoV7IPF/0fvFN/rzic1p2yeTFmKlbDFR1rJCWhkR6FL8D+LDRYBVhvUCmN
+         ckPH68CPsg3UIC9fVLFCJQ8BbiEtb5jUHFA6tFe/pWRM+JoIjfNvl1d0cY9/e62FsD6z
+         VoJMfF9KXjo77xok2P5wTUaNU9uUt3ujSwh8Hz5tYPnaQUlkSTqzkJxLEfSH2lhrKlfm
+         Ju3jc73a+YAZmOJ8RfHPvTwUHv0l403iFwY1ndcxj3wEkJlWAjav4eNNQvWR3QQyWju/
+         x7gw==
+X-Gm-Message-State: AOAM533Sy6SLMMA2y8d+5RcvoQckuxvy/z+3a3EfYMZd2L/FQsWXMmhH
+        yU4U0CPZXgN2mhBNluJtdb/klg==
+X-Google-Smtp-Source: ABdhPJzs9y1RZuz1TgxiB6r0FtvUq2fsAnxRCKUrCMfPgN1zHNdHumy2WgbVHV91xEdhhPCKXoSDYQ==
+X-Received: by 2002:a5d:60d0:: with SMTP id x16mr25862069wrt.196.1600254428922;
+        Wed, 16 Sep 2020 04:07:08 -0700 (PDT)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id l19sm4682554wmi.8.2020.09.16.04.07.07
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Sep 2020 04:07:08 -0700 (PDT)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     robdclark@gmail.com, sean@poorly.run
+Cc:     airlied@linux.ie, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, georgi.djakov@linaro.org
+Subject: [PATCH] drm/msm: Remove depends on interconnect
+Date:   Wed, 16 Sep 2020 14:07:06 +0300
+Message-Id: <20200916110706.6671-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
@@ -56,132 +64,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-s1 (VDDCX) and l3 (VDDMX) are now managed by rpmpd as power domains.
-This allows us to vote for voltage corners instead of voting for raw
-voltages. But we cannot manage these as regulator and power domain at
-the same time: The votes by rpmpd would conflict with the ones from
-the regulator driver.
+The dependency on interconnect in the Kconfig was introduced to avoid
+the case of interconnect=m and driver=y, but the interconnect framework
+has been converted from tristate to bool now. Remove the dependency as
+the framework can't be a module anymore.
 
-All users of these regulators have been converted to power domains.
-Make sure that no new users are added by removing s1 and l3 from
-the regulator definitions.
-
-This also allows us to remove the arbitrary voltage constraints
-we have been using for these regulators. Not all of the voltages
-listed there would actually have been safe for the boards.
-
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi              | 10 ----------
- arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts   | 10 ----------
- arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi           |  4 ++--
- .../boot/dts/qcom/msm8916-samsung-a2015-common.dtsi    | 10 ----------
- 4 files changed, 2 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/msm/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index 3c7f97539390..3a9538e1ec97 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -417,11 +417,6 @@ &smd_rpm_regulators {
- 	vdd_l4_l5_l6-supply = <&pm8916_s4>;
- 	vdd_l7-supply = <&pm8916_s4>;
- 
--	s1 {
--		regulator-min-microvolt = <375000>;
--		regulator-max-microvolt = <1562000>;
--	};
--
- 	s3 {
- 		regulator-min-microvolt = <375000>;
- 		regulator-max-microvolt = <1562000>;
-@@ -445,11 +440,6 @@ l2 {
- 		regulator-max-microvolt = <1200000>;
- 	};
- 
--	l3 {
--		regulator-min-microvolt = <375000>;
--		regulator-max-microvolt = <1525000>;
--	};
--
- 	l4 {
- 		regulator-min-microvolt = <1750000>;
- 		regulator-max-microvolt = <3337000>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index b9d3c5d98dd0..2c204d535d66 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -98,11 +98,6 @@ &smd_rpm_regulators {
- 	vdd_l4_l5_l6-supply = <&pm8916_s4>;
- 	vdd_l7-supply = <&pm8916_s4>;
- 
--	s1 {
--		regulator-min-microvolt = <500000>;
--		regulator-max-microvolt = <1300000>;
--	};
--
- 	s3 {
- 		regulator-min-microvolt = <1200000>;
- 		regulator-max-microvolt = <1300000>;
-@@ -123,11 +118,6 @@ l2 {
- 		regulator-max-microvolt = <1200000>;
- 	};
- 
--	l3 {
--		regulator-min-microvolt = <500000>;
--		regulator-max-microvolt = <1287500>;
--	};
--
- 	l4 {
- 		regulator-min-microvolt = <2050000>;
- 		regulator-max-microvolt = <2050000>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
-index 513e433aa5f3..539823b2c36e 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
-@@ -50,13 +50,13 @@ &rpm_requests {
- 	smd_rpm_regulators: pm8916-regulators {
- 		compatible = "qcom,rpm-pm8916-regulators";
- 
--		pm8916_s1: s1 {};
-+		/* pm8916_s1 is managed by rpmpd (MSM8916_VDDCX) */
- 		pm8916_s3: s3 {};
- 		pm8916_s4: s4 {};
- 
- 		pm8916_l1: l1 {};
- 		pm8916_l2: l2 {};
--		pm8916_l3: l3 {};
-+		/* pm8916_l3 is managed by rpmpd (MSM8916_VDDMX) */
- 		pm8916_l4: l4 {};
- 		pm8916_l5: l5 {};
- 		pm8916_l6: l6 {};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index b18d21e42f59..0b0dfd3059de 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -164,11 +164,6 @@ &smd_rpm_regulators {
- 	vdd_l4_l5_l6-supply = <&pm8916_s4>;
- 	vdd_l7-supply = <&pm8916_s4>;
- 
--	s1 {
--		regulator-min-microvolt = <500000>;
--		regulator-max-microvolt = <1300000>;
--	};
--
- 	s3 {
- 		regulator-min-microvolt = <1200000>;
- 		regulator-max-microvolt = <1300000>;
-@@ -189,11 +184,6 @@ l2 {
- 		regulator-max-microvolt = <1200000>;
- 	};
- 
--	l3 {
--		regulator-min-microvolt = <500000>;
--		regulator-max-microvolt = <1287500>;
--	};
--
- 	l4 {
- 		regulator-min-microvolt = <2050000>;
- 		regulator-max-microvolt = <2050000>;
--- 
-2.28.0
-
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index 5c55cd0ce9f9..3348969460ab 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -6,7 +6,6 @@ config DRM_MSM
+ 	depends on ARCH_QCOM || SOC_IMX5 || (ARM && COMPILE_TEST)
+ 	depends on OF && COMMON_CLK
+ 	depends on MMU
+-	depends on INTERCONNECT || !INTERCONNECT
+ 	depends on QCOM_OCMEM || QCOM_OCMEM=n
+ 	select QCOM_MDT_LOADER if ARCH_QCOM
+ 	select REGULATOR
