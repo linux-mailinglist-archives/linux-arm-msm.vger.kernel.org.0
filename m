@@ -2,87 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ED3226C91D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:03:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA8C326C993
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:13:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728345AbgIPTD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 15:03:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35720 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727476AbgIPRsR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:48:17 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB436C061224
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 04:07:10 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id z1so6467451wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 04:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9nu6UrMqV2SVJMMVWIQbvvsBT41Bk/x2/rbQZZMvR5c=;
-        b=RPRtBcCg7Nlj0wORAHGE/VDKI3mlLQS/qXvivUL4M7/JW5ECAKalvw72hjSbxez8Aw
-         lMCZYbPq15i6bIjwQAxfIDpzMfPNPU/WZzWlPgKpy/oc+Y6L6jiGzWLpVMJB08/BtSZT
-         oD2dRBEBNsclb8R+SHrzd4iEmmwYG8+TCQGsqD7GKc1k8aVkk3vybhh7XzdFgXUgO9lI
-         QYDm0ol0pN3tx1rzzGaDqWMGc+wiiGj82UfSpSfbYEgpd1LIf+jsy1e4OB0MSuUMFEro
-         jQSQHm/io9aXGCi5lKWqazsAZMtxawDIHKwA08vwThJ4DSoOkZZBbBDobGS4XE3i1iKb
-         ItAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9nu6UrMqV2SVJMMVWIQbvvsBT41Bk/x2/rbQZZMvR5c=;
-        b=UnkCDMEaC6vlGfDyNLnNw5KrFC0kJ1EtMitWoBZCpeVHQuvDK+h/v1l8ItEKQhfij2
-         N3B52+seT+NoV7IPF/0fvFN/rzic1p2yeTFmKlbDFR1rJCWhkR6FL8D+LDRYBVhvUCmN
-         ckPH68CPsg3UIC9fVLFCJQ8BbiEtb5jUHFA6tFe/pWRM+JoIjfNvl1d0cY9/e62FsD6z
-         VoJMfF9KXjo77xok2P5wTUaNU9uUt3ujSwh8Hz5tYPnaQUlkSTqzkJxLEfSH2lhrKlfm
-         Ju3jc73a+YAZmOJ8RfHPvTwUHv0l403iFwY1ndcxj3wEkJlWAjav4eNNQvWR3QQyWju/
-         x7gw==
-X-Gm-Message-State: AOAM533Sy6SLMMA2y8d+5RcvoQckuxvy/z+3a3EfYMZd2L/FQsWXMmhH
-        yU4U0CPZXgN2mhBNluJtdb/klg==
-X-Google-Smtp-Source: ABdhPJzs9y1RZuz1TgxiB6r0FtvUq2fsAnxRCKUrCMfPgN1zHNdHumy2WgbVHV91xEdhhPCKXoSDYQ==
-X-Received: by 2002:a5d:60d0:: with SMTP id x16mr25862069wrt.196.1600254428922;
-        Wed, 16 Sep 2020 04:07:08 -0700 (PDT)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id l19sm4682554wmi.8.2020.09.16.04.07.07
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Sep 2020 04:07:08 -0700 (PDT)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     robdclark@gmail.com, sean@poorly.run
-Cc:     airlied@linux.ie, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, georgi.djakov@linaro.org
-Subject: [PATCH] drm/msm: Remove depends on interconnect
-Date:   Wed, 16 Sep 2020 14:07:06 +0300
-Message-Id: <20200916110706.6671-1-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.27.0
+        id S1727364AbgIPTNl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 15:13:41 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:12763 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727383AbgIPTNd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 15:13:33 -0400
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 935D8DFE62249CDE7127;
+        Wed, 16 Sep 2020 19:08:25 +0800 (CST)
+Received: from huawei.com (10.90.53.225) by DGGEMS402-HUB.china.huawei.com
+ (10.3.19.202) with Microsoft SMTP Server id 14.3.487.0; Wed, 16 Sep 2020
+ 19:08:24 +0800
+From:   Qilong Zhang <zhangqilong3@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH -next] soc: use devm_platform_ioremap_resource_byname
+Date:   Wed, 16 Sep 2020 19:15:17 +0800
+Message-ID: <20200916111517.99670-1-zhangqilong3@huawei.com>
+X-Mailer: git-send-email 2.26.0.106.g9fadedd
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.90.53.225]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dependency on interconnect in the Kconfig was introduced to avoid
-the case of interconnect=m and driver=y, but the interconnect framework
-has been converted from tristate to bool now. Remove the dependency as
-the framework can't be a module anymore.
+Use the devm_platform_ioremap_resource_byname() helper instead of
+calling platform_get_resource_byname() and devm_ioremap_resource()
+separately.
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
 ---
- drivers/gpu/drm/msm/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/soc/qcom/llcc-qcom.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 5c55cd0ce9f9..3348969460ab 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -6,7 +6,6 @@ config DRM_MSM
- 	depends on ARCH_QCOM || SOC_IMX5 || (ARM && COMPILE_TEST)
- 	depends on OF && COMMON_CLK
- 	depends on MMU
--	depends on INTERCONNECT || !INTERCONNECT
- 	depends on QCOM_OCMEM || QCOM_OCMEM=n
- 	select QCOM_MDT_LOADER if ARCH_QCOM
- 	select REGULATOR
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 429b5a60a1ba..70fbe70c6213 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -387,7 +387,6 @@ static int qcom_llcc_remove(struct platform_device *pdev)
+ static struct regmap *qcom_llcc_init_mmio(struct platform_device *pdev,
+ 		const char *name)
+ {
+-	struct resource *res;
+ 	void __iomem *base;
+ 	struct regmap_config llcc_regmap_config = {
+ 		.reg_bits = 32,
+@@ -396,11 +395,7 @@ static struct regmap *qcom_llcc_init_mmio(struct platform_device *pdev,
+ 		.fast_io = true,
+ 	};
+ 
+-	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
+-	if (!res)
+-		return ERR_PTR(-ENODEV);
+-
+-	base = devm_ioremap_resource(&pdev->dev, res);
++	base = devm_platform_ioremap_resource_byname(pdev, name);
+ 	if (IS_ERR(base))
+ 		return ERR_CAST(base);
+ 
+-- 
+2.17.1
+
