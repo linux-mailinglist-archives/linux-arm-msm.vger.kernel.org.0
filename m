@@ -2,250 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41B7326C714
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 20:17:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 812BD26C70A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 20:16:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727873AbgIPSRM convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 14:17:12 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:36034 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727653AbgIPSRK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:17:10 -0400
-Received: from marcel-macbook.fritz.box (p4ff9f430.dip0.t-ipconnect.de [79.249.244.48])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 6372ECED04;
-        Wed, 16 Sep 2020 16:34:38 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: [PATCH v1] Bluetooth: Use NVM files based on SoC ID for WCN3991
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
-Date:   Wed, 16 Sep 2020 16:27:41 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <A07A6C72-55B6-4DE6-BA4A-987ED4DB88E0@holtmann.org>
-References: <1600184605-31611-1-git-send-email-gubbaven@codeaurora.org>
-To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+        id S1727847AbgIPSPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 14:15:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53838 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727835AbgIPSPa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 14:15:30 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.191])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B10D72255F;
+        Wed, 16 Sep 2020 16:23:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600273388;
+        bh=GxwrIW7qntGRRCtYs+U7rfFBfVMvupzhpGRssjOqgfc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=eJdp7dwsABHWLOLo856E9StQJ4p+sYsaIrnv30ga2lxVVy299VKDfRjnxVHVSYRam
+         J9iCOvMBMO4TjJt/0dzEmOCErvtBBHeOXw5bZT/JjPVNif1FLVrldgdms7L5Qrlv+O
+         +/s866azKmm/LjIY6wDdEtnslIODT1upIviFRBHg=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Yash Shah <yash.shah@sifive.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-unisoc@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-riscv@lists.infradead.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 0/8] gpio: add common dtschema
+Date:   Wed, 16 Sep 2020 18:22:42 +0200
+Message-Id: <20200916162250.16098-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Venkata,
+Hi,
 
-> This change will allow to use different NVM file based
-> on WCN3991 BT SoC ID.Need to use different NVM file based on
-> fab location for WCN3991 BT SoC.
-> 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> ---
-> drivers/bluetooth/btqca.c   | 41 +++++++++++++++++++++++++----------------
-> drivers/bluetooth/btqca.h   | 13 ++++++++-----
-> drivers/bluetooth/hci_qca.c | 11 +++++------
-> 3 files changed, 38 insertions(+), 27 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index ce9dcff..a7e72f1 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -14,12 +14,11 @@
-> 
-> #define VERSION "0.1"
-> 
-> -int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-> +int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
-> 			 enum qca_btsoc_type soc_type)
-> {
-> 	struct sk_buff *skb;
-> 	struct edl_event_hdr *edl;
-> -	struct qca_btsoc_version *ver;
-> 	char cmd;
-> 	int err = 0;
-> 	u8 event_type = HCI_EV_VENDOR;
-> @@ -70,9 +69,9 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-> 	}
-> 
-> 	if (soc_type >= QCA_WCN3991)
-> -		memmove(&edl->data, &edl->data[1], sizeof(*ver));
-> -
-> -	ver = (struct qca_btsoc_version *)(edl->data);
-> +		memcpy(ver, &edl->data[1], sizeof(*ver));
+This is independent work of pca953x bindings:
+https://lore.kernel.org/lkml/20200916155715.21009-1-krzk@kernel.org/T/#u
 
-any reason to use &edl->data[1] and not just edl->data + 1?
+The DTS patches can be also applied independently.
 
-> +	else
-> +		memcpy(ver, &edl->data, sizeof(*ver));
-> 
-> 	bt_dev_info(hdev, "QCA Product ID   :0x%08x",
-> 		    le32_to_cpu(ver->product_id));
-> @@ -83,13 +82,7 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-> 	bt_dev_info(hdev, "QCA Patch Version:0x%08x",
-> 		    le16_to_cpu(ver->patch_ver));
-> 
-> -	/* QCA chipset version can be decided by patch and SoC
-> -	 * version, combination with upper 2 bytes from SoC
-> -	 * and lower 2 bytes from patch will be used.
-> -	 */
-> -	*soc_version = (le32_to_cpu(ver->soc_id) << 16) |
-> -		       (le16_to_cpu(ver->rom_ver) & 0x0000ffff);
-> -	if (*soc_version == 0)
-> +	if (le32_to_cpu(ver->soc_id) == 0 || le16_to_cpu(ver->rom_ver) == 0)
-> 		err = -EILSEQ;
-> 
-> out:
-> @@ -446,15 +439,25 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
-> EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
-> 
-> int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> -		   enum qca_btsoc_type soc_type, u32 soc_ver,
-> +		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
-> 		   const char *firmware_name)
-> {
-> 	struct qca_fw_config config;
-> 	int err;
-> 	u8 rom_ver = 0;
-> +	u32 soc_ver;
-> 
-> 	bt_dev_dbg(hdev, "QCA setup on UART");
-> 
-> +	/* QCA chipset version can be decided by patch and SoC
-> +	 * version, combination with upper 2 bytes from SoC
-> +	 * and lower 2 bytes from patch will be used.
-> +	 */
-> +	soc_ver = (le32_to_cpu(ver.soc_id) << 16) |
-> +		       (le16_to_cpu(ver.rom_ver) & 0x0000ffff);
+Best regards,
+Krzysztof
 
-Please indent this properly.
 
-I am also confused about the 0x0000ffff since it is just 16-bit value in the first place. Also where do you want to shift the 32-bit value to.
+Krzysztof Kozlowski (8):
+  dt-bindings: gpio: add common schema for GPIO controllers
+  dt-bindings: gpio: include common schema in GPIO controllers
+  dt-bindings: gpio: pl061: add missing properties and include common
+    schema
+  dt-bindings: gpio: fsl-imx-gpio: add i.MX ARMv6 and ARMv7 compatibles
+  dt-bindings: gpio: fsl-imx-gpio: add gpio-line-names
+  arm64: dts: imx8mq-librem5: correct GPIO hog property
+  arm64: dts: imx8mq-librem5: align GPIO hog names with dtschema
+  ARM: dts: imx: align GPIO hog names with dtschema
 
-Frankly, I find all this version magic kinda questionable.
+ .../bindings/gpio/brcm,xgs-iproc-gpio.yaml    |   3 +
+ .../bindings/gpio/fsl-imx-gpio.yaml           |  17 ++-
+ .../devicetree/bindings/gpio/gpio-common.yaml | 126 ++++++++++++++++++
+ .../devicetree/bindings/gpio/gpio-mxs.yaml    |   3 +
+ .../bindings/gpio/gpio-pca9570.yaml           |   3 +
+ .../devicetree/bindings/gpio/gpio-rda.yaml    |   3 +
+ .../devicetree/bindings/gpio/gpio-vf610.yaml  |   3 +
+ .../devicetree/bindings/gpio/mrvl-gpio.yaml   |   1 +
+ .../devicetree/bindings/gpio/pl061-gpio.yaml  |   6 +
+ .../bindings/gpio/qcom,wcd934x-gpio.yaml      |   3 +
+ .../bindings/gpio/renesas,em-gio.yaml         |   3 +
+ .../bindings/gpio/renesas,rcar-gpio.yaml      |   3 +
+ .../devicetree/bindings/gpio/sifive,gpio.yaml |   3 +
+ .../gpio/socionext,uniphier-gpio.yaml         |   3 +
+ .../bindings/gpio/xylon,logicvc-gpio.yaml     |   3 +
+ arch/arm/boot/dts/imx51-zii-rdu1.dts          |   2 +-
+ arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi       |   8 +-
+ arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts   |   2 +-
+ .../boot/dts/freescale/imx8mq-librem5.dtsi    |   4 +-
+ 19 files changed, 190 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/gpio/gpio-common.yaml
 
-> +
-> +	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
-> +
-> 	config.user_baud_rate = baudrate;
-> 
-> 	/* Download rampatch file */
-> @@ -491,9 +494,15 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> 	if (firmware_name)
-> 		snprintf(config.fwname, sizeof(config.fwname),
-> 			 "qca/%s", firmware_name);
-> -	else if (qca_is_wcn399x(soc_type))
-> -		snprintf(config.fwname, sizeof(config.fwname),
-> -			 "qca/crnv%02x.bin", rom_ver);
-> +	else if (qca_is_wcn399x(soc_type)) {
-> +		if (ver.soc_id == QCA_WCN3991_SOC_ID) {
-> +			snprintf(config.fwname, sizeof(config.fwname),
-> +				 "qca/crnv%02xu.bin", rom_ver);
-> +		} else {
-> +			snprintf(config.fwname, sizeof(config.fwname),
-> +				 "qca/crnv%02x.bin", rom_ver);
-> +		}
-> +	}
-> 	else if (soc_type == QCA_QCA6390)
-> 		snprintf(config.fwname, sizeof(config.fwname),
-> 			 "qca/htnv%02x.bin", rom_ver);
-> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> index d81b74c..d01a9f5 100644
-> --- a/drivers/bluetooth/btqca.h
-> +++ b/drivers/bluetooth/btqca.h
-> @@ -34,6 +34,8 @@
-> #define QCA_HCI_CC_OPCODE		0xFC00
-> #define QCA_HCI_CC_SUCCESS		0x00
-> 
-> +#define QCA_WCN3991_SOC_ID		(0x40014320)
-> +
-> enum qca_baudrate {
-> 	QCA_BAUDRATE_115200 	= 0,
-> 	QCA_BAUDRATE_57600,
-> @@ -136,9 +138,9 @@ enum qca_btsoc_type {
-> 
-> int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr);
-> int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> -		   enum qca_btsoc_type soc_type, u32 soc_ver,
-> +		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
-> 		   const char *firmware_name);
-> -int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-> +int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
-> 			 enum qca_btsoc_type);
-> int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
-> int qca_send_pre_shutdown_cmd(struct hci_dev *hdev);
-> @@ -155,13 +157,14 @@ static inline int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdad
-> }
-> 
-> static inline int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> -				 enum qca_btsoc_type soc_type, u32 soc_ver,
-> -				 const char *firmware_name)
-> +		enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
-> +				const char *firmware_name)
-
-Please use proper indentation.
-
-> {
-> 	return -EOPNOTSUPP;
-> }
-> 
-> -static inline int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
-> +static inline int qca_read_soc_version(struct hci_dev *hdev,
-> +				       struct qca_btsoc_version *ver,
-> 				       enum qca_btsoc_type)
-> {
-> 	return -EOPNOTSUPP;
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 244b8fe..4c32c60 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1649,7 +1649,7 @@ static int qca_setup(struct hci_uart *hu)
-> 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-> 	const char *firmware_name = qca_get_firmware_name(hu);
-> 	int ret;
-> -	int soc_ver = 0;
-> +	struct qca_btsoc_version ver;
-> 
-> 	ret = qca_check_speeds(hu);
-> 	if (ret)
-> @@ -1678,7 +1678,7 @@ static int qca_setup(struct hci_uart *hu)
-> 	if (qca_is_wcn399x(soc_type)) {
-> 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-> 
-> -		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
-> +		ret = qca_read_soc_version(hdev, &ver, soc_type);
-> 		if (ret)
-> 			return ret;
-> 	} else {
-> @@ -1697,15 +1697,14 @@ static int qca_setup(struct hci_uart *hu)
-> 
-> 	if (!qca_is_wcn399x(soc_type)) {
-> 		/* Get QCA version information */
-> -		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
-> +		ret = qca_read_soc_version(hdev, &ver, soc_type);
-> 		if (ret)
-> 			return ret;
-> 	}
-> 
-> -	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
-> 	/* Setup patch / NVM configurations */
-> -	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, soc_ver,
-> -			firmware_name);
-> +	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, ver,
-> +			     firmware_name);
-> 	if (!ret) {
-> 		set_bit(QCA_IBS_ENABLED, &qca->flags);
-> 		qca_debugfs_init(hdev);
-
-Regards
-
-Marcel
+-- 
+2.17.1
 
