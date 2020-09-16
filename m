@@ -2,174 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCA1126C958
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:07:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7653826CA0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:44:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727497AbgIPTHn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 15:07:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35142 "EHLO
+        id S1727589AbgIPTnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 15:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727359AbgIPRoz (ORCPT
+        with ESMTP id S1727958AbgIPTnG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:44:55 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8A8C0698D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 04:35:20 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id z9so2645156wmk.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 04:35:20 -0700 (PDT)
+        Wed, 16 Sep 2020 15:43:06 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582D2C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 12:42:50 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id r19so3751768pls.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 12:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DdTA+P9lRhC68qI4dpVtWpzlyCIniGzxdHE1O+Q7zUU=;
-        b=VZm53vKzP2cW6qF7XV0KSRt5PPELHpk07zG//Mxa2CBTIBDdZdST/S+s0rdEQKVsZW
-         gTZ1OWjoGqV/1N91UgOzFqec1vf3PElY/ngrFrKXGmjuOOcYrYiRpj5tf2Kdv9HG27Xk
-         tCQbqYKzbNGq1n8DixVR/dUuMsm1DSxiACKH4=
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=uI2M1b5CJmiot/6Hd8YrKzzoCzUgOR4d8982RGbGjD8=;
+        b=mdqEeSdYH5tz+BxLF4boEJJhntqAmdYlAI6RJyaLW8zNxInQKWsMvG5jjeXIsjftb0
+         WdtN41v/JR3azTNc97XwywJ+LpJfFCvgdrs0j5Z+ZRkFSW8Y46I7SAcZ7+Ry+1Qi3Sk3
+         vA4gXc8kWMF9jk1hykVzXWlj046Zhvz8rCXbs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DdTA+P9lRhC68qI4dpVtWpzlyCIniGzxdHE1O+Q7zUU=;
-        b=CeCkWrOenXrWM27xQHrxpOkp0jjhxLYUuepunWMmpZ2RhUrc7ZA5UbPT3qfKFIihkO
-         CUTScI/IA0npToIiOUcK3UZS5bZtlwguJlfddPjnKenldIN/lkEggeTrakkYWTwHzicx
-         J6TRw+ussrZC1wN6TG5upCYrYsAuHjktqFdDcnO8VaSkUZuQ5waJ1WBRaYXrpJ1AYGBl
-         lsZk8ROeHlCycrScjCC/iqVu24G4cHfrJvZgJbxI7YX8fUqKrNoxawdJZBaThGujHJfc
-         Amq4zQxkcrvOYpyGokbTQhRbDVlN7t4Fo6h0v+6KrtwjRIXg/o5Fr2anfXiNEEB1oDlF
-         YaTw==
-X-Gm-Message-State: AOAM530+q28GcJxJ2ASKppgEfxoh2ia0jDK75rdfjSpH4jZqH83AJW3G
-        BVIaORIWYAJBg7TV3bdR4f4HgA==
-X-Google-Smtp-Source: ABdhPJylkcOBbGgEGGZKZhaBAwyH9kqk9RFSGhRv17hk61GEhNulx96NJ9Vhx8cdjXcbwhCg7LMEDQ==
-X-Received: by 2002:a05:600c:2109:: with SMTP id u9mr3990398wml.147.1600256118887;
-        Wed, 16 Sep 2020 04:35:18 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id g14sm4163583wrv.25.2020.09.16.04.35.16
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=uI2M1b5CJmiot/6Hd8YrKzzoCzUgOR4d8982RGbGjD8=;
+        b=mf/K9ZhRiwhfhzjCVcnEWXMOloHqCLpuR+msTMEJ9GnV29IWcAztFVIpdHsZA2taWQ
+         is5tg9dQAj7QjG3fuch46RdqNI6yHS9foHuhOTTDso9FmarsrUqBXL53PDSBCz8RX1ci
+         JKFi2mfGMtBZ8lLcoeyUwHANKFf8lZnwR2mwqbjK8zRy3i3jbL4yDaNMJwNY4WaiArCM
+         qJbkkX7+9VqKWLCKcxk9YUgs+Qy2EIm2/6rMnvD97j44AsDCA5CPE9WCfuSbGa9/AxBC
+         ku92fFY+MKb5TWRn78KBomFlMkHNFuiLtEHqdImXrnbuQtNB+D0jzRwPAEAkpliT3IJ0
+         WUEA==
+X-Gm-Message-State: AOAM531wcX7qyoLI3+xiBQb31bKWPVJfwgpSJp4u2AnKqpuP8I9/ViyA
+        vXX4PBr0LD79lqMn7Km6C2ussA==
+X-Google-Smtp-Source: ABdhPJykmzdZLk88uv+LmjEE31cyv5pE9gp7ym7Z31sba/goptxv5DmuVBCotn6wnasSvqYZ3LdHQw==
+X-Received: by 2002:a17:90a:bf8c:: with SMTP id d12mr5450291pjs.157.1600285369764;
+        Wed, 16 Sep 2020 12:42:49 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id y6sm3468330pji.1.2020.09.16.12.42.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 04:35:18 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 13:35:14 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
-        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
-        inki.dae@samsung.com, jy0922.shim@samsung.com,
-        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
-        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
-        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
-        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
-        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
-        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
-        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
-        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
-        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
-        chris@chris-wilson.co.uk, matthew.auld@intel.com,
-        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
-        sam@ravnborg.org, miaoqinglang@huawei.com,
-        emil.velikov@collabora.com, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v2 07/21] drm/mediatek: Introduce GEM object functions
-Message-ID: <20200916113514.GK438822@phenom.ffwll.local>
-References: <20200915145958.19993-1-tzimmermann@suse.de>
- <20200915145958.19993-8-tzimmermann@suse.de>
+        Wed, 16 Sep 2020 12:42:48 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200915145958.19993-8-tzimmermann@suse.de>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200915202432.GA2435458@bogus>
+References: <20200910004902.2252694-1-swboyd@chromium.org> <20200910004902.2252694-2-swboyd@chromium.org> <159972050159.2295844.14715100754744266014@swboyd.mtv.corp.google.com> <20200915202432.GA2435458@bogus>
+Subject: Re: [PATCH v3 01/10] dt-bindings: phy: qcom,qmp-usb3-dp: Add DP phy information
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, Rob Clark <robdclark@chromium.org>
+To:     Rob Herring <robh@kernel.org>
+Date:   Wed, 16 Sep 2020 12:42:46 -0700
+Message-ID: <160028536666.4188128.14311541474912461984@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 04:59:44PM +0200, Thomas Zimmermann wrote:
-> GEM object functions deprecate several similar callback interfaces in
-> struct drm_driver. This patch replaces the per-driver callbacks with
-> per-instance callbacks in mediatek. The only exception is gem_prime_mmap,
-> which is non-trivial to convert.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/mediatek/mtk_drm_drv.c |  5 -----
->  drivers/gpu/drm/mediatek/mtk_drm_gem.c | 11 +++++++++++
->  2 files changed, 11 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-> index 040a8f393fe2..2f8d0043fca7 100644
-> --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-> +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-> @@ -301,18 +301,13 @@ struct drm_gem_object *mtk_drm_gem_prime_import(struct drm_device *dev,
->  static struct drm_driver mtk_drm_driver = {
->  	.driver_features = DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
->  
-> -	.gem_free_object_unlocked = mtk_drm_gem_free_object,
-> -	.gem_vm_ops = &drm_gem_cma_vm_ops,
->  	.dumb_create = mtk_drm_gem_dumb_create,
->  
->  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
->  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
->  	.gem_prime_import = mtk_drm_gem_prime_import,
-> -	.gem_prime_get_sg_table = mtk_gem_prime_get_sg_table,
->  	.gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
->  	.gem_prime_mmap = mtk_drm_gem_mmap_buf,
-> -	.gem_prime_vmap = mtk_drm_gem_prime_vmap,
-> -	.gem_prime_vunmap = mtk_drm_gem_prime_vunmap,
->  	.fops = &mtk_drm_fops,
->  
->  	.name = DRIVER_NAME,
-> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-> index 6190cc3b7b0d..591b90410e4a 100644
-> --- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-> +++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-> @@ -8,11 +8,20 @@
->  #include <drm/drm.h>
->  #include <drm/drm_device.h>
->  #include <drm/drm_gem.h>
-> +#include <drm/drm_gem_cma_helper.h>
->  #include <drm/drm_prime.h>
->  
->  #include "mtk_drm_drv.h"
->  #include "mtk_drm_gem.h"
->  
-> +static const struct drm_gem_object_funcs mtk_drm_gem_object_funcs = {
-> +	.free = mtk_drm_gem_free_object,
-> +	.get_sg_table = mtk_gem_prime_get_sg_table,
-> +	.vmap = mtk_drm_gem_prime_vmap,
-> +	.vunmap = mtk_drm_gem_prime_vunmap,
-> +	.vm_ops = &drm_gem_cma_vm_ops,
-> +};
-> +
->  static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
->  						unsigned long size)
->  {
-> @@ -25,6 +34,8 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
->  	if (!mtk_gem_obj)
->  		return ERR_PTR(-ENOMEM);
->  
-> +	mtk_gem_obj->base.funcs = &mtk_drm_gem_object_funcs;
-> +
->  	ret = drm_gem_object_init(dev, &mtk_gem_obj->base, size);
->  	if (ret < 0) {
->  		DRM_ERROR("failed to initialize gem object\n");
-> -- 
-> 2.28.0
+Quoting Rob Herring (2020-09-15 13:24:32)
+> On Wed, Sep 09, 2020 at 11:48:21PM -0700, Stephen Boyd wrote:
+> > Quoting Stephen Boyd (2020-09-09 17:48:53)
+> > > This binding only describes the USB phy inside the USB3 + DP "combo"
+> > > phy. Add information for the DP phy and describe the sub-nodes that
+> > > represent the DP and USB3 phys that exist inside the combo wrapper.
+> > > Remove reg-names from required properties because it isn't required n=
+or
+> > > used by the kernel driver.
+> > >=20
+> > > Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
+> > > Cc: Chandan Uddaraju <chandanu@codeaurora.org>
+> > > Cc: Vara Reddy <varar@codeaurora.org>
+> > > Cc: Tanmay Shah <tanmay@codeaurora.org>
+> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > Cc: Manu Gautam <mgautam@codeaurora.org>
+> > > Cc: Sandeep Maheswaram <sanm@codeaurora.org>
+> > > Cc: Douglas Anderson <dianders@chromium.org>
+> > > Cc: Sean Paul <seanpaul@chromium.org>
+> > > Cc: Jonathan Marek <jonathan@marek.ca>
+> > > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > Cc: <devicetree@vger.kernel.org>
+> > > Cc: Rob Herring <robh+dt@kernel.org>
+> > > Cc: Rob Clark <robdclark@chromium.org>
+> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > > ---
+> > >  .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    | 91 +++++++++++++++++=
+--
+> > >  1 file changed, 81 insertions(+), 10 deletions(-)
+> >=20
+> > I noticed that I didn't document the new compatible string I'm using,
+> > qcom,sc7180-qmp-usb3-dp-phy, ugh.
+> >=20
+> > Should I copy the whole file over and make a new document for the new
+> > compatible string? That feels like the better solution vs. making this
+> > binding have min/max stuff where it fails to enforce the DP part of the
+> > phy. We can delete this binding once the kernel tree isn't using it,
+> > right?
+>=20
+> It generally depends on how much if/then schema you have (or should=20
+> have) vs. how much is common, but it's a judgement call. It looks=20
+> like you are just extending the binding for the most part. If there's=20
+> dtb warnings until the existing stuff gets updated, that's fine.
+>=20
 
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-
-> 
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Ok. I'll just add in the extra compatible and then we can drop the older
+ones at some point.
