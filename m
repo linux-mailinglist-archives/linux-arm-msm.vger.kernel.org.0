@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2913E26CF51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 01:13:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5952A26CF48
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 01:12:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726981AbgIPXMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 19:12:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58066 "EHLO
+        id S1726814AbgIPXMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 19:12:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726692AbgIPXMQ (ORCPT
+        with ESMTP id S1726769AbgIPXMT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 19:12:16 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0711C061788
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 16:12:14 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id q4so242320pjh.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 16:12:14 -0700 (PDT)
+        Wed, 16 Sep 2020 19:12:19 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B53CC061797
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 16:12:15 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id j7so61066plk.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 16:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=di4VpVMrklBUTkiILuGGkVs93hPE6Pj33M5z5xQHHXY=;
-        b=KZRO9frtpAxHUp6E7ry/+WaWAozDf2SUqR4IUKdY5OrkDEbosZsbTMgVjJwhsXKuRO
-         opafxnX50N3rdXhn/7JqHxS7EqVC55yib2FLMah58yoJsT40l9UMhcUtOBKQniMxOuYG
-         S10/34kF6rb5Q9r5Vkb0g4A+dhtYB6ispuZls=
+        bh=xwN4Lh5cIbYb5K/fWg1B1RhUro5At/hehYhhAFZFYDY=;
+        b=R328/M8XhAMCJzOfiSivX1CdQwm/p7wE4IG2wq42FTOLYdzNQlDb35dG1IWM7c2nuS
+         tC0y2z0xBmPuMaQCcFdD2DNzgI7/OcsU2V0+Izs1xaufZt0vwtUAaIyy8Tbcpa9A2Rax
+         GPGAoJzVbC2ob4AZi7uRUH4K16D60lbdOlAUA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=di4VpVMrklBUTkiILuGGkVs93hPE6Pj33M5z5xQHHXY=;
-        b=X4U7eVIk2VsKfnAuDsgmht/dtkzuzyYYf1kl0uxY5vVbOABtl9JOf4pODwXQGT2IPh
-         IMFnidKpawkBWAM+H9WK6RBmh0sTj0tW2a0LWzEJDGd3Na9i05jWdCdBpJTh/MJYPUhy
-         BLP8zxv7OGu7Bs0+dLg5+YQvkYD/zd0ecDGCnB6Ux6StlOuiagS1mTa5RuV6q4EBHfUQ
-         5aUc+X9BKUhH/q6k5ygYcrhzbRkQI8QaHenzzA9yuCCd15ZbaZXxOR1l4TENaBJX+W/2
-         3aULcQxw6G/VsSAWhbsh6GsNCC2QMgZLyjC1GoE5hw6kylGSZfPCzhM1wBHu8a8PwD25
-         /VZg==
-X-Gm-Message-State: AOAM533sgJV6DMwxGIXfpRYd1BhKNm3NBhIxLreDQFPwczKBQweJj62y
-        nh4pDlwM15eNnz+Rd0rw2WBztA==
-X-Google-Smtp-Source: ABdhPJxCxtMnfaL/pHekGZhuxRQxzE6nlNoUXEaELUWDyteZS3cmT3mHNwcvaiZxGcsaBzTZUrh6Cg==
-X-Received: by 2002:a17:902:6941:b029:d0:cbe1:e76b with SMTP id k1-20020a1709026941b02900d0cbe1e76bmr26010276plt.18.1600297934222;
-        Wed, 16 Sep 2020 16:12:14 -0700 (PDT)
+        bh=xwN4Lh5cIbYb5K/fWg1B1RhUro5At/hehYhhAFZFYDY=;
+        b=HzhTCzkVsWqRbpoz/FOMW7H6bm5tWVe+WtAJ26enzMwpcI5kPukQ4Q3KraSPZImTgr
+         C/0OP3vvPgbquxmHWKxOljAqPgtArS+YZfJM1XBhl8lNuOJKkgdXeuE0oX303KteY5FV
+         2Hb0MX+mgiW31VhO1u76qOAaoxrZGVuJRTaPcGvi0P4y/vPYICj6cpVie6OLD/rzTIAB
+         8hxE3HiqdvwOndCo9+n1j+B0qwSlnNaVSza9fmQqkvjLBDyC3Yypg23RdxfbnYL0SJZ+
+         60ystzEHWTx6lbBdbHc0L/rbKiqiAlOf4zNy1ryq4wyP9CWkMVggAjZMWi/JkIAcprZY
+         vAiA==
+X-Gm-Message-State: AOAM531HdX7drsPSFuG0KF86xm5Xalz68s1IJCJTXsCOH2Z4/vveKxVI
+        KnbpT2wJC3JQDOFzVQ2uwlJQw3acJm0gXA==
+X-Google-Smtp-Source: ABdhPJwiUxlfTg+57nZqAMpdzuKNnA9Wt7wv5ymeO8z1fbkt2pyE0pWFfwr4+bjl/l3Q/NfjZjt6/Q==
+X-Received: by 2002:a17:902:8b82:b029:d1:f2ad:e7f with SMTP id ay2-20020a1709028b82b02900d1f2ad0e7fmr3583853plb.84.1600297935339;
+        Wed, 16 Sep 2020 16:12:15 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id u6sm3643254pjy.37.2020.09.16.16.12.13
+        by smtp.gmail.com with ESMTPSA id u6sm3643254pjy.37.2020.09.16.16.12.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 16:12:13 -0700 (PDT)
+        Wed, 16 Sep 2020 16:12:14 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>
@@ -58,12 +58,13 @@ Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Sandeep Maheswaram <sanm@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
         Jonathan Marek <jonathan@marek.ca>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@chromium.org>
-Subject: [PATCH v4 08/10] phy: qcom-qmp: Add support for sc7180 DP phy
-Date:   Wed, 16 Sep 2020 16:12:00 -0700
-Message-Id: <20200916231202.3637932-9-swboyd@chromium.org>
+Subject: [PATCH v4 09/10] clk: qcom: dispcc: Update DP clk ops for phy design
+Date:   Wed, 16 Sep 2020 16:12:01 -0700
+Message-Id: <20200916231202.3637932-10-swboyd@chromium.org>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
 In-Reply-To: <20200916231202.3637932-1-swboyd@chromium.org>
 References: <20200916231202.3637932-1-swboyd@chromium.org>
@@ -73,8 +74,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the necessary compatible strings and phy data for the sc7180 USB3+DP
-combo phy.
+The clk_rcg2_dp_determine_rate() function is used for the DP pixel clk.
+This function should return the rate that can be achieved by the pixel
+clk in 'struct clk_rate_request::rate' and match the logic similar to
+what is seen in clk_rcg2_dp_set_rate(). But that isn't the case. Instead
+the code merely bubbles the rate request up to the parent of the pixel
+clk and doesn't try to do a rational approximation of the rate that
+would be achieved by picking some m/n value for the RCG.
+
+Let's change this logic so that we can assume the parent clk frequency
+is fixed (it is because it's the VCO of the DP PLL that is configured
+based on the link rate) and so that we can calculate what the m/n value
+will be and adjust the req->rate appropriately.
 
 Cc: Jeykumar Sankaran <jsanka@codeaurora.org>
 Cc: Chandan Uddaraju <chandanu@codeaurora.org>
@@ -85,171 +96,76 @@ Cc: Manu Gautam <mgautam@codeaurora.org>
 Cc: Sandeep Maheswaram <sanm@codeaurora.org>
 Cc: Douglas Anderson <dianders@chromium.org>
 Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
 Cc: Jonathan Marek <jonathan@marek.ca>
 Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Rob Clark <robdclark@chromium.org>
-Link: https://lore.kernel.org/r/20200609034623.10844-1-tanmay@codeaurora.org
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c | 124 ++++++++++++++++++++++++++++
- 1 file changed, 124 insertions(+)
+ drivers/clk/qcom/clk-rcg2.c      | 19 +++++++++++++------
+ drivers/clk/qcom/dispcc-sc7180.c |  3 ---
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index c9ba9fe50f5b..ba0f07ad041e 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -947,6 +947,88 @@ static const struct qmp_phy_init_tbl qmp_v3_usb3_tx_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V3_TX_RES_CODE_LANE_OFFSET_TX, 0x06),
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 357159fe85b5..59a5a0f261f3 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1182,14 +1182,21 @@ static int clk_rcg2_dp_set_rate_and_parent(struct clk_hw *hw,
+ static int clk_rcg2_dp_determine_rate(struct clk_hw *hw,
+ 				struct clk_rate_request *req)
+ {
+-	struct clk_rate_request parent_req = *req;
+-	int ret;
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++	unsigned long num, den;
++	u64 tmp;
+ 
+-	ret = __clk_determine_rate(clk_hw_get_parent(hw), &parent_req);
+-	if (ret)
+-		return ret;
++	/* Parent rate is a fixed phy link rate */
++	rational_best_approximation(req->best_parent_rate, req->rate,
++			GENMASK(rcg->mnd_width - 1, 0),
++			GENMASK(rcg->mnd_width - 1, 0), &den, &num);
++
++	if (!num || !den)
++		return -EINVAL;
+ 
+-	req->best_parent_rate = parent_req.rate;
++	tmp = req->best_parent_rate * num;
++	do_div(tmp, den);
++	req->rate = tmp;
+ 
+ 	return 0;
+ }
+diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
+index 0a5d395bce93..f487515701e3 100644
+--- a/drivers/clk/qcom/dispcc-sc7180.c
++++ b/drivers/clk/qcom/dispcc-sc7180.c
+@@ -202,7 +202,6 @@ static struct clk_rcg2 disp_cc_mdss_dp_crypto_clk_src = {
+ 		.name = "disp_cc_mdss_dp_crypto_clk_src",
+ 		.parent_data = disp_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_byte2_ops,
+ 	},
  };
- 
-+static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_SVS_MODE_CLK_SEL, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_SYSCLK_EN_SEL, 0x37),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_SYS_CLK_CTRL, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_ENABLE1, 0x0e),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_SYSCLK_BUF_ENABLE, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_SELECT, 0x30),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CMN_CONFIG, 0x02),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_INTEGLOOP_GAIN0_MODE0, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_INTEGLOOP_GAIN1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_VCO_TUNE_MAP, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP3_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_BG_TIMER, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CORECLK_DIV_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_VCO_TUNE_CTRL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CORE_CLK_EN, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_PLL_IVCO, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_PLL_CCTRL_MODE0, 0x36),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_PLL_RCTRL_MODE0, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CP_CTRL_MODE0, 0x06),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_rbr[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DEC_START_MODE0, 0x69),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START2_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START3_MODE0, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP1_MODE0, 0x6f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP2_MODE0, 0x08),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP_EN, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_hbr[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DEC_START_MODE0, 0x69),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START2_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START3_MODE0, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP1_MODE0, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP2_MODE0, 0x0e),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP_EN, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_hbr2[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DEC_START_MODE0, 0x8c),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START2_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START3_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP1_MODE0, 0x1f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP2_MODE0, 0x1c),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP_EN, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_hbr3[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DEC_START_MODE0, 0x69),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START2_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_DIV_FRAC_START3_MODE0, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP1_MODE0, 0x2f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP2_MODE0, 0x2a),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_LOCK_CMP_EN, 0x08),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v3_dp_tx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TRANSCEIVER_BIAS_EN, 0x1a),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_VMODE_CTRL1, 0x40),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_PRE_STALL_LDO_BOOST_EN, 0x30),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_INTERFACE_SELECT, 0x3d),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_CLKBUF_ENABLE, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_RESET_TSYNC_EN, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TRAN_DRVR_EMP_EN, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_PARRATE_REC_DETECT_IDLE_EN, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TX_INTERFACE_MODE, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TX_BAND, 0x4),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TX_POL_INV, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TX_DRV_LVL, 0x38),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_TX_EMP_POST1_LVL, 0x20),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_RES_CODE_LANE_OFFSET_TX, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V3_TX_RES_CODE_LANE_OFFSET_RX, 0x07),
-+};
-+
- static const struct qmp_phy_init_tbl qmp_v3_usb3_rx_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V3_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
- 	QMP_PHY_INIT_CFG(QSERDES_V3_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0f),
-@@ -2223,6 +2305,41 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
- 	.is_dual_lane_phy	= true,
+@@ -216,7 +215,6 @@ static struct clk_rcg2 disp_cc_mdss_dp_link_clk_src = {
+ 		.name = "disp_cc_mdss_dp_link_clk_src",
+ 		.parent_data = disp_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_byte2_ops,
+ 	},
  };
- 
-+static const struct qmp_phy_cfg sc7180_dpphy_cfg = {
-+	.type			= PHY_TYPE_DP,
-+	.nlanes			= 1,
-+
-+	.serdes_tbl		= qmp_v3_dp_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(qmp_v3_dp_serdes_tbl),
-+	.tx_tbl			= qmp_v3_dp_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(qmp_v3_dp_tx_tbl),
-+
-+	.serdes_tbl_rbr		= qmp_v3_dp_serdes_tbl_rbr,
-+	.serdes_tbl_rbr_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_rbr),
-+	.serdes_tbl_hbr		= qmp_v3_dp_serdes_tbl_hbr,
-+	.serdes_tbl_hbr_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr),
-+	.serdes_tbl_hbr2	= qmp_v3_dp_serdes_tbl_hbr2,
-+	.serdes_tbl_hbr2_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr2),
-+	.serdes_tbl_hbr3	= qmp_v3_dp_serdes_tbl_hbr3,
-+	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr3),
-+
-+	.clk_list		= qmp_v3_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
-+	.reset_list		= sc7180_usb3phy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sc7180_usb3phy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= qmp_v3_usb3phy_regs_layout,
-+
-+	.has_phy_dp_com_ctrl	= true,
-+	.is_dual_lane_phy	= true,
-+};
-+
-+static const struct qmp_phy_combo_cfg sc7180_usb3dpphy_cfg = {
-+	.usb_cfg		= &sc7180_usb3phy_cfg,
-+	.dp_cfg			= &sc7180_dpphy_cfg,
-+};
-+
- static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
- 	.type			= PHY_TYPE_USB3,
- 	.nlanes			= 1,
-@@ -3742,6 +3859,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sc7180-qmp-usb3-phy",
- 		.data = &sc7180_usb3phy_cfg,
-+	}, {
-+		.compatible = "qcom,sc7180-qmp-usb3-dp-phy",
-+		/* It's a combo phy */
- 	}, {
- 		.compatible = "qcom,sdm845-qhp-pcie-phy",
- 		.data = &sdm845_qhp_pciephy_cfg,
-@@ -3784,6 +3904,10 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- MODULE_DEVICE_TABLE(of, qcom_qmp_phy_of_match_table);
- 
- static const struct of_device_id qcom_qmp_combo_phy_of_match_table[] = {
-+	{
-+		.compatible = "qcom,sc7180-qmp-usb3-dp-phy",
-+		.data = &sc7180_usb3dpphy_cfg,
-+	},
- 	{ }
+@@ -230,7 +228,6 @@ static struct clk_rcg2 disp_cc_mdss_dp_pixel_clk_src = {
+ 		.name = "disp_cc_mdss_dp_pixel_clk_src",
+ 		.parent_data = disp_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_dp_ops,
+ 	},
  };
- 
 -- 
 Sent by a computer, using git, on the internet
 
