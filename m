@@ -2,103 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 246F126C56C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 18:57:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DF9426C5EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 19:25:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726660AbgIPQ40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 12:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55270 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726616AbgIPQy4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 12:54:56 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B24AC014B52
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 06:20:44 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x123so3957565pfc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 06:20:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SlRt7rB4mW/iayDYnKOqfS2OFUlf7qeJNI2l7CVFG2Q=;
-        b=G1FhARCk63c6iPMnPAWQAM+DtyHV4xw6CAA4tru7QJDWs6+BFxO4IRR9c2+1P/xiQU
-         6GOF588WmUXXT8NSEPNyOYIdCHgWVEJ8lv3BXgTqeyLPrqq3VbkwNIxMb2eVtnRSZgBT
-         AJTPZTBxmJicJM+DeCpKwG9RqQu+ak89sN8Pa2w0K8WC9BpEWN6I0C3vdjxIMgnnl2rY
-         wjs9ZGnJVgVhdRhaPRbgIsvmuE+LI8Mjb2m3qoEDsiVNfE2PxQb42/JapQ1isqcXTcAQ
-         xW1Xbr7bhY1HHbbCU3obFz13vi7AvCJU+eJjAd3QT5sZc27ofHuijp+y4xfp2zVkuAO8
-         8QKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=SlRt7rB4mW/iayDYnKOqfS2OFUlf7qeJNI2l7CVFG2Q=;
-        b=iGkV6EwWjwXfiBKdC1w38OyRN56NlzhhbsZjopoMjS0oFz02qwmZFVmZIH/+FSn7Tr
-         aDtcnhRiLfp3nUHPYgmDNbkUgfbUTORILrglCInkKVA3q//3/Itl1i2JZhQsOnhEmSw9
-         mnP2ZdQfWxxkYtSasRAften35N/t512/RevNLP+8gNFCmXwiW8w7TlISO5IzUeRAKt5Z
-         Cg+/1tnuhqv54rADjgQ8k8usCdWRan3seBhbafa+wEM90sU4hMl9X49su811XC4/M6Qy
-         mKddSLvo+fEYxhubow7FiqQZPgpTbo39Oa7zyAOstbbPOaJdhSzHo7ymbA9UKLSPd/tn
-         8etw==
-X-Gm-Message-State: AOAM532TKrvaATD2jm3h7JqOu3w8oiL7qnred6bOaVOinNXs9QNBNQbz
-        ZbD+d4f2c4B4uTowCyt7l8Wo
-X-Google-Smtp-Source: ABdhPJwsG95VpZSqBcV3Pwm6AuVbbi4NnUSh1kO/w9kUI5DaP3pH2VWt8YQjRdKtkRmlf0M9uAGO7g==
-X-Received: by 2002:a63:d242:: with SMTP id t2mr18945938pgi.47.1600262443656;
-        Wed, 16 Sep 2020 06:20:43 -0700 (PDT)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.googlemail.com with ESMTPSA id e123sm17615726pfh.167.2020.09.16.06.20.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 06:20:43 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        vkoul@kernel.org, robh@kernel.org
-Cc:     svarbanov@mm-sol.com, bhelgaas@google.com,
-        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mgautam@codeaurora.org, devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Subject: [PATCH 5/5] pci: controller: dwc: qcom: Harcode PCIe config SID
-Date:   Wed, 16 Sep 2020 18:50:00 +0530
-Message-Id: <20200916132000.1850-6-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200916132000.1850-1-manivannan.sadhasivam@linaro.org>
-References: <20200916132000.1850-1-manivannan.sadhasivam@linaro.org>
+        id S1727035AbgIPRZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 13:25:40 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41104 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727021AbgIPRZi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 13:25:38 -0400
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 94C452222E;
+        Wed, 16 Sep 2020 16:15:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600272952;
+        bh=27sYm41mDiVDnZrWbm0QPVBaPRpD52EfmzkcCrZV80c=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=pqNRMaP0X9Blp3xQCD3Zk+PlqjNSI+5urM1u/88kqjNllpJCcNBf7qN2LPn3/BTT2
+         dRyX2kVPw+lPv64et2CISd3l4nVeoM+yFS2ajeTC1WSNblvCbW7Trl4WMuBEPkg7hD
+         k/UqtCkwJCii1ROu6m15flANY9Y6NmenSXuaxsbw=
+Received: by mail-ej1-f47.google.com with SMTP id p9so11151659ejf.6;
+        Wed, 16 Sep 2020 09:15:52 -0700 (PDT)
+X-Gm-Message-State: AOAM531YawbGDMzodTmV2YlokpruOKg3Bsvon+RzTPVkEgssTkV2K/pB
+        B3dthBoKPV9FGnQvzp0vCAB/kz4sD6yR0KJo3N0=
+X-Google-Smtp-Source: ABdhPJxEK6ZjXsdxLcZySzuz0z9lSyaAmd9P0gRxYMJTfHrR5KxRYZH+Asvudz0vhNq7zAjPO6GX+HHY/5crRL//S3M=
+X-Received: by 2002:a17:906:8401:: with SMTP id n1mr25499511ejx.215.1600272951032;
+ Wed, 16 Sep 2020 09:15:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200902150348.14465-1-krzk@kernel.org> <20200902163558.GA4137028@piout.net>
+ <20200911153441.GA18190@kozik-lap> <160012811662.4188128.10109140799333292326@swboyd.mtv.corp.google.com>
+In-Reply-To: <160012811662.4188128.10109140799333292326@swboyd.mtv.corp.google.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 16 Sep 2020 18:15:39 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPdjyETBwDqC+C75giz2bD0Gie-G4Yd_svpc-vYccywy_Q@mail.gmail.com>
+Message-ID: <CAJKOXPdjyETBwDqC+C75giz2bD0Gie-G4Yd_svpc-vYccywy_Q@mail.gmail.com>
+Subject: Re: [PATCH 01/10] clk: at91: Drop unused at91sam9g45_pcr_layout
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        David Lechner <david@lechnology.com>,
+        Sekhar Nori <nsekhar@ti.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hardcode the PCIe config SID table value. This is needed to avoid random
-MHI failure observed during reboot on SM8250.
+On Tue, 15 Sep 2020 at 02:01, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Krzysztof Kozlowski (2020-09-11 08:34:41)
+> > On Wed, Sep 02, 2020 at 06:35:58PM +0200, Alexandre Belloni wrote:
+> > > On 02/09/2020 17:03:39+0200, Krzysztof Kozlowski wrote:
+> > > > The at91sam9g45_pcr_layout is not used so drop it to fix build warning:
+> > > >
+> > > >   drivers/clk/at91/at91sam9g45.c:49:36: warning:
+> > > >     'at91sam9g45_pcr_layout' defined but not used [-Wunused-const-variable=]
+> > > >
+> > > > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > > Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> > >
+> > > > ---
+> > > >  drivers/clk/at91/at91sam9g45.c | 7 -------
+> > > >  1 file changed, 7 deletions(-)
+> > > >
+> >
+> > Hi Stephen,
+> >
+> > If the dev_err_probe() waits/skips/goes to /dev/null, then how about the
+> > fixes in the series? This patch and few other?
+>
+> Yes if dev_err_probe() is superseded by Rob's work then the fixes should
+> be fine to pick up. Can you resend the fixes?
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-[mani: stripped out unnecessary settings and ported for upstream]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Sure, I will send the fixes only.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index ca8ad354e09d..50748016ce96 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -57,6 +57,7 @@
- #define PCIE20_PARF_SID_OFFSET			0x234
- #define PCIE20_PARF_BDF_TRANSLATE_CFG		0x24C
- #define PCIE20_PARF_DEVICE_TYPE			0x1000
-+#define PCIE20_PARF_BDF_TO_SID_TABLE_N		0x2000
- 
- #define PCIE20_ELBI_SYS_CTRL			0x04
- #define PCIE20_ELBI_SYS_CTRL_LT_ENABLE		BIT(0)
-@@ -1290,6 +1291,9 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
- 	if (ret)
- 		goto err;
- 
-+	writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N);
-+	writel(0x01000100, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N + 0x054);
-+
- 	return 0;
- err:
- 	qcom_ep_reset_assert(pcie);
--- 
-2.17.1
-
+Best regards,
+Krzysztof
