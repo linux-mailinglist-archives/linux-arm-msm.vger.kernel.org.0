@@ -2,141 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DEC426CBDA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 22:36:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 521AD26CE5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 00:08:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727006AbgIPUfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 16:35:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60430 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726843AbgIPRKb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:10:31 -0400
-Received: from kozik-lap.mshome.net (unknown [194.230.155.191])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9D44922B30;
-        Wed, 16 Sep 2020 16:24:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600273452;
-        bh=OZQQiNgbEb8ZHtloDc4attI+pGJEHjLlrjIjhE2p740=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tfKj/be4+r8rwTNc7bmVfsswqTcOXsQiNqhKVO+RtwvaQhrdo5ToeYXNBAAl8nb0I
-         gT1RG4b4JL+rLMux5Wi2aVdF6caBm7WWSoLETztCmT7+CXCFKsmzKw9GibovgMGalE
-         YeauZ8qQHDDpbkR182aQ3e6mfpTRZGPF1yuc0/WA=
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Yash Shah <yash.shah@sifive.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-unisoc@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-riscv@lists.infradead.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 8/8] ARM: dts: imx: align GPIO hog names with dtschema
-Date:   Wed, 16 Sep 2020 18:22:50 +0200
-Message-Id: <20200916162250.16098-9-krzk@kernel.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200916162250.16098-1-krzk@kernel.org>
-References: <20200916162250.16098-1-krzk@kernel.org>
-Sender: linux-arm-msm-owner@vger.kernel.org
+        id S1726280AbgIPWH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 18:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726189AbgIPWH6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 18:07:58 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B13C0698CE;
+        Wed, 16 Sep 2020 14:52:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
+        :Reply-To:Content-ID:Content-Description;
+        bh=WXS+ff+b5bMlOip+NKUbf0Z9b6R6EpWN0difBpMRFZs=; b=P50r4tzkwmXp8h4nAvjTnJw/v7
+        kPbHSxNAst66A4F4n8LTtKjaowXthHcYZkR+2ZXVtua9qRpZPYUjRbYoEQ32DBDizBkJgDy3wEeNm
+        iBdTZAzAJGvbtdHpbLUE3woMTHE9p++LmeCvs9WGlGEBemg+VPLVUeKgriDTarI38RhVSGxw5dKEs
+        YAelkJXRv6tLNIHHPnxwDtTRSI2ypj6uuyecMw8AnHF7AYN5OkbA8/UPAQCFB76XEqk6zxqkeVXjh
+        fPhwCG6Pw1VIDt8npyntlIQKLPgozok5L46mzxqbzl+kjqXKXGfn0G+XmVJMsjM+cSICMv2EQMTxu
+        edQEL8bw==;
+Received: from [2601:1c0:6280:3f0::19c2]
+        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1kIfLy-0005SU-Te; Wed, 16 Sep 2020 21:52:39 +0000
+Subject: Re: [PATCH v6 4/4] bus: mhi: Add userspace client interface driver
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org
+References: <1600286167-4432-1-git-send-email-hemantk@codeaurora.org>
+ <1600286167-4432-5-git-send-email-hemantk@codeaurora.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <73ab1853-a07d-599f-9d4c-c346376aa6fc@infradead.org>
+Date:   Wed, 16 Sep 2020 14:52:34 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <1600286167-4432-5-git-send-email-hemantk@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dtschema for GPIO controllers expects GPIO hogs to end with 'hog'
-prefix.
+On 9/16/20 12:56 PM, Hemant Kumar wrote:
+> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+> index 6a217ff..8aebe8b 100644
+> --- a/drivers/bus/mhi/Kconfig
+> +++ b/drivers/bus/mhi/Kconfig
+> @@ -20,3 +20,16 @@ config MHI_BUS_DEBUG
+>  	 Enable debugfs support for use with the MHI transport. Allows
+>  	 reading and/or modifying some values within the MHI controller
+>  	 for debug and test purposes.
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- arch/arm/boot/dts/imx51-zii-rdu1.dts        | 2 +-
- arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi     | 8 ++++----
- arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+Hi,
+Please indent Kconfig keywords with one tab only, and indent
+help text with one tab + 2 spaces, as documented in
+Documentation/process/coding-style.rst:
 
-diff --git a/arch/arm/boot/dts/imx51-zii-rdu1.dts b/arch/arm/boot/dts/imx51-zii-rdu1.dts
-index e559ab0c3645..ec8ca3ac2c1c 100644
---- a/arch/arm/boot/dts/imx51-zii-rdu1.dts
-+++ b/arch/arm/boot/dts/imx51-zii-rdu1.dts
-@@ -451,7 +451,7 @@
- 			  "", "", "", "",
- 			  "", "", "", "";
- 
--	unused-sd3-wp-gpio {
-+	unused-sd3-wp-hog {
- 		/*
- 		 * See pinctrl_esdhc1 below for more details on this
- 		 */
-diff --git a/arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi b/arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi
-index 66b15748e287..c0a76202e16b 100644
---- a/arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi
-@@ -330,28 +330,28 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_gpio3_hog>;
- 
--	usb-emulation {
-+	usb-emulation-hog {
- 		gpio-hog;
- 		gpios = <19 GPIO_ACTIVE_HIGH>;
- 		output-low;
- 		line-name = "usb-emulation";
- 	};
- 
--	usb-mode1 {
-+	usb-mode1-hog {
- 		gpio-hog;
- 		gpios = <20 GPIO_ACTIVE_HIGH>;
- 		output-high;
- 		line-name = "usb-mode1";
- 	};
- 
--	usb-pwr {
-+	usb-pwr-hog {
- 		gpio-hog;
- 		gpios = <22 GPIO_ACTIVE_LOW>;
- 		output-high;
- 		line-name = "usb-pwr-ctrl-en-n";
- 	};
- 
--	usb-mode2 {
-+	usb-mode2-hog {
- 		gpio-hog;
- 		gpios = <23 GPIO_ACTIVE_HIGH>;
- 		output-high;
-diff --git a/arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts b/arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts
-index a0bbec57ddc7..3ec042bfccba 100644
---- a/arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts
-+++ b/arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts
-@@ -110,7 +110,7 @@
- };
- 
- &gpio5 {
--	emmc-usd-mux {
-+	emmc-usd-mux-hog {
- 		gpio-hog;
- 		gpios = <1 GPIO_ACTIVE_LOW>;
- 		output-high;
+"""
+For all of the Kconfig* configuration files throughout the source tree,
+the indentation is somewhat different.  Lines under a ``config`` definition
+are indented with one tab, while help text is indented an additional two
+spaces.
+"""
+
+> +
+> +config MHI_UCI
+> +       tristate "MHI UCI"
+> +       depends on MHI_BUS
+> +       help
+> +	 MHI based userspace client interface driver is used for transferring
+> +	 raw data between host and device using standard file operations from
+> +	 userspace. Open, read, write, and close operations are supported
+> +	 by this driver. Please check mhi_uci_match_table for all supported
+> +	 channels that are exposed to userspace.
+> +
+> +	 To compile this driver as a module, choose M here: the module will be
+> +	 called mhi_uci.
+
+thanks.
 -- 
-2.17.1
+~Randy
 
