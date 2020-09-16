@@ -2,81 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A1CA26BA36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 04:30:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF33426BBD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 07:33:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbgIPC3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Sep 2020 22:29:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33640 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726402AbgIPC3K (ORCPT
+        id S1726172AbgIPFdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 01:33:22 -0400
+Received: from mail29.static.mailgun.info ([104.130.122.29]:58918 "EHLO
+        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726069AbgIPFdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Sep 2020 22:29:10 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2687CC06174A;
-        Tue, 15 Sep 2020 19:29:09 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id m5so5250868lfp.7;
-        Tue, 15 Sep 2020 19:29:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=GK9+C1oomDz6uVnNOODHcK5n0hkREpa5d365nxARSlQ=;
-        b=ivXcT/BSWD9eHKF5fmu1LVGsfELyKmXRv1tgY3c1gUJxIT4s77oCje6K/STc1JilzO
-         g0/HhFcMPovrz3+RIBb1UNIkIC0/QRlpica+HugQMxFwZOqAmrd0xd5ZnbPGSZd6VTBi
-         Cwsuvr3v3olxvxA7FwJx8mr39VEuSR/kuOC7Qnk9tXAflMeYa2rBHRriGu7ioVCuzyID
-         jlEEwb+zn9IEa3vpb9zasSWufVHjC45YZlP5Ye1EaFw60S8XhjWVMNoU2xTnIiaI7gs4
-         kqVO8LmdfKlpOhxYKsHEZO2TUXkbmoYsUge7/02BZVBmOudRO+1wmsN4amtJvTd9MY2o
-         NXQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=GK9+C1oomDz6uVnNOODHcK5n0hkREpa5d365nxARSlQ=;
-        b=V3aCmOPN9H3qJUkaYDpYWzhGWPiDh/vsQelQGo81OsQnQb05VHHHXSSxWSvbQ0YiO4
-         jqvllCemh+lr+uQXmvGvOCWP/V6l22yyVz1F//TPk68eqHr6o3NwC3BobnTN/Rrqy0hr
-         4NwHh8h4A2EsEZhdZBg56RyW7SNhAmqnvC9jwOv7Sf/Gdz62f58ZwNakc0W6+yLd8A+f
-         gkC/42jtWui1/HeSYmlfJUD6bpFzH4c4Ehq3xFWH5DXaG7g7L9+mwsRktQMqJYoZZreK
-         Wzur6RQn410U4DPkfYKSPWwhx0lj8/90wn6YlvY14vQzxM7Le8BxW57n2J7Z2NMr1yBn
-         R1EQ==
-X-Gm-Message-State: AOAM530LLRgLCYgrctPngeKKvUybTnB8iw5+TBPKxK8PzunCyQR0daBR
-        iWjv0Ul+ePcKi4n13CO7YIa5XqBEAqdObpTvCNQ=
-X-Google-Smtp-Source: ABdhPJz3mJdWwByW2nnR8gVQDANHxxrdl0PgQIGP9uf/PCLvjp6cJ31H81PHZZUnHib8dRcNGmVl6SVajTnc8v6EZq4=
-X-Received: by 2002:a19:e602:: with SMTP id d2mr6618353lfh.536.1600223346217;
- Tue, 15 Sep 2020 19:29:06 -0700 (PDT)
+        Wed, 16 Sep 2020 01:33:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600234399; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3j+QTm64Oi/tUW8ti81ih3zzkyWdq/GkExlCHs4LZkI=; b=xQG08zQsXEFzKu6olgUhnFbZINADz1+kgLb6Zf4moYnL0HD9YZ8LhmVncMZF98TnlOTmK6RW
+ vrF/tfgD6y4xdA17qTBdNV6K2ehUsFj0LSzyH9g6YPan+E3gVGZzlCv2CD12fhCndi780nWt
+ bXw94SDGSdGqTJIoJ48vFw97GrY=
+X-Mailgun-Sending-Ip: 104.130.122.29
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f61a39f73afa3417e2510a7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 16 Sep 2020 05:33:19
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A9D8AC433CA; Wed, 16 Sep 2020 05:33:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.100] (unknown [49.207.203.124])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA0A8C433C8;
+        Wed, 16 Sep 2020 05:33:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EA0A8C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v6 0/5] DVFS support for Venus
+To:     stanimir.varbanov@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org
+References: <1598970026-7199-1-git-send-email-rnayak@codeaurora.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <34ed34bd-90fd-0e84-6020-c487d612ad2f@codeaurora.org>
+Date:   Wed, 16 Sep 2020 11:03:11 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20200912102558.656-1-zhenzhong.duan@gmail.com> <20200914162010.GB15060@jcrouse1-lnx.qualcomm.com>
-In-Reply-To: <20200914162010.GB15060@jcrouse1-lnx.qualcomm.com>
-From:   Zhenzhong Duan <zhenzhong.duan@gmail.com>
-Date:   Wed, 16 Sep 2020 10:28:54 +0800
-Message-ID: <CAFH1YnM1O6bE2bYbCjaWHfvo47TkHjh999yeESy81UMxMW_KYg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/a6xx: fix a potential overflow issue
-To:     Zhenzhong Duan <zhenzhong.duan@gmail.com>,
-        linux-kernel <linux-kernel@vger.kernel.org>, robdclark@gmail.com,
-        sean@poorly.run, airlied@linux.ie, Daniel Vetter <daniel@ffwll.ch>,
-        smasetty@codeaurora.org, Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1598970026-7199-1-git-send-email-rnayak@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 12:20 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> On Sat, Sep 12, 2020 at 06:25:58PM +0800, Zhenzhong Duan wrote:
-> > It's allocating an array of a6xx_gpu_state_obj structure rathor than
-> > its pointers.
-> >
-> > This patch fix it.
-> >
-> > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@gmail.com>
->
-> LGTM but should have a Fixes: tag for the stable trees
->
-> Fixes: d6852b4b2d01 ("drm/msm/a6xx: Track and manage a6xx state memory")
-> Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-I had sent a v2 version with same change as you suggested on Sep 14,
-could you help review it? Thanks
-https://lkml.org/lkml/2020/9/13/311
+On 9/1/2020 7:50 PM, Rajendra Nayak wrote:
+> Rob, can you pick PATCH 1 since its already reviewed by you.
+> Stan, Patch 2 and 3 will need to be picked by you and they both have your ACKs
+
+Rob/Stan, any plans to get the patches merged for 5.10?
+
+> Patch 4 and 5 will need to be merged via the qcom tree once we have them reviewed.
+> 
+> v6: No changes, rebased on 5.9-rc3
+> 
+> v5: Fixed the opp-tables (patch 4/5) to avoid -ERANGE from
+> dev_pm_opp_set_rate
+> 
+> v4: Moved code from probe/remove/runtime_suspend into
+> different pm_ops callbacks
+> 
+> v3: Renamed the optional power domain as cx
+> 
+> v2: Fixed up the labels of OPP nodes in patch 4
+>      Included the bindings update patch as part of this series,
+>      a resend of https://lore.kernel.org/patchwork/patch/1241077/
+> 
+> These patches add DVFS support for Venus
+> 
+> Rajendra Nayak (5):
+>    dt-bindings: media: venus: Add an optional power domain for perf
+>      voting
+>    media: venus: core: Fix error handling in probe
+>    media: venus: core: Add support for opp tables/perf voting
+>    arm64: dts: sdm845: Add OPP tables and power-domains for venus
+>    arm64: dts: sc7180: Add OPP tables and power-domains for venus
+> 
+>   .../bindings/media/qcom,sc7180-venus.yaml          |  6 +-
+>   .../bindings/media/qcom,sdm845-venus-v2.yaml       |  6 +-
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi               | 35 +++++++-
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi               | 40 +++++++++-
+>   drivers/media/platform/qcom/venus/core.c           | 17 ++--
+>   drivers/media/platform/qcom/venus/core.h           |  5 ++
+>   drivers/media/platform/qcom/venus/pm_helpers.c     | 92 ++++++++++++++++++++--
+>   7 files changed, 183 insertions(+), 18 deletions(-)
+> 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
