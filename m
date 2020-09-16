@@ -2,82 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9130626BE8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 09:53:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CCB826BE92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 09:54:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726243AbgIPHw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 03:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55350 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726508AbgIPHwx (ORCPT
+        id S1726349AbgIPHyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 03:54:22 -0400
+Received: from ssl.serverraum.org ([176.9.125.105]:49189 "EHLO
+        ssl.serverraum.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726196AbgIPHyW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 03:52:53 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F3BC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 00:52:52 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id c8so5309670edv.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 00:52:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=YMMc40rRDox9zDpUt8zWYJEoAPFeZbvaKdWP2jjUs7U=;
-        b=omSLfTKCdijD1zIfa5lE5cwXoJnzkrwdJtm6aHP0LEx04lxYzikzgwoqmzGhH5ews9
-         owUFw3hYHvOj6ykias8qGojCVHjpGCA5FyQYC+oGNp7JjhnhxjdYqvAU/g8qm6eeNDdm
-         WsrXuTTDVFnKHsOxu4xjkARcgvVcziGEU3gha+80ZNvrOw+eb9pMK42g3x2lsyH4mF2o
-         bzWPta64FgYVwebSdX8+JBnbVFj1xje/VT+O6eNrYT01XK3nUjCSPMLcOiHp5WcMQruX
-         ZeM6ruDmquUMssSNr8zv1hhFBM/UDnWJEe69g9XMi46te+pP3kPN2B5sWn9ZtQE3+FeE
-         wUWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=YMMc40rRDox9zDpUt8zWYJEoAPFeZbvaKdWP2jjUs7U=;
-        b=m/WgsChanGAI6AOSrhYYpeQW46bhMO4w0bsZzb8AY6j8F4hugzbrqTBI4b2WyNjyLw
-         kE6jgknhAZ4/IZFlSh/K5ddDBwGoQJ8hO3+kq+abSTVk5EqULG5wd3SezvYRGRERszyl
-         urMN3Inugc8aNUrTZJSJ2BiqoJh3sCT6glclXKfOVNx290t+ypF8jCHoIfz9kHB2AMg3
-         xMyp1GfjVo90OsU5G68aTvROMkBjO7pEjkdu8izDQkexLkS4WcJ+mpGQZp8RNNxUNmMl
-         ZGuBl95zbl13WnpkGTnzPCYCNlvKtDeT1b0HDyFxu4AhEvC/Xbsp0ynGFGzIdJPFeayY
-         uocw==
-X-Gm-Message-State: AOAM531wF3QIXEqNmH+spVQuCD1fikM/ieL1DpVV7Tu5WucV759ciPXj
-        fuObpAuHVerVYdgr1E+YTTX9oeCM8X5glLZ5KjWgpA==
-X-Google-Smtp-Source: ABdhPJxKPjAgwVYaYZaWZ0+gacFV4GyHXzLcsKXbNqCtZAJLWj20D+MoZWjSVNIR0HP97s0e6v247FGLkDX1163EhkI=
-X-Received: by 2002:aa7:ca46:: with SMTP id j6mr25926244edt.155.1600242771009;
- Wed, 16 Sep 2020 00:52:51 -0700 (PDT)
+        Wed, 16 Sep 2020 03:54:22 -0400
+Received: from ssl.serverraum.org (web.serverraum.org [172.16.0.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ssl.serverraum.org (Postfix) with ESMTPSA id DFEDB22F00;
+        Wed, 16 Sep 2020 09:54:10 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc; s=mail2016061301;
+        t=1600242857;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=/mrV4ooFGnJh2/RwC1ApcYKUUoJS8TkPIKcSBJOevMI=;
+        b=hZYcEooibPlvGYZsIy6M1JnuIGdhF2nyPQr1geOw5eoiHM1PLx4w1uqnELsVgZaNK9oHSm
+        J6p7MyQNttvX9ylL+BtvV4J5f43XLjVJl9to5980o1I2bsOOnMfHmjEWfJQwKTEZ7audCW
+        GI7REFPaQWuDo39bLZ59wHfcBEUMegs=
 MIME-Version: 1.0
-References: <20200916074924.20637-1-jun.nie@linaro.org>
-In-Reply-To: <20200916074924.20637-1-jun.nie@linaro.org>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Wed, 16 Sep 2020 15:52:40 +0800
-Message-ID: <CABymUCOPG79sYcSPQ7JkTMSM3jG38Q0fCAJnOrn47QgMoqZsqQ@mail.gmail.com>
-Subject: Re: [PATCH v2] soc: qcom: rpmpd: Add MSM8939 power-domains
-To:     phan@gerhold.net, Shawn Guo <shawn.guo@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rob Herring <robh@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 16 Sep 2020 09:54:10 +0200
+From:   Michael Walle <michael@walle.cc>
+To:     Rob Herring <robh@kernel.org>
+Cc:     "Gross, Andy" <agross@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Dilip Kota <eswara.kota@linux.intel.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        linux-arm-kernel@axis.com,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        PCI <linux-pci@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Song Xiaowei <songxiaowei@hisilicon.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Wangbinghui <wangbinghui@hisilicon.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Yue Wang <yue.wang@amlogic.com>
+Subject: Re: [PATCH v2 00/40] PCI: dwc: Driver clean-ups
+In-Reply-To: <CAL_JsqLHBPduSjs1L3R2vbsLygJNDzajt4XThAkRG0DEu-GnAA@mail.gmail.com>
+References: <20200821035420.380495-1-robh@kernel.org>
+ <20200915091218.28737-1-michael@walle.cc>
+ <CAL_JsqLHBPduSjs1L3R2vbsLygJNDzajt4XThAkRG0DEu-GnAA@mail.gmail.com>
+User-Agent: Roundcube Webmail/1.4.8
+Message-ID: <346b694e43b1b6b86e4f3164e6589d25@walle.cc>
+X-Sender: michael@walle.cc
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Jun Nie <jun.nie@linaro.org> =E4=BA=8E2020=E5=B9=B49=E6=9C=8816=E6=97=A5=E5=
-=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=883:49=E5=86=99=E9=81=93=EF=BC=9A
->
-> Add the shared modemcx/cx/mx power-domains found on MSM8939.
->
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
->  drivers/soc/qcom/rpmpd.c                      | 27 +++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h        | 10 +++++++
->  3 files changed, 38 insertions(+)
->
+Am 2020-09-16 00:02, schrieb Rob Herring:
+> Can you try this? The link up check seemed unnecessary as it is racy.
+> What happens if the link goes down right after checking? That's the
+> only thing in the change that sticks out.
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c
+> b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 317ff512f8df..afee1a0e8883 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -441,6 +441,9 @@ static void __iomem
+> *dw_pcie_other_conf_map_bus(struct pci_bus *bus,
+>         struct pcie_port *pp = bus->sysdata;
+>         struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> 
+> +       if (!dw_pcie_link_up(pci))
+> +               return NULL;
+> +
+>         busdev = PCIE_ATU_BUS(bus->number) | 
+> PCIE_ATU_DEV(PCI_SLOT(devfn)) |
+>                  PCIE_ATU_FUNC(PCI_FUNC(devfn));
 
-Fix max state and alphabetically order per comments from Stephan, vs
-the version 1 patch.
+This will fix the issue.
 
-Jun
+-michael
