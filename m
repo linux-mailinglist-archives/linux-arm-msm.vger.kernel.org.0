@@ -2,93 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D042526BFD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 10:50:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76FC726BFE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 10:54:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726590AbgIPIuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 04:50:24 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:46257 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726068AbgIPIt6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 04:49:58 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 16 Sep 2020 01:49:58 -0700
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Sep 2020 01:49:55 -0700
-Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Sep 2020 14:19:43 +0530
-Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id B030121D3B; Wed, 16 Sep 2020 14:19:42 +0530 (IST)
-From:   Mansur Alisha Shaik <mansur@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH v4 3/3] venus: core: add shutdown callback for venus
-Date:   Wed, 16 Sep 2020 14:19:34 +0530
-Message-Id: <1600246174-31802-4-git-send-email-mansur@codeaurora.org>
+        id S1726196AbgIPIyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 04:54:08 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32]:53728 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726068AbgIPIyH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 04:54:07 -0400
+Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.60])
+        by Forcepoint Email with ESMTP id 802145808EA40AEE348A;
+        Wed, 16 Sep 2020 16:54:05 +0800 (CST)
+Received: from huawei.com (10.69.192.56) by DGGEMS404-HUB.china.huawei.com
+ (10.3.19.204) with Microsoft SMTP Server id 14.3.487.0; Wed, 16 Sep 2020
+ 16:54:00 +0800
+From:   Luo Jiaxing <luojiaxing@huawei.com>
+To:     <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <robdclark@chromium.org>, <airlied@linux.ie>,
+        <yaohongbo@huawei.com>, <daniel@ffwll.ch>,
+        <ddavenport@chromium.org>, <kalyan_t@codeaurora.org>,
+        <bernard@vivo.com>, <robdclark@gmail.com>
+Subject: [PATCH] drm/msm/dpu: remove unused variables new_cnt and old_cnt in dpu_encoder_phys_vid_vblank_irq()
+Date:   Wed, 16 Sep 2020 16:51:38 +0800
+Message-ID: <1600246298-16120-1-git-send-email-luojiaxing@huawei.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1600246174-31802-1-git-send-email-mansur@codeaurora.org>
-References: <1600246174-31802-1-git-send-email-mansur@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.69.192.56]
+X-CFilter-Loop: Reflected
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After the SMMU translation is disabled in the
-arm-smmu shutdown callback during reboot, if
-any subsystem are still alive then IOVAs they
-are using will become PAs on bus, which may
-lead to crash.
+We found two unused variables new_cnt and old_cnt when build kernel with
+W=1.
 
-So implemented shutdown callback, which detach iommu maps.
+So delete it.
 
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Luo Jiaxing <luojiaxing@huawei.com>
 ---
-Changes in V4:
-- In venus_core_shutdown(), instead of venurs_remove() calling 
-  venus_shutdown() and venus_firmware_deinit().
-- With venus_remove() call during shutdown we are facing few issue 
-  like ui freez this is because in venus_remove, hfi_core_deinit()
-  will wait until all core instances count become zero dudring 
-  wait_var_event().
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Changes in V3:
-- Fix build errors
-
- drivers/media/platform/qcom/venus/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 6103aaf..65b71ac 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -345,6 +345,14 @@ static int venus_remove(struct platform_device *pdev)
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index b5a4905..377ce8d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -298,7 +298,6 @@ static void dpu_encoder_phys_vid_vblank_irq(void *arg, int irq_idx)
+ 	struct dpu_hw_ctl *hw_ctl;
+ 	unsigned long lock_flags;
+ 	u32 flush_register = 0;
+-	int new_cnt = -1, old_cnt = -1;
  
-+static void venus_core_shutdown(struct platform_device *pdev)
-+{
-+	struct venus_core *core = platform_get_drvdata(pdev);
-+
-+	venus_shutdown(core);
-+	venus_firmware_deinit(core);
-+}
-+
- static __maybe_unused int venus_runtime_suspend(struct device *dev)
- {
- 	struct venus_core *core = dev_get_drvdata(dev);
-@@ -602,6 +610,7 @@ static struct platform_driver qcom_venus_driver = {
- 		.of_match_table = venus_dt_match,
- 		.pm = &venus_pm_ops,
- 	},
-+	.shutdown = venus_core_shutdown,
- };
- module_platform_driver(qcom_venus_driver);
+ 	hw_ctl = phys_enc->hw_ctl;
  
+@@ -308,7 +307,7 @@ static void dpu_encoder_phys_vid_vblank_irq(void *arg, int irq_idx)
+ 		phys_enc->parent_ops->handle_vblank_virt(phys_enc->parent,
+ 				phys_enc);
+ 
+-	old_cnt  = atomic_read(&phys_enc->pending_kickoff_cnt);
++	atomic_read(&phys_enc->pending_kickoff_cnt);
+ 
+ 	/*
+ 	 * only decrement the pending flush count if we've actually flushed
+@@ -320,8 +319,7 @@ static void dpu_encoder_phys_vid_vblank_irq(void *arg, int irq_idx)
+ 		flush_register = hw_ctl->ops.get_flush_register(hw_ctl);
+ 
+ 	if (!(flush_register & hw_ctl->ops.get_pending_flush(hw_ctl)))
+-		new_cnt = atomic_add_unless(&phys_enc->pending_kickoff_cnt,
+-				-1, 0);
++		atomic_add_unless(&phys_enc->pending_kickoff_cnt, -1, 0);
+ 	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
+ 
+ 	/* Signal any waiting atomic commit thread */
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
 
