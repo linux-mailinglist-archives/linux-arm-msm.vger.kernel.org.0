@@ -2,65 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF1E426CACE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 22:15:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C2C026CD79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 22:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727189AbgIPUPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 16:15:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728328AbgIPUNL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 16:13:11 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BFEC061788
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 13:13:10 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id b123so4785469vsd.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 13:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=GcbBDc3F14nB5fItkaCR8bNi/7szL/0DDXdKpHCyoVg=;
-        b=WdOkItQh65coZKHtbLtCry05LIlLS/47JKxIFd5oHs6A7Luo37AFBUWhJGKmiHg2Kc
-         3lhisA2LapqsXclKHkpUt/m0EhzXQla8tSj9wUtUlwkCTqzQmj6zCCqc2V02xvF1Atya
-         2xsQm+aC1YGiYs1zK3BscTTaL7swsr8Vikd1jpxJhT/VOlZqFcjqrENNApxWjziVkfWL
-         HWjDTUBHH4USrOcn4I/vZDaywNTIaBubN2QoaWlhinD4oCycqiP5P7dmIcJCbIlvmvGC
-         Iv+fHlUz+hyH0hE6v2xSvt9SPQnkOYDD4XiXZrrHCvaCPae51rT3DBBjlpFB8dNDM3Nb
-         Ij4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=GcbBDc3F14nB5fItkaCR8bNi/7szL/0DDXdKpHCyoVg=;
-        b=HMnt2NeE7lpepFMdCPYRaV9zScEkjcHKH1rCc7cVn8p3fng8KfK5/kt3wEQvi+1lCv
-         oBerJ/aUeVhW/rv/JM4t6k/q9iwH6u+yvg/l81hUnV0R66jD9mwZZ2kE6UEe6OePXlsz
-         sjH9tMc6VrFdfh9VDriKEHtKy5EAEN3jqzc4WFlp0LEY1Pi87I1HCgWvG73CRaqb9qu+
-         KLgbffr0qpaFPbogMzQhn8iLtslRdJgzIlJdHcZLEFxWIMNkkXRDak8sSj8A5S41eRI9
-         DGPZuRR1zM6Vhae5bH3OxQgqwMrwENzpwRsZoVcNzzHSRmRHWIAsfYRHVISMGcHrav7i
-         p1pA==
-X-Gm-Message-State: AOAM530kA1m1CAqMCXIbm1MJZFHnWAryNAk/BB42QTKzxlz7IsWd/Ubd
-        LXP6Zt1JbtfFBY/jE93sWfoAXPBmjERVldYlWqI=
-X-Google-Smtp-Source: ABdhPJxy1gxkUt72kPzIznZooaLfdaI+EfieVI+ftdsKxLlXkLj8DSbhlQHXpspMiWRODAFl9uCV0L87nI/k2vn4anY=
-X-Received: by 2002:a05:6102:101a:: with SMTP id q26mr6140643vsp.57.1600287189878;
- Wed, 16 Sep 2020 13:13:09 -0700 (PDT)
+        id S1728489AbgIPU7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 16:59:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45064 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726267AbgIPQae (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Sep 2020 12:30:34 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E717F2223C;
+        Wed, 16 Sep 2020 12:25:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600259122;
+        bh=fvCW/yn//rNf2DCvUhVeerd0f2FRK4KmVGnAWhv8i0k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=pwgwgbhXSsRbXfNwqjzRbJvnPlbl+v1XgK3uZnPf9g60wTxWOk8hPxcR0XF5e3qyx
+         DyPw5mbuZmriU2G6BtTRt4Xa14Yw3I5csDnxNvG2uHsBKcJLZSqpxap0IapeHAGmoS
+         ovcO6Z2FVgTo2A88nuLPMaRZswR2W+DnKMoAKMEE=
+Date:   Wed, 16 Sep 2020 14:25:57 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     satya priya <skakit@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, akashast@codeaurora.org,
+        rojay@codeaurora.org, msavaliy@qti.qualcomm.com,
+        dianders@chromium.org
+Subject: Re: [PATCH V5 4/4] tty: serial: qcom_geni_serial: Fix the UART
+ wakeup issue
+Message-ID: <20200916122557.GA2790503@kroah.com>
+References: <1599742438-16811-1-git-send-email-skakit@codeaurora.org>
+ <1599742438-16811-5-git-send-email-skakit@codeaurora.org>
+ <20200910230639.GB472@uller>
 MIME-Version: 1.0
-Received: by 2002:ab0:3412:0:0:0:0:0 with HTTP; Wed, 16 Sep 2020 13:13:09
- -0700 (PDT)
-Reply-To: aalihelp5@gmail.com
-From:   "Mr.Hui Ka Yan" <jacobmoore.moores41@gmail.com>
-Date:   Wed, 16 Sep 2020 13:13:09 -0700
-Message-ID: <CAEedSLdw9cQpdDgoAQWHTA9VDtMRsPUVn_VFAmSDuzGEiS==Sw@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200910230639.GB472@uller>
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bin Herr Hui Ka Yan. Ich spende Ihnen einen Zuschuss von 10.500.000
-USD. Kontaktieren Sie mich (aalihelp5@gmail.com) f=C3=BCr weitere Details.
+On Thu, Sep 10, 2020 at 11:06:39PM +0000, Bjorn Andersson wrote:
+> On Thu 10 Sep 12:53 UTC 2020, satya priya wrote:
+> 
+> > As a part of system suspend uart_port_suspend is called from the
+> > Serial driver, which calls set_mctrl passing mctrl as 0. This
+> > makes RFR high(NOT_READY) during suspend.
+> > 
+> > Due to this BT SoC is not able to send wakeup bytes to UART during
+> > suspend. Include if check for non-suspend case to keep RFR low
+> > during suspend.
+> > 
+> 
+> Seems reasonable.
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> > Signed-off-by: satya priya <skakit@codeaurora.org>
+> > Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> 
+> Greg, I don't see this depending on anything else, will you pick this
+> patch through your tree? I will take the dts patches through the qcom
+> tree.
 
-Danke und Gott segne dich.
+Sure, will pick it up now, thanks.
+
+greg k-h
