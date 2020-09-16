@@ -2,98 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 910EE26BDAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 09:10:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9475526BDE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 09:26:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726377AbgIPHKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 03:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48756 "EHLO
+        id S1726314AbgIPH0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 03:26:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgIPHKQ (ORCPT
+        with ESMTP id S1726317AbgIPH0s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 03:10:16 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5415C06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 00:10:15 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id d13so3376190pgl.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 00:10:15 -0700 (PDT)
+        Wed, 16 Sep 2020 03:26:48 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D02AC06178B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 00:26:47 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id s12so5709652wrw.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 00:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dCN2AFryqy+FayqDrktseJf4Knff8xTZtC15klQo6HI=;
-        b=DKkZQkytUjTwB6aIU6j4eONmza9A70oFPJkSMH1+DRwON/kyhR42FZpvfsHiJSz+XI
-         ARVeqU8mDPxQLyrOJFsBNdpHwNfNn8x4RG8R/lJ3aehUm98MzbYsCszFoM3gPpLorwXK
-         W86jyHqMG9qbjO8RFsoK9KEtvhfRe+lkWU5n9riBFiJXcegLPo3K947iuKofzQ45gGWd
-         irFLCM0HgE01iIgV6oA3Vi3DXlVz/ogf9kZ1SfZnc/pKJOl+Bs3D1aWzpKj9S8HlCOkJ
-         AkNo2w5m3ON8yB/tSWt0a5T1EX3jqbxnL1c2xj2uYTz0mvBV3VjAHZ4KC9/LnHqTj6de
-         dncQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7fnd1H7JWR0H2Ed0PevksPXMw8NbHRfcO8lkjwpN2/E=;
+        b=LryN3IjtR9Z/niCTVz4RcZC/v679mEEOZVfLF/kJ1QH9y+hKN36URiG8+/hSflXbcX
+         tSakH/dk15eNWGGZnYu0FXQLXWc7xFJxK1t95pgh+flnrLfGdOpjS2TyKJlJnJVR0Xd7
+         G4fm+9mma0ZqK7hYm7pkYxPV5R7EmEUlrQmLttkAn7jsqbZIEc7xInD4aoYgOtBERbId
+         Z2uAqVhXNuYlITJbLssgUDhTQOdR5n2BJ1quHGPj8zEZQONCuoFWSVcvODdiSnWChlTl
+         XE0e/JNcCn9d2+jSj69L+v/FQ19BScLgDQ/MMv31ETqChNs6gOgsS/6jfDiYyVe1TQf+
+         7nKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dCN2AFryqy+FayqDrktseJf4Knff8xTZtC15klQo6HI=;
-        b=CdQvrp62iopCeDko3GxkrxF1sgjSw2hb39dWAj8+yXV2ZKsgun0u1b2vmos9HSfege
-         Rjxv3lVj8uClVKuFk4JW5jvuKffDNpGIpmKi3pf5pSIgB5h5YTAANFlL6RlyEOG7/VT8
-         wqTGQFQ5+4BWJnfi/bublufoa+Pvuj3+WLyGDrqjI99+aVWftdNulzJTmm54WoPdn5ui
-         A+rWWH0l9nxEq83Vy3P/6ykdT2DFOE5zrzoTfUi5XeMnIB/wQaeuf1bVklyJiqr3MLpf
-         hTc1x6PkSuQ2WD8e9YriMWYjHb1ngmKgKnfPnR+DN4yw57z13tRrCv3FVFMrC353DBMw
-         2p1w==
-X-Gm-Message-State: AOAM530jSv0ZgDyjazAJCAf27DjqxM2hImB5hh1M/rUABzlEvJF0JL8I
-        PLOnX6Wc/5WJadle42OyGo3NSw==
-X-Google-Smtp-Source: ABdhPJwEKxo7Fjj0kYT7JCpuobL1YW/w9j9hFb9Ge9no8gjp05kHeLFv593g9FA9eT2Uix1Bqu/DpQ==
-X-Received: by 2002:a63:5f8b:: with SMTP id t133mr18058069pgb.238.1600240215289;
-        Wed, 16 Sep 2020 00:10:15 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id j4sm16730075pfd.101.2020.09.16.00.10.14
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Sep 2020 00:10:14 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 12:40:01 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     rjw@rjwysocki.net, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, amitk@kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, tdas@codeaurora.org
-Subject: Re: [PATCH v2 0/5] Add CPUFreq support for SM8250 SoC
-Message-ID: <20200916071001.vr3wxpprfrordpcj@vireshk-i7>
-References: <20200915072423.18437-1-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7fnd1H7JWR0H2Ed0PevksPXMw8NbHRfcO8lkjwpN2/E=;
+        b=tVRvwxZ3QTWsPKsvIWlDn5hCLL5U3raCuC59JhOc0ovon1GZQN5aOX77jJfm2NP45b
+         F9VNSWrNEdSZHTFwQr3rVX4mI21NFrsaZK0wUtUoNjxqprnYiTJQKaGvC4VAEcwjv4r1
+         FAScXGQOcIKf+DKAE4gcjb3v1VM4DpavcfZqjnkP2bh0IgkcDs/6I9ivM2xAi4Td2e3c
+         D+wF22msz8uwkHkVuyK/L0gzdPuEaGQHDtBU0Uf3qAk+zVO1kVicXVO6AWxohYqOl6KL
+         i7c+K/HlQ5jSiVBLvmSqgBGGH4bBSg3Xz1tFpb5RXMjx3F7skDPi0B3swPIgA6T4g9sg
+         J5rQ==
+X-Gm-Message-State: AOAM532hrIijfdObmUITuil/C+rVScaF/2GIfi7JOIt0dzXj7eF43Ii2
+        Z0mKkiotEQl07fEdV3eBAJTn/g==
+X-Google-Smtp-Source: ABdhPJw/SzVNV/DTty8lHNTUmF68J0FX3tyEi7nWyRXPIJaq7XAjq2KEOUsDQuL94WSNYffK7IEARg==
+X-Received: by 2002:adf:eb04:: with SMTP id s4mr27142757wrn.81.1600241205735;
+        Wed, 16 Sep 2020 00:26:45 -0700 (PDT)
+Received: from [192.168.1.8] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id y6sm31567954wrn.41.2020.09.16.00.26.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Sep 2020 00:26:45 -0700 (PDT)
+Subject: Re: [PATCH v6 0/5] DVFS support for Venus
+To:     Rajendra Nayak <rnayak@codeaurora.org>, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org
+References: <1598970026-7199-1-git-send-email-rnayak@codeaurora.org>
+ <34ed34bd-90fd-0e84-6020-c487d612ad2f@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <aec87de2-500d-763c-df01-c0daec56b1e2@linaro.org>
+Date:   Wed, 16 Sep 2020 10:26:43 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200915072423.18437-1-manivannan.sadhasivam@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <34ed34bd-90fd-0e84-6020-c487d612ad2f@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: linux-arm-msm-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-09-20, 12:54, Manivannan Sadhasivam wrote:
-> Hello,
-> 
-> This series adds CPUFreq support for Qualcomm SM8250 SoC. The existing
-> qcom-hw driver is reworked to support the EPSS block on this SoC which
-> handles the CPUFreq duties.
-> 
-> The EPSS block supports additional features for which incremental patches
-> will be submitted on top of this series!
-> 
-> Thanks,
-> Mani
-> 
-> Changes in v2:
-> 
-> * Dropped the regmap conversion patch
-> * Used "qcom,cpufreq-epss" compatible and "epss_soc_data" for dev data
-> * Switched to "of_device_get_match_data" API
-> * Collected reviews from Amit, Viresh and Bjorn
-> * Dropped patch [3/7] which got applied by Viresh
-> 
-> Bjorn Andersson (1):
->   arm64: dts: qcom: sm8250: Add cpufreq hw node
+Hi,
 
-Applied all except this one, as it will go through ARM Soc tree.
+On 9/16/20 8:33 AM, Rajendra Nayak wrote:
+> 
+> On 9/1/2020 7:50 PM, Rajendra Nayak wrote:
+>> Rob, can you pick PATCH 1 since its already reviewed by you.
+>> Stan, Patch 2 and 3 will need to be picked by you and they both have
+>> your ACKs
+> 
+> Rob/Stan, any plans to get the patches merged for 5.10?
+
+2/5 and 3/5 are queued up for v5.10 through media tree.
+
+> 
+>> Patch 4 and 5 will need to be merged via the qcom tree once we have
+>> them reviewed.
+>>
+>> v6: No changes, rebased on 5.9-rc3
+>>
+>> v5: Fixed the opp-tables (patch 4/5) to avoid -ERANGE from
+>> dev_pm_opp_set_rate
+>>
+>> v4: Moved code from probe/remove/runtime_suspend into
+>> different pm_ops callbacks
+>>
+>> v3: Renamed the optional power domain as cx
+>>
+>> v2: Fixed up the labels of OPP nodes in patch 4
+>>      Included the bindings update patch as part of this series,
+>>      a resend of https://lore.kernel.org/patchwork/patch/1241077/
+>>
+>> These patches add DVFS support for Venus
+>>
+>> Rajendra Nayak (5):
+>>    dt-bindings: media: venus: Add an optional power domain for perf
+>>      voting
+>>    media: venus: core: Fix error handling in probe
+>>    media: venus: core: Add support for opp tables/perf voting
+>>    arm64: dts: sdm845: Add OPP tables and power-domains for venus
+>>    arm64: dts: sc7180: Add OPP tables and power-domains for venus
+>>
+>>   .../bindings/media/qcom,sc7180-venus.yaml          |  6 +-
+>>   .../bindings/media/qcom,sdm845-venus-v2.yaml       |  6 +-
+>>   arch/arm64/boot/dts/qcom/sc7180.dtsi               | 35 +++++++-
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi               | 40 +++++++++-
+>>   drivers/media/platform/qcom/venus/core.c           | 17 ++--
+>>   drivers/media/platform/qcom/venus/core.h           |  5 ++
+>>   drivers/media/platform/qcom/venus/pm_helpers.c     | 92
+>> ++++++++++++++++++++--
+>>   7 files changed, 183 insertions(+), 18 deletions(-)
+>>
+> 
 
 -- 
-viresh
+regards,
+Stan
