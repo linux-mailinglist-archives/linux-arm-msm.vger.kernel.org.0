@@ -2,39 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1BE726C928
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:04:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1ED626C919
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Sep 2020 21:03:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727684AbgIPTEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 15:04:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35680 "EHLO
+        id S1727279AbgIPTD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 15:03:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727468AbgIPRsG (ORCPT
+        with ESMTP id S1727414AbgIPRsf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:48:06 -0400
-X-Greylist: delayed 625 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 16 Sep 2020 04:14:26 PDT
-Received: from mo6-p02-ob.smtp.rzone.de (mo6-p02-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5302::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69643C0611BD;
-        Wed, 16 Sep 2020 04:14:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1600254260;
+        Wed, 16 Sep 2020 13:48:35 -0400
+Received: from mo6-p03-ob.smtp.rzone.de (mo6-p03-ob.smtp.rzone.de [IPv6:2a01:238:20a:202:5303::7])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD057C061A2D;
+        Wed, 16 Sep 2020 04:14:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1600254283;
         s=strato-dkim-0002; d=gerhold.net;
         h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
         X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
-        bh=jiyYMYZZNIoZ7veBFmVpfgQHbhhTN+QDRt6ZYIRb/ZI=;
-        b=LBpMMN1198j+Utnu6y7plHoZ4aBh94yChIZh8LR9kAIH8UAZiJV+2uM6jFoiV9ivV1
-        S+O0nJwpwNqOWIpqF3eWc1krI73NiRzsJGKLDrZ1kQYCWAGj4xx1QhYPNZYfgXalsu8W
-        4oCLQDyLz3YShizg8RI4YN6bTzrQWXo11UEl7hxypXrI0KXfJmqTip3T9aQq/P51C9Ca
-        NpnYuZx9triBsNBQkx40UycgWSgvovTbqnlxlVaOayJlHDLJlHNhq5JUaVRRevSp8e23
-        ALgdHGloFbifrviwPDARe+HT3X1JK1S4zrUsFJC6ODBFiy8xdA4BROnqW4odnMfu8CP0
-        qSew==
+        bh=hi/PA+n3q3LCTeQ36n/1hS+OHW65T/N24KCCdA3v318=;
+        b=g/FahEZNHPOPrPE0VS25nirG/vN4CBmaAxSA9NVnqBO36GNsn+O5GKQjNCyw5OZJeT
+        fKdroBoxCgx242JjNayMTFWoNO6wE1QbquciDxESiiyJ7Qr//JdJYao9cC2pgz8GS8Xc
+        aMP/5YRLbHlTouxvrYM5J0Lt3juqlC40DxM7rAZg0N0K7mqmWvf97Idk3ffcyS521EBU
+        FZTxMa5Fh6PC4vKT56mDEIue4v19KpaKXrevDfK12KzbdTkyGKESoiMnz7c8mqc2NZ1d
+        Ys46ZNrm8SB4+7FO3RtnhgpAzYhfaN1AI7XXq0ifobBooD/nxoGuXWVKD02aGsrUHo0d
+        KRPA==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB4W6Nahc="
 X-RZG-CLASS-ID: mo00
 Received: from localhost.localdomain
         by smtp.strato.de (RZmta 46.10.7 DYNA|AUTH)
-        with ESMTPSA id g0b6c1w8GAfrzlU
+        with ESMTPSA id g0b6c1w8GAfszlX
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-        Wed, 16 Sep 2020 12:41:53 +0200 (CEST)
+        Wed, 16 Sep 2020 12:41:54 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -44,9 +43,9 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-remoteproc@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 07/10] dt-bindings: remoteproc: qcom,wcnss: Deprecate regulators for PDs
-Date:   Wed, 16 Sep 2020 12:41:32 +0200
-Message-Id: <20200916104135.25085-8-stephan@gerhold.net>
+Subject: [PATCH 09/10] arm64: dts: qcom: msm8916: Use power domains for MSS/WCNSS remoteprocs
+Date:   Wed, 16 Sep 2020 12:41:34 +0200
+Message-Id: <20200916104135.25085-10-stephan@gerhold.net>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200916104135.25085-1-stephan@gerhold.net>
 References: <20200916104135.25085-1-stephan@gerhold.net>
@@ -57,64 +56,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-So far we have been doing all proxy votes by voting for raw voltages/load
-through the regulator interface. But actually VDDCX and VDDMX represent
-power domains that should be preferably managed using corner votes
-through the power domain interface.
+So far we have been making proxy votes for the remote processors
+through the regulator interface. Now that we have rpmpd it's better
+to vote for performance states through the power domain interface.
 
-Document that those should be specified as power domains for
-qcom,pronto-v1/2-pil and deprecate using them through the regulator
-interface.
+This also allows us to move these supplies back to msm8916.dtsi
+because the device tree binding for RPMPD is independent of the
+underlying regulator/PMIC.
 
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- .../bindings/remoteproc/qcom,wcnss-pil.txt    | 20 +++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi | 3 ---
+ arch/arm64/boot/dts/qcom/msm8916.dtsi        | 9 +++++++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
-index d420f84ddfb0..cc0b7fc1c29b 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
-@@ -34,14 +34,25 @@ on the Qualcomm WCNSS core.
- 	Definition: should be "wdog", "fatal", optionally followed by "ready",
- 		    "handover", "stop-ack"
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
+index cd626e7db599..513e433aa5f3 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
+@@ -17,13 +17,10 @@ &dsi_phy0 {
+ };
  
--- vddmx-supply:
--- vddcx-supply:
-+- vddmx-supply: (deprecated for qcom,pronto-v1/2-pil)
-+- vddcx-supply: (deprecated for qcom,pronto-v1/2-pil)
- - vddpx-supply:
- 	Usage: required
- 	Value type: <phandle>
- 	Definition: reference to the regulators to be held on behalf of the
- 		    booting of the WCNSS core
+ &mpss {
+-	cx-supply = <&pm8916_s1>;
+-	mx-supply = <&pm8916_l3>;
+ 	pll-supply = <&pm8916_l7>;
+ };
  
-+- power-domains:
-+	Usage: required (for qcom,pronto-v1/2-pil)
-+	Value type: <phandle>
-+	Definition: reference to the power domains to be held on behalf of the
-+		    booting of the WCNSS core
+ &pronto {
+-	vddmx-supply = <&pm8916_l3>;
+ 	vddpx-supply = <&pm8916_l7>;
+ 
+ 	iris {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 117804f94c35..74aa50f3db10 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/interconnect/qcom,msm8916.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
++#include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/reset/qcom,gcc-msm8916.h>
+ #include <dt-bindings/thermal/thermal.h>
+ 
+@@ -1292,6 +1293,10 @@ mpss: remoteproc@4080000 {
+ 			interrupt-names = "wdog", "fatal", "ready",
+ 					  "handover", "stop-ack";
+ 
++			power-domains = <&rpmpd MSM8916_VDDCX>,
++					<&rpmpd MSM8916_VDDMX>;
++			power-domain-names = "cx", "mx";
 +
-+- power-domain-names:
-+	Usage: required (for qcom,pronto-v1/2-pil)
-+	Value type: <stringlist>
-+	Definition: must be "cx", "mx"
-+
- - qcom,smem-states:
- 	Usage: optional
- 	Value type: <prop-encoded-array>
-@@ -111,8 +122,9 @@ pronto@fb204000 {
- 			      <&wcnss_smp2p_slave 3 0>;
- 	interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
+ 			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+ 				 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
+ 				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
+@@ -1689,6 +1694,10 @@ pronto: remoteproc@a21b000 {
+ 					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
  
--	vddmx-supply = <&pm8841_s1>;
--	vddcx-supply = <&pm8841_s2>;
-+	power-domains = <&rpmpd MSM8974_VDDCX>, <&rpmpd MSM8974_VDDMX>;
-+	power-domain-names = "cx", "mx";
++			power-domains = <&rpmpd MSM8916_VDDCX>,
++					<&rpmpd MSM8916_VDDMX>;
++			power-domain-names = "cx", "mx";
 +
- 	vddpx-supply = <&pm8941_s3>;
+ 			qcom,state = <&wcnss_smp2p_out 0>;
+ 			qcom,state-names = "stop";
  
- 	qcom,smem-states = <&wcnss_smp2p_out 0>;
 -- 
 2.28.0
 
