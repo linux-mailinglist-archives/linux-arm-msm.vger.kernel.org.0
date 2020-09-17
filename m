@@ -2,348 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BAF226DCD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 15:31:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A56B26DE5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 16:37:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbgIQNbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 09:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49434 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726783AbgIQN3l (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 09:29:41 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BD1C061223
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 06:29:01 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id g4so2080988wrs.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 06:29:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=55Fl8iRTWry8sClQedunMDBGG4ZcDw9WhyqWY+z9CDM=;
-        b=SaVtwZvEUlCSrKLSB/jfZIitdreCGj+Ltia5Xq+RfwUITIXjmTZipSdjeKv2qSA8hM
-         9m+oUjPEarkhjH0fdqZpHuylyxJkH1JatbCY/sFYvNZAnOe5Od9/BTOgfWfRcw2+wbSq
-         HNVGHyXKzr6FjEtDo6kooTPpyZRf3F3sQP4I/+w8Jv8mbM3r516VnMFu4b4Tz1pc3bYa
-         jf971i3CiAuuhi7d4RXMgmHbGmsoMVXre1PDLabRSkOaqTxPZeMAUR6ftxj/sh3WPul/
-         EJNEUb41JMhSbZ+MQWSsHwdgLOF+juDG+V4ob/fCPGjartfkzRHYq/YUmFBsf2eFW5JE
-         QvSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=55Fl8iRTWry8sClQedunMDBGG4ZcDw9WhyqWY+z9CDM=;
-        b=PsjP8/xcKCZ1QA9tFRUA1/eJByloMmiLQrs2/XGU/Uwba/82r7fOdTvsv868kUqEVh
-         iQ5vATSNmrWEw3xx4Sh3zfoFyS64gGSCiv0gIk9LIPPTcIiqzeiD70V391+ADbOKSZlD
-         90j69kzO978mSULxnALCj6OlocQdGndn7Ye7QcIipQ7qLiUR6R9gtgi5x0ytWBC9CqOH
-         pvH173juPRAL0JlR72Qhvp2OdNS7bgyjMU8vZGkDPHxRHPPHVSiPQ5MiGGPQv1KuiAV0
-         WxnBwP/arQQT2GTnyun0PyR35sQl0feXfvj7/8Mpk5TzsE9cNRv4KjFWE2e0f+vNyf6e
-         URZw==
-X-Gm-Message-State: AOAM530g7X+QE1vF7q9hRUrJLTdR8Z9bZSp4z2Mk69uXlp0gqScv6M4g
-        9k7XYaKqCQXynWVRAvX+hAs7Qy813qRbYQ==
-X-Google-Smtp-Source: ABdhPJxXjTMt3U1zADgl3ZVp6/v2FO6MZgS1jdesv+YId1tuFMuQm3yZn4cYLO0pVVRZzbFerEJT2w==
-X-Received: by 2002:a5d:470e:: with SMTP id y14mr32111551wrq.354.1600349340278;
-        Thu, 17 Sep 2020 06:29:00 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.gmail.com with ESMTPSA id n10sm11486910wmk.7.2020.09.17.06.28.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2020 06:28:59 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     sboyd@kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 3/4] clk: qcom: Add support to LPASS AUDIO_CC Glitch Free Mux clocks
-Date:   Thu, 17 Sep 2020 14:28:49 +0100
-Message-Id: <20200917132850.7730-4-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20200917132850.7730-1-srinivas.kandagatla@linaro.org>
-References: <20200917132850.7730-1-srinivas.kandagatla@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1727325AbgIQOhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 10:37:09 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:21464 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727472AbgIQOg7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 10:36:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600353362; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=gPyLpnk35md75z42y0gXvz/xNdSmi34X9M0nhz3DYJ8=; b=roRsKVMJ2blRhD4Xo8CSxXgGbLWmz2ZqTs8uVBoVzgX7ZHdu3jMV+dD73aIre2KIjmFH/nsK
+ rgYHOcdQK1RFy1MgwV19msiEHG+oi07Lb2j+MVxxWhVST0wADEeceTP4LwEDO5qQZikmoQlH
+ 9oX1G3BpWqK4LmYO598ZfKRFSp8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f6366a591755cb92b39744d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Sep 2020 13:37:41
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4FE8EC433CA; Thu, 17 Sep 2020 13:37:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 214B4C433FE;
+        Thu, 17 Sep 2020 13:37:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 214B4C433FE
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao <srivasam@codeaurora.org>
+Subject: [PATCH v5 2/5] ASoC: dt-bindings: Add dt binding for lpass hdmi
+Date:   Thu, 17 Sep 2020 19:07:05 +0530
+Message-Id: <1600349828-10727-3-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1600349828-10727-1-git-send-email-srivasam@codeaurora.org>
+References: <1600349828-10727-1-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-GFM Muxes in AUDIO_CC control clocks to LPASS WSA and RX Codec Macros.
-This patch adds support to these muxes.
+From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Adds bindings for lpass hdmi interface
+which can support audio path over dp.
+
+Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 ---
- drivers/clk/qcom/Kconfig            |   7 +
- drivers/clk/qcom/Makefile           |   1 +
- drivers/clk/qcom/lpass-gfm-sm8250.c | 235 ++++++++++++++++++++++++++++
- 3 files changed, 243 insertions(+)
- create mode 100644 drivers/clk/qcom/lpass-gfm-sm8250.c
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 74 +++++++++++++++-------
+ 1 file changed, 52 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 2eda63b7c46c..4e46fd339e62 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -494,4 +494,11 @@ config KRAITCC
- 	  Support for the Krait CPU clocks on Qualcomm devices.
- 	  Say Y if you want to support CPU frequency scaling.
+diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+index 09c9bd2..f95ef70 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+@@ -24,9 +24,10 @@ properties:
+       - qcom,sc7180-lpass-cpu
  
-+config CLK_GFM_LPASS_SM8250
-+	tristate "GFM LPASS Clocks"
-+	depends on SND_SOC_QDSP6_COMMON
-+	help
-+	  Support for the GFM Glitch Free Mux LPASS clock. Say Y
-+	  if you want to support GFM Clocks on LPASS for SM8250 SoC.
-+
- endif
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 8eb395d02a32..c18e4ead6c9e 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -74,3 +74,4 @@ obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
- obj-$(CONFIG_KPSS_XCC) += kpss-xcc.o
- obj-$(CONFIG_QCOM_HFPLL) += hfpll.o
- obj-$(CONFIG_KRAITCC) += krait-cc.o
-+obj-$(CONFIG_CLK_GFM_LPASS_SM8250) += lpass-gfm-sm8250.o
-diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass-gfm-sm8250.c
-new file mode 100644
-index 000000000000..2d5c41ae4969
---- /dev/null
-+++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
-@@ -0,0 +1,235 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/clk-provider.h>
-+#include <linux/io.h>
-+#include <linux/clk.h>
-+#include <linux/slab.h>
-+#include <linux/err.h>
-+#include <linux/notifier.h>
-+#include <linux/device.h>
-+#include <linux/platform_device.h>
-+#include <linux/of_device.h>
-+#include <dt-bindings/clock/qcom,sm8250-lpass-audiocc.h>
-+
-+struct lpass_gfm {
-+	struct device *dev;
-+	void __iomem *base;
-+	struct clk *core_vote;
-+	struct clk *bus_clk;
-+};
-+
-+struct clk_gfm {
-+	unsigned int mux_reg;
-+	unsigned int mux_mask;
-+	struct clk_hw	hw;
-+	struct lpass_gfm *priv;
-+	void __iomem *gfm_mux;
-+};
-+
-+#define GFM_MASK	BIT(1)
-+#define to_clk_gfm(_hw) container_of(_hw, struct clk_gfm, hw)
-+
-+static u8 clk_gfm_get_parent(struct clk_hw *hw)
-+{
-+	struct clk_gfm *clk = to_clk_gfm(hw);
-+
-+	return readl(clk->gfm_mux) & GFM_MASK;
-+}
-+
-+static int clk_gfm_set_parent(struct clk_hw *hw, u8 index)
-+{
-+	struct clk_gfm *clk = to_clk_gfm(hw);
-+	unsigned int val;
-+
-+	val = readl(clk->gfm_mux);
-+
-+	if (index)
-+		val |= GFM_MASK;
-+	else
-+		val &= ~GFM_MASK;
-+
-+	writel(val, clk->gfm_mux);
-+
-+	return 0;
-+}
-+
-+static const struct clk_ops clk_gfm_ops = {
-+	.get_parent = clk_gfm_get_parent,
-+	.set_parent = clk_gfm_set_parent,
-+	.determine_rate = __clk_mux_determine_rate,
-+};
-+
-+static struct clk_gfm lpass_gfm_wsa_mclk = {
-+	.mux_reg = 0x220d8,
-+	.mux_mask = BIT(0),
-+	.hw.init = &(struct clk_init_data) {
-+		.name = "WSA_MCLK",
-+		.ops = &clk_gfm_ops,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
-+		.parent_names = (const char *[]){
-+			"LPASS_CLK_ID_TX_CORE_MCLK",
-+			"LPASS_CLK_ID_WSA_CORE_MCLK",
-+		},
-+		.parent_data = (const struct clk_parent_data[]){
-+				{ .index = 0 },
-+				{ .index = 1 },
-+		},
-+		.num_parents = 2,
-+	},
-+};
-+
-+static struct clk_gfm lpass_gfm_wsa_npl = {
-+	.mux_reg = 0x220d8,
-+	.mux_mask = BIT(0),
-+	.hw.init = &(struct clk_init_data) {
-+		.name = "WSA_NPL",
-+		.ops = &clk_gfm_ops,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
-+		.parent_names = (const char *[]){
-+			"LPASS_CLK_ID_TX_CORE_NPL_MCLK",
-+			"LPASS_CLK_ID_WSA_CORE_NPL_MCLK",
-+		},
-+		.parent_data = (const struct clk_parent_data[]){
-+				{ .index = 0 },
-+				{ .index = 1 },
-+		},
-+		.num_parents = 2,
-+	},
-+};
-+
-+static struct clk_gfm lpass_gfm_rx_mclk_mclk2 = {
-+	.mux_reg = 0x240d8,
-+	.mux_mask = BIT(0),
-+	.hw.init = &(struct clk_init_data) {
-+		.name = "RX_MCLK_MCLK2",
-+		.ops = &clk_gfm_ops,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
-+		.parent_names = (const char *[]){
-+			"LPASS_CLK_ID_TX_CORE_MCLK",
-+			"LPASS_CLK_ID_RX_CORE_MCLK",
-+		},
-+		.parent_data = (const struct clk_parent_data[]){
-+				{ .index = 0 },
-+				{ .index = 1 },
-+		},
-+		.num_parents = 2,
-+	},
-+};
-+
-+static struct clk_gfm lpass_gfm_rx_npl = {
-+	.mux_reg = 0x240d8,
-+	.mux_mask = BIT(0),
-+	.hw.init = &(struct clk_init_data) {
-+		.name = "RX_NPL",
-+		.ops = &clk_gfm_ops,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
-+		.parent_names = (const char *[]){
-+			"LPASS_CLK_ID_TX_CORE_NPL_MCLK",
-+			"LPASS_CLK_ID_RX_CORE_NPL_MCLK",
-+		},
-+		.parent_data = (const struct clk_parent_data[]){
-+				{ .index = 0 },
-+				{ .index = 1 },
-+		},
-+		.num_parents = 2,
-+	},
-+};
-+
-+static struct clk_gfm *audiocc_gfm_clks[] = {
-+	[LPASS_CDC_WSA_NPL]		= &lpass_gfm_wsa_npl,
-+	[LPASS_CDC_WSA_MCLK]		= &lpass_gfm_wsa_mclk,
-+	[LPASS_CDC_RX_NPL]		= &lpass_gfm_rx_npl,
-+	[LPASS_CDC_RX_MCLK_MCLK2]	= &lpass_gfm_rx_mclk_mclk2,
-+};
-+
-+static struct clk_hw_onecell_data audiocc_hw_onecell_data = {
-+	.hws = {
-+		[LPASS_CDC_WSA_NPL]	= &lpass_gfm_wsa_npl.hw,
-+		[LPASS_CDC_WSA_MCLK]	= &lpass_gfm_wsa_mclk.hw,
-+		[LPASS_CDC_RX_NPL]	= &lpass_gfm_rx_npl.hw,
-+		[LPASS_CDC_RX_MCLK_MCLK2] = &lpass_gfm_rx_mclk_mclk2.hw,
-+	},
-+	.num = ARRAY_SIZE(audiocc_gfm_clks),
-+};
-+
-+struct lpass_gfm_data {
-+	struct clk_hw_onecell_data *onecell_data;
-+	struct clk_gfm **gfm_clks;
-+};
-+
-+static struct lpass_gfm_data audiocc_data = {
-+	.onecell_data = &audiocc_hw_onecell_data,
-+	.gfm_clks = audiocc_gfm_clks,
-+};
-+
-+static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
-+{
-+	const struct lpass_gfm_data *data;
-+	struct device *dev = &pdev->dev;
-+	struct resource *res;
-+	struct clk_gfm *gfm;
-+	struct lpass_gfm *cc;
-+	int err, i;
-+
-+	cc = devm_kzalloc(dev, sizeof(*cc), GFP_KERNEL);
-+	if (!cc)
-+		return -ENOMEM;
-+
-+	cc->core_vote = devm_clk_get(&pdev->dev, "core");
-+	if (IS_ERR(cc->core_vote)) {
-+		dev_dbg(dev, "Failed to get lpass core clk\n");
-+		return PTR_ERR(cc->core_vote);
-+	}
-+
-+	data = of_device_get_match_data(dev);
-+	cc->bus_clk = devm_clk_get(&pdev->dev, "bus");
-+	if (IS_ERR(cc->bus_clk)) {
-+		dev_dbg(dev, "Failed to get lpass bus clk\n");
-+		return PTR_ERR(cc->bus_clk);
-+	}
-+
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	cc->base = devm_ioremap_resource(dev, res);
-+	if (IS_ERR(cc->base))
-+		return PTR_ERR(cc->base);
-+
-+	clk_prepare_enable(cc->core_vote);
-+	clk_prepare_enable(cc->bus_clk);
-+
-+	for (i = 0; i < data->onecell_data->num; i++) {
-+		if (!data->gfm_clks[i])
-+			continue;
-+
-+		gfm = data->gfm_clks[i];
-+		gfm->priv = cc;
-+		gfm->gfm_mux = cc->base;
-+		gfm->gfm_mux = gfm->gfm_mux + data->gfm_clks[i]->mux_reg;
-+
-+		err = devm_clk_hw_register(dev, &data->gfm_clks[i]->hw);
-+		if (err)
-+			return err;
-+
-+	}
-+
-+	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
-+					   data->onecell_data);
-+}
-+
-+static const struct of_device_id lpass_gfm_clk_match_table[] = {
-+	{
-+		.compatible = "qcom,sm8250-lpass-audiocc",
-+		.data = &audiocc_data,
-+	},
-+	{ }
-+};
-+
-+static struct platform_driver lpass_gfm_clk_driver = {
-+	.probe		= lpass_gfm_clk_driver_probe,
-+	.driver		= {
-+		.name	= "lpass-gfm-clk",
-+		.of_match_table = lpass_gfm_clk_match_table,
-+	},
-+};
-+builtin_platform_driver(lpass_gfm_clk_driver);
+   reg:
+-    maxItems: 1
++    maxItems: 2
+     description: LPAIF core registers
+-
++  reg-names:
++     maxItems: 2
+   clocks:
+     minItems: 3
+     maxItems: 6
+@@ -36,15 +37,16 @@ properties:
+     maxItems: 6
+ 
+   interrupts:
+-    maxItems: 1
++    maxItems: 2
+     description: LPAIF DMA buffer interrupt
+-
++  interrupt-names:
++    maxItems: 2
+   qcom,adsp:
+     $ref: /schemas/types.yaml#/definitions/phandle
+     description: Phandle for the audio DSP node
+ 
+   iommus:
+-    maxItems: 1
++    maxItems: 2
+     description: Phandle to apps_smmu node with sid mask
+ 
+   power-domains:
+@@ -60,10 +62,12 @@ properties:
+     const: 0
+ 
+ patternProperties:
+-  "(^mi2s-[0-9a-f]$|mi2s)":
++  "^dai-link@[0-9a-f]$":
+     type: object
+-    description: Required properties for each DAI
+-
++    description: |
++      LPASS CPU dai node for each I2S device. Bindings of each node
++      depends on the specific driver providing the functionality and
++      properties.
+     properties:
+       reg:
+         maxItems: 1
+@@ -85,9 +89,11 @@ patternProperties:
+ required:
+   - compatible
+   - reg
++  - reg-names
+   - clocks
+   - clock-names
+   - interrupts
++  - interrupt-names
+   - '#sound-dai-cells'
+ 
+ additionalProperties: false
+@@ -134,13 +140,32 @@ allOf:
+     then:
+       properties:
+         clock-names:
+-          items:
+-            - const: pcnoc-sway-clk
+-            - const: audio-core
+-            - const: mclk0
+-            - const: pcnoc-mport-clk
+-            - const: mi2s-bit-clk0
+-            - const: mi2s-bit-clk1
++          oneOf:
++           - items:   #for I2S
++              - const: pcnoc-sway-clk
++              - const: audio-core
++              - const: mclk0
++              - const: pcnoc-mport-clk
++              - const: mi2s-bit-clk0
++              - const: mi2s-bit-clk1
++           - items:   #for HDMI
++              - const: pcnoc-sway-clk
++              - const: audio-core
++              - const: pcnoc-mport-clk
++        reg-names:
++          anyOf:
++            - items:   #for I2S and HDMI
++              - const: lpass-hdmiif
++              - const: lpass-lpaif
++            - items:   #for I2S
++              - const: lpass-lpaif
++        interrupt-names:
++          anyOf:
++            - items:   #for I2S and HDMI
++              - const: lpass-irq-lpaif
++              - const: lpass-irq-hdmi
++            - items:   #for I2S
++              - const: lpass-irq-lpaif
+       required:
+         - iommus
+         - power-domains
+@@ -152,12 +177,15 @@ examples:
+     soc {
+         #address-cells = <2>;
+         #size-cells = <2>;
+-        lpass@62f00000 {
++        lpass@62d80000 {
+             compatible = "qcom,sc7180-lpass-cpu";
+ 
+-            reg = <0 0x62f00000  0 0x29000>;
+-
+-            iommus = <&apps_smmu 0x1020 0>;
++            reg = <0 0x62d87000 0 0x68000>,
++                  <0 0x62f00000 0 0x29000>;
++            reg-names = "lpass-hdmiif",
++                        "lpass-lpaif";
++            iommus = <&apps_smmu 0x1020 0>,
++                     <&apps_smmu 0x1032 0>;
+             power-domains = <&lpass_hm 0>;
+ 
+             clocks = <&gcc 131>,
+@@ -171,14 +199,16 @@ examples:
+                           "mclk0", "pcnoc-mport-clk",
+                           "mi2s-bit-clk0", "mi2s-bit-clk1";
+ 
+-            interrupts = <0 160 1>;
+-
++            interrupts = <0 160 1>,
++                         <0 268 1>;
++            interrupt-names = "lpass-irq-lpaif",
++                              "lpass-irq-hdmi";
+             #sound-dai-cells = <1>;
+ 
+             #address-cells = <1>;
+             #size-cells = <0>;
+             /* Optional to set different MI2S SD lines */
+-            mi2s-primary@0 {
++            dai-link@0 {
+                 reg = <MI2S_PRIMARY>;
+                 qcom,playback-sd-lines = <1>;
+                 qcom,capture-sd-lines = <0>;
 -- 
-2.21.0
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
