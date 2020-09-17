@@ -2,110 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29B8726D1B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 05:29:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 868E026D2C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 06:40:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726151AbgIQD3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 23:29:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41026 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726142AbgIQD2G (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 23:28:06 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0114C061A10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 20:22:35 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id n10so809163qtv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 20:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7uYlLNN0UyKBRIab8OLOITLg387YzzBqmIZv+ipj1Bk=;
-        b=WgQWIsUlbXN3VVXSecXh6NSwzMBUdXegJ1UbE5dZ5hL0zTZqMnJXK3IU1YodWCoeuB
-         Y4OEpjgNajgPg+yhYvIAF872GecFsE1BgxlzwnqnA2jGT679cwonprKHeJe8p+UZy5J4
-         r72IIPcyanDumuLDsqhSxQlUc1HrTMomgmZd3gWrEDjF51lbPdFbSTdtKnYDJe3bi49z
-         HEdjA9fmvjxIv9m2vCLCmsz7H6ZD+ixW5RTucdXqj8nak9ZZl5Ra/dU9HxJrqjt1fx3v
-         5Uc6+JFwsR2u575L2MXyGO88rbRgDz78wJEGc2KS0sgSp02IBTsoU+HrrDclIL7UUzD5
-         yPIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7uYlLNN0UyKBRIab8OLOITLg387YzzBqmIZv+ipj1Bk=;
-        b=PT132b5j4IyiifO+K9wyL1CtSzpC5Zpfu/ZxivSVg0CJusPQtKIKZjGmsdNmhc8N53
-         KsiPOPNdhZwlJn7jIdP3AVFbvuOxsQS4lbp+nwiI6fEwAI6P+3G6JoarJHGijNS6Ejr1
-         CEuaeYI/EdZrr1U+/E5KG6uUx0UqsfcA+WePuoK9qi0hMk1Ljv3ZPIvzzVAuB5Dq6BeU
-         qmnuiZYQcEWTDqbFmiwgEv1GdaBFqoeryeC3hnjaX2YGxo5vI7W75VoOIgpwfHNQG2E3
-         tvKgNKmCvvze3EKj/I2IIxda8tdMtyv+tKch2iYFBObRV76V6XrlA+vrr/kJUpkN//QK
-         sk0A==
-X-Gm-Message-State: AOAM530kMNftGdyfsGKE9Ai5f6IMLdRzgw9BHgd/HLMCprm5pGbDDQt1
-        zobVR+h8/9GUuvBXeERqKIY1dg==
-X-Google-Smtp-Source: ABdhPJzGL4YEJnZLHDs2gCK48wqeWdvZlE8nmVrQmjPTUaQ1EXFV5sqoz+sP/iUjbWjWIJ3lhJr+wg==
-X-Received: by 2002:aed:2b86:: with SMTP id e6mr25582795qtd.86.1600312955087;
-        Wed, 16 Sep 2020 20:22:35 -0700 (PDT)
-Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id g45sm21370801qtb.60.2020.09.16.20.22.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 20:22:34 -0700 (PDT)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     rui.zhang@intel.com, daniel.lezcano@linaro.org, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        lukasz.luba@arm.com, amitk@kernel.org
-Subject: [PATCH RFC 8/8] soc:qcom:qcom_aoss: Change cooling_device_register to warming_device_register
-Date:   Wed, 16 Sep 2020 23:22:26 -0400
-Message-Id: <20200917032226.820371-9-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200917032226.820371-1-thara.gopinath@linaro.org>
-References: <20200917032226.820371-1-thara.gopinath@linaro.org>
+        id S1726072AbgIQEkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 00:40:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36716 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725267AbgIQEkb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 00:40:31 -0400
+X-Greylist: delayed 467 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 00:40:30 EDT
+Received: from localhost (unknown [136.185.111.192])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id A48D02075E;
+        Thu, 17 Sep 2020 04:32:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600317163;
+        bh=s17TDe+HqxPv+0W4FH6Ox4FMMt2wi7Eu6ArcbO9bhkA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TurpCaD5gtig9W8PoCYREz2lJlmgzsA58TCSwN/U9l6CiDsM23pwmRXXe85F/LIqF
+         BubWSy4a/0Tg1MSv3gbWEn/WqxrBMcZwO0vPPy/BaLeX0KBU5yzLN5I3gJ+cCpBFdf
+         RoySljMsD8wUqaUX2HZVXfvLCDonq8+ScJRgi/R0=
+Date:   Thu, 17 Sep 2020 10:02:39 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        agross@kernel.org, kishon@ti.com, robh@kernel.org,
+        svarbanov@mm-sol.com, bhelgaas@google.com,
+        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: phy: qcom,qmp: Document SM8250 PCIe PHY
+ bindings
+Message-ID: <20200917043239.GW2968@vkoul-mobl>
+References: <20200916132000.1850-1-manivannan.sadhasivam@linaro.org>
+ <20200916132000.1850-2-manivannan.sadhasivam@linaro.org>
+ <20200916224541.GF1893@yoga>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200916224541.GF1893@yoga>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Always on subsystem host resources cx and ebi that are used as warming
-devices. Use the newly introduce _warming_device_register to register
-these devices with the thermal framework.
+On 16-09-20, 17:45, Bjorn Andersson wrote:
+> On Wed 16 Sep 08:19 CDT 2020, Manivannan Sadhasivam wrote:
+> 
+> > Document the DT bindings of below PCIe PHY versions used on SM8250:
+> > 
+> > QMP GEN3x1 PHY - 1 lane
+> > QMP GEN3x2 PHY - 2 lanes
+> > QMP Modem PHY - 2 lanes
+> 
+> How about something like "Add the three PCIe PHYs found in SM8250 to the
+> QMP binding"?
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- drivers/soc/qcom/qcom_aoss.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Or add just one compatible sm8250-qmp-pcie and then use number of lanes
+as dt property?
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index ed2c687c16b3..4f65c03a5def 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -461,7 +461,7 @@ static int qmp_cooling_device_add(struct qmp *qmp,
- 	qmp_cdev->qmp = qmp;
- 	qmp_cdev->state = !qmp_cdev_max_state;
- 	qmp_cdev->name = cdev_name;
--	qmp_cdev->cdev = devm_thermal_of_cooling_device_register
-+	qmp_cdev->cdev = devm_thermal_of_warming_device_register
- 				(qmp->dev, node,
- 				cdev_name,
- 				qmp_cdev, &qmp_cooling_device_ops);
-@@ -501,7 +501,7 @@ static int qmp_cooling_devices_register(struct qmp *qmp)
- 
- unroll:
- 	while (--count >= 0)
--		thermal_cooling_device_unregister
-+		thermal_warming_device_unregister
- 			(qmp->cooling_devs[count].cdev);
- 
- 	return ret;
-@@ -512,7 +512,7 @@ static void qmp_cooling_devices_remove(struct qmp *qmp)
- 	int i;
- 
- 	for (i = 0; i < QMP_NUM_COOLING_RESOURCES; i++)
--		thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
-+		thermal_warming_device_unregister(qmp->cooling_devs[i].cdev);
- }
- 
- static int qmp_probe(struct platform_device *pdev)
+> 
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> > index 185cdea9cf81..69b67f79075c 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> > @@ -31,6 +31,9 @@ properties:
+> >        - qcom,sdm845-qmp-usb3-uni-phy
+> >        - qcom,sm8150-qmp-ufs-phy
+> >        - qcom,sm8250-qmp-ufs-phy
+> > +      - qcom,qcom,sm8250-qmp-gen3x1-pcie-phy
+> > +      - qcom,qcom,sm8250-qmp-gen3x2-pcie-phy
+> > +      - qcom,qcom,sm8250-qmp-modem-pcie-phy
+> 
+> One "qcom," should be enough.
+> 
+> >  
+> >    reg:
+> >      items:
+> > @@ -259,6 +262,8 @@ allOf:
+> >              enum:
+> >                - qcom,sdm845-qhp-pcie-phy
+> >                - qcom,sdm845-qmp-pcie-phy
+> > +              - qcom,sm8250-qhp-pcie-phy
+> > +              - qcom,sm8250-qmp-pcie-phy
+> 
+> Adjust these.
+> 
+> Regards,
+> Bjorn
+> 
+> >      then:
+> >        properties:
+> >          clocks:
+> > -- 
+> > 2.17.1
+> > 
+
 -- 
-2.25.1
-
+~Vinod
