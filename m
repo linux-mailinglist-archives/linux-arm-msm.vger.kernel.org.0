@@ -2,130 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C03726DC8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 15:12:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B9DE26DCCD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 15:29:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbgIQNKh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 09:10:37 -0400
-Received: from mail29.static.mailgun.info ([104.130.122.29]:52990 "EHLO
-        mail29.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727089AbgIQNKe (ORCPT
+        id S1726954AbgIQN3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 09:29:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726964AbgIQN3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 09:10:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600348219; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=+exb4SkAt82PbgJkbLQGaVlcoCDQLiY2MVs1jWjuReQ=; b=MGIJ3KF9yHwdDToOgmz4Apn2cK2s/tMYuRIkYEe5jdA3Lh2TSIoOZEHS8JgxUD+a7vsodPtZ
- cTG+NYahyMpxWEuu3AZrEnapZ+PECl9kz+rt/1J3VMY3OOw++3Kc+nWjQg3ySb3nikWr4cPD
- qeKZqovyvwwD1604+2a7QZ719+E=
-X-Mailgun-Sending-Ip: 104.130.122.29
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f63603af1e3eb89c7f05a88 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Sep 2020 13:10:18
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7145AC433F1; Thu, 17 Sep 2020 13:10:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost.localdomain (unknown [139.227.220.136])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rjliao)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79E1DC433CA;
-        Thu, 17 Sep 2020 13:10:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 79E1DC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rjliao@codeaurora.org
-From:   Rocky Liao <rjliao@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rocky Liao <rjliao@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: btusb: Enable wide band speech support for BTUSB_QCA_ROME
-Date:   Thu, 17 Sep 2020 21:09:23 +0800
-Message-Id: <20200917130923.15237-1-rjliao@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        Thu, 17 Sep 2020 09:29:40 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C78FC061226
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 06:29:02 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id a17so2078406wrn.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 06:29:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VXnokbFwaIT7VX7ySLaYW+p97LOfw5oIrujXpIr02w0=;
+        b=YhtNwsS5EvW9wWdW0ET2SOg7FW6/fm0TOPmHQKipPLCr3EfGF1dYktxktoMauq3MyG
+         Gtc3F4EdJm7Skmycwfiti1rvHXn5w5Y+pIYmtfz13lf8DovTFs5+WjrgOttK2mGIVDr4
+         zO2h4zetldL4/9owZvYijsqtb4D3ppFAcTZ8rJdchatZnRbckqS4T9VAkUO4YrAN0DGt
+         u8B+VB+3oyqvl6kYwKaYfrnVUEEf0fzPGxl+jWb/LCHto6aXmR1hOeWB0luqBgcw3Rlq
+         P877I2RYE/VhlaQzsra3l3wYNn9/ADDUZ3Cn//OBjx9/4s+8gFiAtN+nA3kkLgls4TXp
+         K1Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VXnokbFwaIT7VX7ySLaYW+p97LOfw5oIrujXpIr02w0=;
+        b=Nz5rKcoH3UUUkFprOQfSBPrS8X74u8udyIFL263P8JZB1vH2SnvJx+GIYsnJKoUfwe
+         M0yK1JV0rn35ljR4fW3CAB/JkMebUI/HpcapWBZWqXa0EfXIxde34mCw8etNk9YIm/sw
+         +NotU06NEg2Ie5SyIBU7V0MR8GyMzuAtEQO5XlfrBFQ4632XmTtz8HM7UO5PiPzqfrLl
+         xctV8EVOwwexgZmPMMHfoVz2cssezgw8ALQXnUKjN6cMN17d1T6wEy3Gbc8F6X7vDtq6
+         ceKid0HW4SDX3EI3+EYug9VFhnrI09PEY3Ud4Qoj5XVRcHYUeiV298sjJrYunmNM4nLA
+         dkTw==
+X-Gm-Message-State: AOAM533lTsZTRr9R7ZqXCUQP09tWxAlVpDaqJvUAf+tByWFKXv5UrYOH
+        VvPlnrQq8HhEf1EaERQxuzA3hA==
+X-Google-Smtp-Source: ABdhPJxwtR7oBdq4afBifC7Rg+K/286K5d8bHf/oiQjz59hxtnrtlu7e7eCW1oFzS8JgGdVTD3B3GA==
+X-Received: by 2002:adf:e304:: with SMTP id b4mr31131498wrj.141.1600349341564;
+        Thu, 17 Sep 2020 06:29:01 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id n10sm11486910wmk.7.2020.09.17.06.29.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 06:29:00 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     sboyd@kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 4/4] clk: qcom: Add support to LPASS AON_CC Glitch Free Mux clocks
+Date:   Thu, 17 Sep 2020 14:28:50 +0100
+Message-Id: <20200917132850.7730-5-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20200917132850.7730-1-srinivas.kandagatla@linaro.org>
+References: <20200917132850.7730-1-srinivas.kandagatla@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCA Rome supports wide band speech, this patch enables the wide band
-speech support by set the BTUSB_WIDEBAND_SPEECH flag.
+LPASS Always ON Clock controller has one GFM mux to control VA
+and TX clocks to codec macro on LPASS.
+This patch adds support to this mux.
 
-Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- drivers/bluetooth/btusb.c | 54 ++++++++++++++++++++++++++-------------
- 1 file changed, 36 insertions(+), 18 deletions(-)
+ drivers/clk/qcom/lpass-gfm-sm8250.c | 61 +++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index fe80588c7bd3..9f294b941943 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -254,24 +254,42 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe03c), .driver_info = BTUSB_ATH3012 },
+diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass-gfm-sm8250.c
+index 2d5c41ae4969..6b11bea912bf 100644
+--- a/drivers/clk/qcom/lpass-gfm-sm8250.c
++++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
+@@ -12,6 +12,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/of_device.h>
+ #include <dt-bindings/clock/qcom,sm8250-lpass-audiocc.h>
++#include <dt-bindings/clock/qcom,sm8250-lpass-aoncc.h>
  
- 	/* QCA ROME chipset */
--	{ USB_DEVICE(0x0cf3, 0x535b), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0cf3, 0xe007), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0cf3, 0xe009), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0cf3, 0xe010), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0cf3, 0xe300), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0cf3, 0xe301), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0cf3, 0xe360), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0489, 0xe092), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0489, 0xe09f), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x0489, 0xe0a2), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x04ca, 0x3011), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x04ca, 0x3015), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x04ca, 0x3016), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x04ca, 0x301a), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x04ca, 0x3021), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x13d3, 0x3491), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x13d3, 0x3496), .driver_info = BTUSB_QCA_ROME },
--	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME },
-+	{ USB_DEVICE(0x0cf3, 0x535b), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cf3, 0xe007), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cf3, 0xe009), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cf3, 0xe010), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cf3, 0xe300), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cf3, 0xe301), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0cf3, 0xe360), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe092), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe09f), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe0a2), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x04ca, 0x3011), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x04ca, 0x3015), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x04ca, 0x3016), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x04ca, 0x301a), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x04ca, 0x3021), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3491), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3496), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
-+						     BTUSB_WIDEBAND_SPEECH },
+ struct lpass_gfm {
+ 	struct device *dev;
+@@ -61,6 +62,44 @@ static const struct clk_ops clk_gfm_ops = {
+ 	.determine_rate = __clk_mux_determine_rate,
+ };
  
- 	/* Broadcom BCM2035 */
- 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
++static struct clk_gfm lpass_gfm_va_mclk = {
++	.mux_reg = 0x20000,
++	.mux_mask = BIT(0),
++	.hw.init = &(struct clk_init_data) {
++		.name = "VA_MCLK",
++		.ops = &clk_gfm_ops,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
++		.parent_names = (const char *[]) {
++			"LPASS_CLK_ID_TX_CORE_MCLK",
++			"LPASS_CLK_ID_VA_CORE_MCLK",
++		},
++		.num_parents = 2,
++		.parent_data = (const struct clk_parent_data[]){
++				{ .index = 0 },
++				{ .index = 1 },
++		},
++	},
++};
++
++static struct clk_gfm lpass_gfm_tx_npl = {
++	.mux_reg = 0x20000,
++	.mux_mask = BIT(0),
++	.hw.init = &(struct clk_init_data) {
++		.name = "TX_NPL",
++		.ops = &clk_gfm_ops,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
++		.parent_names = (const char *[]){
++			"LPASS_CLK_ID_TX_CORE_NPL_MCLK",
++			"LPASS_CLK_ID_VA_CORE_2X_MCLK",
++		},
++		.parent_data = (const struct clk_parent_data[]){
++				{ .index = 0 },
++				{ .index = 1 },
++		},
++		.num_parents = 2,
++	},
++};
++
+ static struct clk_gfm lpass_gfm_wsa_mclk = {
+ 	.mux_reg = 0x220d8,
+ 	.mux_mask = BIT(0),
+@@ -137,6 +176,19 @@ static struct clk_gfm lpass_gfm_rx_npl = {
+ 	},
+ };
+ 
++static struct clk_gfm *aoncc_gfm_clks[] = {
++	[LPASS_CDC_VA_MCLK]		= &lpass_gfm_va_mclk,
++	[LPASS_CDC_TX_NPL]		= &lpass_gfm_tx_npl,
++};
++
++static struct clk_hw_onecell_data aoncc_hw_onecell_data = {
++	.hws = {
++		[LPASS_CDC_VA_MCLK]	= &lpass_gfm_va_mclk.hw,
++		[LPASS_CDC_TX_NPL]	= &lpass_gfm_tx_npl.hw,
++	},
++	.num = ARRAY_SIZE(aoncc_gfm_clks),
++};
++
+ static struct clk_gfm *audiocc_gfm_clks[] = {
+ 	[LPASS_CDC_WSA_NPL]		= &lpass_gfm_wsa_npl,
+ 	[LPASS_CDC_WSA_MCLK]		= &lpass_gfm_wsa_mclk,
+@@ -164,6 +216,11 @@ static struct lpass_gfm_data audiocc_data = {
+ 	.gfm_clks = audiocc_gfm_clks,
+ };
+ 
++static struct lpass_gfm_data aoncc_data = {
++	.onecell_data = &aoncc_hw_onecell_data,
++	.gfm_clks = aoncc_gfm_clks,
++};
++
+ static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
+ {
+ 	const struct lpass_gfm_data *data;
+@@ -218,6 +275,10 @@ static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id lpass_gfm_clk_match_table[] = {
++	{
++		.compatible = "qcom,sm8250-lpass-aoncc",
++		.data = &aoncc_data,
++	},
+ 	{
+ 		.compatible = "qcom,sm8250-lpass-audiocc",
+ 		.data = &audiocc_data,
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+2.21.0
 
