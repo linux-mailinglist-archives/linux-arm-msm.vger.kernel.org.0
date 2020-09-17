@@ -2,177 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C6C926DA46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 13:33:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F209F26DB0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 14:06:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbgIQLbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 07:31:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59400 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726505AbgIQLbc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 07:31:32 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CBBC061788;
-        Thu, 17 Sep 2020 04:31:31 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id s13so1610286wmh.4;
-        Thu, 17 Sep 2020 04:31:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QoGoJWGY9uvsPbK1VFldPakdj/95886EaH4XmF5Nmig=;
-        b=WT+tCnqscdjnhBzx4pey4qfrs3TpF1Xktu7jt8T8cQSP0yZJdX3KoYHPdWspzIugsq
-         6HSKY9VJKgsdLw89cCYxqdbs7Vt7/k4/jK9LtTE+4i9XvfXW1Lr/Fm+fEnngxxWPD5dx
-         hAgvu8wEl2ImGMZ/Vxi1axcUTWC/C1hcCZmRCP+VMlQrWSEcu/Hqzj+fuVKA2INfBjX3
-         /zcARTJCVi7gGPGSYovxguWtsuZzPwF6TsPs2IH9t/Kp5k3R+t/9fCDbL8cqbYXRyKxo
-         iHGdqfCt+o61f/ixQfUMrk5tyRoSS69zCZaqGiTmJsGllEHi/xlz25EYavgN+6zZY8AL
-         WM8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QoGoJWGY9uvsPbK1VFldPakdj/95886EaH4XmF5Nmig=;
-        b=aqjDBpusXuNQUj7CV+AkN9pQhHXDrkvYezt/YCQfSCm3JbRvtEAsOK6MmDn7TGscnd
-         pM3DULz9ei+usiI0HQIgf/SnTZQnpCXeocXi3Ra1rmUwriJXZRaX8NFR2Sh5BAFHetcc
-         LDFzexaVOpRFVXadVab6h3gfYDRn93FLG5GQ+BsUROm0m4kp6BT8hvHC/OoKbraFfi/1
-         eV9q4bo/Iwz4eduj2WAy30OZDiw2YQ/xrcAxEOQJwix7ad4KxmHZunuMi7RqdFi4pMHq
-         g/YIE+MXtBn7/znatiKyxN0lcdNmrnx8iPigDoa0t/q85MHqaF6LelCQtl30T5WCGaGW
-         j/uQ==
-X-Gm-Message-State: AOAM532rw2w2svcJsxjGy+a3a/LHq2P7waiaLVBHBzPTdvraUoSlbpid
-        YiIDvbOUqcFwRxAxrIRO/fs=
-X-Google-Smtp-Source: ABdhPJyuZcp+AqRLPz3yJIfvdwNUATarIMvgIK7I09VrN4WEXhLqSMqZyvaS1A1ZqiWgJrdIoQA/Hg==
-X-Received: by 2002:a1c:96:: with SMTP id 144mr9601334wma.84.1600342290200;
-        Thu, 17 Sep 2020 04:31:30 -0700 (PDT)
-Received: from smtp.gmail.com (a95-92-181-29.cpe.netcabo.pt. [95.92.181.29])
-        by smtp.gmail.com with ESMTPSA id 11sm10489240wmi.14.2020.09.17.04.31.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2020 04:31:29 -0700 (PDT)
-Date:   Thu, 17 Sep 2020 08:31:20 -0300
-From:   Melissa Wen <melissa.srw@gmail.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     alexander.deucher@amd.com, christian.koenig@amd.com,
-        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
-        inki.dae@samsung.com, jy0922.shim@samsung.com,
-        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
-        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
-        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
-        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
-        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
-        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
-        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
-        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
-        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
-        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
-        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
-        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
-        chris@chris-wilson.co.uk, matthew.auld@intel.com,
-        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
-        sam@ravnborg.org, miaoqinglang@huawei.com,
-        emil.velikov@collabora.com, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, amd-gfx@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        xen-devel@lists.xenproject.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 18/21] drm/vkms: Introduce GEM object functions
-Message-ID: <20200917113120.dtz7yxvdg7xdgbx5@smtp.gmail.com>
-References: <20200915145958.19993-1-tzimmermann@suse.de>
- <20200915145958.19993-19-tzimmermann@suse.de>
+        id S1726935AbgIQMGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 08:06:09 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40431 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726900AbgIQMGC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 08:06:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600344353; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=4UtZeQmJZCTmN33hwmN7PDkDrzAhWXay1mgYEYiQhVU=;
+ b=L+vN0xg8EgBovzgl/0Z6G7j+IdGNrxYKUgjOx0p3DzxjBeP2NeeqTXy/TRyc+yNKoaYDS9yT
+ gXFY83dHtWAs7X/Ce/GYVwpR7UzlhisdKYfN6phr9hv9IhAo/E3h+Vf8Gx43hV5IBwhzAY5+
+ YuECwZzLQG7VvcqEnQClzYi2p1E=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f635093c4180d293b3feab6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Sep 2020 12:03:31
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8DA0DC433C8; Thu, 17 Sep 2020 12:03:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rojay)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79557C433CA;
+        Thu, 17 Sep 2020 12:03:30 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200915145958.19993-19-tzimmermann@suse.de>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 17 Sep 2020 17:33:30 +0530
+From:   rojay@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     wsa@kernel.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH V3] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+In-Reply-To: <159959341894.454335.3250696075143737399@swboyd.mtv.corp.google.com>
+References: <20200907130731.2607-1-rojay@codeaurora.org>
+ <159959341894.454335.3250696075143737399@swboyd.mtv.corp.google.com>
+Message-ID: <fdd2919bc0705b4bd54b8be92fbc9fe5@codeaurora.org>
+X-Sender: rojay@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
+Hi Stephen,
 
-On 09/15, Thomas Zimmermann wrote:
-> GEM object functions deprecate several similar callback interfaces in
-> struct drm_driver. This patch replaces the per-driver callbacks with
-> per-instance callbacks in vkms.
+On 2020-09-09 01:00, Stephen Boyd wrote:
+> Why is dri-devel on here? And linaro-mm-sig?
 > 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-Thanks! Looks fine.
+Ok, I will remove these lists.
 
-Reviewed-by: Melissa Wen <melissa.srw@gmail.com>
-
-> ---
->  drivers/gpu/drm/vkms/vkms_drv.c |  8 --------
->  drivers/gpu/drm/vkms/vkms_gem.c | 13 +++++++++++++
->  2 files changed, 13 insertions(+), 8 deletions(-)
+> Quoting Roja Rani Yarubandi (2020-09-07 06:07:31)
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+>> b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index dead5db3315a..b3609760909f 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>>  struct geni_i2c_err_log {
+>> @@ -384,7 +387,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg *msg,
+>>         if (dma_buf) {
+>>                 if (gi2c->err)
+>>                         geni_i2c_rx_fsm_rst(gi2c);
+>> -               geni_se_rx_dma_unprep(se, rx_dma, len);
+>> +               geni_se_rx_dma_unprep(se, gi2c->rx_dma, len);
+>> +               gi2c->rx_dma = (dma_addr_t)NULL;
+>>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+>>         }
+>> 
+>> @@ -394,12 +398,12 @@ static int geni_i2c_rx_one_msg(struct 
+>> geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>>  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct 
+>> i2c_msg *msg,
+>>                                 u32 m_param)
+>>  {
+>> -       dma_addr_t tx_dma;
+>>         unsigned long time_left;
+>>         void *dma_buf = NULL;
+>>         struct geni_se *se = &gi2c->se;
+>>         size_t len = msg->len;
+>> 
+>> +       gi2c->xfer_len = len;
+>>         if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>>                 dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
+>> 
+>> @@ -410,7 +414,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg *msg,
+>> 
+>>         writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
+>> 
+>> -       if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) 
+>> {
+>> +       if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, 
+>> &gi2c->tx_dma)) {
+>>                 geni_se_select_mode(se, GENI_SE_FIFO);
+>>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+>>                 dma_buf = NULL;
+>> @@ -429,7 +433,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg *msg,
+>>         if (dma_buf) {
+>>                 if (gi2c->err)
+>>                         geni_i2c_tx_fsm_rst(gi2c);
+>> -               geni_se_tx_dma_unprep(se, tx_dma, len);
+>> +               geni_se_tx_dma_unprep(se, gi2c->tx_dma, len);
+>> +               gi2c->tx_dma = (dma_addr_t)NULL;
+>>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+>>         }
+>> 
+>> @@ -479,6 +484,51 @@ static int geni_i2c_xfer(struct i2c_adapter 
+>> *adap,
+>>         return ret;
+>>  }
+>> 
+>> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
+>> +{
+>> +       int ret;
+>> +       u32 dma;
+>> +       u32 val;
+>> +       u32 geni_status;
+>> +       struct geni_se *se = &gi2c->se;
+>> +
+>> +       ret = pm_runtime_get_sync(gi2c->se.dev);
+>> +       if (ret < 0) {
+>> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", 
+>> ret);
 > 
-> diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
-> index cb0b6230c22c..726801ab44d4 100644
-> --- a/drivers/gpu/drm/vkms/vkms_drv.c
-> +++ b/drivers/gpu/drm/vkms/vkms_drv.c
-> @@ -51,12 +51,6 @@ static const struct file_operations vkms_driver_fops = {
->  	.release	= drm_release,
->  };
->  
-> -static const struct vm_operations_struct vkms_gem_vm_ops = {
-> -	.fault = vkms_gem_fault,
-> -	.open = drm_gem_vm_open,
-> -	.close = drm_gem_vm_close,
-> -};
-> -
->  static void vkms_release(struct drm_device *dev)
->  {
->  	struct vkms_device *vkms = container_of(dev, struct vkms_device, drm);
-> @@ -98,8 +92,6 @@ static struct drm_driver vkms_driver = {
->  	.release		= vkms_release,
->  	.fops			= &vkms_driver_fops,
->  	.dumb_create		= vkms_dumb_create,
-> -	.gem_vm_ops		= &vkms_gem_vm_ops,
-> -	.gem_free_object_unlocked = vkms_gem_free_object,
->  	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
->  	.gem_prime_import_sg_table = vkms_prime_import_sg_table,
->  
-> diff --git a/drivers/gpu/drm/vkms/vkms_gem.c b/drivers/gpu/drm/vkms/vkms_gem.c
-> index a017fc59905e..19a0e260a4df 100644
-> --- a/drivers/gpu/drm/vkms/vkms_gem.c
-> +++ b/drivers/gpu/drm/vkms/vkms_gem.c
-> @@ -7,6 +7,17 @@
->  
->  #include "vkms_drv.h"
->  
-> +static const struct vm_operations_struct vkms_gem_vm_ops = {
-> +	.fault = vkms_gem_fault,
-> +	.open = drm_gem_vm_open,
-> +	.close = drm_gem_vm_close,
-> +};
-> +
-> +static const struct drm_gem_object_funcs vkms_gem_object_funcs = {
-> +	.free = vkms_gem_free_object,
-> +	.vm_ops = &vkms_gem_vm_ops,
-> +};
-> +
->  static struct vkms_gem_object *__vkms_gem_create(struct drm_device *dev,
->  						 u64 size)
->  {
-> @@ -17,6 +28,8 @@ static struct vkms_gem_object *__vkms_gem_create(struct drm_device *dev,
->  	if (!obj)
->  		return ERR_PTR(-ENOMEM);
->  
-> +	obj->gem.funcs = &vkms_gem_object_funcs;
-> +
->  	size = roundup(size, PAGE_SIZE);
->  	ret = drm_gem_object_init(dev, &obj->gem, size);
->  	if (ret) {
-> -- 
-> 2.28.0
+> Is this print really necessary? Doesn't PM core already print this sort
+> of information?
 > 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+
+PM core will not print any such information.
+Here we wanted to know our driver's pm runtime resume is successful.
+
+>> +               return;
+>> +       }
+>> +
+>> +       geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
+>> +       if (geni_status & M_GENI_CMD_ACTIVE) {
+> 
+> Please try to de-indent all this.
+> 
+
+Okay.
+
+> 	if (!(geni_status & M_GENI_CMD_ACTIVE))
+> 		goto out;
+> 
+>> +               geni_i2c_abort_xfer(gi2c);
+>> +               dma = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
+>> +               if (dma) {
+> 
+> 	if (!dma)
+> 		goto out;
+> 
+>> +                       val = readl_relaxed(gi2c->se.base + 
+>> SE_DMA_DEBUG_REG0);
+>> +                       if (val & DMA_TX_ACTIVE) {
+>> +                               gi2c->cur_wr = 0;
+>> +                               if (gi2c->err)
+>> +                                       geni_i2c_tx_fsm_rst(gi2c);
+>> +                               if (gi2c->tx_dma) {
+>> +                                       geni_se_tx_dma_unprep(se,
+>> +                                                gi2c->tx_dma, 
+>> gi2c->xfer_len);
+>> +                                       gi2c->tx_dma = 
+>> (dma_addr_t)NULL;
+> 
+> Almost nobody does this. In fact, grep shows me one hit in the kernel.
+> If nobody else is doing it something is probably wrong. When would dma
+> mode be active and tx_dma not be set to something that should be
+> stopped? If it really is necessary I suppose we should assign this to
+> DMA_MAPPING_ERROR instead of casting NULL. Then the check above for
+> tx_dma being valid can be dropped because geni_se_tx_dma_unprep()
+> already checks for a valid mapping before doing anything. But really, 
+> we
+> should probably be tracking the dma buffer mapped to the CPU as well as
+> the dma address that was used for the mapping. Not storing both is a
+> problem, see below.
+> 
+
+You are correct, setting gi2c->tx_dma to NULL and check for tx_dma is
+not required. Will correct this.
+
+>> +                               }
+>> +                       } else if (val & DMA_RX_ACTIVE) {
+>> +                               gi2c->cur_rd = 0;
+>> +                               if (gi2c->err)
+>> +                                       geni_i2c_rx_fsm_rst(gi2c);
+>> +                               if (gi2c->rx_dma) {
+>> +                                       geni_se_rx_dma_unprep(se,
+>> +                                               gi2c->rx_dma, 
+>> gi2c->xfer_len);
+> 
+> Looking closely it seems that the geni dma wrappers shouldn't even be
+> checking for an iova being non-zero. Instead they should make sure that
+> it just isn't invalid with !dma_mapping_error().
+> 
+
+Yes. I will remove iova check in geni_se_rx_dma_unprep() function(also 
+in tx_dma_unprep)
+
+>> +                                       gi2c->rx_dma = 
+>> (dma_addr_t)NULL;
+> 
+> If we're stopping some dma transaction doesn't that mean the
+> 
+>                  i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+> 
+> code needs to run also? I fail to see where we free the buffer that has
+> been mapped for DMA.
+> 
+
+Yes, this is required. I will do this cleanup.
+
+>> +                               }
+>> +                       }
+>> +               }
+>> +       }
+>> +
+> 
+> out:
+> 
+>> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
+>> +}
+>> +
