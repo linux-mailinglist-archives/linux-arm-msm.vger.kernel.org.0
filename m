@@ -2,248 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F209F26DB0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 14:06:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A27C26DC66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 15:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726935AbgIQMGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 08:06:09 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40431 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726900AbgIQMGC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 08:06:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600344353; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=4UtZeQmJZCTmN33hwmN7PDkDrzAhWXay1mgYEYiQhVU=;
- b=L+vN0xg8EgBovzgl/0Z6G7j+IdGNrxYKUgjOx0p3DzxjBeP2NeeqTXy/TRyc+yNKoaYDS9yT
- gXFY83dHtWAs7X/Ce/GYVwpR7UzlhisdKYfN6phr9hv9IhAo/E3h+Vf8Gx43hV5IBwhzAY5+
- YuECwZzLQG7VvcqEnQClzYi2p1E=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f635093c4180d293b3feab6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Sep 2020 12:03:31
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8DA0DC433C8; Thu, 17 Sep 2020 12:03:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rojay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79557C433CA;
-        Thu, 17 Sep 2020 12:03:30 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 17 Sep 2020 17:33:30 +0530
-From:   rojay@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     wsa@kernel.org, dianders@chromium.org,
+        id S1726794AbgIQNEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 09:04:48 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:29274 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbgIQMhH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 08:37:07 -0400
+X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 08:36:02 EDT
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 17 Sep 2020 05:27:51 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Sep 2020 05:27:49 -0700
+Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 17 Sep 2020 17:57:10 +0530
+Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
+        id 072351AEA; Thu, 17 Sep 2020 17:57:08 +0530 (IST)
+From:   Roja Rani Yarubandi <rojay@codeaurora.org>
+To:     wsa@kernel.org
+Cc:     swboyd@chromium.org, dianders@chromium.org,
         saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
         mka@chromium.org, akashast@codeaurora.org,
         msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        vkaur@codeaurora.org, pyarlaga@codeaurora.org,
         rnayak@codeaurora.org, agross@kernel.org,
         bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V3] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-In-Reply-To: <159959341894.454335.3250696075143737399@swboyd.mtv.corp.google.com>
-References: <20200907130731.2607-1-rojay@codeaurora.org>
- <159959341894.454335.3250696075143737399@swboyd.mtv.corp.google.com>
-Message-ID: <fdd2919bc0705b4bd54b8be92fbc9fe5@codeaurora.org>
-X-Sender: rojay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Subject: [PATCH V4] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+Date:   Thu, 17 Sep 2020 17:55:58 +0530
+Message-Id: <20200917122558.23110-1-rojay@codeaurora.org>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+If the hardware is still accessing memory after SMMU translation
+is disabled (as part of smmu shutdown callback), then the
+IOVAs (I/O virtual address) which it was using will go on the bus
+as the physical addresses which will result in unknown crashes
+like NoC/interconnect errors.
 
-On 2020-09-09 01:00, Stephen Boyd wrote:
-> Why is dri-devel on here? And linaro-mm-sig?
-> 
+So, implement shutdown callback to i2c driver to stop on-going transfer
+and unmap DMA mappings during system "reboot" or "shutdown".
 
-Ok, I will remove these lists.
+Store DMA mapping data in geni_i2c_dev struct to enhance DMA mapping
+data scope. For example during shutdown callback to unmap DMA mapping,
+this stored DMA mapping data can be used to call geni_se_tx_dma_unprep,
+geni_se_rx_dma_unprep and  i2c_put_dma_safe_msg_buf functions.
 
-> Quoting Roja Rani Yarubandi (2020-09-07 06:07:31)
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
->> b/drivers/i2c/busses/i2c-qcom-geni.c
->> index dead5db3315a..b3609760909f 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->>  struct geni_i2c_err_log {
->> @@ -384,7 +387,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev 
->> *gi2c, struct i2c_msg *msg,
->>         if (dma_buf) {
->>                 if (gi2c->err)
->>                         geni_i2c_rx_fsm_rst(gi2c);
->> -               geni_se_rx_dma_unprep(se, rx_dma, len);
->> +               geni_se_rx_dma_unprep(se, gi2c->rx_dma, len);
->> +               gi2c->rx_dma = (dma_addr_t)NULL;
->>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
->>         }
->> 
->> @@ -394,12 +398,12 @@ static int geni_i2c_rx_one_msg(struct 
->> geni_i2c_dev *gi2c, struct i2c_msg *msg,
->>  static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct 
->> i2c_msg *msg,
->>                                 u32 m_param)
->>  {
->> -       dma_addr_t tx_dma;
->>         unsigned long time_left;
->>         void *dma_buf = NULL;
->>         struct geni_se *se = &gi2c->se;
->>         size_t len = msg->len;
->> 
->> +       gi2c->xfer_len = len;
->>         if (!of_machine_is_compatible("lenovo,yoga-c630"))
->>                 dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
->> 
->> @@ -410,7 +414,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev 
->> *gi2c, struct i2c_msg *msg,
->> 
->>         writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
->> 
->> -       if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) 
->> {
->> +       if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, 
->> &gi2c->tx_dma)) {
->>                 geni_se_select_mode(se, GENI_SE_FIFO);
->>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
->>                 dma_buf = NULL;
->> @@ -429,7 +433,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev 
->> *gi2c, struct i2c_msg *msg,
->>         if (dma_buf) {
->>                 if (gi2c->err)
->>                         geni_i2c_tx_fsm_rst(gi2c);
->> -               geni_se_tx_dma_unprep(se, tx_dma, len);
->> +               geni_se_tx_dma_unprep(se, gi2c->tx_dma, len);
->> +               gi2c->tx_dma = (dma_addr_t)NULL;
->>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
->>         }
->> 
->> @@ -479,6 +484,51 @@ static int geni_i2c_xfer(struct i2c_adapter 
->> *adap,
->>         return ret;
->>  }
->> 
->> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
->> +{
->> +       int ret;
->> +       u32 dma;
->> +       u32 val;
->> +       u32 geni_status;
->> +       struct geni_se *se = &gi2c->se;
->> +
->> +       ret = pm_runtime_get_sync(gi2c->se.dev);
->> +       if (ret < 0) {
->> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", 
->> ret);
-> 
-> Is this print really necessary? Doesn't PM core already print this sort
-> of information?
-> 
+Add two helper functions geni_i2c_rx_msg_cleanup and
+geni_i2c_tx_msg_cleanup to unwrap the things after rx/tx FIFO/DMA
+transfers, so that the same can be used in geni_i2c_stop_xfer()
+function during shutdown callback.
 
-PM core will not print any such information.
-Here we wanted to know our driver's pm runtime resume is successful.
+Remove "iova" check from geni_se_tx_dma_unprep and geni_se_rx_dma_unprep
+fucntions as invalidating with dma_mapping_error() is enough.
 
->> +               return;
->> +       }
->> +
->> +       geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
->> +       if (geni_status & M_GENI_CMD_ACTIVE) {
-> 
-> Please try to de-indent all this.
-> 
+Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+---
+Changes in V2:
+ - As per Stephen's comments added seperate function for stop transfer,
+   fixed minor nitpicks.
+ - As per Stephen's comments, changed commit text.
 
-Okay.
+Changes in V3:
+ - As per Stephen's comments, squashed patch 1 into patch 2, added Fixes tag.
+ - As per Akash's comments, included FIFO case in stop_xfer, fixed minor nitpicks.
 
-> 	if (!(geni_status & M_GENI_CMD_ACTIVE))
-> 		goto out;
-> 
->> +               geni_i2c_abort_xfer(gi2c);
->> +               dma = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
->> +               if (dma) {
-> 
-> 	if (!dma)
-> 		goto out;
-> 
->> +                       val = readl_relaxed(gi2c->se.base + 
->> SE_DMA_DEBUG_REG0);
->> +                       if (val & DMA_TX_ACTIVE) {
->> +                               gi2c->cur_wr = 0;
->> +                               if (gi2c->err)
->> +                                       geni_i2c_tx_fsm_rst(gi2c);
->> +                               if (gi2c->tx_dma) {
->> +                                       geni_se_tx_dma_unprep(se,
->> +                                                gi2c->tx_dma, 
->> gi2c->xfer_len);
->> +                                       gi2c->tx_dma = 
->> (dma_addr_t)NULL;
-> 
-> Almost nobody does this. In fact, grep shows me one hit in the kernel.
-> If nobody else is doing it something is probably wrong. When would dma
-> mode be active and tx_dma not be set to something that should be
-> stopped? If it really is necessary I suppose we should assign this to
-> DMA_MAPPING_ERROR instead of casting NULL. Then the check above for
-> tx_dma being valid can be dropped because geni_se_tx_dma_unprep()
-> already checks for a valid mapping before doing anything. But really, 
-> we
-> should probably be tracking the dma buffer mapped to the CPU as well as
-> the dma address that was used for the mapping. Not storing both is a
-> problem, see below.
-> 
+Changes in V4:
+ - As per Stephen's comments cleaned up geni_i2c_stop_xfer function,
+   added dma_buf in geni_i2c_dev struct to call i2c_put_dma_safe_msg_buf()
+   from other functions, removed "iova" check in geni_se_rx_dma_unprep()
+   and geni_se_tx_dma_unprep() functions.
+ - Added two helper functions geni_i2c_rx_msg_cleanup() and
+   geni_i2c_tx_msg_cleanup() to unwrap the things after rx/tx FIFO/DMA
+   transfers, so that the same can be used in geni_i2c_stop_xfer() function
+   during shutdown callback. Updated commit text accordingly.
+ - In stop_xfer check whether it is tx/rx transfer using I2C_M_RD which is valid
+   for both FIFO and DMA cases, so dropped DMA_RX_ACTIVE and DMA_TX_ACTIVE bit
+   check of SE_DMA_DEBUG_REG0 register.
 
-You are correct, setting gi2c->tx_dma to NULL and check for tx_dma is
-not required. Will correct this.
+ drivers/i2c/busses/i2c-qcom-geni.c | 93 ++++++++++++++++++++++++------
+ drivers/soc/qcom/qcom-geni-se.c    |  4 +-
+ 2 files changed, 78 insertions(+), 19 deletions(-)
 
->> +                               }
->> +                       } else if (val & DMA_RX_ACTIVE) {
->> +                               gi2c->cur_rd = 0;
->> +                               if (gi2c->err)
->> +                                       geni_i2c_rx_fsm_rst(gi2c);
->> +                               if (gi2c->rx_dma) {
->> +                                       geni_se_rx_dma_unprep(se,
->> +                                               gi2c->rx_dma, 
->> gi2c->xfer_len);
-> 
-> Looking closely it seems that the geni dma wrappers shouldn't even be
-> checking for an iova being non-zero. Instead they should make sure that
-> it just isn't invalid with !dma_mapping_error().
-> 
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index dead5db3315a..b0d8043c8cb2 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -86,6 +86,10 @@ struct geni_i2c_dev {
+ 	u32 clk_freq_out;
+ 	const struct geni_i2c_clk_fld *clk_fld;
+ 	int suspended;
++	void *dma_buf;
++	size_t xfer_len;
++	dma_addr_t tx_dma;
++	dma_addr_t rx_dma;
+ };
+ 
+ struct geni_i2c_err_log {
+@@ -307,7 +311,6 @@ static void geni_i2c_abort_xfer(struct geni_i2c_dev *gi2c)
+ 
+ 	spin_lock_irqsave(&gi2c->lock, flags);
+ 	geni_i2c_err(gi2c, GENI_TIMEOUT);
+-	gi2c->cur = NULL;
+ 	geni_se_abort_m_cmd(&gi2c->se);
+ 	spin_unlock_irqrestore(&gi2c->lock, flags);
+ 	do {
+@@ -349,10 +352,62 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
+ 		dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
+ }
+ 
++static void geni_i2c_rx_msg_cleanup(struct geni_i2c_dev *gi2c)
++{
++	struct geni_se *se = &gi2c->se;
++
++	gi2c->cur_rd = 0;
++	if (gi2c->dma_buf) {
++		if (gi2c->err)
++			geni_i2c_rx_fsm_rst(gi2c);
++		geni_se_rx_dma_unprep(se, gi2c->rx_dma, gi2c->xfer_len);
++		i2c_put_dma_safe_msg_buf(gi2c->dma_buf, gi2c->cur, !gi2c->err);
++	}
++}
++
++static void geni_i2c_tx_msg_cleanup(struct geni_i2c_dev *gi2c)
++{
++	struct geni_se *se = &gi2c->se;
++
++	gi2c->cur_wr = 0;
++	if (gi2c->dma_buf) {
++		if (gi2c->err)
++			geni_i2c_tx_fsm_rst(gi2c);
++		geni_se_tx_dma_unprep(se, gi2c->tx_dma, gi2c->xfer_len);
++		i2c_put_dma_safe_msg_buf(gi2c->dma_buf, gi2c->cur, !gi2c->err);
++	}
++}
++
++static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
++{
++	int ret;
++	u32 geni_status;
++
++	/* Resume device, as runtime suspend can happen anytime during transfer */
++	ret = pm_runtime_get_sync(gi2c->se.dev);
++	if (ret < 0) {
++		dev_err(gi2c->se.dev, "Failed to resume device: %d\n", ret);
++		return;
++	}
++
++	geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
++	if (!(geni_status & M_GENI_CMD_ACTIVE))
++		goto out;
++
++	geni_i2c_abort_xfer(gi2c);
++	if (gi2c->cur->flags & I2C_M_RD)
++		geni_i2c_rx_msg_cleanup(gi2c);
++	else
++		geni_i2c_tx_msg_cleanup(gi2c);
++	gi2c->cur = NULL;
++out:
++	pm_runtime_put_sync_suspend(gi2c->se.dev);
++}
++
+ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 				u32 m_param)
+ {
+-	dma_addr_t rx_dma;
++	dma_addr_t rx_dma = 0;
+ 	unsigned long time_left;
+ 	void *dma_buf = NULL;
+ 	struct geni_se *se = &gi2c->se;
+@@ -372,6 +427,10 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
+ 		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+ 		dma_buf = NULL;
++	} else {
++		gi2c->xfer_len = len;
++		gi2c->rx_dma = rx_dma;
++		gi2c->dma_buf = dma_buf;
+ 	}
+ 
+ 	geni_se_setup_m_cmd(se, I2C_READ, m_param);
+@@ -380,13 +439,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 	if (!time_left)
+ 		geni_i2c_abort_xfer(gi2c);
+ 
+-	gi2c->cur_rd = 0;
+-	if (dma_buf) {
+-		if (gi2c->err)
+-			geni_i2c_rx_fsm_rst(gi2c);
+-		geni_se_rx_dma_unprep(se, rx_dma, len);
+-		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+-	}
++	geni_i2c_rx_msg_cleanup(gi2c);
+ 
+ 	return gi2c->err;
+ }
+@@ -394,7 +447,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 				u32 m_param)
+ {
+-	dma_addr_t tx_dma;
++	dma_addr_t tx_dma = 0;
+ 	unsigned long time_left;
+ 	void *dma_buf = NULL;
+ 	struct geni_se *se = &gi2c->se;
+@@ -414,6 +467,10 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
+ 		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+ 		dma_buf = NULL;
++	} else {
++		gi2c->xfer_len = len;
++		gi2c->tx_dma = tx_dma;
++		gi2c->dma_buf = dma_buf;
+ 	}
+ 
+ 	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
+@@ -425,13 +482,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 	if (!time_left)
+ 		geni_i2c_abort_xfer(gi2c);
+ 
+-	gi2c->cur_wr = 0;
+-	if (dma_buf) {
+-		if (gi2c->err)
+-			geni_i2c_tx_fsm_rst(gi2c);
+-		geni_se_tx_dma_unprep(se, tx_dma, len);
+-		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+-	}
++	geni_i2c_tx_msg_cleanup(gi2c);
+ 
+ 	return gi2c->err;
+ }
+@@ -630,6 +681,13 @@ static int geni_i2c_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static void geni_i2c_shutdown(struct platform_device *pdev)
++{
++	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
++
++	geni_i2c_stop_xfer(gi2c);
++}
++
+ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+ {
+ 	int ret;
+@@ -694,6 +752,7 @@ MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
+ static struct platform_driver geni_i2c_driver = {
+ 	.probe  = geni_i2c_probe,
+ 	.remove = geni_i2c_remove,
++	.shutdown = geni_i2c_shutdown,
+ 	.driver = {
+ 		.name = "geni_i2c",
+ 		.pm = &geni_i2c_pm_ops,
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index d0e4f520cff8..0216b38c1e9a 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -705,7 +705,7 @@ void geni_se_tx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
+ {
+ 	struct geni_wrapper *wrapper = se->wrapper;
+ 
+-	if (iova && !dma_mapping_error(wrapper->dev, iova))
++	if (!dma_mapping_error(wrapper->dev, iova))
+ 		dma_unmap_single(wrapper->dev, iova, len, DMA_TO_DEVICE);
+ }
+ EXPORT_SYMBOL(geni_se_tx_dma_unprep);
+@@ -722,7 +722,7 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_addr_t iova, size_t len)
+ {
+ 	struct geni_wrapper *wrapper = se->wrapper;
+ 
+-	if (iova && !dma_mapping_error(wrapper->dev, iova))
++	if (!dma_mapping_error(wrapper->dev, iova))
+ 		dma_unmap_single(wrapper->dev, iova, len, DMA_FROM_DEVICE);
+ }
+ EXPORT_SYMBOL(geni_se_rx_dma_unprep);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Yes. I will remove iova check in geni_se_rx_dma_unprep() function(also 
-in tx_dma_unprep)
-
->> +                                       gi2c->rx_dma = 
->> (dma_addr_t)NULL;
-> 
-> If we're stopping some dma transaction doesn't that mean the
-> 
->                  i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
-> 
-> code needs to run also? I fail to see where we free the buffer that has
-> been mapped for DMA.
-> 
-
-Yes, this is required. I will do this cleanup.
-
->> +                               }
->> +                       }
->> +               }
->> +       }
->> +
-> 
-> out:
-> 
->> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
->> +}
->> +
