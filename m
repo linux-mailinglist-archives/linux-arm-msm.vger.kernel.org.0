@@ -2,145 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0ED426D464
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 09:15:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CB3926D476
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 09:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726192AbgIQHPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 03:15:00 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37198 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726109AbgIQHO7 (ORCPT
+        id S1726106AbgIQHSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 03:18:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726312AbgIQHSe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 03:14:59 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a9so924115wmm.2;
-        Thu, 17 Sep 2020 00:14:57 -0700 (PDT)
+        Thu, 17 Sep 2020 03:18:34 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9EBC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 00:18:33 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id f18so633712pfa.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 00:18:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=ynLxGjJzusRgxkhmFN/ohIJVj9Ev6KgIVGk/i8e/nNI=;
+        b=Ts0dqlozJIW/qWGqzFOiAbgbC9DRZERqoKpKu3tTpvC7XQlqA/IE+bxLWsvZXGc8f/
+         VEiISqJZ2IYWvw982XeE56Mvf4E3vFCCB3SvvSH/Yapue9VF4MJIZJCdYArcS1/JjlHI
+         SgI6nzy/fcnjGh0prlvpqeaAfKnzD6IDj+37M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uaz9kepgEXq9uBdXqyYSIYC/gVUhci+I1g61k9mFWnQ=;
-        b=mZBMk5UeweX0q+du3MNn+k65e1Tlsy+++1i7IVGQya9+avXR872473DvD2MWmN92BW
-         xuu4EuYruFXemP5zk127LMCqqEaeGUiVVm9jK34ZJTTlCn4mYs/VOCZQb0KC/JNnB36J
-         iprUD3fXBkDy6laua1+UyJsTBoMfZ4tPxwbX8wcLpYpW49IsGS2dbF38t8WwzVz17860
-         Y3T5E2K0yZAS7I7QfORVqOFmkdQ728/2MmAj2wqM/1V25drBehSDZxzTJueB7zfrHC4h
-         grttuFGv2+aXpCOgo4dBDtUDDIhAUpd46a2EtFdiRVp5J7G9R8+3BIKRXloSkuAFXnE9
-         ZZog==
-X-Gm-Message-State: AOAM5317lmn84Dzsbv4n0pXcatZ6EM3vvAih7q+aGnaXxuD8WT86QyIx
-        pJcksSkpP0lUMiRgFcXnWbI=
-X-Google-Smtp-Source: ABdhPJwJoXbRCDZ7Y0+x+9aKWBixTbcBqY473DlXztmst9+kEcc+7QCYPQ3dhqjJGZomFsfeIuz1bg==
-X-Received: by 2002:a7b:cb17:: with SMTP id u23mr8250390wmj.166.1600326896325;
-        Thu, 17 Sep 2020 00:14:56 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.191])
-        by smtp.googlemail.com with ESMTPSA id x16sm36483228wrq.62.2020.09.17.00.14.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Sep 2020 00:14:55 -0700 (PDT)
-Date:   Thu, 17 Sep 2020 09:14:51 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Yash Shah <yash.shah@sifive.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-unisoc@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 2/8] dt-bindings: gpio: include common schema in GPIO
- controllers
-Message-ID: <20200917071451.GA30367@kozik-lap>
-References: <20200916162250.16098-1-krzk@kernel.org>
- <20200916162250.16098-3-krzk@kernel.org>
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=ynLxGjJzusRgxkhmFN/ohIJVj9Ev6KgIVGk/i8e/nNI=;
+        b=QeAOzCV4gMMIuUO2xdzOe317NrW+V7kGLxxmPYTH/pjRA+rYJ8On6i7E5IByDp5kHY
+         QrVNd0FTbz5+Jh2mSpr77cYOicaHHobE7G07QgNHh0sr5QGthWRRMfSSjRElRj0baLqL
+         hW3x3DdujWhw61zdRnZGGMZeVdp73C9P4Lpx5g5dA7j6WpRl8mza6XmOP0ezCVrWsuQc
+         cXF6R1u5RaIGhPprPinRazmTOQqcu/9DH9vxBra3xvwXL6LYnyPOuZQP+Bgwt8irF0z8
+         TKXcXx6RTGTcKN1gzL5aOv/3VCCDopm2rfuvdqwHpBzbvtw/mstvp8sh6SHa5Ifv0LNi
+         CYZg==
+X-Gm-Message-State: AOAM533tIeLg3/QxTBGwPrpouvOiqT269sdn8JU5c3inA1VbkalTSmwA
+        ZIyLVg/4ISDwVBQX5lOHgg46ZWrB/UBUaQ==
+X-Google-Smtp-Source: ABdhPJxc0K6qFiNJ4R6QHz+/pHYtkO+ZQGzA01miebp+oqBr2+UjMOF8inhsObCIfPalFzm6tnmDCA==
+X-Received: by 2002:aa7:88c8:0:b029:142:2501:39ef with SMTP id k8-20020aa788c80000b0290142250139efmr10119378pff.62.1600327113499;
+        Thu, 17 Sep 2020 00:18:33 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id y5sm19068248pge.62.2020.09.17.00.18.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 00:18:32 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200916162250.16098-3-krzk@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <4865efd5e746d2e94cc4680a47a30a0d@codeaurora.org>
+References: <1599536645-4593-1-git-send-email-mansur@codeaurora.org> <159959010893.454335.18221321331314189759@swboyd.mtv.corp.google.com> <4865efd5e746d2e94cc4680a47a30a0d@codeaurora.org>
+Subject: Re: [PATCH 1/2] venus: core: change clk enable and disable order in resume and suspend
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+To:     mansur@codeaurora.org
+Date:   Thu, 17 Sep 2020 00:18:31 -0700
+Message-ID: <160032711157.4188128.1711388061841789272@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 16, 2020 at 06:22:44PM +0200, Krzysztof Kozlowski wrote:
-> Include the common GPIO schema in GPIO controllers to be sure all common
-> properties are properly validated.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  .../devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml          | 3 +++
->  Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml       | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-mxs.yaml           | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml       | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-rda.yaml           | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-vf610.yaml         | 3 +++
->  Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml          | 1 +
->  Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml  | 3 +++
->  Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml     | 3 +++
->  Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml  | 3 +++
->  Documentation/devicetree/bindings/gpio/sifive,gpio.yaml        | 3 +++
->  .../devicetree/bindings/gpio/socionext,uniphier-gpio.yaml      | 3 +++
->  Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml | 3 +++
->  13 files changed, 37 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml b/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml
-> index c213cb9ddb9f..1ac69b9c03f9 100644
-> --- a/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml
-> @@ -13,6 +13,9 @@ description: |
->    This controller is the Chip Common A GPIO present on a number of Broadcom
->    switch ASICs with integrated SoCs.
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      const: brcm,iproc-gpio-cca
-> diff --git a/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml b/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-> index de0b9b5f6a70..737756e081fb 100644
-> --- a/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-> @@ -9,6 +9,9 @@ title: Freescale i.MX/MXC GPIO controller
->  maintainers:
->    - Anson Huang <Anson.Huang@nxp.com>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      oneOf:
-> diff --git a/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml b/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml
-> index dfa1133f8c5e..7fc04ab35044 100644
-> --- a/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml
-> @@ -17,6 +17,9 @@ description: |
->    GPIO ports share the same IO space with PIN controller, the GPIO node
->    will be represented as sub-nodes of MXS pinctrl node.
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
+Quoting mansur@codeaurora.org (2020-09-16 18:07:44)
+> > On 2020-09-09 00:05, Stephen Boyd wrote:
+> >> Quoting Mansur Alisha Shaik (2020-09-07 20:44:05)
+> >>> Currently video driver is voting after clk enable and un voting
+> >>> before clk disable. Basically we should vote before clk enable
+> >>> and un vote after clk disable.
+> >>>=20
+> >>> Corrected this by changing the order of clk enable and clk disable.
+> >>>=20
+> >>> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> >>> ---
+> >>=20
+> >> Any Fixes: tag?
+> Added Fixes tag
+> >>=20
+> >>>  drivers/media/platform/qcom/venus/core.c | 17 ++++++++++-------
+> >>>  1 file changed, 10 insertions(+), 7 deletions(-)
+> >>>=20
+> >>> diff --git a/drivers/media/platform/qcom/venus/core.c=20
+> >>> b/drivers/media/platform/qcom/venus/core.c
+> >>> index c5af428..4857bbd 100644
+> >>> --- a/drivers/media/platform/qcom/venus/core.c
+> >>> +++ b/drivers/media/platform/qcom/venus/core.c
+> >>> @@ -363,13 +363,16 @@ static __maybe_unused int=20
+> >>> venus_runtime_suspend(struct device *dev)
+> >>>         if (ret)
+> >>>                 return ret;
+> >>>=20
+> >>> +       if (pm_ops->core_power) {
+> >>> +               ret =3D pm_ops->core_power(dev, POWER_OFF);
+> >>> +               if (ret)
+> >>> +                       return ret;
+> >>> +       }
+> >>> +
+> >>>         ret =3D icc_set_bw(core->cpucfg_path, 0, 0);
+> >>>         if (ret)
+> >>>                 return ret;
+> >>=20
+> >> Shouldn't we power it back up if this fails during suspend?
+> On icc_set_bw() failure, we are just power it and return.
+> Addressed these comments and posted new version
+> https://lore.kernel.org/patchwork/project/lkml/list/?series=3D463224
 
-I found something to fix - this one should go under patternProperties,
-not here.
-
-Best regards,
-Krzysztof
+Thanks. It's customary to Cc reviewers on patches, so please add me on
+the next round of patches.
