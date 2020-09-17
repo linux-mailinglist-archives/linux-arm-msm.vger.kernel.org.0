@@ -2,42 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C102726D3CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 08:40:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0406026D40A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 08:58:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726106AbgIQGkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 02:40:23 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:45823 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgIQGkX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 02:40:23 -0400
-Received: by mail-oi1-f193.google.com with SMTP id z26so1227927oih.12;
-        Wed, 16 Sep 2020 23:40:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5pAuv3apgn3zMedgKzg1fHsW6HJeuRQq0Uxv7kzEHzU=;
-        b=JMbyxdtTPrmF0AVnhh4zj4ejRp4/6VNksf8YkXFoy/ewqv7u356jGMUm+ntfKYEtLQ
-         wEvUbedmg1f8jtfcsa+0PyLMzXAqw2gFy4rBoDZZXw0s82eGU+Ct3+i1xd0PPGeNO3KU
-         7L50PI/rFWnyeq7U3o6CXI0CIXAZ0JbxfTeNnu6b3NCsUJIjmM5X7cdyBdpGYcST6WDo
-         xh/2Q7k2SFaONcds4a7bqGfErLI75J3xjp4wNKWroTYI7SvmcI8IY7kZw35VxKxX9blP
-         +LLVDqYHfgHITkUrrmtgGgMi8IMkrayPP2hLA7qnxZXL3Ijx27EY9o4+BK1KDGzdHcut
-         EAyw==
-X-Gm-Message-State: AOAM530iWB9cmtTehu5cfT7sXfFiVXp96CKluMp19uaD4hSAnmwaLui8
-        lwdkCEkJUafcVktLPj36q/6kEp2LvmjdeI+JVQU=
-X-Google-Smtp-Source: ABdhPJwRx5EmCljn9g3yX8DYdM4t9aUSxsmqF94I58rxrRGiI/zXEZcu6GX1mLgMwnc0JY0rw/qLetnZRUk/FQe87lA=
-X-Received: by 2002:aca:52d6:: with SMTP id g205mr5458445oib.54.1600324822000;
- Wed, 16 Sep 2020 23:40:22 -0700 (PDT)
+        id S1726157AbgIQG6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 02:58:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52590 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726142AbgIQG62 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 02:58:28 -0400
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9DA8C21D41;
+        Thu, 17 Sep 2020 06:58:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600325906;
+        bh=nPSrDuBIqK++Cs2Yf8watCT9FKUAvE8l/UEvBK+iyoI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=R8+Zxy8DVnHIGDtj/rxH1HYE7+ZI7x6ClAOFZg+v/22EvmPQmS0iR+V1m6PRFpW3X
+         X873efb8X9+8WoporP624GJXUCGLxqPWvml5scUjhzOAEvZNxJr7BjL3kGMyKIHRIa
+         H25+QiYH6WFTG3Sh7e7uJRiq2cQfj0Qetv1YjJ4k=
+Received: by mail-ed1-f43.google.com with SMTP id n22so1324522edt.4;
+        Wed, 16 Sep 2020 23:58:26 -0700 (PDT)
+X-Gm-Message-State: AOAM533xf7kos8Rcs+nf+MxotAttzjoFfbIq9U+TD7aKPz2l89rq5mbZ
+        qhys+waoSlxfQM72s1cF7a4C95/G/ii+VuZdo4c=
+X-Google-Smtp-Source: ABdhPJw6oBjGfpKJpPCFXBca1WTyVw1bjowRIiOkT6Iq1M84hhnCUG0jSC0ArmHu21bBl/Bc3OMUftiIy2mZoqPT59s=
+X-Received: by 2002:a50:e78f:: with SMTP id b15mr31833332edn.104.1600325905101;
+ Wed, 16 Sep 2020 23:58:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200916162250.16098-1-krzk@kernel.org> <20200916162250.16098-3-krzk@kernel.org>
-In-Reply-To: <20200916162250.16098-3-krzk@kernel.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 17 Sep 2020 08:40:10 +0200
-Message-ID: <CAMuHMdUS134fokz9Xus_pnL6tVYvgQE_uAS4Q-+B4r77VeY=xg@mail.gmail.com>
+ <CAMuHMdUS134fokz9Xus_pnL6tVYvgQE_uAS4Q-+B4r77VeY=xg@mail.gmail.com>
+In-Reply-To: <CAMuHMdUS134fokz9Xus_pnL6tVYvgQE_uAS4Q-+B4r77VeY=xg@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Thu, 17 Sep 2020 08:58:13 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPeTTbrz5Ja8Y=qeCx_vbUub9sBzQqQY1yNa8dWN0nafGg@mail.gmail.com>
+Message-ID: <CAJKOXPeTTbrz5Ja8Y=qeCx_vbUub9sBzQqQY1yNa8dWN0nafGg@mail.gmail.com>
 Subject: Re: [PATCH 2/8] dt-bindings: gpio: include common schema in GPIO controllers
-To:     Krzysztof Kozlowski <krzk@kernel.org>
+To:     Geert Uytterhoeven <geert@linux-m68k.org>
 Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Bartosz Golaszewski <bgolaszewski@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
@@ -75,43 +77,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
-
-On Wed, Sep 16, 2020 at 6:23 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> Include the common GPIO schema in GPIO controllers to be sure all common
-> properties are properly validated.
+On Thu, 17 Sep 2020 at 08:40, Geert Uytterhoeven <geert@linux-m68k.org> wrote:
 >
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Hi Krzysztof,
+>
+> On Wed, Sep 16, 2020 at 6:23 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > Include the common GPIO schema in GPIO controllers to be sure all common
+> > properties are properly validated.
+> >
+> > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>
+> Thanks for your patch!
+>
+> > ---
+> >  .../devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml          | 3 +++
+> >  Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml       | 3 +++
+> >  Documentation/devicetree/bindings/gpio/gpio-mxs.yaml           | 3 +++
+> >  Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml       | 3 +++
+> >  Documentation/devicetree/bindings/gpio/gpio-rda.yaml           | 3 +++
+> >  Documentation/devicetree/bindings/gpio/gpio-vf610.yaml         | 3 +++
+> >  Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml          | 1 +
+> >  Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml  | 3 +++
+> >  Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml     | 3 +++
+> >  Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml  | 3 +++
+> >  Documentation/devicetree/bindings/gpio/sifive,gpio.yaml        | 3 +++
+> >  .../devicetree/bindings/gpio/socionext,uniphier-gpio.yaml      | 3 +++
+> >  Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml | 3 +++
+> >  13 files changed, 37 insertions(+)
+>
+> There are more binding files describing GPIO controllers outside the
+> Documentation/devicetree/bindings/gpio/ subdirectory, cfr.
+> 'git grep gpio-controller:.true -- "Doc*yaml"'
 
-Thanks for your patch!
+Oh, indeed. Thanks for spotting these. I will check them and send a follow up.
 
-> ---
->  .../devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml          | 3 +++
->  Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml       | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-mxs.yaml           | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml       | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-rda.yaml           | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-vf610.yaml         | 3 +++
->  Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml          | 1 +
->  Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml  | 3 +++
->  Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml     | 3 +++
->  Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml  | 3 +++
->  Documentation/devicetree/bindings/gpio/sifive,gpio.yaml        | 3 +++
->  .../devicetree/bindings/gpio/socionext,uniphier-gpio.yaml      | 3 +++
->  Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml | 3 +++
->  13 files changed, 37 insertions(+)
-
-There are more binding files describing GPIO controllers outside the
-Documentation/devicetree/bindings/gpio/ subdirectory, cfr.
-'git grep gpio-controller:.true -- "Doc*yaml"'
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Best regards,
+Krzysztof
