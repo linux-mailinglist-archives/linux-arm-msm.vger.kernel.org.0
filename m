@@ -2,171 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5499826D11F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 04:29:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88E9926D1BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 05:29:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726093AbgIQC3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Sep 2020 22:29:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
+        id S1726129AbgIQD2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Sep 2020 23:28:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726047AbgIQC3h (ORCPT
+        with ESMTP id S1726097AbgIQD2B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Sep 2020 22:29:37 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498A0C061351
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 19:29:37 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id g26so192559ooa.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 19:29:37 -0700 (PDT)
+        Wed, 16 Sep 2020 23:28:01 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23589C06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 20:22:28 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id o16so835428qkj.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Sep 2020 20:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VE5n3jGn2FvmnuiKIkLlfMO4cq4htPGZqkOIyp7oCTk=;
-        b=hR2nePbgnTCUSqe41FcHVgNm6Xjz7Zcw43IyQiS21NSCRJrlVvCvgXCGKY+F16FJ/s
-         JvtIF9bPYtgc+XzhdG1AsItCFVfZL8eNSdQZnJtJztmCrTvdiuFRUwhVQJrf3EHb4Exg
-         TbdUZWZ13gZ6yAqUVIj6VR+oPYAHBpPuD9kfvPH7tpKx54iQW8pOi3aw1D7ll99udSB+
-         WvK7Vtcqsd2QFjYl90EpyOXrWUNhSHGWTPaSbp+/HIqUfdl5vM9jd+FuP7CUF/clPBu6
-         dpANmsKilhkPW5hKKW9R/IL6BQQf50CljJqXlVAxo+DWHLiTzOkJEgqQB4tPcgDS1LTA
-         g9Ag==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KcbOfWlEFuul00HQqd8oilYbvxROka4ZC4SJrI4joOI=;
+        b=ZoAZr1W5Oy5cf66eKQDQmN5f8ior/qPaBYuhUSTkzttNy0/O9TEdGWW4csN2pa49hh
+         id6Fmyh9QZCKAH0LJv0YPxZGf8vB/Itcyb+O/nYPdnbtGUhdBnRYcDkntbur9LKRXaQc
+         wj53IAzDyNAzQFKT2B9CkUV0rX5xEsCfMERavdq1QiHUHPoIZu5B+99HQgYDEnTp1Ykh
+         7zKTNEG9VaH025rt4wOluXioXoDuWzGUh4DNamII+pIl2TcaS9XZyfQhFEsqaPIN/9aA
+         CqwwYu7Z6KiZaYLWHss70WCO1qEl1UGGACL5OWYmfdGeRSCEWjQoTbfbs1s3MM3DSVuC
+         z4tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VE5n3jGn2FvmnuiKIkLlfMO4cq4htPGZqkOIyp7oCTk=;
-        b=TF8s7NYZNgETUeny1cgF38hVquErqD37G/rPSi/5brE45dFNQdpGi1wd7dTS13Eomb
-         zWRTgcTbBI2ZWdCwXQrY5wqdYV84le97/MBMEztrJSpZyAl0DwspHOf6BKXlOKTXhl1C
-         Rb+twVIJX+l0+Q6d9NyNKeE8D7iyRvF0nT7BZZQv6kuH1t/HicB85NgXoswMNb70QcOq
-         3A2n7wMwavJS5wwxHQdddYX3tvcKUzPNp4uwZ+ahkNKG5zgUPlNz1kyUxlzgnOsJiSiD
-         9lZkMVmt7FuqW1Kr22vL6QViwxl75+VZEwZZsbc26N88YK1af0t802bvikZMppgrP+cD
-         Coog==
-X-Gm-Message-State: AOAM531bNMMMrGTyYf24Jno/q4hy7DV2rjO0lY9JimslXFF9+vpC+R+S
-        0fC7UIsC4hreimaejG+JDwe9wpRTjjeEeFM+
-X-Google-Smtp-Source: ABdhPJzJXURfl4y3VSIHVzz+sPBmYwpGpspEgIn+LJcsthzHcADKcaXDgK8YmNFE3yaluddQ3frHJg==
-X-Received: by 2002:a4a:5d84:: with SMTP id w126mr17892143ooa.1.1600309776351;
-        Wed, 16 Sep 2020 19:29:36 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:7cad:6eff:fec8:37e4])
-        by smtp.gmail.com with ESMTPSA id a22sm5143467oie.13.2020.09.16.19.29.33
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KcbOfWlEFuul00HQqd8oilYbvxROka4ZC4SJrI4joOI=;
+        b=GnNKPDE3aAsEk12dyIhuahAtfa/fNCuZ6SAZAtTFpywDhpjR5EMeyHm6lpTOD8fFpr
+         2x909ffTd5KptQgxkHxMNGf3EJcQss2ra56EqIn4pG4moMc8PxoEK4xEr7AworeVhXfn
+         a3Gj1/x4CskhymLKwq7CbwTtdfN/AZrlkHB5SEenJtcFHQXsitJU7v4XpCr09FLrWwaY
+         K2BxKYT0yB6GquH28mozUFYo02L2Vg79D1ZiPaUu+L2biQXs2LFstaXV9eHill3HWjQW
+         UAPA1jj9FxAVEjx9eLvSJDgp6EsqSqUkvbcrOpUAzh4ll52RBCHP3tRE3PxXz4qnsgxl
+         xOFQ==
+X-Gm-Message-State: AOAM530qcD7wlB048+cUW54N+vJ6p5mKMOHchSJb5dXqt8oIZpuqVuOW
+        An+u5TRrMyLJUlNOCJ7rxyCagg==
+X-Google-Smtp-Source: ABdhPJycdE9iUoUS8L8EAQ9dflosqsZ4aHX4wg/fxy61biNVVViV9GA9A6GsEun9aHQ6DekgpsepBg==
+X-Received: by 2002:a05:620a:2082:: with SMTP id e2mr25150130qka.421.1600312947892;
+        Wed, 16 Sep 2020 20:22:27 -0700 (PDT)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id g45sm21370801qtb.60.2020.09.16.20.22.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 19:29:35 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 21:29:31 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     nguyenb@codeaurora.org
-Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
-Message-ID: <20200917022931.GK1893@yoga>
-References: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
- <20200915025401.GD471@uller>
- <a8c851744fcaee205fc7a58db8f747fa@codeaurora.org>
- <20200915133729.GD670377@yoga>
- <6e36f0a315c13429bdad1ce704cbe878@codeaurora.org>
+        Wed, 16 Sep 2020 20:22:27 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     rui.zhang@intel.com, daniel.lezcano@linaro.org, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        lukasz.luba@arm.com, amitk@kernel.org
+Subject: [PATCH RFC 0/8] Introduce warming in thermal framework
+Date:   Wed, 16 Sep 2020 23:22:18 -0400
+Message-Id: <20200917032226.820371-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6e36f0a315c13429bdad1ce704cbe878@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 16 Sep 19:53 CDT 2020, nguyenb@codeaurora.org wrote:
+Thermal framework today supports monitoring for rising temperatures and
+subsequently initiating cooling action in case of a thermal trip point
+being crossed. There are scenarios where a SoC need warming mitigating
+action to be activated if the temperature falls below a cetain permissible
+limit.  Since warming action can be considered mirror opposite of cooling
+action, most of the thermal framework can be re-used to achieve this. The
+key assumption in this patch series is that a device can act either as a
+warming device or a cooling device and not as both.
 
-> On 2020-09-15 06:37, Bjorn Andersson wrote:
-> > On Tue 15 Sep 03:49 CDT 2020, nguyenb@codeaurora.org wrote:
-> > 
-> > > On 2020-09-14 19:54, Bjorn Andersson wrote:
-> > > > On Tue 01 Sep 01:19 UTC 2020, Bao D. Nguyen wrote:
-> > > >
-> > > > > UFS version 3.0 and later devices require Vcc and Vccq power supplies
-> > > > > with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
-> > > > > devices, the Vcc and Vccq2 are required with Vccq being optional.
-> > > > > Check the required power supplies used by the device
-> > > > > and set the device's supported Icc level properly.
-> > > > >
-> > > > > Signed-off-by: Can Guo <cang@codeaurora.org>
-> > > > > Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-> > > > > Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
-> > > > > ---
-> > > > >  drivers/scsi/ufs/ufshcd.c | 5 +++--
-> > > > >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > > > >
-> > > > > diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-> > > > > index 06e2439..fdd1d3e 100644
-> > > > > --- a/drivers/scsi/ufs/ufshcd.c
-> > > > > +++ b/drivers/scsi/ufs/ufshcd.c
-> > > > > @@ -6845,8 +6845,9 @@ static u32
-> > > > > ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
-> > > > >  {
-> > > > >  	u32 icc_level = 0;
-> > > > >
-> > > > > -	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
-> > > > > -						!hba->vreg_info.vccq2) {
-> > > > > +	if (!hba->vreg_info.vcc ||
-> > > >
-> > > > How did you test this?
-> > > >
-> > > > devm_regulator_get() never returns NULL, so afaict this conditional will
-> > > > never be taken with either the old or new version of the code.
-> > > Thanks for your comment. The call flow is as follows:
-> > > ufshcd_pltfrm_init->ufshcd_parse_regulator_info->ufshcd_populate_vreg
-> > > In the ufshcd_populate_vreg() function, it looks for DT entries
-> > > "%s-supply"
-> > > For UFS3.0+ devices, "vccq2-supply" is optional, so the vendor may
-> > > choose
-> > > not to provide vccq2-supply in the DT.
-> > > As a result, a NULL is returned to hba->vreg_info.vccq2.
-> > > Same for UFS2.0 and UFS2.1 devices, a NULL may be returned to
-> > > hba->vreg_info.vccq if vccq-supply is not provided in the DT.
-> > > The current code only checks for !hba->vreg_info.vccq OR
-> > > !hba->vreg_info.vccq2. It will skip the setting for icc_level
-> > > if either vccq or vccq2 is not provided in the DT.
-> > > >
-> > 
-> > Thanks for the pointers, I now see that the there will only be struct
-> > ufs_vreg objects allocated for the items that has an associated
-> > %s-supply.
-> > 
-> > FYI, the idiomatic way to handle optional regulators is to use
-> > regulator_get_optional(), which will return -ENODEV for regulators not
-> > specified.
-> Thanks for the regulator_get_optional() suggestion. Do you have a strong
-> opinion about
-> using regulator_get_optional() or would my proposal be ok? With
-> regulator_get_optional(),
-> we need to make 3 calls and check each result while the current
-> implementation is also reliable
-> simple quick check for NULL without any potential problem.
-> 
+In order to support warming three extensions are needed in the thermal
+framework.
 
-I think the changes to the conditional that you're proposing in this
-patch is reasonable.
+1. Indication that a trip point is being monitored for falling temperature
+and not rising temperature. We discussed two different ways to achieve this
+during LPC. First option is to introduce a new trip type to indicate that a
+trip is a cold trip(THERMAL_TRIP_COLD). The second option is to introduce a
+new property for trip point that will indicate whether a trip point is
+being monitored for rising temperature or falling temperature. The patch
+series(patches 1-4) chooses the second approach since it allows trip points
+of any type to be monitored for rising or falling temperature.Also this was
+the preferred approach when discussed during LPC. The approach that
+introduces a new cold trip type was posted on the list earlier as a RFC and
+can be found at [1].
 
-Regards,
-Bjorn
+2. Extend the exisitng governors to handle monitoring of falling
+temperature. The patch series(patches 5 & 6) extends the step wise governor
+to monitor the falling temperature.Other governors return doing nothing if
+the trip point they are being called for is being monitored for falling
+temperature. The governors' mitigate function is called "throttle" in the
+thermal framework and with this patch series it is a misnomer as the
+function is called for both throttling and warming up. Ideally
+"throttle" should be renamed to "mitigate" to improve readability of code.
+The renaming is not part of this series.
 
-> Thanks,
-> Bao
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > > Regards,
-> > > > Bjorn
-> > > >
-> > > > > +		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
-> > > > > +		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
-> > > > >  		dev_err(hba->dev,
-> > > > >  			"%s: Regulator capability was not set, actvIccLevel=%d",
-> > > > >  							__func__, icc_level);
-> > > > > --
-> > > > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
-> > > > > Forum,
-> > > > > a Linux Foundation Collaborative Project
-> > > > >
+3. Finally, the cooling device framework itself can be reused for a warming
+device. As stated before a device can act either as a warming device or a
+cooling device and not as both.  With this the cooling state in the
+framework can be considered as mitigating state with 0 as the state with no
+thermal mitigation and higher the number higher the thermal mitigation.
+Again what affects the code readability and comprehension is the term
+"cooling" which is a misnomer here. Ideally the term "cooling" should be
+renamed to "mitigating" and hence thermal_cooling_device will become
+thermal_mitgating_device. The renaming is not part of the patch series as
+even though the renaming is a simple search-replace, it will change a lot
+of files.  The patch series(patches 7 & 8) instead introduces a minimal set
+of _warming_device_ apis to register and unregister warming devices which
+internally is identical to the _cooling_device_ counterpart.
+
+1. https://lkml.org/lkml/2020/7/10/639
+
+Thara Gopinath (8):
+  dt-bindings: thermal: Introduce monitor-falling parameter to thermal
+    trip point binding
+  thermal: Introduce new property monitor_type for trip point.
+  thermal: thermal_of: Extend thermal dt driver to support
+    bi-directional monitoring of a thermal trip point.
+  thermal:core:Add genetlink notifications for monitoring falling
+    temperature
+  thermal: gov_step_wise: Extend thermal step-wise governor to monitor
+    falling temperature.
+  thermal: Modify thermal governors to do nothing for trip points being
+    monitored for falling temperature
+  thermal:core: Add is_warming_dev and supporting warming device api's
+    to the cooling dev framework.
+  soc:qcom:qcom_aoss: Change cooling_device_register to
+    warming_device_register
+
+ .../bindings/thermal/thermal-zones.yaml       |   7 ++
+ drivers/soc/qcom/qcom_aoss.c                  |   6 +-
+ drivers/thermal/gov_bang_bang.c               |  12 ++
+ drivers/thermal/gov_fair_share.c              |  12 ++
+ drivers/thermal/gov_power_allocator.c         |  12 ++
+ drivers/thermal/gov_step_wise.c               |  62 +++++++---
+ drivers/thermal/thermal_core.c                | 113 +++++++++++++++---
+ drivers/thermal/thermal_core.h                |   2 +
+ drivers/thermal/thermal_of.c                  |  22 ++++
+ include/linux/thermal.h                       |   9 ++
+ include/uapi/linux/thermal.h                  |   5 +
+ 11 files changed, 226 insertions(+), 36 deletions(-)
+
+-- 
+2.25.1
+
