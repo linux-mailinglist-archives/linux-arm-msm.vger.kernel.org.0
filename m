@@ -2,129 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7105726D4A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 09:26:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88E9926D489
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 09:21:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726191AbgIQHZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 03:25:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:48429 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726171AbgIQHZ4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 03:25:56 -0400
-X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 03:25:54 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1600327547;
-        bh=zXWtad0JIIFPcwVYIpkWAbxd5f/Xglqob2hHG1bVTJw=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=QMccrluTswFKdC4vzqLbTwsDnY5Fi6s62lnyubzZXYqReT/meO2gx6E4FPmy/yJJA
-         JvhMt23jQ0tJuXIBGeA/ouC5sBW8yelnG6747VoyShStPAOoXlY3eCfyC0nTb2bIg/
-         I4EiphjIC3JuzEc4SVKXdCR1osbhauOQJ0nCIYnQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.195.151]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTiU3-1jvWjJ31tl-00Tylu; Thu, 17
- Sep 2020 09:19:40 +0200
-Date:   Thu, 17 Sep 2020 09:19:32 +0200
-From:   Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Yash Shah <yash.shah@sifive.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-unisoc@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 8/8] ARM: dts: imx: align GPIO hog names with dtschema
-Message-ID: <20200917071932.GF3306@latitude>
-References: <20200916162250.16098-1-krzk@kernel.org>
- <20200916162250.16098-9-krzk@kernel.org>
+        id S1726244AbgIQHUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 03:20:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48610 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbgIQHUY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 03:20:24 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99887C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 00:20:22 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id d6so639570pfn.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 00:20:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=8mZBJ8cLMtckf5ie94vJM9dG4dXSSI5Lejo+Q/gBHh4=;
+        b=emqitvXamm1Zt4kpxTich+8DdlEB5lfs6ctgPWa0EPCVR9Iyj+wLVcTCZ44Z74IjUY
+         94Mj+hbZqt2kyeIzD3SJ1u5sB1MIHi4psCJJgsF8tfoS7tmUTZ5OzCuBFiTkY4d9O9Xl
+         sE6j+kvR4hBDGNAXRH3Jf1laOeVtuJl9IgMUI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=8mZBJ8cLMtckf5ie94vJM9dG4dXSSI5Lejo+Q/gBHh4=;
+        b=JxzcwEl6dFiwNgjXiOh4yyWvgk6Kcm2MGQ9PqNbHe2yQr0vYKGQ+ukmc3S255iCBa4
+         GeDvJgPPXRZ20s2sLbGlnm/3v4tP6eyGxYno6LkumddIrfL91ZJ2INL48D33E+LAiuFh
+         fClDMTM9CPa3bu4qgVNmmyGQfKauc0Dl9YMltLOS5Y29TnKNmSCV9haA72fQQCiGvKLN
+         wxNEjOsuv8+lUcWlrpTOMfhBLlGeflPHXWsPqYemcl2Gr5ksqNHqHwDyHctKP3M+ykZl
+         gdg7PpstL71qChrsLDLj0iQJwoHutmVk05knXddmpvsugpilpSAEwHmAdJz7v24hGZbA
+         NSIg==
+X-Gm-Message-State: AOAM5336oA/aq7ubNWL+XKiLnJA/fZFBC3DiE41GxIGlF6KY9SxNYtCI
+        7qJPU9Kn7BGkx/Kq3kadvXuNGQ==
+X-Google-Smtp-Source: ABdhPJwXci7bPJVYBFGnOsZ81TDzX4aNaBlsDL4MOUhAzC4BVReOIP1FUogHNHnB3AqHInM5cq0p0Q==
+X-Received: by 2002:a63:d648:: with SMTP id d8mr21375045pgj.4.1600327222184;
+        Thu, 17 Sep 2020 00:20:22 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id 143sm19564027pfc.66.2020.09.17.00.20.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 00:20:21 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="w3uUfsyyY1Pqa/ej"
-Content-Disposition: inline
-In-Reply-To: <20200916162250.16098-9-krzk@kernel.org>
-X-Provags-ID: V03:K1:YorKu7pZDQvPgwcW74yxwuNVFEWXjpKmR+QQ6aCm2kjASQe781T
- gyUNKzv6xZx4M4wwltaekmcBFF56mIMGiApidvEyvD91soIu76ecvOnAWz9Y7Rovj2sShwX
- 32LYp5Gxiqo7cY8aSzhwh/VfYZsBtibMCT8gNTUvzpGI4VLobehqvbg7P5fMmCM8MgIzAmo
- 8uIUIEgW8UoeyErWXINdQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Y7I6dMnRb2k=:ExMK8jy0Hy6akrnQXgge2U
- 2lZyxPYOqgYe5iMPk/CVzt3Ndhq6ZwIhd5v/x1Jr3O2qXg3MIUPNO1Ux9omlkeRI1dDs0cpwq
- uiVy/j2hysoMJbPbx+seuo0vNWrqHwihtPYSwdW8Pm+RHzjZgew3osZUkoPbdd2PXiWaTHG7Z
- z73UNyIK8rdZzvJ7tw7VdlRA0lTwnbili5irQ4EY2bYVh66MzguQH/YhNIAZmqMZwq1599vtM
- qzDTSy0aMYYisS6Yb77Zk8z5mY2HWxStdwx7qm6YN1u6HjrEM20QlAdlVcTRWyIPTLhj7amtZ
- G/QQvb7liwYx497e8Dl6YV04JaTX2St51RBNbp5QgAgz0USJTg2yc7RRbVvm3wAAZGlmABbld
- eevwaBm/wBHFTdoni63EoMwiEr1o7qDnnhwrIp1ltq/1P7r1hmLmzlPmKRjSiRNgyaAo1CuvP
- DsXANagkKzz2eXRCFvlVVwc0bR14YGUzB4/0cwwFrMb/YzD9gC7AH8+hL+i7XkBPC8QFVM8xa
- l5NHNjlf/7dLuG84gzBXx3N4vMVaF+9DH4wTLrM5iUBcox1pWV47StAZ8IgMFtKVt9hwV3AOc
- YI/IspB3MBCDnu2duH7cSxPL2lRnvbtY8gtSGVH2qNozvrHQCG9T3iR8IO+Ukf/5lvD0LuGVi
- a3DA5+fEUD5fSeR0uzBdkhLO+IecK0A+v21ufsB0jNcFsqAYYGiFJf0Pt1frHoxULS71/RWvX
- dwQ8ryYbMvbfOiat/yp7KN/ddydSMumW+qAIA89pGfjZP/euCbkaS49uhFckQYIi38Ykyg9Nq
- mzY0RXepOxy+lLjZoAfrQMEebCpWZOsZMXBEnb3/984bh18hLHS/aOH+VW3e0NC+aba4F7HIb
- fuW0MtRh6Km8jmVh1gll0nh3eN7G7pJUZsIq/rl5KST0+PDfDHv7TyCrWuUX1VuwrASHrhpqL
- xeWxJjUUkXSLyCob548sr4MPFJH8VFV5P0ye7D4FRpwTh8CQsbetIOu99DsFY6I8xLkiP9Ie+
- s47fcWGAYUhImFnN5f/D6xpfdfbO4YF5i5vLpxIzl/VWFDQZUS9gNv4m1tou3MbksBoi/xrRO
- eQi7VpsbXG4decRCv7DSQ2undAKXwqL8ENnUW4s9ZNseawwg6plMRV0wd1N4nIE7yIq9JSDUG
- sUL5jnSLpLLLSL/oXobvW43U+HUZ8D0NHAHcpMl2DzaT+NRyv0IznCuGwtcKncpH3NyYeIJP+
- BhhZa6dk5iei0R3QeDJoJfhaW7owR7rZs5ai3rg==
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1600305963-7659-3-git-send-email-mansur@codeaurora.org>
+References: <1600305963-7659-1-git-send-email-mansur@codeaurora.org> <1600305963-7659-3-git-send-email-mansur@codeaurora.org>
+Subject: Re: [RESEND v2 2/4] venus: core: vote for video-mem path
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Date:   Thu, 17 Sep 2020 00:20:20 -0700
+Message-ID: <160032722036.4188128.15261798942473063496@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Mansur Alisha Shaik (2020-09-16 18:26:01)
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/pla=
+tform/qcom/venus/core.c
+> index 52a3886..064b6c8 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -363,8 +363,16 @@ static __maybe_unused int venus_runtime_suspend(stru=
+ct device *dev)
+> =20
+>         ret =3D icc_set_bw(core->cpucfg_path, 0, 0);
+>         if (ret)
+> -               return ret;
+> +               goto err_poweron_core;
+> +
+> +       ret =3D icc_set_bw(core->video_path, 0, 0);
+> +       if (ret)
+> +               goto err_poweron_core;
+> +
+> +       return ret;
+> =20
+> +err_poweron_core:
+> +       pm_ops->core_power(dev, POWER_ON);
 
---w3uUfsyyY1Pqa/ej
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Don't we need to put back the bandwidth from before suspend was entered
+if the video_path fails?
 
-On Wed, Sep 16, 2020 at 06:22:50PM +0200, Krzysztof Kozlowski wrote:
-> dtschema for GPIO controllers expects GPIO hogs to end with 'hog'
-> prefix.
-
-Nit: It's a suffix if it's at the end.
-
-
-Thanks,
-Jonathan Neusch=C3=A4fer
-
---w3uUfsyyY1Pqa/ej
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAl9jDfwACgkQCDBEmo7z
-X9tyrRAAil2Ws9RX5xEhOM4JTYZZs2cN+39EFsN/UxgAFfH6d5DSDAvTwsAKLVYu
-fN2VXncB+EnJuFS1poUbhIHVv8UKAhd51hVXveutQjhCXRCqTRxhsTbE2NamacUZ
-TMUzWwXkZbmeH3GFQ07pgxKh8SSvrqeVn95IupKHWtSIHNomGY4ZccO4iuaRlD1e
-Ginacpkf107eon+YEJgoAX6CMumZbzCFM9LVyaWiT9psJQvdS9aDp26ER785IaYH
-UT+9LtBrXytog7EzrJHJEMbDboewPKtJ+yMWfmP33FnqR+9MvUkt+N+d7g5H0Mkb
-fUPqL0NFd01jkVWAmUOGem1baRHQlupf4hcm609RGakdHyZUB0g8MBhL6O5inUZO
-/m/HkeO4Gx2Y7FR3aVfIC2sDwUzglI4fHqRdoHC+4lexbvhsBfoVZw5XHe2LmSX1
-lvVW3jYfGQaiJiBhFR2nWZU2CkRm7Ur4bGBa0z6Rthv0BUYNdZ9JvOuVJRKzKl0D
-deUbMLt1YdCVvELm1SbG6y0ItP9EkVJVK5cTtPr1H5PIP8zl7JdAnxkR3YOEbpxt
-Hkthrhjh48Cvb5id6Xqf5O6g17rAtKqKxZGjjSLDvwxDu5tQCfSad7M3gxNIb/KV
-a4eXNUuwJYhawOtgrFyjvg0jJ2PXZbfZLZqIfvhepUz5Xv9gQ94=
-=n42d
------END PGP SIGNATURE-----
-
---w3uUfsyyY1Pqa/ej--
+>         return ret;
+>  }
+>
