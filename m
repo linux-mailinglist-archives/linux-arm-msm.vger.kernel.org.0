@@ -2,105 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E03F26E90F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 00:44:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 981D826E958
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 01:16:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbgIQWo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 18:44:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51122 "EHLO
+        id S1726115AbgIQXQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 19:16:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726055AbgIQWo1 (ORCPT
+        with ESMTP id S1726040AbgIQXQm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 18:44:27 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92B49C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 15:44:27 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id j7so1892506plk.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 15:44:27 -0700 (PDT)
+        Thu, 17 Sep 2020 19:16:42 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF4DC06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 16:16:42 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id q21so3613215ota.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 16:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=emK8TCQ/AOCbQCaTZuyx4EX1GGlS5xLteCwUhZhZWKs=;
-        b=asVwRODTCKzTMhPdETpQLiZroP91Get/mIBjAac5bezdK+pOzFI4MJpd0T9o9DUYWW
-         Jrgc59dc5QywWAx0/rRfNXXzIp+8G6594T6t/N1pVZVe2h3Q97pV/5VPO3dLx5rXGWbS
-         OUXTBUjCBjdKZPF75UxabZQM0laVCy2zi9SYQ=
+        d=linuxfoundation.org; s=google;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=YeOyKeCzbk9VWMgOTxwltUHxECBUKayGqCzk0HAQiXM=;
+        b=W614FkUN/tdIYzf9qMMdeL1QrJDlDKeBxOZ78PcE/uZTbTqryTGwCaQ2lVqJv3tVa6
+         1pWitjG94eKsyf9d9cjiOBasZyml+Uf4l1AB8P1yeTQWOGieEOHyPVWS+PuvJMXwYDpZ
+         E0/Z/QH4vHeswWBOAz/5Vmqe3eq8nnsot4oh0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=emK8TCQ/AOCbQCaTZuyx4EX1GGlS5xLteCwUhZhZWKs=;
-        b=t+TEjDiBh0zY7ZU3y0Nrw5fH+Ui6GYS2QiVrVl+JA0K5UM1FPetMcJuHXV1uVH73rm
-         7oXuXOoo9AMtvDPwXF2ISYvUdZgVa/DZHKvu2xrkvnxvoT2cZfNNTowENCqpUChllPD8
-         QWQaWMHxg+ZWxP4H8IChT0bTPrXbpFlqO2XEpJrmNBOWHqzzqhExGrv5zgZiogL20LS1
-         EAlSnAmtAc/lqy3RK6Dq4YdI8/5B7F+bwO/G4qXAeBzyRCKVsBNGW90Gid0PTF9wQ9H4
-         XpPdWL3PjXn13UfV6SVqbl1hkZbsTElfr5pwGB6T0uDIi1V/3UUHUpv3iedKmsagfvij
-         WlvQ==
-X-Gm-Message-State: AOAM533PdtR1mUaguO3CKz7Mb+Q+UQxhHJvInpIn0pyBLymLFj4XjLbr
-        5TVLbbdhaPmC9eC/oa8PxQButA==
-X-Google-Smtp-Source: ABdhPJywypDGBU0fygZ+vRZ0Ah7m+uJXUNioxfPKAcCRYPGZUExxbYZ5CmLJLP3uPld3wN0+0sGN1Q==
-X-Received: by 2002:a17:902:8509:b029:d0:cbe1:e746 with SMTP id bj9-20020a1709028509b02900d0cbe1e746mr29812096plb.33.1600382667062;
-        Thu, 17 Sep 2020 15:44:27 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id l123sm674509pgl.24.2020.09.17.15.44.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2020 15:44:26 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH] drm/msm/dp: Sleep properly in dp_hpd_handler kthread
-Date:   Thu, 17 Sep 2020 15:44:25 -0700
-Message-Id: <20200917224425.2331583-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.28.0.681.g6f77f65b4e-goog
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=YeOyKeCzbk9VWMgOTxwltUHxECBUKayGqCzk0HAQiXM=;
+        b=kK/WfMohKKXH0Vy15YVbBoK9eVujVp0b0JlL1L62THQBzMXjAi7yLTchxnbT9XusMk
+         MdBm6M+Du6l8FhifHMP6fVpgC8pEW3K73dJNObcHrmwk5N/Z7dQwgDKI3Z3ZvXsV+U2I
+         nE/228b9w8E78j7SDPf1Xhar3FyWRsyLJ+bVXtM4Uy0shssVpAiOQVATNvBtNRIp8qp3
+         Nuvaey/YSnd7zwLITJeIqLcmT+T5flJUgTKgBChJUhYle/xEy58qO127fLNUz0FC40Ka
+         Qdg1REiX60XsYXnWny4sP2LqaICPDbRH7m2Nk3COI+9U8V4L+swRrAQQLAek/4KIf8fb
+         CFBw==
+X-Gm-Message-State: AOAM533ajsFRv81gmwsjn1r+btg+B2SOpviP4Mta47X60GiM+dw+oDQZ
+        c9d39zcKwMdIXg7Bde5De7yeCg==
+X-Google-Smtp-Source: ABdhPJx+UGHmNQ/BidpCBn/LPEtpga+MaVySdfe/g+ZP/KcC7X7ODQWsK27boq70o9w5XD7pJisOTw==
+X-Received: by 2002:a05:6830:1e30:: with SMTP id t16mr21703501otr.18.1600384602162;
+        Thu, 17 Sep 2020 16:16:42 -0700 (PDT)
+Received: from [192.168.1.112] (c-24-9-64-241.hsd1.co.comcast.net. [24.9.64.241])
+        by smtp.gmail.com with ESMTPSA id o13sm920200otj.2.2020.09.17.16.16.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Sep 2020 16:16:41 -0700 (PDT)
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        jhugo@codeaurora.org, sdias@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Shuah Khan <skhan@linuxfoundation.org>
+From:   Shuah Khan <skhan@linuxfoundation.org>
+Subject: bus/mhi/core: Double lock in mhi_device_put() and dev_wake inc/dec
+Message-ID: <5029d4b5-d614-eef3-5a7a-9c8e1c3e7ddb@linuxfoundation.org>
+Date:   Thu, 17 Sep 2020 17:16:40 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We shouldn't be waiting for an event here with a timeout of 100ms when
-we're not in the 'timeout' arm of the if condition. Instead we should be
-sleeping in the interruptible state (S) until something happens and we
-need to wakeup. Right now this kthread is running almost all the time
-because it sleeps for 100ms, wakes up, sees there's nothing to do, and
-then starts the process all over again. Looking at top it shows up in
-the D state (uninterruptible) because it uses wait_event_timeout(). FIx
-this up.
+While looking at this file for an unrelated issue, I happen to notice
+there is a double locking on mhi_cntrl->pm_lock in the mhi_device_put()
+when it gets called from mhi_driver_remove()
 
-Cc: Tanmay Shah <tanmay@codeaurora.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
+The other two calls from mhi_driver_probe() don't hold the pm_lock.
 
-Based on msm-next-dp of https://gitlab.freedesktop.org/drm/msm.git
+In addition, lock holding while dev_wake updates is inconsistent.
 
- drivers/gpu/drm/msm/dp/dp_display.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+dev_wake gets incremented and decremented without holding pm_lock in
+mhi_device_get(), mhi_device_get_sync() and mhi_device_put().
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 05a97e097edf..e175aa3fd3a9 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -970,9 +970,8 @@ static int hpd_event_thread(void *data)
- 				(dp_priv->event_pndx == dp_priv->event_gndx),
- 						EVENT_TIMEOUT);
- 		} else {
--			wait_event_timeout(dp_priv->event_q,
--				(dp_priv->event_pndx != dp_priv->event_gndx),
--						EVENT_TIMEOUT);
-+			wait_event_interruptible(dp_priv->event_q,
-+				(dp_priv->event_pndx != dp_priv->event_gndx));
- 		}
- 		spin_lock_irqsave(&dp_priv->event_lock, flag);
- 		todo = &dp_priv->event_list[dp_priv->event_gndx];
+Exception are when mhi_device_put() is called from mhi_driver_remove().
 
-base-commit: 937f941ca06f2f3ab64baebf31be2c16d57ae7b8
--- 
-Sent by a computer, using git, on the internet
+The following commit is where all this code is added.
 
+bus: mhi: core: Add support for data transfer
+https://github.com/torvalds/linux/commit/189ff97cca53e3fe2d8b38d64105040ce17fc62d
+
+It appears to be real problem. I don't have a way to test this driver,
+hence reaching out to let you know about my findings.
+
+thanks,
+-- Shuah
