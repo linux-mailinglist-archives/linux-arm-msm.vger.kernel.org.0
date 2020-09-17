@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C81A326E14E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 18:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 424A726E162
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 18:57:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728750AbgIQQzc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 12:55:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33146 "EHLO mail.kernel.org"
+        id S1728796AbgIQQ4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 12:56:44 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35904 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728744AbgIQQzP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 12:55:15 -0400
+        id S1728651AbgIQQ41 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 12:56:27 -0400
 Received: from kozik-lap.mshome.net (unknown [194.230.155.191])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CE174221E7;
-        Thu, 17 Sep 2020 16:54:58 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id C26952078D;
+        Thu, 17 Sep 2020 16:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600361713;
-        bh=HczLzPQr6OtHbam5qOdkdD+vA7dPuNPd8y9fq4tyixw=;
+        s=default; t=1600361787;
+        bh=BHBvTl9J5bVNGcjbgF1Wrd0LOUeqr0pjrgInbdXE4tc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iuy5p0+Ez3XMnKjk08wzzH6pMKBcMSmcBzBBWZcw06qb8eATzdQsyeG9aZ85bT4hW
-         pzU2ynkwfqqkI3EYoJgoOZJzpq2CFcQ0Gp/XY+1Gpqr1vebfRY/wroBvMS2AHGEVvi
-         YCKCmQK5gyP55HfTJ9BhRkNS8uT2a5HUIDR0Sudo=
+        b=GRH/P+hmbkvZV1XUdX3hrXr/M7yIadjWJCzkILNlNjfuSFyrmNOxxyOBSVjiJTn4J
+         gKvBNwbvbYzo0IGdWxTLE2oG9gmZ6oXMt70NrCbSqHARK+31sF7Rx0nhtl11Izm9do
+         rhuxXTc0Y62DIAey7vczzig9Bz3xjl9vz5LWXWP8=
 From:   Krzysztof Kozlowski <krzk@kernel.org>
 To:     Linus Walleij <linus.walleij@linaro.org>,
         Bartosz Golaszewski <bgolaszewski@baylibre.com>,
@@ -86,9 +86,9 @@ To:     Linus Walleij <linus.walleij@linaro.org>,
         linux-mediatek@lists.infradead.org,
         linux-renesas-soc@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH v2 05/13] dt-bindings: gpio: fsl-imx-gpio: add gpio-line-names
-Date:   Thu, 17 Sep 2020 18:52:53 +0200
-Message-Id: <20200917165301.23100-6-krzk@kernel.org>
+Subject: [PATCH v2 10/13] ASoC: dt-bindings: zl38060: include common schema in GPIO controllers
+Date:   Thu, 17 Sep 2020 18:52:58 +0200
+Message-Id: <20200917165301.23100-11-krzk@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200917165301.23100-1-krzk@kernel.org>
 References: <20200917165301.23100-1-krzk@kernel.org>
@@ -96,30 +96,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Describe common "gpio-line-names" property to fix dtbs_check warnings
-like:
-
-  arch/arm/boot/dts/imx53-m53menlo.dt.yaml: gpio@53f84000:
-    'gpio-line-names' does not match any of the regexes: '^(hog-[0-9]+|.+-hog(-[0-9]+)?)$', 'pinctrl-[0-9]+'
+Include the common GPIO schema in GPIO controllers to be sure all common
+properties are properly validated.
 
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
----
- Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml b/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-index ad761e2f380a..347f059d347a 100644
---- a/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-+++ b/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-@@ -65,7 +65,7 @@ properties:
-     const: 2
+---
+
+Changes since v1:
+1. New patch
+---
+ Documentation/devicetree/bindings/sound/zl38060.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/sound/zl38060.yaml b/Documentation/devicetree/bindings/sound/zl38060.yaml
+index 338e2a13c775..0e3d8c854806 100644
+--- a/Documentation/devicetree/bindings/sound/zl38060.yaml
++++ b/Documentation/devicetree/bindings/sound/zl38060.yaml
+@@ -15,6 +15,9 @@ maintainers:
+   - Jaroslav Kysela <perex@perex.cz>
+   - Takashi Iwai <tiwai@suse.com>
  
-   gpio-controller: true
--
-+  gpio-line-names: true
-   gpio-ranges: true
- 
-   power-domains:
++allOf:
++  - $ref: /schemas/gpio/gpio-common.yaml#
++
+ properties:
+   compatible:
+     const: mscc,zl38060
 -- 
 2.17.1
 
