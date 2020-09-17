@@ -2,338 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D439926E670
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 22:13:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 403E426E6B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 22:23:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbgIQUNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 16:13:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56008 "EHLO
+        id S1726524AbgIQUXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 16:23:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726759AbgIQUNq (ORCPT
+        with ESMTP id S1726440AbgIQUXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 16:13:46 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40825C06174A;
-        Thu, 17 Sep 2020 13:13:46 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id E541EFED;
-        Thu, 17 Sep 2020 22:13:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1600373621;
-        bh=Lgq9PKRDYhVRmNU7RasyOZL9cSKALVzKVkOgyrxq3OM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ghKM0GYxCHRhO2OzSWfqAhvO7iCRt7cu1MM1uolJIk+nsQMPRL7i+oqzAG17EDXFX
-         hXLgKqL8giZLAXpZS4JYEwCm7oygNVuf1gJW1iEqCumOXugar6+RcBIw2vSYE1k5Ma
-         eNzDgBcqBKHUcXSs2SWfCLHPqVWYAO4XJE6hsiWs=
-Date:   Thu, 17 Sep 2020 23:13:11 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Hoan Tran <hoan@os.amperecomputing.com>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Jacopo Mondi <jacopo+renesas@jmondi.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Niklas =?utf-8?Q?S=C3=B6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Yash Shah <yash.shah@sifive.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        - <patches@opensource.cirrus.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Amelie Delaunay <amelie.delaunay@st.com>,
-        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Andy Teng <andy.teng@mediatek.com>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Chris Brandt <chris.brandt@renesas.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-media@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v2 02/13] dt-bindings: gpio: include common schema in
- GPIO controllers
-Message-ID: <20200917201311.GH3969@pendragon.ideasonboard.com>
-References: <20200917165301.23100-1-krzk@kernel.org>
- <20200917165301.23100-3-krzk@kernel.org>
+        Thu, 17 Sep 2020 16:23:33 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D290DC06178A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 13:23:33 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id o20so1927139pfp.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 13:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=YNTKdfmB+28CU+5YDgFT2N85sceXAWnBJsBarav4y+M=;
+        b=OdZtCvQoTUU2/0aeiyYVxshd5cH9YBMc46/QsslQPFg6HIoO1W3vPSMnGgfiTjq+hP
+         lZ67JaaqUhGORuBb6aOBcA0X1TKytQoCnwaV/I9z+hnCZicJ70GO3vqG78QBvxtraNQK
+         wgVLp+lE87xR6i3ugguJM0o/4hMfbe7tXbI4k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=YNTKdfmB+28CU+5YDgFT2N85sceXAWnBJsBarav4y+M=;
+        b=o/ggQy3P27GUZbaTN4E5glrjuMzNIHNZbRV6Gu+EWmSolZkbThQsBVigh3pQZi5nsM
+         CDLG+cHG3JLGEDfeaWy3FrpdZ1WSpWF5bWIDwFCJuY4+GVKhYTQm94qcpxcMklsqJzO2
+         bugVxO+VprZKUnoxL1A6add5E2Bte67OtE607ZCo9U952OiFb1Gz7LEANwYxJ6ihzqVP
+         3CBCfCWSHmAvVJyAaR840gF8luG3WZcp/Y3x5ArtKXpXe+Vj1LPam4OMzNZoQzdJYJwN
+         zvBX/oGH8lV3fdD6M2Bpj5t+HRLIjbu3UTsb68OZB0+IQfcR6CQxYqz1k5zoq3s82CfK
+         32Cg==
+X-Gm-Message-State: AOAM531Z7NJd9mTdBd12Bc9wBUQg5LccPuU2ZDMX6t8O+wDZRfDVTAaz
+        uSWHVmstOS36NroXPsidU6ewjxoS/uR9BA==
+X-Google-Smtp-Source: ABdhPJwUqBYNZMyzzYNYV2v6k7IsJ0N4NSjmQfacJ/Gq4BJeWFAXgI4j+VtUDY8KYuhwwQR1Vc28lQ==
+X-Received: by 2002:aa7:989c:0:b029:142:2501:3973 with SMTP id r28-20020aa7989c0000b029014225013973mr13132887pfl.56.1600374213043;
+        Thu, 17 Sep 2020 13:23:33 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id 84sm497155pfw.14.2020.09.17.13.23.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 13:23:32 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200917165301.23100-3-krzk@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200917122558.23110-1-rojay@codeaurora.org>
+References: <20200917122558.23110-1-rojay@codeaurora.org>
+Subject: Re: [PATCH V4] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     dianders@chromium.org, saiprakash.ranjan@codeaurora.org,
+        gregkh@linuxfoundation.org, mka@chromium.org,
+        akashast@codeaurora.org, msavaliy@qti.qualcomm.com,
+        skakit@codeaurora.org, vkaur@codeaurora.org,
+        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>, wsa@kernel.org
+Date:   Thu, 17 Sep 2020 13:23:30 -0700
+Message-ID: <160037421089.4188128.9425314091585708436@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Quoting Roja Rani Yarubandi (2020-09-17 05:25:58)
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
+qcom-geni.c
+> index dead5db3315a..b0d8043c8cb2 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -86,6 +86,10 @@ struct geni_i2c_dev {
+>         u32 clk_freq_out;
+>         const struct geni_i2c_clk_fld *clk_fld;
+>         int suspended;
+> +       void *dma_buf;
+> +       size_t xfer_len;
+> +       dma_addr_t tx_dma;
+> +       dma_addr_t rx_dma;
 
-Thank you for the patch.
+Do we need both tx_dma and rx_dma? Seems that we use cur->flags to
+figure out if the transfer is tx or rx so we could have juat dma_buf and
+dma_addr here?
 
-On Thu, Sep 17, 2020 at 06:52:50PM +0200, Krzysztof Kozlowski wrote:
-> Include the common GPIO schema in GPIO controllers to be sure all common
-> properties are properly validated.
+>  };
+> =20
+>  struct geni_i2c_err_log {
+> @@ -307,7 +311,6 @@ static void geni_i2c_abort_xfer(struct geni_i2c_dev *=
+gi2c)
+> =20
+>         spin_lock_irqsave(&gi2c->lock, flags);
+>         geni_i2c_err(gi2c, GENI_TIMEOUT);
+> -       gi2c->cur =3D NULL;
 
-Same comment as for patch 09/13, shouldn't we delete redundant
-properties from all these schemas ?
+This looks concerning. We're moving this out from under the spinlock.
+The irq handler in this driver seems to hold the spinlock all the time
+while processing and this function grabs it here to keep cur consistent
+when aborting the transfer due to a timeout. Otherwise it looks like the
+irqhandler can race with this and try to complete the transfer while
+it's being torn down here.
 
-> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-> 
-> ---
-> 
-> Changes since v1:
-> 1. Fix gpio-mxs.yaml
-> 2. Add snps,dw-apb-gpio.yaml
-> ---
->  .../devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml         | 3 +++
->  Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml      | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-mxs.yaml          | 4 ++++
->  Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml      | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-rda.yaml          | 3 +++
->  Documentation/devicetree/bindings/gpio/gpio-vf610.yaml        | 3 +++
->  Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml         | 1 +
->  Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml | 3 +++
->  Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml    | 3 +++
->  Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml | 3 +++
->  Documentation/devicetree/bindings/gpio/sifive,gpio.yaml       | 3 +++
->  Documentation/devicetree/bindings/gpio/snps,dw-apb-gpio.yaml  | 3 +++
->  .../devicetree/bindings/gpio/socionext,uniphier-gpio.yaml     | 3 +++
->  .../devicetree/bindings/gpio/xylon,logicvc-gpio.yaml          | 3 +++
->  14 files changed, 41 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml b/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml
-> index c213cb9ddb9f..1ac69b9c03f9 100644
-> --- a/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/brcm,xgs-iproc-gpio.yaml
-> @@ -13,6 +13,9 @@ description: |
->    This controller is the Chip Common A GPIO present on a number of Broadcom
->    switch ASICs with integrated SoCs.
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      const: brcm,iproc-gpio-cca
-> diff --git a/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml b/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-> index de0b9b5f6a70..737756e081fb 100644
-> --- a/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml
-> @@ -9,6 +9,9 @@ title: Freescale i.MX/MXC GPIO controller
->  maintainers:
->    - Anson Huang <Anson.Huang@nxp.com>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      oneOf:
-> diff --git a/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml b/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml
-> index dfa1133f8c5e..bd0c4f329625 100644
-> --- a/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/gpio-mxs.yaml
-> @@ -34,6 +34,10 @@ properties:
->  patternProperties:
->    "gpio@[0-9]+$":
->      type: object
-> +
-> +    allOf:
-> +      - $ref: gpio-common.yaml#
-> +
->      properties:
->        compatible:
->          enum:
-> diff --git a/Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml b/Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml
-> index 338c5312a106..69b12041c893 100644
-> --- a/Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/gpio-pca9570.yaml
-> @@ -9,6 +9,9 @@ title: PCA9570 I2C GPO expander
->  maintainers:
->    - Sungbo Eo <mans0n@gorani.run>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      enum:
-> diff --git a/Documentation/devicetree/bindings/gpio/gpio-rda.yaml b/Documentation/devicetree/bindings/gpio/gpio-rda.yaml
-> index 6ece555f074f..d70c99f463c2 100644
-> --- a/Documentation/devicetree/bindings/gpio/gpio-rda.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/gpio-rda.yaml
-> @@ -9,6 +9,9 @@ title: RDA Micro GPIO controller
->  maintainers:
->    - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      const: rda,8810pl-gpio
-> diff --git a/Documentation/devicetree/bindings/gpio/gpio-vf610.yaml b/Documentation/devicetree/bindings/gpio/gpio-vf610.yaml
-> index 6ac5a78ad3da..82f3e4b407d1 100644
-> --- a/Documentation/devicetree/bindings/gpio/gpio-vf610.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/gpio-vf610.yaml
-> @@ -17,6 +17,9 @@ description: |
->    Note: Each GPIO port should have an alias correctly numbered in "aliases"
->    node.
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      enum:
-> diff --git a/Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml b/Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml
-> index 4db3b8a3332c..e2b7d2d133a8 100644
-> --- a/Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/mrvl-gpio.yaml
-> @@ -12,6 +12,7 @@ maintainers:
->    - Rob Herring <robh+dt@kernel.org>
->  
->  allOf:
-> +  - $ref: gpio-common.yaml#
->    - if:
->        properties:
->          compatible:
-> diff --git a/Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml b/Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml
-> index 32a566ec3558..2eee374e8396 100644
-> --- a/Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/qcom,wcd934x-gpio.yaml
-> @@ -13,6 +13,9 @@ description: |
->    Qualcomm Technologies Inc WCD9340/WCD9341 Audio Codec has integrated
->    gpio controller to control 5 gpios on the chip.
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      enum:
-> diff --git a/Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml b/Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml
-> index 8bdef812c87c..845689807678 100644
-> --- a/Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/renesas,em-gio.yaml
-> @@ -9,6 +9,9 @@ title: Renesas EMMA Mobile General Purpose I/O Interface
->  maintainers:
->    - Magnus Damm <magnus.damm@gmail.com>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      const: renesas,em-gio
-> diff --git a/Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml b/Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml
-> index 5026662e4508..c116000d579f 100644
-> --- a/Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/renesas,rcar-gpio.yaml
-> @@ -9,6 +9,9 @@ title: Renesas R-Car General-Purpose Input/Output Ports (GPIO)
->  maintainers:
->    - Geert Uytterhoeven <geert+renesas@glider.be>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      oneOf:
-> diff --git a/Documentation/devicetree/bindings/gpio/sifive,gpio.yaml b/Documentation/devicetree/bindings/gpio/sifive,gpio.yaml
-> index a0efd8dc2538..f2d93b40fc7e 100644
-> --- a/Documentation/devicetree/bindings/gpio/sifive,gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/sifive,gpio.yaml
-> @@ -10,6 +10,9 @@ maintainers:
->    - Yash Shah <yash.shah@sifive.com>
->    - Paul Walmsley <paul.walmsley@sifive.com>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    compatible:
->      items:
-> diff --git a/Documentation/devicetree/bindings/gpio/snps,dw-apb-gpio.yaml b/Documentation/devicetree/bindings/gpio/snps,dw-apb-gpio.yaml
-> index b391cc1b4590..459aafe5fd47 100644
-> --- a/Documentation/devicetree/bindings/gpio/snps,dw-apb-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/snps,dw-apb-gpio.yaml
-> @@ -49,6 +49,9 @@ properties:
->  patternProperties:
->    "^gpio-(port|controller)@[0-9a-f]+$":
->      type: object
-> +    allOf:
-> +      - $ref: gpio-common.yaml#
-> +
->      properties:
->        compatible:
->          const: snps,dw-apb-gpio-port
-> diff --git a/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml b/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml
-> index c58ff9a94f45..94a911e9c313 100644
-> --- a/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/socionext,uniphier-gpio.yaml
-> @@ -9,6 +9,9 @@ title: UniPhier GPIO controller
->  maintainers:
->    - Masahiro Yamada <yamada.masahiro@socionext.com>
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    $nodename:
->      pattern: "^gpio@[0-9a-f]+$"
-> diff --git a/Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml b/Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml
-> index a36aec27069c..0e4581241b3f 100644
-> --- a/Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/xylon,logicvc-gpio.yaml
-> @@ -23,6 +23,9 @@ description: |
->    - EN_VEE (power control) mapped to index 7
->    - V_EN (power control) mapped to index 8
->  
-> +allOf:
-> +  - $ref: gpio-common.yaml#
-> +
->  properties:
->    $nodename:
->      pattern: "^gpio@[0-9a-f]+$"
+>         geni_se_abort_m_cmd(&gi2c->se);
+>         spin_unlock_irqrestore(&gi2c->lock, flags);
+>         do {
+> @@ -349,10 +352,62 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev=
+ *gi2c)
+>                 dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
+>  }
+> =20
+> +static void geni_i2c_rx_msg_cleanup(struct geni_i2c_dev *gi2c)
 
--- 
-Regards,
+So maybe pass cur to this function?
 
-Laurent Pinchart
+> +{
+> +       struct geni_se *se =3D &gi2c->se;
+> +
+> +       gi2c->cur_rd =3D 0;
+> +       if (gi2c->dma_buf) {
+> +               if (gi2c->err)
+> +                       geni_i2c_rx_fsm_rst(gi2c);
+> +               geni_se_rx_dma_unprep(se, gi2c->rx_dma, gi2c->xfer_len);
+> +               i2c_put_dma_safe_msg_buf(gi2c->dma_buf, gi2c->cur, !gi2c-=
+>err);
+> +       }
+> +}
+> +
+> +static void geni_i2c_tx_msg_cleanup(struct geni_i2c_dev *gi2c)
+
+And this one?
+
+> +{
+> +       struct geni_se *se =3D &gi2c->se;
+> +
+> +       gi2c->cur_wr =3D 0;
+> +       if (gi2c->dma_buf) {
+> +               if (gi2c->err)
+> +                       geni_i2c_tx_fsm_rst(gi2c);
+> +               geni_se_tx_dma_unprep(se, gi2c->tx_dma, gi2c->xfer_len);
+> +               i2c_put_dma_safe_msg_buf(gi2c->dma_buf, gi2c->cur, !gi2c-=
+>err);
+> +       }
+> +}
+> +
+> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
+> +{
+> +       int ret;
+> +       u32 geni_status;
+> +
+> +       /* Resume device, as runtime suspend can happen anytime during tr=
+ansfer */
+> +       ret =3D pm_runtime_get_sync(gi2c->se.dev);
+> +       if (ret < 0) {
+> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", re=
+t);
+> +               return;
+> +       }
+> +
+> +       geni_status =3D readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
+
+And this probably needs to hold the lock?
+
+> +       if (!(geni_status & M_GENI_CMD_ACTIVE))
+> +               goto out;
+> +
+> +       geni_i2c_abort_xfer(gi2c);
+> +       if (gi2c->cur->flags & I2C_M_RD)
+> +               geni_i2c_rx_msg_cleanup(gi2c);
+> +       else
+> +               geni_i2c_tx_msg_cleanup(gi2c);
+> +       gi2c->cur =3D NULL;
+
+until here?
+
+> +out:
+> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
+> +}
+> +
+>  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg=
+ *msg,
+>                                 u32 m_param)
+>  {
+> -       dma_addr_t rx_dma;
+> +       dma_addr_t rx_dma =3D 0;
+>         unsigned long time_left;
+>         void *dma_buf =3D NULL;
+>         struct geni_se *se =3D &gi2c->se;
+> @@ -372,6 +427,10 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *=
+gi2c, struct i2c_msg *msg,
+>                 geni_se_select_mode(se, GENI_SE_FIFO);
+>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+>                 dma_buf =3D NULL;
+> +       } else {
+> +               gi2c->xfer_len =3D len;
+> +               gi2c->rx_dma =3D rx_dma;
+> +               gi2c->dma_buf =3D dma_buf;
+>         }
+> =20
+>         geni_se_setup_m_cmd(se, I2C_READ, m_param);
+> @@ -380,13 +439,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *=
+gi2c, struct i2c_msg *msg,
+>         if (!time_left)
+>                 geni_i2c_abort_xfer(gi2c);
+> =20
+> -       gi2c->cur_rd =3D 0;
+> -       if (dma_buf) {
+> -               if (gi2c->err)
+> -                       geni_i2c_rx_fsm_rst(gi2c);
+> -               geni_se_rx_dma_unprep(se, rx_dma, len);
+> -               i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
+> -       }
+> +       geni_i2c_rx_msg_cleanup(gi2c);
+> =20
+>         return gi2c->err;
+>  }
+
+It may make sense to extract the cleanup stuff into another patch. Then
+have a patch after that which does the shutdown hook. So three patches
+total.
+
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni=
+-se.c
+> index d0e4f520cff8..0216b38c1e9a 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -705,7 +705,7 @@ void geni_se_tx_dma_unprep(struct geni_se *se, dma_ad=
+dr_t iova, size_t len)
+>  {
+>         struct geni_wrapper *wrapper =3D se->wrapper;
+> =20
+> -       if (iova && !dma_mapping_error(wrapper->dev, iova))
+> +       if (!dma_mapping_error(wrapper->dev, iova))
+>                 dma_unmap_single(wrapper->dev, iova, len, DMA_TO_DEVICE);
+>  }
+>  EXPORT_SYMBOL(geni_se_tx_dma_unprep);
+> @@ -722,7 +722,7 @@ void geni_se_rx_dma_unprep(struct geni_se *se, dma_ad=
+dr_t iova, size_t len)
+>  {
+>         struct geni_wrapper *wrapper =3D se->wrapper;
+> =20
+> -       if (iova && !dma_mapping_error(wrapper->dev, iova))
+> +       if (!dma_mapping_error(wrapper->dev, iova))
+>                 dma_unmap_single(wrapper->dev, iova, len, DMA_FROM_DEVICE=
+);
+>  }
+>  EXPORT_SYMBOL(geni_se_rx_dma_unprep);
+
+I'd make this a different patch. Nothing depends on this change, right?
