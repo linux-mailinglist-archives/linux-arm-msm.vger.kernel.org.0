@@ -2,121 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A20226E38B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 20:29:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D8E126E44E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Sep 2020 20:44:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726580AbgIQS2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 14:28:21 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:26224 "EHLO m43-7.mailgun.net"
+        id S1726481AbgIQSne (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 14:43:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57978 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726343AbgIQSU4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 14:20:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600366822; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=2Awvd0docYELA3/VOnVrhxEnBWW9DSBcjwiYbeE9eKM=; b=pM4KX74rJnmgWF+NPvK2Buz5+Si7HHxRJZ0clYcafPmcZTxPrrEYcEA28XaWoJ4ASCmKF7bM
- lRfh4GqAOQm8Xz7VM+CVziQ24786u8KWQMMaSDjQutzli95xIoT0jy1e0B/g+mWnAa85MS/X
- G6IqI9zLikmRJKdcLIaa0PHv4gg=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f63a8daea858627d51edc3d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Sep 2020 18:20:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 76D50C433FF; Thu, 17 Sep 2020 18:20:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.10] (cpe-75-83-25-192.socal.res.rr.com [75.83.25.192])
+        id S1728606AbgIQQx3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 12:53:29 -0400
+Received: from kozik-lap.mshome.net (unknown [194.230.155.191])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: sidgup)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0AEE5C433CA;
-        Thu, 17 Sep 2020 18:20:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0AEE5C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
-Subject: Re: [PATCH v4 0/3] Introduce mini-dump support for remoteproc
-To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com
-Cc:     linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
-        psodagud@codeaurora.org, rishabhb@codeaurora.org,
-        linux-doc@vger.kernel.org
-References: <01010174796142bd-a595147b-833a-48fe-b692-f8b6fe466146-000000@us-west-2.amazonses.com>
-From:   Siddharth Gupta <sidgup@codeaurora.org>
-Message-ID: <5a8002bd-2eaa-5acd-d7ad-b651dd5e4fbb@codeaurora.org>
-Date:   Thu, 17 Sep 2020 11:20:08 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-In-Reply-To: <01010174796142bd-a595147b-833a-48fe-b692-f8b6fe466146-000000@us-west-2.amazonses.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        by mail.kernel.org (Postfix) with ESMTPSA id 39C1520708;
+        Thu, 17 Sep 2020 16:53:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600361605;
+        bh=P6t4EObPuKTAtjmptm4+AFH+z1+4hhhtxhJjS4UyDF0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=QWWMJnynLqLOQxMCeIhdb30C/fJHQKsRzanwLdTpwbhaMyXT+tXpbqbOYpkb+Ly2M
+         aBumK6+zCHsWhNp6ZfqN5QXKUzl+nO1TwJgKiLkTRKlRiFxwyqIPdifsq9tCyheivp
+         WIbwLhtE7vcm3MGDi0wpAwkD5yRasj8RADVLwNo8=
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Hoan Tran <hoan@os.amperecomputing.com>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Jacopo Mondi <jacopo+renesas@jmondi.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        =?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Yash Shah <yash.shah@sifive.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        - <patches@opensource.cirrus.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Amelie Delaunay <amelie.delaunay@st.com>,
+        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Andy Teng <andy.teng@mediatek.com>,
+        Sean Wang <sean.wang@mediatek.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Chris Brandt <chris.brandt@renesas.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-media@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH v2 00/13] gpio: add common dtschema
+Date:   Thu, 17 Sep 2020 18:52:48 +0200
+Message-Id: <20200917165301.23100-1-krzk@kernel.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Gentle remind to review this patch series.
+Hi,
 
-Thanks,
-Sid
+Changes since v1
+================
+1. Use common schema in bindings outside of gpio/ (new patches).
+2. Minor fixes - see individual patches for changelogs.
 
-On 9/10/2020 11:57 AM, Siddharth Gupta wrote:
-> Sometimes firmware sizes can be in ten's of MB's and reading
-> all the memory during coredump can consume lot of time and
-> memory.
-> Introducing support for mini-dumps. Mini-dump contains smallest
-> amount of useful information, that could help to debug subsystem
-> crashes.
-> During bootup memory is allocated in SMEM (Shared memory)
-> in the form of a table that contains the physical
-> addresses and sizes of the regions that are supposed to be
-> collected during coredump. This memory is shared amongst all
-> processors in a Qualcomm platform, so all remoteprocs
-> fill in their entry in the global table once they are out
-> of reset.
-> This patch series adds support for parsing the global minidump
-> table and uses the current coredump frameork to expose this memory
-> to userspace during remoteproc's recovery.
->
-> This patch series also integrates the patch:
-> https://patchwork.kernel.org/patch/11695541/ sent by Siddharth.
->
-> Changelog:
-> v3 -> v4:
-> - Made adsp_priv_cleanup a static function.
->
-> v2 -> v3:
-> - Refactored code to remove dependency on Qualcomm configs.
-> - Renamed do_rproc_minidump to rproc_minidump and marked as exported
->    symbol.
->
-> v1 -> v2:
-> - 3 kernel test robot warnings have been resolved.
-> - Introduced priv_cleanup op in order to making the cleaning of
->    private elements used by the remoteproc more readable.
-> - Removed rproc_cleanup_priv as it is no longer needed.
-> - Switched to if/else format for rproc_alloc in order to keep
->    the static const decalaration of adsp_minidump_ops.
->
-> Siddharth Gupta (3):
->    remoteproc: core: Add ops to enable custom coredump functionality
->    remoteproc: qcom: Add capability to collect minidumps
->    remoteproc: qcom: Add minidump id for sm8150 modem remoteproc
->
->   drivers/remoteproc/qcom_minidump.h          |  64 +++++++++++++
->   drivers/remoteproc/qcom_q6v5_pas.c          | 107 ++++++++++++++++++++-
->   drivers/remoteproc/remoteproc_core.c        |   6 +-
->   drivers/remoteproc/remoteproc_coredump.c    | 138 ++++++++++++++++++++++++++++
->   drivers/remoteproc/remoteproc_elf_helpers.h |  27 ++++++
->   include/linux/remoteproc.h                  |   5 +
->   6 files changed, 344 insertions(+), 3 deletions(-)
->   create mode 100644 drivers/remoteproc/qcom_minidump.h
->
+
+Notes
+=====
+This is independent work of pca953x bindings:
+https://lore.kernel.org/lkml/20200916155715.21009-1-krzk@kernel.org/T/#u
+
+The DTS patches can be also applied independently.
+The bindings patches depend on first one, adding common schema.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (13):
+  dt-bindings: gpio: add common schema for GPIO controllers
+  dt-bindings: gpio: include common schema in GPIO controllers
+  dt-bindings: gpio: pl061: add missing properties and include common
+    schema
+  dt-bindings: gpio: fsl-imx-gpio: add i.MX ARMv6 and ARMv7 compatibles
+  dt-bindings: gpio: fsl-imx-gpio: add gpio-line-names
+  dt-bindings: gpio: gpio-vf610: fix iMX 7ULP compatible matching
+  dt-bindings: media: include common schema in GPIO controllers
+  dt-bindings: mfd: include common schema in GPIO controllers
+  dt-bindings: pinctrl: include common schema in GPIO controllers
+  ASoC: dt-bindings: zl38060: include common schema in GPIO controllers
+  arm64: dts: imx8mq-librem5: correct GPIO hog property
+  arm64: dts: imx8mq-librem5: align GPIO hog names with dtschema
+  ARM: dts: imx: align GPIO hog names with dtschema
+
+ .../bindings/gpio/brcm,xgs-iproc-gpio.yaml    |   3 +
+ .../bindings/gpio/fsl-imx-gpio.yaml           |  17 ++-
+ .../devicetree/bindings/gpio/gpio-common.yaml | 125 ++++++++++++++++++
+ .../devicetree/bindings/gpio/gpio-mxs.yaml    |   4 +
+ .../bindings/gpio/gpio-pca9570.yaml           |   3 +
+ .../devicetree/bindings/gpio/gpio-rda.yaml    |   3 +
+ .../devicetree/bindings/gpio/gpio-vf610.yaml  |  11 +-
+ .../devicetree/bindings/gpio/mrvl-gpio.yaml   |   1 +
+ .../devicetree/bindings/gpio/pl061-gpio.yaml  |   6 +
+ .../bindings/gpio/qcom,wcd934x-gpio.yaml      |   3 +
+ .../bindings/gpio/renesas,em-gio.yaml         |   3 +
+ .../bindings/gpio/renesas,rcar-gpio.yaml      |   3 +
+ .../devicetree/bindings/gpio/sifive,gpio.yaml |   3 +
+ .../bindings/gpio/snps,dw-apb-gpio.yaml       |   3 +
+ .../gpio/socionext,uniphier-gpio.yaml         |   3 +
+ .../bindings/gpio/xylon,logicvc-gpio.yaml     |   3 +
+ .../bindings/media/i2c/maxim,max9286.yaml     |   3 +
+ .../bindings/mfd/cirrus,madera.yaml           |   1 +
+ .../devicetree/bindings/mfd/max77650.yaml     |   3 +
+ .../bindings/mfd/rohm,bd71828-pmic.yaml       |   3 +
+ .../devicetree/bindings/mfd/st,stmfx.yaml     |   2 +
+ .../devicetree/bindings/mfd/wlf,arizona.yaml  |   1 +
+ .../pinctrl/actions,s500-pinctrl.yaml         |   3 +
+ .../pinctrl/allwinner,sun4i-a10-pinctrl.yaml  |   1 +
+ .../bindings/pinctrl/cirrus,lochnagar.yaml    |   3 +
+ .../bindings/pinctrl/ingenic,pinctrl.yaml     |   3 +
+ .../pinctrl/mediatek,mt6779-pinctrl.yaml      |   3 +
+ .../bindings/pinctrl/pinctrl-mt8192.yaml      |   3 +
+ .../pinctrl/qcom,ipq6018-pinctrl.yaml         |   3 +
+ .../pinctrl/qcom,msm8226-pinctrl.yaml         |   3 +
+ .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml |   3 +
+ .../pinctrl/renesas,rza2-pinctrl.yaml         |   3 +
+ .../bindings/pinctrl/st,stm32-pinctrl.yaml    |   3 +
+ .../devicetree/bindings/sound/zl38060.yaml    |   3 +
+ arch/arm/boot/dts/imx51-zii-rdu1.dts          |   2 +-
+ arch/arm/boot/dts/imx6qdl-zii-rdu2.dtsi       |   8 +-
+ arch/arm/boot/dts/imx6ul-ccimx6ulsbcpro.dts   |   2 +-
+ .../boot/dts/freescale/imx8mq-librem5.dtsi    |   4 +-
+ 38 files changed, 245 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/gpio/gpio-common.yaml
+
+-- 
+2.17.1
+
