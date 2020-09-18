@@ -2,134 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D229C27028E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 18:49:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 052172702E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:06:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726361AbgIRQtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 12:49:08 -0400
-Received: from so254-54.mailgun.net ([198.61.254.54]:27249 "EHLO
-        so254-54.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726343AbgIRQtH (ORCPT
+        id S1726044AbgIRRGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 13:06:22 -0400
+Received: from m42-11.mailgun.net ([69.72.42.11]:47640 "EHLO
+        m42-11.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726115AbgIRRGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 12:49:07 -0400
+        Fri, 18 Sep 2020 13:06:22 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600447747; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=+d2OSsMHEt+1k6yBECsil4G1Px+umDGHfE9fOGblTpk=;
- b=QjPZmrDhBx8l9Sa0zoUDklIVEe7RQ5ab69G4cjqeyx+tUzzIcEj6UWgi5UYpIKQBniIMxqxx
- fiN370TpgeCNWWvYH/dTTxsmHID+4x6LmodJ1WwK4DTxbHR5OwK+SDHjeMJsBhvPofr/2wiZ
- H9d2YJe+75cE+yQH7tF3UwxyixM=
-X-Mailgun-Sending-Ip: 198.61.254.54
+ s=smtp; t=1600448781; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=GvoHhNZXEhEePaycPGrMSPaqU1/ITiUda54Uc4ClNck=; b=ViwHZOyjbKAnYgJNL9fQqaVcO7wb1n1hayykZrTrxtbeJEzH9H8suR8+h9owMZuTDaQ47DUO
+ 3FKzNEgpI1TrKI0eyX9MMR3gb9pMQq1sMTySH98ya7Zxpzp4ZMejzuQbJK2poWlUogCq2o68
+ K0wG59ocHwQ+kjRV3K+QVc6YWzU=
+X-Mailgun-Sending-Ip: 69.72.42.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f64e50228e87a878b316be4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 16:49:06
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f64e8f9ae7ca421d2a55e52 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 17:06:01
  GMT
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2CA22C433CA; Fri, 18 Sep 2020 16:49:06 +0000 (UTC)
+        id 1C69FC433FF; Fri, 18 Sep 2020 17:06:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7BFBDC433CB;
-        Fri, 18 Sep 2020 16:49:05 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Sep 2020 09:49:05 -0700
-From:   bbhatt@codeaurora.org
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] bus: mhi: core: Remove warnings for missing
- MODULE_LICENSE()
-In-Reply-To: <6f7b6be3-f52d-b082-6065-c75e3d89d252@codeaurora.org>
-References: <1600381176-37604-1-git-send-email-bbhatt@codeaurora.org>
- <1600381176-37604-2-git-send-email-bbhatt@codeaurora.org>
- <6f7b6be3-f52d-b082-6065-c75e3d89d252@codeaurora.org>
-Message-ID: <0e34b5a2562b776ea410c80479107581@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A29BCC433C8;
+        Fri, 18 Sep 2020 17:05:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A29BCC433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     vsujithk <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH] Asoc: qcom: lpass-cpu: Enable MI2S BCLK and LRCLK together
+Date:   Fri, 18 Sep 2020 22:24:33 +0530
+Message-Id: <1600448073-6709-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-18 07:27, Jeffrey Hugo wrote:
-> On 9/17/2020 4:19 PM, Bhaumik Bhatt wrote:
->> When building MHI as a module, missing MODULE_LICENSE() warnings
->> are seen. Avoid them by adding the license and description
->> information for the files where the warnings are seen.
->> 
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>   drivers/bus/mhi/core/boot.c | 3 +++
->>   drivers/bus/mhi/core/main.c | 3 +++
->>   drivers/bus/mhi/core/pm.c   | 3 +++
->>   3 files changed, 9 insertions(+)
->> 
->> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
->> index 24422f5..78140cc 100644
->> --- a/drivers/bus/mhi/core/boot.c
->> +++ b/drivers/bus/mhi/core/boot.c
->> @@ -523,3 +523,6 @@ void mhi_fw_load_handler(struct mhi_controller 
->> *mhi_cntrl)
->>   error_alloc_fw_table:
->>   	release_firmware(firmware);
->>   }
->> +
->> +MODULE_LICENSE("GPL v2");
->> +MODULE_DESCRIPTION("MHI Host Interface");
->> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> index 2cff5dd..172026f 100644
->> --- a/drivers/bus/mhi/core/main.c
->> +++ b/drivers/bus/mhi/core/main.c
->> @@ -1533,3 +1533,6 @@ int mhi_poll(struct mhi_device *mhi_dev, u32 
->> budget)
->>   	return ret;
->>   }
->>   EXPORT_SYMBOL_GPL(mhi_poll);
->> +
->> +MODULE_LICENSE("GPL v2");
->> +MODULE_DESCRIPTION("MHI Host Interface");
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index ce4d969..72c3dbc 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -1150,3 +1150,6 @@ void mhi_device_put(struct mhi_device *mhi_dev)
->>   	read_unlock_bh(&mhi_cntrl->pm_lock);
->>   }
->>   EXPORT_SYMBOL_GPL(mhi_device_put);
->> +
->> +MODULE_LICENSE("GPL v2");
->> +MODULE_DESCRIPTION("MHI Host Interface");
->> 
-> 
-> I would expect you only need to add the MODULE_* once per module, in
-> which case main.c is probably the only place that needs it.
+From: vsujithk <vsujithk@codeaurora.org>
 
-Hi Jeff,
+Update lpass-cpu.c to enable I2S BCLK and LRCLK together.
+Remove BCLK enable in lpass_cpu_daiops_startup and
+add in lpass_cpu_daiops_trigger API.
 
-I thought so too. This is to fix below warnings seen when building MHI 
-as a MODULE:
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+ sound/soc/qcom/lpass-cpu.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-WARNING: modpost: missing MODULE_LICENSE() in 
-drivers/bus/mhi/core/main.o
-WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/pm.o
-WARNING: modpost: missing MODULE_LICENSE() in 
-drivers/bus/mhi/core/boot.o
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index 41a2470..8db2cdb 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -80,14 +80,6 @@ static int lpass_cpu_daiops_startup(struct snd_pcm_substream *substream,
+ 		dev_err(dai->dev, "error in enabling mi2s osr clk: %d\n", ret);
+ 		return ret;
+ 	}
+-
+-	ret = clk_prepare_enable(drvdata->mi2s_bit_clk[dai->driver->id]);
+-	if (ret) {
+-		dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
+-		clk_disable_unprepare(drvdata->mi2s_osr_clk[dai->driver->id]);
+-		return ret;
+-	}
+-
+ 	return 0;
+ }
+ 
+@@ -310,6 +302,14 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 		if (ret)
+ 			dev_err(dai->dev, "error writing to i2sctl reg: %d\n",
+ 				ret);
++
++		ret = clk_prepare_enable(drvdata->mi2s_bit_clk[id]);
++		if (ret) {
++			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
++			clk_disable_unprepare(drvdata->mi2s_osr_clk[id]);
++			return ret;
++		}
++
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-We've only had those in init.c so far.
-
-Thanks,
-Bhaumik
-
-'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,\na Linux Foundation Collaborative Project'
