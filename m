@@ -2,143 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F0F626F773
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 09:53:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9273226F9FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 12:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbgIRHxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 03:53:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37158 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726646AbgIRHxP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 03:53:15 -0400
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 06430235FC;
-        Fri, 18 Sep 2020 07:53:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600415594;
-        bh=zR4pC32CsRwkRMcQjTnnCp339wA8YZYmTzvhc8Ku3wQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=cZJCNtkfkHA0r0FeMIAWY7D+QPapfLaH15sFE1WNYM4PKyUdb33JlOgilSdSSTwM4
-         xGabXi2sfwLjYfFwquhkvjT02UVDctUBVqx+oQlovxOMWqP6oSQxOmeXlwiNQh93Do
-         /Vu58+Vdi5m6dZbWmFufI2IgJXtwo+Id3LfJFLZc=
-Received: by mail-ej1-f49.google.com with SMTP id lo4so6816003ejb.8;
-        Fri, 18 Sep 2020 00:53:13 -0700 (PDT)
-X-Gm-Message-State: AOAM5322x9vk1MhUHFVQGQWeaMtCYoBkJFKPRbrvliNpWhinsBqGAiVC
-        iw55FPvy/pQrybbdppR2VvjMxfww1o4jgfX5YsE=
-X-Google-Smtp-Source: ABdhPJz4h58zSa29o5A1o7MhoFoews9vi+zWZmYhOt2gWbPt5yeBvYS4l1uut8tLvrHP24ftCZlb9SA8h3ZMk81xBpI=
-X-Received: by 2002:a17:906:5008:: with SMTP id s8mr36525529ejj.408.1600415590292;
- Fri, 18 Sep 2020 00:53:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200917165301.23100-1-krzk@kernel.org> <20200917165301.23100-2-krzk@kernel.org>
- <20200917200936.GF3969@pendragon.ideasonboard.com>
-In-Reply-To: <20200917200936.GF3969@pendragon.ideasonboard.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Fri, 18 Sep 2020 09:52:57 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPc=o0vtU0VKE5b5Ro3nF=ra-p7UnbFfjj_++onw8MeSKQ@mail.gmail.com>
-Message-ID: <CAJKOXPc=o0vtU0VKE5b5Ro3nF=ra-p7UnbFfjj_++onw8MeSKQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/13] dt-bindings: gpio: add common schema for GPIO controllers
-To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Hoan Tran <hoan@os.amperecomputing.com>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Jacopo Mondi <jacopo+renesas@jmondi.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        =?UTF-8?Q?Niklas_S=C3=B6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Yash Shah <yash.shah@sifive.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        - <patches@opensource.cirrus.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Amelie Delaunay <amelie.delaunay@st.com>,
-        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Andy Teng <andy.teng@mediatek.com>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Chris Brandt <chris.brandt@renesas.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-unisoc@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-media@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1725941AbgIRKLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 06:11:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725874AbgIRKLJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Sep 2020 06:11:09 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFA8C06174A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 03:11:09 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id z9so4961895wmk.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 03:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=AVgBejU6PKGR4LfpM4yfP5XdNO6wVoUQaPlrdan1azc=;
+        b=BfFdpSh6I88rbRG6B4e5Cs8zmhXx3ja7UJiseS9ajgqFE5qakXBRoLj8Jp3HhJS5yG
+         r9WDP+T2LnrtKZCEjysfIcgVGhG+Jw9+nlciTT36nyJ/6gD7tUWrYL/GH8DRi10At7WO
+         8PIpiA6pcdBmhG2jDKwDzZe5j6Sf/a47u3+Dhu1rVc0CoGKqXnLrqP65MXtBk48sqiDS
+         Yg8JhHNXzmvDOQXtREk8VAIZeVE8omGzja8xTqZDMAVOegptJ8ktiN7lKNj8QB9cFBcg
+         a55safTSe/P571bjp6/Od/G7aMHNV9spYGaODA0+MlDKnBXnizRUkzPXVoFiBXVW+gMG
+         73Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=AVgBejU6PKGR4LfpM4yfP5XdNO6wVoUQaPlrdan1azc=;
+        b=TXDHAThWdwErW2K9p6NAoJkCaO6c9AcCtqVe9C1WtujmSBdCcpNhAzhG6cPyafmh+L
+         diywcmldNXIpshBp9dFPeDxhdmYAj+67mppoimfyTpJ7LlB/6RXuHNDXheYn3EPXBu7Y
+         GTATUHmW0lhp/dnOa4fC+xx8nR1A38JtLqIHjHjJCA40Ij2xylVnCVBuUUzRiZ7e4i0H
+         BiCyAHwkgOjNA435HF15CYR4tRtgH9O2mIWCkr0rxH/5uMLKyJfnr0ojnXb9JApeW4lA
+         WUySduGFi9cqck1soVDLj4xTzOp1s/+Aah+kkoNIrHmx3J2yVNAHWn6P+cMcyNQZz0o3
+         BT2g==
+X-Gm-Message-State: AOAM530nSX6rgP4VKCNmL5X8Ms2lZH2WeDJP/GSIY9cVHpjFr8weXpg9
+        Stl9B0qgHUZxX8xwROUu+swlC20XLHqVgg==
+X-Google-Smtp-Source: ABdhPJzUJKW+0m5SQEja3BikfktnOJlg7U2SeMNOBiFXgqEe44Rm+67b+cQ7PhOFZC5gJufjfKnxVg==
+X-Received: by 2002:a1c:dd45:: with SMTP id u66mr15117434wmg.117.1600423867788;
+        Fri, 18 Sep 2020 03:11:07 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:c407:647e:3839:49ce])
+        by smtp.gmail.com with ESMTPSA id z14sm4202939wrh.14.2020.09.18.03.11.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Sep 2020 03:11:07 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: Remove auto-start option
+Date:   Fri, 18 Sep 2020 12:16:59 +0200
+Message-Id: <1600424219-6674-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 17 Sep 2020 at 22:10, Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
->
-> Hi Krzysztof,
->
-> Thank you for the patch.
->
-> On Thu, Sep 17, 2020 at 06:52:49PM +0200, Krzysztof Kozlowski wrote:
-> > Convert parts of gpio.txt bindings into common dtschema file for GPIO
-> > controllers.
->
-> How about deleting the part that has been converted from gpio.txt ?
+There is really no point having an auto-start for channels.
+This is confusing for the device drivers, some have to enable the
+channels, others don't have... and waste resources (e.g. pre allocated
+buffers) that may never be used.
 
-I did not move everything from the gpio.txt and it is really nicely
-explained there. I think to leave it as it works as a overview/guide
-better than YAML.
+This is really up to the MHI device(channel) driver to manage the state
+of its channels.
 
->
-> > The schema enforces proper naming of GPIO controller nodes and GPIO
-> > hogs.
-> >
-> > The schema should be included by specific GPIO controllers bindings.
->
-> Instead of including it manually, could we use a conditional select: to
-> apply the schema automatically when a gpio-controller property is
-> present ?
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/init.c     | 9 ---------
+ drivers/bus/mhi/core/internal.h | 1 -
+ include/linux/mhi.h             | 2 --
+ net/qrtr/mhi.c                  | 5 +++++
+ 4 files changed, 5 insertions(+), 12 deletions(-)
 
-You mean the same way as generic schema for GPIO controllers work?
-This could be done but the point is to enforce the GPIO controller
-bindings in GPIO controllers, so also in cases when someone forgets to
-add "gpio-controller" property. Although, if given GPIO controller
-schema requires "gpio-controller" then indeed select would work...
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index ac19067..7aef6b7 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -727,7 +727,6 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+ 		mhi_chan->offload_ch = ch_cfg->offload_channel;
+ 		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
+ 		mhi_chan->pre_alloc = ch_cfg->auto_queue;
+-		mhi_chan->auto_start = ch_cfg->auto_start;
+ 
+ 		/*
+ 		 * If MHI host allocates buffers, then the channel direction
+@@ -1125,11 +1124,6 @@ static int mhi_driver_probe(struct device *dev)
+ 			goto exit_probe;
+ 
+ 		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
+-		if (ul_chan->auto_start) {
+-			ret = mhi_prepare_channel(mhi_cntrl, ul_chan);
+-			if (ret)
+-				goto exit_probe;
+-		}
+ 	}
+ 
+ 	ret = -EINVAL;
+@@ -1163,9 +1157,6 @@ static int mhi_driver_probe(struct device *dev)
+ 	if (ret)
+ 		goto exit_probe;
+ 
+-	if (dl_chan && dl_chan->auto_start)
+-		mhi_prepare_channel(mhi_cntrl, dl_chan);
+-
+ 	mhi_device_put(mhi_dev);
+ 
+ 	return ret;
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 5a81a42..73b52a0 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -563,7 +563,6 @@ struct mhi_chan {
+ 	bool configured;
+ 	bool offload_ch;
+ 	bool pre_alloc;
+-	bool auto_start;
+ 	bool wake_capable;
+ };
+ 
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 008b8f6..742dabe 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -214,7 +214,6 @@ enum mhi_db_brst_mode {
+  * @offload_channel: The client manages the channel completely
+  * @doorbell_mode_switch: Channel switches to doorbell mode on M0 transition
+  * @auto_queue: Framework will automatically queue buffers for DL traffic
+- * @auto_start: Automatically start (open) this channel
+  * @wake-capable: Channel capable of waking up the system
+  */
+ struct mhi_channel_config {
+@@ -232,7 +231,6 @@ struct mhi_channel_config {
+ 	bool offload_channel;
+ 	bool doorbell_mode_switch;
+ 	bool auto_queue;
+-	bool auto_start;
+ 	bool wake_capable;
+ };
+ 
+diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+index ff0c414..7100f0b 100644
+--- a/net/qrtr/mhi.c
++++ b/net/qrtr/mhi.c
+@@ -76,6 +76,11 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+ 	struct qrtr_mhi_dev *qdev;
+ 	int rc;
+ 
++	/* start channels */
++	rc = mhi_prepare_for_transfer(mhi_dev);
++	if (rc)
++		return rc;
++
+ 	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
+ 	if (!qdev)
+ 		return -ENOMEM;
+-- 
+2.7.4
 
-Best regards,
-Krzysztof
