@@ -2,115 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED72526EA0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 02:43:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7FBC26EA54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 03:12:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbgIRAnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Sep 2020 20:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725886AbgIRAnv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Sep 2020 20:43:51 -0400
-Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com [IPv6:2607:f8b0:4864:20::b42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B23C06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 17:43:51 -0700 (PDT)
-Received: by mail-yb1-xb42.google.com with SMTP id x8so3042813ybm.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Sep 2020 17:43:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+Fbuu+N/rr0QMGhmDlrnMnIzun18VD3BLmNAc5Myj9Y=;
-        b=g4Fh/zsrl3iWnIJC8Ych5c8ZwL8DA+JQOLZ71/Jw/2PKET0WMZAuabA2GJafRqKC0/
-         DNXkRuEp9RLUOuUSJxti9u4H8TxKgNFCWlRRv5tRPRiueyN1fKHF1e7mKgpZyi6QqpKM
-         T8Z5DMPR1BzSKK4ZVw0pdud+PlDZWwOZ3I/QEFSHpJjrFOJVeiKVOLMB+KNhHy8RrQwu
-         FNTZjI2uYgom6vvQvv9OkG6H8aLNhew6nhriGYI8zKTgS0DI/aM5RxRG9pSyNpWj4aIq
-         HuN/rhj3Ac5ceZ+8s0PapeKbdFR4MoOEvxwsdpQ0IY7kxAPAG3JVfJM4Y1fUNU4xkEwi
-         ObMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+Fbuu+N/rr0QMGhmDlrnMnIzun18VD3BLmNAc5Myj9Y=;
-        b=P1I6pv/mG9NUzhGD05oW8U8FruYaT3d2MSSRRDpkE1eoicoDcbUBpd0CJ7AQMovjhe
-         tcx5sonB223Jb98bXggh7Qsk+vTUInSkoVGtuXt+Ur/yCP/dho0zt6hGBKofkeIt496r
-         BSwIsHcWhqm/LB4ffJywxinWWUAkhu7luXQ09OHNHtW9zZGizvDvp48K72pRS8+wKgvi
-         KtrOsF4sSs1wLtqStAreiiYvgXZWVrRQdb+A+B+j1yYTC4jzUrvGekcTCMe2hCF4L1W3
-         lUm3Ul/vjSyxqoXtaxjm2pqtfDJ2FXBDgcZawJ0lYoqeMbbzSK1YxpM4YX7LuvqAYKJi
-         VxSw==
-X-Gm-Message-State: AOAM533QbJqgAJIb3ypuOij6HWmwJoTJXRfIc2bNzwqX5smoXdg7qJiM
-        i3tdALJvTl/ygLIaa9eaGEtsHuL8Nxn/DvrQDlnysw==
-X-Google-Smtp-Source: ABdhPJyN5VchFReE9lSL3fJdNDH+SyMJ1oU3sF0hfnq+46d3nFs9PMZTuIc7VwwpyCoZYngG1ngvU0DhlzbwQpHRoP4=
-X-Received: by 2002:a05:6902:725:: with SMTP id l5mr26247685ybt.346.1600389830440;
- Thu, 17 Sep 2020 17:43:50 -0700 (PDT)
+        id S1725987AbgIRBMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Sep 2020 21:12:54 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35]:36312 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725886AbgIRBMy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Sep 2020 21:12:54 -0400
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.59])
+        by Forcepoint Email with ESMTP id 84CE1DB575499A97B6FC;
+        Fri, 18 Sep 2020 09:12:52 +0800 (CST)
+Received: from huawei.com (10.175.127.227) by DGGEMS403-HUB.china.huawei.com
+ (10.3.19.203) with Microsoft SMTP Server id 14.3.487.0; Fri, 18 Sep 2020
+ 09:12:46 +0800
+From:   Yu Kuai <yukuai3@huawei.com>
+To:     <robdclark@gmail.com>, <will@kernel.org>, <joro@8bytes.org>
+CC:     <iommu@lists.linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <yukuai3@huawei.com>,
+        <yi.zhang@huawei.com>
+Subject: [PATCH] iommu/qcom: add missing put_device() call in qcom_iommu_of_xlate()
+Date:   Fri, 18 Sep 2020 09:13:57 +0800
+Message-ID: <20200918011357.909335-1-yukuai3@huawei.com>
+X-Mailer: git-send-email 2.25.4
 MIME-Version: 1.0
-References: <20200825170152.6434-1-georgi.djakov@linaro.org>
-In-Reply-To: <20200825170152.6434-1-georgi.djakov@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Thu, 17 Sep 2020 17:43:14 -0700
-Message-ID: <CAGETcx-N6FHK3dNmq8eSLoBoscBtHjSq=F6cepnCrrJrVuTV9g@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Add interconnect sync state support
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     Linux PM <linux-pm@vger.kernel.org>,
-        Mike Tipton <mdtipton@codeaurora.org>, okukatla@codeaurora.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.127.227]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: Saravana Kannan <saravanak@google.com>
+if of_find_device_by_node() succeed, qcom_iommu_of_xlate() doesn't have
+a corresponding put_device(). Thus add put_device() to fix the exception
+handling for this function implementation.
 
-to all 3 patches in the series.
+Fixes: e86d1aa8b60f ("iommu/arm-smmu: Move Arm SMMU drivers into their own subdirectory")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
--Saravana
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 9535a6af7553..7a9594d221e0 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -584,8 +584,10 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+ 	 * index into qcom_iommu->ctxs:
+ 	 */
+ 	if (WARN_ON(asid < 1) ||
+-	    WARN_ON(asid > qcom_iommu->num_ctxs))
++	    WARN_ON(asid > qcom_iommu->num_ctxs)) {
++		put_device(&iommu_pdev->dev);
+ 		return -EINVAL;
++	}
+ 
+ 	if (!dev_iommu_priv_get(dev)) {
+ 		dev_iommu_priv_set(dev, qcom_iommu);
+@@ -595,6 +597,7 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+ 		 * banks are ok, but multiple devices are not:
+ 		 */
+ 		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev)))
++			put_device(&iommu_pdev->dev);
+ 			return -EINVAL;
+ 	}
+ 
+-- 
+2.25.4
 
-On Tue, Aug 25, 2020 at 10:01 AM Georgi Djakov <georgi.djakov@linaro.org> wrote:
->
-> Bootloaders often leave some system resources enabled such as clocks,
-> regulators, interconnects etc. We want to keep these resources enabled
-> until all their consumers are probed. These resources are often shared,
-> so we must wait for all the consumers to come up, before deciding
-> whether to turn them off or change the configuration. This patchset is
-> trying to solve the above problem just for the on-chip interconnects.
->
-> The problem is solved by allowing the providers to implement the get_bw()
-> function which should return the current average/peak bandwidth. These are
-> used as floor values, that are enforced during boot while the requests from
-> all consumers are being collected. Then the sync_state() callback is used
-> to signal that all consumers have been probed, meaning that the floor
-> bandwidth is not needed anymore and the framework is ready to re-aggregate
-> and process all requests. If get_bw() is not implemented, the framework
-> will use INT_MAX as default bandwidth value.
->
-> v3:
-> * Go back to introducing the get_bw() function as in v1. (Saravana)
-> * If querying the current bandwidth is not supported, max out the
->   bandwidth. (Saravana)
-> * Use icc_sync_state also for sc7180.
->
-> v2: https://lore.kernel.org/r/20200722110139.24778-1-georgi.djakov@linaro.org/
-> * Support initial values for both average and peak bandwidth (Mike)
-> * Skip aggregating/setting for nodes that don't specify initial bw (Mike)
-> * Drop patch 2/4: Add get_bw() callback (Mike)
-> * Squash patches 3 and 4.
->
-> v1: https://lore.kernel.org/lkml/20200709110705.30359-1-georgi.djakov@linaro.org/
->
-> Georgi Djakov (3):
->   interconnect: Add get_bw() callback
->   interconnect: Add sync state support
->   interconnect: qcom: Use icc_sync_state
->
->  drivers/interconnect/core.c           | 67 +++++++++++++++++++++++++++
->  drivers/interconnect/qcom/osm-l3.c    |  1 +
->  drivers/interconnect/qcom/sc7180.c    |  1 +
->  drivers/interconnect/qcom/sdm845.c    |  1 +
->  include/linux/interconnect-provider.h |  7 +++
->  5 files changed, 77 insertions(+)
->
