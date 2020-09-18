@@ -2,182 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7203D27009B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 17:13:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E65A02700CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 17:20:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726285AbgIRPNZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 11:13:25 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:51224 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726154AbgIRPNZ (ORCPT
+        id S1726281AbgIRPUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 11:20:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35616 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726121AbgIRPUO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 11:13:25 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200918151323euoutp01c4a22d97b1c48944de850498dc9c192f~16YWyDbNg3189331893euoutp01N
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 15:13:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200918151323euoutp01c4a22d97b1c48944de850498dc9c192f~16YWyDbNg3189331893euoutp01N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1600442003;
-        bh=SZbHVV2JypCryt9GVj8eUqjOJnnk5VyYDZFqjnLzPdA=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=JTFat9C0WXn81ciROxXFIIcowHMhlvZRdjq59LEqVPJHlJZz/h+jE3sW8fhkbMUUf
-         zrz9Lq5reWgDIi/o0d664y65AQWogMlifALxhxPMCvhVSbfYRh9JQ4atYBuv/9UA/K
-         +7PD6bOm303iF+bVH3MJVI8bifoU8uAbpF63BJEU=
-Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20200918151322eucas1p154435b3ed506dda02cbde20320f59e9d~16YWSYSP81330713307eucas1p1D;
-        Fri, 18 Sep 2020 15:13:22 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges3new.samsung.com (EUCPMTA) with SMTP id BE.94.06318.29EC46F5; Fri, 18
-        Sep 2020 16:13:22 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20200918151322eucas1p236126959c3cc725132450b228701ee72~16YV6FGzN2444524445eucas1p2S;
-        Fri, 18 Sep 2020 15:13:22 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20200918151322eusmtrp2fd051ad885278f61b4ae44c30dc2a27d~16YV49JF20618906189eusmtrp2S;
-        Fri, 18 Sep 2020 15:13:22 +0000 (GMT)
-X-AuditID: cbfec7f5-371ff700000018ae-d9-5f64ce927644
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 35.52.06017.19EC46F5; Fri, 18
-        Sep 2020 16:13:21 +0100 (BST)
-Received: from [106.210.88.143] (unknown [106.210.88.143]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20200918151320eusmtip2208d181453ed3ef09a4f43c068dcffaa~16YUdkdOB0469904699eusmtip24;
-        Fri, 18 Sep 2020 15:13:20 +0000 (GMT)
-Subject: Re: [PATCH 00/18] Convert arch/arm to use iommu-dma
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     Robin Murphy <robin.murphy@arm.com>, hch@lst.de, joro@8bytes.org,
-        linux@armlinux.org.uk
-Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
-        kyungmin.park@samsung.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, vdumpa@nvidia.com, digetx@gmail.com,
-        matthias.bgg@gmail.com, yong.wu@mediatek.com,
-        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
-        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Message-ID: <693f4d91-7dd3-31e6-92b6-7ffa84dd3226@samsung.com>
-Date:   Fri, 18 Sep 2020 17:13:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
-        Thunderbird/68.12.0
+        Fri, 18 Sep 2020 11:20:14 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944B2C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 08:20:14 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id 185so7406069oie.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 08:20:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nJCca1Gpz/qntKkkfuhUuqPAs19Va9nMUQHb7GNjxCg=;
+        b=G0JQIiIhW4dKr073ygInqGVY5kUDcU8THtTlLrQPIHIrlwNpPWOojEhsaxVflOlROF
+         op5FB8vXuuCwPRKf04D2j486HVcIKrDbw8hIHvi5bY9XQ7EdeGncm2txHPe7puzA+6BI
+         e5Kzk6rZYBabdhTK6VTqSwzW93dXXdjwSBjgg4nMP5i/04aZ3UolON6FZVlCwfdYo7je
+         nS8ZXdGOCcdWuYQOhTLx3Fzy7Kf/21SMXSGUmIzrnsKTDZXvydeXQugMbSZWDk3aOkuo
+         cXf1w/3YUSVHVnAI+652d4V/vbz4rMEFnK1pqeNFrVtmRAj1kwXOWKOESAR3s+vqrEKM
+         VQpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nJCca1Gpz/qntKkkfuhUuqPAs19Va9nMUQHb7GNjxCg=;
+        b=U9HhMxR5AhcfwEWiawm8nkaD9Do9DWwnXyaZmCUMW+GoiHuVXjE0TA2M0u6Z032jWf
+         BkccOOsa4bBQ41GJPbng9eINSfnpz9pCpxOV+OCbsG08sLkNG1IG602Vqbo8HDf6JBDg
+         Va0gHGHQa0m+UN/unL0qcAWi9+p7GnJnmC9iJ2bCoArxa+B2CWh7C5CurEIH3AXZK1AB
+         COBsEyBi6I9Her9szOtoxge4a7cWNRX1ei08QRWThVWyULi4LAO2v+7E2bbwmtZn+NWd
+         5m7hfqt7IDJQdyD9i1VU58xM1SBxGyXddgOi/O1HP+w3ITDc5mtpBv8D4aD6Ok/4+E/v
+         mCyg==
+X-Gm-Message-State: AOAM532tvkb9ZNuj715iYmg/J7v6/JYi7psPtH0xedmU5UfY2WHnDnzr
+        u7n1eiOAkujh1FHF3bqPjY4GZg==
+X-Google-Smtp-Source: ABdhPJwxwD0KlJLfqNq5E0fE74Vl81bSoHj+6hUtjJSAc48pb3MwGBc1WyGkrk3bQn9hMvBPv9EyCw==
+X-Received: by 2002:aca:5903:: with SMTP id n3mr10026260oib.159.1600442412373;
+        Fri, 18 Sep 2020 08:20:12 -0700 (PDT)
+Received: from yoga ([2605:6000:e5cb:c100:7cad:6eff:fec8:37e4])
+        by smtp.gmail.com with ESMTPSA id l3sm3306211oom.18.2020.09.18.08.20.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Sep 2020 08:20:11 -0700 (PDT)
+Date:   Fri, 18 Sep 2020 10:20:09 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, Ajit Pandey <ajitp@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7180: Add lpass cpu node for I2S
+ driver
+Message-ID: <20200918152009.GQ1893@yoga>
+References: <1600435026-1876-1-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <bf32cdea-ee5b-1431-3b97-c0889acdacc6@samsung.com>
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0yTZxTG9373Emo+ipMzXNjWuCWaiCKavYmE3ZN3f5gsiybGRFi3fkEU
-        KuknOuaWVcBJO0VbM8Ci1SDGDbwwLpV7Q7V2BSkCiuhgdcLmysRiwE1B3Ww/2Pjvd55znpzz
-        vHkFWnOVixcyDTsko0GXpeWiGOflx/7lNr8+faXzQDz2j8wwuMt1n8HVD0YQvvYwxOFj5TaE
-        f6j2UNgWOMTgE661uNBewWBzeQ2Pu/Pv8dhsreRx7cgAi62ubh73Nx/l8P6aBhb3F/QiXNbT
-        TmHzlJ3D7u/aEL5dPc7h/MJk3DExyuK26XYWlx0OcrjytyIOP252MLi47WNcOLQGB2x1zNsJ
-        ZLTDQZEzjjOI9A/00sTavZw02Yd5Ul50hCW1VWaODA20ciTwrZcidZVfk8ODpxFpuWniSKHP
-        xZADBfc5UlxfhYh38AL1UcymqBS9lJW5UzKuSP0kakvD30tyQos+7+zrpUyoQ2NBKgHE1WCu
-        LqEsKErQiN8jmLzxiFaKKQQB0wSjFJMIDpb8RM9ZJjpLZxunEYz1HJ21hBDM7B1hw1OxYgp4
-        eu9GHJyYBJZxCxfmheJmmG58wocNtNjKgskWYMINtZgKp1pqIsyIr8Mvx5oi/KKYBpc778zO
-        xIDvyOhzFgSV+Bb86IoOy7T4ChQ0lNMKx8Gt0eORQCCWqsC37xKrnP0+NJ5roBSOhTFvPa/w
-        y/BP05yhAMGv/rO8UuxH0J9fhpSptTDkn+bCm2lxKZxvXqHI74BnuDUig7gABsdjlCMWgM1Z
-        SiuyGoq+mX3sN8DuPfff2o6rffQhpLXPS2afF8c+L479/70nEFOF4qRcOTtDkpMN0q5EWZct
-        5xoyEj/bnl2Lnv/zrmfeh42o/cmnbiQKSBut/sOhT9ewup1yXrYbgUBrF6rf7e5K06j1urwv
-        JOP2dGNuliS70WKB0capkyuCmzVihm6HtE2SciTjXJcSVPEmpDrVZmi2rHd6Uto148OrdoXe
-        vLd1z0FH13WNGzlbSOzJnoRLX+7WvSenvXY24avFVyouBH/PGby959WYnLtBhy9+Xf3G4zPr
-        3Bf3Pc3c2JpXetL351ZPUmjpJHk0pR37C1le+rAuWPUB9BVbz6cyiSUbeJ+18oU1q/U3on+2
-        ZdzEWMvIW3RJy2ijrPsX0InXyeMDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0hTYRjHe8/OOTtGi9Na9TK6cVIIoVOb6R5rmtWHTtCHLtSHrGy4w6yc
-        k3NmZBTNHKGzJI3Ktlo3LdI+mJdM09YsMzMLM5aFaeEig7wUWXRBU1fgtx/P8/898MCfUajf
-        UVpmT5pdlNJMqRw9lWwdae5eUvjMnLTs9GF41vubhFbfAAllX3oRvBwepOGCpxDBjbImAgp7
-        TpJwybcSnO4rJOR6ypXQdvSzEnILipVQ0RugoMDXpoSOuvM0HC+vpqAjux1B0fN7BOR+c9PQ
-        eLoBwbuyfhqOOqPAPxSkoOHXPQqKTn2iofhDDg0/67wk5DdsBmdXNPQUVpIJ84Wg30sIN703
-        kdARaFcIBW1LhFr3W6XgyTlHCRWlubTQFainhZ68ZkKoLD4inOq8joS7rx204GzxkcKJ7AFa
-        yK8qRUJzZw2xccZ23ijZMuziwhSbbI/jEnWg53WxwOuXx/K6KMPOFfpobmm80Sym7tkvSkvj
-        d/Mp1T/C0wdnH3jyop1wIL/ahcIYzC7HQ0/Oki40lVGzJQg7L2crQou5uOWMgwrxTPwn4KJD
-        oX6E60b6iPHFTNaIm9o/Tgg0q8Ou/vFQGKNhd+Jv18smWMHWU7ikXxuS7yN8dfTKhKxi43HJ
-        3XJynEk2AndfqJ3gWewu/PR4Hx3KzMAt54Jjc4YJY1fhW75poZsx2Fv5XhHiBTi72vOP5+A3
-        wYvESaR2T7LdkxT3JMU9SbmEyFKkETNkq8Uq63nZZJUz0ix8ss1agcbadfvRz6o7yDWwpRGx
-        DOKmqfq85iQ1ZdovZ1obEWYUnEa1pq11l1plNmUeFCVbkpSRKsqNKHrstwKFdlaybayrafYk
-        XbTOALE6Q5QhKga4Oaoc1r9DzVpMdnGfKKaL0n+PYMK0DrS4atHuZO4V72ww67v1XYPd0x8Y
-        /X+k0b1r7eWRlhvVs0s9ZJ4U3HYm3JlXkxnewTpWboW5QwHNvPrECG1Wa+Kh4WtNceSUT/cj
-        uc5lPz4WRaTHDA0/tGy2H6kZ3PT98Rrj+pIN7n1fdxxbN7ot/2Fn1peY1bUJI/m8hkjIYuIM
-        HCmnmHSRCkk2/QUeyKrJcwMAAA==
-X-CMS-MailID: 20200918151322eucas1p236126959c3cc725132450b228701ee72
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20200820150857eucas1p18f5f2ad87703a68b6ed20a090f7c1c57
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20200820150857eucas1p18f5f2ad87703a68b6ed20a090f7c1c57
-References: <CGME20200820150857eucas1p18f5f2ad87703a68b6ed20a090f7c1c57@eucas1p1.samsung.com>
-        <cover.1597931875.git.robin.murphy@arm.com>
-        <bf32cdea-ee5b-1431-3b97-c0889acdacc6@samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1600435026-1876-1-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
+On Fri 18 Sep 08:17 CDT 2020, Srinivasa Rao Mandadapu wrote:
 
-On 24.08.2020 13:40, Marek Szyprowski wrote:
-> On 20.08.2020 17:08, Robin Murphy wrote:
->> After 5 years or so of intending to get round to this, finally the
->> time comes! The changes themselves actualy turn out to be relatively
->> mechanical; the bigger concern appears to be how to get everything
->> merged across about 5 diffferent trees given the dependencies.
->>
->> I've lightly boot-tested things on Rockchip RK3288 and Exynos 4412
->> (Odroid-U3), to the degree that their display drivers should be using
->> IOMMU-backed buffers and don't explode (the Odroid doesn't manage to
->> send a working HDMI signal to the one monitor I have that it actually
->> detects, but that's a pre-existing condition...) Confirmation that the
->> Mediatek, OMAP and Tegra changes work will be most welcome.
->>
->> Patches are based on 5.9-rc1, branch available here:
->>
->>    git://linux-arm.org/linux-rm arm/dma
->
-> Well, my first proposal for the ARM and ARM64 DMA-mapping unification 
-> has been posted long time ago: https://lkml.org/lkml/2016/2/19/79
->
-> Thanks for resurrecting it! :)
->
-> I've tested this patchset on various ARM32bit Exynos based boards (not 
-> only Exynos4412) and most of them works fine after your conversion. 
-> However there are issues you cannot learn from the code.
->
-> Conversion of the Exynos DRM was straightforward (thanks!), but there 
-> are other Exynos drivers that depends on the old ARM implementation. 
-> The S5P-MFC (only for the v5 hardware) and Exynos4 FIMC-ISP drivers 
-> depends on the first-fit IOVA allocation algorithm in the old ARM 
-> DMA-mapping. This was the main reason I've didn't continue my initial 
-> conversion attempt.
->
-> Both drivers allocate a buffer for their firmware and then in the 
-> hardware registers address video buffers as an offset from the 
-> begginning of the firmware. This doesn't work when underlying 
-> DMA-mapping allocates IOVA with the last-fit algorithm, what the 
-> drivers/iommu/dma-iommu.c does. So far I didn't find a good solution 
-> for that issue.
->
-> I'm open for suggestions. One more limitation for the S5P-MFC driver 
-> is that the hardware is capable only for addressing 128MiB. They will 
-> probably need to call IOMMU API directly, but I would like to keep as 
-> much from the IOMMU/DMA-mapping code as possible.
+> From: Ajit Pandey <ajitp@codeaurora.org>
+> 
+> Add the I2S controller node to sc7180 dtsi.
+> Add pinmux for primary and secondary I2S.
+> 
+> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Just for the record. I've finally managed to add needed workarounds to 
-the both problematic Exynos4 drivers, so they work fine with this 
-patchset. It turned out that it wasn't that hard:
+Each s-o-b is a statement that this patch conforms to the license
+requirements of the Linux project. As such it describes the history of
+how this patch reached this point; starting with Ajit writing the patch,
+Cheng-Yi handling it, then you and finally Sujith.
 
-https://lore.kernel.org/linux-samsung-soc/20200918144833.14618-1-m.szyprowski@samsung.com/T/#t
+You sending the patch would indicate that you handled it last, so your
+certification should be last (and if Sujith handled the patch inbetween
+you should be listed twice).
 
-So from my side you have a green light to go ahead and switch ARM 32bit 
-to generic code. Time to say good bye to the one of my biggest 
-architecture related things merged once to mainline Linux. ;)
+Please read https://www.kernel.org/doc/html/latest/process/submitting-patches.html?highlight=certificate#sign-your-work-the-developer-s-certificate-of-origin
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Regards,
+Bjorn
 
+> ---
+> Changes since v1:
+>    -- Updated I2S pin control nodes  with grouping common pin controls
+>    -- Updated lpass_cpu node with proper control names
+> Changes since v2:
+>    -- The plement of lpass_cpu node is changed
+>  
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 69 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6678f1e..59c39cf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1742,6 +1742,45 @@
+>  				};
+>  			};
+>  
+> +			sec_mi2s_active: sec-mi2s-active {
+> +				pinmux {
+> +					pins = "gpio49", "gpio50", "gpio51";
+> +					function = "mi2s_1";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio49", "gpio50", "gpio51";;
+> +					drive-strength = <8>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+> +			pri_mi2s_active: pri-mi2s-active {
+> +				pinmux {
+> +					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+> +					function = "mi2s_0";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+> +					drive-strength = <8>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+> +			pri_mi2s_mclk_active: pri-mi2s-mclk-active {
+> +				pinmux {
+> +					pins = "gpio57";
+> +					function = "lpass_ext";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio57";
+> +					drive-strength = <8>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+>  			sdc1_on: sdc1-on {
+>  				pinconf-clk {
+>  					pins = "sdc1_clk";
+> @@ -3389,6 +3428,36 @@
+>  			#power-domain-cells = <1>;
+>  		};
+>  
+> +		lpass_cpu: lpass@62f00000 {
+> +			compatible = "qcom,sc7180-lpass-cpu";
+> +
+> +			reg = <0 0x62f00000 0 0x29000>;
+> +			reg-names = "lpass-lpaif";
+> +
+> +			iommus = <&apps_smmu 0x1020 0>;
+> +
+> +			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +
+> +			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
+> +
+> +			clock-names = "pcnoc-sway-clk", "audio-core",
+> +					"mclk0", "pcnoc-mport-clk",
+> +					"mi2s-bit-clk0", "mi2s-bit-clk1";
+> +
+> +
+> +			#sound-dai-cells = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "lpass-irq-lpaif";
+> +		};
+> +
+>  		lpass_hm: clock-controller@63000000 {
+>  			compatible = "qcom,sc7180-lpasshm";
+>  			reg = <0 0x63000000 0 0x28>;
+> -- 
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+> 
