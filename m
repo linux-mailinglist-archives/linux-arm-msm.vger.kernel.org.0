@@ -2,94 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 160992702F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:09:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACF55270312
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:18:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726333AbgIRRJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 13:09:55 -0400
-Received: from m42-11.mailgun.net ([69.72.42.11]:46441 "EHLO
-        m42-11.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbgIRRJz (ORCPT
+        id S1726044AbgIRRSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 13:18:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53796 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbgIRRSQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 13:09:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600448994; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=thyujIIB3eiKeskRUDzOVjH6lcM4CSCxYjc4gLe9/ZU=;
- b=rlSL2FescMNfhAOHeIJBuhXTqq5MtOTL4YdtC2KO1f8mHgK6djuH553824uTEmx3M+0aFXIX
- hZUP0B92sReSSOovpL4/lOhrB7do++rfSCpXKZ2LZamlKk0dLF2vPa9cApueKLoJd/eE8gvx
- 3WsxxjPbKgKZsyrKeAXj6l0g1LE=
-X-Mailgun-Sending-Ip: 69.72.42.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f64e99c4ab73023a70f57b2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 17:08:44
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0E77EC433FE; Fri, 18 Sep 2020 17:08:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 86C4CC433CB;
-        Fri, 18 Sep 2020 17:08:43 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Sep 2020 10:08:43 -0700
-From:   bbhatt@codeaurora.org
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/3] bus: mhi: core: Introduce debugfs entries for MHI
-In-Reply-To: <bf24b8fe-8ff3-4ff3-a1f0-c276dcc5832c@infradead.org>
+        Fri, 18 Sep 2020 13:18:16 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 803D2C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 10:18:16 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id bw23so678751pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 10:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7CLUrRFKwNrwTUyxJoKuleB6MYxxEKnOKzNF221gmC0=;
+        b=SCteN+WchU83TDktKoSQ3XWkRzDQcCljQpmVUWTABHX4PiW2kuTWnYt6v6ZFRQvdFW
+         nRGBw/xH92RJPO7iPmXAEIK21lPxjD4hLSCT2gFK72jkUzlOwDZpb1lEzaZMCPmJogP+
+         NHk6t8k94dWOzQz3eyJxo9P7moQjAWsUXZIEV93Vd53lQlkVWmr0khF3KFvOW3DfuZcq
+         7MW44efOKxCIGgUAgDLxSqGFa/0/nIbi3UDVEdNcvLQeIBYEUZsytbCVdhLYrbH/sLr7
+         sRIqVFzN+HQNGNLUCEiiKSY5lQ/4brngCZ3jpXZd1x966KkyajC+ezuhN2dpWqqkXBg3
+         KVig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7CLUrRFKwNrwTUyxJoKuleB6MYxxEKnOKzNF221gmC0=;
+        b=ulMELkyQT+5iBZnpGWs2Lo9ULoSWAZ10u+J2+PQDAG4qr2kjKoElzc+pW0fOY1ozeq
+         /JcwrykZux8yTprBy2SyDGGt8sYRprBPjGKgD4RCCTpG9cWTF7c808saMgM3mT7Ays5J
+         Gc4rCTzWMLFEzjle9tO+tjXhtOq5+hgpyz91hK5FfBYOWGBHl/ozqo0Pzuh0q6Wjd/so
+         ZleA7UShcx0q1/6REU5NIlC5H+yHHh1NbfnKoD+Q0CLCN48oDVQ4gOE3sZI9AMq2WRE6
+         d0/DBD8htrs0bmECAZGYFY+NaDxkgBAz0iMFbCxkNcFqRXhY/3avO9a+HxcoC9hUGI6p
+         5tdA==
+X-Gm-Message-State: AOAM533zQmUwzew4PLHs62CXTIrdSLFPr0/11YxmSZYkDtoeRI9vpUPN
+        iNQw13AxeiUIGhHBkv3gXrsG
+X-Google-Smtp-Source: ABdhPJzk9kdvRZxiiMzV1zqsWZeRBM7A2B/AF2DI/wS8ijsthwkryajYpn8Unuqb6jaaVi9yX4Y7/Q==
+X-Received: by 2002:a17:902:8e8c:b029:d1:e5f9:9f7 with SMTP id bg12-20020a1709028e8cb02900d1e5f909f7mr16243903plb.72.1600449495685;
+        Fri, 18 Sep 2020 10:18:15 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6291:66eb:7496:aa7a:b42d:458c])
+        by smtp.gmail.com with ESMTPSA id q11sm3656897pgj.92.2020.09.18.10.18.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Sep 2020 10:18:14 -0700 (PDT)
+Date:   Fri, 18 Sep 2020 22:48:09 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bbhatt@codeaurora.org
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/3] bus: mhi: core: Remove warnings for missing
+ MODULE_LICENSE()
+Message-ID: <20200918171809.GA3410@Mani-XPS-13-9360>
 References: <1600381176-37604-1-git-send-email-bbhatt@codeaurora.org>
- <1600381176-37604-3-git-send-email-bbhatt@codeaurora.org>
- <bf24b8fe-8ff3-4ff3-a1f0-c276dcc5832c@infradead.org>
-Message-ID: <59df7b450303542c498ff845ea171be4@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+ <1600381176-37604-2-git-send-email-bbhatt@codeaurora.org>
+ <6f7b6be3-f52d-b082-6065-c75e3d89d252@codeaurora.org>
+ <0e34b5a2562b776ea410c80479107581@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0e34b5a2562b776ea410c80479107581@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-17 16:36, Randy Dunlap wrote:
-> On 9/17/20 3:19 PM, Bhaumik Bhatt wrote:
->> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
->> index a8bd9bd..ae68347 100644
->> --- a/drivers/bus/mhi/Kconfig
->> +++ b/drivers/bus/mhi/Kconfig
->> @@ -12,3 +12,11 @@ config MHI_BUS
->>  	 communication protocol used by the host processors to control
->>  	 and communicate with modem devices over a high speed peripheral
->>  	 bus or shared memory.
->> +
->> +config MHI_BUS_DEBUG
->> +       bool "Debugfs support for the MHI bus"
->> +       depends on MHI_BUS && DEBUG_FS
->> +       help
->> +	 Enable debugfs support for use with the MHI transport. Allows
->> +	 reading and/or modifying some values within the MHI controller
->> +	 for debug and test purposes.
+On Fri, Sep 18, 2020 at 09:49:05AM -0700, bbhatt@codeaurora.org wrote:
+> On 2020-09-18 07:27, Jeffrey Hugo wrote:
+> > On 9/17/2020 4:19 PM, Bhaumik Bhatt wrote:
+> > > When building MHI as a module, missing MODULE_LICENSE() warnings
+> > > are seen. Avoid them by adding the license and description
+> > > information for the files where the warnings are seen.
+> > > 
+> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> > > ---
+> > >   drivers/bus/mhi/core/boot.c | 3 +++
+> > >   drivers/bus/mhi/core/main.c | 3 +++
+> > >   drivers/bus/mhi/core/pm.c   | 3 +++
+> > >   3 files changed, 9 insertions(+)
+> > > 
+> > > diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+> > > index 24422f5..78140cc 100644
+> > > --- a/drivers/bus/mhi/core/boot.c
+> > > +++ b/drivers/bus/mhi/core/boot.c
+> > > @@ -523,3 +523,6 @@ void mhi_fw_load_handler(struct mhi_controller
+> > > *mhi_cntrl)
+> > >   error_alloc_fw_table:
+> > >   	release_firmware(firmware);
+> > >   }
+> > > +
+> > > +MODULE_LICENSE("GPL v2");
+> > > +MODULE_DESCRIPTION("MHI Host Interface");
+> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> > > index 2cff5dd..172026f 100644
+> > > --- a/drivers/bus/mhi/core/main.c
+> > > +++ b/drivers/bus/mhi/core/main.c
+> > > @@ -1533,3 +1533,6 @@ int mhi_poll(struct mhi_device *mhi_dev, u32
+> > > budget)
+> > >   	return ret;
+> > >   }
+> > >   EXPORT_SYMBOL_GPL(mhi_poll);
+> > > +
+> > > +MODULE_LICENSE("GPL v2");
+> > > +MODULE_DESCRIPTION("MHI Host Interface");
+> > > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > > index ce4d969..72c3dbc 100644
+> > > --- a/drivers/bus/mhi/core/pm.c
+> > > +++ b/drivers/bus/mhi/core/pm.c
+> > > @@ -1150,3 +1150,6 @@ void mhi_device_put(struct mhi_device *mhi_dev)
+> > >   	read_unlock_bh(&mhi_cntrl->pm_lock);
+> > >   }
+> > >   EXPORT_SYMBOL_GPL(mhi_device_put);
+> > > +
+> > > +MODULE_LICENSE("GPL v2");
+> > > +MODULE_DESCRIPTION("MHI Host Interface");
+> > > 
+> > 
+> > I would expect you only need to add the MODULE_* once per module, in
+> > which case main.c is probably the only place that needs it.
 > 
-> from Documentation/process/coding-style.rst:
+> Hi Jeff,
 > 
-> """For all of the Kconfig* configuration files throughout the source 
-> tree,
-> the indentation is somewhat different.  Lines under a ``config`` 
-> definition
-> are indented with one tab, while help text is indented an additional 
-> two
-> spaces."""
+> I thought so too. This is to fix below warnings seen when building MHI as a
+> MODULE:
 > 
-> Several lines above use spaces instead of one tab...
-Thank you for pointing out. I will fix this.
+> WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/main.o
+> WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/pm.o
+> WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/boot.o
+> 
+> We've only had those in init.c so far.
+> 
+
+Can you please test below diff to see if it fixes the warning?
+
+diff --git a/drivers/bus/mhi/core/Makefile b/drivers/bus/mhi/core/Makefile
+index 66e2700c9032..bc1469778cf8 100644
+--- a/drivers/bus/mhi/core/Makefile
++++ b/drivers/bus/mhi/core/Makefile
+@@ -1,3 +1,3 @@
+-obj-$(CONFIG_MHI_BUS) := mhi.o
++obj-$(CONFIG_MHI_BUS) += mhi.o
+ 
+ mhi-y := init.o main.o pm.o boot.o
+
+Thanks,
+Mani
+
+> Thanks,
+> Bhaumik
+> 
+> 'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+> Forum,\na Linux Foundation Collaborative Project'
