@@ -2,91 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1612727071B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 22:31:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F29270782
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 22:52:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbgIRUbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 16:31:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55532 "EHLO
+        id S1726299AbgIRUwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 16:52:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726174AbgIRUbj (ORCPT
+        with ESMTP id S1726159AbgIRUwc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 16:31:39 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E1DEC0613CE;
-        Fri, 18 Sep 2020 13:31:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description;
-        bh=o9/imEnW9/JE981eQ7g+rdek3o0kI3zgkkujwrqFQ5I=; b=uDbL0HEBNBVE3o7olUIpMaBLYQ
-        rA+e3k9vQopqp7W66Ikv6hHym5E/XrfaZldc/HRXU4U/AnaY8Qg2jUg9h9ydIVzHHkFX7frMswbYi
-        KXLVDb5PppxYwwkgr6kN3m3/JWKm7PPj54xmVsm5uK3VGQaTiCiuhUnix2NgPfSUtR9Alu1R0ShKx
-        fWFUTKTN5dSEUkH4HcguiGdwS6bVo4MYX7sJ7c/tbOmBpK1t9NZjA0TEV/Aj3BRXDHXds/KFIyEzT
-        tOnTNqJStfxd+cSJzQaeBwlXhj1Q+12TJi54P5RYqEhyr8jOBX/lMVCv4LJumW/VbI+/K+3ie1STz
-        SfNm7rFQ==;
-Received: from [2601:1c0:6280:3f0::19c2]
-        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kJN2f-0006iy-5k; Fri, 18 Sep 2020 20:31:37 +0000
-Subject: Re: [PATCH v3 1/3] bus: mhi: Fix entries based on Kconfig coding
- style
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-References: <1600457992-18448-1-git-send-email-bbhatt@codeaurora.org>
- <1600457992-18448-2-git-send-email-bbhatt@codeaurora.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <200e7b72-cb62-b21d-72a6-767b4159353b@infradead.org>
-Date:   Fri, 18 Sep 2020 13:31:34 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Fri, 18 Sep 2020 16:52:32 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C61D6C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:52:31 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id e17so6504138wme.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5FMcTfB8bTNiA4IO/9hnI5vPpMpLqnjxtoFBZxrk7cE=;
+        b=xZbdn2brp8iJKt3mCiCe80a1m4D8Lb5T70pNABO2DKRoI+Br9p6grk2AdI3QUBUGH2
+         YOog8mw90sa9mYVJz75XfhY1Bn7/c/jcWPSOnjvpPnQCq7kS9AX/1MXQPj7Gw4SPyiVj
+         CXbQH6EYHJgGD0Eg5/Nmur2erzRkJ2CFwM/rughEpsc8ouzngFNj1DnT1RNvlhge5T/J
+         wkouoURDrYk0U8YQQeV0j+sAUu7Ex8vHgbvi7ACtNnRFD02UhFkA6DzAqcLcJzF04gvT
+         XYAI7CC1JQyTGFYwVtJsBX6cu91CrzeMPBVHEHVyDYMqAOxfkXVCBI4e9LLl1z2lHCXh
+         0zcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5FMcTfB8bTNiA4IO/9hnI5vPpMpLqnjxtoFBZxrk7cE=;
+        b=AEoS3nBcG17eBYdYPGo8sO+udNIbJbq+0+hB684W/TgzFbepB6Mjo8/CmxyJgJEzrN
+         fQTrOf6T9x0konHaoeXfMUd30faVZKge3aedoUa37REH+p6oh+UM5iz4hFEcjSV2KMt+
+         x3hCp4QGiZk83F0dmQ9t5crq7ttXF/Mu0R9/owyFf00BJ3L9Ftzirpv70LbhTnAHzelo
+         lMQnlrNXaB9lYwxEZdvGi98h5R5SRCKDAt+jnxcGFIHp1+D8eQtKdN9L4j1sKYBf2OjS
+         73aeaAb0nNWtxeocv64SHnOHcKWnWEFi0FCu7oOQHbMXBeyAsP0tL6nnDMWMOJGLaEd2
+         nxSQ==
+X-Gm-Message-State: AOAM531XWiukVSl03luMExPQZJ6Puom/gogRGz7tABjHygxXLVHVEpqv
+        yPoWudIXCkPhMruEYYifCo/Ojg==
+X-Google-Smtp-Source: ABdhPJz1s7iaFLlprcjzI6+V5+IneVUiLhkPjcqU9oGnTUsJuwN91xmDsjAo3grsZUsi2FAriERYNA==
+X-Received: by 2002:a1c:f008:: with SMTP id a8mr18211963wmb.155.1600462350313;
+        Fri, 18 Sep 2020 13:52:30 -0700 (PDT)
+Received: from localhost.localdomain (dh207-97-14.xnet.hr. [88.207.97.14])
+        by smtp.googlemail.com with ESMTPSA id z19sm6694041wmi.3.2020.09.18.13.52.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Sep 2020 13:52:29 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
+        davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Robert Marko <robert.marko@sartura.hr>
+Subject: [PATCH v2 0/2] net: mdio-ipq4019: add Clause 45 support
+Date:   Fri, 18 Sep 2020 22:52:20 +0200
+Message-Id: <20200918205222.2698102-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <1600457992-18448-2-git-send-email-bbhatt@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/18/20 12:39 PM, Bhaumik Bhatt wrote:
-> Kconfig coding style mandates use of tabs for the configuration
-> definition and an additional two spaces for the help text. Make the
-> required changes to the MHI Kconfig adhering to those guidelines.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+This patch series adds support for Clause 45 to the driver.
 
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
+While at it also change some defines to upper case to match rest of the driver.
 
-Thanks.
+Changes since v1:
+* Drop clock patches, these need further investigation and
+no user for non default configuration has been found
 
-> ---
->  drivers/bus/mhi/Kconfig | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-> index a8bd9bd..6677ccc 100644
-> --- a/drivers/bus/mhi/Kconfig
-> +++ b/drivers/bus/mhi/Kconfig
-> @@ -6,9 +6,9 @@
->  #
->  
->  config MHI_BUS
-> -       tristate "Modem Host Interface (MHI) bus"
-> -       help
-> -	 Bus driver for MHI protocol. Modem Host Interface (MHI) is a
-> -	 communication protocol used by the host processors to control
-> -	 and communicate with modem devices over a high speed peripheral
-> -	 bus or shared memory.
-> +	tristate "Modem Host Interface (MHI) bus"
-> +	help
-> +	  Bus driver for MHI protocol. Modem Host Interface (MHI) is a
-> +	  communication protocol used by the host processors to control
-> +	  and communicate with modem devices over a high speed peripheral
-> +	  bus or shared memory.
-> 
+Robert Marko (2):
+  net: mdio-ipq4019: change defines to upper case
+  net: mdio-ipq4019: add Clause 45 support
 
+ drivers/net/phy/mdio-ipq4019.c | 109 ++++++++++++++++++++++++++++-----
+ 1 file changed, 92 insertions(+), 17 deletions(-)
 
 -- 
-~Randy
+2.26.2
+
