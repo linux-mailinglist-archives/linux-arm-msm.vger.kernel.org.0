@@ -2,89 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A86D3270360
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:29:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CE5A27036C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:34:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726550AbgIRR3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 13:29:42 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:35352 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbgIRR3k (ORCPT
+        id S1726157AbgIRReX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 13:34:23 -0400
+Received: from so254-54.mailgun.net ([198.61.254.54]:12808 "EHLO
+        so254-54.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726118AbgIRReX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 13:29:40 -0400
-Received: by mail-io1-f65.google.com with SMTP id r9so7697402ioa.2;
-        Fri, 18 Sep 2020 10:29:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ny9tDH+nBQM6mJBprxM+c/wU9flvPjzymRh3lT0/kVk=;
-        b=KCwsV9b57CDbeQJu92upDEnQtRu71xe1oDAp0ENqkol2dpGViXlfateHKi4D2yZ+pp
-         RoxEBp9J65zG8atyEwO3lSLc+cpS3U/FdF3e1J+BO11Lu3S/6lwkjjAqMFKEOYB72iqT
-         sl2jBeoLZQ9UEIP0T4MrEBbn/dqCO3hvPLm3Gf3nSNY3cLCbp8f5kU07P6+hRx2HUVo+
-         HQq7tOtw8FZppcKfqHBh/NUO3I886sGdk1of72g4iqaKKqRoui1VJJtM3PVxSVCVwdnQ
-         ankKaxwcAAKoRYoBc1A8aLkbgSkEbRn0PGYc3TVmIuFQz2DCGRHALWDqLTzPllZtm9RK
-         s+1w==
-X-Gm-Message-State: AOAM533SyHh7oqzmx3dy8YeMc77rfeG9eV2fvnLvAWy1CMHAE6wKuXb1
-        hXACySwxVTyHjyhHH5PH1lKBx0T2GnwP
-X-Google-Smtp-Source: ABdhPJzLozBMYhtZYDqrpXIyir/PmouLlphXJhKeqvt/SJfp+lOEGVYC0ThUZCFwtGy6Xwq7htWmng==
-X-Received: by 2002:a05:6602:240c:: with SMTP id s12mr28010535ioa.5.1600450177899;
-        Fri, 18 Sep 2020 10:29:37 -0700 (PDT)
-Received: from xps15 ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id a20sm1987472ilq.57.2020.09.18.10.29.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 10:29:37 -0700 (PDT)
-Received: (nullmailer pid 3827896 invoked by uid 1000);
-        Fri, 18 Sep 2020 17:29:36 -0000
-Date:   Fri, 18 Sep 2020 11:29:36 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        sboyd@kernel.org, mturquette@baylibre.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH 2/4] dt-bindings: clock: Add support for LPASS Always ON
- Controller
-Message-ID: <20200918172936.GA3827721@bogus>
-References: <20200917132850.7730-1-srinivas.kandagatla@linaro.org>
- <20200917132850.7730-3-srinivas.kandagatla@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200917132850.7730-3-srinivas.kandagatla@linaro.org>
+        Fri, 18 Sep 2020 13:34:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600450462; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=q2e9iINiXn4aOr/7k6nZrE8i9XGigJzoqBndAZHpgGE=; b=ikHcftIKT9Z89WeZVcDPRSw695D8uKyM3Y8vwi77poSY+6+KExcKvempzPDafgcFzgk0fRUD
+ fdt51lWpeJmpv2TZyuAy9iBDVTrr9zGLcnDkvwPhUy5EiLSS9YjuE0AONbIIIofdB0Y5xRku
+ CbTuESngz3C7dM/Q/ZkVDutVsGE=
+X-Mailgun-Sending-Ip: 198.61.254.54
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f64ef8b6fe64d5a7fcb3abd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 17:34:03
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 28489C433F1; Fri, 18 Sep 2020 17:34:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 43923C433CA;
+        Fri, 18 Sep 2020 17:33:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 43923C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org
+Cc:     Ajit Pandey <ajitp@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH v4] arm64: dts: qcom: sc7180: Add lpass cpu node for I2S driver
+Date:   Fri, 18 Sep 2020 23:03:46 +0530
+Message-Id: <1600450426-14063-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 17 Sep 2020 14:28:48 +0100, Srinivas Kandagatla wrote:
-> Always ON Clock controller is a block inside LPASS which controls
-> 1 Glitch free muxes to LPASS codec Macros.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  .../bindings/clock/qcom,aoncc-sm8250.yaml     | 58 +++++++++++++++++++
->  .../clock/qcom,sm8250-lpass-aoncc.h           | 11 ++++
->  2 files changed, 69 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,aoncc-sm8250.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,sm8250-lpass-aoncc.h
-> 
+From: Ajit Pandey <ajitp@codeaurora.org>
 
+Add the I2S controller node to sc7180 dtsi.
+Add pinmux for primary and secondary I2S.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+Changes since v3:
+   -- The typo error fix
+Changes since v2:
+   -- The plement of lpass_cpu node is changed
+Changes since v1:
+   -- Updated I2S pin control nodes  with grouping common pin controls
+   -- Updated lpass_cpu node with proper control names
 
-Error: Documentation/devicetree/bindings/clock/qcom,aoncc-sm8250.example.dts:25.30-31 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/clock/qcom,aoncc-sm8250.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1366: dt_binding_check] Error 2
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 69 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
-
-See https://patchwork.ozlabs.org/patch/1366126
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure dt-schema is up to date:
-
-pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
-
-Please check and re-submit.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 6678f1e..427a4bf 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1742,6 +1742,45 @@
+ 				};
+ 			};
+ 
++			sec_mi2s_active: sec-mi2s-active {
++				pinmux {
++					pins = "gpio49", "gpio50", "gpio51";
++					function = "mi2s_1";
++				};
++
++				pinconf {
++					pins = "gpio49", "gpio50", "gpio51";
++					drive-strength = <8>;
++					bias-pull-up;
++				};
++			};
++
++			pri_mi2s_active: pri-mi2s-active {
++				pinmux {
++					pins = "gpio53", "gpio54", "gpio55", "gpio56";
++					function = "mi2s_0";
++				};
++
++				pinconf {
++					pins = "gpio53", "gpio54", "gpio55", "gpio56";
++					drive-strength = <8>;
++					bias-pull-up;
++				};
++			};
++
++			pri_mi2s_mclk_active: pri-mi2s-mclk-active {
++				pinmux {
++					pins = "gpio57";
++					function = "lpass_ext";
++				};
++
++				pinconf {
++					pins = "gpio57";
++					drive-strength = <8>;
++					bias-pull-up;
++				};
++			};
++
+ 			sdc1_on: sdc1-on {
+ 				pinconf-clk {
+ 					pins = "sdc1_clk";
+@@ -3389,6 +3428,36 @@
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		lpass_cpu: lpass@62f00000 {
++			compatible = "qcom,sc7180-lpass-cpu";
++
++			reg = <0 0x62f00000 0 0x29000>;
++			reg-names = "lpass-lpaif";
++
++			iommus = <&apps_smmu 0x1020 0>;
++
++			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
++
++			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
++				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
++				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
++				 <&lpasscc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
++				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
++				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
++
++			clock-names = "pcnoc-sway-clk", "audio-core",
++					"mclk0", "pcnoc-mport-clk",
++					"mi2s-bit-clk0", "mi2s-bit-clk1";
++
++
++			#sound-dai-cells = <1>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "lpass-irq-lpaif";
++		};
++
+ 		lpass_hm: clock-controller@63000000 {
+ 			compatible = "qcom,sc7180-lpasshm";
+ 			reg = <0 0x63000000 0 0x28>;
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
