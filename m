@@ -2,197 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E65A02700CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 17:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E338A27027D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 18:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726281AbgIRPUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 11:20:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbgIRPUO (ORCPT
+        id S1726304AbgIRQqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 12:46:38 -0400
+Received: from so254-54.mailgun.net ([198.61.254.54]:15319 "EHLO
+        so254-54.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726367AbgIRQqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 11:20:14 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944B2C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 08:20:14 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id 185so7406069oie.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 08:20:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nJCca1Gpz/qntKkkfuhUuqPAs19Va9nMUQHb7GNjxCg=;
-        b=G0JQIiIhW4dKr073ygInqGVY5kUDcU8THtTlLrQPIHIrlwNpPWOojEhsaxVflOlROF
-         op5FB8vXuuCwPRKf04D2j486HVcIKrDbw8hIHvi5bY9XQ7EdeGncm2txHPe7puzA+6BI
-         e5Kzk6rZYBabdhTK6VTqSwzW93dXXdjwSBjgg4nMP5i/04aZ3UolON6FZVlCwfdYo7je
-         nS8ZXdGOCcdWuYQOhTLx3Fzy7Kf/21SMXSGUmIzrnsKTDZXvydeXQugMbSZWDk3aOkuo
-         cXf1w/3YUSVHVnAI+652d4V/vbz4rMEFnK1pqeNFrVtmRAj1kwXOWKOESAR3s+vqrEKM
-         VQpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nJCca1Gpz/qntKkkfuhUuqPAs19Va9nMUQHb7GNjxCg=;
-        b=U9HhMxR5AhcfwEWiawm8nkaD9Do9DWwnXyaZmCUMW+GoiHuVXjE0TA2M0u6Z032jWf
-         BkccOOsa4bBQ41GJPbng9eINSfnpz9pCpxOV+OCbsG08sLkNG1IG602Vqbo8HDf6JBDg
-         Va0gHGHQa0m+UN/unL0qcAWi9+p7GnJnmC9iJ2bCoArxa+B2CWh7C5CurEIH3AXZK1AB
-         COBsEyBi6I9Her9szOtoxge4a7cWNRX1ei08QRWThVWyULi4LAO2v+7E2bbwmtZn+NWd
-         5m7hfqt7IDJQdyD9i1VU58xM1SBxGyXddgOi/O1HP+w3ITDc5mtpBv8D4aD6Ok/4+E/v
-         mCyg==
-X-Gm-Message-State: AOAM532tvkb9ZNuj715iYmg/J7v6/JYi7psPtH0xedmU5UfY2WHnDnzr
-        u7n1eiOAkujh1FHF3bqPjY4GZg==
-X-Google-Smtp-Source: ABdhPJwxwD0KlJLfqNq5E0fE74Vl81bSoHj+6hUtjJSAc48pb3MwGBc1WyGkrk3bQn9hMvBPv9EyCw==
-X-Received: by 2002:aca:5903:: with SMTP id n3mr10026260oib.159.1600442412373;
-        Fri, 18 Sep 2020 08:20:12 -0700 (PDT)
-Received: from yoga ([2605:6000:e5cb:c100:7cad:6eff:fec8:37e4])
-        by smtp.gmail.com with ESMTPSA id l3sm3306211oom.18.2020.09.18.08.20.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 08:20:11 -0700 (PDT)
-Date:   Fri, 18 Sep 2020 10:20:09 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, Ajit Pandey <ajitp@codeaurora.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+        Fri, 18 Sep 2020 12:46:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600447596; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=aDUDmyWvcWkfN3QFAfQxmB92TzviMMAi90RnbNQlrIo=; b=Y4zzGT7mIN7qJ0I9bRLNrV1Bx3KRmZ/+B+03fSDR2SbgPpArku906IrPoMMhxXoBVsB+MJXn
+ j0H7R0s6vbjeCuPFCMoo/Epeg9iPsho5T3OJ/5EtYblKOYmOmxRLwNDvSIJ83kaz4D32yTNc
+ kxKndVb1CmIz7DGYc6XQLZLs9E8=
+X-Mailgun-Sending-Ip: 198.61.254.54
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f64e464f1e3eb89c71cd391 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 16:46:28
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 91307C433FF; Fri, 18 Sep 2020 16:46:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [10.131.172.121] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A6DA4C433C8;
+        Fri, 18 Sep 2020 16:46:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A6DA4C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
 Subject: Re: [PATCH v3] arm64: dts: qcom: sc7180: Add lpass cpu node for I2S
  driver
-Message-ID: <20200918152009.GQ1893@yoga>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Ajit Pandey <ajitp@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 References: <1600435026-1876-1-git-send-email-srivasam@codeaurora.org>
+ <CAD=FV=WtSEB6-M8x564t=RuSEKHwH3YvcmuZ9VGpxY+5kcL7rA@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited
+Message-ID: <c55995fa-5233-b1c9-7c4c-13b5cd8fe178@codeaurora.org>
+Date:   Fri, 18 Sep 2020 22:16:21 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1600435026-1876-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <CAD=FV=WtSEB6-M8x564t=RuSEKHwH3YvcmuZ9VGpxY+5kcL7rA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 18 Sep 08:17 CDT 2020, Srinivasa Rao Mandadapu wrote:
+Thanks Mr. Doug for Review comments!!
 
-> From: Ajit Pandey <ajitp@codeaurora.org>
-> 
-> Add the I2S controller node to sc7180 dtsi.
-> Add pinmux for primary and secondary I2S.
-> 
-> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
-> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+On 9/18/2020 7:28 PM, Doug Anderson wrote:
+> Hi,
+>
+> On Fri, Sep 18, 2020 at 6:18 AM Srinivasa Rao Mandadapu
+> <srivasam@codeaurora.org> wrote:
+>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>> @@ -1742,6 +1742,45 @@
+>>                                  };
+>>                          };
+>>
+>> +                       sec_mi2s_active: sec-mi2s-active {
+>> +                               pinmux {
+>> +                                       pins = "gpio49", "gpio50", "gpio51";
+>> +                                       function = "mi2s_1";
+>> +                               };
+>> +
+>> +                               pinconf {
+>> +                                       pins = "gpio49", "gpio50", "gpio51";;
+> There are still two ";" on the above line.
+will fix this type error.
 
-Each s-o-b is a statement that this patch conforms to the license
-requirements of the Linux project. As such it describes the history of
-how this patch reached this point; starting with Ajit writing the patch,
-Cheng-Yi handling it, then you and finally Sujith.
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-You sending the patch would indicate that you handled it last, so your
-certification should be last (and if Sujith handled the patch inbetween
-you should be listed twice).
-
-Please read https://www.kernel.org/doc/html/latest/process/submitting-patches.html?highlight=certificate#sign-your-work-the-developer-s-certificate-of-origin
-
-Regards,
-Bjorn
-
-> ---
-> Changes since v1:
->    -- Updated I2S pin control nodes  with grouping common pin controls
->    -- Updated lpass_cpu node with proper control names
-> Changes since v2:
->    -- The plement of lpass_cpu node is changed
->  
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 69 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 69 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 6678f1e..59c39cf 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1742,6 +1742,45 @@
->  				};
->  			};
->  
-> +			sec_mi2s_active: sec-mi2s-active {
-> +				pinmux {
-> +					pins = "gpio49", "gpio50", "gpio51";
-> +					function = "mi2s_1";
-> +				};
-> +
-> +				pinconf {
-> +					pins = "gpio49", "gpio50", "gpio51";;
-> +					drive-strength = <8>;
-> +					bias-pull-up;
-> +				};
-> +			};
-> +
-> +			pri_mi2s_active: pri-mi2s-active {
-> +				pinmux {
-> +					pins = "gpio53", "gpio54", "gpio55", "gpio56";
-> +					function = "mi2s_0";
-> +				};
-> +
-> +				pinconf {
-> +					pins = "gpio53", "gpio54", "gpio55", "gpio56";
-> +					drive-strength = <8>;
-> +					bias-pull-up;
-> +				};
-> +			};
-> +
-> +			pri_mi2s_mclk_active: pri-mi2s-mclk-active {
-> +				pinmux {
-> +					pins = "gpio57";
-> +					function = "lpass_ext";
-> +				};
-> +
-> +				pinconf {
-> +					pins = "gpio57";
-> +					drive-strength = <8>;
-> +					bias-pull-up;
-> +				};
-> +			};
-> +
->  			sdc1_on: sdc1-on {
->  				pinconf-clk {
->  					pins = "sdc1_clk";
-> @@ -3389,6 +3428,36 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		lpass_cpu: lpass@62f00000 {
-> +			compatible = "qcom,sc7180-lpass-cpu";
-> +
-> +			reg = <0 0x62f00000 0 0x29000>;
-> +			reg-names = "lpass-lpaif";
-> +
-> +			iommus = <&apps_smmu 0x1020 0>;
-> +
-> +			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
-> +
-> +			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
-> +				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
-> +				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
-> +				 <&lpasscc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
-> +				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
-> +				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
-> +
-> +			clock-names = "pcnoc-sway-clk", "audio-core",
-> +					"mclk0", "pcnoc-mport-clk",
-> +					"mi2s-bit-clk0", "mi2s-bit-clk1";
-> +
-> +
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "lpass-irq-lpaif";
-> +		};
-> +
->  		lpass_hm: clock-controller@63000000 {
->  			compatible = "qcom,sc7180-lpasshm";
->  			reg = <0 0x63000000 0 0x28>;
-> -- 
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
