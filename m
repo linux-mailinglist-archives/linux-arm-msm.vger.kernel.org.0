@@ -2,168 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B807270458
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 20:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05334270484
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 21:02:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbgIRSsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 14:48:35 -0400
-Received: from m42-11.mailgun.net ([69.72.42.11]:56272 "EHLO
-        m42-11.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726168AbgIRSsc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 14:48:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600454911; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=I15lYOFQgP5KLwMoydnHHG3ATiZuNtYswFCmvUG0xyo=;
- b=UoHcSd2G1WAzl/TaJTyPl3Bwkt4POx0aC9j+UhFXSvLOPpgAR+SsTp12Wsull1gVHWaFuhA2
- o3z6Z4HWK6smTGqhaO1h9l8BD2Y7F+8MWkX4wZFnxbMPWwI6Qv1cyVi92IUEtzaSF4HdHha+
- a46ApnwvczMR9UswGGdK/cHarAI=
-X-Mailgun-Sending-Ip: 69.72.42.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f6500f6c4180d293b3726c4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 18:48:22
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5D063C433F1; Fri, 18 Sep 2020 18:48:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1726159AbgIRTB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 15:01:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56430 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726115AbgIRTB6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Sep 2020 15:01:58 -0400
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93856C433CA;
-        Fri, 18 Sep 2020 18:48:21 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AE02222208;
+        Fri, 18 Sep 2020 19:01:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600455717;
+        bh=rS84A/OaBg23yNAtPTq3plT5X3kOb7286omQM12f1Fk=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=lBQ48smIRQIhIDWuplFGl2mJEcnYqMPakqetKj4pW2yatfyCMH9c1wXgyli7z/ZWn
+         d39s0E0thPumFHv24BQtFlkwIcPw+9x6/8zHIf3wONcRQKvVaYgCAcAnNhkzELO5Ha
+         C8pkBB5efZA4/zZ+GSLRZGH835T6n/Un3UenVLJ8=
+Received: by mail-ot1-f42.google.com with SMTP id q21so6340787ota.8;
+        Fri, 18 Sep 2020 12:01:57 -0700 (PDT)
+X-Gm-Message-State: AOAM531Jb/tm6KXclqaZDWkbJ2BJma/eMT9KBJlFxRdIktggCP9VRyLt
+        pW+AkTVm6W0i660/j08UDyysUqQET85EG6fMwA==
+X-Google-Smtp-Source: ABdhPJy5SRe4iLnIuK1LSlYLAhKMK7cdeAyXWOah9n6KqXUDNjHoxqZWwPaLaSunMfwZS1MlOrEAELY5ORhtsHG4Pek=
+X-Received: by 2002:a9d:6ada:: with SMTP id m26mr10145370otq.192.1600455716990;
+ Fri, 18 Sep 2020 12:01:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Sep 2020 11:48:21 -0700
-From:   bbhatt@codeaurora.org
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] bus: mhi: core: Remove warnings for missing
- MODULE_LICENSE()
-In-Reply-To: <20200918171809.GA3410@Mani-XPS-13-9360>
-References: <1600381176-37604-1-git-send-email-bbhatt@codeaurora.org>
- <1600381176-37604-2-git-send-email-bbhatt@codeaurora.org>
- <6f7b6be3-f52d-b082-6065-c75e3d89d252@codeaurora.org>
- <0e34b5a2562b776ea410c80479107581@codeaurora.org>
- <20200918171809.GA3410@Mani-XPS-13-9360>
-Message-ID: <4506782e8bb9a50d80b4a40575ae532e@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <cover.1598939393.git.nguyenb@codeaurora.org> <0a9d395dc38433501f9652a9236856d0ac840b77.1598939393.git.nguyenb@codeaurora.org>
+ <20200914183505.GA357@bogus> <d332e61cea4fef237507f1404efa724a@codeaurora.org>
+In-Reply-To: <d332e61cea4fef237507f1404efa724a@codeaurora.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Fri, 18 Sep 2020 13:01:45 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+YV-GjAhVVHtgNz6xFR=bEgSwWKY+QGixRQJ5Ov75pag@mail.gmail.com>
+Message-ID: <CAL_Jsq+YV-GjAhVVHtgNz6xFR=bEgSwWKY+QGixRQJ5Ov75pag@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] scsi: dt-bindings: ufs: Add vcc-voltage-level for UFS
+To:     "Bao D. Nguyen" <nguyenb@codeaurora.org>
+Cc:     Can Guo <cang@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        SCSI <linux-scsi@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Avri Altman <Avri.Altman@wdc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-18 10:18, Manivannan Sadhasivam wrote:
-> On Fri, Sep 18, 2020 at 09:49:05AM -0700, bbhatt@codeaurora.org wrote:
->> On 2020-09-18 07:27, Jeffrey Hugo wrote:
->> > On 9/17/2020 4:19 PM, Bhaumik Bhatt wrote:
->> > > When building MHI as a module, missing MODULE_LICENSE() warnings
->> > > are seen. Avoid them by adding the license and description
->> > > information for the files where the warnings are seen.
->> > >
->> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> > > ---
->> > >   drivers/bus/mhi/core/boot.c | 3 +++
->> > >   drivers/bus/mhi/core/main.c | 3 +++
->> > >   drivers/bus/mhi/core/pm.c   | 3 +++
->> > >   3 files changed, 9 insertions(+)
->> > >
->> > > diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
->> > > index 24422f5..78140cc 100644
->> > > --- a/drivers/bus/mhi/core/boot.c
->> > > +++ b/drivers/bus/mhi/core/boot.c
->> > > @@ -523,3 +523,6 @@ void mhi_fw_load_handler(struct mhi_controller
->> > > *mhi_cntrl)
->> > >   error_alloc_fw_table:
->> > >   	release_firmware(firmware);
->> > >   }
->> > > +
->> > > +MODULE_LICENSE("GPL v2");
->> > > +MODULE_DESCRIPTION("MHI Host Interface");
->> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> > > index 2cff5dd..172026f 100644
->> > > --- a/drivers/bus/mhi/core/main.c
->> > > +++ b/drivers/bus/mhi/core/main.c
->> > > @@ -1533,3 +1533,6 @@ int mhi_poll(struct mhi_device *mhi_dev, u32
->> > > budget)
->> > >   	return ret;
->> > >   }
->> > >   EXPORT_SYMBOL_GPL(mhi_poll);
->> > > +
->> > > +MODULE_LICENSE("GPL v2");
->> > > +MODULE_DESCRIPTION("MHI Host Interface");
->> > > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> > > index ce4d969..72c3dbc 100644
->> > > --- a/drivers/bus/mhi/core/pm.c
->> > > +++ b/drivers/bus/mhi/core/pm.c
->> > > @@ -1150,3 +1150,6 @@ void mhi_device_put(struct mhi_device *mhi_dev)
->> > >   	read_unlock_bh(&mhi_cntrl->pm_lock);
->> > >   }
->> > >   EXPORT_SYMBOL_GPL(mhi_device_put);
->> > > +
->> > > +MODULE_LICENSE("GPL v2");
->> > > +MODULE_DESCRIPTION("MHI Host Interface");
->> > >
->> >
->> > I would expect you only need to add the MODULE_* once per module, in
->> > which case main.c is probably the only place that needs it.
->> 
->> Hi Jeff,
->> 
->> I thought so too. This is to fix below warnings seen when building MHI 
->> as a
->> MODULE:
->> 
->> WARNING: modpost: missing MODULE_LICENSE() in 
->> drivers/bus/mhi/core/main.o
->> WARNING: modpost: missing MODULE_LICENSE() in 
->> drivers/bus/mhi/core/pm.o
->> WARNING: modpost: missing MODULE_LICENSE() in 
->> drivers/bus/mhi/core/boot.o
->> 
->> We've only had those in init.c so far.
->> 
-> 
-> Can you please test below diff to see if it fixes the warning?
-> 
-> diff --git a/drivers/bus/mhi/core/Makefile 
-> b/drivers/bus/mhi/core/Makefile
-> index 66e2700c9032..bc1469778cf8 100644
-> --- a/drivers/bus/mhi/core/Makefile
-> +++ b/drivers/bus/mhi/core/Makefile
-> @@ -1,3 +1,3 @@
-> -obj-$(CONFIG_MHI_BUS) := mhi.o
-> +obj-$(CONFIG_MHI_BUS) += mhi.o
-> 
->  mhi-y := init.o main.o pm.o boot.o
-> 
-> Thanks,
-> Mani
-> 
->> Thanks,
->> Bhaumik
->> 
->> 'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
->> Forum,\na Linux Foundation Collaborative Project'
-Hi Mani,
+On Tue, Sep 15, 2020 at 2:10 AM <nguyenb@codeaurora.org> wrote:
+>
+> On 2020-09-14 11:35, Rob Herring wrote:
+> > On Mon, Aug 31, 2020 at 11:00:47PM -0700, Bao D. Nguyen wrote:
+> >> UFS's specifications supports a range of Vcc operating
+> >> voltage levels. Add documentation for the UFS's Vcc voltage
+> >> levels setting.
+> >>
+> >> Signed-off-by: Can Guo <cang@codeaurora.org>
+> >> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> >> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+> >> ---
+> >>  Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt | 2 ++
+> >>  1 file changed, 2 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> >> b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> >> index 415ccdd..7257b32 100644
+> >> --- a/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> >> +++ b/Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> >> @@ -23,6 +23,8 @@ Optional properties:
+> >>                            with "phys" attribute, provides phandle to
+> >> UFS PHY node
+> >>  - vdd-hba-supply        : phandle to UFS host controller supply
+> >> regulator node
+> >>  - vcc-supply            : phandle to VCC supply regulator node
+> >> +- vcc-voltage-level     : specifies voltage levels for VCC supply.
+> >> +                          Should be specified in pairs (min, max),
+> >> units uV.
+> >
+> > The expectation is the regulator pointed to by 'vcc-supply' has the
+> > voltage constraints. Those constraints are supposed to be the board
+> > constraints, not the regulator operating design constraints. If that
+> > doesn't work for your case, then it should be addressed in a common way
+> > for the regulator binding.
+> The UFS regulator has a min_uV and max_uV limits. Currently, the min and
+> max are hardcoded
+> to UFS2.1 Spec allowed values of 2.7V and 3.6V respectively.
+> With this change, I am trying to fix a couple issues:
+> 1. The 2.7V min value only applies to UFS2.1 devices. with UFS3.0+
+> devices, the VCC min should be 2.4V.
+> Hardcoding the min_uV to 2.7V does not work for UFS3.0+ devices.
 
-Yes I was just about to reply. I realized it was due to the Makefile 
-change. I have fixed and
-tested it. The warnings are gone now. I will remove the patch.
+Don't you know the device version attached and can adjust the voltage
+based on that? Or you have to set the voltage first?
 
-Thanks,
-Bhaumik
+> 2. Allow users to select a different Vcc voltage within the allowed
+> range.
+> Using the min value, the UFS device is operating at marginal Vcc
+> voltage.
+> In addition the PMIC and the board designs may add some variables
+> especially at extreme
+> temperatures. We observe stability issues when using the min Vcc
+> voltage.
 
-'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
-Forum,\na Linux Foundation Collaborative Project'
+Again, we have standard regulator properties for this already that you
+can tune per board.
+
+Rob
