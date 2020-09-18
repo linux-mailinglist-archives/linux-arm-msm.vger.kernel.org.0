@@ -2,118 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85F1926F6AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 09:22:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F0F626F773
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 09:53:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726093AbgIRHW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 03:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46158 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726022AbgIRHW5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 03:22:57 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A04BC06174A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 00:22:57 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id o5so4494918wrn.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 00:22:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=5V+8cud3rzv0k+ZRd43+2+GB8tXQrCGwtBK+wQfmnRs=;
-        b=Xm2quYGq2qVjvkQkQLL79kbjPahCfQQJpkbmKpkx5NjKq8Vy4gZx40qdPixJBYqDmB
-         0kplQ3EpJeEkcEsu5P3/GC0zesoLZodbaPq7t+q0r7da9veJ3f8Gety46ZbyhwZ6RekH
-         C82mwDqypyAUUqRxkbj6QuDbTGagsGjogsUW6nI5oPjsm2piaP+YBk1UKJ9Hjmncd84W
-         dqmh3Y5iazNUn4zKqbSY34ke10ZUpCBVVMJKbrmnzLn86qBLJwMWhNUQ9jHX8SnxL9N3
-         Lun6+RSg81nWdmhjjmO0p59ctG1GMBP4AV0SgVMI39vFiYQTEQAjwaMbl8pTZNgj961n
-         bhOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=5V+8cud3rzv0k+ZRd43+2+GB8tXQrCGwtBK+wQfmnRs=;
-        b=WTqyEoOH6gN/tyPM3WT7T9p7ssFzuVsq+yAf2X9mmzeEk1gJUxSmcylBshyZaICHid
-         mp3FECvPl2Y70M2ipBkMpOP3zaaEuOcZGYNUUe309kSrgm9cpVn0DuDYJ1rV7bB0JS1C
-         aug+F6kDn2uuKZqlEAF6MZgaEJ4wBDfWGNr4P5hojOctsJP5cdcRnvz7q+aVq8aOjuk+
-         L3BE6+vavTo4LLycIauOgkvpqz0XtA4RnJyLi+2Xe44bFUWqK4z3h4ysulvgzQZ6fvOO
-         o48z3pgX/i94l34abrBAsCXzcSwQwaRWrqRq0loCdDkJdy0Gmz0vaBsokJiZrGx9kJ3J
-         PTzg==
-X-Gm-Message-State: AOAM532Jc1q4fyBG2kntgXNTHgsN14S4eScchx7C0E2O6bNv2B0mSMbv
-        g1d64xf7okyPvp6EksW5FuvsD+bKXg7VCQ==
-X-Google-Smtp-Source: ABdhPJxl2TlVrZiYaYTgJWWjEIIE8blyuqSB+WNdeqaiU5dGnMhdtHF83DXuOXam9/v43uj3MgBlcA==
-X-Received: by 2002:adf:e9c3:: with SMTP id l3mr35669616wrn.63.1600413775807;
-        Fri, 18 Sep 2020 00:22:55 -0700 (PDT)
-Received: from localhost.localdomain ([2a01:e0a:490:8730:c407:647e:3839:49ce])
-        by smtp.gmail.com with ESMTPSA id e18sm3757015wra.36.2020.09.18.00.22.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Sep 2020 00:22:55 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] bus: mhi: core: Allow shared IRQ for event rings
-Date:   Fri, 18 Sep 2020 09:28:47 +0200
-Message-Id: <1600414128-5510-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        id S1726876AbgIRHxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 03:53:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37158 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726646AbgIRHxP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Sep 2020 03:53:15 -0400
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 06430235FC;
+        Fri, 18 Sep 2020 07:53:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600415594;
+        bh=zR4pC32CsRwkRMcQjTnnCp339wA8YZYmTzvhc8Ku3wQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=cZJCNtkfkHA0r0FeMIAWY7D+QPapfLaH15sFE1WNYM4PKyUdb33JlOgilSdSSTwM4
+         xGabXi2sfwLjYfFwquhkvjT02UVDctUBVqx+oQlovxOMWqP6oSQxOmeXlwiNQh93Do
+         /Vu58+Vdi5m6dZbWmFufI2IgJXtwo+Id3LfJFLZc=
+Received: by mail-ej1-f49.google.com with SMTP id lo4so6816003ejb.8;
+        Fri, 18 Sep 2020 00:53:13 -0700 (PDT)
+X-Gm-Message-State: AOAM5322x9vk1MhUHFVQGQWeaMtCYoBkJFKPRbrvliNpWhinsBqGAiVC
+        iw55FPvy/pQrybbdppR2VvjMxfww1o4jgfX5YsE=
+X-Google-Smtp-Source: ABdhPJz4h58zSa29o5A1o7MhoFoews9vi+zWZmYhOt2gWbPt5yeBvYS4l1uut8tLvrHP24ftCZlb9SA8h3ZMk81xBpI=
+X-Received: by 2002:a17:906:5008:: with SMTP id s8mr36525529ejj.408.1600415590292;
+ Fri, 18 Sep 2020 00:53:10 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200917165301.23100-1-krzk@kernel.org> <20200917165301.23100-2-krzk@kernel.org>
+ <20200917200936.GF3969@pendragon.ideasonboard.com>
+In-Reply-To: <20200917200936.GF3969@pendragon.ideasonboard.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Fri, 18 Sep 2020 09:52:57 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPc=o0vtU0VKE5b5Ro3nF=ra-p7UnbFfjj_++onw8MeSKQ@mail.gmail.com>
+Message-ID: <CAJKOXPc=o0vtU0VKE5b5Ro3nF=ra-p7UnbFfjj_++onw8MeSKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 01/13] dt-bindings: gpio: add common schema for GPIO controllers
+To:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Hoan Tran <hoan@os.amperecomputing.com>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Jacopo Mondi <jacopo+renesas@jmondi.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        =?UTF-8?Q?Niklas_S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Yash Shah <yash.shah@sifive.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        - <patches@opensource.cirrus.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Amelie Delaunay <amelie.delaunay@st.com>,
+        Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Andy Teng <andy.teng@mediatek.com>,
+        Sean Wang <sean.wang@mediatek.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Chris Brandt <chris.brandt@renesas.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-unisoc@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-media@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no requirement for using a dedicated IRQ per event ring.
-Some systems does not support multiple MSI vectors (e.g. intel
-without CONFIG_IRQ_REMAP), In that case the MHI controller can
-configure all the event rings to use the same interrupt (as fallback).
+On Thu, 17 Sep 2020 at 22:10, Laurent Pinchart
+<laurent.pinchart@ideasonboard.com> wrote:
+>
+> Hi Krzysztof,
+>
+> Thank you for the patch.
+>
+> On Thu, Sep 17, 2020 at 06:52:49PM +0200, Krzysztof Kozlowski wrote:
+> > Convert parts of gpio.txt bindings into common dtschema file for GPIO
+> > controllers.
+>
+> How about deleting the part that has been converted from gpio.txt ?
 
-Allow this by removing the nr_irqs = ev_ring test and add extra check
-in the irq_setup function.
+I did not move everything from the gpio.txt and it is really nicely
+explained there. I think to leave it as it works as a overview/guide
+better than YAML.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- drivers/bus/mhi/core/init.c | 10 ++++++++++
- drivers/bus/mhi/core/pm.c   |  3 ---
- 2 files changed, 10 insertions(+), 3 deletions(-)
+>
+> > The schema enforces proper naming of GPIO controller nodes and GPIO
+> > hogs.
+> >
+> > The schema should be included by specific GPIO controllers bindings.
+>
+> Instead of including it manually, could we use a conditional select: to
+> apply the schema automatically when a gpio-controller property is
+> present ?
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index d232938..ac19067 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -113,6 +113,9 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	int i, ret;
- 
-+	if (mhi_cntrl->nr_irqs < 1)
-+		return -EINVAL;
-+
- 	/* Setup BHI_INTVEC IRQ */
- 	ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
- 				   mhi_intvec_threaded_handler,
-@@ -125,6 +128,13 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
- 		if (mhi_event->offload_ev)
- 			continue;
- 
-+		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
-+			dev_err(dev, "irq %d not available for event ring\n",
-+				mhi_event->irq);
-+			ret = -EINVAL;
-+			goto error_request;
-+		}
-+
- 		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
- 				  mhi_irq_handler,
- 				  IRQF_SHARED | IRQF_NO_SUSPEND,
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index ce4d969..07efdbc 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -918,9 +918,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	dev_info(dev, "Requested to power ON\n");
- 
--	if (mhi_cntrl->nr_irqs < mhi_cntrl->total_ev_rings)
--		return -EINVAL;
--
- 	/* Supply default wake routines if not provided by controller driver */
- 	if (!mhi_cntrl->wake_get || !mhi_cntrl->wake_put ||
- 	    !mhi_cntrl->wake_toggle) {
--- 
-2.7.4
+You mean the same way as generic schema for GPIO controllers work?
+This could be done but the point is to enforce the GPIO controller
+bindings in GPIO controllers, so also in cases when someone forgets to
+add "gpio-controller" property. Although, if given GPIO controller
+schema requires "gpio-controller" then indeed select would work...
 
+Best regards,
+Krzysztof
