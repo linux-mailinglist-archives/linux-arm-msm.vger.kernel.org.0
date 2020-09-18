@@ -2,145 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 995A82703CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 20:14:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8473270430
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 20:39:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726118AbgIRSOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 14:14:44 -0400
-Received: from so254-54.mailgun.net ([198.61.254.54]:49362 "EHLO
-        so254-54.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbgIRSOn (ORCPT
+        id S1726199AbgIRSj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 14:39:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726115AbgIRSj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 14:14:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600452883; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=O75c0CeERH4wHTd3fACg+X+szRd6Gel5m6fuBbBhOqU=; b=JJFZAO50Z5A8w9U4XKM98UFPnd8371KhWXm4sYp5p7/K4j3Dt4cPuqOGWZj8FkufJBCQ9hYq
- jnO8AVxSvlE1aPrkoo5m6gBr9Mlj+WcAt2vdj4qf3ogaUgDpSgjd51pDhw1gTpYDBswcxQah
- FhfkAZvS0fkuE7uAPOswYQwrzYY=
-X-Mailgun-Sending-Ip: 198.61.254.54
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f64f8f2ea858627d565f7fc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 18:14:10
- GMT
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 115C9C433CB; Fri, 18 Sep 2020 18:14:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=ham autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 422A9C433C8;
-        Fri, 18 Sep 2020 18:14:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 422A9C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v6 4/4] bus: mhi: Add userspace client interface driver
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org
-References: <1600286167-4432-1-git-send-email-hemantk@codeaurora.org>
- <1600286167-4432-5-git-send-email-hemantk@codeaurora.org>
- <20200917164419.GC721081@kroah.com>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <4e60cac3-d680-93ea-922e-bd4f22cf3f0a@codeaurora.org>
-Date:   Fri, 18 Sep 2020 11:14:08 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        Fri, 18 Sep 2020 14:39:27 -0400
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A69AC0613CF;
+        Fri, 18 Sep 2020 11:39:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+        :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=wBs2XakhO2bKgWJ7UG5nJK64qnPI9aNOtXXnkZJGonM=; b=aRAPwiwZFtVlEL6VaLzZcZzbS4
+        0nMZsnWHLNFYzhb1CQVmdbM+FCYzKGRxkG+DkmKysnictu9BCTTzVixvUkon/PNlqQVgK7jywV/WO
+        Hi5YSe7bt8zG1xHBK52sjPEFRlaHvjKSxBHa/DFwXMGyqojRYpZEuxvLchxJR3oWpboqrvPfdoIbO
+        e4x+sxPSoi7RZ+0EPWOBobZGxG3bL20bwZYyWGxNRvx8fReFsNgBzNHkdKuef3IPvNia3cm2DYjmY
+        yRfOl1YPRQQLvUlOBqito+9QT5yBsvT2K19YAO2s38w0WGG2cn/WIcbYu4T3g4odV91NLMqGBmafd
+        Fpi5SZ2A==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1kJLHz-0005Ha-Ja; Fri, 18 Sep 2020 19:39:19 +0100
+Date:   Fri, 18 Sep 2020 19:39:19 +0100
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Thomas Pedersen <twp@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: Add ADM driver
+Message-ID: <20200918183919.GQ3411@earth.li>
+References: <20200916064326.GA13963@earth.li>
+ <20200918113443.GN2968@vkoul-mobl>
 MIME-Version: 1.0
-In-Reply-To: <20200917164419.GC721081@kroah.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200918113443.GN2968@vkoul-mobl>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+On Fri, Sep 18, 2020 at 05:04:43PM +0530, Vinod Koul wrote:
+> Hello Jonathan
+> 
+> On 16-09-20, 07:43, Jonathan McDowell wrote:
+> > From: Andy Gross <agross@codeaurora.org>
+> > 
+> > (I'm not sure how best to attribute this. It's originally from Andy
+> > Gross, the version I picked up was a later version from Thomas Pedersen,
+> > and I can't find clear indication of why the latest version wasn't
+> > applied. The device tree details were added back in September 2014. The
+> > driver is the missing piece in mainline for IPQ8064 NAND support and
+> > I've been using it successfully with my RB3011 device on 5.8+)
+> 
+> Yeah not sure why the driver was missed :(
+> Btw this note is helpful but not great for log, you should add it after
+> sob lines.
 
-On 9/17/20 9:44 AM, Greg KH wrote:
-> On Wed, Sep 16, 2020 at 12:56:07PM -0700, Hemant Kumar wrote:
-...
-...
->> +
->> +static int mhi_uci_open(struct inode *inode, struct file *filp)
->> +{
->> +	struct uci_dev *udev = NULL;
->> +	unsigned int minor = iminor(inode);
->> +	int ret = -EIO;
->> +	struct uci_buf *buf_itr, *tmp;
->> +	struct uci_chan *dl_chan;
->> +	struct mhi_device *mhi_dev;
->> +	struct device *dev;
->> +
->> +	mutex_lock(&uci_idr_mutex);
->> +	udev = idr_find(&uci_idr, minor);
->> +	mutex_unlock(&uci_idr_mutex);
->> +	if (!udev) {
->> +		pr_err("uci dev: minor %d not found\n", minor);
+Noted, I'll move it for v2.
+
+> > diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
+> > index 3bcb689162c6..75ee112ccea9 100644
+> > --- a/drivers/dma/qcom/Kconfig
+> > +++ b/drivers/dma/qcom/Kconfig
+> > @@ -28,3 +28,13 @@ config QCOM_HIDMA
+> >  	  (user to kernel, kernel to kernel, etc.).  It only supports
+> >  	  memcpy interface. The core is not intended for general
+> >  	  purpose slave DMA.
+> > +
+> > +config QCOM_ADM
 > 
-> Don't spam the kernel log for things that users can do :(
-i will change it to a pr_debug, as it helps to debug why open() is failing.
+> alphabetical sort please
+
+Ok.
+
+> > +	tristate "Qualcomm ADM support"
+> > +	depends on ARCH_QCOM || (COMPILE_TEST && OF && ARM)
 > 
->> +		ret = -ENODEV;
->> +		goto error_no_dev;
->> +	}
->> +
->> +	kref_get(&udev->ref_count);
+> Why COMPILE_TEST && OF? just COMPILE_TEST should be fine
+
+Turns out (ARCH_QCOM || COMPILE_TEST) && !64BIT is sufficient.
+
+> > +	select DMA_ENGINE
+> > +	select DMA_VIRTUAL_CHANNELS
+> > +	---help---
+> > +	  Enable support for the Qualcomm ADM DMA controller.  This controller
+> > +	  provides DMA capabilities for both general purpose and on-chip
+> > +	  peripheral devices.
+> > diff --git a/drivers/dma/qcom/Makefile b/drivers/dma/qcom/Makefile
+> > index 1ae92da88b0c..98a021fc6fe5 100644
+> > --- a/drivers/dma/qcom/Makefile
+> > +++ b/drivers/dma/qcom/Makefile
+> > @@ -4,3 +4,4 @@ obj-$(CONFIG_QCOM_HIDMA_MGMT) += hdma_mgmt.o
+> >  hdma_mgmt-objs	 := hidma_mgmt.o hidma_mgmt_sys.o
+> >  obj-$(CONFIG_QCOM_HIDMA) +=  hdma.o
+> >  hdma-objs        := hidma_ll.o hidma.o hidma_dbg.o
+> > +obj-$(CONFIG_QCOM_ADM) += qcom_adm.o
 > 
-> Why grab a reference?  What does that help with?
-In case open() and driver remove() are racing, it helps to prevent use 
-after free of udev in open().
+> alphabetical sort please
+
+Ok.
+
+> > +/* channel conf */
+> > +#define ADM_CH_CONF_SHADOW_EN		BIT(12)
+> > +#define ADM_CH_CONF_MPU_DISABLE		BIT(11)
+> > +#define ADM_CH_CONF_PERM_MPU_CONF	BIT(9)
+> > +#define ADM_CH_CONF_FORCE_RSLT_EN	BIT(7)
+> > +#define ADM_CH_CONF_SEC_DOMAIN(ee)	(((ee & 0x3) << 4) | ((ee & 0x4) << 11))
 > 
->> +
->> +	mhi_dev = udev->mhi_dev;
->> +	dev = &mhi_dev->dev;
->> +
->> +	mutex_lock(&udev->lock);
->> +	if (kref_read(&udev->ref_count) > 2) {
->> +		dev_dbg(dev, "Node already opened\n");
-> 
-> Nope, this is NOT doing what you think it is doing.
-> 
-> I told you before, do not try to keep a device node from being opened
-> multiple times, as it will always fail (think about passing file handles
-> around between programs...)
-> 
-> If userspace wants to do this, it will do it.  If your driver can't
-> handle that, that's fine, userspace will learn not to do that.  But the
-> kernel can not prevent this from happening.
-This check is not returning error, instead just setting 
-filp->private_data = udev; and return 0; It is skipping channel prepare
-and queuing of inbound buffers which was done by first open().
-> 
-> Also note that reading a kref value is a HUGE sign that the code is
-> incorrect, you should never care about the value of a reference.  Maybe
-> if it is 0, but that's a special case...
-In previous patch this was done using separate open reference count and
-after removing that i was relying on udev ref count. MHI channel prepare
-and buffer allocation for a give channel suppose to happen at open() and
-only for first open() call.
-> 
-> Anyway, given that you ignored my previous review comments here, I'm
-> loath to keep reviewing this patch series.  Please get others to review
-> it first before sending it back as I don't like being the only one doing
-> this type of work...
-Thanks for reviewing my patch series Greg and help making it a better 
-driver!
-> 
-> thanks,
-> 
-> greg k-h
-> 
+> USE FIELD_PREP for this?
+
+I can't see a way to neatly use FIELD_PREP for a split field; am I
+missing something?
+
+(other pieces fixed up for v2 as well; I'd run checkpatch but not with
+--strict. Will post once I've actually tested it.)
+
+J.
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+ Minorities are the foundation of  |  .''`.  Debian GNU/Linux Developer
+             society.              | : :' :  Happy to accept PGP signed
+                                   | `. `'   or encrypted mail - RSA
+                                   |   `-    key on the keyservers.
