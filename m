@@ -2,156 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACF55270312
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:18:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39FE527035D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 19:29:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbgIRRSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 13:18:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbgIRRSQ (ORCPT
+        id S1726384AbgIRR3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 13:29:37 -0400
+Received: from mail-il1-f193.google.com ([209.85.166.193]:43315 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbgIRR3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 13:18:16 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 803D2C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 10:18:16 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id bw23so678751pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 10:18:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7CLUrRFKwNrwTUyxJoKuleB6MYxxEKnOKzNF221gmC0=;
-        b=SCteN+WchU83TDktKoSQ3XWkRzDQcCljQpmVUWTABHX4PiW2kuTWnYt6v6ZFRQvdFW
-         nRGBw/xH92RJPO7iPmXAEIK21lPxjD4hLSCT2gFK72jkUzlOwDZpb1lEzaZMCPmJogP+
-         NHk6t8k94dWOzQz3eyJxo9P7moQjAWsUXZIEV93Vd53lQlkVWmr0khF3KFvOW3DfuZcq
-         7MW44efOKxCIGgUAgDLxSqGFa/0/nIbi3UDVEdNcvLQeIBYEUZsytbCVdhLYrbH/sLr7
-         sRIqVFzN+HQNGNLUCEiiKSY5lQ/4brngCZ3jpXZd1x966KkyajC+ezuhN2dpWqqkXBg3
-         KVig==
+        Fri, 18 Sep 2020 13:29:21 -0400
+Received: by mail-il1-f193.google.com with SMTP id a19so6968845ilq.10;
+        Fri, 18 Sep 2020 10:29:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7CLUrRFKwNrwTUyxJoKuleB6MYxxEKnOKzNF221gmC0=;
-        b=ulMELkyQT+5iBZnpGWs2Lo9ULoSWAZ10u+J2+PQDAG4qr2kjKoElzc+pW0fOY1ozeq
-         /JcwrykZux8yTprBy2SyDGGt8sYRprBPjGKgD4RCCTpG9cWTF7c808saMgM3mT7Ays5J
-         Gc4rCTzWMLFEzjle9tO+tjXhtOq5+hgpyz91hK5FfBYOWGBHl/ozqo0Pzuh0q6Wjd/so
-         ZleA7UShcx0q1/6REU5NIlC5H+yHHh1NbfnKoD+Q0CLCN48oDVQ4gOE3sZI9AMq2WRE6
-         d0/DBD8htrs0bmECAZGYFY+NaDxkgBAz0iMFbCxkNcFqRXhY/3avO9a+HxcoC9hUGI6p
-         5tdA==
-X-Gm-Message-State: AOAM533zQmUwzew4PLHs62CXTIrdSLFPr0/11YxmSZYkDtoeRI9vpUPN
-        iNQw13AxeiUIGhHBkv3gXrsG
-X-Google-Smtp-Source: ABdhPJzk9kdvRZxiiMzV1zqsWZeRBM7A2B/AF2DI/wS8ijsthwkryajYpn8Unuqb6jaaVi9yX4Y7/Q==
-X-Received: by 2002:a17:902:8e8c:b029:d1:e5f9:9f7 with SMTP id bg12-20020a1709028e8cb02900d1e5f909f7mr16243903plb.72.1600449495685;
-        Fri, 18 Sep 2020 10:18:15 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6291:66eb:7496:aa7a:b42d:458c])
-        by smtp.gmail.com with ESMTPSA id q11sm3656897pgj.92.2020.09.18.10.18.11
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Sep 2020 10:18:14 -0700 (PDT)
-Date:   Fri, 18 Sep 2020 22:48:09 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     bbhatt@codeaurora.org
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] bus: mhi: core: Remove warnings for missing
- MODULE_LICENSE()
-Message-ID: <20200918171809.GA3410@Mani-XPS-13-9360>
-References: <1600381176-37604-1-git-send-email-bbhatt@codeaurora.org>
- <1600381176-37604-2-git-send-email-bbhatt@codeaurora.org>
- <6f7b6be3-f52d-b082-6065-c75e3d89d252@codeaurora.org>
- <0e34b5a2562b776ea410c80479107581@codeaurora.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=Zp/UgCO4yesf32LjMFW5Twkm/7ZCg9X5k+hMqt07GWE=;
+        b=mAweGh+Mi8cf0Mh95dGkIFAFAvWVyVKcAv+xi4oN5e3O/sakqvuaiWQsRP8TmzNZIe
+         lVSn1Bfjv7dLJk2SOi1t02wIK42/ZtMT6VJWNkYEgjmi37mm3iqPyLLmRx5WjSqMxMVp
+         ABHXlyWRplAyfol5YHk9/QK/GkEICuiae2sQX4LrXXeIdbY6lvLXkNEffnxhYcL+fkwI
+         w/WpVzdJyAq+1+C1I/rJCEa33hT5Gl/UuhSzod8nDTeWdM/O4FxCnaUi03+j9L2Y3/io
+         3f7qaK2jtnnFl8sROiQE3MKU7rOBbpcVWI4IcBfw0dvKy2pjMtVn4K18np827wNaNZez
+         hO3w==
+X-Gm-Message-State: AOAM532pJ8zjqyawnMDX2HFu8zSZtt9q/ZOFVl48D+sp8bAX0c9vL4i+
+        MqAziB4IhACrucBXrhJ96Yz6dGHbID8k
+X-Google-Smtp-Source: ABdhPJxjQh+EEtw5uCfwtCt8JutOTg7mAqFPtFABcDPIUIAA/b1d2ssI/Aef7xdXn145949h96YVLg==
+X-Received: by 2002:a92:d48b:: with SMTP id p11mr26390866ilg.69.1600450159255;
+        Fri, 18 Sep 2020 10:29:19 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id o15sm1899367ilc.41.2020.09.18.10.29.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Sep 2020 10:29:18 -0700 (PDT)
+Received: (nullmailer pid 3827355 invoked by uid 1000);
+        Fri, 18 Sep 2020 17:29:17 -0000
+Date:   Fri, 18 Sep 2020 11:29:17 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, mturquette@baylibre.com,
+        bjorn.andersson@linaro.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: clock: Add support for LPASS Audio
+ Clock Controller
+Message-ID: <20200918172917.GA3827183@bogus>
+References: <20200917132850.7730-1-srinivas.kandagatla@linaro.org>
+ <20200917132850.7730-2-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0e34b5a2562b776ea410c80479107581@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200917132850.7730-2-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 09:49:05AM -0700, bbhatt@codeaurora.org wrote:
-> On 2020-09-18 07:27, Jeffrey Hugo wrote:
-> > On 9/17/2020 4:19 PM, Bhaumik Bhatt wrote:
-> > > When building MHI as a module, missing MODULE_LICENSE() warnings
-> > > are seen. Avoid them by adding the license and description
-> > > information for the files where the warnings are seen.
-> > > 
-> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > ---
-> > >   drivers/bus/mhi/core/boot.c | 3 +++
-> > >   drivers/bus/mhi/core/main.c | 3 +++
-> > >   drivers/bus/mhi/core/pm.c   | 3 +++
-> > >   3 files changed, 9 insertions(+)
-> > > 
-> > > diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> > > index 24422f5..78140cc 100644
-> > > --- a/drivers/bus/mhi/core/boot.c
-> > > +++ b/drivers/bus/mhi/core/boot.c
-> > > @@ -523,3 +523,6 @@ void mhi_fw_load_handler(struct mhi_controller
-> > > *mhi_cntrl)
-> > >   error_alloc_fw_table:
-> > >   	release_firmware(firmware);
-> > >   }
-> > > +
-> > > +MODULE_LICENSE("GPL v2");
-> > > +MODULE_DESCRIPTION("MHI Host Interface");
-> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> > > index 2cff5dd..172026f 100644
-> > > --- a/drivers/bus/mhi/core/main.c
-> > > +++ b/drivers/bus/mhi/core/main.c
-> > > @@ -1533,3 +1533,6 @@ int mhi_poll(struct mhi_device *mhi_dev, u32
-> > > budget)
-> > >   	return ret;
-> > >   }
-> > >   EXPORT_SYMBOL_GPL(mhi_poll);
-> > > +
-> > > +MODULE_LICENSE("GPL v2");
-> > > +MODULE_DESCRIPTION("MHI Host Interface");
-> > > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> > > index ce4d969..72c3dbc 100644
-> > > --- a/drivers/bus/mhi/core/pm.c
-> > > +++ b/drivers/bus/mhi/core/pm.c
-> > > @@ -1150,3 +1150,6 @@ void mhi_device_put(struct mhi_device *mhi_dev)
-> > >   	read_unlock_bh(&mhi_cntrl->pm_lock);
-> > >   }
-> > >   EXPORT_SYMBOL_GPL(mhi_device_put);
-> > > +
-> > > +MODULE_LICENSE("GPL v2");
-> > > +MODULE_DESCRIPTION("MHI Host Interface");
-> > > 
-> > 
-> > I would expect you only need to add the MODULE_* once per module, in
-> > which case main.c is probably the only place that needs it.
+On Thu, 17 Sep 2020 14:28:47 +0100, Srinivas Kandagatla wrote:
+> Audio Clock controller is a block inside LPASS which controls
+> 2 Glitch free muxes to LPASS codec Macros.
 > 
-> Hi Jeff,
-> 
-> I thought so too. This is to fix below warnings seen when building MHI as a
-> MODULE:
-> 
-> WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/main.o
-> WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/pm.o
-> WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/boot.o
-> 
-> We've only had those in init.c so far.
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  .../bindings/clock/qcom,audiocc-sm8250.yaml   | 58 +++++++++++++++++++
+>  .../clock/qcom,sm8250-lpass-audiocc.h         | 13 +++++
+>  2 files changed, 71 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,audiocc-sm8250.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm8250-lpass-audiocc.h
 > 
 
-Can you please test below diff to see if it fixes the warning?
 
-diff --git a/drivers/bus/mhi/core/Makefile b/drivers/bus/mhi/core/Makefile
-index 66e2700c9032..bc1469778cf8 100644
---- a/drivers/bus/mhi/core/Makefile
-+++ b/drivers/bus/mhi/core/Makefile
-@@ -1,3 +1,3 @@
--obj-$(CONFIG_MHI_BUS) := mhi.o
-+obj-$(CONFIG_MHI_BUS) += mhi.o
- 
- mhi-y := init.o main.o pm.o boot.o
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Thanks,
-Mani
+Error: Documentation/devicetree/bindings/clock/qcom,audiocc-sm8250.example.dts:25.30-31 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/clock/qcom,audiocc-sm8250.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1366: dt_binding_check] Error 2
 
-> Thanks,
-> Bhaumik
-> 
-> 'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
-> Forum,\na Linux Foundation Collaborative Project'
+
+See https://patchwork.ozlabs.org/patch/1366127
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
+
