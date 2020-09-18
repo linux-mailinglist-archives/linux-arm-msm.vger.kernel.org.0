@@ -2,137 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8473270430
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 20:39:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B807270458
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 20:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbgIRSj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 14:39:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38030 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbgIRSj1 (ORCPT
+        id S1726115AbgIRSsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 14:48:35 -0400
+Received: from m42-11.mailgun.net ([69.72.42.11]:56272 "EHLO
+        m42-11.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726168AbgIRSsc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 14:39:27 -0400
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A69AC0613CF;
-        Fri, 18 Sep 2020 11:39:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
-        :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=wBs2XakhO2bKgWJ7UG5nJK64qnPI9aNOtXXnkZJGonM=; b=aRAPwiwZFtVlEL6VaLzZcZzbS4
-        0nMZsnWHLNFYzhb1CQVmdbM+FCYzKGRxkG+DkmKysnictu9BCTTzVixvUkon/PNlqQVgK7jywV/WO
-        Hi5YSe7bt8zG1xHBK52sjPEFRlaHvjKSxBHa/DFwXMGyqojRYpZEuxvLchxJR3oWpboqrvPfdoIbO
-        e4x+sxPSoi7RZ+0EPWOBobZGxG3bL20bwZYyWGxNRvx8fReFsNgBzNHkdKuef3IPvNia3cm2DYjmY
-        yRfOl1YPRQQLvUlOBqito+9QT5yBsvT2K19YAO2s38w0WGG2cn/WIcbYu4T3g4odV91NLMqGBmafd
-        Fpi5SZ2A==;
-Received: from noodles by the.earth.li with local (Exim 4.92)
-        (envelope-from <noodles@earth.li>)
-        id 1kJLHz-0005Ha-Ja; Fri, 18 Sep 2020 19:39:19 +0100
-Date:   Fri, 18 Sep 2020 19:39:19 +0100
-From:   Jonathan McDowell <noodles@earth.li>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Thomas Pedersen <twp@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: Add ADM driver
-Message-ID: <20200918183919.GQ3411@earth.li>
-References: <20200916064326.GA13963@earth.li>
- <20200918113443.GN2968@vkoul-mobl>
+        Fri, 18 Sep 2020 14:48:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600454911; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=I15lYOFQgP5KLwMoydnHHG3ATiZuNtYswFCmvUG0xyo=;
+ b=UoHcSd2G1WAzl/TaJTyPl3Bwkt4POx0aC9j+UhFXSvLOPpgAR+SsTp12Wsull1gVHWaFuhA2
+ o3z6Z4HWK6smTGqhaO1h9l8BD2Y7F+8MWkX4wZFnxbMPWwI6Qv1cyVi92IUEtzaSF4HdHha+
+ a46ApnwvczMR9UswGGdK/cHarAI=
+X-Mailgun-Sending-Ip: 69.72.42.11
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f6500f6c4180d293b3726c4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Sep 2020 18:48:22
+ GMT
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5D063C433F1; Fri, 18 Sep 2020 18:48:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93856C433CA;
+        Fri, 18 Sep 2020 18:48:21 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200918113443.GN2968@vkoul-mobl>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 18 Sep 2020 11:48:21 -0700
+From:   bbhatt@codeaurora.org
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/3] bus: mhi: core: Remove warnings for missing
+ MODULE_LICENSE()
+In-Reply-To: <20200918171809.GA3410@Mani-XPS-13-9360>
+References: <1600381176-37604-1-git-send-email-bbhatt@codeaurora.org>
+ <1600381176-37604-2-git-send-email-bbhatt@codeaurora.org>
+ <6f7b6be3-f52d-b082-6065-c75e3d89d252@codeaurora.org>
+ <0e34b5a2562b776ea410c80479107581@codeaurora.org>
+ <20200918171809.GA3410@Mani-XPS-13-9360>
+Message-ID: <4506782e8bb9a50d80b4a40575ae532e@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 05:04:43PM +0530, Vinod Koul wrote:
-> Hello Jonathan
+On 2020-09-18 10:18, Manivannan Sadhasivam wrote:
+> On Fri, Sep 18, 2020 at 09:49:05AM -0700, bbhatt@codeaurora.org wrote:
+>> On 2020-09-18 07:27, Jeffrey Hugo wrote:
+>> > On 9/17/2020 4:19 PM, Bhaumik Bhatt wrote:
+>> > > When building MHI as a module, missing MODULE_LICENSE() warnings
+>> > > are seen. Avoid them by adding the license and description
+>> > > information for the files where the warnings are seen.
+>> > >
+>> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> > > ---
+>> > >   drivers/bus/mhi/core/boot.c | 3 +++
+>> > >   drivers/bus/mhi/core/main.c | 3 +++
+>> > >   drivers/bus/mhi/core/pm.c   | 3 +++
+>> > >   3 files changed, 9 insertions(+)
+>> > >
+>> > > diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+>> > > index 24422f5..78140cc 100644
+>> > > --- a/drivers/bus/mhi/core/boot.c
+>> > > +++ b/drivers/bus/mhi/core/boot.c
+>> > > @@ -523,3 +523,6 @@ void mhi_fw_load_handler(struct mhi_controller
+>> > > *mhi_cntrl)
+>> > >   error_alloc_fw_table:
+>> > >   	release_firmware(firmware);
+>> > >   }
+>> > > +
+>> > > +MODULE_LICENSE("GPL v2");
+>> > > +MODULE_DESCRIPTION("MHI Host Interface");
+>> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> > > index 2cff5dd..172026f 100644
+>> > > --- a/drivers/bus/mhi/core/main.c
+>> > > +++ b/drivers/bus/mhi/core/main.c
+>> > > @@ -1533,3 +1533,6 @@ int mhi_poll(struct mhi_device *mhi_dev, u32
+>> > > budget)
+>> > >   	return ret;
+>> > >   }
+>> > >   EXPORT_SYMBOL_GPL(mhi_poll);
+>> > > +
+>> > > +MODULE_LICENSE("GPL v2");
+>> > > +MODULE_DESCRIPTION("MHI Host Interface");
+>> > > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+>> > > index ce4d969..72c3dbc 100644
+>> > > --- a/drivers/bus/mhi/core/pm.c
+>> > > +++ b/drivers/bus/mhi/core/pm.c
+>> > > @@ -1150,3 +1150,6 @@ void mhi_device_put(struct mhi_device *mhi_dev)
+>> > >   	read_unlock_bh(&mhi_cntrl->pm_lock);
+>> > >   }
+>> > >   EXPORT_SYMBOL_GPL(mhi_device_put);
+>> > > +
+>> > > +MODULE_LICENSE("GPL v2");
+>> > > +MODULE_DESCRIPTION("MHI Host Interface");
+>> > >
+>> >
+>> > I would expect you only need to add the MODULE_* once per module, in
+>> > which case main.c is probably the only place that needs it.
+>> 
+>> Hi Jeff,
+>> 
+>> I thought so too. This is to fix below warnings seen when building MHI 
+>> as a
+>> MODULE:
+>> 
+>> WARNING: modpost: missing MODULE_LICENSE() in 
+>> drivers/bus/mhi/core/main.o
+>> WARNING: modpost: missing MODULE_LICENSE() in 
+>> drivers/bus/mhi/core/pm.o
+>> WARNING: modpost: missing MODULE_LICENSE() in 
+>> drivers/bus/mhi/core/boot.o
+>> 
+>> We've only had those in init.c so far.
+>> 
 > 
-> On 16-09-20, 07:43, Jonathan McDowell wrote:
-> > From: Andy Gross <agross@codeaurora.org>
-> > 
-> > (I'm not sure how best to attribute this. It's originally from Andy
-> > Gross, the version I picked up was a later version from Thomas Pedersen,
-> > and I can't find clear indication of why the latest version wasn't
-> > applied. The device tree details were added back in September 2014. The
-> > driver is the missing piece in mainline for IPQ8064 NAND support and
-> > I've been using it successfully with my RB3011 device on 5.8+)
+> Can you please test below diff to see if it fixes the warning?
 > 
-> Yeah not sure why the driver was missed :(
-> Btw this note is helpful but not great for log, you should add it after
-> sob lines.
-
-Noted, I'll move it for v2.
-
-> > diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
-> > index 3bcb689162c6..75ee112ccea9 100644
-> > --- a/drivers/dma/qcom/Kconfig
-> > +++ b/drivers/dma/qcom/Kconfig
-> > @@ -28,3 +28,13 @@ config QCOM_HIDMA
-> >  	  (user to kernel, kernel to kernel, etc.).  It only supports
-> >  	  memcpy interface. The core is not intended for general
-> >  	  purpose slave DMA.
-> > +
-> > +config QCOM_ADM
+> diff --git a/drivers/bus/mhi/core/Makefile 
+> b/drivers/bus/mhi/core/Makefile
+> index 66e2700c9032..bc1469778cf8 100644
+> --- a/drivers/bus/mhi/core/Makefile
+> +++ b/drivers/bus/mhi/core/Makefile
+> @@ -1,3 +1,3 @@
+> -obj-$(CONFIG_MHI_BUS) := mhi.o
+> +obj-$(CONFIG_MHI_BUS) += mhi.o
 > 
-> alphabetical sort please
-
-Ok.
-
-> > +	tristate "Qualcomm ADM support"
-> > +	depends on ARCH_QCOM || (COMPILE_TEST && OF && ARM)
+>  mhi-y := init.o main.o pm.o boot.o
 > 
-> Why COMPILE_TEST && OF? just COMPILE_TEST should be fine
-
-Turns out (ARCH_QCOM || COMPILE_TEST) && !64BIT is sufficient.
-
-> > +	select DMA_ENGINE
-> > +	select DMA_VIRTUAL_CHANNELS
-> > +	---help---
-> > +	  Enable support for the Qualcomm ADM DMA controller.  This controller
-> > +	  provides DMA capabilities for both general purpose and on-chip
-> > +	  peripheral devices.
-> > diff --git a/drivers/dma/qcom/Makefile b/drivers/dma/qcom/Makefile
-> > index 1ae92da88b0c..98a021fc6fe5 100644
-> > --- a/drivers/dma/qcom/Makefile
-> > +++ b/drivers/dma/qcom/Makefile
-> > @@ -4,3 +4,4 @@ obj-$(CONFIG_QCOM_HIDMA_MGMT) += hdma_mgmt.o
-> >  hdma_mgmt-objs	 := hidma_mgmt.o hidma_mgmt_sys.o
-> >  obj-$(CONFIG_QCOM_HIDMA) +=  hdma.o
-> >  hdma-objs        := hidma_ll.o hidma.o hidma_dbg.o
-> > +obj-$(CONFIG_QCOM_ADM) += qcom_adm.o
+> Thanks,
+> Mani
 > 
-> alphabetical sort please
+>> Thanks,
+>> Bhaumik
+>> 
+>> 'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+>> Forum,\na Linux Foundation Collaborative Project'
+Hi Mani,
 
-Ok.
+Yes I was just about to reply. I realized it was due to the Makefile 
+change. I have fixed and
+tested it. The warnings are gone now. I will remove the patch.
 
-> > +/* channel conf */
-> > +#define ADM_CH_CONF_SHADOW_EN		BIT(12)
-> > +#define ADM_CH_CONF_MPU_DISABLE		BIT(11)
-> > +#define ADM_CH_CONF_PERM_MPU_CONF	BIT(9)
-> > +#define ADM_CH_CONF_FORCE_RSLT_EN	BIT(7)
-> > +#define ADM_CH_CONF_SEC_DOMAIN(ee)	(((ee & 0x3) << 4) | ((ee & 0x4) << 11))
-> 
-> USE FIELD_PREP for this?
+Thanks,
+Bhaumik
 
-I can't see a way to neatly use FIELD_PREP for a split field; am I
-missing something?
-
-(other pieces fixed up for v2 as well; I'd run checkpatch but not with
---strict. Will post once I've actually tested it.)
-
-J.
-
--- 
- Minorities are the foundation of  |  .''`.  Debian GNU/Linux Developer
-             society.              | : :' :  Happy to accept PGP signed
-                                   | `. `'   or encrypted mail - RSA
-                                   |   `-    key on the keyservers.
+'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+Forum,\na Linux Foundation Collaborative Project'
