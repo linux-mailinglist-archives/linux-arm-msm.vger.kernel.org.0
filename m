@@ -2,238 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09738270788
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 22:53:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE84227079C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 22:56:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726522AbgIRUwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 16:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58796 "EHLO
+        id S1726276AbgIRU4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 16:56:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726507AbgIRUwh (ORCPT
+        with ESMTP id S1726187AbgIRU4l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 16:52:37 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72E0C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:52:36 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id m6so6903519wrn.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:52:36 -0700 (PDT)
+        Fri, 18 Sep 2020 16:56:41 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5603C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:56:40 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id d4so6502906wmd.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EhooCBlS96MjfCXJxgfsgQ1Ti7nqGrVAG9Oz5i5Ijzg=;
-        b=JZwZfS9O5YJSeHgrTbzTMuOYxQeJu0LEob1BU9fNFKfB+lzgR3dtgz9ZlcxYmWa++3
-         lGBbSbrMQrRxUE6tckD+uIhKlAfk77thfqHCdFDmFdAFi5kJiX6oPLfxXEq5K4Sq+PtT
-         oBTgVtuc2RmRWsKDonEypgsX8NtoluvzcECYomKgq0MOMdr1GpI5MTIH+zEarobYpIkm
-         +8YyB8mSbq34uVkDYZWsV4ZqVAz0W8gAablmAmjZDa+pK8RS78glMF/AG3//u/2jxzB0
-         g5OBWtUsalP2PLi7FmZ/fWADuWi2CFDK3aU9MyHGJRPQPoO55JPHvqOfldp2sPjipi2W
-         71qQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5FMcTfB8bTNiA4IO/9hnI5vPpMpLqnjxtoFBZxrk7cE=;
+        b=qcmtt6kWrvx7k2QXabW17gKwfCLKlGN7MuLc+YURLF3y8JXAUupyBXOWPXzkOgERbd
+         heeBiEW3ckdFgeef0CSxlO0KtTGJyCZaSvzAhOvhG3zYvWbJPbI5yMwKN8nZrtOObvNU
+         EFfpfdmivw7K23hKCFr3u8dgqBnonLw60yviyWEGBRhij5x2Sh2mshRSDU8YePF1rOSX
+         aufFYW2i4xmv1RqpXOiLpN3mPPuFd2/A7rSbYVdI7KpyYVyCeVMFBJhWxma+qfnzw4W+
+         ZkxjFzBtR43RbJ84MAq6elE6PZsg7F2l2Xv5N12JZ8zDFv4ME7WO/RHJNwQ9F42D5ifI
+         scbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EhooCBlS96MjfCXJxgfsgQ1Ti7nqGrVAG9Oz5i5Ijzg=;
-        b=Lke5zVB2Kdc3YeA8/OKnNG+TOf2rj3s4Ofd8buMW6iJVOb3JSK7k4cHkKH0yV0xLK7
-         tD6XS1SrpGjU5qg2TfFkxKWxnAy16NObVapbuKOAYRCmttEc61XoAPg0YwgtlbZjLXEI
-         mCPwTYymZAMqaymD40ojYA/Sr1Ke1TW3+SC4/QyXVI9azfazHb+zNqjzb3bIPf8BHqBq
-         fXJHjPSgGJiKZ++yLi8LOjo/H3aEb0hibjJyBfRRQ+QZ6JOYju4qNxHAIiPdWtQ/s6AD
-         ZBYIFruHD92v24mKKZ97pg3SsmbxMRTLvKJQtKeRrKIGZdleQHaTzcUUFcNQXT34cMJL
-         0qyQ==
-X-Gm-Message-State: AOAM533HJnXAwrhdIaxiJZyATEBr/gp8FdoEu4cdvCvoqR2/2VcQhnUp
-        Cl4WnGrShLPy5iZhvyQH+08lnTJ1CBYrUzVR
-X-Google-Smtp-Source: ABdhPJxfpnyNDvZKbfjkEH72vYZZ7jrP9x/RX5ezgQmSi26YnBX1aDTmIlTnJfmGOJ3hXXuel2B+Sg==
-X-Received: by 2002:adf:e44b:: with SMTP id t11mr17262050wrm.101.1600462355415;
-        Fri, 18 Sep 2020 13:52:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5FMcTfB8bTNiA4IO/9hnI5vPpMpLqnjxtoFBZxrk7cE=;
+        b=DP6NZNOcyDo7YIt/OBZrJw4Z9hKQ+usA3eNJs04MIoullj+wIcSlCS0NB/tWSDq1Ls
+         ebi64O0P3Ji+Q0e1icoAz7e9dBNUbyDsWERz19TidXwh27Is1/rfO5VWwAVz74LEW+Vt
+         8HkO/IdhyveTJshMhBn+0EaouNZAwRyuhqk0JyyzuoLJAkmPOlD5Vewa11Dtib9IAZ6Y
+         QLfA5AcCvcVXZ0+dUZLIIWbaNCRoXTwCaLM5Nqo9xwrMcYblEzXklN4DynKDZr+Jk0Xo
+         NYdV8h1oJQdx+4DpCDtV6ymKmvLAo/dlkReEnhvtI0aegXNLhsxWAUORKoFXKhojyegI
+         jqoQ==
+X-Gm-Message-State: AOAM531e4u61tuwCkh/q61sXlT2nu4/LjqqTy3ZWH7AwpjsrSirqTBiF
+        YO4yldVxM+XmTphK1HjhHgKK2w==
+X-Google-Smtp-Source: ABdhPJzhy9TPwdBBkuXxPyaO8NB4E6vvhIn4upUGvLx5IuAD7USpHZ5JEqUfW7aw5bNhdX0/RP/s0g==
+X-Received: by 2002:a1c:f20b:: with SMTP id s11mr17966461wmc.144.1600462599324;
+        Fri, 18 Sep 2020 13:56:39 -0700 (PDT)
 Received: from localhost.localdomain (dh207-97-14.xnet.hr. [88.207.97.14])
-        by smtp.googlemail.com with ESMTPSA id z19sm6694041wmi.3.2020.09.18.13.52.34
+        by smtp.googlemail.com with ESMTPSA id a17sm7661875wra.24.2020.09.18.13.56.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 13:52:34 -0700 (PDT)
+        Fri, 18 Sep 2020 13:56:38 -0700 (PDT)
 From:   Robert Marko <robert.marko@sartura.hr>
 To:     andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
         davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH v2 2/2] net: mdio-ipq4019: add Clause 45 support
-Date:   Fri, 18 Sep 2020 22:52:22 +0200
-Message-Id: <20200918205222.2698102-3-robert.marko@sartura.hr>
+Cc:     Robert Marko <robert.marko@sartura.hr>
+Subject: [PATCH v3 0/2] net: mdio-ipq4019: add Clause 45 support
+Date:   Fri, 18 Sep 2020 22:56:31 +0200
+Message-Id: <20200918205633.2698654-1-robert.marko@sartura.hr>
 X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200918205222.2698102-1-robert.marko@sartura.hr>
-References: <20200918205222.2698102-1-robert.marko@sartura.hr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While up-streaming the IPQ4019 driver it was thought that the controller had no Clause 45 support,
-but it actually does and its activated by writing a bit to the mode register.
+This patch series adds support for Clause 45 to the driver.
 
-So lets add it as newer SoC-s use the same controller and Clause 45 compliant PHY-s.
+While at it also change some defines to upper case to match rest of the driver.
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
- drivers/net/phy/mdio-ipq4019.c | 103 ++++++++++++++++++++++++++++-----
- 1 file changed, 89 insertions(+), 14 deletions(-)
+Changes since v1:
+* Drop clock patches, these need further investigation and
+no user for non default configuration has been found
 
-diff --git a/drivers/net/phy/mdio-ipq4019.c b/drivers/net/phy/mdio-ipq4019.c
-index 64b169e5a699..d507cfa77c9e 100644
---- a/drivers/net/phy/mdio-ipq4019.c
-+++ b/drivers/net/phy/mdio-ipq4019.c
-@@ -12,6 +12,7 @@
- #include <linux/phy.h>
- #include <linux/platform_device.h>
- 
-+#define MDIO_MODE_REG				0x40
- #define MDIO_ADDR_REG				0x44
- #define MDIO_DATA_WRITE_REG			0x48
- #define MDIO_DATA_READ_REG			0x4c
-@@ -20,6 +21,12 @@
- #define MDIO_CMD_ACCESS_START		BIT(8)
- #define MDIO_CMD_ACCESS_CODE_READ	0
- #define MDIO_CMD_ACCESS_CODE_WRITE	1
-+#define MDIO_CMD_ACCESS_CODE_C45_ADDR	0
-+#define MDIO_CMD_ACCESS_CODE_C45_WRITE	1
-+#define MDIO_CMD_ACCESS_CODE_C45_READ	2
-+
-+/* 0 = Clause 22, 1 = Clause 45 */
-+#define MDIO_MODE_BIT				BIT(8)
- 
- #define IPQ4019_MDIO_TIMEOUT	10000
- #define IPQ4019_MDIO_SLEEP		10
-@@ -41,19 +48,44 @@ static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
- static int ipq4019_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
- {
- 	struct ipq4019_mdio_data *priv = bus->priv;
-+	unsigned int data;
- 	unsigned int cmd;
- 
--	/* Reject clause 45 */
--	if (regnum & MII_ADDR_C45)
--		return -EOPNOTSUPP;
--
- 	if (ipq4019_mdio_wait_busy(bus))
- 		return -ETIMEDOUT;
- 
--	/* issue the phy address and reg */
--	writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+	/* Clause 45 support */
-+	if (regnum & MII_ADDR_C45) {
-+		unsigned int mmd = (regnum >> 16) & 0x1F;
-+		unsigned int reg = regnum & 0xFFFF;
-+
-+		/* Enter Clause 45 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
-+
-+		data |= MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and mmd */
-+		writel((mii_id << 8) | mmd, priv->membase + MDIO_ADDR_REG);
-+
-+		/* issue reg */
-+		writel(reg, priv->membase + MDIO_DATA_WRITE_REG);
-+
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_ADDR;
-+	} else {
-+		/* Enter Clause 22 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
- 
--	cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_READ;
-+		data &= ~MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and reg */
-+		writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_READ;
-+	}
- 
- 	/* issue read command */
- 	writel(cmd, priv->membase + MDIO_CMD_REG);
-@@ -62,6 +94,15 @@ static int ipq4019_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
- 	if (ipq4019_mdio_wait_busy(bus))
- 		return -ETIMEDOUT;
- 
-+	if (regnum & MII_ADDR_C45) {
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_READ;
-+
-+		writel(cmd, priv->membase + MDIO_CMD_REG);
-+
-+		if (ipq4019_mdio_wait_busy(bus))
-+			return -ETIMEDOUT;
-+	}
-+
- 	/* Read and return data */
- 	return readl(priv->membase + MDIO_DATA_READ_REG);
- }
-@@ -71,22 +112,56 @@ static int ipq4019_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
- {
- 	struct ipq4019_mdio_data *priv = bus->priv;
- 	unsigned int cmd;
--
--	/* Reject clause 45 */
--	if (regnum & MII_ADDR_C45)
--		return -EOPNOTSUPP;
-+	unsigned int data;
- 
- 	if (ipq4019_mdio_wait_busy(bus))
- 		return -ETIMEDOUT;
- 
--	/* issue the phy address and reg */
--	writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+	/* Clause 45 support */
-+	if (regnum & MII_ADDR_C45) {
-+		unsigned int mmd = (regnum >> 16) & 0x1F;
-+		unsigned int reg = regnum & 0xFFFF;
-+
-+		/* Enter Clause 45 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
-+
-+		data |= MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and mmd */
-+		writel((mii_id << 8) | mmd, priv->membase + MDIO_ADDR_REG);
-+
-+		/* issue reg */
-+		writel(reg, priv->membase + MDIO_DATA_WRITE_REG);
-+
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_ADDR;
-+
-+		writel(cmd, priv->membase + MDIO_CMD_REG);
-+
-+		if (ipq4019_mdio_wait_busy(bus))
-+			return -ETIMEDOUT;
-+	} else {
-+		/* Enter Clause 22 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
-+
-+		data &= ~MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and reg */
-+		writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+	}
- 
- 	/* issue write data */
- 	writel(value, priv->membase + MDIO_DATA_WRITE_REG);
- 
--	cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_WRITE;
- 	/* issue write command */
-+	if (regnum & MII_ADDR_C45)
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_WRITE;
-+	else
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_WRITE;
-+
- 	writel(cmd, priv->membase + MDIO_CMD_REG);
- 
- 	/* Wait write complete */
+Robert Marko (2):
+  net: mdio-ipq4019: change defines to upper case
+  net: mdio-ipq4019: add Clause 45 support
+
+ drivers/net/phy/mdio-ipq4019.c | 109 ++++++++++++++++++++++++++++-----
+ 1 file changed, 92 insertions(+), 17 deletions(-)
+
 -- 
 2.26.2
 
