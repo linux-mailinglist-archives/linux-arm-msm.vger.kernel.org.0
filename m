@@ -2,62 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5A4B271049
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 21:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 225EF27104C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 21:36:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726518AbgISTgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Sep 2020 15:36:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43482 "EHLO
+        id S1726617AbgISTgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Sep 2020 15:36:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbgISTgg (ORCPT
+        with ESMTP id S1726511AbgISTgi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Sep 2020 15:36:36 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1234BC0613CE;
-        Sat, 19 Sep 2020 12:36:36 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id u13so5555493pgh.1;
-        Sat, 19 Sep 2020 12:36:35 -0700 (PDT)
+        Sat, 19 Sep 2020 15:36:38 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 226AFC0613CE;
+        Sat, 19 Sep 2020 12:36:38 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id f2so5545277pgd.3;
+        Sat, 19 Sep 2020 12:36:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/hbQvW/WwycKpSevUDMADl+bOt9pZZjBbbmr6AnIEaI=;
-        b=LV6oI91d2+vZgOpBsE3f5tmaEmuLfA7Q10jGKazhq2CUGtcu8o0tldMSpggbrL5u7m
-         sO5twsUD4PMa9te7nppTnFJHrV2oD/h0QfLir3MaGmWZ+OEx/ViSJsie0+YbKww6hPts
-         A55PE8p4pOWQq/zHNIvzaRBXJ3OJL0jLKqQr9Z6WlEeEGa54bzoxNrk0au9GK8T0e4Al
-         fvkRM0ECxrsqQ5f/aGK9ZUTPAwPKSrAcNKN7SNl1oRXr0DRcGg9kizSn6fbBQLZ68Z61
-         iZkJ5p/0sgZZryPhSTJRgJzXioKskcTnmyJY7QY+yr4WGH2U9FxZ0v6AKNvXKVewCdQN
-         iySg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7VsdxD+1OUY1iuOfImGtGZsxp93pIxtgiAELnGBIf8o=;
+        b=CvFnInfCybqLqP+tNr86/LOeDZ/1iIdJWcGulCo/xLwBSujQolgiXW2EBmO/2FJa44
+         S3tFBmDs4uSgRkDRTT3Knknj/t/JDLT1Wt7bqwCKVBr5KSpWpAf6qV6yZPL05aWUSr43
+         gc0hH8x8d9qI8v00skwhTHs6B5IjgZ+XAavj1OnrhDMS4IXWNrlyKw3gVv3wGl7mJBU7
+         u0Rn70DNl3/7jqM041w07g1NIZKyaYQrAZPH0yGqVGVPDlJ3Z3vkeg/Ndc9gDw0yJf8l
+         RkoMibyK7xtSzcVVZbBP0YsbfvHUT5DW27eIwRaUVCUht9GRLJcvmXbnIfSZdrXS9NEt
+         YbfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/hbQvW/WwycKpSevUDMADl+bOt9pZZjBbbmr6AnIEaI=;
-        b=KEci1CqHMJnwbtGx+COXpyfmzYPdT+6NQZMPoW1oURNDXpcF7aqNwdkboyUnnS7p0o
-         yAgKYyy/wE/Oq+mP2XfH7Vri1gL5JRPbf/cAmc92YuoWI6VtoHGGzm+KN0I7IAHCW4X/
-         t9mm0DG9lhXN+hfEbGCxBSrwYP7P5LOf32qAF3YTrzpywH1PcpqSMhZU2GJrhIyugBbe
-         AVRsymqYWn5CvlLz2CdkVXCeDVrPKFnWk25VLJxkOGWFZtwErc7ewQKm6K8V83cgrR89
-         Gxz93y1jiuVyJVsE8BxgFwynVWjLfCkpu+HkR5vfBGaFpupKfdNINnT+vAIyjKZagdlo
-         hcnA==
-X-Gm-Message-State: AOAM532o+QkWNZ0OZfjqHKYRzNBcsGqhTXN0DnGs6NDvO56N3MC9/KAc
-        Id59h67QmLx9JAmrzH9ll1E=
-X-Google-Smtp-Source: ABdhPJx9BimOCWqRHWSyLRsQP7obbHYEpFxvnWsXd3DpadbJxUFwl1Fa6tKEJ5FKQ1joMc6DMSSa4A==
-X-Received: by 2002:a65:42c2:: with SMTP id l2mr11008521pgp.61.1600544195287;
-        Sat, 19 Sep 2020 12:36:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7VsdxD+1OUY1iuOfImGtGZsxp93pIxtgiAELnGBIf8o=;
+        b=rc53cnj/ZlWeeG9bteZniaqbGye4rbVTPp5x3MZfCWkNiPaK+dr9fKKeess9GzPuqR
+         NyRe13GPc96n4x6JMRpJuxZD/JWG1JVfUfzS7nPAQpt65Kr06048QzdYoBQLzZIXxFcz
+         56WLXTuWlM6ThaA1RtRWmb7cYTnY5c5tT2tCE3bOP2t0gRrMoyLofGgIxxEdTq/KsUPa
+         JOWUC2R7tDroSIQrqipRkgGVyHsWorF/LaXnZzFJwfzsGK6v/ahFiymkDPybfc0sHkJk
+         lz7k1PFU2gHlJ3P2QYyK0O8obiG/fE87IOEM+tLPq1GNItMB/zwna9+rEUzRrLFgE186
+         MBOA==
+X-Gm-Message-State: AOAM532qtS+RBxNVrPtq4U66+wk33tMgyTfMSiiQ2pJxEqzGdjkE6cuC
+        VY4FUwxcoiHJa+PiMGPLcUg=
+X-Google-Smtp-Source: ABdhPJz7NMJRNRuLfpWgnHbyS2MqLZ6mQ9iOw/mKZIE7oo1Gcm9Lw1ACSLLPOoArQXAbYQ7Ovip9xg==
+X-Received: by 2002:a63:4b1c:: with SMTP id y28mr26589970pga.53.1600544197645;
+        Sat, 19 Sep 2020 12:36:37 -0700 (PDT)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id g24sm7553133pfk.65.2020.09.19.12.36.33
+        by smtp.gmail.com with ESMTPSA id k27sm6778575pgb.12.2020.09.19.12.36.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Sep 2020 12:36:34 -0700 (PDT)
+        Sat, 19 Sep 2020 12:36:36 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>,
         timmurray@google.com, linux-arm-msm@vger.kernel.org,
         Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 0/3] drm: commit_work scheduling
-Date:   Sat, 19 Sep 2020 12:37:23 -0700
-Message-Id: <20200919193727.2093945-1-robdclark@gmail.com>
+Subject: [PATCH 1/3] drm/crtc: Introduce per-crtc kworker
+Date:   Sat, 19 Sep 2020 12:37:24 -0700
+Message-Id: <20200919193727.2093945-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200919193727.2093945-1-robdclark@gmail.com>
+References: <20200919193727.2093945-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -66,52 +73,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-The android userspace treats the display pipeline as a realtime problem.
-And arguably, if your goal is to not miss frame deadlines (ie. vblank),
-it is.  (See https://lwn.net/Articles/809545/ for the best explaination
-that I found.)
+This will be used for non-block atomic commits.
 
-But this presents a problem with using workqueues for non-blocking
-atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
-preempt the worker.  Which is not really the outcome you want.. once
-the required fences are scheduled, you want to push the atomic commit
-down to hw ASAP.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/drm_crtc.c | 11 +++++++++++
+ include/drm/drm_crtc.h     |  8 ++++++++
+ 2 files changed, 19 insertions(+)
 
-But the decision of whether commit_work should be RT or not really
-depends on what userspace is doing.  For a pure CFS userspace display
-pipeline, commit_work() should remain SCHED_NORMAL.
-
-To handle this, convert non-blocking commit_work() to use per-CRTC
-kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
-used to avoid serializing commits when userspace is using a per-CRTC
-update loop.
-
-A client-cap is introduced so that userspace can opt-in to SCHED_FIFO
-priority commit work.
-
-A potential issue is that since 616d91b68cd ("sched: Remove
-sched_setscheduler*() EXPORTs") we have limited RT priority levels,
-meaning that commit_work() ends up running at the same priority level
-as vblank-work.  This shouldn't be a big problem *yet*, due to limited
-use of vblank-work at this point.  And if it could be arranged that
-vblank-work is scheduled before signaling out-fences and/or sending
-pageflip events, it could probably work ok to use a single priority
-level for both commit-work and vblank-work.
-
-Rob Clark (3):
-  drm/crtc: Introduce per-crtc kworker
-  drm/atomic: Use kthread worker for nonblocking commits
-  drm: Add a client-cap to set scheduling mode
-
- drivers/gpu/drm/drm_atomic_helper.c | 13 ++++++----
- drivers/gpu/drm/drm_auth.c          |  4 ++++
- drivers/gpu/drm/drm_crtc.c          | 37 +++++++++++++++++++++++++++++
- drivers/gpu/drm/drm_ioctl.c         | 13 ++++++++++
- include/drm/drm_atomic.h            | 31 ++++++++++++++++++++++++
- include/drm/drm_crtc.h              | 10 ++++++++
- include/uapi/drm/drm.h              | 13 ++++++++++
- 7 files changed, 117 insertions(+), 4 deletions(-)
-
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index aecdd7ea26dc..4f7c0bfce0a3 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -326,6 +326,14 @@ int drm_crtc_init_with_planes(struct drm_device *dev, struct drm_crtc *crtc,
+ 					   config->prop_out_fence_ptr, 0);
+ 		drm_object_attach_property(&crtc->base,
+ 					   config->prop_vrr_enabled, 0);
++
++		crtc->worker = kthread_create_worker(0, "%s-worker", crtc->name);
++		if (IS_ERR(crtc->worker)) {
++			drm_mode_object_unregister(dev, &crtc->base);
++			ret = PTR_ERR(crtc->worker);
++			crtc->worker = NULL;
++			return ret;
++		}
+ 	}
+ 
+ 	return 0;
+@@ -366,6 +374,9 @@ void drm_crtc_cleanup(struct drm_crtc *crtc)
+ 
+ 	kfree(crtc->name);
+ 
++	if (crtc->worker)
++		kthread_destroy_worker(crtc->worker);
++
+ 	memset(crtc, 0, sizeof(*crtc));
+ }
+ EXPORT_SYMBOL(drm_crtc_cleanup);
+diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
+index 59b51a09cae6..8964a3732bca 100644
+--- a/include/drm/drm_crtc.h
++++ b/include/drm/drm_crtc.h
+@@ -30,6 +30,7 @@
+ #include <linux/types.h>
+ #include <linux/fb.h>
+ #include <linux/hdmi.h>
++#include <linux/kthread.h>
+ #include <linux/media-bus-format.h>
+ #include <uapi/drm/drm_mode.h>
+ #include <uapi/drm/drm_fourcc.h>
+@@ -1172,6 +1173,13 @@ struct drm_crtc {
+ 	 * Initialized via drm_self_refresh_helper_init().
+ 	 */
+ 	struct drm_self_refresh_data *self_refresh_data;
++
++	/**
++	 * worker:
++	 *
++	 * Per-CRTC worker for nonblock atomic commits.
++	 */
++	struct kthread_worker *worker;
+ };
+ 
+ /**
 -- 
 2.26.2
 
