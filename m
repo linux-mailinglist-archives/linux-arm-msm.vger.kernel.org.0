@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73246270A1A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 04:38:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4107270A1D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 04:43:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbgISCix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 22:38:53 -0400
-Received: from m42-11.mailgun.net ([69.72.42.11]:13781 "EHLO
+        id S1726104AbgISCnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 22:43:45 -0400
+Received: from m42-11.mailgun.net ([69.72.42.11]:18688 "EHLO
         m42-11.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726054AbgISCit (ORCPT
+        with ESMTP id S1726054AbgISCnp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 22:38:49 -0400
+        Fri, 18 Sep 2020 22:43:45 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600483128; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1600483424; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Dg+IKLrMf7MCNkBGhSbK0GWFTh2zjW/UmnJw53wNH1M=;
- b=Xtei/iVIPQhwsQG0lw13T2yuhJ0oOW7Ih+sMkaHyFYyMELt8Q1kkcxcQVKVvxIQjWYPrm+fK
- rwTnqVBrJ8jP6fAXJJ0ZJYKbv0zEll9LepWNP0c/1zAZDfhb8kJdl1oUVI2xpH0E8HNrfvH+
- wrLjf17kZOVx/OZNvObcZLd7jhE=
+ MIME-Version: Sender; bh=ba7dBm2ndlgmqK79zONY4EgonhQis4QJFa/xLQhocuM=;
+ b=rWACYpE+OiuJ1a0mL4GEpM01WlikgwWZdO9ZpiycJ4rDFVTkWQrQVJdNM2X4b6qdrHxZKCA+
+ H0HofJO/c7W1YmbTor+ELUzvXnFYZx8E4W6ScUpdOP2dVR8v+E8GZXicAg3Oy8QRlpuR1ivr
+ FskADFDW/pfLD9sqKq23c/FCRU8=
 X-Mailgun-Sending-Ip: 69.72.42.11
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f656f37f1e3eb89c720b2dc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 19 Sep 2020 02:38:47
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f6570450049ea5816161297 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 19 Sep 2020 02:43:17
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 11274C433F1; Sat, 19 Sep 2020 02:38:47 +0000 (UTC)
+        id 2A2D3C433CB; Sat, 19 Sep 2020 02:43:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,140 +39,101 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A797C433C8;
-        Sat, 19 Sep 2020 02:38:46 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6A00BC433C8;
+        Sat, 19 Sep 2020 02:43:16 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Sep 2020 19:38:46 -0700
+Date:   Fri, 18 Sep 2020 19:43:16 -0700
 From:   bbhatt@codeaurora.org
-To:     Loic Poulain <loic.poulain@linaro.org>, clew@codeaurora.org
+To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-In-Reply-To: <1600424219-6674-1-git-send-email-loic.poulain@linaro.org>
-References: <1600424219-6674-1-git-send-email-loic.poulain@linaro.org>
-Message-ID: <5baa5f331edb9feb5314b2d6e32b25e0@codeaurora.org>
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: core: Allow shared IRQ for event rings
+In-Reply-To: <1600414128-5510-1-git-send-email-loic.poulain@linaro.org>
+References: <1600414128-5510-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <c7d5abb9ecb9d9558c154dddb53385b1@codeaurora.org>
 X-Sender: bbhatt@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-18 03:16, Loic Poulain wrote:
-> There is really no point having an auto-start for channels.
-> This is confusing for the device drivers, some have to enable the
-> channels, others don't have... and waste resources (e.g. pre allocated
-> buffers) that may never be used.
+On 2020-09-18 00:28, Loic Poulain wrote:
+> There is no requirement for using a dedicated IRQ per event ring.
+> Some systems does not support multiple MSI vectors (e.g. intel
+> without CONFIG_IRQ_REMAP), In that case the MHI controller can
+> configure all the event rings to use the same interrupt (as fallback).
 > 
-> This is really up to the MHI device(channel) driver to manage the state
-> of its channels.
+> Allow this by removing the nr_irqs = ev_ring test and add extra check
+> in the irq_setup function.
 > 
 > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
->  drivers/bus/mhi/core/init.c     | 9 ---------
->  drivers/bus/mhi/core/internal.h | 1 -
->  include/linux/mhi.h             | 2 --
->  net/qrtr/mhi.c                  | 5 +++++
->  4 files changed, 5 insertions(+), 12 deletions(-)
+>  drivers/bus/mhi/core/init.c | 10 ++++++++++
+>  drivers/bus/mhi/core/pm.c   |  3 ---
+>  2 files changed, 10 insertions(+), 3 deletions(-)
 > 
 > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index ac19067..7aef6b7 100644
+> index d232938..ac19067 100644
 > --- a/drivers/bus/mhi/core/init.c
 > +++ b/drivers/bus/mhi/core/init.c
-> @@ -727,7 +727,6 @@ static int parse_ch_cfg(struct mhi_controller 
-> *mhi_cntrl,
->  		mhi_chan->offload_ch = ch_cfg->offload_channel;
->  		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
->  		mhi_chan->pre_alloc = ch_cfg->auto_queue;
-> -		mhi_chan->auto_start = ch_cfg->auto_start;
+> @@ -113,6 +113,9 @@ int mhi_init_irq_setup(struct mhi_controller 
+> *mhi_cntrl)
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	int i, ret;
 > 
->  		/*
->  		 * If MHI host allocates buffers, then the channel direction
-> @@ -1125,11 +1124,6 @@ static int mhi_driver_probe(struct device *dev)
->  			goto exit_probe;
-> 
->  		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
-> -		if (ul_chan->auto_start) {
-> -			ret = mhi_prepare_channel(mhi_cntrl, ul_chan);
-> -			if (ret)
-> -				goto exit_probe;
-> -		}
->  	}
-> 
->  	ret = -EINVAL;
-> @@ -1163,9 +1157,6 @@ static int mhi_driver_probe(struct device *dev)
->  	if (ret)
->  		goto exit_probe;
-> 
-> -	if (dl_chan && dl_chan->auto_start)
-> -		mhi_prepare_channel(mhi_cntrl, dl_chan);
-> -
->  	mhi_device_put(mhi_dev);
-> 
->  	return ret;
-> diff --git a/drivers/bus/mhi/core/internal.h 
-> b/drivers/bus/mhi/core/internal.h
-> index 5a81a42..73b52a0 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -563,7 +563,6 @@ struct mhi_chan {
->  	bool configured;
->  	bool offload_ch;
->  	bool pre_alloc;
-> -	bool auto_start;
->  	bool wake_capable;
->  };
-> 
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 008b8f6..742dabe 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -214,7 +214,6 @@ enum mhi_db_brst_mode {
->   * @offload_channel: The client manages the channel completely
->   * @doorbell_mode_switch: Channel switches to doorbell mode on M0 
-> transition
->   * @auto_queue: Framework will automatically queue buffers for DL 
-> traffic
-> - * @auto_start: Automatically start (open) this channel
->   * @wake-capable: Channel capable of waking up the system
->   */
->  struct mhi_channel_config {
-> @@ -232,7 +231,6 @@ struct mhi_channel_config {
->  	bool offload_channel;
->  	bool doorbell_mode_switch;
->  	bool auto_queue;
-> -	bool auto_start;
->  	bool wake_capable;
->  };
-> 
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index ff0c414..7100f0b 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -76,6 +76,11 @@ static int qcom_mhi_qrtr_probe(struct mhi_device 
-> *mhi_dev,
->  	struct qrtr_mhi_dev *qdev;
->  	int rc;
-> 
-> +	/* start channels */
-> +	rc = mhi_prepare_for_transfer(mhi_dev);
-> +	if (rc)
-> +		return rc;
+> +	if (mhi_cntrl->nr_irqs < 1)
+> +		return -EINVAL;
 > +
->  	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
->  	if (!qdev)
->  		return -ENOMEM;
-Hi Loic,
 
-Thank you for your patch. Hemant and I discussed and we are OK with this 
-patch.
+It would be better to move this check earlier in 
+mhi_register_controller() because if
+the resource is not available, we do not have to proceed to even allow 
+power up.
 
-Adding Chris to ensure that QRTR changes are acceptable.
+>  	/* Setup BHI_INTVEC IRQ */
+>  	ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
+>  				   mhi_intvec_threaded_handler,
+> @@ -125,6 +128,13 @@ int mhi_init_irq_setup(struct mhi_controller 
+> *mhi_cntrl)
+>  		if (mhi_event->offload_ev)
+>  			continue;
+> 
+> +		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
+> +			dev_err(dev, "irq %d not available for event ring\n",
+> +				mhi_event->irq);
+> +			ret = -EINVAL;
+> +			goto error_request;
+> +		}
+> +
+>  		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
+>  				  mhi_irq_handler,
+>  				  IRQF_SHARED | IRQF_NO_SUSPEND,
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index ce4d969..07efdbc 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -918,9 +918,6 @@ int mhi_async_power_up(struct mhi_controller 
+> *mhi_cntrl)
+> 
+>  	dev_info(dev, "Requested to power ON\n");
+> 
+> -	if (mhi_cntrl->nr_irqs < mhi_cntrl->total_ev_rings)
+> -		return -EINVAL;
+> -
+>  	/* Supply default wake routines if not provided by controller driver 
+> */
+>  	if (!mhi_cntrl->wake_get || !mhi_cntrl->wake_put ||
+>  	    !mhi_cntrl->wake_toggle) {
+
+Maybe another clean-up patch is also good to remove usage of 
+"mhi_cntrl->nr_irqs_req"
+as it is deemed optional anyway and is unused in the driver.
 
 Thanks,
 Bhaumik
 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
 Forum, a Linux Foundation Collaborative Project'
