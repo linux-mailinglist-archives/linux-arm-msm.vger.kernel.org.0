@@ -2,245 +2,279 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 601AE27079D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Sep 2020 22:56:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00429270978
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 02:45:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726405AbgIRU4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 16:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59454 "EHLO
+        id S1726154AbgISApj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 20:45:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726380AbgIRU4o (ORCPT
+        with ESMTP id S1726104AbgISApi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 16:56:44 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E8DC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:56:44 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id l9so6841193wme.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 13:56:44 -0700 (PDT)
+        Fri, 18 Sep 2020 20:45:38 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2B72C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 17:45:38 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id bg9so3866079plb.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Sep 2020 17:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=y7Ouw5q1csmctc1fhzHHzDmNSVOw553D4RNVDspsGXc=;
-        b=b3xm3zFHU+buD3Ln0FVgbcbMbPnMTvNIGdUxLkI6vtACC9VE086XBT4yBgh5+OIeLu
-         hONtUk4H33USs1oL5kO06ZO/xyR5t+4UF7s8nr8Bx3RoiHrzakL4lIulE8tSo0zrJ2u3
-         Q9TZFQfjXuas/3eDUG9Fp+Av1c59pY0NK4zwdnKZlbkNch64Dvbs9WEhfOfV8klTns2b
-         0dWTemmqkKCSpjERQZSGdcV4jiPZwn62CaX3AingfR5BB+T+k+yoK4nPK94EHojF+ssN
-         sCVwojz2Nf1/r0iB/o+MWxGvpkt3e76/RL4rXKUlWyweqz2NcE4ghDcdt7lsIkopadXX
-         Y11g==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I9DKFU7QPxZJEnkfzidi3lK2I/p7M1OxIN1tiywqUs8=;
+        b=kCiMKDH3nnYATu2ElRhi7X+tNFp/jWD7K0KkFDR4wzavd7z2vHgseo0HBNiqMY0Pzc
+         I7ip6V1N1cxIw6ELlphy8BWzInNcItFyfZZ5Ai6GMX235FktIVvGzupxM7Fhay+WSN+C
+         j5+l37/E4fyRasoV9oSLmB4MD3o7giXRlzeAQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=y7Ouw5q1csmctc1fhzHHzDmNSVOw553D4RNVDspsGXc=;
-        b=IrZhJRXrk/e5+h4INwJqa4UC56J9TU1vrrra3hsqqzQd4LM4uTcEU95eMtR8s446xS
-         T7PUsUV5JM8B8YKPAVSOIU70gW0O4TcGlkGoYMpfWhW3LKUD/lZbL5TxFatmJkNaauW2
-         fcOtlfq0PRIhzNWEy5cb8u8eG5Mywq1kkDetjz2XebeAwtmg+bh6m5DUKaWuqtQkN6Zd
-         aDG9pbFcoWBG4Gg18CmQouyG01bymSancHudIXP/XYu6fKLQ+mnMyWI9IVuInqwqR4bd
-         mYakBettieY16spUtELrpFIXktNwF7sb41ijBEk0LFe86bilpsYnI/B0ho9SHpjEfROs
-         v4cQ==
-X-Gm-Message-State: AOAM530UALHzczuNsIEtFW9sQIi3YZ/nMBA/5jE2/p7W/+YFIZXcsdlW
-        GqjgJpPHwYeC2509qGqPi8LFWA==
-X-Google-Smtp-Source: ABdhPJwsXsTpXRP28mmPzwga2ydJd/E7HzwKvWR6b2GYMUMdfEuS1Tl9h3jYI5Eo4VWTyjUHbOUc5A==
-X-Received: by 2002:a7b:cf36:: with SMTP id m22mr18367968wmg.51.1600462603052;
-        Fri, 18 Sep 2020 13:56:43 -0700 (PDT)
-Received: from localhost.localdomain (dh207-97-14.xnet.hr. [88.207.97.14])
-        by smtp.googlemail.com with ESMTPSA id a17sm7661875wra.24.2020.09.18.13.56.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I9DKFU7QPxZJEnkfzidi3lK2I/p7M1OxIN1tiywqUs8=;
+        b=QASZqbYU58vz+n4CEd9RvHWmsOK9xTwuKhMJg/5/ZcMIRVyuwbQLk1uR4MWeEnddJz
+         fq7rm9t1scNgrDfUmn4b09++JZqwZ/6pYA0y+4b7tx8BzyW5SnfU4CPdmB2b9xb+StYH
+         pDOgDWUqGHeUr5o8E0ZihPODXpFrdeu0+GVCnna+276egs1ETENfHWhPe2x0nE9CMPVA
+         fs83YVR3nG/zAsbbHrhFH0hNLRrO7o3/YmPx4fwTSwEyNmr66v9ZKowJVhtDeqE5iQ5J
+         zV2G2e70lEbp0HHiMVUBQ2yLaX7jBGtQzafjQzXTKXHSNnD3jYPSv7BDxysm4A1IOhom
+         rJcA==
+X-Gm-Message-State: AOAM5326aX33gcQ+4z0hC3QsTMbO94w4IK+iIkSukBc5RAQyB3CnTrzb
+        LoSxrphSJpvN0Am2MTiOu4sH6PjvaY11Kg==
+X-Google-Smtp-Source: ABdhPJzTquwp8o4Wi9pUdFSyG6//hHRgFjsv8I3+kMytrRsnqm/MxhF3Q42uXyYwmt0ZyTQOJYLUJQ==
+X-Received: by 2002:a17:902:2:b029:d1:7ed9:613f with SMTP id 2-20020a1709020002b02900d17ed9613fmr35787255pla.32.1600476338005;
+        Fri, 18 Sep 2020 17:45:38 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id j18sm4257479pgm.30.2020.09.18.17.45.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 13:56:42 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
-        davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH v3 2/2] net: mdio-ipq4019: add Clause 45 support
-Date:   Fri, 18 Sep 2020 22:56:33 +0200
-Message-Id: <20200918205633.2698654-3-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200918205633.2698654-1-robert.marko@sartura.hr>
-References: <20200918205633.2698654-1-robert.marko@sartura.hr>
+        Fri, 18 Sep 2020 17:45:36 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        akashast@codeaurora.org, Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] arm64: dts: qcom: sc7180: Provide pinconf for SPI to use GPIO for CS
+Date:   Fri, 18 Sep 2020 17:45:27 -0700
+Message-Id: <20200918174511.v2.1.I997a428f58ef9d48b37a27a028360f34e66c00ec@changeid>
+X-Mailer: git-send-email 2.28.0.681.g6f77f65b4e-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While up-streaming the IPQ4019 driver it was thought that the controller had no Clause 45 support,
-but it actually does and its activated by writing a bit to the mode register.
+When the chip select line is controlled by the QUP, changing CS is a
+time consuming operation.  We have to send a command over to the geni
+and wait for it to Ack us every time we want to change (both making it
+high and low).  To send this command we have to make a choice in
+software when we want to control the chip select, we have to either:
+A) Wait for the Ack via interrupt which slows down all SPI transfers
+   (and incurrs extra processing associated with interrupts).
+B) Sit in a loop and poll, waiting for the Ack.
 
-So lets add it as newer SoC-s use the same controller and Clause 45 compliant PHY-s.
+Neither A) nor B) is a great option.
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
+We can avoid all of this by realizing that, at least on some boards,
+there is no advantage of considering this line to be a geni line.
+While it's true that geni _can_ control the line, it's also true that
+the line can be a GPIO and there is no downside of viewing it that
+way.  Setting a GPIO is a simple MMIO operation.
+
+This patch provides definitions so a board can easily select the GPIO
+mode.
+
+NOTE: apparently, it's possible to run the geni in "GSI" mode.  In GSI
+the SPI port is allowed to be controlled by more than one user (like
+firmware and Linux) and also the port can operate sequences of
+operations in one go.  In GSI mode it _would_ be invalid to look at
+the chip select as a GPIO because that would prevent other users from
+using it.  In theory GSI mode would also avoid some overhead by
+allowing us to sequence the chip select better.  However, I'll argue
+GSI is not relevant for all boards (and certainly not any boards
+supported by mainline today).  Why?
+- Apparently to run a SPI chip in GSI mode you need to initialize it
+  (in the bootloader) with a different firmware and then it will
+  always run in GSI mode.  Since there is no support for GSI mode in
+  the current Linux driver, it must be that existing boards don't have
+  firmware that's doing that.  Note that the kernel device tree
+  describes hardware but also firmware, so it is legitimate to make
+  the assumption that we don't have GSI firmware in a given dts file.
+- Some boards with sc7180 have SPI connected to the Chrome OS EC or
+  security chip (Cr50).  The protocols for talking to cros_ec and cr50
+  are extremely complex.  Both drivers in Linux fully lock the bus
+  across several distinct SPI transfers.  While I am not an expert on
+  GSI mode it feels highly unlikely to me that we'd ever be able to
+  enable GSI mode for these devices.
+
+From a testing perspective, running "flashrom -p ec -r /tmp/foo.bin"
+in a loop after this patch shows almost no reduction in time, but the
+number of interrupts per command goes from 32357 down to 30611 (about
+a 5% reduction).
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-Changes since v2:
-* Fix missed reverse christmas tree
 
-Changes since v1:
-* Maintain reverse christmas tree
+Changes in v2:
+- Now just add the pinctrl; let a board use it.
 
- drivers/net/phy/mdio-ipq4019.c | 103 ++++++++++++++++++++++++++++-----
- 1 file changed, 89 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 96 ++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
-diff --git a/drivers/net/phy/mdio-ipq4019.c b/drivers/net/phy/mdio-ipq4019.c
-index 64b169e5a699..24fecbf659e8 100644
---- a/drivers/net/phy/mdio-ipq4019.c
-+++ b/drivers/net/phy/mdio-ipq4019.c
-@@ -12,6 +12,7 @@
- #include <linux/phy.h>
- #include <linux/platform_device.h>
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 6678f1e8e395..0534122b9a3c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1595,6 +1595,18 @@ pinmux {
+ 				};
+ 			};
  
-+#define MDIO_MODE_REG				0x40
- #define MDIO_ADDR_REG				0x44
- #define MDIO_DATA_WRITE_REG			0x48
- #define MDIO_DATA_READ_REG			0x4c
-@@ -20,6 +21,12 @@
- #define MDIO_CMD_ACCESS_START		BIT(8)
- #define MDIO_CMD_ACCESS_CODE_READ	0
- #define MDIO_CMD_ACCESS_CODE_WRITE	1
-+#define MDIO_CMD_ACCESS_CODE_C45_ADDR	0
-+#define MDIO_CMD_ACCESS_CODE_C45_WRITE	1
-+#define MDIO_CMD_ACCESS_CODE_C45_READ	2
++			qup_spi0_cs_gpio: qup-spi0-cs-gpio {
++				pinmux {
++					pins = "gpio34", "gpio35",
++					       "gpio36";
++					function = "qup00";
++				};
++				pinmux-cs {
++					pins = "gpio37";
++					function = "gpio";
++				};
++			};
 +
-+/* 0 = Clause 22, 1 = Clause 45 */
-+#define MDIO_MODE_BIT				BIT(8)
+ 			qup_spi1_default: qup-spi1-default {
+ 				pinmux {
+ 					pins = "gpio0", "gpio1",
+@@ -1603,6 +1615,18 @@ pinmux {
+ 				};
+ 			};
  
- #define IPQ4019_MDIO_TIMEOUT	10000
- #define IPQ4019_MDIO_SLEEP		10
-@@ -41,19 +48,44 @@ static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
- static int ipq4019_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
- {
- 	struct ipq4019_mdio_data *priv = bus->priv;
-+	unsigned int data;
- 	unsigned int cmd;
++			qup_spi1_cs_gpio: qup-spi1-cs-gpio {
++				pinmux {
++					pins = "gpio0", "gpio1",
++					       "gpio2";
++					function = "qup01";
++				};
++				pinmux-cs {
++					pins = "gpio3";
++					function = "gpio";
++				};
++			};
++
+ 			qup_spi3_default: qup-spi3-default {
+ 				pinmux {
+ 					pins = "gpio38", "gpio39",
+@@ -1611,6 +1635,18 @@ pinmux {
+ 				};
+ 			};
  
--	/* Reject clause 45 */
--	if (regnum & MII_ADDR_C45)
--		return -EOPNOTSUPP;
--
- 	if (ipq4019_mdio_wait_busy(bus))
- 		return -ETIMEDOUT;
++			qup_spi3_cs_gpio: qup-spi3-cs-gpio {
++				pinmux {
++					pins = "gpio38", "gpio39",
++					       "gpio40";
++					function = "qup03";
++				};
++				pinmux-cs {
++					pins = "gpio41";
++					function = "gpio";
++				};
++			};
++
+ 			qup_spi5_default: qup-spi5-default {
+ 				pinmux {
+ 					pins = "gpio25", "gpio26",
+@@ -1619,6 +1655,18 @@ pinmux {
+ 				};
+ 			};
  
--	/* issue the phy address and reg */
--	writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+	/* Clause 45 support */
-+	if (regnum & MII_ADDR_C45) {
-+		unsigned int mmd = (regnum >> 16) & 0x1F;
-+		unsigned int reg = regnum & 0xFFFF;
++			qup_spi5_cs_gpio: qup-spi5-cs-gpio {
++				pinmux {
++					pins = "gpio25", "gpio26",
++					       "gpio27";
++					function = "qup05";
++				};
++				pinmux-cs {
++					pins = "gpio28";
++					function = "gpio";
++				};
++			};
 +
-+		/* Enter Clause 45 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
-+
-+		data |= MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and mmd */
-+		writel((mii_id << 8) | mmd, priv->membase + MDIO_ADDR_REG);
-+
-+		/* issue reg */
-+		writel(reg, priv->membase + MDIO_DATA_WRITE_REG);
-+
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_ADDR;
-+	} else {
-+		/* Enter Clause 22 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
+ 			qup_spi6_default: qup-spi6-default {
+ 				pinmux {
+ 					pins = "gpio59", "gpio60",
+@@ -1627,6 +1675,18 @@ pinmux {
+ 				};
+ 			};
  
--	cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_READ;
-+		data &= ~MDIO_MODE_BIT;
++			qup_spi6_cs_gpio: qup-spi6-cs-gpio {
++				pinmux {
++					pins = "gpio59", "gpio60",
++					       "gpio61";
++					function = "qup10";
++				};
++				pinmux-cs {
++					pins = "gpio62";
++					function = "gpio";
++				};
++			};
 +
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and reg */
-+		writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_READ;
-+	}
+ 			qup_spi8_default: qup-spi8-default {
+ 				pinmux {
+ 					pins = "gpio42", "gpio43",
+@@ -1635,6 +1695,18 @@ pinmux {
+ 				};
+ 			};
  
- 	/* issue read command */
- 	writel(cmd, priv->membase + MDIO_CMD_REG);
-@@ -62,6 +94,15 @@ static int ipq4019_mdio_read(struct mii_bus *bus, int mii_id, int regnum)
- 	if (ipq4019_mdio_wait_busy(bus))
- 		return -ETIMEDOUT;
++			qup_spi8_cs_gpio: qup-spi8-cs-gpio {
++				pinmux {
++					pins = "gpio42", "gpio43",
++					       "gpio44";
++					function = "qup12";
++				};
++				pinmux-cs {
++					pins = "gpio45";
++					function = "gpio";
++				};
++			};
++
+ 			qup_spi10_default: qup-spi10-default {
+ 				pinmux {
+ 					pins = "gpio86", "gpio87",
+@@ -1643,6 +1715,18 @@ pinmux {
+ 				};
+ 			};
  
-+	if (regnum & MII_ADDR_C45) {
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_READ;
++			qup_spi10_cs_gpio: qup-spi10-cs-gpio {
++				pinmux {
++					pins = "gpio86", "gpio87",
++					       "gpio88";
++					function = "qup14";
++				};
++				pinmux-cs {
++					pins = "gpio89";
++					function = "gpio";
++				};
++			};
 +
-+		writel(cmd, priv->membase + MDIO_CMD_REG);
-+
-+		if (ipq4019_mdio_wait_busy(bus))
-+			return -ETIMEDOUT;
-+	}
-+
- 	/* Read and return data */
- 	return readl(priv->membase + MDIO_DATA_READ_REG);
- }
-@@ -70,23 +111,57 @@ static int ipq4019_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
- 							 u16 value)
- {
- 	struct ipq4019_mdio_data *priv = bus->priv;
-+	unsigned int data;
- 	unsigned int cmd;
+ 			qup_spi11_default: qup-spi11-default {
+ 				pinmux {
+ 					pins = "gpio53", "gpio54",
+@@ -1651,6 +1735,18 @@ pinmux {
+ 				};
+ 			};
  
--	/* Reject clause 45 */
--	if (regnum & MII_ADDR_C45)
--		return -EOPNOTSUPP;
--
- 	if (ipq4019_mdio_wait_busy(bus))
- 		return -ETIMEDOUT;
- 
--	/* issue the phy address and reg */
--	writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+	/* Clause 45 support */
-+	if (regnum & MII_ADDR_C45) {
-+		unsigned int mmd = (regnum >> 16) & 0x1F;
-+		unsigned int reg = regnum & 0xFFFF;
++			qup_spi11_cs_gpio: qup-spi11-cs-gpio {
++				pinmux {
++					pins = "gpio53", "gpio54",
++					       "gpio55";
++					function = "qup15";
++				};
++				pinmux-cs {
++					pins = "gpio56";
++					function = "gpio";
++				};
++			};
 +
-+		/* Enter Clause 45 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
-+
-+		data |= MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and mmd */
-+		writel((mii_id << 8) | mmd, priv->membase + MDIO_ADDR_REG);
-+
-+		/* issue reg */
-+		writel(reg, priv->membase + MDIO_DATA_WRITE_REG);
-+
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_ADDR;
-+
-+		writel(cmd, priv->membase + MDIO_CMD_REG);
-+
-+		if (ipq4019_mdio_wait_busy(bus))
-+			return -ETIMEDOUT;
-+	} else {
-+		/* Enter Clause 22 mode */
-+		data = readl(priv->membase + MDIO_MODE_REG);
-+
-+		data &= ~MDIO_MODE_BIT;
-+
-+		writel(data, priv->membase + MDIO_MODE_REG);
-+
-+		/* issue the phy address and reg */
-+		writel((mii_id << 8) | regnum, priv->membase + MDIO_ADDR_REG);
-+	}
- 
- 	/* issue write data */
- 	writel(value, priv->membase + MDIO_DATA_WRITE_REG);
- 
--	cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_WRITE;
- 	/* issue write command */
-+	if (regnum & MII_ADDR_C45)
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_C45_WRITE;
-+	else
-+		cmd = MDIO_CMD_ACCESS_START | MDIO_CMD_ACCESS_CODE_WRITE;
-+
- 	writel(cmd, priv->membase + MDIO_CMD_REG);
- 
- 	/* Wait write complete */
+ 			qup_uart0_default: qup-uart0-default {
+ 				pinmux {
+ 					pins = "gpio34", "gpio35",
 -- 
-2.26.2
+2.28.0.681.g6f77f65b4e-goog
 
