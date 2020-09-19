@@ -2,220 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4B61270A33
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 04:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF433270B09
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 08:03:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726390AbgISCvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 22:51:41 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:43042 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726009AbgISCvi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 22:51:38 -0400
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
-        by Forcepoint Email with ESMTP id BBB30DF5AD78B628E014;
-        Sat, 19 Sep 2020 10:51:35 +0800 (CST)
-Received: from localhost.localdomain.localdomain (10.175.113.25) by
- DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
- 14.3.487.0; Sat, 19 Sep 2020 10:51:26 +0800
-From:   Qinglang Miao <miaoqinglang@huawei.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Qinglang Miao" <miaoqinglang@huawei.com>
-Subject: [PATCH -next v2] drm/msm/dpu: Convert to DEFINE_SHOW_ATTRIBUTE
-Date:   Sat, 19 Sep 2020 10:51:58 +0800
-Message-ID: <20200919025158.17264-1-miaoqinglang@huawei.com>
-X-Mailer: git-send-email 2.20.1
+        id S1726129AbgISGDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Sep 2020 02:03:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51672 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726054AbgISGDd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 19 Sep 2020 02:03:33 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4707820DD4;
+        Sat, 19 Sep 2020 06:03:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600495413;
+        bh=BjlADGlYj36HiizsrLcIy5xSLzS1x/lA9GoI2whYhZg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gGU6RqOo0c+wf7esLi8DAN3i/Zs80j0KkjJVz5ecuzweYn7wSJ1zsIfXfQGGaAdiW
+         HS/O8MRIKXiMzYpbt/3K2I0s97Pgc+gIn9AdTUkeboMqyDxGFXqFFb6MZj3ssnmtMa
+         R54pI5gGCLhg9ZwofjGOX2L1IuZ1zGhgHvkUR5KM=
+Date:   Sat, 19 Sep 2020 08:03:28 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org
+Subject: Re: [PATCH v6 4/4] bus: mhi: Add userspace client interface driver
+Message-ID: <20200919060328.GA435759@kroah.com>
+References: <1600286167-4432-1-git-send-email-hemantk@codeaurora.org>
+ <1600286167-4432-5-git-send-email-hemantk@codeaurora.org>
+ <20200917164419.GC721081@kroah.com>
+ <4e60cac3-d680-93ea-922e-bd4f22cf3f0a@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.113.25]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4e60cac3-d680-93ea-922e-bd4f22cf3f0a@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use DEFINE_SHOW_ATTRIBUTE macro to simplify the code.
+On Fri, Sep 18, 2020 at 11:14:08AM -0700, Hemant Kumar wrote:
+> Hi Greg,
+> 
+> On 9/17/20 9:44 AM, Greg KH wrote:
+> > On Wed, Sep 16, 2020 at 12:56:07PM -0700, Hemant Kumar wrote:
+> ...
+> ...
+> > > +
+> > > +static int mhi_uci_open(struct inode *inode, struct file *filp)
+> > > +{
+> > > +	struct uci_dev *udev = NULL;
+> > > +	unsigned int minor = iminor(inode);
+> > > +	int ret = -EIO;
+> > > +	struct uci_buf *buf_itr, *tmp;
+> > > +	struct uci_chan *dl_chan;
+> > > +	struct mhi_device *mhi_dev;
+> > > +	struct device *dev;
+> > > +
+> > > +	mutex_lock(&uci_idr_mutex);
+> > > +	udev = idr_find(&uci_idr, minor);
+> > > +	mutex_unlock(&uci_idr_mutex);
+> > > +	if (!udev) {
+> > > +		pr_err("uci dev: minor %d not found\n", minor);
+> > 
+> > Don't spam the kernel log for things that users can do :(
+> i will change it to a pr_debug, as it helps to debug why open() is failing.
+> > 
+> > > +		ret = -ENODEV;
+> > > +		goto error_no_dev;
+> > > +	}
+> > > +
+> > > +	kref_get(&udev->ref_count);
+> > 
+> > Why grab a reference?  What does that help with?
+> In case open() and driver remove() are racing, it helps to prevent use after
+> free of udev in open().
 
-Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
----
-v2: based on linux-next(20200917), and can be applied to
-    mainline cleanly now.
+Are you sure it prevents that?  Where is the lock that handles dropping
+a reference count and incrementing it at the same time?
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 15 +---------
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c     | 29 ++------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c  | 15 ++--------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c      | 17 ++----------
- 4 files changed, 8 insertions(+), 68 deletions(-)
+krefs are not "lock free" entirely, they need to have some type of other
+control somewhere to prevent foolish things from happening :)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-index f1bc6a1af..84ea09d96 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-@@ -288,19 +288,6 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
- }
- 
- #ifdef CONFIG_DEBUG_FS
--#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)				\
--static int __prefix ## _open(struct inode *inode, struct file *file)	\
--{									\
--	return single_open(file, __prefix ## _show, inode->i_private);	\
--}									\
--static const struct file_operations __prefix ## _fops = {		\
--	.owner = THIS_MODULE,						\
--	.open = __prefix ## _open,					\
--	.release = single_release,					\
--	.read = seq_read,						\
--	.llseek = seq_lseek,						\
--}
--
- static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- {
- 	struct dpu_irq *irq_obj = s->private;
-@@ -328,7 +315,7 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- 	return 0;
- }
- 
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_core_irq);
-+DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_core_irq);
- 
- void dpu_debugfs_core_irq_init(struct dpu_kms *dpu_kms,
- 		struct dentry *parent)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 6169148b3..f56414a06 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1177,23 +1177,7 @@ static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
- 	return 0;
- }
- 
--static int _dpu_debugfs_status_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, _dpu_debugfs_status_show, inode->i_private);
--}
--
--#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)                          \
--static int __prefix ## _open(struct inode *inode, struct file *file)	\
--{									\
--	return single_open(file, __prefix ## _show, inode->i_private);	\
--}									\
--static const struct file_operations __prefix ## _fops = {		\
--	.owner = THIS_MODULE,						\
--	.open = __prefix ## _open,					\
--	.release = single_release,					\
--	.read = seq_read,						\
--	.llseek = seq_lseek,						\
--}
-+DEFINE_SHOW_ATTRIBUTE(_dpu_debugfs_status);
- 
- static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
- {
-@@ -1210,25 +1194,18 @@ static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
- 
- 	return 0;
- }
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_crtc_debugfs_state);
-+DEFINE_SHOW_ATTRIBUTE(dpu_crtc_debugfs_state);
- 
- static int _dpu_crtc_init_debugfs(struct drm_crtc *crtc)
- {
- 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
- 
--	static const struct file_operations debugfs_status_fops = {
--		.open =		_dpu_debugfs_status_open,
--		.read =		seq_read,
--		.llseek =	seq_lseek,
--		.release =	single_release,
--	};
--
- 	dpu_crtc->debugfs_root = debugfs_create_dir(dpu_crtc->name,
- 			crtc->dev->primary->debugfs_root);
- 
- 	debugfs_create_file("status", 0400,
- 			dpu_crtc->debugfs_root,
--			dpu_crtc, &debugfs_status_fops);
-+			dpu_crtc, &_dpu_debugfs_status_fops);
- 	debugfs_create_file("state", 0600,
- 			dpu_crtc->debugfs_root,
- 			&dpu_crtc->base,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index bd6def436..da192e275 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1880,24 +1880,13 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
- 	return 0;
- }
- 
--static int _dpu_encoder_debugfs_status_open(struct inode *inode,
--		struct file *file)
--{
--	return single_open(file, _dpu_encoder_status_show, inode->i_private);
--}
-+DEFINE_SHOW_ATTRIBUTE(_dpu_encoder_status);
- 
- static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	int i;
- 
--	static const struct file_operations debugfs_status_fops = {
--		.open =		_dpu_encoder_debugfs_status_open,
--		.read =		seq_read,
--		.llseek =	seq_lseek,
--		.release =	single_release,
--	};
--
- 	char name[DPU_NAME_SIZE];
- 
- 	if (!drm_enc->dev) {
-@@ -1913,7 +1902,7 @@ static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
- 
- 	/* don't error check these */
- 	debugfs_create_file("status", 0600,
--		dpu_enc->debugfs_root, dpu_enc, &debugfs_status_fops);
-+		dpu_enc->debugfs_root, dpu_enc, &_dpu_encoder_status_fops);
- 
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++)
- 		if (dpu_enc->phys_encs[i]->ops.late_register)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 5abf0047c..0649d1dee 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -85,30 +85,17 @@ static int _dpu_danger_signal_status(struct seq_file *s,
- 	return 0;
- }
- 
--#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)				\
--static int __prefix ## _open(struct inode *inode, struct file *file)	\
--{									\
--	return single_open(file, __prefix ## _show, inode->i_private);	\
--}									\
--static const struct file_operations __prefix ## _fops = {		\
--	.owner = THIS_MODULE,						\
--	.open = __prefix ## _open,					\
--	.release = single_release,					\
--	.read = seq_read,						\
--	.llseek = seq_lseek,						\
--}
--
- static int dpu_debugfs_danger_stats_show(struct seq_file *s, void *v)
- {
- 	return _dpu_danger_signal_status(s, true);
- }
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_danger_stats);
-+DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_danger_stats);
- 
- static int dpu_debugfs_safe_stats_show(struct seq_file *s, void *v)
- {
- 	return _dpu_danger_signal_status(s, false);
- }
--DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_safe_stats);
-+DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_safe_stats);
- 
- static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
- 		struct dentry *parent)
--- 
-2.23.0
+> > > +
+> > > +	mhi_dev = udev->mhi_dev;
+> > > +	dev = &mhi_dev->dev;
+> > > +
+> > > +	mutex_lock(&udev->lock);
+> > > +	if (kref_read(&udev->ref_count) > 2) {
+> > > +		dev_dbg(dev, "Node already opened\n");
+> > 
+> > Nope, this is NOT doing what you think it is doing.
+> > 
+> > I told you before, do not try to keep a device node from being opened
+> > multiple times, as it will always fail (think about passing file handles
+> > around between programs...)
+> > 
+> > If userspace wants to do this, it will do it.  If your driver can't
+> > handle that, that's fine, userspace will learn not to do that.  But the
+> > kernel can not prevent this from happening.
+> This check is not returning error, instead just setting filp->private_data =
+> udev; and return 0; It is skipping channel prepare
+> and queuing of inbound buffers which was done by first open().
 
+But don't do that by checking a kref value.  You should never care about
+the value of it, that is not how you use it at all, and one reason I
+hate that function is even present in the kernel...
+
+thanks,
+
+greg k-h
