@@ -2,138 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4107270A1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 04:43:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4B61270A33
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Sep 2020 04:52:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726104AbgISCnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Sep 2020 22:43:45 -0400
-Received: from m42-11.mailgun.net ([69.72.42.11]:18688 "EHLO
-        m42-11.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726054AbgISCnp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Sep 2020 22:43:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600483424; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ba7dBm2ndlgmqK79zONY4EgonhQis4QJFa/xLQhocuM=;
- b=rWACYpE+OiuJ1a0mL4GEpM01WlikgwWZdO9ZpiycJ4rDFVTkWQrQVJdNM2X4b6qdrHxZKCA+
- H0HofJO/c7W1YmbTor+ELUzvXnFYZx8E4W6ScUpdOP2dVR8v+E8GZXicAg3Oy8QRlpuR1ivr
- FskADFDW/pfLD9sqKq23c/FCRU8=
-X-Mailgun-Sending-Ip: 69.72.42.11
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f6570450049ea5816161297 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 19 Sep 2020 02:43:17
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2A2D3C433CB; Sat, 19 Sep 2020 02:43:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6A00BC433C8;
-        Sat, 19 Sep 2020 02:43:16 +0000 (UTC)
+        id S1726390AbgISCvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Sep 2020 22:51:41 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35]:43042 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726009AbgISCvi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Sep 2020 22:51:38 -0400
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id BBB30DF5AD78B628E014;
+        Sat, 19 Sep 2020 10:51:35 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
+ 14.3.487.0; Sat, 19 Sep 2020 10:51:26 +0800
+From:   Qinglang Miao <miaoqinglang@huawei.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Qinglang Miao" <miaoqinglang@huawei.com>
+Subject: [PATCH -next v2] drm/msm/dpu: Convert to DEFINE_SHOW_ATTRIBUTE
+Date:   Sat, 19 Sep 2020 10:51:58 +0800
+Message-ID: <20200919025158.17264-1-miaoqinglang@huawei.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 18 Sep 2020 19:43:16 -0700
-From:   bbhatt@codeaurora.org
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: core: Allow shared IRQ for event rings
-In-Reply-To: <1600414128-5510-1-git-send-email-loic.poulain@linaro.org>
-References: <1600414128-5510-1-git-send-email-loic.poulain@linaro.org>
-Message-ID: <c7d5abb9ecb9d9558c154dddb53385b1@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.113.25]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-18 00:28, Loic Poulain wrote:
-> There is no requirement for using a dedicated IRQ per event ring.
-> Some systems does not support multiple MSI vectors (e.g. intel
-> without CONFIG_IRQ_REMAP), In that case the MHI controller can
-> configure all the event rings to use the same interrupt (as fallback).
-> 
-> Allow this by removing the nr_irqs = ev_ring test and add extra check
-> in the irq_setup function.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  drivers/bus/mhi/core/init.c | 10 ++++++++++
->  drivers/bus/mhi/core/pm.c   |  3 ---
->  2 files changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index d232938..ac19067 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -113,6 +113,9 @@ int mhi_init_irq_setup(struct mhi_controller 
-> *mhi_cntrl)
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  	int i, ret;
-> 
-> +	if (mhi_cntrl->nr_irqs < 1)
-> +		return -EINVAL;
-> +
+Use DEFINE_SHOW_ATTRIBUTE macro to simplify the code.
 
-It would be better to move this check earlier in 
-mhi_register_controller() because if
-the resource is not available, we do not have to proceed to even allow 
-power up.
+Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
+---
+v2: based on linux-next(20200917), and can be applied to
+    mainline cleanly now.
 
->  	/* Setup BHI_INTVEC IRQ */
->  	ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
->  				   mhi_intvec_threaded_handler,
-> @@ -125,6 +128,13 @@ int mhi_init_irq_setup(struct mhi_controller 
-> *mhi_cntrl)
->  		if (mhi_event->offload_ev)
->  			continue;
-> 
-> +		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
-> +			dev_err(dev, "irq %d not available for event ring\n",
-> +				mhi_event->irq);
-> +			ret = -EINVAL;
-> +			goto error_request;
-> +		}
-> +
->  		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
->  				  mhi_irq_handler,
->  				  IRQF_SHARED | IRQF_NO_SUSPEND,
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index ce4d969..07efdbc 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -918,9 +918,6 @@ int mhi_async_power_up(struct mhi_controller 
-> *mhi_cntrl)
-> 
->  	dev_info(dev, "Requested to power ON\n");
-> 
-> -	if (mhi_cntrl->nr_irqs < mhi_cntrl->total_ev_rings)
-> -		return -EINVAL;
-> -
->  	/* Supply default wake routines if not provided by controller driver 
-> */
->  	if (!mhi_cntrl->wake_get || !mhi_cntrl->wake_put ||
->  	    !mhi_cntrl->wake_toggle) {
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 15 +---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c     | 29 ++------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c  | 15 ++--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c      | 17 ++----------
+ 4 files changed, 8 insertions(+), 68 deletions(-)
 
-Maybe another clean-up patch is also good to remove usage of 
-"mhi_cntrl->nr_irqs_req"
-as it is deemed optional anyway and is unused in the driver.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+index f1bc6a1af..84ea09d96 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+@@ -288,19 +288,6 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
+ }
+ 
+ #ifdef CONFIG_DEBUG_FS
+-#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)				\
+-static int __prefix ## _open(struct inode *inode, struct file *file)	\
+-{									\
+-	return single_open(file, __prefix ## _show, inode->i_private);	\
+-}									\
+-static const struct file_operations __prefix ## _fops = {		\
+-	.owner = THIS_MODULE,						\
+-	.open = __prefix ## _open,					\
+-	.release = single_release,					\
+-	.read = seq_read,						\
+-	.llseek = seq_lseek,						\
+-}
+-
+ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+ {
+ 	struct dpu_irq *irq_obj = s->private;
+@@ -328,7 +315,7 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
+ 	return 0;
+ }
+ 
+-DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_core_irq);
++DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_core_irq);
+ 
+ void dpu_debugfs_core_irq_init(struct dpu_kms *dpu_kms,
+ 		struct dentry *parent)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 6169148b3..f56414a06 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1177,23 +1177,7 @@ static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
+ 	return 0;
+ }
+ 
+-static int _dpu_debugfs_status_open(struct inode *inode, struct file *file)
+-{
+-	return single_open(file, _dpu_debugfs_status_show, inode->i_private);
+-}
+-
+-#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)                          \
+-static int __prefix ## _open(struct inode *inode, struct file *file)	\
+-{									\
+-	return single_open(file, __prefix ## _show, inode->i_private);	\
+-}									\
+-static const struct file_operations __prefix ## _fops = {		\
+-	.owner = THIS_MODULE,						\
+-	.open = __prefix ## _open,					\
+-	.release = single_release,					\
+-	.read = seq_read,						\
+-	.llseek = seq_lseek,						\
+-}
++DEFINE_SHOW_ATTRIBUTE(_dpu_debugfs_status);
+ 
+ static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
+ {
+@@ -1210,25 +1194,18 @@ static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
+ 
+ 	return 0;
+ }
+-DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_crtc_debugfs_state);
++DEFINE_SHOW_ATTRIBUTE(dpu_crtc_debugfs_state);
+ 
+ static int _dpu_crtc_init_debugfs(struct drm_crtc *crtc)
+ {
+ 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+ 
+-	static const struct file_operations debugfs_status_fops = {
+-		.open =		_dpu_debugfs_status_open,
+-		.read =		seq_read,
+-		.llseek =	seq_lseek,
+-		.release =	single_release,
+-	};
+-
+ 	dpu_crtc->debugfs_root = debugfs_create_dir(dpu_crtc->name,
+ 			crtc->dev->primary->debugfs_root);
+ 
+ 	debugfs_create_file("status", 0400,
+ 			dpu_crtc->debugfs_root,
+-			dpu_crtc, &debugfs_status_fops);
++			dpu_crtc, &_dpu_debugfs_status_fops);
+ 	debugfs_create_file("state", 0600,
+ 			dpu_crtc->debugfs_root,
+ 			&dpu_crtc->base,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index bd6def436..da192e275 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1880,24 +1880,13 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
+ 	return 0;
+ }
+ 
+-static int _dpu_encoder_debugfs_status_open(struct inode *inode,
+-		struct file *file)
+-{
+-	return single_open(file, _dpu_encoder_status_show, inode->i_private);
+-}
++DEFINE_SHOW_ATTRIBUTE(_dpu_encoder_status);
+ 
+ static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
+ {
+ 	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+ 	int i;
+ 
+-	static const struct file_operations debugfs_status_fops = {
+-		.open =		_dpu_encoder_debugfs_status_open,
+-		.read =		seq_read,
+-		.llseek =	seq_lseek,
+-		.release =	single_release,
+-	};
+-
+ 	char name[DPU_NAME_SIZE];
+ 
+ 	if (!drm_enc->dev) {
+@@ -1913,7 +1902,7 @@ static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
+ 
+ 	/* don't error check these */
+ 	debugfs_create_file("status", 0600,
+-		dpu_enc->debugfs_root, dpu_enc, &debugfs_status_fops);
++		dpu_enc->debugfs_root, dpu_enc, &_dpu_encoder_status_fops);
+ 
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++)
+ 		if (dpu_enc->phys_encs[i]->ops.late_register)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 5abf0047c..0649d1dee 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -85,30 +85,17 @@ static int _dpu_danger_signal_status(struct seq_file *s,
+ 	return 0;
+ }
+ 
+-#define DEFINE_DPU_DEBUGFS_SEQ_FOPS(__prefix)				\
+-static int __prefix ## _open(struct inode *inode, struct file *file)	\
+-{									\
+-	return single_open(file, __prefix ## _show, inode->i_private);	\
+-}									\
+-static const struct file_operations __prefix ## _fops = {		\
+-	.owner = THIS_MODULE,						\
+-	.open = __prefix ## _open,					\
+-	.release = single_release,					\
+-	.read = seq_read,						\
+-	.llseek = seq_lseek,						\
+-}
+-
+ static int dpu_debugfs_danger_stats_show(struct seq_file *s, void *v)
+ {
+ 	return _dpu_danger_signal_status(s, true);
+ }
+-DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_danger_stats);
++DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_danger_stats);
+ 
+ static int dpu_debugfs_safe_stats_show(struct seq_file *s, void *v)
+ {
+ 	return _dpu_danger_signal_status(s, false);
+ }
+-DEFINE_DPU_DEBUGFS_SEQ_FOPS(dpu_debugfs_safe_stats);
++DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_safe_stats);
+ 
+ static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
+ 		struct dentry *parent)
+-- 
+2.23.0
 
-Thanks,
-Bhaumik
-
-'The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project'
