@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F4D92711A2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Sep 2020 02:43:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 091322712AD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Sep 2020 08:27:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726788AbgITAnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Sep 2020 20:43:01 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:45664 "EHLO vps0.lunn.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726707AbgITAnA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Sep 2020 20:43:00 -0400
-X-Greylist: delayed 1431 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Sep 2020 20:43:00 EDT
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94)
-        (envelope-from <andrew@lunn.ch>)
-        id 1kJn4K-00FR2h-1K; Sun, 20 Sep 2020 02:19:04 +0200
-Date:   Sun, 20 Sep 2020 02:19:04 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     hkallweit1@gmail.com, linux@armlinux.org.uk, davem@davemloft.net,
-        kuba@kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH v3 2/2] net: mdio-ipq4019: add Clause 45 support
-Message-ID: <20200920001904.GB3673389@lunn.ch>
-References: <20200918205633.2698654-1-robert.marko@sartura.hr>
- <20200918205633.2698654-3-robert.marko@sartura.hr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200918205633.2698654-3-robert.marko@sartura.hr>
+        id S1726222AbgITG1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Sep 2020 02:27:15 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:57510 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726200AbgITG1P (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 20 Sep 2020 02:27:15 -0400
+X-Greylist: delayed 567 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Sep 2020 02:27:15 EDT
+Received: from marcel-macbook.fritz.box (p4fefc7f4.dip0.t-ipconnect.de [79.239.199.244])
+        by mail.holtmann.org (Postfix) with ESMTPSA id B8E5ACEC92;
+        Sun, 20 Sep 2020 08:24:44 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: [PATCH v1] Bluetooth: btusb: Enable wide band speech support for
+ BTUSB_QCA_ROME
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200917130923.15237-1-rjliao@codeaurora.org>
+Date:   Sun, 20 Sep 2020 08:17:46 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <6D9F38F1-D350-4D32-8D30-A316AD1A9400@holtmann.org>
+References: <20200917130923.15237-1-rjliao@codeaurora.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> +
-> +/* 0 = Clause 22, 1 = Clause 45 */
-> +#define MDIO_MODE_BIT				BIT(8)
+Hi Rocky,
 
-How about calling this MDIO_MODE_C45
+> QCA Rome supports wide band speech, this patch enables the wide band
+> speech support by set the BTUSB_WIDEBAND_SPEECH flag.
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+> drivers/bluetooth/btusb.c | 54 ++++++++++++++++++++++++++-------------
+> 1 file changed, 36 insertions(+), 18 deletions(-)
 
-> +		/* Enter Clause 45 mode */
-> +		data = readl(priv->membase + MDIO_MODE_REG);
-> +
-> +		data |= MDIO_MODE_BIT;
-> +
-> +		writel(data, priv->membase + MDIO_MODE_REG);
+patch has been applied to bluetooth-next tree.
 
-It then becomes clearer what this does.
+Regards
 
-Otherwise this looks O.K.
+Marcel
 
-	  Andrew
