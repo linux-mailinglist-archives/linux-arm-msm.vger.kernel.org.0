@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0726627151F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Sep 2020 16:50:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D85A1271523
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Sep 2020 16:50:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726501AbgITOuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Sep 2020 10:50:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49622 "EHLO
+        id S1726526AbgITOuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Sep 2020 10:50:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgITOuQ (ORCPT
+        with ESMTP id S1726267AbgITOuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Sep 2020 10:50:16 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F4FC061755;
-        Sun, 20 Sep 2020 07:50:16 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id j2so10166135wrx.7;
-        Sun, 20 Sep 2020 07:50:16 -0700 (PDT)
+        Sun, 20 Sep 2020 10:50:19 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8927BC061755;
+        Sun, 20 Sep 2020 07:50:19 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id l15so9926204wmh.1;
+        Sun, 20 Sep 2020 07:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z/2uZ0pYs4z9cwjMhZc9o0Cxd7UZbdq55pRW4iZm16k=;
-        b=R8BlIVOwsRdTH/sWcOXMzXJiav8nqd9EN21VdAk+Z2gdueMSiv9OWlxvkGOgnr2TlA
-         VYFygauUaEUleThyTmm9JxVmkjKotBFsvY1fvxSujl9m9ubnZfw0L7UVuneTblcPqe5p
-         6pVEkpXOEOIW4Ub9IknqxSGIeU6GuCOIzSIL5EOABSIvN3dPgtH9lYLdv3EU7knxzhA9
-         Um0aTZu0O4IOQNrWhbmM9YKB78vylh6FdRvTnR/38yF2GOUYdp3RY/fei2Zka/1PV8CI
-         1cnuHMRjJBJthENU3JF++kzvv92LzGSe+PhRGbXUXuJ4jiRXIPpjRPktoUIOYG3g9jiX
-         2NVQ==
+        bh=SteKMBpmBrguVd23I5meuDfrBnRPfbmSgXwQWs0dPQM=;
+        b=tvQ5lupA7UglXX89heGIad1LEEh8JvWmpB6SnN/WFOKmPhkdXpu243oNWa/FmzVzso
+         fMHhv+e/PSE9VKuQYHuv5j/Q7oiCD9u0/q/wJKBTTfMWtHYXciVVo7Cz7aGiZX4bu6Gq
+         2L7jLR/oBk1aGgl4bo6wTVgkid5QwDmCCydqJ3AHuG+arslEMn8q0X9RH7QjxE11HQR2
+         cCr1XYUKLRZkXTL4mekIfh3AXNe5H6jXCoboLqFI9w7Jy1wWiGngntXvd8i+XR1e+zYC
+         Mbnj+2Ounm6/s7Wu9DK74Ue1oL2T38TVXME1xtThscKDhv8bEs/3axwTXWCnPClksZxA
+         iGWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z/2uZ0pYs4z9cwjMhZc9o0Cxd7UZbdq55pRW4iZm16k=;
-        b=hXgTE+LqOAUVzUllAzZmU/65VwPGY52thKg0iffVsgeHldyYbP+ar7RQac9KlsVIsm
-         Gia1e3GiDuTmfRdGpp+R5jvdjOhodzFbSN6kC+fkIpDERFx7MYyGnS48KdaurdGHhFue
-         mZAmOQ4O6AYLFOrAyquUKUVNMU22yPXIfkGos6JJwQnhtgs4XsptIHUtIbZvTUMHlURB
-         gVkRoLf04FpGgfW18GFb5GBbOCD/OMDqss3jYg2nepgxdu+OZw9Gbjj1K+wSmImsMK7Z
-         s8k+uYvCOHAZkRBrs1Psr96bX3t8vDJzgUXHdKRh/O9gAaIT9ysQ6aivJhlbYxiOg5QO
-         iFyQ==
-X-Gm-Message-State: AOAM530Npsg+7g2fgolyzE9F74cvYm4veS9a0iWqrBsyEw9BmIfofUhq
-        ajrkxs/LBgiXkTanIitZsXE=
-X-Google-Smtp-Source: ABdhPJzvpLai1gcqedwDYq06Zg4QTcRUOP/B04URAbVdVic+ZBM84Dbwj4jOcthzgdAE6tRMlceJmA==
-X-Received: by 2002:a5d:40c4:: with SMTP id b4mr45060837wrq.151.1600613415003;
-        Sun, 20 Sep 2020 07:50:15 -0700 (PDT)
+        bh=SteKMBpmBrguVd23I5meuDfrBnRPfbmSgXwQWs0dPQM=;
+        b=s4albZ3TaYk6aqDdjTyjVnFsiHXDeTmkgZeuk2CgFJ2Rbt6oJI5wjHC4KV1ktJ3igD
+         NnKsiN4xeGjCgPNXJdi7wZdh3zQwEhO+xQqMv6ejU1J0gXh1bftbjV5hFj7NRYs5GJBh
+         Sb/pfkMaFhIAY43+pME2Ze6rcw+FGbioOWEP0rw1VxptueHjfImm0rooW56elfHdGK8e
+         MTpi+5y+HmZbnu7ubfvGeC3+1snIoCiPqQN2Oirrs1czmdgqV97r9F/HDWDfbwgj2J1I
+         R88PTHcJ5846D6GJFO9I8E0yMhu2Q47Adsy7Un6s9NGBartyVf3G/6Tk7xQri8Au9ctC
+         7aHA==
+X-Gm-Message-State: AOAM532RIqCsqITVIFJYzZNQdEKiqJ1asxTWwgEX9wKNXVMvaI/Pj42B
+        FB4DWRDotEISG8eSeCv0lHkvHlAUpyCx8fKK
+X-Google-Smtp-Source: ABdhPJxlRO8KW5JdN4Ie/Lh6Cx9T0AbI9tJVN6s2v+EhCFUxWJvy9Exom5byY1PBmuSuDrcVPIR0HA==
+X-Received: by 2002:a05:600c:21cd:: with SMTP id x13mr25626226wmj.63.1600613418253;
+        Sun, 20 Sep 2020 07:50:18 -0700 (PDT)
 Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id q15sm15411842wrr.8.2020.09.20.07.50.13
+        by smtp.gmail.com with ESMTPSA id w15sm14985282wro.46.2020.09.20.07.50.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Sep 2020 07:50:14 -0700 (PDT)
+        Sun, 20 Sep 2020 07:50:17 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Rob Herring <robh+dt@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -56,9 +56,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org,
         Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH RESEND 6/7] ARM: dts: qcom: msm8974-klte: Add support for wifi
-Date:   Sun, 20 Sep 2020 17:48:58 +0300
-Message-Id: <20200920144859.813032-7-iskren.chernev@gmail.com>
+Subject: [PATCH RESEND 7/7] ARM: dts: qcom: msm8974-klte: Add support for SD card
+Date:   Sun, 20 Sep 2020 17:48:59 +0300
+Message-Id: <20200920144859.813032-8-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200920144859.813032-1-iskren.chernev@gmail.com>
 References: <20200920144859.813032-1-iskren.chernev@gmail.com>
@@ -68,129 +68,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Samsung Galaxy S5 (klte), uses a Broadcom 4354 Chip connected on the
-SDIO bus. The chip also requires a corresponding firmware + txt file[1].
-
-[1] https://gitlab.com/postmarketOS/pmaports/-/blob/master/firmware/firmware-samsung-klte/APKBUILD
+The Samsung Galaxy S5 (klte), has 3 SDHCI nodes used for internal
+storage, WiFi, external SD card slot. The external SD card slot is
+similar to the internal storage.
 
 Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 ---
- .../boot/dts/qcom-msm8974-samsung-klte.dts    | 74 +++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 44 ++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-index 29099b83b231d..989447beb4319 100644
+index 989447beb4319..b0899107f3ced 100644
 --- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
 +++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-@@ -282,6 +282,17 @@ led@3 {
- 		};
+@@ -12,6 +12,8 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &blsp1_uart1;
++		sdhc1 = &sdhc_1; /* SDC1 eMMC slot */
++		sdhc2 = &sdhc_2; /* SDC2 SD card slot */
  	};
  
-+	vreg_wlan: wlan-regulator {
-+		compatible = "regulator-fixed";
+ 	chosen {
+@@ -161,6 +163,9 @@ pma8084_l20: l20 {
+ 					pma8084_l21: l21 {
+ 						regulator-min-microvolt = <2950000>;
+ 						regulator-max-microvolt = <2950000>;
 +
-+		regulator-name = "wl-reg";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&gpio_expander 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
- 	/delete-node/ vreg-boost;
- };
++						regulator-allow-set-load;
++						regulator-system-load = <200000>;
+ 					};
  
-@@ -338,6 +349,20 @@ cmd-data {
+ 					pma8084_l22: l22 {
+@@ -349,6 +354,24 @@ cmd-data {
  			};
  		};
  
-+		sdhc3_pin_a: sdhc3-pin-active {
-+			clk {
-+				pins = "sdc2_clk";
-+				drive-strength = <6>;
++		sdhc2_pin_a: sdhc2-pin-active {
++			clk-cmd-data {
++				pins = "gpio35", "gpio36", "gpio37", "gpio38",
++					"gpio39", "gpio40";
++				function = "sdc3";
++				drive-strength = <8>;
 +				bias-disable;
 +			};
-+
-+			cmd-data {
-+				pins = "sdc2_cmd", "sdc2_data";
-+				drive-strength = <6>;
-+				bias-pull-up;
-+			};
 +		};
 +
- 		i2c2_pins: i2c2 {
- 			mux {
- 				pins = "gpio6", "gpio7";
-@@ -385,6 +410,16 @@ res {
- 				drive-strength = <2>;
- 			};
++		sdhc2_cd_pin: sdhc2-cd {
++			pins = "gpio62";
++			function = "gpio";
++
++			drive-strength = <2>;
++			bias-disable;
++		};
++
+ 		sdhc3_pin_a: sdhc3-pin-active {
+ 			clk {
+ 				pins = "sdc2_clk";
+@@ -422,7 +445,7 @@ int {
  		};
-+
-+		wifi_pin: wifi {
-+			int {
-+				pins = "gpio92";
-+				function = "gpio";
-+
-+				input-enable;
-+				bias-pull-down;
-+			};
-+		};
  	};
  
- 	sdhci@f9824900 {
-@@ -400,6 +435,36 @@ sdhci@f9824900 {
+-	sdhci@f9824900 {
++	sdhc_1: sdhci@f9824900 {
+ 		status = "ok";
+ 
+ 		vmmc-supply = <&pma8084_l20>;
+@@ -435,6 +458,25 @@ sdhci@f9824900 {
  		pinctrl-0 = <&sdhc1_pin_a>;
  	};
  
-+	sdhci@f98a4900 {
-+		status = "okay";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
++	sdhc_2: sdhci@f9864900 {
++		status = "ok";
 +
 +		max-frequency = <100000000>;
 +
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&sdhc3_pin_a>;
-+
-+		vmmc-supply = <&vreg_wlan>;
-+		vqmmc-supply = <&pma8084_s4>;
++		vmmc-supply = <&pma8084_l21>;
++		vqmmc-supply = <&pma8084_l13>;
 +
 +		bus-width = <4>;
-+		non-removable;
 +
-+		wifi@1 {
-+			reg = <1>;
-+			compatible = "brcm,bcm4329-fmac";
-+
-+			interrupt-parent = <&msmgpio>;
-+			interrupts = <92 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "host-wake";
-+
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&wlan_sleep_clk_pin &wifi_pin>;
-+		};
++		/* cd-gpio is intentionally disabled. If enabled, an SD card
++		 * present during boot is not initialized correctly. Without
++		 * cd-gpios the driver resorts to polling, so hotplug works.
++		 */
++		pinctrl-names = "default";
++		pinctrl-0 = <&sdhc2_pin_a /* &sdhc2_cd_pin */>;
++		// cd-gpios = <&msmgpio 62 GPIO_ACTIVE_LOW>;
 +	};
 +
- 	usb@f9a55000 {
- 		status = "ok";
+ 	sdhci@f98a4900 {
+ 		status = "okay";
  
-@@ -587,6 +652,15 @@ touch_pin: touchscreen-int-pin {
- 				input-enable;
- 				power-source = <PMA8084_GPIO_S4>;
- 			};
-+
-+			wlan_sleep_clk_pin: wlan-sleep-clk-pin {
-+				pins = "gpio16";
-+				function = "func2";
-+
-+				output-high;
-+				power-source = <PMA8084_GPIO_S4>;
-+				qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+			};
- 		};
- 	};
- };
 -- 
 2.28.0
 
