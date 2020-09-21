@@ -2,83 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21383271B36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 09:02:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1E95271BDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 09:31:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726297AbgIUHCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 03:02:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56674 "EHLO
+        id S1726324AbgIUHbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 03:31:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726011AbgIUHCb (ORCPT
+        with ESMTP id S1726211AbgIUHbM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 03:02:31 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E82C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 00:02:31 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id u21so16198316eja.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 00:02:31 -0700 (PDT)
+        Mon, 21 Sep 2020 03:31:12 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46548C061755
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 00:31:12 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id j2so11578298wrx.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 00:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+Xss9c11p8bBmXKV+u1JKfgT0yo2Puvq1LzLJon8FQc=;
-        b=r+PipTUq1b+cWxzWdj8ctE37KVVoRKKTlAGfH+WYlEUV4dQ+8xWL+Jk3REr7eojnxm
-         KiilYAWOjXIrixf3i7YlYs91J5t67wLHoFZfXUJRdAgp81XXxVqHgm0E0p5N9ziP+XwT
-         NRxVd91YJQVerIVmNvg/gOqKR+SMgtWs1yfnQn0wAmT1B2SboIYI6/pp6Hl4jLrwYFaI
-         +4tCfZlSWlaK2drf6MxYrH/xzJ/eTzIS09FUJGHlqiSSA/IEoVvoJBotGhf3sOHy7NKy
-         oqm9neBc/cf0oeVhzCEs/8IUhl1SAXC2WMe03lOfV9EnnukairSuzrxRn4rd6ox/rx7n
-         Ge0Q==
+        h=from:to:cc:subject:date:message-id;
+        bh=qThituOruGqfJmANB4icVDJLbT7XwfYfdRi5PVcvaHc=;
+        b=V+/v2ZQBqJJuvojgm7zCRBV4CVpCmG4KL+KhecuKzD41YajWMpuyCMnRbNDSSQULNY
+         bTXPNyri/wEDokJNhweiVzo7Y+TI2yl9d579/b4lBI84172yAEeoi7i76DcCAPh8y3uj
+         nZvZt/dYja5vxl3k1B4Xml+IzAWBtDDEjqnlRH8umIHWhdvmd5fe1yx4j085rtjdD20P
+         oVyjyVKqf2jAfZGR97m1SIF4wbeUoDZQNXoB6WpXf4SJJhqwOuTSaQwrwkWZMMZPquSp
+         CVyQQCxUP9UkVcfA0ApHK6s7PkSzEAovT7gEjKkcPxHIh5HlVZycaCS197KNfh92c6oG
+         51GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+Xss9c11p8bBmXKV+u1JKfgT0yo2Puvq1LzLJon8FQc=;
-        b=bucNYe2STsCVhup2owD18I7Rlk7EFebnnuLKxpj0yO6PbvOIU4+nZHS44pnYh1pfwp
-         u8uFJcKzjgv0pGb5/7micpxErUvJOdycCOou/vj5ux9HdaGnL8MflQpbTJnGyUs9JSGq
-         TpkrG8sNnMKR4qQn8ZYCBldGi2x0/No/mYrXqCMeF+8AmAi6z5GAyaB/IRmENybtRGz3
-         mYbhprOqIqPp2r35LjiPI35WBhBiM6JOjCS9gu5uZP+IvpgDiuJe7HFy/yWM7NmwFkht
-         62KtiKdR8RglPniEEHQ30Br/sOSDUuUyidEXNh2NzxP7NjLNdZnTQ8lsDwbYqaljkwbI
-         qv1Q==
-X-Gm-Message-State: AOAM533ifGKhFxWUwnKMe3+ognKTe0jaHOJxf4G25V1arGmimagF/OX7
-        Y+HxNlJSsSf0XdQ2lAR/15gyf9UwEV5L8Vy1lRKrEA==
-X-Google-Smtp-Source: ABdhPJzDkxa18iXpBT+DXdSntUtWFnIzGNDW6XrdJtcesI8TpoWFYuOMPmfc8vxJ5XI82CR/RTs/mdYPYx0wf1xub8w=
-X-Received: by 2002:a17:906:724b:: with SMTP id n11mr48947047ejk.328.1600671749742;
- Mon, 21 Sep 2020 00:02:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <1600424219-6674-1-git-send-email-loic.poulain@linaro.org> <E1056EBC-1EC3-44F1-A0E8-28C7627E0074@linaro.org>
-In-Reply-To: <E1056EBC-1EC3-44F1-A0E8-28C7627E0074@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qThituOruGqfJmANB4icVDJLbT7XwfYfdRi5PVcvaHc=;
+        b=TAMQvzsdhjkddtr6wcM1VSi2Yp1FNKieHu4X1srTl30bnrmX7DVUiSemIsa1aK2kr4
+         Ubnb4jiAMFc0TXrsHbuAAKnVhrrQTE4gTXxbgTrS9ERrWaJhmGcw04fU9iC+5gzzmVLH
+         R+yB9Uoc1eB5eDdS0dXEwZH7rsDN5AUL+/qBu58fDOH4dsME6ROaIVheJ9YP/33S+25Y
+         ydlHy7+JtHVV3/P/LIUD4u/XnVydKlad1C+JamNlLFTheOi/GQLr5kKvP7jR9ExpazkC
+         tFBIDYvEOG09yO3YIPKCcHWJCC1IXp3vppz0BOSHvSeb9SQtfebyENsiImWYkiUZVZJm
+         3c5g==
+X-Gm-Message-State: AOAM532TDJfJGPtyndFzJbEgf94OGd+zRXrtkvHjzCDh6I0MvNvq2uRW
+        BXV4zzPqjz+z2OL5+AW5SzCM1A==
+X-Google-Smtp-Source: ABdhPJyqhAb2P82honw+gvl6Q0MUzwYw9Oksssjjnpn2VKdXNrSximkE72wMT6s0T48BaFhy7eZ0Vg==
+X-Received: by 2002:adf:fc81:: with SMTP id g1mr49497243wrr.31.1600673470836;
+        Mon, 21 Sep 2020 00:31:10 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:5875:9da3:b857:e7f4])
+        by smtp.gmail.com with ESMTPSA id u13sm18331995wrm.77.2020.09.21.00.31.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Sep 2020 00:31:10 -0700 (PDT)
 From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 21 Sep 2020 09:07:45 +0200
-Message-ID: <CAMZdPi_XEALysyXDtOH3vd1hwAhf0ntrWEU2nxEY5VCXJhtziA@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        clew@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v2 1/2] bus: mhi: core: Allow shared IRQ for event rings
+Date:   Mon, 21 Sep 2020 09:36:58 +0200
+Message-Id: <1600673819-1698-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 19 Sep 2020 at 13:27, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> Hi Loic,
->
-> On 18 September 2020 3:46:59 PM IST, Loic Poulain <loic.poulain@linaro.org> wrote:
-> >There is really no point having an auto-start for channels.
-> >This is confusing for the device drivers, some have to enable the
-> >channels, others don't have... and waste resources (e.g. pre allocated
-> >buffers) that may never be used.
-> >
-> >This is really up to the MHI device(channel) driver to manage the state
-> >of its channels.
-> >
-> >Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->
-> The patch content looks good but you should split the qrtr change to a separate patch. I can't queue the networking change through mhi tree.
+There is no requirement for using a dedicated IRQ per event ring.
+Some systems does not support multiple MSI vectors (e.g. intel
+without CONFIG_IRQ_REMAP), In that case the MHI controller can
+configure all the event rings to use the same interrupt (as fallback).
 
-Ok going to split that.
+Allow this by removing the nr_irqs = ev_ring test and add extra check
+in the irq_setup function.
 
-Thanks,
-Loic
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ v2: keep nr_irqs check early in init sequence
+
+ drivers/bus/mhi/core/init.c | 7 +++++++
+ drivers/bus/mhi/core/pm.c   | 2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 19ade8a..31961af 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -125,6 +125,13 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ 		if (mhi_event->offload_ev)
+ 			continue;
+ 
++		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
++			dev_err(dev, "irq %d not available for event ring\n",
++				mhi_event->irq);
++			ret = -EINVAL;
++			goto error_request;
++		}
++
+ 		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
+ 				  mhi_irq_handler,
+ 				  IRQF_SHARED | IRQF_NO_SUSPEND,
+diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+index ce4d969..3de7b16 100644
+--- a/drivers/bus/mhi/core/pm.c
++++ b/drivers/bus/mhi/core/pm.c
+@@ -918,7 +918,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+ 
+ 	dev_info(dev, "Requested to power ON\n");
+ 
+-	if (mhi_cntrl->nr_irqs < mhi_cntrl->total_ev_rings)
++	if (mhi_cntrl->nr_irqs < 1)
+ 		return -EINVAL;
+ 
+ 	/* Supply default wake routines if not provided by controller driver */
+-- 
+2.7.4
+
