@@ -2,92 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CAA6272B34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 18:11:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F28D272B21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 18:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728160AbgIUQLk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 12:11:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57362 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727174AbgIUQLk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 12:11:40 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B298C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 09:11:40 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id o25so4507004pgm.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 09:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jN92Mz9LhRgMy6R9r5bCTsDXQ/6vWkXL7O/cDsot2BM=;
-        b=N2RvolYFayc5fsOh1gJB3DMK8oIMyBLRgMfxg0FMJLL7xfLAZBP01+r5QYj+1GffUM
-         9BxtINmxg9fRU+P1ec6xIBuRVD0tqNgD2LTsF3vyOHR5mYyDOOjr01s0CP9v9JCMZGQF
-         QA9oxgiD7HKR4dOk3wBA93ftpmen3Zowd7yd58R2TufsBRIds7Ij3caLJWNI6n66MFoJ
-         MZhOZpDv6Ao0RNg6HFEfyLQE7V/MSJZxG+VeFCZwqLkpPp4lEIoMNmmSWpVZKDzg2J0O
-         NZotg/bCnTmE06vbBS7PbT3MZfyvR2+uaptpqg4YwTRWBYv2lbwSW57Gq78Aaqo+1vu7
-         iQ9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=jN92Mz9LhRgMy6R9r5bCTsDXQ/6vWkXL7O/cDsot2BM=;
-        b=FuieGG3qEf+5rfj4nQDvQOHSnVJlWMPM5wSYjXQKI8748a1oAVN8bcNXyN9MCHmrIl
-         DV9CShQzP8q6mezBMATmdEOhB/CvIRY8BidLgaGWRk/GEGQ+nTQTiTIg34fUzOMMdOq1
-         X2oDiDbDCSqT5+1Onr8cJnx2GhHznO9Zr1ZTC2sdW040TKMha4C7KjNeQQInf+TfYO9e
-         YeA94m/6NzdvPP8tXQC3TSLvMKRl0Bak5FBlGjH+GPgL2Ljdpwys+5dq4EukEu3R8/Qq
-         UE4S41uryHLXTKQtL9eA7YSaBXfl0liAY2bz88fQTU/zGxpHXBCWeVep9QAZ5niLGbtK
-         nvuQ==
-X-Gm-Message-State: AOAM531VcAgL9SBeg/j7A1Cb+xj13ONl78/w7m5P2hgyVl59P9D75XtS
-        A93lxQm/tTQNw6s221AqIqI3
-X-Google-Smtp-Source: ABdhPJw8SItFJiNDC55yGBHXRfsp10m1RmOM+ZPdNrLv6b91hudCqSZkRXGKp2kqd4I6H8Ssmr6RcA==
-X-Received: by 2002:a17:902:c394:b029:d2:4ca:2e22 with SMTP id g20-20020a170902c394b02900d204ca2e22mr621403plg.77.1600704699579;
-        Mon, 21 Sep 2020 09:11:39 -0700 (PDT)
-Received: from Mani-XPS-13-9360.localdomain ([2409:4072:6d03:bd12:1004:2ccf:6900:b97])
-        by smtp.gmail.com with ESMTPSA id f4sm9204577pgr.68.2020.09.21.09.11.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 09:11:39 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 18/18] bus: mhi: core: Fix the building of MHI module
-Date:   Mon, 21 Sep 2020 21:38:15 +0530
-Message-Id: <20200921160815.28071-20-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200921160815.28071-1-manivannan.sadhasivam@linaro.org>
-References: <20200921160815.28071-1-manivannan.sadhasivam@linaro.org>
+        id S1728068AbgIUQK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 12:10:26 -0400
+Received: from foss.arm.com ([217.140.110.172]:46088 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727386AbgIUQKZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Sep 2020 12:10:25 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7956F147A;
+        Mon, 21 Sep 2020 09:10:24 -0700 (PDT)
+Received: from e107158-lin.cambridge.arm.com (e107158-lin.cambridge.arm.com [10.1.195.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5D50D3F73B;
+        Mon, 21 Sep 2020 09:10:23 -0700 (PDT)
+Date:   Mon, 21 Sep 2020 17:10:21 +0100
+From:   Qais Yousef <qais.yousef@arm.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Peter Zijlstra <peterz@infradead.org>,
+        Tejun Heo <tj@kernel.org>, timmurray@google.com,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 0/3] drm: commit_work scheduling
+Message-ID: <20200921161020.pjd6v6ul3beljwot@e107158-lin.cambridge.arm.com>
+References: <20200919193727.2093945-1-robdclark@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200919193727.2093945-1-robdclark@gmail.com>
+User-Agent: NeoMutt/20171215
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kbuild rule to build MHI should use the append operator. This fixes
-the below warning reported by Kbuild test bot.
+On 09/19/20 12:37, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> The android userspace treats the display pipeline as a realtime problem.
+> And arguably, if your goal is to not miss frame deadlines (ie. vblank),
+> it is.  (See https://lwn.net/Articles/809545/ for the best explaination
+> that I found.)
+> 
+> But this presents a problem with using workqueues for non-blocking
+> atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
+> preempt the worker.  Which is not really the outcome you want.. once
+> the required fences are scheduled, you want to push the atomic commit
+> down to hw ASAP.
+> 
+> But the decision of whether commit_work should be RT or not really
+> depends on what userspace is doing.  For a pure CFS userspace display
+> pipeline, commit_work() should remain SCHED_NORMAL.
 
-WARNING: modpost: missing MODULE_LICENSE() in
-drivers/bus/mhi/core/main.o
-WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/pm.o
-WARNING: modpost: missing MODULE_LICENSE() in
-drivers/bus/mhi/core/boot.o
+Just a side note; this RT vs CFS inter-operatability is an issue that
+creeps up every now and again.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+https://lore.kernel.org/lkml/1567048502-6064-1-git-send-email-jing-ting.wu@mediatek.com/
 
-diff --git a/drivers/bus/mhi/core/Makefile b/drivers/bus/mhi/core/Makefile
-index 12c57ab3724c..c3feb4130aa3 100644
---- a/drivers/bus/mhi/core/Makefile
-+++ b/drivers/bus/mhi/core/Makefile
-@@ -1,4 +1,4 @@
--obj-$(CONFIG_MHI_BUS) := mhi.o
-+obj-$(CONFIG_MHI_BUS) += mhi.o
- 
- mhi-y := init.o main.o pm.o boot.o
- mhi-$(CONFIG_MHI_BUS_DEBUG) += debugfs.o
--- 
-2.17.1
+Does the UI thread in Android ever run as RT by the way? I always suspected it
+is one susceptible to such potential delays since it is part of the application
+thread and thought it can't be trusted to become RT.
 
+Those 120MHz displays will stress the pipeline :-)
+
+> 
+> To handle this, convert non-blocking commit_work() to use per-CRTC
+> kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
+> used to avoid serializing commits when userspace is using a per-CRTC
+> update loop.
+> 
+> A client-cap is introduced so that userspace can opt-in to SCHED_FIFO
+> priority commit work.
+> 
+> A potential issue is that since 616d91b68cd ("sched: Remove
+> sched_setscheduler*() EXPORTs") we have limited RT priority levels,
+> meaning that commit_work() ends up running at the same priority level
+> as vblank-work.  This shouldn't be a big problem *yet*, due to limited
+> use of vblank-work at this point.  And if it could be arranged that
+> vblank-work is scheduled before signaling out-fences and/or sending
+> pageflip events, it could probably work ok to use a single priority
+> level for both commit-work and vblank-work.
+
+This is a function of num_cpus too. As long as nr_cpus > nr_running_rt_tasks
+you should be fine.
+
+Cheers
+
+--
+Qais Yousef
