@@ -2,99 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04D93273201
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 20:34:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FBB9273216
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 20:43:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727030AbgIUSdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 14:33:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726456AbgIUSdf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 14:33:35 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02484C061755;
-        Mon, 21 Sep 2020 11:33:34 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id d4so450859wmd.5;
-        Mon, 21 Sep 2020 11:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2pljieOa3zqVRg/nGCsqWTPIMVj9a7ObD+5hzvK2Z0I=;
-        b=s/2lSfECPbjLHM2LdhQLNaMh78qvA/Uu+BsbwbIwRyEVeTA30UJJJ26rlr0/UdPmIj
-         q6EtpiecmC2cTci+sv0gqZhFfHO0H9VgrYQ/YF7xuti1+alXMRMily9jWUq/lvLQ9b9G
-         SpcGH6rlbNgPOBVhfYQK1JE5JfKgj4cLpi2MYoRmZbY/f1VzAD55/ZBfiqWlqi+W8QK2
-         2fsbgcim3qo9fRXr77t63uZtuqi4MJmRs/vywjq3keI9xP9xz9HwvGNlGjs8XKZZFF33
-         /tOeYdh+UaFxmA6mb9Jb3PdX7yYd2lRr3gUz9pzyjPXpriHZQ2Hiw4klgPs/5bo/ObzN
-         wspA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2pljieOa3zqVRg/nGCsqWTPIMVj9a7ObD+5hzvK2Z0I=;
-        b=L++N3wECfXSCYujHkVuP4xB3RuxMSHNMAy4s7skoa5jxqBW8kIXThskN8X3Easegls
-         SROdns4e9isKUf5IgfQOueggmmDU/fAiXrQd21VP/YBb3rQV24vYwqg5hS9sv/0s3IyY
-         chGIY1LNRZ46bf+eBBThiMjJ/XbeqrCXijalQyEfQo2GY8UmFZbYkEEjjVHFMXrApW5d
-         AMt3YzHNCj4MyTQGCboWleMELz6hmF73poI49wU1YL0Hk+JnYwTP/NwYJSmayHbDNNRi
-         JDSFF9/XzdSijgnXPFRWRsaorip2vJJyXhulxSm7CYJmuCFOipEacEYSU5ss4/IXEXgZ
-         gS1w==
-X-Gm-Message-State: AOAM533vU2cKrJO82T6taNUHyRsp0EjWIJa1j6Qashv+2Nb5LSAZaGKI
-        o72zsyiB5z1Bva9hGoaUmHQA+q1AYGzvJOXN7CCYDthyhjc=
-X-Google-Smtp-Source: ABdhPJwOdkyX2T0nNsDtEYqTQPWOnuWTEliEywfKgd/Kd/kkmsATU6V+QmG/OrZNm2joFQfWrCrOoKg8VsCqThpuZIU=
-X-Received: by 2002:a7b:c345:: with SMTP id l5mr630045wmj.123.1600713213466;
- Mon, 21 Sep 2020 11:33:33 -0700 (PDT)
+        id S1726456AbgIUSmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 14:42:20 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:57723 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726973AbgIUSmT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Sep 2020 14:42:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600713739; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=c5mtWHfIaxLFoxw+EoRdIaIWvc6kNm56/MgQRovBjK4=;
+ b=nF/NaCwHoz/YV9QYVLyG2HGnt8hgp4hXotJh4HHBYwT3Xe5fvfHa+m7zL8t4R6HlfeyMdKjU
+ tyU4l0U2DdBdK7a+dqctAYWO1Ygi75xGs2Og3Eqor/dXzXvOI3bIKoTdrtsDRpgsm4jrYK4P
+ iD3rke5aYblYpfQ5V9+Ox+V19qI=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f68f40936c8ce93e83b2ad9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Sep 2020 18:42:17
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6AEA0C433F1; Mon, 21 Sep 2020 18:42:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA581C433C8;
+        Mon, 21 Sep 2020 18:42:16 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200918011357.909335-1-yukuai3@huawei.com> <20200921175048.GD3141@willie-the-truck>
- <CAF6AEGuVsuOxhFONDpJF4EsY-KWQu+Vna_CM9dPhrFS_9FQsqA@mail.gmail.com>
-In-Reply-To: <CAF6AEGuVsuOxhFONDpJF4EsY-KWQu+Vna_CM9dPhrFS_9FQsqA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 21 Sep 2020 11:33:21 -0700
-Message-ID: <CAF6AEGu1CLqQcowTz+V8E5fj2FLFKLmUMchz1hDP1niM8QDkPQ@mail.gmail.com>
-Subject: Re: [PATCH] iommu/qcom: add missing put_device() call in qcom_iommu_of_xlate()
-To:     Will Deacon <will@kernel.org>
-Cc:     Yu Kuai <yukuai3@huawei.com>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <joro@8bytes.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        yi.zhang@huawei.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 21 Sep 2020 11:42:16 -0700
+From:   bbhatt@codeaurora.org
+To:     Loic Poulain <loic.poulain@linaro.org>, clew@codeaurora.org
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        davem@davemloft.net, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH v2 1/2] bus: mhi: Remove auto-start option
+In-Reply-To: <1600674184-3537-1-git-send-email-loic.poulain@linaro.org>
+References: <1600674184-3537-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <20b95a1bd31bedc20ce03c5efc1bdd02@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 11:27 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> On Mon, Sep 21, 2020 at 10:50 AM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Fri, Sep 18, 2020 at 09:13:57AM +0800, Yu Kuai wrote:
-> > > if of_find_device_by_node() succeed, qcom_iommu_of_xlate() doesn't have
-> > > a corresponding put_device(). Thus add put_device() to fix the exception
-> > > handling for this function implementation.
-> > >
-> > > Fixes: e86d1aa8b60f ("iommu/arm-smmu: Move Arm SMMU drivers into their own subdirectory")
-> >
-> > That's probably not accurate, in that this driver used to live under
-> > drivers/iommu/ and assumedly had this bug there as well.
-> >
+On 2020-09-21 00:43, Loic Poulain wrote:
+> There is really no point having an auto-start for channels.
+> This is confusing for the device drivers, some have to enable the
+> channels, others don't have... and waste resources (e.g. pre allocated
+> buffers) that may never be used.
+> 
+> This is really up to the MHI device(channel) driver to manage the state
+> of its channels.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  v2: split MHI and qrtr changes in dedicated commits
+> 
+>  drivers/bus/mhi/core/init.c     | 9 ---------
+>  drivers/bus/mhi/core/internal.h | 1 -
+>  include/linux/mhi.h             | 2 --
+>  3 files changed, 12 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index dccc824..8798deb 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -721,7 +721,6 @@ static int parse_ch_cfg(struct mhi_controller 
+> *mhi_cntrl,
+>  		mhi_chan->offload_ch = ch_cfg->offload_channel;
+>  		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
+>  		mhi_chan->pre_alloc = ch_cfg->auto_queue;
+> -		mhi_chan->auto_start = ch_cfg->auto_start;
+> 
+>  		/*
+>  		 * If MHI host allocates buffers, then the channel direction
+> @@ -1119,11 +1118,6 @@ static int mhi_driver_probe(struct device *dev)
+>  			goto exit_probe;
+> 
+>  		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
+> -		if (ul_chan->auto_start) {
+> -			ret = mhi_prepare_channel(mhi_cntrl, ul_chan);
+> -			if (ret)
+> -				goto exit_probe;
+> -		}
+>  	}
+> 
+>  	ret = -EINVAL;
+> @@ -1157,9 +1151,6 @@ static int mhi_driver_probe(struct device *dev)
+>  	if (ret)
+>  		goto exit_probe;
+> 
+> -	if (dl_chan && dl_chan->auto_start)
+> -		mhi_prepare_channel(mhi_cntrl, dl_chan);
+> -
+>  	mhi_device_put(mhi_dev);
+> 
+>  	return ret;
+> diff --git a/drivers/bus/mhi/core/internal.h 
+> b/drivers/bus/mhi/core/internal.h
+> index 5a81a42..73b52a0 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -563,7 +563,6 @@ struct mhi_chan {
+>  	bool configured;
+>  	bool offload_ch;
+>  	bool pre_alloc;
+> -	bool auto_start;
+>  	bool wake_capable;
+>  };
+> 
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 811e686..0d277c7 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -214,7 +214,6 @@ enum mhi_db_brst_mode {
+>   * @offload_channel: The client manages the channel completely
+>   * @doorbell_mode_switch: Channel switches to doorbell mode on M0 
+> transition
+>   * @auto_queue: Framework will automatically queue buffers for DL 
+> traffic
+> - * @auto_start: Automatically start (open) this channel
+>   * @wake-capable: Channel capable of waking up the system
+>   */
+>  struct mhi_channel_config {
+> @@ -232,7 +231,6 @@ struct mhi_channel_config {
+>  	bool offload_channel;
+>  	bool doorbell_mode_switch;
+>  	bool auto_queue;
+> -	bool auto_start;
+>  	bool wake_capable;
+>  };
 
-and fwiw, that looks like it should be:
-
-Fixes: 0ae349a0f33fb ("iommu/qcom: Add qcom_iommu")
-
-> > > Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-> > > ---
-> > >  drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 ++++-
-> > >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > I guess Rob will pick this up.
->
-> Probably overkill for me to send a pull req for a single patch, if you
-> want to pick it up:
->
-> Acked-by: Rob Clark <robdclark@gmail.com>
+Chris, are you OK with this? It will change the current behavior where 
+MHI will
+not start the up link channel before providing QRTR with a probe.
