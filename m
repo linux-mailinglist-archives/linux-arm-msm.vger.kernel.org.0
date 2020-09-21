@@ -2,129 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A810C271CF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 10:03:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C9ED271E34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 10:42:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgIUIDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 04:03:20 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35]:48064 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726893AbgIUIC3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 04:02:29 -0400
-Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.59])
-        by Forcepoint Email with ESMTP id C81C425D22564A5CA31A;
-        Mon, 21 Sep 2020 16:02:26 +0800 (CST)
-Received: from huawei.com (10.175.113.32) by DGGEMS411-HUB.china.huawei.com
- (10.3.19.211) with Microsoft SMTP Server id 14.3.487.0; Mon, 21 Sep 2020
- 16:02:16 +0800
-From:   Liu Shixin <liushixin2@huawei.com>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        id S1726476AbgIUImC convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 04:42:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726457AbgIUImC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Sep 2020 04:42:02 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AA0C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 01:42:01 -0700 (PDT)
+Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1kKHOT-0003EY-Gt; Mon, 21 Sep 2020 10:41:53 +0200
+Received: from pza by lupine with local (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1kKHOR-0005hZ-U1; Mon, 21 Sep 2020 10:41:51 +0200
+Message-ID: <e6848ae656e8e49ced429226d716f2b29cecfcba.camel@pengutronix.de>
+Subject: Re: [PATCH v3] dmaengine: qcom: Add ADM driver
+From:   Philipp Zabel <p.zabel@pengutronix.de>
+To:     Jonathan McDowell <noodles@earth.li>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>
-CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Liu Shixin <liushixin2@huawei.com>
-Subject: [PATCH -next] media: venus: simplify the return expression of venus_sys_set_* function
-Date:   Mon, 21 Sep 2020 16:24:40 +0800
-Message-ID: <20200921082440.2591617-1-liushixin2@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Dan Williams <dan.j.williams@intel.com>,
+        Thomas Pedersen <twp@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Date:   Mon, 21 Sep 2020 10:41:51 +0200
+In-Reply-To: <20200920181204.GT3411@earth.li>
+References: <20200916064326.GA13963@earth.li>
+         <20200919185739.GS3411@earth.li> <20200920181204.GT3411@earth.li>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.113.32]
-X-CFilter-Loop: Reflected
+X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Simplify the return expression.
+Hi Jonathan,
 
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 28 +++----------------
- 1 file changed, 4 insertions(+), 24 deletions(-)
+On Sun, 2020-09-20 at 19:12 +0100, Jonathan McDowell wrote:
+> Add the DMA engine driver for the QCOM Application Data Mover (ADM) DMA
+> controller found in the MSM8x60 and IPQ/APQ8064 platforms.
+> 
+> The ADM supports both memory to memory transactions and memory
+> to/from peripheral device transactions.  The controller also provides
+> flow control capabilities for transactions to/from peripheral devices.
+> 
+> The initial release of this driver supports slave transfers to/from
+> peripherals and also incorporates CRCI (client rate control interface)
+> flow control.
+> 
+> Signed-off-by: Andy Gross <agross@codeaurora.org>
+> Signed-off-by: Thomas Pedersen <twp@codeaurora.org>
+> Signed-off-by: Jonathan McDowell <noodles@earth.li>
+[...]
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 4be4a75ddcb6..05ddb68023b8 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -772,34 +772,24 @@ static int venus_sys_set_debug(struct venus_hfi_device *hdev, u32 debug)
- {
- 	struct hfi_sys_set_property_pkt *pkt;
- 	u8 packet[IFACEQ_VAR_SMALL_PKT_SIZE];
--	int ret;
- 
- 	pkt = (struct hfi_sys_set_property_pkt *)packet;
- 
- 	pkt_sys_debug_config(pkt, HFI_DEBUG_MODE_QUEUE, debug);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
--	if (ret)
--		return ret;
--
--	return 0;
-+	return venus_iface_cmdq_write(hdev, pkt);
- }
- 
- static int venus_sys_set_coverage(struct venus_hfi_device *hdev, u32 mode)
- {
- 	struct hfi_sys_set_property_pkt *pkt;
- 	u8 packet[IFACEQ_VAR_SMALL_PKT_SIZE];
--	int ret;
- 
- 	pkt = (struct hfi_sys_set_property_pkt *)packet;
- 
- 	pkt_sys_coverage_config(pkt, mode);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
--	if (ret)
--		return ret;
--
--	return 0;
-+	return venus_iface_cmdq_write(hdev, pkt);
- }
- 
- static int venus_sys_set_idle_message(struct venus_hfi_device *hdev,
-@@ -807,7 +797,6 @@ static int venus_sys_set_idle_message(struct venus_hfi_device *hdev,
- {
- 	struct hfi_sys_set_property_pkt *pkt;
- 	u8 packet[IFACEQ_VAR_SMALL_PKT_SIZE];
--	int ret;
- 
- 	if (!enable)
- 		return 0;
-@@ -816,11 +805,7 @@ static int venus_sys_set_idle_message(struct venus_hfi_device *hdev,
- 
- 	pkt_sys_idle_indicator(pkt, enable);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
--	if (ret)
--		return ret;
--
--	return 0;
-+	return venus_iface_cmdq_write(hdev, pkt);
- }
- 
- static int venus_sys_set_power_control(struct venus_hfi_device *hdev,
-@@ -828,17 +813,12 @@ static int venus_sys_set_power_control(struct venus_hfi_device *hdev,
- {
- 	struct hfi_sys_set_property_pkt *pkt;
- 	u8 packet[IFACEQ_VAR_SMALL_PKT_SIZE];
--	int ret;
- 
- 	pkt = (struct hfi_sys_set_property_pkt *)packet;
- 
- 	pkt_sys_power_control(pkt, enable);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
--	if (ret)
--		return ret;
--
--	return 0;
-+	return venus_iface_cmdq_write(hdev, pkt);
- }
- 
- static int venus_get_queue_size(struct venus_hfi_device *hdev,
--- 
-2.25.1
+> +static int adm_dma_probe(struct platform_device *pdev)
+> {
+[...]
+> +	adev->core_clk = devm_clk_get(adev->dev, "core");
+> +	if (IS_ERR(adev->core_clk))
+> +		return PTR_ERR(adev->core_clk);
+> +
+> +	ret = clk_prepare_enable(adev->core_clk);
+> +	if (ret) {
+> +		dev_err(adev->dev, "failed to prepare/enable core clock\n");
+> +		return ret;
+> +	}
 
+It is better to only start enabling the hardware after all resources
+have been acquired, see below.
+
+> +	adev->iface_clk = devm_clk_get(adev->dev, "iface");
+> +	if (IS_ERR(adev->iface_clk)) {
+> +		ret = PTR_ERR(adev->iface_clk);
+> +		goto err_disable_core_clk;
+> +	}
+
+Move this up before the core_clk enable, and you can directly return the
+error.
+
+> +
+> +	ret = clk_prepare_enable(adev->iface_clk);
+> +	if (ret) {
+> +		dev_err(adev->dev, "failed to prepare/enable iface clock\n");
+> +		goto err_disable_core_clk;
+> +	}
+> +
+> +	adev->clk_reset = devm_reset_control_get(&pdev->dev, "clk");
+> +	if (IS_ERR(adev->clk_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 reset\n");
+> +		ret = PTR_ERR(adev->clk_reset);
+> +		goto err_disable_clks;
+> +	}
+> +
+> +	adev->c0_reset = devm_reset_control_get(&pdev->dev, "c0");
+> +	if (IS_ERR(adev->c0_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 C0 reset\n");
+> +		ret = PTR_ERR(adev->c0_reset);
+> +		goto err_disable_clks;
+> +	}
+> +
+> +	adev->c1_reset = devm_reset_control_get(&pdev->dev, "c1");
+> +	if (IS_ERR(adev->c1_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 C1 reset\n");
+> +		ret = PTR_ERR(adev->c1_reset);
+> +		goto err_disable_clks;
+> +	}
+> +
+> +	adev->c2_reset = devm_reset_control_get(&pdev->dev, "c2");
+> +	if (IS_ERR(adev->c2_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 C2 reset\n");
+> +		ret = PTR_ERR(adev->c2_reset);
+> +		goto err_disable_clks;
+> +	}
+
+Please use devm_reset_control_get_exclusive(). Move these up before the
+core_clk enable, and you can directly return the error.
+
+regards
+Philipp
