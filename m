@@ -2,123 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03020272A61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 17:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82F37272A85
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 17:44:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727182AbgIUPk4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 11:40:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52504 "EHLO
+        id S1726720AbgIUPoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 11:44:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726690AbgIUPk4 (ORCPT
+        with ESMTP id S1727838AbgIUPoO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 11:40:56 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EAB8C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 08:40:56 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x123so9575612pfc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 08:40:56 -0700 (PDT)
+        Mon, 21 Sep 2020 11:44:14 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3557FC061755;
+        Mon, 21 Sep 2020 08:44:14 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id a17so13285192wrn.6;
+        Mon, 21 Sep 2020 08:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jZ99iFfxzvKpZHylDsCAj6abQzoB9RXyCLfCxvwZg6k=;
-        b=hOI6g64IctIUMHlqGYnTdodYOYwXX7UnNy8dQFYq1bYnIgDW5gh/NyesYwjCejEXvu
-         r+GPa5YdxuIjLztvf/D5Z4QCsO4pBptO8u6ENx+VygT18gY/h7qlm8PGm599nx5ecDcm
-         1v2jca9awMvk2dwUCw5pwnnZiV1ZEdcP+sP0cewHd0J8c1/4rB/02uJj9Mt2Muscrjfy
-         n/NFikKA/K+u9mx7SDENqvwVAagbbuMrs43gnhtpnSSjjqwdLqcNj6eN3+KtadyVrmI/
-         4AvfXdWRfg0hLiEQBriQXhmtPUl9hKAqBuF3ujnj2R2ypGLH1f4frHOio6c43zd3H+cc
-         6Img==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ncg6avQQOalfPHkzs1oRhLRgvZCdQBKt01aCszcvetU=;
+        b=NVNaMJ7ITtRUOps26faZunIJcz7uDjSlVkq44z9Vb6PRdsl3FspBnfrIk5sFVha0Ow
+         qMbe468oFXIBzIb+4Uq8OrAdKLiz7qUiBlH2TOdvVYn45lWGOVNWlapPdm1ny4NfmKGK
+         amuj1DbOl50HYxz6xUnzbJlkd/feqQb9eCz5lf6F7q3wkZ6Ae4qXWXRBJm0CUTXi38+X
+         2LlO4Ed3ZxcNJqQQVly3N7z53PwEgOycJn2PpxMfPubxLt844j49+/X5xmrofNkLnSZ2
+         aVhcABfKb63PtOzjMWTkehpuwU6I+XUT++pSWd4jZCKZVrJ4PU441k9W4a0aXyytgv58
+         qsdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jZ99iFfxzvKpZHylDsCAj6abQzoB9RXyCLfCxvwZg6k=;
-        b=e+p7DERx8xKX5ek+jF5BjmZLIutft263TyUC8tWQ/h/k9mhx9QH7fXSxAOpPjQXEuz
-         85n2/r1fD8a20LHIw5LNzoeSnEoetWQi85Z1ipQ7RpTgwn4UW0fq0qnkqrE34iCj0qKd
-         YurOiABlDXg1q0HDj/VAxOzSp9VnRvxbB2nXuWgCbRQgEhMV+SWfxO0SjEilNuo5mxIR
-         rbVCGrV+Dthj0pfZgipjQhHewcxcORmwTDsqIH7k3y0zSIEpihNE/8KTDyL20UldqVm6
-         KOUzvAUZpuTf2K9GfoXjBvvyHRMMh/0cfVLZlLJAyB8Eo+CY3LaB8Rsbo9g5rfkQYxGa
-         Z9JA==
-X-Gm-Message-State: AOAM5305Uyv8U7F2xzamBY9MQ8rPzY898GOEmPj70yjw0Iqau+CYo5/z
-        NvCWbc3113GgTDAXojH9vdov
-X-Google-Smtp-Source: ABdhPJz9ON/EFYhAyfwGe4GnDer492KsDkj8lOUBFL5C0PBualPCSCVopxiZmG34vHpoQ0awydla2g==
-X-Received: by 2002:aa7:8645:0:b029:13c:de96:6fde with SMTP id a5-20020aa786450000b029013cde966fdemr492471pfo.14.1600702855636;
-        Mon, 21 Sep 2020 08:40:55 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6d03:bd12:1004:2ccf:6900:b97])
-        by smtp.gmail.com with ESMTPSA id n12sm12670062pgk.20.2020.09.21.08.40.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 21 Sep 2020 08:40:55 -0700 (PDT)
-Date:   Mon, 21 Sep 2020 21:10:50 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, clew@codeaurora.org
-Subject: Re: [PATCH v2 1/2] bus: mhi: core: Allow shared IRQ for event rings
-Message-ID: <20200921154049.GJ3262@Mani-XPS-13-9360>
-References: <1600673819-1698-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ncg6avQQOalfPHkzs1oRhLRgvZCdQBKt01aCszcvetU=;
+        b=ixC7MzS9lDW3+WEqBmHyS98ifwrLe0kxjbzHlxlJZizolb4XJVFkf3KPGfHFqH2OJZ
+         mhFWu5CYOEDSlGITelOR3jIhHIAwKCG8WMByll+qYPpLZgtMpy6HWIjkSI/i470vPHOd
+         eP2M9KyYmVOUFbUt6iyyR+Nvwtoc+UBc8rtuPBL0JUEfwn4m9A+WwNrl18RDfrITw2oc
+         ij3ZKguT3MDWTV3aLoFo03dUILM9mYwXKikWawXWl1QDetb+RpcqT/VZ7TINPEUdBHM6
+         EDfvWHyM2fVVV9dTlJazJSLxz/W95wxAE93Z8QjBW4hSqKTfVRPUwUrHwRaoKlng0KaK
+         z0eQ==
+X-Gm-Message-State: AOAM532D8yNv4QzCX+2mCF023eeyS1S8I9vrFJd1P5neNNBZsOfYEJ3u
+        prS8+dhtED0IHkfElriG/UjBSJEfgsnt6kfnrqo=
+X-Google-Smtp-Source: ABdhPJzMA87ZO84z3m+xAsODxCz2vLvFZSGF0VaQEONo6ODJ2wz9ldoFqrzXAwmy2Vm3nccYC3OUqXZWfNX2mh/BAyY=
+X-Received: by 2002:a5d:4a0c:: with SMTP id m12mr380766wrq.83.1600703052626;
+ Mon, 21 Sep 2020 08:44:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1600673819-1698-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <1600702038-10893-1-git-send-email-akhilpo@codeaurora.org>
+In-Reply-To: <1600702038-10893-1-git-send-email-akhilpo@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 21 Sep 2020 08:44:01 -0700
+Message-ID: <CAF6AEGvspAXr3RFzBF_WB83QXNCzNEAzWj7_UqHWc=1gtAbgqw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm: Replace active_list with refcount
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jonathan <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 09:36:58AM +0200, Loic Poulain wrote:
-> There is no requirement for using a dedicated IRQ per event ring.
-> Some systems does not support multiple MSI vectors (e.g. intel
-> without CONFIG_IRQ_REMAP), In that case the MHI controller can
-> configure all the event rings to use the same interrupt (as fallback).
-> 
-> Allow this by removing the nr_irqs = ev_ring test and add extra check
-> in the irq_setup function.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-Applied to mhi-next!
-
-Thanks,
-Mani
-
+On Mon, Sep 21, 2020 at 8:27 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>
+> In the case where we have a back-to-back submission that shares the same
+> BO, this BO will be prematurely moved to inactive_list while retiring the
+> first submit. But it will be still part of the second submit which is
+> being processed by the GPU. Now, if the shrinker happens to be triggered at
+> this point, it will result in premature purging of this BO.
+>
+> To fix this, we can replace the active_list with reference counting and
+> move the BO to inactive list only when this count becomes zero.
+>
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
 > ---
->  v2: keep nr_irqs check early in init sequence
-> 
->  drivers/bus/mhi/core/init.c | 7 +++++++
->  drivers/bus/mhi/core/pm.c   | 2 +-
->  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 19ade8a..31961af 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -125,6 +125,13 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->  		if (mhi_event->offload_ev)
->  			continue;
->  
-> +		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
-> +			dev_err(dev, "irq %d not available for event ring\n",
-> +				mhi_event->irq);
-> +			ret = -EINVAL;
-> +			goto error_request;
-> +		}
+>  drivers/gpu/drm/msm/msm_drv.h |  5 ++---
+>  drivers/gpu/drm/msm/msm_gem.c | 30 ++++++++++++++++--------------
+>  drivers/gpu/drm/msm/msm_gem.h |  4 +++-
+>  drivers/gpu/drm/msm/msm_gpu.c | 11 +++++++----
+>  4 files changed, 28 insertions(+), 22 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 3193274..28e3c8d 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -309,9 +309,8 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj);
+>  int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv);
+>  int msm_gem_sync_object(struct drm_gem_object *obj,
+>                 struct msm_fence_context *fctx, bool exclusive);
+> -void msm_gem_move_to_active(struct drm_gem_object *obj,
+> -               struct msm_gpu *gpu, bool exclusive, struct dma_fence *fence);
+> -void msm_gem_move_to_inactive(struct drm_gem_object *obj);
+> +void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu);
+> +void msm_gem_active_put(struct drm_gem_object *obj);
+>  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
+>  int msm_gem_cpu_fini(struct drm_gem_object *obj);
+>  void msm_gem_free_object(struct drm_gem_object *obj);
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index 76a6c52..accc106 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -743,33 +743,36 @@ int msm_gem_sync_object(struct drm_gem_object *obj,
+>         return 0;
+>  }
+>
+> -void msm_gem_move_to_active(struct drm_gem_object *obj,
+> -               struct msm_gpu *gpu, bool exclusive, struct dma_fence *fence)
+> +void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
+>  {
+>         struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> +       WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
+>         WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
 > +
->  		ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
->  				  mhi_irq_handler,
->  				  IRQF_SHARED | IRQF_NO_SUSPEND,
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index ce4d969..3de7b16 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -918,7 +918,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
->  
->  	dev_info(dev, "Requested to power ON\n");
->  
-> -	if (mhi_cntrl->nr_irqs < mhi_cntrl->total_ev_rings)
-> +	if (mhi_cntrl->nr_irqs < 1)
->  		return -EINVAL;
->  
->  	/* Supply default wake routines if not provided by controller driver */
-> -- 
+>         msm_obj->gpu = gpu;
+> -       if (exclusive)
+> -               dma_resv_add_excl_fence(obj->resv, fence);
+> -       else
+> -               dma_resv_add_shared_fence(obj->resv, fence);
+>         list_del_init(&msm_obj->mm_list);
+> -       list_add_tail(&msm_obj->mm_list, &gpu->active_list);
+> +       atomic_inc(&msm_obj->active_count);
+
+I don't think we want to get rid of active_list, but just supplement
+it with a refcnt.
+
+I suspect as-is, this breaks $debugfs/gem (which iterates the active
+and inactive list)
+
+>  }
+>
+> -void msm_gem_move_to_inactive(struct drm_gem_object *obj)
+> +static void move_to_inactive(struct msm_gem_object *msm_obj)
+>  {
+> -       struct drm_device *dev = obj->dev;
+> +       struct drm_device *dev = msm_obj->base.dev;
+>         struct msm_drm_private *priv = dev->dev_private;
+> -       struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> -
+> -       WARN_ON(!mutex_is_locked(&dev->struct_mutex));
+>
+>         msm_obj->gpu = NULL;
+> -       list_del_init(&msm_obj->mm_list);
+>         list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
+>  }
+>
+> +void msm_gem_active_put(struct drm_gem_object *obj)
+> +{
+> +       struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> +
+> +       WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
+> +
+> +       if (atomic_dec_and_test(&msm_obj->active_count))
+> +               move_to_inactive(msm_obj);
+> +}
+> +
+>  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout)
+>  {
+>         bool write = !!(op & MSM_PREP_WRITE);
+> @@ -1104,7 +1107,6 @@ static struct drm_gem_object *_msm_gem_new(struct drm_device *dev,
+>         }
+>
+>         if (struct_mutex_locked) {
+> -               WARN_ON(!mutex_is_locked(&dev->struct_mutex));
+
+This looks unrelated (and I don't think we want to drop this WARN_ON())
+
+BR,
+-R
+
+>                 list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
+>         } else {
+>                 mutex_lock(&dev->struct_mutex);
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index 7b1c7a5..a1bf741 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -88,12 +88,14 @@ struct msm_gem_object {
+>         struct mutex lock; /* Protects resources associated with bo */
+>
+>         char name[32]; /* Identifier to print for the debugfs files */
+> +
+> +       atomic_t active_count;
+>  };
+>  #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
+>
+>  static inline bool is_active(struct msm_gem_object *msm_obj)
+>  {
+> -       return msm_obj->gpu != NULL;
+> +       return atomic_read(&msm_obj->active_count);
+>  }
+>
+>  static inline bool is_purgeable(struct msm_gem_object *msm_obj)
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 29c8d73c..55d1648 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -698,8 +698,8 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+>
+>         for (i = 0; i < submit->nr_bos; i++) {
+>                 struct msm_gem_object *msm_obj = submit->bos[i].obj;
+> -               /* move to inactive: */
+> -               msm_gem_move_to_inactive(&msm_obj->base);
+> +
+> +               msm_gem_active_put(&msm_obj->base);
+>                 msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
+>                 drm_gem_object_put_locked(&msm_obj->base);
+>         }
+> @@ -774,6 +774,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>
+>         for (i = 0; i < submit->nr_bos; i++) {
+>                 struct msm_gem_object *msm_obj = submit->bos[i].obj;
+> +               struct drm_gem_object *drm_obj = &msm_obj->base;
+>                 uint64_t iova;
+>
+>                 /* can't happen yet.. but when we add 2d support we'll have
+> @@ -786,9 +787,11 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>                 msm_gem_get_and_pin_iova(&msm_obj->base, submit->aspace, &iova);
+>
+>                 if (submit->bos[i].flags & MSM_SUBMIT_BO_WRITE)
+> -                       msm_gem_move_to_active(&msm_obj->base, gpu, true, submit->fence);
+> +                       dma_resv_add_excl_fence(drm_obj->resv, submit->fence);
+>                 else if (submit->bos[i].flags & MSM_SUBMIT_BO_READ)
+> -                       msm_gem_move_to_active(&msm_obj->base, gpu, false, submit->fence);
+> +                       dma_resv_add_shared_fence(drm_obj->resv, submit->fence);
+> +
+> +               msm_gem_active_get(drm_obj, gpu);
+>         }
+>
+>         gpu->funcs->submit(gpu, submit);
+> --
 > 2.7.4
-> 
+>
