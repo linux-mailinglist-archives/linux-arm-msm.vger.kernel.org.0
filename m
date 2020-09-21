@@ -2,278 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F71427225E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 13:26:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8CF0272427
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 14:48:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbgIUL0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 07:26:13 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:56702 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726367AbgIUL0N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 07:26:13 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 07:26:11 EDT
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600687571; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=PVIsUxy0Uf9L3hCn1GrabY9F83kqfBklo/5mHcDueKE=;
- b=uNJoKqMVbP+V/fI6DnNNz75WH/dS7Z24S7UwsyRyTMCGA67aosR2gfEPkIfdjd6jA2lRIA7F
- SHH+D9KziRfEtAHdl9Yx3bqk83BnD8sm5xZAXhUQpFKdTFftPsPAaJem0kvTJ0Kw0M7K8Sr+
- YtCUzK+xXLLJ7RwQktxY2Lc3kx0=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5f688ca14a8a578ddcf1104c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Sep 2020 11:21:05
- GMT
-Sender: rojay=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 85625C433C8; Mon, 21 Sep 2020 11:21:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rojay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA465C433CB;
-        Mon, 21 Sep 2020 11:21:04 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 21 Sep 2020 16:51:04 +0530
-From:   rojay@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     wsa@kernel.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        vkaur@codeaurora.org, pyarlaga@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH V4] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-In-Reply-To: <160037421089.4188128.9425314091585708436@swboyd.mtv.corp.google.com>
-References: <20200917122558.23110-1-rojay@codeaurora.org>
- <160037421089.4188128.9425314091585708436@swboyd.mtv.corp.google.com>
-Message-ID: <f6cb2d7bc02dab409030ec42bf1d17c9@codeaurora.org>
-X-Sender: rojay@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S1726353AbgIUMsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 08:48:38 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:41023 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726643AbgIUMse (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Sep 2020 08:48:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
+  s=qcdkim; t=1600692514; x=1632228514;
+  h=from:to:cc:subject:date:message-id;
+  bh=aZMDGH/QxK/Xu1ccqYQ3KxkvrzH2gMYAzF0dSipOzIk=;
+  b=e9G0ScWYtxfxix2LGz0bjI/VHXr9me9zFCKyLK5WYqzwfAaoAq98VdAG
+   xodzLmaMEZZdkrk2tIXbGaOqpepqUl22BuCJulD7DML6PQzDsYuWRFweg
+   4iLkczxFKE0gO5Q1JC1tAEdOYE8yJMx+I8GCf8pqogw4WKLenJ1RBaRDO
+   Y=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 21 Sep 2020 05:42:29 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Sep 2020 05:42:27 -0700
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Sep 2020 18:12:03 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 417494DEF; Mon, 21 Sep 2020 18:12:02 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@qti.qualcomm.com>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        ezequiel@collabora.com, stanimir.varbanov@linaro.org,
+        vgarodia@codeaurora.org, majja@codeaurora.org,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>
+Subject: [PATCH 0/2] Add new controls for QP and layer bitrate
+Date:   Mon, 21 Sep 2020 18:11:51 +0530
+Message-Id: <1600692113-32279-1-git-send-email-dikshita@qti.qualcomm.com>
+X-Mailer: git-send-email 1.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+This series adds frame specific min/max qp controls for hevc and
+layer wise bitrate control for h264.
 
-On 2020-09-18 01:53, Stephen Boyd wrote:
-> Quoting Roja Rani Yarubandi (2020-09-17 05:25:58)
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
->> b/drivers/i2c/busses/i2c-qcom-geni.c
->> index dead5db3315a..b0d8043c8cb2 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -86,6 +86,10 @@ struct geni_i2c_dev {
->>         u32 clk_freq_out;
->>         const struct geni_i2c_clk_fld *clk_fld;
->>         int suspended;
->> +       void *dma_buf;
->> +       size_t xfer_len;
->> +       dma_addr_t tx_dma;
->> +       dma_addr_t rx_dma;
-> 
-> Do we need both tx_dma and rx_dma? Seems that we use cur->flags to
-> figure out if the transfer is tx or rx so we could have juat dma_buf 
-> and
-> dma_addr here?
-> 
+Dikshita Agarwal (2):
+  media: v4l2-ctrl: Add frame-specific min/max qp controls for hevc
+  media: v4l2-ctrl: Add layer wise bitrate controls for h264
 
-Okay.
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 74 +++++++++++++++++++++-
+ drivers/media/v4l2-core/v4l2-ctrls.c               | 15 +++++
+ include/uapi/linux/v4l2-controls.h                 | 17 +++++
+ 3 files changed, 104 insertions(+), 2 deletions(-)
 
->>  };
->> 
->>  struct geni_i2c_err_log {
->> @@ -307,7 +311,6 @@ static void geni_i2c_abort_xfer(struct 
->> geni_i2c_dev *gi2c)
->> 
->>         spin_lock_irqsave(&gi2c->lock, flags);
->>         geni_i2c_err(gi2c, GENI_TIMEOUT);
->> -       gi2c->cur = NULL;
-> 
-> This looks concerning. We're moving this out from under the spinlock.
-> The irq handler in this driver seems to hold the spinlock all the time
-> while processing and this function grabs it here to keep cur consistent
-> when aborting the transfer due to a timeout. Otherwise it looks like 
-> the
-> irqhandler can race with this and try to complete the transfer while
-> it's being torn down here.
-> 
->>         geni_se_abort_m_cmd(&gi2c->se);
->>         spin_unlock_irqrestore(&gi2c->lock, flags);
->>         do {
->> @@ -349,10 +352,62 @@ static void geni_i2c_tx_fsm_rst(struct 
->> geni_i2c_dev *gi2c)
->>                 dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
->>  }
->> 
->> +static void geni_i2c_rx_msg_cleanup(struct geni_i2c_dev *gi2c)
-> 
-> So maybe pass cur to this function?
-> 
+-- 
+1.9.1
 
-Sorry, i did not understand why to pass cur to this function?
-
->> +{
->> +       struct geni_se *se = &gi2c->se;
->> +
->> +       gi2c->cur_rd = 0;
->> +       if (gi2c->dma_buf) {
->> +               if (gi2c->err)
->> +                       geni_i2c_rx_fsm_rst(gi2c);
->> +               geni_se_rx_dma_unprep(se, gi2c->rx_dma, 
->> gi2c->xfer_len);
->> +               i2c_put_dma_safe_msg_buf(gi2c->dma_buf, gi2c->cur, 
->> !gi2c->err);
->> +       }
->> +}
->> +
->> +static void geni_i2c_tx_msg_cleanup(struct geni_i2c_dev *gi2c)
-> 
-> And this one?
-> 
->> +{
->> +       struct geni_se *se = &gi2c->se;
->> +
->> +       gi2c->cur_wr = 0;
->> +       if (gi2c->dma_buf) {
->> +               if (gi2c->err)
->> +                       geni_i2c_tx_fsm_rst(gi2c);
->> +               geni_se_tx_dma_unprep(se, gi2c->tx_dma, 
->> gi2c->xfer_len);
->> +               i2c_put_dma_safe_msg_buf(gi2c->dma_buf, gi2c->cur, 
->> !gi2c->err);
->> +       }
->> +}
->> +
->> +static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
->> +{
->> +       int ret;
->> +       u32 geni_status;
->> +
->> +       /* Resume device, as runtime suspend can happen anytime during 
->> transfer */
->> +       ret = pm_runtime_get_sync(gi2c->se.dev);
->> +       if (ret < 0) {
->> +               dev_err(gi2c->se.dev, "Failed to resume device: %d\n", 
->> ret);
->> +               return;
->> +       }
->> +
->> +       geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
-> 
-> And this probably needs to hold the lock?
-> 
->> +       if (!(geni_status & M_GENI_CMD_ACTIVE))
->> +               goto out;
->> +
->> +       geni_i2c_abort_xfer(gi2c);
->> +       if (gi2c->cur->flags & I2C_M_RD)
->> +               geni_i2c_rx_msg_cleanup(gi2c);
->> +       else
->> +               geni_i2c_tx_msg_cleanup(gi2c);
->> +       gi2c->cur = NULL;
-> 
-> until here?
-> 
-
-Okay.
-
->> +out:
->> +       pm_runtime_put_sync_suspend(gi2c->se.dev);
->> +}
->> +
->>  static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct 
->> i2c_msg *msg,
->>                                 u32 m_param)
->>  {
->> -       dma_addr_t rx_dma;
->> +       dma_addr_t rx_dma = 0;
->>         unsigned long time_left;
->>         void *dma_buf = NULL;
->>         struct geni_se *se = &gi2c->se;
->> @@ -372,6 +427,10 @@ static int geni_i2c_rx_one_msg(struct 
->> geni_i2c_dev *gi2c, struct i2c_msg *msg,
->>                 geni_se_select_mode(se, GENI_SE_FIFO);
->>                 i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
->>                 dma_buf = NULL;
->> +       } else {
->> +               gi2c->xfer_len = len;
->> +               gi2c->rx_dma = rx_dma;
->> +               gi2c->dma_buf = dma_buf;
->>         }
->> 
->>         geni_se_setup_m_cmd(se, I2C_READ, m_param);
->> @@ -380,13 +439,7 @@ static int geni_i2c_rx_one_msg(struct 
->> geni_i2c_dev *gi2c, struct i2c_msg *msg,
->>         if (!time_left)
->>                 geni_i2c_abort_xfer(gi2c);
->> 
->> -       gi2c->cur_rd = 0;
->> -       if (dma_buf) {
->> -               if (gi2c->err)
->> -                       geni_i2c_rx_fsm_rst(gi2c);
->> -               geni_se_rx_dma_unprep(se, rx_dma, len);
->> -               i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
->> -       }
->> +       geni_i2c_rx_msg_cleanup(gi2c);
->> 
->>         return gi2c->err;
->>  }
-> 
-> It may make sense to extract the cleanup stuff into another patch. Then
-> have a patch after that which does the shutdown hook. So three patches
-> total.
-> 
-
-Okay, I will make separate patches, one for cleanup and another for 
-shutdown hook.
-
->> diff --git a/drivers/soc/qcom/qcom-geni-se.c 
->> b/drivers/soc/qcom/qcom-geni-se.c
->> index d0e4f520cff8..0216b38c1e9a 100644
->> --- a/drivers/soc/qcom/qcom-geni-se.c
->> +++ b/drivers/soc/qcom/qcom-geni-se.c
->> @@ -705,7 +705,7 @@ void geni_se_tx_dma_unprep(struct geni_se *se, 
->> dma_addr_t iova, size_t len)
->>  {
->>         struct geni_wrapper *wrapper = se->wrapper;
->> 
->> -       if (iova && !dma_mapping_error(wrapper->dev, iova))
->> +       if (!dma_mapping_error(wrapper->dev, iova))
->>                 dma_unmap_single(wrapper->dev, iova, len, 
->> DMA_TO_DEVICE);
->>  }
->>  EXPORT_SYMBOL(geni_se_tx_dma_unprep);
->> @@ -722,7 +722,7 @@ void geni_se_rx_dma_unprep(struct geni_se *se, 
->> dma_addr_t iova, size_t len)
->>  {
->>         struct geni_wrapper *wrapper = se->wrapper;
->> 
->> -       if (iova && !dma_mapping_error(wrapper->dev, iova))
->> +       if (!dma_mapping_error(wrapper->dev, iova))
->>                 dma_unmap_single(wrapper->dev, iova, len, 
->> DMA_FROM_DEVICE);
->>  }
->>  EXPORT_SYMBOL(geni_se_rx_dma_unprep);
-> 
-> I'd make this a different patch. Nothing depends on this change, right?
-
-Yes this is independent patch. I will make this as separate patch which 
-will be the third one.
-
-Thanks,
-Roja
