@@ -2,101 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDD30272A9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 17:46:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B119272B04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 18:08:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbgIUPqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 11:46:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53426 "EHLO
+        id S1727419AbgIUQI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 12:08:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726611AbgIUPqs (ORCPT
+        with ESMTP id S1727397AbgIUQI3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 11:46:48 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF60C061755;
-        Mon, 21 Sep 2020 08:46:48 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id t10so13317418wrv.1;
-        Mon, 21 Sep 2020 08:46:48 -0700 (PDT)
+        Mon, 21 Sep 2020 12:08:29 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452B2C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 09:08:29 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id o20so9646763pfp.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 09:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=U7rH3MXQ3KBOROK+/p1uMLnsBPfVkv2CUGNF+40H8CQ=;
-        b=sn3DqawA1RNbqkHW0tvnFkd2GiYiCjELepybm+aam7/yvyjHFmOo9q7pPBiH33v8Op
-         2wL+UI+jhlMdMmJMPgt0vQClTuOd1Tn+woUaaLaU1nbbru77Gq92Sv7WlYXdGc/1fh7j
-         tPV7BURHK0mzqBcwiijiVvCOoDFHnuWolY9QHzurOv312IH7j3Au86bQTsXS+BGDCWAL
-         jomGlM4U5R6hyuHfCfItut5XwMsFyZwiPL5Diiy6tprIy7rS95mlHbaOL4RBW7MOVc26
-         GQMu0iwRcdWjryua/c2h1CCJFbhrvAubhd/57B9O5ZxZEZ7ElkfYSLSj/MG45nycuB4P
-         EftQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=Hfx4RTpZhFAY4Z2pUhJV8nNIOCBdY90YIEZPHB5rL1s=;
+        b=P1kXJJSdlE+mZb3JoUzmJ4E529qwlmWdoyRTRe/D5BTl0hDaPNOof2IEfqXCa3ZQ8A
+         2sUR16R2bPcCKvDvfHnxr00hPAS51U59Zkk945RSwcMfFaJgjPfjLV5Fs667Hp9mHXcD
+         ob5dYDHo0PPTjYmPSLFPzf/MEsx9Ck9YaNvallspu6bhElXtMpYn4xmEy90wOZZrc2JC
+         fbGtTIiadZ9sTt0hl0RIFRiXJ0RnBs462tt8yp8IhJBS02Bvu/qgkfiV69OvhZ/5E/cs
+         eEhnr50k+xYabbSsfuxAwGISEjjN+u53Y2Z/6YkzXTuMwqVDkkq5c0ZlBYILQ+MVyaGb
+         580Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=U7rH3MXQ3KBOROK+/p1uMLnsBPfVkv2CUGNF+40H8CQ=;
-        b=Z5gvVz2p1kZTjcsw0N+yECJ4loCcd+fkZPVKWCxhIxBIBk/X0t1Z8zI3SdlZBtaSwi
-         IubUOV+Y/N4oxJztJ2AsVmeQY/xeUc63WuxuaZaDD3I+2SywJTK/7tVgN0aBtAy4Z+sX
-         r7F3Zhb1xmtbl24F/9J+SxzBGrcNIX1fsqVKom+uc8qARU6tGVnQQJqR0obPGJNOsCgx
-         wXfqr1sfKaUyTa4mwRQi+FhKSIzp0TWwGfwZ0uNGiM1C9s8NNq2y2VpE9BJwaZC5/bp7
-         tP5ATQgcxchfUfC9Haca1ZxrN3ZrvNB6lNgjfCCTIM1Icv5eUFKwqUTJxuQxK510kzOS
-         1pjg==
-X-Gm-Message-State: AOAM5306ZpIFEIKa5I5gZdrDvlu0kfKm3IDxWTMl/HVhnd16AAEvHls7
-        uh2JXrNPXroFqkR9x3THNMlSNnTwhWsGvzz4HWo=
-X-Google-Smtp-Source: ABdhPJxtVHCQUzYNlQuLpcrdAi/k+3N/BQu6j76lleZS5WeYQKN4wzqF/1ou0P5HlZiijbSJuuB5KdJ7UqhNNjRI4mg=
-X-Received: by 2002:adf:f382:: with SMTP id m2mr345644wro.327.1600703207013;
- Mon, 21 Sep 2020 08:46:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <1600702038-10893-1-git-send-email-akhilpo@codeaurora.org> <1600702038-10893-2-git-send-email-akhilpo@codeaurora.org>
-In-Reply-To: <1600702038-10893-2-git-send-email-akhilpo@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 21 Sep 2020 08:47:48 -0700
-Message-ID: <CAF6AEGsRMB_XvAKuaV8uf3yT61j-845GLB7sKPQoJrOQwd5-QQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm: Leave inuse count intact on map failure
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Hfx4RTpZhFAY4Z2pUhJV8nNIOCBdY90YIEZPHB5rL1s=;
+        b=LGUngxTm2G9YoNu5Ls5L04NSBivUNqx/u2vRbvpmj6tw3s06tf9Hopjg/Yn8xNEK7X
+         qdrp1V24Q6DOLXffOd+F6uCnIvI1qd1NC3GSTdWeQqscZLN7AWpqEac4W+Yf8Xz+SKAt
+         liYgNKeS5jJOZf0Vpen1m68AEikhKnnFgH4V2ZscQWIG/Ke2qgGR3GCSKSJ+98sgNQHA
+         awFV++KA/2aLGuVXlSqd+rSGjhAXJpZqkV1r8+VpE9iJ3tWMz1ZdxjiTe6odnQMRGaaX
+         5LsGdepXNtN6xf1BJCC6KvWS7H+GKlGjxuL5tqQhPCssRYqw9mqOZzvw5+HEfbl9mRNB
+         dNxg==
+X-Gm-Message-State: AOAM5313mEQwk5fAIMW6na4XLd5IHdI2eeu0Ky/loUTkWlYYiZlh6+2G
+        F3VE9Efb+EoMI4JA+BZyKsnL
+X-Google-Smtp-Source: ABdhPJy49Zt+/HsF0E4gG2X763eYsUgLBjZgKiymr27NsU3OgSXg9tsma0xM97yQiYo1dLcE5SKybw==
+X-Received: by 2002:a63:d251:: with SMTP id t17mr293420pgi.280.1600704508436;
+        Mon, 21 Sep 2020 09:08:28 -0700 (PDT)
+Received: from Mani-XPS-13-9360.localdomain ([2409:4072:6d03:bd12:1004:2ccf:6900:b97])
+        by smtp.gmail.com with ESMTPSA id f4sm9204577pgr.68.2020.09.21.09.08.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Sep 2020 09:08:27 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 00/18] MHI changes for v5.10
+Date:   Mon, 21 Sep 2020 21:37:56 +0530
+Message-Id: <20200921160815.28071-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 8:27 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->
-> Leave the inuse count intact on map failure to keep the accounting
-> accurate.
->
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/msm_gem_vma.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-> index 80a8a26..8367a1c 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> @@ -88,8 +88,10 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
->                 ret = aspace->mmu->funcs->map(aspace->mmu, vma->iova, sgt,
->                                 size, prot);
->
-> -       if (ret)
-> +       if (ret) {
->                 vma->mapped = false;
-> +               vma->inuse++;
+Hi Greg,
 
-vma->inuse-- ?
+Here is the MHI series for v5.10 cycle. Most of the patches are cleanups
+in the MHI stack. Notable changes are below:
 
-BR,
--R
+* Saving the client device hardware information obtained through the BHI
+  protocol. This information will be exposed through sysfs to make use in
+  the userland applications.
+* Introduce sysfs entries to read the serial number and OEM PK hash values
+  of the client device obtained from BHI protocol. Relevant API documentation
+  is also added.
+* Introduce debugfs entries to show MHI states, events, channels, register
+  state etc... to aid debug.
+* Fix the warning reported by Kbuild bot by using append (+=) Kbuild rule
+  to the mhi/core Makefile.
+* Removed the requirement to have a dedicated IRQ for each event ring.
+  The MHI controllers can now use a single IRQ for all event rings.
 
-> +       }
->
->         return ret;
->  }
-> --
-> 2.7.4
->
+Please consider merging!
+
+Thanks,
+Mani
+
+Bhaumik Bhatt (12):
+  bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task()
+    declaration
+  bus: mhi: core: Abort suspends due to outgoing pending packets
+  bus: mhi: core: Use helper API to trigger a non-blocking host resume
+  bus: mhi: core: Trigger host resume if suspended during
+    mhi_device_get()
+  bus: mhi: core: Use generic name field for an MHI device
+  bus: mhi: core: Introduce helper function to check device state
+  bus: mhi: core: Introduce counters to track MHI device state
+    transitions
+  bus: mhi: core: Read and save device hardware information from BHI
+  bus: mhi: core: Introduce APIs to allocate and free the MHI controller
+  bus: mhi: Fix entries based on Kconfig coding style
+  bus: mhi: core: Introduce debugfs entries for MHI
+  bus: mhi: core: Introduce sysfs entries for MHI
+
+Clark Williams (1):
+  bus: mhi: Remove include of rwlock_types.h
+
+Hemant Kumar (1):
+  bus: mhi: core: Add const qualifier to MHI config information
+
+Loic Poulain (2):
+  bus: mhi: core: Allow shared IRQ for event rings
+  bus: mhi: Remove unused nr_irqs_req variable
+
+Manivannan Sadhasivam (1):
+  bus: mhi: core: Fix the building of MHI module
+
+Randy Dunlap (1):
+  bus: mhi: fix doubled words and struct image_info kernel-doc
+
+ Documentation/ABI/stable/sysfs-bus-mhi |  21 ++
+ MAINTAINERS                            |   1 +
+ drivers/bus/mhi/Kconfig                |  20 +-
+ drivers/bus/mhi/core/Makefile          |   3 +-
+ drivers/bus/mhi/core/boot.c            |  17 +-
+ drivers/bus/mhi/core/debugfs.c         | 410 +++++++++++++++++++++++++
+ drivers/bus/mhi/core/init.c            | 103 ++++++-
+ drivers/bus/mhi/core/internal.h        |  37 ++-
+ drivers/bus/mhi/core/main.c            |  27 +-
+ drivers/bus/mhi/core/pm.c              |  28 +-
+ include/linux/mhi.h                    |  51 ++-
+ 11 files changed, 654 insertions(+), 64 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+ create mode 100644 drivers/bus/mhi/core/debugfs.c
+
+-- 
+2.17.1
+
