@@ -2,88 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A7552727EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 16:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA457272933
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 16:55:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727695AbgIUOk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 10:40:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43150 "EHLO
+        id S1727550AbgIUOzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 10:55:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727386AbgIUOkZ (ORCPT
+        with ESMTP id S1726419AbgIUOzz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 10:40:25 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BC42C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 07:40:25 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id f2so9222092pgd.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 07:40:25 -0700 (PDT)
+        Mon, 21 Sep 2020 10:55:55 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27BCAC061755;
+        Mon, 21 Sep 2020 07:55:55 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id z9so13051508wmk.1;
+        Mon, 21 Sep 2020 07:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=jN92Mz9LhRgMy6R9r5bCTsDXQ/6vWkXL7O/cDsot2BM=;
-        b=zsL9JirMq5HpALimvd09iibQnWaz8tHvctE5DJPUqGY1Bwj9g7lv4HpCPEkrQr9x1D
-         cpTvDW2kqI+apf8ijcXSda4vBc8ThF18xsliUg37T67kR2P0z6GTDBOgF6jXdrgqh2Mg
-         Eoi6xq3GWQa4Nn1WZnpMZhl7RXyaqqo0UWZArO54H7BdBnZnlC5c0koY/nZx7PVkWXD8
-         eUcVLJ9PEJcGe+A1IqCTVNHYA+zZxkNyY+o8wPyGapJKWEuU80LWGurNuSjmfInZJjs3
-         BZgyddmubK/p2R0nUUao9TYW0hlnJj2sa0rcRJgfa5GCas8zN1/kB4ctlwZDjmc4eodn
-         H/+Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1gD5aOm8fuZMk6MimLqRwABTZfn3FP7FLxy/euBRZic=;
+        b=tqzFSNwdl3Bk7iLcqBlHFWtq/IGqi1UjVmTmJLHpjjo7e5o2poI1OSijojjxtmKIfR
+         YdAVU5XzOtc2dwyfRzCHxYV2Mf1OPmvwiLE9YW9QEfXdbyz5BzJ4FRC2WJQ/OqBb88yV
+         hmZMaSG2WOI0PDOz+mrA9JyzfBABTXR94c7+oT2UMKsROiUkjymCrbGl4lovACHAvJnq
+         VaAcYTjP+iqCvHpRx5Z9MG2s2lTocg8xsrEFl8T/tnV0ci9BO/2hWouSnpW1gouZ/LaK
+         QGkZ0aPYcztp/rTndWD5SIhivgYv2xmUrWc6AD6JlPPUmKFaVcWJ/SUK22pT+ycBRj4d
+         PQIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=jN92Mz9LhRgMy6R9r5bCTsDXQ/6vWkXL7O/cDsot2BM=;
-        b=MBJubJBCl8sFbmAjJVQ6wqmYkBndIVjCil63XawaDYhXNv4oDQrSLm7ZfZmJkbXywx
-         aYfvcM+fq63/kcSq/hvWw6FRRWWXfQtvQYum9fh0gVTeWrQaRNGMe47xsSF/Q1ac0VBz
-         a3t1ncp8qYobEWPdivsEFrJWK8t++2rOgjbPDgFxKGAC/j3aOH/MVs7mpXCK1hmz2quP
-         gLTsAaezqqn8gCvDG3VP4XCFuCIERf2/UHlhqevrixxsYX18qcEc0SaOh97GB9PYiUHq
-         CYPBLbXxT4RLSjgJIGM2u2XZ+NZtEP2vWHBOBcmGKKJSJndTZXWc33ExR8viP11lXbtM
-         sQuA==
-X-Gm-Message-State: AOAM530pWtU92gEC9ETClHekvXOSxFWJwHRwlrySG17dQA0fkXk68KH1
-        fFsDFIjb+wrPkVjCpaGakw4BNKZT9DAi
-X-Google-Smtp-Source: ABdhPJyohwO/EI2eSCs0mN25XzumXwMZMcxYuYeuVEzHBXk0/POa0bAgm6mlE0cA5pI1tGm+UvhWEg==
-X-Received: by 2002:aa7:8c09:0:b029:142:2501:3983 with SMTP id c9-20020aa78c090000b029014225013983mr229338pfd.72.1600699224149;
-        Mon, 21 Sep 2020 07:40:24 -0700 (PDT)
-Received: from Mani-XPS-13-9360.localdomain ([2409:4072:6d03:bd12:1004:2ccf:6900:b97])
-        by smtp.gmail.com with ESMTPSA id m24sm12085108pgn.44.2020.09.21.07.40.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 07:40:23 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] bus: mhi: core: Fix the building of MHI module
-Date:   Mon, 21 Sep 2020 20:10:16 +0530
-Message-Id: <20200921144016.10519-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1gD5aOm8fuZMk6MimLqRwABTZfn3FP7FLxy/euBRZic=;
+        b=ET6nQhD4pv+DK8zBYoSxa+sVM+e12TN9qHyGHRYEvVQeLzyackVkQYpzzHLBBYs6EG
+         +IFqHA4FTdWywIk4bvCza8B2T5VKlQYG00v8UuHL9VHU5G46jQUAGHJx8SRcITxpv9e0
+         z17qCYSQMz48MZeWoEtblgIFqDOlJZQJhCbn+m2ovlsqvqTfHXKjcmjH9uC4YCbRz+7l
+         fUCFpz7pQhsVRNCxw/ufMwiCy5f+nkyKOQgiLKVUnEEXJBI7WEP4TP1goo3tHw2hoQ8C
+         HvRyK0pek6B8En5esQ1+GOGKSwx+wrStLnRs7hcDfZ81Q+MuSOw1VtZ/1RJ3+HUbqwnz
+         csPA==
+X-Gm-Message-State: AOAM530aR3v6DXDNnl68XksKTsQ7+Sn8mwHnI+I99jhFyYoUxIJRbdXR
+        Zt96SCzuhaWgjnjvtYwMM+ZA4AIv00BiFW3+7i2pxPzQ
+X-Google-Smtp-Source: ABdhPJxonY3gT1MbyqiHSexj8fbAdMxfyk43LjxB/pUJgUTXh2mmPGf6lxTa06IyXSstN6A4utQXvG1UZAhXAr2vXXI=
+X-Received: by 2002:a1c:3588:: with SMTP id c130mr66270wma.94.1600700153766;
+ Mon, 21 Sep 2020 07:55:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200919193727.2093945-1-robdclark@gmail.com> <20200919193727.2093945-3-robdclark@gmail.com>
+ <20200921092322.GK438822@phenom.ffwll.local>
+In-Reply-To: <20200921092322.GK438822@phenom.ffwll.local>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 21 Sep 2020 07:55:42 -0700
+Message-ID: <CAF6AEGu9b_6NOk-PcZnpv3UCi_muYdrayCaA83me1RTGoU+jHw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] drm/atomic: Use kthread worker for nonblocking commits
+To:     Rob Clark <robdclark@gmail.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Tejun Heo <tj@kernel.org>, timmurray@google.com,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        open list <linux-kernel@vger.kernel.org>
+Cc:     Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kbuild rule to build MHI should use the append operator. This fixes
-the below warning reported by Kbuild test bot.
+On Mon, Sep 21, 2020 at 2:23 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Sat, Sep 19, 2020 at 12:37:25PM -0700, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > This will allow us to more easily switch scheduling rules based on what
+> > userspace wants.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+>
+> I still think switching to the highpriority systemwq as a start (like i915
+> already does) would be a good first step no matter what we end up doing
+> for the android thing.
 
-WARNING: modpost: missing MODULE_LICENSE() in
-drivers/bus/mhi/core/main.o
-WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/pm.o
-WARNING: modpost: missing MODULE_LICENSE() in
-drivers/bus/mhi/core/boot.o
+highpri wq is probably better than the current state, but it doesn't
+really address the problem.  You'll still end up with surfaceflinger
+preempting commit_work..
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+And with non-RT priority, you'll still occasionally get lower priority
+threads which haven't had a chance to run for a while preempting you.
 
-diff --git a/drivers/bus/mhi/core/Makefile b/drivers/bus/mhi/core/Makefile
-index 12c57ab3724c..c3feb4130aa3 100644
---- a/drivers/bus/mhi/core/Makefile
-+++ b/drivers/bus/mhi/core/Makefile
-@@ -1,4 +1,4 @@
--obj-$(CONFIG_MHI_BUS) := mhi.o
-+obj-$(CONFIG_MHI_BUS) += mhi.o
- 
- mhi-y := init.o main.o pm.o boot.o
- mhi-$(CONFIG_MHI_BUS_DEBUG) += debugfs.o
--- 
-2.17.1
+BR,
+-R
 
+
+> -Daniel
+>
+> > ---
+> >  drivers/gpu/drm/drm_atomic_helper.c | 13 ++++++++----
+> >  include/drm/drm_atomic.h            | 31 +++++++++++++++++++++++++++++
+> >  2 files changed, 40 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+> > index 9e1ad493e689..75eeec5e7b10 100644
+> > --- a/drivers/gpu/drm/drm_atomic_helper.c
+> > +++ b/drivers/gpu/drm/drm_atomic_helper.c
+> > @@ -1659,11 +1659,11 @@ static void commit_tail(struct drm_atomic_state *old_state)
+> >       drm_atomic_state_put(old_state);
+> >  }
+> >
+> > -static void commit_work(struct work_struct *work)
+> > +static void commit_work(struct kthread_work *work)
+> >  {
+> >       struct drm_atomic_state *state = container_of(work,
+> >                                                     struct drm_atomic_state,
+> > -                                                   commit_work);
+> > +                                                   commit_kwork);
+> >       commit_tail(state);
+> >  }
+> >
+> > @@ -1797,6 +1797,7 @@ int drm_atomic_helper_commit(struct drm_device *dev,
+> >                            struct drm_atomic_state *state,
+> >                            bool nonblock)
+> >  {
+> > +     struct kthread_worker *worker = NULL;
+> >       int ret;
+> >
+> >       if (state->async_update) {
+> > @@ -1814,7 +1815,7 @@ int drm_atomic_helper_commit(struct drm_device *dev,
+> >       if (ret)
+> >               return ret;
+> >
+> > -     INIT_WORK(&state->commit_work, commit_work);
+> > +     kthread_init_work(&state->commit_kwork, commit_work);
+> >
+> >       ret = drm_atomic_helper_prepare_planes(dev, state);
+> >       if (ret)
+> > @@ -1857,8 +1858,12 @@ int drm_atomic_helper_commit(struct drm_device *dev,
+> >        */
+> >
+> >       drm_atomic_state_get(state);
+> > +
+> >       if (nonblock)
+> > -             queue_work(system_unbound_wq, &state->commit_work);
+> > +             worker = drm_atomic_pick_worker(state);
+> > +
+> > +     if (worker)
+> > +             kthread_queue_work(worker, &state->commit_kwork);
+> >       else
+> >               commit_tail(state);
+> >
+> > diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+> > index d07c851d255b..8d0ee19953df 100644
+> > --- a/include/drm/drm_atomic.h
+> > +++ b/include/drm/drm_atomic.h
+> > @@ -373,8 +373,18 @@ struct drm_atomic_state {
+> >        *
+> >        * Work item which can be used by the driver or helpers to execute the
+> >        * commit without blocking.
+> > +      *
+> > +      * This is deprecated, use commit_kwork.
+> >        */
+> >       struct work_struct commit_work;
+> > +
+> > +     /**
+> > +      * @commit_kwork:
+> > +      *
+> > +      * Work item which can be used by the driver or helpers to execute the
+> > +      * commit without blocking.
+> > +      */
+> > +     struct kthread_work commit_kwork;
+> >  };
+> >
+> >  void __drm_crtc_commit_free(struct kref *kref);
+> > @@ -954,6 +964,27 @@ void drm_state_dump(struct drm_device *dev, struct drm_printer *p);
+> >                     (new_obj_state) = (__state)->private_objs[__i].new_state, 1); \
+> >            (__i)++)
+> >
+> > +/**
+> > + * drm_atomic_pick_worker - helper to get kworker to use for nonblocking commit
+> > + * @state: the &drm_atomic_state for the commit
+> > + *
+> > + * Pick an appropriate worker for a given atomic update.  The first CRTC
+> > + * invovled in the atomic update is used to pick the worker, to prevent
+> > + * serializing multiple pageflips / atomic-updates on indenpendent CRTCs.
+> > + */
+> > +static inline struct kthread_worker *
+> > +drm_atomic_pick_worker(const struct drm_atomic_state *state)
+> > +{
+> > +     struct drm_crtc_state *crtc_state;
+> > +     struct drm_crtc *crtc;
+> > +     unsigned i;
+> > +
+> > +     for_each_new_crtc_in_state(state, crtc, crtc_state, i)
+> > +             return crtc->worker;
+> > +
+> > +     return NULL;
+> > +}
+> > +
+> >  /**
+> >   * drm_atomic_crtc_needs_modeset - compute combined modeset need
+> >   * @state: &drm_crtc_state for the CRTC
+> > --
+> > 2.26.2
+> >
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
