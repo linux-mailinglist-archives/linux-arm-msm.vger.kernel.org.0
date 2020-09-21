@@ -2,95 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DF62273671
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 01:12:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3CAD2736E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 01:52:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728790AbgIUXMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 19:12:21 -0400
-Received: from mail.rusoil.net ([188.128.114.25]:58282 "EHLO mail.rusoil.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728741AbgIUXMV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 19:12:21 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 19:12:11 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.rusoil.net (Postfix) with ESMTP id 9EF1840C07;
-        Tue, 22 Sep 2020 04:08:14 +0500 (YEKT)
-Received: from mail.rusoil.net ([127.0.0.1])
-        by localhost (mail.rusoil.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id SVpSP78GR2pZ; Tue, 22 Sep 2020 04:08:14 +0500 (YEKT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.rusoil.net (Postfix) with ESMTP id 3D89E40D78;
-        Tue, 22 Sep 2020 04:08:13 +0500 (YEKT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rusoil.net 3D89E40D78
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rusoil.net;
-        s=maildkim; t=1600729693;
-        bh=6R3BgBYiA7fkqGiiNDuwPskBnpH9JXyNAW/l3ZEA+wY=;
-        h=Date:From:Message-ID:MIME-Version;
-        b=Vnjy6nBVnSTcINEW6kER3ugTxQ4KBYKS36YiGFr6YA3B4INc+KiGVhbak8MS9Qjs4
-         d1hbAool1vpcT5tqzIahdEndE3qiAPgBOX6jsmCcvHSMZhz19GFDJ1aQySn107enqY
-         lwxWqbZRY2a+BQ8VxoJh3Rpje7MgA+/fhr9SupmU=
-X-Virus-Scanned: amavisd-new at mail.rusoil.net
-Received: from mail.rusoil.net ([127.0.0.1])
-        by localhost (mail.rusoil.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id KLkCjnFIcNrK; Tue, 22 Sep 2020 04:08:12 +0500 (YEKT)
-Received: from mail.rusoil.net (mail.rusoil.net [172.16.7.34])
-        by mail.rusoil.net (Postfix) with ESMTP id 6147940C07;
-        Tue, 22 Sep 2020 04:08:10 +0500 (YEKT)
-Date:   Tue, 22 Sep 2020 04:08:09 +0500 (YEKT)
-From:   Blue Oak Mortgage and Loans <em@rusoil.net>
-Reply-To: Blue Oak Mortgage and Loans <info@bluelmtg.net>
-Message-ID: <2020026523.907101.1600729689731.JavaMail.zimbra@rusoil.net>
-Subject: Wir finanzieren Projekte und Unternehmen
+        id S1728973AbgIUXwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 19:52:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728565AbgIUXwq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Sep 2020 19:52:46 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CD91C061755
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 16:52:46 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id w16so18994870oia.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 16:52:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=myqkOnv6Utq5RSw8l54xg4GrYi2iSXWvV0sGIl2/+3U=;
+        b=uKhOiogdhPNBB+yyjH5O8cDz4plTBywF6AtnQp6ffm7e8auw/lFYqFWHxjWkcaplTz
+         DN8XAEt88ZwYLW4l/RT/qZrRM4e95PlLwLNOPjq31G6B6iBDseLFKRQPT1W1J+refIcB
+         scQEHMHXcWlZ06AyPEwTOFuwjiCJ0/Hrl8R86T7AR+ZAOWsfZ6n6aLgpWHTz75UWAVhS
+         0YwBhQP2uOsT340I9iKFSnd4nwcvKBfWOs75X3uOfLtSqF/3R5WWPjXToQCByI6GvENH
+         QPUbmKFYkMmpDM+GWBr3Rg9HYM9semQIQvOoUPCbdj/FK9Ppr68XrQzi0yJG+6y481SP
+         MZkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=myqkOnv6Utq5RSw8l54xg4GrYi2iSXWvV0sGIl2/+3U=;
+        b=c0Wn3nFbxakv36K2f/dKvLOUlvUuUderUz/GI1+P27OYK6Tmrl5iClJi5hOmzqsfSN
+         bHGfGROCM8OJLax5oOfV1k2qv+qwOV4mqUgS2a25JvBe8LvYlaw7wJCnVUWXTknoTyx/
+         aFXDedmj/vshBqQbPCAV890yKBBOLEzRdXvuQEoBUtFk5IFTAIvsqGc7U+Xo4JrYdCVy
+         YJUUFkGs2sbc5wWV1xEJcCBwYIqZ9mKjHhfKgLmdW4v/Obh30Sy/sRI98VmkHPaXVqJv
+         h+4c2oOdh9XK5qa4g2Zp66QS84CC/QG+ZCDrqqUI/kr+ahK7EhDTfEXGrOe+mcEHUP10
+         rh1g==
+X-Gm-Message-State: AOAM532SddHospoR6B6nI4kRn62ym/EoNvHDhrs7JgXUbztwVt2mbWxY
+        ZUM6K3A1xWmPt5PsrNcS10A8Mg==
+X-Google-Smtp-Source: ABdhPJz17QYnLhnyp7BQTzbVCuUn497fqAguP8gE1cbvwZEtHoTYnd5SX/AZieoE/O6U9drrPyDQiQ==
+X-Received: by 2002:aca:1006:: with SMTP id 6mr1060998oiq.2.1600732365592;
+        Mon, 21 Sep 2020 16:52:45 -0700 (PDT)
+Received: from localhost.localdomain (99-135-181-32.lightspeed.austtx.sbcglobal.net. [99.135.181.32])
+        by smtp.gmail.com with ESMTPSA id c124sm7257395oib.22.2020.09.21.16.52.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Sep 2020 16:52:44 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [GIT PULL] Qualcomm driver fixes for v5.9
+Date:   Mon, 21 Sep 2020 18:52:41 -0500
+Message-Id: <20200921235241.36463-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [192.210.183.69]
-X-Mailer: Zimbra 8.8.12_GA_3803 (ZimbraWebClient - FF79 (Win)/8.8.12_GA_3794)
-Thread-Index: IhGK+mMcCqn+S/Et9t28g8ApaUDaLg==
-Thread-Topic: Wir finanzieren Projekte und Unternehmen
-To:     unlisted-recipients:; (no To-header on input)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The following changes since commit 9123e3a74ec7b934a4a099e98af6a61c2f80bbf5:
 
+  Linux 5.9-rc1 (2020-08-16 13:04:57 -0700)
 
-Dies ist ein Newsletter von Blue Oak Mortgage and Loans. Bitte melden Sie s=
-ich ab, wenn Sie keine E-Mail mehr von uns erhalten m=C3=B6chten.
+are available in the Git repository at:
 
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-fixes-for-5.9
 
-Eine kurze Einf=C3=BChrung.
+for you to fetch changes up to 7a366707bb6a93baeb1a9ef46c4b9c875e0132d6:
 
-Wir sind ein f=C3=BChrendes Finanzierungsunternehmen in Europa. Wir finanzi=
-eren Startups / etablierte Unternehmen, finanzieren Gro=C3=9Fprojekte (Bau,=
- Landwirtschaft, Immobilien und dergleichen) zu einem niedrigen Zinssatz vo=
-n 2% pro Jahr.
+  soc: qcom: pdr: Fixup array type of get_domain_list_resp message (2020-09-14 23:53:29 +0000)
 
+----------------------------------------------------------------
+Qualcomm driver fixes for v5.9
 
-Darlehensverfahren
+Fix the array type of the domain_list QMI response in PDR.
 
-1. Sie m=C3=BCssen das Online-Bewerbungsformular ausf=C3=BCllen und eine or=
-dnungsgem=C3=A4=C3=9F unterschriebene Kopie an uns zur=C3=BCcksenden.
+----------------------------------------------------------------
+Sibi Sankar (1):
+      soc: qcom: pdr: Fixup array type of get_domain_list_resp message
 
-2. M=C3=B6glicherweise m=C3=BCssen Sie Finanzdokumente als unterst=C3=BCtze=
-nden Nachweis f=C3=BCr die F=C3=A4higkeit zur R=C3=BCckzahlung von Krediten=
- vorlegen.
-
-3. Wenn Ihr Darlehen genehmigt wurde, m=C3=BCssen Sie eine Versicherungsgar=
-antie f=C3=BCr die Darlehenssicherheit vorlegen. Wir empfehlen eine Versich=
-erungsgesellschaft. Sie sind allein verantwortlich f=C3=BCr die Zahlung und=
- den Erwerb der Anleihe, die als Sicherheit dienen. Die H=C3=B6he der Anlei=
-he h=C3=A4ngt von Ihrem Darlehensbetrag ab. Die Versicherungsgesellschaft w=
-ird Sie durch den Prozess f=C3=BChren. (F=C3=BCr Gro=C3=9Fprojekte)
-
-4. Ihr =C3=9Cberweisungsprozess wird eingeleitet, sobald die Versicherungsa=
-nleihe =C3=BCberpr=C3=BCft wurde. Ihr Darlehensr=C3=BCckzahlungsplan wird i=
-m NC-Darlehensvertragsformular aufgef=C3=BChrt.
-
-Wenn die Bedingungen Sie beruhigen, k=C3=B6nnen Sie uns =C3=BCber die Whats=
-App-Nummer / E-Mail kontaktieren und auch unsere Website besuchen, um weite=
-re Informationen zu erhalten. Wir freuen uns darauf, von Ihnen zu h=C3=B6re=
-n.
-
-WhatsApp: + 90-552-365-3483
-E-Mail: info@bluelmtg.net
+ drivers/soc/qcom/pdr_internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
