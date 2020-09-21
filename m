@@ -2,119 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C195C273384
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 22:13:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC6212733C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Sep 2020 22:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726442AbgIUUM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Sep 2020 16:12:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38152 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726427AbgIUUM7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Sep 2020 16:12:59 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4F4C061755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 13:12:59 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id q4so344139pjh.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Sep 2020 13:12:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=W/Kxd3ZsTJKzJEkeZeLlo7BrMx4l7UcmMdHw88y51RQ=;
-        b=hVYFLWChiCBjVwypKK0nyxvfd37bkITGsEBYxWBdD10OR6NdYz0pzW1BJbHzXslJo0
-         xtK3VvUkMzKZbsQ7aCfvV6ZlkuAvQfTmGBV7ZSh1zyrAUTEkGDeSJAXhqEtbyVOTczYF
-         jER8++ADxIio0/I76KHHvyQQhit8ZCWm8qIE0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=W/Kxd3ZsTJKzJEkeZeLlo7BrMx4l7UcmMdHw88y51RQ=;
-        b=NLzo9AAum5X+T0BK4NLS1UykTrmmJrdm3CwrHS3yQ8ydyOHrDw/7SL6zI4j2Z+Gi6+
-         PKava3d+HK03eesz+UiJF245DDUDv88G461sXZTrf7v4rhEeeiszWpKdvA1ow7cFrrT6
-         9zPW0xemJ9qyyln6RsE9IKHzxoG8du6BPxoDhOvI11iLLWi92pTgxP/nccMUAVkx65RK
-         GwYcvlcmb5dQBq48Wq/AWI8xxvmCNGziSd4ei4tMIRuSwse1e/QbAtGeIbVdpUUKCuiG
-         tA6TMobOQ0DKv0q42gEYwQW8E5hvbzDz+C6dU5wB7R3zX7Gq0cl42totE9qXBEuX036u
-         rZdQ==
-X-Gm-Message-State: AOAM533mnCThaeNigaM7ugMGvk8xYlgRP3LaH0wStOYdDdpiI53H8Q8Z
-        7Wa1D4eVrYBa0AOwdZBMk+rhZw==
-X-Google-Smtp-Source: ABdhPJyehtYtEUeW5/Zkf7avMtNZ6qZZdA9mko0zR33iKWVQ2TSolZX0a+lsDR+hlvIgP+9qaZ5HRg==
-X-Received: by 2002:a17:90b:3cb:: with SMTP id go11mr802317pjb.152.1600719178625;
-        Mon, 21 Sep 2020 13:12:58 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id l188sm12643094pfl.200.2020.09.21.13.12.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 13:12:57 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        id S1727719AbgIUUqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Sep 2020 16:46:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53890 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726471AbgIUUqC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Sep 2020 16:46:02 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D37C221BE5;
+        Mon, 21 Sep 2020 20:45:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1600721161;
+        bh=EdurATGxug8cG+oyNYLURJIjRYdM3Db8byGV5R+MXAw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=2EmwJzFSBBPOPx6F855kk70qAf3unPskCBeHSbPpZVJNbW7TPKyCEWvjHhP623NnE
+         71cFz77tBtPoIb0OSrqSyQWabxmFq6g91n7EtrDlo4xAG9MTKOhh6CztBU8+s1/vxU
+         hbkVuOo6YgAefgKUlk5L+eWpvbnn/0eJnlyrBUS4=
+Date:   Mon, 21 Sep 2020 21:45:57 +0100
+From:   Will Deacon <will@kernel.org>
+To:     kernel test robot <lkp@intel.com>
+Cc:     Yu Kuai <yukuai3@huawei.com>, robdclark@gmail.com, joro@8bytes.org,
+        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
+        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        yi.zhang@huawei.com
+Subject: Re: [PATCH] iommu/qcom: add missing put_device() call in
+ qcom_iommu_of_xlate()
+Message-ID: <20200921204556.GB3811@willie-the-truck>
+References: <20200918011357.909335-1-yukuai3@huawei.com>
+ <202009220340.bJfsaeQn%lkp@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <f6cb2d7bc02dab409030ec42bf1d17c9@codeaurora.org>
-References: <20200917122558.23110-1-rojay@codeaurora.org> <160037421089.4188128.9425314091585708436@swboyd.mtv.corp.google.com> <f6cb2d7bc02dab409030ec42bf1d17c9@codeaurora.org>
-Subject: Re: [PATCH V4] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     wsa@kernel.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        vkaur@codeaurora.org, pyarlaga@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-To:     rojay@codeaurora.org
-Date:   Mon, 21 Sep 2020 13:12:56 -0700
-Message-ID: <160071917655.4188128.4175000228517858211@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202009220340.bJfsaeQn%lkp@intel.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting rojay@codeaurora.org (2020-09-21 04:21:04)
-> Hi Stephen,
->=20
-> On 2020-09-18 01:53, Stephen Boyd wrote:
-> > Quoting Roja Rani Yarubandi (2020-09-17 05:25:58)
-> >> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c=20
-> >> b/drivers/i2c/busses/i2c-qcom-geni.c
-> >> index dead5db3315a..b0d8043c8cb2 100644
-> >> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> >> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> >>  };
-> >>=20
-> >>  struct geni_i2c_err_log {
-> >> @@ -307,7 +311,6 @@ static void geni_i2c_abort_xfer(struct=20
-> >> geni_i2c_dev *gi2c)
-> >>=20
-> >>         spin_lock_irqsave(&gi2c->lock, flags);
-> >>         geni_i2c_err(gi2c, GENI_TIMEOUT);
-> >> -       gi2c->cur =3D NULL;
-> >=20
-> > This looks concerning. We're moving this out from under the spinlock.
-> > The irq handler in this driver seems to hold the spinlock all the time
-> > while processing and this function grabs it here to keep cur consistent
-> > when aborting the transfer due to a timeout. Otherwise it looks like=20
-> > the
-> > irqhandler can race with this and try to complete the transfer while
-> > it's being torn down here.
-> >=20
-> >>         geni_se_abort_m_cmd(&gi2c->se);
-> >>         spin_unlock_irqrestore(&gi2c->lock, flags);
-> >>         do {
-> >> @@ -349,10 +352,62 @@ static void geni_i2c_tx_fsm_rst(struct=20
-> >> geni_i2c_dev *gi2c)
-> >>                 dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
-> >>  }
-> >>=20
-> >> +static void geni_i2c_rx_msg_cleanup(struct geni_i2c_dev *gi2c)
-> >=20
-> > So maybe pass cur to this function?
-> >=20
->=20
-> Sorry, i did not understand why to pass cur to this function?
+On Tue, Sep 22, 2020 at 03:13:53AM +0800, kernel test robot wrote:
+> Thank you for the patch! Perhaps something to improve:
+> 
+> [auto build test WARNING on iommu/next]
+> [also build test WARNING on linus/master v5.9-rc6 next-20200921]
+> [cannot apply to robclark/msm-next]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+> 
+> url:    https://github.com/0day-ci/linux/commits/Yu-Kuai/iommu-qcom-add-missing-put_device-call-in-qcom_iommu_of_xlate/20200918-091341
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/joro/iommu.git next
+> config: arm64-randconfig-r023-20200920 (attached as .config)
+> compiler: clang version 12.0.0 (https://github.com/llvm/llvm-project 4e8c028158b56d9c2142a62464e8e0686bde3584)
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # install arm64 cross compiling tool for clang build
+>         # apt-get install binutils-aarch64-linux-gnu
+>         # save the attached .config to linux build tree
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=arm64 
+> 
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All warnings (new ones prefixed by >>):
+> 
+> >> drivers/iommu/arm/arm-smmu/qcom_iommu.c:601:4: warning: misleading indentation; statement is not part of the previous 'if' [-Wmisleading-indentation]
+>                            return -EINVAL;
+>                            ^
+>    drivers/iommu/arm/arm-smmu/qcom_iommu.c:599:3: note: previous statement is here
+>                    if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev)))
 
-I'm suggesting to copy the cur data out of the gi2c pointer and then
-pass it to these functions so that it can't race with another transfer.
-Something like an atomic exchange may work. I haven't thought about it
-deeply, but we need to make sure the irq handler can't race with the
-cleanup functions.
+Oh, this looks like a nasty bug. Seems we're missing some braces.
+
+Will
