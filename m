@@ -2,83 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 893FB2739F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 06:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 781722739F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 06:51:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728569AbgIVEt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 00:49:59 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:49316 "EHLO m42-4.mailgun.net"
+        id S1728269AbgIVEvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 00:51:45 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:61164 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728516AbgIVEt7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 00:49:59 -0400
+        id S1727939AbgIVEvp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Sep 2020 00:51:45 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600750198; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=R4faDtMAAlvcimRCoxb6A2gPBHPAB4+jpEJWGiQPGgE=; b=RiTS5V2I6sRBSL85DVnIRrkAF++aXqCXBUSAr6q24046yatvjogvvg8wtEREtuAMldX8mpDw
- N/u7/ULx9XI9AfI+pz+Ze5sMj6oPlo4XzwwjQrQKwb2Y07xRD62QrznHiE/MQubkY1d8pRGF
- VpcdE3XuAnbz/M2DtGGLwU2IVDU=
-X-Mailgun-Sending-Ip: 69.72.42.4
+ s=smtp; t=1600750304; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=UMXvr4d2w3U0Xub2etDKsO5ANOh5QYekekonWK9KY7g=;
+ b=LXUBRt5Clv1b7bFn4l1oeseOprdLnFGrs3nNZODShkhv2uR20pPoDpoQErBTKKkhwraHVz6j
+ 3SlNydse3Zfr+1ahGGlP1JJ/Cmf6pVK0T2OUJ8fQ5Xm4sWiVsaE0FOop58ZBVOFnPkZj4iMV
+ J8oBzZL0P9LKm1T4bUFvyskHHC8=
+X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f6982760915d30357491bf1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Sep 2020 04:49:58
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f6982e00915d30357497c5b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Sep 2020 04:51:44
  GMT
-Sender: akashast=codeaurora.org@mg.codeaurora.org
+Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9607FC433C8; Tue, 22 Sep 2020 04:49:57 +0000 (UTC)
+        id 947E4C433CB; Tue, 22 Sep 2020 04:51:43 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.101] (unknown [47.8.232.49])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 88CB1C433C8;
-        Tue, 22 Sep 2020 04:49:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 88CB1C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Switch sc7180-trogdor to control
- SPI CS via GPIO
-To:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20200921142655.v3.1.I997a428f58ef9d48b37a27a028360f34e66c00ec@changeid>
- <20200921142655.v3.2.I3c57d8b6d83d5bdad73a413eea1e249a98d11973@changeid>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <8942f1b9-9ebf-992b-1e43-45fe9adedce9@codeaurora.org>
-Date:   Tue, 22 Sep 2020 10:19:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F683C433C8;
+        Tue, 22 Sep 2020 04:51:41 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200921142655.v3.2.I3c57d8b6d83d5bdad73a413eea1e249a98d11973@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Tue, 22 Sep 2020 10:21:41 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Andy Gross <agross@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        "Nayak, Rajendra" <rnayak@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME
+ flags
+In-Reply-To: <160071818317.4188128.15658877054019388462@swboyd.mtv.corp.google.com>
+References: <20200821204921.32536-1-sibis@codeaurora.org>
+ <CAJZ5v0gdMroJY0d9n2+_P2uhBNw1xp5yn=jhxdejDLq0WmkPTA@mail.gmail.com>
+ <160071818317.4188128.15658877054019388462@swboyd.mtv.corp.google.com>
+Message-ID: <14eb0558c8ff820280bb7354cfe33326@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-09-22 01:26, Stephen Boyd wrote:
+> Quoting Rafael J. Wysocki (2020-09-21 09:18:17)
+>> On Fri, Aug 21, 2020 at 10:49 PM Sibi Sankar <sibis@codeaurora.org> 
+>> wrote:
+>> >
+>> > Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
+>> > status of the PM domain unaltered during suspend/resume respectively.
+>> > The flags are aimed at power domains coupled to co-processors which
+>> > enter low-power modes independent to that of the application processor.
+>> >
+>> > Specifically the flags are to be used by the power domains exposed
+>> > by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
+>> > power domains are used to notify the Always on Subsystem (AOSS) that
+>> > a particular co-processor is up. AOSS uses this information to wait
+>> > for the co-processors to suspend before starting its sleep sequence.
+>> > The application processor powers off these power domains only if the
+>> > co-processor has crashed or powered off and remains unaltered during
+>> > system suspend/resume.
+>> >
+>> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> 
+>> Applied with the Ulf's R-by along with the [2/2] as 5.10 material, 
+>> thanks!
+>> 
+> 
+> There was a bunch of discussion on this patch series and I thought the
+> consensus was to not apply these patches and instead implement a custom
+> qcom specific API that does this instead.
 
-On 9/22/2020 2:57 AM, Douglas Anderson wrote:
-> As talked about in the patch ("arm64: dts: qcom: sc7180: Provide
-> pinconf for SPI to use GPIO for CS"), on some boards it makes much
-> more sense (and is much more efficient) to think of the SPI Chip
-> Select as a GPIO.  Trogdor is one such board where the SPI parts don't
-> run in GSI mode and we do a lot of SPI traffic.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+https://lore.kernel.org/lkml/20200913034603.GV3715@yoga/
+
+The power domains which were targeted
+to use the flags will be replaced by
+custom qcom specific API. So let's not
+pick up the patch series.
+
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
