@@ -2,99 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2533274560
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 17:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4583C27458B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 17:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbgIVPgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 11:36:03 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:37559 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726566AbgIVPgC (ORCPT
+        id S1726739AbgIVPkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 11:40:22 -0400
+Received: from mail-il1-f196.google.com ([209.85.166.196]:33292 "EHLO
+        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726566AbgIVPkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 11:36:02 -0400
-Received: by mail-oi1-f193.google.com with SMTP id a3so21523366oib.4;
-        Tue, 22 Sep 2020 08:36:02 -0700 (PDT)
+        Tue, 22 Sep 2020 11:40:22 -0400
+Received: by mail-il1-f196.google.com with SMTP id y2so7038542ila.0;
+        Tue, 22 Sep 2020 08:40:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yBYKnp2qIyIar4+QEHF6IHFHyA4o1eDMQTBvugxuVxY=;
-        b=jQLRIlgyi4R6sFeho/H09CXcD1Ls1erL2apqizl+eKE3MBnk+/YwF7bJnx5zKTLVkk
-         qVKYFC4OAGXVhj06EwH2W9ZOHw1RjQD+nGq6tSMuEuoLqSvYBBxHrRyVtLqhdxl5CVJh
-         ZZbZ1uBoOfoDxfw69e1bL2Px492kmWjAnftSWuce/cQhUaH1mXOXmbHS9WkuwtiKGkjH
-         aDEEwZPkeZ3avsIp2HAAcKdjCAWvn2dGjTdYGXkuH/g5gYEfz5ZU5gIlsV7LMQv+Fjha
-         mF8oj9Qkgn2722do5L/r8EotqdyMMLDiWYBTkK7+D7S5tjiPYKV10OvUHolORLHGt21Q
-         Txfw==
-X-Gm-Message-State: AOAM530GWfmoc2vl+DmPKfrJG1PsaV5RxafpqiIQ900fwK6YsKfRK9ZK
-        6jDr1SgdNj7X9cm87aoyhsm8Ads/K7hGTs7dbq0=
-X-Google-Smtp-Source: ABdhPJyQ3oBma7ZSM0DZ1lCdbgYp+HqDIHEHTk6w56xE90nMDiJZNDikOMvJidF9A9Okh8UaErkOIhUH+UFs4ZgqHZQ=
-X-Received: by 2002:aca:df84:: with SMTP id w126mr3134469oig.103.1600788961565;
- Tue, 22 Sep 2020 08:36:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200821204921.32536-1-sibis@codeaurora.org> <CAJZ5v0gdMroJY0d9n2+_P2uhBNw1xp5yn=jhxdejDLq0WmkPTA@mail.gmail.com>
- <160071818317.4188128.15658877054019388462@swboyd.mtv.corp.google.com> <14eb0558c8ff820280bb7354cfe33326@codeaurora.org>
-In-Reply-To: <14eb0558c8ff820280bb7354cfe33326@codeaurora.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Tue, 22 Sep 2020 17:35:50 +0200
-Message-ID: <CAJZ5v0jPQoXtNY3YMe=TEEAOJjF-GbVe4msc682dHamoveatzA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] PM / Domains: Add GENPD_FLAG_NO_SUSPEND/RESUME flags
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Andy Gross <agross@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8GdJRN6siN1K/3VUt/RzQ7dwFh0PUHODAfHPAkJXVec=;
+        b=WGB1VOEU6jpfTlda4fWmes7xisIZXnU6Tzzeqph8/n3wBAOw1Zzd+FJ+curOT93GwE
+         EkaZEedS9NkDk7+PI4hrva4N7KYDxzhmTY22Ix8InMEmNPOfO+FawxWqqw8Xr9jDNkp6
+         nxWcILJ21C3JkJzg2pXXNe3R1uz8QvhYY7x0G38GQJSYDFOFQdq0CfM7DO68biSUS/3v
+         sbs+Nxmr843R79GP+k1CPv5IhNeldoP2gLXB8+amaKE+JnXZCj8/6V4C/ACr+c49zPWC
+         q+aP+op6vxuTRbnsxS17429wALAIsiQ1Y6y1x6Hy6d3TFnzZ4r9z0b+6jGcBD6dw7bDB
+         EuvQ==
+X-Gm-Message-State: AOAM531hp0fJc1iilTU2KuDJ2eBO3I+rtTA+fYomPskh8DUMCUJVR+yx
+        o7yqgA4/0Y9liM4Z9nOKOA==
+X-Google-Smtp-Source: ABdhPJyREJxSIdBKii6r07HwAtgscFY+xZM0Hzr/ADdWxpwvmnoH8SQzW6oBqLEpp2gzISGF/n+Kjw==
+X-Received: by 2002:a92:b503:: with SMTP id f3mr4935318ile.23.1600789220548;
+        Tue, 22 Sep 2020 08:40:20 -0700 (PDT)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id e4sm7533543iom.14.2020.09.22.08.40.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2020 08:40:19 -0700 (PDT)
+Received: (nullmailer pid 2730094 invoked by uid 1000);
+        Tue, 22 Sep 2020 15:40:18 -0000
+Date:   Tue, 22 Sep 2020 09:40:18 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        "maintainer:BROADCOM BCM7XXX ARM ARCHITECTURE" 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-unisoc@lists.infradead.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        "Nayak, Rajendra" <rnayak@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-riscv <linux-riscv@lists.infradead.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux-ALSA <alsa-devel@alsa-project.org>,
+        "moderated list:ARM/STM32 ARCHITECTURE" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        "open list:MEDIA DRIVERS FOR RENESAS - FCP" 
+        <linux-renesas-soc@vger.kernel.org>
+Subject: Re: [PATCH v2 01/13] dt-bindings: gpio: add common schema for GPIO
+ controllers
+Message-ID: <20200922154018.GA2657058@bogus>
+References: <20200917165301.23100-1-krzk@kernel.org>
+ <20200917165301.23100-2-krzk@kernel.org>
+ <CAL_JsqJCLgf6syqV=jNPHPyu02ygwWCDDV+U9VCm0qRpLkirSQ@mail.gmail.com>
+ <20200920193915.GA31074@kozik-lap>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200920193915.GA31074@kozik-lap>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 22, 2020 at 6:51 AM Sibi Sankar <sibis@codeaurora.org> wrote:
->
-> On 2020-09-22 01:26, Stephen Boyd wrote:
-> > Quoting Rafael J. Wysocki (2020-09-21 09:18:17)
-> >> On Fri, Aug 21, 2020 at 10:49 PM Sibi Sankar <sibis@codeaurora.org>
-> >> wrote:
-> >> >
-> >> > Add GENPD_FLAG_NO_SUSPEND/RESUME flags to instruct genpd to keep the
-> >> > status of the PM domain unaltered during suspend/resume respectively.
-> >> > The flags are aimed at power domains coupled to co-processors which
-> >> > enter low-power modes independent to that of the application processor.
-> >> >
-> >> > Specifically the flags are to be used by the power domains exposed
-> >> > by the AOSS QMP driver linked to modem, adsp, cdsp remoteprocs. These
-> >> > power domains are used to notify the Always on Subsystem (AOSS) that
-> >> > a particular co-processor is up. AOSS uses this information to wait
-> >> > for the co-processors to suspend before starting its sleep sequence.
-> >> > The application processor powers off these power domains only if the
-> >> > co-processor has crashed or powered off and remains unaltered during
-> >> > system suspend/resume.
-> >> >
-> >> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> >>
-> >> Applied with the Ulf's R-by along with the [2/2] as 5.10 material,
-> >> thanks!
-> >>
-> >
-> > There was a bunch of discussion on this patch series and I thought the
-> > consensus was to not apply these patches and instead implement a custom
-> > qcom specific API that does this instead.
->
-> https://lore.kernel.org/lkml/20200913034603.GV3715@yoga/
->
-> The power domains which were targeted
-> to use the flags will be replaced by
-> custom qcom specific API. So let's not
-> pick up the patch series.
+On Sun, Sep 20, 2020 at 09:39:15PM +0200, Krzysztof Kozlowski wrote:
+> On Fri, Sep 18, 2020 at 08:30:02AM -0600, Rob Herring wrote:
+> > On Thu, Sep 17, 2020 at 10:53 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> > >
+> > > Convert parts of gpio.txt bindings into common dtschema file for GPIO
+> > > controllers.  The schema enforces proper naming of GPIO controller nodes
+> > > and GPIO hogs.
+> > 
+> > Did you not see my previous reply about a common schema? We already
+> > have a common GPIO and hog schema in dtschema. Please add to it
+> > whatever is missing.
+> 
+> Indeed, I'll enhance the dt-schema.
+> 
+> The trouble is that each in-kernel YAML file still has to mention
+> possible gpio-hogs nodes. Is the proper solution to put them in common
+> YAML inside kernel sources?
 
-OK, I'm dropping it then, thanks!
+Currently, the gpio.yaml schema is applied to all nodes. That has the 
+advantage that GPIO related properties are always checked whether we 
+have a device specific schema or not. It has the disadvantage that you 
+can't do some constraints like required properties or what's in child 
+nodes.
+
+We could (and probably should) change it to be referenced by specific 
+gpio controller schemas like we do for i2c, spi, etc. Then you can 
+define required properties there and do something like:
+
+"-hogs$":
+  type: object
+  $ref: gpio-hogs.yaml#
+
+
+> > My goal is all common schema end up in dtschema, but I haven't pushed
+> > folks to do that yet. Ones I've done are there though. One issue is
+> > what's in dtschema should be GPL/BSD and the existing text bindings
+> > are default GPL, so there's a relicensing exercise. In some cases, the
+> > schema is there but I haven't copied over the descriptions.
+> 
+> Right, I'll skip the descriptions when posting to dt-schema.
+
+I was hoping someone would add the descriptions. :)
+
+Rob
