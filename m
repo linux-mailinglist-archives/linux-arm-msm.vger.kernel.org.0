@@ -2,111 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D26A274644
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 18:12:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEDA5274717
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 19:00:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbgIVQMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 12:12:42 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:32738 "EHLO z5.mailgun.us"
+        id S1726614AbgIVRA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 13:00:26 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:49807 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726637AbgIVQMm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 12:12:42 -0400
+        id S1726526AbgIVRA0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Sep 2020 13:00:26 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600791161; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=EZRwqUT9E3jZrgdjNm8FFMtkMTg/4V6XnlWG1JPmllI=; b=GhwicaFzy8pq0Os7JEeA1GP504RSIklAztJQ0xjWOeb3R2qfydxiLT22f8+m5aY/g1VrdSNA
- i/LTPQ/bt0DAKlZ9jwkCnSIQvCmPu2WvsiffatFyoLJPW/2XtafTelw7ispa7RQ/YVnxz1j3
- D34m0kDoU2gCm1Z1f3pi4pnVTss=
+ s=smtp; t=1600794025; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Im3F+W8MIOfmRt75vkZIASWX2D/KCtpMsDrEarObrkg=;
+ b=VeXaVgNqMSIGxjLKY8oExer8K21C9rJV4V1G4aPSMgHY0ZK8oxVz17bQyKMktxwuH8WCALek
+ z/kpYi7X4zTR+evk49PxgUfO610/eRQ/TRYoAm89PejFinP66nqu5Iu5bmHedKy0IOe609Uf
+ dpH2mM7s/aB4EttH9XxDwAQX0aQ=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f6a226145a0e38d8175087a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Sep 2020 16:12:17
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f6a2d9f3e7bfb5c37f04e3d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Sep 2020 17:00:15
  GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 309DCC433F1; Tue, 22 Sep 2020 16:12:17 +0000 (UTC)
+        id BED7FC433F1; Tue, 22 Sep 2020 17:00:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7583FC433C8;
-        Tue, 22 Sep 2020 16:12:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7583FC433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 22 Sep 2020 10:12:15 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] cpuidle: governor: export cpuidle governor functions
-Message-ID: <20200922161215.GD30658@codeaurora.org>
-References: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
- <CAJZ5v0hJJxxb+J5UtyZe2S_Tn7ARoGvjwDjw4dq601VJrriH9g@mail.gmail.com>
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53849C433C8;
+        Tue, 22 Sep 2020 17:00:14 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0hJJxxb+J5UtyZe2S_Tn7ARoGvjwDjw4dq601VJrriH9g@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 22 Sep 2020 10:00:14 -0700
+From:   bbhatt@codeaurora.org
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: Move irq check in controller registration
+In-Reply-To: <1600762066-25849-1-git-send-email-loic.poulain@linaro.org>
+References: <1600762066-25849-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <c052dbd8dcc2bd625b300b6c21638e3b@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafael,
+On 2020-09-22 01:07, Loic Poulain wrote:
+> Move irq number check early in mhi_register_controller along
+> with other mandatory parameters checking.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  drivers/bus/mhi/core/init.c | 2 +-
+>  drivers/bus/mhi/core/pm.c   | 3 ---
+>  2 files changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index ca08437..34f9ae3 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -871,7 +871,7 @@ int mhi_register_controller(struct mhi_controller
+> *mhi_cntrl,
+> 
+>  	if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+>  	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
+> -	    !mhi_cntrl->write_reg)
+> +	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
+>  		return -EINVAL;
+> 
+>  	ret = parse_config(mhi_cntrl, config);
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index 3de7b16..07efdbc 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -918,9 +918,6 @@ int mhi_async_power_up(struct mhi_controller 
+> *mhi_cntrl)
+> 
+>  	dev_info(dev, "Requested to power ON\n");
+> 
+> -	if (mhi_cntrl->nr_irqs < 1)
+> -		return -EINVAL;
+> -
+>  	/* Supply default wake routines if not provided by controller driver 
+> */
+>  	if (!mhi_cntrl->wake_get || !mhi_cntrl->wake_put ||
+>  	    !mhi_cntrl->wake_toggle) {
+Hi Loic,
 
-On Tue, Sep 22 2020 at 10:00 -0600, Rafael J. Wysocki wrote:
->Sorry for the delay.
->
->On Wed, Sep 9, 2020 at 12:15 AM Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
->> capability of registering cpuidle governors, which was unused at that
->> time. By exporting the symbol, let's allow platform specific modules to
->> register cpuidle governors and use cpuidle_governor_latency_req() to get
->> the QoS for the CPU.
->
->Which platform-specific modules may want to do that and why?
->
-We are planning a custom cpuidle governor for QCOM SoCs. With Android,
-the idea is to make them loadable modules so they can be in a separate
-partition.
+Can you please add a Suggested-by: Bhaumik Bhatt <bbhatt@codeaurora.org> 
+tag with my name?
+
+Also, I made this patch myself too but you can submit it. It'd be nice 
+to add some more
+details in the commit text.
+
+Mine goes like this:
+
+bus: mhi: core: Check for IRQ availability during registration
+
+     Current design allows a controller to register with MHI successfully
+     without the need to have any IRQs available for use. If no IRQs are
+     available, power up requests to MHI can fail after a successful
+     registration with MHI. Improve the design by checking for the number
+     of IRQs available sooner within the mhi_regsiter_controller() API as
+     it is required to be specified by the controller.
 
 Thanks,
-Lina
-
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> ---
->>  drivers/cpuidle/governor.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/drivers/cpuidle/governor.c b/drivers/cpuidle/governor.c
->> index 29acaf48e575..0e51ed25665e 100644
->> --- a/drivers/cpuidle/governor.c
->> +++ b/drivers/cpuidle/governor.c
->> @@ -102,6 +102,7 @@ int cpuidle_register_governor(struct cpuidle_governor *gov)
->>
->>         return ret;
->>  }
->> +EXPORT_SYMBOL_GPL(cpuidle_register_governor);
->>
->>  /**
->>   * cpuidle_governor_latency_req - Compute a latency constraint for CPU
->> @@ -118,3 +119,4 @@ s64 cpuidle_governor_latency_req(unsigned int cpu)
->>
->>         return (s64)device_req * NSEC_PER_USEC;
->>  }
->> +EXPORT_SYMBOL_GPL(cpuidle_governor_latency_req);
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
+Bhaumik
