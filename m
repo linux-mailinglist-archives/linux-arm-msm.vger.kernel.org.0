@@ -2,125 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4583C27458B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 17:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E01D12745D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 17:57:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726739AbgIVPkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 11:40:22 -0400
-Received: from mail-il1-f196.google.com ([209.85.166.196]:33292 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726566AbgIVPkW (ORCPT
+        id S1726706AbgIVP5R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 11:57:17 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:45872 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726566AbgIVP5R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 11:40:22 -0400
-Received: by mail-il1-f196.google.com with SMTP id y2so7038542ila.0;
-        Tue, 22 Sep 2020 08:40:21 -0700 (PDT)
+        Tue, 22 Sep 2020 11:57:17 -0400
+Received: by mail-oi1-f194.google.com with SMTP id z26so21527977oih.12;
+        Tue, 22 Sep 2020 08:57:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8GdJRN6siN1K/3VUt/RzQ7dwFh0PUHODAfHPAkJXVec=;
-        b=WGB1VOEU6jpfTlda4fWmes7xisIZXnU6Tzzeqph8/n3wBAOw1Zzd+FJ+curOT93GwE
-         EkaZEedS9NkDk7+PI4hrva4N7KYDxzhmTY22Ix8InMEmNPOfO+FawxWqqw8Xr9jDNkp6
-         nxWcILJ21C3JkJzg2pXXNe3R1uz8QvhYY7x0G38GQJSYDFOFQdq0CfM7DO68biSUS/3v
-         sbs+Nxmr843R79GP+k1CPv5IhNeldoP2gLXB8+amaKE+JnXZCj8/6V4C/ACr+c49zPWC
-         q+aP+op6vxuTRbnsxS17429wALAIsiQ1Y6y1x6Hy6d3TFnzZ4r9z0b+6jGcBD6dw7bDB
-         EuvQ==
-X-Gm-Message-State: AOAM531hp0fJc1iilTU2KuDJ2eBO3I+rtTA+fYomPskh8DUMCUJVR+yx
-        o7yqgA4/0Y9liM4Z9nOKOA==
-X-Google-Smtp-Source: ABdhPJyREJxSIdBKii6r07HwAtgscFY+xZM0Hzr/ADdWxpwvmnoH8SQzW6oBqLEpp2gzISGF/n+Kjw==
-X-Received: by 2002:a92:b503:: with SMTP id f3mr4935318ile.23.1600789220548;
-        Tue, 22 Sep 2020 08:40:20 -0700 (PDT)
-Received: from xps15 ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id e4sm7533543iom.14.2020.09.22.08.40.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2020 08:40:19 -0700 (PDT)
-Received: (nullmailer pid 2730094 invoked by uid 1000);
-        Tue, 22 Sep 2020 15:40:18 -0000
-Date:   Tue, 22 Sep 2020 09:40:18 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        "maintainer:BROADCOM BCM7XXX ARM ARCHITECTURE" 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-unisoc@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-riscv <linux-riscv@lists.infradead.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Linux-ALSA <alsa-devel@alsa-project.org>,
-        "moderated list:ARM/STM32 ARCHITECTURE" 
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        "open list:MEDIA DRIVERS FOR RENESAS - FCP" 
-        <linux-renesas-soc@vger.kernel.org>
-Subject: Re: [PATCH v2 01/13] dt-bindings: gpio: add common schema for GPIO
- controllers
-Message-ID: <20200922154018.GA2657058@bogus>
-References: <20200917165301.23100-1-krzk@kernel.org>
- <20200917165301.23100-2-krzk@kernel.org>
- <CAL_JsqJCLgf6syqV=jNPHPyu02ygwWCDDV+U9VCm0qRpLkirSQ@mail.gmail.com>
- <20200920193915.GA31074@kozik-lap>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=H7GTMYyDTGfT2GkuPOYpbPR9aCxeCsMt4Pl5zwmZ3aQ=;
+        b=ZHoXZYi+V2kiyf52ylq5HGU18/Y5PtAZUFjAIpn7h4AJG7Si2wE6xY8zTjAYzygwr9
+         KJCmBiSggH5RfRPEJe6yNfUJUnpjP1KtLS8d9CoEbRvFz23kNYkRxgRF3AL8zS94cTrv
+         bVVnL2jrRDGf1Ry+AueSEhCtyVZ+22AcZe0kkkXbi8DJvBlk/8dakqYnysGSwGKd1++s
+         QTV+2GbM2bunuVf6R811zs7EzoXdHlbbLNNej2g74j/e3gL2WtHA1it425+u1Ma0fxO1
+         NyCLSXuoNg1As4p7tHNIev2JIdUNntG9taz7Fw2Edk9cxtwOapT452suhCL0iBRhbGKw
+         0WhA==
+X-Gm-Message-State: AOAM533SDzECuY+1loteK2dtR9KscopLi8GPoWIMZL088jbRUQyPHdXj
+        9/NE7PTQyv3pkXo5NcJnNbPpSysckaqS1t8oxQ4=
+X-Google-Smtp-Source: ABdhPJySETBo8YtEgNAde+S5KENFHtSP29em06c8SeyWbwPKS6nl0wIvxxd16q5d/ROKSfXuO6+g7rbOC9AHW8Joloc=
+X-Received: by 2002:a05:6808:491:: with SMTP id z17mr3163364oid.110.1600790236736;
+ Tue, 22 Sep 2020 08:57:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200920193915.GA31074@kozik-lap>
+References: <20200902210116.7360-1-ilina@codeaurora.org>
+In-Reply-To: <20200902210116.7360-1-ilina@codeaurora.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Tue, 22 Sep 2020 17:57:05 +0200
+Message-ID: <CAJZ5v0gWVVPF_S_=1WyXAiB0Gse6PO8VZQf0yAr=in15CM3w7w@mail.gmail.com>
+Subject: Re: [PATCH] cpuidle: record state entry failed statistics
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 20, 2020 at 09:39:15PM +0200, Krzysztof Kozlowski wrote:
-> On Fri, Sep 18, 2020 at 08:30:02AM -0600, Rob Herring wrote:
-> > On Thu, Sep 17, 2020 at 10:53 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> > >
-> > > Convert parts of gpio.txt bindings into common dtschema file for GPIO
-> > > controllers.  The schema enforces proper naming of GPIO controller nodes
-> > > and GPIO hogs.
-> > 
-> > Did you not see my previous reply about a common schema? We already
-> > have a common GPIO and hog schema in dtschema. Please add to it
-> > whatever is missing.
-> 
-> Indeed, I'll enhance the dt-schema.
-> 
-> The trouble is that each in-kernel YAML file still has to mention
-> possible gpio-hogs nodes. Is the proper solution to put them in common
-> YAML inside kernel sources?
+Sorry for the delay.
 
-Currently, the gpio.yaml schema is applied to all nodes. That has the 
-advantage that GPIO related properties are always checked whether we 
-have a device specific schema or not. It has the disadvantage that you 
-can't do some constraints like required properties or what's in child 
-nodes.
+On Wed, Sep 2, 2020 at 11:01 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> When CPUs fail to enter the chosen idle state it's mostly because of a
+> pending interrupt. Let's record that and show along with other
+> statistics for the idle state. This could prove useful in understanding
+> behavior of the governor and the system during usecases that involve
+> multiple CPUs.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> ---
+>  drivers/cpuidle/cpuidle.c | 1 +
+>  drivers/cpuidle/sysfs.c   | 3 +++
+>  include/linux/cpuidle.h   | 1 +
 
-We could (and probably should) change it to be referenced by specific 
-gpio controller schemas like we do for i2c, spi, etc. Then you can 
-define required properties there and do something like:
+The documentation needs to be updated too to cover the new state attribute.
 
-"-hogs$":
-  type: object
-  $ref: gpio-hogs.yaml#
+>  3 files changed, 5 insertions(+)
+>
+> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+> index 04becd70cc41..8dbf71f6138d 100644
+> --- a/drivers/cpuidle/cpuidle.c
+> +++ b/drivers/cpuidle/cpuidle.c
+> @@ -302,6 +302,7 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
+>                 }
+>         } else {
+>                 dev->last_residency_ns = 0;
+> +               dev->states_usage[index].failed++;
+>         }
+>
+>         return entered_state;
+> diff --git a/drivers/cpuidle/sysfs.c b/drivers/cpuidle/sysfs.c
+> index 091d1caceb41..f166687b3bcd 100644
+> --- a/drivers/cpuidle/sysfs.c
+> +++ b/drivers/cpuidle/sysfs.c
+> @@ -256,6 +256,7 @@ define_show_state_time_function(exit_latency)
+>  define_show_state_time_function(target_residency)
+>  define_show_state_function(power_usage)
+>  define_show_state_ull_function(usage)
+> +define_show_state_ull_function(failed)
 
+And what about calling it "rejected" instead of "failed"?
 
-> > My goal is all common schema end up in dtschema, but I haven't pushed
-> > folks to do that yet. Ones I've done are there though. One issue is
-> > what's in dtschema should be GPL/BSD and the existing text bindings
-> > are default GPL, so there's a relicensing exercise. In some cases, the
-> > schema is there but I haven't copied over the descriptions.
-> 
-> Right, I'll skip the descriptions when posting to dt-schema.
-
-I was hoping someone would add the descriptions. :)
-
-Rob
+>  define_show_state_str_function(name)
+>  define_show_state_str_function(desc)
+>  define_show_state_ull_function(above)
+> @@ -312,6 +313,7 @@ define_one_state_ro(latency, show_state_exit_latency);
+>  define_one_state_ro(residency, show_state_target_residency);
+>  define_one_state_ro(power, show_state_power_usage);
+>  define_one_state_ro(usage, show_state_usage);
+> +define_one_state_ro(failed, show_state_failed);
+>  define_one_state_ro(time, show_state_time);
+>  define_one_state_rw(disable, show_state_disable, store_state_disable);
+>  define_one_state_ro(above, show_state_above);
+> @@ -325,6 +327,7 @@ static struct attribute *cpuidle_state_default_attrs[] = {
+>         &attr_residency.attr,
+>         &attr_power.attr,
+>         &attr_usage.attr,
+> +       &attr_failed.attr,
+>         &attr_time.attr,
+>         &attr_disable.attr,
+>         &attr_above.attr,
+> diff --git a/include/linux/cpuidle.h b/include/linux/cpuidle.h
+> index 75895e6363b8..911b99273eba 100644
+> --- a/include/linux/cpuidle.h
+> +++ b/include/linux/cpuidle.h
+> @@ -38,6 +38,7 @@ struct cpuidle_state_usage {
+>         u64                     time_ns;
+>         unsigned long long      above; /* Number of times it's been too deep */
+>         unsigned long long      below; /* Number of times it's been too shallow */
+> +       unsigned long long      failed; /* Number of times it failed to enter */
+>  #ifdef CONFIG_SUSPEND
+>         unsigned long long      s2idle_usage;
+>         unsigned long long      s2idle_time; /* in US */
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
