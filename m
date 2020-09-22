@@ -2,94 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B925A273AB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 08:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6460F273ACD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 08:24:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729268AbgIVGT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 02:19:27 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:22703 "EHLO m42-4.mailgun.net"
+        id S1726898AbgIVGYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 02:24:11 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:62601 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729390AbgIVGTZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 02:19:25 -0400
+        id S1727710AbgIVGYL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Sep 2020 02:24:11 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600755564; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=g9ROR4jyStHwIzhd7iym5OgkIupIqrI05z3ntpotmg0=; b=qUeEKAUMi6hEtyNq+fyFYN8NpJ613H5DFwTJGwTAKwh0+iJn/0bxLOH99BDpoFT5pAdV70Ej
- 9YOVFcnszkrXfPvGcO0OeaMNxhtjA2LwIgd0kLT2NsN69a738C2a4DsQE37L29gxrgj+8f7T
- /avhhOCOPwS8m1VjgXByjHynBQo=
-X-Mailgun-Sending-Ip: 69.72.42.4
+ s=smtp; t=1600755850; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=0qOdr4a6KdsBlo9u+BzInNEOsqWqmni1tOXn1Md3388=;
+ b=OscCIGRmb9QYh+UsT9szArSI4EPd/e+FtGafXkyqvaOLIFbPT26GIF2QzQhp/kG6r5UppQvD
+ +ugYr1QwNO/Jl7SBaJdg5O5iHtYpgj19497l49cutdpyK52TvHzZX+bhNRToPpaB+ulic6Gk
+ baQ8bYSXfvE98t1DVuYlnwm1MHo=
+X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f69975e4ab73023a7a056ac (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Sep 2020 06:19:10
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f69987d0566e2dcd7ec0c15 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Sep 2020 06:23:57
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B17C6C43395; Tue, 22 Sep 2020 06:19:10 +0000 (UTC)
+        id 51D1DC433C8; Tue, 22 Sep 2020 06:23:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 86BA9C4339C;
-        Tue, 22 Sep 2020 06:19:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 86BA9C4339C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF46FC433CA;
+        Tue, 22 Sep 2020 06:23:55 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 22 Sep 2020 11:53:55 +0530
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
         Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     iommu@lists.linux-foundation.org,
+        Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
         freedreno@lists.freedesktop.org,
         "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv5 6/6] iommu: arm-smmu-impl: Add a space before open parenthesis
-Date:   Tue, 22 Sep 2020 11:48:19 +0530
-Message-Id: <f00b12c75cc35d447161229085991322f1eafc41.1600754909.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1600754909.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1600754909.git.saiprakash.ranjan@codeaurora.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCHv4 1/6] iommu/io-pgtable-arm: Add support to use system
+ cache
+In-Reply-To: <20200921180318.GG3141@willie-the-truck>
+References: <cover.1599832685.git.saiprakash.ranjan@codeaurora.org>
+ <3b1beb6cf6a34a44b0ecff9ec5a2105b5ff91bd4.1599832685.git.saiprakash.ranjan@codeaurora.org>
+ <20200921180318.GG3141@willie-the-truck>
+Message-ID: <f3d9c7bc63eae6edfce5b3507413a51b@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the checkpatch warning for space required before the open
-parenthesis.
+Hi Will,
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 2020-09-21 23:33, Will Deacon wrote:
+> On Fri, Sep 11, 2020 at 07:57:18PM +0530, Sai Prakash Ranjan wrote:
+>> Add a quirk IO_PGTABLE_QUIRK_SYS_CACHE to override the
+>> attributes set in TCR for the page table walker when
+>> using system cache.
+> 
+> I wonder if the panfrost folks can reuse this for the issue discussed
+> over at:
+> 
+> https://lore.kernel.org/r/cover.1600213517.git.robin.murphy@arm.com
+> 
+> However, Sai, your email setup went wrong when you posted this so you
+> probably need to repost now that you have that fixed.
+> 
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-index ce78295cfa78..eda852111706 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-@@ -19,7 +19,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 
- static int arm_smmu_gr0_ns(int offset)
- {
--	switch(offset) {
-+	switch (offset) {
- 	case ARM_SMMU_GR0_sCR0:
- 	case ARM_SMMU_GR0_sACR:
- 	case ARM_SMMU_GR0_sGFSR:
+I have sent a v5 [1] now since I had to drop cleanup of blank lines
+as Robin said it was intentional and also had to rebase over new
+gpu changes since it moves pretty fast.
+
+[1] https://lore.kernel.org/patchwork/cover/1310000/
+
+Thanks,
+Sai
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
 of Code Aurora Forum, hosted by The Linux Foundation
-
