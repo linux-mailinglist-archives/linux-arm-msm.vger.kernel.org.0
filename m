@@ -2,77 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5488E274770
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 19:27:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB6D0274777
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 19:28:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726607AbgIVR1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 13:27:44 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:42134 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726563AbgIVR1o (ORCPT
+        id S1726573AbgIVR2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 13:28:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726563AbgIVR2f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 13:27:44 -0400
-Received: by mail-oi1-f193.google.com with SMTP id x14so21891337oic.9;
-        Tue, 22 Sep 2020 10:27:44 -0700 (PDT)
+        Tue, 22 Sep 2020 13:28:35 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D08C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Sep 2020 10:28:34 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id e23so24044755eja.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Sep 2020 10:28:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bxPPiY0DEKYyOmXiSi2gGDkfWu7wqu7yt5daKtdFtn0=;
+        b=qs7fMaVnPW1ImJnBB3gI/U/GuDzyA9UeCBbRG/SQJBhzzDXtCfq8Flm476Ybx+0/Gb
+         VHZK+/YCRdYHuOAleRLXlTy3EuJNXg+MuLFbKq2KfuvgI6N6PE5cP4RgrYtzFmIaguc5
+         o2JfqGLRIxqsu4uGi9q/xiwpkta+nDK+bSNsWIe6iryFsuDOQsygyNoTetb/aVVQ/SPG
+         zcJ+8rctADzcf6Qj6O3cdeQ5sfaKb1i3Wp8XNqTgWaBocKF0OhJsvIG7TPnNBqQh3Yn7
+         fgYEE2r2eQNqYsCenBjpICF2EMlWpcXCV1ob7HO519s868Y4l7dPT0hfPfOeHzRbvqvB
+         fFcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kU4bT0i25SjrMN84gdoOesX/M8UlZc1ewy1FNxT3Nmk=;
-        b=g9nVglvZ8n/aolXMm7z2bF+sKZ8HafTJ71t+Q414ucl4PK3Rip82HOzgnyCp7wPePi
-         tLSO46gAP0Ga8cE3EOK6e4Z0bs/wmEyV01hH3nOPfmLl2iG8kja6bpqAyMWAliTWPeR0
-         ju/qSS27SGXuE/qbTgKE0PN20j9QAuU0AsX7rwylaC0GlrVUvCoJgcBc6mZS1szxUGZ2
-         fpEYqxguWzET7x3F7QfSa599Ll6QqxOHqwkF+VnFJcbX/iEi1D6llN0o5d1guFIzD0dG
-         st1m9M6z3wg7QFQVxV5+knPS6wWUzLKl26zmV1MhBjhavtT7BSs6Z0c7xRODJUwC/l5V
-         z/OQ==
-X-Gm-Message-State: AOAM533i/qQb9asdVfFCXKqlsTRCnyKnhBS0dIbb9mnFU5o1M44GImTP
-        wk1R8qdvAYGVsyzkZPEzwYxGmXjCZe5b8TlMcLA=
-X-Google-Smtp-Source: ABdhPJyEOriize9tTcV0MGf37PfDaCQkXKcVAGzSX54sh0NyjzbCsHVnJJVY26WCA+OH4bwlbCodLmMMoJrGO6eTPWk=
-X-Received: by 2002:aca:df84:: with SMTP id w126mr3486140oig.103.1600795663663;
- Tue, 22 Sep 2020 10:27:43 -0700 (PDT)
+        bh=bxPPiY0DEKYyOmXiSi2gGDkfWu7wqu7yt5daKtdFtn0=;
+        b=t2NuzBD59frND0Lz5tEtyZRAYZm9IUynHCmVl9r8H6duNAGgitc094/twMxXpvTpgT
+         u2azSoZfKGUVReKoVZiTgSgS/Y6Jx8luBRPAX1/5HGJDNpuSXOQgghanQjF0VMeubvFy
+         p268+bt62GIM7i4SNomPmi/xF7pCRNSEIZihPTnbFyh1pROT31TXVgsTD1CIOTOsx5Ds
+         dianJQj0SZjlpAfX0k7rEnh6ekMkbdp6bS3SHumCuZIVj4H861Vim8Mm5mPCJe8+kq0o
+         UKYofqqrnZrGio4YGQEXFmHCzcehIkm6nlAUKCnlM33o5hGkMTkD+0soo0leEPRq/Fo6
+         CZOw==
+X-Gm-Message-State: AOAM531mTouDh5I6qlCHgZ6bzb2qRMqCYMYeDPsBUOsPc6wYIZaYe9wt
+        oBzzDPmfa4TxYZcyPW2E/RY6tijsaXWACDquDRNGdJSgBJz6Yw==
+X-Google-Smtp-Source: ABdhPJydpRKP4xzI/ibQnerT+ybdf4I3+adcz4A0MksLztnOsBaMozCDfPxNxM4vFJVNpn6Asf+a9tPMHahQcfWUiOk=
+X-Received: by 2002:a17:906:24d2:: with SMTP id f18mr6077255ejb.510.1600795713225;
+ Tue, 22 Sep 2020 10:28:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
- <CAJZ5v0hJJxxb+J5UtyZe2S_Tn7ARoGvjwDjw4dq601VJrriH9g@mail.gmail.com> <20200922161215.GD30658@codeaurora.org>
-In-Reply-To: <20200922161215.GD30658@codeaurora.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Tue, 22 Sep 2020 19:27:32 +0200
-Message-ID: <CAJZ5v0ipDRkPe6N9B6RzvHyCBobz8B9EoBfPh4DANrL_e86+Ww@mail.gmail.com>
-Subject: Re: [PATCH] cpuidle: governor: export cpuidle governor functions
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
+References: <1600762066-25849-1-git-send-email-loic.poulain@linaro.org> <c052dbd8dcc2bd625b300b6c21638e3b@codeaurora.org>
+In-Reply-To: <c052dbd8dcc2bd625b300b6c21638e3b@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 22 Sep 2020 19:33:47 +0200
+Message-ID: <CAMZdPi-b-P45Q1n5bTH45YmaqunXJwidU_gnTGL1rLXvyBBWcA@mail.gmail.com>
+Subject: Re: [PATCH] bus: mhi: Move irq check in controller registration
+To:     bbhatt@codeaurora.org
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lina,
+Hi Bhaumik,
 
-On Tue, Sep 22, 2020 at 6:12 PM Lina Iyer <ilina@codeaurora.org> wrote:
+On Tue, 22 Sep 2020 at 19:00, <bbhatt@codeaurora.org> wrote:
 >
-> Hi Rafael,
+> On 2020-09-22 01:07, Loic Poulain wrote:
+> > Move irq number check early in mhi_register_controller along
+> > with other mandatory parameters checking.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > ---
+> >  drivers/bus/mhi/core/init.c | 2 +-
+> >  drivers/bus/mhi/core/pm.c   | 3 ---
+> >  2 files changed, 1 insertion(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> > index ca08437..34f9ae3 100644
+> > --- a/drivers/bus/mhi/core/init.c
+> > +++ b/drivers/bus/mhi/core/init.c
+> > @@ -871,7 +871,7 @@ int mhi_register_controller(struct mhi_controller
+> > *mhi_cntrl,
+> >
+> >       if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+> >           !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
+> > -         !mhi_cntrl->write_reg)
+> > +         !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
+> >               return -EINVAL;
+> >
+> >       ret = parse_config(mhi_cntrl, config);
+> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > index 3de7b16..07efdbc 100644
+> > --- a/drivers/bus/mhi/core/pm.c
+> > +++ b/drivers/bus/mhi/core/pm.c
+> > @@ -918,9 +918,6 @@ int mhi_async_power_up(struct mhi_controller
+> > *mhi_cntrl)
+> >
+> >       dev_info(dev, "Requested to power ON\n");
+> >
+> > -     if (mhi_cntrl->nr_irqs < 1)
+> > -             return -EINVAL;
+> > -
+> >       /* Supply default wake routines if not provided by controller driver
+> > */
+> >       if (!mhi_cntrl->wake_get || !mhi_cntrl->wake_put ||
+> >           !mhi_cntrl->wake_toggle) {
+> Hi Loic,
 >
-> On Tue, Sep 22 2020 at 10:00 -0600, Rafael J. Wysocki wrote:
-> >Sorry for the delay.
-> >
-> >On Wed, Sep 9, 2020 at 12:15 AM Lina Iyer <ilina@codeaurora.org> wrote:
-> >>
-> >> Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
-> >> capability of registering cpuidle governors, which was unused at that
-> >> time. By exporting the symbol, let's allow platform specific modules to
-> >> register cpuidle governors and use cpuidle_governor_latency_req() to get
-> >> the QoS for the CPU.
-> >
-> >Which platform-specific modules may want to do that and why?
-> >
-> We are planning a custom cpuidle governor for QCOM SoCs. With Android,
-> the idea is to make them loadable modules so they can be in a separate
-> partition.
+> Can you please add a Suggested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> tag with my name?
+>
+> Also, I made this patch myself too but you can submit it. It'd be nice
+> to add some more
+> details in the commit text.
+>
+> Mine goes like this:
+>
+> bus: mhi: core: Check for IRQ availability during registration
+>
+>      Current design allows a controller to register with MHI successfully
+>      without the need to have any IRQs available for use. If no IRQs are
+>      available, power up requests to MHI can fail after a successful
+>      registration with MHI. Improve the design by checking for the number
+>      of IRQs available sooner within the mhi_regsiter_controller() API as
+>      it is required to be specified by the controller.
 
-Well, the $subject patch is not applicable without a mainline user
-requiring this, so it needs to be posted along with that user.
+Then I would prefer you to submit yours and we discard mine, don't
+want to be authored for your work.
 
-Cheers!
+Thanks,
+Loic
