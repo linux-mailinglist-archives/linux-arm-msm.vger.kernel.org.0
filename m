@@ -2,87 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EA8C274123
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 13:46:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 148E52741CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Sep 2020 14:09:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726621AbgIVLpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Sep 2020 07:45:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48124 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726661AbgIVLoN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Sep 2020 07:44:13 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 22C62214F1;
-        Tue, 22 Sep 2020 11:44:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600775052;
-        bh=3OhywcltP9VHm6MmXFAi4kj4+8+FaFh5Jl0cjhgWevI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=R6seZPA/KYfch3970nAndvescUMM14RveYUo8rkB69y4KfOAWHalRvlDVbbLGz0xD
-         xHFTtQR7oplTb/Vvc2IisPURG10cscMznhU8yXAZ0N/mf+kVyArQ5LTW/Ii7maQv72
-         JABAfDNdUV2pBtjZaHU/tWkZ9jouuf240imOrPZo=
-Date:   Tue, 22 Sep 2020 12:43:19 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Subject: Re: [PATCH v6 3/5] Asoc:qcom:lpass-cpu:Update dts property read API
-Message-ID: <20200922114319.GR4792@sirena.org.uk>
-References: <1600409084-29093-1-git-send-email-srivasam@codeaurora.org>
- <1600409084-29093-4-git-send-email-srivasam@codeaurora.org>
- <040290a8-26a3-ab9c-04dc-beb23ee827e8@linaro.org>
- <20200922110825.GN4792@sirena.org.uk>
- <3866ce69-b7d0-5eb5-e0aa-874d150cd47a@linaro.org>
+        id S1726603AbgIVMJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Sep 2020 08:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44420 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726531AbgIVMJQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Sep 2020 08:09:16 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B449DC061755;
+        Tue, 22 Sep 2020 05:09:15 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id r7so22451405ejs.11;
+        Tue, 22 Sep 2020 05:09:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=steyxlT4LVPBsfe8IJH2NOc1f2Mr0MYY3HiC50X/c/0=;
+        b=PqcBVJ7UteV28rSmL9CuvhOhID/Uowd4Vi5TEe7GA2bzJUzqbTmmZm7SWjiPB2GWLl
+         Zl8QrP2PohhWHRpBtKC0fYkFrUo2P40E0n0SjX/zq5YKu7gSpNmgKTPEGxMy5yEeu8dB
+         m1C4jOnOFn9Kdc1XxkKDBXNa+VCReqLMFADIZjD/gyAGo/I+3Ees8nlVC+00UJ+9KGi7
+         6eVmzJV6g5GaH2rmaFYxhC56lyJt//9Ct3th439Vw0eY6AIwMrEVnCIHORO9e6pRPAvF
+         2m6xbPbL8r35BI85U4lbUH9Z1LGOsHYHeWBQ/FOi1FopTp+Nlj8hqPSnDaAQHPLKN6SO
+         HZBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=steyxlT4LVPBsfe8IJH2NOc1f2Mr0MYY3HiC50X/c/0=;
+        b=fTkiT/GVD5Z311TMhJZp3EbFLYyTuRlExLNsjRTQ0uh016p+ftRHcuUC04v0vKuV7r
+         f9SvRMnBf00qMRuG0X6sS/06yaVUAtnZxtJIo6oQJi8jGf02fRUCCtx+VJOH0LbBVi5l
+         mi+VBF7m4WLrSvOMJcjLB+2o6K310igUoBnnnU871k2pU7ohaTjNcl5Oqifx3y+NJCyv
+         qNxlcchFwiPvQqpg05xOCj9SfrxiVYXye+FJkz2clYcnl9RcEGKC4GB7jOXYOLUGYoXJ
+         23G2EONnPWchq1e4O60FEnwhtktXHY91acnAI4abrvDF5UXOJd/4/cJV1k0Nss7S2ivx
+         aPKQ==
+X-Gm-Message-State: AOAM533cDZq3TZsOfGbpE/fgEuubLV4+5bj8ZBSlpBoTAaEnJHOOt9t9
+        +xkZ3zkjROwmoAkaE6V9A4Q=
+X-Google-Smtp-Source: ABdhPJzlCM3Uyjl7gfhzf06ug/kOBwEhcs+oi+eQu3ZTZlZOD1QO+qA+foqWGCToItKWcrF5S8Bsgg==
+X-Received: by 2002:a17:906:474f:: with SMTP id j15mr4786337ejs.468.1600776554474;
+        Tue, 22 Sep 2020 05:09:14 -0700 (PDT)
+Received: from localhost.localdomain (abab42.neoplus.adsl.tpnet.pl. [83.6.165.42])
+        by smtp.googlemail.com with ESMTPSA id c25sm3575013ejd.88.2020.09.22.05.09.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2020 05:09:13 -0700 (PDT)
+From:   Konrad Dybcio <konradybcio@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: gcc-sdm660: Fix wrong parent_map
+Date:   Tue, 22 Sep 2020 14:09:09 +0200
+Message-Id: <20200922120909.97203-1-konradybcio@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="TMgB3/Ch1aWgZB1L"
-Content-Disposition: inline
-In-Reply-To: <3866ce69-b7d0-5eb5-e0aa-874d150cd47a@linaro.org>
-X-Cookie: Love thy neighbor, tune thy piano.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This was likely overlooked while porting the driver upstream.
 
---TMgB3/Ch1aWgZB1L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Reported-by: Pavel Dubrova <pashadubrova@gmail.com>
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+---
+ drivers/clk/qcom/gcc-sdm660.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Tue, Sep 22, 2020 at 12:22:38PM +0100, Srinivas Kandagatla wrote:
-> On 22/09/2020 12:08, Mark Brown wrote:
+diff --git a/drivers/clk/qcom/gcc-sdm660.c b/drivers/clk/qcom/gcc-sdm660.c
+index 3cffadc77bce..1a5e98e5c965 100644
+--- a/drivers/clk/qcom/gcc-sdm660.c
++++ b/drivers/clk/qcom/gcc-sdm660.c
+@@ -666,7 +666,7 @@ static struct clk_rcg2 hmss_rbcpr_clk_src = {
+ 	.cmd_rcgr = 0x48044,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
+-	.parent_map = gcc_parent_map_xo_gpll0_gpll0_early_div,
++	.parent_map = gcc_parent_map_xo_gpll0,
+ 	.freq_tbl = ftbl_hmss_rbcpr_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "hmss_rbcpr_clk_src",
+-- 
+2.28.0
 
-> I agree with you on this and I see the point, but Rob had a very different
-> opinion about the reg-names bindings to start with.
-
-> This topic been discussed in the past with Rob in many instances ex: https://lore.kernel.org/linux-devicetree/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
-
-> According to him, reg-names seems to be highly discouraged as it came along
-> for the OMAP folks and was related to the hwmods stuff.
-
-That's very much specific to reg, it's not true of the use of names in
-general - Rob mentions cases like interrupts for example.
-
---TMgB3/Ch1aWgZB1L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl9p41YACgkQJNaLcl1U
-h9AuWQf/ca9nQ2PmzHcNzlz7TsFIO+ht142QjTqAQlUdhHDiYcPpG9jqzYi81epi
-FLGHcE+NK0CCvc7fgnWsPv776/Fbj2+19GtH1bbQxARF2Oc9fkBvzP7x9lV92iUh
-KZ7aX5RAgvA+87nDF2jmOgfcJbeTnMw3ToKLbvlEqS4k+zsXhSWFuGbgCogexiSg
-TGI8So/Mp296hyFsgLFYIyF4pc2FPP9gulIwzyk+tPanIXZIXMgrWJvGVvq/BXp+
-32W1NMxm0HX5mY4vdAqPid7EiP+7wZCp/YtxmoOiY9XhqK38c5YZnqQV8rv+azpO
-ffsGe76ABBy85FJ4OdxsXt+7iw3cZg==
-=oQkO
------END PGP SIGNATURE-----
-
---TMgB3/Ch1aWgZB1L--
