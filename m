@@ -2,237 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EA7B275A7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 16:42:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16598275AB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 16:51:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbgIWOmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 10:42:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726156AbgIWOmQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 10:42:16 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58214C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 07:42:16 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id 60so19184376otw.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 07:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=z95oVIBTfkEbl+uyir3w0ZqJF+KtX0tYet5L68ylfls=;
-        b=jN3IOG05bDUzWPEZI2JtQSs5EhccGAKx+0OTFGga22R+/qSCLm7fz055FWzDM/kIBI
-         D1HvGfm2xYgOwHSfLI+4CTZRh35oijmrknboOpEN5P8deS3cA29+/BCGdFdVEVwLIuM1
-         IcnDqt42s88BbbRLeO7ASmMK/Rp4CFcP0goVLfHVzRDSSRu41DW5iVVtVxuPss4ZJsLt
-         v2zmETmt+6xm4vdqUhaFIYQH7CVB2/Y98mw+poM1gHW+u8GPYnThpPW97Sn90TEmErq9
-         v6Q8/AGvwoCcQ1qm4dH0pkrIGrN5coTafx2Al4S3RhzpNTbL4bTsBs1zazVkkp5yW3Ac
-         0Rbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=z95oVIBTfkEbl+uyir3w0ZqJF+KtX0tYet5L68ylfls=;
-        b=MfQgVr8rzw+JDCx+qyxUZCEj5bqvzvLUtfz31AdGKLr/B2rms1qx7M0UoNXs3ae1Oa
-         emN1AHNyO0tZaCVu/albyR7dIb41wZvJ4OV55kFQqvzoJUD3nppv2Kp7pnxz0Xz1uT6L
-         IWWGUcGln89iRi7Y6nBbCWqpwLW6oic088C1UGIlsmKBIBQTTAZo3oWRuh7LQvHvKK6Z
-         uOwRV+x34wIjARdw/G9BZjjtte668iiGFRL36NVgXzpxbmgIxYppza7iVQSvIZgUvoC+
-         PWXQHqppEbWH/OvoPtFP4crsTJs1G64yHm/9hXpVMZhslmu/d3SMrpA1K8dhV9PyHCqH
-         kq7Q==
-X-Gm-Message-State: AOAM531v3aCyMMdKj6YBlVZM5xgHHWJQupPzaT28twB5nFhp1mdZ1/WD
-        R3wRPhAdpovMq1PTiNmDLy7+zw==
-X-Google-Smtp-Source: ABdhPJw0JPdlhxUtcDmd01TXvVVR8Olrf8Kh/0esOGyHXPL0W46rzAC83xIx+falqXeT8astKcMsHA==
-X-Received: by 2002:a9d:2641:: with SMTP id a59mr6326903otb.217.1600872135602;
-        Wed, 23 Sep 2020 07:42:15 -0700 (PDT)
-Received: from yoga (99-135-181-32.lightspeed.austtx.sbcglobal.net. [99.135.181.32])
-        by smtp.gmail.com with ESMTPSA id p20sm46378oth.48.2020.09.23.07.42.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2020 07:42:14 -0700 (PDT)
-Date:   Wed, 23 Sep 2020 09:42:12 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [RFC 2/4] clk: qcom: gdsc: enable external switchable power
- domain
-Message-ID: <20200923144212.GB40811@yoga>
-References: <20200911130950.578483-1-dmitry.baryshkov@linaro.org>
- <20200911130950.578483-3-dmitry.baryshkov@linaro.org>
+        id S1726595AbgIWOu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 10:50:58 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:32659 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726839AbgIWOuy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 10:50:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600872653; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=ESkeylNUl1FVxKx50DfBnz4zr7RE1eH47m6PTA1AtBw=; b=wV4ej7/1jHHlN7eJ/LV+3amoKbauE5tQaSYQgafnW8xFp96WG8PiNSS7UJhYjK86SOz0ot9L
+ rBW83nqtstgSlchrsMhTRiYeYdERuAQLDtx5nLyevh6c5Wjb2GbfdZ32tW5bkfuU5goEkbq6
+ YQ2yYyRni/4ttJi3fLyEriJFEdE=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f6b60ccd8a57df5abcf0c23 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Sep 2020 14:50:52
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9283AC43382; Wed, 23 Sep 2020 14:50:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 95E42C433CA;
+        Wed, 23 Sep 2020 14:50:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 95E42C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Wed, 23 Sep 2020 08:50:47 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, jonathan@marek.ca, robdclark@gmail.com,
+        dianders@chromium.org
+Subject: Re: [PATCH v2 1/2] drm/msm: Fix premature purging of BO
+Message-ID: <20200923145047.GB31425@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, jonathan@marek.ca, robdclark@gmail.com,
+        dianders@chromium.org
+References: <1600786527-7343-1-git-send-email-akhilpo@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200911130950.578483-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <1600786527-7343-1-git-send-email-akhilpo@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 11 Sep 08:09 CDT 2020, Dmitry Baryshkov wrote:
-
-> Some GDSCs (SM8250's MDSS_GDSC for example) need switchable power domain
-> to be on to be able to access hardware registers. Use dev_pm/opp to
-                           ^
-What you describe here ----+ sounds like the GDSC controller is part of
-the power-domain specified and hence needs to be enabled in order to
-control the GDSC.
-
-But in contrast what the patch implements is a mechanism where the
-GDSC power-domain is a child of some other power-domain. So the commit
-message needs to better reflect what's implemented.
-
-Then looking at the DT representation I think it says that the
-controller sits in the specified power-domain, rather than the exposed
-power-domain...
-
-> enable corresponding power domain.
+On Tue, Sep 22, 2020 at 08:25:26PM +0530, Akhil P Oommen wrote:
+> In the case where we have a back-to-back submission that shares the same
+> BO, this BO will be prematurely moved to inactive_list while retiring the
+> first submit. But it will be still part of the second submit which is
+> being processed by the GPU. Now, if the shrinker happens to be triggered at
+> this point, it will result in a premature purging of this BO.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> To fix this, we need to refcount BO while doing submit and retire. Then,
+> it should be moved to inactive list when this refcount becomes 0.
+> 
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
 > ---
->  drivers/clk/qcom/gdsc.c | 56 ++++++++++++++++++++++++++++++++++++++---
->  drivers/clk/qcom/gdsc.h |  5 ++++
->  2 files changed, 57 insertions(+), 4 deletions(-)
+> Changes in v2:
+> 	1. Keep Active List around
+> 	2. Put back the deleted WARN_ON
 > 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index bfc4ac02f9ea..a522e062a79a 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -11,6 +11,7 @@
->  #include <linux/kernel.h>
->  #include <linux/ktime.h>
->  #include <linux/pm_domain.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/regmap.h>
->  #include <linux/regulator/consumer.h>
->  #include <linux/reset-controller.h>
-> @@ -110,13 +111,31 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
->  	return -ETIMEDOUT;
+>  drivers/gpu/drm/msm/msm_drv.h |  5 ++---
+>  drivers/gpu/drm/msm/msm_gem.c | 32 ++++++++++++++++----------------
+>  drivers/gpu/drm/msm/msm_gem.h |  4 +++-
+>  drivers/gpu/drm/msm/msm_gpu.c | 11 +++++++----
+>  4 files changed, 28 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 3193274..28e3c8d 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -309,9 +309,8 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj);
+>  int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv);
+>  int msm_gem_sync_object(struct drm_gem_object *obj,
+>  		struct msm_fence_context *fctx, bool exclusive);
+> -void msm_gem_move_to_active(struct drm_gem_object *obj,
+> -		struct msm_gpu *gpu, bool exclusive, struct dma_fence *fence);
+> -void msm_gem_move_to_inactive(struct drm_gem_object *obj);
+> +void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu);
+> +void msm_gem_active_put(struct drm_gem_object *obj);
+>  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
+>  int msm_gem_cpu_fini(struct drm_gem_object *obj);
+>  void msm_gem_free_object(struct drm_gem_object *obj);
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index 76a6c52..14e14ca 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -743,31 +743,31 @@ int msm_gem_sync_object(struct drm_gem_object *obj,
+>  	return 0;
 >  }
 >  
-> +int gdsc_toggle_on(struct gdsc *sc)
-
-This should be "static" and I think you should include "supply" in the
-name to denote that it doesn't turn on the gdsc, but rather its supply.
-
-> +{
-> +	if (sc->rsupply)
-> +		return regulator_enable(sc->rsupply);
-> +	if (sc->pd_dev)
-> +		return dev_pm_genpd_set_performance_state(sc->pd_dev, sc->pd_opp);
-> +	return 0;
-> +}
-> +
-> +int gdsc_toggle_off(struct gdsc *sc)
-> +{
-> +	if (sc->pd_dev)
-> +		return dev_pm_genpd_set_performance_state(sc->pd_dev, 0);
-> +	if (sc->rsupply)
-> +		return regulator_disable(sc->rsupply);
-> +	return 0;
-> +}
-> +
->  static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+> -void msm_gem_move_to_active(struct drm_gem_object *obj,
+> -		struct msm_gpu *gpu, bool exclusive, struct dma_fence *fence)
+> +void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
 >  {
->  	int ret;
->  	u32 val = (status == GDSC_ON) ? 0 : SW_COLLAPSE_MASK;
->  
-> -	if (status == GDSC_ON && sc->rsupply) {
-> -		ret = regulator_enable(sc->rsupply);
-> +	if (status == GDSC_ON) {
-> +		ret = gdsc_toggle_on(sc);
->  		if (ret < 0)
->  			return ret;
->  	}
-> @@ -153,8 +172,8 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->  	ret = gdsc_poll_status(sc, status);
->  	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
->  
-> -	if (!ret && status == GDSC_OFF && sc->rsupply) {
-> -		ret = regulator_disable(sc->rsupply);
-> +	if (!ret && status == GDSC_OFF) {
-> +		ret = gdsc_toggle_off(sc);
->  		if (ret < 0)
->  			return ret;
->  	}
-> @@ -407,6 +426,27 @@ int gdsc_register(struct gdsc_desc *desc,
->  			return PTR_ERR(scs[i]->rsupply);
->  	}
->  
-> +	for (i = 0; i < num; i++) {
-> +		if (!scs[i] || !scs[i]->domain)
-> +			continue;
+>  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> +	WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
+>  	WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
+> -	msm_obj->gpu = gpu;
+> -	if (exclusive)
+> -		dma_resv_add_excl_fence(obj->resv, fence);
+> -	else
+> -		dma_resv_add_shared_fence(obj->resv, fence);
+> -	list_del_init(&msm_obj->mm_list);
+> -	list_add_tail(&msm_obj->mm_list, &gpu->active_list);
 > +
-> +		scs[i]->pd_opp = of_get_required_opp_performance_state(dev->of_node, scs[i]->perf_idx);
-> +		if (scs[i]->pd_opp < 0)
-> +			return scs[i]->pd_opp;
-> +
-> +		scs[i]->pd_dev = dev_pm_domain_attach_by_name(dev, scs[i]->domain);
-> +		if (IS_ERR(scs[i]->pd_dev)) {
-> +			ret = PTR_ERR(scs[i]->pd_dev);
-> +			/* Single domain has been already attached, so reuse dev */
-> +			if (ret == -EEXIST) {
-> +				scs[i]->pd_dev = dev;
-> +			} else {
-> +				scs[i]->pd_dev = NULL;
-> +				goto pm_detach;
-> +			}
-> +		}
+> +	if (!atomic_fetch_inc(&msm_obj->active_count)) {
+> +		msm_obj->gpu = gpu;
+> +		list_del_init(&msm_obj->mm_list);
+> +		list_add_tail(&msm_obj->mm_list, &gpu->active_list);
 > +	}
-> +
->  	data->num_domains = num;
->  	for (i = 0; i < num; i++) {
->  		if (!scs[i])
-> @@ -428,6 +468,12 @@ int gdsc_register(struct gdsc_desc *desc,
->  	}
->  
->  	return of_genpd_add_provider_onecell(dev->of_node, data);
-> +
-> +pm_detach:
-> +	for (i = 0; i < num; i++)
-> +		if (scs[i]->pd_dev)
-> +			dev_pm_domain_detach(scs[i]->pd_dev, false);
 
-I think that if dev_pm_domain_attach_by_name() returned -EEXIST you
-will attempt to detach the main device's domain here.
+I'm not sure if all the renaming and reorganization are really needed here -
+this is the meat of the change and it would have fit in reasonably well with the
+existing function design.
 
-> +	return ret;
 >  }
 >  
->  void gdsc_unregister(struct gdsc_desc *desc)
-> @@ -443,6 +489,8 @@ void gdsc_unregister(struct gdsc_desc *desc)
->  			continue;
->  		if (scs[i]->parent)
->  			pm_genpd_remove_subdomain(scs[i]->parent, &scs[i]->pd);
-> +		if (scs[i]->pd_dev && scs[i]->pd_dev != dev)
-> +			dev_pm_domain_detach(scs[i]->pd_dev, true);
-
-Ditto
-
-Regards,
-Bjorn
-
->  	}
->  	of_genpd_del_provider(dev->of_node);
->  }
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index bd537438c793..d58575f8f25f 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -57,6 +57,11 @@ struct gdsc {
+> -void msm_gem_move_to_inactive(struct drm_gem_object *obj)
+> +void msm_gem_active_put(struct drm_gem_object *obj)
+>  {
+> -	struct drm_device *dev = obj->dev;
+> -	struct msm_drm_private *priv = dev->dev_private;
+>  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> +	struct msm_drm_private *priv = obj->dev->dev_private;
 >  
->  	const char 			*supply;
->  	struct regulator		*rsupply;
+> -	WARN_ON(!mutex_is_locked(&dev->struct_mutex));
+> +	WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
+>  
+> -	msm_obj->gpu = NULL;
+> -	list_del_init(&msm_obj->mm_list);
+> -	list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
+> +	if (!atomic_dec_return(&msm_obj->active_count)) {
+> +		msm_obj->gpu = NULL;
+> +		list_del_init(&msm_obj->mm_list);
+> +		list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
+> +	}
+
+Same.
+
+Jordan
+>  }
+>  
+>  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout)
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index 7b1c7a5..a1bf741 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -88,12 +88,14 @@ struct msm_gem_object {
+>  	struct mutex lock; /* Protects resources associated with bo */
+>  
+>  	char name[32]; /* Identifier to print for the debugfs files */
 > +
-> +	const char			*domain;
-> +	unsigned int			perf_idx;
-> +	struct device			*pd_dev;
-> +	int				pd_opp;
+> +	atomic_t active_count;
 >  };
+>  #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
 >  
->  struct gdsc_desc {
+>  static inline bool is_active(struct msm_gem_object *msm_obj)
+>  {
+> -	return msm_obj->gpu != NULL;
+> +	return atomic_read(&msm_obj->active_count);
+>  }
+>  
+>  static inline bool is_purgeable(struct msm_gem_object *msm_obj)
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 29c8d73c..55d1648 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -698,8 +698,8 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+>  
+>  	for (i = 0; i < submit->nr_bos; i++) {
+>  		struct msm_gem_object *msm_obj = submit->bos[i].obj;
+> -		/* move to inactive: */
+> -		msm_gem_move_to_inactive(&msm_obj->base);
+> +
+> +		msm_gem_active_put(&msm_obj->base);
+>  		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
+>  		drm_gem_object_put_locked(&msm_obj->base);
+>  	}
+> @@ -774,6 +774,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>  
+>  	for (i = 0; i < submit->nr_bos; i++) {
+>  		struct msm_gem_object *msm_obj = submit->bos[i].obj;
+> +		struct drm_gem_object *drm_obj = &msm_obj->base;
+>  		uint64_t iova;
+>  
+>  		/* can't happen yet.. but when we add 2d support we'll have
+> @@ -786,9 +787,11 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>  		msm_gem_get_and_pin_iova(&msm_obj->base, submit->aspace, &iova);
+>  
+>  		if (submit->bos[i].flags & MSM_SUBMIT_BO_WRITE)
+> -			msm_gem_move_to_active(&msm_obj->base, gpu, true, submit->fence);
+> +			dma_resv_add_excl_fence(drm_obj->resv, submit->fence);
+>  		else if (submit->bos[i].flags & MSM_SUBMIT_BO_READ)
+> -			msm_gem_move_to_active(&msm_obj->base, gpu, false, submit->fence);
+> +			dma_resv_add_shared_fence(drm_obj->resv, submit->fence);
+> +
+> +		msm_gem_active_get(drm_obj, gpu);
+>  	}
+>  
+>  	gpu->funcs->submit(gpu, submit);
 > -- 
-> 2.28.0
+> 2.7.4
 > 
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
