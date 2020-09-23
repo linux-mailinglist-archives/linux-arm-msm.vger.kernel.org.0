@@ -2,294 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5EC9275402
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 11:07:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20842275585
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 12:22:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726722AbgIWJH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 05:07:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40374 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726244AbgIWJH1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 05:07:27 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7104DC0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 02:07:27 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id r24so16586029ljm.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 02:07:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oxfqN+/oFq6f8zrQC/M5ig8ijRiZLXyefj4fwEV8+DY=;
-        b=kAJE3GOD2vJpQ7aXFpD7xZpacWnJ+tWlt4k6eb4f5ao88/RQvx9wqvk/ebR6ZqhTTn
-         5Py6T+kevtOj+S8vA4PTA5eygM0sOHC1/FP9KdZVwlu0Oq3/44qodvghr+43QoHnh8x8
-         5CeWVD2IjSUHbIHbrAQ7kGd2QIrb8U079ygRjFkfN/Ywk/8Jrge8p9BXYzrluAY8UJ2n
-         nvM7Hpy0u4TFvdCA452stR9Ka/o059qUfVnVUvuyJ/7rNkwXW6Yvm09W9hWHlSib5sse
-         6fm/Y3mqsAQ/qtmkhTdlqildrALk8/aejkg8NeldoKzmgWO0UY41ZxhVXRjCrwHJdb12
-         YIRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oxfqN+/oFq6f8zrQC/M5ig8ijRiZLXyefj4fwEV8+DY=;
-        b=GQ5In6MNsK6AewICBLGbSau893KrN1xqthM6fjd1oSs0CTf8CRejUNrgrIeAkAalTQ
-         UdRmFFRTYEOqmINRsgkKHdDz/+mHVyQHSlkeQ+ysOPnXqNtwprUMSUFmvpYYwH8LUmq8
-         KAaNM1+hbCN2e8xOUvpLlEG6ZGZn8B9ABHarQRS5A+i6epxuuS46nVe77rZHDn6W9OeJ
-         OrkzvsHDVNPAzSzo4D7TtHj3c957ecTiLq74RVsSKdbXfgEHkf2oWxufmzR0Jrn7Sp5i
-         gl0GMqoFvr1GpDxTZWPdC91dYNhY4tp7xiT96R+Cy7l2MiITtxiX6IoZpyTtIkhtN7+D
-         O9Jg==
-X-Gm-Message-State: AOAM530gWvQzxCUlx1qQC7cNHK5KpUVjKuJA7nd/1uQo6GPxeU0m6x/G
-        L/sA3K9GvCDJeKVrmoRZxClSfw==
-X-Google-Smtp-Source: ABdhPJyoCA3uPuZCxSHL6yFBRN8e+6DemT9CbJsGA4nrCdkQQLUMdOxpTNjah6CWsGURB+sl+Zwn0g==
-X-Received: by 2002:a2e:8850:: with SMTP id z16mr2761724ljj.184.1600852045836;
-        Wed, 23 Sep 2020 02:07:25 -0700 (PDT)
-Received: from [192.168.1.211] ([188.162.64.186])
-        by smtp.gmail.com with ESMTPSA id o8sm4572927lfa.44.2020.09.23.02.07.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Sep 2020 02:07:25 -0700 (PDT)
-Subject: Re: [PATCH v5 1/9] dt-bindings: thermal: qcom: add adc-thermal
- monitor bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-References: <20200914154809.192174-1-dmitry.baryshkov@linaro.org>
- <20200914154809.192174-2-dmitry.baryshkov@linaro.org>
- <20200922234025.GA3476652@bogus>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <55d3f181-b9e6-4963-9d0c-cefee875058c@linaro.org>
-Date:   Wed, 23 Sep 2020 12:07:22 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        id S1726574AbgIWKWF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 06:22:05 -0400
+Received: from mx2.suse.de ([195.135.220.15]:56714 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726130AbgIWKWE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 06:22:04 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id 67929B009;
+        Wed, 23 Sep 2020 10:22:39 +0000 (UTC)
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     alexander.deucher@amd.com, christian.koenig@amd.com,
+        airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, laurentiu.palcu@oss.nxp.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v3 00/22] Convert all remaining drivers to GEM object functions
+Date:   Wed, 23 Sep 2020 12:21:37 +0200
+Message-Id: <20200923102159.24084-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20200922234025.GA3476652@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/09/2020 02:40, Rob Herring wrote:
-> On Mon, Sep 14, 2020 at 06:48:01PM +0300, Dmitry Baryshkov wrote:
->> Add bindings for thermal monitor, part of Qualcomm PMIC5 chips. It is a
->> close counterpart of VADC part of those PMICs.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> ---
->>   .../bindings/thermal/qcom-spmi-adc-tm5.yaml   | 151 ++++++++++++++++++
->>   1 file changed, 151 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
->> new file mode 100644
->> index 000000000000..432a65839b89
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
->> @@ -0,0 +1,151 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/thermal/qcom-spmi-adc-tm5.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm's SPMI PMIC ADC Thermal Monitoring
->> +maintainers:
->> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,spmi-adc-tm5
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  "#thermal-sensor-cells":
->> +    const: 1
->> +    description:
->> +      Number of cells required to uniquely identify the thermal sensors. Since
->> +      we have multiple sensors this is set to 1
->> +
->> +  "#address-cells":
->> +    const: 1
->> +
->> +  "#size-cells":
->> +    const: 0
->> +
->> +  qcom,avg-samples:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description: Number of samples to be used for measurement.
->> +    enum:
->> +      - 1
->> +      - 2
->> +      - 4
->> +      - 8
->> +      - 16
->> +    default: 1
->> +
->> +  qcom,decimation:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description: This parameter is used to decrease ADC sampling rate.
->> +            Quicker measurements can be made by reducing decimation ratio.
->> +    enum:
->> +      - 250
->> +      - 420
->> +      - 840
->> +    default: 840
->> +
->> +patternProperties:
->> +  "^([-a-z0-9]*)@[0-9]+$":
-> 
-> Less than 10 as unit-addresses are hex?
+The GEM and PRIME related callbacks in struct drm_driver are deprecated in
+favor of GEM object functions in struct drm_gem_object_funcs. This patchset
+converts the remaining drivers to object functions and removes most of the
+obsolete interfaces.
 
-8 channels at max currently. I'll fix to use hex though.
+Version 3 of this patchset mostly fixes drm_gem_prime_handle_to_fd and
+updates i.MX's dcss driver. The driver was missing from earlier versions
+and still needs review.
 
-> 
->> +    type: object
->> +    description:
->> +      Represent one thermal sensor.
->> +
->> +    properties:
->> +      reg:
->> +        description: Specify the sensor channel.
->> +        maxItems: 1
-> 
-> You need a range of values here.
+Patches #1 to #6, #8 to #17 and #19 to #20 convert DRM drivers to GEM object
+functions, one by one. Each patch moves existing callbacks from struct
+drm_driver to an instance of struct drm_gem_object_funcs, and sets these
+funcs when the GEM object is initialized. The expection is .gem_prime_mmap.
+There are different ways of how drivers implement the callback, and moving
+it to GEM object functions requires a closer review for each.
 
-ok.
+Patch #18 fixes virtgpu to use GEM object functions where possible. The
+driver recently introduced a function for one of the deprecated callbacks.
 
-> 
->> +
->> +      io-channels:
->> +        description:
->> +          From common IIO binding. Used to pipe PMIC ADC channel to thermal monitor
->> +
->> +      qcom,adc-channel:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: Corresponding ADC channel ID.
-> 
-> Why is this not a cell in io-channels?
+Patches #7 and #20 convert i.MX's dcss and xlnx to CMA helper macros. There's
+no apparent reason why the drivers do the GEM setup on their's own. Using CMA
+helper macros adds GEM object functions implicitly.
 
+With most of the GEM and PRIME moved to GEM object functions, related code
+in struct drm_driver and in the DRM core/helpers is being removed by patch
+#22.
 
-Do you mean parsing a cell from io-channels rather than specifying it 
-again? Sounds like a good idea.
+Further testing is welcome. I tested the drivers for which I have HW
+available. These are gma500, i915, nouveau, radeon and vc4. The console,
+Weston and Xorg apparently work with the patches applied.
 
-> 
->> +
->> +      qcom,ratiometric:
->> +        $ref: /schemas/types.yaml#/definitions/flag
->> +        description:
->> +          Channel calibration type.
->> +          If this property is specified VADC will use the VDD reference
->> +          (1.875V) and GND for channel calibration. If property is not found,
->> +          channel will be calibrated with 0V and 1.25V reference channels,
->> +          also known as absolute calibration.
->> +
->> +      qcom,hw-settle-time:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: Time between AMUX getting configured and the ADC starting conversion.
-> 
-> Time values should have a unit suffix. Seems like a commmon ADC
-> property...
+v3:
+	* restore default call to drm_gem_prime_export() in
+	  drm_gem_prime_handle_to_fd()
+	* return -ENOSYS if get_sg_table is not set
+	* drop all checks for obj->funcs
+	* clean up TODO list and documentation
+v2:
+	* moved code in amdgpu and radeon
+	* made several functions static in various drivers
+	* updated TODO-list item
+	* fix virtgpu
 
-Could you please be more specific here? Would you like for me to just 
-specify the unit in the description?
+Thomas Zimmermann (22):
+  drm/amdgpu: Introduce GEM object functions
+  drm/armada: Introduce GEM object functions
+  drm/etnaviv: Introduce GEM object functions
+  drm/exynos: Introduce GEM object functions
+  drm/gma500: Introduce GEM object functions
+  drm/i915: Introduce GEM object functions
+  drm/imx/dcss: Initialize DRM driver instance with CMA helper macro
+  drm/mediatek: Introduce GEM object functions
+  drm/msm: Introduce GEM object funcs
+  drm/nouveau: Introduce GEM object functions
+  drm/omapdrm: Introduce GEM object functions
+  drm/pl111: Introduce GEM object functions
+  drm/radeon: Introduce GEM object functions
+  drm/rockchip: Convert to drm_gem_object_funcs
+  drm/tegra: Introduce GEM object functions
+  drm/vc4: Introduce GEM object functions
+  drm/vgem: Introduce GEM object functions
+  drm/virtgpu: Set PRIME export function in struct drm_gem_object_funcs
+  drm/vkms: Introduce GEM object functions
+  drm/xen: Introduce GEM object functions
+  drm/xlnx: Initialize DRM driver instance with CMA helper macro
+  drm: Remove obsolete GEM and PRIME callbacks from struct drm_driver
 
-> 
->> +
->> +      qcom,pre-scaling:
->> +        $ref: /schemas/types.yaml#/definitions/uint32-array
->> +        description: Used for scaling the channel input signal before the
->> +          signal is fed to VADC. See qcom,spi-vadc specification for the list
->> +          of possible values.
-> 
-> I'd rather not. Need the values here to validate a DT.
+ Documentation/gpu/drm-mm.rst                  |  4 +-
+ Documentation/gpu/todo.rst                    |  9 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c       |  6 --
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c       | 23 +++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.h       |  5 --
+ drivers/gpu/drm/armada/armada_drv.c           |  3 -
+ drivers/gpu/drm/armada/armada_gem.c           | 12 ++-
+ drivers/gpu/drm/armada/armada_gem.h           |  2 -
+ drivers/gpu/drm/drm_gem.c                     | 53 ++++--------
+ drivers/gpu/drm/drm_gem_cma_helper.c          |  8 +-
+ drivers/gpu/drm/drm_prime.c                   | 14 +--
+ drivers/gpu/drm/etnaviv/etnaviv_drv.c         | 13 ---
+ drivers/gpu/drm/etnaviv/etnaviv_drv.h         |  1 -
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c         | 19 ++++-
+ drivers/gpu/drm/exynos/exynos_drm_drv.c       | 10 ---
+ drivers/gpu/drm/exynos/exynos_drm_gem.c       | 15 ++++
+ drivers/gpu/drm/gma500/framebuffer.c          |  2 +
+ drivers/gpu/drm/gma500/gem.c                  | 18 +++-
+ drivers/gpu/drm/gma500/gem.h                  |  3 +
+ drivers/gpu/drm/gma500/psb_drv.c              |  9 --
+ drivers/gpu/drm/gma500/psb_drv.h              |  2 -
+ drivers/gpu/drm/i915/gem/i915_gem_object.c    | 21 ++++-
+ drivers/gpu/drm/i915/gem/i915_gem_object.h    |  3 -
+ drivers/gpu/drm/i915/i915_drv.c               |  4 -
+ .../gpu/drm/i915/selftests/mock_gem_device.c  |  3 -
+ drivers/gpu/drm/imx/dcss/dcss-kms.c           | 14 +--
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c        |  5 --
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c        | 11 +++
+ drivers/gpu/drm/msm/msm_drv.c                 | 13 ---
+ drivers/gpu/drm/msm/msm_drv.h                 |  1 -
+ drivers/gpu/drm/msm/msm_gem.c                 | 19 ++++-
+ drivers/gpu/drm/nouveau/nouveau_drm.c         |  9 --
+ drivers/gpu/drm/nouveau/nouveau_gem.c         | 13 +++
+ drivers/gpu/drm/nouveau/nouveau_gem.h         |  2 +
+ drivers/gpu/drm/nouveau/nouveau_prime.c       |  2 +
+ drivers/gpu/drm/omapdrm/omap_drv.c            |  9 --
+ drivers/gpu/drm/omapdrm/omap_gem.c            | 18 +++-
+ drivers/gpu/drm/omapdrm/omap_gem.h            |  2 -
+ drivers/gpu/drm/pl111/pl111_drv.c             |  5 +-
+ drivers/gpu/drm/radeon/radeon_drv.c           | 23 +----
+ drivers/gpu/drm/radeon/radeon_gem.c           | 31 ++++++-
+ drivers/gpu/drm/rockchip/rockchip_drm_drv.c   |  5 --
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c   | 12 ++-
+ drivers/gpu/drm/tegra/drm.c                   |  4 -
+ drivers/gpu/drm/tegra/gem.c                   |  8 ++
+ drivers/gpu/drm/vc4/vc4_bo.c                  | 21 ++++-
+ drivers/gpu/drm/vc4/vc4_drv.c                 | 12 ---
+ drivers/gpu/drm/vc4/vc4_drv.h                 |  1 -
+ drivers/gpu/drm/vgem/vgem_drv.c               | 21 +++--
+ drivers/gpu/drm/virtio/virtgpu_drv.c          |  1 -
+ drivers/gpu/drm/virtio/virtgpu_object.c       |  1 +
+ drivers/gpu/drm/vkms/vkms_drv.c               |  8 --
+ drivers/gpu/drm/vkms/vkms_gem.c               | 13 +++
+ drivers/gpu/drm/xen/xen_drm_front.c           | 44 ++++------
+ drivers/gpu/drm/xen/xen_drm_front.h           |  2 +
+ drivers/gpu/drm/xen/xen_drm_front_gem.c       | 15 ++++
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c           | 14 +--
+ include/drm/drm_drv.h                         | 85 +------------------
+ include/drm/drm_gem.h                         |  2 +-
+ 59 files changed, 333 insertions(+), 375 deletions(-)
 
-OK
+--
+2.28.0
 
-> 
->> +        minItems: 2
->> +        maxItems: 2
->> +
->> +    required:
->> +      - reg
->> +      - qcom,adc-channel
->> +
->> +    additionalProperties:
->> +      false
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts
->> +  - "#address-cells"
->> +  - "#size-cells"
->> +  - "#thermal-sensor-cells"
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/iio/qcom,spmi-vadc.h>
->> +    #include <dt-bindings/interrupt-controller/irq.h>
->> +    spmi_bus {
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +        pm8150b_adc: adc@3100 {
->> +            reg = <0x3100>;
->> +            compatible = "qcom,spmi-adc5";
->> +            #address-cells = <1>;
->> +            #size-cells = <0>;
->> +            #io-channel-cells = <1>;
->> +            io-channel-ranges;
->> +
->> +            /* Other propreties are omitted */
->> +            conn-therm@4f {
->> +                reg = <ADC5_AMUX_THM3_100K_PU>;
->> +                qcom,ratiometric;
->> +                qcom,hw-settle-time = <200>;
->> +            };
->> +        };
->> +
->> +        pm8150b_adc_tm: adc-tm@3500 {
->> +            compatible = "qcom,spmi-adc-tm5";
->> +            reg = <0x3500>;
->> +            interrupts = <0x2 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
->> +            #thermal-sensor-cells = <1>;
->> +            #address-cells = <1>;
->> +            #size-cells = <0>;
->> +
->> +            conn-therm@0 {
->> +                reg = <0>;
->> +                io-channels = <&pm8150b_adc ADC5_AMUX_THM3_100K_PU>;
->> +                qcom,adc-channel = <ADC5_AMUX_THM3_100K_PU>;
->> +                qcom,ratiometric;
->> +                qcom,hw-settle-time = <200>;
->> +            };
->> +        };
->> +    };
->> +...
->> -- 
->> 2.28.0
->>
-
-
--- 
-With best wishes
-Dmitry
