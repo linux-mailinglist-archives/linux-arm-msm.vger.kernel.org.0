@@ -2,231 +2,1038 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76D7F275FCF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 20:28:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3754C27613D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 21:41:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726228AbgIWS2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 14:28:37 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:61733 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726545AbgIWS2h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 14:28:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600885717; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
- Subject: Sender; bh=HSmX8kpVwDUv15l7Sb/7/CBV4c0IJBor4yUGLVYSTNc=; b=f5pUQprkTPYuzeBOEpjlcZLV2mTLiVljrXS0/KkugQLeRgBPuPbZxWZ1PSLS3bU3ySSFECt3
- ObsCenylCpucLzq8zQ17bw6BuPYiLkXQXflzbq93pvdTpw+drzN1UvK5Ty5hQCmE0VjdGHbl
- +ATmWEzYlNsuVc8M2ZutnE691LQ=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f6b93c6705bd2c5ddd92e2d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Sep 2020 18:28:22
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E5F3BC433CB; Wed, 23 Sep 2020 18:28:21 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.7] (unknown [61.1.224.240])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9404CC433CA;
-        Wed, 23 Sep 2020 18:28:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9404CC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH v2 1/2] drm/msm: Fix premature purging of BO
-To:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, jonathan@marek.ca, robdclark@gmail.com,
-        dianders@chromium.org, Jordan Crouse <jcrouse@codeaurora.org>
-References: <1600786527-7343-1-git-send-email-akhilpo@codeaurora.org>
- <20200923145047.GB31425@jcrouse1-lnx.qualcomm.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <df7a93b7-240f-bb52-9e3c-eeb346a4574e@codeaurora.org>
-Date:   Wed, 23 Sep 2020 23:58:14 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        id S1726600AbgIWTlG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 15:41:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726582AbgIWTlG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 15:41:06 -0400
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3FBC0613CE;
+        Wed, 23 Sep 2020 12:41:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+        :To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=Tkv5UClnbJbWv7DC0YPM+3PbrMp9Clzp09DNZi+qk88=; b=XCUO87AwE8uOi5Eot9bJb25pQT
+        D5IpRT8az7DL9F53G4D41I/RES3qzE0uJgj0mPHlOFldx7eB/EYfOUYPxKSqBZwN8CY7dA6hWPOT4
+        Py1gi4DJ1H16FDUBMm6CFnZjGEHnmSkOcwixX+uQLl8BIYUlvNu3PyioebZ9g3SQ7gosKDJZg3yJ2
+        Rk+LcH8gp6wnx0wI8lDjimcih3DIofreFGObP0Fx17x8+kcfZ192bUAQfeiZ/oAPHBvEdDmnqt4/y
+        HNszbSnU0Om92dKPhAqQDMVrYoTLp1p4hVMNQa0w6f/bN2h4vyqxKYM/+UDXsDVbTun7Et3HMBxOV
+        kEJXfQXg==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1kLAdM-0003im-3D; Wed, 23 Sep 2020 20:40:56 +0100
+Date:   Wed, 23 Sep 2020 20:40:56 +0100
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Thomas Pedersen <twp@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: [PATCH v4] dmaengine: qcom: Add ADM driver
+Message-ID: <20200923194056.GY3411@earth.li>
+References: <20200916064326.GA13963@earth.li>
+ <20200919185739.GS3411@earth.li>
+ <20200920181204.GT3411@earth.li>
 MIME-Version: 1.0
-In-Reply-To: <20200923145047.GB31425@jcrouse1-lnx.qualcomm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200920181204.GT3411@earth.li>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/23/2020 8:20 PM, Jordan Crouse wrote:
-> On Tue, Sep 22, 2020 at 08:25:26PM +0530, Akhil P Oommen wrote:
->> In the case where we have a back-to-back submission that shares the same
->> BO, this BO will be prematurely moved to inactive_list while retiring the
->> first submit. But it will be still part of the second submit which is
->> being processed by the GPU. Now, if the shrinker happens to be triggered at
->> this point, it will result in a premature purging of this BO.
->>
->> To fix this, we need to refcount BO while doing submit and retire. Then,
->> it should be moved to inactive list when this refcount becomes 0.
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
->> ---
->> Changes in v2:
->> 	1. Keep Active List around
->> 	2. Put back the deleted WARN_ON
->>
->>   drivers/gpu/drm/msm/msm_drv.h |  5 ++---
->>   drivers/gpu/drm/msm/msm_gem.c | 32 ++++++++++++++++----------------
->>   drivers/gpu/drm/msm/msm_gem.h |  4 +++-
->>   drivers/gpu/drm/msm/msm_gpu.c | 11 +++++++----
->>   4 files changed, 28 insertions(+), 24 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
->> index 3193274..28e3c8d 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.h
->> +++ b/drivers/gpu/drm/msm/msm_drv.h
->> @@ -309,9 +309,8 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj);
->>   int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv);
->>   int msm_gem_sync_object(struct drm_gem_object *obj,
->>   		struct msm_fence_context *fctx, bool exclusive);
->> -void msm_gem_move_to_active(struct drm_gem_object *obj,
->> -		struct msm_gpu *gpu, bool exclusive, struct dma_fence *fence);
->> -void msm_gem_move_to_inactive(struct drm_gem_object *obj);
->> +void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu);
->> +void msm_gem_active_put(struct drm_gem_object *obj);
->>   int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
->>   int msm_gem_cpu_fini(struct drm_gem_object *obj);
->>   void msm_gem_free_object(struct drm_gem_object *obj);
->> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
->> index 76a6c52..14e14ca 100644
->> --- a/drivers/gpu/drm/msm/msm_gem.c
->> +++ b/drivers/gpu/drm/msm/msm_gem.c
->> @@ -743,31 +743,31 @@ int msm_gem_sync_object(struct drm_gem_object *obj,
->>   	return 0;
->>   }
->>   
->> -void msm_gem_move_to_active(struct drm_gem_object *obj,
->> -		struct msm_gpu *gpu, bool exclusive, struct dma_fence *fence)
->> +void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
->>   {
->>   	struct msm_gem_object *msm_obj = to_msm_bo(obj);
->> +	WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
->>   	WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
->> -	msm_obj->gpu = gpu;
->> -	if (exclusive)
->> -		dma_resv_add_excl_fence(obj->resv, fence);
->> -	else
->> -		dma_resv_add_shared_fence(obj->resv, fence);
->> -	list_del_init(&msm_obj->mm_list);
->> -	list_add_tail(&msm_obj->mm_list, &gpu->active_list);
->> +
->> +	if (!atomic_fetch_inc(&msm_obj->active_count)) {
->> +		msm_obj->gpu = gpu;
->> +		list_del_init(&msm_obj->mm_list);
->> +		list_add_tail(&msm_obj->mm_list, &gpu->active_list);
->> +	}
-> 
-> I'm not sure if all the renaming and reorganization are really needed here -
-> this is the meat of the change and it would have fit in reasonably well with the
-> existing function design.
-This happened due to the way I implemented the v1 patch. In the 
-hindsight, I think you are right.
+Add the DMA engine driver for the QCOM Application Data Mover (ADM) DMA
+controller found in the MSM8x60 and IPQ/APQ8064 platforms.
 
-Akhil.
-> 
->>   }
->>   
->> -void msm_gem_move_to_inactive(struct drm_gem_object *obj)
->> +void msm_gem_active_put(struct drm_gem_object *obj)
->>   {
->> -	struct drm_device *dev = obj->dev;
->> -	struct msm_drm_private *priv = dev->dev_private;
->>   	struct msm_gem_object *msm_obj = to_msm_bo(obj);
->> +	struct msm_drm_private *priv = obj->dev->dev_private;
->>   
->> -	WARN_ON(!mutex_is_locked(&dev->struct_mutex));
->> +	WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
->>   
->> -	msm_obj->gpu = NULL;
->> -	list_del_init(&msm_obj->mm_list);
->> -	list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
->> +	if (!atomic_dec_return(&msm_obj->active_count)) {
->> +		msm_obj->gpu = NULL;
->> +		list_del_init(&msm_obj->mm_list);
->> +		list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
->> +	}
-> 
-> Same.
-> 
-> Jordan
->>   }
->>   
->>   int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout)
->> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
->> index 7b1c7a5..a1bf741 100644
->> --- a/drivers/gpu/drm/msm/msm_gem.h
->> +++ b/drivers/gpu/drm/msm/msm_gem.h
->> @@ -88,12 +88,14 @@ struct msm_gem_object {
->>   	struct mutex lock; /* Protects resources associated with bo */
->>   
->>   	char name[32]; /* Identifier to print for the debugfs files */
->> +
->> +	atomic_t active_count;
->>   };
->>   #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
->>   
->>   static inline bool is_active(struct msm_gem_object *msm_obj)
->>   {
->> -	return msm_obj->gpu != NULL;
->> +	return atomic_read(&msm_obj->active_count);
->>   }
->>   
->>   static inline bool is_purgeable(struct msm_gem_object *msm_obj)
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
->> index 29c8d73c..55d1648 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.c
->> +++ b/drivers/gpu/drm/msm/msm_gpu.c
->> @@ -698,8 +698,8 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->>   
->>   	for (i = 0; i < submit->nr_bos; i++) {
->>   		struct msm_gem_object *msm_obj = submit->bos[i].obj;
->> -		/* move to inactive: */
->> -		msm_gem_move_to_inactive(&msm_obj->base);
->> +
->> +		msm_gem_active_put(&msm_obj->base);
->>   		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
->>   		drm_gem_object_put_locked(&msm_obj->base);
->>   	}
->> @@ -774,6 +774,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>   
->>   	for (i = 0; i < submit->nr_bos; i++) {
->>   		struct msm_gem_object *msm_obj = submit->bos[i].obj;
->> +		struct drm_gem_object *drm_obj = &msm_obj->base;
->>   		uint64_t iova;
->>   
->>   		/* can't happen yet.. but when we add 2d support we'll have
->> @@ -786,9 +787,11 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>   		msm_gem_get_and_pin_iova(&msm_obj->base, submit->aspace, &iova);
->>   
->>   		if (submit->bos[i].flags & MSM_SUBMIT_BO_WRITE)
->> -			msm_gem_move_to_active(&msm_obj->base, gpu, true, submit->fence);
->> +			dma_resv_add_excl_fence(drm_obj->resv, submit->fence);
->>   		else if (submit->bos[i].flags & MSM_SUBMIT_BO_READ)
->> -			msm_gem_move_to_active(&msm_obj->base, gpu, false, submit->fence);
->> +			dma_resv_add_shared_fence(drm_obj->resv, submit->fence);
->> +
->> +		msm_gem_active_get(drm_obj, gpu);
->>   	}
->>   
->>   	gpu->funcs->submit(gpu, submit);
->> -- 
->> 2.7.4
->>
-> 
+The ADM supports both memory to memory transactions and memory
+to/from peripheral device transactions.  The controller also provides
+flow control capabilities for transactions to/from peripheral devices.
+
+The initial release of this driver supports slave transfers to/from
+peripherals and also incorporates CRCI (client rate control interface)
+flow control.
+
+Signed-off-by: Andy Gross <agross@codeaurora.org>
+Signed-off-by: Thomas Pedersen <twp@codeaurora.org>
+Signed-off-by: Jonathan McDowell <noodles@earth.li>
+
+(I'm not sure how best to attribute this. It's originally from Andy
+Gross, the version I picked up was a later version from Thomas Pedersen,
+and I can't find clear indication of why the latest version wasn't
+applied. The device tree details were added back in September 2014. The
+driver is the missing piece in mainline for IPQ8064 NAND support and
+I've been using it successfully with my RB3011 device on 5.8+)
+
+v4:
+- Reorder probe function to acquire resources before enabling anything
+v3:
+- Depend on !PHYS_ADDR_T_64BIT rather than !64BIT as reported by kernel
+  test robot <lkp@intel.com>
+v2:
+- Address Vinod's review comments
+  - GFP_NOWAIT instead of GFP_ATOMIC
+  - Use devm_platform_ioremap_resource()
+  - Call tasklet_kill on remove
+  - Sort Kconfig/Makefile entries
+  - SPDX identifier
+  - Formatting fixes for checkpatch --strict
+---
+ drivers/dma/qcom/Kconfig    |  11 +
+ drivers/dma/qcom/Makefile   |   1 +
+ drivers/dma/qcom/qcom_adm.c | 903 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 915 insertions(+)
+ create mode 100644 drivers/dma/qcom/qcom_adm.c
+
+diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
+index 3bcb689162c6..0389d60d2604 100644
+--- a/drivers/dma/qcom/Kconfig
++++ b/drivers/dma/qcom/Kconfig
+@@ -1,4 +1,15 @@
+ # SPDX-License-Identifier: GPL-2.0-only
++config QCOM_ADM
++	tristate "Qualcomm ADM support"
++	depends on (ARCH_QCOM || COMPILE_TEST) && !PHYS_ADDR_T_64BIT
++	select DMA_ENGINE
++	select DMA_VIRTUAL_CHANNELS
++	help
++	  Enable support for the Qualcomm Application Data Mover (ADM) DMA
++	  controller, as present on MSM8x60, APQ8064, and IPQ8064 devices.
++	  This controller provides DMA capabilities for both general purpose
++	  and on-chip peripheral devices.
++
+ config QCOM_BAM_DMA
+ 	tristate "QCOM BAM DMA support"
+ 	depends on ARCH_QCOM || (COMPILE_TEST && OF && ARM)
+diff --git a/drivers/dma/qcom/Makefile b/drivers/dma/qcom/Makefile
+index 1ae92da88b0c..346e643fbb6d 100644
+--- a/drivers/dma/qcom/Makefile
++++ b/drivers/dma/qcom/Makefile
+@@ -1,4 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0
++obj-$(CONFIG_QCOM_ADM) += qcom_adm.o
+ obj-$(CONFIG_QCOM_BAM_DMA) += bam_dma.o
+ obj-$(CONFIG_QCOM_HIDMA_MGMT) += hdma_mgmt.o
+ hdma_mgmt-objs	 := hidma_mgmt.o hidma_mgmt_sys.o
+diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
+new file mode 100644
+index 000000000000..9b6f8e050ecc
+--- /dev/null
++++ b/drivers/dma/qcom/qcom_adm.c
+@@ -0,0 +1,903 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
++ */
++
++#include <linux/clk.h>
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/dmaengine.h>
++#include <linux/dma-mapping.h>
++#include <linux/init.h>
++#include <linux/interrupt.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/of_address.h>
++#include <linux/of_irq.h>
++#include <linux/of_dma.h>
++#include <linux/platform_device.h>
++#include <linux/reset.h>
++#include <linux/scatterlist.h>
++#include <linux/slab.h>
++
++#include "../dmaengine.h"
++#include "../virt-dma.h"
++
++/* ADM registers - calculated from channel number and security domain */
++#define ADM_CHAN_MULTI			0x4
++#define ADM_CI_MULTI			0x4
++#define ADM_CRCI_MULTI			0x4
++#define ADM_EE_MULTI			0x800
++#define ADM_CHAN_OFFS(chan)		(ADM_CHAN_MULTI * (chan))
++#define ADM_EE_OFFS(ee)			(ADM_EE_MULTI * (ee))
++#define ADM_CHAN_EE_OFFS(chan, ee)	(ADM_CHAN_OFFS(chan) + ADM_EE_OFFS(ee))
++#define ADM_CHAN_OFFS(chan)		(ADM_CHAN_MULTI * (chan))
++#define ADM_CI_OFFS(ci)			(ADM_CHAN_OFF(ci))
++#define ADM_CH_CMD_PTR(chan, ee)	(ADM_CHAN_EE_OFFS(chan, ee))
++#define ADM_CH_RSLT(chan, ee)		(0x40 + ADM_CHAN_EE_OFFS(chan, ee))
++#define ADM_CH_FLUSH_STATE0(chan, ee)	(0x80 + ADM_CHAN_EE_OFFS(chan, ee))
++#define ADM_CH_STATUS_SD(chan, ee)	(0x200 + ADM_CHAN_EE_OFFS(chan, ee))
++#define ADM_CH_CONF(chan)		(0x240 + ADM_CHAN_OFFS(chan))
++#define ADM_CH_RSLT_CONF(chan, ee)	(0x300 + ADM_CHAN_EE_OFFS(chan, ee))
++#define ADM_SEC_DOMAIN_IRQ_STATUS(ee)	(0x380 + ADM_EE_OFFS(ee))
++#define ADM_CI_CONF(ci)			(0x390 + (ci) * ADM_CI_MULTI)
++#define ADM_GP_CTL			0x3d8
++#define ADM_CRCI_CTL(crci, ee)		(0x400 + (crci) * ADM_CRCI_MULTI + \
++						ADM_EE_OFFS(ee))
++
++/* channel status */
++#define ADM_CH_STATUS_VALID		BIT(1)
++
++/* channel result */
++#define ADM_CH_RSLT_VALID		BIT(31)
++#define ADM_CH_RSLT_ERR			BIT(3)
++#define ADM_CH_RSLT_FLUSH		BIT(2)
++#define ADM_CH_RSLT_TPD			BIT(1)
++
++/* channel conf */
++#define ADM_CH_CONF_SHADOW_EN		BIT(12)
++#define ADM_CH_CONF_MPU_DISABLE		BIT(11)
++#define ADM_CH_CONF_PERM_MPU_CONF	BIT(9)
++#define ADM_CH_CONF_FORCE_RSLT_EN	BIT(7)
++#define ADM_CH_CONF_SEC_DOMAIN(ee)	((((ee) & 0x3) << 4) | (((ee) & 0x4) << 11))
++
++/* channel result conf */
++#define ADM_CH_RSLT_CONF_FLUSH_EN	BIT(1)
++#define ADM_CH_RSLT_CONF_IRQ_EN		BIT(0)
++
++/* CRCI CTL */
++#define ADM_CRCI_CTL_MUX_SEL		BIT(18)
++#define ADM_CRCI_CTL_RST		BIT(17)
++
++/* CI configuration */
++#define ADM_CI_RANGE_END(x)		((x) << 24)
++#define ADM_CI_RANGE_START(x)		((x) << 16)
++#define ADM_CI_BURST_4_WORDS		BIT(2)
++#define ADM_CI_BURST_8_WORDS		BIT(3)
++
++/* GP CTL */
++#define ADM_GP_CTL_LP_EN		BIT(12)
++#define ADM_GP_CTL_LP_CNT(x)		((x) << 8)
++
++/* Command pointer list entry */
++#define ADM_CPLE_LP			BIT(31)
++#define ADM_CPLE_CMD_PTR_LIST		BIT(29)
++
++/* Command list entry */
++#define ADM_CMD_LC			BIT(31)
++#define ADM_CMD_DST_CRCI(n)		(((n) & 0xf) << 7)
++#define ADM_CMD_SRC_CRCI(n)		(((n) & 0xf) << 3)
++
++#define ADM_CMD_TYPE_SINGLE		0x0
++#define ADM_CMD_TYPE_BOX		0x3
++
++#define ADM_CRCI_MUX_SEL		BIT(4)
++#define ADM_DESC_ALIGN			8
++#define ADM_MAX_XFER			(SZ_64K - 1)
++#define ADM_MAX_ROWS			(SZ_64K - 1)
++#define ADM_MAX_CHANNELS		16
++
++struct adm_desc_hw_box {
++	u32 cmd;
++	u32 src_addr;
++	u32 dst_addr;
++	u32 row_len;
++	u32 num_rows;
++	u32 row_offset;
++};
++
++struct adm_desc_hw_single {
++	u32 cmd;
++	u32 src_addr;
++	u32 dst_addr;
++	u32 len;
++};
++
++struct adm_async_desc {
++	struct virt_dma_desc vd;
++	struct adm_device *adev;
++
++	size_t length;
++	enum dma_transfer_direction dir;
++	dma_addr_t dma_addr;
++	size_t dma_len;
++
++	void *cpl;
++	dma_addr_t cp_addr;
++	u32 crci;
++	u32 mux;
++	u32 blk_size;
++};
++
++struct adm_chan {
++	struct virt_dma_chan vc;
++	struct adm_device *adev;
++
++	/* parsed from DT */
++	u32 id;			/* channel id */
++
++	struct adm_async_desc *curr_txd;
++	struct dma_slave_config slave;
++	struct list_head node;
++
++	int error;
++	int initialized;
++};
++
++static inline struct adm_chan *to_adm_chan(struct dma_chan *common)
++{
++	return container_of(common, struct adm_chan, vc.chan);
++}
++
++struct adm_device {
++	void __iomem *regs;
++	struct device *dev;
++	struct dma_device common;
++	struct device_dma_parameters dma_parms;
++	struct adm_chan *channels;
++
++	u32 ee;
++
++	struct clk *core_clk;
++	struct clk *iface_clk;
++
++	struct reset_control *clk_reset;
++	struct reset_control *c0_reset;
++	struct reset_control *c1_reset;
++	struct reset_control *c2_reset;
++	int irq;
++};
++
++/**
++ * adm_free_chan - Frees dma resources associated with the specific channel
++ *
++ * Free all allocated descriptors associated with this channel
++ *
++ */
++static void adm_free_chan(struct dma_chan *chan)
++{
++	/* free all queued descriptors */
++	vchan_free_chan_resources(to_virt_chan(chan));
++}
++
++/**
++ * adm_get_blksize - Get block size from burst value
++ *
++ */
++static int adm_get_blksize(unsigned int burst)
++{
++	int ret;
++
++	switch (burst) {
++	case 16:
++	case 32:
++	case 64:
++	case 128:
++		ret = ffs(burst >> 4) - 1;
++		break;
++	case 192:
++		ret = 4;
++		break;
++	case 256:
++		ret = 5;
++		break;
++	default:
++		ret = -EINVAL;
++		break;
++	}
++
++	return ret;
++}
++
++/**
++ * adm_process_fc_descriptors - Process descriptors for flow controlled xfers
++ *
++ * @achan: ADM channel
++ * @desc: Descriptor memory pointer
++ * @sg: Scatterlist entry
++ * @crci: CRCI value
++ * @burst: Burst size of transaction
++ * @direction: DMA transfer direction
++ */
++static void *adm_process_fc_descriptors(struct adm_chan *achan, void *desc,
++					struct scatterlist *sg, u32 crci,
++					u32 burst,
++					enum dma_transfer_direction direction)
++{
++	struct adm_desc_hw_box *box_desc = NULL;
++	struct adm_desc_hw_single *single_desc;
++	u32 remainder = sg_dma_len(sg);
++	u32 rows, row_offset, crci_cmd;
++	u32 mem_addr = sg_dma_address(sg);
++	u32 *incr_addr = &mem_addr;
++	u32 *src, *dst;
++
++	if (direction == DMA_DEV_TO_MEM) {
++		crci_cmd = ADM_CMD_SRC_CRCI(crci);
++		row_offset = burst;
++		src = &achan->slave.src_addr;
++		dst = &mem_addr;
++	} else {
++		crci_cmd = ADM_CMD_DST_CRCI(crci);
++		row_offset = burst << 16;
++		src = &mem_addr;
++		dst = &achan->slave.dst_addr;
++	}
++
++	while (remainder >= burst) {
++		box_desc = desc;
++		box_desc->cmd = ADM_CMD_TYPE_BOX | crci_cmd;
++		box_desc->row_offset = row_offset;
++		box_desc->src_addr = *src;
++		box_desc->dst_addr = *dst;
++
++		rows = remainder / burst;
++		rows = min_t(u32, rows, ADM_MAX_ROWS);
++		box_desc->num_rows = rows << 16 | rows;
++		box_desc->row_len = burst << 16 | burst;
++
++		*incr_addr += burst * rows;
++		remainder -= burst * rows;
++		desc += sizeof(*box_desc);
++	}
++
++	/* if leftover bytes, do one single descriptor */
++	if (remainder) {
++		single_desc = desc;
++		single_desc->cmd = ADM_CMD_TYPE_SINGLE | crci_cmd;
++		single_desc->len = remainder;
++		single_desc->src_addr = *src;
++		single_desc->dst_addr = *dst;
++		desc += sizeof(*single_desc);
++
++		if (sg_is_last(sg))
++			single_desc->cmd |= ADM_CMD_LC;
++	} else {
++		if (box_desc && sg_is_last(sg))
++			box_desc->cmd |= ADM_CMD_LC;
++	}
++
++	return desc;
++}
++
++/**
++ * adm_process_non_fc_descriptors - Process descriptors for non-fc xfers
++ *
++ * @achan: ADM channel
++ * @desc: Descriptor memory pointer
++ * @sg: Scatterlist entry
++ * @direction: DMA transfer direction
++ */
++static void *adm_process_non_fc_descriptors(struct adm_chan *achan, void *desc,
++					    struct scatterlist *sg,
++					    enum dma_transfer_direction direction)
++{
++	struct adm_desc_hw_single *single_desc;
++	u32 remainder = sg_dma_len(sg);
++	u32 mem_addr = sg_dma_address(sg);
++	u32 *incr_addr = &mem_addr;
++	u32 *src, *dst;
++
++	if (direction == DMA_DEV_TO_MEM) {
++		src = &achan->slave.src_addr;
++		dst = &mem_addr;
++	} else {
++		src = &mem_addr;
++		dst = &achan->slave.dst_addr;
++	}
++
++	do {
++		single_desc = desc;
++		single_desc->cmd = ADM_CMD_TYPE_SINGLE;
++		single_desc->src_addr = *src;
++		single_desc->dst_addr = *dst;
++		single_desc->len = (remainder > ADM_MAX_XFER) ?
++				ADM_MAX_XFER : remainder;
++
++		remainder -= single_desc->len;
++		*incr_addr += single_desc->len;
++		desc += sizeof(*single_desc);
++	} while (remainder);
++
++	/* set last command if this is the end of the whole transaction */
++	if (sg_is_last(sg))
++		single_desc->cmd |= ADM_CMD_LC;
++
++	return desc;
++}
++
++/**
++ * adm_prep_slave_sg - Prep slave sg transaction
++ *
++ * @chan: dma channel
++ * @sgl: scatter gather list
++ * @sg_len: length of sg
++ * @direction: DMA transfer direction
++ * @flags: DMA flags
++ * @context: transfer context (unused)
++ */
++static struct dma_async_tx_descriptor *adm_prep_slave_sg(struct dma_chan *chan,
++							 struct scatterlist *sgl,
++							 unsigned int sg_len,
++							 enum dma_transfer_direction direction,
++							 unsigned long flags,
++							 void *context)
++{
++	struct adm_chan *achan = to_adm_chan(chan);
++	struct adm_device *adev = achan->adev;
++	struct adm_async_desc *async_desc;
++	struct scatterlist *sg;
++	dma_addr_t cple_addr;
++	u32 i, burst;
++	u32 single_count = 0, box_count = 0, crci = 0;
++	void *desc;
++	u32 *cple;
++	int blk_size = 0;
++
++	if (!is_slave_direction(direction)) {
++		dev_err(adev->dev, "invalid dma direction\n");
++		return NULL;
++	}
++
++	/*
++	 * get burst value from slave configuration
++	 */
++	burst = (direction == DMA_MEM_TO_DEV) ?
++		achan->slave.dst_maxburst :
++		achan->slave.src_maxburst;
++
++	/* if using flow control, validate burst and crci values */
++	if (achan->slave.device_fc) {
++		blk_size = adm_get_blksize(burst);
++		if (blk_size < 0) {
++			dev_err(adev->dev, "invalid burst value: %d\n",
++				burst);
++			return ERR_PTR(-EINVAL);
++		}
++
++		crci = achan->slave.slave_id & 0xf;
++		if (!crci || achan->slave.slave_id > 0x1f) {
++			dev_err(adev->dev, "invalid crci value\n");
++			return ERR_PTR(-EINVAL);
++		}
++	}
++
++	/* iterate through sgs and compute allocation size of structures */
++	for_each_sg(sgl, sg, sg_len, i) {
++		if (achan->slave.device_fc) {
++			box_count += DIV_ROUND_UP(sg_dma_len(sg) / burst,
++						  ADM_MAX_ROWS);
++			if (sg_dma_len(sg) % burst)
++				single_count++;
++		} else {
++			single_count += DIV_ROUND_UP(sg_dma_len(sg),
++						     ADM_MAX_XFER);
++		}
++	}
++
++	async_desc = kzalloc(sizeof(*async_desc), GFP_NOWAIT);
++	if (!async_desc)
++		return ERR_PTR(-ENOMEM);
++
++	if (crci)
++		async_desc->mux = achan->slave.slave_id & ADM_CRCI_MUX_SEL ?
++					ADM_CRCI_CTL_MUX_SEL : 0;
++	async_desc->crci = crci;
++	async_desc->blk_size = blk_size;
++	async_desc->dma_len = single_count * sizeof(struct adm_desc_hw_single) +
++				box_count * sizeof(struct adm_desc_hw_box) +
++				sizeof(*cple) + 2 * ADM_DESC_ALIGN;
++
++	async_desc->cpl = kzalloc(async_desc->dma_len, GFP_NOWAIT);
++	if (!async_desc->cpl)
++		goto free;
++
++	async_desc->adev = adev;
++
++	/* both command list entry and descriptors must be 8 byte aligned */
++	cple = PTR_ALIGN(async_desc->cpl, ADM_DESC_ALIGN);
++	desc = PTR_ALIGN(cple + 1, ADM_DESC_ALIGN);
++
++	for_each_sg(sgl, sg, sg_len, i) {
++		async_desc->length += sg_dma_len(sg);
++
++		if (achan->slave.device_fc)
++			desc = adm_process_fc_descriptors(achan, desc, sg, crci,
++							  burst, direction);
++		else
++			desc = adm_process_non_fc_descriptors(achan, desc, sg,
++							      direction);
++	}
++
++	async_desc->dma_addr = dma_map_single(adev->dev, async_desc->cpl,
++					      async_desc->dma_len,
++					      DMA_TO_DEVICE);
++	if (dma_mapping_error(adev->dev, async_desc->dma_addr))
++		goto free;
++
++	cple_addr = async_desc->dma_addr + ((void *)cple - async_desc->cpl);
++
++	/* init cmd list */
++	dma_sync_single_for_cpu(adev->dev, cple_addr, sizeof(*cple),
++				DMA_TO_DEVICE);
++	*cple = ADM_CPLE_LP;
++	*cple |= (async_desc->dma_addr + ADM_DESC_ALIGN) >> 3;
++	dma_sync_single_for_device(adev->dev, cple_addr, sizeof(*cple),
++				   DMA_TO_DEVICE);
++
++	return vchan_tx_prep(&achan->vc, &async_desc->vd, flags);
++
++free:
++	kfree(async_desc);
++	return ERR_PTR(-ENOMEM);
++}
++
++/**
++ * adm_terminate_all - terminate all transactions on a channel
++ * @achan: adm dma channel
++ *
++ * Dequeues and frees all transactions, aborts current transaction
++ * No callbacks are done
++ *
++ */
++static int adm_terminate_all(struct dma_chan *chan)
++{
++	struct adm_chan *achan = to_adm_chan(chan);
++	struct adm_device *adev = achan->adev;
++	unsigned long flags;
++	LIST_HEAD(head);
++
++	spin_lock_irqsave(&achan->vc.lock, flags);
++	vchan_get_all_descriptors(&achan->vc, &head);
++
++	/* send flush command to terminate current transaction */
++	writel_relaxed(0x0,
++		       adev->regs + ADM_CH_FLUSH_STATE0(achan->id, adev->ee));
++
++	spin_unlock_irqrestore(&achan->vc.lock, flags);
++
++	vchan_dma_desc_free_list(&achan->vc, &head);
++
++	return 0;
++}
++
++static int adm_slave_config(struct dma_chan *chan, struct dma_slave_config *cfg)
++{
++	struct adm_chan *achan = to_adm_chan(chan);
++	unsigned long flag;
++
++	spin_lock_irqsave(&achan->vc.lock, flag);
++	memcpy(&achan->slave, cfg, sizeof(struct dma_slave_config));
++	spin_unlock_irqrestore(&achan->vc.lock, flag);
++
++	return 0;
++}
++
++/**
++ * adm_start_dma - start next transaction
++ * @achan - ADM dma channel
++ */
++static void adm_start_dma(struct adm_chan *achan)
++{
++	struct virt_dma_desc *vd = vchan_next_desc(&achan->vc);
++	struct adm_device *adev = achan->adev;
++	struct adm_async_desc *async_desc;
++
++	lockdep_assert_held(&achan->vc.lock);
++
++	if (!vd)
++		return;
++
++	list_del(&vd->node);
++
++	/* write next command list out to the CMD FIFO */
++	async_desc = container_of(vd, struct adm_async_desc, vd);
++	achan->curr_txd = async_desc;
++
++	/* reset channel error */
++	achan->error = 0;
++
++	if (!achan->initialized) {
++		/* enable interrupts */
++		writel(ADM_CH_CONF_SHADOW_EN |
++		       ADM_CH_CONF_PERM_MPU_CONF |
++		       ADM_CH_CONF_MPU_DISABLE |
++		       ADM_CH_CONF_SEC_DOMAIN(adev->ee),
++		       adev->regs + ADM_CH_CONF(achan->id));
++
++		writel(ADM_CH_RSLT_CONF_IRQ_EN | ADM_CH_RSLT_CONF_FLUSH_EN,
++		       adev->regs + ADM_CH_RSLT_CONF(achan->id, adev->ee));
++
++		achan->initialized = 1;
++	}
++
++	/* set the crci block size if this transaction requires CRCI */
++	if (async_desc->crci) {
++		writel(async_desc->mux | async_desc->blk_size,
++		       adev->regs + ADM_CRCI_CTL(async_desc->crci, adev->ee));
++	}
++
++	/* make sure IRQ enable doesn't get reordered */
++	wmb();
++
++	/* write next command list out to the CMD FIFO */
++	writel(ALIGN(async_desc->dma_addr, ADM_DESC_ALIGN) >> 3,
++	       adev->regs + ADM_CH_CMD_PTR(achan->id, adev->ee));
++}
++
++/**
++ * adm_dma_irq - irq handler for ADM controller
++ * @irq: IRQ of interrupt
++ * @data: callback data
++ *
++ * IRQ handler for the bam controller
++ */
++static irqreturn_t adm_dma_irq(int irq, void *data)
++{
++	struct adm_device *adev = data;
++	u32 srcs, i;
++	struct adm_async_desc *async_desc;
++	unsigned long flags;
++
++	srcs = readl_relaxed(adev->regs +
++			ADM_SEC_DOMAIN_IRQ_STATUS(adev->ee));
++
++	for (i = 0; i < ADM_MAX_CHANNELS; i++) {
++		struct adm_chan *achan = &adev->channels[i];
++		u32 status, result;
++
++		if (srcs & BIT(i)) {
++			status = readl_relaxed(adev->regs +
++					       ADM_CH_STATUS_SD(i, adev->ee));
++
++			/* if no result present, skip */
++			if (!(status & ADM_CH_STATUS_VALID))
++				continue;
++
++			result = readl_relaxed(adev->regs +
++				ADM_CH_RSLT(i, adev->ee));
++
++			/* no valid results, skip */
++			if (!(result & ADM_CH_RSLT_VALID))
++				continue;
++
++			/* flag error if transaction was flushed or failed */
++			if (result & (ADM_CH_RSLT_ERR | ADM_CH_RSLT_FLUSH))
++				achan->error = 1;
++
++			spin_lock_irqsave(&achan->vc.lock, flags);
++			async_desc = achan->curr_txd;
++
++			achan->curr_txd = NULL;
++
++			if (async_desc) {
++				vchan_cookie_complete(&async_desc->vd);
++
++				/* kick off next DMA */
++				adm_start_dma(achan);
++			}
++
++			spin_unlock_irqrestore(&achan->vc.lock, flags);
++		}
++	}
++
++	return IRQ_HANDLED;
++}
++
++/**
++ * adm_tx_status - returns status of transaction
++ * @chan: dma channel
++ * @cookie: transaction cookie
++ * @txstate: DMA transaction state
++ *
++ * Return status of dma transaction
++ */
++static enum dma_status adm_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
++				     struct dma_tx_state *txstate)
++{
++	struct adm_chan *achan = to_adm_chan(chan);
++	struct virt_dma_desc *vd;
++	enum dma_status ret;
++	unsigned long flags;
++	size_t residue = 0;
++
++	ret = dma_cookie_status(chan, cookie, txstate);
++	if (ret == DMA_COMPLETE || !txstate)
++		return ret;
++
++	spin_lock_irqsave(&achan->vc.lock, flags);
++
++	vd = vchan_find_desc(&achan->vc, cookie);
++	if (vd)
++		residue = container_of(vd, struct adm_async_desc, vd)->length;
++
++	spin_unlock_irqrestore(&achan->vc.lock, flags);
++
++	/*
++	 * residue is either the full length if it is in the issued list, or 0
++	 * if it is in progress.  We have no reliable way of determining
++	 * anything inbetween
++	 */
++	dma_set_residue(txstate, residue);
++
++	if (achan->error)
++		return DMA_ERROR;
++
++	return ret;
++}
++
++/**
++ * adm_issue_pending - starts pending transactions
++ * @chan: dma channel
++ *
++ * Issues all pending transactions and starts DMA
++ */
++static void adm_issue_pending(struct dma_chan *chan)
++{
++	struct adm_chan *achan = to_adm_chan(chan);
++	unsigned long flags;
++
++	spin_lock_irqsave(&achan->vc.lock, flags);
++
++	if (vchan_issue_pending(&achan->vc) && !achan->curr_txd)
++		adm_start_dma(achan);
++	spin_unlock_irqrestore(&achan->vc.lock, flags);
++}
++
++/**
++ * adm_dma_free_desc - free descriptor memory
++ * @vd: virtual descriptor
++ *
++ */
++static void adm_dma_free_desc(struct virt_dma_desc *vd)
++{
++	struct adm_async_desc *async_desc = container_of(vd,
++			struct adm_async_desc, vd);
++
++	dma_unmap_single(async_desc->adev->dev, async_desc->dma_addr,
++			 async_desc->dma_len, DMA_TO_DEVICE);
++	kfree(async_desc->cpl);
++	kfree(async_desc);
++}
++
++static void adm_channel_init(struct adm_device *adev, struct adm_chan *achan,
++			     u32 index)
++{
++	achan->id = index;
++	achan->adev = adev;
++
++	vchan_init(&achan->vc, &adev->common);
++	achan->vc.desc_free = adm_dma_free_desc;
++}
++
++static int adm_dma_probe(struct platform_device *pdev)
++{
++	struct adm_device *adev;
++	int ret;
++	u32 i;
++
++	adev = devm_kzalloc(&pdev->dev, sizeof(*adev), GFP_KERNEL);
++	if (!adev)
++		return -ENOMEM;
++
++	adev->dev = &pdev->dev;
++
++	adev->regs = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(adev->regs))
++		return PTR_ERR(adev->regs);
++
++	adev->irq = platform_get_irq(pdev, 0);
++	if (adev->irq < 0)
++		return adev->irq;
++
++	ret = of_property_read_u32(pdev->dev.of_node, "qcom,ee", &adev->ee);
++	if (ret) {
++		dev_err(adev->dev, "Execution environment unspecified\n");
++		return ret;
++	}
++
++	adev->core_clk = devm_clk_get(adev->dev, "core");
++	if (IS_ERR(adev->core_clk))
++		return PTR_ERR(adev->core_clk);
++
++	adev->iface_clk = devm_clk_get(adev->dev, "iface");
++	if (IS_ERR(adev->iface_clk))
++		return PTR_ERR(adev->iface_clk);
++
++	adev->clk_reset = devm_reset_control_get_exclusive(&pdev->dev, "clk");
++	if (IS_ERR(adev->clk_reset)) {
++		dev_err(adev->dev, "failed to get ADM0 reset\n");
++		return PTR_ERR(adev->clk_reset);
++	}
++
++	adev->c0_reset = devm_reset_control_get_exclusive(&pdev->dev, "c0");
++	if (IS_ERR(adev->c0_reset)) {
++		dev_err(adev->dev, "failed to get ADM0 C0 reset\n");
++		return PTR_ERR(adev->c0_reset);
++	}
++
++	adev->c1_reset = devm_reset_control_get_exclusive(&pdev->dev, "c1");
++	if (IS_ERR(adev->c1_reset)) {
++		dev_err(adev->dev, "failed to get ADM0 C1 reset\n");
++		return PTR_ERR(adev->c1_reset);
++	}
++
++	adev->c2_reset = devm_reset_control_get_exclusive(&pdev->dev, "c2");
++	if (IS_ERR(adev->c2_reset)) {
++		dev_err(adev->dev, "failed to get ADM0 C2 reset\n");
++		return PTR_ERR(adev->c2_reset);
++	}
++
++	ret = clk_prepare_enable(adev->core_clk);
++	if (ret) {
++		dev_err(adev->dev, "failed to prepare/enable core clock\n");
++		return ret;
++	}
++
++	ret = clk_prepare_enable(adev->iface_clk);
++	if (ret) {
++		dev_err(adev->dev, "failed to prepare/enable iface clock\n");
++		goto err_disable_core_clk;
++	}
++
++	reset_control_assert(adev->clk_reset);
++	reset_control_assert(adev->c0_reset);
++	reset_control_assert(adev->c1_reset);
++	reset_control_assert(adev->c2_reset);
++
++	udelay(2);
++
++	reset_control_deassert(adev->clk_reset);
++	reset_control_deassert(adev->c0_reset);
++	reset_control_deassert(adev->c1_reset);
++	reset_control_deassert(adev->c2_reset);
++
++	adev->channels = devm_kcalloc(adev->dev, ADM_MAX_CHANNELS,
++				      sizeof(*adev->channels), GFP_KERNEL);
++
++	if (!adev->channels) {
++		ret = -ENOMEM;
++		goto err_disable_clks;
++	}
++
++	/* allocate and initialize channels */
++	INIT_LIST_HEAD(&adev->common.channels);
++
++	for (i = 0; i < ADM_MAX_CHANNELS; i++)
++		adm_channel_init(adev, &adev->channels[i], i);
++
++	/* reset CRCIs */
++	for (i = 0; i < 16; i++)
++		writel(ADM_CRCI_CTL_RST, adev->regs +
++			ADM_CRCI_CTL(i, adev->ee));
++
++	/* configure client interfaces */
++	writel(ADM_CI_RANGE_START(0x40) | ADM_CI_RANGE_END(0xb0) |
++	       ADM_CI_BURST_8_WORDS, adev->regs + ADM_CI_CONF(0));
++	writel(ADM_CI_RANGE_START(0x2a) | ADM_CI_RANGE_END(0x2c) |
++	       ADM_CI_BURST_8_WORDS, adev->regs + ADM_CI_CONF(1));
++	writel(ADM_CI_RANGE_START(0x12) | ADM_CI_RANGE_END(0x28) |
++	       ADM_CI_BURST_8_WORDS, adev->regs + ADM_CI_CONF(2));
++	writel(ADM_GP_CTL_LP_EN | ADM_GP_CTL_LP_CNT(0xf),
++	       adev->regs + ADM_GP_CTL);
++
++	ret = devm_request_irq(adev->dev, adev->irq, adm_dma_irq,
++			       0, "adm_dma", adev);
++	if (ret)
++		goto err_disable_clks;
++
++	platform_set_drvdata(pdev, adev);
++
++	adev->common.dev = adev->dev;
++	adev->common.dev->dma_parms = &adev->dma_parms;
++
++	/* set capabilities */
++	dma_cap_zero(adev->common.cap_mask);
++	dma_cap_set(DMA_SLAVE, adev->common.cap_mask);
++	dma_cap_set(DMA_PRIVATE, adev->common.cap_mask);
++
++	/* initialize dmaengine apis */
++	adev->common.directions = BIT(DMA_DEV_TO_MEM | DMA_MEM_TO_DEV);
++	adev->common.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
++	adev->common.src_addr_widths = DMA_SLAVE_BUSWIDTH_4_BYTES;
++	adev->common.dst_addr_widths = DMA_SLAVE_BUSWIDTH_4_BYTES;
++	adev->common.device_free_chan_resources = adm_free_chan;
++	adev->common.device_prep_slave_sg = adm_prep_slave_sg;
++	adev->common.device_issue_pending = adm_issue_pending;
++	adev->common.device_tx_status = adm_tx_status;
++	adev->common.device_terminate_all = adm_terminate_all;
++	adev->common.device_config = adm_slave_config;
++
++	ret = dma_async_device_register(&adev->common);
++	if (ret) {
++		dev_err(adev->dev, "failed to register dma async device\n");
++		goto err_disable_clks;
++	}
++
++	ret = of_dma_controller_register(pdev->dev.of_node,
++					 of_dma_xlate_by_chan_id,
++					 &adev->common);
++	if (ret)
++		goto err_unregister_dma;
++
++	return 0;
++
++err_unregister_dma:
++	dma_async_device_unregister(&adev->common);
++err_disable_clks:
++	clk_disable_unprepare(adev->iface_clk);
++err_disable_core_clk:
++	clk_disable_unprepare(adev->core_clk);
++
++	return ret;
++}
++
++static int adm_dma_remove(struct platform_device *pdev)
++{
++	struct adm_device *adev = platform_get_drvdata(pdev);
++	struct adm_chan *achan;
++	u32 i;
++
++	of_dma_controller_free(pdev->dev.of_node);
++	dma_async_device_unregister(&adev->common);
++
++	for (i = 0; i < ADM_MAX_CHANNELS; i++) {
++		achan = &adev->channels[i];
++
++		/* mask IRQs for this channel/EE pair */
++		writel(0, adev->regs + ADM_CH_RSLT_CONF(achan->id, adev->ee));
++
++		tasklet_kill(&adev->channels[i].vc.task);
++		adm_terminate_all(&adev->channels[i].vc.chan);
++	}
++
++	devm_free_irq(adev->dev, adev->irq, adev);
++
++	clk_disable_unprepare(adev->core_clk);
++	clk_disable_unprepare(adev->iface_clk);
++
++	return 0;
++}
++
++static const struct of_device_id adm_of_match[] = {
++	{ .compatible = "qcom,adm", },
++	{}
++};
++MODULE_DEVICE_TABLE(of, adm_of_match);
++
++static struct platform_driver adm_dma_driver = {
++	.probe = adm_dma_probe,
++	.remove = adm_dma_remove,
++	.driver = {
++		.name = "adm-dma-engine",
++		.of_match_table = adm_of_match,
++	},
++};
++
++module_platform_driver(adm_dma_driver);
++
++MODULE_AUTHOR("Andy Gross <agross@codeaurora.org>");
++MODULE_DESCRIPTION("QCOM ADM DMA engine driver");
++MODULE_LICENSE("GPL v2");
+-- 
+2.20.1
 
