@@ -2,204 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 475BF275944
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 16:00:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B80FB275958
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 16:05:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726498AbgIWOAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 10:00:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48564 "EHLO mail.kernel.org"
+        id S1726234AbgIWOFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 10:05:20 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:10510 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726234AbgIWOAn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 10:00:43 -0400
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+        id S1726634AbgIWOFU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 10:05:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600869920; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Xtdljh1No1QAeTSaYV0vbGjROBylDQ1ztRE3nRt6TEc=; b=w22xspPSvPq+xTt1D8oxveuajC0h2OzpeNETQsIK8ZwUWqpaQ0PnLexsIn0Q9aF5B7T0hDW5
+ 5n0Wp1UM7ZUcmftEs+oNUtmAPhDdT4YIXmHXLjd6nFeVVKTA7g3qa5QEzD37ueHXEPVqWSvo
+ GkNkJX8pypepLQq+Ta09GeDONDk=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f6b55cc588e0a9888abd958 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Sep 2020 14:03:56
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 49C5AC433CB; Wed, 23 Sep 2020 14:03:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 40B132220D;
-        Wed, 23 Sep 2020 14:00:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600869642;
-        bh=uPO5QEsbdE6AvUAkxiDyJMEnsN9G+X32NRZNdDWX7vo=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=GKmrh7TKpBRsEGTgA4ERGMC6c1N348Rx3sUa10F5RhBLgK29xbuC3wkccDbFEoX81
-         Z4eB1C0TDl+nPx/l4YzfJ1OQMCAGEf5I75L9WTB8gTOwOeAdvzPe399aJsSLPigTeS
-         0VGt2YFuxr6cQ7DjfI7HKIZxXJDDJeL7TrTJ28Bg=
-Received: by mail-oi1-f182.google.com with SMTP id v20so25129405oiv.3;
-        Wed, 23 Sep 2020 07:00:42 -0700 (PDT)
-X-Gm-Message-State: AOAM530KJbrl+opgoSkXPxjlcp7sUYo+Tyf3HJ32e8o65dnPHGj0rToj
-        NgxNZNhvITamIxXg9u0i0LiqLWcthZe6XCYxow==
-X-Google-Smtp-Source: ABdhPJw5m3EwopKpxZHXzXo8D6QAKUjhQa+P6a04N3OwKxbxayvWDjFH81CTtEfTj3d77o1PSZFOQUPKo/164Vp/9hE=
-X-Received: by 2002:aca:4d58:: with SMTP id a85mr5948098oib.147.1600869641415;
- Wed, 23 Sep 2020 07:00:41 -0700 (PDT)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7BB31C433C8;
+        Wed, 23 Sep 2020 14:03:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7BB31C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] bus: mhi: Add MHI PCI support
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1600868432-12438-1-git-send-email-loic.poulain@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <797a690f-247c-7ff1-6468-8d56b0b81116@codeaurora.org>
+Date:   Wed, 23 Sep 2020 08:03:53 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-References: <20200914154809.192174-1-dmitry.baryshkov@linaro.org>
- <20200914154809.192174-2-dmitry.baryshkov@linaro.org> <20200922234025.GA3476652@bogus>
- <55d3f181-b9e6-4963-9d0c-cefee875058c@linaro.org>
-In-Reply-To: <55d3f181-b9e6-4963-9d0c-cefee875058c@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 23 Sep 2020 08:00:29 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqK+Obxpy+Zd-3g8BN2h++S413=8V_ff1A2j91Cqc6RnDQ@mail.gmail.com>
-Message-ID: <CAL_JsqK+Obxpy+Zd-3g8BN2h++S413=8V_ff1A2j91Cqc6RnDQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/9] dt-bindings: thermal: qcom: add adc-thermal
- monitor bindings
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "open list:IIO SUBSYSTEM AND DRIVERS" <linux-iio@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1600868432-12438-1-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 23, 2020 at 3:07 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 23/09/2020 02:40, Rob Herring wrote:
-> > On Mon, Sep 14, 2020 at 06:48:01PM +0300, Dmitry Baryshkov wrote:
-> >> Add bindings for thermal monitor, part of Qualcomm PMIC5 chips. It is a
-> >> close counterpart of VADC part of those PMICs.
-> >>
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >> ---
-> >>   .../bindings/thermal/qcom-spmi-adc-tm5.yaml   | 151 ++++++++++++++++++
-> >>   1 file changed, 151 insertions(+)
-> >>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-> >> new file mode 100644
-> >> index 000000000000..432a65839b89
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-> >> @@ -0,0 +1,151 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/thermal/qcom-spmi-adc-tm5.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Qualcomm's SPMI PMIC ADC Thermal Monitoring
-> >> +maintainers:
-> >> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    const: qcom,spmi-adc-tm5
-> >> +
-> >> +  reg:
-> >> +    maxItems: 1
-> >> +
-> >> +  interrupts:
-> >> +    maxItems: 1
-> >> +
-> >> +  "#thermal-sensor-cells":
-> >> +    const: 1
-> >> +    description:
-> >> +      Number of cells required to uniquely identify the thermal sensors. Since
-> >> +      we have multiple sensors this is set to 1
-> >> +
-> >> +  "#address-cells":
-> >> +    const: 1
-> >> +
-> >> +  "#size-cells":
-> >> +    const: 0
-> >> +
-> >> +  qcom,avg-samples:
-> >> +    $ref: /schemas/types.yaml#/definitions/uint32
-> >> +    description: Number of samples to be used for measurement.
-> >> +    enum:
-> >> +      - 1
-> >> +      - 2
-> >> +      - 4
-> >> +      - 8
-> >> +      - 16
-> >> +    default: 1
-> >> +
-> >> +  qcom,decimation:
-> >> +    $ref: /schemas/types.yaml#/definitions/uint32
-> >> +    description: This parameter is used to decrease ADC sampling rate.
-> >> +            Quicker measurements can be made by reducing decimation ratio.
-> >> +    enum:
-> >> +      - 250
-> >> +      - 420
-> >> +      - 840
-> >> +    default: 840
-> >> +
-> >> +patternProperties:
-> >> +  "^([-a-z0-9]*)@[0-9]+$":
-> >
-> > Less than 10 as unit-addresses are hex?
->
-> 8 channels at max currently. I'll fix to use hex though.
+On 9/23/2020 7:40 AM, Loic Poulain wrote:
+> This is a generic MHI-over-PCI controller driver for MHI only devices
+> such as QCOM modems. For now it supports registering of Qualcomm SDX55
+> based PCIe modules. The MHI channels have been extracted from mhi
+> downstream driver.
+> 
+> This driver is easily extendable to support other MHI PCI devices like
+> different modem hw or OEM superset.
+> 
 
-Then it should be @[0-7]$
+Maybe I'm being a bit dense, but what does this "driver" even do?
 
-> >> +    type: object
-> >> +    description:
-> >> +      Represent one thermal sensor.
-> >> +
-> >> +    properties:
-> >> +      reg:
-> >> +        description: Specify the sensor channel.
-> >> +        maxItems: 1
-> >
-> > You need a range of values here.
->
-> ok.
->
-> >
-> >> +
-> >> +      io-channels:
-> >> +        description:
-> >> +          From common IIO binding. Used to pipe PMIC ADC channel to thermal monitor
-> >> +
-> >> +      qcom,adc-channel:
-> >> +        $ref: /schemas/types.yaml#/definitions/uint32
-> >> +        description: Corresponding ADC channel ID.
-> >
-> > Why is this not a cell in io-channels?
->
->
-> Do you mean parsing a cell from io-channels rather than specifying it
-> again? Sounds like a good idea.
+Ok, it'll bind to SDX55 and "power up" the MHI.  I don't see any 
+communication with the device, so I'm not really seeing the value here. 
+  Feels like this should be patch 1 of a series, but patches 2 - X are 
+"missing".
 
-Yes.
-
-> >> +      qcom,ratiometric:
-> >> +        $ref: /schemas/types.yaml#/definitions/flag
-> >> +        description:
-> >> +          Channel calibration type.
-> >> +          If this property is specified VADC will use the VDD reference
-> >> +          (1.875V) and GND for channel calibration. If property is not found,
-> >> +          channel will be calibrated with 0V and 1.25V reference channels,
-> >> +          also known as absolute calibration.
-> >> +
-> >> +      qcom,hw-settle-time:
-> >> +        $ref: /schemas/types.yaml#/definitions/uint32
-> >> +        description: Time between AMUX getting configured and the ADC starting conversion.
-> >
-> > Time values should have a unit suffix. Seems like a commmon ADC
-> > property...
->
-> Could you please be more specific here? Would you like for me to just
-> specify the unit in the description?
-
-More a question for Jonathan I guess as to whether this should be
-common or not. Maybe we have something already. Settle or acquisition
-time is a common thing for ADCs, right?
-
-Properties with units need a suffix as defined in
-.../bindings/property-units.txt.
-
-Rob
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
