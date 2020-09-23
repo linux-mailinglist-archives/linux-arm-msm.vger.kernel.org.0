@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 59E262755DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 12:22:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 189E6275591
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 12:22:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726634AbgIWKWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 06:22:10 -0400
-Received: from mx2.suse.de ([195.135.220.15]:57368 "EHLO mx2.suse.de"
+        id S1726689AbgIWKWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 06:22:12 -0400
+Received: from mx2.suse.de ([195.135.220.15]:57482 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726332AbgIWKWJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 06:22:09 -0400
+        id S1726652AbgIWKWK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 06:22:10 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 65514B289;
-        Wed, 23 Sep 2020 10:22:45 +0000 (UTC)
+        by mx2.suse.de (Postfix) with ESMTP id 5800FB27A;
+        Wed, 23 Sep 2020 10:22:46 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     alexander.deucher@amd.com, christian.koenig@amd.com,
         airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
@@ -51,10 +51,10 @@ Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         xen-devel@lists.xenproject.org,
         Thomas Zimmermann <tzimmermann@suse.de>,
-        kernel test robot <lkp@intel.com>
-Subject: [PATCH v3 07/22] drm/imx/dcss: Initialize DRM driver instance with CMA helper macro
-Date:   Wed, 23 Sep 2020 12:21:44 +0200
-Message-Id: <20200923102159.24084-8-tzimmermann@suse.de>
+        Daniel Vetter <daniel.vetter@ffwll.ch>
+Subject: [PATCH v3 08/22] drm/mediatek: Introduce GEM object functions
+Date:   Wed, 23 Sep 2020 12:21:45 +0200
+Message-Id: <20200923102159.24084-9-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200923102159.24084-1-tzimmermann@suse.de>
 References: <20200923102159.24084-1-tzimmermann@suse.de>
@@ -64,45 +64,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The i.MX DCSS driver uses CMA helpers with default callback functions.
-Initialize the driver structure with the rsp CMA helper macro. The
-driver is being converted to use GEM object functions as part of
-this change.
-
-Two callbacks, .gem_prime_export and .gem_prime_import, were initialized
-to their default implementations, so they are just kept empty now.
+GEM object functions deprecate several similar callback interfaces in
+struct drm_driver. This patch replaces the per-driver callbacks with
+per-instance callbacks in mediatek. The only exception is gem_prime_mmap,
+which is non-trivial to convert.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 ---
- drivers/gpu/drm/imx/dcss/dcss-kms.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |  5 -----
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 11 +++++++++++
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/dcss/dcss-kms.c b/drivers/gpu/drm/imx/dcss/dcss-kms.c
-index 135a62366ab8..b72e5cef7e40 100644
---- a/drivers/gpu/drm/imx/dcss/dcss-kms.c
-+++ b/drivers/gpu/drm/imx/dcss/dcss-kms.c
-@@ -28,19 +28,7 @@ static const struct drm_mode_config_funcs dcss_drm_mode_config_funcs = {
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index 2d982740b1a4..5899859438e0 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -303,18 +303,13 @@ struct drm_gem_object *mtk_drm_gem_prime_import(struct drm_device *dev,
+ static struct drm_driver mtk_drm_driver = {
+ 	.driver_features = DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
  
- static struct drm_driver dcss_kms_driver = {
- 	.driver_features	= DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
--	.gem_free_object_unlocked = drm_gem_cma_free_object,
--	.gem_vm_ops		= &drm_gem_cma_vm_ops,
--	.dumb_create		= drm_gem_cma_dumb_create,
--
--	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
--	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
--	.gem_prime_import	= drm_gem_prime_import,
--	.gem_prime_export	= drm_gem_prime_export,
--	.gem_prime_get_sg_table	= drm_gem_cma_prime_get_sg_table,
--	.gem_prime_import_sg_table = drm_gem_cma_prime_import_sg_table,
--	.gem_prime_vmap		= drm_gem_cma_prime_vmap,
--	.gem_prime_vunmap	= drm_gem_cma_prime_vunmap,
--	.gem_prime_mmap		= drm_gem_cma_prime_mmap,
-+	DRM_GEM_CMA_DRIVER_OPS,
- 	.fops			= &dcss_cma_fops,
- 	.name			= "imx-dcss",
- 	.desc			= "i.MX8MQ Display Subsystem",
+-	.gem_free_object_unlocked = mtk_drm_gem_free_object,
+-	.gem_vm_ops = &drm_gem_cma_vm_ops,
+ 	.dumb_create = mtk_drm_gem_dumb_create,
+ 
+ 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+ 	.gem_prime_import = mtk_drm_gem_prime_import,
+-	.gem_prime_get_sg_table = mtk_gem_prime_get_sg_table,
+ 	.gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
+ 	.gem_prime_mmap = mtk_drm_gem_mmap_buf,
+-	.gem_prime_vmap = mtk_drm_gem_prime_vmap,
+-	.gem_prime_vunmap = mtk_drm_gem_prime_vunmap,
+ 	.fops = &mtk_drm_fops,
+ 
+ 	.name = DRIVER_NAME,
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 0583e557ad37..cdd1a6e61564 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -8,11 +8,20 @@
+ #include <drm/drm.h>
+ #include <drm/drm_device.h>
+ #include <drm/drm_gem.h>
++#include <drm/drm_gem_cma_helper.h>
+ #include <drm/drm_prime.h>
+ 
+ #include "mtk_drm_drv.h"
+ #include "mtk_drm_gem.h"
+ 
++static const struct drm_gem_object_funcs mtk_drm_gem_object_funcs = {
++	.free = mtk_drm_gem_free_object,
++	.get_sg_table = mtk_gem_prime_get_sg_table,
++	.vmap = mtk_drm_gem_prime_vmap,
++	.vunmap = mtk_drm_gem_prime_vunmap,
++	.vm_ops = &drm_gem_cma_vm_ops,
++};
++
+ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+ 						unsigned long size)
+ {
+@@ -25,6 +34,8 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+ 	if (!mtk_gem_obj)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	mtk_gem_obj->base.funcs = &mtk_drm_gem_object_funcs;
++
+ 	ret = drm_gem_object_init(dev, &mtk_gem_obj->base, size);
+ 	if (ret < 0) {
+ 		DRM_ERROR("failed to initialize gem object\n");
 -- 
 2.28.0
 
