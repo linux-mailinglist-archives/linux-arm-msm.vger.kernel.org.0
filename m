@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 389222755A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 12:22:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 811B72755B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 12:22:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726722AbgIWKWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 06:22:15 -0400
-Received: from mx2.suse.de ([195.135.220.15]:57990 "EHLO mx2.suse.de"
+        id S1726734AbgIWKWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 06:22:17 -0400
+Received: from mx2.suse.de ([195.135.220.15]:57482 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726709AbgIWKWP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 06:22:15 -0400
+        id S1726674AbgIWKWQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 06:22:16 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 3F26CB281;
-        Wed, 23 Sep 2020 10:22:51 +0000 (UTC)
+        by mx2.suse.de (Postfix) with ESMTP id 388DBB009;
+        Wed, 23 Sep 2020 10:22:52 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     alexander.deucher@amd.com, christian.koenig@amd.com,
         airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
@@ -50,15 +50,15 @@ Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         xen-devel@lists.xenproject.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 13/22] drm/radeon: Introduce GEM object functions
-Date:   Wed, 23 Sep 2020 12:21:50 +0200
-Message-Id: <20200923102159.24084-14-tzimmermann@suse.de>
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>
+Subject: [PATCH v3 14/22] drm/rockchip: Convert to drm_gem_object_funcs
+Date:   Wed, 23 Sep 2020 12:21:51 +0200
+Message-Id: <20200923102159.24084-15-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200923102159.24084-1-tzimmermann@suse.de>
 References: <20200923102159.24084-1-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -66,154 +66,76 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 GEM object functions deprecate several similar callback interfaces in
 struct drm_driver. This patch replaces the per-driver callbacks with
-per-instance callbacks in radeon.
+per-instance callbacks in rockchip. The only exception is gem_prime_mmap,
+which is non-trivial to convert.
 
-v2:
-	* move object-function instance to radeon_gem.c (Christian)
-	* set callbacks in radeon_gem_object_create() (Christian)
+v3:
+	* update documentation
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 ---
- drivers/gpu/drm/radeon/radeon_drv.c | 23 +--------------------
- drivers/gpu/drm/radeon/radeon_gem.c | 31 +++++++++++++++++++++++++----
- 2 files changed, 28 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_drv.c |  5 -----
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 12 +++++++++++-
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_drv.c b/drivers/gpu/drm/radeon/radeon_drv.c
-index 4cd30613fa1d..65061c949aee 100644
---- a/drivers/gpu/drm/radeon/radeon_drv.c
-+++ b/drivers/gpu/drm/radeon/radeon_drv.c
-@@ -124,13 +124,6 @@ void radeon_driver_irq_preinstall_kms(struct drm_device *dev);
- int radeon_driver_irq_postinstall_kms(struct drm_device *dev);
- void radeon_driver_irq_uninstall_kms(struct drm_device *dev);
- irqreturn_t radeon_driver_irq_handler_kms(int irq, void *arg);
--void radeon_gem_object_free(struct drm_gem_object *obj);
--int radeon_gem_object_open(struct drm_gem_object *obj,
--				struct drm_file *file_priv);
--void radeon_gem_object_close(struct drm_gem_object *obj,
--				struct drm_file *file_priv);
--struct dma_buf *radeon_gem_prime_export(struct drm_gem_object *gobj,
--					int flags);
- extern int radeon_get_crtc_scanoutpos(struct drm_device *dev, unsigned int crtc,
- 				      unsigned int flags, int *vpos, int *hpos,
- 				      ktime_t *stime, ktime_t *etime,
-@@ -145,14 +138,9 @@ int radeon_mode_dumb_mmap(struct drm_file *filp,
- int radeon_mode_dumb_create(struct drm_file *file_priv,
- 			    struct drm_device *dev,
- 			    struct drm_mode_create_dumb *args);
--struct sg_table *radeon_gem_prime_get_sg_table(struct drm_gem_object *obj);
- struct drm_gem_object *radeon_gem_prime_import_sg_table(struct drm_device *dev,
- 							struct dma_buf_attachment *,
- 							struct sg_table *sg);
--int radeon_gem_prime_pin(struct drm_gem_object *obj);
--void radeon_gem_prime_unpin(struct drm_gem_object *obj);
--void *radeon_gem_prime_vmap(struct drm_gem_object *obj);
--void radeon_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr);
- 
- /* atpx handler */
- #if defined(CONFIG_VGA_SWITCHEROO)
-@@ -550,7 +538,7 @@ long radeon_drm_ioctl(struct file *filp,
- 	}
- 
- 	ret = drm_ioctl(filp, cmd, arg);
--	
-+
- 	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
- 	return ret;
-@@ -609,22 +597,13 @@ static struct drm_driver kms_driver = {
- 	.irq_uninstall = radeon_driver_irq_uninstall_kms,
- 	.irq_handler = radeon_driver_irq_handler_kms,
- 	.ioctls = radeon_ioctls_kms,
--	.gem_free_object_unlocked = radeon_gem_object_free,
--	.gem_open_object = radeon_gem_object_open,
--	.gem_close_object = radeon_gem_object_close,
- 	.dumb_create = radeon_mode_dumb_create,
- 	.dumb_map_offset = radeon_mode_dumb_mmap,
- 	.fops = &radeon_driver_kms_fops,
- 
- 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
- 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
--	.gem_prime_export = radeon_gem_prime_export,
--	.gem_prime_pin = radeon_gem_prime_pin,
--	.gem_prime_unpin = radeon_gem_prime_unpin,
--	.gem_prime_get_sg_table = radeon_gem_prime_get_sg_table,
- 	.gem_prime_import_sg_table = radeon_gem_prime_import_sg_table,
--	.gem_prime_vmap = radeon_gem_prime_vmap,
--	.gem_prime_vunmap = radeon_gem_prime_vunmap,
- 
- 	.name = DRIVER_NAME,
- 	.desc = DRIVER_DESC,
-diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
-index e5c4271e64ed..0ccd7213e41f 100644
---- a/drivers/gpu/drm/radeon/radeon_gem.c
-+++ b/drivers/gpu/drm/radeon/radeon_gem.c
-@@ -35,7 +35,17 @@
- 
- #include "radeon.h"
- 
--void radeon_gem_object_free(struct drm_gem_object *gobj)
-+struct dma_buf *radeon_gem_prime_export(struct drm_gem_object *gobj,
-+					int flags);
-+struct sg_table *radeon_gem_prime_get_sg_table(struct drm_gem_object *obj);
-+int radeon_gem_prime_pin(struct drm_gem_object *obj);
-+void radeon_gem_prime_unpin(struct drm_gem_object *obj);
-+void *radeon_gem_prime_vmap(struct drm_gem_object *obj);
-+void radeon_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr);
-+
-+static const struct drm_gem_object_funcs radeon_gem_object_funcs;
-+
-+static void radeon_gem_object_free(struct drm_gem_object *gobj)
- {
- 	struct radeon_bo *robj = gem_to_radeon_bo(gobj);
- 
-@@ -85,6 +95,7 @@ int radeon_gem_object_create(struct radeon_device *rdev, unsigned long size,
- 		return r;
- 	}
- 	*obj = &robj->tbo.base;
-+	(*obj)->funcs = &radeon_gem_object_funcs;
- 	robj->pid = task_pid_nr(current);
- 
- 	mutex_lock(&rdev->gem.mutex);
-@@ -146,7 +157,7 @@ void radeon_gem_fini(struct radeon_device *rdev)
-  * Call from drm_gem_handle_create which appear in both new and open ioctl
-  * case.
-  */
--int radeon_gem_object_open(struct drm_gem_object *obj, struct drm_file *file_priv)
-+static int radeon_gem_object_open(struct drm_gem_object *obj, struct drm_file *file_priv)
- {
- 	struct radeon_bo *rbo = gem_to_radeon_bo(obj);
- 	struct radeon_device *rdev = rbo->rdev;
-@@ -176,8 +187,8 @@ int radeon_gem_object_open(struct drm_gem_object *obj, struct drm_file *file_pri
- 	return 0;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+index 0f3eb392fe39..b7654f5e4225 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+@@ -212,15 +212,10 @@ static const struct file_operations rockchip_drm_driver_fops = {
+ static struct drm_driver rockchip_drm_driver = {
+ 	.driver_features	= DRIVER_MODESET | DRIVER_GEM | DRIVER_ATOMIC,
+ 	.lastclose		= drm_fb_helper_lastclose,
+-	.gem_vm_ops		= &drm_gem_cma_vm_ops,
+-	.gem_free_object_unlocked = rockchip_gem_free_object,
+ 	.dumb_create		= rockchip_gem_dumb_create,
+ 	.prime_handle_to_fd	= drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle	= drm_gem_prime_fd_to_handle,
+-	.gem_prime_get_sg_table	= rockchip_gem_prime_get_sg_table,
+ 	.gem_prime_import_sg_table	= rockchip_gem_prime_import_sg_table,
+-	.gem_prime_vmap		= rockchip_gem_prime_vmap,
+-	.gem_prime_vunmap	= rockchip_gem_prime_vunmap,
+ 	.gem_prime_mmap		= rockchip_gem_mmap_buf,
+ 	.fops			= &rockchip_drm_driver_fops,
+ 	.name	= DRIVER_NAME,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 62e5d0970525..1cf4631461c9 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -295,6 +295,14 @@ static void rockchip_gem_release_object(struct rockchip_gem_object *rk_obj)
+ 	kfree(rk_obj);
  }
  
--void radeon_gem_object_close(struct drm_gem_object *obj,
--			     struct drm_file *file_priv)
-+static void radeon_gem_object_close(struct drm_gem_object *obj,
-+				    struct drm_file *file_priv)
- {
- 	struct radeon_bo *rbo = gem_to_radeon_bo(obj);
- 	struct radeon_device *rdev = rbo->rdev;
-@@ -216,6 +227,18 @@ static int radeon_gem_handle_lockup(struct radeon_device *rdev, int r)
- 	return r;
- }
- 
-+static const struct drm_gem_object_funcs radeon_gem_object_funcs = {
-+	.free = radeon_gem_object_free,
-+	.open = radeon_gem_object_open,
-+	.close = radeon_gem_object_close,
-+	.export = radeon_gem_prime_export,
-+	.pin = radeon_gem_prime_pin,
-+	.unpin = radeon_gem_prime_unpin,
-+	.get_sg_table = radeon_gem_prime_get_sg_table,
-+	.vmap = radeon_gem_prime_vmap,
-+	.vunmap = radeon_gem_prime_vunmap,
++static const struct drm_gem_object_funcs rockchip_gem_object_funcs = {
++	.free = rockchip_gem_free_object,
++	.get_sg_table = rockchip_gem_prime_get_sg_table,
++	.vmap = rockchip_gem_prime_vmap,
++	.vunmap	= rockchip_gem_prime_vunmap,
++	.vm_ops = &drm_gem_cma_vm_ops,
 +};
 +
+ static struct rockchip_gem_object *
+ 	rockchip_gem_alloc_object(struct drm_device *drm, unsigned int size)
+ {
+@@ -309,6 +317,8 @@ static struct rockchip_gem_object *
+ 
+ 	obj = &rk_obj->base;
+ 
++	obj->funcs = &rockchip_gem_object_funcs;
++
+ 	drm_gem_object_init(drm, obj, size);
+ 
+ 	return rk_obj;
+@@ -337,7 +347,7 @@ rockchip_gem_create_object(struct drm_device *drm, unsigned int size,
+ }
+ 
  /*
-  * GEM ioctls.
+- * rockchip_gem_free_object - (struct drm_driver)->gem_free_object_unlocked
++ * rockchip_gem_free_object - (struct drm_gem_object_funcs)->free
+  * callback function
   */
+ void rockchip_gem_free_object(struct drm_gem_object *obj)
 -- 
 2.28.0
 
