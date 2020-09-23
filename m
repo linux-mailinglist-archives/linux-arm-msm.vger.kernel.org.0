@@ -2,154 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA0C22757BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 14:12:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 364892757E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 14:30:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726534AbgIWMMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 08:12:25 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:45931 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726498AbgIWMMZ (ORCPT
+        id S1726513AbgIWMa3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 08:30:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43326 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726130AbgIWMa3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 08:12:25 -0400
-Received: by mail-oi1-f196.google.com with SMTP id z26so24724138oih.12;
-        Wed, 23 Sep 2020 05:12:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eveZIbMy5IaynFxma8rYgZSMFND5801oVWlwra+0n8I=;
-        b=bOZnX94N16otpsU1LPVWYvCSMbFL+SOA3z5aaeuRoCHjOGWRI7Eh+w1RyeaQPZ7UWu
-         nCEwbqhcZ6D9u0j0UFGVNL3xFtmFDJdI4LgV8u84/pxuxuaxAznJhc9DZfVycfMtmDIz
-         Ah1z6B5tmg+tyytM7XyQSAJ8K86NKQz6krbWO4YFtxAl4XFCu9l4rszHbk7zkleP1oN8
-         4WaZ9O9Cpxfyy+a/dDa3JdiSXIm/dcHl0H2wthrt8yEKrcMLhe1wjkwU5Bbk092Xk+Fb
-         T58S5HB+VQ6lJEevGYDGtunbMHfWBXR0zgZcbco91Cn242Rz/m5HmeiaKMP/PsXRlvYH
-         6gYw==
-X-Gm-Message-State: AOAM532me7d4Gi7j0L/8bL+rUjUg3otut1DDTKn9+jXYYuK3QXKhrgk8
-        jXPeWUcC3i/Mhy0Ty9onxY/d2PyhZk04Ix/9vtzy1DY4
-X-Google-Smtp-Source: ABdhPJzzJuupuF64EpLqYlHLZHIz3hvhsnMUcZcqxdYlUfrZGOIRy88bH3VwTICVcry00uYzCyQWzAIc7VxUC0xZMbQ=
-X-Received: by 2002:aca:5b09:: with SMTP id p9mr5330041oib.68.1600863144301;
- Wed, 23 Sep 2020 05:12:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200922183416.14442-1-ilina@codeaurora.org>
-In-Reply-To: <20200922183416.14442-1-ilina@codeaurora.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Wed, 23 Sep 2020 14:12:10 +0200
-Message-ID: <CAJZ5v0gooHij1AAjXXm+R-SHYUscuvANYv25pG2_iWqe_DBcpw@mail.gmail.com>
-Subject: Re: [PATCH v2] cpuidle: record state entry rejection statistics
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Wed, 23 Sep 2020 08:30:29 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B3EC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 05:30:28 -0700 (PDT)
+Received: from [2a0a:edc0:0:900:6245:cbff:fea0:1793] (helo=kresse.office.stw.pengutronix.de)
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <l.stach@pengutronix.de>)
+        id 1kL3sK-0001Gu-2L; Wed, 23 Sep 2020 14:27:57 +0200
+Message-ID: <3411d277f84ec42eca6c467ceafb10d59c0fd482.camel@pengutronix.de>
+From:   Lucas Stach <l.stach@pengutronix.de>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, alexander.deucher@amd.com,
+        christian.koenig@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+        linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, christian.gmeiner@gmail.com,
+        inki.dae@samsung.com, jy0922.shim@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com,
+        kgene@kernel.org, krzk@kernel.org, patrik.r.jakobsson@gmail.com,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+        robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+        tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com,
+        heiko@sntech.de, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+        oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+        laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+        sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+        tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, laurentiu.palcu@oss.nxp.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org,
+        Daniel Vetter <daniel.vetter@ffwll.ch>
+Date:   Wed, 23 Sep 2020 14:27:37 +0200
+In-Reply-To: <20200923102159.24084-4-tzimmermann@suse.de>
+References: <20200923102159.24084-1-tzimmermann@suse.de>
+         <20200923102159.24084-4-tzimmermann@suse.de>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:6245:cbff:fea0:1793
+X-SA-Exim-Mail-From: l.stach@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
+        metis.ext.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.2 required=4.0 tests=AWL,BAYES_00,RDNS_NONE,
+        SPF_HELO_NONE,SPF_SOFTFAIL,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.2
+Subject: Re: [PATCH v3 03/22] drm/etnaviv: Introduce GEM object functions
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 22, 2020 at 8:34 PM Lina Iyer <ilina@codeaurora.org> wrote:
->
-> CPUs may fail to enter the chosen idle state if there was a pending
-> interrupt. The cpuidle driver would return an error value in that case.
-> Let's record that and show along with other statistics for the idle
-> state. This could prove useful in understanding behavior of the governor
-> and the system during usecases that involve multiple CPUs.
->
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+On Mi, 2020-09-23 at 12:21 +0200, Thomas Zimmermann wrote:
+> GEM object functions deprecate several similar callback interfaces in
+> struct drm_driver. This patch replaces the per-driver callbacks with
+> per-instance callbacks in etnaviv. The only exception is gem_prime_mmap,
+> which is non-trivial to convert.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-Applied as 5.10 material with some changelog and documentation edits, thanks!
-
->
+Acked-by: Lucas Stach <l.stach@pengutronix.de>
 > ---
-> Changes in v2:
-> - Rename 'failed' to 'rejected'
-> - Update documentation
-> ---
->  Documentation/admin-guide/pm/cpuidle.rst | 8 ++++++++
->  drivers/cpuidle/cpuidle.c                | 1 +
->  drivers/cpuidle/sysfs.c                  | 3 +++
->  include/linux/cpuidle.h                  | 1 +
->  4 files changed, 13 insertions(+)
->
-> diff --git a/Documentation/admin-guide/pm/cpuidle.rst b/Documentation/admin-guide/pm/cpuidle.rst
-> index a96a423e3779..1e7fd7a64c65 100644
-> --- a/Documentation/admin-guide/pm/cpuidle.rst
-> +++ b/Documentation/admin-guide/pm/cpuidle.rst
-> @@ -528,6 +528,9 @@ object corresponding to it, as follows:
->         Total number of times the hardware has been asked by the given CPU to
->         enter this idle state.
->
-> +``rejected``
-> +        Total number of times the idle state requested to the CPU was rejected.
+>  drivers/gpu/drm/etnaviv/etnaviv_drv.c | 13 -------------
+>  drivers/gpu/drm/etnaviv/etnaviv_drv.h |  1 -
+>  drivers/gpu/drm/etnaviv/etnaviv_gem.c | 19 ++++++++++++++++++-
+>  3 files changed, 18 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+> index a9a3afaef9a1..aa270b79e585 100644
+> --- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+> +++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+> @@ -468,12 +468,6 @@ static const struct drm_ioctl_desc etnaviv_ioctls[] = {
+>  	ETNA_IOCTL(PM_QUERY_SIG, pm_query_sig, DRM_RENDER_ALLOW),
+>  };
+>  
+> -static const struct vm_operations_struct vm_ops = {
+> -	.fault = etnaviv_gem_fault,
+> -	.open = drm_gem_vm_open,
+> -	.close = drm_gem_vm_close,
+> -};
+> -
+>  static const struct file_operations fops = {
+>  	.owner              = THIS_MODULE,
+>  	.open               = drm_open,
+> @@ -490,16 +484,9 @@ static struct drm_driver etnaviv_drm_driver = {
+>  	.driver_features    = DRIVER_GEM | DRIVER_RENDER,
+>  	.open               = etnaviv_open,
+>  	.postclose           = etnaviv_postclose,
+> -	.gem_free_object_unlocked = etnaviv_gem_free_object,
+> -	.gem_vm_ops         = &vm_ops,
+>  	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>  	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+> -	.gem_prime_pin      = etnaviv_gem_prime_pin,
+> -	.gem_prime_unpin    = etnaviv_gem_prime_unpin,
+> -	.gem_prime_get_sg_table = etnaviv_gem_prime_get_sg_table,
+>  	.gem_prime_import_sg_table = etnaviv_gem_prime_import_sg_table,
+> -	.gem_prime_vmap     = etnaviv_gem_prime_vmap,
+> -	.gem_prime_vunmap   = etnaviv_gem_prime_vunmap,
+>  	.gem_prime_mmap     = etnaviv_gem_prime_mmap,
+>  #ifdef CONFIG_DEBUG_FS
+>  	.debugfs_init       = etnaviv_debugfs_init,
+> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.h b/drivers/gpu/drm/etnaviv/etnaviv_drv.h
+> index 4d8dc9236e5f..914f0867ff71 100644
+> --- a/drivers/gpu/drm/etnaviv/etnaviv_drv.h
+> +++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.h
+> @@ -49,7 +49,6 @@ int etnaviv_ioctl_gem_submit(struct drm_device *dev, void *data,
+>  		struct drm_file *file);
+>  
+>  int etnaviv_gem_mmap(struct file *filp, struct vm_area_struct *vma);
+> -vm_fault_t etnaviv_gem_fault(struct vm_fault *vmf);
+>  int etnaviv_gem_mmap_offset(struct drm_gem_object *obj, u64 *offset);
+>  struct sg_table *etnaviv_gem_prime_get_sg_table(struct drm_gem_object *obj);
+>  void *etnaviv_gem_prime_vmap(struct drm_gem_object *obj);
+> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
+> index d1533bdc1335..67d9a2b9ea6a 100644
+> --- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
+> +++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
+> @@ -171,7 +171,7 @@ int etnaviv_gem_mmap(struct file *filp, struct vm_area_struct *vma)
+>  	return obj->ops->mmap(obj, vma);
+>  }
+>  
+> -vm_fault_t etnaviv_gem_fault(struct vm_fault *vmf)
+> +static vm_fault_t etnaviv_gem_fault(struct vm_fault *vmf)
+>  {
+>  	struct vm_area_struct *vma = vmf->vma;
+>  	struct drm_gem_object *obj = vma->vm_private_data;
+> @@ -559,6 +559,22 @@ void etnaviv_gem_obj_add(struct drm_device *dev, struct drm_gem_object *obj)
+>  	mutex_unlock(&priv->gem_lock);
+>  }
+>  
+> +static const struct vm_operations_struct vm_ops = {
+> +	.fault = etnaviv_gem_fault,
+> +	.open = drm_gem_vm_open,
+> +	.close = drm_gem_vm_close,
+> +};
 > +
->  The :file:`desc` and :file:`name` files both contain strings.  The difference
->  between them is that the name is expected to be more concise, while the
->  description may be longer and it may contain white space or special characters.
-> @@ -572,6 +575,11 @@ particular case.  For these reasons, the only reliable way to find out how
->  much time has been spent by the hardware in different idle states supported by
->  it is to use idle state residency counters in the hardware, if available.
->
-> +Generally, an  interrupt received when entering idle state would cause the idle
-> +state entry request to be rejected. The return value from the cpuidle driver
-> +indicates whether the idle state was entered or rejected. The files
-> +:file:`usage` and :file:`rejected` report the number of times the idle states
-> +were successfully entered and rejected, respectively.
->
->  .. _cpu-pm-qos:
->
-> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
-> index 6c7e5621cf9a..0ed5030b89d6 100644
-> --- a/drivers/cpuidle/cpuidle.c
-> +++ b/drivers/cpuidle/cpuidle.c
-> @@ -307,6 +307,7 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
->                 }
->         } else {
->                 dev->last_residency_ns = 0;
-> +               dev->states_usage[index].rejected++;
->         }
->
->         return entered_state;
-> diff --git a/drivers/cpuidle/sysfs.c b/drivers/cpuidle/sysfs.c
-> index 091d1caceb41..53ec9585ccd4 100644
-> --- a/drivers/cpuidle/sysfs.c
-> +++ b/drivers/cpuidle/sysfs.c
-> @@ -256,6 +256,7 @@ define_show_state_time_function(exit_latency)
->  define_show_state_time_function(target_residency)
->  define_show_state_function(power_usage)
->  define_show_state_ull_function(usage)
-> +define_show_state_ull_function(rejected)
->  define_show_state_str_function(name)
->  define_show_state_str_function(desc)
->  define_show_state_ull_function(above)
-> @@ -312,6 +313,7 @@ define_one_state_ro(latency, show_state_exit_latency);
->  define_one_state_ro(residency, show_state_target_residency);
->  define_one_state_ro(power, show_state_power_usage);
->  define_one_state_ro(usage, show_state_usage);
-> +define_one_state_ro(rejected, show_state_rejected);
->  define_one_state_ro(time, show_state_time);
->  define_one_state_rw(disable, show_state_disable, store_state_disable);
->  define_one_state_ro(above, show_state_above);
-> @@ -325,6 +327,7 @@ static struct attribute *cpuidle_state_default_attrs[] = {
->         &attr_residency.attr,
->         &attr_power.attr,
->         &attr_usage.attr,
-> +       &attr_rejected.attr,
->         &attr_time.attr,
->         &attr_disable.attr,
->         &attr_above.attr,
-> diff --git a/include/linux/cpuidle.h b/include/linux/cpuidle.h
-> index 6175c77bf25e..ed0da0e58e8b 100644
-> --- a/include/linux/cpuidle.h
-> +++ b/include/linux/cpuidle.h
-> @@ -38,6 +38,7 @@ struct cpuidle_state_usage {
->         u64                     time_ns;
->         unsigned long long      above; /* Number of times it's been too deep */
->         unsigned long long      below; /* Number of times it's been too shallow */
-> +       unsigned long long      rejected; /* Number of times idle entry was rejected */
->  #ifdef CONFIG_SUSPEND
->         unsigned long long      s2idle_usage;
->         unsigned long long      s2idle_time; /* in US */
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+> +static const struct drm_gem_object_funcs etnaviv_gem_object_funcs = {
+> +	.free = etnaviv_gem_free_object,
+> +	.pin = etnaviv_gem_prime_pin,
+> +	.unpin = etnaviv_gem_prime_unpin,
+> +	.get_sg_table = etnaviv_gem_prime_get_sg_table,
+> +	.vmap = etnaviv_gem_prime_vmap,
+> +	.vunmap = etnaviv_gem_prime_vunmap,
+> +	.vm_ops = &vm_ops,
+> +};
+> +
+>  static int etnaviv_gem_new_impl(struct drm_device *dev, u32 size, u32 flags,
+>  	const struct etnaviv_gem_ops *ops, struct drm_gem_object **obj)
+>  {
+> @@ -593,6 +609,7 @@ static int etnaviv_gem_new_impl(struct drm_device *dev, u32 size, u32 flags,
+>  	INIT_LIST_HEAD(&etnaviv_obj->vram_list);
+>  
+>  	*obj = &etnaviv_obj->base;
+> +	(*obj)->funcs = &etnaviv_gem_object_funcs;
+>  
+>  	return 0;
+>  }
+
