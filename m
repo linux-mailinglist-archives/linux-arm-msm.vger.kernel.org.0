@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76EBF27558F
+	by mail.lfdr.de (Postfix) with ESMTP id 0A82B27558D
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 12:22:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgIWKWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 06:22:11 -0400
-Received: from mx2.suse.de ([195.135.220.15]:57174 "EHLO mx2.suse.de"
+        id S1726420AbgIWKWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 06:22:10 -0400
+Received: from mx2.suse.de ([195.135.220.15]:57274 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726632AbgIWKWI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 06:22:08 -0400
+        id S1726634AbgIWKWJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 06:22:09 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 71F61B284;
-        Wed, 23 Sep 2020 10:22:43 +0000 (UTC)
+        by mx2.suse.de (Postfix) with ESMTP id 6CA01B286;
+        Wed, 23 Sep 2020 10:22:44 +0000 (UTC)
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     alexander.deucher@amd.com, christian.koenig@amd.com,
         airlied@linux.ie, daniel@ffwll.ch, linux@armlinux.org.uk,
@@ -51,10 +51,10 @@ Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         xen-devel@lists.xenproject.org,
         Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH v3 05/22] drm/gma500: Introduce GEM object functions
-Date:   Wed, 23 Sep 2020 12:21:42 +0200
-Message-Id: <20200923102159.24084-6-tzimmermann@suse.de>
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH v3 06/22] drm/i915: Introduce GEM object functions
+Date:   Wed, 23 Sep 2020 12:21:43 +0200
+Message-Id: <20200923102159.24084-7-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200923102159.24084-1-tzimmermann@suse.de>
 References: <20200923102159.24084-1-tzimmermann@suse.de>
@@ -66,146 +66,120 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 GEM object functions deprecate several similar callback interfaces in
 struct drm_driver. This patch replaces the per-driver callbacks with
-per-instance callbacks in gma500.
+per-instance callbacks in i915.
+
+v2:
+	* move object-function instance to i915_gem_object.c (Jani)
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 ---
- drivers/gpu/drm/gma500/framebuffer.c |  2 ++
- drivers/gpu/drm/gma500/gem.c         | 18 ++++++++++++++++--
- drivers/gpu/drm/gma500/gem.h         |  3 +++
- drivers/gpu/drm/gma500/psb_drv.c     |  9 ---------
- drivers/gpu/drm/gma500/psb_drv.h     |  2 --
- 5 files changed, 21 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_object.c    | 21 ++++++++++++++++---
+ drivers/gpu/drm/i915/gem/i915_gem_object.h    |  3 ---
+ drivers/gpu/drm/i915/i915_drv.c               |  4 ----
+ .../gpu/drm/i915/selftests/mock_gem_device.c  |  3 ---
+ 4 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/gma500/framebuffer.c b/drivers/gpu/drm/gma500/framebuffer.c
-index 54d9876b5305..5ede24fb44ae 100644
---- a/drivers/gpu/drm/gma500/framebuffer.c
-+++ b/drivers/gpu/drm/gma500/framebuffer.c
-@@ -24,6 +24,7 @@
- #include <drm/drm_gem_framebuffer_helper.h>
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object.c b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+index c8421fd9d2dc..3389ac972d16 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+@@ -39,9 +39,18 @@ static struct i915_global_object {
+ 	struct kmem_cache *slab_objects;
+ } global;
  
- #include "framebuffer.h"
-+#include "gem.h"
- #include "gtt.h"
- #include "psb_drv.h"
- #include "psb_intel_drv.h"
-@@ -285,6 +286,7 @@ static struct gtt_range *psbfb_alloc(struct drm_device *dev, int aligned_size)
- 	/* Begin by trying to use stolen memory backing */
- 	backing = psb_gtt_alloc_range(dev, aligned_size, "fb", 1, PAGE_SIZE);
- 	if (backing) {
-+		backing->gem.funcs = &psb_gem_object_funcs;
- 		drm_gem_private_object_init(dev, &backing->gem, aligned_size);
- 		return backing;
- 	}
-diff --git a/drivers/gpu/drm/gma500/gem.c b/drivers/gpu/drm/gma500/gem.c
-index f9c4b1d76f56..8f07de83b6fb 100644
---- a/drivers/gpu/drm/gma500/gem.c
-+++ b/drivers/gpu/drm/gma500/gem.c
-@@ -18,7 +18,9 @@
- 
- #include "psb_drv.h"
- 
--void psb_gem_free_object(struct drm_gem_object *obj)
-+static vm_fault_t psb_gem_fault(struct vm_fault *vmf);
++static const struct drm_gem_object_funcs i915_gem_object_funcs;
 +
-+static void psb_gem_free_object(struct drm_gem_object *obj)
+ struct drm_i915_gem_object *i915_gem_object_alloc(void)
  {
- 	struct gtt_range *gtt = container_of(obj, struct gtt_range, gem);
- 
-@@ -36,6 +38,17 @@ int psb_gem_get_aperture(struct drm_device *dev, void *data,
- 	return -EINVAL;
+-	return kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
++	struct drm_i915_gem_object *obj;
++
++	obj = kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
++	if (!obj)
++		return NULL;
++	obj->base.funcs = &i915_gem_object_funcs;
++
++	return obj;
  }
  
-+static const struct vm_operations_struct psb_gem_vm_ops = {
-+	.fault = psb_gem_fault,
-+	.open = drm_gem_vm_open,
-+	.close = drm_gem_vm_close,
-+};
-+
-+const struct drm_gem_object_funcs psb_gem_object_funcs = {
-+	.free = psb_gem_free_object,
-+	.vm_ops = &psb_gem_vm_ops,
-+};
-+
- /**
-  *	psb_gem_create		-	create a mappable object
-  *	@file: the DRM file of the client
-@@ -63,6 +76,7 @@ int psb_gem_create(struct drm_file *file, struct drm_device *dev, u64 size,
- 		dev_err(dev->dev, "no memory for %lld byte GEM object\n", size);
- 		return -ENOSPC;
- 	}
-+	r->gem.funcs = &psb_gem_object_funcs;
- 	/* Initialize the extra goodies GEM needs to do all the hard work */
- 	if (drm_gem_object_init(dev, &r->gem, size) != 0) {
- 		psb_gtt_free_range(dev, r);
-@@ -123,7 +137,7 @@ int psb_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
-  *	vma->vm_private_data points to the GEM object that is backing this
-  *	mapping.
-  */
--vm_fault_t psb_gem_fault(struct vm_fault *vmf)
-+static vm_fault_t psb_gem_fault(struct vm_fault *vmf)
- {
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct drm_gem_object *obj;
-diff --git a/drivers/gpu/drm/gma500/gem.h b/drivers/gpu/drm/gma500/gem.h
-index 4a74dc623b6b..3741a711b9fd 100644
---- a/drivers/gpu/drm/gma500/gem.h
-+++ b/drivers/gpu/drm/gma500/gem.h
-@@ -8,6 +8,9 @@
- #ifndef _GEM_H
- #define _GEM_H
+ void i915_gem_object_free(struct drm_i915_gem_object *obj)
+@@ -101,7 +110,7 @@ void i915_gem_object_set_cache_coherency(struct drm_i915_gem_object *obj,
+ 		!(obj->cache_coherent & I915_BO_CACHE_COHERENT_FOR_WRITE);
+ }
  
-+extern const struct drm_gem_object_funcs psb_gem_object_funcs;
+-void i915_gem_close_object(struct drm_gem_object *gem, struct drm_file *file)
++static void i915_gem_close_object(struct drm_gem_object *gem, struct drm_file *file)
+ {
+ 	struct drm_i915_gem_object *obj = to_intel_bo(gem);
+ 	struct drm_i915_file_private *fpriv = file->driver_priv;
+@@ -264,7 +273,7 @@ static void __i915_gem_free_work(struct work_struct *work)
+ 	i915_gem_flush_free_objects(i915);
+ }
+ 
+-void i915_gem_free_object(struct drm_gem_object *gem_obj)
++static void i915_gem_free_object(struct drm_gem_object *gem_obj)
+ {
+ 	struct drm_i915_gem_object *obj = to_intel_bo(gem_obj);
+ 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
+@@ -403,6 +412,12 @@ int __init i915_global_objects_init(void)
+ 	return 0;
+ }
+ 
++static const struct drm_gem_object_funcs i915_gem_object_funcs = {
++	.free = i915_gem_free_object,
++	.close = i915_gem_close_object,
++	.export = i915_gem_prime_export,
++};
 +
- extern int psb_gem_create(struct drm_file *file, struct drm_device *dev,
- 			  u64 size, u32 *handlep, int stolen, u32 align);
-+
- #endif
-diff --git a/drivers/gpu/drm/gma500/psb_drv.c b/drivers/gpu/drm/gma500/psb_drv.c
-index 34b4aae9a15e..b13376a6fb91 100644
---- a/drivers/gpu/drm/gma500/psb_drv.c
-+++ b/drivers/gpu/drm/gma500/psb_drv.c
-@@ -480,12 +480,6 @@ static const struct dev_pm_ops psb_pm_ops = {
- 	.runtime_idle = psb_runtime_idle,
+ #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
+ #include "selftests/huge_gem_object.c"
+ #include "selftests/huge_pages.c"
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_object.h b/drivers/gpu/drm/i915/gem/i915_gem_object.h
+index d46db8d8f38e..eaf3d4147be0 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.h
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.h
+@@ -38,9 +38,6 @@ void __i915_gem_object_release_shmem(struct drm_i915_gem_object *obj,
+ 
+ int i915_gem_object_attach_phys(struct drm_i915_gem_object *obj, int align);
+ 
+-void i915_gem_close_object(struct drm_gem_object *gem, struct drm_file *file);
+-void i915_gem_free_object(struct drm_gem_object *obj);
+-
+ void i915_gem_flush_free_objects(struct drm_i915_private *i915);
+ 
+ struct sg_table *
+diff --git a/drivers/gpu/drm/i915/i915_drv.c b/drivers/gpu/drm/i915/i915_drv.c
+index acc32066cec3..45e719c79183 100644
+--- a/drivers/gpu/drm/i915/i915_drv.c
++++ b/drivers/gpu/drm/i915/i915_drv.c
+@@ -1750,12 +1750,8 @@ static struct drm_driver driver = {
+ 	.lastclose = i915_driver_lastclose,
+ 	.postclose = i915_driver_postclose,
+ 
+-	.gem_close_object = i915_gem_close_object,
+-	.gem_free_object_unlocked = i915_gem_free_object,
+-
+ 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+ 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+-	.gem_prime_export = i915_gem_prime_export,
+ 	.gem_prime_import = i915_gem_prime_import,
+ 
+ 	.dumb_create = i915_gem_dumb_create,
+diff --git a/drivers/gpu/drm/i915/selftests/mock_gem_device.c b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+index 397c313a8b69..79664046c622 100644
+--- a/drivers/gpu/drm/i915/selftests/mock_gem_device.c
++++ b/drivers/gpu/drm/i915/selftests/mock_gem_device.c
+@@ -87,9 +87,6 @@ static struct drm_driver mock_driver = {
+ 	.name = "mock",
+ 	.driver_features = DRIVER_GEM,
+ 	.release = mock_device_release,
+-
+-	.gem_close_object = i915_gem_close_object,
+-	.gem_free_object_unlocked = i915_gem_free_object,
  };
  
--static const struct vm_operations_struct psb_gem_vm_ops = {
--	.fault = psb_gem_fault,
--	.open = drm_gem_vm_open,
--	.close = drm_gem_vm_close,
--};
--
- static const struct file_operations psb_gem_fops = {
- 	.owner = THIS_MODULE,
- 	.open = drm_open,
-@@ -507,9 +501,6 @@ static struct drm_driver driver = {
- 	.irq_uninstall = psb_irq_uninstall,
- 	.irq_handler = psb_irq_handler,
- 
--	.gem_free_object_unlocked = psb_gem_free_object,
--	.gem_vm_ops = &psb_gem_vm_ops,
--
- 	.dumb_create = psb_gem_dumb_create,
- 	.ioctls = psb_ioctls,
- 	.fops = &psb_gem_fops,
-diff --git a/drivers/gpu/drm/gma500/psb_drv.h b/drivers/gpu/drm/gma500/psb_drv.h
-index 956926341316..c71a5a4e912c 100644
---- a/drivers/gpu/drm/gma500/psb_drv.h
-+++ b/drivers/gpu/drm/gma500/psb_drv.h
-@@ -735,12 +735,10 @@ extern const struct drm_connector_helper_funcs
- extern const struct drm_connector_funcs psb_intel_lvds_connector_funcs;
- 
- /* gem.c */
--extern void psb_gem_free_object(struct drm_gem_object *obj);
- extern int psb_gem_get_aperture(struct drm_device *dev, void *data,
- 			struct drm_file *file);
- extern int psb_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
- 			struct drm_mode_create_dumb *args);
--extern vm_fault_t psb_gem_fault(struct vm_fault *vmf);
- 
- /* psb_device.c */
- extern const struct psb_ops psb_chip_ops;
+ static void release_dev(struct device *dev)
 -- 
 2.28.0
 
