@@ -2,103 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D84A275AC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 16:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85C08275AD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Sep 2020 16:55:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbgIWOwJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 10:52:09 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:20908 "EHLO m42-4.mailgun.net"
+        id S1726643AbgIWOzU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 10:55:20 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:63607 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726621AbgIWOwJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 10:52:09 -0400
+        id S1726634AbgIWOzU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 10:55:20 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1600872728; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=vkxHpFKBJvKP4A5LtaVO3IzTyiPbLXjaRDFxfcx8I48=; b=crlEZi6NpuD7aSLqy2/2Zu3/LJKZ/y4eukp/WMF0CvhSoMDDz8ek8rSue7w76xaBw4ouSsZP
- gdEs6faquxslrcXcxfoW9pegwY4ZxG6w3GO6bgPy3KuffJsi60S5k0XP2CUCSnKLgTTQAXxs
- hvkOghkZ0N6zcxKib/CeobQ50D4=
+ s=smtp; t=1600872920; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=g1EwZU50j8AHC5qbXjEPUsEa4+UOYZkGy7owG2kQFjE=; b=rjLHuwVz/UXWfCcek9s7YCwJx7w7U4J+ZsKO4FXfYzhd3P1mxwEb2tWf+Jq4YIc2I31NsnmZ
+ SxbRxVhGhQyqp17hxEXr5uE1gxTvzg/KrtydYAuHT8yVmqt0XXp2RG5Vw6buUkYm5r5SJR+g
+ sn4+unql6rvSG4/GaOWCS96iRPM=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f6b61085ce0e081c775d8cb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Sep 2020 14:51:52
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f6b61d751ea4325f30bbf5b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Sep 2020 14:55:19
  GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C03D1C433F1; Wed, 23 Sep 2020 14:51:51 +0000 (UTC)
+        id 96607C433CA; Wed, 23 Sep 2020 14:55:19 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22AA7C433CB;
-        Wed, 23 Sep 2020 14:51:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 22AA7C433CB
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8EE38C433C8;
+        Wed, 23 Sep 2020 14:55:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8EE38C433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Wed, 23 Sep 2020 08:51:47 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, jonathan@marek.ca, robdclark@gmail.com,
-        dianders@chromium.org
-Subject: Re: [PATCH v2 2/2] drm/msm: Leave inuse count intact on map failure
-Message-ID: <20200923145146.GC31425@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, jonathan@marek.ca, robdclark@gmail.com,
-        dianders@chromium.org
-References: <1600786527-7343-1-git-send-email-akhilpo@codeaurora.org>
- <1600786527-7343-2-git-send-email-akhilpo@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] bus: mhi: Add MHI PCI support
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <1600868432-12438-1-git-send-email-loic.poulain@linaro.org>
+ <797a690f-247c-7ff1-6468-8d56b0b81116@codeaurora.org>
+ <CAMZdPi-iaCWm21GzTLpoXZuCxawAPgLo_X91zSQ2VFTfV_4rvA@mail.gmail.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <673a42ea-70d0-3005-b359-a54407bdb66e@codeaurora.org>
+Date:   Wed, 23 Sep 2020 08:55:17 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1600786527-7343-2-git-send-email-akhilpo@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAMZdPi-iaCWm21GzTLpoXZuCxawAPgLo_X91zSQ2VFTfV_4rvA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 22, 2020 at 08:25:27PM +0530, Akhil P Oommen wrote:
-> Leave the inuse count intact on map failure to keep the accounting
-> accurate.
+On 9/23/2020 8:35 AM, Loic Poulain wrote:
+> Hi Jeffrey,
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> On Wed, 23 Sep 2020 at 16:04, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>>
+>> On 9/23/2020 7:40 AM, Loic Poulain wrote:
+>>> This is a generic MHI-over-PCI controller driver for MHI only devices
+>>> such as QCOM modems. For now it supports registering of Qualcomm SDX55
+>>> based PCIe modules. The MHI channels have been extracted from mhi
+>>> downstream driver.
+>>>
+>>> This driver is easily extendable to support other MHI PCI devices like
+>>> different modem hw or OEM superset.
+>>>
+>>
+>> Maybe I'm being a bit dense, but what does this "driver" even do?
+>>
+>> Ok, it'll bind to SDX55 and "power up" the MHI.  I don't see any
+>> communication with the device, so I'm not really seeing the value here.
+>>    Feels like this should be patch 1 of a series, but patches 2 - X are
+>> "missing".
+> 
+> Well, yes and no. On MHI controller side point-of-view, the driver is
+> quite complete, since its only goal is to implement the MHI transport
+> layer and to register the available channels. The PCI driver is really
+> no expected to do more (contrary to ath11k), everything else will be
+> implemented by MHI device drivers at upper level. I agree most of them
+> are not yet implemented (only qrtr-mhi for IPCR channel), but I'm
+> currently working on this.
 
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+Hmm.  I guess I wonder why the functionality provided by this patch 
+isn't incorporated into some other driver.  I see why its not really a 
+great idea to pick a random client driver (like ipc router) and push the 
+responsibility into them.  However, do we hook up these external modems 
+to remoteproc?  If we are managing the devices somewhere else (for FW 
+loading, SSR, etc), then it would seem like a good place for this 
+functionality.
 
-> ---
->  drivers/gpu/drm/msm/msm_gem_vma.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-> index 80a8a26..f914ddb 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> @@ -88,8 +88,10 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
->  		ret = aspace->mmu->funcs->map(aspace->mmu, vma->iova, sgt,
->  				size, prot);
->  
-> -	if (ret)
-> +	if (ret) {
->  		vma->mapped = false;
-> +		vma->inuse--;
-> +	}
->  
->  	return ret;
->  }
-> -- 
-> 2.7.4
-> 
+In summary, this feels like a shim driver that is a driver for driver's 
+sake, which doesn't feel like the right design.  I don't think I have a 
+better suggestion through.  Since I don't have a concrete "this should 
+be done some other way" I won't be offended if you ignore this "complaint".
+
+However, assuming you continue with this approach, I think this change 
+needs more documentation.  At a minimum I think what you just explained 
+to me needs to be in the commit text.
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
