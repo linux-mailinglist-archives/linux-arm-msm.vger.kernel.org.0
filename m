@@ -2,99 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54E4F276475
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 01:28:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78FB5276481
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 01:30:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgIWX22 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Sep 2020 19:28:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35798 "EHLO mail.kernel.org"
+        id S1726794AbgIWXan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Sep 2020 19:30:43 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36240 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726466AbgIWX2Y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Sep 2020 19:28:24 -0400
+        id S1726638AbgIWXaf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Sep 2020 19:30:35 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id B8F2620BED;
-        Wed, 23 Sep 2020 23:28:23 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id D5D732065E;
+        Wed, 23 Sep 2020 23:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600903703;
-        bh=jD9FzPY9npLBXMykAm0YVS2Sn9WihPKnudR+sOe4IzY=;
+        s=default; t=1600903835;
+        bh=YEekD48/CVeQDATxhCdijxDkNgGZL+EL076GbjZ49R0=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=F/ThN3TDt9u2tC6CIY6JBC9Ziz663ISP5KiCPLR6bwB5nHubXblTyllGdJFHsSahx
-         /SzDx6/4Nr9hv14n8qhZQTDqha+RgmRzh+mjkiPyTR9udIJgyyxoqFEedgG4Z2AEDa
-         5luFdzuKS6Or7kkTZfT3SpWu5aM08MMna/EiaJfc=
+        b=trOkXhbUhaazwz6ah1vmvfC5SPgR51xx5YprUD7cw4+Ma3SxBqp1zJg9A5X/OVfos
+         fmpVC1eMHZ+PXBD/fJw+uT4eLLQCChsApsYgGqoG1/Rbm+vg/Lfhpk4qmMqQ3A/Oi2
+         E4Z0LPl2HDlyxrJ9SYkRYq4KLTl9o/WGdtXOEcos=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <a8713637-d240-d22d-02a7-f15080620467@linaro.org>
-References: <20200917132850.7730-1-srinivas.kandagatla@linaro.org> <20200917132850.7730-4-srinivas.kandagatla@linaro.org> <160080010215.310579.4526434246523292987@swboyd.mtv.corp.google.com> <a8713637-d240-d22d-02a7-f15080620467@linaro.org>
-Subject: Re: [PATCH 3/4] clk: qcom: Add support to LPASS AUDIO_CC Glitch Free Mux clocks
+In-Reply-To: <0ce9fdb6-e224-ced7-ec32-fe67b2ca6127@marek.ca>
+References: <20200904030958.13325-1-jonathan@marek.ca> <20200904030958.13325-6-jonathan@marek.ca> <160080040123.310579.8471841951357841843@swboyd.mtv.corp.google.com> <0ce9fdb6-e224-ced7-ec32-fe67b2ca6127@marek.ca>
+Subject: Re: [PATCH v2 5/5] clk: qcom: add video clock controller driver for SM8250
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-Date:   Wed, 23 Sep 2020 16:28:22 -0700
-Message-ID: <160090370240.310579.7670305169509496614@swboyd.mtv.corp.google.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
+Date:   Wed, 23 Sep 2020 16:30:33 -0700
+Message-ID: <160090383364.310579.1979253418505275623@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivas Kandagatla (2020-09-22 14:45:07)
-> Thanks Stephen for review,
->=20
-> On 22/09/2020 19:41, Stephen Boyd wrote:
-> > Quoting Srinivas Kandagatla (2020-09-17 06:28:49)
-> >> diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lp=
-ass-gfm-sm8250.c
-> >> new file mode 100644
-> >> index 000000000000..2d5c41ae4969
-> >> --- /dev/null
-> >> +++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
-> >> @@ -0,0 +1,235 @@
-[...]
+Quoting Jonathan Marek (2020-09-23 09:07:16)
+> On 9/22/20 2:46 PM, Stephen Boyd wrote:
+> > Quoting Jonathan Marek (2020-09-03 20:09:54)
+> >=20
+> >> +                       .ops =3D &clk_branch2_ops,
+> >> +               },
+> >> +       },
 > >> +};
 > >> +
-> >> +static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
-> >> +{
-> >> +       const struct lpass_gfm_data *data;
-> >> +       struct device *dev =3D &pdev->dev;
-> >> +       struct resource *res;
-> >> +       struct clk_gfm *gfm;
-> >> +       struct lpass_gfm *cc;
-> >> +       int err, i;
-> >> +
-> >> +       cc =3D devm_kzalloc(dev, sizeof(*cc), GFP_KERNEL);
-> >> +       if (!cc)
-> >> +               return -ENOMEM;
-> >> +
-> >> +       cc->core_vote =3D devm_clk_get(&pdev->dev, "core");
-> >> +       if (IS_ERR(cc->core_vote)) {
-> >> +               dev_dbg(dev, "Failed to get lpass core clk\n");
-> >> +               return PTR_ERR(cc->core_vote);
-> >> +       }
+> >> +static struct clk_branch video_cc_mvs0_clk =3D {
+> >> +       .halt_reg =3D 0xd34,
+> >> +       .halt_check =3D BRANCH_HALT_SKIP, /* TODO: hw gated ? */
 > >=20
-> > Can this use the pm_clk stuff?
->=20
-> you mean add runtime pm support or something else?
->=20
-> I can give it a go and see!
->=20
-
-Yes use the runtime PM support and pm_clk APIs. There are some examples
-in this directory already.
-
->=20
+> > Is this resolved?
 > >=20
-> >> +
-> >> +       data =3D of_device_get_match_data(dev);
-> >=20
-> > What if data is NULL?
-> It should not be here if there is no match of compatible string, so data =
+>=20
+> Downstream has this clock as BRANCH_HALT_VOTED, but with the upstream=20
+> venus driver (with patches to enable sm8250), that results in a=20
+> "video_cc_mvs0_clk status stuck at 'off" error. AFAIK venus=20
+> enables/disables this clock on its own (venus still works without=20
+> touching this clock), but I didn't want to remove this in case it might=20
+> be needed. I removed these clocks in the v3 I just sent.
+>=20
 
-> should not be NULL!
-
-Ok sure but it always makes me feel better if we check for a valid
-pointer with this API.
+Hmm. Does downstream use these clks? There have been some clk stuck
+problems with venus recently that were attributed to improperly enabling
+clks before enabling interconnects and power domains. Maybe it's the
+same problem.
