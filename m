@@ -2,90 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E82322777F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 19:42:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB63027783B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 20:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728621AbgIXRm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Sep 2020 13:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728613AbgIXRm0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Sep 2020 13:42:26 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1745C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Sep 2020 10:42:25 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id 16so287239qkf.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Sep 2020 10:42:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ufQSouJEr6iOhClGNkcFys0+GmEFSbJ326GsTOQ2uLs=;
-        b=nOuIzwWdqsKX//nOnPPcem2yIWA2yfus/bkl7atiAWOGJyts9EJzkywbm3/178bHdP
-         GIu7YfCjro+GjducZXySGvlhKxo41hPz9qqgcCspT6ybspy4HJUpojHUeGNViEOVcXNy
-         fO4CPjviAUOJPD8GxRMJF/DjJv6o/GlXwBkFaw7FJkBLnqMk5te1Fje9KkBzlkM5704K
-         u2h3MKqbKzCIz7wJJPZiCHE15+a7tl6pKs8EgAMJiWPXX2n+81eU4hO3BQ5Ha40yYxla
-         zTxeG4CNde9VZn0X6xyGpVZFPsqxt645OZjRsdX1PUkGvsz7HtBTIrUXZkdOKL1mPt+k
-         BKhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=ufQSouJEr6iOhClGNkcFys0+GmEFSbJ326GsTOQ2uLs=;
-        b=elIOoMxoJmQmvmSkl3/tI1gHnPXBhO9XuiwpmfzZ+KVx7kQ5EJL7pQplQUY+4ItZMH
-         OwN1wYugGYKjYZkXz/sfhTh/EbM77IAPyv4D4Brfaw+STiIHBy5oeCwdF1f03S37n3Wa
-         BOBCJ2FhK/HtN1xoQVQilIGrbi8FDFe3hz0sOqSCjcNZ6QUVWOL5hx187d3MZMnQcSp6
-         VpXxeZZZff9uYXOpEEZKdq8lO4pXuxrUmLblKT7Nw64axVHcoc17TkgJGQmnMAgo1mv3
-         lEz+jRvpNrI4Td2T85lKbq5C3Ho18f0uGsgRfwYRIgYgrgfOOYUtjbm8hcCq7Xy73swN
-         UdUQ==
-X-Gm-Message-State: AOAM532MiqEtyEgzwZTg42i6YqQfv2zCZKAK689UNWvrVCvar+ajcqGB
-        fOLfzOdtLyALBnfzhi9Cw6GP6Q==
-X-Google-Smtp-Source: ABdhPJy3+e6AffcDB4O9E1FMQxXBkkIU1OHmqDYWUevKy9OJXSv9xTsK0X7FvrcZqGkh92CxjFaiRg==
-X-Received: by 2002:a37:5fc6:: with SMTP id t189mr231569qkb.78.1600969344786;
-        Thu, 24 Sep 2020 10:42:24 -0700 (PDT)
-Received: from skullcanyon (marriott-chateau-champlain-montreal.sites.intello.com. [66.171.169.34])
-        by smtp.gmail.com with ESMTPSA id a24sm85243qko.82.2020.09.24.10.42.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2020 10:42:24 -0700 (PDT)
-Message-ID: <871d369fc987ac7cc24bdab9bc9df9fadf939c01.camel@ndufresne.ca>
-Subject: Re: [PATCH v2 0/2] Add new controls for QP and layer bitrate
-From:   Nicolas Dufresne <nicolas@ndufresne.ca>
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        ezequiel@collabora.com, stanimir.varbanov@linaro.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org
-Date:   Thu, 24 Sep 2020 13:42:22 -0400
-In-Reply-To: <1600693440-3015-1-git-send-email-dikshita@codeaurora.org>
-References: <1600693440-3015-1-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 (3.36.5-1.fc32) 
+        id S1728589AbgIXSGm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Sep 2020 14:06:42 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:40786 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727753AbgIXSGm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Sep 2020 14:06:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1600970801; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ALhUP7sAqZrosBEby/VQO6Cy4FEeZWO8qfo6Ml+PqXc=;
+ b=CFiGnTcffLvLbkBMA/M7TLqfGyGiYGJyXZh2PErU7d+FFzkx6YFl8VLRoCZqVQ3AQIliiy30
+ 6Lv8BLsZ37dTRXaQbSCU0M0UHDcvbzty26Pzsp67sLsQcHkVjm2K3DN6fvbHXkpElifEMh3w
+ Ur5OC35CCTV5hW8c+c13F3AA0Qo=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f6ce02f5fb64f6e3755e9dd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Sep 2020 18:06:39
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5D7EAC433FF; Thu, 24 Sep 2020 18:06:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8C519C433CA;
+        Thu, 24 Sep 2020 18:06:38 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 24 Sep 2020 11:06:38 -0700
+From:   abhinavk@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     dri-devel@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
+        linux-arm-msm@vger.kernel.org, khsieh@codeaurora.org,
+        seanpaul@chromium.org, tanmay@codeaurora.org,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dp: fix incorrect function prototype of
+ dp_debug_get()
+In-Reply-To: <160092913200.310579.7777419545906412437@swboyd.mtv.corp.google.com>
+References: <20200923232448.24516-1-abhinavk@codeaurora.org>
+ <160092913200.310579.7777419545906412437@swboyd.mtv.corp.google.com>
+Message-ID: <9b14d270ac94a7b17e13a2d4ac86ffdc@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le lundi 21 septembre 2020 à 18:33 +0530, Dikshita Agarwal a écrit :
-> This series adds frame specific min/max qp controls for hevc and layer
-> wise bitrate control for h264.
+Hi Stephen
 
-Any chance you could append your driver changes with this set ? I don't
-think new APIs ever make it without a driver using it.
+Thanks for the review.
 
+On 2020-09-23 23:32, Stephen Boyd wrote:
+> Quoting Abhinav Kumar (2020-09-23 16:24:48)
+>> Fix the incorrect function prototype for dp_debug_get()
+>> in the dp_debug module to address compilation warning.
+>> 
+>> Fixes: f913454aae8e ("drm/msm/dp: move debugfs node to 
+>> /sys/kernel/debug/dri/*/")
+>> Reported-by: kernel test robot <lkp@intel.com>
+>> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+>> ---
 > 
-> Chnage since v1:
->  corrected email.
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > 
-> Dikshita Agarwal (2):
->   media: v4l2-ctrl: Add frame-specific min/max qp controls for hevc
->   media: v4l2-ctrl: Add layer wise bitrate controls for h264
-> 
->  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 74 +++++++++++++++++++++-
->  drivers/media/v4l2-core/v4l2-ctrls.c               | 15 +++++
->  include/uapi/linux/v4l2-controls.h                 | 17 +++++
->  3 files changed, 104 insertions(+), 2 deletions(-)
-> 
+> Will the compliance testing parts be moved out of debugfs at some 
+> point?
+> Just curious what the plan is there.
 
+No, the video pattern compliance testing parts will remain in debugfs as 
+they use
+IGT as the userspace entity which is debugfs based for DP compliance 
+tests.
+
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
