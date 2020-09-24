@@ -2,279 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07B82277529
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 17:23:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B8FF2775EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 17:55:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728360AbgIXPXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Sep 2020 11:23:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38092 "EHLO
+        id S1728395AbgIXPzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Sep 2020 11:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728344AbgIXPXh (ORCPT
+        with ESMTP id S1728574AbgIXPzL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Sep 2020 11:23:37 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59FC3C0613CE;
-        Thu, 24 Sep 2020 08:23:37 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id e2so4031370wme.1;
-        Thu, 24 Sep 2020 08:23:37 -0700 (PDT)
+        Thu, 24 Sep 2020 11:55:11 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E3F5C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Sep 2020 08:55:11 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id o8so3628000otl.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Sep 2020 08:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7286v2n5MsKNIWaDNjy3w7lnkrAjciTfY1U8kqoxZQs=;
-        b=V1HbQ0SGQPBcZyu/T+PtWOHlNSTDGeXxYBiZVZbJDmjiRpNDDhzl2qHiUkzU6s93YA
-         pTquOpoRoknVz8i6YirNK7quZfh2VTEW85j+O0tJ9/Y8VXB+JZf7DVJU6M5swufm3YCT
-         bpYr/TGzwR8wwxWPRRia8EqHi97KSuWm9aw19jDueELlRSLH8h4te86Q7R/tdCCHwrLc
-         k1Hv6a3cuXzhaE9Y6YpEHjFStuKxFsl3ZU6qLHs0RvaZo+kyH+14mBIDGjdJjdVLmDiT
-         STy5kyLvE1UEtfMI4wSrTHSCU1u5UU6JA8WL7EbAV8mDqOT/fwu+ZFjG+SXqy4SDWMFu
-         xs+A==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BFQYGakvszSZQYEiK77qmVljG0V+wrRK/T3GO3bZxA4=;
+        b=VuYM/Sxtj92l9I7qft+wT7jbFfT5vZNLK8wgvLXr8W0wjputBXVcePPAvaI+sKwdv2
+         bH4N0JJWo33SnqLzRC1fZbF0hRkFxmfqgEc4IHi1hVHB3Fy5EsfE6p2K8PvvMTwvUO6b
+         9dUZIZYKqOWqyX/6f49oJ2/bXQPDOhNowqmZNQr3+sWHQqVSXVZnFVVpP3cc4ixi06m+
+         TyS7AJO+fPZVMp/o356dNl29HmfqXU3xV/wr1dPTCU9YV33lDqN3S/FcY7VoNLuqRiDr
+         T76jWbUSgh9HkVtgoxw65kl9/4u2P6dZIejODFmlWo6SkLGdgLmwrtvRTusn5irWQFTB
+         Tc/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7286v2n5MsKNIWaDNjy3w7lnkrAjciTfY1U8kqoxZQs=;
-        b=FFKxAU9SVAY3r0J/JAxKxS7BKJpv3/QpCj0EMkS3OYkT1ipYOFfCdBUN1yPaHZsMV1
-         l4rgPKGb6s1XtXdU4WvHKoIh854FbN0lUF6kniZxtoZ0hi8yYDU9VYcvp2SO0teCfvmj
-         4RFTUAwfoUNbgI+59smLsGxA2SM1vkiQgnPOCMHqPEmkJvIXj6py0hTj8lrEINofdv1D
-         dG8F66L8gn4BhtjGruG/9iIMFssZqr9EqQws9kPpiGOFFD8/wGXz6gYXXI3TMDQAssxD
-         QsQ55F7K/Ew9Nz05XnxjmwZ3E6/bYGFKGApROtfMlUjnNkmcmHRS/wTbgvv/2DdDVaLU
-         TKDQ==
-X-Gm-Message-State: AOAM531gWs9NNROo+ajV6+TS70xjTB6EiiFh+lKHqOqS9X6wQhNI3Sle
-        tak5LxGn9APEg0BP1HfkHIohUtWCeZCOC4vCLFY=
-X-Google-Smtp-Source: ABdhPJzAAHwCZBGWgG8Ih+dVEfLlrq+rE83hkHZb956tO4J6xMktEkZnLNyK+z5MV/UDBVB0SP+UeWo+jR5L67QbWSo=
-X-Received: by 2002:a05:600c:2183:: with SMTP id e3mr5625462wme.49.1600961015780;
- Thu, 24 Sep 2020 08:23:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200919193727.2093945-1-robdclark@gmail.com> <20200921092154.GJ438822@phenom.ffwll.local>
- <CAF6AEGuDRk9D_aqyb6R8N5VHx2rvbZDf4uTqF3gQTrmzno+qtw@mail.gmail.com>
- <CAKMK7uEqDD-oDAQKyA9DQbxkCgEjC5yyjvKR7d8T0Gj0SqEZ4A@mail.gmail.com>
- <CAF6AEGtYAn+W8HxP7SXtxPr5FsEB1hYGU91WrHCtwX89UmUR5w@mail.gmail.com>
- <20200923152545.GQ438822@phenom.ffwll.local> <CAF6AEGs9xDOoG3n4E_+6iDaiJXp_hqvSV1VKE=vpvG-twYPoew@mail.gmail.com>
- <20200924084950.GY438822@phenom.ffwll.local>
-In-Reply-To: <20200924084950.GY438822@phenom.ffwll.local>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 24 Sep 2020 08:24:37 -0700
-Message-ID: <CAF6AEGt9-2Fo=eWt0cZaS4mEDoSbEOVTJoraqm7gB_Cuue4snA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] drm: commit_work scheduling
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BFQYGakvszSZQYEiK77qmVljG0V+wrRK/T3GO3bZxA4=;
+        b=aV8kXysJt+PZkmd5lGYjpgUot2JCa7LyLRexLAcyk9INsOWIHUhVWYXo0gbV1oXHO4
+         ETEJQxnVJVg8CBmPVCd+fUsjiCra2JiC6J9WcmYICX0MS9n0y4ceDt4VSapf+0+9f8gZ
+         3VmRQsooL77eJJqG8+UjSbGTaxMk/oVdiiJlYw6W2OTDUSflUvJEstR+y18ysWk7bzPN
+         KiZlqLzCXgb8WEpbYoPd1CHM/eZoTlypnTsLmsX0RxMX94lMzFxEU6hEjxwO4Xp/oSnd
+         5CZ1qXaumC/i1cju7QBW/bOIMEftqnkTS9UnBvDNO1VTDQnv0mV0oSMobZ4vQIEon3w1
+         8DnA==
+X-Gm-Message-State: AOAM530b2FKduWZLT33Op85gu/LfaBa1KBC5M4lHG5tINLEBXYzppbRP
+        eaDTxqY/gnExEMdUdumoJccxlg==
+X-Google-Smtp-Source: ABdhPJwFHBL2FKeccMlXLdOu/LTSXUl23rU0UsGy8dJd/nIuZMvT3wS2wgBvDcqgNEUZ6Q8WAUKisQ==
+X-Received: by 2002:a05:6830:610:: with SMTP id w16mr178455oti.353.1600962910817;
+        Thu, 24 Sep 2020 08:55:10 -0700 (PDT)
+Received: from yoga (99-135-181-32.lightspeed.austtx.sbcglobal.net. [99.135.181.32])
+        by smtp.gmail.com with ESMTPSA id p8sm907633oot.29.2020.09.24.08.55.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Sep 2020 08:55:10 -0700 (PDT)
+Date:   Thu, 24 Sep 2020 10:55:07 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>, Tejun Heo <tj@kernel.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 6/8] iommu/arm-smmu: Add impl hook for inherit boot
+ mappings
+Message-ID: <20200924155507.GE40811@yoga>
+References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
+ <20200904155513.282067-7-bjorn.andersson@linaro.org>
+ <0bfcc8f7-d054-616b-834b-319461b1ecb9@arm.com>
+ <20200913032559.GT3715@yoga>
+ <20200921210814.GE3811@willie-the-truck>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200921210814.GE3811@willie-the-truck>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 24, 2020 at 1:49 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->
-> On Wed, Sep 23, 2020 at 07:33:17PM -0700, Rob Clark wrote:
-> > On Wed, Sep 23, 2020 at 8:25 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > >
-> > > On Tue, Sep 22, 2020 at 07:48:10AM -0700, Rob Clark wrote:
-> > > > On Mon, Sep 21, 2020 at 11:59 PM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > > >
-> > > > > On Mon, Sep 21, 2020 at 5:16 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > > > >
-> > > > > > On Mon, Sep 21, 2020 at 2:21 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > > > > >
-> > > > > > > On Sat, Sep 19, 2020 at 12:37:23PM -0700, Rob Clark wrote:
-> > > > > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > > > > >
-> > > > > > > > The android userspace treats the display pipeline as a realtime problem.
-> > > > > > > > And arguably, if your goal is to not miss frame deadlines (ie. vblank),
-> > > > > > > > it is.  (See https://lwn.net/Articles/809545/ for the best explaination
-> > > > > > > > that I found.)
-> > > > > > > >
-> > > > > > > > But this presents a problem with using workqueues for non-blocking
-> > > > > > > > atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
-> > > > > > > > preempt the worker.  Which is not really the outcome you want.. once
-> > > > > > > > the required fences are scheduled, you want to push the atomic commit
-> > > > > > > > down to hw ASAP.
-> > > > > > > >
-> > > > > > > > But the decision of whether commit_work should be RT or not really
-> > > > > > > > depends on what userspace is doing.  For a pure CFS userspace display
-> > > > > > > > pipeline, commit_work() should remain SCHED_NORMAL.
-> > > > > > > >
-> > > > > > > > To handle this, convert non-blocking commit_work() to use per-CRTC
-> > > > > > > > kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
-> > > > > > > > used to avoid serializing commits when userspace is using a per-CRTC
-> > > > > > > > update loop.
-> > > > > > > >
-> > > > > > > > A client-cap is introduced so that userspace can opt-in to SCHED_FIFO
-> > > > > > > > priority commit work.
-> > > > > > > >
-> > > > > > > > A potential issue is that since 616d91b68cd ("sched: Remove
-> > > > > > > > sched_setscheduler*() EXPORTs") we have limited RT priority levels,
-> > > > > > > > meaning that commit_work() ends up running at the same priority level
-> > > > > > > > as vblank-work.  This shouldn't be a big problem *yet*, due to limited
-> > > > > > > > use of vblank-work at this point.  And if it could be arranged that
-> > > > > > > > vblank-work is scheduled before signaling out-fences and/or sending
-> > > > > > > > pageflip events, it could probably work ok to use a single priority
-> > > > > > > > level for both commit-work and vblank-work.
-> > > > > > >
-> > > > > > > The part I don't like about this is that it all feels rather hacked
-> > > > > > > together, and if we add more stuff (or there's some different thing in the
-> > > > > > > system that also needs rt scheduling) then it doesn't compose.
-> > > > > >
-> > > > > > The ideal thing would be that userspace is in control of the
-> > > > > > priorities.. the setclientcap approach seemed like a reasonable way to
-> > > > > > give the drm-master a way to opt in.
-> > > > > >
-> > > > > > I suppose instead userspace could use sched_setscheduler().. but that
-> > > > > > would require userspace to be root, and would require some way to find
-> > > > > > the tid.
-> > > > >
-> > > > > Userspace already needs that for the SCHED_FIFO for surface-flinger.
-> > > > > Or is the problem that CAP_SYS_NICE is only good for your own
-> > > > > processes?
-> > > >
-> > > > tbh, I'm not completely sure offhand what gives surfaceflinger
-> > > > permission to set itself SCHED_FIFO
-> > > >
-> > > > (But on CrOS there are a few more pieces to the puzzle)
-> > > >
-> > > > > Other question I have for this is whether there's any recommendations
-> > > > > for naming the kthreads (since I guess that name is what becomes the
-> > > > > uapi for userspace to control this)?
-> > > > >
-> > > > > Otherwise I think "userspace calls sched_setscheduler on the right
-> > > > > kthreads" sounds like a good interface, since it lets userspace decide
-> > > > > how it all needs to fit together and compose. Anything we hard-code in
-> > > > > an ioctl is kinda lost cause. And we can choose the default values to
-> > > > > work reasonably well when the compositor runs at normal priority
-> > > > > (lowest niceness or something like that for the commit work).
-> > > >
-> > > > I don't really like the naming convention approach.. what is to stop
-> > > > some unrelated process to name it's thread the same thing to get a
-> > > > SCHED_FIFO boost..
-> > > >
-> > > > But we can stick with my idea to expose the thread id as a read-only
-> > > > CRTC property, for userspace to find the things to call
-> > > > sched_setscheduler() on.  If for whatever reason the drm master is not
-> > > > privileged (or is running in a sandbox, etc), a small helper that has
-> > > > the necessary permissions could open the drm device to find the CRTC
-> > > > thread-ids and call sched_setscheduler()..
-> > >
-> > > Hm thread ids don't translate too well across PID namespaces I think ...
-> > > So that's another can of worms. And pidfd doesn't really work as a
-> > > property.
-> >
-> > hmm, I was kinda hoping there was already a solution for translating
-> > thread-id's, but hadn't had a chance to dig through it yet
->
-> You can translate them, and it happens automatically in process context
-> (iirc at least). But when we set the read-only prop we don't know which
-> process namespace the compositor is sitting in, so that translation isn't
-> doing us any good.
+On Mon 21 Sep 16:08 CDT 2020, Will Deacon wrote:
 
-Well, that only requires writing some code.. when I mentioned
-read-only, I just meant that it is read-only from the userspace
-standpoint.  But we would need some hook when the property is read to
-do the translation so userspace sees the appropriate value
+> On Sat, Sep 12, 2020 at 10:25:59PM -0500, Bjorn Andersson wrote:
+> > On Fri 11 Sep 12:13 CDT 2020, Robin Murphy wrote:
+> > > On 2020-09-04 16:55, Bjorn Andersson wrote:
+> > > > Add a new operation to allow platform implementations to inherit any
+> > > > stream mappings from the boot loader.
+> > > 
+> > > Is there a reason we need an explicit step for this? The aim of the
+> > > cfg_probe hook is that the SMMU software state should all be set up by then,
+> > > and you can mess about with it however you like before arm_smmu_reset()
+> > > actually commits anything to hardware. I would have thought you could
+> > > permanently steal a context bank, configure it as your bypass hole, read out
+> > > the previous SME configuration and tweak smmu->smrs and smmu->s2crs
+> > > appropriately all together "invisibly" at that point.
+> > 
+> > I did this because as of 6a79a5a3842b ("iommu/arm-smmu: Call
+> > configuration impl hook before consuming features") we no longer have
+> > setup pgsize_bitmap as we hit cfg_probe, which means that I need to
+> > replicate this logic to set up the iommu_domain.
+> > 
+> > If I avoid setting up an iommu_domain for the identity context, as you
+> > request in patch 8, this shouldn't be needed anymore.
+> > 
+> > > If that can't work, I'm very curious as to what I've overlooked.
+> > > 
+> > 
+> > I believe that will work, I will rework the patches and try it out.
+> 
+> Did you get a chance to rework this?
+> 
 
-BR,
--R
+Unfortunately not, I hope to get to this shortly.
 
-> I think there's a root namespace that the kernel uses, but tbh I'm not
-> sure how this all works.
->
-> > > I also thought kernel threads can be distinguished from others, so
-> > > userspace shouldn't be able to sneak in and get elevated by accident.
-> >
-> > I guess maybe you could look at the parent?  I still would like to
-> > think that we could come up with something a bit less shaking than
-> > matching thread names by regexp..
->
-> ps marks up kernel threads with [], so there is a way. But I haven't
-> looked at what it is exactly that tells kernel threads apart from others.
->
-> But aside from that sounds like "match right kernel thread with regex and
-> set its scheduler class" is how this is currently done, if I'm
-> understanding what Tejun and Peter said correctly.
->
-> Not pretty, but also *shrug* ...
-> -Daniel
->
-> > BR,
-> > -R
-> >
-> > > -Daniel
-> > >
-> > > >
-> > > > BR,
-> > > > -R
-> > > >
-> > > > > -Daniel
-> > > > >
-> > > > > > Is there some way we could arrange for the per-crtc kthread's to be
-> > > > > > owned by the drm master?  That would solve the "must be root" issue.
-> > > > > > And since the target audience is an atomic userspace, I suppose we
-> > > > > > could expose the tid as a read-only property on the crtc?
-> > > > > >
-> > > > > > BR,
-> > > > > > -R
-> > > > > >
-> > > > > > > So question to rt/worker folks: What's the best way to let userspace set
-> > > > > > > the scheduling mode and priorities of things the kernel does on its
-> > > > > > > behalf? Surely we're not the first ones where if userspace runs with some
-> > > > > > > rt priority it'll starve out the kernel workers that it needs. Hardcoding
-> > > > > > > something behind a subsystem ioctl (which just means every time userspace
-> > > > > > > changes what it does, we need a new such flag or mode) can't be the right
-> > > > > > > thing.
-> > > > > > >
-> > > > > > > Peter, Tejun?
-> > > > > > >
-> > > > > > > Thanks, Daniel
-> > > > > > >
-> > > > > > > >
-> > > > > > > > Rob Clark (3):
-> > > > > > > >   drm/crtc: Introduce per-crtc kworker
-> > > > > > > >   drm/atomic: Use kthread worker for nonblocking commits
-> > > > > > > >   drm: Add a client-cap to set scheduling mode
-> > > > > > > >
-> > > > > > > >  drivers/gpu/drm/drm_atomic_helper.c | 13 ++++++----
-> > > > > > > >  drivers/gpu/drm/drm_auth.c          |  4 ++++
-> > > > > > > >  drivers/gpu/drm/drm_crtc.c          | 37 +++++++++++++++++++++++++++++
-> > > > > > > >  drivers/gpu/drm/drm_ioctl.c         | 13 ++++++++++
-> > > > > > > >  include/drm/drm_atomic.h            | 31 ++++++++++++++++++++++++
-> > > > > > > >  include/drm/drm_crtc.h              | 10 ++++++++
-> > > > > > > >  include/uapi/drm/drm.h              | 13 ++++++++++
-> > > > > > > >  7 files changed, 117 insertions(+), 4 deletions(-)
-> > > > > > > >
-> > > > > > > > --
-> > > > > > > > 2.26.2
-> > > > > > > >
-> > > > > > > > _______________________________________________
-> > > > > > > > dri-devel mailing list
-> > > > > > > > dri-devel@lists.freedesktop.org
-> > > > > > > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> > > > > > >
-> > > > > > > --
-> > > > > > > Daniel Vetter
-> > > > > > > Software Engineer, Intel Corporation
-> > > > > > > http://blog.ffwll.ch
-> > > > > > _______________________________________________
-> > > > > > dri-devel mailing list
-> > > > > > dri-devel@lists.freedesktop.org
-> > > > > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> > > > >
-> > > > >
-> > > > >
-> > > > > --
-> > > > > Daniel Vetter
-> > > > > Software Engineer, Intel Corporation
-> > > > > http://blog.ffwll.ch
-> > >
-> > > --
-> > > Daniel Vetter
-> > > Software Engineer, Intel Corporation
-> > > http://blog.ffwll.ch
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+Thanks,
+Bjorn
