@@ -2,89 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30EAA2768C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 08:17:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5CE72768F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 08:32:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726917AbgIXGRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Sep 2020 02:17:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41058 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726683AbgIXGRt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Sep 2020 02:17:49 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 18A23208E4;
-        Thu, 24 Sep 2020 06:17:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1600928269;
-        bh=ywMlU+ZfSYC9ZcnZdzwR0HqdVTNchu7DmscGuKbNLqQ=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=hW8qSEmnvkfbsBJdrVB5FZeQHcwUKxske6S3exItwKYARITiaUQrM/NUjQou/yo5/
-         XsuMGTBw5QV6+KKkSvq0xyHU/njZDxzgQ6Ze9wesU4fo5QEwN4fLD38H2zA5rEpZuK
-         Z7URMKbOB3cZxPwmU8VuTTqcetVuDO8riVw++DUc=
+        id S1726925AbgIXGcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Sep 2020 02:32:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726119AbgIXGcO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Sep 2020 02:32:14 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B20C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 23:32:14 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id l126so1272067pfd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Sep 2020 23:32:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=QLnDNKE2S3wzGcgxQbn94gD4gMx4cWe6gJ0q+mzRl+Q=;
+        b=a33jq1KwBVdBeHZ6vJ/PJDssGM/nkkdTZuwG6vxdqOkbpjhTUyZn7nvYMusycvTeUg
+         l5vP/b8Wg0uPEOnvQJMVKhMFtkTEAX9gNC7BWHHxSbvR14Dj/1CQhKacpHoQsGrKu6P2
+         IHpi6jXMAW7JYNPevhxHBR022uVslkdWxU4/c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=QLnDNKE2S3wzGcgxQbn94gD4gMx4cWe6gJ0q+mzRl+Q=;
+        b=fKV/ZS1jw+xCtxdXxmR3yedvJbzL9EbfJBSYErpXCt041sl6ZRJQsDs90Z0W7kra0N
+         wFrWWhD0dhsy4Gtqf+cZCaOAPwyCa75aNOtVRzTzTs7gqUH3TAhmvol3/V1WLDPqjBDd
+         yDJYkvAmPmQEEywCinSE0yT3Hc31O2UGwlissJXgHQDvOHgkiKODggq802Tq381y+K5+
+         gurole8BTU7xzyJpMRqh46XqwBEskxFS2+l2Au3qL6TxaP87SZhj6HRkREoMZdJGa3wR
+         uiXNvgPZxWXB9VvtqzZEfaQX7hRAsX3GIn/M/N3UpjhsIuOrzkH720QXQP4/8JHVyXB8
+         /C5w==
+X-Gm-Message-State: AOAM530m+UzlkPwx1Mq7TwVad8AzIjKkSb5rZ9aXOxaMt+iXgGuAuI/L
+        NKNB1VzjvzbJultBQtkdiTbuhQ==
+X-Google-Smtp-Source: ABdhPJzH1YjRbI7I1wZnL68bv9NNgPPGtLGQpYKz73xHcQIYGHEmTe5RXFL5RZ9shSJozYaiqwYClg==
+X-Received: by 2002:aa7:8a54:0:b029:142:2501:34f6 with SMTP id n20-20020aa78a540000b0290142250134f6mr3022588pfa.79.1600929134015;
+        Wed, 23 Sep 2020 23:32:14 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id i9sm1584716pfq.53.2020.09.23.23.32.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2020 23:32:13 -0700 (PDT)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <d7207c1c-c4e4-f994-cacb-bdfb7952732b@marek.ca>
-References: <20200904030958.13325-1-jonathan@marek.ca> <20200904030958.13325-6-jonathan@marek.ca> <160080040123.310579.8471841951357841843@swboyd.mtv.corp.google.com> <0ce9fdb6-e224-ced7-ec32-fe67b2ca6127@marek.ca> <160090383364.310579.1979253418505275623@swboyd.mtv.corp.google.com> <d7207c1c-c4e4-f994-cacb-bdfb7952732b@marek.ca>
-Subject: Re: [PATCH v2 5/5] clk: qcom: add video clock controller driver for SM8250
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 23 Sep 2020 23:17:47 -0700
-Message-ID: <160092826778.310579.12225989905897101118@swboyd.mtv.corp.google.com>
+In-Reply-To: <20200923232448.24516-1-abhinavk@codeaurora.org>
+References: <20200923232448.24516-1-abhinavk@codeaurora.org>
+Subject: Re: [PATCH] drm/msm/dp: fix incorrect function prototype of dp_debug_get()
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, tanmay@codeaurora.org,
+        khsieh@codeaurora.org, kernel test robot <lkp@intel.com>
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        dri-devel@lists.freedesktop.org
+Date:   Wed, 23 Sep 2020 23:32:12 -0700
+Message-ID: <160092913200.310579.7777419545906412437@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2020-09-23 17:54:59)
-> On 9/23/20 7:30 PM, Stephen Boyd wrote:
-> > Quoting Jonathan Marek (2020-09-23 09:07:16)
-> >> On 9/22/20 2:46 PM, Stephen Boyd wrote:
-> >>> Quoting Jonathan Marek (2020-09-03 20:09:54)
-> >>>
-> >>>> +                       .ops =3D &clk_branch2_ops,
-> >>>> +               },
-> >>>> +       },
-> >>>> +};
-> >>>> +
-> >>>> +static struct clk_branch video_cc_mvs0_clk =3D {
-> >>>> +       .halt_reg =3D 0xd34,
-> >>>> +       .halt_check =3D BRANCH_HALT_SKIP, /* TODO: hw gated ? */
-> >>>
-> >>> Is this resolved?
-> >>>
-> >>
-> >> Downstream has this clock as BRANCH_HALT_VOTED, but with the upstream
-> >> venus driver (with patches to enable sm8250), that results in a
-> >> "video_cc_mvs0_clk status stuck at 'off" error. AFAIK venus
-> >> enables/disables this clock on its own (venus still works without
-> >> touching this clock), but I didn't want to remove this in case it might
-> >> be needed. I removed these clocks in the v3 I just sent.
-> >>
-> >=20
-> > Hmm. Does downstream use these clks? There have been some clk stuck
-> > problems with venus recently that were attributed to improperly enabling
-> > clks before enabling interconnects and power domains. Maybe it's the
-> > same problem.
-> >=20
+Quoting Abhinav Kumar (2020-09-23 16:24:48)
+> Fix the incorrect function prototype for dp_debug_get()
+> in the dp_debug module to address compilation warning.
 >=20
-> Yes, downstream uses these clks.
->=20
-> The "stuck" problem still happens if GSDCS/interconnects are always on,=20
-> and like I mentioned, venus works even with these clocks completely=20
-> removed.
->=20
-> I think venus controls these clocks (and downstream just happens to try=20
-> enabling it at a point where venus has already enabled it?). I'm not too =
+> Fixes: f913454aae8e ("drm/msm/dp: move debugfs node to /sys/kernel/debug/=
+dri/*/")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> ---
 
-> sure about this, it might have something to do with the GDSC having the=20
-> HW_CTRL flag too..
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Ok. Maybe Taniya has an idea.
+Will the compliance testing parts be moved out of debugfs at some point?
+Just curious what the plan is there.
